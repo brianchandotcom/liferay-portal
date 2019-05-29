@@ -35,6 +35,35 @@ components:
                     readOnly: true
                     type: string
             type: object
+        CustomField:
+            # @review
+            description: Represents the value of each custom field. Fields can contain different information types (e.g., geolocation, strings, etc.).
+            properties:
+                customValue:
+                    properties:
+                        data:
+                            description: The field's content for simple types.
+                            type: object
+                        geo:
+                            description: A point determined by latitude and longitude.
+                            properties:
+                                latitude:
+                                    description: The latitude of a point in space.
+                                    format: double
+                                    type: number
+                                longitude:
+                                    description: The longitude of a point in space.
+                                    format: double
+                                    type: number
+                            type: object
+                    type: object
+                dataType:
+                    description: The field type (e.g., image, text, etc.).
+                    readOnly: true
+                    type: string
+                name:
+                    description: The field's internal name. This is valid for comparisons and unique in the structured content.
+                    type: string
         EmailAddress:
             description: Represents an email address. Properties follow the [email](https://schema.org/email) specification.
             properties:
@@ -93,9 +122,9 @@ components:
                     readOnly: true
                     type: object
                 customFields:
-                    additionalProperties:
-                        type: object
-                    type: object
+                    items:
+                        $ref: "#/components/schemas/CustomField"
+                    type: array
                 dateCreated:
                     description: The organization's creation date.
                     format: date-time
@@ -465,9 +494,9 @@ components:
                             type: array
                     type: object
                 customFields:
-                    additionalProperties:
-                        type: object
-                    type: object
+                    items:
+                        $ref: "#/components/schemas/CustomField"
+                    type: array
                 dashboardURL:
                     description: A relative URL to the user's dashboard.
                     readOnly: true

@@ -3,5 +3,4 @@ Bundle-SymbolicName: com.liferay.headless.common.spi
 Bundle-Version: 4.0.0
 Export-Package:\
 	com.liferay.headless.common.spi.resource,\
-	com.liferay.headless.common.spi.service.context,\
-	com.liferay.headless.common.spi.util
+	com.liferay.headless.common.spi.service.context

@@ -19,12 +19,12 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.HitsImpl;
 import com.liferay.portal.kernel.search.Stats;
 import com.liferay.portal.kernel.search.StatsResults;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -35,6 +35,9 @@ import com.liferay.portal.search.elasticsearch6.internal.groupby.GroupByTranslat
 import com.liferay.portal.search.elasticsearch6.internal.stats.StatsTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
+import com.liferay.portal.search.groupby.GroupByRequest;
+import com.liferay.portal.search.groupby.GroupByResponse;
+import com.liferay.portal.search.groupby.GroupByResponseFactory;
 import com.liferay.portal.search.legacy.stats.StatsRequestBuilderFactory;
 import com.liferay.portal.search.legacy.stats.StatsResultsTranslator;
 import com.liferay.portal.search.stats.StatsRequest;
@@ -78,7 +81,7 @@ public class DefaultSearchResponseTranslator
 		updateFacetCollectors(searchResponse, searchSearchRequest.getFacets());
 
 		updateGroupedHits(
-			searchResponse, searchSearchRequest.getGroupBy(), hits,
+			searchSearchResponse, searchResponse, searchSearchRequest, hits,
 			searchSearchRequest.getAlternateUidFieldName(),
 			searchSearchRequest.getHighlightFieldNames(),
 			searchSearchRequest.getLocale());
@@ -224,6 +227,13 @@ public class DefaultSearchResponseTranslator
 	}
 
 	@Reference(unbind = "-")
+	protected void setGroupByResponseFactory(
+		GroupByResponseFactory groupByResponseFactory) {
+
+		_groupByResponseFactory = groupByResponseFactory;
+	}
+
+	@Reference(unbind = "-")
 	protected void setSearchHitDocumentTranslator(
 		SearchHitDocumentTranslator searchHitDocumentTranslator) {
 
@@ -276,22 +286,51 @@ public class DefaultSearchResponseTranslator
 	}
 
 	protected void updateGroupedHits(
-		SearchResponse searchResponse, GroupBy groupBy, Hits hits,
-		String alternateUidFieldName, String[] highlightFieldNames,
+		SearchSearchResponse searchSearchResponse,
+		SearchResponse searchResponse, SearchSearchRequest searchSearchRequest,
+		Hits hits, String alternateUidFieldName, String[] highlightFieldNames,
 		Locale locale) {
 
-		if (groupBy == null) {
-			return;
+		List<GroupByRequest> groupByRequests =
+			searchSearchRequest.getGroupByRequests();
+
+		if (ListUtil.isNotEmpty(groupByRequests)) {
+			for (GroupByRequest groupByRequest : groupByRequests) {
+				updateGroupedHits(
+					searchSearchResponse, searchResponse,
+					groupByRequest.getField(), hits, alternateUidFieldName,
+					highlightFieldNames, locale);
+			}
 		}
+
+		GroupBy groupBy = searchSearchRequest.getGroupBy();
+
+		if (groupBy != null) {
+			updateGroupedHits(
+				searchSearchResponse, searchResponse, groupBy.getField(), hits,
+				alternateUidFieldName, highlightFieldNames, locale);
+		}
+	}
+
+	protected void updateGroupedHits(
+		SearchSearchResponse searchSearchResponse,
+		SearchResponse searchResponse, String field, Hits hits,
+		String alternateUidFieldName, String[] highlightFieldNames,
+		Locale locale) {
 
 		Aggregations aggregations = searchResponse.getAggregations();
 
 		Map<String, Aggregation> aggregationsMap = aggregations.getAsMap();
 
 		Terms terms = (Terms)aggregationsMap.get(
-			GroupByTranslator.GROUP_BY_AGGREGATION_PREFIX + groupBy.getField());
+			GroupByTranslator.GROUP_BY_AGGREGATION_PREFIX + field);
 
 		List<? extends Terms.Bucket> buckets = terms.getBuckets();
+
+		GroupByResponse groupByResponse =
+			_groupByResponseFactory.getGroupByResponse(field);
+
+		searchSearchResponse.addGroupByResponse(groupByResponse);
 
 		for (Terms.Bucket bucket : buckets) {
 			Aggregations bucketAggregations = bucket.getAggregations();
@@ -310,6 +349,8 @@ public class DefaultSearchResponseTranslator
 			groupedHits.setLength((int)groupedSearchHits.getTotalHits());
 
 			hits.addGroupedHits(bucket.getKeyAsString(), groupedHits);
+
+			groupByResponse.putHits(bucket.getKeyAsString(), groupedHits);
 		}
 	}
 
@@ -332,6 +373,7 @@ public class DefaultSearchResponseTranslator
 		}
 	}
 
+	private GroupByResponseFactory _groupByResponseFactory;
 	private SearchHitDocumentTranslator _searchHitDocumentTranslator;
 	private StatsRequestBuilderFactory _statsRequestBuilderFactory;
 	private StatsResultsTranslator _statsResultsTranslator;

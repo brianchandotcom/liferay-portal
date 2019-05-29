@@ -12,20 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.search.solr7.internal.groupby;
+package com.liferay.portal.search.legacy.groupby;
 
-import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.search.groupby.GroupByRequest;
 
-import org.apache.solr.client.solrj.SolrQuery;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Miguel Angelo Caldas Gallindo
+ * @author Bryan Engler
  */
-public interface GroupByTranslator {
+@ProviderType
+public interface GroupByRequestFactory {
 
-	public void translate(
-		SolrQuery solrQuery, GroupByRequest groupByRequest,
-		SearchContext searchContext);
+	/**
+	 * Provides a GroupByRequest object based off a legacy GroupBy object.
+	 *
+	 * @param groupBy the legacy GroupBy object to be converted
+	 * @return the converted GroupByRequest object
+	 *
+	 * @review
+	 */
+	public GroupByRequest getGroupByRequest(GroupBy groupBy);
 
 }

@@ -22,6 +22,7 @@ import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.filter.ComplexQueryPart;
+import com.liferay.portal.search.groupby.GroupByRequest;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.sort.Sort;
@@ -117,6 +118,11 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 	@Override
 	public Integer getFrom() {
 		return _from;
+	}
+
+	@Override
+	public List<GroupByRequest> getGroupByRequests() {
+		return Collections.unmodifiableList(_groupByRequests);
 	}
 
 	@Override
@@ -224,6 +230,12 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 		_from = from;
 	}
 
+	public void setGroupByRequests(GroupByRequest... groupByRequests) {
+		_groupByRequests.clear();
+
+		Collections.addAll(_groupByRequests, groupByRequests);
+	}
+
 	public void setHighlightEnabled(boolean highlightEnabled) {
 		QueryConfig queryConfig = _searchContext.getQueryConfig();
 
@@ -310,6 +322,7 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 	private final Map<String, SearchRequest> _federatedSearchRequestsMap =
 		new LinkedHashMap<>();
 	private Integer _from;
+	private final List<GroupByRequest> _groupByRequests = new ArrayList<>();
 	private boolean _includeResponseString;
 	private final List<Class<?>> _modelIndexerClasses = new ArrayList<>();
 	private String _paginationStartParameterName;

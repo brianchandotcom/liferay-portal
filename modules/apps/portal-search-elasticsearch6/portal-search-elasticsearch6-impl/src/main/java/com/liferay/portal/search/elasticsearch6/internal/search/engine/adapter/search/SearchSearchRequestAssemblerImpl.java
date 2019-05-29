@@ -15,8 +15,10 @@
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.kernel.search.Stats;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch6.internal.groupby.GroupByTranslator;
@@ -26,6 +28,8 @@ import com.liferay.portal.search.elasticsearch6.internal.query.QueryToQueryBuild
 import com.liferay.portal.search.elasticsearch6.internal.sort.SortTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.stats.StatsTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.search.groupby.GroupByRequest;
+import com.liferay.portal.search.legacy.groupby.GroupByRequestFactory;
 import com.liferay.portal.search.legacy.stats.StatsRequestBuilderFactory;
 import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortFieldTranslator;
@@ -59,6 +63,7 @@ public class SearchSearchRequestAssemblerImpl
 
 		setFetchSource(searchRequestBuilder, searchSearchRequest);
 		setGroupBy(searchRequestBuilder, searchSearchRequest);
+		setGroupByRequests(searchRequestBuilder, searchSearchRequest);
 		setHighlighter(searchRequestBuilder, searchSearchRequest);
 		setPagination(searchRequestBuilder, searchSearchRequest);
 		setPreference(searchRequestBuilder, searchSearchRequest);
@@ -94,16 +99,43 @@ public class SearchSearchRequestAssemblerImpl
 
 		if (searchSearchRequest.getGroupBy() != null) {
 			_groupByTranslator.translate(
-				searchRequestBuilder, searchSearchRequest.getGroupBy(),
-				searchSearchRequest.getSorts71(),
+				searchRequestBuilder,
+				translate(searchSearchRequest.getGroupBy()),
 				searchSearchRequest.getLocale(),
 				searchSearchRequest.getSelectedFieldNames(),
 				searchSearchRequest.getHighlightFieldNames(),
 				searchSearchRequest.isHighlightEnabled(),
 				searchSearchRequest.isHighlightRequireFieldMatch(),
 				searchSearchRequest.getHighlightFragmentSize(),
-				searchSearchRequest.getHighlightSnippetSize(),
-				searchSearchRequest.getStart(), searchSearchRequest.getSize());
+				searchSearchRequest.getHighlightSnippetSize());
+		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupByRequestFactory(
+		GroupByRequestFactory groupByRequestFactory) {
+
+		_groupByRequestFactory = groupByRequestFactory;
+	}
+
+	protected void setGroupByRequests(
+		SearchRequestBuilder searchRequestBuilder,
+		SearchSearchRequest searchSearchRequest) {
+
+		List<GroupByRequest> groupByRequests =
+			searchSearchRequest.getGroupByRequests();
+
+		if (ListUtil.isNotEmpty(groupByRequests)) {
+			groupByRequests.forEach(
+				groupByRequest -> _groupByTranslator.translate(
+					searchRequestBuilder, groupByRequest,
+					searchSearchRequest.getLocale(),
+					searchSearchRequest.getSelectedFieldNames(),
+					searchSearchRequest.getHighlightFieldNames(),
+					searchSearchRequest.isHighlightEnabled(),
+					searchSearchRequest.isHighlightRequireFieldMatch(),
+					searchSearchRequest.getHighlightFragmentSize(),
+					searchSearchRequest.getHighlightSnippetSize()));
 		}
 	}
 
@@ -260,6 +292,10 @@ public class SearchSearchRequestAssemblerImpl
 		}
 	}
 
+	protected GroupByRequest translate(GroupBy groupBy) {
+		return _groupByRequestFactory.getGroupByRequest(groupBy);
+	}
+
 	protected StatsRequest translate(Stats stats) {
 		StatsRequestBuilder statsRequestBuilder =
 			_statsRequestBuilderFactory.getStatsRequestBuilder(stats);
@@ -269,6 +305,7 @@ public class SearchSearchRequestAssemblerImpl
 
 	private CommonSearchRequestBuilderAssembler
 		_commonSearchRequestBuilderAssembler;
+	private GroupByRequestFactory _groupByRequestFactory;
 	private GroupByTranslator _groupByTranslator;
 	private HighlighterTranslator _highlighterTranslator;
 	private final HighlightTranslator _highlightTranslator =

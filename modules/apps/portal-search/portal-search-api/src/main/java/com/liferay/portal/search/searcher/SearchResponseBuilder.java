@@ -16,9 +16,11 @@ package com.liferay.portal.search.searcher;
 
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.search.aggregation.AggregationResult;
+import com.liferay.portal.search.groupby.GroupByResponse;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.stats.StatsResponse;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -48,6 +50,17 @@ public interface SearchResponseBuilder {
 	public SearchResponseBuilder count(long count);
 
 	public SearchResponseBuilder federatedSearchKey(String key);
+
+	/**
+	 * Sets the list of top hits aggregations.
+	 *
+	 * @param groupByResponses the list of top hits aggregations.
+	 * @return the same builder
+	 *
+	 * @review
+	 */
+	public SearchResponseBuilder groupByResponses(
+		List<GroupByResponse> groupByResponses);
 
 	public SearchResponseBuilder hits(Hits hits);
 

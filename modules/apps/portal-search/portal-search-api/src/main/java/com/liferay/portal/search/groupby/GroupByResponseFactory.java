@@ -12,20 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.search.solr7.internal.groupby;
+package com.liferay.portal.search.groupby;
 
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.search.groupby.GroupByRequest;
-
-import org.apache.solr.client.solrj.SolrQuery;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Miguel Angelo Caldas Gallindo
+ * @author Bryan Engler
  */
-public interface GroupByTranslator {
+@ProviderType
+public interface GroupByResponseFactory {
 
-	public void translate(
-		SolrQuery solrQuery, GroupByRequest groupByRequest,
-		SearchContext searchContext);
+	public GroupByResponse getGroupByResponse(String field);
 
 }

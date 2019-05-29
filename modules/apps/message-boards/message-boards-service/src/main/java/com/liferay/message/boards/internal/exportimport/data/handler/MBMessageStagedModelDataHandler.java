@@ -435,26 +435,20 @@ public class MBMessageStagedModelDataHandler
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		MBMessage importedMessage = null;
-
 		if (!message.isRoot()) {
 			MBDiscussion discussion =
 				_mbDiscussionLocalService.getThreadDiscussion(threadId);
 
-			importedMessage = _mbMessageLocalService.addDiscussionMessage(
+			return _mbMessageLocalService.addDiscussionMessage(
 				userId, message.getUserName(),
 				portletDataContext.getScopeGroupId(), discussion.getClassName(),
 				discussion.getClassPK(), threadId, parentMessageId,
 				message.getSubject(), message.getBody(), serviceContext);
 		}
-		else {
-			MBThread thread = _mbThreadLocalService.getThread(threadId);
 
-			importedMessage = _mbMessageLocalService.getMBMessage(
-				thread.getRootMessageId());
-		}
+		MBThread thread = _mbThreadLocalService.getThread(threadId);
 
-		return importedMessage;
+		return _mbMessageLocalService.getMBMessage(thread.getRootMessageId());
 	}
 
 	private List<ObjectValuePair<String, InputStream>> _getAttachments(

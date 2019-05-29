@@ -58,7 +58,7 @@ import org.junit.runner.RunWith;
  * @author Andrew Betts
  */
 @RunWith(Arquillian.class)
-public class CleanUpPortletPreferencesUtilTest {
+public class EditServerMVCActionCommandCleanUpPortletPreferencesTest {
 
 	@ClassRule
 	@Rule

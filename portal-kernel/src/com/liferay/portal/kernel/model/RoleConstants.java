@@ -30,6 +30,9 @@ public class RoleConstants {
 
 	public static final String ADMINISTRATOR = "Administrator";
 
+	public static final String ANALYTICS_ADMINISTRATOR =
+		"Analytics Administrator";
+
 	public static final String GUEST = "Guest";
 
 	public static final String NAME_INVALID_CHARACTERS =
@@ -69,7 +72,8 @@ public class RoleConstants {
 	};
 
 	public static final String[] SYSTEM_ROLES = {
-		ADMINISTRATOR, GUEST, OWNER, POWER_USER, RoleConstants.USER
+		ADMINISTRATOR, ANALYTICS_ADMINISTRATOR, GUEST, OWNER, POWER_USER,
+		RoleConstants.USER
 	};
 
 	public static final String[] SYSTEM_SITE_ROLES = {

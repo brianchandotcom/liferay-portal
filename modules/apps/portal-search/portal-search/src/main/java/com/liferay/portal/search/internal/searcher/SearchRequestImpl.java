@@ -51,6 +51,31 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 		_searchContext = searchContext;
 	}
 
+	public SearchRequestImpl(SearchRequestImpl searchRequestImpl) {
+		_aggregationsMap.putAll(searchRequestImpl._aggregationsMap);
+		_basicFacetSelection = searchRequestImpl._basicFacetSelection;
+		_complexQueryParts.addAll(searchRequestImpl._complexQueryParts);
+		_emptySearchEnabled = searchRequestImpl._emptySearchEnabled;
+		_excludeContributors.addAll(searchRequestImpl._excludeContributors);
+		_explain = searchRequestImpl._explain;
+		_federatedSearchKey = searchRequestImpl._federatedSearchKey;
+		_federatedSearchRequestsMap.putAll(
+			searchRequestImpl._federatedSearchRequestsMap);
+		_from = searchRequestImpl._from;
+		_includeContributors.addAll(searchRequestImpl._includeContributors);
+		_includeResponseString = searchRequestImpl._includeResponseString;
+		_modelIndexerClasses.addAll(searchRequestImpl._modelIndexerClasses);
+		_pipelineAggregationsMap.putAll(
+			searchRequestImpl._pipelineAggregationsMap);
+		_postFilterQuery = searchRequestImpl._postFilterQuery;
+		_query = searchRequestImpl._query;
+		_rescoreQuery = searchRequestImpl._rescoreQuery;
+		_searchContext = searchRequestImpl._searchContext;
+		_size = searchRequestImpl._size;
+		_sorts.addAll(searchRequestImpl._sorts);
+		_statsRequests.addAll(searchRequestImpl._statsRequests);
+	}
+
 	public void addAggregation(Aggregation aggregation) {
 		_aggregationsMap.put(aggregation.getName(), aggregation);
 	}
@@ -63,9 +88,17 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 		_searchContext.setEntryClassNames(entryClassNames);
 	}
 
+	public void addExcludeContributors(String... ids) {
+		Collections.addAll(_excludeContributors, ids);
+	}
+
 	public void addFederatedSearchRequest(SearchRequest searchRequest) {
 		_federatedSearchRequestsMap.put(
 			searchRequest.getFederatedSearchKey(), searchRequest);
+	}
+
+	public void addIncludeContributors(String... ids) {
+		Collections.addAll(_includeContributors, ids);
 	}
 
 	public void addIndex(String index) {
@@ -105,6 +138,11 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 	}
 
 	@Override
+	public List<String> getExcludeContributors() {
+		return Collections.unmodifiableList(_excludeContributors);
+	}
+
+	@Override
 	public String getFederatedSearchKey() {
 		return _federatedSearchKey;
 	}
@@ -120,6 +158,11 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 	}
 
 	@Override
+	public List<String> getIncludeContributors() {
+		return Collections.unmodifiableList(_includeContributors);
+	}
+
+	@Override
 	public List<String> getIndexes() {
 		QueryConfig queryConfig = _searchContext.getQueryConfig();
 
@@ -132,6 +175,7 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 		return Collections.unmodifiableList(_modelIndexerClasses);
 	}
 
+	@Override
 	public String getPaginationStartParameterName() {
 		return _paginationStartParameterName;
 	}
@@ -159,6 +203,10 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 	@Override
 	public Query getRescoreQuery() {
 		return _rescoreQuery;
+	}
+
+	public SearchContext getSearchContext() {
+		return _searchContext;
 	}
 
 	@Override
@@ -296,20 +344,18 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 		Collections.addAll(_statsRequests, statsRequests);
 	}
 
-	protected SearchContext getSearchContext() {
-		return _searchContext;
-	}
-
 	private final Map<String, Aggregation> _aggregationsMap =
 		new LinkedHashMap<>();
 	private boolean _basicFacetSelection;
 	private final List<ComplexQueryPart> _complexQueryParts = new ArrayList<>();
 	private boolean _emptySearchEnabled;
+	private final List<String> _excludeContributors = new ArrayList<>();
 	private boolean _explain;
 	private String _federatedSearchKey;
 	private final Map<String, SearchRequest> _federatedSearchRequestsMap =
 		new LinkedHashMap<>();
 	private Integer _from;
+	private final List<String> _includeContributors = new ArrayList<>();
 	private boolean _includeResponseString;
 	private final List<Class<?>> _modelIndexerClasses = new ArrayList<>();
 	private String _paginationStartParameterName;

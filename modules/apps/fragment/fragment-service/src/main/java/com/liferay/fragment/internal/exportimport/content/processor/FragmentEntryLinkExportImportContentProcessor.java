@@ -25,7 +25,6 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -342,18 +341,9 @@ public class FragmentEntryLinkExportImportContentProcessor
 				continue;
 			}
 
-			FragmentEntryLink fragmentEntryLink =
-				(FragmentEntryLink)stagedModel;
-
 			SegmentsExperience segmentsExperience =
 				_segmentsExperienceLocalService.fetchSegmentsExperience(
 					segmentsExperienceId);
-
-			if (fragmentEntryLink.getClassPK() !=
-					segmentsExperience.getClassPK()) {
-
-				continue;
-			}
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, stagedModel, segmentsExperience,

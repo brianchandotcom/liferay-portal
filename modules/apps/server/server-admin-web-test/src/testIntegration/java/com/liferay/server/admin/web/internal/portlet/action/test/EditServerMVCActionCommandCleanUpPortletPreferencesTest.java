@@ -25,11 +25,11 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.LayoutBranchLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutBranchLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
+import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -75,7 +75,7 @@ public class EditServerMVCActionCommandCleanUpPortletPreferencesTest {
 		LayoutRevision layoutRevision = getLayoutRevision();
 
 		PortletPreferences portletPreferences =
-			PortletPreferencesLocalServiceUtil.addPortletPreferences(
+			_portletPreferencesLocalService.addPortletPreferences(
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), 0,
 				layoutRevision.getLayoutRevisionId(),
 				RandomTestUtil.randomString(), new PortletImpl(),
@@ -88,7 +88,7 @@ public class EditServerMVCActionCommandCleanUpPortletPreferencesTest {
 			new Class<?>[0]);
 
 		portletPreferences =
-			PortletPreferencesLocalServiceUtil.fetchPortletPreferences(
+			_portletPreferencesLocalService.fetchPortletPreferences(
 				portletPreferences.getPortletPreferencesId());
 
 		Assert.assertNull(portletPreferences);
@@ -105,19 +105,18 @@ public class EditServerMVCActionCommandCleanUpPortletPreferencesTest {
 
 		typeSettingProperties.setProperty("column-1", portletId);
 
-		layoutRevision = LayoutRevisionLocalServiceUtil.updateLayoutRevision(
+		layoutRevision = _layoutRevisionLocalService.updateLayoutRevision(
 			layoutRevision);
 
 		PortletPreferences portletPreferences =
-			PortletPreferencesLocalServiceUtil.addPortletPreferences(
+			_portletPreferencesLocalService.addPortletPreferences(
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), 0,
 				layoutRevision.getLayoutRevisionId(), portletId, null,
 				StringPool.BLANK);
 
 		Assert.assertNotNull(portletPreferences);
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(
-			layoutRevision.getPlid());
+		Layout layout = _layoutLocalService.getLayout(layoutRevision.getPlid());
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
@@ -131,7 +130,7 @@ public class EditServerMVCActionCommandCleanUpPortletPreferencesTest {
 			new Class<?>[0]);
 
 		portletPreferences =
-			PortletPreferencesLocalServiceUtil.fetchPortletPreferences(
+			_portletPreferencesLocalService.fetchPortletPreferences(
 				portletPreferences.getPortletPreferencesId());
 
 		Assert.assertNotNull(portletPreferences);
@@ -144,16 +143,16 @@ public class EditServerMVCActionCommandCleanUpPortletPreferencesTest {
 			ServiceContextTestUtil.getServiceContext();
 
 		LayoutSetBranch layoutSetBranch =
-			LayoutSetBranchLocalServiceUtil.addLayoutSetBranch(
+			_layoutSetBranchLocalService.addLayoutSetBranch(
 				TestPropsValues.getUserId(), _group.getGroupId(), false,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				true, 0, serviceContext);
 
 		LayoutBranch layoutBranch =
-			LayoutBranchLocalServiceUtil.getMasterLayoutBranch(
+			_layoutBranchLocalService.getMasterLayoutBranch(
 				layoutSetBranch.getLayoutSetBranchId(), layout.getPlid());
 
-		return LayoutRevisionLocalServiceUtil.getLayoutRevision(
+		return _layoutRevisionLocalService.getLayoutRevision(
 			layoutSetBranch.getLayoutSetBranchId(),
 			layoutBranch.getLayoutBranchId(), layout.getPlid());
 	}
@@ -161,7 +160,22 @@ public class EditServerMVCActionCommandCleanUpPortletPreferencesTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	@Inject
+	private LayoutBranchLocalService _layoutBranchLocalService;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutRevisionLocalService _layoutRevisionLocalService;
+
+	@Inject
+	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
+
 	@Inject(filter = "mvc.command.name=/server_admin/edit_server")
 	private MVCActionCommand _mvcActionCommand;
+
+	@Inject
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 }

@@ -87,7 +87,9 @@ public class CommonSearchRequestBuilderAssemblerImpl
 
 		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
 
-		boolQueryBuilder.should(queryBuilder);
+		if (queryBuilder != null) {
+			boolQueryBuilder.should(queryBuilder);
+		}
 
 		BooleanQuery booleanQuery =
 			(BooleanQuery)_complexQueryBuilderFactory.builder(

@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.AdaptedImage;
+import com.liferay.headless.delivery.client.dto.v1_0.CustomField;
 import com.liferay.headless.delivery.client.dto.v1_0.Document;
 import com.liferay.headless.delivery.client.dto.v1_0.RelatedContent;
 import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategory;
@@ -124,7 +125,17 @@ public class DocumentSerDes {
 
 			sb.append("\"customFields\": ");
 
-			sb.append(_toJSON(document.getCustomFields()));
+			sb.append("[");
+
+			for (int i = 0; i < document.getCustomFields().length; i++) {
+				sb.append(String.valueOf(document.getCustomFields()[i]));
+
+				if ((i + 1) < document.getCustomFields().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (document.getDateCreated() != null) {
@@ -611,7 +622,13 @@ public class DocumentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					document.setCustomFields(
-						DocumentSerDes.toMap((String)jsonParserFieldValue));
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> CustomFieldSerDes.toDTO((String)object)
+						).toArray(
+							size -> new CustomField[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

@@ -14,6 +14,7 @@
 
 package com.liferay.headless.admin.user.client.serdes.v1_0;
 
+import com.liferay.headless.admin.user.client.dto.v1_0.CustomField;
 import com.liferay.headless.admin.user.client.dto.v1_0.OrganizationBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.RoleBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.SiteBrief;
@@ -125,7 +126,17 @@ public class UserAccountSerDes {
 
 			sb.append("\"customFields\": ");
 
-			sb.append(_toJSON(userAccount.getCustomFields()));
+			sb.append("[");
+
+			for (int i = 0; i < userAccount.getCustomFields().length; i++) {
+				sb.append(String.valueOf(userAccount.getCustomFields()[i]));
+
+				if ((i + 1) < userAccount.getCustomFields().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (userAccount.getDashboardURL() != null) {
@@ -663,7 +674,13 @@ public class UserAccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					userAccount.setCustomFields(
-						UserAccountSerDes.toMap((String)jsonParserFieldValue));
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> CustomFieldSerDes.toDTO((String)object)
+						).toArray(
+							size -> new CustomField[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dashboardURL")) {

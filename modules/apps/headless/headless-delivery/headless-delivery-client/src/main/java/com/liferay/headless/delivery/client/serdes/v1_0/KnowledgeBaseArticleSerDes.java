@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
+import com.liferay.headless.delivery.client.dto.v1_0.CustomField;
 import com.liferay.headless.delivery.client.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.delivery.client.dto.v1_0.RelatedContent;
 import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategory;
@@ -106,7 +107,20 @@ public class KnowledgeBaseArticleSerDes {
 
 			sb.append("\"customFields\": ");
 
-			sb.append(_toJSON(knowledgeBaseArticle.getCustomFields()));
+			sb.append("[");
+
+			for (int i = 0; i < knowledgeBaseArticle.getCustomFields().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(knowledgeBaseArticle.getCustomFields()[i]));
+
+				if ((i + 1) < knowledgeBaseArticle.getCustomFields().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (knowledgeBaseArticle.getDateCreated() != null) {
@@ -656,8 +670,13 @@ public class KnowledgeBaseArticleSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					knowledgeBaseArticle.setCustomFields(
-						KnowledgeBaseArticleSerDes.toMap(
-							(String)jsonParserFieldValue));
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> CustomFieldSerDes.toDTO((String)object)
+						).toArray(
+							size -> new CustomField[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

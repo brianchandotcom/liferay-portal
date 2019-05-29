@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.BlogPosting;
+import com.liferay.headless.delivery.client.dto.v1_0.CustomField;
 import com.liferay.headless.delivery.client.dto.v1_0.RelatedContent;
 import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
@@ -119,7 +120,17 @@ public class BlogPostingSerDes {
 
 			sb.append("\"customFields\": ");
 
-			sb.append(_toJSON(blogPosting.getCustomFields()));
+			sb.append("[");
+
+			for (int i = 0; i < blogPosting.getCustomFields().length; i++) {
+				sb.append(String.valueOf(blogPosting.getCustomFields()[i]));
+
+				if ((i + 1) < blogPosting.getCustomFields().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (blogPosting.getDateCreated() != null) {
@@ -632,7 +643,13 @@ public class BlogPostingSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					blogPosting.setCustomFields(
-						BlogPostingSerDes.toMap((String)jsonParserFieldValue));
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> CustomFieldSerDes.toDTO((String)object)
+						).toArray(
+							size -> new CustomField[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

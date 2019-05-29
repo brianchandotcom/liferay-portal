@@ -116,18 +116,17 @@ public class StructuredContentFolder {
 	protected Creator creator;
 
 	@Schema
-	public Map<String, Object> getCustomFields() {
+	public CustomField[] getCustomFields() {
 		return customFields;
 	}
 
-	public void setCustomFields(Map<String, Object> customFields) {
+	public void setCustomFields(CustomField[] customFields) {
 		this.customFields = customFields;
 	}
 
 	@JsonIgnore
 	public void setCustomFields(
-		UnsafeSupplier<Map<String, Object>, Exception>
-			customFieldsUnsafeSupplier) {
+		UnsafeSupplier<CustomField[], Exception> customFieldsUnsafeSupplier) {
 
 		try {
 			customFields = customFieldsUnsafeSupplier.get();
@@ -142,7 +141,7 @@ public class StructuredContentFolder {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, Object> customFields;
+	protected CustomField[] customFields;
 
 	@Schema(description = "The date the folder was created.")
 	public Date getDateCreated() {
@@ -465,7 +464,17 @@ public class StructuredContentFolder {
 
 			sb.append("\"customFields\": ");
 
-			sb.append(_toJSON(customFields));
+			sb.append("[");
+
+			for (int i = 0; i < customFields.length; i++) {
+				sb.append(String.valueOf(customFields[i]));
+
+				if ((i + 1) < customFields.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (dateCreated != null) {

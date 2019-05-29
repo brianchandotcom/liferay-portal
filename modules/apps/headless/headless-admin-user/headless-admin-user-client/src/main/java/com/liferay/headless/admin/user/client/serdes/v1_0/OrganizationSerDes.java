@@ -14,6 +14,7 @@
 
 package com.liferay.headless.admin.user.client.serdes.v1_0;
 
+import com.liferay.headless.admin.user.client.dto.v1_0.CustomField;
 import com.liferay.headless.admin.user.client.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.client.dto.v1_0.Service;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
@@ -94,7 +95,17 @@ public class OrganizationSerDes {
 
 			sb.append("\"customFields\": ");
 
-			sb.append(_toJSON(organization.getCustomFields()));
+			sb.append("[");
+
+			for (int i = 0; i < organization.getCustomFields().length; i++) {
+				sb.append(String.valueOf(organization.getCustomFields()[i]));
+
+				if ((i + 1) < organization.getCustomFields().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (organization.getDateCreated() != null) {
@@ -428,7 +439,13 @@ public class OrganizationSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					organization.setCustomFields(
-						OrganizationSerDes.toMap((String)jsonParserFieldValue));
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> CustomFieldSerDes.toDTO((String)object)
+						).toArray(
+							size -> new CustomField[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

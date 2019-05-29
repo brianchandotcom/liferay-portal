@@ -117,11 +117,6 @@ public abstract class BaseDocumentFolderResourceImpl
 		DocumentFolder existingDocumentFolder = getDocumentFolder(
 			documentFolderId);
 
-		if (documentFolder.getCustomFields() != null) {
-			existingDocumentFolder.setCustomFields(
-				documentFolder.getCustomFields());
-		}
-
 		if (documentFolder.getDateCreated() != null) {
 			existingDocumentFolder.setDateCreated(
 				documentFolder.getDateCreated());

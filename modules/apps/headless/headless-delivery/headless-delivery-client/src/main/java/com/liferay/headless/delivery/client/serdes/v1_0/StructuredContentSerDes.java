@@ -747,7 +747,7 @@ public class StructuredContentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					structuredContent.setCustomFields(
-						StructuredContentSerDes.toMap(
+						(Map)StructuredContentSerDes.toMap(
 							(String)jsonParserFieldValue));
 				}
 			}

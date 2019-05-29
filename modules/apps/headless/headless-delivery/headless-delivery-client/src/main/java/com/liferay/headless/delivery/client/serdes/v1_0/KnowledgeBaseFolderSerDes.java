@@ -414,7 +414,7 @@ public class KnowledgeBaseFolderSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					knowledgeBaseFolder.setCustomFields(
-						KnowledgeBaseFolderSerDes.toMap(
+						(Map)KnowledgeBaseFolderSerDes.toMap(
 							(String)jsonParserFieldValue));
 				}
 			}

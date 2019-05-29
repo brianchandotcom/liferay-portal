@@ -535,7 +535,7 @@ public class MessageBoardThreadSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					messageBoardThread.setCustomFields(
-						MessageBoardThreadSerDes.toMap(
+						(Map)MessageBoardThreadSerDes.toMap(
 							(String)jsonParserFieldValue));
 				}
 			}

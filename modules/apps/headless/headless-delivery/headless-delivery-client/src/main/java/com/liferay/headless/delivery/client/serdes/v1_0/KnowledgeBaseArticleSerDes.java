@@ -656,7 +656,7 @@ public class KnowledgeBaseArticleSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					knowledgeBaseArticle.setCustomFields(
-						KnowledgeBaseArticleSerDes.toMap(
+						(Map)KnowledgeBaseArticleSerDes.toMap(
 							(String)jsonParserFieldValue));
 				}
 			}

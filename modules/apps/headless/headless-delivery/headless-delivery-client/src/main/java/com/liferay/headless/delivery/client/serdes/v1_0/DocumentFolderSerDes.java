@@ -363,7 +363,7 @@ public class DocumentFolderSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					documentFolder.setCustomFields(
-						DocumentFolderSerDes.toMap(
+						(Map)DocumentFolderSerDes.toMap(
 							(String)jsonParserFieldValue));
 				}
 			}

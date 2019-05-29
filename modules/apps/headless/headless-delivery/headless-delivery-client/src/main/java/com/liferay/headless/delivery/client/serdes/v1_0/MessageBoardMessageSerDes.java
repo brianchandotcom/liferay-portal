@@ -539,7 +539,7 @@ public class MessageBoardMessageSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					messageBoardMessage.setCustomFields(
-						MessageBoardMessageSerDes.toMap(
+						(Map)MessageBoardMessageSerDes.toMap(
 							(String)jsonParserFieldValue));
 				}
 			}

@@ -611,7 +611,8 @@ public class DocumentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					document.setCustomFields(
-						DocumentSerDes.toMap((String)jsonParserFieldValue));
+						(Map)DocumentSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

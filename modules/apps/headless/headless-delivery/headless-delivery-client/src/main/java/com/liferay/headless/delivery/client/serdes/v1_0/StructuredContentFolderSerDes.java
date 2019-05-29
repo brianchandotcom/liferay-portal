@@ -382,7 +382,7 @@ public class StructuredContentFolderSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					structuredContentFolder.setCustomFields(
-						StructuredContentFolderSerDes.toMap(
+						(Map)StructuredContentFolderSerDes.toMap(
 							(String)jsonParserFieldValue));
 				}
 			}

@@ -372,7 +372,7 @@ public class MessageBoardSectionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					messageBoardSection.setCustomFields(
-						MessageBoardSectionSerDes.toMap(
+						(Map)MessageBoardSectionSerDes.toMap(
 							(String)jsonParserFieldValue));
 				}
 			}

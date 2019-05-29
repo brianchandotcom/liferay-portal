@@ -632,7 +632,8 @@ public class BlogPostingSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					blogPosting.setCustomFields(
-						BlogPostingSerDes.toMap((String)jsonParserFieldValue));
+						(Map)BlogPostingSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

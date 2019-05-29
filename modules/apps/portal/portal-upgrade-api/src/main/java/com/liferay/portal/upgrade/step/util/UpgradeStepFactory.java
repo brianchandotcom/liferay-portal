@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 import java.util.Arrays;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -36,6 +37,21 @@ public class UpgradeStepFactory {
 					tableClass,
 					_getAlterables(
 						AlterTableAddColumn::new, columnDefinitions));
+			}
+
+		};
+	}
+
+	public static UpgradeStep alterColumnTypes(
+		Class<?> tableClass, String newType, String... columnNames) {
+
+		return new UpgradeProcess() {
+
+			@Override
+			protected void doUpgrade() throws Exception {
+				alter(
+					tableClass,
+					_getAlterables(AlterColumnType::new, newType, columnNames));
 			}
 
 		};
@@ -65,6 +81,19 @@ public class UpgradeStepFactory {
 			}
 
 		};
+	}
+
+	private static UpgradeProcess.Alterable[] _getAlterables(
+		BiFunction<String, String, UpgradeProcess.Alterable> alterableFunction,
+		String newType, String... columnNames) {
+
+		return Arrays.stream(
+			columnNames
+		).map(
+			columnName -> alterableFunction.apply(columnName, newType)
+		).toArray(
+			UpgradeProcess.Alterable[]::new
+		);
 	}
 
 	private static UpgradeProcess.Alterable[] _getAlterables(

@@ -160,6 +160,31 @@ public abstract class Base${schemaName}ResourceTestCase {
 		properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)
 	/>
 
+	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		${schemaName} ${schemaVarName} = random${schemaName}();
+
+		<#list properties?keys as propertyName>
+			<#if stringUtil.equals(properties[propertyName], "String")>
+				${schemaVarName}.set${propertyName?cap_first}(regex);
+			</#if>
+		</#list>
+
+		String json = ${schemaName}SerDes.toJSON(${schemaVarName});
+
+		Assert.assertFalse(json.contains(regex));
+
+		${schemaVarName} = ${schemaName}SerDes.toDTO(json);
+
+		<#list properties?keys as propertyName>
+			<#if stringUtil.equals(properties[propertyName], "String")>
+				Assert.assertEquals(regex, ${schemaVarName}.get${propertyName?cap_first}());
+			</#if>
+		</#list>
+	}
+
 	<#list javaMethodSignatures as javaMethodSignature>
 		<#assign
 			arguments = freeMarkerTool.getResourceTestCaseArguments(javaMethodSignature.javaMethodParameters)

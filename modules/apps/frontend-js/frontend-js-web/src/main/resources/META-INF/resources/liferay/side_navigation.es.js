@@ -351,7 +351,7 @@
 					type: 'closedStart.lexicon.sidenav'
 				});
 
-				instance._onSidenavTransitionEnd($content, function() {
+				instance._subscribeSidenavTransitionEnd($content, function() {
 					removeClass($sidenav, 'sidenav-transition');
 					removeClass($toggler, 'sidenav-transition');
 
@@ -530,7 +530,7 @@
 					type: 'openStart.lexicon.sidenav'
 				});
 
-				instance._onSidenavTransitionEnd($content, function() {
+				instance._subscribeSidenavTransitionEnd($content, function() {
 					removeClass($sidenav, 'sidenav-transition');
 					removeClass($toggler, 'sidenav-transition');
 
@@ -595,7 +595,7 @@
 				});
 			}
 
-			instance._onSidenavTransitionEnd($container, function() {
+			instance._subscribeSidenavTransitionEnd($container, function() {
 				var $menu = $container.find('.sidenav-menu').first();
 
 				if (hasClass($container, 'closed')) {
@@ -698,12 +698,12 @@
 			var instance = this;
 
 			if (!instance.useDataAttribute) {
-				instance._onScreenChange();
+				instance._subscribeScreenChange();
 			}
 
-			instance._onClickTrigger();
+			instance._subscribeClickTrigger();
 
-			instance._onClickSidenavClose();
+			instance._subscribeClickSidenavClose();
 		},
 
 		_getSidenavWidth: function() {
@@ -797,7 +797,7 @@
 			}
 		},
 
-		_onClickSidenavClose: function() {
+		_subscribeClickSidenavClose: function() {
 			var instance = this;
 
 			var options = instance.options;
@@ -818,7 +818,7 @@
 			}
 		},
 
-		_onClickTrigger: function() {
+		_subscribeClickTrigger: function() {
 			var instance = this;
 
 			var $toggler = instance.$toggler;
@@ -842,7 +842,7 @@
 			instance.togglerSelector = togglerSelector;
 		},
 
-		_onScreenChange: function() {
+		_subscribeScreenChange: function() {
 			var instance = this;
 			var options = instance.options;
 
@@ -931,7 +931,7 @@
 			});
 		},
 
-		_onSidenavTransitionEnd: function($el, fn) {
+		_subscribeSidenavTransitionEnd: function($el, fn) {
 			var instance = this;
 
 			var transitionEnd = 'bsTransitionEnd';

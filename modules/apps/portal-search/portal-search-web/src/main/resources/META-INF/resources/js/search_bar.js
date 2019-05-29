@@ -84,9 +84,12 @@ AUI.add(
 
 					if (hasQuestionMark) {
 						var parts = queryString.split('?');
+
 						queryString = parts[1];
+
 						hasQuestionMark = false;
 					}
+
 					var parameterArray = queryString.split('&');
 
 					parameterArray = FacetUtil.removeURLParameters(
@@ -95,7 +98,6 @@ AUI.add(
 					);
 
 					if (instance.resetStartPage) {
-
 						var resetStartPageName = instance.resetStartPage.get('name');
 
 						parameterArray = FacetUtil.removeURLParameters(

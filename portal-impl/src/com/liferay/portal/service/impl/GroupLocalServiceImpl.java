@@ -837,7 +837,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					group.getGroupId(),
 					BackgroundTaskConstants.STATUS_IN_PROGRESS);
 
-			if (!backgroundTasks.isEmpty()) {
+			if (ListUtil.isNotNull(backgroundTasks)) {
 				throw new PendingBackgroundTaskException(
 					"Unable to delete group with pending background tasks");
 			}

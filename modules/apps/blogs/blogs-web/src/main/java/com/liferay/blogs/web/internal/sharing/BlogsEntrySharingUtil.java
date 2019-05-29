@@ -18,9 +18,12 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.sharing.display.context.util.SharingDropdownItemFactory;
 import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
+import com.liferay.sharing.security.permission.SharingPermission;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,6 +35,32 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = {})
 public class BlogsEntrySharingUtil {
+
+	public static boolean containsManageCollaboratorsPermission(
+		PermissionChecker permissionChecker, BlogsEntry blogsEntry) {
+
+		try {
+			return _sharingPermission.containsManageCollaboratorsPermission(
+				permissionChecker, PortalUtil.getClassNameId(BlogsEntry.class),
+				blogsEntry.getEntryId(), blogsEntry.getGroupId());
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
+	}
+
+	public static boolean containsSharePermission(
+		PermissionChecker permissionChecker, BlogsEntry blogsEntry) {
+
+		try {
+			return _sharingPermission.containsSharePermission(
+				permissionChecker, PortalUtil.getClassNameId(BlogsEntry.class),
+				blogsEntry.getEntryId(), blogsEntry.getGroupId());
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
+	}
 
 	public static DropdownItem createManageCollaboratorsDropdownItem(
 		BlogsEntry blogsEntry, HttpServletRequest httpServletRequest) {
@@ -100,7 +129,13 @@ public class BlogsEntrySharingUtil {
 		_sharingMenuItemFactory = sharingMenuItemFactory;
 	}
 
+	@Reference(unbind = "-")
+	protected void setSharingPermission(SharingPermission sharingPermission) {
+		_sharingPermission = sharingPermission;
+	}
+
 	private static SharingDropdownItemFactory _sharingDropdownItemFactory;
 	private static SharingMenuItemFactory _sharingMenuItemFactory;
+	private static SharingPermission _sharingPermission;
 
 }

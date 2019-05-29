@@ -66,6 +66,9 @@
 		<check name="CSSHexColorsCheck" />
 		<check name="CSSImportsCheck" />
 		<check name="CSSPropertiesOrderCheck" />
+		<check name="CSSSelectorsOrderCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="CSSWhitespaceCheck" />
 	</source-processor>
 	<source-processor name="DockerfileSourceProcessor">

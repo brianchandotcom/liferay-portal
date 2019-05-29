@@ -154,6 +154,10 @@ public class IndexSynchronizerImpl implements IndexSynchronizer {
 				createIndexRequestBuilder.get();
 
 			LogUtil.logActionResponse(_log, createIndexResponse);
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Index created: " + createIndexResponse.index());
+			}
 		}
 		catch (ResourceAlreadyExistsException raee) {
 			if (_log.isDebugEnabled()) {

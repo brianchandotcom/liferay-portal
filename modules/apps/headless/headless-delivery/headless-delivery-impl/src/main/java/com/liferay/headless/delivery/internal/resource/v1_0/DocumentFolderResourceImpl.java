@@ -17,10 +17,13 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.DocumentFolderDTOConverter;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.DocumentFolderEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -30,6 +33,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -83,8 +87,16 @@ public class DocumentFolderResourceImpl
 	}
 
 	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
-		return _entityModel;
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			DLFolder.class.getName());
+
+		return new DocumentFolderEntityModel(
+			EntityFieldsUtil.getEntityFields(
+				classNameId, contextCompany.getCompanyId(),
+				_expandoColumnLocalService, _expandoTableLocalService));
 	}
 
 	@Override
@@ -222,13 +234,19 @@ public class DocumentFolderResourceImpl
 					0, contextAcceptLanguage.getPreferredLocale(), null)));
 	}
 
-	private static final EntityModel _entityModel =
-		new DocumentFolderEntityModel();
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private DLAppService _dlAppService;
 
 	@Reference
 	private DocumentFolderDTOConverter _documentFolderDTOConverter;
+
+	@Reference
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Reference
+	private ExpandoTableLocalService _expandoTableLocalService;
 
 }

@@ -17,6 +17,8 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.resource.SPIRatingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
@@ -25,6 +27,7 @@ import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.BlogPostingDTOConverter;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.BlogPostingEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
@@ -33,6 +36,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -96,8 +100,16 @@ public class BlogPostingResourceImpl
 	}
 
 	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
-		return _entityModel;
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			BlogsEntry.class.getName());
+
+		return new BlogPostingEntityModel(
+			EntityFieldsUtil.getEntityFields(
+				classNameId, contextCompany.getCompanyId(),
+				_expandoColumnLocalService, _expandoTableLocalService));
 	}
 
 	@Override
@@ -284,9 +296,6 @@ public class BlogPostingResourceImpl
 				blogsEntry.getEntryId()));
 	}
 
-	private static final EntityModel _entityModel =
-		new BlogPostingEntityModel();
-
 	@Reference
 	private BlogPostingDTOConverter _blogPostingDTOConverter;
 
@@ -294,7 +303,16 @@ public class BlogPostingResourceImpl
 	private BlogsEntryService _blogsEntryService;
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Reference
+	private ExpandoTableLocalService _expandoTableLocalService;
 
 	@Reference
 	private Portal _portal;

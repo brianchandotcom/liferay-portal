@@ -20,12 +20,15 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.resource.SPIRatingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.Document;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.DocumentDTOConverter;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.DocumentEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
@@ -40,6 +43,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -121,8 +125,16 @@ public class DocumentResourceImpl
 	}
 
 	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
-		return _entityModel;
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			DLFileEntry.class.getName());
+
+		return new DocumentEntityModel(
+			EntityFieldsUtil.getEntityFields(
+				classNameId, contextCompany.getCompanyId(),
+				_expandoColumnLocalService, _expandoTableLocalService));
 	}
 
 	@Override
@@ -414,8 +426,6 @@ public class DocumentResourceImpl
 			new DefaultDTOConverterContext(null, fileEntry.getFileEntryId()));
 	}
 
-	private static final EntityModel _entityModel = new DocumentEntityModel();
-
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
@@ -423,10 +433,19 @@ public class DocumentResourceImpl
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private DLAppService _dlAppService;
 
 	@Reference
 	private DocumentDTOConverter _documentDTOConverter;
+
+	@Reference
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Reference
+	private ExpandoTableLocalService _expandoTableLocalService;
 
 	@Reference
 	private Portal _portal;

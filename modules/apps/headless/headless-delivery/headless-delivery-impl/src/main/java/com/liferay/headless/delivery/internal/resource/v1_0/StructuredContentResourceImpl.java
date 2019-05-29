@@ -32,6 +32,8 @@ import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.resource.SPIRatingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.ContentField;
@@ -41,6 +43,7 @@ import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterConte
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.StructuredContentDTOConverter;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.DDMFormValuesUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.DDMValueUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.EntityFieldsProvider;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.StructuredContentEntityModel;
@@ -68,6 +71,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -184,7 +188,14 @@ public class StructuredContentResourceImpl
 			entityFields = Collections.emptyList();
 		}
 
-		return new StructuredContentEntityModel(entityFields);
+		long classNameId = _classNameLocalService.getClassNameId(
+			JournalArticle.class.getName());
+
+		return new StructuredContentEntityModel(
+			entityFields,
+			EntityFieldsUtil.getEntityFields(
+				classNameId, contextCompany.getCompanyId(),
+				_expandoColumnLocalService, _expandoTableLocalService));
 	}
 
 	@Override
@@ -842,6 +853,9 @@ public class StructuredContentResourceImpl
 	}
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private DDM _ddm;
 
 	@Reference
@@ -861,6 +875,12 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private EntityFieldsProvider _entityFieldsProvider;
+
+	@Reference
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Reference
+	private ExpandoTableLocalService _expandoTableLocalService;
 
 	@Context
 	private HttpServletRequest _httpServletRequest;

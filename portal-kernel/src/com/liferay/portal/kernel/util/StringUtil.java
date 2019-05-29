@@ -1773,7 +1773,9 @@ public class StringUtil {
 			sb.append(delimiter);
 		}
 
-		sb.setIndex(sb.index() - 1);
+		if (!delimiter.isEmpty()) {
+			sb.setIndex(sb.index() - 1);
+		}
 
 		return sb.toString();
 	}

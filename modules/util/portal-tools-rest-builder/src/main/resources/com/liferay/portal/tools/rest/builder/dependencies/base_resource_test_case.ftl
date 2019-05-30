@@ -760,6 +760,39 @@ public abstract class Base${schemaName}ResourceTestCase {
 					}
 				</#if>
 
+				@Test
+				public void test${javaMethodSignature.methodName?cap_first}Empty() throws Exception {
+					Page<${schemaName}> page = ${schemaName}Resource.${javaMethodSignature.methodName}(
+
+					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+						<#if !javaMethodParameter?is_first>
+							,
+						</#if>
+
+						<#if stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
+							Pagination.of(1, 2)
+						<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+							test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
+						<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
+							RandomTestUtil.randomString()
+						<#elseif stringUtil.equals(javaMethodParameter.parameterType, "boolean")>
+							RandomTestUtil.randomBoolean();
+						<#elseif stringUtil.equals(javaMethodParameter.parameterType, "double")>
+							RandomTestUtil.randomDouble();
+						<#elseif stringUtil.equals(javaMethodParameter.parameterType, "long")>
+							RandomTestUtil.randomLong();
+						<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.util.Date")>
+							RandomTestUtil.nextDate();
+						<#else>
+							null
+						</#if>
+					</#list>
+
+					);
+
+					Assert.assertEquals(0, page.getTotalCount());
+				}
+
 				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
 						<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
 							${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName},

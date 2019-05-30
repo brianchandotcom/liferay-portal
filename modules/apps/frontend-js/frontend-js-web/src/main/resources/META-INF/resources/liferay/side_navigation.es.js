@@ -858,20 +858,19 @@
 		}
 	};
 
-	function initialize(toggler, options) {
-		let data = INSTANCE_MAP.get(toggler);
 
-		if (!data) {
-			if (!options) {
-				options = {};
-			}
 
-			data = new SideNavigation(toggler, options);
 
-			INSTANCE_MAP.set(toggler, data);
+	function initialize(toggler, options = {}) {
+		let instance = INSTANCE_MAP.get(toggler);
+
+		if (!instance) {
+			instance = new SideNavigation(toggler, options);
+
+			INSTANCE_MAP.set(toggler, instance);
 		}
 
-		return data;
+		return instance;
 	};
 
 	function Plugin(options) {

@@ -1,3 +1,6 @@
 Bundle-Name: Liferay Change Tracking Headless API
 Bundle-SymbolicName: com.liferay.change.tracking.headless.api
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.change.tracking.headless.dto.v1_0,\
+	com.liferay.change.tracking.headless.resource.v1_0

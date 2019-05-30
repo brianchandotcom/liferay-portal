@@ -174,12 +174,11 @@ public class SharedAssetsViewMVCRenderCommand implements MVCRenderCommand {
 		_serviceTrackerList.forEach(sharedAssetsFilterItems::add);
 
 		return new SharedAssetsViewDisplayContext(
-			liferayPortletRequest, liferayPortletResponse,
-			sharedAssetsFilterItems,
+			_groupLocalService, liferayPortletRequest, liferayPortletResponse,
+			sharedAssetsFilterItems, _sharingConfigurationFactory,
 			_sharingEntryInterpreterProvider::getSharingEntryInterpreter,
 			_sharingEntryLocalService, _sharingEntryMenuItemContributorRegistry,
-			_sharingMenuItemFactory, _sharingPermission,
-			_sharingConfigurationFactory, _groupLocalService);
+			_sharingMenuItemFactory, _sharingPermission);
 	}
 
 	private SharingEntry _getSharingEntry(

@@ -73,30 +73,30 @@ import javax.servlet.http.HttpServletRequest;
 public class SharedAssetsViewDisplayContext {
 
 	public SharedAssetsViewDisplayContext(
+		GroupLocalService groupLocalService,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		List<SharedAssetsFilterItem> sharedAssetsFilterItems,
+		SharingConfigurationFactory sharingConfigurationFactory,
 		Function<SharingEntry, SharingEntryInterpreter>
 			sharingEntryInterpreterFunction,
 		SharingEntryLocalService sharingEntryLocalService,
 		SharingEntryMenuItemContributorRegistry
 			sharingEntryMenuItemContributorRegistry,
 		SharingMenuItemFactory sharingMenuItemFactory,
-		SharingPermission sharingPermission,
-		SharingConfigurationFactory sharingConfigurationFactory,
-		GroupLocalService groupLocalService) {
+		SharingPermission sharingPermission) {
 
+		_groupLocalService = groupLocalService;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_sharedAssetsFilterItems = sharedAssetsFilterItems;
+		_sharingConfigurationFactory = sharingConfigurationFactory;
 		_sharingEntryInterpreterFunction = sharingEntryInterpreterFunction;
 		_sharingEntryLocalService = sharingEntryLocalService;
 		_sharingEntryMenuItemContributorRegistry =
 			sharingEntryMenuItemContributorRegistry;
 		_sharingMenuItemFactory = sharingMenuItemFactory;
 		_sharingPermission = sharingPermission;
-		_sharingConfigurationFactory = sharingConfigurationFactory;
-		_groupLocalService = groupLocalService;
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);

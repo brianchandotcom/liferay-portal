@@ -320,19 +320,11 @@ public class FragmentEntryServiceTest {
 
 	@Test
 	public void testDeleteFragmentEntries() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+		FragmentEntry fragmentEntry1 = FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId());
 
-		FragmentEntry fragmentEntry1 = _fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString(), WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
-
-		FragmentEntry fragmentEntry2 = _fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString(), WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+		FragmentEntry fragmentEntry2 = FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId());
 
 		long[] fragmentEntryIds = {
 			fragmentEntry1.getFragmentEntryId(),
@@ -352,14 +344,8 @@ public class FragmentEntryServiceTest {
 
 	@Test
 	public void testDeleteFragmentEntry() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString(), WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId());
 
 		_fragmentEntryService.deleteFragmentEntry(
 			fragmentEntry.getFragmentEntryId());
@@ -371,24 +357,16 @@ public class FragmentEntryServiceTest {
 
 	@Test
 	public void testGetFragmentCollectionsCount() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		int originalFragmentCollectionsCount =
 			_fragmentEntryService.getFragmentCollectionsCount(
 				_group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId());
 
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry 1", WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+		FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId());
 
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry 2", WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+		FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId());
 
 		int actualFragmentCollectionsCount =
 			_fragmentEntryService.getFragmentCollectionsCount(
@@ -402,25 +380,19 @@ public class FragmentEntryServiceTest {
 
 	@Test
 	public void testGetFragmentCollectionsCountByKeyword() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		int originalFragmentCollectionsCount =
 			_fragmentEntryService.getFragmentCollectionsCount(
 				_group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(),
 				"Fragment Entry");
 
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry One", WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+		FragmentEntryTestUtil.addFragmentEntryByType(
+			_fragmentCollection.getFragmentCollectionId(), "Fragment Entry One",
+			WorkflowConstants.STATUS_APPROVED);
 
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry Two", WorkflowConstants.STATUS_DENIED,
-			serviceContext);
+		FragmentEntryTestUtil.addFragmentEntryByType(
+			_fragmentCollection.getFragmentCollectionId(), "Fragment Entry Two",
+			WorkflowConstants.STATUS_DENIED);
 
 		int actualFragmentCollectionsCount =
 			_fragmentEntryService.getFragmentCollectionsCount(
@@ -437,25 +409,19 @@ public class FragmentEntryServiceTest {
 	public void testGetFragmentCollectionsCountByKeywordAndStatus()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		int originalFragmentCollectionsCount =
 			_fragmentEntryService.getFragmentCollectionsCount(
 				_group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), "Fragment Entry",
 				WorkflowConstants.STATUS_APPROVED);
 
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry One", WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+		FragmentEntryTestUtil.addFragmentEntryByStatus(
+			_fragmentCollection.getFragmentCollectionId(), "Fragment Entry One",
+			WorkflowConstants.STATUS_APPROVED);
 
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry Two", WorkflowConstants.STATUS_DENIED,
-			serviceContext);
+		FragmentEntryTestUtil.addFragmentEntryByStatus(
+			_fragmentCollection.getFragmentCollectionId(), "Fragment Entry Two",
+			WorkflowConstants.STATUS_DENIED);
 
 		int actualFragmentCollectionsCount =
 			_fragmentEntryService.getFragmentCollectionsCount(
@@ -470,10 +436,6 @@ public class FragmentEntryServiceTest {
 
 	@Test
 	public void testGetFragmentCollectionsCountByStatus() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		int originalApprovedFragmentEntryCount =
 			_fragmentEntryService.getFragmentCollectionsCount(
 				_group.getGroupId(),
@@ -486,20 +448,17 @@ public class FragmentEntryServiceTest {
 				_fragmentCollection.getFragmentCollectionId(),
 				WorkflowConstants.STATUS_DRAFT);
 
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString(), WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+		FragmentEntryTestUtil.addFragmentEntryByStatus(
+			_fragmentCollection.getFragmentCollectionId(),
+			WorkflowConstants.STATUS_APPROVED);
 
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString(), WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+		FragmentEntryTestUtil.addFragmentEntryByStatus(
+			_fragmentCollection.getFragmentCollectionId(),
+			WorkflowConstants.STATUS_APPROVED);
 
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString(), WorkflowConstants.STATUS_DRAFT,
-			serviceContext);
+		FragmentEntryTestUtil.addFragmentEntryByStatus(
+			_fragmentCollection.getFragmentCollectionId(),
+			WorkflowConstants.STATUS_DRAFT);
 
 		List<FragmentEntry> approvedFragmentEntries =
 			_fragmentEntryService.getFragmentEntries(
@@ -525,27 +484,19 @@ public class FragmentEntryServiceTest {
 
 	@Test
 	public void testGetFragmentCollectionsCountByType() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		int originalFragmentCollectionsCount =
 			_fragmentEntryService.getFragmentCollectionsCountByType(
 				_group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(),
 				FragmentConstants.TYPE_COMPONENT);
 
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			"FRAGMENTENTRYKEYONE", "Fragment Entry One",
-			FragmentConstants.TYPE_COMPONENT, WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+		FragmentEntryTestUtil.addFragmentEntryByType(
+			_fragmentCollection.getFragmentCollectionId(),
+			FragmentConstants.TYPE_COMPONENT);
 
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			"FRAGMENTENTRYKEYTWO", "Fragment Entry Two",
-			FragmentConstants.TYPE_SECTION, WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+		FragmentEntryTestUtil.addFragmentEntryByType(
+			_fragmentCollection.getFragmentCollectionId(),
+			FragmentConstants.TYPE_SECTION);
 
 		int actualFragmentCollectionsCount =
 			_fragmentEntryService.getFragmentCollectionsCountByType(
@@ -564,25 +515,29 @@ public class FragmentEntryServiceTest {
 
 		LocalDateTime localDateTime = LocalDateTime.now();
 
-		FragmentEntryTestUtil.addFragmentEntry(
+		FragmentEntryTestUtil.addFragmentEntryByStatus(
 			_fragmentCollection.getFragmentCollectionId(), "AD Fragment",
 			WorkflowConstants.STATUS_DRAFT, Timestamp.valueOf(localDateTime));
 
-		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
-			_fragmentCollection.getFragmentCollectionId(), "AC Fragment Entry",
-			WorkflowConstants.STATUS_ANY, Timestamp.valueOf(localDateTime));
+		FragmentEntry fragmentEntry =
+			FragmentEntryTestUtil.addFragmentEntryByStatus(
+				_fragmentCollection.getFragmentCollectionId(),
+				"AC Fragment Entry", WorkflowConstants.STATUS_APPROVED,
+				Timestamp.valueOf(localDateTime));
 
 		localDateTime = localDateTime.plus(1, ChronoUnit.SECONDS);
 
-		FragmentEntryTestUtil.addFragmentEntry(
+		FragmentEntryTestUtil.addFragmentEntryByStatus(
 			_fragmentCollection.getFragmentCollectionId(), "AA Fragment",
-			WorkflowConstants.STATUS_ANY, Timestamp.valueOf(localDateTime));
+			WorkflowConstants.STATUS_APPROVED,
+			Timestamp.valueOf(localDateTime));
 
 		localDateTime = localDateTime.plus(1, ChronoUnit.SECONDS);
 
-		FragmentEntryTestUtil.addFragmentEntry(
+		FragmentEntryTestUtil.addFragmentEntryByStatus(
 			_fragmentCollection.getFragmentCollectionId(), "AB Fragment Entry",
-			WorkflowConstants.STATUS_ANY, Timestamp.valueOf(localDateTime));
+			WorkflowConstants.STATUS_APPROVED,
+			Timestamp.valueOf(localDateTime));
 
 		FragmentEntryCreateDateComparator fragmentEntryCreateDateComparatorAsc =
 			new FragmentEntryCreateDateComparator(true);
@@ -735,23 +690,14 @@ public class FragmentEntryServiceTest {
 	public void testGetFragmentEntriesByKeywordOrderByNameComparator()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId(), "AB Fragment Entry");
 
-		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			"AB Fragment Entry", WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+		FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId(), "AA Fragment");
 
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			"AA Fragment", WorkflowConstants.STATUS_APPROVED, serviceContext);
-
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			"AC Fragment Entry", WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+		FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId(), "AC Fragment Entry");
 
 		FragmentEntryNameComparator fragmentEntryNameComparatorAsc =
 			new FragmentEntryNameComparator(true);
@@ -789,22 +735,28 @@ public class FragmentEntryServiceTest {
 	public void testGetFragmentEntriesByStatusOrderByCreateDateComparator()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		LocalDateTime localDateTime = LocalDateTime.now();
 
-		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			"AB Fragment Entry", WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+		FragmentEntryTestUtil.addFragmentEntryByStatus(
+			_fragmentCollection.getFragmentCollectionId(), "AC Fragment Entry",
+			WorkflowConstants.STATUS_DRAFT, Timestamp.valueOf(localDateTime));
 
 		localDateTime = localDateTime.plus(1, ChronoUnit.SECONDS);
 
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			"AA Fragment", WorkflowConstants.STATUS_APPROVED, serviceContext);
+		FragmentEntry fragmentEntry =
+			FragmentEntryTestUtil.addFragmentEntryByStatus(
+				_fragmentCollection.getFragmentCollectionId(),
+				"AB Fragment Entry", WorkflowConstants.STATUS_APPROVED,
+				Timestamp.valueOf(localDateTime));
+
+		localDateTime = localDateTime.plus(1, ChronoUnit.SECONDS);
+
+		FragmentEntryTestUtil.addFragmentEntryByStatus(
+			_fragmentCollection.getFragmentCollectionId(), "AA Fragment Entry",
+			WorkflowConstants.STATUS_APPROVED,
+			Timestamp.valueOf(localDateTime));
+
+		localDateTime = localDateTime.plus(1, ChronoUnit.SECONDS);
 
 		FragmentEntryCreateDateComparator fragmentEntryCreateDateComparatorAsc =
 			new FragmentEntryCreateDateComparator(true);
@@ -813,8 +765,8 @@ public class FragmentEntryServiceTest {
 			_fragmentEntryService.getFragmentEntries(
 				_group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				fragmentEntryCreateDateComparatorAsc);
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, fragmentEntryCreateDateComparatorAsc);
 
 		FragmentEntry firstFragmentEntry = fragmentEntries.get(0);
 
@@ -828,8 +780,8 @@ public class FragmentEntryServiceTest {
 
 		fragmentEntries = _fragmentEntryService.getFragmentEntries(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			fragmentEntryCreateDateComparatorDesc);
+			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, fragmentEntryCreateDateComparatorDesc);
 
 		FragmentEntry lastFragmentEntry = fragmentEntries.get(
 			fragmentEntries.size() - 1);
@@ -843,23 +795,18 @@ public class FragmentEntryServiceTest {
 	public void testGetFragmentEntriesByStatusOrderByNameComparator()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+		FragmentEntryTestUtil.addFragmentEntryByStatus(
+			_fragmentCollection.getFragmentCollectionId(), "AC Fragment Entry",
+			WorkflowConstants.STATUS_DRAFT);
 
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			"AC Fragment Entry", WorkflowConstants.STATUS_DRAFT,
-			serviceContext);
+		FragmentEntry fragmentEntry =
+			FragmentEntryTestUtil.addFragmentEntryByStatus(
+				_fragmentCollection.getFragmentCollectionId(),
+				"AB Fragment Entry", WorkflowConstants.STATUS_APPROVED);
 
-		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			"AB Fragment Entry", WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
-
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			"AA Fragment", WorkflowConstants.STATUS_APPROVED, serviceContext);
+		FragmentEntryTestUtil.addFragmentEntryByStatus(
+			_fragmentCollection.getFragmentCollectionId(), "AA Fragment",
+			WorkflowConstants.STATUS_APPROVED);
 
 		FragmentEntryNameComparator fragmentEntryNameComparatorAsc =
 			new FragmentEntryNameComparator(true);
@@ -938,18 +885,21 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntryTestUtil.addFragmentEntryByType(
 			_fragmentCollection.getFragmentCollectionId(), "AC Fragment Entry",
-			FragmentConstants.TYPE_SECTION);
+			FragmentConstants.TYPE_SECTION, Timestamp.valueOf(localDateTime));
+
+		localDateTime = localDateTime.plus(1, ChronoUnit.SECONDS);
 
 		FragmentEntry fragmentEntry =
 			FragmentEntryTestUtil.addFragmentEntryByType(
 				_fragmentCollection.getFragmentCollectionId(),
-				"AB Fragment Entry", FragmentConstants.TYPE_COMPONENT);
+				"AB Fragment Entry", FragmentConstants.TYPE_COMPONENT,
+				Timestamp.valueOf(localDateTime));
 
 		localDateTime = localDateTime.plus(1, ChronoUnit.SECONDS);
 
 		FragmentEntryTestUtil.addFragmentEntryByType(
 			_fragmentCollection.getFragmentCollectionId(), "AA Fragment Entry",
-			FragmentConstants.TYPE_COMPONENT);
+			FragmentConstants.TYPE_COMPONENT, Timestamp.valueOf(localDateTime));
 
 		FragmentEntryCreateDateComparator fragmentEntryCreateDateComparatorAsc =
 			new FragmentEntryCreateDateComparator(true);
@@ -1037,29 +987,17 @@ public class FragmentEntryServiceTest {
 	public void testGetFragmentEntriesOrderByCreateDateComparator()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		LocalDateTime localDateTime = LocalDateTime.now();
 
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			"AC Fragment Entry", WorkflowConstants.STATUS_DRAFT,
-			serviceContext);
+		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId(), "AB Fragment Entry",
+			Timestamp.valueOf(localDateTime));
 
 		localDateTime = localDateTime.plus(1, ChronoUnit.SECONDS);
 
-		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			"AB Fragment Entry", WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
-
-		localDateTime = localDateTime.plus(1, ChronoUnit.SECONDS);
-
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			"AA Fragment", WorkflowConstants.STATUS_APPROVED, serviceContext);
+		FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId(), "AA Fragment Entry",
+			Timestamp.valueOf(localDateTime));
 
 		FragmentEntryCreateDateComparator fragmentEntryCreateDateComparatorAsc =
 			new FragmentEntryCreateDateComparator(true);
@@ -1068,8 +1006,8 @@ public class FragmentEntryServiceTest {
 			_fragmentEntryService.getFragmentEntries(
 				_group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(),
-				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, fragmentEntryCreateDateComparatorAsc);
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				fragmentEntryCreateDateComparatorAsc);
 
 		FragmentEntry firstFragmentEntry = fragmentEntries.get(0);
 
@@ -1083,8 +1021,8 @@ public class FragmentEntryServiceTest {
 
 		fragmentEntries = _fragmentEntryService.getFragmentEntries(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, fragmentEntryCreateDateComparatorDesc);
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			fragmentEntryCreateDateComparatorDesc);
 
 		FragmentEntry lastFragmentEntry = fragmentEntries.get(
 			fragmentEntries.size() - 1);
@@ -1096,18 +1034,11 @@ public class FragmentEntryServiceTest {
 
 	@Test
 	public void testGetFragmentEntriesOrderByNameComparator() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId(), "AB Fragment Entry");
 
-		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			"AB Fragment Entry", WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
-
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			"AA Fragment", WorkflowConstants.STATUS_APPROVED, serviceContext);
+		FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId(), "AA Fragment Entry");
 
 		FragmentEntryNameComparator fragmentEntryNameComparatorAsc =
 			new FragmentEntryNameComparator(true);
@@ -1143,14 +1074,8 @@ public class FragmentEntryServiceTest {
 
 	@Test
 	public void testMoveFragmentEntry() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId());
 
 		FragmentCollection targetFragmentCollection =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
@@ -1170,14 +1095,9 @@ public class FragmentEntryServiceTest {
 
 	@Test
 	public void testUpdateFragmentEntry() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			"Fragment Name Original", WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId(),
+			"Fragment Name Original");
 
 		fragmentEntry = _fragmentEntryService.updateFragmentEntry(
 			fragmentEntry.getFragmentEntryId(), "Fragment Name Updated");

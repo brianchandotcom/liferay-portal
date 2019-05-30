@@ -36,6 +36,14 @@ public class FragmentEntryTestUtil {
 	public static FragmentEntry addFragmentEntry(long fragmentCollectionId)
 		throws PortalException {
 
+		return addFragmentEntry(
+			fragmentCollectionId, RandomTestUtil.randomString());
+	}
+
+	public static FragmentEntry addFragmentEntry(
+			long fragmentCollectionId, String name)
+		throws PortalException {
+
 		FragmentCollection fragmentCollection =
 			FragmentCollectionLocalServiceUtil.getFragmentCollection(
 				fragmentCollectionId);
@@ -46,9 +54,8 @@ public class FragmentEntryTestUtil {
 
 		return FragmentEntryLocalServiceUtil.addFragmentEntry(
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			fragmentCollectionId, StringPool.BLANK,
-			RandomTestUtil.randomString(), StringPool.BLANK, "<div></div>",
-			StringPool.BLANK, WorkflowConstants.STATUS_APPROVED,
+			fragmentCollectionId, StringPool.BLANK, name, StringPool.BLANK,
+			"<div></div>", StringPool.BLANK, WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
 	}
 
@@ -74,7 +81,33 @@ public class FragmentEntryTestUtil {
 			serviceContext);
 	}
 
-	public static FragmentEntry addFragmentEntry(
+	public static FragmentEntry addFragmentEntryByStatus(
+			long fragmentCollectionId, int status)
+		throws PortalException {
+
+		return addFragmentEntryByStatus(
+			fragmentCollectionId, RandomTestUtil.randomString(), status);
+	}
+
+	public static FragmentEntry addFragmentEntryByStatus(
+			long fragmentCollectionId, String name, int status)
+		throws PortalException {
+
+		FragmentCollection fragmentCollection =
+			FragmentCollectionLocalServiceUtil.getFragmentCollection(
+				fragmentCollectionId);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				fragmentCollection.getGroupId());
+
+		return FragmentEntryLocalServiceUtil.addFragmentEntry(
+			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			fragmentCollectionId, StringPool.BLANK, name, StringPool.BLANK,
+			"<div></div>", StringPool.BLANK, status, serviceContext);
+	}
+
+	public static FragmentEntry addFragmentEntryByStatus(
 			long fragmentCollectionId, String name, int status, Date createDate)
 		throws PortalException {
 
@@ -93,6 +126,14 @@ public class FragmentEntryTestUtil {
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			fragmentCollectionId, StringPool.BLANK, name, StringPool.BLANK,
 			"<div></div>", StringPool.BLANK, status, serviceContext);
+	}
+
+	public static FragmentEntry addFragmentEntryByType(
+			long fragmentCollectionId, int type)
+		throws PortalException {
+
+		return addFragmentEntryByType(
+			fragmentCollectionId, RandomTestUtil.randomString(), type);
 	}
 
 	public static FragmentEntry addFragmentEntryByType(

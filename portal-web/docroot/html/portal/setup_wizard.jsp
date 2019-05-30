@@ -347,7 +347,7 @@
 						A.one('#fm').on(
 							'submit',
 							function(event) {
-								if ((adminEmailAddress && (adminEmailAddress.val() != '')) && (adminFirstName && (adminFirstName.val() != '')) && (adminLastName && (adminLastName.val() != '')) && (companyName && (companyName.val() != ''))) {
+								if ((adminEmailAddress && (adminEmailAddress.val() != '')) && (adminFirstName && (adminFirstName.val() != '')) && (adminLastName && (adminLastName.val() != '')) && (companyName && (companyName.val() != '')) && (jdbcDefaultDriverClassName && (jdbcDefaultDriverClassName.val() != '')) && (jdbcDefaultURL && (jdbcDefaultURL.val() != ''))) {
 									if (defaultDatabase.val() == 'true') {
 										startInstall();
 

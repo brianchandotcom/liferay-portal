@@ -31,7 +31,8 @@ public class UpgradeLayoutTemplateId extends UpgradeProcess {
 		String sql = StringBundler.concat(
 			"update Layout set typeSettings = REPLACE(typeSettings, ",
 			"'layout-template-id=1_2_1_columns', ",
-			"'layout-template-id=1_2_1_columns_ii')");
+			"'layout-template-id=1_2_1_columns_ii') where typesettings like ",
+			"'%layout-template-id=1_2_1_columns%'");
 
 		runSQL(sql);
 	}

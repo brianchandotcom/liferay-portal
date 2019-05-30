@@ -77,7 +77,7 @@ public class CSSSelectorsOrderCheck extends BaseFileCheck {
 					continue;
 				}
 
-				sb.append(line.replaceFirst("^([\t ]+).+", "$1"));
+				sb.append(line.replaceFirst("^([\t ]*).+", "$1"));
 
 				sb.append(ListUtil.toString(selecters, StringPool.BLANK, ", "));
 				sb.append(" {");

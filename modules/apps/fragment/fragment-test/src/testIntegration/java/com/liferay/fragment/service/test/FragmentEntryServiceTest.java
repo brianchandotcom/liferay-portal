@@ -90,8 +90,32 @@ public class FragmentEntryServiceTest {
 		Assert.assertEquals("Fragment Entry", fragmentEntry.getName());
 	}
 
+	@Test(expected = FragmentEntryContentException.class)
+	public void testAddFragmentEntryUsingEmptyHTML() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		_fragmentEntryService.addFragmentEntry(
+			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString(), null, null, null,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+	}
+
+	@Test(expected = FragmentEntryNameException.class)
+	public void testAddFragmentEntryUsingEmptyName() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		_fragmentEntryService.addFragmentEntry(
+			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
+			StringPool.BLANK, WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
+	}
+
 	@Test
-	public void testAddFragmentEntryByFragmentEntryKeyAndStatus()
+	public void testAddFragmentEntryWithFragmentEntryKey()
 		throws PortalException {
 
 		ServiceContext serviceContext =
@@ -110,7 +134,7 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testAddFragmentEntryByFragmentEntryKeyAndType()
+	public void testAddFragmentEntryWithFragmentEntryKeyAndType()
 		throws PortalException {
 
 		ServiceContext serviceContext =
@@ -129,8 +153,43 @@ public class FragmentEntryServiceTest {
 			FragmentConstants.TYPE_COMPONENT, fragmentEntry.getType());
 	}
 
+	@Test(expected = FragmentEntryContentException.class)
+	public void testAddFragmentEntryUsingInvalidHTML() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		_fragmentEntryService.addFragmentEntry(
+			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString(), null, "<div id=\"divId></div>", null,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+	}
+
+	@Test(expected = FragmentEntryNameException.class)
+	public void testAddFragmentEntryUsingNullName() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		_fragmentEntryService.addFragmentEntry(
+			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
+			null, WorkflowConstants.STATUS_APPROVED, serviceContext);
+	}
+
 	@Test
-	public void testAddFragmentEntryByType() throws PortalException {
+	public void testAddFragmentEntryUsingPlainTextHTML() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		_fragmentEntryService.addFragmentEntry(
+			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString(), null, "Text only fragment", null,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+	}
+
+	@Test
+	public void testAddFragmentEntryWithType() throws PortalException {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
@@ -145,7 +204,20 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testAddFragmentEntryByTypeAndValidHTML()
+	public void testAddFragmentEntryWithTypeUsingMixedHTML() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		_fragmentEntryService.addFragmentEntry(
+			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString(), null,
+			"<div>Text Inside</div> Text Outside", null,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+	}
+
+	@Test
+	public void testAddFragmentEntryWithTypeAndHTML()
 		throws PortalException {
 
 		ServiceContext serviceContext =
@@ -165,80 +237,8 @@ public class FragmentEntryServiceTest {
 			FragmentConstants.TYPE_COMPONENT, fragmentEntry.getType());
 	}
 
-	@Test(expected = FragmentEntryContentException.class)
-	public void testAddFragmentEntryWithEmptyHTML() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString(), null, null, null,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
-	}
-
-	@Test(expected = FragmentEntryNameException.class)
-	public void testAddFragmentEntryWithEmptyName() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			StringPool.BLANK, WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
-	}
-
-	@Test(expected = FragmentEntryContentException.class)
-	public void testAddFragmentEntryWithInvalidHTML() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString(), null, "<div id=\"divId></div>", null,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
-	}
-
 	@Test
-	public void testAddFragmentEntryWithMixedHTML() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString(), null,
-			"<div>Text Inside</div> Text Outside", null,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
-	}
-
-	@Test(expected = FragmentEntryNameException.class)
-	public void testAddFragmentEntryWithNullName() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			null, WorkflowConstants.STATUS_APPROVED, serviceContext);
-	}
-
-	@Test
-	public void testAddFragmentEntryWithoutHTML() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		_fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString(), null, "Text only fragment", null,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
-	}
-
-	@Test
-	public void testAddMultipleFragmentEntries() throws PortalException {
+	public void testAddFragmentEntries() throws PortalException {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
@@ -379,7 +379,7 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testGetFragmentCollectionsCountByKeyword() throws Exception {
+	public void testGetFragmentCollectionsCountWithKeyword() throws Exception {
 		int originalFragmentCollectionsCount =
 			_fragmentEntryService.getFragmentCollectionsCount(
 				_group.getGroupId(),
@@ -406,7 +406,7 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testGetFragmentCollectionsCountByKeywordAndStatus()
+	public void testGetFragmentCollectionsCountWithKeywordAndStatus()
 		throws Exception {
 
 		int originalFragmentCollectionsCount =
@@ -435,7 +435,7 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testGetFragmentCollectionsCountByStatus() throws Exception {
+	public void testGetFragmentCollectionsCountWithStatus() throws Exception {
 		int originalApprovedFragmentEntryCount =
 			_fragmentEntryService.getFragmentCollectionsCount(
 				_group.getGroupId(),
@@ -483,7 +483,7 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testGetFragmentCollectionsCountByType() throws Exception {
+	public void testGetFragmentCollectionsCountWithType() throws Exception {
 		int originalFragmentCollectionsCount =
 			_fragmentEntryService.getFragmentCollectionsCountByType(
 				_group.getGroupId(),
@@ -510,7 +510,7 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testGetFragmentEntriesByKeywordAndStatusOrderByCreateDateComparator()
+	public void testGetFragmentEntriesWithKeywordAndStatusOrderByCreateDateComparator()
 		throws Exception {
 
 		LocalDateTime localDateTime = LocalDateTime.now();
@@ -573,7 +573,7 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testGetFragmentEntriesByKeywordAndStatusOrderByNameComparator()
+	public void testGetFragmentEntriesWithKeywordAndStatusOrderByNameComparator()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -632,7 +632,7 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testGetFragmentEntriesByKeywordOrderByCreateDateComparator()
+	public void testGetFragmentEntriesWithKeywordOrderByCreateDateComparator()
 		throws Exception {
 
 		LocalDateTime localDateTime = LocalDateTime.now();
@@ -687,7 +687,7 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testGetFragmentEntriesByKeywordOrderByNameComparator()
+	public void testGetFragmentEntriesWithKeywordOrderByNameComparator()
 		throws Exception {
 
 		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
@@ -732,7 +732,7 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testGetFragmentEntriesByStatusOrderByCreateDateComparator()
+	public void testGetFragmentEntriesWithStatusOrderByCreateDateComparator()
 		throws Exception {
 
 		LocalDateTime localDateTime = LocalDateTime.now();
@@ -792,7 +792,7 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testGetFragmentEntriesByStatusOrderByNameComparator()
+	public void testGetFragmentEntriesWithStatusOrderByNameComparator()
 		throws Exception {
 
 		FragmentEntryTestUtil.addFragmentEntryByStatus(
@@ -841,7 +841,7 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testGetFragmentEntriesByType() throws Exception {
+	public void testGetFragmentEntriesWithType() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
@@ -878,7 +878,7 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testGetFragmentEntriesByTypeOrderByCreateDateComparator()
+	public void testGetFragmentEntriesWithTypeOrderByCreateDateComparator()
 		throws Exception {
 
 		LocalDateTime localDateTime = LocalDateTime.now();
@@ -935,7 +935,7 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testGetFragmentEntriesByTypeOrderByNameComparator()
+	public void testGetFragmentEntriesWithTypeOrderByNameComparator()
 		throws Exception {
 
 		FragmentEntryTestUtil.addFragmentEntryByType(
@@ -1106,7 +1106,9 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testUpdateFragmentEntryPreviewFileEntryId() throws Exception {
+	public void testUpdateFragmentEntryValuesAndPreviewFileEntryId()
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());

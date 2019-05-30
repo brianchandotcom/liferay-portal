@@ -59,6 +59,25 @@ public class DefaultLayoutTypeAccessPolicyImpl
 			Portlet portlet)
 		throws PortalException {
 
+		String cacheKey = StringBundler.concat(
+			"ACCESS_ALLOWED_TO_PORTLET_LAYOUT_ID_", layout.getPlid(),
+			"_PORTLET_PRIMARY_KEY_", portlet.getPrimaryKey());
+
+		Boolean allowed = (Boolean)httpServletRequest.getAttribute(cacheKey);
+
+		if (allowed != null) {
+			if (allowed) {
+				return;
+			}
+
+			throw new PrincipalException.MustHavePermission(
+				PortalUtil.getUserId(httpServletRequest),
+				StringBundler.concat(
+					portlet.getDisplayName(), StringPool.SPACE,
+					portlet.getPortletId()),
+				0, ActionKeys.ACCESS);
+		}
+
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
@@ -74,6 +93,8 @@ public class DefaultLayoutTypeAccessPolicyImpl
 			PortletPermissionUtil.hasControlPanelAccessPermission(
 				permissionChecker, themeDisplay.getScopeGroupId(), portlet)) {
 
+			httpServletRequest.setAttribute(cacheKey, Boolean.TRUE);
+
 			return;
 		}
 
@@ -83,9 +104,13 @@ public class DefaultLayoutTypeAccessPolicyImpl
 			PortalUtil.addPortletDefaultResource(httpServletRequest, portlet);
 
 			if (hasAccessPermission(httpServletRequest, layout, portlet)) {
+				httpServletRequest.setAttribute(cacheKey, Boolean.TRUE);
+
 				return;
 			}
 		}
+
+		httpServletRequest.setAttribute(cacheKey, Boolean.FALSE);
 
 		throw new PrincipalException.MustHavePermission(
 			PortalUtil.getUserId(httpServletRequest),

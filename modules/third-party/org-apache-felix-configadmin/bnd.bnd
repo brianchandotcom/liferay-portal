@@ -1,6 +1,7 @@
 Bundle-SymbolicName: org.apache.felix.configadmin
 Bundle-Version: 1.9.8.LIFERAY-PATCHED-3
-Import-Package: \
+Import-Package:\
 	!org.osgi.service.coordinator,\
 	!org.osgi.service.log,\
+	\
 	*

@@ -76,6 +76,10 @@ public class DiffVersionComparatorTag extends ComponentRendererTag {
 
 		diffVersionJSONObject.put("sourceURL", sourceURL.toString());
 
+		if (Validator.isNotNull(_languageId)) {
+			targetURL.setParameter("languageId", _languageId);
+		}
+
 		targetURL.setParameter("targetVersion", diffVersionString);
 
 		diffVersionJSONObject.put("targetURL", targetURL.toString());

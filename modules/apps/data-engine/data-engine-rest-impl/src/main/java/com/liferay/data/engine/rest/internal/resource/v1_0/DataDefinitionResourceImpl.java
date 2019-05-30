@@ -24,17 +24,22 @@ import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollection;
 import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
 import com.liferay.data.engine.rest.internal.constants.DataDefinitionConstants;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataDefinitionUtil;
+import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataLayoutUtil;
+import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataRecordCollectionUtil;
 import com.liferay.data.engine.rest.internal.model.InternalDataDefinition;
+import com.liferay.data.engine.rest.internal.model.InternalDataLayout;
+import com.liferay.data.engine.rest.internal.model.InternalDataRecordCollection;
 import com.liferay.data.engine.rest.internal.resource.v1_0.util.DataEnginePermissionUtil;
 import com.liferay.data.engine.rest.resource.v1_0.DataDefinitionResource;
-import com.liferay.data.engine.rest.resource.v1_0.DataLayoutResource;
-import com.liferay.data.engine.rest.resource.v1_0.DataRecordCollectionResource;
 import com.liferay.data.engine.spi.field.type.util.LocalizedValueUtil;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.exception.RequiredStructureException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
@@ -340,8 +345,26 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 		dataLayout.setDataLayoutPages(new DataLayoutPage[] {dataLayoutPage});
 
-		_dataLayoutResource.postDataDefinitionDataLayout(
-			dataDefinition.getId(), dataLayout);
+		ServiceContext serviceContext = new ServiceContext();
+
+		DDMStructureLayout ddmStructureLayout =
+			_ddmStructureLayoutLocalService.addStructureLayout(
+				PrincipalThreadLocal.getUserId(), dataDefinition.getSiteId(),
+				_getDDMStructureVersionId(dataDefinition.getId()),
+				_getClassNameId(),
+				LocalizedValueUtil.toLocaleStringMap(dataLayout.getName()),
+				LocalizedValueUtil.toLocaleStringMap(
+					dataLayout.getDescription()),
+				DataLayoutUtil.toJSON(dataLayout),
+				dataLayout.getDataLayoutKey(), serviceContext);
+
+		dataLayout.setId(ddmStructureLayout.getStructureLayoutId());
+
+		_resourceLocalService.addModelResources(
+			contextCompany.getCompanyId(), dataDefinition.getSiteId(),
+			PrincipalThreadLocal.getUserId(),
+			InternalDataLayout.class.getName(), dataLayout.getId(),
+			serviceContext.getModelPermissions());
 	}
 
 	private void _addDefaultDataRecordCollection(
@@ -354,22 +377,44 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		dataRecordCollection.setDescription(dataDefinition.getDescription());
 		dataRecordCollection.setName(dataDefinition.getName());
 
-		_dataRecordCollectionResource.postDataDefinitionDataRecordCollection(
-			dataDefinition.getId(), dataRecordCollection);
+		ServiceContext serviceContext = new ServiceContext();
+
+		dataRecordCollection = DataRecordCollectionUtil.toDataRecordCollection(
+			_ddlRecordSetLocalService.addRecordSet(
+				PrincipalThreadLocal.getUserId(), dataDefinition.getSiteId(),
+				dataDefinition.getId(), dataDefinitionKey,
+				LocalizedValueUtil.toLocaleStringMap(
+					dataRecordCollection.getName()),
+				LocalizedValueUtil.toLocaleStringMap(
+					dataRecordCollection.getDescription()),
+				0, DDLRecordSetConstants.SCOPE_DATA_ENGINE, serviceContext));
+
+		_resourceLocalService.addModelResources(
+			contextCompany.getCompanyId(), dataDefinition.getSiteId(),
+			PrincipalThreadLocal.getUserId(),
+			InternalDataRecordCollection.class.getName(),
+			dataRecordCollection.getId(), serviceContext.getModelPermissions());
 	}
 
 	private long _getClassNameId() {
 		return _portal.getClassNameId(InternalDataDefinition.class);
 	}
 
-	@Reference
-	private DataLayoutResource _dataLayoutResource;
+	private long _getDDMStructureVersionId(Long deDataDefinitionId)
+		throws Exception {
 
-	@Reference
-	private DataRecordCollectionResource _dataRecordCollectionResource;
+		DDMStructureVersion ddmStructureVersion =
+			_ddmStructureVersionLocalService.getLatestStructureVersion(
+				deDataDefinitionId);
+
+		return ddmStructureVersion.getStructureVersionId();
+	}
 
 	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+
+	@Reference
+	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

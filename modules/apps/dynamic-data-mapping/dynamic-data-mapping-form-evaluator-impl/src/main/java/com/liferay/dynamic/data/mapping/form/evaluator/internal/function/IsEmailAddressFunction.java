@@ -18,8 +18,9 @@ import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -41,7 +42,7 @@ public class IsEmailAddressFunction
 		).map(
 			String::trim
 		).allMatch(
-			Validator::isEmailAddress
+			IsEmailAddressFunction::_isEmailAddress
 		);
 	}
 
@@ -49,5 +50,19 @@ public class IsEmailAddressFunction
 	public String getName() {
 		return "isEmailAddress";
 	}
+
+	private static boolean _isEmailAddress(String emailAddress) {
+		if (emailAddress == null) {
+			return false;
+		}
+
+		Matcher matcher = _emailAddressPattern.matcher(emailAddress);
+
+		return matcher.matches();
+	}
+
+	private static final Pattern _emailAddressPattern = Pattern.compile(
+		"^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)" +
+			"*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$");
 
 }

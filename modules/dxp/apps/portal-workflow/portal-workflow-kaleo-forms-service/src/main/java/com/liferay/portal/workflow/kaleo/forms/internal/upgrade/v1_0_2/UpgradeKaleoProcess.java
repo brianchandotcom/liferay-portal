@@ -143,14 +143,12 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 			});
 		actionableDynamicQuery.setParallel(true);
 		actionableDynamicQuery.setPerformActionMethod(
-			(DDLRecord ddlRecord) -> {
-				_assetEntryLocalService.updateEntry(
-					userId, groupId, createDate, modifiedDate,
-					KaleoProcess.class.getName(), ddlRecord.getRecordId(), uuid,
-					0, null, null, true, true, null, null, null,
-					ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
-					null, 0, 0, null);
-			});
+			(DDLRecord ddlRecord) -> _assetEntryLocalService.updateEntry(
+				userId, groupId, createDate, modifiedDate,
+				KaleoProcess.class.getName(), ddlRecord.getRecordId(), uuid, 0,
+				null, null, true, true, null, null, null,
+				ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
+				null, 0, 0, null));
 
 		actionableDynamicQuery.performActions();
 	}

@@ -342,7 +342,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 				return workflowMetricsSLAProcessResult;
 			}
 		).forEach(
-			workflowMetricsSLAProcessResult -> {
+			workflowMetricsSLAProcessResult ->
 				_indexWorkflowMetricsSLAProcessResult(
 					_getTaskNames(
 						_createSLATaskResultsSearchRequest(
@@ -351,8 +351,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 							workflowMetricsSLAProcessResult.getProcessId(),
 							workflowMetricsSLAProcessResult.
 								getSLADefinitionId())),
-					workflowMetricsSLAProcessResult);
-			}
+					workflowMetricsSLAProcessResult)
 		);
 	}
 
@@ -375,15 +374,14 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		).map(
 			Optional::get
 		).forEach(
-			workflowMetricsSLAProcessResult -> {
+			workflowMetricsSLAProcessResult ->
 				_indexWorkflowMetricsSLAProcessResult(
 					_getTaskNames(
 						_createTokensSearchRequest(
 							workflowMetricsSLAProcessResult.getCompanyId(),
 							workflowMetricsSLAProcessResult.getInstanceId(),
 							workflowMetricsSLAProcessResult.getProcessId())),
-					workflowMetricsSLAProcessResult);
-			}
+					workflowMetricsSLAProcessResult)
 		);
 	}
 

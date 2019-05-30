@@ -86,13 +86,12 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListener
 				dynamicQuery.add(activeProperty.eq(true));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			(KaleoDefinition kaleoDefinition) -> {
+			(KaleoDefinition kaleoDefinition) ->
 				_workflowMetricsSLADefinitionTransformer.transform(
 					kaleoDefinition.getCompanyId(),
 					StringBundler.concat(
 						kaleoDefinition.getVersion(), CharPool.PERIOD, 0),
-					kaleoDefinition.getKaleoDefinitionId());
-			});
+					kaleoDefinition.getKaleoDefinitionId()));
 
 		actionableDynamicQuery.performActions();
 	}

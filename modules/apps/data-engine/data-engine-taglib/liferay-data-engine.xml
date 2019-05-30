@@ -42,6 +42,11 @@
 				<required>true</required>
 			</attribute>
 			<attribute>
+				<name>dataRecordId</name>
+				<inputType>java.lang.Long</inputType>
+				<outputType>java.lang.Long</outputType>
+			</attribute>
+			<attribute>
 				<name>namespace</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>

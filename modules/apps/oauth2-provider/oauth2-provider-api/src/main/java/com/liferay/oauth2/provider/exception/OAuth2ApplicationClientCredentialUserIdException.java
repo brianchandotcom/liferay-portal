@@ -26,6 +26,13 @@ import org.osgi.annotation.versioning.ProviderType;
 public class OAuth2ApplicationClientCredentialUserIdException
 	extends PortalException {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), since 7.2, unused
+	 */
+	@Deprecated
+	public OAuth2ApplicationClientCredentialUserIdException() {
+	}
+
 	public OAuth2ApplicationClientCredentialUserIdException(
 		long userId, String userScreenName, long clientCredentialUserId,
 		String clientCredentialUserScreenName) {
@@ -39,6 +46,32 @@ public class OAuth2ApplicationClientCredentialUserIdException
 		this.clientCredentialUserId = clientCredentialUserId;
 		this.userScreenName = userScreenName;
 		this.clientCredentialUserScreenName = clientCredentialUserScreenName;
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), since 7.2, unused
+	 */
+	@Deprecated
+	public OAuth2ApplicationClientCredentialUserIdException(String msg) {
+		super(msg);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), since 7.2, unused
+	 */
+	@Deprecated
+	public OAuth2ApplicationClientCredentialUserIdException(
+		String msg, Throwable cause) {
+
+		super(msg, cause);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), since 7.2, unused
+	 */
+	@Deprecated
+	public OAuth2ApplicationClientCredentialUserIdException(Throwable cause) {
+		super(cause);
 	}
 
 	public long clientCredentialUserId;

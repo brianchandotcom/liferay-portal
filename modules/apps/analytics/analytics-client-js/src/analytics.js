@@ -82,6 +82,8 @@ class Analytics {
 			flushInterval || FLUSH_INTERVAL
 		);
 
+		this._ensureIntegrity();
+
 		return instance;
 	}
 
@@ -98,6 +100,14 @@ class Analytics {
 			.forEach(disposer => disposer());
 	}
 
+	_ensureIntegrity() {
+		let userId = storage.get(STORAGE_KEY_USER_ID);
+
+		if (userId) {
+			this._setCookie(STORAGE_KEY_USER_ID, userId);
+		}
+	}
+	
 	_isNewUserIdRequired() {
 		const identityHash = storage.get(STORAGE_KEY_IDENTITY_HASH);
 		const storedUserId = storage.get(STORAGE_KEY_USER_ID);
@@ -147,6 +157,18 @@ class Analytics {
 	}
 
 	/**
+	 * Sets a browser cookie
+	 * @protected
+	 */
+	_setCookie(key, data) {
+		const expirationDate = new Date();
+
+		expirationDate.setDate(expirationDate.getDate() + 365);
+
+		document.cookie = key + "=" + data + "; expires=" + expirationDate.toUTCString() + " ;path=/";
+	}
+
+	/**
 	 * Returns a promise that times out after the given time limit is exceeded
 	 * @param {number} timeout
 	 * @return {object} Promise
@@ -174,6 +196,7 @@ class Analytics {
 		const userId = uuidv1();
 
 		this._persist(STORAGE_KEY_USER_ID, userId);
+		this._setCookie(STORAGE_KEY_USER_ID, userId);
 
 		storage.remove(STORAGE_KEY_IDENTITY_HASH);
 

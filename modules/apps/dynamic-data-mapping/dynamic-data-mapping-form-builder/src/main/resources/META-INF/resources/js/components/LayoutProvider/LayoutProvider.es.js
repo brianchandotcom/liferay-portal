@@ -188,6 +188,13 @@ class LayoutProvider extends Component {
 	getPages() {
 		const {defaultLanguageId, editingLanguageId} = this.props;
 		let {pages} = this.state;
+
+		pages = pages.filter(
+			page => {
+				return page.contentRenderer != 'success';
+			}
+		);
+
 		const visitor = new PagesVisitor(pages);
 
 		pages = visitor.mapFields(field => {
@@ -209,6 +216,12 @@ class LayoutProvider extends Component {
 		});
 
 		visitor.setPages(pages);
+
+		this.setState(
+			{
+				pages
+			}
+		);
 
 		return visitor.mapPages(page => {
 			let {description, title} = page;

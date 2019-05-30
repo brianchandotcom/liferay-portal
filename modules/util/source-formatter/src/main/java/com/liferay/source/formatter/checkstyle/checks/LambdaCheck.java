@@ -31,15 +31,29 @@ public class LambdaCheck extends BaseCheck {
 	protected void doVisitToken(DetailAST detailAST) {
 		DetailAST lastChildDetailAST = detailAST.getLastChild();
 
-		if ((lastChildDetailAST.getType() != TokenTypes.SLIST) ||
-			(lastChildDetailAST.getChildCount() != 2)) {
-
+		if (lastChildDetailAST.getType() != TokenTypes.SLIST) {
 			return;
 		}
 
 		DetailAST firstChildDetailAST = lastChildDetailAST.getFirstChild();
 
-		if (firstChildDetailAST.getType() == TokenTypes.LITERAL_RETURN) {
+		if (lastChildDetailAST.getChildCount() == 2) {
+			if (firstChildDetailAST.getType() == TokenTypes.LITERAL_RETURN) {
+				log(detailAST, _MSG_SIMPLIFY_LAMBDA);
+			}
+
+			return;
+		}
+
+		if ((lastChildDetailAST.getChildCount() != 3) ||
+			(firstChildDetailAST.getType() != TokenTypes.EXPR)) {
+
+			return;
+		}
+
+		DetailAST nextSiblingDetailAST = firstChildDetailAST.getNextSibling();
+
+		if (nextSiblingDetailAST.getType() == TokenTypes.SEMI) {
 			log(detailAST, _MSG_SIMPLIFY_LAMBDA);
 		}
 	}

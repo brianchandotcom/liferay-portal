@@ -237,7 +237,16 @@ public class LiferayExtPlugin implements Plugin<Project> {
 
 				@Override
 				public String call() throws Exception {
-					return war.getBaseName() + "-" + war.getAppendix();
+					String servletContextName = war.getBaseName();
+
+					String appendix = war.getAppendix();
+
+					if (appendix != null) {
+						servletContextName =
+							servletContextName + "-" + appendix;
+					}
+
+					return servletContextName;
 				}
 
 			});

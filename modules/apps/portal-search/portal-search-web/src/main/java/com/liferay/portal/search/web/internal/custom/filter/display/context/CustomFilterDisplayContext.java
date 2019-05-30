@@ -69,9 +69,9 @@ public class CustomFilterDisplayContext {
 
 	private String _filterValue;
 	private String _heading;
+	private boolean _immutable;
 	private String _parameterName;
 	private boolean _renderNothing;
-	private boolean _immutable;
 	private String _searchURL;
 
 }

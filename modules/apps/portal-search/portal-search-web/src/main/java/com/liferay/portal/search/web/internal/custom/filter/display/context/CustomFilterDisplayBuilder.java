@@ -116,6 +116,11 @@ public class CustomFilterDisplayBuilder {
 	}
 
 	protected String getFilterValue() {
+		if (_immutable) {
+			return SearchOptionalUtil.findFirstPresent(
+				Stream.of(_filterValueOptional), StringPool.BLANK);
+		}
+
 		return SearchOptionalUtil.findFirstPresent(
 			Stream.of(_parameterValueOptional, _filterValueOptional),
 			StringPool.BLANK);

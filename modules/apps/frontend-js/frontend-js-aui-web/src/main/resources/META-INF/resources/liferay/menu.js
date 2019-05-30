@@ -158,26 +158,24 @@ AUI.add(
 					var direction =
 						(directionMatch && directionMatch[1]) || AUTO;
 
-					var overlayHorizontal =
-						mapAlignHorizontalOverlay[direction] ||
-						defaultOverlayHorizontalAlign;
-					var overlayVertical =
-						MAP_ALIGN_VERTICAL_OVERLAY[direction] || STR_TOP;
+					if (direction != 'down') {
+						var overlayHorizontal =
+							mapAlignHorizontalOverlay[direction] ||
+							defaultOverlayHorizontalAlign;
+						var overlayVertical =
+							MAP_ALIGN_VERTICAL_OVERLAY[direction] || STR_TOP;
 
-					var triggerHorizontal =
-						mapAlignHorizontalTrigger[direction] ||
-						defaultTriggerHorizontalAlign;
-					var triggerVertical =
-						MAP_ALIGN_VERTICAL_TRIGGER[direction] || STR_TOP;
+						var triggerHorizontal =
+							mapAlignHorizontalTrigger[direction] ||
+							defaultTriggerHorizontalAlign;
+						var triggerVertical =
+							MAP_ALIGN_VERTICAL_TRIGGER[direction] || STR_TOP;
 
-					if (direction === 'down') {
-						overlayHorizontal = STR_LEFT;
+						alignPoints = [
+							overlayVertical + overlayHorizontal,
+							triggerVertical + triggerHorizontal
+						];
 					}
-
-					alignPoints = [
-						overlayVertical + overlayHorizontal,
-						triggerVertical + triggerHorizontal
-					];
 				}
 
 				return alignPoints;

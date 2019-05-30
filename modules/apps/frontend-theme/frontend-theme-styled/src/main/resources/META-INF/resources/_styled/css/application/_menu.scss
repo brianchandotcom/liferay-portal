@@ -72,14 +72,14 @@
 	}
 }
 
-.menu-content li a, .menu-content li .disabled {
+.menu-content li .disabled, .menu-content li a {
 	color: #2C2F34;
 	display: block;
 	padding: 4px 5px;
 	text-decoration: none;
 }
 
-.menu-content li a.focus, .lfr-menu-expanded li a:focus {
+.lfr-menu-expanded li a:focus, .menu-content li a.focus {
 	background-color: #5B677D;
 	color: #FFF;
 	text-shadow: -1px -1px #2C2F34;

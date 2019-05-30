@@ -106,7 +106,7 @@ h2.TOCTitle {
 	font-weight: bold;
 }
 
-pre, code {
+code, pre {
 	font-family: "Courier New", Courier, monospace;
 	font-size: small;
 }

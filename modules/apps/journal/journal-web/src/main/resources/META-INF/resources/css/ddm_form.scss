@@ -112,7 +112,7 @@
 }
 
 .ltr .form-builder-rtl-inputs, .rtl .form-builder-ltr-inputs {
-	.portlet-dynamic-data-mapping .form-builder-content, .textcelleditor, .textareacelleditor {
+	.portlet-dynamic-data-mapping .form-builder-content, .textareacelleditor, .textcelleditor {
 		input[type="text"], textarea {
 			direction: rtl;
 		}

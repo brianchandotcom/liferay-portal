@@ -22,7 +22,7 @@
 		}
 
 		@include sm {
-			&:hover, &.focus {
+			&.focus, &:hover {
 				> .portlet-topper {
 					opacity: 1;
 					pointer-events: all;

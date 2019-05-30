@@ -72,7 +72,7 @@
 	white-space: nowrap;
 }
 
-.calendar-list-item-hover, .calendar-list-item-active {
+.calendar-list-item-active, .calendar-list-item-hover {
 	background-color: #DCE3EA;
 
 	@include force-wrap();
@@ -255,7 +255,7 @@
 	opacity: 0.5;
 }
 
-.calendar-portlet-event-draft, .calendar-portlet-event-denied, .calendar-portlet-event-maybe, .calendar-portlet-event-pending {
+.calendar-portlet-event-denied, .calendar-portlet-event-draft, .calendar-portlet-event-maybe, .calendar-portlet-event-pending {
 	opacity: 0.8;
 }
 
@@ -346,7 +346,7 @@
 
 .calendar-portlet-recurrence-content {
 	.calendar-portlet-recurrence-limit {
-		label, input {
+		input, label {
 			display: inline-block;
 			margin: 0 4px 0 0;
 		}
@@ -565,7 +565,7 @@
 	}
 }
 
-.simple-color-picker-item:hover, .simple-color-picker-item-selected {
+.simple-color-picker-item-selected, .simple-color-picker-item:hover {
 	border-color: #000 !important;
 }
 
@@ -585,7 +585,7 @@
 		font-weight: 200;
 	}
 
-	.yui3-calendar-day, .yui3-calendar-prevmonth-day, .yui3-calendar-nextmonth-day, .yui3-calendar-content {
+	.yui3-calendar-content, .yui3-calendar-day, .yui3-calendar-nextmonth-day, .yui3-calendar-prevmonth-day {
 		border-width: 0;
 	}
 
@@ -597,7 +597,7 @@
 		padding: 5px 0 10px;
 		width: 14.286%;
 
-		&:hover, &.yui3-calendar-day-selected:hover, &.yui3-calendar-day-selected.lfr-busy-day:hover {
+		&.yui3-calendar-day-selected.lfr-busy-day:hover, &.yui3-calendar-day-selected:hover, &:hover {
 			background: #BBB;
 			color: #FFF;
 		}
@@ -669,7 +669,7 @@
 	}
 }
 
-.simple-color-picker-item:hover, .simple-color-picker-item-selected {
+.simple-color-picker-item-selected, .simple-color-picker-item:hover {
 	@include transition(border-color 0s);
 }
 

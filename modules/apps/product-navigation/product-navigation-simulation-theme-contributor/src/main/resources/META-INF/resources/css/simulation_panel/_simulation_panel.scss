@@ -110,15 +110,15 @@
 			text-align: center;
 		}
 
-		&.r, &.br, &.tr {
+		&.br, &.r, &.tr {
 			text-align: right;
 		}
 
-		&.l, &.bl, &.tl {
+		&.bl, &.l, &.tl {
 			text-align: left;
 		}
 
-		&.r, &.l {
+		&.l, &.r {
 			margin-top: -15px;
 			top: 50%;
 		}

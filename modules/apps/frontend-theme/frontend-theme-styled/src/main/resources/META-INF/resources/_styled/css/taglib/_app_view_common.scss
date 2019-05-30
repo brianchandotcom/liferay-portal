@@ -9,7 +9,7 @@
 		}
 
 		.entry-metadata {
-			dt, dd, .entry-categories, .entry-tags, .entry-description {
+			.entry-categories, .entry-description, .entry-tags, dd, dt {
 				color: #F0F0F0;
 			}
 		}
@@ -24,7 +24,7 @@
 	}
 
 	.entry-metadata {
-		dt, dd, .entry-categories, .entry-tags, .entry-description {
+		.entry-categories, .entry-description, .entry-tags, dd, dt {
 			color: #333;
 			word-wrap: break-word;
 		}
@@ -52,11 +52,11 @@
 		}
 	}
 
-	&.active-area, &.active-area.hover, &.active-area td {
+	&.active-area, &.active-area td, &.active-area.hover {
 		background-color: #5AD300;
 	}
 
-	&:hover, &.hover {
+	&.hover, &:hover {
 		background-color: #D3E8F1;
 	}
 

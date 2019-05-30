@@ -15,7 +15,7 @@
 			padding: 6px 15px;
 			text-transform: uppercase;
 
-			&:hover, &:focus {
+			&:focus, &:hover {
 				color: $brand-color-3;
 			}
 		}
@@ -59,7 +59,7 @@
 			padding: 6px;
 		}
 
-		&:hover, &:focus {
+		&:focus, &:hover {
 			color: $brand-color-3;
 			text-decoration: initial;
 		}
@@ -95,7 +95,7 @@
 	padding-bottom: 10px;
 	position: relative;
 
-	a:active, a:hover, a:focus {
+	a:active, a:focus, a:hover {
 		text-decoration: none;
 	}
 
@@ -164,7 +164,7 @@
 				margin-right: 0;
 			}
 
-			&:hover > a, &.hover > a, &.active > a {
+			&.active > a, &.hover > a, &:hover > a {
 				background-color: none;
 				color: $main-black;
 			}

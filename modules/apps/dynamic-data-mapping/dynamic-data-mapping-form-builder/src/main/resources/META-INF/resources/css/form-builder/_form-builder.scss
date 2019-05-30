@@ -31,7 +31,7 @@ $c: '.ddm-form-builder';
 	}
 
 	.ddm-field-container {
-		&:hover, &:active {
+		&:active, &:hover {
 			border-color: #CDCED9;
 		}
 	}

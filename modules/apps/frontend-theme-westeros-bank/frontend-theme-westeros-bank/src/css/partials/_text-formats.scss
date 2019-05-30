@@ -8,7 +8,7 @@ a.small.text-uppercase {
 	font-size: 12px;
 	text-decoration: underline;
 
-	&:hover, &:focus {
+	&:focus, &:hover {
 		text-decoration: none;
 	}
 }

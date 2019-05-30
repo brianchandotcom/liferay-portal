@@ -90,7 +90,7 @@ $microblogs-border-color: #EAEAEA;
 			position: relative;
 		}
 
-		&, &:focus, &.inactive {
+		&, &.inactive, &:focus {
 			border: 1px solid #EAEAEA;
 
 			border-radius: 3px;
@@ -217,7 +217,7 @@ $microblogs-border-color: #EAEAEA;
 			margin-left: 35px;
 		}
 
-		.microblogs-entry-content, .autocomplete {
+		.autocomplete, .microblogs-entry-content {
 			margin-left: 40px;
 		}
 

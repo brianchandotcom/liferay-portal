@@ -45,7 +45,7 @@
 }
 
 .lfr-asset-vocabulary-container {
-	.lfr-asset-category-message, &.no-matches .lfr-asset-category-list {
+	&.no-matches .lfr-asset-category-list, .lfr-asset-category-message {
 		display: none;
 	}
 

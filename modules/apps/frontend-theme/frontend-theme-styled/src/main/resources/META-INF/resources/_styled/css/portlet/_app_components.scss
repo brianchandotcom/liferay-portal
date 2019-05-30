@@ -1,6 +1,6 @@
 /* ---------- Dynamic data list display/Journal portlet ---------- */
 
-.portlet-dynamic-data-lists-display, .portlet-dynamic-data-lists {
+.portlet-dynamic-data-lists, .portlet-dynamic-data-lists-display {
 	.lfr-ddm-field-group {
 		margin-bottom: 10px;
 		margin-top: 10px;
@@ -36,7 +36,7 @@
 
 .taglib-calendar {
 	tr {
-		&.portlet-section-header th, & td {
+		& td, &.portlet-section-header th {
 			border-width: 0;
 		}
 

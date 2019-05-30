@@ -13,7 +13,7 @@
 .js {
 	@include respond-to(phone) {
 		.controls-hidden {
-			.lfr-meta-actions, .lfr-configurator-visibility {
+			.lfr-configurator-visibility, .lfr-meta-actions {
 				display: none;
 			}
 		}
@@ -46,18 +46,18 @@
 	border-collapse: collapse;
 	clear: both;
 
-	> tbody, > thead, > tfoot {
+	> tbody, > tfoot, > thead {
 		> tr {
 			> td, > th {
 				padding: 0 5px;
 
 				@include word-wrap(break-all);
 
-				&:first-child, &.first-child {
+				&.first-child, &:first-child {
 					padding-left: 0;
 				}
 
-				&:last-child, &.last-child {
+				&.last-child, &:last-child {
 					padding-right: 0;
 				}
 			}

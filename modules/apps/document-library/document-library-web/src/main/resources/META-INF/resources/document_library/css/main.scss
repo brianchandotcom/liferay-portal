@@ -234,7 +234,7 @@
 		.lfr-asset-summary {
 			margin-left: 5px;
 
-			.download-document, .conversions, .webdav-url {
+			.conversions, .download-document, .webdav-url {
 				display: block;
 				margin: 0.7em 0;
 			}
@@ -268,7 +268,7 @@
 		}
 	}
 
-	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .paginator-container {
+	.paginator-container, .taglib-search-iterator-page-iterator-bottom, .taglib-search-iterator-page-iterator-top {
 		clear: both;
 		padding: 5px;
 		position: relative;
@@ -358,7 +358,7 @@
 	}
 
 	.app-view-entry-taglib.entry-display-style {
-		&.display-icon, &.display-descriptive {
+		&.display-descriptive, &.display-icon {
 			.entry-thumbnail .taglib-workflow-status {
 				left: 6px;
 				margin: 0;
@@ -448,7 +448,7 @@
 			text-shadow: 1px 1px #FFF;
 		}
 
-		.user-date, .taglib-asset-tags-summary {
+		.taglib-asset-tags-summary, .user-date {
 			font-weight: bold;
 		}
 

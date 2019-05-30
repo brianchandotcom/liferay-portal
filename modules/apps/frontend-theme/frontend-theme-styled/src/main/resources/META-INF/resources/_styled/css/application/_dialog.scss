@@ -40,10 +40,10 @@
 	.portlet-configuration-body-content,
 	.process-list,
 	.roles-selector-body {
-		> .container-fluid-1280, .container-view {
+		.container-view, > .container-fluid-1280 {
 			padding-top: 20px;
 
-			> .nav-tabs-default, .nav-tabs-underline {
+			.nav-tabs-underline, > .nav-tabs-default {
 				margin-left: -$grid-gutter-width / 2;
 				margin-right: -$grid-gutter-width / 2;
 				margin-top: -20px;

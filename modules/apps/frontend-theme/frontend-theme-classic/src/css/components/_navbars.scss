@@ -3,7 +3,7 @@
 	padding-top: 0.907rem;
 
 	.portlet {
-		&:hover, &.open {
+		&.open, &:hover {
 			z-index: 1035;
 		}
 	}

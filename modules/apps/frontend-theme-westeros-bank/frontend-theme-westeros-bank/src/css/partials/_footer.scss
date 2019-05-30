@@ -6,7 +6,7 @@
 	.nav-item > a {
 		color: $brand-color-3;
 
-		&:hover, &:focus {
+		&:focus, &:hover {
 			text-decoration: underline;
 		}
 	}

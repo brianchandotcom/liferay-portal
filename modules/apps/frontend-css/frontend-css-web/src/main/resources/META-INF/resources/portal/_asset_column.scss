@@ -65,7 +65,7 @@
 		margin: 2em 0;
 	}
 
-	.taglib-custom-attributes-list label, .lfr-asset-field label {
+	.lfr-asset-field label, .taglib-custom-attributes-list label {
 		display: block;
 	}
 
@@ -74,7 +74,7 @@
 	}
 }
 
-.lfr-asset-column-details, .lfr-asset-column-actions {
+.lfr-asset-column-actions, .lfr-asset-column-details {
 	.lfr-asset-field {
 		clear: left;
 		margin: 1em auto;
@@ -86,14 +86,14 @@
 	padding-top: 1em;
 }
 
-.lfr-asset-panels, .lfr-asset-column-details {
+.lfr-asset-column-details, .lfr-asset-panels {
 	.lfr-panel {
 		clear: both;
 		margin-bottom: 0.2em;
 	}
 }
 
-.lfr-asset-panels, .lfr-asset-column-details {
+.lfr-asset-column-details, .lfr-asset-panels {
 	.lfr-panel.lfr-extended {
 		border: 1px solid transparent;
 		margin-bottom: 0;

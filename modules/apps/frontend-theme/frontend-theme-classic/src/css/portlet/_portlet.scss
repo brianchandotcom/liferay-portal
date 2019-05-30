@@ -47,7 +47,7 @@
 			vertical-align: middle;
 		}
 
-		.portlet-topper-toolbar, .icon-monospaced {
+		.icon-monospaced, .portlet-topper-toolbar {
 			height: 1.5rem;
 			line-height: 1.5rem;
 			width: 1.5rem;
@@ -59,7 +59,7 @@
 		}
 	}
 
-	&:hover, &.open {
+	&.open, &:hover {
 		> .portlet-topper {
 			z-index: 999;
 		}

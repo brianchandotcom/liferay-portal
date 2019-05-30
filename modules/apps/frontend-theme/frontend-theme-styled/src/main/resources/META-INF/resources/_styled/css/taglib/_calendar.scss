@@ -4,7 +4,7 @@
 	}
 
 	tr {
-		th, td {
+		td, th {
 			border-bottom-color: #999;
 		}
 
@@ -13,7 +13,7 @@
 		}
 	}
 
-	a:hover, a:focus {
+	a:focus, a:hover {
 		background-color: #CCC;
 	}
 

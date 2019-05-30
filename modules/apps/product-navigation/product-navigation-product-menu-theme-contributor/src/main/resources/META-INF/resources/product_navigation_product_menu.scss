@@ -9,7 +9,7 @@ body {
 		}
 	}
 
-	&.open .control-menu, &.open .affix {
+	&.open .affix, &.open .control-menu {
 		@include sm() {
 			left: $product-menu-width;
 		}
@@ -123,13 +123,13 @@ body {
 			padding-left: 20px;
 		}
 
-		> .active > a, .nav > .active > a {
+		.nav > .active > a, > .active > a {
 			&, &:focus, &:hover {
 				color: $product-menu-nav-link-active-color;
 			}
 		}
 
-		> .active, .nav > .active {
+		.nav > .active, > .active {
 			border-left-color: $product-menu-nav-link-active-color;
 		}
 	}
@@ -151,7 +151,7 @@ body {
 }
 
 .product-menu {
-	a.list-group-heading, button.list-group-heading, .list-group-heading[data-toggle="collapse"] {
+	.list-group-heading[data-toggle="collapse"], a.list-group-heading, button.list-group-heading {
 		border-color: transparent;
 		color: $product-menu-list-group-heading-color;
 	}
@@ -203,7 +203,7 @@ body {
 		@include word-wrap(normal);
 
 		&.active {
-			&, &:hover, &:focus {
+			&, &:focus, &:hover {
 				background-color: $product-menu-list-group-heading-active-bg;
 			}
 
@@ -301,11 +301,11 @@ body {
 		}
 
 		.panel-heading + .panel-collapse {
-			> .panel-body, > .list-group {
+			> .list-group, > .panel-body {
 				border-top-width: 0;
 			}
 
-			&.in, &.collapsing {
+			&.collapsing, &.in {
 				border-bottom: 2px solid $product-menu-panel-title-active-border;
 			}
 		}
@@ -336,7 +336,7 @@ body {
 				top: 4px;
 			}
 
-			.category-name, .user-name, .site-name {
+			.category-name, .site-name, .user-name {
 				color: $product-menu-panel-title-color;
 			}
 		}
@@ -360,7 +360,7 @@ body {
 }
 
 .product-menu {
-	.user-icon, .sticker {
+	.sticker, .user-icon {
 		display: inline-block;
 		float: left;
 		margin-right: 16px;
@@ -385,7 +385,7 @@ body {
 
 .product-menu {
 	.staging-links {
-		a, .links-separator {
+		.links-separator, a {
 			color: $product-menu-nav-link-color;
 		}
 

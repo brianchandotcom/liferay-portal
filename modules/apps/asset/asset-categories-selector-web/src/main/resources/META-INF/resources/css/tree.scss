@@ -38,7 +38,7 @@ $spacer: 1rem;
 	}
 
 	.disabled {
-		.card, .card:hover, .card:focus {
+		.card, .card:focus, .card:hover {
 			background-color: #E7E7ED;
 			border: 1px solid #E7E7ED;
 			box-shadow: none;

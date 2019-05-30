@@ -35,7 +35,7 @@ body.portlet {
 	white-space: nowrap;
 }
 
-.panel-page-content, .panel-page-body {
+.panel-page-body, .panel-page-content {
 	.portlet-title-text {
 		cursor: auto;
 	}
@@ -70,7 +70,7 @@ body.portlet {
 		}
 	}
 
-	&:hover, &.open {
+	&.open, &:hover {
 		.visible-interaction {
 			display: block;
 		}

@@ -2,7 +2,7 @@
 	font-weight: normal;
 }
 
-.staging-taglib-checkbox-items, .staging-taglib-checkbox-deletions {
+.staging-taglib-checkbox-deletions, .staging-taglib-checkbox-items {
 	&:after {
 		content: ')'
 	}

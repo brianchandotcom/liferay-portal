@@ -69,7 +69,7 @@
 	}
 }
 
-.lfr-upload-container .progress-bar, .lfr-upload-container .progress, .lfr-editable:after {
+.lfr-editable:after, .lfr-upload-container .progress, .lfr-upload-container .progress-bar {
 	border-radius: 10px;
 }
 
@@ -79,7 +79,7 @@
 	}
 }
 
-body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbnail, .lfr-api-results, .lfr-translation-manager, .lfr-translation-manager-translation, .lfr-upload-container .cancel-button .modify-pages .delete-tab, .portlet-image-gallery-display .image-thumbnail img, .rule-group-instance-container .rule-group-instance, .select-documents, .select-files, .taglib-ratings.stars:hover, .taglib-ratings.stars:hover .liferay-rating-vote > div, .taglib-ratings.stars .rating-focused > div, .tags-search-combobox .field-input-text {
+.active-area-proxy, .entry-display-style .entry-thumbnail, .lfr-api-results, .lfr-translation-manager, .lfr-translation-manager-translation, .lfr-upload-container .cancel-button .modify-pages .delete-tab, .portlet-image-gallery-display .image-thumbnail img, .rule-group-instance-container .rule-group-instance, .select-documents, .select-files, .taglib-ratings.stars .rating-focused > div, .taglib-ratings.stars:hover, .taglib-ratings.stars:hover .liferay-rating-vote > div, .tags-search-combobox .field-input-text, body > .lfr-menu-list ul {
 	border-radius: 4px;
 }
 
@@ -104,7 +104,7 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	box-shadow: none;
 
 	.tab .tab-label {
-		&:hover, &:focus {
+		&:focus, &:hover {
 			.number {
 				box-shadow: 0 0 5px 0 #333;
 				transition-duration: 0.25s;

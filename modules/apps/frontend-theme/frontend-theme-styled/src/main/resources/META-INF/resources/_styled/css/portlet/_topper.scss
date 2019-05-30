@@ -51,7 +51,7 @@
 }
 
 .portlet {
-	&:hover, &.focus {
+	&.focus, &:hover {
 		> .portlet-content-editable {
 			@extend %display-portlet-content-editable;
 		}
@@ -127,7 +127,7 @@
 	margin: 0;
 	padding-left: 0;
 
-	> a, > span > a, .lfr-icon-menu > a {
+	.lfr-icon-menu > a, > a, > span > a {
 		color: $portlet-topper-link-color;
 	}
 
@@ -145,7 +145,7 @@
 
 	@include media-query(sm) {
 		.portlet {
-			&:hover, &.focus, &.open {
+			&.focus, &.open, &:hover {
 				.portlet-topper {
 					opacity: 0.5;
 				}

@@ -1,5 +1,5 @@
 .has-control-menu {
-	.affix, #wrapper {
+	#wrapper, .affix {
 		margin-top: $has-control-menu-margin-top-mobile;
 
 		.portlet-boundary > span:first-child {
@@ -30,7 +30,7 @@
 		}
 	}
 
-	&.has-customization-menu .affix, &.has-customization-menu #wrapper {
+	&.has-customization-menu #wrapper, &.has-customization-menu .affix {
 		margin-top: ($has-control-menu-margin-top-mobile + $has-customization-menu-margin-top-mobile);
 
 		.portlet-boundary > span:first-child {

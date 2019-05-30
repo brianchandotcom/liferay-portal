@@ -31,7 +31,7 @@
 			text-decoration: none;
 		}
 
-		&:hover, &:focus {
+		&:focus, &:hover {
 			span {
 				text-decoration: underline;
 			}

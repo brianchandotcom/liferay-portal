@@ -63,17 +63,17 @@
 			text-decoration: $link-hover-decoration;
 		}
 
-		&:focus, &.focus {
+		&.focus, &:focus {
 			border-color: transparent;
 			box-shadow: $btn-focus-box-shadow;
 			text-decoration: $link-decoration;
 		}
 
-		&:disabled, &.disabled {
+		&.disabled, &:disabled {
 			color: $btn-link-disabled-color;
 		}
 
-		&:active, &.active, &:not([disabled]):not(.disabled):active {
+		&.active, &:active, &:not([disabled]):not(.disabled):active {
 			background-color: transparent;
 			border-color: transparent;
 			box-shadow: none;

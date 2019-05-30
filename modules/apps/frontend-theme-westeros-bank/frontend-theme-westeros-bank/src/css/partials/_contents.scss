@@ -1,4 +1,4 @@
-.portlet-layout.row > .col-md-12, .portlet {
+.portlet, .portlet-layout.row > .col-md-12 {
 	margin-bottom: 0;
 	padding-bottom: 0;
 	padding-left: 0;
@@ -87,7 +87,7 @@
 	a {
 		color: $brand-color-3;
 
-		&:hover, &:focus {
+		&:focus, &:hover {
 			text-decoration: underline;
 		}
 	}

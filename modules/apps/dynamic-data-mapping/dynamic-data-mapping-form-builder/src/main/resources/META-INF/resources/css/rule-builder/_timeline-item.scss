@@ -58,18 +58,18 @@
 				margin-bottom: 15px;
 			}
 
-			.data-provider-parameter-output, .data-provider-parameter-input {
+			.data-provider-parameter-input, .data-provider-parameter-output {
 				margin-right: 10px;
 			}
 
-			.data-provider-parameter-output-container, .data-provider-parameter-input-container {
+			.data-provider-parameter-input-container, .data-provider-parameter-output-container {
 				background-color: #F8F8F8;
 				border-top: 1px solid #DCE0E3;
 				margin-top: 15px;
 				padding: 20px 55px;
 			}
 
-			.data-provider-parameter-output-list, .data-provider-parameter-input-list {
+			.data-provider-parameter-input-list, .data-provider-parameter-output-list {
 				.container-input-field {
 					margin-bottom: 10px;
 				}
@@ -189,7 +189,7 @@
 					overflow: inherit;
 					padding: 0;
 
-					li.calculator-button, .calculator-add-operator-button-area {
+					.calculator-add-operator-button-area, li.calculator-button {
 						align-items: center;
 						cursor: pointer;
 						display: flex;
@@ -270,7 +270,7 @@
 		}
 	}
 
-	.form-group-item div.dropdown, .action {
+	.action, .form-group-item div.dropdown {
 		position: relative !important;
 		right: inherit !important;
 		top: inherit !important;

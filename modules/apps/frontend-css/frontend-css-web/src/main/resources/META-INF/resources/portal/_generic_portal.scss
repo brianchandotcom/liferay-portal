@@ -49,7 +49,7 @@ td {
 		width: 100%;
 
 		tr td {
-			&.lines, &.line-numbers {
+			&.line-numbers, &.lines {
 				border-width: 0;
 			}
 

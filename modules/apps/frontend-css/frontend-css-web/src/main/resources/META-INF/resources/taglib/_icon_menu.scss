@@ -52,7 +52,7 @@
 	.table-cell.last .lfr-icon-menu .dropdown-toggle {
 		text-align: center;
 
-		> img, .lfr-icon-menu-text {
+		.lfr-icon-menu-text, > img {
 			display: none;
 		}
 	}

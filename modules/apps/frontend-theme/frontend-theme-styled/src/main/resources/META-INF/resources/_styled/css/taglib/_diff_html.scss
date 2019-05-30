@@ -8,7 +8,7 @@
 			background: #CFC url(../images/diff/plus.png) no-repeat;
 		}
 
-		&.diff-removed-image, &.diff-added-image {
+		&.diff-added-image, &.diff-removed-image {
 			opacity: 0.55;
 		}
 	}

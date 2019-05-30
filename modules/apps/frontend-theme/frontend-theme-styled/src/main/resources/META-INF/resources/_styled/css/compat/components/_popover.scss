@@ -31,7 +31,7 @@
 	margin-left: $popover-arrow-width;
 }
 
-&.top, &.bottom {
+&.bottom, &.top {
 	.arrow {
 	 left: calc(50% - (#{$popover-arrow-width} / 2));
 	}

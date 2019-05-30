@@ -56,7 +56,7 @@
 			}
 		}
 
-		dt, dd, .entry-categories, .entry-tags, .entry-description {
+		.entry-categories, .entry-description, .entry-tags, dd, dt {
 			line-height: 1.5em;
 			overflow: hidden;
 		}
@@ -88,7 +88,7 @@
 		}
 	}
 
-	.folder-action, .entry-action {
+	.entry-action, .folder-action {
 		position: absolute;
 		right: 6px;
 		top: 10px;
@@ -116,7 +116,7 @@
 		}
 	}
 
-	.overlay.folder-action a, .overlay.entry-action a {
+	.overlay.entry-action a, .overlay.folder-action a {
 		display: block;
 		width: 20px;
 	}
@@ -127,7 +127,7 @@
 }
 
 .lfr-search-container td .overlay {
-	&.folder-action, &.entry-action {
+	&.entry-action, &.folder-action {
 		position: static;
 
 		.btn a {

@@ -31,7 +31,7 @@
 			width: 100%;
 		}
 
-		table, th, td {
+		table, td, th {
 			border: 1px solid;
 		}
 	}
@@ -227,7 +227,7 @@
 		width: 100%;
 
 		tr {
-			th, td {
+			td, th {
 				border: 1px solid #CCC;
 				border-left-width: 0;
 				border-right-width: 0;

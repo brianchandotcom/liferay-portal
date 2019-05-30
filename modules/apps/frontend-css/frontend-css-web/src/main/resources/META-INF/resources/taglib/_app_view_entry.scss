@@ -31,7 +31,7 @@
 			text-align: center;
 		}
 
-		.folder-action, .entry-action {
+		.entry-action, .folder-action {
 			top: 14px;
 
 			@include respond-to(phone, tablet) {
@@ -77,7 +77,7 @@
 		}
 
 		@include respond-to(phone, tablet) {
-			.folder-action, .entry-action {
+			.entry-action, .folder-action {
 				a {
 					padding: 10px 12px;
 					width: auto;

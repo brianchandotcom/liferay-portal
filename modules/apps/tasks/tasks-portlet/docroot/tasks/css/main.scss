@@ -114,13 +114,13 @@
 		}
 	}
 
-	.progress-wrapper .due-date, .progress-indicator, .progress-selector, .progress-wrapper .new-progress {
+	.progress-indicator, .progress-selector, .progress-wrapper .due-date, .progress-wrapper .new-progress {
 		left: 0;
 		position: absolute;
 		top: 0;
 	}
 
-	.progress-wrapper .due-date, .progress-indicator {
+	.progress-indicator, .progress-wrapper .due-date {
 		text-align: center;
 	}
 
@@ -251,7 +251,7 @@
 }
 
 .upcoming-tasks-portlet .tasks-entries-container {
-	ul, li {
+	li, ul {
 		list-style: none;
 		margin: 0;
 		padding: 0;

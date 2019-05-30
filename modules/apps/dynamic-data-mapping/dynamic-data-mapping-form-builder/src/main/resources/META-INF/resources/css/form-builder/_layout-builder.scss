@@ -27,7 +27,7 @@ $c: '.ddm-layout-builder';
 		width: 21px;
 	}
 
-	.ddm-resize-handle, .ddm-resize-column {
+	.ddm-resize-column, .ddm-resize-handle {
 		top: 0 !important;
 	}
 
@@ -46,7 +46,7 @@ $c: '.ddm-layout-builder';
 			visibility: hidden;
 		}
 
-		&:hover, &:active {
+		&:active, &:hover {
 			border-color: #CDCED9;
 
 			.ddm-resize-handle-left,
@@ -65,7 +65,7 @@ $c: '.ddm-layout-builder';
 	}
 }
 
-.ddm-resize-handle, .ddm-resize-column {
+.ddm-resize-column, .ddm-resize-handle {
 	height: 100%;
 	position: absolute;
 	width: 5px;

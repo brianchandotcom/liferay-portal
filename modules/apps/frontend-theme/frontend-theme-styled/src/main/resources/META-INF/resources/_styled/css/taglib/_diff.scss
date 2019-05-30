@@ -1,4 +1,4 @@
-.taglib-diff-addedline, #taglib-diff-results ins {
+#taglib-diff-results ins, .taglib-diff-addedline {
 	background: #E6FFE6;
 }
 
@@ -6,6 +6,6 @@
 	background: #EEE;
 }
 
-.taglib-diff-deletedline, #taglib-diff-results del {
+#taglib-diff-results del, .taglib-diff-deletedline {
 	background: #FFE6E6;
 }

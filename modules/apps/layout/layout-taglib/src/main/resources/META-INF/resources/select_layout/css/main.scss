@@ -28,7 +28,7 @@
 	}
 
 	.disabled {
-		.card, .card:hover, .card:focus {
+		.card, .card:focus, .card:hover {
 			background-color: #E7E7ED;
 			border: 1px solid #E7E7ED;
 			box-shadow: none;
@@ -237,7 +237,7 @@
 			color: #65B6F0;
 		}
 
-		.layout-tree, .icon-monospaced {
+		.icon-monospaced, .layout-tree {
 			cursor: pointer;
 		}
 	}

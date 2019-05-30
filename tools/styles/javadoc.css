@@ -15,7 +15,7 @@ a:link, a:visited {
 	text-decoration: none;
 }
 
-a:hover, a:focus {
+a:focus, a:hover {
 	color: #BB7A2A;
 	text-decoration: none;
 }
@@ -103,12 +103,12 @@ sup {
 	margin-left: 0.5em;
 }
 
-.bar a, .bar a:link, .bar a:visited, .bar a:active {
+.bar a, .bar a:active, .bar a:link, .bar a:visited {
 	color: #FFF;
 	text-decoration: none;
 }
 
-.bar a:hover, .bar a:focus {
+.bar a:focus, .bar a:hover {
 	color: #BB7A2A;
 }
 
@@ -190,12 +190,12 @@ ul.subNavList li {
 	list-style: none;
 }
 
-.topNav a:link, .topNav a:active, .topNav a:visited, .bottomNav a:link, .bottomNav a:active, .bottomNav a:visited {
+.bottomNav a:active, .bottomNav a:link, .bottomNav a:visited, .topNav a:active, .topNav a:link, .topNav a:visited {
 	color: #FFF;
 	text-decoration: none;
 }
 
-.topNav a:hover, .bottomNav a:hover {
+.bottomNav a:hover, .topNav a:hover {
 	color: #BB7A2A;
 	text-decoration: none;
 }
@@ -221,7 +221,7 @@ div.bottomNav .skipNav {
 
 /* ---------- Page header and footer styles ---------- */
 
-.header, .footer {
+.footer, .header {
 	clear: both;
 	margin: 0 20px;
 	padding: 5px 0 0 0;
@@ -254,7 +254,7 @@ div.bottomNav .skipNav {
 	margin: 20px 0 5px 0;
 }
 
-.header ul li, .footer ul li {
+.footer ul li, .header ul li {
 	font-size: 1.2em;
 	list-style: none;
 }
@@ -288,7 +288,7 @@ ul.blockList li.blockList h2 {
 
 /* ---------- Page layout container styles ---------- */
 
-.contentContainer, .sourceContainer, .classUseContainer, .serializedFormContainer, .constantValuesContainer {
+.classUseContainer, .constantValuesContainer, .contentContainer, .serializedFormContainer, .sourceContainer {
 	clear: both;
 	padding: 10px 20px;
 	position: relative;
@@ -398,23 +398,23 @@ ul.blockList ul.blockList ul.blockList ul.blockList li.blockListLast {
 	padding-bottom: 0;
 }
 
-table tr td dl, table tr td dl dt, table tr td dl dd {
+table tr td dl, table tr td dl dd, table tr td dl dt {
 	margin-bottom: 1px;
 	margin-top: 0;
 }
 
 /* ---------- Table styles ---------- */
 
-caption a:link, caption a:hover, caption a:active, caption a:visited {
+caption a:active, caption a:hover, caption a:link, caption a:visited {
 	color: #FFF;
 }
 
-.contentContainer table, .classUseContainer table, .constantValuesContainer table {
+.classUseContainer table, .constantValuesContainer table, .contentContainer table {
 	border-bottom: 1px solid #9EADC0;
 	width: 100%;
 }
 
-.contentContainer ul li table, .classUseContainer ul li table, .constantValuesContainer ul li table {
+.classUseContainer ul li table, .constantValuesContainer ul li table, .contentContainer ul li table {
 	width: 100%;
 }
 
@@ -422,16 +422,16 @@ caption a:link, caption a:hover, caption a:active, caption a:visited {
 	border-bottom-width: none;
 }
 
-.contentContainer ul li table th.colOne, .contentContainer ul li table th.colFirst, .contentContainer ul li table th.colLast, .classUseContainer ul li table th, .constantValuesContainer ul li table th, .contentContainer ul li table td.colOne, .contentContainer ul li table td.colFirst, .contentContainer ul li table td.colLast, .classUseContainer ul li table td, .constantValuesContainer ul li table td {
+.classUseContainer ul li table td, .classUseContainer ul li table th, .constantValuesContainer ul li table td, .constantValuesContainer ul li table th, .contentContainer ul li table td.colFirst, .contentContainer ul li table td.colLast, .contentContainer ul li table td.colOne, .contentContainer ul li table th.colFirst, .contentContainer ul li table th.colLast, .contentContainer ul li table th.colOne {
 	padding-right: 20px;
 	vertical-align: top;
 }
 
-.contentContainer ul li table th.colLast, .classUseContainer ul li table th.colLast, .constantValuesContainer ul li table th.colLast, .contentContainer ul li table td.colLast, .classUseContainer ul li table td.colLast, .constantValuesContainer ul li table td.colLast, .contentContainer ul li table th.colOne, .classUseContainer ul li table th.colOne, .contentContainer ul li table td.colOne, .classUseContainer ul li table td.colOne {
+.classUseContainer ul li table td.colLast, .classUseContainer ul li table td.colOne, .classUseContainer ul li table th.colLast, .classUseContainer ul li table th.colOne, .constantValuesContainer ul li table td.colLast, .constantValuesContainer ul li table th.colLast, .contentContainer ul li table td.colLast, .contentContainer ul li table td.colOne, .contentContainer ul li table th.colLast, .contentContainer ul li table th.colOne {
 	padding-right: 3px;
 }
 
-.memberSummary caption span.tableTab, .memberSummary caption span.activeTableTab {
+.memberSummary caption span.activeTableTab, .memberSummary caption span.tableTab {
 	background-image: none;
 	display: inline;
 	float: none;
@@ -455,7 +455,7 @@ caption a:link, caption a:hover, caption a:active, caption a:visited {
 	width: 5px;
 }
 
-.overviewSummary caption, .packageSummary caption, .contentContainer ul.blockList li.blockList caption, .summary caption, .classUseContainer caption, .constantValuesContainer caption {
+.classUseContainer caption, .constantValuesContainer caption, .contentContainer ul.blockList li.blockList caption, .overviewSummary caption, .packageSummary caption, .summary caption {
 	background-repeat: no-repeat;
 	clear: none;
 	color: #FFF;
@@ -467,7 +467,7 @@ caption a:link, caption a:hover, caption a:active, caption a:visited {
 	text-align: left;
 }
 
-.overviewSummary caption, .memberSummary caption, .typeSummary caption, .useSummary caption, .constantsSummary caption, .deprecatedSummary caption {
+.constantsSummary caption, .deprecatedSummary caption, .memberSummary caption, .overviewSummary caption, .typeSummary caption, .useSummary caption {
 	background-repeat: no-repeat;
 	clear: none;
 	color: #253441;
@@ -482,7 +482,7 @@ caption a:link, caption a:hover, caption a:active, caption a:visited {
 	white-space: pre;
 }
 
-.overviewSummary caption span, .memberSummary caption span, .typeSummary caption span, .useSummary caption span, .constantsSummary caption span, .deprecatedSummary caption span {
+.constantsSummary caption span, .deprecatedSummary caption span, .memberSummary caption span, .overviewSummary caption span, .typeSummary caption span, .useSummary caption span {
 	background-color: #F5A11D;
 	border-width: 0;
 	display: inline-block;
@@ -496,7 +496,7 @@ caption a:link, caption a:hover, caption a:active, caption a:visited {
 	white-space: nowrap;
 }
 
-.overviewSummary caption span, .packageSummary caption span, .contentContainer ul.blockList li.blockList caption span, .summary caption span, .classUseContainer caption span, .constantValuesContainer caption span {
+.classUseContainer caption span, .constantValuesContainer caption span, .contentContainer ul.blockList li.blockList caption span, .overviewSummary caption span, .packageSummary caption span, .summary caption span {
 	color: #000;
 	display: block;
 	float: left;
@@ -506,7 +506,7 @@ caption a:link, caption a:hover, caption a:active, caption a:visited {
 	white-space: nowrap;
 }
 
-.overviewSummary caption span.activeTableTab, .memberSummary caption span.activeTableTab, .typeSummary caption span.activeTableTab, .useSummary caption span.activeTableTab, .constantsSummary caption span.activeTableTab, .deprecatedSummary caption span.activeTableTab {
+.constantsSummary caption span.activeTableTab, .deprecatedSummary caption span.activeTableTab, .memberSummary caption span.activeTableTab, .overviewSummary caption span.activeTableTab, .typeSummary caption span.activeTableTab, .useSummary caption span.activeTableTab {
 	background-color: #F5A11D;
 	border-width: 0;
 	display: inline-block;
@@ -519,12 +519,12 @@ caption a:link, caption a:hover, caption a:active, caption a:visited {
 	white-space: nowrap;
 }
 
-.overviewSummary caption span.activeTableTab span, .memberSummary caption span.activeTableTab span, .typeSummary caption span.activeTableTab span, .useSummary caption span.activeTableTab span, .constantsSummary caption span.activeTableTab span, .deprecatedSummary caption span.activeTableTab span {
+.constantsSummary caption span.activeTableTab span, .deprecatedSummary caption span.activeTableTab span, .memberSummary caption span.activeTableTab span, .overviewSummary caption span.activeTableTab span, .typeSummary caption span.activeTableTab span, .useSummary caption span.activeTableTab span {
 	background-color: #F5A11D;
 	margin-right: 0;
 }
 
-.overviewSummary .tabEnd, .packageSummary .tabEnd, .contentContainer ul.blockList li.blockList .tabEnd, .summary .tabEnd, .classUseContainer .tabEnd, .constantValuesContainer .tabEnd {
+.classUseContainer .tabEnd, .constantValuesContainer .tabEnd, .contentContainer ul.blockList li.blockList .tabEnd, .overviewSummary .tabEnd, .packageSummary .tabEnd, .summary .tabEnd {
 	display: none;
 	float: left;
 	position: relative;
@@ -548,12 +548,12 @@ ul.blockList ul.blockList li.blockList table {
 	background-color: #FFF;
 }
 
-.overviewSummary td, .packageSummary td, .contentContainer ul.blockList li.blockList td, .summary td, .classUseContainer td, .constantValuesContainer td {
+.classUseContainer td, .constantValuesContainer td, .contentContainer ul.blockList li.blockList td, .overviewSummary td, .packageSummary td, .summary td {
 	padding: 3px 3px 3px 7px;
 	text-align: left;
 }
 
-th.colFirst, th.colLast, th.colOne, .constantValuesContainer th {
+.constantValuesContainer th, th.colFirst, th.colLast, th.colOne {
 	background-color: #1B75BB;
 	border-bottom: 1px solid #9EADC0;
 	border-top: 1px solid #9EADC0;
@@ -562,7 +562,7 @@ th.colFirst, th.colLast, th.colOne, .constantValuesContainer th {
 	text-align: left;
 }
 
-td.colOne a:link, td.colOne a:active, td.colOne a:visited, td.colOne a:hover, td.colFirst a:link, td.colFirst a:active, td.colFirst a:visited, td.colFirst a:hover, td.colLast a:link, td.colLast a:active, td.colLast a:visited, td.colLast a:hover, .constantValuesContainer td a:link, .constantValuesContainer td a:active, .constantValuesContainer td a:visited, .constantValuesContainer td a:hover {
+.constantValuesContainer td a:active, .constantValuesContainer td a:hover, .constantValuesContainer td a:link, .constantValuesContainer td a:visited, td.colFirst a:active, td.colFirst a:hover, td.colFirst a:link, td.colFirst a:visited, td.colLast a:active, td.colLast a:hover, td.colLast a:link, td.colLast a:visited, td.colOne a:active, td.colOne a:hover, td.colOne a:link, td.colOne a:visited {
 	font-weight: bold;
 }
 
@@ -585,12 +585,12 @@ table.overviewSummary {
 	padding: 0;
 }
 
-table.overviewSummary td.colFirst, table.overviewSummary th.colFirst, table.overviewSummary td.colOne, table.overviewSummary th.colOne {
+table.overviewSummary td.colFirst, table.overviewSummary td.colOne, table.overviewSummary th.colFirst, table.overviewSummary th.colOne {
 	vertical-align: middle;
 	width: 25%;
 }
 
-table.packageSummary td.colFirst, table.overviewSummary th.colFirst {
+table.overviewSummary th.colFirst, table.packageSummary td.colFirst {
 	vertical-align: middle;
 	width: 25%;
 }

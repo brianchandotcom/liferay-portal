@@ -90,7 +90,7 @@
 			}
 
 			&.cke_widget_wrapper {
-				&:hover, &.cke_widget_focused {
+				&.cke_widget_focused, &:hover {
 					.cke_widget_element {
 						outline: none;
 					}

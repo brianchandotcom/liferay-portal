@@ -55,7 +55,7 @@
 		display: block;
 		padding: 0.5rem;
 
-		&:hover, &:active {
+		&:active, &:hover {
 			color: $dark;
 			text-decoration: none;
 

@@ -8,7 +8,7 @@
 				opacity: 1;
 
 				.tab-label {
-					&:hover, &:focus {
+					&:focus, &:hover {
 						background: transparent;
 					}
 
@@ -33,7 +33,7 @@
 				background: transparent;
 				outline: 0;
 
-				&:hover, &:focus {
+				&:focus, &:hover {
 					text-decoration: none;
 
 					.number {

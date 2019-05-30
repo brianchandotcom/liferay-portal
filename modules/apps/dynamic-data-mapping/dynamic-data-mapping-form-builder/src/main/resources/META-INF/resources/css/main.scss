@@ -75,7 +75,7 @@ textarea[class^="form-builder-page-header"] {
 }
 
 .liferay-ddm-form-rule-builder-timeline .timeline-item .panel-body .dropdown {
-	&.dropdown-action, &.calculator-add-field-button-container {
+	&.calculator-add-field-button-container, &.dropdown-action {
 		position: relative;
 		right: 0;
 		top: 0;
@@ -150,7 +150,7 @@ textarea[class^="form-builder-page-header"] {
 	width: 100%;
 }
 
-.form-builder-select-field .dropdown-menu .dropdown-section, .form-builder-select-field .dropdown-menu .dropdown-item, .form-builder-select-field .dropdown-menu .no-results-list {
+.form-builder-select-field .dropdown-menu .dropdown-item, .form-builder-select-field .dropdown-menu .dropdown-section, .form-builder-select-field .dropdown-menu .no-results-list {
 	padding: 0.5rem 1rem;
 }
 

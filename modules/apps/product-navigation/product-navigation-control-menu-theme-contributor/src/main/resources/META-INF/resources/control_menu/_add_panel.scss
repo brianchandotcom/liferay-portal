@@ -2,7 +2,7 @@
 @import "mixins";
 
 body.open-admin-panel {
-	&, .control-menu, .affix {
+	&, .affix, .control-menu {
 		@include sm() {
 			padding-right: $admin-panel-width;
 		}

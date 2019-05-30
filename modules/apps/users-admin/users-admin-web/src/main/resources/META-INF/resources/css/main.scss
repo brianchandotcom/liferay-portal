@@ -102,8 +102,8 @@
 	}
 
 	.form-navigator {
-		.user-info, .organization-info {
-			.user-logo, .organization-logo {
+		.organization-info, .user-info {
+			.organization-logo, .user-logo {
 				margin-right: 5px;
 				width: 35px;
 			}
@@ -287,7 +287,7 @@
 
 .lfr-floating-container {
 	.field {
-		input, img {
+		img, input {
 			vertical-align: top;
 		}
 	}

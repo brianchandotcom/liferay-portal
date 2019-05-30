@@ -13,18 +13,18 @@
 				font-size: 12px;
 				text-transform: uppercase;
 
-				&:hover, &:focus, &.active, &.open {
+				&.active, &.open, &:focus, &:hover {
 					color: #787878;
 				}
 			}
 		}
 
-		& > .open > a, & > .active > a {
+		& > .active > a, & > .open > a {
 			color: #787878;
 		}
 	}
 
-	section, .navbar {
+	.navbar, section {
 		@include sm {
 			margin: 0;
 		}

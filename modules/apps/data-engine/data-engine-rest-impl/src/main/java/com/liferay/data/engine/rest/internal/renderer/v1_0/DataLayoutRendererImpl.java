@@ -46,7 +46,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -64,7 +63,8 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 
 	@Override
 	public String render(
-			Long dataLayoutId, HttpServletRequest httpServletRequest,
+			Long dataLayoutId, Map<String, Object> dataRecordValues,
+			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
@@ -90,7 +90,8 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 			_createDataLayoutPageContexts(
 				_getDataDefinitionFieldsMap(
 					DataDefinitionUtil.toDataDefinition(
-						ddmStructureVersion.getStructure())),
+						ddmStructureVersion.getStructure()),
+					dataRecordValues),
 				dataLayout.getDataLayoutPages(), _fieldTypeTracker,
 				httpServletRequest, httpServletResponse));
 
@@ -223,7 +224,7 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 	}
 
 	private Map<String, DataDefinitionField> _getDataDefinitionFieldsMap(
-		DataDefinition dataDefinition) {
+		DataDefinition dataDefinition, Map<String, Object> dataRecordValues) {
 
 		List<DataDefinitionField> dataDefinitionFields = Arrays.asList(
 			dataDefinition.getDataDefinitionFields());
@@ -231,7 +232,18 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 		Stream<DataDefinitionField> stream = dataDefinitionFields.stream();
 
 		return stream.collect(
-			Collectors.toMap(field -> field.getName(), Function.identity()));
+			Collectors.toMap(
+				dataDefinitionField -> dataDefinitionField.getName(),
+				definitionField -> {
+					Map<String, Object> customProperties =
+						definitionField.getCustomProperties();
+
+					customProperties.put(
+						"value",
+						dataRecordValues.get(definitionField.getName()));
+
+					return definitionField;
+				}));
 	}
 
 	private static final String _MODULE_NAME =

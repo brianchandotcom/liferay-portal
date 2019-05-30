@@ -297,6 +297,15 @@ public class CTEngineManagerImpl implements CTEngineManager {
 	}
 
 	@Override
+	public List<CTEntry> getCTEntries(
+		CTCollection ctCollection, String keywords,
+		QueryDefinition<CTEntry> queryDefinition) {
+
+		return _ctEntryLocalService.search(
+			ctCollection, keywords, queryDefinition);
+	}
+
+	@Override
 	public List<CTEntry> getCTEntries(long ctCollectionId) {
 		return _ctEntryLocalService.getCTCollectionCTEntries(ctCollectionId);
 	}
@@ -325,6 +334,15 @@ public class CTEngineManagerImpl implements CTEngineManager {
 		return (int)_ctEntryLocalService.searchCount(
 			ctCollection, groupIds, userIds, classNameIds, changeTypes,
 			collision, queryDefinition);
+	}
+
+	@Override
+	public int getCTEntriesCount(
+		CTCollection ctCollection, String keywords,
+		QueryDefinition<CTEntry> queryDefinition) {
+
+		return _ctEntryLocalService.searchCount(
+			ctCollection, keywords, queryDefinition);
 	}
 
 	@Override

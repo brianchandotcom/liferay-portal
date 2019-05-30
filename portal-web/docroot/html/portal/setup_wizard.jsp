@@ -365,7 +365,7 @@
 													failure: function(event, id, obj) {
 														loadingMask.hide();
 
-														updateMessage('<%= UnicodeLanguageUtil.get(request, "an-unexpected-error-occurred-while-connecting-to-the-database") %>', 'error');
+														updateMessage('<%= UnicodeLanguageUtil.get(request, "an-unexpected-error-occurred-while-connecting-to-the-database") %>', 'danger');
 													},
 													success: function(event, id, obj) {
 														command.val('<%= Constants.UPDATE %>');
@@ -373,7 +373,7 @@
 														var responseData = this.get('responseData');
 
 														if (!responseData.success) {
-															updateMessage(responseData.message, 'error');
+															updateMessage(responseData.message, 'danger');
 
 															loadingMask.hide();
 														}

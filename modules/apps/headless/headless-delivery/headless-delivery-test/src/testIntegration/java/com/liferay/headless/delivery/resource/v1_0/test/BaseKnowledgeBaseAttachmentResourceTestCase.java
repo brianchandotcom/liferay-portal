@@ -54,7 +54,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -575,10 +574,11 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 
 		Collection<EntityField> entityFields = getEntityFields();
 
-		Stream<EntityField> stream = entityFields.stream();
-
-		return stream.filter(
-			entityField -> Objects.equals(entityField.getType(), type)
+		return entityFields.stream(
+		).filter(
+			entityField ->
+				!Objects.equals(entityField.getName(), "creatorId") &&
+				Objects.equals(entityField.getType(), type)
 		).collect(
 			Collectors.toList()
 		);

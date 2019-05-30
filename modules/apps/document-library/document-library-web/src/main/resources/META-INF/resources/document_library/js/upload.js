@@ -3,7 +3,6 @@ AUI.add(
 	function(A) {
 		var AArray = A.Array;
 		var ANode = A.Node;
-		var HistoryManager = Liferay.HistoryManager;
 		var Lang = A.Lang;
 		var LString = Lang.String;
 		var UploaderQueue = A.Uploader.Queue;
@@ -791,9 +790,7 @@ AUI.add(
 					_getDisplayStyle: function(style) {
 						var instance = this;
 
-						var displayStyleNamespace = instance.get(STR_HOST).ns('displayStyle');
-
-						var displayStyle = HistoryManager.get(displayStyleNamespace) || instance._displayStyle;
+						var displayStyle = instance._displayStyle;
 
 						if (style) {
 							displayStyle = style == displayStyle;
@@ -1397,6 +1394,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-component', 'aui-data-set-deprecated', 'aui-overlay-manager-deprecated', 'aui-overlay-mask-deprecated', 'aui-parse-content', 'aui-progressbar', 'aui-template-deprecated', 'aui-tooltip', 'liferay-history-manager', 'liferay-search-container', 'liferay-storage-formatter', 'querystring-parse-simple', 'uploader']
+		requires: ['aui-component', 'aui-data-set-deprecated', 'aui-overlay-manager-deprecated', 'aui-overlay-mask-deprecated', 'aui-parse-content', 'aui-progressbar', 'aui-template-deprecated', 'aui-tooltip', 'liferay-search-container', 'liferay-storage-formatter', 'querystring-parse-simple', 'uploader']
 	}
 );

@@ -1,13 +1,19 @@
-.search-bar {
-	.form-group.input-group-item {
+.portlet-search-bar {
+	.alert {
 		margin-bottom: 0;
 	}
-}
 
-.search-bar-keywords-input-wrapper {
-	min-width: 6.25rem;
-}
+	.search-bar {
+		.form-group.input-group-item {
+			margin-bottom: 0;
+		}
+	}
 
-.search-bar-search-select-wrapper {
-	max-width: 9.375rem;
+	.search-bar-keywords-input-wrapper {
+		min-width: 6.25rem;
+	}
+
+	.search-bar-search-select-wrapper {
+		max-width: 9.375rem;
+	}
 }

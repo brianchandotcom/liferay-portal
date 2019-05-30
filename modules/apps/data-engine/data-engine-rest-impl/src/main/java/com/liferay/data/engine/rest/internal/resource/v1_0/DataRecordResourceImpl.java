@@ -62,8 +62,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.validation.constraints.NotNull;
-
 import javax.ws.rs.BadRequestException;
 
 import org.osgi.service.component.annotations.Activate;
@@ -107,7 +105,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
 	@Override
 	public Page<DataRecord> getDataDefinitionDataRecordsPage(
-			@NotNull Long dataDefinitionId, Pagination pagination)
+			Long dataDefinitionId, Pagination pagination)
 		throws Exception {
 
 		return getDataRecordCollectionDataRecordsPage(
@@ -178,7 +176,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
 	@Override
 	public DataRecord postDataDefinitionDataRecord(
-			@NotNull Long dataDefinitionId, DataRecord dataRecord)
+			Long dataDefinitionId, DataRecord dataRecord)
 		throws Exception {
 
 		return postDataRecordCollectionDataRecord(

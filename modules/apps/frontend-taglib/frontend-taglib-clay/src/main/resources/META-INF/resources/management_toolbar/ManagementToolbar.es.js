@@ -80,9 +80,7 @@ class ManagementToolbar extends ClayComponent {
 					width: '320px'
 				});
 
-				this._sidenavInstance = sidenavToggle.sideNavigation(
-					'instance'
-				);
+				sidenavToggle.sideNavigation('instance');
 			}
 		}
 	}

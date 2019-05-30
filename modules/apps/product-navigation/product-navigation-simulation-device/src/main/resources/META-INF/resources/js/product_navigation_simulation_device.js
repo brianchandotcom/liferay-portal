@@ -154,14 +154,6 @@ AUI.add(
 
 					var eventHandles = instance._eventHandles;
 
-					var resizeHandle = A.getWin().on('resize', function(event) {
-						if (Util.isTablet()) {
-							instance._closePanel();
-
-							resizeHandle.detach();
-						}
-					});
-
 					eventHandles.push(
 						Liferay.on(
 							'SimulationMenu:closeSimulationPanel',
@@ -176,8 +168,7 @@ AUI.add(
 							instance._onDeviceClick,
 							SELECTOR_DEVICE_ITEM,
 							instance
-						),
-						resizeHandle
+						)
 					);
 
 					var inputWidth = instance.get(STR_INPUT_WIDTH);
@@ -203,14 +194,6 @@ AUI.add(
 							)
 						);
 					}
-				},
-
-				_closePanel: function() {
-					var instance = this;
-
-					var simulationToggle = AUI.$('#simulationToggleId');
-
-					simulationToggle.sideNavigation('hide');
 				},
 
 				_normalizeDialogAttrs: function(device, rotation) {

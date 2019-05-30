@@ -124,7 +124,8 @@ for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory :
 								var panelId = item.attr('id');
 
 								if (panelId !== itemId) {
-									$('#<portlet:namespace />ControlMenu [data-toggle="sidenav"][data-target*="' + panelId + '"]').sideNavigation('hide');
+									var toggle = document.querySelector('#<portlet:namespace />ControlMenu [data-toggle="sidenav"][data-target*="' + panelId + '"]');
+									SideNavigation.hide(toggle);
 								}
 							}
 						);

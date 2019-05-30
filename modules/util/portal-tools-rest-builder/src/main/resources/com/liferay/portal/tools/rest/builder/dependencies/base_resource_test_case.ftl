@@ -1171,10 +1171,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type) throws Exception {
 		Collection<EntityField> entityFields = getEntityFields();
 
-		Stream<EntityField> stream = entityFields.stream();
-
-		return stream.filter(
-			entityField -> Objects.equals(entityField.getType(), type)
+		return entityFields.stream(
+		).filter(
+			entityField -> !Objects.equals(entityField.getName(), "creatorId") && Objects.equals(entityField.getType(), type)
 		).collect(
 			Collectors.toList()
 		);

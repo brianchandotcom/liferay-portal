@@ -14,6 +14,8 @@
 
 package com.liferay.data.engine.spi.renderer;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,7 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 public interface DataLayoutRenderer {
 
 	public String render(
-			Long dataLayoutId, HttpServletRequest httpServletRequest,
+			Long dataLayoutId, Map<String, Object> dataRecordValues,
+			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception;
 

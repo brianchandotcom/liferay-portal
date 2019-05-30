@@ -36,11 +36,16 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 
 import java.io.InputStream;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -125,6 +130,22 @@ public class StructuredContentResourceTest
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"contentStructureId", "description", "title"};
+	}
+
+	@Override
+	protected List<EntityField> getEntityFields(EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = super.getEntityFields(type);
+
+		return entityFields.stream(
+		).filter(
+			entityField ->
+				!Objects.equals(entityField.getName(), "contentStructureId") &&
+				!Objects.equals(entityField.getName(), "creatorId")
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	@Override

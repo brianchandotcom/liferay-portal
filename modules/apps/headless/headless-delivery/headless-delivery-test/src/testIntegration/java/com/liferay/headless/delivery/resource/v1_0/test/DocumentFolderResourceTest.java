@@ -21,7 +21,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.junit.Assert;
 import org.junit.runner.RunWith;
@@ -36,6 +41,20 @@ public class DocumentFolderResourceTest
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"description", "name"};
+	}
+
+	@Override
+	protected List<EntityField> getEntityFields(EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = super.getEntityFields(type);
+
+		return entityFields.stream(
+		).filter(
+			entityField -> !Objects.equals(entityField.getName(), "creatorId")
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	@Override

@@ -15,6 +15,11 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.odata.entity.EntityField;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.junit.runner.RunWith;
 
@@ -27,6 +32,20 @@ public class BlogPostingResourceTest extends BaseBlogPostingResourceTestCase {
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"description", "headline"};
+	}
+
+	@Override
+	protected List<EntityField> getEntityFields(EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = super.getEntityFields(type);
+
+		return entityFields.stream(
+		).filter(
+			entityField -> !Objects.equals(entityField.getName(), "creatorId")
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 }

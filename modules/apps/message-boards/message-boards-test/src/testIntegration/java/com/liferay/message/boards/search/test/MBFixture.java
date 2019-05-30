@@ -34,6 +34,7 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -109,8 +110,16 @@ public class MBFixture {
 	}
 
 	public ServiceContext getServiceContext() throws Exception {
-		return ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId(), getUserId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), getUserId());
+
+		Date now = new Date();
+
+		serviceContext.setCreateDate(now);
+		serviceContext.setModifiedDate(now);
+
+		return serviceContext;
 	}
 
 	public void updateDisplaySettings(Locale locale) throws Exception {

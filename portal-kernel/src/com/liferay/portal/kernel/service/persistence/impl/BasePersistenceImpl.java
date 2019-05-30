@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.NullSafeStringComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -774,8 +773,12 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	protected static final Object[] FINDER_ARGS_EMPTY = new Object[0];
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	protected static final Comparator<String> NULL_SAFE_STRING_COMPARATOR =
-		new NullSafeStringComparator();
+		Comparator.nullsLast(Comparator.naturalOrder());
 
 	protected static final String ORDER_BY_ASC = " ASC";
 

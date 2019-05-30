@@ -27,7 +27,8 @@ public class OAuth2ApplicationClientCredentialUserIdException
 	extends PortalException {
 
 	public OAuth2ApplicationClientCredentialUserIdException(
-		long userId, long clientCredentialUserId) {
+		long userId, String userScreenName, long clientCredentialUserId,
+		String clientCredentialUserScreenName) {
 
 		super(
 			StringBundler.concat(
@@ -36,9 +37,13 @@ public class OAuth2ApplicationClientCredentialUserIdException
 
 		this.userId = userId;
 		this.clientCredentialUserId = clientCredentialUserId;
+		this.userScreenName = userScreenName;
+		this.clientCredentialUserScreenName = clientCredentialUserScreenName;
 	}
 
 	public long clientCredentialUserId;
+	public String clientCredentialUserScreenName;
 	public long userId;
+	public String userScreenName;
 
 }

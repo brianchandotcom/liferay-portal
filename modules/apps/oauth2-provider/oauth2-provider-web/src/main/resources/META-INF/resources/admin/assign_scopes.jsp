@@ -26,7 +26,21 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 
 <div class="container-fluid container-fluid-max-xl container-view">
 	<liferay-ui:error exception="<%= OAuth2ApplicationClientCredentialUserIdException.class %>">
-		<liferay-ui:message arguments="<%= new Object[] {((OAuth2ApplicationClientCredentialUserIdException)errorException).userId, ((OAuth2ApplicationClientCredentialUserIdException)errorException).clientCredentialUserId} %>" key="client-credentials-x-can-not-impersonate-y" />
+
+		<%
+		OAuth2ApplicationClientCredentialUserIdException oAuth2ApplicationClientCredentialUserIdException = ((OAuth2ApplicationClientCredentialUserIdException)errorException);
+
+		String clientCredentialUserScreenName = oAuth2ApplicationClientCredentialUserIdException.clientCredentialUserScreenName;
+		%>
+
+		<c:choose>
+			<c:when test="<%= Validator.isNotNull(clientCredentialUserScreenName) %>">
+				<liferay-ui:message arguments="<%= new Object[] {oAuth2ApplicationClientCredentialUserIdException.userScreenName, oAuth2ApplicationClientCredentialUserIdException.clientCredentialUserScreenName} %>" key="this-operation-cannot-be-performed-because-you-x-can-not-impersonate-y-which-is-the-user-selected-for-the-client-credentials-authorization-type" />
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:message arguments="<%= new Object[] {oAuth2ApplicationClientCredentialUserIdException.userScreenName, oAuth2ApplicationClientCredentialUserIdException.clientCredentialUserId} %>" key="this-operation-cannot-be-performed-because-you-x-can-not-impersonate-user-y-which-is-the-user-selected-for-the-client-credentials-authorization-type-and-no-longer-exists" />
+			</c:otherwise>
+		</c:choose>
 	</liferay-ui:error>
 
 	<div class="row">

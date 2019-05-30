@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
@@ -62,13 +63,9 @@ public class OAuth2ApplicationServiceImpl
 		User user = getUser();
 
 		if (allowedGrantTypesList.contains(GrantType.CLIENT_CREDENTIALS) &&
-			(clientCredentialUserId != user.getUserId()) &&
-			!ModelResourcePermissionHelper.contains(
-				_userModelResourcePermission, getPermissionChecker(), 0,
-				clientCredentialUserId, ActionKeys.IMPERSONATE)) {
+			(clientCredentialUserId != user.getUserId())) {
 
-			throw new OAuth2ApplicationClientCredentialUserIdException(
-				user.getUserId(), clientCredentialUserId);
+			_checkCanImpersonateClientCredentialUser(clientCredentialUserId);
 		}
 
 		return oAuth2ApplicationLocalService.addOAuth2Application(
@@ -215,16 +212,7 @@ public class OAuth2ApplicationServiceImpl
 			getPermissionChecker(), oAuth2Application, ActionKeys.UPDATE);
 
 		if (allowedGrantTypesList.contains(GrantType.CLIENT_CREDENTIALS)) {
-			long userId = getUserId();
-
-			if ((clientCredentialUserId != userId) &&
-				!ModelResourcePermissionHelper.contains(
-					_userModelResourcePermission, getPermissionChecker(), 0,
-					clientCredentialUserId, ActionKeys.IMPERSONATE)) {
-
-				throw new OAuth2ApplicationClientCredentialUserIdException(
-					userId, clientCredentialUserId);
-			}
+			_checkCanImpersonateClientCredentialUser(clientCredentialUserId);
 		}
 
 		return oAuth2ApplicationLocalService.updateOAuth2Application(
@@ -279,25 +267,43 @@ public class OAuth2ApplicationServiceImpl
 
 		List<GrantType> allowedGrantTypesList =
 			oAuth2Application.getAllowedGrantTypesList();
-		long clientCredentialUserId =
-			oAuth2Application.getClientCredentialUserId();
 
 		if (allowedGrantTypesList.contains(GrantType.CLIENT_CREDENTIALS)) {
-			long userId = getUserId();
-
-			if ((clientCredentialUserId != userId) &&
-				!ModelResourcePermissionHelper.contains(
-					_userModelResourcePermission, getPermissionChecker(), 0,
-					clientCredentialUserId, ActionKeys.IMPERSONATE)) {
-
-				throw new OAuth2ApplicationClientCredentialUserIdException(
-					userId, clientCredentialUserId);
-			}
+			_checkCanImpersonateClientCredentialUser(
+				oAuth2Application.getClientCredentialUserId());
 		}
 
 		return oAuth2ApplicationLocalService.updateScopeAliases(
 			user.getUserId(), user.getFullName(), oAuth2ApplicationId,
 			scopeAliasesList);
+	}
+
+	private void _checkCanImpersonateClientCredentialUser(
+			long clientCredentialUserId)
+		throws OAuth2ApplicationClientCredentialUserIdException,
+			   PortalException, PrincipalException {
+
+		User user = getUser();
+
+		if ((clientCredentialUserId != user.getUserId()) &&
+			!ModelResourcePermissionHelper.contains(
+				_userModelResourcePermission, getPermissionChecker(), 0,
+				clientCredentialUserId, ActionKeys.IMPERSONATE)) {
+
+			User clientCredentialUser = userLocalService.fetchUser(
+				clientCredentialUserId);
+
+			String clientCredentialUserScreenName = null;
+
+			if (clientCredentialUser != null) {
+				clientCredentialUserScreenName =
+					clientCredentialUser.getScreenName();
+			}
+
+			throw new OAuth2ApplicationClientCredentialUserIdException(
+				user.getUserId(), user.getScreenName(), clientCredentialUserId,
+				clientCredentialUserScreenName);
+		}
 	}
 
 	@Reference(

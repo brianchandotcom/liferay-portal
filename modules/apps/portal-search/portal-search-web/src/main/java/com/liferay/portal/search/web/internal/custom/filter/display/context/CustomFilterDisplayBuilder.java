@@ -53,6 +53,12 @@ public class CustomFilterDisplayBuilder {
 		return this;
 	}
 
+	public CustomFilterDisplayBuilder disabled(boolean disabled) {
+		_disabled = disabled;
+
+		return this;
+	}
+
 	public CustomFilterDisplayBuilder filterFieldOptional(
 		Optional<String> filterFieldOptional) {
 
@@ -77,12 +83,6 @@ public class CustomFilterDisplayBuilder {
 
 	public CustomFilterDisplayBuilder immutable(boolean immutable) {
 		_immutable = immutable;
-
-		return this;
-	}
-
-	public CustomFilterDisplayBuilder invisible(boolean invisible) {
-		_invisible = invisible;
 
 		return this;
 	}
@@ -139,7 +139,7 @@ public class CustomFilterDisplayBuilder {
 	}
 
 	protected boolean isRenderNothing() {
-		if (_immutable || _invisible) {
+		if (_disabled) {
 			return true;
 		}
 
@@ -147,11 +147,11 @@ public class CustomFilterDisplayBuilder {
 	}
 
 	private Optional<String> _customHeadingOptional = Optional.empty();
+	private boolean _disabled;
 	private Optional<String> _filterFieldOptional = Optional.empty();
 	private Optional<String> _filterValueOptional = Optional.empty();
 	private Http _http;
 	private boolean _immutable;
-	private boolean _invisible;
 	private String _parameterName;
 	private Optional<String> _parameterValueOptional = Optional.empty();
 	private Optional<String> _queryNameOptional = Optional.empty();

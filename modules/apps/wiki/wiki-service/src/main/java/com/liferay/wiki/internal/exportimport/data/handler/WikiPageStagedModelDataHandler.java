@@ -109,7 +109,7 @@ public class WikiPageStagedModelDataHandler
 
 		return _wikiPageLocalService.getWikiPagesByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new StagedModelModifiedDateComparator<WikiPage>());
+			new StagedModelModifiedDateComparator<>());
 	}
 
 	@Override
@@ -139,9 +139,11 @@ public class WikiPageStagedModelDataHandler
 		page.setContent(content);
 
 		if (page.isHead()) {
-			for (FileEntry fileEntry : page.getAttachmentsFileEntries()) {
+			for (FileEntry attachmentFileEntry :
+					page.getAttachmentsFileEntries()) {
+
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, page, fileEntry,
+					portletDataContext, page, attachmentFileEntry,
 					PortletDataContext.REFERENCE_TYPE_WEAK);
 			}
 		}
@@ -158,9 +160,8 @@ public class WikiPageStagedModelDataHandler
 
 	@Override
 	protected void doImportMissingReference(
-			PortletDataContext portletDataContext, String uuid, long groupId,
-			long pageId)
-		throws Exception {
+		PortletDataContext portletDataContext, String uuid, long groupId,
+		long pageId) {
 
 		WikiPage existingPage = fetchMissingReference(uuid, groupId);
 
@@ -283,11 +284,11 @@ public class WikiPageStagedModelDataHandler
 				page.getUuid(), portletDataContext.getScopeGroupId());
 
 			if (existingPage != null) {
-				for (FileEntry fileEntry :
+				for (FileEntry attachmentFileEntry :
 						existingPage.getAttachmentsFileEntries()) {
 
 					PortletFileRepositoryUtil.deletePortletFileEntry(
-						fileEntry.getFileEntryId());
+						attachmentFileEntry.getFileEntryId());
 				}
 			}
 

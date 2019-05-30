@@ -1,0 +1,28 @@
+@mixin file-icon($colorIndex, $color) {
+	[data-file-icon-color="#{$colorIndex}"] .lexicon-icon {
+		color: $color;
+		height: 1.25em;
+		width: auto;
+	}
+}
+
+.lfr-email-column, .lfr-mobile-column, .lfr-website-column {
+	min-width: 100px;
+}
+
+.lfr-email-row-9, .lfr-email-row-10 {
+	min-width: 100px;
+}
+
+.portlet-document-library, .portlet-document-library-display {
+	.paginator-container, .taglib-search-iterator-page-iterator-bottom, .taglib-search-iterator-page-iterator-top {
+		clear: both;
+		padding: 5px;
+		position: relative;
+	}
+}
+
+@mixin sprite-background-position($map,
+$sprite, $offset-x: 0, $offset-y: 0, $use-percentages: false) {
+	background-position: sprite-position($map, $sprite, $offset-x, $offset-y, $use-percentages);
+}

@@ -21,6 +21,7 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.fragment.util.FragmentEntryTestUtil;
 import com.liferay.fragment.util.FragmentTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -116,7 +117,7 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(group.getGroupId());
 
-		FragmentEntry fragmentEntry = FragmentTestUtil.addFragmentEntry(
+		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
 			fragmentCollection.getFragmentCollectionId());
 
 		return FragmentTestUtil.addFragmentEntryLink(

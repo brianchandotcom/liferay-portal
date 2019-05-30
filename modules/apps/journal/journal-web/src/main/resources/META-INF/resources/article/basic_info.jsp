@@ -39,7 +39,7 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 	<b><liferay-ui:message key="structure" /></b>: <%= HtmlUtil.escape(ddmStructure.getName(locale)) %>
 </p>
 
-<c:if test="<%= article != null %>">
+<c:if test="<%= (article != null) && !article.isNew() %>">
 	<p class="article-version-status">
 		<b><liferay-ui:message key="version" /></b>: <%= article.getVersion() %>
 
@@ -71,7 +71,7 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 		<aui:input name="newArticleId" type="hidden" />
 		<aui:input name="autoArticleId" type="hidden" value="<%= true %>" />
 
-		<c:if test="<%= (article != null) && (journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
+		<c:if test="<%= (article != null) && !article.isNew() && (journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
 			<p class="article-id">
 				<b><liferay-ui:message key="id" /></b>: <%= article.getArticleId() %>
 			</p>

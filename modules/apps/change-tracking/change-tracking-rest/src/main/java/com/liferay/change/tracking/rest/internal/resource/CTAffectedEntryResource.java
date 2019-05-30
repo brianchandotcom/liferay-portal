@@ -17,6 +17,13 @@ package com.liferay.change.tracking.rest.internal.resource;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.rest.internal.model.entry.CTAffectedEntryModel;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -27,6 +34,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
@@ -51,15 +59,59 @@ public class CTAffectedEntryResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Page<CTAffectedEntryModel> getCTAffectedEntryModels(
 		@PathParam("collectionId") long ctCollectionId,
-		@PathParam("entryId") long ctEntryId, @Context Pagination pagination) {
+		@PathParam("entryId") long ctEntryId,
+		@QueryParam("keywords") String keywords,
+		@Context Pagination pagination) {
 
-		List<CTEntry> affectedCTEntries =
-			_ctEntryLocalService.getRelatedOwnerCTEntries(ctEntryId);
+		try {
+			List<CTEntry> affectedCTEntries;
 
-		int totalCount = _ctEntryLocalService.getRelatedOwnerCTEntriesCount(
-			ctEntryId);
+			QueryDefinition<CTEntry> queryDefinition = new QueryDefinition<>();
 
-		return _getPage(affectedCTEntries, totalCount, pagination);
+			if (pagination != null) {
+				queryDefinition.setEnd(pagination.getEndPosition());
+				queryDefinition.setStart(pagination.getStartPosition());
+			}
+
+			queryDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+			int totalCount;
+
+			if (Validator.isNotNull(keywords)) {
+				OrderByComparator<CTEntry> orderByComparator =
+					OrderByComparatorFactoryUtil.create(
+						"CTEntry", Field.TITLE, "asc");
+
+				queryDefinition.setOrderByComparator(orderByComparator);
+
+				CTEntry ownerCTEntry = _ctEntryLocalService.getCTEntry(
+					ctEntryId);
+
+				affectedCTEntries =
+					_ctEntryLocalService.getRelatedOwnerCTEntries(
+						ownerCTEntry.getCompanyId(), ctCollectionId, ctEntryId,
+						keywords, queryDefinition);
+
+				totalCount =
+					(int)_ctEntryLocalService.getRelatedOwnerCTEntriesCount(
+						ownerCTEntry.getCompanyId(), ctCollectionId, ctEntryId,
+						keywords, queryDefinition);
+			}
+			else {
+				affectedCTEntries =
+					_ctEntryLocalService.getRelatedOwnerCTEntries(
+						ctEntryId, pagination.getStartPosition(),
+						pagination.getEndPosition(), null);
+
+				totalCount = _ctEntryLocalService.getRelatedOwnerCTEntriesCount(
+					ctEntryId);
+			}
+
+			return _getPage(affectedCTEntries, totalCount, pagination);
+		}
+		catch (PortalException pe) {
+			throw new IllegalArgumentException(pe.getMessage(), pe);
+		}
 	}
 
 	private Page<CTAffectedEntryModel> _getPage(

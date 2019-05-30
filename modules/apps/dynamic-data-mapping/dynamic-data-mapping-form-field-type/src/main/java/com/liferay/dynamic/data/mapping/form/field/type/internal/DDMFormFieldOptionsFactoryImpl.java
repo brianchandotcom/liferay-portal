@@ -58,14 +58,12 @@ public class DDMFormFieldOptionsFactoryImpl
 		String dataSourceType = GetterUtil.getString(
 			ddmFormField.getProperty("dataSourceType"), "manual");
 
-		if (Objects.equals(dataSourceType, "from-autofill")) {
-			List<Map<String, String>> options =
-				(List<Map<String, String>>)
-					ddmFormFieldRenderingContext.getProperty("options");
+		Object options = ddmFormFieldRenderingContext.getProperty("options");
 
-			if (options.size() > 1) {
+		if (Objects.equals(dataSourceType, "from-autofill")) {
+			if (((List)options).size() > 1) {
 				return createDDMFormFieldOptions(
-					ddmFormField, ddmFormFieldRenderingContext);
+					ddmFormField, ddmFormFieldRenderingContext, options);
 			}
 
 			DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
@@ -81,16 +79,13 @@ public class DDMFormFieldOptionsFactoryImpl
 		}
 
 		return createDDMFormFieldOptions(
-			ddmFormField, ddmFormFieldRenderingContext);
+			ddmFormField, ddmFormFieldRenderingContext, options);
 	}
 
 	protected DDMFormFieldOptions createDDMFormFieldOptions(
 		DDMFormField ddmFormField,
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
-
-		List<Map<String, String>> options =
-			(List<Map<String, String>>)ddmFormFieldRenderingContext.getProperty(
-				"options");
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext,
+		Object options) {
 
 		if (options == null) {
 			return ddmFormField.getDDMFormFieldOptions();
@@ -98,7 +93,7 @@ public class DDMFormFieldOptionsFactoryImpl
 
 		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
 
-		for (Map<String, String> option : options) {
+		for (Map<String, String> option : (List<Map<String, String>>)options) {
 			ddmFormFieldOptions.addOptionLabel(
 				option.get("value"), ddmFormFieldRenderingContext.getLocale(),
 				option.get("label"));

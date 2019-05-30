@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 
 import java.io.File;
@@ -29,8 +28,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.runner.RunWith;
 
@@ -51,11 +50,12 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 
 		List<EntityField> entityFields = super.getEntityFields(type);
 
-		Stream<EntityField> stream = entityFields.stream();
-
-		return stream.filter(
-			entityField -> !StringUtil.equals(
-				"fileExtension", entityField.getName())
+		return entityFields.stream(
+		).filter(
+			entityField ->
+				!Objects.equals(entityField.getName(), "creatorId") &&
+				!Objects.equals(entityField.getName(), "fileExtension") &&
+				!Objects.equals(entityField.getName(), "sizeInBytes")
 		).collect(
 			Collectors.toList()
 		);

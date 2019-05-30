@@ -18,6 +18,11 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.odata.entity.EntityField;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.junit.runner.RunWith;
 
@@ -31,6 +36,20 @@ public class StructuredContentFolderResourceTest
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"description", "name"};
+	}
+
+	@Override
+	protected List<EntityField> getEntityFields(EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = super.getEntityFields(type);
+
+		return entityFields.stream(
+		).filter(
+			entityField -> !Objects.equals(entityField.getName(), "creatorId")
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	@Override

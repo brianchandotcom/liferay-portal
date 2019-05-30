@@ -127,10 +127,8 @@ public class ChangesetManagerImpl implements ChangesetManager {
 		Stream<Map.Entry<String, String>> entryStream = entrySet.stream();
 
 		entryStream.forEach(
-			entry -> {
-				parameterMap.put(
-					entry.getKey(), new String[] {entry.getValue()});
-			});
+			entry -> parameterMap.put(
+				entry.getKey(), new String[] {entry.getValue()}));
 
 		User user = _userLocalService.fetchUser(
 			changesetEnvironment.getUserId());

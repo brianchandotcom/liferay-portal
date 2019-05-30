@@ -128,26 +128,24 @@ public class CalendarBookingIndexerLocalizedContentTest
 		Stream.of(
 			full, partial1, partial2
 		).forEach(
-			title -> {
-				addCalendarBooking(
-					new LocalizedValuesMap() {
-						{
-							put(LocaleUtil.JAPAN, title);
-						}
-					},
-					new LocalizedValuesMap() {
-						{
-							put(LocaleUtil.US, description);
-							put(LocaleUtil.HUNGARY, description);
-						}
-					},
-					new LocalizedValuesMap() {
-						{
-							put(LocaleUtil.US, description);
-							put(LocaleUtil.HUNGARY, description);
-						}
-					});
-			}
+			title -> addCalendarBooking(
+				new LocalizedValuesMap() {
+					{
+						put(LocaleUtil.JAPAN, title);
+					}
+				},
+				new LocalizedValuesMap() {
+					{
+						put(LocaleUtil.US, description);
+						put(LocaleUtil.HUNGARY, description);
+					}
+				},
+				new LocalizedValuesMap() {
+					{
+						put(LocaleUtil.US, description);
+						put(LocaleUtil.HUNGARY, description);
+					}
+				})
 		);
 
 		Map<String, String> titleMap = new HashMap<String, String>() {

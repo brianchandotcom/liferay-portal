@@ -42,28 +42,26 @@ public class BaseIndexerExpandoQueryContributor
 			keywordQueryContributorsHolder.getAll();
 
 		stream.forEach(
-			keywordQueryContributor -> {
-				keywordQueryContributor.contribute(
-					searchContext.getKeywords(), booleanQuery,
-					new KeywordQueryContributorHelper() {
+			keywordQueryContributor -> keywordQueryContributor.contribute(
+				searchContext.getKeywords(), booleanQuery,
+				new KeywordQueryContributorHelper() {
 
-						@Override
-						public String getClassName() {
-							return null;
-						}
+					@Override
+					public String getClassName() {
+						return null;
+					}
 
-						@Override
-						public Stream<String> getSearchClassNamesStream() {
-							return Stream.of(classNames);
-						}
+					@Override
+					public Stream<String> getSearchClassNamesStream() {
+						return Stream.of(classNames);
+					}
 
-						@Override
-						public SearchContext getSearchContext() {
-							return searchContext;
-						}
+					@Override
+					public SearchContext getSearchContext() {
+						return searchContext;
+					}
 
-					});
-			});
+				}));
 	}
 
 	@Reference

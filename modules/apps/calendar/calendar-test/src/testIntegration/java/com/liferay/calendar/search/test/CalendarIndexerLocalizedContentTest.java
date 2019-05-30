@@ -139,21 +139,19 @@ public class CalendarIndexerLocalizedContentTest
 		Stream.of(
 			full, partial1, partial2
 		).forEach(
-			name -> {
-				addCalendar(
-					new LocalizedValuesMap() {
-						{
-							put(LocaleUtil.US, originalName);
-							put(LocaleUtil.JAPAN, name);
-						}
-					},
-					new LocalizedValuesMap() {
-						{
-							put(LocaleUtil.US, description);
-							put(LocaleUtil.JAPAN, description);
-						}
-					});
-			}
+			name -> addCalendar(
+				new LocalizedValuesMap() {
+					{
+						put(LocaleUtil.US, originalName);
+						put(LocaleUtil.JAPAN, name);
+					}
+				},
+				new LocalizedValuesMap() {
+					{
+						put(LocaleUtil.US, description);
+						put(LocaleUtil.JAPAN, description);
+					}
+				})
 		);
 
 		Map<String, String> nameMap = new HashMap<String, String>() {

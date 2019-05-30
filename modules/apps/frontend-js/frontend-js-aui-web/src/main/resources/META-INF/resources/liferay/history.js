@@ -1,3 +1,10 @@
+/**
+ * The History Utility, a utility for SPA.
+ *
+ * @deprecated since 7.2, unused, replaced by senna.js
+ * @module liferay-history
+ */
+
 AUI.add(
 	'liferay-history',
 	function(A) {

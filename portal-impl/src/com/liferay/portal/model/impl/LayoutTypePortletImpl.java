@@ -781,6 +781,10 @@ public class LayoutTypePortletImpl
 
 	@Override
 	public boolean isColumnDisabled(String columnId) {
+		if (columnId.startsWith(_NESTED_PORTLETS_NAMESPACE)) {
+			return false;
+		}
+
 		if ((isCustomizedView() && !isColumnCustomizable(columnId)) ||
 			(!isCustomizedView() && !hasUpdatePermission())) {
 
@@ -1040,7 +1044,16 @@ public class LayoutTypePortletImpl
 
 			String columnValue = null;
 
-			if (hasUserPreferences()) {
+			if (PortletIdCodec.hasInstanceId(columnId) &&
+				PortletIdCodec.hasUserId(columnId)) {
+
+				PortletPreferences portletPreferences =
+					_getUserColumnPortletPreferences(columnId);
+
+				columnValue = portletPreferences.getValue(
+					columnId, StringPool.BLANK);
+			}
+			else if (hasUserPreferences()) {
 				columnValue = getUserPreference(columnId);
 			}
 			else {
@@ -1054,7 +1067,21 @@ public class LayoutTypePortletImpl
 					0, columnValue.length() - 1);
 			}
 
-			if (hasUserPreferences()) {
+			if (PortletIdCodec.hasInstanceId(columnId) &&
+				PortletIdCodec.hasUserId(columnId)) {
+
+				PortletPreferences portletPreferences =
+					_getUserColumnPortletPreferences(columnId);
+
+				try {
+					portletPreferences.setValue(columnId, columnValue);
+					portletPreferences.store();
+				}
+				catch (Exception e) {
+					_log.error("Unable to save portlet preferences", e);
+				}
+			}
+			else if (hasUserPreferences()) {
 				setUserPreference(columnId, columnValue);
 			}
 			else {
@@ -1362,7 +1389,9 @@ public class LayoutTypePortletImpl
 		}
 
 		if (isCustomizable()) {
-			if (isColumnDisabled(columnId)) {
+			if (isColumnDisabled(columnId) &&
+				!columnId.startsWith(_NESTED_PORTLETS_NAMESPACE)) {
+
 				return null;
 			}
 
@@ -1375,7 +1404,16 @@ public class LayoutTypePortletImpl
 
 		String columnValue = StringPool.BLANK;
 
-		if (hasUserPreferences()) {
+		if (PortletIdCodec.hasInstanceId(columnId) &&
+			PortletIdCodec.hasUserId(columnId)) {
+
+			PortletPreferences portletPreferences =
+				_getUserColumnPortletPreferences(columnId);
+
+			columnValue = portletPreferences.getValue(
+				columnId, StringPool.BLANK);
+		}
+		else if (hasUserPreferences()) {
 			columnValue = getUserPreference(columnId);
 		}
 		else {
@@ -1405,7 +1443,21 @@ public class LayoutTypePortletImpl
 			columnValue = StringUtil.add(columnValue, portletId);
 		}
 
-		if (hasUserPreferences()) {
+		if (PortletIdCodec.hasInstanceId(columnId) &&
+			PortletIdCodec.hasUserId(columnId)) {
+
+			PortletPreferences portletPreferences =
+				_getUserColumnPortletPreferences(columnId);
+
+			try {
+				portletPreferences.setValue(columnId, columnValue);
+				portletPreferences.store();
+			}
+			catch (Exception e) {
+				_log.error("Unable to save portlet preferences", e);
+			}
+		}
+		else if (hasUserPreferences()) {
 			setUserPreference(columnId, columnValue);
 		}
 		else {
@@ -1450,6 +1502,27 @@ public class LayoutTypePortletImpl
 				PortletPreferencesFactoryUtil.getPortletPreferencesIds(
 					layout.getGroupId(), userId, layout, targetPortletId,
 					false);
+
+			UnicodeProperties typeSettingsProperties =
+				layout.getTypeSettingsProperties();
+
+			String sourcePortletNamespace = PortalUtil.getPortletNamespace(
+				sourcePortletId);
+
+			for (Map.Entry<String, String> entry :
+					typeSettingsProperties.entrySet()) {
+
+				String key = entry.getKey();
+
+				if (key.startsWith(sourcePortletNamespace)) {
+					String targetKey =
+						PortalUtil.getPortletNamespace(targetPortletId) +
+							key.substring(sourcePortletNamespace.length());
+
+					sourcePortletPreferences.setValue(
+						targetKey, entry.getValue());
+				}
+			}
 
 			PortletPreferencesLocalServiceUtil.updatePreferences(
 				portletPreferencesIds.getOwnerId(),
@@ -1548,9 +1621,19 @@ public class LayoutTypePortletImpl
 
 	protected String getColumnValue(String columnId) {
 		if (hasUserPreferences() && isCustomizable() &&
-			!isColumnDisabled(columnId)) {
+			!isColumnDisabled(columnId) &&
+			!columnId.startsWith(_NESTED_PORTLETS_NAMESPACE)) {
 
 			return getUserPreference(columnId);
+		}
+
+		if (PortletIdCodec.hasInstanceId(columnId) &&
+			PortletIdCodec.hasUserId(columnId)) {
+
+			PortletPreferences portletPreferences =
+				_getUserColumnPortletPreferences(columnId);
+
+			return portletPreferences.getValue(columnId, StringPool.BLANK);
 		}
 
 		return getTypeSettingsProperty(columnId);
@@ -1579,10 +1662,35 @@ public class LayoutTypePortletImpl
 	}
 
 	protected String[] getNestedColumns() {
-		String nestedColumnIds = getTypeSettingsProperty(
-			LayoutTypePortletConstants.NESTED_COLUMN_IDS);
+		String[] nestedColumnIds = StringUtil.split(
+			getTypeSettingsProperty(
+				LayoutTypePortletConstants.NESTED_COLUMN_IDS));
 
-		return StringUtil.split(nestedColumnIds);
+		if (!hasUserPreferences()) {
+			return nestedColumnIds;
+		}
+
+		for (String columnId : nestedColumnIds) {
+			if (columnId.lastIndexOf(StringPool.DOUBLE_UNDERLINE) != -1) {
+				columnId = columnId.substring(
+					columnId.lastIndexOf(StringPool.DOUBLE_UNDERLINE) + 2);
+			}
+
+			String[] portletIds = StringUtil.split(
+				_portalPreferences.getValue(
+					CustomizedPages.namespacePlid(getPlid()), columnId));
+
+			for (String portletId : portletIds) {
+				PortletPreferences portletPreferences =
+					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+						getLayout(), portletId);
+
+				nestedColumnIds = ArrayUtil.append(
+					nestedColumnIds, _getNestedColumnIds(portletPreferences));
+			}
+		}
+
+		return nestedColumnIds;
 	}
 
 	protected long getPlid() {
@@ -1970,6 +2078,47 @@ public class LayoutTypePortletImpl
 		}
 
 		return _group;
+	}
+
+	private String[] _getNestedColumnIds(
+		PortletPreferences portletPreferences) {
+
+		Map<String, String[]> preferencesMap = portletPreferences.getMap();
+
+		String[] columnIds = new String[0];
+
+		for (String key : preferencesMap.keySet()) {
+			if (!key.startsWith(_NESTED_PORTLETS_NAMESPACE)) {
+				continue;
+			}
+
+			columnIds = ArrayUtil.append(columnIds, key);
+		}
+
+		return columnIds;
+	}
+
+	private PortletPreferences _getUserColumnPortletPreferences(
+		String columnId) {
+
+		String instanceId = PortletIdCodec.decodeInstanceId(columnId);
+
+		if (instanceId.indexOf(StringPool.UNDERLINE) != -1) {
+			instanceId = instanceId.substring(
+				0, instanceId.indexOf(StringPool.UNDERLINE));
+		}
+
+		long userId = PortletIdCodec.decodeUserId(columnId);
+
+		String portletName = PortletIdCodec.decodePortletName(columnId);
+
+		if (portletName.startsWith(StringPool.UNDERLINE)) {
+			portletName = portletName.substring(1);
+		}
+
+		return PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+			getLayout(),
+			PortletIdCodec.encode(portletName, userId, instanceId));
 	}
 
 	private void _removeNestedColumns(

@@ -273,6 +273,14 @@ public abstract class BaseFormResourceTestCase {
 			Arrays.asList(form1, form2, form3), (List<Form>)page3.getItems());
 	}
 
+	@Test
+	public void testGetSiteFormsPageEmpty() throws Exception {
+		Page<Form> page = FormResource.getSiteFormsPage(
+			testGetSiteFormsPage_getSiteId(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+	}
+
 	protected Form testGetSiteFormsPage_addForm(Long siteId, Form form)
 		throws Exception {
 

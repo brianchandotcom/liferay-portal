@@ -402,6 +402,19 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			(List<KnowledgeBaseFolder>)page3.getItems());
 	}
 
+	@Test
+	public void testGetKnowledgeBaseFolderKnowledgeBaseFoldersPageEmpty()
+		throws Exception {
+
+		Page<KnowledgeBaseFolder> page =
+			KnowledgeBaseFolderResource.
+				getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
+					testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getParentKnowledgeBaseFolderId(),
+					Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+	}
+
 	protected KnowledgeBaseFolder
 			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 				Long parentKnowledgeBaseFolderId,
@@ -546,6 +559,16 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				knowledgeBaseFolder1, knowledgeBaseFolder2,
 				knowledgeBaseFolder3),
 			(List<KnowledgeBaseFolder>)page3.getItems());
+	}
+
+	@Test
+	public void testGetSiteKnowledgeBaseFoldersPageEmpty() throws Exception {
+		Page<KnowledgeBaseFolder> page =
+			KnowledgeBaseFolderResource.getSiteKnowledgeBaseFoldersPage(
+				testGetSiteKnowledgeBaseFoldersPage_getSiteId(),
+				Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected KnowledgeBaseFolder

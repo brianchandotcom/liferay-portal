@@ -240,6 +240,15 @@ public abstract class BaseEmailAddressResourceTestCase {
 		assertValid(page);
 	}
 
+	@Test
+	public void testGetOrganizationEmailAddressesPageEmpty() throws Exception {
+		Page<EmailAddress> page =
+			EmailAddressResource.getOrganizationEmailAddressesPage(
+				testGetOrganizationEmailAddressesPage_getOrganizationId());
+
+		Assert.assertEquals(0, page.getTotalCount());
+	}
+
 	protected EmailAddress
 			testGetOrganizationEmailAddressesPage_addEmailAddress(
 				Long organizationId, EmailAddress emailAddress)
@@ -305,6 +314,15 @@ public abstract class BaseEmailAddressResourceTestCase {
 			Arrays.asList(emailAddress1, emailAddress2),
 			(List<EmailAddress>)page.getItems());
 		assertValid(page);
+	}
+
+	@Test
+	public void testGetUserAccountEmailAddressesPageEmpty() throws Exception {
+		Page<EmailAddress> page =
+			EmailAddressResource.getUserAccountEmailAddressesPage(
+				testGetUserAccountEmailAddressesPage_getUserAccountId());
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected EmailAddress testGetUserAccountEmailAddressesPage_addEmailAddress(

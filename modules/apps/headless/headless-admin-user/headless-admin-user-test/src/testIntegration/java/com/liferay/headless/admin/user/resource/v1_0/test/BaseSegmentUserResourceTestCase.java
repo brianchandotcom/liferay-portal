@@ -266,6 +266,14 @@ public abstract class BaseSegmentUserResourceTestCase {
 			(List<SegmentUser>)page3.getItems());
 	}
 
+	@Test
+	public void testGetSegmentUserAccountsPageEmpty() throws Exception {
+		Page<SegmentUser> page = SegmentUserResource.getSegmentUserAccountsPage(
+			testGetSegmentUserAccountsPage_getSegmentId(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+	}
+
 	protected SegmentUser testGetSegmentUserAccountsPage_addSegmentUser(
 			Long segmentId, SegmentUser segmentUser)
 		throws Exception {

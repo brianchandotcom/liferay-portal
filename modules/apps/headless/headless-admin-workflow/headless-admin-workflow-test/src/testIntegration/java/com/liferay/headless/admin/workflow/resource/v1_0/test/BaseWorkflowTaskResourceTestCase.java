@@ -271,6 +271,14 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			(List<WorkflowTask>)page3.getItems());
 	}
 
+	@Test
+	public void testGetRoleWorkflowTasksPageEmpty() throws Exception {
+		Page<WorkflowTask> page = WorkflowTaskResource.getRoleWorkflowTasksPage(
+			testGetRoleWorkflowTasksPage_getRoleId(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+	}
+
 	protected WorkflowTask testGetRoleWorkflowTasksPage_addWorkflowTask(
 			Long roleId, WorkflowTask workflowTask)
 		throws Exception {

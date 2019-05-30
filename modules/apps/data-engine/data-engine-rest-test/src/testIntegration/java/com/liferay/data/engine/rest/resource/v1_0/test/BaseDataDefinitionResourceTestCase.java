@@ -356,6 +356,16 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			(List<DataDefinition>)page3.getItems());
 	}
 
+	@Test
+	public void testGetSiteDataDefinitionsPageEmpty() throws Exception {
+		Page<DataDefinition> page =
+			DataDefinitionResource.getSiteDataDefinitionsPage(
+				testGetSiteDataDefinitionsPage_getSiteId(),
+				RandomTestUtil.randomString(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+	}
+
 	protected DataDefinition testGetSiteDataDefinitionsPage_addDataDefinition(
 			Long siteId, DataDefinition dataDefinition)
 		throws Exception {

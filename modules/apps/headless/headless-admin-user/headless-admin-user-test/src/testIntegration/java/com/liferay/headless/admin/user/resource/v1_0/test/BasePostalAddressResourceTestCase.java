@@ -234,6 +234,15 @@ public abstract class BasePostalAddressResourceTestCase {
 		assertValid(page);
 	}
 
+	@Test
+	public void testGetOrganizationPostalAddressesPageEmpty() throws Exception {
+		Page<PostalAddress> page =
+			PostalAddressResource.getOrganizationPostalAddressesPage(
+				testGetOrganizationPostalAddressesPage_getOrganizationId());
+
+		Assert.assertEquals(0, page.getTotalCount());
+	}
+
 	protected PostalAddress
 			testGetOrganizationPostalAddressesPage_addPostalAddress(
 				Long organizationId, PostalAddress postalAddress)
@@ -318,6 +327,15 @@ public abstract class BasePostalAddressResourceTestCase {
 			Arrays.asList(postalAddress1, postalAddress2),
 			(List<PostalAddress>)page.getItems());
 		assertValid(page);
+	}
+
+	@Test
+	public void testGetUserAccountPostalAddressesPageEmpty() throws Exception {
+		Page<PostalAddress> page =
+			PostalAddressResource.getUserAccountPostalAddressesPage(
+				testGetUserAccountPostalAddressesPage_getUserAccountId());
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected PostalAddress

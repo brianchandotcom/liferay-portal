@@ -361,11 +361,56 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		TaxonomyVocabulary taxonomyVocabulary1 = randomTaxonomyVocabulary();
 		TaxonomyVocabulary taxonomyVocabulary2 = randomTaxonomyVocabulary();
 
+		setEntityFieldValueSortDateTime(
+			taxonomyVocabulary1, taxonomyVocabulary2);
+
+		taxonomyVocabulary1 =
+			testGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				siteId, taxonomyVocabulary1);
+
+		taxonomyVocabulary2 =
+			testGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				siteId, taxonomyVocabulary2);
+
 		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				taxonomyVocabulary1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
+			Page<TaxonomyVocabulary> ascPage =
+				TaxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
+					siteId, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(taxonomyVocabulary1, taxonomyVocabulary2),
+				(List<TaxonomyVocabulary>)ascPage.getItems());
+
+			Page<TaxonomyVocabulary> descPage =
+				TaxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
+					siteId, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(taxonomyVocabulary2, taxonomyVocabulary1),
+				(List<TaxonomyVocabulary>)descPage.getItems());
 		}
+	}
+
+	@Test
+	public void testGetSiteTaxonomyVocabulariesPageWithSortInteger()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.INTEGER);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteTaxonomyVocabulariesPage_getSiteId();
+
+		TaxonomyVocabulary taxonomyVocabulary1 = randomTaxonomyVocabulary();
+		TaxonomyVocabulary taxonomyVocabulary2 = randomTaxonomyVocabulary();
+
+		setEntityFieldValueSortInteger(
+			taxonomyVocabulary1, taxonomyVocabulary2);
 
 		taxonomyVocabulary1 =
 			testGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary(
@@ -412,12 +457,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		TaxonomyVocabulary taxonomyVocabulary1 = randomTaxonomyVocabulary();
 		TaxonomyVocabulary taxonomyVocabulary2 = randomTaxonomyVocabulary();
 
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				taxonomyVocabulary1, entityField.getName(), "Aaa");
-			BeanUtils.setProperty(
-				taxonomyVocabulary2, entityField.getName(), "Bbb");
-		}
+		setEntityFieldValueSortString(taxonomyVocabulary1, taxonomyVocabulary2);
 
 		taxonomyVocabulary1 =
 			testGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary(
@@ -446,6 +486,16 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				Arrays.asList(taxonomyVocabulary2, taxonomyVocabulary1),
 				(List<TaxonomyVocabulary>)descPage.getItems());
 		}
+	}
+
+	@Test
+	public void testGetSiteTaxonomyVocabulariesPageEmpty() throws Exception {
+		Page<TaxonomyVocabulary> page =
+			TaxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
+				testGetSiteTaxonomyVocabulariesPage_getSiteId(),
+				RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected TaxonomyVocabulary
@@ -1120,6 +1170,53 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		throws Exception {
 
 		return randomTaxonomyVocabulary();
+	}
+
+	protected void setEntityFieldValueSortDateTime(
+			TaxonomyVocabulary taxonomyVocabulary1,
+			TaxonomyVocabulary taxonomyVocabulary2)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(
+				taxonomyVocabulary1, entityField.getName(),
+				DateUtils.addMinutes(new Date(), -2));
+		}
+	}
+
+	protected void setEntityFieldValueSortInteger(
+			TaxonomyVocabulary taxonomyVocabulary1,
+			TaxonomyVocabulary taxonomyVocabulary2)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.INTEGER);
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(
+				taxonomyVocabulary1, entityField.getName(), 0);
+			BeanUtils.setProperty(
+				taxonomyVocabulary2, entityField.getName(), 1);
+		}
+	}
+
+	protected void setEntityFieldValueSortString(
+			TaxonomyVocabulary taxonomyVocabulary1,
+			TaxonomyVocabulary taxonomyVocabulary2)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(
+				taxonomyVocabulary1, entityField.getName(), "Aaa");
+			BeanUtils.setProperty(
+				taxonomyVocabulary2, entityField.getName(), "Bbb");
+		}
 	}
 
 	protected Group irrelevantGroup;

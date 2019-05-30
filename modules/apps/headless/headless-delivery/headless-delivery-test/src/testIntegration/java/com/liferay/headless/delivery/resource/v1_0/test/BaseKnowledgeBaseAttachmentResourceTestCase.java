@@ -240,6 +240,18 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		assertValid(page);
 	}
 
+	@Test
+	public void testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPageEmpty()
+		throws Exception {
+
+		Page<KnowledgeBaseAttachment> page =
+			KnowledgeBaseAttachmentResource.
+				getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
+					testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getKnowledgeBaseArticleId());
+
+		Assert.assertEquals(0, page.getTotalCount());
+	}
+
 	protected KnowledgeBaseAttachment
 			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_addKnowledgeBaseAttachment(
 				Long knowledgeBaseArticleId,

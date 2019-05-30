@@ -270,6 +270,16 @@ public abstract class BaseDataLayoutResourceTestCase {
 			(List<DataLayout>)page3.getItems());
 	}
 
+	@Test
+	public void testGetDataDefinitionDataLayoutsPageEmpty() throws Exception {
+		Page<DataLayout> page =
+			DataLayoutResource.getDataDefinitionDataLayoutsPage(
+				testGetDataDefinitionDataLayoutsPage_getDataDefinitionId(),
+				RandomTestUtil.randomString(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+	}
+
 	protected DataLayout testGetDataDefinitionDataLayoutsPage_addDataLayout(
 			Long dataDefinitionId, DataLayout dataLayout)
 		throws Exception {
@@ -452,6 +462,15 @@ public abstract class BaseDataLayoutResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(dataLayout1, dataLayout2, dataLayout3),
 			(List<DataLayout>)page3.getItems());
+	}
+
+	@Test
+	public void testGetSiteDataLayoutPageEmpty() throws Exception {
+		Page<DataLayout> page = DataLayoutResource.getSiteDataLayoutPage(
+			testGetSiteDataLayoutPage_getSiteId(),
+			RandomTestUtil.randomString(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected DataLayout testGetSiteDataLayoutPage_addDataLayout(

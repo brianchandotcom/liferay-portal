@@ -276,6 +276,18 @@ public abstract class BaseContentSetElementResourceTestCase {
 			(List<ContentSetElement>)page3.getItems());
 	}
 
+	@Test
+	public void testGetContentSetContentSetElementsPageEmpty()
+		throws Exception {
+
+		Page<ContentSetElement> page =
+			ContentSetElementResource.getContentSetContentSetElementsPage(
+				testGetContentSetContentSetElementsPage_getContentSetId(),
+				Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+	}
+
 	protected ContentSetElement
 			testGetContentSetContentSetElementsPage_addContentSetElement(
 				Long contentSetId, ContentSetElement contentSetElement)
@@ -404,6 +416,20 @@ public abstract class BaseContentSetElementResourceTestCase {
 			Arrays.asList(
 				contentSetElement1, contentSetElement2, contentSetElement3),
 			(List<ContentSetElement>)page3.getItems());
+	}
+
+	@Test
+	public void testGetSiteContentSetByKeyContentSetElementsPageEmpty()
+		throws Exception {
+
+		Page<ContentSetElement> page =
+			ContentSetElementResource.
+				getSiteContentSetByKeyContentSetElementsPage(
+					testGetSiteContentSetByKeyContentSetElementsPage_getSiteId(),
+					testGetSiteContentSetByKeyContentSetElementsPage_getKey(),
+					Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected ContentSetElement
@@ -549,6 +575,20 @@ public abstract class BaseContentSetElementResourceTestCase {
 			Arrays.asList(
 				contentSetElement1, contentSetElement2, contentSetElement3),
 			(List<ContentSetElement>)page3.getItems());
+	}
+
+	@Test
+	public void testGetSiteContentSetByUuidContentSetElementsPageEmpty()
+		throws Exception {
+
+		Page<ContentSetElement> page =
+			ContentSetElementResource.
+				getSiteContentSetByUuidContentSetElementsPage(
+					testGetSiteContentSetByUuidContentSetElementsPage_getSiteId(),
+					testGetSiteContentSetByUuidContentSetElementsPage_getUuid(),
+					Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected ContentSetElement

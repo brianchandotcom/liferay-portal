@@ -107,8 +107,6 @@ public class DiffVersionComparatorTag extends ComponentRendererTag {
 	@Override
 	public int doStartTag() {
 		if (Validator.isNotNull(_languageId)) {
-			_portletURL.setParameter("languageId", _languageId);
-
 			_resourceURL.setParameter("languageId", _languageId);
 		}
 

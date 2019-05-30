@@ -94,10 +94,10 @@ AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUs
 					{
 						dialog: {
 							destroyOnHide: true,
-							modal: true,
+							modal: true
 						},
 						dialogIframe: {
-							bodyCssClass: 'dialog-with-footer article-preview',
+							bodyCssClass: 'dialog-with-footer article-preview'
 						},
 						title: '<liferay-ui:message key="preview" />',
 						uri: delegateTarget.getAttribute('data-href')

@@ -493,6 +493,10 @@ public abstract class BaseBuild implements Build {
 	public long getDuration() {
 		JSONObject buildJSONObject = getBuildJSONObject("duration,timestamp");
 
+		if (buildJSONObject == null) {
+			return 0;
+		}
+
 		long duration = buildJSONObject.getLong("duration");
 
 		if (duration == 0) {

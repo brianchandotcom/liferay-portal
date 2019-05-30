@@ -285,6 +285,16 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			});
 	}
 
+	@Test
+	public void testGetWorkflowTaskWorkflowLogsPageEmpty() throws Exception {
+		Page<WorkflowLog> page =
+			WorkflowLogResource.getWorkflowTaskWorkflowLogsPage(
+				testGetWorkflowTaskWorkflowLogsPage_getWorkflowTaskId(),
+				Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+	}
+
 	protected WorkflowLog testGetWorkflowTaskWorkflowLogsPage_addWorkflowLog(
 			Long workflowTaskId, WorkflowLog workflowLog)
 		throws Exception {

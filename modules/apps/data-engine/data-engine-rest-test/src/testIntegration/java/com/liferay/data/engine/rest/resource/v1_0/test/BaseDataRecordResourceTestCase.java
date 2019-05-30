@@ -259,6 +259,18 @@ public abstract class BaseDataRecordResourceTestCase {
 			});
 	}
 
+	@Test
+	public void testGetDataRecordCollectionDataRecordsPageEmpty()
+		throws Exception {
+
+		Page<DataRecord> page =
+			DataRecordResource.getDataRecordCollectionDataRecordsPage(
+				testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId(),
+				Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+	}
+
 	protected DataRecord
 			testGetDataRecordCollectionDataRecordsPage_addDataRecord(
 				Long dataRecordCollectionId, DataRecord dataRecord)

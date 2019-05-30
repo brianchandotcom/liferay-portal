@@ -408,11 +408,54 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		BlogPostingImage blogPostingImage1 = randomBlogPostingImage();
 		BlogPostingImage blogPostingImage2 = randomBlogPostingImage();
 
+		setEntityFieldValueSortDateTime(blogPostingImage1, blogPostingImage2);
+
+		blogPostingImage1 =
+			testGetSiteBlogPostingImagesPage_addBlogPostingImage(
+				siteId, blogPostingImage1);
+
+		blogPostingImage2 =
+			testGetSiteBlogPostingImagesPage_addBlogPostingImage(
+				siteId, blogPostingImage2);
+
 		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				blogPostingImage1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
+			Page<BlogPostingImage> ascPage =
+				BlogPostingImageResource.getSiteBlogPostingImagesPage(
+					siteId, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(blogPostingImage1, blogPostingImage2),
+				(List<BlogPostingImage>)ascPage.getItems());
+
+			Page<BlogPostingImage> descPage =
+				BlogPostingImageResource.getSiteBlogPostingImagesPage(
+					siteId, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(blogPostingImage2, blogPostingImage1),
+				(List<BlogPostingImage>)descPage.getItems());
 		}
+	}
+
+	@Test
+	public void testGetSiteBlogPostingImagesPageWithSortInteger()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.INTEGER);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteBlogPostingImagesPage_getSiteId();
+
+		BlogPostingImage blogPostingImage1 = randomBlogPostingImage();
+		BlogPostingImage blogPostingImage2 = randomBlogPostingImage();
+
+		setEntityFieldValueSortInteger(blogPostingImage1, blogPostingImage2);
 
 		blogPostingImage1 =
 			testGetSiteBlogPostingImagesPage_addBlogPostingImage(
@@ -459,12 +502,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		BlogPostingImage blogPostingImage1 = randomBlogPostingImage();
 		BlogPostingImage blogPostingImage2 = randomBlogPostingImage();
 
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				blogPostingImage1, entityField.getName(), "Aaa");
-			BeanUtils.setProperty(
-				blogPostingImage2, entityField.getName(), "Bbb");
-		}
+		setEntityFieldValueSortString(blogPostingImage1, blogPostingImage2);
 
 		blogPostingImage1 =
 			testGetSiteBlogPostingImagesPage_addBlogPostingImage(
@@ -493,6 +531,16 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 				Arrays.asList(blogPostingImage2, blogPostingImage1),
 				(List<BlogPostingImage>)descPage.getItems());
 		}
+	}
+
+	@Test
+	public void testGetSiteBlogPostingImagesPageEmpty() throws Exception {
+		Page<BlogPostingImage> page =
+			BlogPostingImageResource.getSiteBlogPostingImagesPage(
+				testGetSiteBlogPostingImagesPage_getSiteId(),
+				RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected BlogPostingImage
@@ -894,6 +942,51 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 
 	protected BlogPostingImage randomPatchBlogPostingImage() throws Exception {
 		return randomBlogPostingImage();
+	}
+
+	protected void setEntityFieldValueSortDateTime(
+			BlogPostingImage blogPostingImage1,
+			BlogPostingImage blogPostingImage2)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(
+				blogPostingImage1, entityField.getName(),
+				DateUtils.addMinutes(new Date(), -2));
+		}
+	}
+
+	protected void setEntityFieldValueSortInteger(
+			BlogPostingImage blogPostingImage1,
+			BlogPostingImage blogPostingImage2)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.INTEGER);
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(blogPostingImage1, entityField.getName(), 0);
+			BeanUtils.setProperty(blogPostingImage2, entityField.getName(), 1);
+		}
+	}
+
+	protected void setEntityFieldValueSortString(
+			BlogPostingImage blogPostingImage1,
+			BlogPostingImage blogPostingImage2)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(
+				blogPostingImage1, entityField.getName(), "Aaa");
+			BeanUtils.setProperty(
+				blogPostingImage2, entityField.getName(), "Bbb");
+		}
 	}
 
 	protected Group irrelevantGroup;

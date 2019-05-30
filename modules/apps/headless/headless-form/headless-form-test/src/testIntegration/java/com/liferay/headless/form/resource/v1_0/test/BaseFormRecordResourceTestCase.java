@@ -286,6 +286,14 @@ public abstract class BaseFormRecordResourceTestCase {
 			});
 	}
 
+	@Test
+	public void testGetFormFormRecordsPageEmpty() throws Exception {
+		Page<FormRecord> page = FormRecordResource.getFormFormRecordsPage(
+			testGetFormFormRecordsPage_getFormId(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+	}
+
 	protected FormRecord testGetFormFormRecordsPage_addFormRecord(
 			Long formId, FormRecord formRecord)
 		throws Exception {

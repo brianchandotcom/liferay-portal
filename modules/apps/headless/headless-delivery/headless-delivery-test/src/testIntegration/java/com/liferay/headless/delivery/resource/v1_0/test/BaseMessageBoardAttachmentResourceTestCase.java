@@ -285,6 +285,18 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		assertValid(page);
 	}
 
+	@Test
+	public void testGetMessageBoardMessageMessageBoardAttachmentsPageEmpty()
+		throws Exception {
+
+		Page<MessageBoardAttachment> page =
+			MessageBoardAttachmentResource.
+				getMessageBoardMessageMessageBoardAttachmentsPage(
+					testGetMessageBoardMessageMessageBoardAttachmentsPage_getMessageBoardMessageId());
+
+		Assert.assertEquals(0, page.getTotalCount());
+	}
+
 	protected MessageBoardAttachment
 			testGetMessageBoardMessageMessageBoardAttachmentsPage_addMessageBoardAttachment(
 				Long messageBoardMessageId,
@@ -377,6 +389,18 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 			Arrays.asList(messageBoardAttachment1, messageBoardAttachment2),
 			(List<MessageBoardAttachment>)page.getItems());
 		assertValid(page);
+	}
+
+	@Test
+	public void testGetMessageBoardThreadMessageBoardAttachmentsPageEmpty()
+		throws Exception {
+
+		Page<MessageBoardAttachment> page =
+			MessageBoardAttachmentResource.
+				getMessageBoardThreadMessageBoardAttachmentsPage(
+					testGetMessageBoardThreadMessageBoardAttachmentsPage_getMessageBoardThreadId());
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected MessageBoardAttachment

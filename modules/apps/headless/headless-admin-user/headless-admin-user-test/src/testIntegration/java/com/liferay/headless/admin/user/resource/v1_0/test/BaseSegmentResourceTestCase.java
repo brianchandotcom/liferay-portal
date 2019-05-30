@@ -251,6 +251,14 @@ public abstract class BaseSegmentResourceTestCase {
 			});
 	}
 
+	@Test
+	public void testGetSiteSegmentsPageEmpty() throws Exception {
+		Page<Segment> page = SegmentResource.getSiteSegmentsPage(
+			testGetSiteSegmentsPage_getSiteId(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+	}
+
 	protected Segment testGetSiteSegmentsPage_addSegment(
 			Long siteId, Segment segment)
 		throws Exception {
@@ -310,6 +318,15 @@ public abstract class BaseSegmentResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(segment1, segment2), (List<Segment>)page.getItems());
 		assertValid(page);
+	}
+
+	@Test
+	public void testGetSiteUserAccountSegmentsPageEmpty() throws Exception {
+		Page<Segment> page = SegmentResource.getSiteUserAccountSegmentsPage(
+			testGetSiteUserAccountSegmentsPage_getSiteId(),
+			testGetSiteUserAccountSegmentsPage_getUserAccountId());
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected Segment testGetSiteUserAccountSegmentsPage_addSegment(

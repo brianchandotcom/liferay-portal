@@ -271,6 +271,18 @@ public abstract class BaseContentSetElementResourceTestCase {
 			});
 	}
 
+	@Test
+	public void testGetContentSetContentSetElementsPageEmpty()
+		throws Exception {
+
+		Page<ContentSetElement> page =
+			ContentSetElementResource.getContentSetContentSetElementsPage(
+				testGetContentSetContentSetElementsPage_getContentSetId(),
+				Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+	}
+
 	protected ContentSetElement
 			testGetContentSetContentSetElementsPage_addContentSetElement(
 				Long contentSetId, ContentSetElement contentSetElement)
@@ -399,6 +411,20 @@ public abstract class BaseContentSetElementResourceTestCase {
 					addAll(contentSetElements2);
 				}
 			});
+	}
+
+	@Test
+	public void testGetSiteContentSetByKeyContentSetElementsPageEmpty()
+		throws Exception {
+
+		Page<ContentSetElement> page =
+			ContentSetElementResource.
+				getSiteContentSetByKeyContentSetElementsPage(
+					testGetSiteContentSetByKeyContentSetElementsPage_getSiteId(),
+					testGetSiteContentSetByKeyContentSetElementsPage_getKey(),
+					Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected ContentSetElement
@@ -544,6 +570,20 @@ public abstract class BaseContentSetElementResourceTestCase {
 					addAll(contentSetElements2);
 				}
 			});
+	}
+
+	@Test
+	public void testGetSiteContentSetByUuidContentSetElementsPageEmpty()
+		throws Exception {
+
+		Page<ContentSetElement> page =
+			ContentSetElementResource.
+				getSiteContentSetByUuidContentSetElementsPage(
+					testGetSiteContentSetByUuidContentSetElementsPage_getSiteId(),
+					testGetSiteContentSetByUuidContentSetElementsPage_getUuid(),
+					Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected ContentSetElement

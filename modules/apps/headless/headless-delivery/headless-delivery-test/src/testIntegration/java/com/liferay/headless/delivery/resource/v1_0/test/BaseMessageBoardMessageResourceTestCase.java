@@ -539,11 +539,59 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		MessageBoardMessage messageBoardMessage1 = randomMessageBoardMessage();
 		MessageBoardMessage messageBoardMessage2 = randomMessageBoardMessage();
 
+		setEntityFieldValueSortDateTime(
+			messageBoardMessage1, messageBoardMessage2);
+
+		messageBoardMessage1 =
+			testGetMessageBoardMessageMessageBoardMessagesPage_addMessageBoardMessage(
+				parentMessageBoardMessageId, messageBoardMessage1);
+
+		messageBoardMessage2 =
+			testGetMessageBoardMessageMessageBoardMessagesPage_addMessageBoardMessage(
+				parentMessageBoardMessageId, messageBoardMessage2);
+
 		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				messageBoardMessage1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
+			Page<MessageBoardMessage> ascPage =
+				MessageBoardMessageResource.
+					getMessageBoardMessageMessageBoardMessagesPage(
+						parentMessageBoardMessageId, null, null,
+						Pagination.of(1, 2), entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(messageBoardMessage1, messageBoardMessage2),
+				(List<MessageBoardMessage>)ascPage.getItems());
+
+			Page<MessageBoardMessage> descPage =
+				MessageBoardMessageResource.
+					getMessageBoardMessageMessageBoardMessagesPage(
+						parentMessageBoardMessageId, null, null,
+						Pagination.of(1, 2), entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(messageBoardMessage2, messageBoardMessage1),
+				(List<MessageBoardMessage>)descPage.getItems());
 		}
+	}
+
+	@Test
+	public void testGetMessageBoardMessageMessageBoardMessagesPageWithSortInteger()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.INTEGER);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long parentMessageBoardMessageId =
+			testGetMessageBoardMessageMessageBoardMessagesPage_getParentMessageBoardMessageId();
+
+		MessageBoardMessage messageBoardMessage1 = randomMessageBoardMessage();
+		MessageBoardMessage messageBoardMessage2 = randomMessageBoardMessage();
+
+		setEntityFieldValueSortInteger(
+			messageBoardMessage1, messageBoardMessage2);
 
 		messageBoardMessage1 =
 			testGetMessageBoardMessageMessageBoardMessagesPage_addMessageBoardMessage(
@@ -593,12 +641,8 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		MessageBoardMessage messageBoardMessage1 = randomMessageBoardMessage();
 		MessageBoardMessage messageBoardMessage2 = randomMessageBoardMessage();
 
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				messageBoardMessage1, entityField.getName(), "Aaa");
-			BeanUtils.setProperty(
-				messageBoardMessage2, entityField.getName(), "Bbb");
-		}
+		setEntityFieldValueSortString(
+			messageBoardMessage1, messageBoardMessage2);
 
 		messageBoardMessage1 =
 			testGetMessageBoardMessageMessageBoardMessagesPage_addMessageBoardMessage(
@@ -629,6 +673,20 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				Arrays.asList(messageBoardMessage2, messageBoardMessage1),
 				(List<MessageBoardMessage>)descPage.getItems());
 		}
+	}
+
+	@Test
+	public void testGetMessageBoardMessageMessageBoardMessagesPageEmpty()
+		throws Exception {
+
+		Page<MessageBoardMessage> page =
+			MessageBoardMessageResource.
+				getMessageBoardMessageMessageBoardMessagesPage(
+					testGetMessageBoardMessageMessageBoardMessagesPage_getParentMessageBoardMessageId(),
+					RandomTestUtil.randomString(), null, Pagination.of(1, 2),
+					null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected MessageBoardMessage
@@ -881,11 +939,59 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		MessageBoardMessage messageBoardMessage1 = randomMessageBoardMessage();
 		MessageBoardMessage messageBoardMessage2 = randomMessageBoardMessage();
 
+		setEntityFieldValueSortDateTime(
+			messageBoardMessage1, messageBoardMessage2);
+
+		messageBoardMessage1 =
+			testGetMessageBoardThreadMessageBoardMessagesPage_addMessageBoardMessage(
+				messageBoardThreadId, messageBoardMessage1);
+
+		messageBoardMessage2 =
+			testGetMessageBoardThreadMessageBoardMessagesPage_addMessageBoardMessage(
+				messageBoardThreadId, messageBoardMessage2);
+
 		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				messageBoardMessage1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
+			Page<MessageBoardMessage> ascPage =
+				MessageBoardMessageResource.
+					getMessageBoardThreadMessageBoardMessagesPage(
+						messageBoardThreadId, null, null, Pagination.of(1, 2),
+						entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(messageBoardMessage1, messageBoardMessage2),
+				(List<MessageBoardMessage>)ascPage.getItems());
+
+			Page<MessageBoardMessage> descPage =
+				MessageBoardMessageResource.
+					getMessageBoardThreadMessageBoardMessagesPage(
+						messageBoardThreadId, null, null, Pagination.of(1, 2),
+						entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(messageBoardMessage2, messageBoardMessage1),
+				(List<MessageBoardMessage>)descPage.getItems());
 		}
+	}
+
+	@Test
+	public void testGetMessageBoardThreadMessageBoardMessagesPageWithSortInteger()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.INTEGER);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long messageBoardThreadId =
+			testGetMessageBoardThreadMessageBoardMessagesPage_getMessageBoardThreadId();
+
+		MessageBoardMessage messageBoardMessage1 = randomMessageBoardMessage();
+		MessageBoardMessage messageBoardMessage2 = randomMessageBoardMessage();
+
+		setEntityFieldValueSortInteger(
+			messageBoardMessage1, messageBoardMessage2);
 
 		messageBoardMessage1 =
 			testGetMessageBoardThreadMessageBoardMessagesPage_addMessageBoardMessage(
@@ -935,12 +1041,8 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		MessageBoardMessage messageBoardMessage1 = randomMessageBoardMessage();
 		MessageBoardMessage messageBoardMessage2 = randomMessageBoardMessage();
 
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				messageBoardMessage1, entityField.getName(), "Aaa");
-			BeanUtils.setProperty(
-				messageBoardMessage2, entityField.getName(), "Bbb");
-		}
+		setEntityFieldValueSortString(
+			messageBoardMessage1, messageBoardMessage2);
 
 		messageBoardMessage1 =
 			testGetMessageBoardThreadMessageBoardMessagesPage_addMessageBoardMessage(
@@ -971,6 +1073,20 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				Arrays.asList(messageBoardMessage2, messageBoardMessage1),
 				(List<MessageBoardMessage>)descPage.getItems());
 		}
+	}
+
+	@Test
+	public void testGetMessageBoardThreadMessageBoardMessagesPageEmpty()
+		throws Exception {
+
+		Page<MessageBoardMessage> page =
+			MessageBoardMessageResource.
+				getMessageBoardThreadMessageBoardMessagesPage(
+					testGetMessageBoardThreadMessageBoardMessagesPage_getMessageBoardThreadId(),
+					RandomTestUtil.randomString(), null, Pagination.of(1, 2),
+					null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected MessageBoardMessage
@@ -1698,6 +1814,53 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		throws Exception {
 
 		return randomMessageBoardMessage();
+	}
+
+	protected void setEntityFieldValueSortDateTime(
+			MessageBoardMessage messageBoardMessage1,
+			MessageBoardMessage messageBoardMessage2)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(
+				messageBoardMessage1, entityField.getName(),
+				DateUtils.addMinutes(new Date(), -2));
+		}
+	}
+
+	protected void setEntityFieldValueSortInteger(
+			MessageBoardMessage messageBoardMessage1,
+			MessageBoardMessage messageBoardMessage2)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.INTEGER);
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(
+				messageBoardMessage1, entityField.getName(), 0);
+			BeanUtils.setProperty(
+				messageBoardMessage2, entityField.getName(), 1);
+		}
+	}
+
+	protected void setEntityFieldValueSortString(
+			MessageBoardMessage messageBoardMessage1,
+			MessageBoardMessage messageBoardMessage2)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(
+				messageBoardMessage1, entityField.getName(), "Aaa");
+			BeanUtils.setProperty(
+				messageBoardMessage2, entityField.getName(), "Bbb");
+		}
 	}
 
 	protected Group irrelevantGroup;

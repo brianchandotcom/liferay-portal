@@ -265,6 +265,16 @@ public abstract class BaseDataLayoutResourceTestCase {
 			});
 	}
 
+	@Test
+	public void testGetDataDefinitionDataLayoutsPageEmpty() throws Exception {
+		Page<DataLayout> page =
+			DataLayoutResource.getDataDefinitionDataLayoutsPage(
+				testGetDataDefinitionDataLayoutsPage_getDataDefinitionId(),
+				RandomTestUtil.randomString(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+	}
+
 	protected DataLayout testGetDataDefinitionDataLayoutsPage_addDataLayout(
 			Long dataDefinitionId, DataLayout dataLayout)
 		throws Exception {
@@ -449,6 +459,15 @@ public abstract class BaseDataLayoutResourceTestCase {
 					addAll(dataLayouts2);
 				}
 			});
+	}
+
+	@Test
+	public void testGetSiteDataLayoutPageEmpty() throws Exception {
+		Page<DataLayout> page = DataLayoutResource.getSiteDataLayoutPage(
+			testGetSiteDataLayoutPage_getSiteId(),
+			RandomTestUtil.randomString(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected DataLayout testGetSiteDataLayoutPage_addDataLayout(

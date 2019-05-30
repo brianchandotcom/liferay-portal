@@ -21,7 +21,6 @@ import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.engine.exception.CTCollectionDescriptionCTEngineException;
 import com.liferay.change.tracking.engine.exception.CTCollectionNameCTEngineException;
 import com.liferay.change.tracking.engine.exception.CTEngineException;
-import com.liferay.change.tracking.engine.exception.CTEngineSystemException;
 import com.liferay.change.tracking.exception.CTCollectionDescriptionException;
 import com.liferay.change.tracking.exception.CTCollectionNameException;
 import com.liferay.change.tracking.internal.util.ChangeTrackingThreadLocal;
@@ -29,14 +28,13 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryAggregate;
 import com.liferay.change.tracking.model.CTProcess;
+import com.liferay.change.tracking.model.impl.CTCollectionImpl;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryAggregateLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.settings.CTSettingsManager;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -47,9 +45,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -73,7 +73,9 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -81,6 +83,15 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = CTEngineManager.class)
 public class CTEngineManagerImpl implements CTEngineManager {
+
+	@Activate
+	public void activate() {
+		List<Company> companies = _companyLocalService.getCompanies();
+
+		companies.forEach(
+			company -> _productionCTCollections.put(
+				company.getCompanyId(), _createProductionCTCollection()));
+	}
 
 	@Override
 	public void checkoutCTCollection(long userId, long ctCollectionId) {
@@ -94,15 +105,17 @@ public class CTEngineManagerImpl implements CTEngineManager {
 			return;
 		}
 
-		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
-			ctCollectionId);
+		if (ctCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+			CTCollection ctCollection =
+				_ctCollectionLocalService.fetchCTCollection(ctCollectionId);
 
-		if (ctCollection == null) {
-			_log.error(
-				"Unable to checkout change tracking collection " +
-					ctCollectionId);
+			if (ctCollection == null) {
+				_log.error(
+					"Unable to checkout change tracking collection " +
+						ctCollectionId);
 
-			return;
+				return;
+			}
 		}
 
 		try {
@@ -148,6 +161,11 @@ public class CTEngineManagerImpl implements CTEngineManager {
 		}
 
 		return _createCTCollection(userId, name, description);
+	}
+
+	@Deactivate
+	public void deactivate() {
+		_productionCTCollections.clear();
 	}
 
 	@Override
@@ -381,9 +399,7 @@ public class CTEngineManagerImpl implements CTEngineManager {
 			companyId);
 
 		if (productionCTCollection == null) {
-			productionCTCollection =
-				_ctCollectionLocalService.fetchCTCollection(
-					companyId, CTConstants.CT_COLLECTION_NAME_PRODUCTION);
+			productionCTCollection = _createProductionCTCollection();
 
 			_productionCTCollections.put(companyId, productionCTCollection);
 		}
@@ -526,17 +542,21 @@ public class CTEngineManagerImpl implements CTEngineManager {
 		return Optional.ofNullable(ctCollection);
 	}
 
-	private void _enableChangeTracking(long userId) throws PortalException {
-		Optional<CTCollection> ctCollectionOptional = _createCTCollection(
-			userId, CTConstants.CT_COLLECTION_NAME_PRODUCTION,
-			StringPool.BLANK);
+	private CTCollection _createProductionCTCollection() {
+		CTCollection productionCTCollection = new CTCollectionImpl();
+
+		productionCTCollection.setCtCollectionId(
+			CTConstants.CT_COLLECTION_ID_PRODUCTION);
+		productionCTCollection.setName(
+			CTConstants.CT_COLLECTION_NAME_PRODUCTION);
+
+		return productionCTCollection;
+	}
+
+	private void _enableChangeTracking(long userId) {
+		CTCollection productionCTCollection = _createProductionCTCollection();
 
 		long companyId = _getCompanyId(userId);
-
-		CTCollection productionCTCollection = ctCollectionOptional.orElseThrow(
-			() -> new CTEngineSystemException(
-				companyId,
-				"Unable to create production change tracking collection"));
 
 		_productionCTCollections.put(companyId, productionCTCollection);
 
@@ -612,6 +632,9 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTEngineManagerImpl.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;

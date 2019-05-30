@@ -139,8 +139,6 @@
 		this.init(toggler, options);
 	};
 
-	SideNavigation.TRANSITION_DURATION = 500;
-
 	SideNavigation.prototype = {
 		init: function(toggler, options) {
 			const instance = this;
@@ -286,7 +284,7 @@
 					type: 'closedStart.lexicon.sidenav'
 				});
 
-				instance._subscribeSidenavTransitionEnd($(content), function() {
+				instance._subscribeSidenavTransitionEnd(content, function() {
 					removeClass(container, 'sidenav-transition');
 					removeClass(toggler, 'sidenav-transition');
 
@@ -469,7 +467,7 @@
 					type: 'openStart.lexicon.sidenav'
 				});
 
-				instance._subscribeSidenavTransitionEnd($(content), function() {
+				instance._subscribeSidenavTransitionEnd(content, function() {
 					removeClass(container, 'sidenav-transition');
 					removeClass(toggler, 'sidenav-transition');
 
@@ -531,7 +529,7 @@
 				});
 			}
 
-			instance._subscribeSidenavTransitionEnd($(container), function() {
+			instance._subscribeSidenavTransitionEnd(container, function() {
 				const menu = container.querySelector('.sidenav-menu');
 
 				if (hasClass(container, 'closed')) {
@@ -778,28 +776,14 @@
 			}
 		},
 
-		_subscribeSidenavTransitionEnd: function($el, fn) {
-			const instance = this;
+		_subscribeSidenavTransitionEnd: function(element, fn) {
+			const subscription = subscribe(element, 'transitionend', () => {
+				subscription.dispose();
 
-			const transitionEnd = 'bsTransitionEnd';
+				removeClass(element, 'sidenav-transition');
 
-			function complete() {
-				removeClass($el, 'sidenav-transition');
-
-				if (fn) {
-					fn();
-				}
-			};
-
-			if (!bootstrap.Util.supportsTransitionEnd()) {
-				complete.call(instance);
-			}
-			else {
-				$el.one(transitionEnd, function(event) {
-					complete();
-				})
-				.emulateTransitionEnd(SideNavigation.TRANSITION_DURATION);
-			}
+				fn();
+			});
 		},
 
 		_renderNav: function() {

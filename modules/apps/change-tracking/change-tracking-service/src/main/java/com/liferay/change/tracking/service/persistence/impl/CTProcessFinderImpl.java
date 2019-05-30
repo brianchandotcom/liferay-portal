@@ -114,7 +114,7 @@ public class CTProcessFinderImpl
 
 			if (status == WorkflowConstants.STATUS_ANY) {
 				sql = StringUtil.replace(
-					sql, "(BackgroundTask.status = ?) AND", StringPool.BLANK);
+					sql, "AND (BackgroundTask.status = ?)", StringPool.BLANK);
 			}
 
 			sql = _customSQL.replaceOrderBy(sql, orderByComparator);

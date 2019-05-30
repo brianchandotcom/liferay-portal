@@ -118,6 +118,11 @@ PortalLDAPUtil.getGroups(themeDisplay.getCompanyId(), ldapContext, new byte[0], 
 		if (counter == 0) {
 	%>
 
+			<col width="5%" />
+			<col width="25%" />
+			<col width="60%" />
+			<col width="15%%" />
+
 			<tr>
 				<th>
 					#

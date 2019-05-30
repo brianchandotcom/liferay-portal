@@ -4,6 +4,7 @@
 	<source-processor name="all">
 		<check name="CDNCheck" />
 		<check name="IncorrectFileLocationCheck" />
+		<check name="NonbreakingSpaceCheck" />
 		<check name="ReturnCharacterCheck" />
 		<check name="SlantedQuotesCheck">
 			<property name="enabled" value="false" />

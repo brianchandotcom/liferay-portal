@@ -334,8 +334,8 @@
 							}
 						);
 
-						var updateMessage = function(message, type) {
-							connectionMessages.html('<span class="alert alert-' + type + '">' + message + '</span>');
+						var updateMessage = function(message) {
+							connectionMessages.html('<div class="alert alert-danger"><span class="alert-indicator"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-exclamation-full"><use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#exclamation-full"></use></svg></span><strong class="lead"><liferay-ui:message key="error-colon" /></strong>' + message + '</div>');
 						};
 
 						var startInstall = function() {
@@ -365,7 +365,7 @@
 													failure: function(event, id, obj) {
 														loadingMask.hide();
 
-														updateMessage('<%= UnicodeLanguageUtil.get(request, "an-unexpected-error-occurred-while-connecting-to-the-database") %>', 'danger');
+														updateMessage('<%= UnicodeLanguageUtil.get(request, "an-unexpected-error-occurred-while-connecting-to-the-database") %>);
 													},
 													success: function(event, id, obj) {
 														command.val('<%= Constants.UPDATE %>');
@@ -373,7 +373,7 @@
 														var responseData = this.get('responseData');
 
 														if (!responseData.success) {
-															updateMessage(responseData.message, 'danger');
+															updateMessage(responseData.message);
 
 															loadingMask.hide();
 														}
@@ -406,7 +406,13 @@
 					<c:choose>
 						<c:when test="<%= propertiesFileCreated %>">
 							<div class="alert alert-success">
-								<liferay-ui:message key="your-configuration-was-saved-sucessfully" />
+								<span class="alert-indicator">
+									<svg aria-hidden="true" class="lexicon-icon lexicon-icon-check-circle-full">
+										<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#check-circle-full"></use>
+									</svg>
+								</span>
+
+								<strong class="lead"><liferay-ui:message key="success-colon" /></strong><liferay-ui:message key="your-configuration-was-saved-sucessfully" />
 							</div>
 
 							<p class="lfr-setup-notice">
@@ -429,18 +435,29 @@
 							</c:if>
 
 							<div class="alert alert-info">
-								<liferay-ui:message key="changes-will-take-effect-once-the-portal-is-restarted-please-restart-the-portal-now" />
+								<span class="alert-indicator">
+									<svg aria-hidden="true" class="lexicon-icon lexicon-icon-info-circle">
+										<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#info-circle"></use>
+									</svg>
+								</span>
+
+								<strong class="lead"><liferay-ui:message key="info" />:</strong><liferay-ui:message key="changes-will-take-effect-once-the-portal-is-restarted-please-restart-the-portal-now" />
 							</div>
 						</c:when>
 						<c:otherwise>
 							<p>
 								<div class="alert alert-warning">
+									<span class="alert-indicator">
+										<svg aria-hidden="true" class="lexicon-icon lexicon-icon-warning-full">
+											<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#warning-full"></use>
+										</svg>
+									</span>
 
 									<%
 									String taglibArguments = "<span class=\"lfr-inline-code\">" + PropsValues.LIFERAY_HOME + "</span>";
 									%>
 
-									<liferay-ui:message arguments="<%= taglibArguments %>" key="sorry,-we-were-not-able-to-save-the-configuration-file-in-x" translateArguments="<%= false %>" />
+									<strong class="lead"><liferay-ui:message key="warning-colon" /></strong><liferay-ui:message arguments="<%= taglibArguments %>" key="sorry,-we-were-not-able-to-save-the-configuration-file-in-x" translateArguments="<%= false %>" />
 								</div>
 							</p>
 

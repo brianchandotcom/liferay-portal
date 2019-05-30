@@ -189,6 +189,14 @@ public abstract class BaseWebUrlResourceTestCase {
 		assertValid(page);
 	}
 
+	@Test
+	public void testGetOrganizationWebUrlsPageEmpty() throws Exception {
+		Page<WebUrl> page = WebUrlResource.getOrganizationWebUrlsPage(
+			testGetOrganizationWebUrlsPage_getOrganizationId());
+
+		Assert.assertEquals(0, page.getTotalCount());
+	}
+
 	protected WebUrl testGetOrganizationWebUrlsPage_addWebUrl(
 			Long organizationId, WebUrl webUrl)
 		throws Exception {
@@ -244,6 +252,14 @@ public abstract class BaseWebUrlResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(webUrl1, webUrl2), (List<WebUrl>)page.getItems());
 		assertValid(page);
+	}
+
+	@Test
+	public void testGetUserAccountWebUrlsPageEmpty() throws Exception {
+		Page<WebUrl> page = WebUrlResource.getUserAccountWebUrlsPage(
+			testGetUserAccountWebUrlsPage_getUserAccountId());
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected WebUrl testGetUserAccountWebUrlsPage_addWebUrl(

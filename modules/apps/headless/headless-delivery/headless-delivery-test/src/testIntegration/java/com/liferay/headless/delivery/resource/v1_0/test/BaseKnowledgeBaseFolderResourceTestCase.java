@@ -377,6 +377,19 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			});
 	}
 
+	@Test
+	public void testGetKnowledgeBaseFolderKnowledgeBaseFoldersPageEmpty()
+		throws Exception {
+
+		Page<KnowledgeBaseFolder> page =
+			KnowledgeBaseFolderResource.
+				getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
+					testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getParentKnowledgeBaseFolderId(),
+					Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+	}
+
 	protected KnowledgeBaseFolder
 			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 				Long parentKnowledgeBaseFolderId,
@@ -522,6 +535,16 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 					addAll(knowledgeBaseFolders2);
 				}
 			});
+	}
+
+	@Test
+	public void testGetSiteKnowledgeBaseFoldersPageEmpty() throws Exception {
+		Page<KnowledgeBaseFolder> page =
+			KnowledgeBaseFolderResource.getSiteKnowledgeBaseFoldersPage(
+				testGetSiteKnowledgeBaseFoldersPage_getSiteId(),
+				Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected KnowledgeBaseFolder

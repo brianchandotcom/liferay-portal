@@ -285,11 +285,46 @@ public abstract class BaseOrganizationResourceTestCase {
 		Organization organization1 = randomOrganization();
 		Organization organization2 = randomOrganization();
 
+		setEntityFieldValueSortDateTime(organization1, organization2);
+
+		organization1 = testGetOrganizationsPage_addOrganization(organization1);
+
+		organization2 = testGetOrganizationsPage_addOrganization(organization2);
+
 		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				organization1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
+			Page<Organization> ascPage =
+				OrganizationResource.getOrganizationsPage(
+					null, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(organization1, organization2),
+				(List<Organization>)ascPage.getItems());
+
+			Page<Organization> descPage =
+				OrganizationResource.getOrganizationsPage(
+					null, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(organization2, organization1),
+				(List<Organization>)descPage.getItems());
 		}
+	}
+
+	@Test
+	public void testGetOrganizationsPageWithSortInteger() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.INTEGER);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Organization organization1 = randomOrganization();
+		Organization organization2 = randomOrganization();
+
+		setEntityFieldValueSortInteger(organization1, organization2);
 
 		organization1 = testGetOrganizationsPage_addOrganization(organization1);
 
@@ -328,10 +363,7 @@ public abstract class BaseOrganizationResourceTestCase {
 		Organization organization1 = randomOrganization();
 		Organization organization2 = randomOrganization();
 
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(organization1, entityField.getName(), "Aaa");
-			BeanUtils.setProperty(organization2, entityField.getName(), "Bbb");
-		}
+		setEntityFieldValueSortString(organization1, organization2);
 
 		organization1 = testGetOrganizationsPage_addOrganization(organization1);
 
@@ -356,6 +388,14 @@ public abstract class BaseOrganizationResourceTestCase {
 				Arrays.asList(organization2, organization1),
 				(List<Organization>)descPage.getItems());
 		}
+	}
+
+	@Test
+	public void testGetOrganizationsPageEmpty() throws Exception {
+		Page<Organization> page = OrganizationResource.getOrganizationsPage(
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected Organization testGetOrganizationsPage_addOrganization(
@@ -566,11 +606,53 @@ public abstract class BaseOrganizationResourceTestCase {
 		Organization organization1 = randomOrganization();
 		Organization organization2 = randomOrganization();
 
+		setEntityFieldValueSortDateTime(organization1, organization2);
+
+		organization1 = testGetOrganizationOrganizationsPage_addOrganization(
+			parentOrganizationId, organization1);
+
+		organization2 = testGetOrganizationOrganizationsPage_addOrganization(
+			parentOrganizationId, organization2);
+
 		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				organization1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
+			Page<Organization> ascPage =
+				OrganizationResource.getOrganizationOrganizationsPage(
+					parentOrganizationId, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(organization1, organization2),
+				(List<Organization>)ascPage.getItems());
+
+			Page<Organization> descPage =
+				OrganizationResource.getOrganizationOrganizationsPage(
+					parentOrganizationId, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(organization2, organization1),
+				(List<Organization>)descPage.getItems());
 		}
+	}
+
+	@Test
+	public void testGetOrganizationOrganizationsPageWithSortInteger()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.INTEGER);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long parentOrganizationId =
+			testGetOrganizationOrganizationsPage_getParentOrganizationId();
+
+		Organization organization1 = randomOrganization();
+		Organization organization2 = randomOrganization();
+
+		setEntityFieldValueSortInteger(organization1, organization2);
 
 		organization1 = testGetOrganizationOrganizationsPage_addOrganization(
 			parentOrganizationId, organization1);
@@ -616,10 +698,7 @@ public abstract class BaseOrganizationResourceTestCase {
 		Organization organization1 = randomOrganization();
 		Organization organization2 = randomOrganization();
 
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(organization1, entityField.getName(), "Aaa");
-			BeanUtils.setProperty(organization2, entityField.getName(), "Bbb");
-		}
+		setEntityFieldValueSortString(organization1, organization2);
 
 		organization1 = testGetOrganizationOrganizationsPage_addOrganization(
 			parentOrganizationId, organization1);
@@ -646,6 +725,16 @@ public abstract class BaseOrganizationResourceTestCase {
 				Arrays.asList(organization2, organization1),
 				(List<Organization>)descPage.getItems());
 		}
+	}
+
+	@Test
+	public void testGetOrganizationOrganizationsPageEmpty() throws Exception {
+		Page<Organization> page =
+			OrganizationResource.getOrganizationOrganizationsPage(
+				testGetOrganizationOrganizationsPage_getParentOrganizationId(),
+				RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected Organization testGetOrganizationOrganizationsPage_addOrganization(
@@ -1219,6 +1308,46 @@ public abstract class BaseOrganizationResourceTestCase {
 
 	protected Organization randomPatchOrganization() throws Exception {
 		return randomOrganization();
+	}
+
+	protected void setEntityFieldValueSortDateTime(
+			Organization organization1, Organization organization2)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(
+				organization1, entityField.getName(),
+				DateUtils.addMinutes(new Date(), -2));
+		}
+	}
+
+	protected void setEntityFieldValueSortInteger(
+			Organization organization1, Organization organization2)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.INTEGER);
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(organization1, entityField.getName(), 0);
+			BeanUtils.setProperty(organization2, entityField.getName(), 1);
+		}
+	}
+
+	protected void setEntityFieldValueSortString(
+			Organization organization1, Organization organization2)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(organization1, entityField.getName(), "Aaa");
+			BeanUtils.setProperty(organization2, entityField.getName(), "Bbb");
+		}
 	}
 
 	protected Group irrelevantGroup;

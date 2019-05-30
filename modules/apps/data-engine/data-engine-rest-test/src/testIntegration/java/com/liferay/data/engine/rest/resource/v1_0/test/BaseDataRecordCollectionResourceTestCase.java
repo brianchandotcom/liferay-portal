@@ -263,6 +263,19 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			});
 	}
 
+	@Test
+	public void testGetDataDefinitionDataRecordCollectionsPageEmpty()
+		throws Exception {
+
+		Page<DataRecordCollection> page =
+			DataRecordCollectionResource.
+				getDataDefinitionDataRecordCollectionsPage(
+					testGetDataDefinitionDataRecordCollectionsPage_getDataDefinitionId(),
+					RandomTestUtil.randomString(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+	}
+
 	protected DataRecordCollection
 			testGetDataDefinitionDataRecordCollectionsPage_addDataRecordCollection(
 				Long dataDefinitionId,
@@ -501,6 +514,16 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 					addAll(dataRecordCollections2);
 				}
 			});
+	}
+
+	@Test
+	public void testGetSiteDataRecordCollectionsPageEmpty() throws Exception {
+		Page<DataRecordCollection> page =
+			DataRecordCollectionResource.getSiteDataRecordCollectionsPage(
+				testGetSiteDataRecordCollectionsPage_getSiteId(),
+				RandomTestUtil.randomString(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected DataRecordCollection

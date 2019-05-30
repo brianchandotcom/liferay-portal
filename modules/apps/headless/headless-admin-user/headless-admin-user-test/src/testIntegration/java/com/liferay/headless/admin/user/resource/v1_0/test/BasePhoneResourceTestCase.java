@@ -188,6 +188,14 @@ public abstract class BasePhoneResourceTestCase {
 		assertValid(page);
 	}
 
+	@Test
+	public void testGetOrganizationPhonesPageEmpty() throws Exception {
+		Page<Phone> page = PhoneResource.getOrganizationPhonesPage(
+			testGetOrganizationPhonesPage_getOrganizationId());
+
+		Assert.assertEquals(0, page.getTotalCount());
+	}
+
 	protected Phone testGetOrganizationPhonesPage_addPhone(
 			Long organizationId, Phone phone)
 		throws Exception {
@@ -258,6 +266,14 @@ public abstract class BasePhoneResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(phone1, phone2), (List<Phone>)page.getItems());
 		assertValid(page);
+	}
+
+	@Test
+	public void testGetUserAccountPhonesPageEmpty() throws Exception {
+		Page<Phone> page = PhoneResource.getUserAccountPhonesPage(
+			testGetUserAccountPhonesPage_getUserAccountId());
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected Phone testGetUserAccountPhonesPage_addPhone(

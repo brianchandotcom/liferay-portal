@@ -265,6 +265,15 @@ public abstract class BaseFormStructureResourceTestCase {
 			});
 	}
 
+	@Test
+	public void testGetSiteFormStructuresPageEmpty() throws Exception {
+		Page<FormStructure> page =
+			FormStructureResource.getSiteFormStructuresPage(
+				testGetSiteFormStructuresPage_getSiteId(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+	}
+
 	protected FormStructure testGetSiteFormStructuresPage_addFormStructure(
 			Long siteId, FormStructure formStructure)
 		throws Exception {

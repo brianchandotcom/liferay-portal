@@ -527,11 +527,61 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		KnowledgeBaseArticle knowledgeBaseArticle2 =
 			randomKnowledgeBaseArticle();
 
+		setEntityFieldValueSortDateTime(
+			knowledgeBaseArticle1, knowledgeBaseArticle2);
+
+		knowledgeBaseArticle1 =
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
+				parentKnowledgeBaseArticleId, knowledgeBaseArticle1);
+
+		knowledgeBaseArticle2 =
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
+				parentKnowledgeBaseArticleId, knowledgeBaseArticle2);
+
 		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				knowledgeBaseArticle1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
+			Page<KnowledgeBaseArticle> ascPage =
+				KnowledgeBaseArticleResource.
+					getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
+						parentKnowledgeBaseArticleId, null, null,
+						Pagination.of(1, 2), entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(knowledgeBaseArticle1, knowledgeBaseArticle2),
+				(List<KnowledgeBaseArticle>)ascPage.getItems());
+
+			Page<KnowledgeBaseArticle> descPage =
+				KnowledgeBaseArticleResource.
+					getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
+						parentKnowledgeBaseArticleId, null, null,
+						Pagination.of(1, 2), entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(knowledgeBaseArticle2, knowledgeBaseArticle1),
+				(List<KnowledgeBaseArticle>)descPage.getItems());
 		}
+	}
+
+	@Test
+	public void testGetKnowledgeBaseArticleKnowledgeBaseArticlesPageWithSortInteger()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.INTEGER);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long parentKnowledgeBaseArticleId =
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId();
+
+		KnowledgeBaseArticle knowledgeBaseArticle1 =
+			randomKnowledgeBaseArticle();
+		KnowledgeBaseArticle knowledgeBaseArticle2 =
+			randomKnowledgeBaseArticle();
+
+		setEntityFieldValueSortInteger(
+			knowledgeBaseArticle1, knowledgeBaseArticle2);
 
 		knowledgeBaseArticle1 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
@@ -583,12 +633,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		KnowledgeBaseArticle knowledgeBaseArticle2 =
 			randomKnowledgeBaseArticle();
 
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				knowledgeBaseArticle1, entityField.getName(), "Aaa");
-			BeanUtils.setProperty(
-				knowledgeBaseArticle2, entityField.getName(), "Bbb");
-		}
+		setEntityFieldValueSortString(
+			knowledgeBaseArticle1, knowledgeBaseArticle2);
 
 		knowledgeBaseArticle1 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
@@ -619,6 +665,20 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				Arrays.asList(knowledgeBaseArticle2, knowledgeBaseArticle1),
 				(List<KnowledgeBaseArticle>)descPage.getItems());
 		}
+	}
+
+	@Test
+	public void testGetKnowledgeBaseArticleKnowledgeBaseArticlesPageEmpty()
+		throws Exception {
+
+		Page<KnowledgeBaseArticle> page =
+			KnowledgeBaseArticleResource.
+				getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
+					testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId(),
+					RandomTestUtil.randomString(), null, Pagination.of(1, 2),
+					null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected KnowledgeBaseArticle
@@ -876,11 +936,61 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		KnowledgeBaseArticle knowledgeBaseArticle2 =
 			randomKnowledgeBaseArticle();
 
+		setEntityFieldValueSortDateTime(
+			knowledgeBaseArticle1, knowledgeBaseArticle2);
+
+		knowledgeBaseArticle1 =
+			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
+				knowledgeBaseFolderId, knowledgeBaseArticle1);
+
+		knowledgeBaseArticle2 =
+			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
+				knowledgeBaseFolderId, knowledgeBaseArticle2);
+
 		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				knowledgeBaseArticle1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
+			Page<KnowledgeBaseArticle> ascPage =
+				KnowledgeBaseArticleResource.
+					getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
+						knowledgeBaseFolderId, null, null, null,
+						Pagination.of(1, 2), entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(knowledgeBaseArticle1, knowledgeBaseArticle2),
+				(List<KnowledgeBaseArticle>)ascPage.getItems());
+
+			Page<KnowledgeBaseArticle> descPage =
+				KnowledgeBaseArticleResource.
+					getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
+						knowledgeBaseFolderId, null, null, null,
+						Pagination.of(1, 2), entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(knowledgeBaseArticle2, knowledgeBaseArticle1),
+				(List<KnowledgeBaseArticle>)descPage.getItems());
 		}
+	}
+
+	@Test
+	public void testGetKnowledgeBaseFolderKnowledgeBaseArticlesPageWithSortInteger()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.INTEGER);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long knowledgeBaseFolderId =
+			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_getKnowledgeBaseFolderId();
+
+		KnowledgeBaseArticle knowledgeBaseArticle1 =
+			randomKnowledgeBaseArticle();
+		KnowledgeBaseArticle knowledgeBaseArticle2 =
+			randomKnowledgeBaseArticle();
+
+		setEntityFieldValueSortInteger(
+			knowledgeBaseArticle1, knowledgeBaseArticle2);
 
 		knowledgeBaseArticle1 =
 			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
@@ -932,12 +1042,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		KnowledgeBaseArticle knowledgeBaseArticle2 =
 			randomKnowledgeBaseArticle();
 
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				knowledgeBaseArticle1, entityField.getName(), "Aaa");
-			BeanUtils.setProperty(
-				knowledgeBaseArticle2, entityField.getName(), "Bbb");
-		}
+		setEntityFieldValueSortString(
+			knowledgeBaseArticle1, knowledgeBaseArticle2);
 
 		knowledgeBaseArticle1 =
 			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
@@ -968,6 +1074,20 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				Arrays.asList(knowledgeBaseArticle2, knowledgeBaseArticle1),
 				(List<KnowledgeBaseArticle>)descPage.getItems());
 		}
+	}
+
+	@Test
+	public void testGetKnowledgeBaseFolderKnowledgeBaseArticlesPageEmpty()
+		throws Exception {
+
+		Page<KnowledgeBaseArticle> page =
+			KnowledgeBaseArticleResource.
+				getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
+					testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_getKnowledgeBaseFolderId(),
+					null, RandomTestUtil.randomString(), null,
+					Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected KnowledgeBaseArticle
@@ -1207,11 +1327,58 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		KnowledgeBaseArticle knowledgeBaseArticle2 =
 			randomKnowledgeBaseArticle();
 
+		setEntityFieldValueSortDateTime(
+			knowledgeBaseArticle1, knowledgeBaseArticle2);
+
+		knowledgeBaseArticle1 =
+			testGetSiteKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
+				siteId, knowledgeBaseArticle1);
+
+		knowledgeBaseArticle2 =
+			testGetSiteKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
+				siteId, knowledgeBaseArticle2);
+
 		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				knowledgeBaseArticle1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
+			Page<KnowledgeBaseArticle> ascPage =
+				KnowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
+					siteId, null, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(knowledgeBaseArticle1, knowledgeBaseArticle2),
+				(List<KnowledgeBaseArticle>)ascPage.getItems());
+
+			Page<KnowledgeBaseArticle> descPage =
+				KnowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
+					siteId, null, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(knowledgeBaseArticle2, knowledgeBaseArticle1),
+				(List<KnowledgeBaseArticle>)descPage.getItems());
 		}
+	}
+
+	@Test
+	public void testGetSiteKnowledgeBaseArticlesPageWithSortInteger()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.INTEGER);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteKnowledgeBaseArticlesPage_getSiteId();
+
+		KnowledgeBaseArticle knowledgeBaseArticle1 =
+			randomKnowledgeBaseArticle();
+		KnowledgeBaseArticle knowledgeBaseArticle2 =
+			randomKnowledgeBaseArticle();
+
+		setEntityFieldValueSortInteger(
+			knowledgeBaseArticle1, knowledgeBaseArticle2);
 
 		knowledgeBaseArticle1 =
 			testGetSiteKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
@@ -1260,12 +1427,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		KnowledgeBaseArticle knowledgeBaseArticle2 =
 			randomKnowledgeBaseArticle();
 
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				knowledgeBaseArticle1, entityField.getName(), "Aaa");
-			BeanUtils.setProperty(
-				knowledgeBaseArticle2, entityField.getName(), "Bbb");
-		}
+		setEntityFieldValueSortString(
+			knowledgeBaseArticle1, knowledgeBaseArticle2);
 
 		knowledgeBaseArticle1 =
 			testGetSiteKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
@@ -1294,6 +1457,16 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				Arrays.asList(knowledgeBaseArticle2, knowledgeBaseArticle1),
 				(List<KnowledgeBaseArticle>)descPage.getItems());
 		}
+	}
+
+	@Test
+	public void testGetSiteKnowledgeBaseArticlesPageEmpty() throws Exception {
+		Page<KnowledgeBaseArticle> page =
+			KnowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
+				testGetSiteKnowledgeBaseArticlesPage_getSiteId(), null,
+				RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected KnowledgeBaseArticle
@@ -2138,6 +2311,53 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		throws Exception {
 
 		return randomKnowledgeBaseArticle();
+	}
+
+	protected void setEntityFieldValueSortDateTime(
+			KnowledgeBaseArticle knowledgeBaseArticle1,
+			KnowledgeBaseArticle knowledgeBaseArticle2)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(
+				knowledgeBaseArticle1, entityField.getName(),
+				DateUtils.addMinutes(new Date(), -2));
+		}
+	}
+
+	protected void setEntityFieldValueSortInteger(
+			KnowledgeBaseArticle knowledgeBaseArticle1,
+			KnowledgeBaseArticle knowledgeBaseArticle2)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.INTEGER);
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(
+				knowledgeBaseArticle1, entityField.getName(), 0);
+			BeanUtils.setProperty(
+				knowledgeBaseArticle2, entityField.getName(), 1);
+		}
+	}
+
+	protected void setEntityFieldValueSortString(
+			KnowledgeBaseArticle knowledgeBaseArticle1,
+			KnowledgeBaseArticle knowledgeBaseArticle2)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		for (EntityField entityField : entityFields) {
+			BeanUtils.setProperty(
+				knowledgeBaseArticle1, entityField.getName(), "Aaa");
+			BeanUtils.setProperty(
+				knowledgeBaseArticle2, entityField.getName(), "Bbb");
+		}
 	}
 
 	protected Group irrelevantGroup;

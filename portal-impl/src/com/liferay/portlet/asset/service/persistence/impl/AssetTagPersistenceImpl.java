@@ -52,7 +52,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -1987,9 +1986,7 @@ public class AssetTagPersistenceImpl
 			groupIds = new long[0];
 		}
 		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.unique(groupIds);
-
-			Arrays.sort(groupIds);
+			groupIds = ArrayUtil.sortedUnique(groupIds);
 		}
 
 		if (groupIds.length == 1) {
@@ -2177,9 +2174,7 @@ public class AssetTagPersistenceImpl
 			groupIds = new long[0];
 		}
 		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.unique(groupIds);
-
-			Arrays.sort(groupIds);
+			groupIds = ArrayUtil.sortedUnique(groupIds);
 		}
 
 		Object[] finderArgs = new Object[] {StringUtil.merge(groupIds)};
@@ -2781,9 +2776,7 @@ public class AssetTagPersistenceImpl
 				names[i] = Objects.toString(names[i], "");
 			}
 
-			names = ArrayUtil.unique(names);
-
-			Arrays.sort(names);
+			names = ArrayUtil.sortedUnique(names);
 		}
 
 		if (names.length == 1) {
@@ -3004,9 +2997,7 @@ public class AssetTagPersistenceImpl
 				names[i] = Objects.toString(names[i], "");
 			}
 
-			names = ArrayUtil.unique(names);
-
-			Arrays.sort(names);
+			names = ArrayUtil.sortedUnique(names);
 		}
 
 		Object[] finderArgs = new Object[] {StringUtil.merge(names)};
@@ -3903,9 +3894,7 @@ public class AssetTagPersistenceImpl
 			groupIds = new long[0];
 		}
 		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.unique(groupIds);
-
-			Arrays.sort(groupIds);
+			groupIds = ArrayUtil.sortedUnique(groupIds);
 		}
 
 		name = Objects.toString(name, "");
@@ -4139,9 +4128,7 @@ public class AssetTagPersistenceImpl
 			groupIds = new long[0];
 		}
 		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.unique(groupIds);
-
-			Arrays.sort(groupIds);
+			groupIds = ArrayUtil.sortedUnique(groupIds);
 		}
 
 		name = Objects.toString(name, "");

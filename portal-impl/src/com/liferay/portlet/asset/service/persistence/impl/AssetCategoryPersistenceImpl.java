@@ -57,7 +57,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -5249,9 +5248,7 @@ public class AssetCategoryPersistenceImpl
 			vocabularyIds = new long[0];
 		}
 		else if (vocabularyIds.length > 1) {
-			vocabularyIds = ArrayUtil.unique(vocabularyIds);
-
-			Arrays.sort(vocabularyIds);
+			vocabularyIds = ArrayUtil.sortedUnique(vocabularyIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -5424,9 +5421,7 @@ public class AssetCategoryPersistenceImpl
 			vocabularyIds = new long[0];
 		}
 		else if (vocabularyIds.length > 1) {
-			vocabularyIds = ArrayUtil.unique(vocabularyIds);
-
-			Arrays.sort(vocabularyIds);
+			vocabularyIds = ArrayUtil.sortedUnique(vocabularyIds);
 		}
 
 		if (vocabularyIds.length == 1) {
@@ -5635,9 +5630,7 @@ public class AssetCategoryPersistenceImpl
 			vocabularyIds = new long[0];
 		}
 		else if (vocabularyIds.length > 1) {
-			vocabularyIds = ArrayUtil.unique(vocabularyIds);
-
-			Arrays.sort(vocabularyIds);
+			vocabularyIds = ArrayUtil.sortedUnique(vocabularyIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -5772,9 +5765,7 @@ public class AssetCategoryPersistenceImpl
 			vocabularyIds = new long[0];
 		}
 		else if (vocabularyIds.length > 1) {
-			vocabularyIds = ArrayUtil.unique(vocabularyIds);
-
-			Arrays.sort(vocabularyIds);
+			vocabularyIds = ArrayUtil.sortedUnique(vocabularyIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -9590,9 +9581,7 @@ public class AssetCategoryPersistenceImpl
 			vocabularyIds = new long[0];
 		}
 		else if (vocabularyIds.length > 1) {
-			vocabularyIds = ArrayUtil.unique(vocabularyIds);
-
-			Arrays.sort(vocabularyIds);
+			vocabularyIds = ArrayUtil.sortedUnique(vocabularyIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -9789,9 +9778,7 @@ public class AssetCategoryPersistenceImpl
 			vocabularyIds = new long[0];
 		}
 		else if (vocabularyIds.length > 1) {
-			vocabularyIds = ArrayUtil.unique(vocabularyIds);
-
-			Arrays.sort(vocabularyIds);
+			vocabularyIds = ArrayUtil.sortedUnique(vocabularyIds);
 		}
 
 		if (vocabularyIds.length == 1) {
@@ -10044,9 +10031,7 @@ public class AssetCategoryPersistenceImpl
 			vocabularyIds = new long[0];
 		}
 		else if (vocabularyIds.length > 1) {
-			vocabularyIds = ArrayUtil.unique(vocabularyIds);
-
-			Arrays.sort(vocabularyIds);
+			vocabularyIds = ArrayUtil.sortedUnique(vocabularyIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -10222,9 +10207,7 @@ public class AssetCategoryPersistenceImpl
 			vocabularyIds = new long[0];
 		}
 		else if (vocabularyIds.length > 1) {
-			vocabularyIds = ArrayUtil.unique(vocabularyIds);
-
-			Arrays.sort(vocabularyIds);
+			vocabularyIds = ArrayUtil.sortedUnique(vocabularyIds);
 		}
 
 		StringBundler query = new StringBundler();

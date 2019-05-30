@@ -45,7 +45,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -2469,9 +2468,7 @@ public class DDMStorageLinkPersistenceImpl
 			structureVersionIds = new long[0];
 		}
 		else if (structureVersionIds.length > 1) {
-			structureVersionIds = ArrayUtil.unique(structureVersionIds);
-
-			Arrays.sort(structureVersionIds);
+			structureVersionIds = ArrayUtil.sortedUnique(structureVersionIds);
 		}
 
 		if (structureVersionIds.length == 1) {
@@ -2669,9 +2666,7 @@ public class DDMStorageLinkPersistenceImpl
 			structureVersionIds = new long[0];
 		}
 		else if (structureVersionIds.length > 1) {
-			structureVersionIds = ArrayUtil.unique(structureVersionIds);
-
-			Arrays.sort(structureVersionIds);
+			structureVersionIds = ArrayUtil.sortedUnique(structureVersionIds);
 		}
 
 		Object[] finderArgs = new Object[] {

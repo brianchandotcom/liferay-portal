@@ -47,7 +47,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -1066,9 +1065,7 @@ public class ExpandoColumnPersistenceImpl
 				names[i] = Objects.toString(names[i], "");
 			}
 
-			names = ArrayUtil.unique(names);
-
-			Arrays.sort(names);
+			names = ArrayUtil.sortedUnique(names);
 		}
 
 		if (names.length == 1) {
@@ -1463,9 +1460,7 @@ public class ExpandoColumnPersistenceImpl
 				names[i] = Objects.toString(names[i], "");
 			}
 
-			names = ArrayUtil.unique(names);
-
-			Arrays.sort(names);
+			names = ArrayUtil.sortedUnique(names);
 		}
 
 		Object[] finderArgs = new Object[] {tableId, StringUtil.merge(names)};
@@ -1630,9 +1625,7 @@ public class ExpandoColumnPersistenceImpl
 				names[i] = Objects.toString(names[i], "");
 			}
 
-			names = ArrayUtil.unique(names);
-
-			Arrays.sort(names);
+			names = ArrayUtil.sortedUnique(names);
 		}
 
 		StringBundler query = new StringBundler();

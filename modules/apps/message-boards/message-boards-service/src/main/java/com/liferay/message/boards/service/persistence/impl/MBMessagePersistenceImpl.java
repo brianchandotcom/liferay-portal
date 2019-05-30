@@ -56,7 +56,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -8296,9 +8295,7 @@ public class MBMessagePersistenceImpl
 			classNameIds = new long[0];
 		}
 		else if (classNameIds.length > 1) {
-			classNameIds = ArrayUtil.unique(classNameIds);
-
-			Arrays.sort(classNameIds);
+			classNameIds = ArrayUtil.sortedUnique(classNameIds);
 		}
 
 		if (classNameIds.length == 1) {
@@ -8504,9 +8501,7 @@ public class MBMessagePersistenceImpl
 			classNameIds = new long[0];
 		}
 		else if (classNameIds.length > 1) {
-			classNameIds = ArrayUtil.unique(classNameIds);
-
-			Arrays.sort(classNameIds);
+			classNameIds = ArrayUtil.sortedUnique(classNameIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -16602,9 +16597,7 @@ public class MBMessagePersistenceImpl
 			classNameIds = new long[0];
 		}
 		else if (classNameIds.length > 1) {
-			classNameIds = ArrayUtil.unique(classNameIds);
-
-			Arrays.sort(classNameIds);
+			classNameIds = ArrayUtil.sortedUnique(classNameIds);
 		}
 
 		if (classNameIds.length == 1) {
@@ -16826,9 +16819,7 @@ public class MBMessagePersistenceImpl
 			classNameIds = new long[0];
 		}
 		else if (classNameIds.length > 1) {
-			classNameIds = ArrayUtil.unique(classNameIds);
-
-			Arrays.sort(classNameIds);
+			classNameIds = ArrayUtil.sortedUnique(classNameIds);
 		}
 
 		Object[] finderArgs = new Object[] {

@@ -49,7 +49,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -3708,9 +3707,7 @@ public class LayoutFriendlyURLPersistenceImpl
 			plids = new long[0];
 		}
 		else if (plids.length > 1) {
-			plids = ArrayUtil.unique(plids);
-
-			Arrays.sort(plids);
+			plids = ArrayUtil.sortedUnique(plids);
 		}
 
 		languageId = Objects.toString(languageId, "");
@@ -4143,9 +4140,7 @@ public class LayoutFriendlyURLPersistenceImpl
 			plids = new long[0];
 		}
 		else if (plids.length > 1) {
-			plids = ArrayUtil.unique(plids);
-
-			Arrays.sort(plids);
+			plids = ArrayUtil.sortedUnique(plids);
 		}
 
 		languageId = Objects.toString(languageId, "");

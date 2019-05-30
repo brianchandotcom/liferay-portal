@@ -44,7 +44,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -1153,9 +1152,7 @@ public class ResourcePermissionPersistenceImpl
 			scopes = new int[0];
 		}
 		else if (scopes.length > 1) {
-			scopes = ArrayUtil.unique(scopes);
-
-			Arrays.sort(scopes);
+			scopes = ArrayUtil.sortedUnique(scopes);
 		}
 
 		if (scopes.length == 1) {
@@ -1345,9 +1342,7 @@ public class ResourcePermissionPersistenceImpl
 			scopes = new int[0];
 		}
 		else if (scopes.length > 1) {
-			scopes = ArrayUtil.unique(scopes);
-
-			Arrays.sort(scopes);
+			scopes = ArrayUtil.sortedUnique(scopes);
 		}
 
 		Object[] finderArgs = new Object[] {StringUtil.merge(scopes)};
@@ -4647,9 +4642,7 @@ public class ResourcePermissionPersistenceImpl
 			roleIds = new long[0];
 		}
 		else if (roleIds.length > 1) {
-			roleIds = ArrayUtil.unique(roleIds);
-
-			Arrays.sort(roleIds);
+			roleIds = ArrayUtil.sortedUnique(roleIds);
 		}
 
 		if (roleIds.length == 1) {
@@ -5204,9 +5197,7 @@ public class ResourcePermissionPersistenceImpl
 			roleIds = new long[0];
 		}
 		else if (roleIds.length > 1) {
-			roleIds = ArrayUtil.unique(roleIds);
-
-			Arrays.sort(roleIds);
+			roleIds = ArrayUtil.sortedUnique(roleIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -6099,9 +6090,7 @@ public class ResourcePermissionPersistenceImpl
 			roleIds = new long[0];
 		}
 		else if (roleIds.length > 1) {
-			roleIds = ArrayUtil.unique(roleIds);
-
-			Arrays.sort(roleIds);
+			roleIds = ArrayUtil.sortedUnique(roleIds);
 		}
 
 		if (roleIds.length == 1) {
@@ -6445,9 +6434,7 @@ public class ResourcePermissionPersistenceImpl
 			roleIds = new long[0];
 		}
 		else if (roleIds.length > 1) {
-			roleIds = ArrayUtil.unique(roleIds);
-
-			Arrays.sort(roleIds);
+			roleIds = ArrayUtil.sortedUnique(roleIds);
 		}
 
 		Object[] finderArgs = new Object[] {

@@ -47,7 +47,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -2232,9 +2231,7 @@ public class MicroblogsEntryPersistenceImpl
 			creatorClassPKs = new long[0];
 		}
 		else if (creatorClassPKs.length > 1) {
-			creatorClassPKs = ArrayUtil.unique(creatorClassPKs);
-
-			Arrays.sort(creatorClassPKs);
+			creatorClassPKs = ArrayUtil.sortedUnique(creatorClassPKs);
 		}
 
 		if (creatorClassPKs.length == 1) {
@@ -2449,9 +2446,7 @@ public class MicroblogsEntryPersistenceImpl
 			creatorClassPKs = new long[0];
 		}
 		else if (creatorClassPKs.length > 1) {
-			creatorClassPKs = ArrayUtil.unique(creatorClassPKs);
-
-			Arrays.sort(creatorClassPKs);
+			creatorClassPKs = ArrayUtil.sortedUnique(creatorClassPKs);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -4251,9 +4246,7 @@ public class MicroblogsEntryPersistenceImpl
 			creatorClassPKs = new long[0];
 		}
 		else if (creatorClassPKs.length > 1) {
-			creatorClassPKs = ArrayUtil.unique(creatorClassPKs);
-
-			Arrays.sort(creatorClassPKs);
+			creatorClassPKs = ArrayUtil.sortedUnique(creatorClassPKs);
 		}
 
 		if (creatorClassPKs.length == 1) {
@@ -4485,9 +4478,7 @@ public class MicroblogsEntryPersistenceImpl
 			creatorClassPKs = new long[0];
 		}
 		else if (creatorClassPKs.length > 1) {
-			creatorClassPKs = ArrayUtil.unique(creatorClassPKs);
-
-			Arrays.sort(creatorClassPKs);
+			creatorClassPKs = ArrayUtil.sortedUnique(creatorClassPKs);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -5778,9 +5769,7 @@ public class MicroblogsEntryPersistenceImpl
 			creatorClassPKs = new long[0];
 		}
 		else if (creatorClassPKs.length > 1) {
-			creatorClassPKs = ArrayUtil.unique(creatorClassPKs);
-
-			Arrays.sort(creatorClassPKs);
+			creatorClassPKs = ArrayUtil.sortedUnique(creatorClassPKs);
 		}
 
 		if (creatorClassPKs.length == 1) {
@@ -6014,9 +6003,7 @@ public class MicroblogsEntryPersistenceImpl
 			creatorClassPKs = new long[0];
 		}
 		else if (creatorClassPKs.length > 1) {
-			creatorClassPKs = ArrayUtil.unique(creatorClassPKs);
-
-			Arrays.sort(creatorClassPKs);
+			creatorClassPKs = ArrayUtil.sortedUnique(creatorClassPKs);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -6748,9 +6735,7 @@ public class MicroblogsEntryPersistenceImpl
 			creatorClassPKs = new long[0];
 		}
 		else if (creatorClassPKs.length > 1) {
-			creatorClassPKs = ArrayUtil.unique(creatorClassPKs);
-
-			Arrays.sort(creatorClassPKs);
+			creatorClassPKs = ArrayUtil.sortedUnique(creatorClassPKs);
 		}
 
 		if (creatorClassPKs.length == 1) {
@@ -7001,9 +6986,7 @@ public class MicroblogsEntryPersistenceImpl
 			creatorClassPKs = new long[0];
 		}
 		else if (creatorClassPKs.length > 1) {
-			creatorClassPKs = ArrayUtil.unique(creatorClassPKs);
-
-			Arrays.sort(creatorClassPKs);
+			creatorClassPKs = ArrayUtil.sortedUnique(creatorClassPKs);
 		}
 
 		Object[] finderArgs = new Object[] {

@@ -42,7 +42,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -901,9 +900,7 @@ public class PushNotificationsDevicePersistenceImpl
 			userIds = new long[0];
 		}
 		else if (userIds.length > 1) {
-			userIds = ArrayUtil.unique(userIds);
-
-			Arrays.sort(userIds);
+			userIds = ArrayUtil.sortedUnique(userIds);
 		}
 
 		platform = Objects.toString(platform, "");
@@ -1138,9 +1135,7 @@ public class PushNotificationsDevicePersistenceImpl
 			userIds = new long[0];
 		}
 		else if (userIds.length > 1) {
-			userIds = ArrayUtil.unique(userIds);
-
-			Arrays.sort(userIds);
+			userIds = ArrayUtil.sortedUnique(userIds);
 		}
 
 		platform = Objects.toString(platform, "");

@@ -56,7 +56,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -6806,9 +6805,7 @@ public class RolePersistenceImpl
 			types = new int[0];
 		}
 		else if (types.length > 1) {
-			types = ArrayUtil.unique(types);
-
-			Arrays.sort(types);
+			types = ArrayUtil.sortedUnique(types);
 		}
 
 		StringBundler query = new StringBundler();
@@ -6976,9 +6973,7 @@ public class RolePersistenceImpl
 			types = new int[0];
 		}
 		else if (types.length > 1) {
-			types = ArrayUtil.unique(types);
-
-			Arrays.sort(types);
+			types = ArrayUtil.sortedUnique(types);
 		}
 
 		if (types.length == 1) {
@@ -7184,9 +7179,7 @@ public class RolePersistenceImpl
 			types = new int[0];
 		}
 		else if (types.length > 1) {
-			types = ArrayUtil.unique(types);
-
-			Arrays.sort(types);
+			types = ArrayUtil.sortedUnique(types);
 		}
 
 		Object[] finderArgs = new Object[] {companyId, StringUtil.merge(types)};
@@ -7319,9 +7312,7 @@ public class RolePersistenceImpl
 			types = new int[0];
 		}
 		else if (types.length > 1) {
-			types = ArrayUtil.unique(types);
-
-			Arrays.sort(types);
+			types = ArrayUtil.sortedUnique(types);
 		}
 
 		StringBundler query = new StringBundler();
@@ -8497,9 +8488,7 @@ public class RolePersistenceImpl
 			classPKs = new long[0];
 		}
 		else if (classPKs.length > 1) {
-			classPKs = ArrayUtil.unique(classPKs);
-
-			Arrays.sort(classPKs);
+			classPKs = ArrayUtil.sortedUnique(classPKs);
 		}
 
 		if (classPKs.length == 1) {
@@ -8877,9 +8866,7 @@ public class RolePersistenceImpl
 			classPKs = new long[0];
 		}
 		else if (classPKs.length > 1) {
-			classPKs = ArrayUtil.unique(classPKs);
-
-			Arrays.sort(classPKs);
+			classPKs = ArrayUtil.sortedUnique(classPKs);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -9028,9 +9015,7 @@ public class RolePersistenceImpl
 			classPKs = new long[0];
 		}
 		else if (classPKs.length > 1) {
-			classPKs = ArrayUtil.unique(classPKs);
-
-			Arrays.sort(classPKs);
+			classPKs = ArrayUtil.sortedUnique(classPKs);
 		}
 
 		StringBundler query = new StringBundler();

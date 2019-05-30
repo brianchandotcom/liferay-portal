@@ -47,7 +47,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -2723,9 +2722,7 @@ public class BackgroundTaskPersistenceImpl
 			groupIds = new long[0];
 		}
 		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.unique(groupIds);
-
-			Arrays.sort(groupIds);
+			groupIds = ArrayUtil.sortedUnique(groupIds);
 		}
 
 		if (taskExecutorClassNames == null) {
@@ -2737,9 +2734,8 @@ public class BackgroundTaskPersistenceImpl
 					taskExecutorClassNames[i], "");
 			}
 
-			taskExecutorClassNames = ArrayUtil.unique(taskExecutorClassNames);
-
-			Arrays.sort(taskExecutorClassNames);
+			taskExecutorClassNames = ArrayUtil.sortedUnique(
+				taskExecutorClassNames);
 		}
 
 		if (groupIds.length == 1 && taskExecutorClassNames.length == 1) {
@@ -2994,9 +2990,7 @@ public class BackgroundTaskPersistenceImpl
 			groupIds = new long[0];
 		}
 		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.unique(groupIds);
-
-			Arrays.sort(groupIds);
+			groupIds = ArrayUtil.sortedUnique(groupIds);
 		}
 
 		if (taskExecutorClassNames == null) {
@@ -3008,9 +3002,8 @@ public class BackgroundTaskPersistenceImpl
 					taskExecutorClassNames[i], "");
 			}
 
-			taskExecutorClassNames = ArrayUtil.unique(taskExecutorClassNames);
-
-			Arrays.sort(taskExecutorClassNames);
+			taskExecutorClassNames = ArrayUtil.sortedUnique(
+				taskExecutorClassNames);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -4265,9 +4258,8 @@ public class BackgroundTaskPersistenceImpl
 					taskExecutorClassNames[i], "");
 			}
 
-			taskExecutorClassNames = ArrayUtil.unique(taskExecutorClassNames);
-
-			Arrays.sort(taskExecutorClassNames);
+			taskExecutorClassNames = ArrayUtil.sortedUnique(
+				taskExecutorClassNames);
 		}
 
 		if (taskExecutorClassNames.length == 1) {
@@ -4516,9 +4508,8 @@ public class BackgroundTaskPersistenceImpl
 					taskExecutorClassNames[i], "");
 			}
 
-			taskExecutorClassNames = ArrayUtil.unique(taskExecutorClassNames);
-
-			Arrays.sort(taskExecutorClassNames);
+			taskExecutorClassNames = ArrayUtil.sortedUnique(
+				taskExecutorClassNames);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -5275,9 +5266,7 @@ public class BackgroundTaskPersistenceImpl
 			groupIds = new long[0];
 		}
 		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.unique(groupIds);
-
-			Arrays.sort(groupIds);
+			groupIds = ArrayUtil.sortedUnique(groupIds);
 		}
 
 		name = Objects.toString(name, "");
@@ -5291,9 +5280,8 @@ public class BackgroundTaskPersistenceImpl
 					taskExecutorClassNames[i], "");
 			}
 
-			taskExecutorClassNames = ArrayUtil.unique(taskExecutorClassNames);
-
-			Arrays.sort(taskExecutorClassNames);
+			taskExecutorClassNames = ArrayUtil.sortedUnique(
+				taskExecutorClassNames);
 		}
 
 		if (groupIds.length == 1 && taskExecutorClassNames.length == 1) {
@@ -5591,9 +5579,7 @@ public class BackgroundTaskPersistenceImpl
 			groupIds = new long[0];
 		}
 		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.unique(groupIds);
-
-			Arrays.sort(groupIds);
+			groupIds = ArrayUtil.sortedUnique(groupIds);
 		}
 
 		name = Objects.toString(name, "");
@@ -5607,9 +5593,8 @@ public class BackgroundTaskPersistenceImpl
 					taskExecutorClassNames[i], "");
 			}
 
-			taskExecutorClassNames = ArrayUtil.unique(taskExecutorClassNames);
-
-			Arrays.sort(taskExecutorClassNames);
+			taskExecutorClassNames = ArrayUtil.sortedUnique(
+				taskExecutorClassNames);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -6370,9 +6355,7 @@ public class BackgroundTaskPersistenceImpl
 			groupIds = new long[0];
 		}
 		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.unique(groupIds);
-
-			Arrays.sort(groupIds);
+			groupIds = ArrayUtil.sortedUnique(groupIds);
 		}
 
 		if (taskExecutorClassNames == null) {
@@ -6384,9 +6367,8 @@ public class BackgroundTaskPersistenceImpl
 					taskExecutorClassNames[i], "");
 			}
 
-			taskExecutorClassNames = ArrayUtil.unique(taskExecutorClassNames);
-
-			Arrays.sort(taskExecutorClassNames);
+			taskExecutorClassNames = ArrayUtil.sortedUnique(
+				taskExecutorClassNames);
 		}
 
 		if (groupIds.length == 1 && taskExecutorClassNames.length == 1) {
@@ -6663,9 +6645,7 @@ public class BackgroundTaskPersistenceImpl
 			groupIds = new long[0];
 		}
 		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.unique(groupIds);
-
-			Arrays.sort(groupIds);
+			groupIds = ArrayUtil.sortedUnique(groupIds);
 		}
 
 		if (taskExecutorClassNames == null) {
@@ -6677,9 +6657,8 @@ public class BackgroundTaskPersistenceImpl
 					taskExecutorClassNames[i], "");
 			}
 
-			taskExecutorClassNames = ArrayUtil.unique(taskExecutorClassNames);
-
-			Arrays.sort(taskExecutorClassNames);
+			taskExecutorClassNames = ArrayUtil.sortedUnique(
+				taskExecutorClassNames);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -7436,9 +7415,8 @@ public class BackgroundTaskPersistenceImpl
 					taskExecutorClassNames[i], "");
 			}
 
-			taskExecutorClassNames = ArrayUtil.unique(taskExecutorClassNames);
-
-			Arrays.sort(taskExecutorClassNames);
+			taskExecutorClassNames = ArrayUtil.sortedUnique(
+				taskExecutorClassNames);
 		}
 
 		if (taskExecutorClassNames.length == 1) {
@@ -7707,9 +7685,8 @@ public class BackgroundTaskPersistenceImpl
 					taskExecutorClassNames[i], "");
 			}
 
-			taskExecutorClassNames = ArrayUtil.unique(taskExecutorClassNames);
-
-			Arrays.sort(taskExecutorClassNames);
+			taskExecutorClassNames = ArrayUtil.sortedUnique(
+				taskExecutorClassNames);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -8514,9 +8491,7 @@ public class BackgroundTaskPersistenceImpl
 			groupIds = new long[0];
 		}
 		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.unique(groupIds);
-
-			Arrays.sort(groupIds);
+			groupIds = ArrayUtil.sortedUnique(groupIds);
 		}
 
 		name = Objects.toString(name, "");
@@ -8814,9 +8789,7 @@ public class BackgroundTaskPersistenceImpl
 			groupIds = new long[0];
 		}
 		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.unique(groupIds);
-
-			Arrays.sort(groupIds);
+			groupIds = ArrayUtil.sortedUnique(groupIds);
 		}
 
 		name = Objects.toString(name, "");

@@ -51,7 +51,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -20019,9 +20018,7 @@ public class LayoutPersistenceImpl
 			parentLayoutIds = new long[0];
 		}
 		else if (parentLayoutIds.length > 1) {
-			parentLayoutIds = ArrayUtil.unique(parentLayoutIds);
-
-			Arrays.sort(parentLayoutIds);
+			parentLayoutIds = ArrayUtil.sortedUnique(parentLayoutIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -20207,9 +20204,7 @@ public class LayoutPersistenceImpl
 			parentLayoutIds = new long[0];
 		}
 		else if (parentLayoutIds.length > 1) {
-			parentLayoutIds = ArrayUtil.unique(parentLayoutIds);
-
-			Arrays.sort(parentLayoutIds);
+			parentLayoutIds = ArrayUtil.sortedUnique(parentLayoutIds);
 		}
 
 		if (parentLayoutIds.length == 1) {
@@ -20483,9 +20478,7 @@ public class LayoutPersistenceImpl
 			parentLayoutIds = new long[0];
 		}
 		else if (parentLayoutIds.length > 1) {
-			parentLayoutIds = ArrayUtil.unique(parentLayoutIds);
-
-			Arrays.sort(parentLayoutIds);
+			parentLayoutIds = ArrayUtil.sortedUnique(parentLayoutIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -20668,9 +20661,7 @@ public class LayoutPersistenceImpl
 			parentLayoutIds = new long[0];
 		}
 		else if (parentLayoutIds.length > 1) {
-			parentLayoutIds = ArrayUtil.unique(parentLayoutIds);
-
-			Arrays.sort(parentLayoutIds);
+			parentLayoutIds = ArrayUtil.sortedUnique(parentLayoutIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -21735,9 +21726,7 @@ public class LayoutPersistenceImpl
 			parentLayoutIds = new long[0];
 		}
 		else if (parentLayoutIds.length > 1) {
-			parentLayoutIds = ArrayUtil.unique(parentLayoutIds);
-
-			Arrays.sort(parentLayoutIds);
+			parentLayoutIds = ArrayUtil.sortedUnique(parentLayoutIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -21936,9 +21925,7 @@ public class LayoutPersistenceImpl
 			parentLayoutIds = new long[0];
 		}
 		else if (parentLayoutIds.length > 1) {
-			parentLayoutIds = ArrayUtil.unique(parentLayoutIds);
-
-			Arrays.sort(parentLayoutIds);
+			parentLayoutIds = ArrayUtil.sortedUnique(parentLayoutIds);
 		}
 
 		if (parentLayoutIds.length == 1) {
@@ -22231,9 +22218,7 @@ public class LayoutPersistenceImpl
 			parentLayoutIds = new long[0];
 		}
 		else if (parentLayoutIds.length > 1) {
-			parentLayoutIds = ArrayUtil.unique(parentLayoutIds);
-
-			Arrays.sort(parentLayoutIds);
+			parentLayoutIds = ArrayUtil.sortedUnique(parentLayoutIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -22436,9 +22421,7 @@ public class LayoutPersistenceImpl
 			parentLayoutIds = new long[0];
 		}
 		else if (parentLayoutIds.length > 1) {
-			parentLayoutIds = ArrayUtil.unique(parentLayoutIds);
-
-			Arrays.sort(parentLayoutIds);
+			parentLayoutIds = ArrayUtil.sortedUnique(parentLayoutIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -28628,9 +28611,7 @@ public class LayoutPersistenceImpl
 			parentLayoutIds = new long[0];
 		}
 		else if (parentLayoutIds.length > 1) {
-			parentLayoutIds = ArrayUtil.unique(parentLayoutIds);
-
-			Arrays.sort(parentLayoutIds);
+			parentLayoutIds = ArrayUtil.sortedUnique(parentLayoutIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -28829,9 +28810,7 @@ public class LayoutPersistenceImpl
 			parentLayoutIds = new long[0];
 		}
 		else if (parentLayoutIds.length > 1) {
-			parentLayoutIds = ArrayUtil.unique(parentLayoutIds);
-
-			Arrays.sort(parentLayoutIds);
+			parentLayoutIds = ArrayUtil.sortedUnique(parentLayoutIds);
 		}
 
 		if (parentLayoutIds.length == 1) {
@@ -29124,9 +29103,7 @@ public class LayoutPersistenceImpl
 			parentLayoutIds = new long[0];
 		}
 		else if (parentLayoutIds.length > 1) {
-			parentLayoutIds = ArrayUtil.unique(parentLayoutIds);
-
-			Arrays.sort(parentLayoutIds);
+			parentLayoutIds = ArrayUtil.sortedUnique(parentLayoutIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -29328,9 +29305,7 @@ public class LayoutPersistenceImpl
 			parentLayoutIds = new long[0];
 		}
 		else if (parentLayoutIds.length > 1) {
-			parentLayoutIds = ArrayUtil.unique(parentLayoutIds);
-
-			Arrays.sort(parentLayoutIds);
+			parentLayoutIds = ArrayUtil.sortedUnique(parentLayoutIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -30460,9 +30435,7 @@ public class LayoutPersistenceImpl
 			parentLayoutIds = new long[0];
 		}
 		else if (parentLayoutIds.length > 1) {
-			parentLayoutIds = ArrayUtil.unique(parentLayoutIds);
-
-			Arrays.sort(parentLayoutIds);
+			parentLayoutIds = ArrayUtil.sortedUnique(parentLayoutIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -30670,9 +30643,7 @@ public class LayoutPersistenceImpl
 			parentLayoutIds = new long[0];
 		}
 		else if (parentLayoutIds.length > 1) {
-			parentLayoutIds = ArrayUtil.unique(parentLayoutIds);
-
-			Arrays.sort(parentLayoutIds);
+			parentLayoutIds = ArrayUtil.sortedUnique(parentLayoutIds);
 		}
 
 		if (parentLayoutIds.length == 1) {
@@ -30978,9 +30949,7 @@ public class LayoutPersistenceImpl
 			parentLayoutIds = new long[0];
 		}
 		else if (parentLayoutIds.length > 1) {
-			parentLayoutIds = ArrayUtil.unique(parentLayoutIds);
-
-			Arrays.sort(parentLayoutIds);
+			parentLayoutIds = ArrayUtil.sortedUnique(parentLayoutIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -31195,9 +31164,7 @@ public class LayoutPersistenceImpl
 			parentLayoutIds = new long[0];
 		}
 		else if (parentLayoutIds.length > 1) {
-			parentLayoutIds = ArrayUtil.unique(parentLayoutIds);
-
-			Arrays.sort(parentLayoutIds);
+			parentLayoutIds = ArrayUtil.sortedUnique(parentLayoutIds);
 		}
 
 		StringBundler query = new StringBundler();

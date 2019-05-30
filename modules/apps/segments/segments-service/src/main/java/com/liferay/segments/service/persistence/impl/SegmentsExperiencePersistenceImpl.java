@@ -49,7 +49,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -8469,9 +8468,7 @@ public class SegmentsExperiencePersistenceImpl
 			segmentsEntryIds = new long[0];
 		}
 		else if (segmentsEntryIds.length > 1) {
-			segmentsEntryIds = ArrayUtil.unique(segmentsEntryIds);
-
-			Arrays.sort(segmentsEntryIds);
+			segmentsEntryIds = ArrayUtil.sortedUnique(segmentsEntryIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -8680,9 +8677,7 @@ public class SegmentsExperiencePersistenceImpl
 			segmentsEntryIds = new long[0];
 		}
 		else if (segmentsEntryIds.length > 1) {
-			segmentsEntryIds = ArrayUtil.unique(segmentsEntryIds);
-
-			Arrays.sort(segmentsEntryIds);
+			segmentsEntryIds = ArrayUtil.sortedUnique(segmentsEntryIds);
 		}
 
 		if (segmentsEntryIds.length == 1) {
@@ -8942,9 +8937,7 @@ public class SegmentsExperiencePersistenceImpl
 			segmentsEntryIds = new long[0];
 		}
 		else if (segmentsEntryIds.length > 1) {
-			segmentsEntryIds = ArrayUtil.unique(segmentsEntryIds);
-
-			Arrays.sort(segmentsEntryIds);
+			segmentsEntryIds = ArrayUtil.sortedUnique(segmentsEntryIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -9121,9 +9114,7 @@ public class SegmentsExperiencePersistenceImpl
 			segmentsEntryIds = new long[0];
 		}
 		else if (segmentsEntryIds.length > 1) {
-			segmentsEntryIds = ArrayUtil.unique(segmentsEntryIds);
-
-			Arrays.sort(segmentsEntryIds);
+			segmentsEntryIds = ArrayUtil.sortedUnique(segmentsEntryIds);
 		}
 
 		StringBundler query = new StringBundler();

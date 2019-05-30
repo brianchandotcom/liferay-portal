@@ -50,7 +50,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -8303,9 +8302,7 @@ public class DLFileEntryPersistenceImpl
 			folderIds = new long[0];
 		}
 		else if (folderIds.length > 1) {
-			folderIds = ArrayUtil.unique(folderIds);
-
-			Arrays.sort(folderIds);
+			folderIds = ArrayUtil.sortedUnique(folderIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -8478,9 +8475,7 @@ public class DLFileEntryPersistenceImpl
 			folderIds = new long[0];
 		}
 		else if (folderIds.length > 1) {
-			folderIds = ArrayUtil.unique(folderIds);
-
-			Arrays.sort(folderIds);
+			folderIds = ArrayUtil.sortedUnique(folderIds);
 		}
 
 		if (folderIds.length == 1) {
@@ -8687,9 +8682,7 @@ public class DLFileEntryPersistenceImpl
 			folderIds = new long[0];
 		}
 		else if (folderIds.length > 1) {
-			folderIds = ArrayUtil.unique(folderIds);
-
-			Arrays.sort(folderIds);
+			folderIds = ArrayUtil.sortedUnique(folderIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -8824,9 +8817,7 @@ public class DLFileEntryPersistenceImpl
 			folderIds = new long[0];
 		}
 		else if (folderIds.length > 1) {
-			folderIds = ArrayUtil.unique(folderIds);
-
-			Arrays.sort(folderIds);
+			folderIds = ArrayUtil.sortedUnique(folderIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -10958,9 +10949,7 @@ public class DLFileEntryPersistenceImpl
 			folderIds = new long[0];
 		}
 		else if (folderIds.length > 1) {
-			folderIds = ArrayUtil.unique(folderIds);
-
-			Arrays.sort(folderIds);
+			folderIds = ArrayUtil.sortedUnique(folderIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -11144,9 +11133,7 @@ public class DLFileEntryPersistenceImpl
 			folderIds = new long[0];
 		}
 		else if (folderIds.length > 1) {
-			folderIds = ArrayUtil.unique(folderIds);
-
-			Arrays.sort(folderIds);
+			folderIds = ArrayUtil.sortedUnique(folderIds);
 		}
 
 		if (folderIds.length == 1) {
@@ -11367,9 +11354,7 @@ public class DLFileEntryPersistenceImpl
 			folderIds = new long[0];
 		}
 		else if (folderIds.length > 1) {
-			folderIds = ArrayUtil.unique(folderIds);
-
-			Arrays.sort(folderIds);
+			folderIds = ArrayUtil.sortedUnique(folderIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -11514,9 +11499,7 @@ public class DLFileEntryPersistenceImpl
 			folderIds = new long[0];
 		}
 		else if (folderIds.length > 1) {
-			folderIds = ArrayUtil.unique(folderIds);
-
-			Arrays.sort(folderIds);
+			folderIds = ArrayUtil.sortedUnique(folderIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -13332,9 +13315,7 @@ public class DLFileEntryPersistenceImpl
 			folderIds = new long[0];
 		}
 		else if (folderIds.length > 1) {
-			folderIds = ArrayUtil.unique(folderIds);
-
-			Arrays.sort(folderIds);
+			folderIds = ArrayUtil.sortedUnique(folderIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -13523,9 +13504,7 @@ public class DLFileEntryPersistenceImpl
 			folderIds = new long[0];
 		}
 		else if (folderIds.length > 1) {
-			folderIds = ArrayUtil.unique(folderIds);
-
-			Arrays.sort(folderIds);
+			folderIds = ArrayUtil.sortedUnique(folderIds);
 		}
 
 		if (folderIds.length == 1) {
@@ -13753,9 +13732,7 @@ public class DLFileEntryPersistenceImpl
 			folderIds = new long[0];
 		}
 		else if (folderIds.length > 1) {
-			folderIds = ArrayUtil.unique(folderIds);
-
-			Arrays.sort(folderIds);
+			folderIds = ArrayUtil.sortedUnique(folderIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -13906,9 +13883,7 @@ public class DLFileEntryPersistenceImpl
 			folderIds = new long[0];
 		}
 		else if (folderIds.length > 1) {
-			folderIds = ArrayUtil.unique(folderIds);
-
-			Arrays.sort(folderIds);
+			folderIds = ArrayUtil.sortedUnique(folderIds);
 		}
 
 		StringBundler query = new StringBundler();

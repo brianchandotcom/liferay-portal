@@ -43,7 +43,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -5014,9 +5013,7 @@ public class SyncDLObjectPersistenceImpl
 				events[i] = Objects.toString(events[i], "");
 			}
 
-			events = ArrayUtil.unique(events);
-
-			Arrays.sort(events);
+			events = ArrayUtil.sortedUnique(events);
 		}
 
 		if (events.length == 1) {
@@ -5274,9 +5271,7 @@ public class SyncDLObjectPersistenceImpl
 				events[i] = Objects.toString(events[i], "");
 			}
 
-			events = ArrayUtil.unique(events);
-
-			Arrays.sort(events);
+			events = ArrayUtil.sortedUnique(events);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -6003,9 +5998,7 @@ public class SyncDLObjectPersistenceImpl
 				types[i] = Objects.toString(types[i], "");
 			}
 
-			types = ArrayUtil.unique(types);
-
-			Arrays.sort(types);
+			types = ArrayUtil.sortedUnique(types);
 		}
 
 		if (types.length == 1) {
@@ -6263,9 +6256,7 @@ public class SyncDLObjectPersistenceImpl
 				types[i] = Objects.toString(types[i], "");
 			}
 
-			types = ArrayUtil.unique(types);
-
-			Arrays.sort(types);
+			types = ArrayUtil.sortedUnique(types);
 		}
 
 		Object[] finderArgs = new Object[] {

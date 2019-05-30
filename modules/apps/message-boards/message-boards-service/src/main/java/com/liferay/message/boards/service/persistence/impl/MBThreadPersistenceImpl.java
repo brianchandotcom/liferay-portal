@@ -58,7 +58,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -3436,9 +3435,7 @@ public class MBThreadPersistenceImpl
 			categoryIds = new long[0];
 		}
 		else if (categoryIds.length > 1) {
-			categoryIds = ArrayUtil.unique(categoryIds);
-
-			Arrays.sort(categoryIds);
+			categoryIds = ArrayUtil.sortedUnique(categoryIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -3610,9 +3607,7 @@ public class MBThreadPersistenceImpl
 			categoryIds = new long[0];
 		}
 		else if (categoryIds.length > 1) {
-			categoryIds = ArrayUtil.unique(categoryIds);
-
-			Arrays.sort(categoryIds);
+			categoryIds = ArrayUtil.sortedUnique(categoryIds);
 		}
 
 		if (categoryIds.length == 1) {
@@ -3818,9 +3813,7 @@ public class MBThreadPersistenceImpl
 			categoryIds = new long[0];
 		}
 		else if (categoryIds.length > 1) {
-			categoryIds = ArrayUtil.unique(categoryIds);
-
-			Arrays.sort(categoryIds);
+			categoryIds = ArrayUtil.sortedUnique(categoryIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -3955,9 +3948,7 @@ public class MBThreadPersistenceImpl
 			categoryIds = new long[0];
 		}
 		else if (categoryIds.length > 1) {
-			categoryIds = ArrayUtil.unique(categoryIds);
-
-			Arrays.sort(categoryIds);
+			categoryIds = ArrayUtil.sortedUnique(categoryIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -9043,9 +9034,7 @@ public class MBThreadPersistenceImpl
 			categoryIds = new long[0];
 		}
 		else if (categoryIds.length > 1) {
-			categoryIds = ArrayUtil.unique(categoryIds);
-
-			Arrays.sort(categoryIds);
+			categoryIds = ArrayUtil.sortedUnique(categoryIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -9230,9 +9219,7 @@ public class MBThreadPersistenceImpl
 			categoryIds = new long[0];
 		}
 		else if (categoryIds.length > 1) {
-			categoryIds = ArrayUtil.unique(categoryIds);
-
-			Arrays.sort(categoryIds);
+			categoryIds = ArrayUtil.sortedUnique(categoryIds);
 		}
 
 		if (categoryIds.length == 1) {
@@ -9454,9 +9441,7 @@ public class MBThreadPersistenceImpl
 			categoryIds = new long[0];
 		}
 		else if (categoryIds.length > 1) {
-			categoryIds = ArrayUtil.unique(categoryIds);
-
-			Arrays.sort(categoryIds);
+			categoryIds = ArrayUtil.sortedUnique(categoryIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -9605,9 +9590,7 @@ public class MBThreadPersistenceImpl
 			categoryIds = new long[0];
 		}
 		else if (categoryIds.length > 1) {
-			categoryIds = ArrayUtil.unique(categoryIds);
-
-			Arrays.sort(categoryIds);
+			categoryIds = ArrayUtil.sortedUnique(categoryIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -10596,9 +10579,7 @@ public class MBThreadPersistenceImpl
 			categoryIds = new long[0];
 		}
 		else if (categoryIds.length > 1) {
-			categoryIds = ArrayUtil.unique(categoryIds);
-
-			Arrays.sort(categoryIds);
+			categoryIds = ArrayUtil.sortedUnique(categoryIds);
 		}
 
 		StringBundler query = new StringBundler();
@@ -10783,9 +10764,7 @@ public class MBThreadPersistenceImpl
 			categoryIds = new long[0];
 		}
 		else if (categoryIds.length > 1) {
-			categoryIds = ArrayUtil.unique(categoryIds);
-
-			Arrays.sort(categoryIds);
+			categoryIds = ArrayUtil.sortedUnique(categoryIds);
 		}
 
 		if (categoryIds.length == 1) {
@@ -11007,9 +10986,7 @@ public class MBThreadPersistenceImpl
 			categoryIds = new long[0];
 		}
 		else if (categoryIds.length > 1) {
-			categoryIds = ArrayUtil.unique(categoryIds);
-
-			Arrays.sort(categoryIds);
+			categoryIds = ArrayUtil.sortedUnique(categoryIds);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -11161,9 +11138,7 @@ public class MBThreadPersistenceImpl
 			categoryIds = new long[0];
 		}
 		else if (categoryIds.length > 1) {
-			categoryIds = ArrayUtil.unique(categoryIds);
-
-			Arrays.sort(categoryIds);
+			categoryIds = ArrayUtil.sortedUnique(categoryIds);
 		}
 
 		StringBundler query = new StringBundler();

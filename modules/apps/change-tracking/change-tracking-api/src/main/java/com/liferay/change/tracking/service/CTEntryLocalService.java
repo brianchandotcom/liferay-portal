@@ -397,9 +397,19 @@ public interface CTEntryLocalService
 		QueryDefinition<CTEntry> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTEntry> search(
+		CTCollection ctCollection, String keywords,
+		QueryDefinition<CTEntry> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long searchCount(
 		CTCollection ctCollection, long[] groupIds, long[] userIds,
 		long[] classNameIds, int[] changeTypes, Boolean collision,
+		QueryDefinition<CTEntry> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(
+		CTCollection ctCollection, String keywords,
 		QueryDefinition<CTEntry> queryDefinition);
 
 	public void setCTCollectionCTEntries(

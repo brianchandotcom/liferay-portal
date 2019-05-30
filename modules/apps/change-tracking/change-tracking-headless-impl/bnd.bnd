@@ -1,3 +1,10 @@
 Bundle-Name: Liferay Change Tracking Headless Implementation
 Bundle-SymbolicName: com.liferay.change.tracking.headless.impl
 Bundle-Version: 1.0.0
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.change.tracking.lang)";\
+		resource.bundle.base.name="content.Language"
+Require-Capability:\
+	liferay.resource.bundle;\
+		filter:="(bundle.symbolic.name=com.liferay.change.tracking.lang)"

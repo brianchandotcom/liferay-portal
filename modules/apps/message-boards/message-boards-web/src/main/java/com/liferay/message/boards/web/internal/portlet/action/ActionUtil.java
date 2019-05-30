@@ -21,6 +21,7 @@ import com.liferay.message.boards.model.MBMessageDisplay;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBBanLocalServiceUtil;
 import com.liferay.message.boards.service.MBCategoryServiceUtil;
+import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.service.MBMessageServiceUtil;
 import com.liferay.message.boards.service.MBThreadLocalServiceUtil;
 import com.liferay.message.boards.web.internal.security.permission.MBResourcePermission;
@@ -133,16 +134,19 @@ public class ActionUtil {
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		int status = WorkflowConstants.STATUS_APPROVED;
+		MBMessageDisplay messageDisplay = null;
 
 		if (permissionChecker.isContentReviewer(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId())) {
 
-			status = WorkflowConstants.STATUS_ANY;
+			messageDisplay = MBMessageLocalServiceUtil.getMessageDisplay(
+				themeDisplay.getUserId(), messageId,
+				WorkflowConstants.STATUS_ANY);
 		}
-
-		MBMessageDisplay messageDisplay =
-			MBMessageServiceUtil.getMessageDisplay(messageId, status);
+		else {
+			messageDisplay = MBMessageServiceUtil.getMessageDisplay(
+				messageId, WorkflowConstants.STATUS_APPROVED);
+		}
 
 		if (messageDisplay != null) {
 			MBMessage message = messageDisplay.getMessage();

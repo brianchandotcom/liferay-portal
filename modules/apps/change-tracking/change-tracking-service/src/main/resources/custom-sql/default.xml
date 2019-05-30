@@ -90,11 +90,11 @@
 			WHERE
 				(CTProcess.companyId = ?) AND
 				(CTProcess.userId = ?) AND
+				(BackgroundTask.status = ?) AND
 				(
 					(LOWER(CTCollection.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(LOWER(CTCollection.description) LIKE ? [$AND_OR_NULL_CHECK$])
-				) AND
-				(BackgroundTask.status = ?)
+				)
 			ORDER BY
 				CTProcess.createDate DESC
 		]]>

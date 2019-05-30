@@ -14,7 +14,12 @@
 
 package com.liferay.data.engine.taglib.servlet.taglib.util;
 
+import com.liferay.data.engine.rest.client.dto.v1_0.DataRecord;
+import com.liferay.data.engine.rest.client.resource.v1_0.DataRecordResource;
 import com.liferay.data.engine.spi.renderer.DataLayoutRenderer;
+
+import java.util.Collections;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,12 +34,14 @@ import org.osgi.service.component.annotations.Reference;
 public class DataLayoutTaglibUtil {
 
 	public static String renderDataLayout(
-			Long dataLayoutId, HttpServletRequest httpServletRequest,
+			long dataLayoutId, long dataRecordId,
+			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		return _dataLayoutRenderer.render(
-			dataLayoutId, httpServletRequest, httpServletResponse);
+			dataLayoutId, _getDataRecordValues(dataRecordId),
+			httpServletRequest, httpServletResponse);
 	}
 
 	@Reference(unbind = "-")
@@ -42,6 +49,20 @@ public class DataLayoutTaglibUtil {
 		DataLayoutRenderer dataLayoutRenderer) {
 
 		_dataLayoutRenderer = dataLayoutRenderer;
+	}
+
+	private static Map<String, Object> _getDataRecordValues(long dataRecordId)
+		throws Exception {
+
+		if (dataRecordId == 0) {
+			return Collections.emptyMap();
+		}
+
+		DataRecordResource dataRecordResource = new DataRecordResource();
+
+		DataRecord dataRecord = dataRecordResource.getDataRecord(dataRecordId);
+
+		return dataRecord.getDataRecordValues();
 	}
 
 	private static DataLayoutRenderer _dataLayoutRenderer;

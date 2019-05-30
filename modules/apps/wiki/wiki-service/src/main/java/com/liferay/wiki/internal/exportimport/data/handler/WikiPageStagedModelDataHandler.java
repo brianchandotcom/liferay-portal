@@ -358,29 +358,6 @@ public class WikiPageStagedModelDataHandler
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiPageExportImportContentProcessor(
-		WikiPageExportImportContentProcessor
-			wikiPageExportImportContentProcessor) {
-
-		_wikiPageExportImportContentProcessor =
-			wikiPageExportImportContentProcessor;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiPageLocalService(
-		WikiPageLocalService wikiPageLocalService) {
-
-		_wikiPageLocalService = wikiPageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiPageResourceLocalService(
-		WikiPageResourceLocalService wikiPageResourceLocalService) {
-
-		_wikiPageResourceLocalService = wikiPageResourceLocalService;
-	}
-
 	private InputStream _getPageAttachmentInputStream(
 			String binPath, PortletDataContext portletDataContext,
 			FileEntry fileEntry)
@@ -410,9 +387,14 @@ public class WikiPageStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiPageStagedModelDataHandler.class);
 
+	@Reference
 	private WikiPageExportImportContentProcessor
 		_wikiPageExportImportContentProcessor;
+
+	@Reference
 	private WikiPageLocalService _wikiPageLocalService;
+
+	@Reference
 	private WikiPageResourceLocalService _wikiPageResourceLocalService;
 
 }

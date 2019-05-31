@@ -7,10 +7,13 @@ export default class InstanceListTable extends React.Component {
 
 		return (
 			<div className="table-responsive">
-				<table className="show-quick-actions-on-hover table table-fixed table-heading-nowrap table-hover table-list">
+				<table
+					className="show-quick-actions-on-hover table table-fixed table-heading-nowrap table-hover table-list"
+					style={{ minWidth: '1061px' }}
+				>
 					<thead>
 						<tr>
-							<th style={{ width: '5%' }} />
+							<th style={{ width: '4%' }} />
 
 							<th className="table-head-title" style={{ width: '10%' }}>
 								{Liferay.Language.get('id')}
@@ -18,7 +21,7 @@ export default class InstanceListTable extends React.Component {
 
 							<th
 								className="table-cell-expand table-head-title"
-								style={{ width: '30%' }}
+								style={{ width: '31%' }}
 							>
 								{Liferay.Language.get('item-subject')}
 							</th>

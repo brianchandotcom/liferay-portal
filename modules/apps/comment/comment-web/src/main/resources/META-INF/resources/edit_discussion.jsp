@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String backURL = ParamUtil.getString(request, "redirect");
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 if (Validator.isNull(redirect)) {
@@ -49,7 +51,7 @@ if (comment instanceof WorkflowableComment) {
 %>
 
 <liferay-ui:header
-	backURL="<%= redirect %>"
+	backURL="<%= backURL %>"
 	title='<%= (comment == null) ? "new-message" : "edit-message" %>'
 />
 

@@ -15,10 +15,13 @@ AUI.add(
 			context: {
 				getter: '_getContext',
 				setter: function(val) {
+					var retVal = val;
+
 					if (A.Lang.isString(val)) {
-						return JSON.parse(val);
+						retVal = JSON.parse(val);
 					}
-					return val;
+
+					return retVal;
 				},
 				valueFn: '_valueContext'
 			},
@@ -172,13 +175,7 @@ AUI.add(
 										var foundFieldContext = AArray.find(
 											columnFieldContexts,
 											function(columnFieldContext) {
-												if (columnFieldContext.fieldName === repeatedContext.fieldName &&
-														columnFieldContext.instanceId === repeatedContext.instanceId) {
-
-													return true;
-												}
-
-												return false;
+												return columnFieldContext.fieldName === repeatedContext.fieldName && columnFieldContext.instanceId === repeatedContext.instanceId;
 											}
 										);
 

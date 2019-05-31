@@ -69,7 +69,7 @@ public class CalendarLocalServiceTest {
 			CalendarResourceUtil.getGroupCalendarResource(
 				_group.getGroupId(), serviceContext);
 
-		Locale locale = LocaleUtil.getDefault();
+		Locale locale = LocaleUtil.getSiteDefault();
 
 		Map<Locale, String> nameMap = RandomTestUtil.randomLocaleStringMap(
 			locale);

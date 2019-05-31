@@ -137,7 +137,7 @@ public class CalendarStagedModelDataHandler
 			portletDataContext, calendar, calendarResource,
 			PortletDataContext.REFERENCE_TYPE_STRONG);
 
-		String calendarName = calendar.getName(LocaleUtil.getDefault());
+		String calendarName = calendar.getName(LocaleUtil.getSiteDefault());
 
 		Group group = _groupLocalService.getGroup(calendar.getGroupId());
 
@@ -261,7 +261,7 @@ public class CalendarStagedModelDataHandler
 			portletDataContext.getScopeGroupId());
 
 		calendarNameMap.put(
-			LocaleUtil.getDefault(), scopeGroup.getDescriptiveName());
+			LocaleUtil.getSiteDefault(), scopeGroup.getDescriptiveName());
 
 		return calendarNameMap;
 	}

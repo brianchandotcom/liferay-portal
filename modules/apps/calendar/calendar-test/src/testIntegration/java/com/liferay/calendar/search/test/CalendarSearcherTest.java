@@ -221,11 +221,11 @@ public class CalendarSearcherTest {
 
 		Map<Locale, String> nameMap = new HashMap<>();
 
-		nameMap.put(LocaleUtil.getDefault(), name);
+		nameMap.put(LocaleUtil.getSiteDefault(), name);
 
 		Map<Locale, String> descriptionMap = new HashMap<>();
 
-		descriptionMap.put(LocaleUtil.getDefault(), description);
+		descriptionMap.put(LocaleUtil.getSiteDefault(), description);
 
 		CalendarLocalServiceUtil.addCalendar(
 			_user.getUserId(), _group.getGroupId(),

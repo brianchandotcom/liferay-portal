@@ -105,7 +105,7 @@ public class CalendarResourceServiceTest {
 
 		int count = CalendarResourceServiceUtil.searchCount(
 			_user.getCompanyId(), new long[] {_user.getGroupId()},
-			new long[] {classNameId}, nameMap.get(LocaleUtil.getDefault()),
+			new long[] {classNameId}, nameMap.get(LocaleUtil.getSiteDefault()),
 			true);
 
 		Assert.assertEquals(1, count);
@@ -118,7 +118,7 @@ public class CalendarResourceServiceTest {
 			RandomTestUtil.randomString() + StringPool.SPACE +
 				RandomTestUtil.randomString();
 
-		nameMap.put(LocaleUtil.getDefault(), name);
+		nameMap.put(LocaleUtil.getSiteDefault(), name);
 
 		return nameMap;
 	}

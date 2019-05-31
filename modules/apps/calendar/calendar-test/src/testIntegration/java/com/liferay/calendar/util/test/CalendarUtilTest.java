@@ -304,7 +304,7 @@ public class CalendarUtilTest {
 
 		themeDisplay.setCompany(company);
 
-		themeDisplay.setLocale(LocaleUtil.getDefault());
+		themeDisplay.setLocale(LocaleUtil.getSiteDefault());
 
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 

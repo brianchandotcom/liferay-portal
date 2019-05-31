@@ -191,7 +191,7 @@ public class CalendarBookingLocalServiceTest {
 
 		String mailMessageSubject =
 			"Calendar: Event Reminder for " + StringPool.QUOTE +
-				calendarBooking.getTitle(LocaleUtil.getDefault()) +
+				calendarBooking.getTitle(LocaleUtil.getSiteDefault()) +
 					StringPool.QUOTE;
 
 		assertMailSubjectCount(mailMessageSubject, 2);
@@ -592,7 +592,7 @@ public class CalendarBookingLocalServiceTest {
 
 		String mailMessageSubject =
 			"Calendar: Event Update for " + StringPool.QUOTE +
-				calendarBooking.getTitle(LocaleUtil.getDefault()) +
+				calendarBooking.getTitle(LocaleUtil.getSiteDefault()) +
 					StringPool.QUOTE;
 
 		assertMailSubjectCount(mailMessageSubject, 1);
@@ -610,7 +610,7 @@ public class CalendarBookingLocalServiceTest {
 
 		mailMessageSubject =
 			"Calendar: Event Deletion for " + StringPool.QUOTE +
-				calendarBooking.getTitle(LocaleUtil.getDefault()) +
+				calendarBooking.getTitle(LocaleUtil.getSiteDefault()) +
 					StringPool.QUOTE;
 
 		assertMailSubjectCount(mailMessageSubject, 2);
@@ -1130,7 +1130,7 @@ public class CalendarBookingLocalServiceTest {
 
 		String mailMessageSubject =
 			"Calendar: Event Notification for " + StringPool.QUOTE +
-				calendarBooking.getTitle(LocaleUtil.getDefault()) +
+				calendarBooking.getTitle(LocaleUtil.getSiteDefault()) +
 					StringPool.QUOTE;
 
 		assertMailSubjectCount(mailMessageSubject, 1);
@@ -1346,7 +1346,7 @@ public class CalendarBookingLocalServiceTest {
 
 		String mailMessageSubject =
 			"Calendar: Event Notification for " + StringPool.QUOTE +
-				calendarBooking.getTitle(LocaleUtil.getDefault()) +
+				calendarBooking.getTitle(LocaleUtil.getSiteDefault()) +
 					StringPool.QUOTE;
 
 		assertMailSubjectCount(mailMessageSubject, 0);
@@ -1852,7 +1852,7 @@ public class CalendarBookingLocalServiceTest {
 
 		String mailMessageSubject =
 			"Calendar: Event Reminder for " + StringPool.QUOTE +
-				calendarBooking.getTitle(LocaleUtil.getDefault()) +
+				calendarBooking.getTitle(LocaleUtil.getSiteDefault()) +
 					StringPool.QUOTE;
 
 		assertMailSubjectCount(mailMessageSubject, 1);

@@ -359,7 +359,7 @@ public class CalendarResourceLocalServiceImpl
 	protected void validate(Map<Locale, String> nameMap)
 		throws PortalException {
 
-		Locale locale = LocaleUtil.getDefault();
+		Locale locale = LocaleUtil.getSiteDefault();
 
 		if (nameMap.isEmpty() || Validator.isNull(nameMap.get(locale))) {
 			throw new CalendarResourceNameException();

@@ -125,7 +125,7 @@ public class CalendarBookingIndexerTest extends BaseCalendarIndexerTestCase {
 				new LocalizedValuesMap() {
 					{
 						put(
-							LocaleUtil.getDefault(),
+							LocaleUtil.getSiteDefault(),
 							RandomTestUtil.randomString());
 					}
 				},

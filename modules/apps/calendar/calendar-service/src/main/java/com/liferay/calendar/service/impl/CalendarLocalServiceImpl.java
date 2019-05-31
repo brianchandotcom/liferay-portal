@@ -405,7 +405,7 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 	protected void validate(Map<Locale, String> nameMap)
 		throws PortalException {
 
-		Locale locale = LocaleUtil.getDefault();
+		Locale locale = LocaleUtil.getSiteDefault();
 
 		String name = nameMap.get(locale);
 

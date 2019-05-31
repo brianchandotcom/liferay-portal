@@ -15,14 +15,11 @@
 package com.liferay.journal.web.internal.portlet.configuration.icon;
 
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -86,7 +83,7 @@ public class ViewSourcePortletConfigurationIcon
 					JavaConstants.JAVAX_PORTLET_REQUEST);
 
 			httpServletRequest.setAttribute(
-				WebKeys.JOURNAL_ARTICLE, _getArticle(portletRequest));
+				WebKeys.JOURNAL_ARTICLE, ActionUtil.getArticle(portletRequest));
 		}
 		catch (Exception e) {
 		}
@@ -97,7 +94,7 @@ public class ViewSourcePortletConfigurationIcon
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
 		try {
-			if (_getArticle(portletRequest) != null) {
+			if (ActionUtil.getArticle(portletRequest) != null) {
 				return true;
 			}
 		}
@@ -114,25 +111,5 @@ public class ViewSourcePortletConfigurationIcon
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
-
-	private JournalArticle _getArticle(PortletRequest portletRequest)
-		throws Exception {
-
-		if (_article != null) {
-			return _article;
-		}
-
-		_article = ActionUtil.getArticle(portletRequest);
-
-		return _article;
-	}
-
-	private JournalArticle _article;
-
-	@Reference
-	private JournalArticleLocalService _journalArticleLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

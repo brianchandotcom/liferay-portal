@@ -421,7 +421,7 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 					portlet.getPortletId()));
 		}
 
-		response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+		httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
 
 		return ActionResult.EMPTY_ACTION_RESULT;
 	}
@@ -468,7 +468,7 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			HttpHeaders.CACHE_CONTROL,
 			HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
 
-		httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
 
 		if (_log.isWarnEnabled()) {
 			String url = getOriginalURL(httpServletRequest);

@@ -45,8 +45,6 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		content = _fixDependencyVersions(absolutePath, content);
-
 		if (isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath)) {
 			return content;
 		}
@@ -64,29 +62,6 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 				content = _formatDependencies(
 					absolutePath, content, dependencies);
 			}
-		}
-
-		return content;
-	}
-
-	private String _fixDependencyVersions(String absolutePath, String content)
-		throws IOException {
-
-		List<String> enforceVersionArtifacts = getAttributeValues(
-			_ENFORCE_VERSION_ARTIFACTS_KEY, absolutePath);
-
-		for (String artifact : enforceVersionArtifacts) {
-			String[] artifactParts = StringUtil.split(
-				artifact, StringPool.COLON);
-
-			Pattern pattern = Pattern.compile(
-				StringBundler.concat(
-					"(group: \"", artifactParts[0], "\", name: \"",
-					artifactParts[1], "\",.* version: \").*?(\")"));
-
-			Matcher matcher = pattern.matcher(content);
-
-			content = matcher.replaceAll("$1" + artifactParts[2] + "$2");
 		}
 
 		return content;
@@ -261,9 +236,6 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 
 		return false;
 	}
-
-	private static final String _ENFORCE_VERSION_ARTIFACTS_KEY =
-		"enforceVersionArtifacts";
 
 	private static final String _MODULES_PROPERTIES_FILE_NAME =
 		"modules/modules.properties";

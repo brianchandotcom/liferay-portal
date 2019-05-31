@@ -7,7 +7,7 @@ dependencies {
 	compileOnly group: "javax.servlet", name: "javax.servlet-api"
 	compileOnly group: "jstl", name: "jstl"
 	compileOnly group: "org.osgi", name: "osgi.cmpn"
-	compileOnly group: "org.osgi", name: "osgi.core"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 
 	runtimeOnly project(":modules:foo-service")
 }

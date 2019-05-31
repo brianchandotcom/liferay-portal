@@ -81,5 +81,7 @@ JSONObject jsonObject = ExpandoValueServiceUtil.getJSONData(themeDisplay.getComp
 
 	<aui:button-row>
 		<aui:button type="submit" />
+
+		<aui:button type="cancel" />
 	</aui:button-row>
 </aui:form>

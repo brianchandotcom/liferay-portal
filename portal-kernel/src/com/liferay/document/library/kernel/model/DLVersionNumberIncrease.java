@@ -38,13 +38,12 @@ public enum DLVersionNumberIncrease {
 			return defaultValue;
 		}
 
-		for (DLVersionNumberIncrease dlVersionNumberIncrease : values()) {
-			if (name.equals(dlVersionNumberIncrease.name())) {
-				return dlVersionNumberIncrease;
-			}
+		try {
+			return valueOf(name);
 		}
-
-		return defaultValue;
+		catch (IllegalArgumentException iae) {
+			return defaultValue;
+		}
 	}
 
 }

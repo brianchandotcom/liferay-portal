@@ -51,7 +51,7 @@ if (messageFormat.equals("bbcode")) {
 	}
 }
 
-Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-showPermanentLink");
+boolean showPermanentLink = GetterUtil.getBoolean(request.getAttribute("edit-message.jsp-showPermanentLink"));
 %>
 
 <div class="panel-heading">

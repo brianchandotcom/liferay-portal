@@ -64,14 +64,14 @@ public class CSSSelectorsOrderCheck extends BaseFileCheck {
 				trimmedLine = trimmedLine.substring(
 					0, trimmedLine.length() - 1);
 
-				List<String> selecters = ListUtil.fromString(
+				List<String> selectors = ListUtil.fromString(
 					trimmedLine, StringPool.COMMA);
 
-				List<String> oldSelecters = new ArrayList<>(selecters);
+				List<String> oldSelectors = new ArrayList<>(selectors);
 
-				Collections.sort(selecters, new NaturalOrderStringComparator());
+				Collections.sort(selectors, new NaturalOrderStringComparator());
 
-				if (oldSelecters.equals(selecters)) {
+				if (oldSelectors.equals(selectors)) {
 					sb.append(line);
 					sb.append("\n");
 
@@ -79,7 +79,7 @@ public class CSSSelectorsOrderCheck extends BaseFileCheck {
 				}
 
 				sb.append(SourceUtil.getIndent(line));
-				sb.append(ListUtil.toString(selecters, StringPool.BLANK, ", "));
+				sb.append(ListUtil.toString(selectors, StringPool.BLANK, ", "));
 				sb.append(" {\n");
 			}
 		}

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -113,6 +114,24 @@ public class MBUtil {
 			httpServletRequest, "mbCategoryId", categoryId);
 
 		return categoryId;
+	}
+
+	public static String getEditorName(String messageFormat) {
+		String editorName = PropsUtil.get(
+			"editor.wysiwyg.portal-web.docroot.html.portlet.message_boards." +
+				"edit_message.html.jsp");
+
+		if (messageFormat.equals("bbcode")) {
+			editorName = PropsUtil.get(
+				com.liferay.message.boards.util.MBUtil.
+					BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
+
+			if (editorName.equals("bbcode")) {
+				editorName = "alloyeditor_bbcode";
+			}
+		}
+
+		return editorName;
 	}
 
 	public static String getHtmlQuoteBody(

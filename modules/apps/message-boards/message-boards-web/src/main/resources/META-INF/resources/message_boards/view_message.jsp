@@ -32,20 +32,10 @@ AssetEntryServiceUtil.incrementViewCounter(layoutAssetEntry);
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
-
-String editorName = PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.html.jsp");
-
-if (messageFormat.equals("bbcode")) {
-	editorName = PropsUtil.get(com.liferay.message.boards.util.MBUtil.BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
-
-	if (editorName.equals("bbcode")) {
-		editorName = "alloyeditor_bbcode";
-	}
-}
 %>
 
 <liferay-editor:resources
-	editorName="<%= editorName %>"
+	editorName="<%= MBUtil.getEditorName(messageFormat) %>"
 />
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>

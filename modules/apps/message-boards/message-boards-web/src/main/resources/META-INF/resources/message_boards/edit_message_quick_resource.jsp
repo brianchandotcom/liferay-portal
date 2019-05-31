@@ -41,15 +41,7 @@ if (threadId > 0) {
 	}
 }
 
-String editorName = PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.html.jsp");
-
-if (messageFormat.equals("bbcode")) {
-	editorName = PropsUtil.get(com.liferay.message.boards.util.MBUtil.BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
-
-	if (editorName.equals("bbcode")) {
-		editorName = "alloyeditor_bbcode";
-	}
-}
+String editorName = MBUtil.getEditorName(messageFormat);
 
 boolean quote = ParamUtil.getBoolean(request, "quote");
 

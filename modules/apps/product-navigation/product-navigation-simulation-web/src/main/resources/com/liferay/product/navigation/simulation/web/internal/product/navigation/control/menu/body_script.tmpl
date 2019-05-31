@@ -1,6 +1,6 @@
-var simulationToggle = $('#${portletNamespace}simulationToggleId');
+var simulationToggle = document.getElementById('${portletNamespace}simulationToggleId');
 
-simulationToggle.sideNavigation();
+SideNavigation.initialize(simulationToggle);
 
 var simulationPanel = $('#${portletNamespace}simulationPanelId');
 

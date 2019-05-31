@@ -29,10 +29,11 @@
 />
 
 <aui:script use="liferay-store">
-	var sidenavToggle = $('[href="#<%= sidenavId %>"]');
+	var sidenavToggle = document.querySelector('[href="#<%= sidenavId %>"]');
 
-	if (!sidenavToggle.sideNavigation('instance')) {
-		sidenavToggle.sideNavigation(
+	if (!SideNavigation.instance(sidenavToggle)) {
+		SideNavigation.initialize(
+			sidenavToggle,
 			{
 				position: '<%= position %>',
 				type: '<%= type %>',

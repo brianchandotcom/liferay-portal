@@ -882,7 +882,9 @@
 		}
 	};
 
-	function initialize(toggler, options = {}) {
+	SideNavigation.initialize = function initialize(toggler, options = {}) {
+		toggler = getElement(toggler);
+
 		let instance = INSTANCE_MAP.get(toggler);
 
 		if (!instance) {
@@ -943,8 +945,8 @@
 		else {
 			this.each(
 				function() {
-					const element = getElement(this);
-					initialize(element, options);
+					const toggler = this;
+					SideNavigation.initialize(toggler, options);
 				}
 			);
 		}
@@ -983,12 +985,9 @@
 	$.fn.sideNavigation = Plugin;
 
 	$(function() {
-		const toggles = document.querySelectorAll('[data-toggle="sidenav"]');
+		const togglers = document.querySelectorAll('[data-toggle="sidenav"]');
 
-		Array.from(toggles).forEach(toggle => {
-			const element = getElement(toggle);
-			initialize(element);
-		});
+		Array.from(togglers).forEach(SideNavigation.initialize);
 	});
 
 	/**

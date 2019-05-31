@@ -465,7 +465,11 @@ AUI.add(
 						instance.get(STR_RENDER_CONTROLS) &&
 						instance.get(STR_RENDER_SIDEBAR)
 					) {
-						AUI.$('[data-toggle="sidenav"]').sideNavigation();
+						var togglers = document.querySelectorAll(
+							'[data-toggle="sidenav"]'
+						);
+
+						Array.from(togglers).forEach(SideNavigation.initialize);
 					}
 				},
 

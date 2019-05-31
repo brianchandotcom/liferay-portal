@@ -138,7 +138,7 @@ boolean showPermanentLink = GetterUtil.getBoolean(request.getAttribute("edit-mes
 
 			<liferay-ui:input-editor
 				allowBrowseDocuments="<%= false %>"
-				autoCreate="<%= false %>"
+				autoCreate="<%= true %>"
 				configKey="replyMBEditor"
 				cssClass='<%= editorName.startsWith("alloyeditor") ? "form-control" : StringPool.BLANK %>'
 				editorName="<%= editorName %>"
@@ -146,6 +146,7 @@ boolean showPermanentLink = GetterUtil.getBoolean(request.getAttribute("edit-mes
 				onChangeMethod='<%= "replyMessageOnChange" + replyToMessageId %>'
 				placeholder='<%= LanguageUtil.get(request, "type-your-reply") %>'
 				showSource="<%= false %>"
+				skipEditorLoading="<%= true %>"
 			/>
 
 			<aui:input name="body" type="hidden" />

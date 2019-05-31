@@ -59,12 +59,11 @@ public class DefaultLayoutTypeAccessPolicyImpl
 			Portlet portlet)
 		throws PortalException {
 
-		String checkAccessAllowedToPortletCacheKey = StringBundler.concat(
-			DefaultLayoutTypeAccessPolicyImpl.class.getName(), "#",
-			layout.getPlid(), "#", portlet.getPrimaryKey());
+		String cacheKey = StringBundler.concat(
+			"ACCESS_ALLOWED_TO_PORTLET_LAYOUT_ID_", layout.getPlid(),
+			"_PORTLET_PRIMARY_KEY_", portlet.getPrimaryKey());
 
-		Boolean allowed = (Boolean)httpServletRequest.getAttribute(
-			checkAccessAllowedToPortletCacheKey);
+		Boolean allowed = (Boolean)httpServletRequest.getAttribute(cacheKey);
 
 		if (allowed != null) {
 			if (allowed) {
@@ -94,8 +93,7 @@ public class DefaultLayoutTypeAccessPolicyImpl
 			PortletPermissionUtil.hasControlPanelAccessPermission(
 				permissionChecker, themeDisplay.getScopeGroupId(), portlet)) {
 
-			httpServletRequest.setAttribute(
-				checkAccessAllowedToPortletCacheKey, Boolean.TRUE);
+			httpServletRequest.setAttribute(cacheKey, Boolean.TRUE);
 
 			return;
 		}
@@ -106,15 +104,13 @@ public class DefaultLayoutTypeAccessPolicyImpl
 			PortalUtil.addPortletDefaultResource(httpServletRequest, portlet);
 
 			if (hasAccessPermission(httpServletRequest, layout, portlet)) {
-				httpServletRequest.setAttribute(
-					checkAccessAllowedToPortletCacheKey, Boolean.TRUE);
+				httpServletRequest.setAttribute(cacheKey, Boolean.TRUE);
 
 				return;
 			}
 		}
 
-		httpServletRequest.setAttribute(
-			checkAccessAllowedToPortletCacheKey, Boolean.FALSE);
+		httpServletRequest.setAttribute(cacheKey, Boolean.FALSE);
 
 		throw new PrincipalException.MustHavePermission(
 			PortalUtil.getUserId(httpServletRequest),

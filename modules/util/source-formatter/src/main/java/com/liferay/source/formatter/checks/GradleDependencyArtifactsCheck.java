@@ -18,8 +18,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.io.IOException;
-
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,15 +29,12 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws IOException {
+		String fileName, String absolutePath, String content) {
 
 		return _fixDependencyVersions(absolutePath, content);
 	}
 
-	private String _fixDependencyVersions(String absolutePath, String content)
-		throws IOException {
-
+	private String _fixDependencyVersions(String absolutePath, String content) {
 		List<String> enforceVersionArtifacts = getAttributeValues(
 			_ENFORCE_VERSION_ARTIFACTS_KEY, absolutePath);
 

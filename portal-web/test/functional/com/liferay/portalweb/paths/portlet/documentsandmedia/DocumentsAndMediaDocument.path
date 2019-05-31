@@ -51,7 +51,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_DESCRIPTION</td>
-	<td>//dd[contains(@class,'sidebar-dd') and contains (.,'Description')]</td>
+	<td>//dd[contains(@class,'sidebar-dd') and contains (.,'Description')] | //dt[contains(@class,'sidebar-dt') and contains (.,'Description')]/following-sibling::dd[contains(.,'${key_dmDocumentDescription}')]</td>
 	<td></td>
 </tr>
 <tr>

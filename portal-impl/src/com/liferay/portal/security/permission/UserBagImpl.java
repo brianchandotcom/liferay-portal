@@ -296,7 +296,7 @@ public class UserBagImpl implements UserBag {
 		Collection<? extends BaseModel<?>> baseModels) {
 
 		if ((baseModels == null) || baseModels.isEmpty()) {
-			return new long[0];
+			return _EMPTY;
 		}
 
 		long[] array = new long[baseModels.size()];
@@ -311,6 +311,8 @@ public class UserBagImpl implements UserBag {
 
 		return array;
 	}
+
+	private static final long[] _EMPTY = {};
 
 	private final long[] _userGroupIds;
 	private final long _userId;

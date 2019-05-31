@@ -211,7 +211,7 @@ public class DBInspector {
 	private Integer _getColumnDataType(String columnType) {
 		Matcher matcher = _columnTypePattern.matcher(columnType);
 
-		if (!matcher.matches()) {
+		if (!matcher.lookingAt()) {
 			return null;
 		}
 
@@ -284,7 +284,7 @@ public class DBInspector {
 	private static final Pattern _columnSizePattern = Pattern.compile(
 		"^\\w+(?:\\((\\d+)\\))?.*", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _columnTypePattern = Pattern.compile(
-		"^\\w+", Pattern.CASE_INSENSITIVE);
+		"(^\\w+)", Pattern.CASE_INSENSITIVE);
 
 	private final Connection _connection;
 

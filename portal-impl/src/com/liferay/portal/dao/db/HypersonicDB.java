@@ -137,9 +137,9 @@ public class HypersonicDB extends BaseDB {
 
 		fieldTypesMap.put(StringUtil.trim(TEMPLATE[11]), Types.BIGINT);
 
-		fieldTypesMap.put(StringUtil.trim(TEMPLATE[12]), Types.LONGNVARCHAR);
+		fieldTypesMap.put(StringUtil.trim(TEMPLATE[12]), Types.VARCHAR);
 
-		fieldTypesMap.put(StringUtil.trim(TEMPLATE[13]), Types.LONGNVARCHAR);
+		fieldTypesMap.put(StringUtil.trim(TEMPLATE[13]), Types.VARCHAR);
 
 		fieldTypesMap.put(StringUtil.trim(TEMPLATE[14]), Types.VARCHAR);
 	}

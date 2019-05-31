@@ -278,11 +278,11 @@ public class PostgreSQLDB extends BaseDB {
 	private static final boolean _SUPPORTS_QUERYING_AFTER_EXCEPTION = false;
 
 	static {
-		fieldTypesMap.put(StringUtil.trim(TEMPLATE[5]), Types.BLOB);
+		fieldTypesMap.put(StringUtil.trim(TEMPLATE[5]), Types.BIGINT);
 
-		fieldTypesMap.put(StringUtil.trim(TEMPLATE[6]), Types.BLOB);
+		fieldTypesMap.put(StringUtil.trim(TEMPLATE[6]), Types.BINARY);
 
-		fieldTypesMap.put(StringUtil.trim(TEMPLATE[7]), Types.BOOLEAN);
+		fieldTypesMap.put(StringUtil.trim(TEMPLATE[7]), Types.BIT);
 
 		fieldTypesMap.put(StringUtil.trim(TEMPLATE[8]), Types.TIMESTAMP);
 

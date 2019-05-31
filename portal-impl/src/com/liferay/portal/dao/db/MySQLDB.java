@@ -220,11 +220,11 @@ public class MySQLDB extends BaseDB {
 	private static final boolean _SUPPORTS_UPDATE_WITH_INNER_JOIN = true;
 
 	static {
-		fieldTypesMap.put(StringUtil.trim(TEMPLATE[5]), Types.BLOB);
+		fieldTypesMap.put(StringUtil.trim(TEMPLATE[5]), Types.LONGVARBINARY);
 
-		fieldTypesMap.put(StringUtil.trim(TEMPLATE[6]), Types.BLOB);
+		fieldTypesMap.put(StringUtil.trim(TEMPLATE[6]), Types.LONGVARBINARY);
 
-		fieldTypesMap.put(StringUtil.trim(TEMPLATE[7]), Types.TINYINT);
+		fieldTypesMap.put(StringUtil.trim(TEMPLATE[7]), Types.BIT);
 
 		fieldTypesMap.put(StringUtil.trim(TEMPLATE[8]), Types.TIMESTAMP);
 
@@ -234,9 +234,9 @@ public class MySQLDB extends BaseDB {
 
 		fieldTypesMap.put(StringUtil.trim(TEMPLATE[11]), Types.BIGINT);
 
-		fieldTypesMap.put(StringUtil.trim(TEMPLATE[12]), Types.LONGNVARCHAR);
+		fieldTypesMap.put(StringUtil.trim(TEMPLATE[12]), Types.LONGVARCHAR);
 
-		fieldTypesMap.put(StringUtil.trim(TEMPLATE[13]), Types.LONGNVARCHAR);
+		fieldTypesMap.put(StringUtil.trim(TEMPLATE[13]), Types.LONGVARCHAR);
 
 		fieldTypesMap.put(StringUtil.trim(TEMPLATE[14]), Types.VARCHAR);
 	}

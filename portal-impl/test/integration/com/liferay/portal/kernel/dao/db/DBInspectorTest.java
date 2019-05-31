@@ -61,13 +61,14 @@ public class DBInspectorTest {
 	@Test
 	public void testHasColumnTypeBlob() throws Exception {
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(TABLE_NAME, "typeBlob", "BLOB"));
+			_dbInspector.hasColumnType(TABLE_NAME, "typeBlob", "BLOB null"));
 	}
 
 	@Test
 	public void testHasColumnTypeBoolean() throws Exception {
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(TABLE_NAME, "typeBoolean", "BOOLEAN"));
+			_dbInspector.hasColumnType(
+				TABLE_NAME, "typeBoolean", "BOOLEAN null"));
 	}
 
 	@Test
@@ -79,13 +80,15 @@ public class DBInspectorTest {
 	@Test
 	public void testHasColumnTypeDouble() throws Exception {
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(TABLE_NAME, "typeDouble", "DOUBLE"));
+			_dbInspector.hasColumnType(
+				TABLE_NAME, "typeDouble", "DOUBLE null"));
 	}
 
 	@Test
 	public void testHasColumnTypeInteger() throws Exception {
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(TABLE_NAME, "typeInteger", "INTEGER"));
+			_dbInspector.hasColumnType(
+				TABLE_NAME, "typeInteger", "INTEGER null"));
 	}
 
 	@Test
@@ -97,7 +100,7 @@ public class DBInspectorTest {
 	@Test
 	public void testHasColumnTypeSBlob() throws Exception {
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(TABLE_NAME, "typeSBlob", "SBLOB"));
+			_dbInspector.hasColumnType(TABLE_NAME, "typeSBlob", "SBLOB null"));
 	}
 
 	@Test

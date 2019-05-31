@@ -22,6 +22,8 @@ definition {
 	}
 
 	macro gotoBlogsEntryPermissionsCP {
+		Pause(locator = "1000");
+
 		LexiconCard.clickEllipsisItem(
 			card = "${entryTitle}",
 			item = "Permissions");

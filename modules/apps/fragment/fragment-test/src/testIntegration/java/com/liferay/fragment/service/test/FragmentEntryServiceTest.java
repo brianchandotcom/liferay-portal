@@ -124,7 +124,7 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test(expected = FragmentEntryContentException.class)
-	public void testAddFragmentEntryUsingEmptyHTML() throws Exception {
+	public void testAddFragmentEntryUsingNullHTML() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());

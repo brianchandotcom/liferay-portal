@@ -515,14 +515,6 @@ public class AssetPublisherWebUtil {
 		}
 	}
 
-	public void refreshAssetPublisherPortletInstanceConfiguration()
-		throws ConfigurationException {
-
-		_assetPublisherPortletInstanceConfiguration =
-			ConfigurationProviderUtil.getSystemConfiguration(
-				AssetPublisherPortletInstanceConfiguration.class);
-	}
-
 	public void subscribe(
 			PermissionChecker permissionChecker, long groupId, long plid,
 			String portletId)

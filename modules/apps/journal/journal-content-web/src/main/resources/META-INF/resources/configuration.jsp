@@ -67,13 +67,22 @@ String redirect = ParamUtil.getString(request, "redirect");
 			<%
 			PortletURL selectWebContentURL = PortletProviderUtil.getPortletURL(request, JournalArticle.class.getName(), PortletProvider.Action.BROWSE);
 
-			selectWebContentURL.setParameter("groupId", String.valueOf(journalContentDisplayContext.getGroupId()));
+			Group scopeGroup = GroupLocalServiceUtil.getGroup(themeDisplay.getScopeGroupId());
 
-			if (journalContentDisplayContext.getSelectedGroupIds() != null) {
-				selectWebContentURL.setParameter("selectedGroupIds", StringUtil.merge(journalContentDisplayContext.getSelectedGroupIds()));
+			if (scopeGroup.isLayoutPrototype()) {
+				Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(scopeGroup.getCompanyId());
+
+				selectWebContentURL.setParameter("selectedGroupIds", String.valueOf(companyGroup.getGroupId()));
 			}
 			else {
-				selectWebContentURL.setParameter("selectedGroupId", String.valueOf(themeDisplay.getScopeGroupId()));
+				selectWebContentURL.setParameter("groupId", String.valueOf(journalContentDisplayContext.getGroupId()));
+
+				if (journalContentDisplayContext.getSelectedGroupIds() != null) {
+					selectWebContentURL.setParameter("selectedGroupIds", StringUtil.merge(journalContentDisplayContext.getSelectedGroupIds()));
+				}
+				else {
+					selectWebContentURL.setParameter("selectedGroupId", String.valueOf(themeDisplay.getScopeGroupId()));
+				}
 			}
 
 			selectWebContentURL.setParameter("refererAssetEntryId", "[$ARTICLE_REFERER_ASSET_ENTRY_ID$]");

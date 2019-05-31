@@ -15,6 +15,8 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Chema Balsas
@@ -66,7 +68,12 @@ public class ButtonTag extends BaseClayTag {
 	}
 
 	public void setStyle(String style) {
-		putValue("style", style);
+		if (Validator.isBoolean(style)) {
+			putValue("style", GetterUtil.getBoolean(style));
+		}
+		else {
+			putValue("style", style);
+		}
 	}
 
 	public void setTitle(String title) {

@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.rest.internal.model.entry;
 
-import com.liferay.change.tracking.configuration.CTConfigurationRegistryUtil;
+import com.liferay.change.tracking.definition.CTDefinitionRegistryUtil;
 import com.liferay.change.tracking.model.CTEntry;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -30,10 +30,10 @@ public class CTAffectedEntryModel {
 		Builder builder = new Builder();
 
 		return builder.setContentType(
-			CTConfigurationRegistryUtil.getVersionEntityContentTypeLanguageKey(
+			CTDefinitionRegistryUtil.getVersionEntityContentTypeLanguageKey(
 				ctEntry.getModelClassNameId())
 		).setTitle(
-			CTConfigurationRegistryUtil.getVersionEntityTitle(
+			CTDefinitionRegistryUtil.getVersionEntityTitle(
 				ctEntry.getModelClassNameId(), ctEntry.getModelClassPK())
 		).build();
 	}

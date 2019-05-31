@@ -14,9 +14,9 @@
 
 package com.liferay.change.tracking.change.lists.web.internal.display.context;
 
-import com.liferay.change.tracking.configuration.CTConfigurationRegistryUtil;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.constants.CTSettingsKeys;
+import com.liferay.change.tracking.definition.CTDefinitionRegistryUtil;
 import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
@@ -88,7 +88,7 @@ public class ChangeListsDisplayContext {
 		soyContext.put(
 			"entityNameTranslations",
 			JSONUtil.toJSONArray(
-				CTConfigurationRegistryUtil.getContentTypeLanguageKeys(),
+				CTDefinitionRegistryUtil.getContentTypeLanguageKeys(),
 				contentTypeLanguageKey -> JSONUtil.put(
 					"key", contentTypeLanguageKey
 				).put(

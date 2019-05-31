@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.rest.internal.model.entry;
 
-import com.liferay.change.tracking.configuration.CTConfigurationRegistryUtil;
+import com.liferay.change.tracking.definition.CTDefinitionRegistryUtil;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -49,7 +49,7 @@ public class CTEntryModel {
 		).setCollision(
 			ctEntry.isCollision()
 		).setContentType(
-			CTConfigurationRegistryUtil.getVersionEntityContentTypeLanguageKey(
+			CTDefinitionRegistryUtil.getVersionEntityContentTypeLanguageKey(
 				ctEntry.getModelClassNameId())
 		).setCTEntryId(
 			ctEntry.getCtEntryId()
@@ -58,15 +58,15 @@ public class CTEntryModel {
 		).setResourcePrimKey(
 			ctEntry.getModelResourcePrimKey()
 		).setSiteName(
-			CTConfigurationRegistryUtil.getVersionEntitySiteName(
+			CTDefinitionRegistryUtil.getVersionEntitySiteName(
 				ctEntry.getModelClassNameId(), ctEntry.getModelClassPK())
 		).setTitle(
-			CTConfigurationRegistryUtil.getVersionEntityTitle(
+			CTDefinitionRegistryUtil.getVersionEntityTitle(
 				ctEntry.getModelClassNameId(), ctEntry.getModelClassPK())
 		).setUserName(
 			ctEntry.getUserName()
 		).setVersion(
-			CTConfigurationRegistryUtil.getVersionEntityVersion(
+			CTDefinitionRegistryUtil.getVersionEntityVersion(
 				ctEntry.getModelClassNameId(), ctEntry.getModelClassPK())
 		).build();
 	}

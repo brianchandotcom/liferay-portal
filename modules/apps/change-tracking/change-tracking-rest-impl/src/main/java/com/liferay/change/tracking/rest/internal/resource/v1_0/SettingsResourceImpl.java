@@ -14,8 +14,8 @@
 
 package com.liferay.change.tracking.rest.internal.resource.v1_0;
 
-import com.liferay.change.tracking.configuration.CTConfiguration;
 import com.liferay.change.tracking.constants.CTSettingsKeys;
+import com.liferay.change.tracking.definition.CTDefinition;
 import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.rest.dto.v1_0.Settings;
 import com.liferay.change.tracking.rest.dto.v1_0.SettingsUpdate;
@@ -115,12 +115,12 @@ public class SettingsResourceImpl extends BaseSettingsResourceImpl {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		for (CTConfiguration<?, ?> ctConfiguration : _ctConfigurations) {
+		for (CTDefinition<?, ?> ctDefinition : _ctDefinitions) {
 			supportedContentTypeLanguageKeys.add(
-				ctConfiguration.getContentTypeLanguageKey());
+				ctDefinition.getContentTypeLanguageKey());
 
 			String contentType = LanguageUtil.get(
-				resourceBundle, ctConfiguration.getContentTypeLanguageKey());
+				resourceBundle, ctDefinition.getContentTypeLanguageKey());
 
 			supportedContentTypes.add(contentType);
 		}
@@ -159,7 +159,7 @@ public class SettingsResourceImpl extends BaseSettingsResourceImpl {
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
-	private volatile List<CTConfiguration<?, ?>> _ctConfigurations;
+	private volatile List<CTDefinition<?, ?>> _ctDefinitions;
 
 	@Reference
 	private CTEngineManager _ctEngineManager;

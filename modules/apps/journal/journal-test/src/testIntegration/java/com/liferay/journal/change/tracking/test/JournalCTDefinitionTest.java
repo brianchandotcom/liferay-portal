@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.journal.change.tracking.configuration.test;
+package com.liferay.journal.change.tracking.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.change.tracking.configuration.CTConfiguration;
+import com.liferay.change.tracking.definition.CTDefinition;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolderConstants;
@@ -47,7 +47,7 @@ import org.junit.runner.RunWith;
  * @author Gergely Mathe
  */
 @RunWith(Arquillian.class)
-public class JournalCTConfigurationTest {
+public class JournalCTDefinitionTest {
 
 	@ClassRule
 	@Rule
@@ -69,8 +69,8 @@ public class JournalCTConfigurationTest {
 
 	@Test
 	public void testJournalArticleCTConfiguration() throws Exception {
-		Optional<CTConfiguration<?, ?>> ctConfigurationOptional =
-			_getCTConfigurationOptional();
+		Optional<CTDefinition<?, ?>> ctConfigurationOptional =
+			_getCTDefinitionOptional();
 
 		Assert.assertTrue(
 			"Change tracking configuration is not registered",
@@ -78,7 +78,7 @@ public class JournalCTConfigurationTest {
 
 		JournalArticleResource resourceEntity =
 			(JournalArticleResource)ctConfigurationOptional.map(
-				CTConfiguration::getResourceEntityByResourceEntityIdFunction
+				CTDefinition::getResourceEntityByResourceEntityIdFunction
 			).map(
 				resourceEntityByResourceEntityIdFunction ->
 					resourceEntityByResourceEntityIdFunction.apply(
@@ -97,7 +97,7 @@ public class JournalCTConfigurationTest {
 
 		Class<JournalArticleResource> resourceClass =
 			(Class<JournalArticleResource>)ctConfigurationOptional.map(
-				CTConfiguration::getResourceEntityClass
+				CTDefinition::getResourceEntityClass
 			).orElse(
 				null
 			);
@@ -107,7 +107,7 @@ public class JournalCTConfigurationTest {
 			_journalArticleResource.getModelClass(), resourceClass);
 
 		long resourceEntityId = (long)ctConfigurationOptional.map(
-			CTConfiguration::getResourceEntityIdFromResourceEntityFunction
+			CTDefinition::getResourceEntityIdFromResourceEntityFunction
 		).map(
 			resourceEntityIdFromResourceEntityFunction ->
 				(Function<JournalArticleResource, Serializable>)
@@ -125,7 +125,7 @@ public class JournalCTConfigurationTest {
 			_journalArticleResource.getResourcePrimKey(), resourceEntityId);
 
 		resourceEntityId = (long)ctConfigurationOptional.map(
-			CTConfiguration::getResourceEntityIdFromVersionEntityFunction
+			CTDefinition::getResourceEntityIdFromVersionEntityFunction
 		).map(
 			resourceEntityIdFromVersionEntityFunction ->
 				(Function<JournalArticle, Serializable>)
@@ -143,7 +143,7 @@ public class JournalCTConfigurationTest {
 
 		JournalArticle versionEntity =
 			(JournalArticle)ctConfigurationOptional.map(
-				CTConfiguration::getVersionEntityByVersionEntityIdFunction
+				CTDefinition::getVersionEntityByVersionEntityIdFunction
 			).map(
 				versionEntityByVersionEntityIdFunction ->
 					versionEntityByVersionEntityIdFunction.apply(
@@ -162,7 +162,7 @@ public class JournalCTConfigurationTest {
 
 		Class<JournalArticle> versionClass =
 			(Class<JournalArticle>)ctConfigurationOptional.map(
-				CTConfiguration::getVersionEntityClass
+				CTDefinition::getVersionEntityClass
 			).orElse(
 				null
 			);
@@ -172,7 +172,7 @@ public class JournalCTConfigurationTest {
 			versionClass);
 
 		long versionEntityId = (long)ctConfigurationOptional.map(
-			CTConfiguration::getVersionEntityIdFromResourceEntityFunction
+			CTDefinition::getVersionEntityIdFromResourceEntityFunction
 		).map(
 			versionEntityIdFromResourceEntityFunction ->
 				(Function<JournalArticleResource, Serializable>)
@@ -190,7 +190,7 @@ public class JournalCTConfigurationTest {
 			_journalArticle.getId(), versionEntityId);
 
 		versionEntityId = (long)ctConfigurationOptional.map(
-			CTConfiguration::getVersionEntityIdFromVersionEntityFunction
+			CTDefinition::getVersionEntityIdFromVersionEntityFunction
 		).map(
 			versionEntityIdFromVersionEntityFunction ->
 				(Function<JournalArticle, Serializable>)
@@ -207,7 +207,7 @@ public class JournalCTConfigurationTest {
 			_journalArticle.getId(), versionEntityId);
 
 		int versionEntityStatus = ctConfigurationOptional.map(
-			CTConfiguration::getVersionEntityStatusFunction
+			CTDefinition::getVersionEntityStatusFunction
 		).map(
 			versionEntityStatusFunction ->
 				(Function<JournalArticle, Integer>)versionEntityStatusFunction
@@ -223,20 +223,20 @@ public class JournalCTConfigurationTest {
 			versionEntityStatus);
 	}
 
-	private Optional<CTConfiguration<?, ?>> _getCTConfigurationOptional()
+	private Optional<CTDefinition<?, ?>> _getCTDefinitionOptional()
 		throws Exception {
 
 		Registry registry = RegistryUtil.getRegistry();
 
 		Object[] objects = registry.getServices(
-			"com.liferay.change.tracking.configuration.CTConfigurationRegistry",
+			"com.liferay.change.tracking.definition.CTDefinitionRegistry",
 			null);
 
 		Object ctConfigurationRegistry = objects[0];
 
 		return ReflectionTestUtil.invoke(
 			ctConfigurationRegistry,
-			"getCTConfigurationOptionalByVersionClassName",
+			"getCTDefinitionOptionalByVersionClassName",
 			new Class<?>[] {String.class},
 			new String[] {JournalArticle.class.getName()});
 	}

@@ -15,10 +15,10 @@
 package com.liferay.change.tracking.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.change.tracking.configuration.CTConfiguration;
-import com.liferay.change.tracking.configuration.CTConfigurationRegistrar;
-import com.liferay.change.tracking.configuration.builder.CTConfigurationBuilder;
 import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.definition.CTDefinition;
+import com.liferay.change.tracking.definition.CTDefinitionRegistrar;
+import com.liferay.change.tracking.definition.builder.CTDefinitionBuilder;
 import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTProcess;
@@ -81,7 +81,7 @@ public class CTProcessLocalServiceTest {
 		_className = _classNameLocalService.addClassName(
 			TestVersionModelClass.class.getName());
 
-		_ctConfiguration = _ctConfigurationBuilder.setContentType(
+		_ctDefinition = _ctDefinitionBuilder.setContentType(
 			"Test Object"
 		).setContentTypeLanguageKey(
 			"test-object"
@@ -107,7 +107,7 @@ public class CTProcessLocalServiceTest {
 			testVersion -> WorkflowConstants.STATUS_APPROVED
 		).build();
 
-		_ctConfigurationRegistrar.register(_ctConfiguration);
+		_ctDefinitionRegistrar.register(_ctDefinition);
 	}
 
 	@After
@@ -121,8 +121,8 @@ public class CTProcessLocalServiceTest {
 				TestPropsValues.getCompanyId());
 		}
 
-		if (_ctConfiguration != null) {
-			_ctConfigurationRegistrar.unregister(_ctConfiguration);
+		if (_ctDefinition != null) {
+			_ctDefinitionRegistrar.unregister(_ctDefinition);
 		}
 	}
 
@@ -173,14 +173,14 @@ public class CTProcessLocalServiceTest {
 	@Inject
 	private CTCollectionLocalService _ctCollectionLocalService;
 
-	private CTConfiguration _ctConfiguration;
+	private CTDefinition _ctDefinition;
 
 	@Inject
-	private CTConfigurationBuilder
-		<TestResourceModelClass, TestVersionModelClass> _ctConfigurationBuilder;
+	private CTDefinitionBuilder<TestResourceModelClass, TestVersionModelClass>
+		_ctDefinitionBuilder;
 
 	@Inject
-	private CTConfigurationRegistrar _ctConfigurationRegistrar;
+	private CTDefinitionRegistrar _ctDefinitionRegistrar;
 
 	@Inject
 	private CTEngineManager _ctEngineManager;

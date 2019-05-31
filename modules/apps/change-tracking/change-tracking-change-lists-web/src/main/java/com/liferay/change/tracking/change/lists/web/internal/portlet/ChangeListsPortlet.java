@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.change.lists.web.internal.portlet;
 
-import com.liferay.change.tracking.configuration.CTPortalConfiguration;
+import com.liferay.change.tracking.configuration.CTConfiguration;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Role;
@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Máté Thurzó
  */
 @Component(
-	configurationPid = "com.liferay.change.tracking.configuration.CTPortalConfiguration",
+	configurationPid = "com.liferay.change.tracking.configuration.CTConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=false",
@@ -102,8 +102,8 @@ public class ChangeListsPortlet extends MVCPortlet {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_ctPortalConfiguration = ConfigurableUtil.createConfigurable(
-			CTPortalConfiguration.class, properties);
+		_ctConfiguration = ConfigurableUtil.createConfigurable(
+			CTConfiguration.class, properties);
 	}
 
 	@Override
@@ -118,7 +118,7 @@ public class ChangeListsPortlet extends MVCPortlet {
 		}
 
 		String[] administratorRoleNames =
-			_ctPortalConfiguration.administratorRoleNames();
+			_ctConfiguration.administratorRoleNames();
 
 		UserBag userBag = permissionChecker.getUserBag();
 
@@ -134,7 +134,7 @@ public class ChangeListsPortlet extends MVCPortlet {
 				permissionChecker.getUserId(), getClass().getSimpleName()));
 	}
 
-	private CTPortalConfiguration _ctPortalConfiguration;
+	private CTConfiguration _ctConfiguration;
 
 	@Reference
 	private Portal _portal;

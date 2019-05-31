@@ -44,7 +44,7 @@
 		"@babel/preset-react": "^7.0.0",
 		"babel-plugin-module-resolver": "^3.2.0",
 		"check-source-formatting": "^2.0.14",
-		"clay-css": "2.15.1",
+		"clay-css": "2.16.0",
 		"css-loader": "^2.0.1",
 		"eslint": "^5.8.0",
 		"eslint-config-liferay": "^2.0.18",

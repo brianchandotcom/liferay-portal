@@ -17,10 +17,10 @@ package com.liferay.headless.delivery.internal.dto.v1_0.util;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.util.ExpandoBridgeIndexerUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -40,13 +40,16 @@ import java.util.stream.Collectors;
 public class EntityFieldsUtil {
 
 	public static List<EntityField> getEntityFields(
-			long classNameId, long companyId,
-			ExpandoColumnLocalService expandoColumnLocalService,
-			ExpandoTableLocalService expandoTableLocalService)
-		throws PortalException {
+		long classNameId, long companyId,
+		ExpandoColumnLocalService expandoColumnLocalService,
+		ExpandoTableLocalService expandoTableLocalService) {
 
-		ExpandoTable expandoTable = expandoTableLocalService.getDefaultTable(
-			companyId, classNameId);
+		ExpandoTable expandoTable = expandoTableLocalService.fetchTable(
+			companyId, classNameId, ExpandoTableConstants.DEFAULT_TABLE_NAME);
+
+		if (expandoTable == null) {
+			return null;
+		}
 
 		List<ExpandoColumn> expandoColumns =
 			expandoColumnLocalService.getColumns(expandoTable.getTableId());

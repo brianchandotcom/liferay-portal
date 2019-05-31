@@ -65,7 +65,7 @@ public class BlogsContentEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("a[*](*); ");
 		sb.append(getAllowedContentText());
@@ -73,6 +73,7 @@ public class BlogsContentEditorConfigContributor
 		sb.append(getAllowedContentLists());
 		sb.append(" p {text-align}; ");
 		sb.append(getAllowedContentTable());
+		sb.append(" video[*](*);");
 
 		jsonObject.put("allowedContent", sb.toString());
 

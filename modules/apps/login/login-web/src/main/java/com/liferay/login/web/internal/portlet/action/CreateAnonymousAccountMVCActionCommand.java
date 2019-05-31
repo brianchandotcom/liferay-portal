@@ -19,7 +19,7 @@ import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.login.web.internal.constants.LoginPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
-import com.liferay.portal.kernel.captcha.CaptchaTextException;
+import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
 import com.liferay.portal.kernel.exception.ContactNameException;
 import com.liferay.portal.kernel.exception.EmailAddressException;
@@ -243,8 +243,7 @@ public class CreateAnonymousAccountMVCActionCommand
 						actionRequest, actionResponse, portletURL.toString());
 				}
 			}
-			else if (e instanceof CaptchaConfigurationException ||
-					 e instanceof CaptchaTextException ||
+			else if (e instanceof CaptchaException ||
 					 e instanceof CompanyMaxUsersException ||
 					 e instanceof ContactNameException ||
 					 e instanceof EmailAddressException ||

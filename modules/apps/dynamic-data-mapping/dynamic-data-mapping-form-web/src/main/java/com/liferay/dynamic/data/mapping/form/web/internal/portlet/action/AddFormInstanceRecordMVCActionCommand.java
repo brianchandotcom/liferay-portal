@@ -29,7 +29,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.portal.kernel.captcha.CaptchaTextException;
+import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -95,8 +95,8 @@ public class AddFormInstanceRecordMVCActionCommand
 		try {
 			validateCaptcha(actionRequest, ddmFormInstance);
 		}
-		catch (CaptchaTextException cte) {
-			SessionErrors.add(actionRequest, cte.getClass());
+		catch (CaptchaException ce) {
+			SessionErrors.add(actionRequest, ce.getClass());
 
 			return;
 		}

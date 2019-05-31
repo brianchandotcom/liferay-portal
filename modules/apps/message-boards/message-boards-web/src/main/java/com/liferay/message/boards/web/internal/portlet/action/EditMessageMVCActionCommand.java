@@ -45,7 +45,7 @@ import com.liferay.message.boards.web.internal.upload.format.MBMessageFormatUplo
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryReference;
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryUtil;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
-import com.liferay.portal.kernel.captcha.CaptchaTextException;
+import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -216,9 +216,9 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			actionResponse.setRenderParameter(
 				"mvcPath", "/message_boards/error.jsp");
 		}
-		catch (AntivirusScannerException | CaptchaConfigurationException |
-			   CaptchaTextException | DuplicateFileEntryException |
-			   FileExtensionException | FileNameException | FileSizeException |
+		catch (AntivirusScannerException | CaptchaException |
+			   DuplicateFileEntryException | FileExtensionException |
+			   FileNameException | FileSizeException |
 			   LiferayFileItemException | LockedThreadException |
 			   MessageBodyException | MessageSubjectException |
 			   SanitizerException | UploadRequestSizeException e) {

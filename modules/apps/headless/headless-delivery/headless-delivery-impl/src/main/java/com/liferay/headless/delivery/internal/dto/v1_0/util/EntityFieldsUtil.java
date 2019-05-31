@@ -31,6 +31,7 @@ import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.odata.normalizer.Normalizer;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -53,6 +54,8 @@ public class EntityFieldsUtil {
 		return expandoColumns.stream(
 		).map(
 			EntityFieldsUtil::_getEntityField
+		).filter(
+			Objects::nonNull
 		).collect(
 			Collectors.toList()
 		);

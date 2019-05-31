@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ include file="/message_boards/init.jsp" %>
+
 <%
 MBMessage replyMessage = null;
 

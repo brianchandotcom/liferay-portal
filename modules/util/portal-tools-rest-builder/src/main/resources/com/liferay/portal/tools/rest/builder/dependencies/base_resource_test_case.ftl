@@ -530,14 +530,27 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						Assert.assertEquals(${schemaVarNames}2.toString(), 1, ${schemaVarNames}2.size());
 
-						assertEqualsIgnoringOrder(
+						Page<${schemaName}> page3 = ${schemaName}Resource.${javaMethodSignature.methodName}(
+
+						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+							<#if !javaMethodParameter?is_first>
+								,
+							</#if>
+
+							<#if stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
+								Pagination.of(1, 3)
+							<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+								${javaMethodParameter.parameterName}
+							<#else>
+								null
+							</#if>
+						</#list>
+
+						);
+
+					assertEqualsIgnoringOrder(
 							Arrays.asList(${schemaVarName}1, ${schemaVarName}2, ${schemaVarName}3),
-							new ArrayList<${schemaName}>() {
-								{
-									addAll(${schemaVarNames}1);
-									addAll(${schemaVarNames}2);
-								}
-							});
+							(List<${schemaName}>)page3.getItems());
 					}
 				</#if>
 

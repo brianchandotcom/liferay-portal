@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -291,8 +290,5 @@ public class ManageCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private SharingEntryService _sharingEntryService;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

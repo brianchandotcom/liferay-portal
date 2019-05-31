@@ -23,13 +23,11 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.model.SharingEntry;
@@ -252,12 +250,6 @@ public class ManageCollaboratorsViewMVCRenderCommand
 	private Template _getTemplate(RenderRequest renderRequest) {
 		return (Template)renderRequest.getAttribute(WebKeys.TEMPLATE);
 	}
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;

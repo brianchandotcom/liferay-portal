@@ -143,8 +143,6 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
-
-			return;
 		}
 	}
 

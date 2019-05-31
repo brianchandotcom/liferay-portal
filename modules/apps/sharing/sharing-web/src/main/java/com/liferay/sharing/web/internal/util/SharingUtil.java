@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.security.permission.SharingPermission;
-import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplay;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayAction;
 
@@ -92,9 +91,6 @@ public class SharingUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(SharingUtil.class);
-
-	@Reference
-	private SharingEntryLocalService _sharingEntryLocalService;
 
 	@Reference
 	private SharingPermission _sharingPermission;

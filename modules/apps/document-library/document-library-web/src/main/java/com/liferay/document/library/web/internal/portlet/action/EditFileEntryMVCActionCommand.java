@@ -319,7 +319,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		DLVersionNumberIncrease dlVersionNumberIncrease =
 			DLVersionNumberIncrease.valueOf(
-				ParamUtil.getString(actionRequest, "versionIncrease"),
+				actionRequest.getParameter("versionIncrease"),
 				DLVersionNumberIncrease.AUTOMATIC);
 
 		String changeLog = ParamUtil.getString(actionRequest, "changeLog");
@@ -897,7 +897,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		DLVersionNumberIncrease dlVersionNumberIncrease =
 			DLVersionNumberIncrease.valueOf(
-				ParamUtil.getString(uploadPortletRequest, "versionIncrease"),
+				uploadPortletRequest.getParameter("versionIncrease"),
 				DLVersionNumberIncrease.AUTOMATIC);
 
 		boolean updateVersionDetails = ParamUtil.getBoolean(

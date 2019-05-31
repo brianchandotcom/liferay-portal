@@ -104,7 +104,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		DLVersionNumberIncrease dlVersionNumberIncrease =
 			DLVersionNumberIncrease.valueOf(
-				ParamUtil.getString(actionRequest, "versionIncrease"),
+				actionRequest.getParameter("versionIncrease"),
 				DLVersionNumberIncrease.MINOR);
 		String changeLog = ParamUtil.getString(actionRequest, "changeLog");
 

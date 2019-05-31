@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.io.IOException;
 
@@ -77,7 +78,7 @@ public class CSSSelectorsOrderCheck extends BaseFileCheck {
 					continue;
 				}
 
-				sb.append(line.replaceFirst("^([\t ]*).+", "$1"));
+				sb.append(SourceUtil.getIndent(line));
 				sb.append(ListUtil.toString(selecters, StringPool.BLANK, ", "));
 				sb.append(" {\n");
 			}

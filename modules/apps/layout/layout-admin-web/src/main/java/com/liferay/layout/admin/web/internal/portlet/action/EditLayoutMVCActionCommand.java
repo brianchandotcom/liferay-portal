@@ -234,7 +234,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-		if (Validator.isNull(redirect) || redirect.endsWith(oldFriendlyURL)) {
+		if (Validator.isNull(redirect) || redirect.contains(oldFriendlyURL)) {
 			redirect = _portal.getLayoutFullURL(layout, themeDisplay);
 		}
 

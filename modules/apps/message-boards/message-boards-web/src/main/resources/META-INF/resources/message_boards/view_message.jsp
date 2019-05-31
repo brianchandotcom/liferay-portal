@@ -88,6 +88,13 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 					}
 				).then(
 					function(response) {
+						var editorName = '<portlet:namespace />replyMessageBody' + messageId;
+
+						if (window[editorName]) {
+							window[editorName].dispose();
+							Liferay.destroyComponent(editorName);
+						}
+
 						addQuickReplyContainer.innerHTML = response;
 
 						dom.globalEval.runScriptsInElement(addQuickReplyContainer);
@@ -99,8 +106,6 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 						if (parentMessageIdInput) {
 							parentMessageIdInput.value = messageId;
 						}
-
-						var editorName = '<portlet:namespace />replyMessageBody' + messageId;
 
 						Liferay.componentReady(editorName).then(
 							function(editor) {

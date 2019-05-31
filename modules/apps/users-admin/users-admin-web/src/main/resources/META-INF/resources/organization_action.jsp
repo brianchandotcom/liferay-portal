@@ -183,7 +183,11 @@ long organizationGroupId = organization.getGroupId();
 		/>
 	</c:if>
 
-	<c:if test="<%= hasUpdatePermission %>">
+	<%
+	long parentOrganizationId = GetterUtil.getLong(request.getAttribute("view.jsp-organizationId"));
+	%>
+
+	<c:if test="<%= (parentOrganizationId > 0) && hasUpdatePermission %>">
 		<portlet:actionURL name="/users_admin/edit_organization_assignments" var="removeOrganizationURL">
 			<portlet:param name="assignmentsRedirect" value="<%= redirect %>" />
 			<portlet:param name="removeOrganizationIds" value="<%= String.valueOf(organizationId) %>" />

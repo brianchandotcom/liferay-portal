@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.configuration;
+package com.liferay.change.tracking.internal.definition;
 
-import com.liferay.change.tracking.internal.configuration.builder.CTConfigurationBuilderImpl;
+import com.liferay.change.tracking.internal.definition.builder.CTDefinitionBuilderImpl;
 import com.liferay.portal.kernel.model.BaseModel;
 
 import java.io.Serializable;
@@ -28,10 +28,10 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Máté Thurzó
  */
 @ProviderType
-public class CTConfigurationImpl<T extends BaseModel, U extends BaseModel>
-	implements CTConfigurationBuilderImpl.CTConfigurationExtended<T, U> {
+public class CTDefinitionImpl<T extends BaseModel, U extends BaseModel>
+	implements CTDefinitionBuilderImpl.CTDefinitionExtended<T, U> {
 
-	public CTConfigurationImpl() {
+	public CTDefinitionImpl() {
 		_resourceEntityInformation = new EntityInformation<>();
 		_versionEntityInformation = new EntityInformation<>();
 	}

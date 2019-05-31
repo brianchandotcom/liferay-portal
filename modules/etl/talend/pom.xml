@@ -23,7 +23,7 @@
 	</pluginRepositories>
 	<properties>
 		<maven.deploy.skip>true</maven.deploy.skip>
-		<liferay.source.formatter.version>1.0.848</liferay.source.formatter.version>
+		<liferay.source.formatter.version>1.0.861</liferay.source.formatter.version>
 		<liferay.javadoc.formatter.version>1.0.28</liferay.javadoc.formatter.version>
 		<liferay.xml.formatter.version>1.0.5</liferay.xml.formatter.version>
 	</properties>

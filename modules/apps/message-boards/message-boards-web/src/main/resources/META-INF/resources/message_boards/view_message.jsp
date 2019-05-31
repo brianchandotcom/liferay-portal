@@ -102,7 +102,11 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 
 						var editorName = '<portlet:namespace />replyMessageBody' + messageId;
 
-						window[editorName].focus();
+						Liferay.componentReady(editorName).then(
+							function(editor) {
+								editor.focus();
+							}
+						);
 
 						if (addQuickReplyContainer && AUI().UA.mobile) {
 							addQuickReplyContainer.scrollIntoView(true);

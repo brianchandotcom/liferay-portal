@@ -15,13 +15,20 @@ import templates from './AdaptiveMediaProgress.soy';
  */
 
 class AdaptiveMediaProgress extends PortletBase {
+
+	/**
+	 * @inheritDoc
+	 */
 	attached() {
 		this._instanceClayTooltip = ClayTooltip.init({});
 
 		this._instanceClayTooltip.position = 'TopCenter';
-		this._instanceClayTooltip.selectors = ['.progress-container '];
+		this._instanceClayTooltip.selectors = ['.progress-container'];
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	disposed() {
 		this._instanceClayTooltip.dispose();
 	}

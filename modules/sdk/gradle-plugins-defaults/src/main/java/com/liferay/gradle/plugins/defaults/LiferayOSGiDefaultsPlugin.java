@@ -51,6 +51,7 @@ import com.liferay.gradle.plugins.dependency.checker.DependencyCheckerExtension;
 import com.liferay.gradle.plugins.dependency.checker.DependencyCheckerPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
+import com.liferay.gradle.plugins.jasper.jspc.CompileJSPTask;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
 import com.liferay.gradle.plugins.jsdoc.JSDocPlugin;
@@ -573,6 +574,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 					_configureTaskCompileJSP(
 						project, jarJSPsTask, liferayExtension);
+					_configureTaskGenerateJSPJava(project);
 
 					// setProjectSnapshotVersion must be called before
 					// configureTaskUploadArchives, because the latter one needs
@@ -3333,6 +3335,44 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 			findBugs.setClasses(configurableFileTree);
 		}
+	}
+
+	private void _configureTaskGenerateJSPJava(final Project project) {
+		CompileJSPTask generateJSPJavaTask = (CompileJSPTask)GradleUtil.getTask(
+			project, JspCPlugin.GENERATE_JSP_JAVA_TASK_NAME);
+
+		Action<Task> taskAction = new Action<Task>() {
+
+			@Override
+			public void execute(Task task) {
+				final CompileJSPTask compileJSPTask = (CompileJSPTask)task;
+
+				Action<CopySpec> copySpecAction = new Action<CopySpec>() {
+
+					@Override
+					public void execute(CopySpec copySpec) {
+						copySpec.from(compileJSPTask.getDestinationDir());
+
+						LiferayExtension liferayExtension =
+							GradleUtil.getExtension(
+								project, LiferayExtension.class);
+
+						File destinationDir = new File(
+							liferayExtension.getLiferayHome() + "/work/" +
+								GradleUtil.getArchivesBaseName(project) + "-" +
+									project.getVersion());
+
+						copySpec.into(destinationDir);
+					}
+
+				};
+
+				project.copy(copySpecAction);
+			}
+
+		};
+
+		generateJSPJavaTask.doLast(taskAction);
 	}
 
 	private void _configureTaskJar(

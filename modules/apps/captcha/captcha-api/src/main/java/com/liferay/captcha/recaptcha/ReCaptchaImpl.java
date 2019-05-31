@@ -22,7 +22,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaException;
-import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -123,7 +122,7 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 					httpServletRequest.getRemoteUser() +
 						" may be trying to circumvent the CAPTCHA.");
 
-			throw new CaptchaTextException();
+			throw new CaptchaException();
 		}
 
 		Http.Options options = new Http.Options();

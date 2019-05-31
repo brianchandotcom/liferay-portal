@@ -56,7 +56,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Template template = getTemplate(renderRequest);
+		Template template = (Template)renderRequest.getAttribute(
+			WebKeys.TEMPLATE);
 
 		long classNameId = ParamUtil.getLong(renderRequest, "classNameId");
 
@@ -119,10 +120,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 
 		return "Sharing";
-	}
-
-	protected Template getTemplate(RenderRequest renderRequest) {
-		return (Template)renderRequest.getAttribute(WebKeys.TEMPLATE);
 	}
 
 	@Reference

@@ -224,7 +224,7 @@ public class MySQLDB extends BaseDB {
 
 		fieldTypesMap.put(StringUtil.trim(TEMPLATE[6]), Types.LONGVARBINARY);
 
-		fieldTypesMap.put(StringUtil.trim(TEMPLATE[7]), Types.BIT);
+		fieldTypesMap.put(StringUtil.trim(TEMPLATE[7]), Types.TINYINT);
 
 		fieldTypesMap.put(StringUtil.trim(TEMPLATE[8]), Types.TIMESTAMP);
 

@@ -1,0 +1,126 @@
+components:
+    schemas:
+        Settings:
+            description: Represents a set of global change tracking settings.
+            properties:
+                changeTrackingAllowed:
+                    description: True if change tracking is allowed.
+                    type: boolean
+                changeTrackingEnabled:
+                    description: True if change tracking is enabled.
+                    type: boolean
+                checkoutCTCollectionConfirmationEnabled:
+                    description: True if the checkout configuration is enabled.
+                    type: boolean
+                companyId:
+                    description: The company id of the change tracking configuration.
+                    type: integer
+                supportedContentTypeLanguageKeys:
+                    description: The language keys of the supported content types'.
+                    items:
+                        type: string
+                    type: array
+                supportedContentTypes:
+                    description: The supported content types.
+                    items:
+                        type: string
+                    type: array
+                userId:
+                    description: The user id of the change tracking settings.
+                    type: integer
+            type: object
+        SettingsUpdate:
+            description: Represents a model to update the change tracking configuration.
+            properties:
+                changeTrackingEnabled:
+                    description: True if change tracking is enabled.
+                    type: boolean
+                checkoutCTCollectionConfirmationEnabled:
+                    description: True if the checkout configuration is enabled.
+                    type: boolean
+            type: object
+info:
+    description: ""
+    title: "Change Tracking Headless"
+    version: v1.0
+openapi: 3.0.1
+paths:
+    "/settings":
+        get:
+            description: Retrieves a change tracking setting for a company or a specific user.
+            operationId: getSettingsPage
+            parameters:
+                - in: query
+                  name: companyId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: userId
+                  required: false
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Settings"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Settings"
+                                type: array
+                    description: ""
+                400:
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                    description: ""
+            tags: ["Settings"]
+        put:
+            description: Updates a change tracking setting for a company or a specific user.
+            operationId: putSettings
+            parameters:
+                - in: query
+                  name: companyId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: userId
+                  required: false
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/SettingsUpdate"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/SettingsUpdate"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Settings"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Settings"
+                    description: ""
+                400:
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                    description: ""
+            tags: ["Settings"]

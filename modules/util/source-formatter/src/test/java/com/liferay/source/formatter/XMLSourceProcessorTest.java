@@ -22,6 +22,12 @@ import org.junit.Test;
 public class XMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
+	public void testIncorrectEmptyLines() throws Exception {
+		test("IncorrectEmptyLines1.testxml");
+		test("IncorrectEmptyLines2.testxml");
+	}
+
+	@Test
 	public void testIncorrectTabs() throws Exception {
 		test("IncorrectTabs1.testaction");
 		test("IncorrectTabs2.testaction");

@@ -17,7 +17,6 @@ package com.liferay.portal.template.soy.internal;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.template.TemplateContextHelper;
 
 import java.util.Collections;
@@ -58,7 +57,7 @@ public class SoyTemplateContextHelper extends TemplateContextHelper {
 
 	@Override
 	public Set<String> getRestrictedVariables() {
-		return SetUtil.fromArray(new String[] {TemplateConstants.NAMESPACE});
+		return _restrictedVariables;
 	}
 
 	@Override
@@ -93,6 +92,9 @@ public class SoyTemplateContextHelper extends TemplateContextHelper {
 
 		_templateContextContributors.remove(templateContextContributor);
 	}
+
+	private static final Set<String> _restrictedVariables =
+		Collections.singleton(TemplateConstants.NAMESPACE);
 
 	private final List<TemplateContextContributor>
 		_templateContextContributors = new CopyOnWriteArrayList<>();

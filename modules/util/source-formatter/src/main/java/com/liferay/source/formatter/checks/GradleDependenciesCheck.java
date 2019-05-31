@@ -70,22 +70,6 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static boolean _hasPatchedOSGiCore(Set<String> dependencies) {
-		if (!dependencies.contains(
-				_ORG_ECLIPSE_OSGI_3_13_0_LIFERAY_PATCHED_1)) {
-
-			return false;
-		}
-
-		if (!dependencies.contains(_OSGI_CORE_6_0_0_DEPENDENCY) &&
-			!dependencies.contains(_ORG_OSGI_CORE_6_0_0_DEPENDENCY)) {
-
-			return false;
-		}
-
-		return true;
-	}
-
 	private void _checkPetraDependencies(
 		String fileName, String content, String dependencies) {
 
@@ -152,16 +136,6 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 			uniqueDependencies.add(_sortDependencyAttributes(dependency));
 		}
 
-		boolean patchedOSGiCore = _hasPatchedOSGiCore(uniqueDependencies);
-
-		if (patchedOSGiCore) {
-
-			// See https://github.com/brianchandotcom/liferay-portal/pull/62537
-
-			uniqueDependencies.remove(_ORG_OSGI_CORE_6_0_0_DEPENDENCY);
-			uniqueDependencies.remove(_OSGI_CORE_6_0_0_DEPENDENCY);
-		}
-
 		StringBundler sb = new StringBundler();
 
 		String previousConfiguration = null;
@@ -176,13 +150,6 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 				previousConfiguration = configuration;
 
 				sb.append("\n");
-
-				if (configuration.equals("compileOnly") && patchedOSGiCore) {
-					sb.append(indent);
-					sb.append("\t");
-					sb.append(_OSGI_CORE_6_0_0_DEPENDENCY);
-					sb.append("\n\n");
-				}
 			}
 
 			sb.append(indent);
@@ -229,18 +196,6 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 
 	private static final String _CHECK_PETRA_DEPENDENCIES_KEY =
 		"checkPetraDependencies";
-
-	private static final String _ORG_ECLIPSE_OSGI_3_13_0_LIFERAY_PATCHED_1 =
-		"compileOnly group: \"com.liferay\", name: \"org.eclipse.osgi\", " +
-			"version: \"3.13.0.LIFERAY-PATCHED-1\"";
-
-	private static final String _ORG_OSGI_CORE_6_0_0_DEPENDENCY =
-		"compileOnly group: \"org.osgi\", name: \"org.osgi.core\", version: " +
-			"\"6.0.0\"";
-
-	private static final String _OSGI_CORE_6_0_0_DEPENDENCY =
-		"compileOnly group: \"org.osgi\", name: \"osgi.core\", version: " +
-			"\"6.0.0\"";
 
 	private static final Pattern _dependencyAttributesPattern = Pattern.compile(
 		"(\\w+): \"([\\w.-]+)\"");

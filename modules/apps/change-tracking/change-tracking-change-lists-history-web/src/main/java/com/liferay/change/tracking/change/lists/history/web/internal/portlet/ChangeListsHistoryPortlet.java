@@ -18,9 +18,7 @@ import com.liferay.change.tracking.configuration.CTPortalConfiguration;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.constants.CTWebKeys;
 import com.liferay.change.tracking.model.CTCollection;
-import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
@@ -92,24 +90,20 @@ public class ChangeListsHistoryPortlet extends MVCPortlet {
 				"Unable to check permissions: " + e.getMessage(), e);
 		}
 
-		long ctProcessId = ParamUtil.getLong(
-			renderRequest, CTWebKeys.CT_PROCESS_ID);
+		long ctCollectionId = ParamUtil.getLong(
+			renderRequest, "ctCollectionId");
 
-		if (ctProcessId > 0) {
-			try {
-				CTProcess ctProcess = _ctProcessLocalService.getCTProcess(
-					ctProcessId);
-
+		try {
+			if (ctCollectionId > 0) {
 				CTCollection ctCollection =
-					_ctCollectionLocalService.getCTCollection(
-						ctProcess.getCtCollectionId());
+					_ctCollectionLocalService.getCTCollection(ctCollectionId);
 
 				renderRequest.setAttribute(
 					CTWebKeys.CT_COLLECTION, ctCollection);
 			}
-			catch (PortalException pe) {
-				SessionErrors.add(renderRequest, pe.getClass());
-			}
+		}
+		catch (PortalException pe) {
+			SessionErrors.add(renderRequest, pe.getClass());
 		}
 
 		super.render(renderRequest, renderResponse);
@@ -120,19 +114,6 @@ public class ChangeListsHistoryPortlet extends MVCPortlet {
 	protected void activate(Map<String, Object> properties) {
 		_ctPortalConfiguration = ConfigurableUtil.createConfigurable(
 			CTPortalConfiguration.class, properties);
-	}
-
-	protected void checkOmniAdmin() throws PortletException {
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if (!permissionChecker.isOmniadmin()) {
-			PrincipalException principalException =
-				new PrincipalException.MustBeCompanyAdmin(
-					permissionChecker.getUserId());
-
-			throw new PortletException(principalException);
-		}
 	}
 
 	@Override
@@ -167,8 +148,5 @@ public class ChangeListsHistoryPortlet extends MVCPortlet {
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	private CTPortalConfiguration _ctPortalConfiguration;
-
-	@Reference
-	private CTProcessLocalService _ctProcessLocalService;
 
 }

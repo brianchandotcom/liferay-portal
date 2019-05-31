@@ -81,24 +81,6 @@ public class SharingEntryPermissionDisplay {
 		return sharingEntryPermissionDisplays;
 	}
 
-	public SharingEntryPermissionDisplay(
-		SharingEntryPermissionDisplayAction sharingEntryPermissionDisplayAction,
-		boolean enabled, ResourceBundle resourceBundle) {
-
-		_enabled = enabled;
-
-		_description = LanguageUtil.get(
-			resourceBundle,
-			sharingEntryPermissionDisplayAction.getDescriptionKey());
-		_phrase = LanguageUtil.format(
-			resourceBundle, "can-x",
-			sharingEntryPermissionDisplayAction.getVerbKey());
-		_sharingEntryPermissionDisplayActionId =
-			sharingEntryPermissionDisplayAction.getActionId();
-		_title = LanguageUtil.get(
-			resourceBundle, sharingEntryPermissionDisplayAction.getTitleKey());
-	}
-
 	public String getDescription() {
 		return _description;
 	}
@@ -117,6 +99,24 @@ public class SharingEntryPermissionDisplay {
 
 	public boolean isEnabled() {
 		return _enabled;
+	}
+
+	private SharingEntryPermissionDisplay(
+		SharingEntryPermissionDisplayAction sharingEntryPermissionDisplayAction,
+		boolean enabled, ResourceBundle resourceBundle) {
+
+		_enabled = enabled;
+
+		_description = LanguageUtil.get(
+			resourceBundle,
+			sharingEntryPermissionDisplayAction.getDescriptionKey());
+		_phrase = LanguageUtil.format(
+			resourceBundle, "can-x",
+			sharingEntryPermissionDisplayAction.getVerbKey());
+		_sharingEntryPermissionDisplayActionId =
+			sharingEntryPermissionDisplayAction.getActionId();
+		_title = LanguageUtil.get(
+			resourceBundle, sharingEntryPermissionDisplayAction.getTitleKey());
 	}
 
 	private final String _description;

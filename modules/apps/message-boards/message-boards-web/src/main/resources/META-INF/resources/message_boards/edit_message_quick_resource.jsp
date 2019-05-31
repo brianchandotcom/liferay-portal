@@ -51,6 +51,19 @@ if (messageFormat.equals("bbcode")) {
 	}
 }
 
+boolean quote = ParamUtil.getBoolean(request, "quote");
+
+String quoteText = null;
+
+if (quote) {
+	if (messageFormat.equals("bbcode")) {
+		quoteText = MBUtil.getBBCodeQuoteBody(request, message);
+	}
+	else {
+		quoteText = MBUtil.getHtmlQuoteBody(request, message);
+	}
+}
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 boolean showPermanentLink = GetterUtil.getBoolean(request.getAttribute("edit-message.jsp-showPermanentLink"));
@@ -140,6 +153,7 @@ boolean showPermanentLink = GetterUtil.getBoolean(request.getAttribute("edit-mes
 				allowBrowseDocuments="<%= false %>"
 				autoCreate="<%= true %>"
 				configKey="replyMBEditor"
+				contents="<%= quoteText %>"
 				cssClass='<%= editorName.startsWith("alloyeditor") ? "form-control" : StringPool.BLANK %>'
 				editorName="<%= editorName %>"
 				name='<%= "replyMessageBody" + replyToMessageId %>'

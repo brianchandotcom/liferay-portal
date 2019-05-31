@@ -271,18 +271,7 @@ if (message.isAnonymous()) {
 								</portlet:renderURL>
 
 								<%
-								String quoteText = null;
-
-								if (messageFormat.equals("bbcode")) {
-									quoteText = MBUtil.getBBCodeQuoteBody(request, message);
-								}
-								else {
-									quoteText = MBUtil.getHtmlQuoteBody(request, message);
-								}
-
-								quoteText = HtmlUtil.escapeJS(quoteText);
-
-								String taglibReplyWithQuoteToMessageURL = "javascript:" + liferayPortletResponse.getNamespace() + "addReplyToMessage('" + message.getMessageId() + "', '" + quoteText + "');";
+								String taglibReplyWithQuoteToMessageURL = "javascript:" + liferayPortletResponse.getNamespace() + "addReplyToMessage('" + message.getMessageId() + "', true);";
 								%>
 
 								<liferay-ui:icon

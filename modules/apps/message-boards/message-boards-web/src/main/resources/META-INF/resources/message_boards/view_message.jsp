@@ -82,6 +82,10 @@ if (messageFormat.equals("bbcode")) {
 
 				var editMessageQuickURL = Liferay.Util.addParams('<portlet:namespace />messageId=' + messageId, '<%= editMessageQuickURL.toString() %>');
 
+				if (quote) {
+					editMessageQuickURL = Liferay.Util.addParams('<portlet:namespace />quote=true', editMessageQuickURL);
+				}
+
 				fetch(
 					editMessageQuickURL,
 					{
@@ -108,7 +112,6 @@ if (messageFormat.equals("bbcode")) {
 
 						var editorName = '<portlet:namespace />replyMessageBody' + messageId;
 
-						window[editorName].setHTML(quote);
 						window[editorName].focus();
 
 						if (addQuickReplyContainer && AUI().UA.mobile) {

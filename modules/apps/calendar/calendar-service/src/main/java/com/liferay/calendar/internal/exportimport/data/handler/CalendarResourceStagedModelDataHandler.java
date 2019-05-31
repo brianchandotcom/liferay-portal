@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.xml.Element;
@@ -279,7 +280,10 @@ public class CalendarResourceStagedModelDataHandler
 		calendarResourceNameMap.put(
 			LocaleUtil.getSiteDefault(), scopeGroup.getDescriptiveName());
 
-		return calendarResourceNameMap;
+		return LocalizationUtil.populateLocalizationMap(
+			calendarResourceNameMap,
+			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
+			scopeGroup.getGroupId());
 	}
 
 	protected long getClassPK(

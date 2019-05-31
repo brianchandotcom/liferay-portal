@@ -76,6 +76,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
@@ -702,7 +703,12 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 			return _calendarResourceLocalService.addCalendarResource(
 				userId, userGroup.getGroupId(),
 				_classNameLocalService.getClassNameId(User.class), userId, null,
-				null, nameMap, descriptionMap, true, serviceContext);
+				null,
+				LocalizationUtil.populateLocalizationMap(
+					nameMap,
+					LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
+					groupId),
+				descriptionMap, true, serviceContext);
 		}
 
 		CalendarResource calendarResource =
@@ -734,7 +740,11 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 
 		return _calendarResourceLocalService.addCalendarResource(
 			userId, groupId, _classNameLocalService.getClassNameId(Group.class),
-			groupId, null, null, nameMap, descriptionMap, true, serviceContext);
+			groupId, null, null,
+			LocalizationUtil.populateLocalizationMap(
+				nameMap, LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
+				groupId),
+			descriptionMap, true, serviceContext);
 	}
 
 	private JSONSerializer _getJSONSerializer() throws Exception {

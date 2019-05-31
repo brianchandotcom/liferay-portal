@@ -21,9 +21,12 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,9 +50,15 @@ public class UserModelListener extends BaseModelListener<User> {
 				return;
 			}
 
-			Locale locale = LocaleUtil.getSiteDefault();
+			Map<Locale, String> nameMap = new HashMap<>();
 
-			calendarResource.setName(user.getFullName(), locale);
+			nameMap.put(LocaleUtil.getSiteDefault(), user.getFullName());
+
+			calendarResource.setNameMap(
+				LocalizationUtil.populateLocalizationMap(
+					nameMap,
+					LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
+					user.getGroupId()));
 
 			_calendarResourceLocalService.updateCalendarResource(
 				calendarResource);

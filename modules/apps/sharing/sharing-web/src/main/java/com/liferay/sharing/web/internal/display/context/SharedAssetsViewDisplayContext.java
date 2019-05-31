@@ -199,6 +199,8 @@ public class SharedAssetsViewDisplayContext {
 		menu.setDirection("left-side");
 		menu.setMarkupView("lexicon");
 		menu.setMessage(LanguageUtil.get(_httpServletRequest, "actions"));
+		menu.setScroll(false);
+		menu.setShowWhenSingleIcon(true);
 		menu.setTriggerCssClass("component-action");
 
 		if (!isVisible(sharingEntry)) {
@@ -245,9 +247,6 @@ public class SharedAssetsViewDisplayContext {
 				sharingEntry, _themeDisplay));
 
 		menu.setMenuItems(menuItems);
-
-		menu.setScroll(false);
-		menu.setShowWhenSingleIcon(true);
 
 		return menu;
 	}

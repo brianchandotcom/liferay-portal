@@ -1335,8 +1335,8 @@ public class Validator {
 	private static final String _XML_EMPTY = "<root />";
 
 	private static final Pattern _emailAddressPattern = Pattern.compile(
-		"[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@" +
-			"(?:\\w(?:[\\w-]*\\w)?\\.)*\\w(?:[\\w-]*\\w)?");
+		"^[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@" +
+			"(?:\\w(?:[\\w-]*\\w)?\\.)+(\\w(?:[\\w-]*\\w))$");
 	private static final Pattern _ipv4AddressPattern;
 	private static final Pattern _ipv6AddressPattern;
 	private static final Pattern _variableNamePattern = Pattern.compile(

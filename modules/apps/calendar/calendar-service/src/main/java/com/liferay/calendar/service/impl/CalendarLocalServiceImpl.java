@@ -407,9 +407,7 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 
 		Locale locale = LocaleUtil.getSiteDefault();
 
-		String name = nameMap.get(locale);
-
-		if (Validator.isNull(name)) {
+		if (nameMap.isEmpty() || Validator.isNull(nameMap.get(locale))) {
 			throw new CalendarNameException();
 		}
 	}

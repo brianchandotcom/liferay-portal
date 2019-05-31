@@ -69,22 +69,6 @@ public class EndpointSchemaInferrer {
 		return schema;
 	}
 
-	private static void _addIdSchemaField(
-		List<Schema.Field> schemaFields, Set<String> previousFieldNames) {
-
-		String safeIdFieldName = AvroConstants.ID;
-
-		previousFieldNames.add(safeIdFieldName);
-
-		Schema.Field designField = new Schema.Field(
-			safeIdFieldName, AvroUtils.wrapAsNullable(AvroUtils._string()),
-			null, (Object)null);
-
-		// This is the first column in the schema
-
-		schemaFields.add(0, designField);
-	}
-
 	private static String _extractEndpointSchemaName(
 		String endpoint, String operation, JsonNode apiSpecJsonNode) {
 
@@ -131,7 +115,9 @@ public class EndpointSchemaInferrer {
 			}
 		}
 		else if (Objects.equals(
-					operation, HttpMethod.PATCH.toLowerCase(Locale.US))) {
+					operation, HttpMethod.PATCH.toLowerCase(Locale.US)) ||
+				 Objects.equals(
+					 operation, HttpMethod.POST.toLowerCase(Locale.US))) {
 
 			JsonNode schemaRefJsonNode = apiSpecJsonNode.path(
 				OpenApiConstants.PATHS
@@ -294,12 +280,6 @@ public class EndpointSchemaInferrer {
 		AtomicInteger index = new AtomicInteger();
 		List<Schema.Field> schemaFields = new ArrayList<>();
 		Set<String> previousFieldNames = new HashSet<>();
-
-		if (operation.equals(Action.Update.getMethodName())) {
-			_addIdSchemaField(schemaFields, previousFieldNames);
-
-			index.incrementAndGet();
-		}
 
 		String schemaName = _extractEndpointSchemaName(
 			endpoint, operation, apiSpecJsonNode);

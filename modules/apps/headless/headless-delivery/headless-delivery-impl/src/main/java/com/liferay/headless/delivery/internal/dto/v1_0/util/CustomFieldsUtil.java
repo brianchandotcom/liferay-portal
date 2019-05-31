@@ -23,6 +23,7 @@ import com.liferay.headless.delivery.dto.v1_0.Geo;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -42,12 +43,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
-import java.util.function.Function;
-import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import org.apache.commons.lang.ArrayUtils;
 
 /**
  * @author Javier Gamarra
@@ -111,14 +108,12 @@ public class CustomFieldsUtil {
 					else if (ExpandoColumnConstants.DOUBLE_ARRAY ==
 								attributeType) {
 
-						return ArrayUtils.toPrimitive(
-							_toArray(data, Double[]::new, Number::doubleValue));
+						return ArrayUtil.toDoubleArray((List<Number>)data);
 					}
 					else if (ExpandoColumnConstants.FLOAT_ARRAY ==
 								attributeType) {
 
-						return ArrayUtils.toPrimitive(
-							_toArray(data, Float[]::new, Number::floatValue));
+						return ArrayUtil.toFloatArray((List<Number>)data);
 					}
 					else if (ExpandoColumnConstants.GEOLOCATION ==
 								attributeType) {
@@ -134,14 +129,12 @@ public class CustomFieldsUtil {
 					else if (ExpandoColumnConstants.INTEGER_ARRAY ==
 								attributeType) {
 
-						return ArrayUtils.toPrimitive(
-							_toArray(data, Integer[]::new, Number::intValue));
+						return ArrayUtil.toIntArray((List<Number>)data);
 					}
 					else if (ExpandoColumnConstants.LONG_ARRAY ==
 								attributeType) {
 
-						return ArrayUtils.toPrimitive(
-							_toArray(data, Long[]::new, Number::longValue));
+						return ArrayUtil.toLongArray((List<Number>)data);
 					}
 					else if (ExpandoColumnConstants.STRING_ARRAY ==
 								attributeType) {
@@ -210,20 +203,6 @@ public class CustomFieldsUtil {
 			throw new IllegalArgumentException(
 				"Unable to parse date from " + data, pe);
 		}
-	}
-
-	private static <E> E[] _toArray(
-		Object data, IntFunction<E[]> intFunction,
-		Function<Number, E> function) {
-
-		List<Number> list = (List<Number>)data;
-
-		return list.stream(
-		).map(
-			function
-		).toArray(
-			intFunction
-		);
 	}
 
 	private static CustomField _toCustomField(

@@ -467,8 +467,8 @@ public class FjordSiteInitializer implements SiteInitializer {
 		}
 
 		_layoutSetLocalService.updateLookAndFeel(
-			serviceContext.getScopeGroupId(), false, _THEME_ID,
-			StringPool.BLANK, StringPool.BLANK);
+			serviceContext.getScopeGroupId(), _THEME_ID, StringPool.BLANK,
+			StringPool.BLANK);
 	}
 
 	private static final String _PATH =

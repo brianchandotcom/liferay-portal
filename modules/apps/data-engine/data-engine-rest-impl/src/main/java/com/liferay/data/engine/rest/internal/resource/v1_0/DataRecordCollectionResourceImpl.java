@@ -191,35 +191,45 @@ public class DataRecordCollectionResourceImpl
 
 		List<String> actionIds = new ArrayList<>();
 
-		if (dataRecordCollectionPermission.getAddDataRecord()) {
+		if (GetterUtil.getBoolean(
+				dataRecordCollectionPermission.getAddDataRecord())) {
+
 			actionIds.add(DataActionKeys.ADD_DATA_RECORD);
 		}
 
-		if (dataRecordCollectionPermission.getDelete()) {
+		if (GetterUtil.getBoolean(dataRecordCollectionPermission.getDelete())) {
 			actionIds.add(ActionKeys.DELETE);
 		}
 
-		if (dataRecordCollectionPermission.getDeleteDataRecord()) {
+		if (GetterUtil.getBoolean(
+				dataRecordCollectionPermission.getDeleteDataRecord())) {
+
 			actionIds.add(DataActionKeys.DELETE_DATA_RECORD);
 		}
 
-		if (dataRecordCollectionPermission.getExportDataRecord()) {
+		if (GetterUtil.getBoolean(
+				dataRecordCollectionPermission.getExportDataRecord())) {
+
 			actionIds.add(DataActionKeys.EXPORT_DATA_RECORDS);
 		}
 
-		if (dataRecordCollectionPermission.getUpdate()) {
+		if (GetterUtil.getBoolean(dataRecordCollectionPermission.getUpdate())) {
 			actionIds.add(ActionKeys.UPDATE);
 		}
 
-		if (dataRecordCollectionPermission.getUpdateDataRecord()) {
+		if (GetterUtil.getBoolean(
+				dataRecordCollectionPermission.getUpdateDataRecord())) {
+
 			actionIds.add(DataActionKeys.UPDATE_DATA_RECORD);
 		}
 
-		if (dataRecordCollectionPermission.getView()) {
+		if (GetterUtil.getBoolean(dataRecordCollectionPermission.getView())) {
 			actionIds.add(ActionKeys.VIEW);
 		}
 
-		if (dataRecordCollectionPermission.getViewDataRecord()) {
+		if (GetterUtil.getBoolean(
+				dataRecordCollectionPermission.getViewDataRecord())) {
+
 			actionIds.add(DataActionKeys.VIEW_DATA_RECORD);
 		}
 

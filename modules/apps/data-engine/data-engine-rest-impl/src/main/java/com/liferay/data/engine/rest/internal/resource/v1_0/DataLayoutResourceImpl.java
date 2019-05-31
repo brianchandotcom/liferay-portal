@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -199,15 +200,15 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 
 		List<String> actionIds = new ArrayList<>();
 
-		if (dataLayoutPermission.getDelete()) {
+		if (GetterUtil.getBoolean(dataLayoutPermission.getDelete())) {
 			actionIds.add(ActionKeys.DELETE);
 		}
 
-		if (dataLayoutPermission.getUpdate()) {
+		if (GetterUtil.getBoolean(dataLayoutPermission.getUpdate())) {
 			actionIds.add(ActionKeys.UPDATE);
 		}
 
-		if (dataLayoutPermission.getView()) {
+		if (GetterUtil.getBoolean(dataLayoutPermission.getView())) {
 			actionIds.add(ActionKeys.VIEW);
 		}
 
@@ -233,11 +234,13 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 
 		List<String> actionIds = new ArrayList<>();
 
-		if (dataLayoutPermission.getAddDataLayout()) {
+		if (GetterUtil.getBoolean(dataLayoutPermission.getAddDataLayout())) {
 			actionIds.add(DataActionKeys.ADD_DATA_LAYOUT);
 		}
 
-		if (dataLayoutPermission.getDefinePermissions()) {
+		if (GetterUtil.getBoolean(
+				dataLayoutPermission.getDefinePermissions())) {
+
 			actionIds.add(DataActionKeys.DEFINE_PERMISSIONS);
 		}
 

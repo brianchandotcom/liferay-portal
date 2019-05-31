@@ -1048,9 +1048,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			classNameId, classPK);
 
 		if (discussion != null) {
-			message = mbMessagePersistence.findByT_P_First(
-				discussion.getThreadId(),
-				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID, null);
+			MBThread mbThread = mbThreadPersistence.findByPrimaryKey(
+				discussion.getThreadId());
+
+			message = mbMessagePersistence.findByPrimaryKey(
+				mbThread.getRootMessageId());
 		}
 		else {
 			boolean workflowEnabled = WorkflowThreadLocal.isEnabled();

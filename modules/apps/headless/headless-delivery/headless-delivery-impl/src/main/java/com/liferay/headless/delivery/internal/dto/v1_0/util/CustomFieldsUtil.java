@@ -42,8 +42,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.function.Function;
+import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.apache.commons.lang.ArrayUtils;
 
 /**
  * @author Javier Gamarra
@@ -107,12 +111,14 @@ public class CustomFieldsUtil {
 					else if (ExpandoColumnConstants.DOUBLE_ARRAY ==
 								attributeType) {
 
-						return _toDoubleArray((List)data);
+						return ArrayUtils.toPrimitive(
+							_toArray(data, Double[]::new, Number::doubleValue));
 					}
 					else if (ExpandoColumnConstants.FLOAT_ARRAY ==
 								attributeType) {
 
-						return _toFloatArray((List)data);
+						return ArrayUtils.toPrimitive(
+							_toArray(data, Float[]::new, Number::floatValue));
 					}
 					else if (ExpandoColumnConstants.GEOLOCATION ==
 								attributeType) {
@@ -128,12 +134,14 @@ public class CustomFieldsUtil {
 					else if (ExpandoColumnConstants.INTEGER_ARRAY ==
 								attributeType) {
 
-						return _toIntegerArray((List)data);
+						return ArrayUtils.toPrimitive(
+							_toArray(data, Integer[]::new, Number::intValue));
 					}
 					else if (ExpandoColumnConstants.LONG_ARRAY ==
 								attributeType) {
 
-						return _toLongArray((List)data);
+						return ArrayUtils.toPrimitive(
+							_toArray(data, Long[]::new, Number::longValue));
 					}
 					else if (ExpandoColumnConstants.STRING_ARRAY ==
 								attributeType) {
@@ -204,6 +212,18 @@ public class CustomFieldsUtil {
 		}
 	}
 
+	private static <E> E[] _toArray(
+		Object data, IntFunction<E[]> intFunction,
+		Function<Number, E> function) {
+
+		return ((List<Number>)data).stream(
+		).map(
+			function
+		).toArray(
+			intFunction
+		);
+	}
+
 	private static CustomField _toCustomField(
 		Map.Entry<String, Serializable> entry, ExpandoBridge expandoBridge,
 		Locale locale) {
@@ -258,39 +278,6 @@ public class CustomFieldsUtil {
 				name = entry.getKey();
 			}
 		};
-	}
-
-	private static Serializable _toDoubleArray(List<Double> doubles) {
-		return doubles.stream(
-		).mapToDouble(
-			Double::doubleValue
-		).toArray();
-	}
-
-	private static Serializable _toFloatArray(List<Double> doubles) {
-		float[] floats = new float[doubles.size()];
-
-		for (int i = 0; i < doubles.size(); i++) {
-			Double aDouble = doubles.get(i);
-
-			floats[i] = aDouble.floatValue();
-		}
-
-		return floats;
-	}
-
-	private static Serializable _toIntegerArray(List<Integer> integers) {
-		return integers.stream(
-		).mapToInt(
-			Integer::intValue
-		).toArray();
-	}
-
-	private static Serializable _toLongArray(List<Integer> integers) {
-		return integers.stream(
-		).mapToLong(
-			Integer::longValue
-		).toArray();
 	}
 
 }

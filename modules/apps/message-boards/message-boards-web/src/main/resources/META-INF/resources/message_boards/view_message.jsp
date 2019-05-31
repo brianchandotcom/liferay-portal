@@ -61,7 +61,10 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 			var addQuickReplyContainer = document.getElementById('<portlet:namespace />addReplyToMessage' + messageId);
 
 			if (addQuickReplyContainer) {
-				<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/message_boards/get_edit_message_quick" var="editMessageQuickURL" />
+
+				<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/message_boards/get_edit_message_quick" var="editMessageQuickURL">
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</liferay-portlet:resourceURL>
 
 				var editMessageQuickURL = Liferay.Util.addParams('<portlet:namespace />messageId=' + messageId, '<%= editMessageQuickURL.toString() %>');
 

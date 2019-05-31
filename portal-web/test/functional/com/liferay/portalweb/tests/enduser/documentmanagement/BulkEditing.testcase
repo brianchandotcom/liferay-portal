@@ -214,17 +214,13 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "Folder 1");
 
-		DMDocument.viewPG(
-			dmDocumentDescription = "Document_1.doc",
-			dmDocumentTitle = "Document_1.doc");
+		DMDocument.viewPG(dmDocumentTitle = "Document_1.doc");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoFolder(dmFolderName = "Folder 1");
 
-		DMDocument.viewPG(
-			dmDocumentDescription = "Document_2.doc",
-			dmDocumentTitle = "Document_2.doc");
+		DMDocument.viewPG(dmDocumentTitle = "Document_2.doc");
 	}
 
 }

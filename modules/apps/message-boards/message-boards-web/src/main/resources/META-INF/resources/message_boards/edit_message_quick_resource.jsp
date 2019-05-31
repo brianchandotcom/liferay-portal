@@ -41,8 +41,6 @@ if (threadId > 0) {
 	}
 }
 
-String body = BeanParamUtil.getString(replyMessage, request, "body");
-
 String editorName = PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.html.jsp");
 
 if (messageFormat.equals("bbcode")) {

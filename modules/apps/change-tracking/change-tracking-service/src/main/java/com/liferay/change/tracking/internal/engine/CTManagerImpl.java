@@ -14,8 +14,8 @@
 
 package com.liferay.change.tracking.internal.engine;
 
-import com.liferay.change.tracking.configuration.CTConfiguration;
-import com.liferay.change.tracking.configuration.CTConfigurationRegistry;
+import com.liferay.change.tracking.definition.CTDefinition;
+import com.liferay.change.tracking.definition.CTDefinitionRegistry;
 import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.engine.CTManager;
 import com.liferay.change.tracking.engine.exception.CTEngineException;
@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -496,23 +495,22 @@ public class CTManagerImpl implements CTManager {
 			return;
 		}
 
-		Optional<CTConfiguration<?, ?>> ctConfigurationOptional =
-			_ctConfigurationRegistry.
-				getCTConfigurationOptionalByVersionClassName(
-					_portal.getClassName(classNameId));
+		Optional<CTDefinition<?, ?>> ctDefinitionOptional =
+			_ctDefinitionRegistry.getCTDefinitionOptionalByVersionClassName(
+				_portal.getClassName(classNameId));
 
-		if (!ctConfigurationOptional.isPresent()) {
+		if (!ctDefinitionOptional.isPresent()) {
 			return;
 		}
 
-		CTConfiguration<?, V> ctConfiguration =
-			(CTConfiguration<?, V>)ctConfigurationOptional.get();
+		CTDefinition<?, V> ctDefinition =
+			(CTDefinition<?, V>)ctDefinitionOptional.get();
 
 		List<Function<V, List<? extends BaseModel>>> relatedEntitiesFunctions =
-			ctConfiguration.getVersionEntityRelatedEntitiesFunctions();
+			ctDefinition.getVersionEntityRelatedEntitiesFunctions();
 
 		Function<Long, V> versionEntityByVersionEntityIdFunction =
-			ctConfiguration.getVersionEntityByVersionEntityIdFunction();
+			ctDefinition.getVersionEntityByVersionEntityIdFunction();
 
 		V versionEntity = versionEntityByVersionEntityIdFunction.apply(classPK);
 
@@ -820,7 +818,7 @@ public class CTManagerImpl implements CTManager {
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
-	private CTConfigurationRegistry _ctConfigurationRegistry;
+	private CTDefinitionRegistry _ctDefinitionRegistry;
 
 	@Reference
 	private CTEngineManager _ctEngineManager;
@@ -837,8 +835,5 @@ public class CTManagerImpl implements CTManager {
 	private final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

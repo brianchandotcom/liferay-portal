@@ -14,9 +14,9 @@
 
 package com.liferay.change.tracking.internal.engine;
 
-import com.liferay.change.tracking.configuration.CTConfiguration;
-import com.liferay.change.tracking.configuration.CTConfigurationRegistry;
 import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.definition.CTDefinition;
+import com.liferay.change.tracking.definition.CTDefinitionRegistry;
 import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.engine.exception.CTCollectionDescriptionCTEngineException;
 import com.liferay.change.tracking.engine.exception.CTCollectionNameCTEngineException;
@@ -434,11 +434,10 @@ public class CTEngineManagerImpl implements CTEngineManager {
 	public boolean isChangeTrackingSupported(
 		long companyId, Class<? extends BaseModel> clazz) {
 
-		Optional<CTConfiguration<?, ?>> ctConfigurationOptional =
-			_ctConfigurationRegistry.getCTConfigurationOptionalByVersionClass(
-				clazz);
+		Optional<CTDefinition<?, ?>> ctDefinitionOptional =
+			_ctDefinitionRegistry.getCTDefinitionOptionalByVersionClass(clazz);
 
-		return ctConfigurationOptional.isPresent();
+		return ctDefinitionOptional.isPresent();
 	}
 
 	@Override
@@ -447,11 +446,11 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 		String modelClassName = _portal.getClassName(modelClassNameId);
 
-		Optional<CTConfiguration<?, ?>> ctConfigurationOptional =
-			_ctConfigurationRegistry.
-				getCTConfigurationOptionalByVersionClassName(modelClassName);
+		Optional<CTDefinition<?, ?>> ctDefinitionOptional =
+			_ctDefinitionRegistry.getCTDefinitionOptionalByVersionClassName(
+				modelClassName);
 
-		return ctConfigurationOptional.isPresent();
+		return ctDefinitionOptional.isPresent();
 	}
 
 	@Override
@@ -584,7 +583,7 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 		_productionCTCollections.put(companyId, productionCTCollection);
 
-		_generateCTEntriesAndCTEntryAggregatesForAllCTConfigurations(
+		_generateCTEntriesAndCTEntryAggregatesForAllCTDefinitions(
 			userId, productionCTCollection);
 
 		_ctSettingsManager.setGlobalCTSetting(
@@ -594,28 +593,27 @@ public class CTEngineManagerImpl implements CTEngineManager {
 			userId, productionCTCollection.getCtCollectionId());
 	}
 
-	private void _generateCTEntriesAndCTEntryAggregatesForAllCTConfigurations(
+	private void _generateCTEntriesAndCTEntryAggregatesForAllCTDefinitions(
 		long userId, CTCollection ctCollection) {
 
-		List<CTConfiguration<?, ?>> ctConfigurations =
-			_ctConfigurationRegistry.getAllCTConfigurations();
+		List<CTDefinition<?, ?>> ctDefinitions =
+			_ctDefinitionRegistry.getAllCTDefinitions();
 
-		ctConfigurations.forEach(
-			ctConfiguration -> _generateCTEntriesForCTConfiguration(
-				userId, ctConfiguration, ctCollection));
+		ctDefinitions.forEach(
+			ctDefinition -> _generateCTEntriesForCTDefinition(
+				userId, ctDefinition, ctCollection));
 
-		ctConfigurations.forEach(
-			ctConfiguration -> _generateCTEntryAggregatesForCTConfiguration(
-				userId, ctConfiguration, ctCollection));
+		ctDefinitions.forEach(
+			ctDefinition -> _generateCTEntryAggregatesForCTDefinition(
+				userId, ctDefinition, ctCollection));
 	}
 
 	@SuppressWarnings("unchecked")
-	private void _generateCTEntriesForCTConfiguration(
-		long userId, CTConfiguration ctConfiguration,
-		CTCollection ctCollection) {
+	private void _generateCTEntriesForCTDefinition(
+		long userId, CTDefinition ctDefinition, CTCollection ctCollection) {
 
 		Function<Long, List> resourceEntitiesByCompanyIdFunction =
-			ctConfiguration.getResourceEntitiesByCompanyIdFunction();
+			ctDefinition.getResourceEntitiesByCompanyIdFunction();
 
 		List<BaseModel> resourceEntitiesByCompanyId =
 			resourceEntitiesByCompanyIdFunction.apply(
@@ -623,7 +621,7 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 		Function<BaseModel, Serializable>
 			resourceEntityIdFromResourceEntityFunction =
-				ctConfiguration.getResourceEntityIdFromResourceEntityFunction();
+				ctDefinition.getResourceEntityIdFromResourceEntityFunction();
 
 		for (BaseModel resourceEntity : resourceEntitiesByCompanyId) {
 			Serializable resourcePrimKey =
@@ -631,18 +629,18 @@ public class CTEngineManagerImpl implements CTEngineManager {
 					resourceEntity);
 
 			_generateCTEntriesForResourceEntity(
-				userId, ctConfiguration, ctCollection, resourceEntity,
+				userId, ctDefinition, ctCollection, resourceEntity,
 				resourcePrimKey);
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	private void _generateCTEntriesForResourceEntity(
-		long userId, CTConfiguration ctConfiguration, CTCollection ctCollection,
+		long userId, CTDefinition ctDefinition, CTCollection ctCollection,
 		BaseModel resourceEntity, Serializable resourcePrimKey) {
 
 		Function<BaseModel, List> versionEntitiesFromResourceEntityFunction =
-			ctConfiguration.getVersionEntitiesFromResourceEntityFunction();
+			ctDefinition.getVersionEntitiesFromResourceEntityFunction();
 
 		List<BaseModel> versionEntities =
 			versionEntitiesFromResourceEntityFunction.apply(resourceEntity);
@@ -650,8 +648,7 @@ public class CTEngineManagerImpl implements CTEngineManager {
 		for (BaseModel versionEntity : versionEntities) {
 			Function<BaseModel, Serializable>
 				versionEntityIdFromVersionEntityFunction =
-					ctConfiguration.
-						getVersionEntityIdFromVersionEntityFunction();
+					ctDefinition.getVersionEntityIdFromVersionEntityFunction();
 
 			Serializable versionEntityId =
 				versionEntityIdFromVersionEntityFunction.apply(versionEntity);
@@ -660,7 +657,7 @@ public class CTEngineManagerImpl implements CTEngineManager {
 				_ctEntryLocalService.addCTEntry(
 					userId,
 					_portal.getClassNameId(
-						ctConfiguration.getVersionEntityClass()),
+						ctDefinition.getVersionEntityClass()),
 					GetterUtil.getLong(versionEntityId),
 					GetterUtil.getLong(resourcePrimKey),
 					CTConstants.CT_CHANGE_TYPE_ADDITION,
@@ -671,7 +668,7 @@ public class CTEngineManagerImpl implements CTEngineManager {
 					StringBundler sb = new StringBundler(5);
 
 					sb.append("Unable to add change tracking entry to ");
-					sb.append(ctConfiguration.getContentType());
+					sb.append(ctDefinition.getContentType());
 					sb.append(" {");
 					sb.append(versionEntityId);
 					sb.append("}");
@@ -685,12 +682,12 @@ public class CTEngineManagerImpl implements CTEngineManager {
 	@SuppressWarnings("unchecked")
 	private <V extends BaseModel, R extends BaseModel> void
 		_generateCTEntryAggregateForCTEntry(
-			long userId, CTConfiguration ctConfiguration,
-			CTCollection ctCollection, CTEntry ctEntry,
+			long userId, CTDefinition ctDefinition, CTCollection ctCollection,
+			CTEntry ctEntry,
 			List<Function<V, List<R>>> versionEntityRelatedEntitiesFunctions) {
 
 		Function<Long, V> versionEntityByVersionEntityIdFunction =
-			ctConfiguration.getVersionEntityByVersionEntityIdFunction();
+			ctDefinition.getVersionEntityByVersionEntityIdFunction();
 
 		V versionEntity = versionEntityByVersionEntityIdFunction.apply(
 			ctEntry.getModelClassPK());
@@ -775,25 +772,24 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 	@SuppressWarnings("unchecked")
 	private <V extends BaseModel, R extends BaseModel> void
-		_generateCTEntryAggregatesForCTConfiguration(
-			long userId, CTConfiguration ctConfiguration,
-			CTCollection ctCollection) {
+		_generateCTEntryAggregatesForCTDefinition(
+			long userId, CTDefinition ctDefinition, CTCollection ctCollection) {
 
 		List<Function<V, List<R>>> versionEntityRelatedEntitiesFunctions =
-			ctConfiguration.getVersionEntityRelatedEntitiesFunctions();
+			ctDefinition.getVersionEntityRelatedEntitiesFunctions();
 
 		if (ListUtil.isEmpty(versionEntityRelatedEntitiesFunctions)) {
 			return;
 		}
 
-		Class<V> versionEntityClass = ctConfiguration.getVersionEntityClass();
+		Class<V> versionEntityClass = ctDefinition.getVersionEntityClass();
 
 		List<CTEntry> ctEntries = _ctEntryLocalService.fetchCTEntries(
 			versionEntityClass.getName());
 
 		ctEntries.forEach(
 			ctEntry -> _generateCTEntryAggregateForCTEntry(
-				userId, ctConfiguration, ctCollection, ctEntry,
+				userId, ctDefinition, ctCollection, ctEntry,
 				versionEntityRelatedEntitiesFunctions));
 	}
 
@@ -867,7 +863,7 @@ public class CTEngineManagerImpl implements CTEngineManager {
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
-	private CTConfigurationRegistry _ctConfigurationRegistry;
+	private CTDefinitionRegistry _ctDefinitionRegistry;
 
 	@Reference
 	private CTEntryAggregateLocalService _ctEntryAggregateLocalService;

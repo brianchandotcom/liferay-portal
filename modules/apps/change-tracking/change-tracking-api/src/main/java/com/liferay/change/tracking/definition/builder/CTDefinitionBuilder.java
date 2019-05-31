@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.change.tracking.configuration.builder;
+package com.liferay.change.tracking.definition.builder;
 
-import com.liferay.change.tracking.configuration.CTConfiguration;
+import com.liferay.change.tracking.definition.CTDefinition;
 import com.liferay.portal.kernel.model.BaseModel;
 
 import java.io.Serializable;
@@ -25,13 +25,13 @@ import java.util.function.Function;
 /**
  * @author Gergely Mathe
  */
-public interface CTConfigurationBuilder<T, U> {
+public interface CTDefinitionBuilder<T, U> {
 
 	public ContentTypeLanguageKeyStep<T, U> setContentType(String contentType);
 
 	public interface BuildStep {
 
-		public CTConfiguration build();
+		public CTDefinition build();
 
 	}
 

@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.internal.search.spi.model.index.contributor;
 
-import com.liferay.change.tracking.configuration.CTConfigurationRegistryUtil;
+import com.liferay.change.tracking.definition.CTDefinitionRegistryUtil;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTCollectionModel;
 import com.liferay.change.tracking.model.CTEntry;
@@ -100,12 +100,12 @@ public class CTEntryModelDocumentContributor
 	}
 
 	private long _getGroupId(CTEntry ctEntry) {
-		return CTConfigurationRegistryUtil.getVersionEntityGroupId(
+		return CTDefinitionRegistryUtil.getVersionEntityGroupId(
 			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
 	}
 
 	private String _getTitle(CTEntry ctEntry) {
-		return CTConfigurationRegistryUtil.getVersionEntityTitle(
+		return CTDefinitionRegistryUtil.getVersionEntityTitle(
 			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
 	}
 

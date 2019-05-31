@@ -12,28 +12,28 @@
  * details.
  */
 
-package com.liferay.change.tracking.configuration;
+package com.liferay.change.tracking.definition;
 
 /**
  * @author Máté Thurzó
  */
-public interface CTConfigurationRegistrar {
+public interface CTDefinitionRegistrar {
 
 	/**
-	 * Registers the change tracking configuration object as a component service
+	 * Registers the change tracking definition object as a component service
 	 *
-	 * @param ctConfiguration The change tracking configuration object to be
+	 * @param ctDefinition The change tracking definition object to be
 	 *        registered
 	 */
-	public void register(CTConfiguration<?, ?> ctConfiguration);
+	public void register(CTDefinition<?, ?> ctDefinition);
 
 	/**
-	 * Unregisters the change tracking configuration object as a component
+	 * Unregisters the change tracking definition object as a component
 	 * service
 	 *
-	 * @param ctConfiguration The change tracking configuration object to be
+	 * @param ctDefinition The change tracking definition object to be
 	 *        unregistered
 	 */
-	public void unregister(CTConfiguration<?, ?> ctConfiguration);
+	public void unregister(CTDefinition<?, ?> ctDefinition);
 
 }

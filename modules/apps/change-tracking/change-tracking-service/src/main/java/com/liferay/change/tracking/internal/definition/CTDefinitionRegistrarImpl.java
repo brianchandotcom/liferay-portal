@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.configuration;
+package com.liferay.change.tracking.internal.definition;
 
-import com.liferay.change.tracking.configuration.CTConfiguration;
-import com.liferay.change.tracking.configuration.CTConfigurationRegistrar;
+import com.liferay.change.tracking.definition.CTDefinition;
+import com.liferay.change.tracking.definition.CTDefinitionRegistrar;
 
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -31,29 +31,29 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Gergely Mathe
  * @author Daniel Kocsis
  */
-@Component(immediate = true, service = CTConfigurationRegistrar.class)
-public class CTConfigurationRegistrarImpl implements CTConfigurationRegistrar {
+@Component(immediate = true, service = CTDefinitionRegistrar.class)
+public class CTDefinitionRegistrarImpl implements CTDefinitionRegistrar {
 
-	public void register(CTConfiguration<?, ?> ctConfiguration) {
-		if (ctConfiguration == null) {
+	public void register(CTDefinition<?, ?> ctDefinition) {
+		if (ctDefinition == null) {
 			return;
 		}
 
-		ServiceRegistration<CTConfiguration> serviceRegistration =
+		ServiceRegistration<CTDefinition> serviceRegistration =
 			_bundleContext.registerService(
-				CTConfiguration.class, ctConfiguration, new Hashtable<>());
+				CTDefinition.class, ctDefinition, new Hashtable<>());
 
-		_serviceRegistrations.put(ctConfiguration, serviceRegistration);
+		_serviceRegistrations.put(ctDefinition, serviceRegistration);
 	}
 
 	@Override
-	public void unregister(CTConfiguration<?, ?> ctConfiguration) {
-		if (ctConfiguration == null) {
+	public void unregister(CTDefinition<?, ?> ctDefinition) {
+		if (ctDefinition == null) {
 			return;
 		}
 
-		ServiceRegistration<CTConfiguration> serviceRegistration =
-			_serviceRegistrations.remove(ctConfiguration);
+		ServiceRegistration<CTDefinition> serviceRegistration =
+			_serviceRegistrations.remove(ctDefinition);
 
 		serviceRegistration.unregister();
 	}
@@ -65,7 +65,7 @@ public class CTConfigurationRegistrarImpl implements CTConfigurationRegistrar {
 
 	@Deactivate
 	protected void deactivate() {
-		for (ServiceRegistration<CTConfiguration> serviceRegistration :
+		for (ServiceRegistration<CTDefinition> serviceRegistration :
 				_serviceRegistrations.values()) {
 
 			serviceRegistration.unregister();
@@ -77,7 +77,7 @@ public class CTConfigurationRegistrarImpl implements CTConfigurationRegistrar {
 	}
 
 	private BundleContext _bundleContext;
-	private final Map<CTConfiguration, ServiceRegistration<CTConfiguration>>
+	private final Map<CTDefinition, ServiceRegistration<CTDefinition>>
 		_serviceRegistrations = new HashMap<>();
 
 }

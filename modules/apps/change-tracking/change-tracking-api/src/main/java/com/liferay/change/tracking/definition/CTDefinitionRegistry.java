@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.configuration;
+package com.liferay.change.tracking.definition;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,20 +20,20 @@ import java.util.Optional;
 /**
  * @author Máté Thurzó
  */
-public interface CTConfigurationRegistry {
+public interface CTDefinitionRegistry {
 
-	public List<CTConfiguration<?, ?>> getAllCTConfigurations();
+	public List<CTDefinition<?, ?>> getAllCTDefinitions();
 
-	public Optional<CTConfiguration<?, ?>>
-		getCTConfigurationOptionalByResourceClass(Class<?> clazz);
+	public Optional<CTDefinition<?, ?>> getCTDefinitionOptionalByResourceClass(
+		Class<?> clazz);
 
-	public Optional<CTConfiguration<?, ?>>
-		getCTConfigurationOptionalByResourceClassName(String className);
+	public Optional<CTDefinition<?, ?>>
+		getCTDefinitionOptionalByResourceClassName(String className);
 
-	public Optional<CTConfiguration<?, ?>>
-		getCTConfigurationOptionalByVersionClass(Class<?> clazz);
+	public Optional<CTDefinition<?, ?>> getCTDefinitionOptionalByVersionClass(
+		Class<?> clazz);
 
-	public Optional<CTConfiguration<?, ?>>
-		getCTConfigurationOptionalByVersionClassName(String className);
+	public Optional<CTDefinition<?, ?>>
+		getCTDefinitionOptionalByVersionClassName(String className);
 
 }

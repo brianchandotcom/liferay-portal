@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.configuration.builder;
+package com.liferay.change.tracking.internal.definition.builder;
 
-import com.liferay.change.tracking.configuration.CTConfiguration;
-import com.liferay.change.tracking.configuration.builder.CTConfigurationBuilder;
-import com.liferay.change.tracking.internal.configuration.CTConfigurationImpl;
+import com.liferay.change.tracking.definition.CTDefinition;
+import com.liferay.change.tracking.definition.builder.CTDefinitionBuilder;
+import com.liferay.change.tracking.internal.definition.CTDefinitionImpl;
 import com.liferay.portal.kernel.model.BaseModel;
 
 import java.io.Serializable;
@@ -31,21 +31,18 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Gergely Mathe
  */
-@Component(
-	scope = ServiceScope.PROTOTYPE, service = CTConfigurationBuilder.class
-)
-public class CTConfigurationBuilderImpl
-	<T extends BaseModel, U extends BaseModel>
-		implements CTConfigurationBuilder<T, U> {
+@Component(scope = ServiceScope.PROTOTYPE, service = CTDefinitionBuilder.class)
+public class CTDefinitionBuilderImpl<T extends BaseModel, U extends BaseModel>
+	implements CTDefinitionBuilder<T, U> {
 
 	@Activate
 	public void activate() {
-		_ctConfiguration = new CTConfigurationImpl<>();
+		_ctDefinition = new CTDefinitionImpl<>();
 	}
 
 	@Override
 	public ContentTypeLanguageKeyStep<T, U> setContentType(String contentType) {
-		_ctConfiguration.setContentType(contentType);
+		_ctDefinition.setContentType(contentType);
 
 		return new ContentTypeLanguageKeyStepImpl();
 	}
@@ -53,8 +50,8 @@ public class CTConfigurationBuilderImpl
 	public class BuildStepImpl implements BuildStep {
 
 		@Override
-		public CTConfiguration build() {
-			return _ctConfiguration;
+		public CTDefinition build() {
+			return _ctDefinition;
 		}
 
 	}
@@ -66,16 +63,16 @@ public class CTConfigurationBuilderImpl
 		public EntityClassesStep<T, U> setContentTypeLanguageKey(
 			String contentTypeLanguageKey) {
 
-			_ctConfiguration.setContentTypeLanguageKey(contentTypeLanguageKey);
+			_ctDefinition.setContentTypeLanguageKey(contentTypeLanguageKey);
 
 			return new EntityClassesStepImpl();
 		}
 
 	}
 
-	public interface CTConfigurationExtended
+	public interface CTDefinitionExtended
 		<T extends BaseModel, U extends BaseModel>
-			extends CTConfiguration<T, U> {
+			extends CTDefinition<T, U> {
 
 		public void setContentType(String contentType);
 
@@ -138,8 +135,8 @@ public class CTConfigurationBuilderImpl
 		public ResourceEntitiesByCompanyIdStep<T, U> setEntityClasses(
 			Class<T> resourceEntityClass, Class<U> versionEntityClass) {
 
-			_ctConfiguration.setResourceEntityClass(resourceEntityClass);
-			_ctConfiguration.setVersionEntityClass(versionEntityClass);
+			_ctDefinition.setResourceEntityClass(resourceEntityClass);
+			_ctDefinition.setVersionEntityClass(versionEntityClass);
 
 			return new ResourceEntitiesByCompanyIdStepImpl();
 		}
@@ -157,9 +154,9 @@ public class CTConfigurationBuilderImpl
 				Function<T, Serializable>
 					versionEntityIdFromResourceEntityFunction) {
 
-			_ctConfiguration.setResourceEntityIdFromResourceEntityFunction(
+			_ctDefinition.setResourceEntityIdFromResourceEntityFunction(
 				resourceEntityIdFromResourceEntityFunction);
-			_ctConfiguration.setVersionEntityIdFromResourceEntityFunction(
+			_ctDefinition.setVersionEntityIdFromResourceEntityFunction(
 				versionEntityIdFromResourceEntityFunction);
 
 			return new VersionEntitiesFromResourceEntityStepImpl();
@@ -178,9 +175,9 @@ public class CTConfigurationBuilderImpl
 				Function<U, Serializable>
 					versionEntityIdFromVersionEntityFunction) {
 
-			_ctConfiguration.setResourceEntityIdFromVersionEntityFunction(
+			_ctDefinition.setResourceEntityIdFromVersionEntityFunction(
 				resourceEntityIdFromVersionEntityFunction);
-			_ctConfiguration.setVersionEntityIdFromVersionEntityFunction(
+			_ctDefinition.setVersionEntityIdFromVersionEntityFunction(
 				versionEntityIdFromVersionEntityFunction);
 
 			return new VersionEntityStatusInfoStepImpl();
@@ -196,7 +193,7 @@ public class CTConfigurationBuilderImpl
 			setResourceEntitiesByCompanyIdFunction(
 				Function<Long, List<T>> resourceEntitiesByCompanyIdFunction) {
 
-			_ctConfiguration.setResourceEntitiesByCompanyIdFunction(
+			_ctDefinition.setResourceEntitiesByCompanyIdFunction(
 				resourceEntitiesByCompanyIdFunction);
 
 			return new ResourceEntityByResourceEntityIdStepImpl();
@@ -212,7 +209,7 @@ public class CTConfigurationBuilderImpl
 			setResourceEntityByResourceEntityIdFunction(
 				Function<Long, T> resourceEntityByResourceEntityIdFunction) {
 
-			_ctConfiguration.setResourceEntityByResourceEntityIdFunction(
+			_ctDefinition.setResourceEntityByResourceEntityIdFunction(
 				resourceEntityByResourceEntityIdFunction);
 
 			return new EntityIdsFromResourceEntityStepImpl();
@@ -229,7 +226,7 @@ public class CTConfigurationBuilderImpl
 				Function<T, List<U>>
 					versionEntitiesFromResourceEntityFunction) {
 
-			_ctConfiguration.setVersionEntitiesFromResourceEntityFunction(
+			_ctDefinition.setVersionEntitiesFromResourceEntityFunction(
 				versionEntitiesFromResourceEntityFunction);
 
 			return new VersionEntityByVersionEntityIdStepImpl();
@@ -245,7 +242,7 @@ public class CTConfigurationBuilderImpl
 			setVersionEntityByVersionEntityIdFunction(
 				Function<Long, U> versionEntityByVersionEntityIdFunction) {
 
-			_ctConfiguration.setVersionEntityByVersionEntityIdFunction(
+			_ctDefinition.setVersionEntityByVersionEntityIdFunction(
 				versionEntityByVersionEntityIdFunction);
 
 			return new VersionEntityDetailsStepImpl();
@@ -264,13 +261,13 @@ public class CTConfigurationBuilderImpl
 			Function<U, String> versionEntityTitleFunction,
 			Function<U, Serializable> versionEntityVersionFunction) {
 
-			_ctConfiguration.setVersionEntityRelatedEntitiesFunctions(
+			_ctDefinition.setVersionEntityRelatedEntitiesFunctions(
 				versionEntityRelatedEntitiesFunctions);
-			_ctConfiguration.setVersionEntitySiteNameFunction(
+			_ctDefinition.setVersionEntitySiteNameFunction(
 				versionEntitySiteNameFunction);
-			_ctConfiguration.setVersionEntityTitleFunction(
+			_ctDefinition.setVersionEntityTitleFunction(
 				versionEntityTitleFunction);
-			_ctConfiguration.setVersionEntityVersionFunction(
+			_ctDefinition.setVersionEntityVersionFunction(
 				versionEntityVersionFunction);
 
 			return new EntityIdsFromVersionEntityStepImpl();
@@ -286,9 +283,9 @@ public class CTConfigurationBuilderImpl
 			Integer[] versionEntityAllowedStatuses,
 			Function<U, Integer> versionEntityStatusFunction) {
 
-			_ctConfiguration.setVersionEntityAllowedStatuses(
+			_ctDefinition.setVersionEntityAllowedStatuses(
 				versionEntityAllowedStatuses);
-			_ctConfiguration.setVersionEntityStatusFunction(
+			_ctDefinition.setVersionEntityStatusFunction(
 				versionEntityStatusFunction);
 
 			return new BuildStepImpl();
@@ -296,6 +293,6 @@ public class CTConfigurationBuilderImpl
 
 	}
 
-	private CTConfigurationImpl<T, U> _ctConfiguration;
+	private CTDefinitionImpl<T, U> _ctDefinition;
 
 }

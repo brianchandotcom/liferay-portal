@@ -130,8 +130,6 @@ function subscribe(element, eventName, handler) {
 	return null;
 }
 
-let selectorCounter = 0;
-
 function toInt(str) {
 	return parseInt(str, 10) || 0;
 }

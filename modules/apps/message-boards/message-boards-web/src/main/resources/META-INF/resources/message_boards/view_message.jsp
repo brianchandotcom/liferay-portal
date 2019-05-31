@@ -53,36 +53,64 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 	</div>
 </div>
 
-<aui:script>
-	function <portlet:namespace />addReplyToMessage(messageId, quote) {
-		var addQuickReplyContainer = document.getElementById('<portlet:namespace />addReplyToMessage' + messageId);
+<aui:script require="metal-dom/src/all/dom as dom">
+	Liferay.provide(
+		window,
+		'<portlet:namespace />addReplyToMessage',
+		function(messageId, quote) {
+			var addQuickReplyContainer = document.getElementById('<portlet:namespace />addReplyToMessage' + messageId);
 
-		if (addQuickReplyContainer) {
-			addQuickReplyContainer.classList.remove('hide');
+			if (addQuickReplyContainer) {
+				<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/message_boards/get_edit_message_quick" var="editMessageQuickURL" />
 
-			var parentMessageIdInput = addQuickReplyContainer.querySelector('#<portlet:namespace />parentMessageId');
+				var editMessageQuickURL = Liferay.Util.addParams('<portlet:namespace />messageId=' + messageId, '<%= editMessageQuickURL.toString() %>');
 
-			if (parentMessageIdInput) {
-				parentMessageIdInput.value = messageId;
+				fetch(
+					editMessageQuickURL,
+					{
+						credentials: 'include',
+						method: 'GET'
+					}
+				).then(
+					function(response) {
+						return response.text();
+					}
+				).then(
+					function(response) {
+						addQuickReplyContainer.innerHTML = response;
+
+						dom.globalEval.runScriptsInElement(addQuickReplyContainer);
+
+						addQuickReplyContainer.classList.remove('hide');
+
+						var parentMessageIdInput = addQuickReplyContainer.querySelector('#<portlet:namespace />parentMessageId');
+
+						if (parentMessageIdInput) {
+							parentMessageIdInput.value = messageId;
+						}
+
+						var editorName = '<portlet:namespace />replyMessageBody' + messageId;
+
+						if (!window[editorName].instanceReady) {
+							window[editorName].create();
+						}
+
+						window[editorName].setHTML(quote);
+						window[editorName].focus();
+
+						if (addQuickReplyContainer && AUI().UA.mobile) {
+							addQuickReplyContainer.scrollIntoView(true);
+						}
+
+						Liferay.Util.toggleDisabled('#<portlet:namespace />replyMessageButton' + messageId, true);
+					}
+				)
 			}
 		}
+	);
+</aui:script>
 
-		var editorName = '<portlet:namespace />replyMessageBody' + messageId;
-
-		if (!window[editorName].instanceReady) {
-			window[editorName].create();
-		}
-
-		window[editorName].setHTML(quote);
-		window[editorName].focus();
-
-		if (addQuickReplyContainer && AUI().UA.mobile) {
-			addQuickReplyContainer.scrollIntoView(true);
-		}
-
-		Liferay.Util.toggleDisabled('#<portlet:namespace />replyMessageButton' + messageId, true);
-	}
-
+<aui:script>
 	function <portlet:namespace />hideReplyMessage(messageId) {
 		var addQuickReplyContainer = document.getElementById('<portlet:namespace />addReplyToMessage' + messageId);
 

@@ -16,7 +16,9 @@ package com.liferay.talend.tliferayoutput;
 
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Set;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.ws.rs.HttpMethod;
@@ -32,6 +34,16 @@ public enum Action {
 
 	public static Stream<Action> getActionsStream() {
 		return _actionsStreamSupplier.get();
+	}
+
+	public static Set<String> getAvailableMethodNames() {
+		Stream<Action> actionsStream = getActionsStream();
+
+		return actionsStream.map(
+			Action::getMethodName
+		).collect(
+			Collectors.toSet()
+		);
 	}
 
 	public String getMethodName() {

@@ -21,6 +21,7 @@ import com.liferay.talend.openapi.OpenAPIFormat;
 import com.liferay.talend.openapi.OpenAPIType;
 import com.liferay.talend.openapi.constants.OpenApiConstants;
 import com.liferay.talend.tliferayoutput.Action;
+import com.liferay.talend.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,10 +38,14 @@ import javax.ws.rs.HttpMethod;
 
 import org.apache.avro.Schema;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.talend.components.common.SchemaProperties;
 import org.talend.daikon.avro.AvroUtils;
 import org.talend.daikon.avro.NameUtil;
 import org.talend.daikon.avro.SchemaConstants;
+import org.talend.daikon.exception.TalendRuntimeException;
 
 /**
  * @author Zoltán Takács
@@ -124,6 +129,29 @@ public class EndpointSchemaInferrer {
 			if (!referenceSchemaJsonNode.isMissingNode()) {
 				schemaName = _stripSchemaName(referenceSchemaJsonNode);
 			}
+		}
+		else if (Objects.equals(
+					operation, HttpMethod.PATCH.toLowerCase(Locale.US))) {
+
+			JsonNode schemaRefJsonNode = apiSpecJsonNode.path(
+				OpenApiConstants.PATHS
+			).path(
+				endpoint
+			).path(
+				operation
+			).path(
+				OpenApiConstants.REQUEST_BODY
+			).path(
+				OpenApiConstants.CONTENT
+			).path(
+				OpenApiConstants.APPLICATION_JSON
+			).path(
+				OpenApiConstants.SCHEMA
+			).path(
+				OpenApiConstants.REF
+			);
+
+			schemaName = _stripSchemaName(schemaRefJsonNode);
 		}
 
 		return schemaName;
@@ -276,6 +304,15 @@ public class EndpointSchemaInferrer {
 		String schemaName = _extractEndpointSchemaName(
 			endpoint, operation, apiSpecJsonNode);
 
+		if (_log.isDebugEnabled()) {
+			_log.debug("Schema name: {}", schemaName);
+		}
+
+		if (StringUtils.isEmpty(schemaName)) {
+			throw TalendRuntimeException.createUnexpectedException(
+				"Unable to determine the Schema for the selected endpoint");
+		}
+
 		JsonNode schemaJsonNode = _extractSchemaJsonNode(
 			schemaName, apiSpecJsonNode);
 
@@ -381,5 +418,8 @@ public class EndpointSchemaInferrer {
 
 		return reference.replaceAll(OpenApiConstants.PATH_SCHEMA_REFERENCE, "");
 	}
+
+	private static final Logger _log = LoggerFactory.getLogger(
+		EndpointSchemaInferrer.class);
 
 }

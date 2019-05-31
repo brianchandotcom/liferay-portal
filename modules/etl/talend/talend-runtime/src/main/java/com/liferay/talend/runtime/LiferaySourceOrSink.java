@@ -414,6 +414,30 @@ public class LiferaySourceOrSink
 		throw new UnsupportedOperationException();
 	}
 
+	public Set<String> getSupportedOperations(String endpoint) {
+		LiferayConnectionProperties liferayConnectionProperties =
+			getEffectiveConnection(null);
+
+		String apiSpecURLHref =
+			liferayConnectionProperties.apiSpecURL.getValue();
+
+		JsonNode apiSpecJsonNode = doGetRequest(apiSpecURLHref);
+
+		JsonNode endpointJsonNode = apiSpecJsonNode.path(
+			OpenApiConstants.PATHS
+		).path(
+			endpoint
+		);
+
+		Iterator<String> operationsIterator = endpointJsonNode.fieldNames();
+
+		Set<String> supportedOperations = new TreeSet<>();
+
+		operationsIterator.forEachRemaining(supportedOperations::add);
+
+		return supportedOperations;
+	}
+
 	@Override
 	public ValidationResult initialize(
 		RuntimeContainer runtimeContainer,

@@ -39,6 +39,8 @@ public class OpenApiConstants {
 
 	public static final String REF = "$ref";
 
+	public static final String REQUEST_BODY = "requestBody";
+
 	public static final String REQUIRED = "required";
 
 	public static final String RESPONSES = "responses";

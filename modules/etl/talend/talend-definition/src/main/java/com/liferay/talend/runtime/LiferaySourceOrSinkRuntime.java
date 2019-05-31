@@ -40,6 +40,8 @@ public interface LiferaySourceOrSinkRuntime extends SourceOrSink {
 	public Schema getEndpointSchema(String endpoint, String operation)
 		throws IOException;
 
+	public Set<String> getSupportedOperations(String endpoint);
+
 	public ValidationResult validateConnection(
 		LiferayConnectionPropertiesProvider liferayConnectionPropertiesProvider,
 		RuntimeContainer runtimeContainer);

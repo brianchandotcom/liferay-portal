@@ -307,6 +307,16 @@ gradle.beforeProject {
 			}
 		}
 
+		pluginManager.withPlugin("com.liferay.portal.tools.wsdd.builder") {
+			if (bndPrintJarFiles != null) {
+				buildWSDDJar {
+					doLast {
+						bndPrintJarFiles << archivePath
+					}
+				}
+			}
+		}
+
 		pluginManager.withPlugin("com.liferay.soy.translation") {
 			replaceSoyTranslation {
 				enabled = false

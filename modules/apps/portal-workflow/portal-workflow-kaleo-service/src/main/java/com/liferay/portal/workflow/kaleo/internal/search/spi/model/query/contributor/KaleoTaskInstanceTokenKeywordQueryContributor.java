@@ -95,14 +95,12 @@ public class KaleoTaskInstanceTokenKeywordQueryContributor
 		SearchContext searchContext =
 			keywordQueryContributorHelper.getSearchContext();
 
-		for (String assetType : assetTypes) {
-			searchContext.setAttribute(
-				KaleoTaskInstanceTokenField.CLASS_NAME, assetType);
+		searchContext.setAttribute(
+			KaleoTaskInstanceTokenField.CLASS_NAME, assetTypes);
 
-			queryHelper.addSearchTerm(
-				booleanQuery, keywordQueryContributorHelper.getSearchContext(),
-				KaleoTaskInstanceTokenField.CLASS_NAME, false);
-		}
+		queryHelper.addSearchTerm(
+			booleanQuery, searchContext, KaleoTaskInstanceTokenField.CLASS_NAME,
+			false);
 	}
 
 	protected void appendTaskNameTerm(
@@ -120,8 +118,8 @@ public class KaleoTaskInstanceTokenKeywordQueryContributor
 			KaleoTaskInstanceTokenField.TASK_NAME, taskName);
 
 		queryHelper.addSearchTerm(
-			booleanQuery, keywordQueryContributorHelper.getSearchContext(),
-			KaleoTaskInstanceTokenField.TASK_NAME, false);
+			booleanQuery, searchContext, KaleoTaskInstanceTokenField.TASK_NAME,
+			false);
 	}
 
 	protected KaleoTaskInstanceTokenQuery getKaleoTaskInstanceTokenQuery(

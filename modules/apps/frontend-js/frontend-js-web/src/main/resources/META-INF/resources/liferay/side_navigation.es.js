@@ -919,11 +919,21 @@ const defaults = {
 	width: '225px'
 };
 
-$(function() {
+function onReady() {
 	const togglers = document.querySelectorAll('[data-toggle="sidenav"]');
 
 	Array.from(togglers).forEach(SideNavigation.initialize);
-});
+}
+
+if (document.readyState !== 'loading') {
+	// readyState is "interactive" or "complete".
+	onReady();
+}
+else {
+	document.addEventListener('DOMContentLoaded', () => {
+		onReady();
+	});
+}
 
 /**
  * Make SideNavigation globally available as a transitional aid.

@@ -34,8 +34,20 @@ import org.hibernate.LockOptions;
  */
 public class SessionImpl implements Session {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #SessionImpl(
+	 *             org.hibernate.Session, ClassLoader)}
+	 */
+	@Deprecated
 	public SessionImpl(org.hibernate.Session session) {
+		this(session, null);
+	}
+
+	public SessionImpl(
+		org.hibernate.Session session, ClassLoader sessionFactoryClassLoader) {
+
 		_session = session;
+		_sessionFactoryClassLoader = sessionFactoryClassLoader;
 	}
 
 	@Override
@@ -77,13 +89,21 @@ public class SessionImpl implements Session {
 	public Query createQuery(String queryString, boolean strictName)
 		throws ORMException {
 
-		try {
-			queryString = SQLTransformer.transformFromJPQLToHQL(queryString);
-
-			return new QueryImpl(_session.createQuery(queryString), strictName);
+		if (_sessionFactoryClassLoader == null) {
+			return _createQuery(queryString, strictName);
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		currentThread.setContextClassLoader(_sessionFactoryClassLoader);
+
+		try {
+			return _createQuery(queryString, strictName);
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 
@@ -258,6 +278,20 @@ public class SessionImpl implements Session {
 		return sb.toString();
 	}
 
+	private Query _createQuery(String queryString, boolean strictName)
+		throws ORMException {
+
+		try {
+			queryString = SQLTransformer.transformFromJPQLToHQL(queryString);
+
+			return new QueryImpl(_session.createQuery(queryString), strictName);
+		}
+		catch (Exception e) {
+			throw ExceptionTranslator.translate(e);
+		}
+	}
+
 	private final org.hibernate.Session _session;
+	private final ClassLoader _sessionFactoryClassLoader;
 
 }

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
-import com.liferay.portal.kernel.dao.orm.ClassLoaderSession;
 import com.liferay.portal.kernel.dao.orm.Dialect;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -101,12 +100,9 @@ public class SessionFactoryImpl implements SessionFactory {
 	public void setSessionFactoryClassLoader(
 		ClassLoader sessionFactoryClassLoader) {
 
-		if (sessionFactoryClassLoader ==
+		if (sessionFactoryClassLoader !=
 				PortalClassLoaderUtil.getClassLoader()) {
 
-			_sessionFactoryClassLoader = sessionFactoryClassLoader;
-		}
-		else {
 			_sessionFactoryClassLoader = new PreloadClassLoader(
 				sessionFactoryClassLoader, getPreloadClassLoaderClasses());
 		}
@@ -139,11 +135,7 @@ public class SessionFactoryImpl implements SessionFactory {
 	}
 
 	protected Session wrapSession(org.hibernate.Session session) {
-
-		// LPS-4190
-
-		return new ClassLoaderSession(
-			new SessionImpl(session), _sessionFactoryClassLoader);
+		return new SessionImpl(session, _sessionFactoryClassLoader);
 	}
 
 	private static final String[] _PRELOAD_CLASS_NAMES =

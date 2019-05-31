@@ -49,14 +49,12 @@ public class DDLRecordModelSummaryContributor
 	public Summary getSummary(
 		Document document, Locale locale, String snippet) {
 
-		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
-
-		String description = document.get(
-			locale, prefix + Field.DESCRIPTION, Field.DESCRIPTION);
-
 		Summary summary = new Summary(
 			getTitle(GetterUtil.getLong(document.get("recordSetId")), locale),
-			description);
+			document.get(
+				locale,
+				Field.SNIPPET + StringPool.UNDERLINE + Field.DESCRIPTION,
+				Field.DESCRIPTION));
 
 		summary.setMaxContentLength(200);
 

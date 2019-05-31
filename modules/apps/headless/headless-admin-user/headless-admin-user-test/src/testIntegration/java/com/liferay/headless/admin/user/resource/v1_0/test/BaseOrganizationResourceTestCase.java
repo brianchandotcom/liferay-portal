@@ -48,7 +48,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -291,14 +290,12 @@ public abstract class BaseOrganizationResourceTestCase {
 		Assert.assertEquals(
 			organizations2.toString(), 1, organizations2.size());
 
+		Page<Organization> page3 = OrganizationResource.getOrganizationsPage(
+			null, null, Pagination.of(1, 3), null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(organization1, organization2, organization3),
-			new ArrayList<Organization>() {
-				{
-					addAll(organizations1);
-					addAll(organizations2);
-				}
-			});
+			(List<Organization>)page3.getItems());
 	}
 
 	@Test
@@ -567,14 +564,13 @@ public abstract class BaseOrganizationResourceTestCase {
 		Assert.assertEquals(
 			organizations2.toString(), 1, organizations2.size());
 
+		Page<Organization> page3 =
+			OrganizationResource.getOrganizationOrganizationsPage(
+				parentOrganizationId, null, null, Pagination.of(1, 3), null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(organization1, organization2, organization3),
-			new ArrayList<Organization>() {
-				{
-					addAll(organizations1);
-					addAll(organizations2);
-				}
-			});
+			(List<Organization>)page3.getItems());
 	}
 
 	@Test

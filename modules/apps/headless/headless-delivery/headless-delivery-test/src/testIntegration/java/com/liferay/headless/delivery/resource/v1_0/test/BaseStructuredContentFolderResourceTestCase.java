@@ -48,7 +48,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -351,16 +350,15 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			structuredContentFolders2.toString(), 1,
 			structuredContentFolders2.size());
 
+		Page<StructuredContentFolder> page3 =
+			StructuredContentFolderResource.getSiteStructuredContentFoldersPage(
+				siteId, null, null, null, Pagination.of(1, 3), null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
 				structuredContentFolder1, structuredContentFolder2,
 				structuredContentFolder3),
-			new ArrayList<StructuredContentFolder>() {
-				{
-					addAll(structuredContentFolders1);
-					addAll(structuredContentFolders2);
-				}
-			});
+			(List<StructuredContentFolder>)page3.getItems());
 	}
 
 	@Test
@@ -702,16 +700,17 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			structuredContentFolders2.toString(), 1,
 			structuredContentFolders2.size());
 
+		Page<StructuredContentFolder> page3 =
+			StructuredContentFolderResource.
+				getStructuredContentFolderStructuredContentFoldersPage(
+					parentStructuredContentFolderId, null, null,
+					Pagination.of(1, 3), null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
 				structuredContentFolder1, structuredContentFolder2,
 				structuredContentFolder3),
-			new ArrayList<StructuredContentFolder>() {
-				{
-					addAll(structuredContentFolders1);
-					addAll(structuredContentFolders2);
-				}
-			});
+			(List<StructuredContentFolder>)page3.getItems());
 	}
 
 	@Test

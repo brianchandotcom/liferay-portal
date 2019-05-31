@@ -48,7 +48,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -354,15 +353,14 @@ public abstract class BaseContentStructureResourceTestCase {
 		Assert.assertEquals(
 			contentStructures2.toString(), 1, contentStructures2.size());
 
+		Page<ContentStructure> page3 =
+			ContentStructureResource.getSiteContentStructuresPage(
+				siteId, null, null, Pagination.of(1, 3), null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
 				contentStructure1, contentStructure2, contentStructure3),
-			new ArrayList<ContentStructure>() {
-				{
-					addAll(contentStructures1);
-					addAll(contentStructures2);
-				}
-			});
+			(List<ContentStructure>)page3.getItems());
 	}
 
 	@Test

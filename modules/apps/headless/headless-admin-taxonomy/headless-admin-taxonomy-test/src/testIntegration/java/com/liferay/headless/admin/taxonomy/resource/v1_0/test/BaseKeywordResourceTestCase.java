@@ -48,7 +48,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -363,14 +362,12 @@ public abstract class BaseKeywordResourceTestCase {
 
 		Assert.assertEquals(keywords2.toString(), 1, keywords2.size());
 
+		Page<Keyword> page3 = KeywordResource.getSiteKeywordsPage(
+			siteId, null, null, Pagination.of(1, 3), null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(keyword1, keyword2, keyword3),
-			new ArrayList<Keyword>() {
-				{
-					addAll(keywords1);
-					addAll(keywords2);
-				}
-			});
+			(List<Keyword>)page3.getItems());
 	}
 
 	@Test

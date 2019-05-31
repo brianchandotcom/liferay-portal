@@ -48,7 +48,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -371,14 +370,13 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		Assert.assertEquals(userAccounts2.toString(), 1, userAccounts2.size());
 
+		Page<UserAccount> page3 =
+			UserAccountResource.getOrganizationUserAccountsPage(
+				organizationId, null, null, Pagination.of(1, 3), null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(userAccount1, userAccount2, userAccount3),
-			new ArrayList<UserAccount>() {
-				{
-					addAll(userAccounts1);
-					addAll(userAccounts2);
-				}
-			});
+			(List<UserAccount>)page3.getItems());
 	}
 
 	@Test
@@ -603,14 +601,12 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		Assert.assertEquals(userAccounts2.toString(), 1, userAccounts2.size());
 
+		Page<UserAccount> page3 = UserAccountResource.getUserAccountsPage(
+			null, null, Pagination.of(1, 3), null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(userAccount1, userAccount2, userAccount3),
-			new ArrayList<UserAccount>() {
-				{
-					addAll(userAccounts1);
-					addAll(userAccounts2);
-				}
-			});
+			(List<UserAccount>)page3.getItems());
 	}
 
 	@Test
@@ -864,14 +860,13 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		Assert.assertEquals(userAccounts2.toString(), 1, userAccounts2.size());
 
+		Page<UserAccount> page3 =
+			UserAccountResource.getWebSiteUserAccountsPage(
+				webSiteId, null, null, Pagination.of(1, 3), null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(userAccount1, userAccount2, userAccount3),
-			new ArrayList<UserAccount>() {
-				{
-					addAll(userAccounts1);
-					addAll(userAccounts2);
-				}
-			});
+			(List<UserAccount>)page3.getItems());
 	}
 
 	@Test

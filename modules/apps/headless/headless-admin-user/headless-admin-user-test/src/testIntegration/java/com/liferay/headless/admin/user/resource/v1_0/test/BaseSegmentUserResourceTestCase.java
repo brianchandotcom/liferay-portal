@@ -48,7 +48,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -258,14 +257,13 @@ public abstract class BaseSegmentUserResourceTestCase {
 
 		Assert.assertEquals(segmentUsers2.toString(), 1, segmentUsers2.size());
 
+		Page<SegmentUser> page3 =
+			SegmentUserResource.getSegmentUserAccountsPage(
+				segmentId, Pagination.of(1, 3));
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(segmentUser1, segmentUser2, segmentUser3),
-			new ArrayList<SegmentUser>() {
-				{
-					addAll(segmentUsers1);
-					addAll(segmentUsers2);
-				}
-			});
+			(List<SegmentUser>)page3.getItems());
 	}
 
 	protected SegmentUser testGetSegmentUserAccountsPage_addSegmentUser(

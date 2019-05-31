@@ -48,7 +48,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -349,15 +348,15 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		Assert.assertEquals(
 			taxonomyCategories2.toString(), 1, taxonomyCategories2.size());
 
+		Page<TaxonomyCategory> page3 =
+			TaxonomyCategoryResource.getTaxonomyCategoryTaxonomyCategoriesPage(
+				parentTaxonomyCategoryId, null, null, Pagination.of(1, 3),
+				null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
 				taxonomyCategory1, taxonomyCategory2, taxonomyCategory3),
-			new ArrayList<TaxonomyCategory>() {
-				{
-					addAll(taxonomyCategories1);
-					addAll(taxonomyCategories2);
-				}
-			});
+			(List<TaxonomyCategory>)page3.getItems());
 	}
 
 	@Test
@@ -792,15 +791,16 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		Assert.assertEquals(
 			taxonomyCategories2.toString(), 1, taxonomyCategories2.size());
 
+		Page<TaxonomyCategory> page3 =
+			TaxonomyCategoryResource.
+				getTaxonomyVocabularyTaxonomyCategoriesPage(
+					taxonomyVocabularyId, null, null, Pagination.of(1, 3),
+					null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
 				taxonomyCategory1, taxonomyCategory2, taxonomyCategory3),
-			new ArrayList<TaxonomyCategory>() {
-				{
-					addAll(taxonomyCategories1);
-					addAll(taxonomyCategories2);
-				}
-			});
+			(List<TaxonomyCategory>)page3.getItems());
 	}
 
 	@Test

@@ -48,7 +48,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -357,15 +356,16 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		Assert.assertEquals(
 			messageBoardThreads2.toString(), 1, messageBoardThreads2.size());
 
+		Page<MessageBoardThread> page3 =
+			MessageBoardThreadResource.
+				getMessageBoardSectionMessageBoardThreadsPage(
+					messageBoardSectionId, null, null, Pagination.of(1, 3),
+					null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
 				messageBoardThread1, messageBoardThread2, messageBoardThread3),
-			new ArrayList<MessageBoardThread>() {
-				{
-					addAll(messageBoardThreads1);
-					addAll(messageBoardThreads2);
-				}
-			});
+			(List<MessageBoardThread>)page3.getItems());
 	}
 
 	@Test
@@ -841,15 +841,14 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		Assert.assertEquals(
 			messageBoardThreads2.toString(), 1, messageBoardThreads2.size());
 
+		Page<MessageBoardThread> page3 =
+			MessageBoardThreadResource.getSiteMessageBoardThreadsPage(
+				siteId, null, null, null, Pagination.of(1, 3), null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
 				messageBoardThread1, messageBoardThread2, messageBoardThread3),
-			new ArrayList<MessageBoardThread>() {
-				{
-					addAll(messageBoardThreads1);
-					addAll(messageBoardThreads2);
-				}
-			});
+			(List<MessageBoardThread>)page3.getItems());
 	}
 
 	@Test

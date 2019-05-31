@@ -48,7 +48,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -282,14 +281,13 @@ public abstract class BaseWorkflowLogResourceTestCase {
 
 		Assert.assertEquals(workflowLogs2.toString(), 1, workflowLogs2.size());
 
+		Page<WorkflowLog> page3 =
+			WorkflowLogResource.getWorkflowTaskWorkflowLogsPage(
+				workflowTaskId, Pagination.of(1, 3));
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(workflowLog1, workflowLog2, workflowLog3),
-			new ArrayList<WorkflowLog>() {
-				{
-					addAll(workflowLogs1);
-					addAll(workflowLogs2);
-				}
-			});
+			(List<WorkflowLog>)page3.getItems());
 	}
 
 	protected WorkflowLog testGetWorkflowTaskWorkflowLogsPage_addWorkflowLog(

@@ -48,7 +48,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -391,16 +390,16 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		Assert.assertEquals(
 			knowledgeBaseFolders2.toString(), 1, knowledgeBaseFolders2.size());
 
+		Page<KnowledgeBaseFolder> page3 =
+			KnowledgeBaseFolderResource.
+				getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
+					parentKnowledgeBaseFolderId, Pagination.of(1, 3));
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
 				knowledgeBaseFolder1, knowledgeBaseFolder2,
 				knowledgeBaseFolder3),
-			new ArrayList<KnowledgeBaseFolder>() {
-				{
-					addAll(knowledgeBaseFolders1);
-					addAll(knowledgeBaseFolders2);
-				}
-			});
+			(List<KnowledgeBaseFolder>)page3.getItems());
 	}
 
 	protected KnowledgeBaseFolder
@@ -538,16 +537,15 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		Assert.assertEquals(
 			knowledgeBaseFolders2.toString(), 1, knowledgeBaseFolders2.size());
 
+		Page<KnowledgeBaseFolder> page3 =
+			KnowledgeBaseFolderResource.getSiteKnowledgeBaseFoldersPage(
+				siteId, Pagination.of(1, 3));
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
 				knowledgeBaseFolder1, knowledgeBaseFolder2,
 				knowledgeBaseFolder3),
-			new ArrayList<KnowledgeBaseFolder>() {
-				{
-					addAll(knowledgeBaseFolders1);
-					addAll(knowledgeBaseFolders2);
-				}
-			});
+			(List<KnowledgeBaseFolder>)page3.getItems());
 	}
 
 	protected KnowledgeBaseFolder

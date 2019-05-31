@@ -48,7 +48,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -517,16 +516,17 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		Assert.assertEquals(
 			messageBoardMessages2.toString(), 1, messageBoardMessages2.size());
 
+		Page<MessageBoardMessage> page3 =
+			MessageBoardMessageResource.
+				getMessageBoardMessageMessageBoardMessagesPage(
+					parentMessageBoardMessageId, null, null,
+					Pagination.of(1, 3), null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
 				messageBoardMessage1, messageBoardMessage2,
 				messageBoardMessage3),
-			new ArrayList<MessageBoardMessage>() {
-				{
-					addAll(messageBoardMessages1);
-					addAll(messageBoardMessages2);
-				}
-			});
+			(List<MessageBoardMessage>)page3.getItems());
 	}
 
 	@Test
@@ -859,16 +859,17 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		Assert.assertEquals(
 			messageBoardMessages2.toString(), 1, messageBoardMessages2.size());
 
+		Page<MessageBoardMessage> page3 =
+			MessageBoardMessageResource.
+				getMessageBoardThreadMessageBoardMessagesPage(
+					messageBoardThreadId, null, null, Pagination.of(1, 3),
+					null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
 				messageBoardMessage1, messageBoardMessage2,
 				messageBoardMessage3),
-			new ArrayList<MessageBoardMessage>() {
-				{
-					addAll(messageBoardMessages1);
-					addAll(messageBoardMessages2);
-				}
-			});
+			(List<MessageBoardMessage>)page3.getItems());
 	}
 
 	@Test

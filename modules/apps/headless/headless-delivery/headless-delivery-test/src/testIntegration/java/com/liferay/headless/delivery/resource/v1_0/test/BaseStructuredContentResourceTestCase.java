@@ -48,7 +48,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -353,15 +352,14 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Assert.assertEquals(
 			structuredContents2.toString(), 1, structuredContents2.size());
 
+		Page<StructuredContent> page3 =
+			StructuredContentResource.getContentStructureStructuredContentsPage(
+				contentStructureId, null, null, Pagination.of(1, 3), null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
 				structuredContent1, structuredContent2, structuredContent3),
-			new ArrayList<StructuredContent>() {
-				{
-					addAll(structuredContents1);
-					addAll(structuredContents2);
-				}
-			});
+			(List<StructuredContent>)page3.getItems());
 	}
 
 	@Test
@@ -648,15 +646,14 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Assert.assertEquals(
 			structuredContents2.toString(), 1, structuredContents2.size());
 
+		Page<StructuredContent> page3 =
+			StructuredContentResource.getSiteStructuredContentsPage(
+				siteId, null, null, null, Pagination.of(1, 3), null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
 				structuredContent1, structuredContent2, structuredContent3),
-			new ArrayList<StructuredContent>() {
-				{
-					addAll(structuredContents1);
-					addAll(structuredContents2);
-				}
-			});
+			(List<StructuredContent>)page3.getItems());
 	}
 
 	@Test
@@ -1016,15 +1013,16 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Assert.assertEquals(
 			structuredContents2.toString(), 1, structuredContents2.size());
 
+		Page<StructuredContent> page3 =
+			StructuredContentResource.
+				getStructuredContentFolderStructuredContentsPage(
+					structuredContentFolderId, null, null, Pagination.of(1, 3),
+					null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
 				structuredContent1, structuredContent2, structuredContent3),
-			new ArrayList<StructuredContent>() {
-				{
-					addAll(structuredContents1);
-					addAll(structuredContents2);
-				}
-			});
+			(List<StructuredContent>)page3.getItems());
 	}
 
 	@Test

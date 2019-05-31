@@ -48,7 +48,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -313,14 +312,12 @@ public abstract class BaseCommentResourceTestCase {
 
 		Assert.assertEquals(comments2.toString(), 1, comments2.size());
 
+		Page<Comment> page3 = CommentResource.getBlogPostingCommentsPage(
+			blogPostingId, null, null, Pagination.of(1, 3), null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(comment1, comment2, comment3),
-			new ArrayList<Comment>() {
-				{
-					addAll(comments1);
-					addAll(comments2);
-				}
-			});
+			(List<Comment>)page3.getItems());
 	}
 
 	@Test
@@ -640,14 +637,12 @@ public abstract class BaseCommentResourceTestCase {
 
 		Assert.assertEquals(comments2.toString(), 1, comments2.size());
 
+		Page<Comment> page3 = CommentResource.getCommentCommentsPage(
+			parentCommentId, null, null, Pagination.of(1, 3), null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(comment1, comment2, comment3),
-			new ArrayList<Comment>() {
-				{
-					addAll(comments1);
-					addAll(comments2);
-				}
-			});
+			(List<Comment>)page3.getItems());
 	}
 
 	@Test
@@ -902,14 +897,12 @@ public abstract class BaseCommentResourceTestCase {
 
 		Assert.assertEquals(comments2.toString(), 1, comments2.size());
 
+		Page<Comment> page3 = CommentResource.getDocumentCommentsPage(
+			documentId, null, null, Pagination.of(1, 3), null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(comment1, comment2, comment3),
-			new ArrayList<Comment>() {
-				{
-					addAll(comments1);
-					addAll(comments2);
-				}
-			});
+			(List<Comment>)page3.getItems());
 	}
 
 	@Test
@@ -1173,14 +1166,12 @@ public abstract class BaseCommentResourceTestCase {
 
 		Assert.assertEquals(comments2.toString(), 1, comments2.size());
 
+		Page<Comment> page3 = CommentResource.getStructuredContentCommentsPage(
+			structuredContentId, null, null, Pagination.of(1, 3), null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(comment1, comment2, comment3),
-			new ArrayList<Comment>() {
-				{
-					addAll(comments1);
-					addAll(comments2);
-				}
-			});
+			(List<Comment>)page3.getItems());
 	}
 
 	@Test

@@ -48,7 +48,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -336,15 +335,14 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		Assert.assertEquals(
 			taxonomyVocabularies2.toString(), 1, taxonomyVocabularies2.size());
 
+		Page<TaxonomyVocabulary> page3 =
+			TaxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
+				siteId, null, null, Pagination.of(1, 3), null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
 				taxonomyVocabulary1, taxonomyVocabulary2, taxonomyVocabulary3),
-			new ArrayList<TaxonomyVocabulary>() {
-				{
-					addAll(taxonomyVocabularies1);
-					addAll(taxonomyVocabularies2);
-				}
-			});
+			(List<TaxonomyVocabulary>)page3.getItems());
 	}
 
 	@Test

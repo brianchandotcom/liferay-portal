@@ -50,7 +50,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -388,15 +387,14 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		Assert.assertEquals(
 			blogPostingImages2.toString(), 1, blogPostingImages2.size());
 
+		Page<BlogPostingImage> page3 =
+			BlogPostingImageResource.getSiteBlogPostingImagesPage(
+				siteId, null, null, Pagination.of(1, 3), null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
 				blogPostingImage1, blogPostingImage2, blogPostingImage3),
-			new ArrayList<BlogPostingImage>() {
-				{
-					addAll(blogPostingImages1);
-					addAll(blogPostingImages2);
-				}
-			});
+			(List<BlogPostingImage>)page3.getItems());
 	}
 
 	@Test

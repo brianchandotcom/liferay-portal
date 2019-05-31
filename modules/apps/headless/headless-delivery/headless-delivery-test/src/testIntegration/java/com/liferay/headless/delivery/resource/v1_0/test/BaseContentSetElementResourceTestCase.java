@@ -48,7 +48,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -267,15 +266,14 @@ public abstract class BaseContentSetElementResourceTestCase {
 		Assert.assertEquals(
 			contentSetElements2.toString(), 1, contentSetElements2.size());
 
+		Page<ContentSetElement> page3 =
+			ContentSetElementResource.getContentSetContentSetElementsPage(
+				contentSetId, Pagination.of(1, 3));
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
 				contentSetElement1, contentSetElement2, contentSetElement3),
-			new ArrayList<ContentSetElement>() {
-				{
-					addAll(contentSetElements1);
-					addAll(contentSetElements2);
-				}
-			});
+			(List<ContentSetElement>)page3.getItems());
 	}
 
 	protected ContentSetElement
@@ -397,15 +395,15 @@ public abstract class BaseContentSetElementResourceTestCase {
 		Assert.assertEquals(
 			contentSetElements2.toString(), 1, contentSetElements2.size());
 
+		Page<ContentSetElement> page3 =
+			ContentSetElementResource.
+				getSiteContentSetByKeyContentSetElementsPage(
+					siteId, key, Pagination.of(1, 3));
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
 				contentSetElement1, contentSetElement2, contentSetElement3),
-			new ArrayList<ContentSetElement>() {
-				{
-					addAll(contentSetElements1);
-					addAll(contentSetElements2);
-				}
-			});
+			(List<ContentSetElement>)page3.getItems());
 	}
 
 	protected ContentSetElement
@@ -542,15 +540,15 @@ public abstract class BaseContentSetElementResourceTestCase {
 		Assert.assertEquals(
 			contentSetElements2.toString(), 1, contentSetElements2.size());
 
+		Page<ContentSetElement> page3 =
+			ContentSetElementResource.
+				getSiteContentSetByUuidContentSetElementsPage(
+					siteId, uuid, Pagination.of(1, 3));
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
 				contentSetElement1, contentSetElement2, contentSetElement3),
-			new ArrayList<ContentSetElement>() {
-				{
-					addAll(contentSetElements1);
-					addAll(contentSetElements2);
-				}
-			});
+			(List<ContentSetElement>)page3.getItems());
 	}
 
 	protected ContentSetElement

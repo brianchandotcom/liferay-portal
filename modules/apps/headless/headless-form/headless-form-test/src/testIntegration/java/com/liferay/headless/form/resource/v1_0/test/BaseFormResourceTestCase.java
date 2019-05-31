@@ -48,7 +48,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -267,14 +266,11 @@ public abstract class BaseFormResourceTestCase {
 
 		Assert.assertEquals(forms2.toString(), 1, forms2.size());
 
+		Page<Form> page3 = FormResource.getSiteFormsPage(
+			siteId, Pagination.of(1, 3));
+
 		assertEqualsIgnoringOrder(
-			Arrays.asList(form1, form2, form3),
-			new ArrayList<Form>() {
-				{
-					addAll(forms1);
-					addAll(forms2);
-				}
-			});
+			Arrays.asList(form1, form2, form3), (List<Form>)page3.getItems());
 	}
 
 	protected Form testGetSiteFormsPage_addForm(Long siteId, Form form)

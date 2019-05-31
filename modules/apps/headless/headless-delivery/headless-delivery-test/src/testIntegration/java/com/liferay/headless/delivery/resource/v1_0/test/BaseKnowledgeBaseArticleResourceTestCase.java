@@ -48,7 +48,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -529,16 +528,17 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			knowledgeBaseArticles2.toString(), 1,
 			knowledgeBaseArticles2.size());
 
+		Page<KnowledgeBaseArticle> page3 =
+			KnowledgeBaseArticleResource.
+				getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
+					parentKnowledgeBaseArticleId, null, null,
+					Pagination.of(1, 3), null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
 				knowledgeBaseArticle1, knowledgeBaseArticle2,
 				knowledgeBaseArticle3),
-			new ArrayList<KnowledgeBaseArticle>() {
-				{
-					addAll(knowledgeBaseArticles1);
-					addAll(knowledgeBaseArticles2);
-				}
-			});
+			(List<KnowledgeBaseArticle>)page3.getItems());
 	}
 
 	@Test
@@ -878,16 +878,17 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			knowledgeBaseArticles2.toString(), 1,
 			knowledgeBaseArticles2.size());
 
+		Page<KnowledgeBaseArticle> page3 =
+			KnowledgeBaseArticleResource.
+				getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
+					knowledgeBaseFolderId, null, null, null,
+					Pagination.of(1, 3), null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
 				knowledgeBaseArticle1, knowledgeBaseArticle2,
 				knowledgeBaseArticle3),
-			new ArrayList<KnowledgeBaseArticle>() {
-				{
-					addAll(knowledgeBaseArticles1);
-					addAll(knowledgeBaseArticles2);
-				}
-			});
+			(List<KnowledgeBaseArticle>)page3.getItems());
 	}
 
 	@Test
@@ -1210,16 +1211,15 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			knowledgeBaseArticles2.toString(), 1,
 			knowledgeBaseArticles2.size());
 
+		Page<KnowledgeBaseArticle> page3 =
+			KnowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
+				siteId, null, null, null, Pagination.of(1, 3), null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
 				knowledgeBaseArticle1, knowledgeBaseArticle2,
 				knowledgeBaseArticle3),
-			new ArrayList<KnowledgeBaseArticle>() {
-				{
-					addAll(knowledgeBaseArticles1);
-					addAll(knowledgeBaseArticles2);
-				}
-			});
+			(List<KnowledgeBaseArticle>)page3.getItems());
 	}
 
 	@Test

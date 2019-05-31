@@ -54,7 +54,11 @@ public class AssetRendererSharingEntryInterpreter
 		AssetRenderer assetRenderer = AssetRendererSharingUtil.getAssetRenderer(
 			sharingEntry);
 
-		AssetRendererFactory assetRendererFactory =
+		if (assetRenderer == null) {
+			return StringPool.BLANK;
+		}
+
+		AssetRendererFactory<?> assetRendererFactory =
 			assetRenderer.getAssetRendererFactory();
 
 		return assetRendererFactory.getTypeName(locale);
@@ -76,6 +80,10 @@ public class AssetRendererSharingEntryInterpreter
 			AssetRenderer assetRenderer =
 				AssetRendererSharingUtil.getAssetRenderer(sharingEntry);
 
+			if (assetRenderer == null) {
+				return StringPool.BLANK;
+			}
+
 			AssetRendererFactory assetRendererFactory =
 				assetRenderer.getAssetRendererFactory();
 
@@ -96,6 +104,10 @@ public class AssetRendererSharingEntryInterpreter
 	public boolean isVisible(SharingEntry sharingEntry) throws PortalException {
 		AssetRenderer assetRenderer = AssetRendererSharingUtil.getAssetRenderer(
 			sharingEntry);
+
+		if (assetRenderer == null) {
+			return false;
+		}
 
 		if (!assetRenderer.isDisplayable()) {
 			return false;

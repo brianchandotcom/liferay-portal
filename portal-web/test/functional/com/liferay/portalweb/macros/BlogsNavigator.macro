@@ -22,9 +22,9 @@ definition {
 	}
 
 	macro gotoBlogsEntryPermissionsCP {
-		LexiconList.clickEllipsisItem(
-			item = "Permissions",
-			listEntry = "${entryTitle}");
+		LexiconCard.clickEllipsisItem(
+			card = "${entryTitle}",
+			item = "Permissions");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 	}

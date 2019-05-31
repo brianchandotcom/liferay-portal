@@ -6,13 +6,18 @@ exports[`Should render component 1`] = `
 >
   <table
     className="show-quick-actions-on-hover table table-fixed table-heading-nowrap table-hover table-list"
+    style={
+      Object {
+        "minWidth": "1061px",
+      }
+    }
   >
     <thead>
       <tr>
         <th
           style={
             Object {
-              "width": "5%",
+              "width": "4%",
             }
           }
         />
@@ -30,7 +35,7 @@ exports[`Should render component 1`] = `
           className="table-cell-expand table-head-title"
           style={
             Object {
-              "width": "30%",
+              "width": "31%",
             }
           }
         >

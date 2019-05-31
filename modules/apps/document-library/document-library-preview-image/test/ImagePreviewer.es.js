@@ -5,7 +5,7 @@ describe(
 	() => {
 
 		it(
-			'should render a creation image previwer',
+			'should render an image previewer',
 			() => {
 				const imagePreviewer = new ImagePreviewer(
 					{

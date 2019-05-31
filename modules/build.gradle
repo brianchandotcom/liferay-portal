@@ -38,7 +38,7 @@ ext {
 
 Set<File> bndPrintJarFiles = null
 
-if (Boolean.getBoolean("build.bnd.print.enabled") && System.getenv("JENKINS_HOME")) {
+if (Boolean.getBoolean("build.bnd.print.enabled")) {
 	configurations {
 		bnd
 	}

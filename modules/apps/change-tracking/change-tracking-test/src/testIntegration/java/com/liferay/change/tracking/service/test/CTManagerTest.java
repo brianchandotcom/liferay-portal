@@ -15,10 +15,10 @@
 package com.liferay.change.tracking.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.change.tracking.configuration.CTConfiguration;
-import com.liferay.change.tracking.configuration.CTConfigurationRegistrar;
-import com.liferay.change.tracking.configuration.builder.CTConfigurationBuilder;
 import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.definition.CTDefinition;
+import com.liferay.change.tracking.definition.CTDefinitionRegistrar;
+import com.liferay.change.tracking.definition.builder.CTDefinitionBuilder;
 import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.engine.CTManager;
 import com.liferay.change.tracking.model.CTCollection;
@@ -80,7 +80,7 @@ public class CTManagerTest {
 		_testVersionClassClassName = _classNameLocalService.addClassName(
 			Object.class.getName());
 
-		_ctConfiguration = _ctConfigurationBuilder.setContentType(
+		_ctDefinition = _ctDefinitionBuilder.setContentType(
 			"Test Object"
 		).setContentTypeLanguageKey(
 			"test-object"
@@ -108,13 +108,13 @@ public class CTManagerTest {
 			testVersion -> WorkflowConstants.STATUS_APPROVED
 		).build();
 
-		_ctConfigurationRegistrar.register(_ctConfiguration);
+		_ctDefinitionRegistrar.register(_ctDefinition);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		if (_ctConfiguration != null) {
-			_ctConfigurationRegistrar.unregister(_ctConfiguration);
+		if (_ctDefinition != null) {
+			_ctDefinitionRegistrar.unregister(_ctDefinition);
 		}
 
 		_ctEngineManager.disableChangeTracking(TestPropsValues.getCompanyId());
@@ -715,13 +715,13 @@ public class CTManagerTest {
 	@Inject
 	private CTCollectionLocalService _ctCollectionLocalService;
 
-	private CTConfiguration _ctConfiguration;
+	private CTDefinition _ctDefinition;
 
 	@Inject
-	private CTConfigurationBuilder<Object, Object> _ctConfigurationBuilder;
+	private CTDefinitionBuilder<Object, Object> _ctDefinitionBuilder;
 
 	@Inject
-	private CTConfigurationRegistrar _ctConfigurationRegistrar;
+	private CTDefinitionRegistrar _ctDefinitionRegistrar;
 
 	@Inject
 	private CTEngineManager _ctEngineManager;

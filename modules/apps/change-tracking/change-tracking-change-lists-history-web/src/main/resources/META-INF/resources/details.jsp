@@ -74,7 +74,7 @@ portletDisplay.setShowBackIcon(true);
 				orderable="<%= true %>"
 				orderableProperty="title"
 			>
-				<%= HtmlUtil.escape(CTConfigurationRegistryUtil.getVersionEntityTitle(curCTEntry.getModelClassNameId(), curCTEntry.getModelClassPK())) %>
+				<%= HtmlUtil.escape(CTDefinitionRegistryUtil.getVersionEntityTitle(curCTEntry.getModelClassNameId(), curCTEntry.getModelClassPK())) %>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
@@ -86,13 +86,13 @@ portletDisplay.setShowBackIcon(true);
 			<liferay-ui:search-container-column-text
 				name="site"
 			>
-				<%= HtmlUtil.escape(CTConfigurationRegistryUtil.getVersionEntitySiteName(curCTEntry.getModelClassNameId(), curCTEntry.getModelClassPK())) %>
+				<%= HtmlUtil.escape(CTDefinitionRegistryUtil.getVersionEntitySiteName(curCTEntry.getModelClassNameId(), curCTEntry.getModelClassPK())) %>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				name="content-type"
 			>
-				<liferay-ui:message key="<%= HtmlUtil.escape(CTConfigurationRegistryUtil.getVersionEntityContentTypeLanguageKey(curCTEntry.getModelClassNameId())) %>" />
+				<liferay-ui:message key="<%= HtmlUtil.escape(CTDefinitionRegistryUtil.getVersionEntityContentTypeLanguageKey(curCTEntry.getModelClassNameId())) %>" />
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
@@ -122,7 +122,7 @@ portletDisplay.setShowBackIcon(true);
 			<liferay-ui:search-container-column-text
 				name="version"
 			>
-				<%= HtmlUtil.escape(String.valueOf(CTConfigurationRegistryUtil.getVersionEntityVersion(curCTEntry.getModelClassNameId(), curCTEntry.getModelClassPK()))) %>
+				<%= HtmlUtil.escape(String.valueOf(CTDefinitionRegistryUtil.getVersionEntityVersion(curCTEntry.getModelClassNameId(), curCTEntry.getModelClassPK()))) %>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

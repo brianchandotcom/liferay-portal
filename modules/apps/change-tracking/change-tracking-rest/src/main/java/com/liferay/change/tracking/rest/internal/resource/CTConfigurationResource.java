@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.rest.internal.resource;
 
-import com.liferay.change.tracking.configuration.CTConfiguration;
+import com.liferay.change.tracking.definition.CTDefinition;
 import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.rest.internal.exception.JaxRsCTEngineException;
 import com.liferay.change.tracking.rest.internal.model.configuration.CTConfigurationModel;
@@ -109,10 +109,10 @@ public class CTConfigurationResource {
 
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC, unbind = "_removeCTConfiguration"
+		policy = ReferencePolicy.DYNAMIC, unbind = "_removeCTDefinition"
 	)
-	private void _addCTConfiguration(CTConfiguration<?, ?> ctConfiguration) {
-		_ctConfigurations.add(ctConfiguration);
+	private void _addCTDefinition(CTDefinition<?, ?> ctDefinition) {
+		_ctDefinitions.add(ctDefinition);
 	}
 
 	private CTConfigurationModel _getCTConfigurationModel(
@@ -124,16 +124,15 @@ public class CTConfigurationResource {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		Stream<CTConfiguration<?, ?>> stream = _ctConfigurations.stream();
+		Stream<CTDefinition<?, ?>> stream = _ctDefinitions.stream();
 
 		stream.forEach(
-			ctConfiguration -> {
+			ctDefinition -> {
 				supportedContentTypeLanguageKeys.add(
-					ctConfiguration.getContentTypeLanguageKey());
+					ctDefinition.getContentTypeLanguageKey());
 
 				String contentType = LanguageUtil.get(
-					resourceBundle,
-					ctConfiguration.getContentTypeLanguageKey());
+					resourceBundle, ctDefinition.getContentTypeLanguageKey());
 
 				supportedContentTypes.add(contentType);
 			});
@@ -152,8 +151,8 @@ public class CTConfigurationResource {
 		).build();
 	}
 
-	private void _removeCTConfiguration(CTConfiguration<?, ?> ctConfiguration) {
-		_ctConfigurations.remove(ctConfiguration);
+	private void _removeCTDefinition(CTDefinition<?, ?> ctDefinition) {
+		_ctDefinitions.remove(ctDefinition);
 	}
 
 	private void _updateChangeTrackingEnabled(
@@ -176,8 +175,7 @@ public class CTConfigurationResource {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private final Set<CTConfiguration<?, ?>> _ctConfigurations =
-		new HashSet<>();
+	private final Set<CTDefinition<?, ?>> _ctDefinitions = new HashSet<>();
 
 	@Reference
 	private CTEngineManager _ctEngineManager;

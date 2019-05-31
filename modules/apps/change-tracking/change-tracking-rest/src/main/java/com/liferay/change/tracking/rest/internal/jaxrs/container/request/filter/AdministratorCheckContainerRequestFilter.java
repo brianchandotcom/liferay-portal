@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.rest.internal.jaxrs.container.request.filter;
 
-import com.liferay.change.tracking.configuration.CTPortalConfiguration;
+import com.liferay.change.tracking.configuration.CTConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Tomas Polesovsky
  */
 @Component(
-	configurationPid = "com.liferay.change.tracking.configuration.CTPortalConfiguration",
+	configurationPid = "com.liferay.change.tracking.configuration.CTConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Change.Tracking.REST)",
@@ -74,8 +74,8 @@ public class AdministratorCheckContainerRequestFilter
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_ctPortalConfiguration = ConfigurableUtil.createConfigurable(
-			CTPortalConfiguration.class, properties);
+		_ctConfiguration = ConfigurableUtil.createConfigurable(
+			CTConfiguration.class, properties);
 	}
 
 	protected void checkPermissions() throws Exception {
@@ -87,7 +87,7 @@ public class AdministratorCheckContainerRequestFilter
 		}
 
 		String[] administratorRoleNames =
-			_ctPortalConfiguration.administratorRoleNames();
+			_ctConfiguration.administratorRoleNames();
 
 		UserBag userBag = permissionChecker.getUserBag();
 
@@ -103,6 +103,6 @@ public class AdministratorCheckContainerRequestFilter
 				permissionChecker.getUserId()));
 	}
 
-	private CTPortalConfiguration _ctPortalConfiguration;
+	private CTConfiguration _ctConfiguration;
 
 }

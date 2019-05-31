@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.layout.change.tracking.internal.configuration;
+package com.liferay.layout.change.tracking.internal;
 
-import com.liferay.change.tracking.configuration.CTConfigurationRegistrar;
-import com.liferay.change.tracking.configuration.builder.CTConfigurationBuilder;
+import com.liferay.change.tracking.definition.CTDefinitionRegistrar;
+import com.liferay.change.tracking.definition.builder.CTDefinitionBuilder;
 import com.liferay.change.tracking.function.CTFunctions;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutVersion;
@@ -33,11 +33,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Gergely Mathe
  */
 @Component(immediate = true, service = {})
-public class LayoutCTConfigurationRegistrar {
+public class LayoutCTRegistrar {
 
 	@Activate
 	public void activate() {
-		_ctConfigurationRegistrar.register(
+		_ctDefinitionRegistrar.register(
 			_builder.setContentType(
 				"Page"
 			).setContentTypeLanguageKey(
@@ -73,10 +73,10 @@ public class LayoutCTConfigurationRegistrar {
 	}
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private CTConfigurationBuilder<Layout, LayoutVersion> _builder;
+	private CTDefinitionBuilder<Layout, LayoutVersion> _builder;
 
 	@Reference
-	private CTConfigurationRegistrar _ctConfigurationRegistrar;
+	private CTDefinitionRegistrar _ctDefinitionRegistrar;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

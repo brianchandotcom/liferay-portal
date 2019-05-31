@@ -12,15 +12,16 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.change.tracking.internal.configuration;
+package com.liferay.dynamic.data.mapping.change.tracking.internal;
 
-import com.liferay.change.tracking.configuration.CTConfigurationRegistrar;
-import com.liferay.change.tracking.configuration.builder.CTConfigurationBuilder;
+import com.liferay.change.tracking.definition.CTDefinitionRegistrar;
+import com.liferay.change.tracking.definition.builder.CTDefinitionBuilder;
 import com.liferay.change.tracking.function.CTFunctions;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateVersionModel;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -44,70 +45,65 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Máté Thurzó
  */
 @Component(immediate = true, service = {})
-public class DDMStructureCTConfigurationRegistrar {
+public class DDMTemplateCTRegistrar {
 
 	@Activate
 	public void activate() {
-		_ctConfigurationRegistrar.register(
+		_ctDefinitionRegistrar.register(
 			_builder.setContentType(
-				"Dynamic Data Mapping Structure"
+				"Dynamic Data Mapping Template"
 			).setContentTypeLanguageKey(
-				"dynamic-data-mapping-structure"
+				"dynamic-data-mapping-template"
 			).setEntityClasses(
-				DDMStructure.class, DDMStructureVersion.class
+				DDMTemplate.class, DDMTemplateVersion.class
 			).setResourceEntitiesByCompanyIdFunction(
-				this::_fetchDDMStructures
+				this::_fetchDDMTemplates
 			).setResourceEntityByResourceEntityIdFunction(
-				_ddmStructureLocalService::fetchStructure
+				_ddmTemplateLocalService::fetchTemplate
 			).setEntityIdsFromResourceEntityFunctions(
-				DDMStructure::getStructureId,
-				this::_fetchLatestStructureVersionId
+				DDMTemplate::getTemplateId, this::_fetchLatestTemplateVersionId
 			).setVersionEntitiesFromResourceEntityFunction(
-				ddmStructure ->
-					_ddmStructureVersionLocalService.getStructureVersions(
-						ddmStructure.getStructureId())
+				ddmTemplate ->
+					_ddmTemplateVersionLocalService.getTemplateVersions(
+						ddmTemplate.getTemplateId())
 			).setVersionEntityByVersionEntityIdFunction(
-				_ddmStructureVersionLocalService::fetchDDMStructureVersion
+				_ddmTemplateVersionLocalService::fetchDDMTemplateVersion
 			).setVersionEntityDetails(
 				null, CTFunctions.getFetchSiteNameFunction(),
 				ddmStructureVersion -> ddmStructureVersion.getName(
 					LocaleUtil.getMostRelevantLocale()),
-				DDMStructureVersion::getVersion
+				DDMTemplateVersion::getVersion
 			).setEntityIdsFromVersionEntityFunctions(
-				DDMStructureVersion::getStructureId,
-				DDMStructureVersion::getStructureVersionId
+				DDMTemplateVersion::getTemplateId,
+				DDMTemplateVersionModel::getTemplateVersionId
 			).setVersionEntityStatusInfo(
-				new Integer[] {
-					WorkflowConstants.STATUS_APPROVED,
-					WorkflowConstants.STATUS_DRAFT
-				},
-				DDMStructureVersion::getStatus
+				new Integer[] {WorkflowConstants.STATUS_APPROVED},
+				ddmTemplateVersion -> WorkflowConstants.STATUS_APPROVED
 			).build());
 	}
 
-	private List<DDMStructure> _fetchDDMStructures(long companyId) {
-		DynamicQuery dynamicQuery = _ddmStructureLocalService.dynamicQuery();
+	private List<DDMTemplate> _fetchDDMTemplates(long companyId) {
+		DynamicQuery dynamicQuery = _ddmTemplateLocalService.dynamicQuery();
 
 		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
 
 		dynamicQuery.add(companyIdProperty.eq(companyId));
 
-		return _ddmStructureLocalService.dynamicQuery(dynamicQuery);
+		return _ddmTemplateLocalService.dynamicQuery(dynamicQuery);
 	}
 
-	private Serializable _fetchLatestStructureVersionId(
-		DDMStructure ddmStructure) {
+	private Serializable _fetchLatestTemplateVersionId(
+		DDMTemplate ddmTemplate) {
 
 		try {
-			DDMStructureVersion ddmStructureVersion =
-				ddmStructure.getStructureVersion();
+			DDMTemplateVersion ddmTemplateVersion =
+				ddmTemplate.getLatestTemplateVersion();
 
-			return ddmStructureVersion.getStructureVersionId();
+			return ddmTemplateVersion.getTemplateVersionId();
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"An error occured when getting structure version ID", pe);
+				_log.debug("Unable to get template version ID", pe);
 			}
 
 			return 0;
@@ -115,19 +111,19 @@ public class DDMStructureCTConfigurationRegistrar {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DDMStructureCTConfigurationRegistrar.class);
+		DDMTemplateCTRegistrar.class);
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private CTConfigurationBuilder<DDMStructure, DDMStructureVersion> _builder;
+	private CTDefinitionBuilder<DDMTemplate, DDMTemplateVersion> _builder;
 
 	@Reference
-	private CTConfigurationRegistrar _ctConfigurationRegistrar;
+	private CTDefinitionRegistrar _ctDefinitionRegistrar;
 
 	@Reference
-	private DDMStructureLocalService _ddmStructureLocalService;
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference
-	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
+	private DDMTemplateVersionLocalService _ddmTemplateVersionLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

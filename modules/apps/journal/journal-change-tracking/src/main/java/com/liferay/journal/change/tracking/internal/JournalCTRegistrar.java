@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.journal.change.tracking.internal.configuration;
+package com.liferay.journal.change.tracking.internal;
 
-import com.liferay.change.tracking.configuration.CTConfigurationRegistrar;
-import com.liferay.change.tracking.configuration.builder.CTConfigurationBuilder;
+import com.liferay.change.tracking.definition.CTDefinitionRegistrar;
+import com.liferay.change.tracking.definition.builder.CTDefinitionBuilder;
 import com.liferay.change.tracking.function.CTFunctions;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
@@ -41,11 +41,11 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Gergely Mathe
  */
 @Component(immediate = true, service = {})
-public class JournalCTConfigurationRegistrar {
+public class JournalCTRegistrar {
 
 	@Activate
 	public void activate() {
-		_ctConfigurationRegistrar.register(
+		_ctDefinitionRegistrar.register(
 			_builder.setContentType(
 				"Web Content"
 			).setContentTypeLanguageKey(
@@ -109,11 +109,11 @@ public class JournalCTConfigurationRegistrar {
 	}
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private CTConfigurationBuilder<JournalArticleResource, JournalArticle>
+	private CTDefinitionBuilder<JournalArticleResource, JournalArticle>
 		_builder;
 
 	@Reference
-	private CTConfigurationRegistrar _ctConfigurationRegistrar;
+	private CTDefinitionRegistrar _ctDefinitionRegistrar;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

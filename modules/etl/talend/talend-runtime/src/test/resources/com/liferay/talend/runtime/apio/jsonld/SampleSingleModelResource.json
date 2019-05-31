@@ -1,0 +1,25 @@
+{
+	"@context": [
+		{
+			"folder": {
+				"@type": "@id"
+			}
+		},
+		{
+			"blogPosts": {
+				"@type": "@id"
+			}
+		},
+		{
+			"@vocab": "http://schema.org/"
+		},
+		"https://www.w3.org/ns/hydra/core#"
+	],
+	"@id": "http://localhost:8080/o/api/p/web-sites/20136",
+	"@type": [
+		"WebSite"
+	],
+	"blogPosts": "http://localhost:8080/o/api/p/web-sites/20136/blog-postings",
+	"folder": "http://localhost:8080/o/api/p/web-sites/20136/folders",
+	"name": "Global"
+}

@@ -19,6 +19,8 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+String backURL = ParamUtil.getString(request, "backURL", redirect);
+
 if (Validator.isNull(redirect)) {
 	redirect = currentURL;
 }
@@ -49,7 +51,7 @@ if (comment instanceof WorkflowableComment) {
 %>
 
 <liferay-ui:header
-	backURL="<%= redirect %>"
+	backURL="<%= backURL %>"
 	title='<%= (comment == null) ? "new-message" : "edit-message" %>'
 />
 

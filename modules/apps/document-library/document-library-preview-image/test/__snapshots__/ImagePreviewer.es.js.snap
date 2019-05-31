@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`document-library-preview-image should render a creation image previwer 1`] = `
+exports[`document-library-preview-image should render an image previewer 1`] = `
 <div class="preview-file">
   <div class="preview-file-container preview-file-max-height" ref="imageContainer"><img class="preview-file-image" ref="image" src="image.jpg" style=""></div>
   <div class="preview-toolbar-container">

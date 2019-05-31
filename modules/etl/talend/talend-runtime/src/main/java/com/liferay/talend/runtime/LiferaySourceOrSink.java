@@ -39,7 +39,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
+import javax.ws.rs.HttpMethod;
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
@@ -255,8 +258,8 @@ public class LiferaySourceOrSink
 	}
 
 	@Override
-	public List<NamedThing> getEndpointList(String operation) {
-		List<NamedThing> endpointsNamedThing = new ArrayList<>();
+	public Set<String> getEndpointList(String operation) {
+		Set<String> endpoints = new TreeSet<>();
 
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveConnection(null);
@@ -275,6 +278,8 @@ public class LiferaySourceOrSink
 
 			JsonNode endpointJsonNode = endpoint.getValue();
 
+			boolean checkForSchemaReference = HttpMethod.GET.equals(operation);
+
 			if (endpointJsonNode.has(operation.toLowerCase(Locale.US))) {
 				boolean hasSchemaReference = endpointJsonNode.path(
 					operation.toLowerCase(Locale.US)
@@ -292,20 +297,18 @@ public class LiferaySourceOrSink
 					OpenApiConstants.REF
 				);
 
-				if (hasSchemaReference) {
-					endpointsNamedThing.add(
-						new SimpleNamedThing(
-							endpoint.getKey(), endpoint.getKey()));
+				if (checkForSchemaReference) {
+					if (hasSchemaReference) {
+						endpoints.add(endpoint.getKey());
+					}
+				}
+				else {
+					endpoints.add(endpoint.getKey());
 				}
 			}
 		}
 
-		Comparator<NamedThing> comparator = Comparator.comparing(
-			NamedThing::getName);
-
-		Collections.sort(endpointsNamedThing, comparator);
-
-		return endpointsNamedThing;
+		return endpoints;
 	}
 
 	/**

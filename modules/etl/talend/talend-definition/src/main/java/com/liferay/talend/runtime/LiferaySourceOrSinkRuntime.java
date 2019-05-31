@@ -19,6 +19,7 @@ import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
 import java.io.IOException;
 
 import java.util.List;
+import java.util.Set;
 
 import org.apache.avro.Schema;
 
@@ -34,8 +35,7 @@ public interface LiferaySourceOrSinkRuntime extends SourceOrSink {
 
 	public List<NamedThing> getAvailableWebSites() throws IOException;
 
-	public List<NamedThing> getEndpointList(String operation)
-		throws IOException;
+	public Set<String> getEndpointList(String operation) throws IOException;
 
 	public Schema getEndpointSchema(String endpoint, String operation)
 		throws IOException;

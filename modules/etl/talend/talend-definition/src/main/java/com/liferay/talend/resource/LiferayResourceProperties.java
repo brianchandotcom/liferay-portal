@@ -24,7 +24,9 @@ import com.liferay.talend.utils.URIUtils;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.ws.rs.HttpMethod;
 
@@ -37,6 +39,8 @@ import org.talend.components.api.component.ISchemaListener;
 import org.talend.components.api.properties.ComponentPropertiesImpl;
 import org.talend.components.common.SchemaProperties;
 import org.talend.daikon.NamedThing;
+import org.talend.daikon.SimpleNamedThing;
+import org.talend.daikon.exception.TalendRuntimeException;
 import org.talend.daikon.i18n.GlobalI18N;
 import org.talend.daikon.i18n.I18nMessageProvider;
 import org.talend.daikon.i18n.I18nMessages;
@@ -88,12 +92,12 @@ public class LiferayResourceProperties
 
 			main.schema.setValue(endpointSchema);
 		}
-		catch (IOException ioe) {
+		catch (IOException | TalendRuntimeException e) {
 			validationResultMutable.setMessage(
 				i18nMessages.getMessage("error.validation.schema"));
 			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
 
-			_log.error("Unable to generate schema", ioe);
+			_log.error("Unable to generate schema", e);
 		}
 
 		if (validationResultMutable.getStatus() ==
@@ -126,8 +130,8 @@ public class LiferayResourceProperties
 			validatedSoSSandboxRuntime.getLiferaySourceOrSinkRuntime();
 
 		try {
-			List<NamedThing> endpoints =
-				liferaySourceOrSinkRuntime.getEndpointList(HttpMethod.GET);
+			Set<String> endpoints = liferaySourceOrSinkRuntime.getEndpointList(
+				HttpMethod.GET);
 
 			if (endpoints.isEmpty()) {
 				validationResultMutable.setMessage(
@@ -138,7 +142,13 @@ public class LiferayResourceProperties
 				return validationResultMutable;
 			}
 
-			endpoint.setPossibleNamedThingValues(endpoints);
+			List<NamedThing> endpointsNamedThing = new ArrayList<>();
+
+			endpoints.forEach(
+				endpoint -> endpointsNamedThing.add(
+					new SimpleNamedThing(endpoint, endpoint)));
+
+			endpoint.setPossibleNamedThingValues(endpointsNamedThing);
 		}
 		catch (Exception e) {
 			return ExceptionUtils.exceptionToValidationResult(e);

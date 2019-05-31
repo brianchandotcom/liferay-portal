@@ -1030,12 +1030,6 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private String _getPortletCategoryTitle(PortletCategory portletCategory) {
-		String title = LanguageUtil.get(request, portletCategory.getName());
-
-		if (Validator.isNotNull(title)) {
-			return title;
-		}
-
 		for (String portletId :
 				PortletCategoryUtil.getFirstChildPortletIds(portletCategory)) {
 
@@ -1058,11 +1052,15 @@ public class ContentPageEditorDisplayContext {
 			ResourceBundle portletResourceBundle =
 				portletConfig.getResourceBundle(themeDisplay.getLocale());
 
-			return ResourceBundleUtil.getString(
+			String title = ResourceBundleUtil.getString(
 				portletResourceBundle, portletCategory.getName());
+
+			if (Validator.isNotNull(title)) {
+				return title;
+			}
 		}
 
-		return StringPool.BLANK;
+		return LanguageUtil.get(request, portletCategory.getName());
 	}
 
 	private String _getPortletId(String content) {

@@ -17,28 +17,23 @@
 <%@ include file="/message_boards/init.jsp" %>
 
 <%
-MBMessage replyMessage = null;
+MBMessage message = (MBMessage)GetterUtil.getObject(request.getAttribute("edit_message_quick_content.jsp-message"));
 
-long messageId = 0;
-
-long categoryId = messageDisplay.getMessage().getCategoryId();
-long threadId = messageDisplay.getMessage().getThreadId();
-long parentMessageId = messageDisplay.getMessage().getMessageId();
-String subject = BeanParamUtil.getString(replyMessage, request, "subject");
-double priority = messageDisplay.getMessage().getPriority();
-
-MBMessage curParentMessage = null;
+long categoryId = message.getCategoryId();
+long threadId = message.getThreadId();
+long parentMessageId = message.getMessageId();
+String subject = ParamUtil.getString(request, "subject");
+double priority = message.getPriority();
+long replyToMessageId = message.getMessageId();
 
 if (threadId > 0) {
 	try {
-		curParentMessage = MBMessageLocalServiceUtil.getMessage(parentMessageId);
-
 		if (Validator.isNull(subject)) {
-			if (curParentMessage.getSubject().startsWith(MBMessageConstants.MESSAGE_SUBJECT_PREFIX_RE)) {
-				subject = curParentMessage.getSubject();
+			if (message.getSubject().startsWith(MBMessageConstants.MESSAGE_SUBJECT_PREFIX_RE)) {
+				subject = message.getSubject();
 			}
 			else {
-				subject = MBMessageConstants.MESSAGE_SUBJECT_PREFIX_RE + curParentMessage.getSubject();
+				subject = MBMessageConstants.MESSAGE_SUBJECT_PREFIX_RE + message.getSubject();
 			}
 		}
 	}
@@ -130,7 +125,7 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 		<aui:form action="<%= editMessageURL %>" method="post" name='<%= "addQuickReplyFm" + replyToMessageId %>' onSubmit='<%= "event.preventDefault(); " %>'>
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="messageId" type="hidden" value="<%= messageId %>" />
+			<aui:input name="messageId" type="hidden" value="<%= 0 %>" />
 			<aui:input name="mbCategoryId" type="hidden" value="<%= categoryId %>" />
 			<aui:input name="threadId" type="hidden" value="<%= threadId %>" />
 			<aui:input name="parentMessageId" type="hidden" value="<%= parentMessageId %>" />

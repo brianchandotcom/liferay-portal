@@ -74,27 +74,28 @@ public class EntityFieldsUtil {
 
 		int type = expandoColumn.getType();
 
-		String columnName = Normalizer.normalizeIdentifier(
+		String externalName = Normalizer.normalizeIdentifier(
 			expandoColumn.getName());
 
-		String fieldName = ExpandoBridgeIndexerUtil.encodeFieldName(
+		String internalName = ExpandoBridgeIndexerUtil.encodeFieldName(
 			expandoColumn.getName(), indexType);
 
 		if (type == ExpandoColumnConstants.BOOLEAN) {
-			return new BooleanEntityField(columnName, locale -> fieldName);
+			return new BooleanEntityField(externalName, locale -> internalName);
 		}
 		else if (type == ExpandoColumnConstants.DATE) {
 			return new DateTimeEntityField(
-				columnName, locale -> Field.getSortableFieldName(fieldName),
-				locale -> fieldName);
+				externalName,
+				locale -> Field.getSortableFieldName(internalName),
+				locale -> internalName);
 		}
 		else if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
 			return new StringEntityField(
-				columnName,
-				locale -> Field.getLocalizedName(locale, fieldName));
+				externalName,
+				locale -> Field.getLocalizedName(locale, internalName));
 		}
 
-		return new StringEntityField(columnName, locale -> fieldName);
+		return new StringEntityField(externalName, locale -> internalName);
 	}
 
 }

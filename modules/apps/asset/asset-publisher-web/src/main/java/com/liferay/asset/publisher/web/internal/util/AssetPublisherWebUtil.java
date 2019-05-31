@@ -94,7 +94,10 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = AssetPublisherWebUtil.class)
+@Component(
+	configurationPid = "com.liferay.asset.publisher.web.internal.configuration.AssetPublisherPortletInstanceConfiguration",
+	immediate = true, service = AssetPublisherWebUtil.class
+)
 public class AssetPublisherWebUtil {
 
 	public void addAndStoreSelection(

@@ -273,6 +273,17 @@ public class FreeMarkerTool {
 			javaMethodSignature, httpMethods);
 	}
 
+	public boolean hasJavaMethodSignature(
+		List<JavaMethodSignature> javaMethodSignatures, String methodName) {
+
+		return javaMethodSignatures.stream(
+		).map(
+			JavaMethodSignature::getMethodName
+		).anyMatch(
+			name -> name.equals(methodName)
+		);
+	}
+
 	public boolean hasPathParameter(JavaMethodSignature javaMethodSignature) {
 		List<JavaMethodParameter> javaMethodParameters =
 			javaMethodSignature.getJavaMethodParameters();

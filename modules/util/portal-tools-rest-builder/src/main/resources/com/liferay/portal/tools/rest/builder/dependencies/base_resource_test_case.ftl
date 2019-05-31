@@ -199,11 +199,32 @@ public abstract class Base${schemaName}ResourceTestCase {
 				<#if properties?keys?seq_contains("id")>
 					${schemaName} ${schemaVarName} = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
-					assertHttpResponseStatusCode(204, ${schemaName}Resource.${javaMethodSignature.methodName}HttpResponse(${schemaVarName}.getId()));
+					assertHttpResponseStatusCode(204, ${schemaName}Resource.${javaMethodSignature.methodName}HttpResponse(
 
-					assertHttpResponseStatusCode(404, ${schemaName}Resource.get${javaMethodSignature.methodName?remove_beginning("delete")}HttpResponse(${schemaVarName}.getId()));
+						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+							<#if !javaMethodParameter?is_first>
+								,
+							</#if>
 
-					assertHttpResponseStatusCode(404, ${schemaName}Resource.get${javaMethodSignature.methodName?remove_beginning("delete")}HttpResponse(0L));
+							<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+								<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+									${schemaVarName}.getId()
+								<#else>
+									null
+								</#if>
+							<#else>
+								null
+							</#if>
+						</#list>
+					));
+
+					<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get"+javaMethodSignature.methodName?remove_beginning("delete"))>
+
+						assertHttpResponseStatusCode(404, ${schemaName}Resource.get${javaMethodSignature.methodName?remove_beginning("delete")}HttpResponse(${schemaVarName}.getId()));
+
+						assertHttpResponseStatusCode(404, ${schemaName}Resource.get${javaMethodSignature.methodName?remove_beginning("delete")}HttpResponse(0L));
+
+					</#if>
 				<#else>
 					Assert.assertTrue(true);
 				</#if>

@@ -101,13 +101,13 @@ class Analytics {
 	}
 
 	_ensureIntegrity() {
-		let userId = storage.get(STORAGE_KEY_USER_ID);
+		const userId = storage.get(STORAGE_KEY_USER_ID);
 
 		if (userId) {
 			this._setCookie(STORAGE_KEY_USER_ID, userId);
 		}
 	}
-	
+
 	_isNewUserIdRequired() {
 		const identityHash = storage.get(STORAGE_KEY_IDENTITY_HASH);
 		const storedUserId = storage.get(STORAGE_KEY_USER_ID);
@@ -165,7 +165,7 @@ class Analytics {
 
 		expirationDate.setDate(expirationDate.getDate() + 365);
 
-		document.cookie = key + "=" + data + "; expires=" + expirationDate.toUTCString() + " ;path=/";
+		document.cookie = `${key}=${data}; expires= ${expirationDate.toUTCString()}; path=/`;
 	}
 
 	/**

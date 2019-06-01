@@ -982,6 +982,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>aspectRatioClasses</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>componentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

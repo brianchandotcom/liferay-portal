@@ -35,6 +35,7 @@ import java.text.DateFormat;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Before;
@@ -168,10 +169,14 @@ public class CalendarIndexerIndexedFieldsTest
 			"resourceName",
 			StringUtil.toLowerCase(
 				calendarResource.getName(LocaleUtil.US, true)));
-		map.put(
-			"resourceName_en_US",
-			StringUtil.toLowerCase(
-				calendarResource.getName(calendar.getDefaultLanguageId())));
+
+		Map<Locale, String> nameMap = calendarResource.getNameMap();
+
+		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
+			map.put(
+				"resourceName_" + entry.getKey(),
+				StringUtil.toLowerCase(entry.getValue()));
+		}
 	}
 
 	protected void populateExpectedFieldValues(

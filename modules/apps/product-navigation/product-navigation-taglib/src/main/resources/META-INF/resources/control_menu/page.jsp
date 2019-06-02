@@ -125,7 +125,7 @@ for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory :
 
 								if (panelId !== itemId) {
 									var toggle = document.querySelector('#<portlet:namespace />ControlMenu [data-toggle="sidenav"][data-target*="' + panelId + '"]');
-									SideNavigation.hide(toggle);
+									Liferay.SideNavigation.hide(toggle);
 								}
 							}
 						);

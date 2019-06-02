@@ -20,10 +20,9 @@ import ns from './util/ns.es';
 import objectToFormData from './util/form/object_to_form_data.es';
 import postForm from './util/form/post_form.es';
 import setFormValues from './util/form/set_form_values.es';
+import SideNavigation from './side_navigation.es';
 import toCharCode from './util/to_char_code.es';
 import unescape from 'lodash.unescape';
-
-import './side_navigation.es';
 
 Liferay.component = component;
 Liferay.componentReady = componentReady;
@@ -37,6 +36,8 @@ Liferay.Address = {
 	getCountries: getCountries,
 	getRegions: getRegions
 };
+
+Liferay.SideNavigation = SideNavigation;
 
 Liferay.Util.escape = escape;
 Liferay.Util.getCropRegion = getCropRegion;

@@ -70,7 +70,7 @@ class ManagementToolbar extends ClayComponent {
 			const sidenavToggle = this.refs.managementToolbar.refs.infoButton;
 
 			if (sidenavToggle) {
-				SideNavigation.initialize(sidenavToggle, {
+				Liferay.SideNavigation.initialize(sidenavToggle, {
 					container: '#' + this.infoPanelId,
 					position: 'right',
 					type: 'relative',

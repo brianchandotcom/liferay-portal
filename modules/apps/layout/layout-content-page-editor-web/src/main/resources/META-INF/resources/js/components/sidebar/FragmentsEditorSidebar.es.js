@@ -19,8 +19,13 @@ class FragmentsEditorSidebar extends Component {
 	created() {
 		this._productMenuToggle = $('.product-menu-toggle');
 		this._handleHide = this._handleHide.bind(this);
-		const sidenav = Liferay.SideNavigation.instance(this._productMenuToggle);
-		this._toggleHandle = sidenav.on('openStart.lexicon.sidenav', this._handleHide);
+		const sidenav = Liferay.SideNavigation.instance(
+			this._productMenuToggle
+		);
+		this._toggleHandle = sidenav.on(
+			'openStart.lexicon.sidenav',
+			this._handleHide
+		);
 	}
 
 	/**
@@ -28,7 +33,10 @@ class FragmentsEditorSidebar extends Component {
 	 * @review
 	 */
 	disposed() {
-		this._toggleHandle.removeListener('openStart.lexicon.sidenav', this._handleHide);
+		this._toggleHandle.removeListener(
+			'openStart.lexicon.sidenav',
+			this._handleHide
+		);
 	}
 
 	/**

@@ -23,7 +23,9 @@ class ContextualSidebar extends Component {
 
 		this._handleOpenProductMenu = this._handleOpenProductMenu.bind(this);
 
-		const sidenav = Liferay.SideNavigation.instance(this._productMenuToggle);
+		const sidenav = Liferay.SideNavigation.instance(
+			this._productMenuToggle
+		);
 
 		this._toggleHandle = sidenav.on(
 			'openStart.lexicon.sidenav',

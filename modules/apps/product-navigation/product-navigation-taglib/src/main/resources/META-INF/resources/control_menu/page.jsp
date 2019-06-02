@@ -108,21 +108,27 @@ for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory :
 
 		var sidenavToggles = document.querySelectorAll('#<portlet:namespace />ControlMenu [data-toggle="sidenav"]');
 
-		var sidenavInstances = Array.from(sidenavToggles).map(function(toggle) {
-			return Liferay.SideNavigation.instance(toggle);
-		});
+		var sidenavInstances = Array.from(sidenavToggles).map(
+			function(toggle) {
+				return Liferay.SideNavigation.instance(toggle);
+			}
+		);
 
-		sidenavInstances.forEach(function(instance) {
-			instance.on(
-				'openStart.lexicon.sidenav',
-				function(event, source) {
-					sidenavInstances.forEach(function (sidenav) {
-						if (sidenav !== source) {
-							sidenav.hide();
-						}
-					});
-				}
-			);
-		});
+		sidenavInstances.forEach(
+			function(instance) {
+				instance.on(
+					'openStart.lexicon.sidenav',
+					function(event, source) {
+						sidenavInstances.forEach(
+							function(sidenav) {
+								if (sidenav !== source) {
+									sidenav.hide();
+								}
+							}
+						);
+					}
+				);
+			}
+		);
 	</aui:script>
 </c:if>

@@ -1,4 +1,4 @@
-const $ = jQuery;
+import EventEmitter from 'metal-events';
 
 /**
  * Map from toggler DOM nodes to sidenav instances.
@@ -173,8 +173,18 @@ SideNavigation.prototype = {
 		instance.options = options;
 		instance.useDataAttribute = useDataAttribute;
 
+		instance._emitter = new EventEmitter();
+
 		instance._bindUI();
 		instance._renderUI();
+	},
+
+	on: function(event, listener) {
+		return this._emitter.on(event, listener);
+	},
+
+	_emit: function(event) {
+		this._emitter.emit(event, this);
 	},
 
 	clearHeight: function() {
@@ -282,17 +292,13 @@ SideNavigation.prototype = {
 
 			const target = toggler.dataset.target || toggler.getAttribute('href');
 
-			$(container).trigger({
-				type: 'closedStart.lexicon.sidenav'
-			});
+			instance._emit('closedStart.lexicon.sidenav');
 
 			instance._subscribeSidenavTransitionEnd(content, function() {
 				removeClass(container, 'sidenav-transition');
 				removeClass(toggler, 'sidenav-transition');
 
-				$(container).trigger({
-					type: 'closed.lexicon.sidenav'
-				});
+				instance._emit('closed.lexicon.sidenav');
 			});
 
 			if (hasClass(content, openClass)) {
@@ -465,17 +471,13 @@ SideNavigation.prototype = {
 				instance._loadUrl(container, url);
 			}
 
-			$(container).trigger({
-				type: 'openStart.lexicon.sidenav'
-			});
+			instance._emit('openStart.lexicon.sidenav');
 
 			instance._subscribeSidenavTransitionEnd(content, function() {
 				removeClass(container, 'sidenav-transition');
 				removeClass(toggler, 'sidenav-transition');
 
-				$(container).trigger({
-					type: 'open.lexicon.sidenav'
-				});
+				instance._emit('open.lexicon.sidenav');
 			});
 
 			setClasses(content, {
@@ -521,14 +523,10 @@ SideNavigation.prototype = {
 		const sidenavRight = instance._isSidenavRight();
 
 		if (closed) {
-			$(container).trigger({
-				type: 'openStart.lexicon.sidenav'
-			});
+			instance._emit('openStart.lexicon.sidenav');
 		}
 		else {
-			$(container).trigger({
-				type: 'closedStart.lexicon.sidenav'
-			});
+			instance._emit('closedStart.lexicon.sidenav');
 		}
 
 		instance._subscribeSidenavTransitionEnd(container, function() {
@@ -542,9 +540,7 @@ SideNavigation.prototype = {
 					'sidenav-transition': false,
 				});
 
-				$(container).trigger({
-					type: 'closed.lexicon.sidenav'
-				});
+				instance._emit('closed.lexicon.sidenav');
 			}
 			else {
 				setClasses(toggler, {
@@ -552,9 +548,7 @@ SideNavigation.prototype = {
 					'sidenav-transition': false,
 				});
 
-				$(container).trigger({
-					type: 'open.lexicon.sidenav'
-				});
+				instance._emit('open.lexicon.sidenav');
 			}
 
 			if (instance.mobile) {

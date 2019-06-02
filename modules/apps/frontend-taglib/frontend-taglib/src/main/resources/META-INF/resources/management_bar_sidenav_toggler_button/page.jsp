@@ -32,7 +32,7 @@
 	var sidenavToggle = document.querySelector('[href="#<%= sidenavId %>"]');
 
 	if (!Liferay.SideNavigation.instance(sidenavToggle)) {
-		Liferay.SideNavigation.initialize(
+		var sidenavInstance = Liferay.SideNavigation.initialize(
 			sidenavToggle,
 			{
 				position: '<%= position %>',
@@ -42,16 +42,14 @@
 			}
 		);
 
-		var sidenavSlider = $('#<%= sidenavId %>');
-
-		sidenavSlider.on(
+		sidenavInstance.on(
 			'closed.lexicon.sidenav',
 			function(event) {
 				Liferay.Store('com.liferay.info.panel_<%= sidenavId %>', 'closed');
 			}
 		);
 
-		sidenavSlider.on(
+		sidenavInstance.on(
 			'open.lexicon.sidenav',
 			function(event) {
 				Liferay.Store('com.liferay.info.panel_<%= sidenavId %>', 'open');

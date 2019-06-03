@@ -1,6 +1,6 @@
 dependencies {
-	compile group: "org.ow2.asm", name: "asm", version: "7.0"
-	compile group: "org.ow2.asm", name: "asm-tree", version: "7.0"
+	compileOnly group: "com.liferay", name: "asm", version: "7.0.LIFERAY-PATCHED-1"
+	compileOnly group: "com.liferay", name: "asm-tree", version: "7.0.LIFERAY-PATCHED-1"
 }
 
 liferay {

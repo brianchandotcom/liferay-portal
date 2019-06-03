@@ -465,8 +465,9 @@ public interface TrashHandler {
 		List<TrashRenderer> trashRenderers = new ArrayList<>();
 
 		for (TrashedModel trashedModel : trashedModels) {
-			String modelClassName =
-				((ClassedModel)trashedModel).getModelClassName();
+			ClassedModel classedModel = (ClassedModel)trashedModel;
+
+			String modelClassName = classedModel.getModelClassName();
 
 			TrashHandler trashHandler =
 				TrashHandlerRegistryUtil.getTrashHandler(modelClassName);

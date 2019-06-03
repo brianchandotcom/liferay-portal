@@ -4302,10 +4302,14 @@ public class StringUtil {
 	 */
 	public static String toHexString(Object obj) {
 		if (obj instanceof Integer) {
-			return toHexString(((Integer)obj).intValue());
+			Integer integerObj = (Integer)obj;
+
+			return toHexString(integerObj.intValue());
 		}
 		else if (obj instanceof Long) {
-			return toHexString(((Long)obj).longValue());
+			Long longObj = (Long)obj;
+
+			return toHexString(longObj.longValue());
 		}
 
 		return String.valueOf(obj);

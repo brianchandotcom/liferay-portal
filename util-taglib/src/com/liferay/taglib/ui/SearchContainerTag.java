@@ -81,8 +81,9 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 					(PortletResponse)request.getAttribute(
 						JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-				_iteratorURL =
-					((MimeResponse)portletResponse).createRenderURL();
+				MimeResponse mimeResponse = (MimeResponse)portletResponse;
+
+				_iteratorURL = mimeResponse.createRenderURL();
 			}
 
 			if (_searchContainer == null) {

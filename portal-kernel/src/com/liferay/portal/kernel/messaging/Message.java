@@ -114,7 +114,9 @@ public class Message implements Cloneable, Serializable {
 		Object object = get(key);
 
 		if (object instanceof Boolean) {
-			value = ((Boolean)object).booleanValue();
+			Boolean booleanObj = (Boolean)object;
+
+			value = booleanObj.booleanValue();
 		}
 		else {
 			value = GetterUtil.getBoolean((String)object);
@@ -133,7 +135,9 @@ public class Message implements Cloneable, Serializable {
 		Object object = get(key);
 
 		if (object instanceof Number) {
-			value = ((Number)object).doubleValue();
+			Number number = (Number)object;
+
+			value = number.doubleValue();
 		}
 		else {
 			value = GetterUtil.getDouble((String)object);
@@ -148,7 +152,9 @@ public class Message implements Cloneable, Serializable {
 		Object object = get(key);
 
 		if (object instanceof Number) {
-			value = ((Number)object).intValue();
+			Number number = (Number)object;
+
+			value = number.intValue();
 		}
 		else {
 			value = GetterUtil.getInteger((String)object);
@@ -163,7 +169,9 @@ public class Message implements Cloneable, Serializable {
 		Object object = get(key);
 
 		if (object instanceof Number) {
-			value = ((Number)object).longValue();
+			Number number = (Number)object;
+
+			value = number.longValue();
 		}
 		else {
 			value = GetterUtil.getLong((String)object);

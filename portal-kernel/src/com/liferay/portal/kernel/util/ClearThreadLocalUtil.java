@@ -81,7 +81,10 @@ public class ClearThreadLocalUtil {
 				continue;
 			}
 
-			Object key = ((Reference<?>)tableEntry).get();
+			Reference<?> reference = (Reference<?>)tableEntry;
+
+			Object key = reference.get();
+
 			Object value = _valueField.get(tableEntry);
 
 			boolean remove = false;

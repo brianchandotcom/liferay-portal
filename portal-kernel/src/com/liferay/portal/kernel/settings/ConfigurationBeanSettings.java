@@ -65,7 +65,9 @@ public class ConfigurationBeanSettings
 		String value = null;
 
 		if (object instanceof LocalizedValuesMap) {
-			value = ((LocalizedValuesMap)object).getDefaultValue();
+			LocalizedValuesMap localizedValuesMap = (LocalizedValuesMap)object;
+
+			value = localizedValuesMap.getDefaultValue();
 		}
 		else {
 			value = object.toString();

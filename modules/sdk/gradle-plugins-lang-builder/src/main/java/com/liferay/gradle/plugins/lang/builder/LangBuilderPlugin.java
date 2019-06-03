@@ -46,7 +46,7 @@ public class LangBuilderPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		Configuration langBuilderConfiguration = _addConfigurationLangBuilder(
+		Configuration langBuilderConfiguration = addConfigurationLangBuilder(
 			project);
 
 		_addTaskBuildLang(project);
@@ -54,7 +54,9 @@ public class LangBuilderPlugin implements Plugin<Project> {
 		_configureTasksBuildLang(project, langBuilderConfiguration);
 	}
 
-	private Configuration _addConfigurationLangBuilder(final Project project) {
+	protected static Configuration addConfigurationLangBuilder(
+		final Project project) {
+
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, CONFIGURATION_NAME);
 
@@ -75,7 +77,7 @@ public class LangBuilderPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	private void _addDependenciesLangBuilder(Project project) {
+	private static void _addDependenciesLangBuilder(Project project) {
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.lang.builder", "latest.release");

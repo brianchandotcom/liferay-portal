@@ -19,18 +19,14 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTCollectionModel;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryAggregate;
-import com.liferay.change.tracking.model.CTEntryModel;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.change.tracking.service.CTEntryAggregateLocalService;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -71,20 +67,16 @@ public class CTEntryModelDocumentContributor
 		List<CTEntryAggregate> ctEntryAggregates =
 			ctEntry.getCTEntryAggregates();
 
-		Set<Long> affectedIds = new HashSet<>();
-
 		Stream<CTEntryAggregate> ctEntryAggregateStream =
 			ctEntryAggregates.stream();
 
-		ctEntryAggregateStream.map(
+		return ctEntryAggregateStream.map(
 			CTEntryAggregate::getRelatedCTEntries
+		).flatMap(
+			Collection::stream
 		).map(
-			ctEntries -> _getRelatedIdArray(ctEntries)
-		).forEach(
-			set -> affectedIds.addAll(set)
-		);
-
-		return affectedIds.stream(
+			CTEntry::getCtEntryId
+		).distinct(
 		).mapToLong(
 			Long::valueOf
 		).toArray();
@@ -109,16 +101,6 @@ public class CTEntryModelDocumentContributor
 			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
 	}
 
-	private Set<Long> _getRelatedIdArray(List<CTEntry> ctEntries) {
-		Stream<CTEntry> ctEntryStream = ctEntries.stream();
-
-		return ctEntryStream.map(
-			CTEntryModel::getCtEntryId
-		).collect(
-			Collectors.toSet()
-		);
-	}
-
 	private String _getTitle(CTEntry ctEntry) {
 		return CTConfigurationRegistryUtil.getVersionEntityTitle(
 			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
@@ -126,9 +108,6 @@ public class CTEntryModelDocumentContributor
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
-
-	@Reference
-	private CTEntryAggregateLocalService _ctEntryAggregateLocalService;
 
 	@Reference
 	private Portal _portal;

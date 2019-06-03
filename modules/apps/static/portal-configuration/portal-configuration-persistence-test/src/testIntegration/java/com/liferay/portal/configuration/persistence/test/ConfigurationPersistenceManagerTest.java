@@ -16,12 +16,11 @@ package com.liferay.portal.configuration.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.io.IOException;
 
 import java.util.Dictionary;
 
@@ -67,7 +66,7 @@ public class ConfigurationPersistenceManagerTest {
 		_assertConfiguration(false);
 	}
 
-	private void _assertConfiguration(boolean factory) throws IOException {
+	private void _assertConfiguration(boolean factory) throws Exception {
 		Configuration configuration = null;
 
 		if (factory) {
@@ -82,7 +81,8 @@ public class ConfigurationPersistenceManagerTest {
 
 		String pid = configuration.getPid();
 
-		configuration.update(MapUtil.singletonDictionary("foo", "bar"));
+		ConfigurationTestUtil.saveConfiguration(
+			configuration, MapUtil.singletonDictionary("foo", "bar"));
 
 		Assert.assertTrue(_persistenceManager.exists(pid));
 
@@ -92,14 +92,14 @@ public class ConfigurationPersistenceManagerTest {
 
 		properties.put("fee", "fum");
 
-		configuration.update(properties);
+		ConfigurationTestUtil.saveConfiguration(configuration, properties);
 
 		properties = _persistenceManager.load(pid);
 
 		Assert.assertEquals("bar", properties.get("foo"));
 		Assert.assertEquals("fum", properties.get("fee"));
 
-		configuration.delete();
+		ConfigurationTestUtil.deleteConfiguration(configuration);
 
 		Assert.assertFalse(_persistenceManager.exists(pid));
 	}

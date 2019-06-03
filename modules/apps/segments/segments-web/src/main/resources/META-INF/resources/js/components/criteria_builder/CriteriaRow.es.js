@@ -1,5 +1,5 @@
 import BooleanInput from '../inputs/BooleanInput.es';
-import ClayAlert from '../shared/ClayAlert';
+import ClayAlert from '../shared/ClayAlert.es';
 import ClayButton from '../shared/ClayButton.es';
 import ClayIcon from '../shared/ClayIcon.es';
 import ClaySelect from '../shared/ClaySelect.es';

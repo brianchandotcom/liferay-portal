@@ -17,8 +17,7 @@ describe('CriteriaRow', () => {
 				connectDragSource={connectDnd}
 				connectDropTarget={connectDnd}
 				criterion={{
-					operatorName:
-						SUPPORTED_PROPERTY_TYPES[PROPERTY_TYPES.STRING],
+					operatorName: PROPERTY_TYPES.STRING,
 					propertyName: 'test_prop',
 					value: 'test_val'
 				}}
@@ -51,8 +50,7 @@ describe('CriteriaRow', () => {
 				connectDragSource={connectDnd}
 				connectDropTarget={connectDnd}
 				criterion={{
-					operatorName:
-						SUPPORTED_PROPERTY_TYPES[PROPERTY_TYPES.STRING],
+					operatorName: PROPERTY_TYPES.STRING,
 					propertyName: 'unknown_prop',
 					value: 'test_val'
 				}}

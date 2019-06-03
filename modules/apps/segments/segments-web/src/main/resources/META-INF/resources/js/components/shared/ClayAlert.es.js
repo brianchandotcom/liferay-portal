@@ -14,8 +14,7 @@ class ClayAlert extends Component {
 	static contextType = ThemeContext;
 
 	static propTypes = {
-		className: PropTypes.string,
-		iconName: PropTypes.string.isRequired
+		className: PropTypes.string
 	};
 
 	render() {
@@ -29,16 +28,16 @@ class ClayAlert extends Component {
 
 		return (
 			<div className={classes} role='alert'>
-				<span class='alert-indicator'>
+				<span className='alert-indicator'>
 					<svg
-						class='lexicon-icon lexicon-icon-check-circle-full'
+						className='lexicon-icon lexicon-icon-check-circle-full'
 						focusable='false'
 						role='presentation'
 					>
 						<use href={`${this.context.spritemap}#${iconName}`} />
 					</svg>
 				</span>
-				{title && <strong class='lead'>{title}:</strong>}
+				{title && <strong className='lead'>{title}:</strong>}
 				{message}
 			</div>
 		);

@@ -16,11 +16,13 @@ package com.liferay.portal.search.solr7.internal.search.engine.adapter.search;
 
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
+import com.liferay.portal.search.solr7.internal.search.response.SearchSearchResponseAssemblerHelper;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bryan Engler
@@ -34,6 +36,32 @@ public class SearchSearchResponseAssemblerImpl
 		SearchSearchResponse searchSearchResponse, SolrQuery solrQuery,
 		QueryResponse queryResponse, SearchSearchRequest searchSearchRequest) {
 
-		throw new UnsupportedOperationException();
+		_baseSearchResponseAssembler.assemble(
+			searchSearchResponse, solrQuery, queryResponse,
+			searchSearchRequest);
+
+		_searchSearchResponseAssemblerHelper.populate(
+			searchSearchResponse, queryResponse, searchSearchRequest);
 	}
+
+	@Reference(unbind = "-")
+	protected void setBaseSearchResponseAssembler(
+		BaseSearchResponseAssembler baseSearchResponseAssembler) {
+
+		_baseSearchResponseAssembler = baseSearchResponseAssembler;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSearchSearchResponseAssemblerHelper(
+		SearchSearchResponseAssemblerHelper
+			searchSearchResponseAssemblerHelper) {
+
+		_searchSearchResponseAssemblerHelper =
+			searchSearchResponseAssemblerHelper;
+	}
+
+	private BaseSearchResponseAssembler _baseSearchResponseAssembler;
+	private SearchSearchResponseAssemblerHelper
+		_searchSearchResponseAssemblerHelper;
+
 }

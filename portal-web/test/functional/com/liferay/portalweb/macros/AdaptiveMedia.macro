@@ -9,7 +9,7 @@ definition {
 	macro adaptRemainingImages {
 		var key_imageName = "${imageName}";
 
-		if (IsElementNotPresent(locator1 = "AdaptiveMediaTable#PROGRESS")) {
+		if (IsElementNotPresent(locator1 = "AdaptiveMediaTable#PROGRESS_SUCCESS")) {
 			Click(locator1 = "AdaptiveMediaTable#IMAGE_RESOLUTION_OPTIONS");
 
 			MenuItem.click(menuItem = "Adapt Remaining");

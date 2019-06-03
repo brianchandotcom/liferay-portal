@@ -262,6 +262,8 @@ public class ActionUtil {
 		long classNameId = ParamUtil.getLong(httpServletRequest, "classNameId");
 		long classPK = ParamUtil.getLong(httpServletRequest, "classPK");
 		String articleId = ParamUtil.getString(httpServletRequest, "articleId");
+		long ddmStructureId = ParamUtil.getLong(
+			httpServletRequest, "ddmStructureId");
 		String ddmStructureKey = ParamUtil.getString(
 			httpServletRequest, "ddmStructureKey");
 		int status = ParamUtil.getInteger(
@@ -293,9 +295,21 @@ public class ActionUtil {
 			}
 		}
 		else {
-			DDMStructure ddmStructure = DDMStructureServiceUtil.fetchStructure(
-				groupId, PortalUtil.getClassNameId(JournalArticle.class),
-				ddmStructureKey, true);
+			DDMStructure ddmStructure = null;
+
+			if (Validator.isNotNull(ddmStructureKey)) {
+				ddmStructure = DDMStructureServiceUtil.fetchStructure(
+					groupId, PortalUtil.getClassNameId(JournalArticle.class),
+					ddmStructureKey, true);
+			}
+			else if (ddmStructureId > 0) {
+				try {
+					ddmStructure = DDMStructureServiceUtil.getStructure(
+						ddmStructureId);
+				}
+				catch (Exception e) {
+				}
+			}
 
 			if (ddmStructure == null) {
 				return null;

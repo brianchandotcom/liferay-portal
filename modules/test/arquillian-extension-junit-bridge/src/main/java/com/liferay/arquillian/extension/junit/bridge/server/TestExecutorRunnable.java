@@ -185,6 +185,16 @@ public class TestExecutorRunnable implements Runnable {
 		}
 	}
 
+	private static Class _getExpectedExceptionClass(Method method) {
+		Test test = method.getAnnotation(Test.class);
+
+		if (test == null) {
+			return Test.None.class;
+		}
+
+		return test.expected();
+	}
+
 	private static Statement _methodBlock(TestClass testClass, Method method)
 		throws Throwable {
 
@@ -202,22 +212,37 @@ public class TestExecutorRunnable implements Runnable {
 
 				currentThread.setContextClassLoader(clazz.getClassLoader());
 
+				Throwable throwable = null;
+
 				try {
 					method.invoke(target);
 				}
 				catch (Throwable t) {
-					if (t instanceof InvocationTargetException) {
-						t = t.getCause();
-					}
-
-					if (t instanceof AssumptionViolatedException) {
-						throw t;
-					}
-
-					_processExpectedException(t, method);
+					throwable = t;
 				}
 				finally {
 					currentThread.setContextClassLoader(classLoader);
+				}
+
+				if (throwable == null) {
+					Class<?> throwableClass = _getExpectedExceptionClass(
+						method);
+
+					if (Test.None.class != throwableClass) {
+						throw new AssertionError(
+							"Expected test to throw " + throwableClass);
+					}
+				}
+				else {
+					if (throwable instanceof InvocationTargetException) {
+						throwable = throwable.getCause();
+					}
+
+					if (throwable instanceof AssumptionViolatedException) {
+						throw throwable;
+					}
+
+					_processExpectedException(throwable, method);
 				}
 			}
 
@@ -241,23 +266,17 @@ public class TestExecutorRunnable implements Runnable {
 			Throwable throwable, Method method)
 		throws Throwable {
 
-		Test test = method.getAnnotation(Test.class);
+		Class<?> expectedThrown = _getExpectedExceptionClass(method);
 
-		if (test == null) {
-			throw throwable;
-		}
-
-		Class<?> expected = test.expected();
-
-		if (test.expected() == Test.None.class) {
+		if (expectedThrown == Test.None.class) {
 			throw throwable;
 		}
 
 		Class<?> clazz = throwable.getClass();
 
-		if (!expected.isAssignableFrom(clazz)) {
+		if (!expectedThrown.isAssignableFrom(clazz)) {
 			String message =
-				"Unexpected exception, expected<" + expected.getName() +
+				"Unexpected exception, expected<" + expectedThrown.getName() +
 					"> but was<" + clazz.getName() + ">";
 
 			throw new Exception(message, throwable);

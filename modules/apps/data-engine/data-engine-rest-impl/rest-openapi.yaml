@@ -137,6 +137,9 @@ components:
                     type: object
                 paginationMode:
                     type: string
+                siteId:
+                    format: int64
+                    type: integer
                 userId:
                     format: int64
                     type: integer

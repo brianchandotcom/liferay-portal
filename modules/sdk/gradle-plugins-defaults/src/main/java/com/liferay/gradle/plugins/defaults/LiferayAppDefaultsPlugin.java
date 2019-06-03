@@ -25,6 +25,7 @@ import com.liferay.gradle.plugins.defaults.tasks.WritePropertiesTask;
 import com.liferay.gradle.plugins.jsdoc.AppJSDocConfigurationExtension;
 import com.liferay.gradle.plugins.jsdoc.AppJSDocPlugin;
 import com.liferay.gradle.plugins.jsdoc.JSDocTask;
+import com.liferay.gradle.plugins.lang.builder.AppLangBuilderPlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.AppTLDDocBuilderExtension;
 import com.liferay.gradle.plugins.tlddoc.builder.AppTLDDocBuilderPlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.tasks.TLDDocTask;
@@ -223,6 +224,7 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 	private void _applyPlugins(Project project) {
 		GradleUtil.applyPlugin(project, AppJSDocPlugin.class);
 		GradleUtil.applyPlugin(project, AppJavadocBuilderPlugin.class);
+		GradleUtil.applyPlugin(project, AppLangBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, AppTLDDocBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, NodeDefaultsPlugin.class);
 	}

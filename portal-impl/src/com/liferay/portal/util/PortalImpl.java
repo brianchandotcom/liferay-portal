@@ -4694,7 +4694,10 @@ public class PortalImpl implements Portal {
 			LiferayPortletUtil.getLiferayPortletResponse(portletResponse);
 
 		if (liferayPortletResponse instanceof LiferayRenderResponse) {
-			return ((LiferayRenderResponse)liferayPortletResponse).getTitle();
+			LiferayRenderResponse liferayRenderResponse =
+				(LiferayRenderResponse)liferayPortletResponse;
+
+			return liferayRenderResponse.getTitle();
 		}
 
 		return null;

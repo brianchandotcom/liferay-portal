@@ -107,7 +107,9 @@ public class NodeImpl implements Node {
 			return false;
 		}
 
-		org.dom4j.Node node = ((NodeImpl)obj).getWrappedNode();
+		NodeImpl nodeImpl = (NodeImpl)obj;
+
+		org.dom4j.Node node = nodeImpl.getWrappedNode();
 
 		return _node.equals(node);
 	}

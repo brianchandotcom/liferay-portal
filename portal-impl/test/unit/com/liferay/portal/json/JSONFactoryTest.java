@@ -209,12 +209,15 @@ public class JSONFactoryTest {
 			"{\"\u0063lass\":\"java.lang.Thread\"}");
 
 		Assert.assertEquals(HashMap.class, object.getClass());
-		Assert.assertTrue(((Map<?, ?>)object).containsKey("class"));
+
+		Map<?, ?> map = (Map<?, ?>)object;
+
+		Assert.assertTrue(map.containsKey("class"));
 
 		JSONFactoryUtil.looseDeserialize(
 			"{\"class\":\"" + JSONFactoryUtil.class.getName() + "\"}");
 
-		Map<?, ?> map = (Map<?, ?>)JSONFactoryUtil.looseDeserialize(
+		map = (Map<?, ?>)JSONFactoryUtil.looseDeserialize(
 			"{\"class\":\"" + JSONFactoryUtil.class.getName() +
 				"\",\"foo\": \"boo\"}");
 

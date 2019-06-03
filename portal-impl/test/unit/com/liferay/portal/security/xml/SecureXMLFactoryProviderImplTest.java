@@ -180,8 +180,10 @@ public class SecureXMLFactoryProviderImplTest {
 				XMLReader xmlReader = _secureXMLFactoryProvider.newXMLReader();
 
 				if (xmlReader instanceof StripDoctypeXMLReader) {
-					xmlReader =
-						((StripDoctypeXMLReader)xmlReader).getXmlReader();
+					StripDoctypeXMLReader stripDoctypeXMLReader =
+						(StripDoctypeXMLReader)xmlReader;
+
+					xmlReader = stripDoctypeXMLReader.getXmlReader();
 				}
 
 				xmlReader.setContentHandler(

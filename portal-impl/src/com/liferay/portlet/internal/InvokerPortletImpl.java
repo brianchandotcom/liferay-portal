@@ -412,11 +412,16 @@ public class InvokerPortletImpl
 			}
 		}
 
-		Map<String, String[]> properties =
-			((RenderResponseImpl)renderResponse).getProperties();
+		RenderResponseImpl renderResponseImpl =
+			(RenderResponseImpl)renderResponse;
+
+		Map<String, String[]> properties = renderResponseImpl.getProperties();
 
 		if (properties.containsKey("clear-request-parameters")) {
-			((RenderRequestImpl)renderRequest).clearRenderParameters();
+			RenderRequestImpl renderRequestImpl =
+				(RenderRequestImpl)renderRequest;
+
+			renderRequestImpl.clearRenderParameters();
 		}
 
 		if (_log.isDebugEnabled()) {

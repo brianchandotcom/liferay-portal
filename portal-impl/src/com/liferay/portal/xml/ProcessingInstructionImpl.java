@@ -48,8 +48,11 @@ public class ProcessingInstructionImpl
 			return false;
 		}
 
+		ProcessingInstructionImpl processingInstructionImpl =
+			(ProcessingInstructionImpl)obj;
+
 		org.dom4j.ProcessingInstruction processingInstruction =
-			((ProcessingInstructionImpl)obj).getWrappedProcessingInstruction();
+			processingInstructionImpl.getWrappedProcessingInstruction();
 
 		return _processingInstruction.equals(processingInstruction);
 	}

@@ -208,7 +208,9 @@ public class BaseSPIProviderTest {
 			final MockSPI mockSPI = new MockSPI();
 
 			if (_registerBack) {
-				final String spiUUID = ((RemoteSPI)processCallable).getUUID();
+				RemoteSPI remoteSPI = (RemoteSPI)processCallable;
+
+				final String spiUUID = remoteSPI.getUUID();
 
 				_syncThrowableThread = new SyncThrowableThread<>(
 					new Callable<Void>() {

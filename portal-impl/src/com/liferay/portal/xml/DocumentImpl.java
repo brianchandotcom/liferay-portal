@@ -66,7 +66,9 @@ public class DocumentImpl extends BranchImpl implements Document {
 			return false;
 		}
 
-		org.dom4j.Document document = ((DocumentImpl)obj).getWrappedDocument();
+		DocumentImpl documentImpl = (DocumentImpl)obj;
+
+		org.dom4j.Document document = documentImpl.getWrappedDocument();
 
 		return _document.equals(document);
 	}

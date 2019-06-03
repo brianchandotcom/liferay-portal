@@ -43,7 +43,9 @@ public class CommentImpl extends NodeImpl implements Comment {
 			return false;
 		}
 
-		org.dom4j.Comment comment = ((CommentImpl)obj).getWrappedComment();
+		CommentImpl commentImpl = (CommentImpl)obj;
+
+		org.dom4j.Comment comment = commentImpl.getWrappedComment();
 
 		return _comment.equals(comment);
 	}

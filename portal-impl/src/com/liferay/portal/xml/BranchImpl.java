@@ -119,7 +119,9 @@ public class BranchImpl extends NodeImpl implements Branch {
 			return false;
 		}
 
-		org.dom4j.Branch branch = ((BranchImpl)obj).getWrappedBranch();
+		BranchImpl branchImpl = (BranchImpl)obj;
+
+		org.dom4j.Branch branch = branchImpl.getWrappedBranch();
 
 		return _branch.equals(branch);
 	}

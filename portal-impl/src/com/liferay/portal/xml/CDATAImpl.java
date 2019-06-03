@@ -43,7 +43,9 @@ public class CDATAImpl extends NodeImpl implements CDATA {
 			return false;
 		}
 
-		org.dom4j.CDATA cdata = ((CDATAImpl)obj).getWrappedCDATA();
+		CDATAImpl cdataImpl = (CDATAImpl)obj;
+
+		org.dom4j.CDATA cdata = cdataImpl.getWrappedCDATA();
 
 		return _cdata.equals(cdata);
 	}

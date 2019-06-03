@@ -61,7 +61,9 @@ public class XPathImpl implements XPath {
 			return false;
 		}
 
-		org.dom4j.XPath xPath = ((XPathImpl)obj).getWrappedXPath();
+		XPathImpl xPathImpl = (XPathImpl)obj;
+
+		org.dom4j.XPath xPath = xPathImpl.getWrappedXPath();
 
 		return _xPath.equals(xPath);
 	}

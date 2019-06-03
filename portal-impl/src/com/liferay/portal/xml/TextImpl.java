@@ -43,7 +43,9 @@ public class TextImpl extends NodeImpl implements Text {
 			return false;
 		}
 
-		org.dom4j.Text text = ((TextImpl)obj).getWrappedText();
+		TextImpl textImpl = (TextImpl)obj;
+
+		org.dom4j.Text text = textImpl.getWrappedText();
 
 		return _text.equals(text);
 	}

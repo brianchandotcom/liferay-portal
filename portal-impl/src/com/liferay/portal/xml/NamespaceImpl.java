@@ -43,8 +43,9 @@ public class NamespaceImpl extends NodeImpl implements Namespace {
 			return false;
 		}
 
-		org.dom4j.Namespace namespace =
-			((NamespaceImpl)obj).getWrappedNamespace();
+		NamespaceImpl namespaceImpl = (NamespaceImpl)obj;
+
+		org.dom4j.Namespace namespace = namespaceImpl.getWrappedNamespace();
 
 		return _namespace.equals(namespace);
 	}

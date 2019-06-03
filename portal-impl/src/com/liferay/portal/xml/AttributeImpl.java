@@ -45,8 +45,9 @@ public class AttributeImpl extends NodeImpl implements Attribute {
 			return false;
 		}
 
-		org.dom4j.Attribute attribute =
-			((AttributeImpl)obj).getWrappedAttribute();
+		AttributeImpl attributeImpl = (AttributeImpl)obj;
+
+		org.dom4j.Attribute attribute = attributeImpl.getWrappedAttribute();
 
 		return _attribute.equals(attribute);
 	}

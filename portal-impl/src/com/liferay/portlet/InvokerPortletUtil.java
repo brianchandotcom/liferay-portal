@@ -81,8 +81,10 @@ public class InvokerPortletUtil {
 	public static Map<String, InvokerPortletResponse> getResponses(
 		PortletSession portletSession) {
 
-		return getResponses(
-			((PortletSessionImpl)portletSession).getHttpSession());
+		PortletSessionImpl portletSessionImpl =
+			(PortletSessionImpl)portletSession;
+
+		return getResponses(portletSessionImpl.getHttpSession());
 	}
 
 }

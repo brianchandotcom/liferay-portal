@@ -43,7 +43,9 @@ public class EntityImpl extends NodeImpl implements Entity {
 			return false;
 		}
 
-		org.dom4j.Entity entity = ((EntityImpl)obj).getWrappedEntity();
+		EntityImpl entityImpl = (EntityImpl)obj;
+
+		org.dom4j.Entity entity = entityImpl.getWrappedEntity();
 
 		return _entity.equals(entity);
 	}

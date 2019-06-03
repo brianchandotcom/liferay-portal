@@ -115,7 +115,9 @@ public class FileEntryUtil {
 		long repositoryId = DLFolderConstants.getDataRepositoryId(
 			fileEntry.getRepositoryId(), fileEntry.getFolderId());
 
-		String name = ((DLFileEntry)fileEntry.getModel()).getName();
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		String name = dlFileEntry.getName();
 
 		InputStream is = DLStoreUtil.getFileAsStream(
 			fileEntry.getCompanyId(), repositoryId, name,

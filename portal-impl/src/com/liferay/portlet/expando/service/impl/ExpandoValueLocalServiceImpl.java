@@ -480,9 +480,11 @@ public class ExpandoValueLocalServiceImpl
 		data = convertType(type, data);
 
 		if (type == ExpandoColumnConstants.BOOLEAN) {
+			Boolean booleanData = (Boolean)data;
+
 			return expandoValueLocalService.addValue(
 				companyId, className, tableName, columnName, classPK,
-				((Boolean)data).booleanValue());
+				booleanData.booleanValue());
 		}
 		else if (type == ExpandoColumnConstants.BOOLEAN_ARRAY) {
 			return expandoValueLocalService.addValue(
@@ -500,9 +502,11 @@ public class ExpandoValueLocalServiceImpl
 				(Date[])data);
 		}
 		else if (type == ExpandoColumnConstants.DOUBLE) {
+			Double doubleData = (Double)data;
+
 			return expandoValueLocalService.addValue(
 				companyId, className, tableName, columnName, classPK,
-				((Double)data).doubleValue());
+				doubleData.doubleValue());
 		}
 		else if (type == ExpandoColumnConstants.DOUBLE_ARRAY) {
 			return expandoValueLocalService.addValue(
@@ -510,9 +514,11 @@ public class ExpandoValueLocalServiceImpl
 				(double[])data);
 		}
 		else if (type == ExpandoColumnConstants.FLOAT) {
+			Float floatData = (Float)data;
+
 			return expandoValueLocalService.addValue(
 				companyId, className, tableName, columnName, classPK,
-				((Float)data).floatValue());
+				floatData.floatValue());
 		}
 		else if (type == ExpandoColumnConstants.FLOAT_ARRAY) {
 			return expandoValueLocalService.addValue(
@@ -525,9 +531,11 @@ public class ExpandoValueLocalServiceImpl
 				JSONFactoryUtil.createJSONObject(data.toString()));
 		}
 		else if (type == ExpandoColumnConstants.INTEGER) {
+			Integer integerData = (Integer)data;
+
 			return expandoValueLocalService.addValue(
 				companyId, className, tableName, columnName, classPK,
-				((Integer)data).intValue());
+				integerData.intValue());
 		}
 		else if (type == ExpandoColumnConstants.INTEGER_ARRAY) {
 			return expandoValueLocalService.addValue(
@@ -535,9 +543,11 @@ public class ExpandoValueLocalServiceImpl
 				(int[])data);
 		}
 		else if (type == ExpandoColumnConstants.LONG) {
+			Long longData = (Long)data;
+
 			return expandoValueLocalService.addValue(
 				companyId, className, tableName, columnName, classPK,
-				((Long)data).longValue());
+				longData.longValue());
 		}
 		else if (type == ExpandoColumnConstants.LONG_ARRAY) {
 			return expandoValueLocalService.addValue(
@@ -555,9 +565,11 @@ public class ExpandoValueLocalServiceImpl
 				(Number[])data);
 		}
 		else if (type == ExpandoColumnConstants.SHORT) {
+			Short shortData = (Short)data;
+
 			return expandoValueLocalService.addValue(
 				companyId, className, tableName, columnName, classPK,
-				((Short)data).shortValue());
+				shortData.shortValue());
 		}
 		else if (type == ExpandoColumnConstants.SHORT_ARRAY) {
 			return expandoValueLocalService.addValue(

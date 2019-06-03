@@ -23,42 +23,32 @@ import com.liferay.portal.kernel.upload.UploadException;
 public class ThrowsSystemException {
 
 	public void method1() {
-		return;
 	}
 
 	public void method2(
 		String string1, String string2, String string3, String string4,
 		String string5) {
-
-		return;
 	}
 
 	public void method3(String string1, String string2, String string3) {
-		return;
 	}
 
 	public void method4() throws PortalException {
-		return;
 	}
 
 	public void method5(
 			String string1, String string2, String string3, String string4,
 			String string5)
 		throws PortalException {
-
-		return;
 	}
 
 	public void method6() throws UploadException {
-		return;
 	}
 
 	public void method7(
 			String string1, String string2, String string3, String string4,
 			String string5)
 		throws UploadException {
-
-		return;
 	}
 
 	public void method8();
@@ -84,15 +74,12 @@ public class ThrowsSystemException {
 		throws UploadException;
 
 	public void n1() throws PortalException, UploadException {
-		return;
 	}
 
 	public void n2(
 			String string1, String string2, String string3, String string4,
 			String string5)
 		throws PortalException, UploadException {
-
-		return;
 	}
 
 	public void n3() throws PortalException, UploadException;

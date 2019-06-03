@@ -82,12 +82,12 @@ public class CombineLines extends SuperClass {
 		}
 	}
 
-	public void method2(
+	public String method2(
 		String test1,
 		String
 			stringWithALongNameSoItDoesNotFitOnTheSameLineWithThePreviousOne) {
 
-		return;
+		return test1;
 	}
 
 	public void method3() throws Exception {
@@ -155,11 +155,11 @@ public class CombineLines extends SuperClass {
 			new String[] {"One", "Two"}, "Hello World");
 	}
 
-	public void method8(String s) {
+	public String method8(String s) {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(s))) {
 
-			return;
+			return s;
 		}
 	}
 

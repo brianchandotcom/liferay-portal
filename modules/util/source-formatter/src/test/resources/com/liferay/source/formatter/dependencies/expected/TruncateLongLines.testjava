@@ -150,8 +150,6 @@ public class TruncateLongLines
 		if ((thisIsAnIntegerWithARatherLongName1 ==
 				thisIsAnIntegerWithARatherLongName2) &&
 			testString1.equals(testString2)) {
-
-			return;
 		}
 	}
 

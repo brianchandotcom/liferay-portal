@@ -107,7 +107,6 @@ public class TruncateLongLines extends ThisIsASuperClassThatAlsoHasASuperLongNam
 		int thisIsAnIntegerWithARatherLongName2 = 0;
 
 		if ((thisIsAnIntegerWithARatherLongName1 == thisIsAnIntegerWithARatherLongName2) && testString1.equals(testString2)) {
-			return;
 		}
 	}
 

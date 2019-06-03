@@ -75,18 +75,14 @@ public class ChangeListsHistoryDetailsDisplayContext {
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
 		breadcrumbEntries.add(
-			_createBreadcrumbEntry(
+			_createPortletBreadcrumbEntry(
 				CTPortletKeys.CHANGE_LISTS,
 				LanguageUtil.get(_httpServletRequest, "change-lists")));
 
 		breadcrumbEntries.add(
-			_createBreadcrumbEntry(CTPortletKeys.CHANGE_LISTS_HISTORY));
+			_createPortletBreadcrumbEntry(CTPortletKeys.CHANGE_LISTS_HISTORY));
 
-		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
-
-		breadcrumbEntry.setTitle(ctCollectionName);
-
-		breadcrumbEntries.add(breadcrumbEntry);
+		breadcrumbEntries.add(_createBreadcrumbEntry(ctCollectionName, null));
 
 		return breadcrumbEntries;
 	}
@@ -183,26 +179,29 @@ public class ChangeListsHistoryDetailsDisplayContext {
 		return sortingURL.toString();
 	}
 
-	private BreadcrumbEntry _createBreadcrumbEntry(String portletId) {
-		String title = LanguageUtil.get(
-			_httpServletRequest, "javax.portlet.title." + portletId);
-
-		return _createBreadcrumbEntry(portletId, title);
-	}
-
-	private BreadcrumbEntry _createBreadcrumbEntry(
-		String portletId, String title) {
-
+	private BreadcrumbEntry _createBreadcrumbEntry(String title, String url) {
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 		breadcrumbEntry.setTitle(title);
+		breadcrumbEntry.setURL(url);
+
+		return breadcrumbEntry;
+	}
+
+	private BreadcrumbEntry _createPortletBreadcrumbEntry(String portletId) {
+		String title = LanguageUtil.get(
+			_httpServletRequest, "javax.portlet.title." + portletId);
+
+		return _createPortletBreadcrumbEntry(portletId, title);
+	}
+
+	private BreadcrumbEntry _createPortletBreadcrumbEntry(
+		String portletId, String title) {
 
 		PortletURL changeListsPortletURL = PortletURLFactoryUtil.create(
 			_renderRequest, portletId, PortletRequest.RENDER_PHASE);
 
-		breadcrumbEntry.setURL(changeListsPortletURL.toString());
-
-		return breadcrumbEntry;
+		return _createBreadcrumbEntry(title, changeListsPortletURL.toString());
 	}
 
 	private PortletURL _getIteratorURL() {

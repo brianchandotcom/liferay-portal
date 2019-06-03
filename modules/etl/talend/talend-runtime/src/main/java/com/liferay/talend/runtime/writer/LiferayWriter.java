@@ -24,14 +24,10 @@ import com.liferay.talend.tliferayoutput.TLiferayOutputProperties;
 
 import java.io.IOException;
 
-import java.net.URI;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
-
-import javax.ws.rs.core.UriBuilder;
 
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
@@ -91,49 +87,28 @@ public class LiferayWriter
 	}
 
 	public void doDelete(IndexedRecord indexedRecord) throws IOException {
-		String resourceId = getIndexedRecordId(indexedRecord);
+		String resourceURL =
+			_tLiferayOutputProperties.resource.getEndpointURL();
+
+		_liferaySink.doDeleteRequest(_runtimeContainer, resourceURL);
+	}
+
+	public void doInsert(IndexedRecord indexedRecord) throws IOException {
+		ObjectNode objectNode = _createEndpointRequestPayload(indexedRecord);
 
 		String resourceURL =
-			_tLiferayOutputProperties.resource.endpoint.getValue();
+			_tLiferayOutputProperties.resource.getEndpointURL();
 
-		UriBuilder uriBuilder = UriBuilder.fromPath(resourceURL);
-
-		URI singleResourceUri = uriBuilder.path(
-			"/{resourceId}"
-		).build(
-			resourceId
-		);
-
-		_liferaySink.doDeleteRequest(
-			_runtimeContainer, singleResourceUri.toASCIIString());
+		_liferaySink.doPostRequest(_runtimeContainer, resourceURL, objectNode);
 	}
 
 	public void doUpdate(IndexedRecord indexedRecord) throws IOException {
-		ObjectNode objectNode = _createApioExpectedForm(indexedRecord, true);
-		String resourceId = getIndexedRecordId(indexedRecord);
+		ObjectNode objectNode = _createEndpointRequestPayload(indexedRecord);
 
 		String resourceURL =
-			_tLiferayOutputProperties.resource.endpoint.getValue();
+			_tLiferayOutputProperties.resource.getEndpointURL();
 
-		UriBuilder uriBuilder = UriBuilder.fromPath(resourceURL);
-
-		URI singleResourceUri = uriBuilder.path(
-			"/{resourceId}"
-		).build(
-			resourceId
-		);
-
-		_liferaySink.doPatchRequest(
-			_runtimeContainer, singleResourceUri.toASCIIString(), objectNode);
-	}
-
-	public void doUpsert(IndexedRecord indexedRecord) throws IOException {
-		ObjectNode objectNode = _createApioExpectedForm(indexedRecord, true);
-
-		String resourceURL =
-			_tLiferayOutputProperties.resource.endpoint.getValue();
-
-		_liferaySink.doPostRequest(_runtimeContainer, resourceURL, objectNode);
+		_liferaySink.doPatchRequest(_runtimeContainer, resourceURL, objectNode);
 	}
 
 	@Override
@@ -184,11 +159,11 @@ public class LiferayWriter
 			if (Action.Delete == action) {
 				doDelete(indexedRecord);
 			}
+			else if (Action.Insert == action) {
+				doInsert(indexedRecord);
+			}
 			else if (Action.Update == action) {
 				doUpdate(indexedRecord);
-			}
-			else if (Action.Insert == action) {
-				doUpsert(indexedRecord);
 			}
 
 			_handleSuccessRecord(indexedRecord);
@@ -248,8 +223,8 @@ public class LiferayWriter
 		i18nMessages = i18nMessageProvider.getI18nMessages(LiferayWriter.class);
 	}
 
-	private ObjectNode _createApioExpectedForm(
-			IndexedRecord indexedRecord, boolean excludeId)
+	private ObjectNode _createEndpointRequestPayload(
+			IndexedRecord indexedRecord)
 		throws IOException {
 
 		Schema indexRecordSchema = indexedRecord.getSchema();
@@ -260,10 +235,6 @@ public class LiferayWriter
 
 		for (Schema.Field field : indexRecordFields) {
 			String fieldName = field.name();
-
-			if (excludeId && fieldName.equals(AvroConstants.ID)) {
-				continue;
-			}
 
 			Schema fieldSchema = field.schema();
 

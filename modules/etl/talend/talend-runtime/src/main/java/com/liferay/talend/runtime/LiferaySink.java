@@ -14,6 +14,7 @@
 
 package com.liferay.talend.runtime;
 
+import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.runtime.writer.LiferayWriteOperation;
 import com.liferay.talend.tliferayoutput.TLiferayOutputProperties;
 
@@ -36,9 +37,15 @@ public class LiferaySink extends LiferaySourceOrSink implements Sink {
 		if (liferayConnectionPropertiesProvider instanceof
 				TLiferayOutputProperties) {
 
-			return new LiferayWriteOperation(
-				this,
-				(TLiferayOutputProperties)liferayConnectionPropertiesProvider);
+			TLiferayOutputProperties tLiferayOutputProperties =
+				(TLiferayOutputProperties)liferayConnectionPropertiesProvider;
+
+			LiferayConnectionProperties liferayConnectionProperties =
+				getEffectiveConnection(null);
+
+			tLiferayOutputProperties.connection = liferayConnectionProperties;
+
+			return new LiferayWriteOperation(this, tLiferayOutputProperties);
 		}
 
 		Class<?> propertiesClass =

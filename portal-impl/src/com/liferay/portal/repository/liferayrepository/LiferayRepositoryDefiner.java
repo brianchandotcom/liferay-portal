@@ -14,6 +14,7 @@
 
 package com.liferay.portal.repository.liferayrepository;
 
+import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
@@ -35,7 +36,7 @@ import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
-import com.liferay.portal.kernel.repository.util.ModelValidatorUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.function.BiFunction;
@@ -144,29 +145,45 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 		public LocalRepository createLocalRepository(long repositoryId)
 			throws PortalException {
 
-			LocalRepository localRepository =
-				_repositoryFactory.createLocalRepository(repositoryId);
-
-			ModelValidator<FileContentReference> modelValidator =
-				ModelValidatorUtil.getDefaultDLFileEntryModelValidator();
-
 			return new ModelValidatorLocalRepositoryWrapper(
-				localRepository, modelValidator);
+				_repositoryFactory.createLocalRepository(repositoryId),
+				_modelValidator);
 		}
 
 		@Override
 		public Repository createRepository(long repositoryId)
 			throws PortalException {
 
-			Repository repository = _repositoryFactory.createRepository(
-				repositoryId);
-
-			ModelValidator<FileContentReference> modelValidator =
-				ModelValidatorUtil.getDefaultDLFileEntryModelValidator();
-
 			return new ModelValidatorRepositoryWrapper(
-				repository, modelValidator);
+				_repositoryFactory.createRepository(repositoryId),
+				_modelValidator);
 		}
+
+		private static final ModelValidator<FileContentReference>
+			_modelValidator = fileContentReference -> {
+				if (Validator.isNotNull(
+						fileContentReference.getSourceFileName())) {
+
+					DLValidatorUtil.validateFileName(
+						fileContentReference.getSourceFileName());
+				}
+
+				if ((fileContentReference.getFileEntryId() == 0) ||
+					Validator.isNotNull(
+						fileContentReference.getSourceFileName())) {
+
+					DLValidatorUtil.validateFileExtension(
+						fileContentReference.getSourceFileName());
+
+					DLValidatorUtil.validateSourceFileExtension(
+						fileContentReference.getExtension(),
+						fileContentReference.getSourceFileName());
+				}
+
+				DLValidatorUtil.validateFileSize(
+					fileContentReference.getSourceFileName(),
+					fileContentReference.getSize());
+			};
 
 		private final RepositoryFactory _repositoryFactory;
 

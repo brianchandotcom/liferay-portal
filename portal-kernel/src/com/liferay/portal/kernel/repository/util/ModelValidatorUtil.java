@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Adolfo Pérez
+ * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
+@Deprecated
 public class ModelValidatorUtil {
 
 	public static final <T> ModelValidator<T> compose(

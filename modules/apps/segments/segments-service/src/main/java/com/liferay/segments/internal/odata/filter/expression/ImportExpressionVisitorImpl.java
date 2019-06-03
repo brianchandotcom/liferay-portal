@@ -24,6 +24,7 @@ import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
+import com.liferay.portal.odata.filter.expression.CollectionPropertyExpression;
 import com.liferay.portal.odata.filter.expression.ComplexPropertyExpression;
 import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
@@ -80,6 +81,13 @@ public class ImportExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		else if (_customFieldEntityFields.containsKey(entityField.getName())) {
 			_importEntityFieldCustomFieldReferences(entityField);
 		}
+
+		return _filterStringSB.toString();
+	}
+
+	@Override
+	public Object visitCollectionPropertyExpression(
+		CollectionPropertyExpression collectionPropertyExpression) {
 
 		return _filterStringSB.toString();
 	}

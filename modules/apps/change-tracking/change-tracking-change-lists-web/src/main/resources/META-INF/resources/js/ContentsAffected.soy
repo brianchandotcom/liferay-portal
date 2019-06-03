@@ -194,7 +194,7 @@
 					{/if}
 					{for $index in range(1, $lastPage - 1)}
 						{if ($index + 1 > $page - 2) and ($index + 1 < $page + 2)}
-							<li class="active{/if} page-item {if $index + 1 == $page}disabled">
+							<li class="{if $index + 1 == $page}active disabled{/if} page-item">
 								<a class="page-link"
 									href="#{$index + 1}"
 									role="button" tabindex="-1"

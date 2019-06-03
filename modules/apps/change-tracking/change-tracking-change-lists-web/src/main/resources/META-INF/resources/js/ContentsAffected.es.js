@@ -14,10 +14,6 @@ class ContentsAffected extends Component {
 		this._fetchAffectedContents();
 	}
 
-	_handleCloseDialogClick(event) {
-		this.refs.modal.visible = false;
-	}
-
 	_fetchAffectedContents(page) {
 		let headers = new Headers();
 		headers.append('Content-Type', 'application/json');
@@ -65,18 +61,30 @@ class ContentsAffected extends Component {
 			);
 	}
 
-	_handleSearchFormKeyUp(event) {
-		this._fetchAffectedContents();
-	}
+	static _getKeywords() {
+		let keywords = '';
 
-	_handleClickSearch(event) {
-		this._fetchAffectedContents();
+		const input = document.querySelector('#filterKeywords');
+
+		if (input) {
+			keywords = input.value;
+		}
+
+		return keywords;
 	}
 
 	_handleClickNextPage(event) {
 		if ((this.page + 1) <= this.lastPage) {
 
 			this._fetchAffectedContents(this.page + 1);
+		}
+	}
+
+	_handleClickPageNumber(event) {
+		let page = event.target.getAttribute('data-page');
+
+		if ((page >= 1) && (page <= this.lastPage)) {
+			this._fetchAffectedContents(page);
 		}
 	}
 
@@ -87,12 +95,16 @@ class ContentsAffected extends Component {
 		}
 	}
 
-	_handleClickPageNumber(event) {
-		let page = event.target.getAttribute('data-page');
+	_handleClickSearch(event) {
+		this._fetchAffectedContents();
+	}
 
-		if ((page >= 1) && (page <= this.lastPage)) {
-			this._fetchAffectedContents(page);
-		}
+	_handleCloseDialogClick(event) {
+		this.refs.modal.visible = false;
+	}
+
+	_handleSearchFormKeyUp(event) {
+		this._fetchAffectedContents();
 	}
 
 	_populateAffectedContents(affectedContentsResult) {
@@ -111,7 +123,7 @@ class ContentsAffected extends Component {
 
 					let entityNameTranslation = this.entityNameTranslations.find(
 						entityNameTranslation =>
-							entityNameTranslation.key == affectedContent.contentType
+							entityNameTranslation.key === affectedContent.contentType
 					);
 
 					this.affectedContents.push(

@@ -65,25 +65,12 @@ public class CTAffectedEntryResource {
 
 		try {
 			List<CTEntry> affectedCTEntries;
-
-			QueryDefinition<CTEntry> queryDefinition = new QueryDefinition<>();
-
-			if (pagination != null) {
-				queryDefinition.setEnd(pagination.getEndPosition());
-				queryDefinition.setStart(pagination.getStartPosition());
-			}
-
-			queryDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
-
 			int totalCount;
 
+			QueryDefinition<CTEntry> queryDefinition = _getQueryDefinition(
+				pagination);
+
 			if (Validator.isNotNull(keywords)) {
-				OrderByComparator<CTEntry> orderByComparator =
-					OrderByComparatorFactoryUtil.create(
-						"CTEntry", Field.TITLE, "asc");
-
-				queryDefinition.setOrderByComparator(orderByComparator);
-
 				CTEntry ownerCTEntry = _ctEntryLocalService.getCTEntry(
 					ctEntryId);
 
@@ -98,13 +85,18 @@ public class CTAffectedEntryResource {
 						keywords, queryDefinition);
 			}
 			else {
+				OrderByComparator<CTEntry> orderByComparator =
+					OrderByComparatorFactoryUtil.create(
+						"CTEntry", "createDate", true);
+
+				queryDefinition.setOrderByComparator(orderByComparator);
+
 				affectedCTEntries =
 					_ctEntryLocalService.getRelatedOwnerCTEntries(
-						ctEntryId, pagination.getStartPosition(),
-						pagination.getEndPosition(), null);
+						ctEntryId, queryDefinition);
 
 				totalCount = _ctEntryLocalService.getRelatedOwnerCTEntriesCount(
-					ctEntryId);
+					ctEntryId, queryDefinition);
 			}
 
 			return _getPage(affectedCTEntries, totalCount, pagination);
@@ -126,6 +118,26 @@ public class CTAffectedEntryResource {
 			TransformUtil.transform(
 				affectedCTEntries, CTAffectedEntryModel::forCTEntry),
 			pagination, totalCount);
+	}
+
+	private QueryDefinition<CTEntry> _getQueryDefinition(
+		Pagination pagination) {
+
+		QueryDefinition<CTEntry> queryDefinition = new QueryDefinition<>();
+
+		if (pagination != null) {
+			queryDefinition.setEnd(pagination.getEndPosition());
+			queryDefinition.setStart(pagination.getStartPosition());
+		}
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+		OrderByComparator<CTEntry> orderByComparator =
+			OrderByComparatorFactoryUtil.create("CTEntry", Field.TITLE, "asc");
+
+		queryDefinition.setOrderByComparator(orderByComparator);
+
+		return queryDefinition;
 	}
 
 	@Reference

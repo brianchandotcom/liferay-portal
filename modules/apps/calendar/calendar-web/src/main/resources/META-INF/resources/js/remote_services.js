@@ -38,37 +38,51 @@ AUI.add(
 					instance._invokeService(
 						{
 							'/calendar.calendarbooking/move-calendar-booking-to-trash': {
-								calendarBookingId: schedulerEvent.get('calendarBookingId')
+								calendarBookingId: schedulerEvent.get(
+									'calendarBookingId'
+								)
 							}
 						},
 						{
 							success: function(data) {
 								if (success) {
 									success.call(instance, data);
-									MessageUtil.showSuccessMessage(instance.get('rootNode'));
+									MessageUtil.showSuccessMessage(
+										instance.get('rootNode')
+									);
 								}
 							}
 						}
 					);
 				},
 
-				deleteEventInstance: function(schedulerEvent, allFollowing, success) {
+				deleteEventInstance: function(
+					schedulerEvent,
+					allFollowing,
+					success
+				) {
 					var instance = this;
 
 					instance._invokeService(
 						{
 							'/calendar.calendarbooking/delete-calendar-booking-instance': {
 								allFollowing: allFollowing,
-								calendarBookingId: schedulerEvent.get('calendarBookingId'),
+								calendarBookingId: schedulerEvent.get(
+									'calendarBookingId'
+								),
 								deleteRecurringCalendarBookings: true,
-								instanceIndex: schedulerEvent.get('instanceIndex')
+								instanceIndex: schedulerEvent.get(
+									'instanceIndex'
+								)
 							}
 						},
 						{
 							success: function(data) {
 								if (success) {
 									success.call(instance, data);
-									MessageUtil.showSuccessMessage(instance.get('rootNode'));
+									MessageUtil.showSuccessMessage(
+										instance.get('rootNode')
+									);
 								}
 							}
 						}
@@ -78,46 +92,49 @@ AUI.add(
 				getCalendar: function(calendarId, callback) {
 					var instance = this;
 
-					instance._invokeResourceURL(
-						{
-							callback: callback,
-							queryParameters: {
-								calendarId: calendarId
-							},
-							resourceId: 'calendar'
-						}
-					);
+					instance._invokeResourceURL({
+						callback: callback,
+						queryParameters: {
+							calendarId: calendarId
+						},
+						resourceId: 'calendar'
+					});
 				},
 
-				getCalendarBookingInvitees: function(calendarBookingId, callback) {
+				getCalendarBookingInvitees: function(
+					calendarBookingId,
+					callback
+				) {
 					var instance = this;
 
-					instance._invokeResourceURL(
-						{
-							callback: callback,
-							queryParameters: {
-								parentCalendarBookingId: calendarBookingId
-							},
-							resourceId: 'calendarBookingInvitees'
-						}
-					);
+					instance._invokeResourceURL({
+						callback: callback,
+						queryParameters: {
+							parentCalendarBookingId: calendarBookingId
+						},
+						resourceId: 'calendarBookingInvitees'
+					});
 				},
 
-				getCalendarRenderingRules: function(calendarIds, startDate, endDate, ruleName, callback) {
+				getCalendarRenderingRules: function(
+					calendarIds,
+					startDate,
+					endDate,
+					ruleName,
+					callback
+				) {
 					var instance = this;
 
-					instance._invokeResourceURL(
-						{
-							callback: callback,
-							payload: {
-								calendarIds: calendarIds.join(),
-								endTime: endDate.getTime(),
-								ruleName: ruleName,
-								startTime: startDate.getTime()
-							},
-							resourceId: 'calendarRenderingRules'
-						}
-					);
+					instance._invokeResourceURL({
+						callback: callback,
+						payload: {
+							calendarIds: calendarIds.join(),
+							endTime: endDate.getTime(),
+							ruleName: ruleName,
+							startTime: startDate.getTime()
+						},
+						resourceId: 'calendarRenderingRules'
+					});
 				},
 
 				getCurrentTime: function(callback) {
@@ -130,7 +147,9 @@ AUI.add(
 
 						var browserTime = new Date();
 
-						var timeDiff = Math.abs(browserTime.getTime() - lastBrowserTime.getTime());
+						var timeDiff = Math.abs(
+							browserTime.getTime() - lastBrowserTime.getTime()
+						);
 
 						var currentTime = lastCurrentTime.getTime() + timeDiff;
 
@@ -145,18 +164,18 @@ AUI.add(
 						return;
 					}
 
-					instance._invokeResourceURL(
-						{
-							callback: function(dateObj) {
-								instance.lastCurrentTime = CalendarUtil.getDateFromObject(dateObj);
+					instance._invokeResourceURL({
+						callback: function(dateObj) {
+							instance.lastCurrentTime = CalendarUtil.getDateFromObject(
+								dateObj
+							);
 
-								instance.lastBrowserTime = new Date();
+							instance.lastBrowserTime = new Date();
 
-								callback(instance.lastCurrentTime);
-							},
-							resourceId: 'currentTime'
-						}
-					);
+							callback(instance.lastCurrentTime);
+						},
+						resourceId: 'currentTime'
+					});
 				},
 
 				getEvent: function(calendarBookingId, success, failure) {
@@ -175,73 +194,85 @@ AUI.add(
 					);
 				},
 
-				getEvents: function(calendarIds, eventsPerPage, startDate, endDate, status, callback) {
+				getEvents: function(
+					calendarIds,
+					eventsPerPage,
+					startDate,
+					endDate,
+					status,
+					callback
+				) {
 					var instance = this;
 
-					instance._invokeResourceURL(
-						{
-							callback: callback,
-							payload: {
-								calendarIds: calendarIds.join(','),
-								endTimeDay: endDate.getDate(),
-								endTimeHour: endDate.getHours(),
-								endTimeMinute: endDate.getMinutes(),
-								endTimeMonth: endDate.getMonth(),
-								endTimeYear: endDate.getFullYear(),
-								eventsPerPage: eventsPerPage,
-								startTimeDay: startDate.getDate(),
-								startTimeHour: startDate.getHours(),
-								startTimeMinute: startDate.getMinutes(),
-								startTimeMonth: startDate.getMonth(),
-								startTimeYear: startDate.getFullYear(),
-								statuses: status.join(',')
-							},
-							resourceId: 'calendarBookings'
-						}
-					);
+					instance._invokeResourceURL({
+						callback: callback,
+						payload: {
+							calendarIds: calendarIds.join(','),
+							endTimeDay: endDate.getDate(),
+							endTimeHour: endDate.getHours(),
+							endTimeMinute: endDate.getMinutes(),
+							endTimeMonth: endDate.getMonth(),
+							endTimeYear: endDate.getFullYear(),
+							eventsPerPage: eventsPerPage,
+							startTimeDay: startDate.getDate(),
+							startTimeHour: startDate.getHours(),
+							startTimeMinute: startDate.getMinutes(),
+							startTimeMonth: startDate.getMonth(),
+							startTimeYear: startDate.getFullYear(),
+							statuses: status.join(',')
+						},
+						resourceId: 'calendarBookings'
+					});
 				},
 
 				getResourceCalendars: function(calendarResourceId, callback) {
 					var instance = this;
 
-					instance._invokeResourceURL(
-						{
-							callback: callback,
-							queryParameters: {
-								calendarResourceId: calendarResourceId
-							},
-							resourceId: 'resourceCalendars'
-						}
-					);
+					instance._invokeResourceURL({
+						callback: callback,
+						queryParameters: {
+							calendarResourceId: calendarResourceId
+						},
+						resourceId: 'resourceCalendars'
+					});
 				},
 
-				hasExclusiveCalendarBooking: function(calendarId, startDate, endDate, callback) {
+				hasExclusiveCalendarBooking: function(
+					calendarId,
+					startDate,
+					endDate,
+					callback
+				) {
 					var instance = this;
 
-					instance._invokeResourceURL(
-						{
-							callback: function(result) {
-								callback(result.hasExclusiveCalendarBooking);
-							},
-							queryParameters: {
-								calendarId: calendarId,
-								endTimeDay: endDate.getDate(),
-								endTimeHour: endDate.getHours(),
-								endTimeMinute: endDate.getMinutes(),
-								endTimeMonth: endDate.getMonth(),
-								endTimeYear: endDate.getFullYear(),
-								startTimeDay: startDate.getDate(),
-								startTimeHour: startDate.getHours(),
-								startTimeMinute: startDate.getMinutes(),
-								startTimeMonth: startDate.getMonth(),
-								startTimeYear: startDate.getFullYear()
-							},
-							resourceId: 'hasExclusiveCalendarBooking'
-						}
-					);
+					instance._invokeResourceURL({
+						callback: function(result) {
+							callback(result.hasExclusiveCalendarBooking);
+						},
+						queryParameters: {
+							calendarId: calendarId,
+							endTimeDay: endDate.getDate(),
+							endTimeHour: endDate.getHours(),
+							endTimeMinute: endDate.getMinutes(),
+							endTimeMonth: endDate.getMonth(),
+							endTimeYear: endDate.getFullYear(),
+							startTimeDay: startDate.getDate(),
+							startTimeHour: startDate.getHours(),
+							startTimeMinute: startDate.getMinutes(),
+							startTimeMonth: startDate.getMonth(),
+							startTimeYear: startDate.getFullYear()
+						},
+						resourceId: 'hasExclusiveCalendarBooking'
+					});
 				},
 
-				invokeTransition: function(schedulerEvent, instanceIndex, status, updateInstance, allFollowing) {
+				invokeTransition: function(
+					schedulerEvent,
+					instanceIndex,
+					status,
+					updateInstance,
+					allFollowing
+				) {
 					var instance = this;
 
 					var scheduler = schedulerEvent.get('scheduler');
@@ -250,7 +281,9 @@ AUI.add(
 						{
 							'/calendar.calendarbooking/invoke-transition': {
 								allFollowing: allFollowing,
-								calendarBookingId: schedulerEvent.get('calendarBookingId'),
+								calendarBookingId: schedulerEvent.get(
+									'calendarBookingId'
+								),
 								instanceIndex: instanceIndex,
 								status: status,
 								updateInstance: updateInstance,
@@ -259,26 +292,20 @@ AUI.add(
 						},
 						{
 							start: function() {
-								schedulerEvent.set(
-									'loading',
-									true,
-									{
-										silent: true
-									}
-								);
+								schedulerEvent.set('loading', true, {
+									silent: true
+								});
 							},
 
 							success: function(data) {
-								schedulerEvent.set(
-									'loading',
-									false,
-									{
-										silent: true
-									}
-								);
+								schedulerEvent.set('loading', false, {
+									silent: true
+								});
 
 								if (data && !data.exception && scheduler) {
-									var eventRecorder = scheduler.get('eventRecorder');
+									var eventRecorder = scheduler.get(
+										'eventRecorder'
+									);
 
 									eventRecorder.hidePopover();
 
@@ -292,71 +319,79 @@ AUI.add(
 				updateCalendarColor: function(calendarId, color) {
 					var instance = this;
 
-					instance._invokeService(
-						{
-							'/calendar.calendar/update-color': {
-								calendarId: calendarId,
-								color: parseInt(color.substr(1), 16)
-							}
+					instance._invokeService({
+						'/calendar.calendar/update-color': {
+							calendarId: calendarId,
+							color: parseInt(color.substr(1), 16)
 						}
-					);
+					});
 				},
 
-				updateEvent: function(schedulerEvent, updateInstance, allFollowing, success) {
+				updateEvent: function(
+					schedulerEvent,
+					updateInstance,
+					allFollowing,
+					success
+				) {
 					var instance = this;
 
 					var endDate = schedulerEvent.get('endDate');
 					var startDate = schedulerEvent.get('startDate');
 
-					instance._invokeActionURL(
-						{
-							actionName: 'updateSchedulerCalendarBooking',
-							callback: function(data) {
-								schedulerEvent.set(
-									'loading',
-									false,
-									{
-										silent: true
-									}
-								);
+					instance._invokeActionURL({
+						actionName: 'updateSchedulerCalendarBooking',
+						callback: function(data) {
+							schedulerEvent.set('loading', false, {
+								silent: true
+							});
 
-								if (data) {
-									if (data.exception) {
-										CalendarUtil.destroyEvent(schedulerEvent);
-										MessageUtil.showErrorMessage(instance.get('rootNode'), data.exception);
-									}
-									else {
-										CalendarUtil.setEventAttrs(schedulerEvent, data);
+							if (data) {
+								if (data.exception) {
+									CalendarUtil.destroyEvent(schedulerEvent);
+									MessageUtil.showErrorMessage(
+										instance.get('rootNode'),
+										data.exception
+									);
+								} else {
+									CalendarUtil.setEventAttrs(
+										schedulerEvent,
+										data
+									);
 
-										if (success) {
-											success.call(instance, data);
-											MessageUtil.showSuccessMessage(instance.get('rootNode'));
-										}
+									if (success) {
+										success.call(instance, data);
+										MessageUtil.showSuccessMessage(
+											instance.get('rootNode')
+										);
 									}
 								}
-							},
-							payload: {
-								allDay: schedulerEvent.get('allDay'),
-								allFollowing: allFollowing,
-								calendarBookingId: schedulerEvent.get('calendarBookingId'),
-								calendarId: schedulerEvent.get('calendarId'),
-								endTimeDay: endDate.getDate(),
-								endTimeHour: endDate.getHours(),
-								endTimeMinute: endDate.getMinutes(),
-								endTimeMonth: endDate.getMonth(),
-								endTimeYear: endDate.getFullYear(),
-								instanceIndex: schedulerEvent.get('instanceIndex'),
-								recurrence: schedulerEvent.get('recurrence'),
-								startTimeDay: startDate.getDate(),
-								startTimeHour: startDate.getHours(),
-								startTimeMinute: startDate.getMinutes(),
-								startTimeMonth: startDate.getMonth(),
-								startTimeYear: startDate.getFullYear(),
-								title: LString.unescapeHTML(schedulerEvent.get('content')),
-								updateInstance: updateInstance
 							}
+						},
+						payload: {
+							allDay: schedulerEvent.get('allDay'),
+							allFollowing: allFollowing,
+							calendarBookingId: schedulerEvent.get(
+								'calendarBookingId'
+							),
+							calendarId: schedulerEvent.get('calendarId'),
+							endTimeDay: endDate.getDate(),
+							endTimeHour: endDate.getHours(),
+							endTimeMinute: endDate.getMinutes(),
+							endTimeMonth: endDate.getMonth(),
+							endTimeYear: endDate.getFullYear(),
+							instanceIndex: schedulerEvent.get('instanceIndex'),
+							recurrence: schedulerEvent.get('recurrence'),
+							startTimeDay: startDate.getDate(),
+							startTimeHour: startDate.getHours(),
+							startTimeMinute: startDate.getMinutes(),
+							startTimeMonth: startDate.getMonth(),
+							startTimeYear: startDate.getFullYear(),
+							title: LString.unescapeHTML(
+								schedulerEvent.get('content')
+							),
+							updateInstance: updateInstance
 						}
-					);
+					});
 				},
 
 				_invokeActionURL: function(params) {
@@ -371,21 +406,21 @@ AUI.add(
 					var payload;
 
 					if (params.payload) {
-						payload = Liferay.Util.ns(instance.get('namespace'), params.payload);
+						payload = Liferay.Util.ns(
+							instance.get('namespace'),
+							params.payload
+						);
 					}
 
-					A.io.request(
-						url.toString(),
-						{
-							data: payload,
-							dataType: 'JSON',
-							on: {
-								success: function() {
-									params.callback(this.get('responseData'));
-								}
+					A.io.request(url.toString(), {
+						data: payload,
+						dataType: 'JSON',
+						on: {
+							success: function() {
+								params.callback(this.get('responseData'));
 							}
 						}
-					);
+					});
 				},
 
 				_invokeResourceURL: function(params) {
@@ -393,7 +428,9 @@ AUI.add(
 
 					var url = Liferay.PortletURL.createResourceURL();
 
-					url.setDoAsUserId(Liferay.ThemeDisplay.getDoAsUserIdEncoded());
+					url.setDoAsUserId(
+						Liferay.ThemeDisplay.getDoAsUserIdEncoded()
+					);
 					url.setParameters(params.queryParameters);
 					url.setPortletId(instance.ID);
 					url.setResourceId(params.resourceId);
@@ -401,21 +438,21 @@ AUI.add(
 					var payload;
 
 					if (params.payload) {
-						payload = Liferay.Util.ns(instance.get('namespace'), params.payload);
+						payload = Liferay.Util.ns(
+							instance.get('namespace'),
+							params.payload
+						);
 					}
 
-					A.io.request(
-						url.toString(),
-						{
-							data: payload,
-							dataType: 'JSON',
-							on: {
-								success: function() {
-									params.callback(this.get('responseData'));
-								}
+					A.io.request(url.toString(), {
+						data: payload,
+						dataType: 'JSON',
+						on: {
+							success: function() {
+								params.callback(this.get('responseData'));
 							}
 						}
-					);
+					});
 				},
 
 				_invokeService: function(payload, callback) {
@@ -423,28 +460,25 @@ AUI.add(
 
 					callback = callback || {};
 
-					A.io.request(
-						instance.get('invokerURL'),
-						{
-							cache: false,
-							data: {
-								cmd: JSON.stringify(payload),
-								p_auth: Liferay.authToken
-							},
-							dataType: 'JSON',
-							on: {
-								failure: callback.failure,
-								start: callback.start,
-								success: function(event) {
-									if (callback.success) {
-										var data = this.get('responseData');
+					A.io.request(instance.get('invokerURL'), {
+						cache: false,
+						data: {
+							cmd: JSON.stringify(payload),
+							p_auth: Liferay.authToken
+						},
+						dataType: 'JSON',
+						on: {
+							failure: callback.failure,
+							start: callback.start,
+							success: function(event) {
+								if (callback.success) {
+									var data = this.get('responseData');
 
-										callback.success.apply(this, [data, event]);
-									}
+									callback.success.apply(this, [data, event]);
 								}
 							}
 						}
-					);
+					});
 				}
 			},
 			{
@@ -464,6 +498,14 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-component', 'aui-io', 'liferay-calendar-message-util', 'liferay-calendar-util', 'liferay-portlet-base', 'liferay-portlet-url']
+		requires: [
+			'aui-base',
+			'aui-component',
+			'aui-io',
+			'liferay-calendar-message-util',
+			'liferay-calendar-util',
+			'liferay-portlet-base',
+			'liferay-portlet-url'
+		]
 	}
 );

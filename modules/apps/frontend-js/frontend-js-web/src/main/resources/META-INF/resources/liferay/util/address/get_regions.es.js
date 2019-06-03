@@ -1,7 +1,4 @@
-import {
-	isFunction,
-	isString
-} from 'metal';
+import {isFunction, isString} from 'metal';
 
 /**
  * Returns a list of regions by country

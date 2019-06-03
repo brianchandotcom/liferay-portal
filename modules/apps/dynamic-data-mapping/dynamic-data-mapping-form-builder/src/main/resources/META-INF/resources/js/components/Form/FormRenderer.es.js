@@ -40,10 +40,7 @@ class FormRenderer extends Component {
 			index = this.pages.length - 1;
 		}
 
-		this.emit(
-			'activePageUpdated',
-			index
-		);
+		this.emit('activePageUpdated', index);
 	}
 
 	_handlePaginationRightClicked() {
@@ -54,15 +51,11 @@ class FormRenderer extends Component {
 			index = -1;
 		}
 
-		this.emit(
-			'activePageUpdated',
-			index
-		);
+		this.emit('activePageUpdated', index);
 	}
 }
 
 FormRenderer.STATE = {
-
 	/**
 	 * @default
 	 * @instance

@@ -3,119 +3,126 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var SidebarPanel = A.Component.create(
-			{
-				ATTRS: {
-					resourceUrl: {
-						validator: Lang.isString
-					},
+		var SidebarPanel = A.Component.create({
+			ATTRS: {
+				resourceUrl: {
+					validator: Lang.isString
+				},
 
-					searchContainerId: {
-						validator: Lang.isString
-					},
+				searchContainerId: {
+					validator: Lang.isString
+				},
 
-					targetNode: {
-						setter: A.one
+				targetNode: {
+					setter: A.one
+				}
+			},
+
+			AUGMENTS: [Liferay.PortletBase],
+
+			EXTENDS: A.Base,
+
+			NAME: 'liferaysidebarpanel',
+
+			prototype: {
+				initializer: function(config) {
+					var instance = this;
+
+					instance._searchContainerRegisterHandle = Liferay.on(
+						'search-container:registered',
+						instance._onSearchContainerRegistered,
+						instance
+					);
+				},
+
+				destructor: function() {
+					var instance = this;
+
+					instance._detachSearchContainerRegisterHandle();
+
+					new A.EventHandle(instance._eventHandles).detach();
+				},
+
+				_bindUI: function() {
+					var instance = this;
+
+					instance._eventHandles = [
+						instance._searchContainer.on(
+							'rowToggled',
+							A.debounce(
+								instance._getSidebarContent,
+								50,
+								instance
+							),
+							instance
+						),
+						Liferay.after('refreshInfoPanel', function() {
+							setTimeout(function() {
+								instance._getSidebarContent();
+							}, 0);
+						})
+					];
+				},
+
+				_detachSearchContainerRegisterHandle: function() {
+					var instance = this;
+
+					var searchContainerRegisterHandle =
+						instance._searchContainerRegisterHandle;
+
+					if (searchContainerRegisterHandle) {
+						searchContainerRegisterHandle.detach();
+
+						instance._searchContainerRegisterHandle = null;
 					}
 				},
 
-				AUGMENTS: [Liferay.PortletBase],
+				_getSidebarContent: function(event) {
+					var instance = this;
 
-				EXTENDS: A.Base,
+					A.io.request(instance.get('resourceUrl'), {
+						form: instance._searchContainer.getForm().getDOM(),
+						on: {
+							success: function(event, id, xhr) {
+								var response = xhr.responseText;
 
-				NAME: 'liferaysidebarpanel',
+								instance.get('targetNode').setContent(response);
+							}
+						}
+					});
+				},
 
-				prototype: {
-					initializer: function(config) {
-						var instance = this;
+				_onSearchContainerRegistered: function(event) {
+					var instance = this;
 
-						instance._searchContainerRegisterHandle = Liferay.on('search-container:registered', instance._onSearchContainerRegistered, instance);
-					},
+					var searchContainer = event.searchContainer;
 
-					destructor: function() {
-						var instance = this;
+					if (
+						searchContainer.get('id') ===
+						instance.get('searchContainerId')
+					) {
+						instance._searchContainer = searchContainer;
 
 						instance._detachSearchContainerRegisterHandle();
 
-						(new A.EventHandle(instance._eventHandles)).detach();
-					},
+						instance.get('targetNode').plug(A.Plugin.ParseContent);
 
-					_bindUI: function() {
-						var instance = this;
-
-						instance._eventHandles = [
-							instance._searchContainer.on(
-								'rowToggled',
-								A.debounce(instance._getSidebarContent, 50, instance),
-								instance
-							),
-							Liferay.after(
-								'refreshInfoPanel',
-								function() {
-									setTimeout(
-										function() {
-											instance._getSidebarContent();
-										},
-										0
-									);
-								}
-							)
-						];
-					},
-
-					_detachSearchContainerRegisterHandle: function() {
-						var instance = this;
-
-						var searchContainerRegisterHandle = instance._searchContainerRegisterHandle;
-
-						if (searchContainerRegisterHandle) {
-							searchContainerRegisterHandle.detach();
-
-							instance._searchContainerRegisterHandle = null;
-						}
-					},
-
-					_getSidebarContent: function(event) {
-						var instance = this;
-
-						A.io.request(
-							instance.get('resourceUrl'),
-							{
-								form: instance._searchContainer.getForm().getDOM(),
-								on: {
-									success: function(event, id, xhr) {
-										var response = xhr.responseText;
-
-										instance.get('targetNode').setContent(response);
-									}
-								}
-							}
-						);
-					},
-
-					_onSearchContainerRegistered: function(event) {
-						var instance = this;
-
-						var searchContainer = event.searchContainer;
-
-						if (searchContainer.get('id') === instance.get('searchContainerId')) {
-							instance._searchContainer = searchContainer;
-
-							instance._detachSearchContainerRegisterHandle();
-
-							instance.get('targetNode').plug(A.Plugin.ParseContent);
-
-							instance._bindUI();
-						}
+						instance._bindUI();
 					}
 				}
 			}
-		);
+		});
 
 		Liferay.SidebarPanel = SidebarPanel;
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-debounce', 'aui-io-request', 'aui-parse-content', 'liferay-portlet-base']
+		requires: [
+			'aui-base',
+			'aui-debounce',
+			'aui-io-request',
+			'aui-parse-content',
+			'liferay-portlet-base'
+		]
 	}
 );

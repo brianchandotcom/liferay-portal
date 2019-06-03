@@ -8,7 +8,6 @@ import templates from './Tooltip.soy';
  */
 
 class Tooltip extends TooltipBase {
-
 	/**
 	 * Hides the alert completely (with display "none"). This is called after the
 	 * hiding animation is done.
@@ -29,10 +28,17 @@ class Tooltip extends TooltipBase {
 
 	syncVisible(visible) {
 		if (!visible) {
-			dom.once(this.element, 'animationend', this.hideCompletely_.bind(this));
-			dom.once(this.element, 'transitionend', this.hideCompletely_.bind(this));
-		}
-		else {
+			dom.once(
+				this.element,
+				'animationend',
+				this.hideCompletely_.bind(this)
+			);
+			dom.once(
+				this.element,
+				'transitionend',
+				this.hideCompletely_.bind(this)
+			);
+		} else {
 			this.element.style.display = '';
 		}
 

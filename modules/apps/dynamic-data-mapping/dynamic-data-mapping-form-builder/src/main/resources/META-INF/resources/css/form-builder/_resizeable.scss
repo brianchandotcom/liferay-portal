@@ -6,7 +6,8 @@ $c: '.ddm-form-builder';
 		width: 21px;
 	}
 
-	.ddm-resize-handle, .ddm-resize-column {
+	.ddm-resize-handle,
+	.ddm-resize-column {
 		top: 0 !important;
 	}
 
@@ -35,14 +36,15 @@ $c: '.ddm-form-builder';
 
 		.ddm-resize-handle-left,
 		.ddm-resize-handle-right {
-			background-color: #CCC;
+			background-color: #ccc;
 			cursor: inherit;
 			opacity: 0;
 			transition: opacity ease-out 0.3s;
 		}
 
-		&:hover, &:active {
-			border-color: #CDCED9;
+		&:hover,
+		&:active {
+			border-color: #cdced9;
 
 			.ddm-resize-handle-left,
 			.ddm-resize-handle-right {
@@ -52,10 +54,11 @@ $c: '.ddm-form-builder';
 	}
 
 	.resizeable .ddm-field-container {
-		&:hover, &:active {
+		&:hover,
+		&:active {
 			.ddm-resize-handle-left,
 			.ddm-resize-handle-right {
-				background-color: #1C67FB;
+				background-color: #1c67fb;
 				cursor: col-resize;
 				opacity: 1;
 			}
@@ -63,7 +66,8 @@ $c: '.ddm-form-builder';
 	}
 }
 
-.ddm-resize-handle, .ddm-resize-column {
+.ddm-resize-handle,
+.ddm-resize-column {
 	height: 100%;
 	position: absolute;
 	width: 5px;

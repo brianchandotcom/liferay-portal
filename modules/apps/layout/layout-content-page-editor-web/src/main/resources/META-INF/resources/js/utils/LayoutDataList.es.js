@@ -13,20 +13,17 @@ function containsFragmentEntryLinkId(
 	fragmentEntryLinkId,
 	skipSegmentsExperienceId
 ) {
-	return LayoutDataList
-		.filter(
-			function _avoidCurrentExperienceLayoutDataItem(LayoutDataItem) {
-				return LayoutDataItem.segmentsExperienceId !== skipSegmentsExperienceId;
-			}
-		).some(
-			function _getFragmentRowIndexWrapper(LayoutDataItem) {
-				const index = getFragmentRowIndex(
-					LayoutDataItem.layoutData.structure,
-					fragmentEntryLinkId
-				);
-				return index !== -1;
-			}
+	return LayoutDataList.filter(function _avoidCurrentExperienceLayoutDataItem(
+		LayoutDataItem
+	) {
+		return LayoutDataItem.segmentsExperienceId !== skipSegmentsExperienceId;
+	}).some(function _getFragmentRowIndexWrapper(LayoutDataItem) {
+		const index = getFragmentRowIndex(
+			LayoutDataItem.layoutData.structure,
+			fragmentEntryLinkId
 		);
+		return index !== -1;
+	});
 }
 
 /**
@@ -42,7 +39,4 @@ function getEmptyLayoutData() {
 	};
 }
 
-export {
-	containsFragmentEntryLinkId,
-	getEmptyLayoutData
-};
+export {containsFragmentEntryLinkId, getEmptyLayoutData};

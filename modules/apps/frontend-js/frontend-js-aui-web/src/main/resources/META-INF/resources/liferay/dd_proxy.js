@@ -14,15 +14,13 @@ AUI.add(
 
 						var proxyNode = A.Node.create('<div></div>');
 
-						proxyNode.setStyles(
-							{
-								display: 'none',
-								left: '-999px',
-								position: 'absolute',
-								top: '-999px',
-								zIndex: '999'
-							}
-						);
+						proxyNode.setStyles({
+							display: 'none',
+							left: '-999px',
+							position: 'absolute',
+							top: '-999px',
+							zIndex: '999'
+						});
 
 						body.prepend(proxyNode);
 
@@ -52,14 +50,12 @@ AUI.add(
 						cursor = DDM.get('dragCursor');
 					}
 
-					dragNode.setStyles(
-						{
-							border: drag.proxy.get('borderStyle'),
-							cursor: cursor,
-							display: 'block',
-							visibility: 'hidden'
-						}
-					);
+					dragNode.setStyles({
+						border: drag.proxy.get('borderStyle'),
+						cursor: cursor,
+						display: 'block',
+						visibility: 'hidden'
+					});
 
 					if (drag.proxy.get('cloneNode')) {
 						dragNode = drag.proxy.clone();
@@ -68,12 +64,10 @@ AUI.add(
 					if (drag.proxy.get('resizeFrame')) {
 						var size = node.invoke('getBoundingClientRect');
 
-						dragNode.setStyles(
-							{
-								height: Math.ceil(size.height),
-								width: Math.ceil(size.width)
-							}
-						);
+						dragNode.setStyles({
+							height: Math.ceil(size.height),
+							width: Math.ceil(size.width)
+						});
 					}
 
 					if (drag.proxy.get('positionProxy')) {

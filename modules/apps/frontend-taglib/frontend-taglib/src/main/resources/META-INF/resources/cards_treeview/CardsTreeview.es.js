@@ -16,7 +16,6 @@ import templates from './CardsTreeview.soy';
  * @review
  */
 class CardsTreeview extends Treeview {
-
 	/**
 	 * @inheritDoc
 	 * @review
@@ -34,17 +33,15 @@ class CardsTreeview extends Treeview {
 	 * @review
 	 */
 	addSelectedNodes_(nodes) {
-		nodes.forEach(
-			(node) => {
-				if (node.children) {
-					this.addSelectedNodes_(node.children);
-				}
-
-				if (node.selected) {
-					this.selectNode_(node);
-				}
+		nodes.forEach(node => {
+			if (node.children) {
+				this.addSelectedNodes_(node.children);
 			}
-		);
+
+			if (node.selected) {
+				this.selectNode_(node);
+			}
+		});
 	}
 
 	/**
@@ -83,22 +80,21 @@ class CardsTreeview extends Treeview {
 		let expanded;
 		let expandedParent;
 
-		nodes.forEach(
-			(node) => {
-				expanded = node.expanded;
+		nodes.forEach(node => {
+			expanded = node.expanded;
 
-				if (node.selected) {
-					expandedParent = true;
-				}
+			if (node.selected) {
+				expandedParent = true;
+			}
 
-				if (node.children) {
-					expanded = this.expandSelectedNodesParentNodes_(node.children) || expanded;
-				}
+			if (node.children) {
+				expanded =
+					this.expandSelectedNodesParentNodes_(node.children) ||
+					expanded;
+			}
 
-				node.expanded = expanded;
-			},
-			this
-		);
+			node.expanded = expanded;
+		}, this);
 
 		return expandedParent;
 	}
@@ -111,7 +107,9 @@ class CardsTreeview extends Treeview {
 	 */
 	focus_(nodeObj) {
 		if (nodeObj) {
-			this.element.querySelector('[data-treeitemid="' + nodeObj.id + '"] .card').focus();
+			this.element
+				.querySelector('[data-treeitemid="' + nodeObj.id + '"] .card')
+				.focus();
 		}
 	}
 
@@ -132,8 +130,7 @@ class CardsTreeview extends Treeview {
 			path.push(0);
 
 			nextNodeObj = this.getNodeObj(path);
-		}
-		else {
+		} else {
 			while (!nextNodeObj && path.length > 0) {
 				path[path.length - 1]++;
 
@@ -161,14 +158,14 @@ class CardsTreeview extends Treeview {
 			path.pop();
 
 			prevNodeObj = this.getNodeObj(path);
-		}
-		else {
+		} else {
 			path[path.length - 1]--;
 
 			prevNodeObj = this.getNodeObj(path);
 
 			while (prevNodeObj.children && prevNodeObj.expanded) {
-				prevNodeObj = prevNodeObj.children[prevNodeObj.children.length - 1];
+				prevNodeObj =
+					prevNodeObj.children[prevNodeObj.children.length - 1];
 			}
 		}
 
@@ -182,7 +179,9 @@ class CardsTreeview extends Treeview {
 	 * @review
 	 */
 	handleNodeClicked_(event) {
-		let path = event.delegateTarget.parentNode.parentNode.parentNode.getAttribute('data-treeview-path').split('-');
+		let path = event.delegateTarget.parentNode.parentNode.parentNode
+			.getAttribute('data-treeview-path')
+			.split('-');
 
 		let node = this.getNodeObj(path);
 
@@ -193,12 +192,10 @@ class CardsTreeview extends Treeview {
 		if (this.multiSelection) {
 			if (node.selected) {
 				this.deselectNode_(node);
-			}
-			else {
+			} else {
 				this.selectNode_(node);
 			}
-		}
-		else if (!node.selected) {
+		} else if (!node.selected) {
 			this.deselectAll_();
 			this.selectNode_(node);
 		}
@@ -222,28 +219,18 @@ class CardsTreeview extends Treeview {
 		let node = event.delegateTarget.parentNode.parentNode.parentNode;
 
 		if (event.keyCode === 37) {
-			this.setNodeExpandedState_(
-				node,
-				{
-					expanded: false
-				}
-			);
-		}
-		else if (event.keyCode === 38) {
+			this.setNodeExpandedState_(node, {
+				expanded: false
+			});
+		} else if (event.keyCode === 38) {
 			this.focusPrevNode_(node);
-		}
-		else if (event.keyCode === 39) {
-			this.setNodeExpandedState_(
-				node,
-				{
-					expanded: true
-				}
-			);
-		}
-		else if (event.keyCode === 40) {
+		} else if (event.keyCode === 39) {
+			this.setNodeExpandedState_(node, {
+				expanded: true
+			});
+		} else if (event.keyCode === 40) {
 			this.focusNextNode_(node);
-		}
-		else if (event.keyCode === 13 || event.keyCode === 32) {
+		} else if (event.keyCode === 13 || event.keyCode === 32) {
 			this.handleNodeClicked_(event);
 		}
 	}
@@ -255,7 +242,9 @@ class CardsTreeview extends Treeview {
 	 * @review
 	 */
 	handleNodeTogglerClicked_(event) {
-		this.toggleExpandedState_(event.delegateTarget.parentNode.parentNode.parentNode);
+		this.toggleExpandedState_(
+			event.delegateTarget.parentNode.parentNode.parentNode
+		);
 	}
 
 	/**
@@ -297,7 +286,6 @@ class CardsTreeview extends Treeview {
  * @static
  */
 CardsTreeview.STATE = {
-
 	/**
 	 * Enables multiple selection of tree elements
 	 * @review

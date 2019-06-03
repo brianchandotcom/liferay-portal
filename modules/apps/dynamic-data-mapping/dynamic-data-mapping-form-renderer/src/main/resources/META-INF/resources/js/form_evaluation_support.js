@@ -7,8 +7,7 @@ AUI.add(
 
 		var Util = Renderer.Util;
 
-		var FormEvaluationSupport = function() {
-		};
+		var FormEvaluationSupport = function() {};
 
 		FormEvaluationSupport.ATTRS = {
 			evaluatorURL: {
@@ -30,7 +29,10 @@ AUI.add(
 
 				var evaluator = instance.get('evaluator');
 
-				evaluator.after('evaluationEnded', A.bind('_afterEvaluationEnded', instance));
+				evaluator.after(
+					'evaluationEnded',
+					A.bind('_afterEvaluationEnded', instance)
+				);
 			},
 
 			destructor: function() {
@@ -63,55 +65,67 @@ AUI.add(
 
 					visitor.set('pages', result);
 
-					visitor.set(
-						'fieldHandler',
-						function(fieldContext) {
-							var qualifiedName = fieldContext.name;
+					visitor.set('fieldHandler', function(fieldContext) {
+						var qualifiedName = fieldContext.name;
 
-							var name = Util.getFieldNameFromQualifiedName(qualifiedName);
+						var name = Util.getFieldNameFromQualifiedName(
+							qualifiedName
+						);
 
-							var instanceId = Util.getInstanceIdFromQualifiedName(qualifiedName);
+						var instanceId = Util.getInstanceIdFromQualifiedName(
+							qualifiedName
+						);
 
-							var field = instance.getField(name, instanceId);
+						var field = instance.getField(name, instanceId);
 
-							if (!field) {
-								return;
-							}
-
-							if (field !== trigger) {
-								if (fieldContext.valueChanged && !Util.compare(field.get('value'), fieldContext.value)) {
-									field.setValue(fieldContext.value);
-								}
-							}
-
-							delete fieldContext.value;
-
-							fieldContext = field.processEvaluationContext(fieldContext, result);
-
-							var currentContext = field.get('context');
-
-							if (!currentContext.visited || fieldContext.valid !== false) {
-								currentContext.errorMessage = '';
-								currentContext.valid = true;
-							}
-
-							fieldContext = A.merge(
-								currentContext,
-								fieldContext,
-								field.getEvaluationContext(fieldContext)
-							);
-
-							if (fieldContext.valid) {
-								fieldContext.visited = true;
-							}
-
-							field.set('context', fieldContext);
+						if (!field) {
+							return;
 						}
-					);
+
+						if (field !== trigger) {
+							if (
+								fieldContext.valueChanged &&
+								!Util.compare(
+									field.get('value'),
+									fieldContext.value
+								)
+							) {
+								field.setValue(fieldContext.value);
+							}
+						}
+
+						delete fieldContext.value;
+
+						fieldContext = field.processEvaluationContext(
+							fieldContext,
+							result
+						);
+
+						var currentContext = field.get('context');
+
+						if (
+							!currentContext.visited ||
+							fieldContext.valid !== false
+						) {
+							currentContext.errorMessage = '';
+							currentContext.valid = true;
+						}
+
+						fieldContext = A.merge(
+							currentContext,
+							fieldContext,
+							field.getEvaluationContext(fieldContext)
+						);
+
+						if (fieldContext.valid) {
+							fieldContext.visited = true;
+						}
+
+						field.set('context', fieldContext);
+					});
 
 					visitor.visit();
-				}
-				else {
+				} else {
 					var strings = instance.get('strings');
 
 					instance.showAlert(strings.requestErrorMessage);
@@ -131,16 +145,16 @@ AUI.add(
 			_valueEvaluator: function() {
 				var instance = this;
 
-				return new Renderer.ExpressionsEvaluator(
-					{
-						enabled: !instance.get('readOnly'),
-						form: instance
-					}
-				);
+				return new Renderer.ExpressionsEvaluator({
+					enabled: !instance.get('readOnly'),
+					form: instance
+				});
 			}
 		};
 
-		Liferay.namespace('DDM.Renderer').FormEvaluationSupport = FormEvaluationSupport;
+		Liferay.namespace(
+			'DDM.Renderer'
+		).FormEvaluationSupport = FormEvaluationSupport;
 	},
 	'',
 	{

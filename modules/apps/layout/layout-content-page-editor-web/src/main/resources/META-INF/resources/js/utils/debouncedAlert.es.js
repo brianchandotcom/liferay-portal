@@ -37,11 +37,10 @@ function debouncedAlert(
 	 * @param {{originalEvent: Event}} event
 	 * @review
 	 */
-	const handleBeforeNavigate = (event) => {
+	const handleBeforeNavigate = event => {
 		if (confirm(message)) {
 			clearPendingCallback();
-		}
-		else {
+		} else {
 			event.originalEvent.preventDefault();
 		}
 	};
@@ -50,7 +49,7 @@ function debouncedAlert(
 	 * @param {BeforeUnloadEvent} event
 	 * @review
 	 */
-	const handleBeforeUnload = (event) => {
+	const handleBeforeUnload = event => {
 		event.returnValue = message;
 
 		return message;
@@ -64,18 +63,12 @@ function debouncedAlert(
 			handleBeforeNavigate
 		);
 
-		window.addEventListener(
-			'beforeunload',
-			handleBeforeUnload
-		);
+		window.addEventListener('beforeunload', handleBeforeUnload);
 
-		timeoutId = setTimeout(
-			() => {
-				clearPendingCallback();
-				callback(...args);
-			},
-			delay
-		);
+		timeoutId = setTimeout(() => {
+			clearPendingCallback();
+			callback(...args);
+		}, delay);
 	};
 }
 

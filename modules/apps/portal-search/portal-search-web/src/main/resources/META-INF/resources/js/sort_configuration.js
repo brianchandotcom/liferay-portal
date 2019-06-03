@@ -9,43 +9,36 @@ AUI.add(
 			instance.form.on('submit', A.bind(instance._onSubmit, instance));
 		};
 
-		A.mix(
-			SortConfiguration.prototype,
-			{
-				_onSubmit: function(event) {
-					var instance = this;
+		A.mix(SortConfiguration.prototype, {
+			_onSubmit: function(event) {
+				var instance = this;
 
-					event.preventDefault();
+				event.preventDefault();
 
-					var fields = [];
+				var fields = [];
 
-					var fieldFormRows = A.all('.field-form-row').filter(
-						function(item) {
-							return !item.get('hidden');
-						}
-					);
+				var fieldFormRows = A.all('.field-form-row').filter(function(
+					item
+				) {
+					return !item.get('hidden');
+				});
 
-					fieldFormRows.each(
-						function(item) {
-							var label = item.one('.label-input').val();
+				fieldFormRows.each(function(item) {
+					var label = item.one('.label-input').val();
 
-							var field = item.one('.sort-field-input').val();
+					var field = item.one('.sort-field-input').val();
 
-							fields.push(
-								{
-									label: label,
-									field: field
-								}
-							);
-						}
-					);
+					fields.push({
+						label: label,
+						field: field
+					});
+				});
 
-					instance.form.one('.fields-input').val(JSON.stringify(fields));
+				instance.form.one('.fields-input').val(JSON.stringify(fields));
 
-					submitForm(instance.form);
-				}
+				submitForm(instance.form);
 			}
-		);
+		});
 
 		Liferay.namespace('Search').SortConfiguration = SortConfiguration;
 	},

@@ -8,8 +8,7 @@ AUI.add(
 		var FieldTypes = Renderer.FieldTypes;
 		var Util = Renderer.Util;
 
-		var FormContextSupport = function() {
-		};
+		var FormContextSupport = function() {};
 
 		FormContextSupport.ATTRS = {
 			context: {
@@ -56,13 +55,11 @@ AUI.add(
 				var instance = this;
 
 				if (instance._scheduledToDisposal) {
-					instance._scheduledToDisposal.forEach(
-						function(component) {
-							if (component.destroy) {
-								component.destroy();
-							}
+					instance._scheduledToDisposal.forEach(function(component) {
+						if (component.destroy) {
+							component.destroy();
 						}
-					);
+					});
 
 					instance._scheduledToDisposal = null;
 				}
@@ -81,8 +78,7 @@ AUI.add(
 					var repetitions = alreadyAdded[0].get('repetitions');
 
 					repeatedIndex = repetitions.length;
-				}
-				else {
+				} else {
 					fieldsMap[name] = [];
 				}
 
@@ -96,21 +92,21 @@ AUI.add(
 					context.localizedValue[editingLanguageId] = context.value;
 				}
 
-				var config = A.merge(
-					context,
-					{
-						context: A.clone(context),
-						parent: instance,
-						portletNamespace: instance.get('portletNamespace'),
-						repeatedIndex: repeatedIndex
-					}
-				);
+				var config = A.merge(context, {
+					context: A.clone(context),
+					parent: instance,
+					portletNamespace: instance.get('portletNamespace'),
+					repeatedIndex: repeatedIndex
+				});
 
 				var fieldType = FieldTypes.get(context.type);
 
 				var fieldClassName = fieldType.get('className');
 
-				var fieldClass = AObject.getValue(window, fieldClassName.split('.'));
+				var fieldClass = AObject.getValue(
+					window,
+					fieldClassName.split('.')
+				);
 
 				var field = new fieldClass(config);
 
@@ -118,11 +114,13 @@ AUI.add(
 
 				fieldsMap[name].push(field);
 
-				fieldsMap[name].forEach(
-					function(repetition, index, repetitions) {
-						repetition.set('repetitions', repetitions);
-					}
-				);
+				fieldsMap[name].forEach(function(
+					repetition,
+					index,
+					repetitions
+				) {
+					repetition.set('repetitions', repetitions);
+				});
 
 				return alreadyAdded ? null : field;
 			},
@@ -136,16 +134,13 @@ AUI.add(
 
 				var visitor = instance.get('visitor');
 
-				visitor.set(
-					'fieldHandler',
-					function(fieldContext) {
-						var field = instance._createField(fieldContext, fieldsMap);
+				visitor.set('fieldHandler', function(fieldContext) {
+					var field = instance._createField(fieldContext, fieldsMap);
 
-						if (field) {
-							fields.push(field);
-						}
+					if (field) {
+						fields.push(field);
 					}
-				);
+				});
 
 				visitor.visit();
 
@@ -159,40 +154,55 @@ AUI.add(
 
 				visitor.set('pages', context.pages);
 
-				visitor.set(
-					'fieldHandler',
-					function(fieldContext, args, columnFieldContexts) {
-						var field = instance.getField(fieldContext.fieldName, fieldContext.instanceId);
+				visitor.set('fieldHandler', function(
+					fieldContext,
+					args,
+					columnFieldContexts
+				) {
+					var field = instance.getField(
+						fieldContext.fieldName,
+						fieldContext.instanceId
+					);
 
-						if (field) {
-							var repeatedSiblings = field.getRepeatedSiblings();
+					if (field) {
+						var repeatedSiblings = field.getRepeatedSiblings();
 
-							repeatedSiblings.forEach(
-								function(repeatedSibling) {
-									if (repeatedSibling) {
-										var repeatedContext = repeatedSibling.get('context');
+						repeatedSiblings.forEach(function(repeatedSibling) {
+							if (repeatedSibling) {
+								var repeatedContext = repeatedSibling.get(
+									'context'
+								);
 
-										var foundFieldContext = AArray.find(
-											columnFieldContexts,
-											function(columnFieldContext) {
-												return columnFieldContext.fieldName === repeatedContext.fieldName && columnFieldContext.instanceId === repeatedContext.instanceId;
-											}
+								var foundFieldContext = AArray.find(
+									columnFieldContexts,
+									function(columnFieldContext) {
+										return (
+											columnFieldContext.fieldName ===
+												repeatedContext.fieldName &&
+											columnFieldContext.instanceId ===
+												repeatedContext.instanceId
 										);
-
-										if (foundFieldContext) {
-											A.mix(foundFieldContext, repeatedContext, true);
-										}
-										else {
-											columnFieldContexts.push(repeatedContext);
-										}
 									}
-								}
-							);
+								);
 
-							instance._removeFieldContexts(columnFieldContexts, repeatedSiblings);
-						}
+								if (foundFieldContext) {
+									A.mix(
+										foundFieldContext,
+										repeatedContext,
+										true
+									);
+								} else {
+									columnFieldContexts.push(repeatedContext);
+								}
+							}
+						});
+
+						instance._removeFieldContexts(
+							columnFieldContexts,
+							repeatedSiblings
+						);
 					}
-				);
+				});
 
 				visitor.visit();
 
@@ -212,36 +222,46 @@ AUI.add(
 
 				visitor.set('pages', context.pages);
 
-				instance.set('fields', instance._createFieldsFromContext(context));
+				instance.set(
+					'fields',
+					instance._createFieldsFromContext(context)
+				);
 			},
 
-			_removeFieldContexts: function(columnFieldContexts, repeatedSiblings) {
+			_removeFieldContexts: function(
+				columnFieldContexts,
+				repeatedSiblings
+			) {
 				var removeContext = [];
 				var repeatedContext = [];
 
-				repeatedSiblings.forEach(
-					function(context) {
-						repeatedContext.push(context.get('context'));
-					}
-				);
+				repeatedSiblings.forEach(function(context) {
+					repeatedContext.push(context.get('context'));
+				});
 
-				columnFieldContexts.forEach(
-					function(columnFieldContext) {
-						var foundFieldContext = AArray.find(
-							repeatedContext,
-							function(repeatedContext) {
-								return columnFieldContext.fieldName === repeatedContext.fieldName && columnFieldContext.instanceId === repeatedContext.instanceId;
-							}
-						);
-
-						if (!foundFieldContext) {
-							removeContext.push(columnFieldContext);
+				columnFieldContexts.forEach(function(columnFieldContext) {
+					var foundFieldContext = AArray.find(
+						repeatedContext,
+						function(repeatedContext) {
+							return (
+								columnFieldContext.fieldName ===
+									repeatedContext.fieldName &&
+								columnFieldContext.instanceId ===
+									repeatedContext.instanceId
+							);
 						}
+					);
+
+					if (!foundFieldContext) {
+						removeContext.push(columnFieldContext);
 					}
-				);
+				});
 
 				for (var i in removeContext) {
-					columnFieldContexts.splice(columnFieldContexts.indexOf(removeContext[i]), 1);
+					columnFieldContexts.splice(
+						columnFieldContexts.indexOf(removeContext[i]),
+						1
+					);
 				}
 			},
 
@@ -270,10 +290,16 @@ AUI.add(
 			}
 		};
 
-		Liferay.namespace('DDM.Renderer').FormContextSupport = FormContextSupport;
+		Liferay.namespace(
+			'DDM.Renderer'
+		).FormContextSupport = FormContextSupport;
 	},
 	'',
 	{
-		requires: ['liferay-ddm-form-renderer-layout-visitor', 'liferay-ddm-form-renderer-types', 'liferay-ddm-form-renderer-util']
+		requires: [
+			'liferay-ddm-form-renderer-layout-visitor',
+			'liferay-ddm-form-renderer-types',
+			'liferay-ddm-form-renderer-util'
+		]
 	}
 );

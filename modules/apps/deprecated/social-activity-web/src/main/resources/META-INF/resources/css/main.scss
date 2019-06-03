@@ -31,16 +31,16 @@
 	}
 
 	.social-activity-item:hover {
-		background-color: #CDE5FD;
+		background-color: #cde5fd;
 	}
 
 	.social-activity-item.selected {
-		background-color: #83BFFA;
+		background-color: #83bffa;
 	}
 
 	.social-activity-item.selected:after {
-		border: 14px solid #83BFFA;
-		border-color: transparent transparent transparent #83BFFA;
+		border: 14px solid #83bffa;
+		border-color: transparent transparent transparent #83bffa;
 		content: '';
 		display: block;
 		left: 100%;
@@ -53,8 +53,8 @@
 
 .social-activity-details {
 	.settings-display .settings-display-content {
-		background-color: #FFF;
-		border: 1px solid #CCC;
+		background-color: #fff;
+		border: 1px solid #ccc;
 		margin: 0 15px 5px 0;
 		padding: 0 15px;
 
@@ -93,7 +93,7 @@
 			min-height: 130px;
 
 			.content-field {
-				border-bottom: 1px solid #CCC;
+				border-bottom: 1px solid #ccc;
 				padding: 8px 0 8px 10px;
 
 				.settings-controls {
@@ -139,7 +139,7 @@
 		}
 
 		.settings-container-label {
-			border-bottom: 1px solid #CCC;
+			border-bottom: 1px solid #ccc;
 			font-size: 1.2em;
 			margin-top: 10px;
 			padding: 0 5px;

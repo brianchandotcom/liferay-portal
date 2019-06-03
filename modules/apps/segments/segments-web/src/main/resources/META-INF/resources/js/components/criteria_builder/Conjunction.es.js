@@ -37,22 +37,22 @@ class Conjunction extends React.Component {
 			className
 		);
 
-		return (
-			editing ?
-				<ClayButton
-					className={classnames}
-					label={this._getConjunctionLabel(
-						conjunctionName,
-						supportedConjunctions
-					)}
-					onClick={onClick}
-				/> :
-				<div className={classnames}>
-					{this._getConjunctionLabel(
-						conjunctionName,
-						supportedConjunctions
-					)}
-				</div>
+		return editing ? (
+			<ClayButton
+				className={classnames}
+				label={this._getConjunctionLabel(
+					conjunctionName,
+					supportedConjunctions
+				)}
+				onClick={onClick}
+			/>
+		) : (
+			<div className={classnames}>
+				{this._getConjunctionLabel(
+					conjunctionName,
+					supportedConjunctions
+				)}
+			</div>
 		);
 	}
 }

@@ -1,6 +1,6 @@
-@import "mixins";
+@import 'mixins';
 
-@import "mixins/site_navigation_menu_item_states";
+@import 'mixins/site_navigation_menu_item_states';
 
 $controlBarDesktopHeight: 120px;
 $managementBarHeight: 4rem;
@@ -47,12 +47,12 @@ body.open .site-navigation-management-bar {
 
 	&--dragging .card {
 		opacity: 0.4;
-		outline: 2px dashed #65B6F0;
+		outline: 2px dashed #65b6f0;
 	}
 
 	&--selected > &__content .card,
 	&.dragging > &__content .card {
-		background-color: #F0F5FF;
+		background-color: #f0f5ff;
 	}
 
 	&__card {

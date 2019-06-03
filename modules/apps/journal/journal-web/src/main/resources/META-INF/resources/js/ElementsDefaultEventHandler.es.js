@@ -20,8 +20,14 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 			function(event) {
 				let uri = itemData.redirectURL;
 
-				uri = Liferay.Util.addParams(namespace + 'sourceVersion=' + event.sourceversion, uri);
-				uri = Liferay.Util.addParams(namespace + 'targetVersion=' + event.targetversion, uri);
+				uri = Liferay.Util.addParams(
+					namespace + 'sourceVersion=' + event.sourceversion,
+					uri
+				);
+				uri = Liferay.Util.addParams(
+					namespace + 'targetVersion=' + event.targetversion,
+					uri
+				);
 
 				location.href = uri;
 			}
@@ -33,10 +39,14 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	delete(itemData) {
-		let message = Liferay.Language.get('are-you-sure-you-want-to-delete-this');
+		let message = Liferay.Language.get(
+			'are-you-sure-you-want-to-delete-this'
+		);
 
 		if (this.trashEnabled) {
-			message = Liferay.Language.get('are-you-sure-you-want-to-move-this-to-the-recycle-bin');
+			message = Liferay.Language.get(
+				'are-you-sure-you-want-to-move-this-to-the-recycle-bin'
+			);
 		}
 
 		if (confirm(message)) {
@@ -49,39 +59,41 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	permissions(itemData) {
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					destroyOnHide: true,
-					modal: true
-				},
-				dialogIframe: {
-					bodyCssClass: 'dialog-with-footer'
-				},
-				title: Liferay.Language.get('permissions'),
-				uri: itemData.permissionsURL
-			}
-		);
+		Liferay.Util.openWindow({
+			dialog: {
+				destroyOnHide: true,
+				modal: true
+			},
+			dialogIframe: {
+				bodyCssClass: 'dialog-with-footer'
+			},
+			title: Liferay.Language.get('permissions'),
+			uri: itemData.permissionsURL
+		});
 	}
 
 	preview(itemData) {
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					destroyOnHide: true,
-					modal: true
-				},
-				dialogIframe: {
-					bodyCssClass: 'dialog-with-footer'
-				},
-				title: itemData.title,
-				uri: itemData.previewURL
-			}
-		);
+		Liferay.Util.openWindow({
+			dialog: {
+				destroyOnHide: true,
+				modal: true
+			},
+			dialogIframe: {
+				bodyCssClass: 'dialog-with-footer'
+			},
+			title: itemData.title,
+			uri: itemData.previewURL
+		});
 	}
 
 	publishToLive(itemData) {
-		if (confirm(Liferay.Language.get('are-you-sure-you-want-to-publish-the-selected-web-content'))) {
+		if (
+			confirm(
+				Liferay.Language.get(
+					'are-you-sure-you-want-to-publish-the-selected-web-content'
+				)
+			)
+		) {
 			this._send(itemData.publishArticleURL);
 		}
 	}

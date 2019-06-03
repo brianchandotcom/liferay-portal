@@ -13,7 +13,6 @@ import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
  */
 
 class AdaptiveMediaOptionsHandler extends PortletBase {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -28,7 +27,10 @@ class AdaptiveMediaOptionsHandler extends PortletBase {
 		this.bindEventsProgressBarComponent_();
 
 		this.disableIcon = this.one('#icon-disable-' + this.uuid, 'body');
-		this.adaptRemainingIcon = this.one('#icon-adapt-remaining' + this.uuid, 'body');
+		this.adaptRemainingIcon = this.one(
+			'#icon-adapt-remaining' + this.uuid,
+			'body'
+		);
 	}
 
 	/**
@@ -56,7 +58,9 @@ class AdaptiveMediaOptionsHandler extends PortletBase {
 					);
 
 					this.eventHandler_.add(
-						progressBarComponent.on('finish', () => this.onFinish_())
+						progressBarComponent.on('finish', () =>
+							this.onFinish_()
+						)
 					);
 				}
 			);
@@ -127,7 +131,6 @@ class AdaptiveMediaOptionsHandler extends PortletBase {
  * @type {!Object}
  */
 AdaptiveMediaOptionsHandler.STATE = {
-
 	/**
 	 * Configuration entry's uuid.
 	 *

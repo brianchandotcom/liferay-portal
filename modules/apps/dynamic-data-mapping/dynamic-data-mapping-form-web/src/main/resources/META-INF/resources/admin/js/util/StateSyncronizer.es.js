@@ -11,24 +11,21 @@ class StateSyncronizer extends Component {
 		this._eventHandler = new EventHandler();
 
 		this._eventHandler.add(
-			descriptionEditor.on('change', this._handleDescriptionEditorChanged.bind(this)),
+			descriptionEditor.on(
+				'change',
+				this._handleDescriptionEditorChanged.bind(this)
+			),
 			nameEditor.on('change', this._handleNameEditorChanged.bind(this))
 		);
 
 		if (translationManager) {
 			this._eventHandler.add(
-				translationManager.on(
-					'deleteAvailableLocale',
-					({locale}) => {
-						this.deleteLanguageId(locale);
-					}
-				),
-				translationManager.on(
-					'editingLocaleChange',
-					event => {
-						this.syncEditors(event.newVal);
-					}
-				),
+				translationManager.on('deleteAvailableLocale', ({locale}) => {
+					this.deleteLanguageId(locale);
+				}),
+				translationManager.on('editingLocaleChange', event => {
+					this.syncEditors(event.newVal);
+				})
 			);
 		}
 	}
@@ -82,7 +79,11 @@ class StateSyncronizer extends Component {
 	}
 
 	getState() {
-		const {layoutProvider, localizedDescription, localizedName} = this.props;
+		const {
+			layoutProvider,
+			localizedDescription,
+			localizedName
+		} = this.props;
 
 		const state = {
 			availableLanguageIds: this.getAvailableLanguageIds(),
@@ -132,32 +133,35 @@ class StateSyncronizer extends Component {
 	syncInputs() {
 		const {namespace, settingsDDMForm} = this.props;
 		const state = this.getState();
-		const {
-			description,
-			name
-		} = state;
+		const {description, name} = state;
 
-		Object.keys(state.name).forEach(
-			key => {
-				state.name[key] = Liferay.Util.unescape(state.name[key]);
-			}
-		);
+		Object.keys(state.name).forEach(key => {
+			state.name[key] = Liferay.Util.unescape(state.name[key]);
+		});
 
-		Object.keys(state.description).forEach(
-			key => {
-				state.description[key] = Liferay.Util.unescape(state.description[key]);
-			}
-		);
+		Object.keys(state.description).forEach(key => {
+			state.description[key] = Liferay.Util.unescape(
+				state.description[key]
+			);
+		});
 
 		if (settingsDDMForm) {
 			const settings = settingsDDMForm.get('context');
 
-			document.querySelector(`#${namespace}serializedSettingsContext`).value = JSON.stringify(settings);
+			document.querySelector(
+				`#${namespace}serializedSettingsContext`
+			).value = JSON.stringify(settings);
 		}
 
-		document.querySelector(`#${namespace}name`).value = JSON.stringify(name);
-		document.querySelector(`#${namespace}description`).value = JSON.stringify(description);
-		document.querySelector(`#${namespace}serializedFormBuilderContext`).value = this._getSerializedFormBuilderContext();
+		document.querySelector(`#${namespace}name`).value = JSON.stringify(
+			name
+		);
+		document.querySelector(
+			`#${namespace}description`
+		).value = JSON.stringify(description);
+		document.querySelector(
+			`#${namespace}serializedFormBuilderContext`
+		).value = this._getSerializedFormBuilderContext();
 	}
 
 	_getSerializedFormBuilderContext() {
@@ -165,63 +169,59 @@ class StateSyncronizer extends Component {
 
 		const visitor = new PagesVisitor(state.pages);
 
-		const pages = visitor.mapPages(
-			page => {
-				return {
-					...page,
-					description: page.localizedDescription,
-					title: page.localizedTitle
-				};
-			}
-		);
+		const pages = visitor.mapPages(page => {
+			return {
+				...page,
+				description: page.localizedDescription,
+				title: page.localizedTitle
+			};
+		});
 
 		visitor.setPages(pages);
 
-		return JSON.stringify(
-			{
-				...state,
-				pages: visitor.mapFields(
-					field => {
-						return {
-							...field,
-							settingsContext: {
-								...field.settingsContext,
-								pages: this._getSerializedSettingsContextPages(field.settingsContext.pages)
-							}
-						};
+		return JSON.stringify({
+			...state,
+			pages: visitor.mapFields(field => {
+				return {
+					...field,
+					settingsContext: {
+						...field.settingsContext,
+						pages: this._getSerializedSettingsContextPages(
+							field.settingsContext.pages
+						)
 					}
-				)
-			}
-		);
+				};
+			})
+		});
 	}
 
 	_getSerializedSettingsContextPages(pages) {
 		const defaultLanguageId = this.getDefaultLanguageId();
 		const visitor = new PagesVisitor(pages);
 
-		return visitor.mapFields(
-			field => {
-				if (field.type === 'options') {
-					const {value} = field;
-					const newValue = {};
+		return visitor.mapFields(field => {
+			if (field.type === 'options') {
+				const {value} = field;
+				const newValue = {};
 
-					for (const locale in value) {
-						newValue[locale] = value[locale].filter(({value}) => value !== '');
-					}
-
-					if (!newValue[defaultLanguageId]) {
-						newValue[defaultLanguageId] = [];
-					}
-
-					field = {
-						...field,
-						value: newValue
-					};
+				for (const locale in value) {
+					newValue[locale] = value[locale].filter(
+						({value}) => value !== ''
+					);
 				}
 
-				return field;
+				if (!newValue[defaultLanguageId]) {
+					newValue[defaultLanguageId] = [];
+				}
+
+				field = {
+					...field,
+					value: newValue
+				};
 			}
-		);
+
+			return field;
+		});
 	}
 
 	_handleDescriptionEditorChanged() {

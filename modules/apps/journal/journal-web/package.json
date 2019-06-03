@@ -1,15 +1,4 @@
 {
-	"csfConfig": {
-		"path:**/*.js": {
-			"js": {
-				"lint": {
-					"globals": {
-						"MODULE_PATH": true
-					}
-				}
-			}
-		}
-	},
 	"dependencies": {
 		"clay-dropdown": "2.16.0",
 		"clay-label": "2.16.0",

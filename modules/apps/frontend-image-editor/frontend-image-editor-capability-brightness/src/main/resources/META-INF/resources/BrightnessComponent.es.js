@@ -12,12 +12,14 @@ import controlsTemplates from './BrightnessControls.soy';
  * Creates a Brightness component.
  */
 class BrightnessComponent extends Component {
-
 	/**
 	 * @inheritDoc
 	 */
 	attached() {
-		this.requestImageEditorPreview_ = debounce(this.requestImageEditorPreview, 50);
+		this.requestImageEditorPreview_ = debounce(
+			this.requestImageEditorPreview,
+			50
+		);
 
 		this.cache_ = {};
 	}
@@ -84,7 +86,7 @@ class BrightnessComponent extends Component {
 			let workerURI = this.modulePath + '/BrightnessWorker.js';
 			let processWorker = new Worker(workerURI);
 
-			processWorker.onmessage = (event) => resolve(event.data);
+			processWorker.onmessage = event => resolve(event.data);
 			processWorker.postMessage(message);
 		});
 	}
@@ -97,7 +99,6 @@ class BrightnessComponent extends Component {
  * @type {!Object}
  */
 BrightnessComponent.STATE = {
-
 	/**
 	 * Path of this module.
 	 *

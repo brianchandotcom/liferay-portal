@@ -7,13 +7,15 @@
 	}
 
 	tr {
-		th, td {
+		th,
+		td {
 			border-bottom: 1px solid transparent;
 			height: 25px;
 			text-align: center;
 		}
 
-		&.portlet-section-header th, td {
+		&.portlet-section-header th,
+		td {
 			border: 1px solid transparent;
 			border-bottom-width: 0;
 			border-top-width: 0;

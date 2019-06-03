@@ -1,11 +1,12 @@
-@import "mixins";
+@import 'mixins';
 
 .portlet-asset-publisher {
 	.addbutton-timeline-item {
 		position: relative;
 	}
 
-	.asset-content, .asset-full-content {
+	.asset-content,
+	.asset-full-content {
 		word-wrap: break-word;
 
 		img {
@@ -32,12 +33,12 @@
 	}
 
 	.preview-asset-entry {
-		border: 1px solid #0B5FFF;
+		border: 1px solid #0b5fff;
 		border-radius: 0;
 	}
 
 	.timeline-increment-icon.add-condition:before {
-		background-color: #869CAD;
+		background-color: #869cad;
 		bottom: 37px;
 		content: '';
 		display: block;
@@ -50,7 +51,7 @@
 	.timeline-increment-icon.add-condition {
 		.form-builder-timeline-add-item {
 			border-radius: 100%;
-			color: #FFF;
+			color: #fff;
 			margin-left: 10px;
 			margin-top: -72px;
 			padding: 0;
@@ -60,7 +61,7 @@
 	.timeline-item {
 		&:first-child {
 			.timeline-icon {
-				background-color: #869CAD;
+				background-color: #869cad;
 			}
 
 			&:before {
@@ -95,7 +96,7 @@
 			top: 0;
 
 			&:hover {
-				color: #65B6F0;
+				color: #65b6f0;
 			}
 
 			> .btn {
@@ -107,7 +108,8 @@
 			}
 		}
 
-		.categoriesselector-content, .tagselector-content {
+		.categoriesselector-content,
+		.tagselector-content {
 			.textboxlistentry-holder {
 				padding: 0 0 4px;
 
@@ -121,13 +123,13 @@
 			position: relative;
 
 			.textboxlistentry-holder {
-				border-bottom: 2px solid #869CAD;
+				border-bottom: 2px solid #869cad;
 				margin-bottom: 10px;
 				min-height: 2.5em;
 			}
 
 			.btn-toolbar-content {
-				background-color: #FFF;
+				background-color: #fff;
 				bottom: -6px;
 				padding: 15px 5px;
 				position: absolute;
@@ -135,14 +137,15 @@
 			}
 		}
 
-		.categoriesselector-content, .tagselector-content {
+		.categoriesselector-content,
+		.tagselector-content {
 			li:not(.textboxlist-input-container) {
-				background-color: #E7F1F9;
+				background-color: #e7f1f9;
 				border: 0;
-				color: #65B6F0;
+				color: #65b6f0;
 
 				.textboxlistentry-remove {
-					color: #65B6F0;
+					color: #65b6f0;
 				}
 			}
 

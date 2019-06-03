@@ -5,10 +5,16 @@ AUI.add(
 
 		var SoyTemplateUtil = {
 			getTemplateRenderer: function(templateNamespace) {
-				var renderer = AObject.getValue(window, templateNamespace.split('.'));
+				var renderer = AObject.getValue(
+					window,
+					templateNamespace.split('.')
+				);
 
 				if (!renderer) {
-					throw new Error('Form template renderer is not defined: "' + templateNamespace);
+					throw new Error(
+						'Form template renderer is not defined: "' +
+							templateNamespace
+					);
 				}
 
 				return renderer;

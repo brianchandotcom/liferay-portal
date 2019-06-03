@@ -13,7 +13,6 @@ import objectToFormData from './util/form/object_to_form_data.es';
  */
 
 class PortletBase extends Component {
-
 	/**
 	 * Returns a NodeList containing all of the matching Element nodes within
 	 * the subtrees of the root object, in tree order. If there are no matching
@@ -49,14 +48,11 @@ class PortletBase extends Component {
 	fetch(url, body) {
 		const requestBody = this.getRequestBody_(body);
 
-		return fetch(
-			url,
-			{
-				body: requestBody,
-				credentials: 'include',
-				method: 'POST'
-			}
-		);
+		return fetch(url, {
+			body: requestBody,
+			credentials: 'include',
+			method: 'POST'
+		});
 	}
 
 	/**
@@ -71,16 +67,11 @@ class PortletBase extends Component {
 
 		if (body instanceof FormData) {
 			requestBody = body;
-		}
-		else if (body instanceof HTMLFormElement) {
+		} else if (body instanceof HTMLFormElement) {
 			requestBody = new FormData(body);
-		}
-		else if (typeof body === 'object') {
-			requestBody = objectToFormData(
-				this.ns(body)
-			);
-		}
-		else {
+		} else if (typeof body === 'object') {
+			requestBody = objectToFormData(this.ns(body));
+		} else {
 			requestBody = body;
 		}
 
@@ -113,10 +104,7 @@ class PortletBase extends Component {
 	 */
 
 	ns(obj) {
-		return Liferay.Util.ns(
-			this.portletNamespace || this.namespace,
-			obj
-		);
+		return Liferay.Util.ns(this.portletNamespace || this.namespace, obj);
 	}
 
 	/**
@@ -165,7 +153,6 @@ class PortletBase extends Component {
  */
 
 PortletBase.STATE = {
-
 	/**
 	 * Portlet's namespace
 	 * @deprecated since 7.1

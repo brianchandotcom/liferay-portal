@@ -14,9 +14,7 @@ class KeyValue extends Component {}
 Soy.register(KeyValue, templates, 'render');
 
 if (!window.DDMKeyValue) {
-	window.DDMKeyValue = {
-
-	};
+	window.DDMKeyValue = {};
 }
 
 window.DDMKeyValue.render = KeyValue;

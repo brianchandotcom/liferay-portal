@@ -1,15 +1,15 @@
 .alloy-editor-container {
 	.alloy-editor {
 		&.alloy-editor-placeholder {
-			color: #2B4259;
+			color: #2b4259;
 
 			&.ae-placeholder:not(:focus) {
-				border-left-color: #DBDDE1;
-				color: #B0B4BB;
+				border-left-color: #dbdde1;
+				color: #b0b4bb;
 			}
 
 			&.readonly {
-				color: #CCC;
+				color: #ccc;
 			}
 		}
 
@@ -17,12 +17,12 @@
 	}
 
 	.alloy-editor-icon {
-		color: #869CAD;
+		color: #869cad;
 	}
 }
 
 .has-error .alloy-editor-container .alloy-editor.alloy-editor-placeholder {
 	&.ae-placeholder:not(:focus) {
-		border-left-color: #CC6677;
+		border-left-color: #cc6677;
 	}
 }

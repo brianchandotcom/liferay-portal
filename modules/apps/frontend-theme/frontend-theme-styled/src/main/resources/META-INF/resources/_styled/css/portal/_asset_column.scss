@@ -1,14 +1,14 @@
 .lfr-asset-column-actions-content {
-	background-color: #D7F1FF;
+	background-color: #d7f1ff;
 }
 
 .lfr-asset-column-actions .lfr-asset-column-actions-content {
-	border-color: #88C5D9;
+	border-color: #88c5d9;
 }
 
 .lfr-asset-column-details {
 	.lfr-asset-categories {
-		color: #7D7D7D;
+		color: #7d7d7d;
 
 		.lfr-asset-category {
 			color: #555;
@@ -28,7 +28,7 @@
 	}
 
 	.lfr-asset-tags {
-		color: #7D7D7D;
+		color: #7d7d7d;
 
 		.tag {
 			color: #555;
@@ -36,8 +36,9 @@
 	}
 }
 
-.lfr-asset-panels, .lfr-asset-column-details {
+.lfr-asset-panels,
+.lfr-asset-column-details {
 	.lfr-panel.lfr-extended {
-		border-color: #CCC;
+		border-color: #ccc;
 	}
 }

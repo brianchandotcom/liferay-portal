@@ -27,7 +27,8 @@ td.stretch {
 	&.cke_toolbar__a11yhelpbtn {
 		float: right;
 
-		.cke_toolgroup, .cke_toolgroup:hover {
+		.cke_toolgroup,
+		.cke_toolgroup:hover {
 			border-width: 0;
 			margin-bottom: 0;
 			margin-top: 5px;
@@ -53,7 +54,9 @@ td.stretch {
 }
 
 .mac {
-	.cke_toolbar.cke_toolbar__a11yhelpbtn .cke_button .cke_button__a11ybtn_label:after {
+	.cke_toolbar.cke_toolbar__a11yhelpbtn
+		.cke_button
+		.cke_button__a11ybtn_label:after {
 		content: 'Option+0';
 	}
 }

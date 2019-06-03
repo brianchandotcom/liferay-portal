@@ -51,7 +51,8 @@
 		}
 
 		&.vertical {
-			.source-panel, .preview-panel {
+			.source-panel,
+			.preview-panel {
 				height: 100%;
 				width: 50%;
 			}
@@ -64,7 +65,8 @@
 		}
 
 		&.horizontal {
-			.source-panel, .preview-panel {
+			.source-panel,
+			.preview-panel {
 				height: 50%;
 				width: 100%;
 			}
@@ -76,7 +78,8 @@
 		}
 
 		&.simple {
-			.panel-splitter, .preview-panel {
+			.panel-splitter,
+			.preview-panel {
 				display: none;
 			}
 

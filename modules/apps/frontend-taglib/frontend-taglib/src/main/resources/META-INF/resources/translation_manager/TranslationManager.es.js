@@ -15,7 +15,6 @@ import templates from './TranslationManager.soy';
  * @review
  */
 class TranslationManager extends Component {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -110,12 +109,9 @@ class TranslationManager extends Component {
 						this.resetEditingLocale_();
 					}
 
-					this.emit(
-						'deleteAvailableLocale',
-						{
-							locale: localeId
-						}
-					);
+					this.emit('deleteAvailableLocale', {
+						locale: localeId
+					});
 				}
 			}
 		};
@@ -141,14 +137,11 @@ class TranslationManager extends Component {
 	startCompatibility_() {
 		this.destroy = this.dispose;
 
-		this.compatibilityEventProxy_ = new CompatibilityEventProxy(
-			{
-				host: this,
-				namespace: 'translationmanager'
-			}
-		);
+		this.compatibilityEventProxy_ = new CompatibilityEventProxy({
+			host: this,
+			namespace: 'translationmanager'
+		});
 	}
-
 }
 
 /**
@@ -159,7 +152,6 @@ class TranslationManager extends Component {
  * @type {!Object}
  */
 TranslationManager.STATE = {
-
 	/**
 	 * Current editing language key.
 	 * @review

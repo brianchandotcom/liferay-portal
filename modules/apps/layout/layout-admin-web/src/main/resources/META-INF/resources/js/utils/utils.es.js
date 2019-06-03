@@ -12,18 +12,13 @@
 
 function setIn(object, keyPath, value) {
 	const nextKey = keyPath[0];
-	const target = object instanceof Array ?
-		[...object] :
-		Object.assign({}, object);
+	const target =
+		object instanceof Array ? [...object] : Object.assign({}, object);
 
 	let nextValue = value;
 
 	if (keyPath.length > 1) {
-		nextValue = setIn(
-			object[nextKey] || {},
-			keyPath.slice(1),
-			value
-		);
+		nextValue = setIn(object[nextKey] || {}, keyPath.slice(1), value);
 	}
 
 	target[nextKey] = nextValue;

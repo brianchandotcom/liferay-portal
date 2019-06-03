@@ -5,8 +5,7 @@
  * @review
  */
 const shouldUpdatePureComponent = changes => {
-	return Object
-		.values(changes)
+	return Object.values(changes)
 		.filter(change => change.key !== 'events')
 		.some(change => change.newVal !== change.prevVal);
 };
@@ -18,13 +17,9 @@ const shouldUpdatePureComponent = changes => {
  * @return {boolean}
  */
 const shouldUpdateOnChangeProperties = (changes, properties) => {
-	return Object
-		.values(changes)
+	return Object.values(changes)
 		.filter(change => properties.indexOf(change.key) !== -1)
 		.some(change => change.newVal !== change.prevVal);
 };
 
-export {
-	shouldUpdatePureComponent,
-	shouldUpdateOnChangeProperties
-};
+export {shouldUpdatePureComponent, shouldUpdateOnChangeProperties};

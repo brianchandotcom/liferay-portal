@@ -3,103 +3,127 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var ExportImportManagementBarButton = A.Component.create(
-			{
-				ATTRS: {
-					actionNamespace : {
-						validator: Lang.isString()
-					},
-
-					cmd : {
-						validator: Lang.isString()
-					},
-
-					exportImportEntityUrl : {
-						validator: Lang.isString()
-					},
-
-					searchContainerId: {
-						validator: Lang.isString
-					},
-
-					searchContainerMappingId: {
-						validator: Lang.isString
-					}
+		var ExportImportManagementBarButton = A.Component.create({
+			ATTRS: {
+				actionNamespace: {
+					validator: Lang.isString()
 				},
 
-				AUGMENTS: [Liferay.PortletBase],
+				cmd: {
+					validator: Lang.isString()
+				},
 
-				EXTENDS: A.Base,
+				exportImportEntityUrl: {
+					validator: Lang.isString()
+				},
 
-				NAME: 'exportImportManagementBarButton',
+				searchContainerId: {
+					validator: Lang.isString
+				},
 
-				prototype: {
-					initializer: function(config) {
-						var instance = this;
+				searchContainerMappingId: {
+					validator: Lang.isString
+				}
+			},
 
-						var namespace = instance.NS;
+			AUGMENTS: [Liferay.PortletBase],
 
-						var searchContainer = Liferay.SearchContainer.get(namespace + instance.get('searchContainerId'));
+			EXTENDS: A.Base,
 
-						instance._searchContainer = searchContainer;
+			NAME: 'exportImportManagementBarButton',
 
-						instance._bindUI();
-					},
+			prototype: {
+				initializer: function(config) {
+					var instance = this;
 
-					destructor: function() {
-						var instance = this;
+					var namespace = instance.NS;
 
-						(new A.EventHandle(instance._eventHandles)).detach();
-					},
+					var searchContainer = Liferay.SearchContainer.get(
+						namespace + instance.get('searchContainerId')
+					);
 
-					_bindUI: function() {
-						var instance = this;
+					instance._searchContainer = searchContainer;
 
-						instance._eventHandles = [
-							Liferay.on(instance.ns(instance.get('cmd')), instance._exportImportEntity, instance)
-						];
-					},
+					instance._bindUI();
+				},
 
-					_exportImportEntity: function() {
-						var instance = this;
+				destructor: function() {
+					var instance = this;
 
-						var searchContainer = instance._searchContainer.plug(A.Plugin.SearchContainerSelect);
+					new A.EventHandle(instance._eventHandles).detach();
+				},
 
-						var selectedRows = searchContainer.select.getAllSelectedElements();
+				_bindUI: function() {
+					var instance = this;
 
-						var namespace = instance.NS;
+					instance._eventHandles = [
+						Liferay.on(
+							instance.ns(instance.get('cmd')),
+							instance._exportImportEntity,
+							instance
+						)
+					];
+				},
 
-						var searchContainerMapping = A.one('#' + namespace + instance.get('searchContainerMappingId'));
+				_exportImportEntity: function() {
+					var instance = this;
 
-						var form = document.getElementById('hrefFm');
+					var searchContainer = instance._searchContainer.plug(
+						A.Plugin.SearchContainerSelect
+					);
 
-						if (form) {
-							selectedRows._nodes.forEach(
-								function(selectedElement) {
-									var node = searchContainerMapping.one('div[data-rowpk=' + selectedElement.value + ']');
+					var selectedRows = searchContainer.select.getAllSelectedElements();
 
-									var input = $("<input>")
-										.attr("type", "hidden")
-										.attr("name", instance.get('actionNamespace') + "exportingEntities")
-										.val(node.attr('data-classNameId') + '#' + node.attr('data-groupId') + "#" + node.attr('data-uuid'));
+					var namespace = instance.NS;
 
-									form.append(input);
-								}
+					var searchContainerMapping = A.one(
+						'#' +
+							namespace +
+							instance.get('searchContainerMappingId')
+					);
+
+					var form = document.getElementById('hrefFm');
+
+					if (form) {
+						selectedRows._nodes.forEach(function(selectedElement) {
+							var node = searchContainerMapping.one(
+								'div[data-rowpk=' + selectedElement.value + ']'
 							);
 
-							form.setAttribute('method', 'POST');
+							var input = $('<input>')
+								.attr('type', 'hidden')
+								.attr(
+									'name',
+									instance.get('actionNamespace') +
+										'exportingEntities'
+								)
+								.val(
+									node.attr('data-classNameId') +
+										'#' +
+										node.attr('data-groupId') +
+										'#' +
+										node.attr('data-uuid')
+								);
 
-							submitForm(form, instance.get('exportImportEntityUrl'));
-						}
+							form.append(input);
+						});
+
+						form.setAttribute('method', 'POST');
+
+						submitForm(form, instance.get('exportImportEntityUrl'));
 					}
 				}
 			}
-		);
+		});
 
 		Liferay.ExportImportManagementBarButton = ExportImportManagementBarButton;
 	},
 	'',
 	{
-		requires: ['aui-component', 'liferay-search-container', 'liferay-search-container-select']
+		requires: [
+			'aui-component',
+			'liferay-search-container',
+			'liferay-search-container-select'
+		]
 	}
 );

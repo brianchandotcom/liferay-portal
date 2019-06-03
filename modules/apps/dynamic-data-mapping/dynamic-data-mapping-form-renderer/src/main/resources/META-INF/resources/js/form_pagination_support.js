@@ -3,8 +3,7 @@ AUI.add(
 	function(A) {
 		var Renderer = Liferay.DDM.Renderer;
 
-		var FormPaginationSupport = function() {
-		};
+		var FormPaginationSupport = function() {};
 
 		FormPaginationSupport.ATTRS = {
 			pagesState: {
@@ -50,17 +49,15 @@ AUI.add(
 
 				var pageNode = instance.getCurrentPageNode();
 
-				instance.eachNestedField(
-					function(field) {
-						var visible = field.get('visible');
+				instance.eachNestedField(function(field) {
+					var visible = field.get('visible');
 
-						if (visible && pageNode.contains(field.get('container'))) {
-							firstField = field;
-						}
-
-						return !!firstField;
+					if (visible && pageNode.contains(field.get('container'))) {
+						firstField = field;
 					}
-				);
+
+					return !!firstField;
+				});
 
 				return firstField;
 			},
@@ -83,17 +80,21 @@ AUI.add(
 				var instance = this;
 
 				if (!instance.pagination) {
-					instance.pagination = new A.Pagination(
-						{
-							circular: false,
-							page: 1,
-							total: instance.getPagesTotal()
-						}
-					);
+					instance.pagination = new A.Pagination({
+						circular: false,
+						page: 1,
+						total: instance.getPagesTotal()
+					});
 
 					instance._eventHandlers.push(
-						instance.pagination.after('pageChange', A.bind('_afterPaginationPageChange', instance)),
-						instance.pagination.on('changeRequest', A.bind('_onPaginationChangeRequest', instance))
+						instance.pagination.after(
+							'pageChange',
+							A.bind('_afterPaginationPageChange', instance)
+						),
+						instance.pagination.on(
+							'changeRequest',
+							A.bind('_onPaginationChangeRequest', instance)
+						)
 					);
 				}
 
@@ -111,19 +112,18 @@ AUI.add(
 
 				var pageIndex = pagination.get('page');
 
-				instance.validatePage(
-					instance.getPageNode(pageIndex),
-					function(hasErrors) {
-						if (!hasErrors) {
-							do {
-								page = pages[pageIndex];
-								pageIndex++;
-							} while (!page.enabled);
+				instance.validatePage(instance.getPageNode(pageIndex), function(
+					hasErrors
+				) {
+					if (!hasErrors) {
+						do {
+							page = pages[pageIndex];
+							pageIndex++;
+						} while (!page.enabled);
 
-							pagination.set('page', pageIndex);
-						}
+						pagination.set('page', pageIndex);
 					}
-				);
+				});
 			},
 
 			prevPage: function() {
@@ -155,11 +155,9 @@ AUI.add(
 
 				var pagination = instance.getPagination();
 
-				pagination.setState(
-					{
-						page: page
-					}
-				);
+				pagination.setState({
+					page: page
+				});
 
 				instance._firePageViewedEvent(page);
 			},
@@ -171,7 +169,11 @@ AUI.add(
 
 				if (controls) {
 					instance._eventHandlers.push(
-						controls.delegate('click', A.bind('_onClickPaginationControls', instance), 'button')
+						controls.delegate(
+							'click',
+							A.bind('_onClickPaginationControls', instance),
+							'button'
+						)
 					);
 
 					instance._syncPaginationControlsUI();
@@ -182,23 +184,19 @@ AUI.add(
 				var paginatedNode = container.one('.lfr-ddm-form-paginated');
 
 				if (container.inDoc() && paginatedNode) {
-					instance.paginated = new Renderer.Paginated(
-						{
-							boundingBox: paginatedNode,
-							srcNode: paginatedNode.one('> ul')
-						}
-					).render();
+					instance.paginated = new Renderer.Paginated({
+						boundingBox: paginatedNode,
+						srcNode: paginatedNode.one('> ul')
+					}).render();
 				}
 
 				var wizardNode = container.one('.lfr-ddm-form-wizard');
 
 				if (container.inDoc() && wizardNode) {
-					instance.wizard = new Renderer.Wizard(
-						{
-							boundingBox: wizardNode,
-							srcNode: wizardNode.one('> ul')
-						}
-					).render();
+					instance.wizard = new Renderer.Wizard({
+						boundingBox: wizardNode,
+						srcNode: wizardNode.one('> ul')
+					}).render();
 				}
 
 				var context = instance.get('context');
@@ -233,13 +231,10 @@ AUI.add(
 				var formId = instance.getFormId();
 
 				if (formId > 0) {
-					Liferay.fire(
-						'ddmFormPageHide',
-						{
-							formId: formId,
-							page: event.prevVal - 1
-						}
-					);
+					Liferay.fire('ddmFormPageHide', {
+						formId: formId,
+						page: event.prevVal - 1
+					});
 
 					instance._firePageViewedEvent(event.newVal);
 				}
@@ -263,14 +258,11 @@ AUI.add(
 
 					var pageTitle = pageContext.title;
 
-					Liferay.fire(
-						'ddmFormPageShow',
-						{
-							formId: formId,
-							page: page - 1,
-							title: pageTitle
-						}
-					);
+					Liferay.fire('ddmFormPageShow', {
+						formId: formId,
+						page: page - 1,
+						title: pageTitle
+					});
 				}
 			},
 
@@ -313,8 +305,9 @@ AUI.add(
 
 				if (currentTarget.hasClass('lfr-ddm-form-pagination-prev')) {
 					instance.prevPage();
-				}
-				else if (currentTarget.hasClass('lfr-ddm-form-pagination-next')) {
+				} else if (
+					currentTarget.hasClass('lfr-ddm-form-pagination-next')
+				) {
 					instance.nextPage();
 				}
 			},
@@ -332,8 +325,7 @@ AUI.add(
 					event.preventDefault();
 
 					pagination.set('page', nextPage);
-				}
-				else {
+				} else {
 					pagination.set('page', nextPage);
 				}
 			},
@@ -346,8 +338,7 @@ AUI.add(
 						pagesState[i] = {
 							enabled: true
 						};
-					}
-					else {
+					} else {
 						pagesState[i] = {
 							enabled: pages[i].enabled
 						};
@@ -365,8 +356,7 @@ AUI.add(
 				if (paginated) {
 					if (currentPage > prevPage) {
 						paginated.complete(prevPage - 1);
-					}
-					else {
+					} else {
 						paginated.clear(prevPage - 1);
 					}
 
@@ -386,16 +376,13 @@ AUI.add(
 				if (pagesTotal == 1) {
 					nextButton.hide();
 					prevButton.hide();
-				}
-				else if (currentPage === 1) {
+				} else if (currentPage === 1) {
 					nextButton.show();
 					prevButton.hide();
-				}
-				else if (currentPage == pagesTotal) {
+				} else if (currentPage == pagesTotal) {
 					nextButton.hide();
 					prevButton.show();
-				}
-				else {
+				} else {
 					nextButton.show();
 					prevButton.show();
 				}
@@ -405,7 +392,9 @@ AUI.add(
 				if (submitButton) {
 					var readOnly = instance.get('readOnly');
 
-					submitButton.toggle(currentPage === pagesTotal && !readOnly);
+					submitButton.toggle(
+						currentPage === pagesTotal && !readOnly
+					);
 				}
 			},
 
@@ -417,8 +406,7 @@ AUI.add(
 				if (wizard) {
 					if (currentPage > prevPage) {
 						wizard.complete(prevPage - 1);
-					}
-					else {
+					} else {
 						wizard.clear(prevPage - 1);
 					}
 
@@ -433,10 +421,16 @@ AUI.add(
 			}
 		};
 
-		Liferay.namespace('DDM.Renderer').FormPaginationSupport = FormPaginationSupport;
+		Liferay.namespace(
+			'DDM.Renderer'
+		).FormPaginationSupport = FormPaginationSupport;
 	},
 	'',
 	{
-		requires: ['aui-pagination', 'liferay-ddm-form-renderer-paginated', 'liferay-ddm-form-renderer-wizard']
+		requires: [
+			'aui-pagination',
+			'liferay-ddm-form-renderer-paginated',
+			'liferay-ddm-form-renderer-wizard'
+		]
 	}
 );

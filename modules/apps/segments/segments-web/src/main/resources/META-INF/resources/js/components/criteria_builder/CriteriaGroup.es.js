@@ -94,17 +94,16 @@ class CriteriaGroup extends Component {
 			item => item.name === criteria.conjunctionName
 		);
 
-		const conjunctionSelected = index === supportedConjunctions.length - 1 ?
-			supportedConjunctions[0].name :
-			supportedConjunctions[index + 1].name;
+		const conjunctionSelected =
+			index === supportedConjunctions.length - 1
+				? supportedConjunctions[0].name
+				: supportedConjunctions[index + 1].name;
 
-		onChange(
-			{
-				...criteria,
-				conjunctionName: conjunctionSelected
-			}
-		);
-	}
+		onChange({
+			...criteria,
+			conjunctionName: conjunctionSelected
+		});
+	};
 
 	/**
 	 * Adds a new criterion in a group at the specified index. If the criteria
@@ -140,66 +139,49 @@ class CriteriaGroup extends Component {
 		);
 
 		const newCriterion = {
-			operatorName: operatorName ?
-				operatorName :
-				operators[0].name,
+			operatorName: operatorName ? operatorName : operators[0].name,
 			propertyName,
 			type,
 			value: criterionValue
 		};
 
 		if (root && !criteria) {
-			onChange(
-				{
-					conjunctionName: CONJUNCTIONS.AND,
-					groupId: generateGroupId(),
-					items: [newCriterion]
-				}
-			);
+			onChange({
+				conjunctionName: CONJUNCTIONS.AND,
+				groupId: generateGroupId(),
+				items: [newCriterion]
+			});
+		} else {
+			onChange({
+				...criteria,
+				items: insertAtIndex(newCriterion, criteria.items, index)
+			});
 		}
-		else {
-			onChange(
-				{
-					...criteria,
-					items: insertAtIndex(
-						newCriterion,
-						criteria.items,
-						index
-					)
-				}
-			);
-		}
-	}
+	};
 
 	_handleCriterionChange = index => newCriterion => {
 		const {criteria, onChange} = this.props;
 
-		onChange(
-			{
-				...criteria,
-				items: replaceAtIndex(newCriterion, criteria.items, index)
-			}
-		);
-	}
+		onChange({
+			...criteria,
+			items: replaceAtIndex(newCriterion, criteria.items, index)
+		});
+	};
 
 	_handleCriterionDelete = index => {
 		const {criteria, onChange} = this.props;
 
-		onChange(
-			{
-				...criteria,
-				items: criteria.items.filter(
-					(fItem, fIndex) => fIndex !== index
-				)
-			}
-		);
-	}
+		onChange({
+			...criteria,
+			items: criteria.items.filter((fItem, fIndex) => fIndex !== index)
+		});
+	};
 
 	_isCriteriaEmpty = () => {
 		const {criteria} = this.props;
 
 		return criteria ? !criteria.items.length : true;
-	}
+	};
 
 	_renderConjunction = index => {
 		const {
@@ -238,7 +220,7 @@ class CriteriaGroup extends Component {
 				/>
 			</Fragment>
 		);
-	}
+	};
 
 	_renderCriterion = (criterion, index) => {
 		const {
@@ -255,12 +237,9 @@ class CriteriaGroup extends Component {
 			supportedPropertyTypes
 		} = this.props;
 
-		const classes = getCN(
-			'criterion',
-			{
-				'criterion-group': criterion.items
-			}
-		);
+		const classes = getCN('criterion', {
+			'criterion-group': criterion.items
+		});
 
 		return (
 			<div className={classes}>
@@ -310,7 +289,7 @@ class CriteriaGroup extends Component {
 				/>
 			</div>
 		);
-	}
+	};
 
 	render() {
 		const {
@@ -336,18 +315,18 @@ class CriteriaGroup extends Component {
 				'dnd-drag': dragging
 			}
 		);
-		const singleRow = criteria && criteria.items && criteria.items.length === 1;
+		const singleRow =
+			criteria && criteria.items && criteria.items.length === 1;
 
 		return connectDragPreview(
-			<div
-				className={classes}
-			>
-				{this._isCriteriaEmpty() ?
+			<div className={classes}>
+				{this._isCriteriaEmpty() ? (
 					<EmptyDropZone
 						emptyContributors={emptyContributors}
 						onCriterionAdd={this._handleCriterionAdd}
 						propertyKey={propertyKey}
-					/> :
+					/>
+				) : (
 					<Fragment>
 						<DropZone
 							before
@@ -358,14 +337,17 @@ class CriteriaGroup extends Component {
 							propertyKey={propertyKey}
 						/>
 
-						{editing && singleRow && !root && connectDragSource(
-							<div className="criteria-group-drag-icon drag-icon">
-								<ClayIcon iconName="drag" />
-							</div>
-						)}
+						{editing &&
+							singleRow &&
+							!root &&
+							connectDragSource(
+								<div className='criteria-group-drag-icon drag-icon'>
+									<ClayIcon iconName='drag' />
+								</div>
+							)}
 
-						{criteria.items && criteria.items.map(
-							(criterion, index) => {
+						{criteria.items &&
+							criteria.items.map((criterion, index) => {
 								return (
 									<Fragment key={index}>
 										{index !== 0 &&
@@ -377,10 +359,9 @@ class CriteriaGroup extends Component {
 										)}
 									</Fragment>
 								);
-							}
-						)}
+							})}
 					</Fragment>
-				}
+				)}
 			</div>
 		);
 	}

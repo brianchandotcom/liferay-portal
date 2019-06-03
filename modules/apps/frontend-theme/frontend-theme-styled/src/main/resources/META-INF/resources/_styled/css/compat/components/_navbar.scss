@@ -63,7 +63,9 @@
 		&.collapse-basic-search {
 			.basic-search {
 				@include media-breakpoint-down($scaling-breakpoint-down) {
-					border-width: $navbar-border-top-width $navbar-border-right-width $navbar-border-bottom-width $navbar-border-left-width;
+					border-width: $navbar-border-top-width
+						$navbar-border-right-width $navbar-border-bottom-width
+						$navbar-border-left-width;
 					left: -$navbar-border-left-width;
 					right: -$navbar-border-right-width;
 					top: -$navbar-border-top-width;
@@ -98,7 +100,10 @@
 	.navbar-default,
 	.navbar-inverse {
 		border-style: solid;
-		border-width: $navbar-border-top-width $navbar-border-right-width $navbar-border-bottom-width $navbar-border-left-width;
+		border-width: $navbar-border-top-width
+			$navbar-border-right-width
+			$navbar-border-bottom-width
+			$navbar-border-left-width;
 
 		.container-fluid-1280 {
 			@include media-breakpoint-up(md) {
@@ -147,14 +152,16 @@
 		.navbar-nav > li > a {
 			color: $navbar-light-color;
 
-			&:focus, &:hover {
+			&:focus,
+			&:hover {
 				color: $navbar-light-hover-color;
 			}
 		}
 
 		.navbar-nav > .active > a,
 		.navbar-toggle-page-name {
-			&, &:hover {
+			&,
+			&:hover {
 				color: $navbar-light-active-color;
 			}
 
@@ -184,14 +191,16 @@
 		.navbar-nav > li > a {
 			color: $navbar-dark-color;
 
-			&:focus, &:hover {
+			&:focus,
+			&:hover {
 				color: $navbar-dark-hover-color;
 			}
 		}
 
 		.navbar-nav > .active > a,
 		.navbar-toggle-page-name {
-			&, &:hover {
+			&,
+			&:hover {
 				color: $navbar-dark-active-color;
 			}
 

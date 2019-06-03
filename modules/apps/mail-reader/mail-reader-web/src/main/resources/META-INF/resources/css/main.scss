@@ -1,4 +1,4 @@
-@import "bourbon";
+@import 'bourbon';
 
 .mail-portlet {
 	.controls-list {
@@ -6,8 +6,8 @@
 	}
 
 	#messageContentContainer {
-		background-color: #FFF;
-		border: solid #C8C9CA;
+		background-color: #fff;
+		border: solid #c8c9ca;
 		border-width: 1px 0;
 		margin: 1em 0;
 		min-height: 2em;
@@ -31,7 +31,8 @@
 					width: 25%;
 				}
 
-				.attachments, .check {
+				.attachments,
+				.check {
 					text-align: center;
 					width: 5%;
 				}
@@ -51,11 +52,12 @@
 		font-weight: bold;
 
 		td {
-			background-color: #FFF;
+			background-color: #fff;
 		}
 	}
 
-	.draft-link, .message-link {
+	.draft-link,
+	.message-link {
 		cursor: pointer;
 	}
 
@@ -69,7 +71,7 @@
 	}
 
 	.message-header {
-		background-color: #FAFAFA;
+		background-color: #fafafa;
 		color: #999;
 		margin: 1em 0;
 		overflow: auto;
@@ -107,13 +109,15 @@
 		text-decoration: underline;
 	}
 
-	.add-folder-container .field-content, .search .field-content {
+	.add-folder-container .field-content,
+	.search .field-content {
 		display: inline-block;
 	}
 }
 
 .mail-portlet .table-bordered {
-	th, td {
+	th,
+	td {
 		&.attachments {
 			border-left-width: 0;
 		}

@@ -3,10 +3,10 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var TPL_ERROR_MESSAGE = '<div class="form-feedback-item help-block">{errorMessage}</div>';
+		var TPL_ERROR_MESSAGE =
+			'<div class="form-feedback-item help-block">{errorMessage}</div>';
 
-		var FieldFeedbackSupport = function() {
-		};
+		var FieldFeedbackSupport = function() {};
 
 		FieldFeedbackSupport.ATTRS = {
 			errorMessage: {
@@ -21,8 +21,14 @@ AUI.add(
 				instance._errorMessageNode = instance._createErrorMessageNode();
 
 				instance._eventHandlers.push(
-					instance.after('errorMessageChange', instance._afterErrorMessageChange),
-					instance.after('visibleChange', instance._afterVisibleChange)
+					instance.after(
+						'errorMessageChange',
+						instance._afterErrorMessageChange
+					),
+					instance.after(
+						'visibleChange',
+						instance._afterVisibleChange
+					)
 				);
 			},
 
@@ -87,13 +93,10 @@ AUI.add(
 					var root = instance.getRoot();
 
 					if (root) {
-						Liferay.fire(
-							'ddmFieldValidationError',
-							{
-								fieldName: instance.get('fieldName'),
-								formId: root.getFormId()
-							}
-						);
+						Liferay.fire('ddmFieldValidationError', {
+							fieldName: instance.get('fieldName'),
+							formId: root.getFormId()
+						});
 					}
 				}
 			},
@@ -134,17 +137,16 @@ AUI.add(
 				var errorMessage = instance.get('errorMessage');
 
 				return A.Node.create(
-					Lang.sub(
-						TPL_ERROR_MESSAGE,
-						{
-							errorMessage: errorMessage
-						}
-					)
+					Lang.sub(TPL_ERROR_MESSAGE, {
+						errorMessage: errorMessage
+					})
 				);
 			}
 		};
 
-		Liferay.namespace('DDM.Renderer').FieldFeedbackSupport = FieldFeedbackSupport;
+		Liferay.namespace(
+			'DDM.Renderer'
+		).FieldFeedbackSupport = FieldFeedbackSupport;
 	},
 	'',
 	{

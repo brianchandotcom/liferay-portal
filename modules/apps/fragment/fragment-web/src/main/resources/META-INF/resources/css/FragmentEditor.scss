@@ -1,6 +1,6 @@
-@import "mixins";
+@import 'mixins';
 
-@import "variables";
+@import 'variables';
 
 .fragment-editor {
 	border-left: solid $editorBorderWidth $editorBorderColor;
@@ -20,13 +20,16 @@
 }
 
 @include sm {
-	$fragmentEditorMargin: $managementBarHeight + $editorBorderWidth + $toolbarBorderWidth * 2;
+	$fragmentEditorMargin: $managementBarHeight + $editorBorderWidth +
+		$toolbarBorderWidth * 2;
 
 	.fragment-editor {
 		height: calc(100vh - #{$fragmentEditorMargin});
 	}
 
 	.has-control-menu .fragment-editor {
-		height: calc(100vh - #{$fragmentEditorMargin + $controlMenuDesktopHeight});
+		height: calc(
+			100vh - #{$fragmentEditorMargin + $controlMenuDesktopHeight}
+		);
 	}
 }

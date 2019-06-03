@@ -18,19 +18,16 @@ import {EventHandler} from 'metal-events';
  */
 
 class DatePicker extends Component {
-
 	attached() {
 		const {base} = this.refs;
 		const {inputElement} = base.refs;
 
-		this._vanillaTextMask = vanillaTextMask(
-			{
-				inputElement,
-				mask: this.getInputMask(),
-				placeholderChar: '_',
-				showMask: true
-			}
-		);
+		this._vanillaTextMask = vanillaTextMask({
+			inputElement,
+			mask: this.getInputMask(),
+			placeholderChar: '_',
+			showMask: true
+		});
 	}
 
 	created() {
@@ -40,18 +37,13 @@ class DatePicker extends Component {
 
 		if (this.value) {
 			newValue = this.value;
-		}
-		else if (this.predefinedValue) {
+		} else if (this.predefinedValue) {
 			newValue = this.predefinedValue;
-		}
-		else {
+		} else {
 			newValue = this.initialMonth;
 		}
 
-		const value = moment(
-			newValue,
-			this.dateFormat
-		).toDate();
+		const value = moment(newValue, this.dateFormat).toDate();
 
 		this.currentMonth = this._setCurrentMonth(value);
 		this._daySelected = Helpers.setDateSelected(value);
@@ -94,23 +86,19 @@ class DatePicker extends Component {
 		const dateFormat = this.getDateFormat();
 		const inputMaskArray = [];
 
-		dateFormat.split('').forEach(
-			item => {
-				if (item === this._dateDelimiter) {
-					inputMaskArray.push(this._dateDelimiter);
-				}
-				else if (item === 'Y') {
-					inputMaskArray.push(/\d/);
-					inputMaskArray.push(/\d/);
-					inputMaskArray.push(/\d/);
-					inputMaskArray.push(/\d/);
-				}
-				else if (item === 'd' || item === 'm') {
-					inputMaskArray.push(/\d/);
-					inputMaskArray.push(/\d/);
-				}
+		dateFormat.split('').forEach(item => {
+			if (item === this._dateDelimiter) {
+				inputMaskArray.push(this._dateDelimiter);
+			} else if (item === 'Y') {
+				inputMaskArray.push(/\d/);
+				inputMaskArray.push(/\d/);
+				inputMaskArray.push(/\d/);
+				inputMaskArray.push(/\d/);
+			} else if (item === 'd' || item === 'm') {
+				inputMaskArray.push(/\d/);
+				inputMaskArray.push(/\d/);
 			}
-		);
+		});
 
 		return inputMaskArray;
 	}
@@ -129,17 +117,15 @@ class DatePicker extends Component {
 	isEmptyValue(string) {
 		const inputMask = this.getInputMask();
 
-		return !inputMask.some(
-			(validator, index) => {
-				let hasValue = false;
+		return !inputMask.some((validator, index) => {
+			let hasValue = false;
 
-				if (typeof validator !== 'string') {
-					hasValue = string[index] !== '_';
-				}
-
-				return hasValue;
+			if (typeof validator !== 'string') {
+				hasValue = string[index] !== '_';
 			}
-		);
+
+			return hasValue;
+		});
 	}
 
 	prepareStateForRender(state) {
@@ -170,8 +156,7 @@ class DatePicker extends Component {
 			this._eventHandler.add(
 				dom.on(document, 'click', this._handleDocClick.bind(this), true)
 			);
-		}
-		else {
+		} else {
 			this._eventHandler.removeAllListeners();
 		}
 	}
@@ -179,23 +164,22 @@ class DatePicker extends Component {
 	_dateFormatValueFn() {
 		const dateFormat = this.getDateFormat();
 
-		return dateFormat.split(this._dateDelimiter).map(
-			item => {
+		return dateFormat
+			.split(this._dateDelimiter)
+			.map(item => {
 				let currentFormat;
 
 				if (item === '%Y') {
 					currentFormat = 'YYYY';
-				}
-				else if (item === '%m') {
+				} else if (item === '%m') {
 					currentFormat = 'MM';
-				}
-				else {
+				} else {
 					currentFormat = 'DD';
 				}
 
 				return currentFormat;
-			}
-		).join(this._dateDelimiter);
+			})
+			.join(this._dateDelimiter);
 	}
 
 	_getCurrentDate() {
@@ -214,8 +198,7 @@ class DatePicker extends Component {
 
 		if (selectedDate.getMonth() > this.currentMonth.getMonth()) {
 			this._handleNextMonth();
-		}
-		else if (selectedDate.getMonth() < this.currentMonth.getMonth()) {
+		} else if (selectedDate.getMonth() < this.currentMonth.getMonth()) {
 			this._handlePreviousMonth();
 		}
 
@@ -247,13 +230,10 @@ class DatePicker extends Component {
 			value = '';
 		}
 
-		this.emit(
-			'fieldEdited',
-			{
-				fieldInstance: this,
-				value: this._setValue(value)
-			}
-		);
+		this.emit('fieldEdited', {
+			fieldInstance: this,
+			value: this._setValue(value)
+		});
 	}
 
 	_handleInputBlurred({target}) {
@@ -324,18 +304,16 @@ class DatePicker extends Component {
 		let newValue;
 
 		if (moment(value, this.dateFormat).isValid() && !isNaN(value)) {
-			if (typeof (value) == 'string') {
+			if (typeof value == 'string') {
 				newValue = value;
-			}
-			else {
+			} else {
 				const date = moment(value)
 					.clone()
 					.format(this.dateFormat);
 
 				newValue = date;
 			}
-		}
-		else {
+		} else {
 			newValue = value;
 		}
 
@@ -344,329 +322,321 @@ class DatePicker extends Component {
 }
 
 /**
-* State definition.
-* @static
-* @type {!Object}
-*/
+ * State definition.
+ * @static
+ * @type {!Object}
+ */
 
 DatePicker.STATE = {
-
 	/**
-	* The day selected by the user.
-	* @default Date Month
-	* @instance
-	* @memberof DatePicker
-	* @type {!Date}
-	*/
+	 * The day selected by the user.
+	 * @default Date Month
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {!Date}
+	 */
 
 	_daySelected: Config.any().internal(),
 
 	/**
-	* The selected month.
-	* @default undefined
-	* @instance
-	* @memberof DatePicker
-	* @type {!int}
-	*/
+	 * The selected month.
+	 * @default undefined
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {!int}
+	 */
 
 	_month: Config.number().internal(),
 
 	/**
-	* An array of the weeks and days list for the current month
-	* @default undefined
-	* @instance
-	* @memberof DatePicker
-	* @type {!Array<Array>}
-	*/
+	 * An array of the weeks and days list for the current month
+	 * @default undefined
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {!Array<Array>}
+	 */
 
 	_weeks: Config.array(Config.array()).internal(),
 
 	/**
-	* The selected year.
-	* @default undefined
-	* @instance
-	* @memberof DatePicker
-	* @type {!int}
-	*/
+	 * The selected year.
+	 * @default undefined
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {!int}
+	 */
 
 	_year: Config.number().internal(),
 
 	/**
-	* Aria label attribute for the button element.
-	* @default undefined
-	* @instance
-	* @memberof DatePicker
-	* @type {?(string|undefined)}
-	*/
+	 * Aria label attribute for the button element.
+	 * @default undefined
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {?(string|undefined)}
+	 */
 
 	ariaLabel: Config.string(),
 
 	/**
-	* Indicates the current month rendered on the screen.
-	* @default undefined
-	* @instance
-	* @memberof DatePicker
-	* @type {!Date}
-	*/
+	 * Indicates the current month rendered on the screen.
+	 * @default undefined
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {!Date}
+	 */
 
 	currentMonth: Config.instanceOf(Date).internal(),
 
 	/**
-	* Database type.
-	* @default string
-	* @instance
-	* @memberof DatePicker
-	* @type {!string}
-	*/
+	 * Database type.
+	 * @default string
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {!string}
+	 */
 	dataType: Config.string().value('string'),
 
 	/**
-	* Set the format of how the date will appear in the input element.
-	* See available: https://momentjs.com/docs/#/parsing/string-format/
-	* @default YYYY-MM-DD
-	* @instance
-	* @memberof DatePicker
-	* @type {?string}
-	*/
+	 * Set the format of how the date will appear in the input element.
+	 * See available: https://momentjs.com/docs/#/parsing/string-format/
+	 * @default YYYY-MM-DD
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {?string}
+	 */
 
 	dateFormat: Config.string().valueFn('_dateFormatValueFn'),
 
 	/**
-	* CSS classes to be applied to the element.
-	* @default undefined
-	* @instance
-	* @memberof DatePicker
-	* @type {?(string|undefined)}
-	*/
+	 * CSS classes to be applied to the element.
+	 * @default undefined
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {?(string|undefined)}
+	 */
 
 	elementClasses: Config.string(),
 
 	/**
-	* Flag to indicate if date is expanded.
-	* @default false
-	* @instance
-	* @memberof DatePicker
-	* @type {?bool}
-	*/
+	 * Flag to indicate if date is expanded.
+	 * @default false
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {?bool}
+	 */
 
-	expanded: Config.bool().internal().value(false),
+	expanded: Config.bool()
+		.internal()
+		.value(false),
 
 	/**
-	* @default undefined
-	* @instance
-	* @memberof DatePicker
-	* @type {?(string|undefined)}
-	*/
+	 * @default undefined
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {?(string|undefined)}
+	 */
 
 	fieldName: Config.string(),
 
 	/**
-	* Set the first day of the week, starting from 0
-	* (Sunday) to 6 (Saturday).
-	* @default 0
-	* @instance
-	* @memberof DatePicker
-	* @type {?int}
-	*/
+	 * Set the first day of the week, starting from 0
+	 * (Sunday) to 6 (Saturday).
+	 * @default 0
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {?int}
+	 */
 
 	firstDayOfWeek: Config.oneOf([0, 1, 2, 3, 4, 5, 6]).value(0),
 
 	/**
-	* Id to be applied to the element.
-	* @default undefined
-	* @instance
-	* @memberof DatePicker
-	* @type {?(string|undefined)}
-	*/
+	 * Id to be applied to the element.
+	 * @default undefined
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {?(string|undefined)}
+	 */
 
 	id: Config.string(),
 
 	/**
-	* The month to display in the calendar on the first render.
-	* @default Date
-	* @instance
-	* @memberof DatePicker
-	* @type {!Date}
-	*/
+	 * The month to display in the calendar on the first render.
+	 * @default Date
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {!Date}
+	 */
 
 	initialMonth: Config.instanceOf(Date).value(new Date()),
 
 	/**
-	* @default undefined
-	* @instance
-	* @memberof DatePicker
-	* @type {?(string|undefined)}
-	*/
+	 * @default undefined
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {?(string|undefined)}
+	 */
 
 	label: Config.string(),
 
 	/**
-	* The names of the months.
-	* @default January...
-	* @instance
-	* @memberof DatePicker
-	* @type {?array<String>}
-	*/
+	 * The names of the months.
+	 * @default January...
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {?array<String>}
+	 */
 
-	months: Config.array().value(
-		[
-			'January',
-			'February',
-			'March',
-			'April',
-			'May',
-			'June',
-			'July',
-			'August',
-			'September',
-			'October',
-			'November',
-			'December'
-		]
-	),
+	months: Config.array().value([
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December'
+	]),
 
 	/**
-	* @default undefined
-	* @instance
-	* @memberof DatePicker
-	* @type {?(string|undefined)}
-	*/
+	 * @default undefined
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {?(string|undefined)}
+	 */
 
 	name: Config.string().required(),
 
 	/**
-	* Describe a brief tip to help users interact.
-	* @default undefined
-	* @instance
-	* @memberof DatePicker
-	* @type {?(string|undefined)}
-	*/
+	 * Describe a brief tip to help users interact.
+	 * @default undefined
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {?(string|undefined)}
+	 */
 
 	placeholder: Config.string(),
 
 	/**
-	* Set the initial value of the input.
-	* @default undefined
-	* @instance
-	* @memberof DatePicker
-	* @type {?(Date|string|undefined)}
-	*/
+	 * Set the initial value of the input.
+	 * @default undefined
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {?(Date|string|undefined)}
+	 */
 
-	predefinedValue: Config.oneOfType(
-		[
-			Config.instanceOf(Date),
-			Config.string()
-		]
-	).setter('_setValue'),
+	predefinedValue: Config.oneOfType([
+		Config.instanceOf(Date),
+		Config.string()
+	]).setter('_setValue'),
 
 	/**
-	* @default undefined
-	* @instance
-	* @memberof DatePicker
-	* @type {?(bool|undefined)}
-	*/
+	 * @default undefined
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {?(bool|undefined)}
+	 */
 	readOnly: Config.bool().value(false),
 
 	/**
-	* @default undefined
-	* @instance
-	* @memberof DatePicker
-	* @type {?(bool|undefined)}
-	*/
+	 * @default undefined
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {?(bool|undefined)}
+	 */
 
 	repeatable: Config.bool(),
 
 	/**
-	* @default false
-	* @instance
-	* @memberof DatePicker
-	* @type {?(bool|undefined)}
-	*/
+	 * @default false
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {?(bool|undefined)}
+	 */
 
 	required: Config.bool().value(false),
 
 	/**
-	* Wether to show the field label or not.
-	* @default true
-	* @instance
-	* @memberof DatePicker
-	* @type {!boolean}
-	*/
+	 * Wether to show the field label or not.
+	 * @default true
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {!boolean}
+	 */
 
 	showLabel: Config.bool().value(true),
 
 	/**
-	* The path to the SVG spritemap file containing the icons.
-	* @default undefined
-	* @instance
-	* @memberof DatePicker
-	* @type {!string}
-	*/
+	 * The path to the SVG spritemap file containing the icons.
+	 * @default undefined
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {!string}
+	 */
 
 	spritemap: Config.string().required(),
 
 	/**
-	* @default undefined
-	* @instance
-	* @memberof DatePicker
-	* @type {?(string|undefined)}
-	*/
+	 * @default undefined
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {?(string|undefined)}
+	 */
 
 	tip: Config.string(),
 
 	/**
-	* @default undefined
-	* @instance
-	* @memberof DatePicker
-	* @type {?(string|undefined)}
-	*/
+	 * @default undefined
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {?(string|undefined)}
+	 */
 
 	type: Config.string().value('text'),
 
 	/**
-	* @default undefined
-	* @instance
-	* @memberof DatePicker
-	* @type {?(string|undefined)}
-	*/
+	 * @default undefined
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {?(string|undefined)}
+	 */
 
-	value: Config.oneOfType(
-		[
-			Config.instanceOf(Date),
-			Config.string()
-		]
-	).setter('_setValue').internal(),
+	value: Config.oneOfType([Config.instanceOf(Date), Config.string()])
+		.setter('_setValue')
+		.internal(),
 
 	/**
-	* Short names of days of the week to use in the header
-	* of the month. It should start from Sunday.
-	* @default S M T W T F S
-	* @instance
-	* @memberof DatePicker
-	* @type {!Array<String>}
-	*/
+	 * Short names of days of the week to use in the header
+	 * of the month. It should start from Sunday.
+	 * @default S M T W T F S
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {!Array<String>}
+	 */
 
 	weekdaysShort: Config.array().value(['S', 'M', 'T', 'W', 'T', 'F', 'S']),
 
 	/**
-	* List of years available for navigate that are added in the selector.
-	* @default undefined
-	* @instance
-	* @memberof DatePicker
-	* @type {!Array<String>}
-	*/
+	 * List of years available for navigate that are added in the selector.
+	 * @default undefined
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {!Array<String>}
+	 */
 
-	years: Config.array().value(
-		[
-			'2018',
-			'2019',
-			'2020',
-			'2021',
-			'2022',
-			'2023',
-			'2024'
-		]
-	)
+	years: Config.array().value([
+		'2018',
+		'2019',
+		'2020',
+		'2021',
+		'2022',
+		'2023',
+		'2024'
+	])
 };
 
 Soy.register(DatePicker, templates);

@@ -1,7 +1,8 @@
 /**
  * @type {string}
  */
-export const BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR = 'com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor';
+export const BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR =
+	'com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor';
 
 /**
  * Available values for buttonType config key
@@ -30,7 +31,7 @@ export const BUTTON_TYPES = [
  */
 
 export const COMPATIBLE_TYPES = {
-	'html': [
+	html: [
 		'ddm-date',
 		'ddm-decimal',
 		'ddm-integer',
@@ -41,10 +42,7 @@ export const COMPATIBLE_TYPES = {
 		'url'
 	],
 
-	'image': [
-		'ddm-image',
-		'image'
-	],
+	image: ['ddm-image', 'image'],
 
 	'rich-text': [
 		'ddm-date',
@@ -57,7 +55,7 @@ export const COMPATIBLE_TYPES = {
 		'url'
 	],
 
-	'text': [
+	text: [
 		'ddm-date',
 		'ddm-decimal',
 		'ddm-integer',
@@ -164,7 +162,8 @@ export const FLOATING_TOOLBAR_BUTTONS = {
 /**
  * @type {string}
  */
-export const EDITABLE_FRAGMENT_ENTRY_PROCESSOR = 'com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor';
+export const EDITABLE_FRAGMENT_ENTRY_PROCESSOR =
+	'com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor';
 
 /**
  * Fragments Editor dragging class
@@ -267,31 +266,19 @@ export const TEXT_STYLES = [
 		textStyleId: 'lead'
 	},
 	{
-		label: Liferay.Util.sub(
-			Liferay.Language.get('heading-x'),
-			'1'
-		),
+		label: Liferay.Util.sub(Liferay.Language.get('heading-x'), '1'),
 		textStyleId: 'h1'
 	},
 	{
-		label: Liferay.Util.sub(
-			Liferay.Language.get('heading-x'),
-			'2'
-		),
+		label: Liferay.Util.sub(Liferay.Language.get('heading-x'), '2'),
 		textStyleId: 'h2'
 	},
 	{
-		label: Liferay.Util.sub(
-			Liferay.Language.get('heading-x'),
-			'3'
-		),
+		label: Liferay.Util.sub(Liferay.Language.get('heading-x'), '3'),
 		textStyleId: 'h3'
 	},
 	{
-		label: Liferay.Util.sub(
-			Liferay.Language.get('heading-x'),
-			'4'
-		),
+		label: Liferay.Util.sub(Liferay.Language.get('heading-x'), '4'),
 		textStyleId: 'h4'
 	}
 ];

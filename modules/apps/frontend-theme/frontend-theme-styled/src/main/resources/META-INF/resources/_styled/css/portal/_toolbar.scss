@@ -1,5 +1,5 @@
 .lfr-toolbar {
-	background-color: #E5E4E8;
+	background-color: #e5e4e8;
 
 	.lfr-button {
 		&:focus {
@@ -7,24 +7,25 @@
 		}
 
 		&:hover {
-			border-color: #CCC #777 #777;
+			border-color: #ccc #777 #777;
 		}
 	}
 
 	.lfr-separator {
-		border-left-color: #FFF;
-		border-right-color: #CCC;
+		border-left-color: #fff;
+		border-right-color: #ccc;
 		font-size: 12px;
 	}
 }
 
-.lfr-toolbar, .lfr-emoticon-container {
+.lfr-toolbar,
+.lfr-emoticon-container {
 	.lfr-button {
-		border-color: #E5E4E8;
+		border-color: #e5e4e8;
 	}
 }
 
 .lfr-emoticon-container {
-	background: #E5E4E8;
-	border-color: #CCC;
+	background: #e5e4e8;
+	border-color: #ccc;
 }

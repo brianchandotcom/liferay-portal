@@ -16,18 +16,7 @@ const MIN_ZOOM_RATIO_AUTOCENTER = 3;
  * Available zoom sizes
  * @type {Array<number>}
  */
-const ZOOM_LEVELS = [
-	0.1,
-	0.2,
-	0.3,
-	0.4,
-	0.5,
-	0.6,
-	0.7,
-	0.8,
-	0.9,
-	1
-];
+const ZOOM_LEVELS = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
 
 /**
  * Available reversed zoom sizes
@@ -40,7 +29,6 @@ const ZOOM_LEVELS_REVERSED = ZOOM_LEVELS.slice().reverse();
  * @review
  */
 class ImagePreviewer extends Component {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -137,19 +125,14 @@ class ImagePreviewer extends Component {
 		let zoomValue;
 
 		if (value === 'in') {
-			zoomValue = ZOOM_LEVELS.find(
-				zoom => zoom > this.currentZoom
-			);
-		}
-		else if (value === 'out') {
+			zoomValue = ZOOM_LEVELS.find(zoom => zoom > this.currentZoom);
+		} else if (value === 'out') {
 			zoomValue = ZOOM_LEVELS_REVERSED.find(
 				zoom => zoom < this.currentZoom
 			);
-		}
-		else if (value === 'real') {
+		} else if (value === 'real') {
 			zoomValue = 1;
-		}
-		else if (value === 'fit') {
+		} else if (value === 'fit') {
 			this._clearZoom();
 		}
 
@@ -169,10 +152,13 @@ class ImagePreviewer extends Component {
 		let scrollTop;
 
 		if (this._zoomRatio < MIN_ZOOM_RATIO_AUTOCENTER) {
-			scrollLeft = imageContainer.clientWidth * (this._zoomRatio - 1) / 2 + imageContainer.scrollLeft * this._zoomRatio;
-			scrollTop = imageContainer.clientHeight * (this._zoomRatio - 1) / 2 + imageContainer.scrollTop * this._zoomRatio;
-		}
-		else {
+			scrollLeft =
+				(imageContainer.clientWidth * (this._zoomRatio - 1)) / 2 +
+				imageContainer.scrollLeft * this._zoomRatio;
+			scrollTop =
+				(imageContainer.clientHeight * (this._zoomRatio - 1)) / 2 +
+				imageContainer.scrollTop * this._zoomRatio;
+		} else {
 			scrollTop = (this.imageHeight - imageContainer.clientHeight) / 2;
 			scrollLeft = (this.imageWidth - imageContainer.clientWidth) / 2;
 		}
@@ -190,7 +176,9 @@ class ImagePreviewer extends Component {
 	 */
 	_updateDimensions() {
 		this.imageMargin = `${
-			this.imageHeight > this.refs.imageContainer.clientHeight ? 0 : 'auto'
+			this.imageHeight > this.refs.imageContainer.clientHeight
+				? 0
+				: 'auto'
 		} ${
 			this.imageWidth > this.refs.imageContainer.clientWidth ? 0 : 'auto'
 		}`;
@@ -208,7 +196,6 @@ class ImagePreviewer extends Component {
  * @type {!Object}
  */
 ImagePreviewer.STATE = {
-
 	/**
 	 * The current zoom value that is shown in the toolbar.
 	 * @type {Number}

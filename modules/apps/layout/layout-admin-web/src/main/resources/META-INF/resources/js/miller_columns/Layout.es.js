@@ -49,38 +49,36 @@ const UPDATE_PATH_TIMEOUT = 500;
  * @review
  */
 class Layout extends Component {
-
 	/**
 	 * @inheritDoc
 	 */
 	attached() {
-		this._handleLayoutColumnsScroll = this._handleLayoutColumnsScroll.bind(this);
+		this._handleLayoutColumnsScroll = this._handleLayoutColumnsScroll.bind(
+			this
+		);
 
 		const A = new AUI();
 
 		A.use(
 			'liferay-search-container',
 			'liferay-search-container-select',
-			(A) => {
+			A => {
 				const plugins = [];
 
-				plugins.push(
-					{
-						cfg: {
-							rowSelector: '.layout-item'
-						},
-						fn: A.Plugin.SearchContainerSelect
-					}
-				);
+				plugins.push({
+					cfg: {
+						rowSelector: '.layout-item'
+					},
+					fn: A.Plugin.SearchContainerSelect
+				});
 
-				const searchContainer = new Liferay.SearchContainer(
-					{
-						contentBox: A.one(this.refs.layout),
-						id: this.getInitialConfig().portletNamespace +
-							this.getInitialConfig().searchContainerId,
-						plugins
-					}
-				);
+				const searchContainer = new Liferay.SearchContainer({
+					contentBox: A.one(this.refs.layout),
+					id:
+						this.getInitialConfig().portletNamespace +
+						this.getInitialConfig().searchContainerId,
+					plugins
+				});
 
 				this.searchContainer_ = searchContainer;
 			}
@@ -100,23 +98,20 @@ class Layout extends Component {
 	 * @inheritDoc
 	 */
 	rendered(firstRendered) {
-		requestAnimationFrame(
-			() => {
-				const {layoutColumns} = this.refs;
+		requestAnimationFrame(() => {
+			const {layoutColumns} = this.refs;
 
-				if (typeof this._layoutColumnsScrollLeft === 'number') {
-					layoutColumns.scrollLeft = this._layoutColumnsScrollLeft;
-				}
-				else {
-					layoutColumns.scrollLeft = layoutColumns.scrollWidth;
-				}
-
-				if (this._newPathItems) {
-					this._addLayoutDragDropTargets(this._newPathItems);
-					this._newPathItems = null;
-				}
+			if (typeof this._layoutColumnsScrollLeft === 'number') {
+				layoutColumns.scrollLeft = this._layoutColumnsScrollLeft;
+			} else {
+				layoutColumns.scrollLeft = layoutColumns.scrollWidth;
 			}
-		);
+
+			if (this._newPathItems) {
+				this._addLayoutDragDropTargets(this._newPathItems);
+				this._newPathItems = null;
+			}
+		});
 
 		if (firstRendered) {
 			this._initializeLayoutDragDrop();
@@ -151,13 +146,11 @@ class Layout extends Component {
 		let element = null;
 		let query = null;
 
-		items.forEach(
-			(item) => {
-				query = `[data-layout-column-item-plid="${item.plid}"]`;
-				element = document.querySelector(query);
-				this._layoutDragDrop.addTarget(element);
-			}
-		);
+		items.forEach(item => {
+			query = `[data-layout-column-item-plid="${item.plid}"]`;
+			element = document.querySelector(query);
+			this._layoutDragDrop.addTarget(element);
+		});
 	}
 
 	/**
@@ -171,16 +164,11 @@ class Layout extends Component {
 
 		formData.append(`${this.portletNamespace}plid`, plid);
 
-		return fetch(
-			this.getItemChildrenURL,
-			{
-				body: formData,
-				credentials: 'include',
-				method: 'POST'
-			}
-		).then(
-			(response) => response.json()
-		);
+		return fetch(this.getItemChildrenURL, {
+			body: formData,
+			credentials: 'include',
+			method: 'POST'
+		}).then(response => response.json());
 	}
 
 	/**
@@ -196,33 +184,20 @@ class Layout extends Component {
 	_handleDragLayoutColumnItem(eventData) {
 		clearTimeout(this._updatePathTimeout);
 
-		const {
-			position,
-			sourceItemPlid,
-			targetId,
-			targetType
-		} = eventData;
+		const {position, sourceItemPlid, targetId, targetType} = eventData;
 
 		if (targetType === DROP_TARGET_ITEM_TYPES.column) {
 			this._setColumnHoveredData(sourceItemPlid, targetId);
-		}
-		else if (targetType === DROP_TARGET_ITEM_TYPES.item) {
-			this._setItemHoveredData(
-				position,
-				sourceItemPlid,
-				targetId
-			);
+		} else if (targetType === DROP_TARGET_ITEM_TYPES.item) {
+			this._setItemHoveredData(position, sourceItemPlid, targetId);
 
 			if (
 				this._draggingItemPosition === DROP_TARGET_BORDERS.inside &&
 				this._currentPathItemPlid !== targetId
 			) {
-				this._updatePathTimeout = setTimeout(
-					() => {
-						this._updatePath(targetId);
-					},
-					UPDATE_PATH_TIMEOUT
-				);
+				this._updatePathTimeout = setTimeout(() => {
+					this._updatePath(targetId);
+				}, UPDATE_PATH_TIMEOUT);
 			}
 		}
 	}
@@ -238,9 +213,9 @@ class Layout extends Component {
 		this._removeLayoutColumnsScrollListener();
 		this._resetDragDropClasses();
 
-		let layoutColumns = this.layoutColumns.map(
-			(layoutColumn) => [...layoutColumn]
-		);
+		let layoutColumns = this.layoutColumns.map(layoutColumn => [
+			...layoutColumn
+		]);
 		const {sourceItemPlid, targetId, targetType} = eventData;
 
 		const itemDropIsValid = dropIsValid(
@@ -273,8 +248,7 @@ class Layout extends Component {
 				layoutColumns = dropData.layoutColumns;
 				parentPlid = dropData.newParentPlid;
 				priority = dropData.priority;
-			}
-			else if (targetType === DROP_TARGET_ITEM_TYPES.item) {
+			} else if (targetType === DROP_TARGET_ITEM_TYPES.item) {
 				const targetItem = getItem(layoutColumns, targetId);
 
 				layoutColumns = clearPath(
@@ -299,8 +273,7 @@ class Layout extends Component {
 					layoutColumns = dropData.layoutColumns;
 					parentPlid = dropData.newParentPlid;
 					priority = dropData.priority;
-				}
-				else {
+				} else {
 					const dropData = dropItemNextToItem(
 						layoutColumns,
 						this._draggingItem,
@@ -319,38 +292,36 @@ class Layout extends Component {
 				sourceItemPlid,
 				priority
 			)
-				.then(
-					response => {
-						let nextPromise = response;
+				.then(response => {
+					let nextPromise = response;
 
-						if (this._draggingItemParentPlid !== '0') {
-							nextPromise = this._getItemChildren(this._draggingItemParentPlid).then(
-								response => {
-									if (response.children && response.children.length === 0) {
-										layoutColumns = this._removeHasChildArrow(
-											layoutColumns,
-											this._draggingItemParentPlid
-										);
-									}
-								}
-							);
-						}
-
-						return nextPromise;
-					}
-				).then(
-					() => {
-						this.layoutColumns = layoutColumns;
-
-						clearTimeout(this._updatePathTimeout);
-
-						requestAnimationFrame(
-							() => {
-								this._initializeLayoutDragDrop();
+					if (this._draggingItemParentPlid !== '0') {
+						nextPromise = this._getItemChildren(
+							this._draggingItemParentPlid
+						).then(response => {
+							if (
+								response.children &&
+								response.children.length === 0
+							) {
+								layoutColumns = this._removeHasChildArrow(
+									layoutColumns,
+									this._draggingItemParentPlid
+								);
 							}
-						);
+						});
 					}
-				);
+
+					return nextPromise;
+				})
+				.then(() => {
+					this.layoutColumns = layoutColumns;
+
+					clearTimeout(this._updatePathTimeout);
+
+					requestAnimationFrame(() => {
+						this._initializeLayoutDragDrop();
+					});
+				});
 		}
 
 		this._resetHoveredData();
@@ -397,8 +368,7 @@ class Layout extends Component {
 
 		if (itemUrl) {
 			navigate(itemUrl);
-		}
-		else {
+		} else {
 			const itemPlid = event.delegateTarget.dataset.layoutColumnItemPlid;
 
 			const item = getItem(this.layoutColumns, itemPlid);
@@ -521,18 +491,13 @@ class Layout extends Component {
 			formData.append(`${this.portletNamespace}priority`, priority);
 		}
 
-		return fetch(
-			this.moveLayoutColumnItemURL,
-			{
-				body: formData,
-				credentials: 'include',
-				method: 'POST'
-			}
-		).catch(
-			() => {
-				this._resetHoveredData();
-			}
-		);
+		return fetch(this.moveLayoutColumnItemURL, {
+			body: formData,
+			credentials: 'include',
+			method: 'POST'
+		}).catch(() => {
+			this._resetHoveredData();
+		});
 	}
 
 	/**
@@ -546,14 +511,8 @@ class Layout extends Component {
 	_removeHasChildArrow(layoutColumns, itemPlid) {
 		let nextLayoutColumns = layoutColumns;
 
-		const column = getItemColumn(
-			layoutColumns,
-			itemPlid
-		);
-		const item = getItem(
-			nextLayoutColumns,
-			itemPlid
-		);
+		const column = getItemColumn(layoutColumns, itemPlid);
+		const item = getItem(nextLayoutColumns, itemPlid);
 
 		nextLayoutColumns = setIn(
 			nextLayoutColumns,
@@ -594,21 +553,21 @@ class Layout extends Component {
 	 * @review
 	 */
 	_resetDragDropClasses() {
-		this.element.querySelectorAll(
-			`
+		this.element
+			.querySelectorAll(
+				`
 				.layout-column-item-drag-bottom,
 				.layout-column-item-drag-inside,
 				.layout-column-item-drag-top
 			`
-		).forEach(
-			item => {
+			)
+			.forEach(item => {
 				item.classList.remove(
 					'layout-column-item-drag-bottom',
 					'layout-column-item-drag-inside',
 					'layout-column-item-drag-top'
 				);
-			}
-		);
+			});
 	}
 
 	/**
@@ -638,8 +597,9 @@ class Layout extends Component {
 			this.layoutColumns,
 			targetColumnIndex
 		);
-		const targetEqualsSource = targetColumnLastItem &&
-			(draggingItemPlid === targetColumnLastItem.plid);
+		const targetEqualsSource =
+			targetColumnLastItem &&
+			draggingItemPlid === targetColumnLastItem.plid;
 
 		if (
 			targetColumnLastItem &&
@@ -697,12 +657,11 @@ class Layout extends Component {
 			this._draggingItemColumnIndex
 		);
 
-		const targetEqualsSource = (sourceItemPlid === targetItemPlid);
+		const targetEqualsSource = sourceItemPlid === targetItemPlid;
 
-		const draggingInsideParent = (
-			(position === DROP_TARGET_BORDERS.inside) &&
-			itemIsParent(this.layoutColumns, sourceItemPlid, targetItemPlid)
-		);
+		const draggingInsideParent =
+			position === DROP_TARGET_BORDERS.inside &&
+			itemIsParent(this.layoutColumns, sourceItemPlid, targetItemPlid);
 
 		if (!targetEqualsSource && !targetIsChild && !draggingInsideParent) {
 			this._draggingItemPosition = position;
@@ -727,11 +686,7 @@ class Layout extends Component {
 
 		this.layoutColumns = setIn(
 			this.layoutColumns,
-			[
-				columnIndex,
-				column.indexOf(item),
-				'checked'
-			],
+			[columnIndex, column.indexOf(item), 'checked'],
 			checked
 		);
 	}
@@ -760,34 +715,29 @@ class Layout extends Component {
 
 		nextLayoutColumns = deleteEmptyColumns(nextLayoutColumns);
 
-		this._getItemChildren(targetItemPlid)
-			.then(
-				(response) => {
-					const {children} = response;
-					const lastColumnIndex = nextLayoutColumns.length - 1;
+		this._getItemChildren(targetItemPlid).then(response => {
+			const {children} = response;
+			const lastColumnIndex = nextLayoutColumns.length - 1;
 
-					if (nextLayoutColumns[lastColumnIndex].length === 0) {
-						nextLayoutColumns = setIn(
-							nextLayoutColumns,
-							[lastColumnIndex],
-							children
-						);
-					}
-					else {
-						nextLayoutColumns = setIn(
-							nextLayoutColumns,
-							[nextLayoutColumns.length],
-							children
-						);
-					}
+			if (nextLayoutColumns[lastColumnIndex].length === 0) {
+				nextLayoutColumns = setIn(
+					nextLayoutColumns,
+					[lastColumnIndex],
+					children
+				);
+			} else {
+				nextLayoutColumns = setIn(
+					nextLayoutColumns,
+					[nextLayoutColumns.length],
+					children
+				);
+			}
 
-					this._newPathItems = children;
+			this._newPathItems = children;
 
-					this.layoutColumns = nextLayoutColumns;
-				}
-			);
+			this.layoutColumns = nextLayoutColumns;
+		});
 	}
-
 }
 
 /**
@@ -798,7 +748,6 @@ class Layout extends Component {
  */
 
 Layout.STATE = {
-
 	/**
 	 * Breadcrumb Entries
 	 * @instance
@@ -807,12 +756,10 @@ Layout.STATE = {
 	 */
 
 	breadcrumbEntries: Config.arrayOf(
-		Config.shapeOf(
-			{
-				title: Config.string().required(),
-				url: Config.string().required()
-			}
-		)
+		Config.shapeOf({
+			title: Config.string().required(),
+			url: Config.string().required()
+		})
 	).required(),
 
 	/**
@@ -834,19 +781,17 @@ Layout.STATE = {
 
 	layoutColumns: Config.arrayOf(
 		Config.arrayOf(
-			Config.shapeOf(
-				{
-					actions: Config.string().required(),
-					actionURLs: Config.object().required(),
-					active: Config.bool().required(),
-					checked: Config.bool().required(),
-					hasChild: Config.bool().required(),
-					parentable: Config.bool().required(),
-					plid: Config.string().required(),
-					title: Config.string().required(),
-					url: Config.string().required()
-				}
-			)
+			Config.shapeOf({
+				actions: Config.string().required(),
+				actionURLs: Config.object().required(),
+				active: Config.bool().required(),
+				checked: Config.bool().required(),
+				hasChild: Config.bool().required(),
+				parentable: Config.bool().required(),
+				plid: Config.string().required(),
+				title: Config.string().required(),
+				url: Config.string().required()
+			})
 		)
 	).required(),
 
@@ -895,7 +840,9 @@ Layout.STATE = {
 	 * @type {!string}
 	 */
 
-	_currentPathItemPlid: Config.string().internal().value(null),
+	_currentPathItemPlid: Config.string()
+		.internal()
+		.value(null),
 
 	/**
 	 * Item that is being dragged.

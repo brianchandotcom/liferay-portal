@@ -4,11 +4,29 @@ import {Config} from 'metal-state';
 
 import './FragmentEntryLinkContent.es';
 import templates from './FragmentEntryLink.soy';
-import {MOVE_FRAGMENT_ENTRY_LINK, REMOVE_FRAGMENT_ENTRY_LINK} from '../../actions/actions.es';
+import {
+	MOVE_FRAGMENT_ENTRY_LINK,
+	REMOVE_FRAGMENT_ENTRY_LINK
+} from '../../actions/actions.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
-import {getFragmentColumn, getFragmentRowIndex, getItemMoveDirection, getItemPath, getTargetBorder, itemIsInPath} from '../../utils/FragmentsEditorGetUtils.es';
-import {FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../../utils/constants';
-import {moveItem, moveRow, removeItem, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {
+	getFragmentColumn,
+	getFragmentRowIndex,
+	getItemMoveDirection,
+	getItemPath,
+	getTargetBorder,
+	itemIsInPath
+} from '../../utils/FragmentsEditorGetUtils.es';
+import {
+	FRAGMENTS_EDITOR_ITEM_TYPES,
+	FRAGMENTS_EDITOR_ROW_TYPES
+} from '../../utils/constants';
+import {
+	moveItem,
+	moveRow,
+	removeItem,
+	setIn
+} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 
 /**
@@ -16,7 +34,6 @@ import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUti
  * @review
  */
 class FragmentEntryLink extends Component {
-
 	/**
 	 * @inheritdoc
 	 * @param {object} state
@@ -54,11 +71,7 @@ class FragmentEntryLink extends Component {
 			FRAGMENTS_EDITOR_ROW_TYPES
 		);
 
-		return setIn(
-			nextState,
-			['_hovered'],
-			fragmentEntryLinkInHoveredPath
-		);
+		return setIn(nextState, ['_hovered'], fragmentEntryLinkInHoveredPath);
 	}
 
 	/**
@@ -85,7 +98,10 @@ class FragmentEntryLink extends Component {
 			const {fragmentEntryLinkRowType} = event.delegateTarget.dataset;
 
 			if (direction) {
-				if (fragmentEntryLinkRowType === FRAGMENTS_EDITOR_ROW_TYPES.sectionRow) {
+				if (
+					fragmentEntryLinkRowType ===
+					FRAGMENTS_EDITOR_ROW_TYPES.sectionRow
+				) {
 					moveRow(
 						direction,
 						getFragmentRowIndex(
@@ -95,8 +111,7 @@ class FragmentEntryLink extends Component {
 						this.store,
 						this.layoutData.structure
 					);
-				}
-				else {
+				} else {
 					const column = getFragmentColumn(
 						this.layoutData.structure,
 						this.fragmentEntryLinkId
@@ -104,9 +119,8 @@ class FragmentEntryLink extends Component {
 					const fragmentIndex = column.fragmentEntryLinkIds.indexOf(
 						this.fragmentEntryLinkId
 					);
-					const targetFragmentEntryLinkId = column.fragmentEntryLinkIds[
-						fragmentIndex + direction
-					];
+					const targetFragmentEntryLinkId =
+						column.fragmentEntryLinkIds[fragmentIndex + direction];
 
 					if (direction && targetFragmentEntryLinkId) {
 						const moveItemPayload = {
@@ -135,15 +149,10 @@ class FragmentEntryLink extends Component {
 	_handleFragmentRemoveButtonClick(event) {
 		event.stopPropagation();
 
-		removeItem(
-			this.store,
-			REMOVE_FRAGMENT_ENTRY_LINK,
-			{
-				fragmentEntryLinkId: this.fragmentEntryLinkId
-			}
-		);
+		removeItem(this.store, REMOVE_FRAGMENT_ENTRY_LINK, {
+			fragmentEntryLinkId: this.fragmentEntryLinkId
+		});
 	}
-
 }
 
 /**
@@ -153,7 +162,6 @@ class FragmentEntryLink extends Component {
  * @type {!Object}
  */
 FragmentEntryLink.STATE = {
-
 	/**
 	 * FragmentEntryLink id
 	 * @default undefined
@@ -162,8 +170,7 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-	fragmentEntryLinkId: Config.string()
-		.required(),
+	fragmentEntryLinkId: Config.string().required(),
 
 	/**
 	 * Fragment name
@@ -173,8 +180,7 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-	name: Config.string()
-		.value(''),
+	name: Config.string().value(''),
 
 	/**
 	 * Row type
@@ -193,8 +199,7 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {!bool}
 	 */
-	showControlBar: Config.bool()
-		.value(true),
+	showControlBar: Config.bool().value(true),
 
 	/**
 	 * CSS class to modify style
@@ -207,27 +212,24 @@ FragmentEntryLink.STATE = {
 	styleModifier: Config.string()
 };
 
-const ConnectedFragmentEntryLink = getConnectedComponent(
-	FragmentEntryLink,
-	[
-		'activeItemId',
-		'activeItemType',
-		'defaultLanguageId',
-		'dropTargetItemId',
-		'dropTargetItemType',
-		'dropTargetBorder',
-		'fragmentEditorEnabled',
-		'hoveredItemId',
-		'hoveredItemType',
-		'imageSelectorURL',
-		'languageId',
-		'layoutData',
-		'portletNamespace',
-		'selectedMappingTypes',
-		'selectedSidebarPanelId',
-		'spritemap'
-	]
-);
+const ConnectedFragmentEntryLink = getConnectedComponent(FragmentEntryLink, [
+	'activeItemId',
+	'activeItemType',
+	'defaultLanguageId',
+	'dropTargetItemId',
+	'dropTargetItemType',
+	'dropTargetBorder',
+	'fragmentEditorEnabled',
+	'hoveredItemId',
+	'hoveredItemType',
+	'imageSelectorURL',
+	'languageId',
+	'layoutData',
+	'portletNamespace',
+	'selectedMappingTypes',
+	'selectedSidebarPanelId',
+	'spritemap'
+]);
 
 Soy.register(ConnectedFragmentEntryLink, templates);
 

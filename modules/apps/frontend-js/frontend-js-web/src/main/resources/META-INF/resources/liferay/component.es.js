@@ -8,7 +8,13 @@ let componentsCache = {};
 let componentsFn = {};
 
 const DEFAULT_CACHE_VALIDATION_PARAMS = ['p_p_id', 'p_p_lifecycle'];
-const DEFAULT_CACHE_VALIDATION_PORTLET_PARAMS = ['ddmStructureKey', 'fileEntryTypeId', 'folderId', 'navigation', 'status'];
+const DEFAULT_CACHE_VALIDATION_PORTLET_PARAMS = [
+	'ddmStructureKey',
+	'fileEntryTypeId',
+	'folderId',
+	'navigation',
+	'status'
+];
 
 const LIFERAY_COMPONENT = 'liferay.component';
 
@@ -20,15 +26,12 @@ const _createPromiseWrapper = function(value) {
 			promise: Promise.resolve(value),
 			resolve: function() {}
 		};
-	}
-	else {
+	} else {
 		let promiseResolve;
 
-		const promise = new Promise(
-			function(resolve) {
-				promiseResolve = resolve;
-			}
-		);
+		const promise = new Promise(function(resolve) {
+			promiseResolve = resolve;
+		});
 
 		promiseWrapper = {
 			promise: promise,
@@ -52,15 +55,13 @@ const _restoreTask = function(state, params, node) {
 	const cache = state.data;
 	const componentIds = Object.keys(cache);
 
-	componentIds.forEach(
-		componentId => {
-			const container = node.querySelector(`#${componentId}`);
+	componentIds.forEach(componentId => {
+		const container = node.querySelector(`#${componentId}`);
 
-			if (container) {
-				container.innerHTML = cache[componentId].html;
-			}
+		if (container) {
+			container.innerHTML = cache[componentId].html;
 		}
-	);
+	});
 };
 
 /**
@@ -82,85 +83,83 @@ const _onStartNavigate = function(event) {
 	const currentUri = new Uri(window.location.href);
 	const uri = new Uri(event.path);
 
-	const cacheableUri = DEFAULT_CACHE_VALIDATION_PARAMS.every(
-		param => {
-			return uri.getParameterValue(param) === currentUri.getParameterValue(param);
-		}
-	);
+	const cacheableUri = DEFAULT_CACHE_VALIDATION_PARAMS.every(param => {
+		return (
+			uri.getParameterValue(param) === currentUri.getParameterValue(param)
+		);
+	});
 
 	if (cacheableUri) {
 		var componentIds = Object.keys(components);
 
-		componentIds = componentIds.filter(
-			componentId => {
-				const component = components[componentId];
-				const componentConfig = componentConfigs[componentId];
+		componentIds = componentIds.filter(componentId => {
+			const component = components[componentId];
+			const componentConfig = componentConfigs[componentId];
 
-				const cacheablePortletUri = DEFAULT_CACHE_VALIDATION_PORTLET_PARAMS.every(
-					param => {
-						let cacheable = false;
+			const cacheablePortletUri = DEFAULT_CACHE_VALIDATION_PORTLET_PARAMS.every(
+				param => {
+					let cacheable = false;
 
-						if (componentConfig) {
-							const namespacedParam = `_${componentConfig.portletId}_${param}`;
+					if (componentConfig) {
+						const namespacedParam = `_${
+							componentConfig.portletId
+						}_${param}`;
 
-							cacheable = uri.getParameterValue(namespacedParam) === currentUri.getParameterValue(namespacedParam);
-						}
-
-						return cacheable;
+						cacheable =
+							uri.getParameterValue(namespacedParam) ===
+							currentUri.getParameterValue(namespacedParam);
 					}
-				);
 
-				const cacheableComponent = isFunction(component.isCacheable) ? component.isCacheable(uri) : false;
+					return cacheable;
+				}
+			);
 
-				return cacheableComponent &&
-					cacheablePortletUri &&
-					componentConfig &&
-					componentConfig.cacheState &&
-					component.element &&
-					component.getState;
-			}
-		);
+			const cacheableComponent = isFunction(component.isCacheable)
+				? component.isCacheable(uri)
+				: false;
 
-		componentsCache = componentIds.reduce(
-			(cache, componentId) => {
-				const component = components[componentId];
-				const componentConfig = componentConfigs[componentId];
-				const componentState = component.getState();
+			return (
+				cacheableComponent &&
+				cacheablePortletUri &&
+				componentConfig &&
+				componentConfig.cacheState &&
+				component.element &&
+				component.getState
+			);
+		});
 
-				const componentCache = componentConfig.cacheState.reduce(
-					(cache, stateKey) => {
-						cache[stateKey] = componentState[stateKey];
+		componentsCache = componentIds.reduce((cache, componentId) => {
+			const component = components[componentId];
+			const componentConfig = componentConfigs[componentId];
+			const componentState = component.getState();
 
-						return cache;
-					},
-					{}
-				);
+			const componentCache = componentConfig.cacheState.reduce(
+				(cache, stateKey) => {
+					cache[stateKey] = componentState[stateKey];
 
-				cache[componentId] = {
-					html: component.element.innerHTML,
-					state: componentCache
-				};
+					return cache;
+				},
+				{}
+			);
 
-				return cache;
-			},
-			[]
-		);
+			cache[componentId] = {
+				html: component.element.innerHTML,
+				state: componentCache
+			};
 
-		Liferay.DOMTaskRunner.addTask(
-			{
-				action: _restoreTask,
-				condition: state => state.owner === LIFERAY_COMPONENT
-			}
-		);
+			return cache;
+		}, []);
 
-		Liferay.DOMTaskRunner.addTaskState(
-			{
-				data: componentsCache,
-				owner: LIFERAY_COMPONENT
-			}
-		);
-	}
-	else {
+		Liferay.DOMTaskRunner.addTask({
+			action: _restoreTask,
+			condition: state => state.owner === LIFERAY_COMPONENT
+		});
+
+		Liferay.DOMTaskRunner.addTaskState({
+			data: componentsCache,
+			owner: LIFERAY_COMPONENT
+		});
+	} else {
 		componentsCache = {};
 	}
 };
@@ -193,22 +192,24 @@ const component = function(id, value, componentConfig) {
 		}
 
 		retVal = component;
-	}
-	else {
+	} else {
 		if (components[id] && value !== null) {
 			delete componentConfigs[id];
 			delete componentPromiseWrappers[id];
 
-			console.warn('Component with id "' + id + '" is being registered twice. This can lead to unexpected behaviour in the "Liferay.component" and "Liferay.componentReady" APIs, as well as in the "*:registered" events.');
+			console.warn(
+				'Component with id "' +
+					id +
+					'" is being registered twice. This can lead to unexpected behaviour in the "Liferay.component" and "Liferay.componentReady" APIs, as well as in the "*:registered" events.'
+			);
 		}
 
-		retVal = (components[id] = value);
+		retVal = components[id] = value;
 
 		if (value === null) {
 			delete componentConfigs[id];
 			delete componentPromiseWrappers[id];
-		}
-		else {
+		} else {
 			componentConfigs[id] = componentConfig;
 
 			Liferay.fire(id + ':registered');
@@ -217,8 +218,7 @@ const component = function(id, value, componentConfig) {
 
 			if (componentPromiseWrapper) {
 				componentPromiseWrapper.resolve(value);
-			}
-			else {
+			} else {
 				componentPromiseWrappers[id] = _createPromiseWrapper(value);
 			}
 		}
@@ -242,8 +242,7 @@ const componentReady = function() {
 
 	if (arguments.length === 1) {
 		component = arguments[0];
-	}
-	else {
+	} else {
 		component = [];
 
 		for (var i = 0; i < arguments.length; i++) {
@@ -252,17 +251,14 @@ const componentReady = function() {
 	}
 
 	if (Array.isArray(component)) {
-		componentPromise = Promise.all(
-			component.map(
-				id => componentReady(id)
-			)
-		);
-	}
-	else {
+		componentPromise = Promise.all(component.map(id => componentReady(id)));
+	} else {
 		let componentPromiseWrapper = componentPromiseWrappers[component];
 
 		if (!componentPromiseWrapper) {
-			componentPromiseWrappers[component] = componentPromiseWrapper = _createPromiseWrapper();
+			componentPromiseWrappers[
+				component
+			] = componentPromiseWrapper = _createPromiseWrapper();
 		}
 
 		componentPromise = componentPromiseWrapper.promise;
@@ -310,14 +306,12 @@ const destroyComponents = function(filterFn) {
 	var componentIds = Object.keys(components);
 
 	if (filterFn) {
-		componentIds = componentIds.filter(
-			componentId => {
-				return filterFn(
-					components[componentId],
-					componentConfigs[componentId] || {}
-				);
-			}
-		);
+		componentIds = componentIds.filter(componentId => {
+			return filterFn(
+				components[componentId],
+				componentConfigs[componentId] || {}
+			);
+		});
 	}
 
 	componentIds.forEach(destroyComponent);

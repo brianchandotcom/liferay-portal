@@ -19,7 +19,6 @@ const USER_FILTER_ALL = -1;
  * Handles the tags of the selected file entries inside a modal.
  */
 class ChangeListsHistory extends PortletBase {
-
 	created() {
 		let headers = new Headers();
 		headers.append('Content-Type', 'application/json');
@@ -37,8 +36,18 @@ class ChangeListsHistory extends PortletBase {
 
 		let instance = this;
 
-		setTimeout(() => instance._fetchProcesses(urlProcesses, init), TIMEOUT_FIRST, urlProcesses, init);
-		setInterval(() => instance._fetchProcesses(urlProcesses, init), TIMEOUT_INTERVAL, urlProcesses, init);
+		setTimeout(
+			() => instance._fetchProcesses(urlProcesses, init),
+			TIMEOUT_FIRST,
+			urlProcesses,
+			init
+		);
+		setInterval(
+			() => instance._fetchProcesses(urlProcesses, init),
+			TIMEOUT_INTERVAL,
+			urlProcesses,
+			init
+		);
 	}
 
 	static _getState(processEntryStatus) {
@@ -55,23 +64,29 @@ class ChangeListsHistory extends PortletBase {
 		fetch(urlProcesses, init)
 			.then(r => r.json())
 			.then(response => this._populateProcessEntries(response))
-			.catch(
-				error => {
-					const message = typeof error === 'string' ?
-						error :
-						Liferay.Util.sub(Liferay.Language.get('an-error-occured-while-getting-data-from-x'), this.urlProcesses);
+			.catch(error => {
+				const message =
+					typeof error === 'string'
+						? error
+						: Liferay.Util.sub(
+								Liferay.Language.get(
+									'an-error-occured-while-getting-data-from-x'
+								),
+								this.urlProcesses
+						  );
 
-					openToast(
-						{
-							message,
-							title: Liferay.Language.get('error'),
-							type: 'danger'
-						}
-					);
-				}
-			);
+				openToast({
+					message,
+					title: Liferay.Language.get('error'),
+					type: 'danger'
+				});
+			});
 
-		let urlProcessUsers = this.urlProcessUsers + '&type=' + this.filterStatus + '&offset=0&limit=5';
+		let urlProcessUsers =
+			this.urlProcessUsers +
+			'&type=' +
+			this.filterStatus +
+			'&offset=0&limit=5';
 
 		if (this.keywords) {
 			urlProcessUsers = urlProcessUsers + '&keywords=' + this.keywords;
@@ -80,32 +95,38 @@ class ChangeListsHistory extends PortletBase {
 		fetch(urlProcessUsers, init)
 			.then(r => r.json())
 			.then(response => this._populateProcessUsers(response))
-			.catch(
-				error => {
-					const message = typeof error === 'string' ?
-						error :
-						Liferay.Util.sub(Liferay.Language.get('an-error-occured-while-getting-data-from-x'), this.urlProcessUsers);
+			.catch(error => {
+				const message =
+					typeof error === 'string'
+						? error
+						: Liferay.Util.sub(
+								Liferay.Language.get(
+									'an-error-occured-while-getting-data-from-x'
+								),
+								this.urlProcessUsers
+						  );
 
-					openToast(
-						{
-							message,
-							title: Liferay.Language.get('error'),
-							type: 'danger'
-						}
-					);
-				}
-			);
+				openToast({
+					message,
+					title: Liferay.Language.get('error'),
+					type: 'danger'
+				});
+			});
 	}
 
 	_getUrlProcesses() {
 		let sort = '&sort=' + this.orderByCol + ':' + this.orderByType;
 
-		let urlProcesses = this.urlProcesses + '&type=' + this.filterStatus + '&offset=0&limit=5' + sort;
+		let urlProcesses =
+			this.urlProcesses +
+			'&type=' +
+			this.filterStatus +
+			'&offset=0&limit=5' +
+			sort;
 
 		if (this.filterUser > 0) {
 			urlProcesses = urlProcesses + '&user=' + this.filterUser;
-		}
-		else {
+		} else {
 			urlProcesses += '&user=' + USER_FILTER_ALL;
 		}
 
@@ -117,91 +138,98 @@ class ChangeListsHistory extends PortletBase {
 	}
 
 	_populateProcessUsers(processUsers) {
-		AUI().use(
-			'liferay-portlet-url',
-			A => {
-				let managementToolbar = Liferay.component('changeListHistoryManagementToolbar');
+		AUI().use('liferay-portlet-url', A => {
+			let managementToolbar = Liferay.component(
+				'changeListHistoryManagementToolbar'
+			);
 
-				let filterByUserIndex = managementToolbar.filterItems.findIndex(e => e.label === 'Filter by User');
+			let filterByUserIndex = managementToolbar.filterItems.findIndex(
+				e => e.label === 'Filter by User'
+			);
 
-				let filterByUserItems = managementToolbar.filterItems[filterByUserIndex].items;
+			let filterByUserItems =
+				managementToolbar.filterItems[filterByUserIndex].items;
 
-				let updatedFilterByUserItems = [];
+			let updatedFilterByUserItems = [];
 
-				updatedFilterByUserItems.push(filterByUserItems[filterByUserItems.findIndex(e => e.label === 'All')]);
+			updatedFilterByUserItems.push(
+				filterByUserItems[
+					filterByUserItems.findIndex(e => e.label === 'All')
+				]
+			);
 
-				processUsers.forEach(
-					processUser => {
-						const userFilterUrl = Liferay.PortletURL.createURL(this.baseURL);
-
-						userFilterUrl.setParameter('displayStyle', 'list');
-						userFilterUrl.setParameter('orderByCol', this.orderByCol);
-						userFilterUrl.setParameter('orderByType', this.orderByType);
-						userFilterUrl.setParameter('user', processUser.userId);
-
-						updatedFilterByUserItems.push(
-							{
-								'active': this.filterUser === processUser.userId.toString(),
-								'href': userFilterUrl.toString(),
-								'label': processUser.userName,
-								'type': 'item'
-							}
-						);
-					}
+			processUsers.forEach(processUser => {
+				const userFilterUrl = Liferay.PortletURL.createURL(
+					this.baseURL
 				);
 
-				managementToolbar.filterItems[filterByUserIndex].items = updatedFilterByUserItems;
-			}
-		);
+				userFilterUrl.setParameter('displayStyle', 'list');
+				userFilterUrl.setParameter('orderByCol', this.orderByCol);
+				userFilterUrl.setParameter('orderByType', this.orderByType);
+				userFilterUrl.setParameter('user', processUser.userId);
+
+				updatedFilterByUserItems.push({
+					active: this.filterUser === processUser.userId.toString(),
+					href: userFilterUrl.toString(),
+					label: processUser.userName,
+					type: 'item'
+				});
+			});
+
+			managementToolbar.filterItems[
+				filterByUserIndex
+			].items = updatedFilterByUserItems;
+		});
 	}
 
 	_populateProcessEntries(processEntries) {
-		AUI().use(
-			'liferay-portlet-url',
-			A => {
-				this.processEntries = [];
+		AUI().use('liferay-portlet-url', A => {
+			this.processEntries = [];
 
-				processEntries.forEach(
-					processEntry => {
-						const detailsLink = Liferay.PortletURL.createURL(this.baseURL);
+			processEntries.forEach(processEntry => {
+				const detailsLink = Liferay.PortletURL.createURL(this.baseURL);
 
-						detailsLink.setParameter('mvcRenderCommandName', '/change_lists_history/view_details');
-						detailsLink.setParameter('ctProcessId', processEntry.ctprocessId);
-
-						const viewLink = Liferay.PortletURL.createURL(this.baseURL);
-
-						detailsLink.setParameter('backURL', viewLink.toString());
-
-						this.processEntries.push(
-							{
-								description: processEntry.ctcollection.description,
-								detailsLink: detailsLink.toString(),
-								name: processEntry.ctcollection.name,
-								percentage: processEntry.percentage,
-								state: ChangeListsHistory._getState(processEntry.status),
-								timestamp: new Intl.DateTimeFormat(
-									Liferay.ThemeDisplay.getBCP47LanguageId(),
-									{
-										day: 'numeric',
-										hour: 'numeric',
-										minute: 'numeric',
-										month: 'numeric',
-										year: 'numeric'
-									}).format(new Date(processEntry.date)),
-								userInitials: processEntry.userInitials,
-								userName: processEntry.userName
-							}
-						);
-					}
+				detailsLink.setParameter(
+					'mvcRenderCommandName',
+					'/change_lists_history/view_details'
+				);
+				detailsLink.setParameter(
+					'ctProcessId',
+					processEntry.ctprocessId
 				);
 
-				Liferay.component('changeListHistoryManagementToolbar').totalItems = this.processEntries.length;
-			}
-		);
+				const viewLink = Liferay.PortletURL.createURL(this.baseURL);
+
+				detailsLink.setParameter('backURL', viewLink.toString());
+
+				this.processEntries.push({
+					description: processEntry.ctcollection.description,
+					detailsLink: detailsLink.toString(),
+					name: processEntry.ctcollection.name,
+					percentage: processEntry.percentage,
+					state: ChangeListsHistory._getState(processEntry.status),
+					timestamp: new Intl.DateTimeFormat(
+						Liferay.ThemeDisplay.getBCP47LanguageId(),
+						{
+							day: 'numeric',
+							hour: 'numeric',
+							minute: 'numeric',
+							month: 'numeric',
+							year: 'numeric'
+						}
+					).format(new Date(processEntry.date)),
+					userInitials: processEntry.userInitials,
+					userName: processEntry.userName
+				});
+			});
+
+			Liferay.component(
+				'changeListHistoryManagementToolbar'
+			).totalItems = this.processEntries.length;
+		});
 
 		this.loaded = true;
 	}
-
 }
 
 /**
@@ -212,7 +240,6 @@ class ChangeListsHistory extends PortletBase {
  * @type {!Object}
  */
 ChangeListsHistory.STATE = {
-
 	baseURL: Config.string(),
 
 	filterStatus: Config.string(),
@@ -230,18 +257,16 @@ ChangeListsHistory.STATE = {
 	urlProcessUsers: Config.string(),
 
 	processEntries: Config.arrayOf(
-		Config.shapeOf(
-			{
-				description: Config.string(),
-				detailsLink: Config.string(),
-				name: Config.string(),
-				percentage: Config.number(),
-				state: Config.string(),
-				timestamp: Config.string(),
-				userInitials: Config.string(),
-				userName: Config.string()
-			}
-		)
+		Config.shapeOf({
+			description: Config.string(),
+			detailsLink: Config.string(),
+			name: Config.string(),
+			percentage: Config.number(),
+			state: Config.string(),
+			timestamp: Config.string(),
+			userInitials: Config.string(),
+			userName: Config.string()
+		})
 	),
 
 	loaded: Config.bool().value(false),
@@ -255,7 +280,6 @@ ChangeListsHistory.STATE = {
 	 * @type {String}
 	 */
 	spritemap: Config.string().required()
-
 };
 
 // Register component

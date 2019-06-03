@@ -1,10 +1,10 @@
 .fragment-entry-link-content {
-	@import "imports";
+	@import 'imports';
 
-	@import "partials/buttons";
-	@import "partials/contents";
-	@import "partials/fonts";
-	@import "partials/text-formats";
+	@import 'partials/buttons';
+	@import 'partials/contents';
+	@import 'partials/fonts';
+	@import 'partials/text-formats';
 
 	font-family: 'open_sansregular';
 }

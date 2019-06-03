@@ -7,12 +7,10 @@ class ClaySelect extends Component {
 		className: PropTypes.string,
 		onChange: PropTypes.func.isRequired,
 		options: PropTypes.arrayOf(
-			PropTypes.shape(
-				{
-					label: PropTypes.string,
-					value: PropTypes.string.isRequired
-				}
-			)
+			PropTypes.shape({
+				label: PropTypes.string,
+				value: PropTypes.string.isRequired
+			})
 		).isRequired,
 		selected: PropTypes.string
 	};
@@ -20,24 +18,15 @@ class ClaySelect extends Component {
 	render() {
 		const {className, options, selected, ...otherProps} = this.props;
 
-		const classes = getCN(
-			'form-control',
-			className
-		);
+		const classes = getCN('form-control', className);
 
 		return (
-			<select
-				className={classes}
-				{...otherProps}
-				value={selected}
-			>
-				{options.map(
-					({label, value}, index) => (
-						<option key={index} value={value}>
-							{label ? label : value}
-						</option>
-					)
-				)}
+			<select className={classes} {...otherProps} value={selected}>
+				{options.map(({label, value}, index) => (
+					<option key={index} value={value}>
+						{label ? label : value}
+					</option>
+				))}
 			</select>
 		);
 	}

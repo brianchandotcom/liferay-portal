@@ -1,4 +1,4 @@
-@import "bourbon";
+@import 'bourbon';
 
 html body {
 	height: auto;
@@ -8,8 +8,8 @@ html body {
 /* ---------- Bottom dock ---------- */
 
 .chat-bar {
-	background: #E5E5E5 url(../images/btm_dock_bg.png) repeat-x;
-	border: 1px solid #B5B5B5;
+	background: #e5e5e5 url(../images/btm_dock_bg.png) repeat-x;
+	border: 1px solid #b5b5b5;
 	border-bottom-width: 0;
 	bottom: 0;
 	height: 24px;
@@ -18,8 +18,9 @@ html body {
 	right: 15px;
 	z-index: 1000;
 
-	.status-message, .trigger-name {
-		text-shadow: 1px 1px #FFF;
+	.status-message,
+	.trigger-name {
+		text-shadow: 1px 1px #fff;
 	}
 }
 
@@ -35,7 +36,8 @@ html body {
 
 .chat-bar {
 	div ul {
-		&, li {
+		&,
+		li {
 			list-style-type: none;
 			margin: 0;
 			padding: 0;
@@ -44,8 +46,8 @@ html body {
 
 		li {
 			.chat-panel-trigger {
-				border-left: 1px solid #B5B5B5;
-				border-right: 1px solid #E0E0E0;
+				border-left: 1px solid #b5b5b5;
+				border-right: 1px solid #e0e0e0;
 				color: #111;
 				cursor: pointer;
 				float: left;
@@ -54,12 +56,12 @@ html body {
 				text-decoration: none;
 
 				&:hover {
-					background: #FFF;
+					background: #fff;
 				}
 
 				.unread {
 					background: url(../images/unread_messages.png);
-					color: #FFF;
+					color: #fff;
 					font: bold 10px/16px Arial, Helvetica, sans-serif;
 					height: 16px;
 					position: absolute;
@@ -72,7 +74,7 @@ html body {
 			}
 
 			&.selected .chat-panel-trigger {
-				background: #FFF;
+				background: #fff;
 				border: solid #262626;
 				border-width: 0 1px 1px;
 				height: 25px;
@@ -156,7 +158,8 @@ html body {
 		}
 
 		.chat-panel-trigger .trigger-name {
-			background: url(@theme_image_path@/application/loading_indicator.gif) no-repeat 0 0;
+			background: url(@theme_image_path@/application/loading_indicator.gif)
+				no-repeat 0 0;
 			padding: 2px 0 2px 20px;
 		}
 	}
@@ -171,7 +174,7 @@ html body {
 
 		.online-users li {
 			align-items: center;
-			border: 1px solid #FFF;
+			border: 1px solid #fff;
 			cursor: pointer;
 			display: flex;
 			flex-wrap: nowrap;
@@ -188,8 +191,8 @@ html body {
 			}
 
 			&:hover {
-				background: #F3F3F3;
-				border-color: #DDD;
+				background: #f3f3f3;
+				border-color: #ddd;
 			}
 		}
 
@@ -260,7 +263,7 @@ html body {
 }
 
 .chat-panel-window {
-	background: #FFF;
+	background: #fff;
 	border: 1px solid #262626;
 	font: 12px Tahoma, Geneva, sans-serif;
 	max-width: 452px;
@@ -280,8 +283,8 @@ img.chat-panel-icon {
 }
 
 .chat-panel-title {
-	background: #20272B;
-	color: #F2F2F2;
+	background: #20272b;
+	color: #f2f2f2;
 	font-weight: bold;
 	height: 24px;
 	line-height: 24px;
@@ -317,7 +320,8 @@ img.chat-panel-icon {
 	}
 }
 
-.buddy-list, .chat-settings {
+.buddy-list,
+.chat-settings {
 	.chat-panel-title {
 		text-indent: 6px;
 	}
@@ -328,8 +332,8 @@ img.chat-panel-icon {
 }
 
 .chat-panel-profile {
-	background: #EEE;
-	border-bottom: 1px solid #CCC;
+	background: #eee;
+	border-bottom: 1px solid #ccc;
 	height: 27px;
 	padding-top: 5px;
 	text-indent: 60px;
@@ -348,20 +352,21 @@ img.chat-panel-icon {
 		position: relative;
 	}
 
-	.date, .name {
+	.date,
+	.name {
 		line-height: 11px;
 		padding: 2px 4px 3px;
 	}
 
 	.name {
-		background: #828F95;
-		color: #FFF;
+		background: #828f95;
+		color: #fff;
 		display: block;
 		padding-right: 4.8em;
 	}
 
 	.date {
-		color: #EEE;
+		color: #eee;
 		font-size: 10px;
 		font-style: normal;
 		position: absolute;
@@ -371,7 +376,7 @@ img.chat-panel-icon {
 
 	.incoming {
 		.name {
-			background: #D3DADD;
+			background: #d3dadd;
 			color: #555;
 		}
 
@@ -412,12 +417,13 @@ pre.chat-height-monitor {
 	padding: 0;
 }
 
-.chat-height-monitor, .chat-panel-input textarea {
+.chat-height-monitor,
+.chat-panel-input textarea {
 	font: 14px/16px Tahoma, Geneva, sans-serif;
 }
 
 .chat-panel-input textarea.focus {
-	background: #FFF;
+	background: #fff;
 	border-width: 0;
 }
 
@@ -471,7 +477,7 @@ pre.chat-height-monitor {
 /* ---------- Message waiting indicator (only background-color is used) ---------- */
 
 .message-waiting {
-	background-color: #A5D6EF;
+	background-color: #a5d6ef;
 }
 
 /* ---------- Extras ---------- */

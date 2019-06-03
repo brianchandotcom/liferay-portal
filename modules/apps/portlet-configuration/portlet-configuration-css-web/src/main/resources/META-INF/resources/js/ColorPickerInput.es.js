@@ -11,7 +11,6 @@ import templates from './ColorPickerInput.soy';
  */
 
 class ColorPickerInput extends Component {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -19,22 +18,21 @@ class ColorPickerInput extends Component {
 	rendered() {
 		let instance = this;
 
-		AUI().use(
-			'aui-color-picker-popover',
-			function(A) {
-				instance.colorPickerPopover = new A.ColorPickerPopover(
-					{
-						color: instance.color,
-						constrain: true,
-						trigger: '#' + instance.id,
-						zIndex: Liferay.zIndex.POPOVER
-					}
-				);
+		AUI().use('aui-color-picker-popover', function(A) {
+			instance.colorPickerPopover = new A.ColorPickerPopover({
+				color: instance.color,
+				constrain: true,
+				trigger: '#' + instance.id,
+				zIndex: Liferay.zIndex.POPOVER
+			});
 
-				instance.colorPickerPopover.render(instance.element);
-				instance.colorPickerPopover.after('select', instance.setColor_, instance);
-			}
-		);
+			instance.colorPickerPopover.render(instance.element);
+			instance.colorPickerPopover.after(
+				'select',
+				instance.setColor_,
+				instance
+			);
+		});
 	}
 
 	/**
@@ -55,7 +53,6 @@ class ColorPickerInput extends Component {
  */
 
 ColorPickerInput.STATE = {
-
 	/**
 	 * Current selected color
 	 * @type {String}

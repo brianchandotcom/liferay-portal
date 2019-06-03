@@ -10,7 +10,6 @@ import templates from './FloatingToolbar.soy';
  * FloatingToolbar
  */
 class FloatingToolbar extends Component {
-
 	/**
 	 * Aligns the given element to the anchor,
 	 * defaulting to BottomRight position and moving to
@@ -33,9 +32,10 @@ class FloatingToolbar extends Component {
 				preferredPosition
 			);
 
-			position = suggestedAlign.position === preferredPosition ?
-				preferredPosition :
-				fallbackPosition;
+			position =
+				suggestedAlign.position === preferredPosition
+					? preferredPosition
+					: fallbackPosition;
 
 			Align.align(element, anchor, position, false);
 		}
@@ -93,11 +93,9 @@ class FloatingToolbar extends Component {
 	rendered() {
 		this._align();
 
-		requestAnimationFrame(
-			() => {
-				this._align();
-			}
-		);
+		requestAnimationFrame(() => {
+			this._align();
+		});
 	}
 
 	/**
@@ -125,8 +123,7 @@ class FloatingToolbar extends Component {
 		if (!event.defaultPrevented) {
 			if (this.selectedPanelId === panelId) {
 				this.selectedPanelId = null;
-			}
-			else {
+			} else {
 				this.selectedPanelId = panelId;
 			}
 		}
@@ -139,14 +136,10 @@ class FloatingToolbar extends Component {
 	_handlePanelButtonClick(event) {
 		const {panelId = null, type} = event.delegateTarget.dataset;
 
-		this.emit(
-			'buttonClicked',
-			event,
-			{
-				panelId,
-				type
-			}
-		);
+		this.emit('buttonClicked', event, {
+			panelId,
+			type
+		});
 	}
 
 	/**
@@ -176,9 +169,8 @@ class FloatingToolbar extends Component {
 			preferred: Align.BottomRight
 		};
 
-		const languageDirection = Liferay.Language.direction[
-			Liferay.ThemeDisplay.getLanguageId()
-		];
+		const languageDirection =
+			Liferay.Language.direction[Liferay.ThemeDisplay.getLanguageId()];
 
 		if (languageDirection === 'rtl') {
 			panelPosition = {
@@ -187,22 +179,18 @@ class FloatingToolbar extends Component {
 			};
 		}
 
-		requestAnimationFrame(
-			() => {
-				FloatingToolbar._alignElement(
-					this.refs.buttons,
-					this.anchorElement,
-					panelPosition.preferred,
-					panelPosition.fallback
-				);
+		requestAnimationFrame(() => {
+			FloatingToolbar._alignElement(
+				this.refs.buttons,
+				this.anchorElement,
+				panelPosition.preferred,
+				panelPosition.fallback
+			);
 
-				requestAnimationFrame(
-					() => {
-						this._alignPanel(panelPosition);
-					}
-				);
-			}
-		);
+			requestAnimationFrame(() => {
+				this._alignPanel(panelPosition);
+			});
+		});
 	}
 
 	/**
@@ -219,7 +207,6 @@ class FloatingToolbar extends Component {
 			panelPosition.fallback
 		);
 	}
-
 }
 
 /**
@@ -229,7 +216,6 @@ class FloatingToolbar extends Component {
  * @type {!Object}
  */
 FloatingToolbar.STATE = {
-
 	/**
 	 * Selected panel
 	 * @default null
@@ -238,8 +224,7 @@ FloatingToolbar.STATE = {
 	 * @review
 	 * @type {object|null}
 	 */
-	_selectedPanel: Config
-		.object()
+	_selectedPanel: Config.object()
 		.internal()
 		.value(null),
 
@@ -251,9 +236,7 @@ FloatingToolbar.STATE = {
 	 * @review
 	 * @type {HTMLElement}
 	 */
-	anchorElement: Config
-		.instanceOf(HTMLElement)
-		.required(),
+	anchorElement: Config.instanceOf(HTMLElement).required(),
 
 	/**
 	 * List of available buttons.
@@ -263,19 +246,15 @@ FloatingToolbar.STATE = {
 	 * @review
 	 * @type {object[]}
 	 */
-	buttons: Config
-		.arrayOf(
-			Config.shapeOf(
-				{
-					icon: Config.string(),
-					id: Config.string(),
-					panelId: Config.string(),
-					title: Config.string(),
-					type: Config.string()
-				}
-			)
-		)
-		.required(),
+	buttons: Config.arrayOf(
+		Config.shapeOf({
+			icon: Config.string(),
+			id: Config.string(),
+			panelId: Config.string(),
+			title: Config.string(),
+			type: Config.string()
+		})
+	).required(),
 
 	/**
 	 * If true, once a panel has been selected it cannot be changed
@@ -286,9 +265,7 @@ FloatingToolbar.STATE = {
 	 * @review
 	 * @type {boolean}
 	 */
-	fixSelectedPanel: Config
-		.bool()
-		.value(false),
+	fixSelectedPanel: Config.bool().value(false),
 
 	/**
 	 * Selected panel ID.
@@ -299,16 +276,14 @@ FloatingToolbar.STATE = {
 	 * @review
 	 * @type {string|null}
 	 */
-	selectedPanelId: Config
-		.string()
+	selectedPanelId: Config.string()
 		.internal()
 		.value(null)
 };
 
-const ConnectedFloatingToolbar = getConnectedComponent(
-	FloatingToolbar,
-	['spritemap']
-);
+const ConnectedFloatingToolbar = getConnectedComponent(FloatingToolbar, [
+	'spritemap'
+]);
 
 Soy.register(ConnectedFloatingToolbar, templates);
 

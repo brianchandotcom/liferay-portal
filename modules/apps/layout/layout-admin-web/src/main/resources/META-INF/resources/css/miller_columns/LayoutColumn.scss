@@ -1,11 +1,11 @@
-@import "mixins";
+@import 'mixins';
 
 .layout-column {
 	margin: 0;
 	padding: 0;
 
 	& + & {
-		border-left: solid #CCC thin;
+		border-left: solid #ccc thin;
 	}
 
 	&--placeholder {
@@ -13,7 +13,7 @@
 	}
 
 	.active-item {
-		background-color: #F7F8F9;
+		background-color: #f7f8f9;
 	}
 
 	.list-group-item {
@@ -44,7 +44,7 @@
 }
 
 .layout-column .list-group-item.layout-column-item-drag-top:first-child {
-	box-shadow: inset 0 2px 0 0 #0B5FFF;
+	box-shadow: inset 0 2px 0 0 #0b5fff;
 	transition-delay: 0s;
 }
 
@@ -53,7 +53,7 @@
 }
 
 .layout-column-item-drag-inside {
-	box-shadow: inset 0 0 0 2px #0B5FFF;
+	box-shadow: inset 0 0 0 2px #0b5fff;
 }
 
 .layout-column-item-subtitle {
@@ -66,7 +66,7 @@
 
 .layout-drag-handler {
 	align-items: center;
-	color: #CDCED9;
+	color: #cdced9;
 	cursor: move;
 	display: inline-flex;
 	position: relative;
@@ -80,7 +80,7 @@
 
 .layout-has-child-col {
 	align-items: center;
-	color: #CDCED9;
+	color: #cdced9;
 	display: inline-flex;
 	min-width: 16px;
 }
@@ -102,7 +102,7 @@
 	.layout-column-item-click-mask {
 		background: transparent;
 		border: none;
-		box-shadow: inset 0 0 0 0 #FFF, inset 0 0 0 0 #80ACFF;
+		box-shadow: inset 0 0 0 0 #fff, inset 0 0 0 0 #80acff;
 		cursor: pointer;
 		height: 100%;
 		left: 0;
@@ -113,8 +113,7 @@
 		will-change: box-shadow;
 
 		&:focus {
-			box-shadow: inset 0 0 0 0.125rem #FFF,
-				inset 0 0 0 0.25rem #80ACFF;
+			box-shadow: inset 0 0 0 0.125rem #fff, inset 0 0 0 0.25rem #80acff;
 			outline: 0;
 		}
 	}
@@ -125,17 +124,17 @@
 }
 
 .list-group-item.layout-item.layout-column-item-drag-bottom {
-	box-shadow: inset 0 -2px 0 0 #0B5FFF;
+	box-shadow: inset 0 -2px 0 0 #0b5fff;
 	transition-delay: 0s;
 }
 
 .list-group-item.layout-item.layout-column-item-drag-top {
-	box-shadow: 0 -2px 0 0 #0B5FFF;
+	box-shadow: 0 -2px 0 0 #0b5fff;
 	transition-delay: 0s;
 }
 
 .list-group-item.layout-drag-item.dragging {
-	background-color: #F0F5FF;
+	background-color: #f0f5ff;
 	border: none;
 	border-radius: 4px;
 	box-shadow: 2px 3px 6px 0 rgba(39, 40, 51, 0.15);
@@ -159,7 +158,8 @@
 }
 
 .select-item-checkbox-label {
-	&:after, &:before {
+	&:after,
+	&:before {
 		top: 0;
 	}
 }

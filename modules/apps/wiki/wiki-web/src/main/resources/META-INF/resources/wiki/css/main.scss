@@ -1,5 +1,5 @@
-@import "bourbon";
-@import "mixins";
+@import 'bourbon';
+@import 'mixins';
 
 .portlet-wiki {
 	.wiki-body {
@@ -14,14 +14,15 @@
 		}
 
 		pre {
-			background: #FFF;
-			border: 1px dashed #2F6FAB;
+			background: #fff;
+			border: 1px dashed #2f6fab;
 			margin: 5px 0;
 			padding: 0.5em;
 		}
 	}
 
-	.wiki-body, .wiki-page-editor {
+	.wiki-body,
+	.wiki-page-editor {
 		img {
 			max-width: 100%;
 		}
@@ -31,7 +32,9 @@
 			width: 100%;
 		}
 
-		table, th, td {
+		table,
+		th,
+		td {
 			border: 1px solid;
 		}
 	}
@@ -41,12 +44,12 @@
 	}
 
 	a.createpage {
-		color: #F00;
+		color: #f00;
 	}
 
 	.toc {
-		background-color: #F9F9F9;
-		border: 1px solid #AAA;
+		background-color: #f9f9f9;
+		border: 1px solid #aaa;
 		padding: 0 1em;
 
 		h4 {
@@ -82,7 +85,7 @@
 	}
 
 	.page-categories {
-		color: #7D7D7D;
+		color: #7d7d7d;
 	}
 
 	.taglib-discussion {
@@ -91,14 +94,17 @@
 
 	.portlet-body {
 		h1.page-title .return-to-page {
-			background: url(@theme_image_path@/wiki/return_to_page.png) no-repeat 0 50%;
+			background: url(@theme_image_path@/wiki/return_to_page.png)
+				no-repeat 0 50%;
 			padding-left: 20px;
 			text-decoration: none;
 		}
 
-		h2, h3, h4 {
+		h2,
+		h3,
+		h4 {
 			a.hashlink {
-				color: #DDE0E1;
+				color: #dde0e1;
 				font-size: 12px;
 				text-decoration: none;
 			}
@@ -110,7 +116,7 @@
 	}
 
 	.preview {
-		background: #FFC;
+		background: #ffc;
 		border: 1px dotted gray;
 		padding: 3px;
 	}
@@ -125,26 +131,29 @@
 
 	.content-body {
 		.wiki-code {
-			background: #FFF;
+			background: #fff;
 			border: 1px solid #777;
 			font-family: monospace;
 			white-space: pre;
 		}
 
 		.code-lines {
-			border-right: 1px solid #CCC;
+			border-right: 1px solid #ccc;
 			color: #000;
 			margin-right: 5px;
 			padding: 0 5px;
 		}
 
 		a.external-link {
-			background: transparent url(@theme_image_path@/wiki/external.png) right top no-repeat;
+			background: transparent url(@theme_image_path@/wiki/external.png)
+				right top no-repeat;
 			padding-right: 10px;
 			text-decoration: none;
 
 			&:hover {
-				background: transparent url(@theme_image_path@/wiki/external.png) right top no-repeat;
+				background: transparent
+					url(@theme_image_path@/wiki/external.png) right top
+					no-repeat;
 				padding-right: 11px;
 				text-decoration: underline;
 			}
@@ -227,8 +236,9 @@
 		width: 100%;
 
 		tr {
-			th, td {
-				border: 1px solid #CCC;
+			th,
+			td {
+				border: 1px solid #ccc;
 				border-left-width: 0;
 				border-right-width: 0;
 				padding: 0.3em 1em;
@@ -237,13 +247,13 @@
 	}
 
 	.page-old-version {
-		color: #F93;
+		color: #f93;
 		line-height: 1.2em;
 		margin: -1em 0 1.4em;
 		width: auto;
 
 		a {
-			color: #F93;
+			color: #f93;
 		}
 	}
 
@@ -252,7 +262,7 @@
 	}
 
 	.page-redirect {
-		color: #7D7D7D;
+		color: #7d7d7d;
 		cursor: pointer;
 		line-height: 1.2em;
 		margin: -1em 0 1.4em;
@@ -290,14 +300,14 @@
 	}
 
 	.top-links-nodes {
-		border: 1px solid #DDD;
+		border: 1px solid #ddd;
 		float: left;
 		list-style-type: none;
 		margin: 0 0.5em 0.5em;
 		padding: 0.2em 0.5em;
 
 		.top-link-node {
-			border-right: 1px solid #AAA;
+			border-right: 1px solid #aaa;
 			display: inline-block;
 			list-style-type: none;
 			margin: 0.3em;

@@ -17,7 +17,6 @@ class LayoutBreadcrumbs extends Component {}
  */
 
 LayoutBreadcrumbs.STATE = {
-
 	/**
 	 * Breadcrumb entries
 	 * @default undefined
@@ -27,12 +26,10 @@ LayoutBreadcrumbs.STATE = {
 	 */
 
 	breadcrumbEntries: Config.arrayOf(
-		Config.shapeOf(
-			{
-				title: Config.string().required(),
-				url: Config.string().required()
-			}
-		)
+		Config.shapeOf({
+			title: Config.string().required(),
+			url: Config.string().required()
+		})
 	).required()
 };
 

@@ -11,7 +11,7 @@ class Captcha extends Component {}
 
 Captcha.STATE = {
 	html: {
-		'isHtml': true,
+		isHtml: true,
 		value: ''
 	}
 };
@@ -23,9 +23,7 @@ Soy.register(Captcha, templates, 'render');
 Captcha.Soy = Soy;
 
 if (!window.DDMCaptcha) {
-	window.DDMCaptcha = {
-
-	};
+	window.DDMCaptcha = {};
 }
 
 window.DDMCaptcha.render = Captcha;

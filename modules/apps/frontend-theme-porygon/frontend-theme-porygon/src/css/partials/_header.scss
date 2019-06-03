@@ -1,5 +1,6 @@
 header {
-	.portlet:hover, .portlet.open {
+	.portlet:hover,
+	.portlet.open {
 		z-index: 1050;
 	}
 
@@ -16,7 +17,8 @@ header {
 	a {
 		color: $main-header-color;
 
-		&:hover, &:focus {
+		&:hover,
+		&:focus {
 			color: $secondary-header-color;
 		}
 	}
@@ -27,7 +29,8 @@ header {
 	}
 
 	.navbar-user {
-		.user-avatar-link, .sign-in {
+		.user-avatar-link,
+		.sign-in {
 			& > a {
 				color: $main-header-color;
 				display: inline-block;
@@ -35,14 +38,18 @@ header {
 				padding: 16px 16px 16px 6px;
 				text-transform: uppercase;
 
-				&:hover, &:focus, &.active, &.open {
+				&:hover,
+				&:focus,
+				&.active,
+				&.open {
 					color: $secondary-header-color;
 					text-decoration: none;
 				}
 			}
 		}
 
-		.user-icon, .icon-user {
+		.user-icon,
+		.icon-user {
 			display: inline-table;
 		}
 
@@ -64,7 +71,8 @@ header {
 		}
 
 		fieldset .form-group {
-			&::placeholder, &:focus::placeholder {
+			&::placeholder,
+			&:focus::placeholder {
 				color: $secondary-header-color;
 			}
 
@@ -106,7 +114,8 @@ header {
 		overflow: hidden;
 		position: relative;
 
-		&:hover, &:focus {
+		&:hover,
+		&:focus {
 			.lexicon-icon {
 				color: $secondary-header-color;
 				fill: $secondary-header-color;
@@ -166,7 +175,8 @@ header {
 		}
 	}
 
-	#content, footer {
+	#content,
+	footer {
 		opacity: 0.3;
 	}
 }

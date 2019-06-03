@@ -27,8 +27,8 @@ const MENU_ITEM_SELECTED_CLASSNAME = `${MENU_ITEM_CLASSNAME}--selected`;
  * @return {Array<HTMLElement>}
  */
 const getChildren = function(menuItem) {
-	return Array.prototype
-		.slice.call(menuItem.children)
+	return Array.prototype.slice
+		.call(menuItem.children)
 		.filter(child => hasClass(child, MENU_ITEM_CLASSNAME));
 };
 
@@ -96,9 +96,7 @@ const getSiblings = function(menuItem) {
 	let siblings = [];
 
 	if (parentElement) {
-		siblings = getChildren(
-			parentElement
-		);
+		siblings = getChildren(parentElement);
 	}
 
 	return siblings;
@@ -143,8 +141,7 @@ const isSelected = function(menuItem) {
 const setDragging = function(menuItem, dragging = false) {
 	if (dragging) {
 		addClasses(menuItem, MENU_ITEM_DRAGGING_CLASSNAME);
-	}
-	else {
+	} else {
 		removeClasses(menuItem, MENU_ITEM_DRAGGING_CLASSNAME);
 	}
 };

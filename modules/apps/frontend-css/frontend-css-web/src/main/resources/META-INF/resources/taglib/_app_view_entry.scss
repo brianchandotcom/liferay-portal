@@ -1,5 +1,5 @@
-@import "bourbon";
-@import "mixins";
+@import 'bourbon';
+@import 'mixins';
 
 .app-view-entry-taglib.entry-display-style {
 	&.display-icon {
@@ -31,7 +31,8 @@
 			text-align: center;
 		}
 
-		.folder-action, .entry-action {
+		.folder-action,
+		.entry-action {
 			top: 14px;
 
 			@include respond-to(phone, tablet) {
@@ -77,7 +78,8 @@
 		}
 
 		@include respond-to(phone, tablet) {
-			.folder-action, .entry-action {
+			.folder-action,
+			.entry-action {
 				a {
 					padding: 10px 12px;
 					width: auto;
@@ -86,8 +88,9 @@
 		}
 	}
 
-	&.display-descriptive, &.display-icon {
-		border: 1px solid #E1E1E1;
+	&.display-descriptive,
+	&.display-icon {
+		border: 1px solid #e1e1e1;
 		margin: 5px;
 
 		img {

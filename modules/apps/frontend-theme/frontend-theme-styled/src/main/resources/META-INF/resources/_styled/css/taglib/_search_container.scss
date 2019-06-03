@@ -6,8 +6,10 @@
 	.lfr-icon-menu > .dropdown-toggle {
 		color: $secondary;
 
-		&:active, &:focus, &:hover {
-			background-color: #F7F8F9;
+		&:active,
+		&:focus,
+		&:hover {
+			background-color: #f7f8f9;
 			border-radius: 4px;
 			color: $body-color;
 		}
@@ -27,7 +29,10 @@
 				margin-bottom: 0;
 			}
 
-			h5, h6, .h5, .h6 {
+			h5,
+			h6,
+			.h5,
+			.h6 {
 				font-size: $font-size-sm;
 				font-weight: 400;
 				line-height: 1.5;
@@ -56,7 +61,8 @@
 		.table-list {
 			tbody {
 				tr:nth-last-child(2) {
-					td, th {
+					td,
+					th {
 						&:first-child {
 							border-bottom-left-radius: $table-list-border-radius;
 						}
@@ -71,7 +77,20 @@
 	}
 }
 
-.lfr-asset-type-column, .lfr-author-column, .lfr-city-column, .lfr-country-column, .lfr-email-address-column, .lfr-job-title-column, .lfr-region-column, .lfr-removed-by-column, .lfr-replier-column, .lfr-scope-column, .lfr-screen-name-column, .lfr-type-column, .lfr-user-column, .lfr-users-column {
+.lfr-asset-type-column,
+.lfr-author-column,
+.lfr-city-column,
+.lfr-country-column,
+.lfr-email-address-column,
+.lfr-job-title-column,
+.lfr-region-column,
+.lfr-removed-by-column,
+.lfr-replier-column,
+.lfr-scope-column,
+.lfr-screen-name-column,
+.lfr-type-column,
+.lfr-user-column,
+.lfr-users-column {
 	word-break: break-all \9;
 	word-wrap: break-word;
 
@@ -81,21 +100,40 @@
 	}
 }
 
-.lfr-completion-date-column, .lfr-create-date-column, .lfr-date-column, .lfr-display-date-column, .lfr-expiration-date-column, .lfr-last-post-date-column, .lfr-modified-date-column, .lfr-removed-date-column, .lfr-reply-date-column, .lfr-revision-column, .lfr-size-column {
+.lfr-completion-date-column,
+.lfr-create-date-column,
+.lfr-date-column,
+.lfr-display-date-column,
+.lfr-expiration-date-column,
+.lfr-last-post-date-column,
+.lfr-modified-date-column,
+.lfr-removed-date-column,
+.lfr-reply-date-column,
+.lfr-revision-column,
+.lfr-size-column {
 	white-space: nowrap;
 }
 
-.lfr-description-column, .lfr-role-column {
+.lfr-description-column,
+.lfr-role-column {
 	max-width: 375px;
 	min-width: 375px;
 }
 
-.lfr-email-address-column, .lfr-name-column, .lfr-parent-organization-column, .lfr-screen-name-column, .lfr-title-column, .lfr-url-column, .lfr-wiki-column {
+.lfr-email-address-column,
+.lfr-name-column,
+.lfr-parent-organization-column,
+.lfr-screen-name-column,
+.lfr-title-column,
+.lfr-url-column,
+.lfr-wiki-column {
 	max-width: 200px;
 	min-width: 200px;
 }
 
-.lfr-email-column, .lfr-mobile-column, .lfr-website-column {
+.lfr-email-column,
+.lfr-mobile-column,
+.lfr-website-column {
 	min-width: 100px;
 
 	@include sm {
@@ -109,11 +147,11 @@
 
 .user-info .user-details {
 	.date-info {
-		color: #8C8C8C;
+		color: #8c8c8c;
 	}
 
 	.user-name {
-		color: #009AE5;
+		color: #009ae5;
 	}
 }
 

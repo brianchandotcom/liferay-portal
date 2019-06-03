@@ -1,4 +1,4 @@
-@import "mixins";
+@import 'mixins';
 
 .app-view-entry {
 	.entry-thumbnail {
@@ -56,12 +56,17 @@
 			}
 		}
 
-		dt, dd, .entry-categories, .entry-tags, .entry-description {
+		dt,
+		dd,
+		.entry-categories,
+		.entry-tags,
+		.entry-description {
 			line-height: 1.5em;
 			overflow: hidden;
 		}
 
-		.entry-categories, .entry-tags {
+		.entry-categories,
+		.entry-tags {
 			display: block;
 		}
 
@@ -88,7 +93,8 @@
 		}
 	}
 
-	.folder-action, .entry-action {
+	.folder-action,
+	.entry-action {
 		position: absolute;
 		right: 6px;
 		top: 10px;
@@ -116,18 +122,21 @@
 		}
 	}
 
-	.overlay.folder-action a, .overlay.entry-action a {
+	.overlay.folder-action a,
+	.overlay.entry-action a {
 		display: block;
 		width: 20px;
 	}
 
-	.entry-title .entry-categories, a.entry-title .entry-tags {
+	.entry-title .entry-categories,
+	a.entry-title .entry-tags {
 		font-size: 16px;
 	}
 }
 
 .lfr-search-container td .overlay {
-	&.folder-action, &.entry-action {
+	&.folder-action,
+	&.entry-action {
 		position: static;
 
 		.btn a {

@@ -1,11 +1,11 @@
-@import "./miller_columns/Layout";
+@import './miller_columns/Layout';
 
-@import "./miller_columns/LayoutColumn";
+@import './miller_columns/LayoutColumn';
 
 .portlet-layouts-admin {
 	.customization-settings #main-content {
 		.portlet-column {
-			border: 1px solid #0B5FFF;
+			border: 1px solid #0b5fff;
 			padding: 0 10px;
 			text-align: center;
 		}
@@ -15,8 +15,9 @@
 		}
 
 		.row {
-			&:nth-child(2n-1) .portlet-column:nth-child(2n-1), &:nth-child(2n) .portlet-column:nth-child(2n) {
-				background-color: #E5F5FC;
+			&:nth-child(2n-1) .portlet-column:nth-child(2n-1),
+			&:nth-child(2n) .portlet-column:nth-child(2n) {
+				background-color: #e5f5fc;
 			}
 		}
 	}

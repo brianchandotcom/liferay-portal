@@ -103,7 +103,9 @@
 
 			@media (min-width: $pageContentMaxWidth) {
 				.contributor-container .container-fluid {
-					padding-right: calc(#{$sidebarWidth} - ((100% - #{$pageContentMaxWidth}) / 2));
+					padding-right: calc(
+						#{$sidebarWidth} - ((100% - #{$pageContentMaxWidth}) / 2)
+					);
 
 					.content-wrapper {
 						padding-right: 32px;

@@ -21,7 +21,12 @@ class RuleList extends Component {
 		this._eventHandler = new EventHandler();
 
 		this._eventHandler.add(
-			dom.on(document, 'mouseup', this._handleDocumentMouseUp.bind(this), true)
+			dom.on(
+				document,
+				'mouseup',
+				this._handleDocumentMouseUp.bind(this),
+				true
+			)
 		);
 	}
 
@@ -37,112 +42,121 @@ class RuleList extends Component {
 
 		return {
 			...states,
-			rules: rules.map(
-				rule => {
-					let logicalOperator;
+			rules: rules.map(rule => {
+				let logicalOperator;
 
-					if (rule['logical-operator']) {
-						logicalOperator = rule['logical-operator'].toLowerCase();
-					}
-					else if (rule.logicalOperator) {
-						logicalOperator = rule.logicalOperator.toLowerCase();
-					}
-
-					return {
-						...rule,
-						actions: rule.actions.map(
-							action => {
-								let newAction = '';
-
-								if (action.action === 'auto-fill') {
-									const {inputs, outputs} = action;
-
-									const inputLabel = Object.values(inputs).map(input => this._getFieldLabel(input));
-									const outputLabel = Object.values(outputs).map(output => this._getFieldLabel(output));
-
-									action = {
-										...action,
-										inputLabel,
-										outputLabel
-									};
-								}
-
-								let fieldLabel = this._getFieldLabel(action.target);
-
-								if (action.action == 'jump-to-page') {
-									const fieldTarget = (parseInt(action.target, 10) + 1).toString();
-
-									if (action.label) {
-										fieldLabel = action.label;
-									}
-									else {
-										const maxPageIndexRes = maxPageIndex(rule.conditions, pages);
-
-										const pageOptionsList = pageOptions(pages, maxPageIndexRes);
-
-										const selectedPage = pageOptionsList.find(
-											option => {
-												return option.value == fieldTarget;
-											}
-										);
-
-										fieldLabel = selectedPage.label;
-									}
-
-									newAction = {
-										...action,
-										label: fieldLabel,
-										target: fieldTarget
-									};
-								}
-								else {
-									newAction = {
-										...action,
-										label: fieldLabel,
-										target: fieldLabel
-									};
-								}
-
-								return newAction;
-							}
-						),
-						conditions: rule.conditions.map(
-							condition => {
-								if (condition.operands.length < 2 && condition.operands[0].type === 'list') {
-									condition.operands = [
-										{
-											label: 'user',
-											repeatable: false,
-											type: 'user',
-											value: 'user'
-										},
-										{
-											...condition.operands[0],
-											label: condition.operands[0].value
-										}
-									];
-								}
-
-								return {
-									...condition,
-									operands: condition.operands.map(
-										(operand, index) => {
-											const label = this._getOperandLabel(condition.operands, index);
-
-											return {
-												...operand,
-												label,
-												value: label
-											};
-										}
-									)
-								};
-							}
-						),
-						logicalOperator
-					};
+				if (rule['logical-operator']) {
+					logicalOperator = rule['logical-operator'].toLowerCase();
+				} else if (rule.logicalOperator) {
+					logicalOperator = rule.logicalOperator.toLowerCase();
 				}
-			),
+
+				return {
+					...rule,
+					actions: rule.actions.map(action => {
+						let newAction = '';
+
+						if (action.action === 'auto-fill') {
+							const {inputs, outputs} = action;
+
+							const inputLabel = Object.values(inputs).map(
+								input => this._getFieldLabel(input)
+							);
+							const outputLabel = Object.values(outputs).map(
+								output => this._getFieldLabel(output)
+							);
+
+							action = {
+								...action,
+								inputLabel,
+								outputLabel
+							};
+						}
+
+						let fieldLabel = this._getFieldLabel(action.target);
+
+						if (action.action == 'jump-to-page') {
+							const fieldTarget = (
+								parseInt(action.target, 10) + 1
+							).toString();
+
+							if (action.label) {
+								fieldLabel = action.label;
+							} else {
+								const maxPageIndexRes = maxPageIndex(
+									rule.conditions,
+									pages
+								);
+
+								const pageOptionsList = pageOptions(
+									pages,
+									maxPageIndexRes
+								);
+
+								const selectedPage = pageOptionsList.find(
+									option => {
+										return option.value == fieldTarget;
+									}
+								);
+
+								fieldLabel = selectedPage.label;
+							}
+
+							newAction = {
+								...action,
+								label: fieldLabel,
+								target: fieldTarget
+							};
+						} else {
+							newAction = {
+								...action,
+								label: fieldLabel,
+								target: fieldLabel
+							};
+						}
+
+						return newAction;
+					}),
+					conditions: rule.conditions.map(condition => {
+						if (
+							condition.operands.length < 2 &&
+							condition.operands[0].type === 'list'
+						) {
+							condition.operands = [
+								{
+									label: 'user',
+									repeatable: false,
+									type: 'user',
+									value: 'user'
+								},
+								{
+									...condition.operands[0],
+									label: condition.operands[0].value
+								}
+							];
+						}
+
+						return {
+							...condition,
+							operands: condition.operands.map(
+								(operand, index) => {
+									const label = this._getOperandLabel(
+										condition.operands,
+										index
+									);
+
+									return {
+										...operand,
+										label,
+										value: label
+									};
+								}
+							)
+						};
+					}),
+					logicalOperator
+				};
+			}),
 			rulesCardOptions: this._getRulesCardOptions()
 		};
 	}
@@ -171,21 +185,17 @@ class RuleList extends Component {
 
 		if (operand.type === 'field') {
 			label = this._getFieldLabel(operand.value);
-		}
-		else if (operand.type === 'user') {
+		} else if (operand.type === 'user') {
 			label = Liferay.Language.get('user');
-		}
-		else if (operand.type !== 'field') {
+		} else if (operand.type !== 'field') {
 			const fieldType = this._getFieldType(operands[0].value);
 
 			if (fieldType == 'select' || fieldType === 'radio') {
 				label = this._getOptionLabel(operands[0].value, operand.value);
-			}
-			else {
+			} else {
 				label = operand.value;
 			}
-		}
-		else {
+		} else {
 			label = operand.value;
 		}
 
@@ -200,27 +210,23 @@ class RuleList extends Component {
 		if (pages && optionValue) {
 			const visitor = new PagesVisitor(pages);
 
-			visitor.findField(
-				field => {
-					let found = false;
+			visitor.findField(field => {
+				let found = false;
 
-					if (field.fieldName === fieldName && field.options) {
-						field.options.some(
-							option => {
-								if (option.value == optionValue) {
-									fieldLabel = option.label;
+				if (field.fieldName === fieldName && field.options) {
+					field.options.some(option => {
+						if (option.value == optionValue) {
+							fieldLabel = option.label;
 
-									found = true;
-								}
+							found = true;
+						}
 
-								return found;
-							}
-						);
-					}
-
-					return found;
+						return found;
+					});
 				}
-			);
+
+				return found;
+			});
 		}
 
 		return fieldLabel;
@@ -229,12 +235,12 @@ class RuleList extends Component {
 	_getRulesCardOptions() {
 		const rulesCardOptions = [
 			{
-				'label': Liferay.Language.get('edit'),
-				'settingsItem': 'edit'
+				label: Liferay.Language.get('edit'),
+				settingsItem: 'edit'
 			},
 			{
-				'label': Liferay.Language.get('delete'),
-				'settingsItem': 'delete'
+				label: Liferay.Language.get('delete'),
+				settingsItem: 'delete'
 			}
 		];
 
@@ -248,11 +254,9 @@ class RuleList extends Component {
 			return;
 		}
 
-		this.setState(
-			{
-				dropdownExpandedIndex: -1
-			}
-		);
+		this.setState({
+			dropdownExpandedIndex: -1
+		});
 	}
 
 	_handleDropdownClicked(event) {
@@ -267,11 +271,9 @@ class RuleList extends Component {
 			ruleIndex = -1;
 		}
 
-		this.setState(
-			{
-				dropdownExpandedIndex: ruleIndex
-			}
-		);
+		this.setState({
+			dropdownExpandedIndex: ruleIndex
+		});
 	}
 
 	_handleRuleCardClicked({data, target}) {
@@ -279,20 +281,13 @@ class RuleList extends Component {
 		const cardId = parseInt(cardElement.getAttribute('data-card-id'), 10);
 
 		if (data.item.settingsItem == 'edit') {
-			this.emit(
-				'ruleEdited',
-				{
-					ruleId: cardId
-				}
-			);
-		}
-		else if (data.item.settingsItem == 'delete') {
-			this.emit(
-				'ruleDeleted',
-				{
-					ruleId: cardId
-				}
-			);
+			this.emit('ruleEdited', {
+				ruleId: cardId
+			});
+		} else if (data.item.settingsItem == 'delete') {
+			this.emit('ruleDeleted', {
+				ruleId: cardId
+			});
 		}
 	}
 
@@ -303,15 +298,15 @@ class RuleList extends Component {
 			for (let rule = 0; rule < rules.length; rule++) {
 				const actions = rules[rule].actions;
 
-				actions.forEach(
-					action => {
-						if (action.action === 'auto-fill') {
-							const dataProviderName = this._getDataProviderName(action.ddmDataProviderInstanceUUID);
+				actions.forEach(action => {
+					if (action.action === 'auto-fill') {
+						const dataProviderName = this._getDataProviderName(
+							action.ddmDataProviderInstanceUUID
+						);
 
-							action.dataProviderName = dataProviderName;
-						}
+						action.dataProviderName = dataProviderName;
 					}
-				);
+				});
 			}
 		}
 
@@ -321,13 +316,11 @@ class RuleList extends Component {
 
 RuleList.STATE = {
 	dataProvider: Config.arrayOf(
-		Config.shapeOf(
-			{
-				id: Config.string(),
-				name: Config.string(),
-				uuid: Config.string()
-			}
-		)
+		Config.shapeOf({
+			id: Config.string(),
+			name: Config.string(),
+			uuid: Config.string()
+		})
 	),
 
 	dropdownExpandedIndex: Config.number().internal(),
@@ -335,12 +328,10 @@ RuleList.STATE = {
 	pages: Config.array().required(),
 
 	roles: Config.arrayOf(
-		Config.shapeOf(
-			{
-				id: Config.string(),
-				name: Config.string()
-			}
-		)
+		Config.shapeOf({
+			id: Config.string(),
+			name: Config.string()
+		})
 	).value([]),
 
 	/**
@@ -351,41 +342,33 @@ RuleList.STATE = {
 	 */
 
 	rules: Config.arrayOf(
-		Config.shapeOf(
-			{
-				actions: Config.arrayOf(
-					Config.shapeOf(
-						{
-							action: Config.string(),
-							ddmDataProviderInstanceUUID: Config.string(),
-							expression: Config.string(),
-							inputs: Config.object(),
+		Config.shapeOf({
+			actions: Config.arrayOf(
+				Config.shapeOf({
+					action: Config.string(),
+					ddmDataProviderInstanceUUID: Config.string(),
+					expression: Config.string(),
+					inputs: Config.object(),
+					label: Config.string(),
+					outputs: Config.object(),
+					target: Config.string()
+				})
+			),
+			conditions: Config.arrayOf(
+				Config.shapeOf({
+					operands: Config.arrayOf(
+						Config.shapeOf({
 							label: Config.string(),
-							outputs: Config.object(),
-							target: Config.string()
-						}
-					)
-				),
-				conditions: Config.arrayOf(
-					Config.shapeOf(
-						{
-							operands: Config.arrayOf(
-								Config.shapeOf(
-									{
-										label: Config.string(),
-										repeatable: Config.bool(),
-										type: Config.string(),
-										value: Config.string()
-									}
-								)
-							),
-							operator: Config.string()
-						}
-					)
-				),
-				['logical-operator']: Config.string()
-			}
-		)
+							repeatable: Config.bool(),
+							type: Config.string(),
+							value: Config.string()
+						})
+					),
+					operator: Config.string()
+				})
+			),
+			['logical-operator']: Config.string()
+		})
 	).value([]),
 
 	/**
@@ -404,22 +387,22 @@ RuleList.STATE = {
 	 * @type {!object}
 	 */
 
-	strings: Config.object().value(
-		{
-			'belongs-to': Liferay.Language.get('belongs-to'),
-			'calculate-field': Liferay.Language.get('calculate-field-x-as-x'),
-			contains: Liferay.Language.get('contains'),
-			'equals-to': Liferay.Language.get('is-equal-to'),
-			'greater-than': Liferay.Language.get('is-greater-than'),
-			'greater-than-equals': Liferay.Language.get('is-greater-than-or-equal-to'),
-			'is-empty': Liferay.Language.get('is-empty'),
-			'less-than': Liferay.Language.get('is-less-than'),
-			'less-than-equals': Liferay.Language.get('is-less-than-or-equal-to'),
-			'not-contains': Liferay.Language.get('does-not-contain'),
-			'not-equals-to': Liferay.Language.get('is-not-equal-to'),
-			'not-is-empty': Liferay.Language.get('is-not-empty')
-		}
-	)
+	strings: Config.object().value({
+		'belongs-to': Liferay.Language.get('belongs-to'),
+		'calculate-field': Liferay.Language.get('calculate-field-x-as-x'),
+		contains: Liferay.Language.get('contains'),
+		'equals-to': Liferay.Language.get('is-equal-to'),
+		'greater-than': Liferay.Language.get('is-greater-than'),
+		'greater-than-equals': Liferay.Language.get(
+			'is-greater-than-or-equal-to'
+		),
+		'is-empty': Liferay.Language.get('is-empty'),
+		'less-than': Liferay.Language.get('is-less-than'),
+		'less-than-equals': Liferay.Language.get('is-less-than-or-equal-to'),
+		'not-contains': Liferay.Language.get('does-not-contain'),
+		'not-equals-to': Liferay.Language.get('is-not-equal-to'),
+		'not-is-empty': Liferay.Language.get('is-not-empty')
+	})
 };
 
 Soy.register(RuleList, templates);

@@ -12,12 +12,14 @@ import controlsTemplates from './SaturationControls.soy';
  * Creates a Saturation component.
  */
 class SaturationComponent extends Component {
-
 	/**
 	 * @inheritDoc
 	 */
 	attached() {
-		this.requestImageEditorPreview_ = debounce(this.requestImageEditorPreview, 50);
+		this.requestImageEditorPreview_ = debounce(
+			this.requestImageEditorPreview,
+			50
+		);
 
 		this.cache_ = {};
 	}
@@ -83,7 +85,7 @@ class SaturationComponent extends Component {
 			let workerURI = this.modulePath + '/SaturationWorker.js';
 			let processWorker = new Worker(workerURI);
 
-			processWorker.onmessage = (event) => resolve(event.data);
+			processWorker.onmessage = event => resolve(event.data);
 			processWorker.postMessage(message);
 		});
 	}
@@ -96,7 +98,6 @@ class SaturationComponent extends Component {
  * @type {!Object}
  */
 SaturationComponent.STATE = {
-
 	/**
 	 * Path of this module.
 	 *

@@ -69,957 +69,1046 @@ YUI.add(
 
 		var SELECTOR_WARNING = STR_DOT + CSS_WARNING;
 
-		var TPL_ERROR_BUTTONS = '<button class="btn {cssClass}" data-errorlinkid="{linkId}" onclick="loggerInterface.handleErrorBtns">' +
-				'<div class="btn-content"></div>' +
+		var TPL_ERROR_BUTTONS =
+			'<button class="btn {cssClass}" data-errorlinkid="{linkId}" onclick="loggerInterface.handleErrorBtns">' +
+			'<div class="btn-content"></div>' +
 			'</button>';
 
 		var TPL_PARAMETER = '<li class="{cssClass}">{parameter}</li>';
 
 		var WIN = A.getWin();
 
-		var PoshiLogger = A.Component.create(
-			{
-				ATTRS: {
-					commandLogId: {
-						value: null
-					},
+		var PoshiLogger = A.Component.create({
+			ATTRS: {
+				commandLogId: {
+					value: null
+				},
 
-					commandLogScope: {
-						value: new A.NodeList()
-					},
+				commandLogScope: {
+					value: new A.NodeList()
+				},
 
-					currentScope: {
-						setter: A.one
-					},
+				currentScope: {
+					setter: A.one
+				},
 
-					errors: {
-						setter: function() {
-							var instance = this;
+				errors: {
+					setter: function() {
+						var instance = this;
 
-							var syntaxLog = instance.get(STR_SYNTAX_LOG);
+						var syntaxLog = instance.get(STR_SYNTAX_LOG);
 
-							return syntaxLog.all(SELECTOR_FAIL + ', ' + SELECTOR_WARNING);
-						}
-					},
-
-					paused: {
-						value: false
-					},
-
-					running: {
-						value: false
-					},
-
-					sidebar: {
-						setter: A.one
-					},
-
-					status: {
-						validator: Lang.isArray,
-						value: [CSS_FAIL, CSS_PASS, CSS_PENDING, CSS_WARNING]
-					},
-
-					transitioning: {
-						value: null
-					},
-
-					syntaxLog: {
-						setter: A.one
+						return syntaxLog.all(
+							SELECTOR_FAIL + ', ' + SELECTOR_WARNING
+						);
 					}
 				},
 
-				NAME: 'poshilogger',
+				paused: {
+					value: false
+				},
 
-				prototype: {
-					initializer: function() {
-						var instance = this;
+				running: {
+					value: false
+				},
 
-						var sidebar = instance.get(STR_SIDEBAR);
+				sidebar: {
+					setter: A.one
+				},
 
-						var commandLog = sidebar.one('.command-log');
+				status: {
+					validator: Lang.isArray,
+					value: [CSS_FAIL, CSS_PASS, CSS_PENDING, CSS_WARNING]
+				},
 
-						instance._toggleCommandLog(commandLog);
-					},
+				transitioning: {
+					value: null
+				},
 
-					bindUI: function() {
-						var instance = this;
+				syntaxLog: {
+					setter: A.one
+				}
+			},
 
-						instance._bindSidebar();
-						instance._bindSyntaxLog();
-					},
+			NAME: 'poshilogger',
 
-					handleCommandCompleted: function(id) {
-						var instance = this;
+			prototype: {
+				initializer: function() {
+					var instance = this;
 
-						var logIdSelector = '.command-log[data-logId="' + instance.get(STR_COMMAND_LOG_ID) + '"]';
+					var sidebar = instance.get(STR_SIDEBAR);
 
-						var commandLog = instance.get(STR_SIDEBAR).one(logIdSelector);
+					var commandLog = sidebar.one('.command-log');
 
-						var latestCommand = commandLog.one('.line-group:last-child');
+					instance._toggleCommandLog(commandLog);
+				},
 
-						if (latestCommand) {
-							var linkedFunction = instance.get(STR_SYNTAX_LOG).one('#' + id);
+				bindUI: function() {
+					var instance = this;
 
-							instance._displayNode(linkedFunction);
-							instance._setSyntaxNodeClass(linkedFunction);
+					instance._bindSidebar();
+					instance._bindSyntaxLog();
+				},
 
-							if (latestCommand.hasClass(CSS_FAILED) || latestCommand.hasClass(CSS_WARNING)) {
-								instance._injectSyntaxError(latestCommand);
-							}
+				handleCommandCompleted: function(id) {
+					var instance = this;
+
+					var logIdSelector =
+						'.command-log[data-logId="' +
+						instance.get(STR_COMMAND_LOG_ID) +
+						'"]';
+
+					var commandLog = instance
+						.get(STR_SIDEBAR)
+						.one(logIdSelector);
+
+					var latestCommand = commandLog.one(
+						'.line-group:last-child'
+					);
+
+					if (latestCommand) {
+						var linkedFunction = instance
+							.get(STR_SYNTAX_LOG)
+							.one('#' + id);
+
+						instance._displayNode(linkedFunction);
+						instance._setSyntaxNodeClass(linkedFunction);
+
+						if (
+							latestCommand.hasClass(CSS_FAILED) ||
+							latestCommand.hasClass(CSS_WARNING)
+						) {
+							instance._injectSyntaxError(latestCommand);
 						}
-					},
+					}
+				},
 
-					handleCurrentCommandSelect: function(event) {
-						var instance = this;
+				handleCurrentCommandSelect: function(event) {
+					var instance = this;
 
-						var currentTargetAncestor = event.currentTarget.ancestor();
+					var currentTargetAncestor = event.currentTarget.ancestor();
 
-						if (currentTargetAncestor) {
-							if (!currentTargetAncestor.hasClass('current-scope')) {
-								event.halt(true);
-							}
-
-							instance._parseCommandLog(currentTargetAncestor);
-
-							var functionLinkId = currentTargetAncestor.getData(ATTR_DATA_FUNCTION_LINK_ID);
-
-							var syntaxLog = instance.get(STR_SYNTAX_LOG);
-
-							var linkedFunction = syntaxLog.one('.line-group[data-functionLinkId="' + functionLinkId + '"]');
-
-							instance._displayNode(linkedFunction, true);
-							instance._selectCurrentScope(linkedFunction);
+					if (currentTargetAncestor) {
+						if (!currentTargetAncestor.hasClass('current-scope')) {
+							event.halt(true);
 						}
-					},
 
-					handleCurrentScopeSelect: function(event) {
-						var instance = this;
+						instance._parseCommandLog(currentTargetAncestor);
 
-						var currentTargetAncestor = event.currentTarget.ancestor();
-
-						if (currentTargetAncestor) {
-							if (!currentTargetAncestor.hasClass('current-scope')) {
-								event.halt(true);
-							}
-
-							instance._displayNode(currentTargetAncestor, true);
-							instance._selectCurrentScope(currentTargetAncestor);
-						}
-					},
-
-					handleErrorBtns: function(event) {
-						var instance = this;
-
-						var currentTarget = event.currentTarget;
-
-						currentTarget.toggleClass(CSS_TOGGLE);
+						var functionLinkId = currentTargetAncestor.getData(
+							ATTR_DATA_FUNCTION_LINK_ID
+						);
 
 						var syntaxLog = instance.get(STR_SYNTAX_LOG);
 
-						var errorLinkId = currentTarget.getData(ATTR_DATA_ERROR_LINK_ID);
-
-						var errorPanel = syntaxLog.one('.errorPanel[data-errorLinkId="' + errorLinkId + '"]');
-
-						if (errorPanel) {
-							errorPanel.toggleClass(CSS_TOGGLE);
-						}
-					},
-
-					handleFullScreenImageClick: function(event) {
-						var instance = this;
-
-						var fullScreenImageContainer = A.one('#fullScreenImage');
-
-						if (fullScreenImageContainer) {
-							var src;
-
-							var fullScreenImage = fullScreenImageContainer.one('#image');
-
-							if (fullScreenImage) {
-								var currentTarget = event.currentTarget;
-
-								src = currentTarget.attr(STR_SRC);
-
-								if (src) {
-									fullScreenImage.attr(STR_SRC, src);
-								}
-
-								fullScreenImage.toggleClass('hide', !src);
-							}
-
-							fullScreenImageContainer.toggleClass(CSS_TOGGLE, !src);
-						}
-					},
-
-					handleGoToErrorBtn: function(event) {
-						var instance = this;
-
-						var currentScope = instance.get(STR_CURRENT_SCOPE);
-						var errorNodes = instance.get(STR_ERRORS);
-
-						var lastIndex = errorNodes.size() - 1;
-
-						var newIndex = lastIndex;
-
-						if (currentScope) {
-							var index = errorNodes.indexOf(currentScope);
-
-							if (index > -1) {
-								if (index < lastIndex) {
-									newIndex = index + 1;
-								}
-								else {
-									newIndex = 0;
-								}
-							}
-						}
-
-						var failure = errorNodes.item(newIndex);
-
-						instance._selectCurrentScope(failure);
-						instance._displayNode(failure, true);
-					},
-
-					handleLineTrigger: function(id, starting) {
-						var instance = this;
-
-						var linkedLine = instance.get(STR_SYNTAX_LOG).one('#' + id);
-
-						instance._setSyntaxNodeClass(linkedLine);
-
-						var container = linkedLine.one('> .child-container');
-
-						if (container) {
-							if (starting && container.hasClass(CSS_COLLAPSE)) {
-								instance._toggleContainer(container, false);
-							}
-							else if (linkedLine.hasClass('conditional-fail')) {
-								instance._toggleContainer(container, false);
-							}
-						}
-					},
-
-					handleMinimizeSidebarBtn: function(event) {
-						var instance = this;
-
-						instance._minimizeSidebar(event.currentTarget);
-					},
-
-					handlePauseBtn: function(event) {
-						var instance = this;
-
-						instance._togglePauseTest();
-					},
-
-					handleToggleCollapseBtn: function(event, inSidebar) {
-						var instance = this;
-
-						var currentTarget = event.currentTarget;
-
-						if (!currentTarget.hasClass('btn')) {
-							currentTarget = currentTarget.previous();
-
-							if (!inSidebar) {
-								currentTarget = currentTarget.one('.btn-collapse');
-							}
-						}
-
-						if (currentTarget) {
-							var lookUpScope = instance.get(STR_SYNTAX_LOG);
-
-							if (inSidebar) {
-								lookUpScope = instance.get(STR_SIDEBAR);
-							}
-
-							var linkId = currentTarget.getData(ATTR_DATA_BUTTON_LINK_ID);
-
-							var collapsibleNode = lookUpScope.one('.child-container[data-btnLinkId="' + linkId + '"]');
-
-							instance._toggleContainer(collapsibleNode, inSidebar);
-						}
-					},
-
-					handleToggleCommandLogBtn: function(event) {
-						var instance = this;
-
-						var currentTarget = event.currentTarget;
-
-						var logId = currentTarget.getData(ATTR_DATA_LOG_ID);
-
-						var commandLog = instance._getCommandLogNode(logId);
-
-						instance._toggleCommandLog(commandLog, currentTarget);
-					},
-
-					_bindSidebar: function() {
-						var instance = this;
-
-						var sidebar = instance.get(STR_SIDEBAR);
-
-						sidebar.delegate(
-							'click',
-							A.bind('handleCurrentCommandSelect', instance),
-							'.linkable .line-container'
+						var linkedFunction = syntaxLog.one(
+							'.line-group[data-functionLinkId="' +
+								functionLinkId +
+								'"]'
 						);
 
-						sidebar.delegate(
-							'click',
-							A.rbind('handleToggleCollapseBtn', instance, true),
-							'.expand-toggle, .linkable.current-scope .line-container'
-						);
+						instance._displayNode(linkedFunction, true);
+						instance._selectCurrentScope(linkedFunction);
+					}
+				},
 
-						var logBtn = sidebar.all('.btn-command-log');
+				handleCurrentScopeSelect: function(event) {
+					var instance = this;
 
-						logBtn.on(
-							'click',
-							A.bind('handleToggleCommandLogBtn', instance)
-						);
+					var currentTargetAncestor = event.currentTarget.ancestor();
 
-						var sidebarBtn = sidebar.one('.btn-sidebar');
-
-						if (sidebarBtn) {
-							sidebarBtn.on(
-								'click',
-								A.bind('handleMinimizeSidebarBtn', instance)
-							);
+					if (currentTargetAncestor) {
+						if (!currentTargetAncestor.hasClass('current-scope')) {
+							event.halt(true);
 						}
 
-						var jumpToError = sidebar.one('.btn-jump-to-error');
+						instance._displayNode(currentTargetAncestor, true);
+						instance._selectCurrentScope(currentTargetAncestor);
+					}
+				},
 
-						if (jumpToError) {
-							jumpToError.on(
-								'click',
-								A.bind('handleGoToErrorBtn', instance)
-							);
-						}
+				handleErrorBtns: function(event) {
+					var instance = this;
 
-						var pause = sidebar.one('.btn-pause');
+					var currentTarget = event.currentTarget;
 
-						if (pause) {
-							pause.on(
-								'click',
-								A.bind('handlePauseBtn', instance)
-							);
-						}
-					},
+					currentTarget.toggleClass(CSS_TOGGLE);
 
-					_bindSyntaxLog: function() {
-						var instance = this;
+					var syntaxLog = instance.get(STR_SYNTAX_LOG);
 
-						var syntaxLog = instance.get(STR_SYNTAX_LOG);
+					var errorLinkId = currentTarget.getData(
+						ATTR_DATA_ERROR_LINK_ID
+					);
 
-						syntaxLog.delegate(
-							'click',
-							A.bind('handleCurrentScopeSelect', instance),
-							'.conditional-function > .line-container, .function > .line-container, .macro > .line-container, .test-group > .line-container'
+					var errorPanel = syntaxLog.one(
+						'.errorPanel[data-errorLinkId="' + errorLinkId + '"]'
+					);
+
+					if (errorPanel) {
+						errorPanel.toggleClass(CSS_TOGGLE);
+					}
+				},
+
+				handleFullScreenImageClick: function(event) {
+					var instance = this;
+
+					var fullScreenImageContainer = A.one('#fullScreenImage');
+
+					if (fullScreenImageContainer) {
+						var src;
+
+						var fullScreenImage = fullScreenImageContainer.one(
+							'#image'
 						);
 
-						syntaxLog.delegate(
-							'click',
-							A.bind('handleFullScreenImageClick', instance),
-							'.fullscreen-image, .screenshot-container img'
-						);
+						if (fullScreenImage) {
+							var currentTarget = event.currentTarget;
 
-						syntaxLog.delegate(
-							'click',
-							A.rbind('handleToggleCollapseBtn', instance, false),
-							'.btn-collapse, .btn-var, .current-scope > .line-container'
-						);
+							src = currentTarget.attr(STR_SRC);
 
-						syntaxLog.delegate(
-							'click',
-							A.bind('handleErrorBtns', instance),
-							'.btn-error, .btn-screenshot'
-						);
-					},
-
-					_clearSyntaxErrors: function(command) {
-						command.all('.errorPanel').remove();
-
-						var btnContainer = command.one('.btn-container');
-
-						btnContainer.all('[data-' + ATTR_DATA_ERROR_LINK_ID + ']').remove();
-					},
-
-					_collapseTransition: function(targetNode) {
-						var instance = this;
-
-						var returnVal = false;
-
-						var transitioning = instance.get(STR_TRANSITIONING);
-
-						if (targetNode && (!transitioning || !transitioning.contains(targetNode))) {
-							var height;
-
-							var collapsing = targetNode.getStyle(STR_HEIGHT) != '0px';
-
-							if (collapsing) {
-								height = targetNode.outerHeight();
-
-								targetNode.height(height);
-
-								instance.set(STR_TRANSITIONING, targetNode);
-
-								targetNode.addClass(CSS_TRANSITIONING);
-							}
-							else {
-								var lastChild = targetNode.getDOMNode().lastElementChild;
-
-								lastChild = A.one(lastChild);
-
-								targetNode.removeClass(CSS_COLLAPSE);
-								targetNode.addClass(CSS_TRANSITIONING);
-
-								var lastChildHeight = lastChild.innerHeight();
-								var lastChildY = lastChild.getY();
-
-								var lastChildBottomY = lastChildY + lastChildHeight + 1;
-
-								height = lastChildBottomY - targetNode.getY();
+							if (src) {
+								fullScreenImage.attr(STR_SRC, src);
 							}
 
-							instance._getTransition(targetNode, height, collapsing);
-
-							returnVal = true;
+							fullScreenImage.toggleClass('hide', !src);
 						}
 
-						return returnVal;
-					},
+						fullScreenImageContainer.toggleClass(CSS_TOGGLE, !src);
+					}
+				},
 
-					_displayNode: function(node, scrollTo) {
-						var instance = this;
+				handleGoToErrorBtn: function(event) {
+					var instance = this;
 
-						node = node || instance.get(STR_ERRORS).last();
+					var currentScope = instance.get(STR_CURRENT_SCOPE);
+					var errorNodes = instance.get(STR_ERRORS);
 
-						if (node) {
-							var parentContainers = node.ancestors('.child-container');
+					var lastIndex = errorNodes.size() - 1;
 
-							if (parentContainers) {
-								instance._expandParentContainers(parentContainers, node, scrollTo);
+					var newIndex = lastIndex;
+
+					if (currentScope) {
+						var index = errorNodes.indexOf(currentScope);
+
+						if (index > -1) {
+							if (index < lastIndex) {
+								newIndex = index + 1;
+							} else {
+								newIndex = 0;
 							}
 						}
-					},
+					}
 
-					_expandParentContainers: function(parentContainers, node, scrollTo) {
-						var instance = this;
+					var failure = errorNodes.item(newIndex);
 
-						var timeout = 0;
+					instance._selectCurrentScope(failure);
+					instance._displayNode(failure, true);
+				},
 
-						var container = parentContainers.shift();
+				handleLineTrigger: function(id, starting) {
+					var instance = this;
 
-						if (container.hasClass(CSS_COLLAPSE)) {
+					var linkedLine = instance.get(STR_SYNTAX_LOG).one('#' + id);
+
+					instance._setSyntaxNodeClass(linkedLine);
+
+					var container = linkedLine.one('> .child-container');
+
+					if (container) {
+						if (starting && container.hasClass(CSS_COLLAPSE)) {
 							instance._toggleContainer(container, false);
-
-							timeout = 10;
+						} else if (linkedLine.hasClass('conditional-fail')) {
+							instance._toggleContainer(container, false);
 						}
+					}
+				},
 
-						A.later(
-							timeout,
-							instance,
-							function() {
-								if (parentContainers.size()) {
-									instance._expandParentContainers(parentContainers, node, scrollTo);
-								}
-								else if (scrollTo) {
-									instance._scrollToNode(node);
-								}
-							}
-						);
-					},
+				handleMinimizeSidebarBtn: function(event) {
+					var instance = this;
 
-					_getCommandLogNode: function(logId) {
-						var instance = this;
+					instance._minimizeSidebar(event.currentTarget);
+				},
 
-						logId = logId || instance.get(STR_COMMAND_LOG_ID);
+				handlePauseBtn: function(event) {
+					var instance = this;
 
-						var logIdSelector = '.command-log[data-logId="' + logId + '"]';
+					instance._togglePauseTest();
+				},
 
-						return instance.get(STR_SIDEBAR).one(logIdSelector);
-					},
+				handleToggleCollapseBtn: function(event, inSidebar) {
+					var instance = this;
 
-					_getTransition: function(targetNode, height, collapsing) {
-						var instance = this;
+					var currentTarget = event.currentTarget;
 
-						var duration = Math.pow(height, 0.15) / 15;
+					if (!currentTarget.hasClass('btn')) {
+						currentTarget = currentTarget.previous();
 
-						var ease = 'ease-in';
-
-						var margin = 0;
-
-						if (collapsing) {
-							ease = 'ease-out';
-
-							height = 0;
+						if (!inSidebar) {
+							currentTarget = currentTarget.one('.btn-collapse');
 						}
+					}
 
-						else {
-							targetNode.addClass('in');
-
-							margin = targetNode.getStyle('marginTop');
-
-							targetNode.removeClass('in');
-						}
-
-						targetNode.transition(
-							{
-								height: {
-									duration: duration,
-									easing: ease,
-									value: height
-								},
-
-								marginTop: {
-									duration: 0.05,
-									easing: ease,
-									value: margin
-								},
-
-								marginBottom: {
-									duration: 0.05,
-									easing: ease,
-									value: margin
-								}
-							},
-							function() {
-								if (collapsing) {
-									targetNode.addClass(CSS_COLLAPSE);
-
-									targetNode.removeAttribute('style');
-								}
-								else {
-									targetNode.height('auto');
-								}
-
-								instance.set(STR_TRANSITIONING, null);
-
-								targetNode.removeClass(CSS_TRANSITIONING);
-							}
-						);
-					},
-
-					_injectSyntaxError: function(command) {
-						var instance = this;
-
-						var consoleLog = command.one('.console');
-						var screenshots = command.one('.screenshots');
-
-						if (screenshots) {
-							screenshots.attr('class', 'screenshots-log');
-
-							consoleLog.append(screenshots);
-						}
-
-						var functionLinkId = command.getData(ATTR_DATA_FUNCTION_LINK_ID);
-
-						var functionLinkIdSelector = '.line-group[data-functionLinkId="' + functionLinkId + '"]';
-
-						var failedFunction = instance.get(STR_SYNTAX_LOG).one(functionLinkIdSelector);
-
-						if (consoleLog && failedFunction) {
-							var buffer = [];
-
-							var consoleBtn = A.Lang.sub(
-								TPL_ERROR_BUTTONS,
-								{
-									cssClass: 'btn-error',
-									linkId: consoleLog.getData(ATTR_DATA_ERROR_LINK_ID)
-								}
-							);
-
-							buffer.push(consoleBtn);
-
-							buffer = buffer.join(STR_BLANK);
-
-							var btnContainer = failedFunction.one('.btn-container');
-
-							btnContainer.append(buffer);
-
-							failedFunction.append(consoleLog.clone());
-						}
-					},
-
-					_minimizeSidebar: function(button) {
-						var instance = this;
-
-						instance.get(STR_CONTENT_BOX).toggleClass('minimized-sidebar');
-
-						button = button || instance.get(STR_SIDEBAR).one('.btn-sidebar');
-
-						button.toggleClass(CSS_TOGGLE);
-					},
-
-					_parseCommandLog: function(node) {
-						var instance = this;
-
-						var commandLogScope = instance.get(STR_COMMAND_LOG_SCOPE);
-
-						if (commandLogScope) {
-							commandLogScope.removeClass(CSS_CURRENT_SCOPE);
-						}
-
-						instance.set(
-							STR_COMMAND_LOG_SCOPE,
-							new A.NodeList()
-						);
-
-						if (node.hasClass('macro')) {
-							var macroScope = node.all('[data-functionLinkId]');
-
-							macroScope.each(instance._scopeCommandLog, instance);
-						}
-						else {
-							instance._scopeCommandLog(node);
-						}
-
-						var commandLogScopeFirst = instance.get(STR_COMMAND_LOG_SCOPE).first();
-
-						instance._scrollToNode(commandLogScopeFirst, true);
-					},
-
-					_refreshEditMenu: function() {
-						var instance = this;
-
-						var currentScope = instance.get(STR_CURRENT_SCOPE);
-
-						if (!currentScope) {
-							return;
-						}
-
-						var sidebar = instance.get(STR_SIDEBAR);
-
-						var scopeNames = currentScope.all('> .line-container .name');
-						var scopeTypes = currentScope.all('> .line-container .tag-type');
-
-						if ((scopeNames.size() == 0) || (scopeTypes.size() == 0)) {
-							return;
-						}
-
-						var scopeName = scopeNames.first();
-
-						scopeName = scopeName.html();
-
-						var scopeType = scopeTypes.first();
-
-						scopeType = scopeType.html();
-
-						sidebar.one('.scope-type .scope-name').html(scopeName);
-						sidebar.one('.scope-type .title').html(scopeType);
-
-						var sidebarParameterList = sidebar.one('.parameter .parameter-list');
-
-						sidebarParameterList.empty();
-
-						var sidebarParameterTitle = sidebar.one('.parameter .title');
-
-						sidebarParameterTitle.removeClass(CSS_HIDDEN);
-
-						if (scopeType !== 'function' && scopeType !== 'macro') {
-							sidebarParameterTitle.addClass(CSS_HIDDEN);
-
-							return;
-						}
-
-						var buffer = [];
-
-						if (scopeType === 'macro' || scopeType === 'function') {
-							var increment = 2;
-							var start = 0;
-							var valueIncrement = 1;
-
-							var paramCollection = currentScope.all('> .line-container .child-container .name');
-
-							if (scopeType === 'function') {
-								increment = 1;
-								start = 1;
-								valueIncrement = 0;
-
-								paramCollection = scopeNames;
-							}
-
-							var limit = paramCollection.size();
-
-							for (var i = start; i < limit; i += increment) {
-								buffer.push(
-									A.Lang.sub(
-										TPL_PARAMETER,
-										{
-											cssClass: 'parameter-name',
-											parameter: scopeTypes.item(i).html()
-										}
-									),
-
-									A.Lang.sub(
-										TPL_PARAMETER,
-										{
-											cssClass: 'parameter-value',
-											parameter: scopeNames.item(i + valueIncrement).html()
-										}
-									)
-								);
-							}
-						}
-
-						buffer = buffer.join(STR_BLANK);
-
-						sidebarParameterList.append(buffer);
-					},
-
-					_scopeCommandLog: function(node) {
-						var instance = this;
-
-						if (node) {
-							var functionLinkId = node.getData(ATTR_DATA_FUNCTION_LINK_ID);
-
-							var functionLinkIdSelector = '.linkable[data-functionLinkId="' + functionLinkId + '"]';
-
-							var nodes = instance.get(STR_SIDEBAR).all(functionLinkIdSelector);
-
-							var buffer = nodes.getDOMNodes().reverse();
-
-							var commandLogScope = instance.get(STR_COMMAND_LOG_SCOPE);
-
-							commandLogScope = commandLogScope.concat(buffer);
-
-							instance.set(STR_COMMAND_LOG_SCOPE, commandLogScope);
-
-							commandLogScope.addClass(CSS_CURRENT_SCOPE);
-						}
-					},
-
-					_scrollToNode: function(node, inSidebar) {
-						var instance = this;
-
-						var scrollNode = WIN;
-
-						if (node) {
-							var lineContainer = node.one('> .line-container');
-
-							if (lineContainer) {
-								var halfNodeHeight = lineContainer.innerHeight() / 2;
-								var halfWindowHeight = WIN.height() / 2;
-
-								var offsetHeight = halfWindowHeight - halfNodeHeight;
-
-								var nodeY = lineContainer.getY();
-
-								if (inSidebar) {
-									scrollNode = instance._getCommandLogNode();
-
-									var dividerLine = scrollNode.one('.divider-line');
-
-									if (dividerLine) {
-										nodeY -= dividerLine.getY();
-									}
-								}
-
-								var yDistance = nodeY - offsetHeight;
-
-								new A.Anim(
-									{
-										duration: 0.12,
-										easing: 'easeOutStrong',
-										node: scrollNode,
-										to: {
-											scroll: [0, yDistance]
-										}
-									}
-								).run();
-							}
-						}
-					},
-
-					_selectCurrentScope: function(node) {
-						var instance = this;
-
-						var currentScope = instance.get(STR_CURRENT_SCOPE);
-
-						if (currentScope) {
-							currentScope.removeClass(CSS_CURRENT_SCOPE);
-						}
-
-						node.addClass(CSS_CURRENT_SCOPE);
-
-						instance.set(STR_CURRENT_SCOPE, node);
-
-						if (instance.get(STR_COMMAND_LOG_ID)) {
-							instance._parseCommandLog(node);
-						}
-
-						instance._refreshEditMenu();
-					},
-
-					_setSyntaxNodeClass: function(node) {
-						var instance = this;
-
-						var status = instance.get(STR_STATUS);
-
-						var statusLength = status.length;
-
-						for (var i = 0; i < statusLength; i++) {
-							node.removeClass(status[i]);
-						}
-
-						var selector = 'status' + instance.get(STR_COMMAND_LOG_ID);
-
-						var currentStatus = node.getData(selector);
-
-						node.addClass(currentStatus);
-					},
-
-					_toggleCommandLog: function(commandLog, button) {
-						var instance = this;
-
-						var commandLogId = instance.get(STR_COMMAND_LOG_ID);
-						var sidebar = instance.get(STR_SIDEBAR);
-
-						var logId = commandLog.getData(ATTR_DATA_LOG_ID);
-
-						var logIdSelector = '.btn-command-log[data-logId="' + logId + '"]';
-
-						button = button || sidebar.one(logIdSelector);
-
-						button.toggleClass(CSS_TOGGLE);
-
-						var newLogId;
-
-						if (commandLogId !== logId) {
-							if (commandLogId) {
-								var currentActiveLog = instance._getCommandLogNode();
-
-								instance._toggleCommandLog(currentActiveLog);
-							}
-
-							newLogId = logId;
-
-							var commandErrors = commandLog.all(SELECTOR_FAILED + ', ' + SELECTOR_WARNING);
-
-							commandErrors.each(instance._injectSyntaxError, instance);
-						}
-						else {
-							newLogId = null;
-
-							var errors = instance.get(STR_SYNTAX_LOG).all(SELECTOR_FAIL + ', ' + SELECTOR_WARNING);
-
-							if (errors.size()) {
-								errors.each(instance._clearSyntaxErrors);
-							}
-						}
-
-						instance.set(STR_COMMAND_LOG_ID, newLogId);
-
-						instance._toggleSyntaxLogClasses(logId);
-
-						var errorNodes = instance.get(STR_SYNTAX_LOG).all(SELECTOR_FAIL + ', ' + SELECTOR_WARNING);
-
-						instance.set(STR_ERRORS, errorNodes);
-
-						instance._transitionCommandLog(commandLog);
-
-						var running = commandLog.hasClass(CSS_RUNNING);
-
-						instance.set(STR_RUNNING, running);
-
-						instance.get(STR_CONTENT_BOX).toggleClass(CSS_RUNNING, running);
-
-						if (errorNodes.size() > 0) {
-							errorNodes.each(instance._displayNode, instance);
-
-							var lastFailNode = errorNodes.first();
-
-							instance._selectCurrentScope(lastFailNode);
-							instance._scrollToNode(lastFailNode);
-						}
-					},
-
-					_toggleContainer: function(collapsibleContainer, inSidebar) {
-						var instance = this;
-
+					if (currentTarget) {
 						var lookUpScope = instance.get(STR_SYNTAX_LOG);
 
 						if (inSidebar) {
 							lookUpScope = instance.get(STR_SIDEBAR);
 						}
 
-						var linkId = collapsibleContainer.getData(ATTR_DATA_BUTTON_LINK_ID);
+						var linkId = currentTarget.getData(
+							ATTR_DATA_BUTTON_LINK_ID
+						);
 
-						var collapsibleBtn = lookUpScope.one('.btn[data-btnLinkId="' + linkId + '"]');
+						var collapsibleNode = lookUpScope.one(
+							'.child-container[data-btnLinkId="' + linkId + '"]'
+						);
 
-						var collapsed = instance._collapseTransition(collapsibleContainer);
+						instance._toggleContainer(collapsibleNode, inSidebar);
+					}
+				},
 
-						if (collapsed && collapsibleBtn) {
-							collapsibleBtn.toggleClass(CSS_TOGGLE);
+				handleToggleCommandLogBtn: function(event) {
+					var instance = this;
+
+					var currentTarget = event.currentTarget;
+
+					var logId = currentTarget.getData(ATTR_DATA_LOG_ID);
+
+					var commandLog = instance._getCommandLogNode(logId);
+
+					instance._toggleCommandLog(commandLog, currentTarget);
+				},
+
+				_bindSidebar: function() {
+					var instance = this;
+
+					var sidebar = instance.get(STR_SIDEBAR);
+
+					sidebar.delegate(
+						'click',
+						A.bind('handleCurrentCommandSelect', instance),
+						'.linkable .line-container'
+					);
+
+					sidebar.delegate(
+						'click',
+						A.rbind('handleToggleCollapseBtn', instance, true),
+						'.expand-toggle, .linkable.current-scope .line-container'
+					);
+
+					var logBtn = sidebar.all('.btn-command-log');
+
+					logBtn.on(
+						'click',
+						A.bind('handleToggleCommandLogBtn', instance)
+					);
+
+					var sidebarBtn = sidebar.one('.btn-sidebar');
+
+					if (sidebarBtn) {
+						sidebarBtn.on(
+							'click',
+							A.bind('handleMinimizeSidebarBtn', instance)
+						);
+					}
+
+					var jumpToError = sidebar.one('.btn-jump-to-error');
+
+					if (jumpToError) {
+						jumpToError.on(
+							'click',
+							A.bind('handleGoToErrorBtn', instance)
+						);
+					}
+
+					var pause = sidebar.one('.btn-pause');
+
+					if (pause) {
+						pause.on('click', A.bind('handlePauseBtn', instance));
+					}
+				},
+
+				_bindSyntaxLog: function() {
+					var instance = this;
+
+					var syntaxLog = instance.get(STR_SYNTAX_LOG);
+
+					syntaxLog.delegate(
+						'click',
+						A.bind('handleCurrentScopeSelect', instance),
+						'.conditional-function > .line-container, .function > .line-container, .macro > .line-container, .test-group > .line-container'
+					);
+
+					syntaxLog.delegate(
+						'click',
+						A.bind('handleFullScreenImageClick', instance),
+						'.fullscreen-image, .screenshot-container img'
+					);
+
+					syntaxLog.delegate(
+						'click',
+						A.rbind('handleToggleCollapseBtn', instance, false),
+						'.btn-collapse, .btn-var, .current-scope > .line-container'
+					);
+
+					syntaxLog.delegate(
+						'click',
+						A.bind('handleErrorBtns', instance),
+						'.btn-error, .btn-screenshot'
+					);
+				},
+
+				_clearSyntaxErrors: function(command) {
+					command.all('.errorPanel').remove();
+
+					var btnContainer = command.one('.btn-container');
+
+					btnContainer
+						.all('[data-' + ATTR_DATA_ERROR_LINK_ID + ']')
+						.remove();
+				},
+
+				_collapseTransition: function(targetNode) {
+					var instance = this;
+
+					var returnVal = false;
+
+					var transitioning = instance.get(STR_TRANSITIONING);
+
+					if (
+						targetNode &&
+						(!transitioning || !transitioning.contains(targetNode))
+					) {
+						var height;
+
+						var collapsing =
+							targetNode.getStyle(STR_HEIGHT) != '0px';
+
+						if (collapsing) {
+							height = targetNode.outerHeight();
+
+							targetNode.height(height);
+
+							instance.set(STR_TRANSITIONING, targetNode);
+
+							targetNode.addClass(CSS_TRANSITIONING);
+						} else {
+							var lastChild = targetNode.getDOMNode()
+								.lastElementChild;
+
+							lastChild = A.one(lastChild);
+
+							targetNode.removeClass(CSS_COLLAPSE);
+							targetNode.addClass(CSS_TRANSITIONING);
+
+							var lastChildHeight = lastChild.innerHeight();
+							var lastChildY = lastChild.getY();
+
+							var lastChildBottomY =
+								lastChildY + lastChildHeight + 1;
+
+							height = lastChildBottomY - targetNode.getY();
 						}
-					},
 
-					_togglePauseTest: function() {
-						var instance = this;
+						instance._getTransition(targetNode, height, collapsing);
 
-						var commandLogId = instance.get(STR_COMMAND_LOG_ID);
-						var sidebar = instance.get(STR_SIDEBAR);
+						returnVal = true;
+					}
 
-						var commandLogNode = sidebar.one('.command-log[data-logId="' + commandLogId + '"]');
+					return returnVal;
+				},
 
-						if (commandLogNode) {
-							commandLogNode.toggleClass('paused');
+				_displayNode: function(node, scrollTo) {
+					var instance = this;
+
+					node = node || instance.get(STR_ERRORS).last();
+
+					if (node) {
+						var parentContainers = node.ancestors(
+							'.child-container'
+						);
+
+						if (parentContainers) {
+							instance._expandParentContainers(
+								parentContainers,
+								node,
+								scrollTo
+							);
+						}
+					}
+				},
+
+				_expandParentContainers: function(
+					parentContainers,
+					node,
+					scrollTo
+				) {
+					var instance = this;
+
+					var timeout = 0;
+
+					var container = parentContainers.shift();
+
+					if (container.hasClass(CSS_COLLAPSE)) {
+						instance._toggleContainer(container, false);
+
+						timeout = 10;
+					}
+
+					A.later(timeout, instance, function() {
+						if (parentContainers.size()) {
+							instance._expandParentContainers(
+								parentContainers,
+								node,
+								scrollTo
+							);
+						} else if (scrollTo) {
+							instance._scrollToNode(node);
+						}
+					});
+				},
+
+				_getCommandLogNode: function(logId) {
+					var instance = this;
+
+					logId = logId || instance.get(STR_COMMAND_LOG_ID);
+
+					var logIdSelector =
+						'.command-log[data-logId="' + logId + '"]';
+
+					return instance.get(STR_SIDEBAR).one(logIdSelector);
+				},
+
+				_getTransition: function(targetNode, height, collapsing) {
+					var instance = this;
+
+					var duration = Math.pow(height, 0.15) / 15;
+
+					var ease = 'ease-in';
+
+					var margin = 0;
+
+					if (collapsing) {
+						ease = 'ease-out';
+
+						height = 0;
+					} else {
+						targetNode.addClass('in');
+
+						margin = targetNode.getStyle('marginTop');
+
+						targetNode.removeClass('in');
+					}
+
+					targetNode.transition(
+						{
+							height: {
+								duration: duration,
+								easing: ease,
+								value: height
+							},
+
+							marginTop: {
+								duration: 0.05,
+								easing: ease,
+								value: margin
+							},
+
+							marginBottom: {
+								duration: 0.05,
+								easing: ease,
+								value: margin
+							}
+						},
+						function() {
+							if (collapsing) {
+								targetNode.addClass(CSS_COLLAPSE);
+
+								targetNode.removeAttribute('style');
+							} else {
+								targetNode.height('auto');
+							}
+
+							instance.set(STR_TRANSITIONING, null);
+
+							targetNode.removeClass(CSS_TRANSITIONING);
+						}
+					);
+				},
+
+				_injectSyntaxError: function(command) {
+					var instance = this;
+
+					var consoleLog = command.one('.console');
+					var screenshots = command.one('.screenshots');
+
+					if (screenshots) {
+						screenshots.attr('class', 'screenshots-log');
+
+						consoleLog.append(screenshots);
+					}
+
+					var functionLinkId = command.getData(
+						ATTR_DATA_FUNCTION_LINK_ID
+					);
+
+					var functionLinkIdSelector =
+						'.line-group[data-functionLinkId="' +
+						functionLinkId +
+						'"]';
+
+					var failedFunction = instance
+						.get(STR_SYNTAX_LOG)
+						.one(functionLinkIdSelector);
+
+					if (consoleLog && failedFunction) {
+						var buffer = [];
+
+						var consoleBtn = A.Lang.sub(TPL_ERROR_BUTTONS, {
+							cssClass: 'btn-error',
+							linkId: consoleLog.getData(ATTR_DATA_ERROR_LINK_ID)
+						});
+
+						buffer.push(consoleBtn);
+
+						buffer = buffer.join(STR_BLANK);
+
+						var btnContainer = failedFunction.one('.btn-container');
+
+						btnContainer.append(buffer);
+
+						failedFunction.append(consoleLog.clone());
+					}
+				},
+
+				_minimizeSidebar: function(button) {
+					var instance = this;
+
+					instance
+						.get(STR_CONTENT_BOX)
+						.toggleClass('minimized-sidebar');
+
+					button =
+						button || instance.get(STR_SIDEBAR).one('.btn-sidebar');
+
+					button.toggleClass(CSS_TOGGLE);
+				},
+
+				_parseCommandLog: function(node) {
+					var instance = this;
+
+					var commandLogScope = instance.get(STR_COMMAND_LOG_SCOPE);
+
+					if (commandLogScope) {
+						commandLogScope.removeClass(CSS_CURRENT_SCOPE);
+					}
+
+					instance.set(STR_COMMAND_LOG_SCOPE, new A.NodeList());
+
+					if (node.hasClass('macro')) {
+						var macroScope = node.all('[data-functionLinkId]');
+
+						macroScope.each(instance._scopeCommandLog, instance);
+					} else {
+						instance._scopeCommandLog(node);
+					}
+
+					var commandLogScopeFirst = instance
+						.get(STR_COMMAND_LOG_SCOPE)
+						.first();
+
+					instance._scrollToNode(commandLogScopeFirst, true);
+				},
+
+				_refreshEditMenu: function() {
+					var instance = this;
+
+					var currentScope = instance.get(STR_CURRENT_SCOPE);
+
+					if (!currentScope) {
+						return;
+					}
+
+					var sidebar = instance.get(STR_SIDEBAR);
+
+					var scopeNames = currentScope.all(
+						'> .line-container .name'
+					);
+					var scopeTypes = currentScope.all(
+						'> .line-container .tag-type'
+					);
+
+					if (scopeNames.size() == 0 || scopeTypes.size() == 0) {
+						return;
+					}
+
+					var scopeName = scopeNames.first();
+
+					scopeName = scopeName.html();
+
+					var scopeType = scopeTypes.first();
+
+					scopeType = scopeType.html();
+
+					sidebar.one('.scope-type .scope-name').html(scopeName);
+					sidebar.one('.scope-type .title').html(scopeType);
+
+					var sidebarParameterList = sidebar.one(
+						'.parameter .parameter-list'
+					);
+
+					sidebarParameterList.empty();
+
+					var sidebarParameterTitle = sidebar.one(
+						'.parameter .title'
+					);
+
+					sidebarParameterTitle.removeClass(CSS_HIDDEN);
+
+					if (scopeType !== 'function' && scopeType !== 'macro') {
+						sidebarParameterTitle.addClass(CSS_HIDDEN);
+
+						return;
+					}
+
+					var buffer = [];
+
+					if (scopeType === 'macro' || scopeType === 'function') {
+						var increment = 2;
+						var start = 0;
+						var valueIncrement = 1;
+
+						var paramCollection = currentScope.all(
+							'> .line-container .child-container .name'
+						);
+
+						if (scopeType === 'function') {
+							increment = 1;
+							start = 1;
+							valueIncrement = 0;
+
+							paramCollection = scopeNames;
 						}
 
-						var pauseBtn = sidebar.one('.btn-pause');
+						var limit = paramCollection.size();
 
-						if (pauseBtn) {
-							pauseBtn.toggleClass(CSS_TOGGLE);
+						for (var i = start; i < limit; i += increment) {
+							buffer.push(
+								A.Lang.sub(TPL_PARAMETER, {
+									cssClass: 'parameter-name',
+									parameter: scopeTypes.item(i).html()
+								}),
+
+								A.Lang.sub(TPL_PARAMETER, {
+									cssClass: 'parameter-value',
+									parameter: scopeNames
+										.item(i + valueIncrement)
+										.html()
+								})
+							);
+						}
+					}
+
+					buffer = buffer.join(STR_BLANK);
+
+					sidebarParameterList.append(buffer);
+				},
+
+				_scopeCommandLog: function(node) {
+					var instance = this;
+
+					if (node) {
+						var functionLinkId = node.getData(
+							ATTR_DATA_FUNCTION_LINK_ID
+						);
+
+						var functionLinkIdSelector =
+							'.linkable[data-functionLinkId="' +
+							functionLinkId +
+							'"]';
+
+						var nodes = instance
+							.get(STR_SIDEBAR)
+							.all(functionLinkIdSelector);
+
+						var buffer = nodes.getDOMNodes().reverse();
+
+						var commandLogScope = instance.get(
+							STR_COMMAND_LOG_SCOPE
+						);
+
+						commandLogScope = commandLogScope.concat(buffer);
+
+						instance.set(STR_COMMAND_LOG_SCOPE, commandLogScope);
+
+						commandLogScope.addClass(CSS_CURRENT_SCOPE);
+					}
+				},
+
+				_scrollToNode: function(node, inSidebar) {
+					var instance = this;
+
+					var scrollNode = WIN;
+
+					if (node) {
+						var lineContainer = node.one('> .line-container');
+
+						if (lineContainer) {
+							var halfNodeHeight =
+								lineContainer.innerHeight() / 2;
+							var halfWindowHeight = WIN.height() / 2;
+
+							var offsetHeight =
+								halfWindowHeight - halfNodeHeight;
+
+							var nodeY = lineContainer.getY();
+
+							if (inSidebar) {
+								scrollNode = instance._getCommandLogNode();
+
+								var dividerLine = scrollNode.one(
+									'.divider-line'
+								);
+
+								if (dividerLine) {
+									nodeY -= dividerLine.getY();
+								}
+							}
+
+							var yDistance = nodeY - offsetHeight;
+
+							new A.Anim({
+								duration: 0.12,
+								easing: 'easeOutStrong',
+								node: scrollNode,
+								to: {
+									scroll: [0, yDistance]
+								}
+							}).run();
+						}
+					}
+				},
+
+				_selectCurrentScope: function(node) {
+					var instance = this;
+
+					var currentScope = instance.get(STR_CURRENT_SCOPE);
+
+					if (currentScope) {
+						currentScope.removeClass(CSS_CURRENT_SCOPE);
+					}
+
+					node.addClass(CSS_CURRENT_SCOPE);
+
+					instance.set(STR_CURRENT_SCOPE, node);
+
+					if (instance.get(STR_COMMAND_LOG_ID)) {
+						instance._parseCommandLog(node);
+					}
+
+					instance._refreshEditMenu();
+				},
+
+				_setSyntaxNodeClass: function(node) {
+					var instance = this;
+
+					var status = instance.get(STR_STATUS);
+
+					var statusLength = status.length;
+
+					for (var i = 0; i < statusLength; i++) {
+						node.removeClass(status[i]);
+					}
+
+					var selector = 'status' + instance.get(STR_COMMAND_LOG_ID);
+
+					var currentStatus = node.getData(selector);
+
+					node.addClass(currentStatus);
+				},
+
+				_toggleCommandLog: function(commandLog, button) {
+					var instance = this;
+
+					var commandLogId = instance.get(STR_COMMAND_LOG_ID);
+					var sidebar = instance.get(STR_SIDEBAR);
+
+					var logId = commandLog.getData(ATTR_DATA_LOG_ID);
+
+					var logIdSelector =
+						'.btn-command-log[data-logId="' + logId + '"]';
+
+					button = button || sidebar.one(logIdSelector);
+
+					button.toggleClass(CSS_TOGGLE);
+
+					var newLogId;
+
+					if (commandLogId !== logId) {
+						if (commandLogId) {
+							var currentActiveLog = instance._getCommandLogNode();
+
+							instance._toggleCommandLog(currentActiveLog);
 						}
 
-						instance.set(STR_PAUSED, !instance.get(STR_PAUSED));
-					},
+						newLogId = logId;
 
-					_toggleSyntaxLogClasses: function(logId) {
-						var instance = this;
+						var commandErrors = commandLog.all(
+							SELECTOR_FAILED + ', ' + SELECTOR_WARNING
+						);
 
-						var status = instance.get(STR_STATUS);
+						commandErrors.each(
+							instance._injectSyntaxError,
+							instance
+						);
+					} else {
+						newLogId = null;
 
-						var selector = 'data-status' + logId;
+						var errors = instance
+							.get(STR_SYNTAX_LOG)
+							.all(SELECTOR_FAIL + ', ' + SELECTOR_WARNING);
 
-						var statusLength = status.length;
-
-						for (var i = 0; i < statusLength; i++) {
-							var currentStatus = status[i];
-
-							var currentStatusSelector = '[' + selector + '="' + currentStatus + '"]';
-
-							var currentStatusNodes = A.all(currentStatusSelector);
-
-							currentStatusNodes.toggleClass(currentStatus);
+						if (errors.size()) {
+							errors.each(instance._clearSyntaxErrors);
 						}
-					},
+					}
 
-					_transitionCommandLog: function(commandLog) {
-						var instance = this;
+					instance.set(STR_COMMAND_LOG_ID, newLogId);
 
-						commandLog.toggleClass(CSS_COLLAPSE);
+					instance._toggleSyntaxLogClasses(logId);
 
-						instance.get(STR_CONTENT_BOX).toggleClass('command-logger');
+					var errorNodes = instance
+						.get(STR_SYNTAX_LOG)
+						.all(SELECTOR_FAIL + ', ' + SELECTOR_WARNING);
 
-						var lastChildLog = commandLog.one('.line-group:last-child');
+					instance.set(STR_ERRORS, errorNodes);
 
-						if (lastChildLog && lastChildLog.hasClass(CSS_COLLAPSE)) {
-							instance._toggleContainer(lastChildLog, true);
-						}
+					instance._transitionCommandLog(commandLog);
 
-						var commandLogId = instance.get(STR_COMMAND_LOG_ID);
-						var commandLogScope = instance.get(STR_COMMAND_LOG_SCOPE);
+					var running = commandLog.hasClass(CSS_RUNNING);
 
-						if (commandLogId && commandLogScope) {
-							instance._scrollToNode(commandLogScope.first(), true);
-						}
+					instance.set(STR_RUNNING, running);
+
+					instance
+						.get(STR_CONTENT_BOX)
+						.toggleClass(CSS_RUNNING, running);
+
+					if (errorNodes.size() > 0) {
+						errorNodes.each(instance._displayNode, instance);
+
+						var lastFailNode = errorNodes.first();
+
+						instance._selectCurrentScope(lastFailNode);
+						instance._scrollToNode(lastFailNode);
+					}
+				},
+
+				_toggleContainer: function(collapsibleContainer, inSidebar) {
+					var instance = this;
+
+					var lookUpScope = instance.get(STR_SYNTAX_LOG);
+
+					if (inSidebar) {
+						lookUpScope = instance.get(STR_SIDEBAR);
+					}
+
+					var linkId = collapsibleContainer.getData(
+						ATTR_DATA_BUTTON_LINK_ID
+					);
+
+					var collapsibleBtn = lookUpScope.one(
+						'.btn[data-btnLinkId="' + linkId + '"]'
+					);
+
+					var collapsed = instance._collapseTransition(
+						collapsibleContainer
+					);
+
+					if (collapsed && collapsibleBtn) {
+						collapsibleBtn.toggleClass(CSS_TOGGLE);
+					}
+				},
+
+				_togglePauseTest: function() {
+					var instance = this;
+
+					var commandLogId = instance.get(STR_COMMAND_LOG_ID);
+					var sidebar = instance.get(STR_SIDEBAR);
+
+					var commandLogNode = sidebar.one(
+						'.command-log[data-logId="' + commandLogId + '"]'
+					);
+
+					if (commandLogNode) {
+						commandLogNode.toggleClass('paused');
+					}
+
+					var pauseBtn = sidebar.one('.btn-pause');
+
+					if (pauseBtn) {
+						pauseBtn.toggleClass(CSS_TOGGLE);
+					}
+
+					instance.set(STR_PAUSED, !instance.get(STR_PAUSED));
+				},
+
+				_toggleSyntaxLogClasses: function(logId) {
+					var instance = this;
+
+					var status = instance.get(STR_STATUS);
+
+					var selector = 'data-status' + logId;
+
+					var statusLength = status.length;
+
+					for (var i = 0; i < statusLength; i++) {
+						var currentStatus = status[i];
+
+						var currentStatusSelector =
+							'[' + selector + '="' + currentStatus + '"]';
+
+						var currentStatusNodes = A.all(currentStatusSelector);
+
+						currentStatusNodes.toggleClass(currentStatus);
+					}
+				},
+
+				_transitionCommandLog: function(commandLog) {
+					var instance = this;
+
+					commandLog.toggleClass(CSS_COLLAPSE);
+
+					instance.get(STR_CONTENT_BOX).toggleClass('command-logger');
+
+					var lastChildLog = commandLog.one('.line-group:last-child');
+
+					if (lastChildLog && lastChildLog.hasClass(CSS_COLLAPSE)) {
+						instance._toggleContainer(lastChildLog, true);
+					}
+
+					var commandLogId = instance.get(STR_COMMAND_LOG_ID);
+					var commandLogScope = instance.get(STR_COMMAND_LOG_SCOPE);
+
+					if (commandLogId && commandLogScope) {
+						instance._scrollToNode(commandLogScope.first(), true);
 					}
 				}
 			}
-		);
+		});
 
 		A.PoshiLogger = PoshiLogger;
 	},
 	'',
 	{
-		requires: ['anim', 'aui-base', 'aui-component', 'aui-node', 'event', 'resize', 'transition', 'widget']
+		requires: [
+			'anim',
+			'aui-base',
+			'aui-component',
+			'aui-node',
+			'event',
+			'resize',
+			'transition',
+			'widget'
+		]
 	}
 );

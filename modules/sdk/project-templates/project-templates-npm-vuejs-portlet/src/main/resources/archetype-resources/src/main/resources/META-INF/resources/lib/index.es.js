@@ -4,7 +4,7 @@ export default function(portletNamespace) {
 	new Vue({
 		el: `#${portletNamespace}-1`,
 		data: {
-			message: 'Hello from Vue.js!',
+			message: 'Hello from Vue.js!'
 		},
 		methods: {
 			reverseMessage: function() {
@@ -12,23 +12,23 @@ export default function(portletNamespace) {
 					.split('')
 					.reverse()
 					.join('');
-			},
-		},
+			}
+		}
 	});
 
 	Vue.component('todo-item', {
 		props: ['todo'],
-		template: '<li>{{ todo.text }}</li>',
+		template: '<li>{{ todo.text }}</li>'
 	});
 
 	new Vue({
 		el: `#${portletNamespace}-2`,
 		data: {
 			groceryList: [
-				{ id: 0, text: 'Vegetables' },
-				{ id: 1, text: 'Cheese' },
-				{ id: 2, text: 'Whatever else humans are supposed to eat' },
-			],
-		},
+				{id: 0, text: 'Vegetables'},
+				{id: 1, text: 'Cheese'},
+				{id: 2, text: 'Whatever else humans are supposed to eat'}
+			]
+		}
 	});
 }

@@ -4,7 +4,6 @@ import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import templates from './modal.soy';
 
 class SegmentsExperienceSelectorModal extends Component {
-
 	/**
 	 * @inheritdoc
 	 * @memberof SegmentsExperienceSelectorModal
@@ -14,11 +13,9 @@ class SegmentsExperienceSelectorModal extends Component {
 	 */
 	prepareStateForRender(state) {
 		if (!state.visible) {
-			this.setState(
-				{
-					_requiredNameError: false
-				}
-			);
+			this.setState({
+				_requiredNameError: false
+			});
 		}
 	}
 
@@ -32,7 +29,8 @@ class SegmentsExperienceSelectorModal extends Component {
 	_handleFormSubmit(event) {
 		event.preventDefault();
 		const nameInput = this.refs.experienceModal.refs.experienceName;
-		const segmentIdInput = this.refs.experienceModal.refs.experienceSegmentId;
+		const segmentIdInput = this.refs.experienceModal.refs
+			.experienceSegmentId;
 		const validName = nameInput.value && nameInput.value.replace(/ /g, '');
 		if (
 			this.experienceForm &&
@@ -43,13 +41,10 @@ class SegmentsExperienceSelectorModal extends Component {
 				nameInput.value,
 				segmentIdInput.value
 			);
-		}
-		else if (!validName) {
-			this.setState(
-				{
-					_requiredNameError: true
-				}
-			);
+		} else if (!validName) {
+			this.setState({
+				_requiredNameError: true
+			});
 
 			nameInput.focus();
 		}
@@ -63,7 +58,6 @@ class SegmentsExperienceSelectorModal extends Component {
  * @type {!object}
  */
 SegmentsExperienceSelectorModal.STATE = {
-
 	/**
 	 * Controls the visibility of the required name error
 	 * @default false
@@ -71,7 +65,9 @@ SegmentsExperienceSelectorModal.STATE = {
 	 * @review
 	 * @type {boolean}
 	 */
-	_requiredNameError: Config.bool().internal().value(false)
+	_requiredNameError: Config.bool()
+		.internal()
+		.value(false)
 };
 
 Soy.register(SegmentsExperienceSelectorModal, templates);

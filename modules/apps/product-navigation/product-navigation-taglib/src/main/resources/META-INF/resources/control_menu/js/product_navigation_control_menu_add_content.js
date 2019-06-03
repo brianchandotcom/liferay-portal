@@ -9,100 +9,117 @@ AUI.add(
 
 		var STR_RESPONSE_DATA = 'responseData';
 
-		var AddContent = A.Component.create(
-			{
-				AUGMENTS: [ControlMenu.AddContentSearch, Liferay.PortletBase],
+		var AddContent = A.Component.create({
+			AUGMENTS: [ControlMenu.AddContentSearch, Liferay.PortletBase],
 
-				EXTENDS: ControlMenu.AddBase,
+			EXTENDS: ControlMenu.AddBase,
 
-				NAME: 'addcontent',
+			NAME: 'addcontent',
 
-				prototype: {
-					initializer: function(config) {
-						var instance = this;
+			prototype: {
+				initializer: function(config) {
+					var instance = this;
 
-						instance._config = config;
-						instance._delta = config.delta;
-						instance._displayStyle = config.displayStyle;
+					instance._config = config;
+					instance._delta = config.delta;
+					instance._displayStyle = config.displayStyle;
 
-						instance._addContentForm = instance.byId('addContentForm');
-						instance._entriesPanel = instance.byId('entriesContainer');
+					instance._addContentForm = instance.byId('addContentForm');
+					instance._entriesPanel = instance.byId('entriesContainer');
 
-						instance._entriesPanel.plug(A.Plugin.ParseContent);
+					instance._entriesPanel.plug(A.Plugin.ParseContent);
 
-						instance._bindUI();
-					},
+					instance._bindUI();
+				},
 
-					destructor: function() {
-						var instance = this;
+				destructor: function() {
+					var instance = this;
 
-						(new A.EventHandle(instance._eventHandles)).detach();
-					},
+					new A.EventHandle(instance._eventHandles).detach();
+				},
 
-					_afterSuccess: function(event) {
-						var instance = this;
+				_afterSuccess: function(event) {
+					var instance = this;
 
-						instance._entriesPanel.setContent(event.currentTarget.get(STR_RESPONSE_DATA));
-					},
+					instance._entriesPanel.setContent(
+						event.currentTarget.get(STR_RESPONSE_DATA)
+					);
+				},
 
-					_bindUI: function() {
-						var instance = this;
+				_bindUI: function() {
+					var instance = this;
 
-						instance._eventHandles.push(
-							instance._entriesPanel.delegate(STR_CLICK, instance._addContent, SELECTOR_ADD_CONTENT_ITEM, instance),
-							Liferay.on('AddContent:refreshContentList', instance._refreshContentList, instance),
-							Liferay.on(
-								'AddContent:addPortlet',
-								function(event) {
-									instance.addPortlet(event.node, event.options);
-								}
-							)
-						);
-					},
+					instance._eventHandles.push(
+						instance._entriesPanel.delegate(
+							STR_CLICK,
+							instance._addContent,
+							SELECTOR_ADD_CONTENT_ITEM,
+							instance
+						),
+						Liferay.on(
+							'AddContent:refreshContentList',
+							instance._refreshContentList,
+							instance
+						),
+						Liferay.on('AddContent:addPortlet', function(event) {
+							instance.addPortlet(event.node, event.options);
+						})
+					);
+				},
 
-					_refreshContentList: function(event) {
-						var instance = this;
+				_refreshContentList: function(event) {
+					var instance = this;
 
-						var delta = event.delta;
+					var delta = event.delta;
 
-						if (delta) {
-							instance._delta = delta;
+					if (delta) {
+						instance._delta = delta;
 
-							Liferay.Store('com.liferay.product.navigation.control.menu.web_addPanelNumItems', delta);
-						}
-
-						var displayStyle = event.displayStyle;
-
-						if (displayStyle) {
-							instance._displayStyle = displayStyle;
-
-							Liferay.Store('com.liferay.product.navigation.control.menu.web_addPanelDisplayStyle', displayStyle);
-						}
-
-						A.io.request(
-							instance._addContentForm.getAttribute('action'),
-							{
-								after: {
-									success: A.bind('_afterSuccess', instance)
-								},
-								data: instance.ns(
-									{
-										delta: instance._delta,
-										displayStyle: instance._displayStyle,
-										keywords: instance.get('inputNode').val()
-									}
-								)
-							}
+						Liferay.Store(
+							'com.liferay.product.navigation.control.menu.web_addPanelNumItems',
+							delta
 						);
 					}
+
+					var displayStyle = event.displayStyle;
+
+					if (displayStyle) {
+						instance._displayStyle = displayStyle;
+
+						Liferay.Store(
+							'com.liferay.product.navigation.control.menu.web_addPanelDisplayStyle',
+							displayStyle
+						);
+					}
+
+					A.io.request(
+						instance._addContentForm.getAttribute('action'),
+						{
+							after: {
+								success: A.bind('_afterSuccess', instance)
+							},
+							data: instance.ns({
+								delta: instance._delta,
+								displayStyle: instance._displayStyle,
+								keywords: instance.get('inputNode').val()
+							})
+						}
+					);
 				}
 			}
-		);
+		});
 
 		ControlMenu.AddContent = AddContent;
 	},
 	'',
 	{
-		requires: ['aui-parse-content', 'aui-io-request', 'liferay-product-navigation-control-menu', 'liferay-product-navigation-control-menu-add-base', 'liferay-product-navigation-control-menu-add-content-search', 'liferay-store']
+		requires: [
+			'aui-parse-content',
+			'aui-io-request',
+			'liferay-product-navigation-control-menu',
+			'liferay-product-navigation-control-menu-add-base',
+			'liferay-product-navigation-control-menu-add-content-search',
+			'liferay-store'
+		]
 	}
 );

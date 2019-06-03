@@ -1,17 +1,4 @@
 {
-	"csfConfig": {
-		"js": {
-			"lint": {
-				"globals": {
-					"AlloyEditor": true,
-					"MODULE_PATH": true
-				},
-				"rules": {
-					"consistent-return": 0
-				}
-			}
-		}
-	},
 	"dependencies": {
 		"alloyeditor": "2.0.6"
 	},

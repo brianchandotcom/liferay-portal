@@ -1,4 +1,4 @@
-@import "bourbon";
+@import 'bourbon';
 
 .portlet-quick-note {
 	margin: 2px;
@@ -25,24 +25,24 @@
 		width: 10px;
 
 		&.yellow {
-			background-color: #FFC;
-			border-color: #FC0;
+			background-color: #ffc;
+			border-color: #fc0;
 			margin-left: 0;
 		}
 
 		&.green {
-			background-color: #CFC;
-			border-color: #0C0;
+			background-color: #cfc;
+			border-color: #0c0;
 		}
 
 		&.blue {
-			background-color: #CCF;
+			background-color: #ccf;
 			border-color: #309;
 		}
 
 		&.red {
-			background-color: #FCC;
-			border-color: #F00;
+			background-color: #fcc;
+			border-color: #f00;
 		}
 	}
 
@@ -58,7 +58,7 @@
 .ie6 {
 	.portlet-quick-note {
 		textarea {
-			height: expression(this.height < 100 ? '100px' : this.height);
+			height: expression(this.height < 100 ? '100px': this.height);
 		}
 	}
 }

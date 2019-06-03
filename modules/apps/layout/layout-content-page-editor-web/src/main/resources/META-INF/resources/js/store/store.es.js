@@ -22,9 +22,8 @@ const STORE_DEVTOOLS_ID = '__REDUX_DEVTOOLS_EXTENSION__';
  * @review
  */
 const connect = function(component, store) {
-	component._storeChangeListener = store.on(
-		'change',
-		() => syncStoreState(component, store)
+	component._storeChangeListener = store.on('change', () =>
+		syncStoreState(component, store)
 	);
 
 	syncStoreState(component, store);
@@ -54,21 +53,16 @@ const disconnect = function(component) {
 const createStore = function(initialState, reducers, componentIds = []) {
 	const store = new Store(initialState, reducers);
 
-	componentIds.forEach(
-		componentId => {
-			Liferay
-				.componentReady(
-					componentId
-				)
-				.then(
-					component => {
-						component.store = store;
+	componentIds.forEach(componentId => {
+		Liferay.componentReady(componentId).then(component => {
+			component.store = store;
 
-						connect(component, store);
-					}
-				);
-		}
-	);
+			connect(
+				component,
+				store
+			);
+		});
+	});
 
 	return store;
 };
@@ -80,14 +74,13 @@ const createStore = function(initialState, reducers, componentIds = []) {
 const syncStoreState = function(component, store) {
 	const state = store.getState();
 
-	component.getStateKeys()
+	component
+		.getStateKeys()
 		.filter(key => key in state)
 		.filter(key => component[key] !== state[key])
-		.forEach(
-			key => {
-				component[key] = state[key];
-			}
-		);
+		.forEach(key => {
+			component[key] = state[key];
+		});
 };
 
 /**
@@ -100,7 +93,6 @@ const syncStoreState = function(component, store) {
  * @review
  */
 class Store extends State {
-
 	/**
 	 * @param {object} [initialState={}]
 	 * @param {function[]} [reducers=[]]
@@ -115,7 +107,10 @@ class Store extends State {
 		this._setInitialState(initialState);
 		this.registerReducers(reducers);
 
-		if ((process.env.NODE_ENV === 'development') && (STORE_DEVTOOLS_ID in window)) {
+		if (
+			process.env.NODE_ENV === 'development' &&
+			STORE_DEVTOOLS_ID in window
+		) {
 			this._devTools = window[STORE_DEVTOOLS_ID].connect();
 
 			this._devTools.init(this._state);
@@ -126,7 +121,7 @@ class Store extends State {
 	 * @inheritDoc
 	 */
 	disposed() {
-		if ((process.env.NODE_ENV === 'development') && this._devTools) {
+		if (process.env.NODE_ENV === 'development' && this._devTools) {
 			this._devTools.disconnect();
 		}
 	}
@@ -141,45 +136,39 @@ class Store extends State {
 	 */
 	dispatch(action) {
 		if (typeof action === 'function') {
-			this._dispatchPromise = this._dispatchPromise.then(
-				() => Promise.resolve(action(this.dispatch, this.getState))
+			this._dispatchPromise = this._dispatchPromise.then(() =>
+				Promise.resolve(action(this.dispatch, this.getState))
 			);
-		}
-		else {
-			this._dispatchPromise = this._dispatchPromise.then(
-				() => this._reducers.reduce(
-					(promiseNextState, reducer) => promiseNextState.then(
-						nextState => Promise.resolve(
-							reducer(nextState, action)
-						)
-					),
-					Promise.resolve(this._state)
-				).then(
-					nextState => {
+		} else {
+			this._dispatchPromise = this._dispatchPromise.then(() =>
+				this._reducers
+					.reduce(
+						(promiseNextState, reducer) =>
+							promiseNextState.then(nextState =>
+								Promise.resolve(reducer(nextState, action))
+							),
+						Promise.resolve(this._state)
+					)
+					.then(nextState => {
 						if (this._state !== nextState) {
 							this._state = this._getFrozenState(nextState);
 
 							this.emit('change', this._state);
 
-							if ((process.env.NODE_ENV === 'development') && this._devTools) {
-								this._devTools.send(
-									action,
-									this._state
-								);
+							if (
+								process.env.NODE_ENV === 'development' &&
+								this._devTools
+							) {
+								this._devTools.send(action, this._state);
 							}
 						}
 
-						return new Promise(
-							resolve => {
-								requestAnimationFrame(
-									() => {
-										resolve(this);
-									}
-								);
-							}
-						);
-					}
-				)
+						return new Promise(resolve => {
+							requestAnimationFrame(() => {
+								resolve(this);
+							});
+						});
+					})
 			);
 		}
 
@@ -187,15 +176,17 @@ class Store extends State {
 	}
 
 	done(callback) {
-		this._dispatchPromise = this._dispatchPromise
-			.then(() => callback(this));
+		this._dispatchPromise = this._dispatchPromise.then(() =>
+			callback(this)
+		);
 
 		return this;
 	}
 
 	failed(callback) {
-		this._dispatchPromise = this._dispatchPromise
-			.catch(error => callback(error));
+		this._dispatchPromise = this._dispatchPromise.catch(error =>
+			callback(error)
+		);
 
 		return this;
 	}
@@ -221,10 +212,7 @@ class Store extends State {
 	 * @review
 	 */
 	registerReducer(reducer) {
-		this._reducers = [
-			...this._reducers,
-			reducer
-		];
+		this._reducers = [...this._reducers, reducer];
 	}
 
 	/**
@@ -234,10 +222,7 @@ class Store extends State {
 	 * @see {Store.registerReducer}
 	 */
 	registerReducers(reducers) {
-		this._reducers = [
-			...this._reducers,
-			...reducers
-		];
+		this._reducers = [...this._reducers, ...reducers];
 	}
 
 	/**
@@ -248,9 +233,11 @@ class Store extends State {
 	 * @review
 	 */
 	_getFrozenState(state) {
-		const differentState = !this._state || Object.entries(state).some(
-			([key, value]) => this._state[key] !== value
-		);
+		const differentState =
+			!this._state ||
+			Object.entries(state).some(
+				([key, value]) => this._state[key] !== value
+			);
 
 		if (differentState) {
 			this._state = state;
@@ -277,16 +264,11 @@ class Store extends State {
 		}
 
 		this._state = this._getFrozenState(
-			Object.assign(
-				{},
-				DEFAULT_INITIAL_STATE,
-				initialState
-			)
+			Object.assign({}, DEFAULT_INITIAL_STATE, initialState)
 		);
 
 		return this._state;
 	}
-
 }
 
 /**
@@ -296,7 +278,6 @@ class Store extends State {
  * @type {!Object}
  */
 Store.STATE = {
-
 	/**
 	 * Redux devtools
 	 * @instance
@@ -305,8 +286,7 @@ Store.STATE = {
 	 * @review
 	 * @type {any|null}
 	 */
-	_devTools: Config
-		.any()
+	_devTools: Config.any()
 		.internal()
 		.value(null),
 
@@ -318,8 +298,7 @@ Store.STATE = {
 	 * @review
 	 * @type {Promise}
 	 */
-	_dispatchPromise: Config
-		.instanceOf(Promise)
+	_dispatchPromise: Config.instanceOf(Promise)
 		.internal()
 		.value(Promise.resolve()),
 
@@ -331,8 +310,7 @@ Store.STATE = {
 	 * @review
 	 * @type {function[]}
 	 */
-	_reducers: Config
-		.arrayOf(Config.func())
+	_reducers: Config.arrayOf(Config.func())
 		.internal()
 		.value([]),
 
@@ -344,8 +322,7 @@ Store.STATE = {
 	 * @review
 	 * @type {object}
 	 */
-	_state: Config
-		.object()
+	_state: Config.object()
 		.internal()
 		.value(null)
 };

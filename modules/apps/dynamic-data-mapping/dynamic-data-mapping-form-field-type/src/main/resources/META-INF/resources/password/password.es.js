@@ -14,9 +14,7 @@ class Password extends Component {}
 Soy.register(Password, templates, 'render');
 
 if (!window.DDMPassword) {
-	window.DDMPassword = {
-
-	};
+	window.DDMPassword = {};
 }
 
 window.DDMPassword.render = Password;

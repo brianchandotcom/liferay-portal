@@ -12,12 +12,13 @@ import templates from './EditTags.soy';
  * fileEntries inside a modal.
  */
 class EditTags extends Component {
-
 	/**
 	 * @inheritDoc
 	 */
 	attached() {
-		this._bulkStatusComponent =	Liferay.component(this.namespace + 'BulkStatus');
+		this._bulkStatusComponent = Liferay.component(
+			this.namespace + 'BulkStatus'
+		);
 	}
 
 	/**
@@ -69,23 +70,23 @@ class EditTags extends Component {
 		};
 
 		return fetch(this.pathModule + url, request)
-			.then(
-				response => response.json()
-			)
-			.catch(
-				(xhr) => {
-					this.close();
-				}
-			);
+			.then(response => response.json())
+			.catch(xhr => {
+				this.close();
+			});
 	}
 
 	_getDescription(size) {
 		if (size === 1) {
-			return Liferay.Language.get('you-are-editing-the-tags-for-the-selected-item');
+			return Liferay.Language.get(
+				'you-are-editing-the-tags-for-the-selected-item'
+			);
 		}
 
 		return Liferay.Util.sub(
-			Liferay.Language.get('you-are-editing-the-common-tags-for-x-items.-select-edit-or-replace-current-tags'),
+			Liferay.Language.get(
+				'you-are-editing-the-common-tags-for-x-items.-select-edit-or-replace-current-tags'
+			),
 			size
 		);
 	}
@@ -106,21 +107,19 @@ class EditTags extends Component {
 
 		let selection = this._getSelection();
 
-		Promise.all(
-			[
-				this._fetchTagsRequest(this.urlTags, 'POST', selection),
-				this._fetchTagsRequest(this.urlSelection, 'POST', selection)
-			]
-		).then(
-			([responseTags, responseSelection]) => {
-				if (responseTags && responseSelection) {
-					this._loading = false;
-					this._commonTags = this._setCommonTags((responseTags.items || []).map(item => item.name));
-					this.description = this._getDescription(responseSelection.size);
-					this.multiple = (this.fileEntries.length > 1) || this.selectAll;
-				}
+		Promise.all([
+			this._fetchTagsRequest(this.urlTags, 'POST', selection),
+			this._fetchTagsRequest(this.urlSelection, 'POST', selection)
+		]).then(([responseTags, responseSelection]) => {
+			if (responseTags && responseSelection) {
+				this._loading = false;
+				this._commonTags = this._setCommonTags(
+					(responseTags.items || []).map(item => item.name)
+				);
+				this.description = this._getDescription(responseSelection.size);
+				this.multiple = this.fileEntries.length > 1 || this.selectAll;
 			}
-		);
+		});
 	}
 
 	_handleInputFocus(event) {
@@ -159,8 +158,7 @@ class EditTags extends Component {
 
 		if (!this.append) {
 			addedTags = finalTags;
-		}
-		else {
+		} else {
 			addedTags = finalTags.filter(
 				tag => this._initialTags.indexOf(tag) == -1
 			);
@@ -180,15 +178,13 @@ class EditTags extends Component {
 				keywordsToAdd: addedTags,
 				keywordsToRemove: removedTags
 			}
-		).then(
-			response => {
-				instance.close();
+		).then(response => {
+			instance.close();
 
-				if (instance._bulkStatusComponent) {
-					instance._bulkStatusComponent.startWatch();
-				}
+			if (instance._bulkStatusComponent) {
+				instance._bulkStatusComponent.startWatch();
 			}
-		);
+		});
 	}
 
 	/**
@@ -204,16 +200,14 @@ class EditTags extends Component {
 		let commonTagsObjList = [];
 
 		if (commonTags.length > 0) {
-			commonTags.forEach(
-				tag => {
-					let tagObj = {
-						'label': tag,
-						'value': tag
-					};
+			commonTags.forEach(tag => {
+				let tagObj = {
+					label: tag,
+					value: tag
+				};
 
-					commonTagsObjList.push(tagObj);
-				}
-			);
+				commonTagsObjList.push(tagObj);
+			});
 		}
 
 		return commonTagsObjList;
@@ -238,7 +232,6 @@ class EditTags extends Component {
  * @type {!Object}
  */
 EditTags.STATE = {
-
 	/**
 	 * Tags that want to be edited.
 	 *
@@ -247,7 +240,9 @@ EditTags.STATE = {
 	 * @review
 	 * @type {List<String>}
 	 */
-	_commonTags: Config.array().value([]).internal(),
+	_commonTags: Config.array()
+		.value([])
+		.internal(),
 
 	/**
 	 * Flag that indicate if loading icon must
@@ -258,7 +253,9 @@ EditTags.STATE = {
 	 * @review
 	 * @type {Boolean}
 	 */
-	_loading: Config.bool().value(false).internal(),
+	_loading: Config.bool()
+		.value(false)
+		.internal(),
 
 	/**
 	 * Flag that indicate if the modal must
@@ -269,7 +266,9 @@ EditTags.STATE = {
 	 * @review
 	 * @type {Boolean}
 	 */
-	_showModal: Config.bool().value(false).internal(),
+	_showModal: Config.bool()
+		.value(false)
+		.internal(),
 
 	/**
 	 * Description

@@ -8,7 +8,8 @@
 	}
 }
 
-.menu-content, .underlay-content {
+.menu-content,
+.underlay-content {
 	box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5);
 }
 
@@ -28,9 +29,10 @@
 	box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.8);
 }
 
-.portlet-document-library, .portlet-dynamic-data-mapping {
+.portlet-document-library,
+.portlet-dynamic-data-mapping {
 	.lfr-ddm-small-image-preview {
-		box-shadow: 0 1px 3px #CCC;
+		box-shadow: 0 1px 3px #ccc;
 	}
 }
 
@@ -39,7 +41,7 @@
 }
 
 .overlaymask-content {
-	background-color: #FFF;
+	background-color: #fff;
 }
 
 :not(.inline-item) {
@@ -69,25 +71,52 @@
 	}
 }
 
-.lfr-upload-container .progress-bar, .lfr-upload-container .progress, .lfr-editable:after {
+.lfr-upload-container .progress-bar,
+.lfr-upload-container .progress,
+.lfr-editable:after {
 	border-radius: 10px;
 }
 
 .portlet-language .portlet-body {
-	.current-language, .taglib-icon, .taglib-language-list-text {
+	.current-language,
+	.taglib-icon,
+	.taglib-language-list-text {
 		border-radius: 10px;
 	}
 }
 
-body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbnail, .lfr-api-results, .lfr-translation-manager, .lfr-translation-manager-translation, .lfr-upload-container .cancel-button .modify-pages .delete-tab, .portlet-image-gallery-display .image-thumbnail img, .rule-group-instance-container .rule-group-instance, .select-documents, .select-files, .taglib-ratings.stars:hover, .taglib-ratings.stars:hover .liferay-rating-vote > div, .taglib-ratings.stars .rating-focused > div, .tags-search-combobox .field-input-text {
+body > .lfr-menu-list ul,
+.active-area-proxy,
+.entry-display-style .entry-thumbnail,
+.lfr-api-results,
+.lfr-translation-manager,
+.lfr-translation-manager-translation,
+.lfr-upload-container .cancel-button .modify-pages .delete-tab,
+.portlet-image-gallery-display .image-thumbnail img,
+.rule-group-instance-container .rule-group-instance,
+.select-documents,
+.select-files,
+.taglib-ratings.stars:hover,
+.taglib-ratings.stars:hover .liferay-rating-vote > div,
+.taglib-ratings.stars .rating-focused > div,
+.tags-search-combobox .field-input-text {
 	border-radius: 4px;
 }
 
-.entry-display-style, .lfr-search-combobox, .lfr-upload-container .upload-file, .lfr-upload-container .upload-target, .portlet-document-library .common-file-metadata-container.selected, .portlet-document-library-display .common-file-metadata-container.selected, .portlet-image-gallery-display .image-icon, .select-documents, .select-files {
+.entry-display-style,
+.lfr-search-combobox,
+.lfr-upload-container .upload-file,
+.lfr-upload-container .upload-target,
+.portlet-document-library .common-file-metadata-container.selected,
+.portlet-document-library-display .common-file-metadata-container.selected,
+.portlet-image-gallery-display .image-icon,
+.select-documents,
+.select-files {
 	border-radius: 5px;
 }
 
-.portlet-dynamic-data-list-display, .portlet-dynamic-data-lists {
+.portlet-dynamic-data-list-display,
+.portlet-dynamic-data-lists {
 	.lfr-ddm-container {
 		.lfr-ddm-repeatable-placeholder {
 			border-radius: 6px;
@@ -104,7 +133,8 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	box-shadow: none;
 
 	.tab .tab-label {
-		&:hover, &:focus {
+		&:hover,
+		&:focus {
 			.number {
 				box-shadow: 0 0 5px 0 #333;
 				transition-duration: 0.25s;
@@ -130,15 +160,15 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	}
 
 	.lfr-input-localized .lfr-input-localized-state {
-		box-shadow: 0 0 3px #DDD;
+		box-shadow: 0 0 3px #ddd;
 
 		&.lfr-input-localized-state-error {
-			box-shadow: 0 0 3px #FF0047;
+			box-shadow: 0 0 3px #ff0047;
 		}
 	}
 
 	.palette-item-selected .lfr-input-localized-state {
-		box-shadow: 0 0 3px #27C1F2;
+		box-shadow: 0 0 3px #27c1f2;
 	}
 }
 
@@ -159,7 +189,9 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	border-radius: 0;
 }
 
-.site-variations-tabview-list .tab-content, .staging-tabview-list .tab-active .tab-content, .tagselector-content .textboxlistentry-holder .lfr-tag-selector-input:focus {
+.site-variations-tabview-list .tab-content,
+.staging-tabview-list .tab-active .tab-content,
+.tagselector-content .textboxlistentry-holder .lfr-tag-selector-input:focus {
 	box-shadow: none;
 }
 
@@ -181,12 +213,22 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	}
 }
 
-.lfr-progress-active .progress-bar-status, .lfr-upload-container .file-uploading .progress-bar .progress {
+.lfr-progress-active .progress-bar-status,
+.lfr-upload-container .file-uploading .progress-bar .progress {
 	$transparent: rgba(255, 255, 255, 0);
 
 	-webkit-animation: progress-bar-stripes 0.5s linear infinite;
 	animation: progress-bar-stripes 0.5s linear infinite;
-	background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0.3) 25%, $transparent 25%, $transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, $transparent 75%, $transparent);
+	background-image: linear-gradient(
+		-45deg,
+		rgba(255, 255, 255, 0.3) 25%,
+		$transparent 25%,
+		$transparent 50%,
+		rgba(255, 255, 255, 0.3) 50%,
+		rgba(255, 255, 255, 0.3) 75%,
+		$transparent 75%,
+		$transparent
+	);
 	background-size: 40px 40px;
 	transition: width, 0.5s, ease-out;
 
@@ -197,7 +239,7 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 
 @include keyframes(highlight-animation) {
 	from {
-		background-color: #FFC;
+		background-color: #ffc;
 	}
 
 	to {
@@ -261,7 +303,8 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 }
 
 .mobile.touch body:first-of-type .portlet-content .lfr-icon-actions {
-	.lfr-icon-menu-text, .taglib-text {
+	.lfr-icon-menu-text,
+	.taglib-text {
 		max-width: 200px;
 	}
 }
@@ -278,14 +321,17 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	}
 }
 
-.portlet-document-library .entry-thumbnail .label, .portlet-document-library-display .workflow-status .label, .portlet-journal .entry-thumbnail .label {
+.portlet-document-library .entry-thumbnail .label,
+.portlet-document-library-display .workflow-status .label,
+.portlet-journal .entry-thumbnail .label {
 	border-bottom-left-radius: 0;
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 }
 
 .portlet-options.btn-group {
-	&, &.open {
+	&,
+	&.open {
 		.dropdown-toggle {
 			box-shadow: none;
 		}
@@ -294,49 +340,49 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 
 @-webkit-keyframes lfr-drop-active {
 	0% {
-		background-color: #EBEBEB;
-		border-color: #DDD;
+		background-color: #ebebeb;
+		border-color: #ddd;
 	}
 
 	50% {
-		background-color: #DDEDDE;
-		border-color: #7D7;
+		background-color: #ddedde;
+		border-color: #7d7;
 		-webkit-transform: scale(1.1);
 		transform: scale(1.1);
 	}
 
 	75% {
-		background-color: #DDEDDE;
-		border-color: #7D7;
+		background-color: #ddedde;
+		border-color: #7d7;
 	}
 
 	100% {
-		background-color: #EBEBEB;
-		border-color: #DDD;
+		background-color: #ebebeb;
+		border-color: #ddd;
 	}
 }
 
 @keyframes lfr-drop-active {
 	0% {
-		background-color: #EBEBEB;
-		border-color: #DDD;
+		background-color: #ebebeb;
+		border-color: #ddd;
 	}
 
 	50% {
-		background-color: #DDEDDE;
-		border-color: #7D7;
+		background-color: #ddedde;
+		border-color: #7d7;
 		-webkit-transform: scale(1.1);
 		transform: scale(1.1);
 	}
 
 	75% {
-		background-color: #DDEDDE;
-		border-color: #7D7;
+		background-color: #ddedde;
+		border-color: #7d7;
 	}
 
 	100% {
-		background-color: #EBEBEB;
-		border-color: #DDD;
+		background-color: #ebebeb;
+		border-color: #ddd;
 	}
 }
 
@@ -347,7 +393,7 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	}
 
 	.portlet-document-library .document-container {
-		box-shadow: inset 0 0 5px #B8C1D1;
+		box-shadow: inset 0 0 5px #b8c1d1;
 	}
 }
 
@@ -364,7 +410,8 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 
 .cke_toolbar {
 	&.cke_toolbar__a11yhelpbtn {
-		.cke_toolgroup, .cke_toolgroup:hover {
+		.cke_toolgroup,
+		.cke_toolgroup:hover {
 			box-shadow: initial;
 		}
 
@@ -375,12 +422,12 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 
 			.cke_button_label {
 				&:after {
-					background-image: linear-gradient(#FFF, #E4E4E4);
+					background-image: linear-gradient(#fff, #e4e4e4);
 					border-radius: 2px;
 				}
 
 				&:hover:after {
-					background-image: linear-gradient(#F2F2F2, #CCC);
+					background-image: linear-gradient(#f2f2f2, #ccc);
 				}
 			}
 		}
@@ -391,11 +438,15 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 
 input.switch {
 	&:focus ~ .switch-bar:before {
-		box-shadow: 0 0 3px #00F;
+		box-shadow: 0 0 3px #00f;
 	}
 
 	&:empty ~ .switch-bar {
-		&:after, &:before, .switch-icon, .switch-toggle:after, .switch-toggle:before {
+		&:after,
+		&:before,
+		.switch-icon,
+		.switch-toggle:after,
+		.switch-toggle:before {
 			@include transition(all 100ms ease-in);
 		}
 	}

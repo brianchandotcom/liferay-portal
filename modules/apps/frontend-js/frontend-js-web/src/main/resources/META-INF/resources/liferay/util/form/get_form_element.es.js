@@ -1,7 +1,4 @@
-import {
-	isDef,
-	isString
-} from 'metal';
+import {isDef, isString} from 'metal';
 
 /**
  * Returns a DOM element or elements in a form.

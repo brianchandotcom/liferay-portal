@@ -1,8 +1,7 @@
 AUI.add(
 	'liferay-ddm-form-renderer-field-evaluation',
 	function(A) {
-		var FieldEvaluationSupport = function() {
-		};
+		var FieldEvaluationSupport = function() {};
 
 		FieldEvaluationSupport.ATTRS = {
 			evaluable: {
@@ -22,16 +21,15 @@ AUI.add(
 			initializer: function() {
 				var instance = this;
 
-				var evaluationTriggerEvents = instance.get('evaluationTriggerEvents');
+				var evaluationTriggerEvents = instance.get(
+					'evaluationTriggerEvents'
+				);
 
 				instance._eventHandlers.push(
-					instance.after(
-						evaluationTriggerEvents,
-						function() {
-							instance._setEvaluating();
-							instance.evaluate();
-						}
-					)
+					instance.after(evaluationTriggerEvents, function() {
+						instance._setEvaluating();
+						instance.evaluate();
+					})
 				);
 			},
 
@@ -40,7 +38,11 @@ AUI.add(
 
 				var evaluator = instance.get('evaluator');
 
-				if (evaluator && instance.get('rendered') && instance.get('evaluable')) {
+				if (
+					evaluator &&
+					instance.get('rendered') &&
+					instance.get('evaluable')
+				) {
 					evaluator.evaluate(instance);
 				}
 			},
@@ -80,10 +82,15 @@ AUI.add(
 			}
 		};
 
-		Liferay.namespace('DDM.Renderer').FieldEvaluationSupport = FieldEvaluationSupport;
+		Liferay.namespace(
+			'DDM.Renderer'
+		).FieldEvaluationSupport = FieldEvaluationSupport;
 	},
 	'',
 	{
-		requires: ['liferay-ddm-form-renderer-expressions-evaluator', 'liferay-ddm-form-renderer-util']
+		requires: [
+			'liferay-ddm-form-renderer-expressions-evaluator',
+			'liferay-ddm-form-renderer-util'
+		]
 	}
 );

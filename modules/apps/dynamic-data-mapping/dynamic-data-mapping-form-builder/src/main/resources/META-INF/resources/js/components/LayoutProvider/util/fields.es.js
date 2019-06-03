@@ -37,8 +37,7 @@ export function normalizeFieldName(fieldName) {
 			nextUpperCase = true;
 
 			continue;
-		}
-		else if (checkInvalidFieldNameCharacter(item)) {
+		} else if (checkInvalidFieldNameCharacter(item)) {
 			continue;
 		}
 
@@ -66,13 +65,11 @@ export const getFieldProperty = (pages, fieldName, propertyName) => {
 	const visitor = new PagesVisitor(pages);
 	let propertyValue;
 
-	visitor.mapFields(
-		field => {
-			if (field.fieldName === fieldName) {
-				propertyValue = field[propertyName];
-			}
+	visitor.mapFields(field => {
+		if (field.fieldName === fieldName) {
+			propertyValue = field[propertyName];
 		}
-	);
+	});
 
 	return propertyValue;
 };
@@ -81,49 +78,54 @@ export const getField = (pages, fieldName) => {
 	const visitor = new PagesVisitor(pages);
 	let field;
 
-	visitor.mapFields(
-		currentField => {
-			if (currentField.fieldName === fieldName) {
-				field = currentField;
-			}
+	visitor.mapFields(currentField => {
+		if (currentField.fieldName === fieldName) {
+			field = currentField;
 		}
-	);
+	});
 
 	return field;
 };
 
 export const getFieldLocalizedValue = (pages, fieldName, locale) => {
-	const fieldLocalizedValue = getFieldProperty(pages, fieldName, 'localizedValue');
+	const fieldLocalizedValue = getFieldProperty(
+		pages,
+		fieldName,
+		'localizedValue'
+	);
 
 	return fieldLocalizedValue[locale];
 };
 
-export const updateFieldValidationProperty = (pages, fieldName, propertyName, propertyValue) => {
+export const updateFieldValidationProperty = (
+	pages,
+	fieldName,
+	propertyName,
+	propertyValue
+) => {
 	const visitor = new PagesVisitor(pages);
 
-	return visitor.mapFields(
-		field => {
-			if (field.fieldName === 'validation' && field.value) {
-				let expression = field.value.expression;
+	return visitor.mapFields(field => {
+		if (field.fieldName === 'validation' && field.value) {
+			let expression = field.value.expression;
 
-				if (propertyName === 'fieldName' && expression) {
-					expression = expression.replace(fieldName, propertyValue);
-				}
-
-				field = {
-					...field,
-					validation: {
-						...field.validation,
-						[propertyName]: propertyValue
-					},
-					value: {
-						...field.value,
-						expression
-					}
-				};
+			if (propertyName === 'fieldName' && expression) {
+				expression = expression.replace(fieldName, propertyValue);
 			}
 
-			return field;
+			field = {
+				...field,
+				validation: {
+					...field.validation,
+					[propertyName]: propertyValue
+				},
+				value: {
+					...field.value,
+					expression
+				}
+			};
 		}
-	);
+
+		return field;
+	});
 };

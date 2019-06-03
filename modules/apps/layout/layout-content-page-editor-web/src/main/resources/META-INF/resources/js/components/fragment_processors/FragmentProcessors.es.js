@@ -5,21 +5,24 @@ import EditableTextFragmentProcessor from './EditableTextFragmentProcessor.es';
 const FragmentProcessors = {
 	fallback: {
 		destroy: EditableTextFragmentProcessor.destroy,
-		getFloatingToolbarButtons: EditableTextFragmentProcessor.getFloatingToolbarButtons,
+		getFloatingToolbarButtons:
+			EditableTextFragmentProcessor.getFloatingToolbarButtons,
 		init: EditableTextFragmentProcessor.init,
 		render: EditableTextFragmentProcessor.render
 	},
 
 	image: {
 		destroy: EditableImageFragmentProcessor.destroy,
-		getFloatingToolbarButtons: EditableImageFragmentProcessor.getFloatingToolbarButtons,
+		getFloatingToolbarButtons:
+			EditableImageFragmentProcessor.getFloatingToolbarButtons,
 		init: EditableImageFragmentProcessor.init,
 		render: EditableImageFragmentProcessor.render
 	},
 
 	link: {
 		destroy: EditableLinkFragmentProcessor.destroy,
-		getFloatingToolbarButtons: EditableLinkFragmentProcessor.getFloatingToolbarButtons,
+		getFloatingToolbarButtons:
+			EditableLinkFragmentProcessor.getFloatingToolbarButtons,
 		init: EditableLinkFragmentProcessor.init,
 		render: EditableLinkFragmentProcessor.render
 	}

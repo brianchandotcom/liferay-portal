@@ -1,6 +1,5 @@
 /** Class representing a point. */
 class Point {
-
 	/**
 	 * Create a point.
 	 * @param {number} x - The x value.
@@ -34,5 +33,4 @@ class Point {
 	static fromString(str) {
 		// ...
 	}
-
 }

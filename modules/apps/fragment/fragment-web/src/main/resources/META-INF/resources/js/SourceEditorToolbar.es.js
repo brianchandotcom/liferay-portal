@@ -10,7 +10,6 @@ import templates from './SourceEditorToolbar.soy';
  */
 
 class SourceEditorToolbar extends Component {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -55,7 +54,6 @@ SourceEditorToolbar.SYNTAX_LABEL = {
  * @type {!Object}
  */
 SourceEditorToolbar.STATE = {
-
 	/**
 	 * Syntax used for the editor toolbar.
 	 *

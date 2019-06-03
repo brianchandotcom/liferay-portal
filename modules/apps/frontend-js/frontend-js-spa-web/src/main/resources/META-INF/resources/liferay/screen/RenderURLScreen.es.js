@@ -8,7 +8,6 @@ import EventScreen from './EventScreen.es';
  */
 
 class RenderURLScreen extends EventScreen {
-
 	/**
 	 * @inheritDoc
 	 */

@@ -11,11 +11,9 @@ let _store;
  * @review
  */
 function _getFormData(body, portletNamespace, _formData = new FormData()) {
-	Object.entries(body).forEach(
-		([key, value]) => {
-			_formData.append(`${portletNamespace}${key}`, value);
-		}
-	);
+	Object.entries(body).forEach(([key, value]) => {
+		_formData.append(`${portletNamespace}${key}`, value);
+	});
 
 	return _formData;
 }
@@ -28,14 +26,11 @@ function _getFormData(body, portletNamespace, _formData = new FormData()) {
  * @review
  */
 function _fetch(url, body = {}) {
-	return fetch(
-		url,
-		{
-			body: _getFormData(body, _store.getState().portletNamespace),
-			credentials: 'include',
-			method: 'POST'
-		}
-	);
+	return fetch(url, {
+		body: _getFormData(body, _store.getState().portletNamespace),
+		credentials: 'include',
+		method: 'POST'
+	});
 }
 
 /**
@@ -71,17 +66,14 @@ function removeFragmentEntryLinks(
 	const state = _store.getState();
 
 	return Promise.all(
-		fragmentEntryLinkIds.map(
-			fragmentEntryLinkId => _fetch(
-				state.deleteFragmentEntryLinkURL,
-				{
-					classNameId: state.classNameId,
-					classPK: state.classPK,
-					data: JSON.stringify(layoutData),
-					fragmentEntryLinkId,
-					segmentsExperienceId
-				}
-			)
+		fragmentEntryLinkIds.map(fragmentEntryLinkId =>
+			_fetch(state.deleteFragmentEntryLinkURL, {
+				classNameId: state.classNameId,
+				classPK: state.classPK,
+				data: JSON.stringify(layoutData),
+				fragmentEntryLinkId,
+				segmentsExperienceId
+			})
 		)
 	);
 }
@@ -102,13 +94,10 @@ function setStore(store) {
 function updateEditableValues(fragmentEntryLinkId, editableValues) {
 	const state = _store.getState();
 
-	return _fetch(
-		state.editFragmentEntryLinkURL,
-		{
-			editableValues: JSON.stringify(editableValues),
-			fragmentEntryLinkId
-		}
-	);
+	return _fetch(state.editFragmentEntryLinkURL, {
+		editableValues: JSON.stringify(editableValues),
+		fragmentEntryLinkId
+	});
 }
 
 /**
@@ -119,15 +108,12 @@ function updateEditableValues(fragmentEntryLinkId, editableValues) {
 function updatePageEditorLayoutData(layoutData, segmentsExperienceId) {
 	const state = _store.getState();
 
-	return _fetch(
-		state.updateLayoutPageTemplateDataURL,
-		{
-			classNameId: state.classNameId,
-			classPK: state.classPK,
-			data: JSON.stringify(layoutData),
-			segmentsExperienceId
-		}
-	);
+	return _fetch(state.updateLayoutPageTemplateDataURL, {
+		classNameId: state.classNameId,
+		classPK: state.classPK,
+		data: JSON.stringify(layoutData),
+		segmentsExperienceId
+	});
 }
 
 export {

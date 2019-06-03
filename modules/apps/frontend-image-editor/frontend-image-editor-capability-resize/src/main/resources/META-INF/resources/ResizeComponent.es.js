@@ -10,23 +10,25 @@ import controlsTemplates from './ResizeControls.soy';
  * Creates a Resize component.
  */
 class ResizeComponent extends Component {
-
 	/**
 	 * @inheritDoc
 	 */
 	attached() {
-		this.getImageEditorImageData()
-			.then((imageData) => {
-				this.imageWidth = imageData.width;
-				this.imageHeight = imageData.height;
+		this.getImageEditorImageData().then(imageData => {
+			this.imageWidth = imageData.width;
+			this.imageHeight = imageData.height;
 
-				this.imageRatio_ = this.imageWidth / this.imageHeight;
+			this.imageRatio_ = this.imageWidth / this.imageHeight;
 
-				this.imageHeightInput_ = this.element.querySelector('#' + this.ref + 'Height');
-				this.imageWidthInput_ = this.element.querySelector('#' + this.ref + 'Width');
+			this.imageHeightInput_ = this.element.querySelector(
+				'#' + this.ref + 'Height'
+			);
+			this.imageWidthInput_ = this.element.querySelector(
+				'#' + this.ref + 'Width'
+			);
 
-				this.lockProportions = true;
-			});
+			this.lockProportions = true;
+		});
 	}
 
 	/**
@@ -77,15 +79,14 @@ class ResizeComponent extends Component {
 			this.imageWidth = newValue;
 
 			if (this.lockProportions) {
-				this.imageHeight = parseInt((newValue / this.imageRatio_), 10);
+				this.imageHeight = parseInt(newValue / this.imageRatio_, 10);
 				this.imageHeightInput_.value = this.imageHeight;
 			}
-		}
-		else {
+		} else {
 			this.imageHeight = newValue;
 
 			if (this.lockProportions) {
-				this.imageWidth = parseInt((newValue * this.imageRatio_), 10);
+				this.imageWidth = parseInt(newValue * this.imageRatio_, 10);
 				this.imageWidthInput_.value = this.imageWidth;
 			}
 		}
@@ -110,7 +111,6 @@ class ResizeComponent extends Component {
  * @type {!Object}
  */
 ResizeComponent.STATE = {
-
 	/**
 	 * Injected helper that retrieves the editor image data.
 	 *

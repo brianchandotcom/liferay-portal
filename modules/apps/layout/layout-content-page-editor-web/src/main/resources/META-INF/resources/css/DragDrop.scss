@@ -1,6 +1,6 @@
-@import "./mixins/lfr_drag_indicator";
+@import './mixins/lfr_drag_indicator';
 
-@import "variables";
+@import 'variables';
 
 @keyframes fragmentsEditorDragSource {
 	to {
@@ -92,11 +92,11 @@
 	}
 
 	&.fragments-editor-border-bottom:after {
-		@include lfr-drag-indicator("bottom");
+		@include lfr-drag-indicator('bottom');
 	}
 
 	&.fragments-editor-border-top:after {
-		@include lfr-drag-indicator("top");
+		@include lfr-drag-indicator('top');
 	}
 }
 

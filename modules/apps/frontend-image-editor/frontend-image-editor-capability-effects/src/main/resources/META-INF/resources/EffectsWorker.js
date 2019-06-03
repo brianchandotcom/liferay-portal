@@ -37,10 +37,30 @@ onmessage = function(event) {
 				data[i + 2] = blueCurve.valueOf(blue);
 
 				if (controlPoints.desaturate) {
-					data[i] = data[i] * DESATURATION_MATRIX[0] + data[i + 1] * DESATURATION_MATRIX[1] + data[i + 2] * DESATURATION_MATRIX[2] + alpha * DESATURATION_MATRIX[3] + DESATURATION_MATRIX[4];
-					data[i + 1] = data[i] * DESATURATION_MATRIX[5] + data[i + 1] * DESATURATION_MATRIX[6] + data[i + 2] * DESATURATION_MATRIX[7] + alpha * DESATURATION_MATRIX[8] + DESATURATION_MATRIX[9];
-					data[i + 2] = data[i] * DESATURATION_MATRIX[10] + data[i + 1] * DESATURATION_MATRIX[11] + data[i + 2] * DESATURATION_MATRIX[12] + alpha * DESATURATION_MATRIX[13] + DESATURATION_MATRIX[14];
-					data[i + 3] = data[i] * DESATURATION_MATRIX[15] + data[i + 1] * DESATURATION_MATRIX[16] + data[i + 2] * DESATURATION_MATRIX[17] + alpha * DESATURATION_MATRIX[18] + DESATURATION_MATRIX[19];
+					data[i] =
+						data[i] * DESATURATION_MATRIX[0] +
+						data[i + 1] * DESATURATION_MATRIX[1] +
+						data[i + 2] * DESATURATION_MATRIX[2] +
+						alpha * DESATURATION_MATRIX[3] +
+						DESATURATION_MATRIX[4];
+					data[i + 1] =
+						data[i] * DESATURATION_MATRIX[5] +
+						data[i + 1] * DESATURATION_MATRIX[6] +
+						data[i + 2] * DESATURATION_MATRIX[7] +
+						alpha * DESATURATION_MATRIX[8] +
+						DESATURATION_MATRIX[9];
+					data[i + 2] =
+						data[i] * DESATURATION_MATRIX[10] +
+						data[i + 1] * DESATURATION_MATRIX[11] +
+						data[i + 2] * DESATURATION_MATRIX[12] +
+						alpha * DESATURATION_MATRIX[13] +
+						DESATURATION_MATRIX[14];
+					data[i + 3] =
+						data[i] * DESATURATION_MATRIX[15] +
+						data[i + 1] * DESATURATION_MATRIX[16] +
+						data[i + 2] * DESATURATION_MATRIX[17] +
+						alpha * DESATURATION_MATRIX[18] +
+						DESATURATION_MATRIX[19];
 				}
 			}
 		}
@@ -64,63 +84,63 @@ var getControlPoints = function(effect) {
 	var controlPoints;
 
 	switch (effect.toLowerCase()) {
-	case 'ruby':
-		controlPoints = CONTROL_POINTS_RUBY;
-		break;
-	case 'absinthe':
-		controlPoints = CONTROL_POINTS_ABSINTHE;
-		break;
-	case 'chroma':
-		controlPoints = CONTROL_POINTS_CHROMA;
-		break;
-	case 'atari':
-		controlPoints = CONTROL_POINTS_ATARI;
-		break;
-	case 'tripel':
-		controlPoints = CONTROL_POINTS_TRIPEL;
-		break;
-	case 'ailis':
-		controlPoints = CONTROL_POINTS_AILIS;
-		break;
-	case 'flatfoot':
-		controlPoints = CONTROL_POINTS_FLATFOOT;
-		break;
-	case 'pyrexia':
-		controlPoints = CONTROL_POINTS_PYREXIA;
-		break;
-	case 'umbra':
-		controlPoints = CONTROL_POINTS_UMBRA;
-		break;
-	case 'rouge':
-		controlPoints = CONTROL_POINTS_ROUGE;
-		break;
-	case 'idyll':
-		controlPoints = CONTROL_POINTS_IDYLL;
-		break;
-	case 'glimmer':
-		controlPoints = CONTROL_POINTS_GLIMMER;
-		break;
-	case 'elysium':
-		controlPoints = CONTROL_POINTS_ELYSIUM;
-		break;
-	case 'nucleus':
-		controlPoints = CONTROL_POINTS_NUCLEUS;
-		break;
-	case 'amber':
-		controlPoints = CONTROL_POINTS_AMBER;
-		break;
-	case 'paella':
-		controlPoints = CONTROL_POINTS_PAELLA;
-		break;
-	case 'aureus':
-		controlPoints = CONTROL_POINTS_AUREUS;
-		break;
-	case 'expanse':
-		controlPoints = CONTROL_POINTS_EXPANSE;
-		break;
-	case 'orchid':
-		controlPoints = CONTROL_POINTS_ORCHID;
-		break;
+		case 'ruby':
+			controlPoints = CONTROL_POINTS_RUBY;
+			break;
+		case 'absinthe':
+			controlPoints = CONTROL_POINTS_ABSINTHE;
+			break;
+		case 'chroma':
+			controlPoints = CONTROL_POINTS_CHROMA;
+			break;
+		case 'atari':
+			controlPoints = CONTROL_POINTS_ATARI;
+			break;
+		case 'tripel':
+			controlPoints = CONTROL_POINTS_TRIPEL;
+			break;
+		case 'ailis':
+			controlPoints = CONTROL_POINTS_AILIS;
+			break;
+		case 'flatfoot':
+			controlPoints = CONTROL_POINTS_FLATFOOT;
+			break;
+		case 'pyrexia':
+			controlPoints = CONTROL_POINTS_PYREXIA;
+			break;
+		case 'umbra':
+			controlPoints = CONTROL_POINTS_UMBRA;
+			break;
+		case 'rouge':
+			controlPoints = CONTROL_POINTS_ROUGE;
+			break;
+		case 'idyll':
+			controlPoints = CONTROL_POINTS_IDYLL;
+			break;
+		case 'glimmer':
+			controlPoints = CONTROL_POINTS_GLIMMER;
+			break;
+		case 'elysium':
+			controlPoints = CONTROL_POINTS_ELYSIUM;
+			break;
+		case 'nucleus':
+			controlPoints = CONTROL_POINTS_NUCLEUS;
+			break;
+		case 'amber':
+			controlPoints = CONTROL_POINTS_AMBER;
+			break;
+		case 'paella':
+			controlPoints = CONTROL_POINTS_PAELLA;
+			break;
+		case 'aureus':
+			controlPoints = CONTROL_POINTS_AUREUS;
+			break;
+		case 'expanse':
+			controlPoints = CONTROL_POINTS_EXPANSE;
+			break;
+		case 'orchid':
+			controlPoints = CONTROL_POINTS_ORCHID;
+			break;
 	}
 
 	return controlPoints;
@@ -152,11 +172,31 @@ var generateColorCurve = function(controlPoints) {
  * @type {Array}
  */
 var DESATURATION_MATRIX = [
-	0.2225, 0.7169, 0.0606, 0, 0,
-	0.2225, 0.7169, 0.0606, 0, 0,
-	0.2225, 0.7169, 0.0606, 0, 0,
-	0, 0, 0, 1, 0,
-	0, 0, 0, 0, 0
+	0.2225,
+	0.7169,
+	0.0606,
+	0,
+	0,
+	0.2225,
+	0.7169,
+	0.0606,
+	0,
+	0,
+	0.2225,
+	0.7169,
+	0.0606,
+	0,
+	0,
+	0,
+	0,
+	0,
+	1,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0
 ];
 
 /**
@@ -175,7 +215,15 @@ var CONTROL_POINTS_RUBY = {
  */
 var CONTROL_POINTS_ABSINTHE = {
 	red: [[0, 19], [30, 62], [82, 148], [128, 188], [145, 200], [255, 250]],
-	green: [[0, 25], [35, 80], [106, 175], [151, 188], [215, 215], [240, 235], [255, 245]],
+	green: [
+		[0, 25],
+		[35, 80],
+		[106, 175],
+		[151, 188],
+		[215, 215],
+		[240, 235],
+		[255, 245]
+	],
 	blue: [[0, 0], [48, 72], [115, 188], [160, 120], [233, 245], [255, 255]]
 };
 
@@ -195,8 +243,24 @@ var CONTROL_POINTS_CHROMA = {
  */
 var CONTROL_POINTS_ATARI = {
 	red: [[0, 25], [45, 80], [85, 135], [120, 180], [230, 240], [255, 255]],
-	green: [[0, 18], [42, 58], [90, 102], [120, 130], [165, 140], [217, 195], [255, 210]],
-	blue: [[0, 0], [40, 55], [88, 112], [132, 172], [168, 198], [215, 218], [255, 240]]
+	green: [
+		[0, 18],
+		[42, 58],
+		[90, 102],
+		[120, 130],
+		[165, 140],
+		[217, 195],
+		[255, 210]
+	],
+	blue: [
+		[0, 0],
+		[40, 55],
+		[88, 112],
+		[132, 172],
+		[168, 198],
+		[215, 218],
+		[255, 240]
+	]
 };
 
 /**
@@ -214,8 +278,24 @@ var CONTROL_POINTS_TRIPEL = {
  * @type {Object}
  */
 var CONTROL_POINTS_AILIS = {
-	red: [[0, 35], [42, 68], [85, 115], [124, 165], [170, 200], [215, 228], [255, 255]],
-	green: [[0, 0], [24, 42], [60, 100], [105, 170], [145, 208], [210, 235], [255, 245]],
+	red: [
+		[0, 35],
+		[42, 68],
+		[85, 115],
+		[124, 165],
+		[170, 200],
+		[215, 228],
+		[255, 255]
+	],
+	green: [
+		[0, 0],
+		[24, 42],
+		[60, 100],
+		[105, 170],
+		[145, 208],
+		[210, 235],
+		[255, 245]
+	],
 	blue: [[0, 0], [45, 60], [102, 135], [140, 182], [192, 215], [255, 255]]
 };
 
@@ -245,9 +325,33 @@ var CONTROL_POINTS_PYREXIA = {
  * @type {Object}
  */
 var CONTROL_POINTS_UMBRA = {
-	red: [[0, 0], [40, 20], [88, 80], [128, 150], [170, 200], [230, 245], [255, 255]],
-	green: [[0, 0], [62, 50], [100, 95], [130, 155], [150, 182], [190, 220], [255, 255]],
-	blue: [[0, 0], [35, 15], [90, 70], [105, 105], [148, 180], [188, 218], [255, 255]]
+	red: [
+		[0, 0],
+		[40, 20],
+		[88, 80],
+		[128, 150],
+		[170, 200],
+		[230, 245],
+		[255, 255]
+	],
+	green: [
+		[0, 0],
+		[62, 50],
+		[100, 95],
+		[130, 155],
+		[150, 182],
+		[190, 220],
+		[255, 255]
+	],
+	blue: [
+		[0, 0],
+		[35, 15],
+		[90, 70],
+		[105, 105],
+		[148, 180],
+		[188, 218],
+		[255, 255]
+	]
 };
 
 /**
@@ -256,7 +360,15 @@ var CONTROL_POINTS_UMBRA = {
  */
 var CONTROL_POINTS_ROUGE = {
 	red: [[0, 30], [85, 110], [125, 170], [221, 232], [254, 242]],
-	green: [[0, 15], [45, 60], [85, 115], [135, 185], [182, 215], [235, 230], [255, 225]],
+	green: [
+		[0, 15],
+		[45, 60],
+		[85, 115],
+		[135, 185],
+		[182, 215],
+		[235, 230],
+		[255, 225]
+	],
 	blue: [[0, 15], [40, 55], [80, 95], [142, 196], [188, 215], [255, 230]]
 };
 
@@ -265,7 +377,15 @@ var CONTROL_POINTS_ROUGE = {
  * @type {Object}
  */
 var CONTROL_POINTS_IDYLL = {
-	red: [[0, 0], [30, 5], [58, 25], [83, 85], [112, 140], [190, 125], [255, 255]],
+	red: [
+		[0, 0],
+		[30, 5],
+		[58, 25],
+		[83, 85],
+		[112, 140],
+		[190, 125],
+		[255, 255]
+	],
 	green: [[0, 65], [40, 90], [85, 115], [212, 185], [255, 205]],
 	blue: [[0, 0], [20, 5], [50, 62], [132, 150], [190, 205], [255, 225]]
 };
@@ -276,8 +396,24 @@ var CONTROL_POINTS_IDYLL = {
  */
 var CONTROL_POINTS_GLIMMER = {
 	red: [[0, 25], [30, 70], [130, 192], [170, 200], [233, 233], [255, 255]],
-	green: [[0, 35], [40, 75], [82, 124], [120, 162], [175, 188], [220, 214], [255, 255]],
-	blue: [[0, 25], [30, 72], [65, 118], [100, 158], [152, 195], [210, 230], [250, 250]]
+	green: [
+		[0, 35],
+		[40, 75],
+		[82, 124],
+		[120, 162],
+		[175, 188],
+		[220, 214],
+		[255, 255]
+	],
+	blue: [
+		[0, 25],
+		[30, 72],
+		[65, 118],
+		[100, 158],
+		[152, 195],
+		[210, 230],
+		[250, 250]
+	]
 };
 
 /**
@@ -285,9 +421,33 @@ var CONTROL_POINTS_GLIMMER = {
  * @type {Object}
  */
 var CONTROL_POINTS_ELYSIUM = {
-	red: [[0, 10], [48, 88], [105, 155], [130, 180], [190, 212], [232, 234], [255, 245]],
-	green: [[0, 30], [45, 82], [95, 132], [138, 164], [176, 182], [210, 200], [255, 218]],
-	blue: [[0, 0], [38, 72], [85, 124], [124, 160], [172, 186], [218, 210], [255, 230]]
+	red: [
+		[0, 10],
+		[48, 88],
+		[105, 155],
+		[130, 180],
+		[190, 212],
+		[232, 234],
+		[255, 245]
+	],
+	green: [
+		[0, 30],
+		[45, 82],
+		[95, 132],
+		[138, 164],
+		[176, 182],
+		[210, 200],
+		[255, 218]
+	],
+	blue: [
+		[0, 0],
+		[38, 72],
+		[85, 124],
+		[124, 160],
+		[172, 186],
+		[218, 210],
+		[255, 230]
+	]
 };
 
 /**
@@ -316,8 +476,24 @@ var CONTROL_POINTS_AMBER = {
  */
 var CONTROL_POINTS_PAELLA = {
 	red: [[0, 20], [50, 80], [85, 120], [128, 162], [228, 224], [255, 240]],
-	green: [[0, 20], [42, 62], [80, 104], [124, 144], [170, 182], [220, 210], [255, 230]],
-	blue: [[0, 0], [18, 12], [60, 70], [104, 128], [148, 178], [212, 224], [255, 255]]
+	green: [
+		[0, 20],
+		[42, 62],
+		[80, 104],
+		[124, 144],
+		[170, 182],
+		[220, 210],
+		[255, 230]
+	],
+	blue: [
+		[0, 0],
+		[18, 12],
+		[60, 70],
+		[104, 128],
+		[148, 178],
+		[212, 224],
+		[255, 255]
+	]
 };
 
 /**
@@ -347,6 +523,22 @@ var CONTROL_POINTS_ORCHID = {
  */
 var CONTROL_POINTS_AUREUS = {
 	red: [[0, 0], [42, 28], [105, 100], [148, 160], [185, 208], [255, 255]],
-	green: [[0, 30], [40, 58], [82, 90], [125, 125], [170, 160], [235, 210], [255, 222]],
-	blue: [[0, 0], [40, 25], [85, 75], [125, 130], [165, 180], [212, 230], [255, 255]]
+	green: [
+		[0, 30],
+		[40, 58],
+		[82, 90],
+		[125, 125],
+		[170, 160],
+		[235, 210],
+		[255, 222]
+	],
+	blue: [
+		[0, 0],
+		[40, 25],
+		[85, 75],
+		[125, 130],
+		[165, 180],
+		[212, 230],
+		[255, 255]
+	]
 };

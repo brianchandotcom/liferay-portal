@@ -1,4 +1,4 @@
-@import "mixins";
+@import 'mixins';
 
 .unsubscribe-portlet {
 	$icon-width: 40px;
@@ -37,7 +37,7 @@
 			position: absolute;
 
 			.lexicon-icon {
-				color: #51A1F0;
+				color: #51a1f0;
 				height: $icon-width;
 				width: $icon-width;
 			}

@@ -5,24 +5,28 @@ import Component from 'metal-jsx';
 import dom from 'metal-dom';
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
-import {focusedFieldStructure, pageStructure, ruleStructure} from '../../util/config.es';
+import {
+	focusedFieldStructure,
+	pageStructure,
+	ruleStructure
+} from '../../util/config.es';
 
 class Actions extends Component {
 	render() {
 		const {spritemap} = this.props;
 
 		return (
-			<div class="ddm-field-actions-container" ref="actionsContainer">
+			<div class='ddm-field-actions-container' ref='actionsContainer'>
 				<ClayButton
 					editable={true}
 					events={{
 						click: this._handleDuplicateButtonClicked.bind(this)
 					}}
-					icon="paste"
+					icon='paste'
 					monospaced={true}
-					size="sm"
+					size='sm'
 					spritemap={spritemap}
-					style="secondary"
+					style='secondary'
 				/>
 
 				<ClayButton
@@ -30,11 +34,11 @@ class Actions extends Component {
 					events={{
 						click: this._handleDeleteButtonClicked.bind(this)
 					}}
-					icon="trash"
+					icon='trash'
 					monospaced={true}
-					size="sm"
+					size='sm'
 					spritemap={spritemap}
-					style="secondary"
+					style='secondary'
 				/>
 			</div>
 		);
@@ -53,12 +57,9 @@ class Actions extends Component {
 			dom.closest(event.target, '.col-ddm')
 		);
 
-		this.emit(
-			'fieldDuplicated',
-			{
-				indexes
-			}
-		);
+		this.emit('fieldDuplicated', {
+			indexes
+		});
 	}
 }
 
@@ -68,7 +69,11 @@ const withActionableFields = ChildComponent => {
 			this._eventHandler = new EventHandler();
 
 			this._eventHandler.add(
-				this.delegate('mouseenter', '.ddm-field-container', this._handleMouseEnterField.bind(this))
+				this.delegate(
+					'mouseenter',
+					'.ddm-field-container',
+					this._handleMouseEnterField.bind(this)
+				)
 			);
 		}
 
@@ -97,9 +102,13 @@ const withActionableFields = ChildComponent => {
 			return (
 				<div>
 					<ClayModal
-						body={Liferay.Language.get('are-you-sure-you-want-to-delete-this-field')}
+						body={Liferay.Language.get(
+							'are-you-sure-you-want-to-delete-this-field'
+						)}
 						events={{
-							clickButton: this._handleDeleteConfirmationModalButtonClicked.bind(this)
+							clickButton: this._handleDeleteConfirmationModalButtonClicked.bind(
+								this
+							)
 						}}
 						footerButtons={[
 							{
@@ -115,10 +124,12 @@ const withActionableFields = ChildComponent => {
 								type: 'button'
 							}
 						]}
-						ref="deleteModal"
-						size="sm"
+						ref='deleteModal'
+						size='sm'
 						spritemap={spritemap}
-						title={Liferay.Language.get('delete-field-dialog-title')}
+						title={Liferay.Language.get(
+							'delete-field-dialog-title'
+						)}
 					/>
 
 					<ChildComponent {...this.props} events={this.getEvents()} />
@@ -127,7 +138,7 @@ const withActionableFields = ChildComponent => {
 						<Actions
 							events={this.getEvents()}
 							portalElement={this.element}
-							ref="actions"
+							ref='actions'
 							spritemap={spritemap}
 						/>
 					)}
@@ -157,11 +168,9 @@ const withActionableFields = ChildComponent => {
 		}
 
 		_handleDeleteRequest({indexes}) {
-			this.setState(
-				{
-					indexes
-				}
-			);
+			this.setState({
+				indexes
+			});
 
 			this.showDeleteConfirmationModal();
 		}
@@ -184,7 +193,6 @@ const withActionableFields = ChildComponent => {
 	}
 
 	ActionableFields.STATE = {
-
 		/**
 		 * @default undefined
 		 * @instance
@@ -196,7 +204,6 @@ const withActionableFields = ChildComponent => {
 	};
 
 	ActionableFields.PROPS = {
-
 		/**
 		 * @default
 		 * @instance

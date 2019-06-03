@@ -10,7 +10,6 @@ import controlsTemplates from './RotateControls.soy';
  * Creates a Rotate component.
  */
 class RotateComponent extends Component {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -84,12 +83,26 @@ class RotateComponent extends Component {
 
 			let offscreenContext = offscreenCanvas.getContext('2d');
 			offscreenContext.save();
-			offscreenContext.translate(offscreenCanvas.width / 2, offscreenCanvas.height / 2);
-			offscreenContext.rotate(rotationAngle * Math.PI / 180);
-			offscreenContext.drawImage(imageCanvas, -imageCanvas.width / 2, -imageCanvas.height / 2);
+			offscreenContext.translate(
+				offscreenCanvas.width / 2,
+				offscreenCanvas.height / 2
+			);
+			offscreenContext.rotate((rotationAngle * Math.PI) / 180);
+			offscreenContext.drawImage(
+				imageCanvas,
+				-imageCanvas.width / 2,
+				-imageCanvas.height / 2
+			);
 			offscreenContext.restore();
 
-			resolve(offscreenContext.getImageData(0, 0, offscreenCanvas.width, offscreenCanvas.height));
+			resolve(
+				offscreenContext.getImageData(
+					0,
+					0,
+					offscreenCanvas.width,
+					offscreenCanvas.height
+				)
+			);
 		});
 
 		return cancellablePromise;
@@ -119,7 +132,6 @@ class RotateComponent extends Component {
  * @type {!Object}
  */
 RotateComponent.STATE = {
-
 	/**
 	 * Path of this module.
 	 *

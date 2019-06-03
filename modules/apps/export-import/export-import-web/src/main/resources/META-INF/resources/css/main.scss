@@ -1,7 +1,7 @@
-@import "mixins";
+@import 'mixins';
 
 @mixin default-label {
-	color: #869CAD;
+	color: #869cad;
 	font-size: 14px;
 }
 
@@ -10,7 +10,7 @@
 		margin-bottom: 1em;
 
 		legend {
-			border-top: solid #E5E5E5;
+			border-top: solid #e5e5e5;
 			border-width: 1px 0 0;
 			font-size: 1em;
 			font-weight: normal;
@@ -68,12 +68,12 @@
 	}
 
 	.publish-mode-switch {
-		background-color: #469DE3;
+		background-color: #469de3;
 		position: absolute;
 		right: 10px;
 
 		a {
-			color: #FFF;
+			color: #fff;
 		}
 
 		span {
@@ -127,7 +127,8 @@
 		margin-bottom: 1em;
 	}
 
-	.portlet-data-section, .portlet-type-data-section {
+	.portlet-data-section,
+	.portlet-type-data-section {
 		.control-label {
 			font-weight: bold;
 		}
@@ -167,7 +168,8 @@
 }
 
 .lfr-root-node {
-	.tree-icon a, .tree-label a {
+	.tree-icon a,
+	.tree-label a {
 		cursor: pointer;
 	}
 }
@@ -175,7 +177,8 @@
 .lfr-tree-controls {
 	width: 165px;
 
-	div, a {
+	div,
+	a {
 		float: left;
 	}
 }
@@ -200,11 +203,11 @@
 	margin-right: 1%;
 
 	a {
-		color: #65B6F0;
+		color: #65b6f0;
 	}
 
 	a:hover {
-		color: #65B6F0;
+		color: #65b6f0;
 		text-decoration: none;
 	}
 }
@@ -257,11 +260,11 @@
 			}
 
 			.toggler-header-collapsed:after {
-				content: "\00a0\00bb";
+				content: '\00a0\00bb';
 			}
 
 			.toggler-header-expanded:after {
-				content: "\00a0\00ab";
+				content: '\00a0\00ab';
 			}
 		}
 
@@ -276,7 +279,7 @@
 }
 
 .publish-simple-help-text {
-	color: #869CAD;
+	color: #869cad;
 	font-size: 16px;
 }
 
@@ -286,11 +289,11 @@
 
 .tree-node-content {
 	.layout-branch-name {
-		color: #AAA;
+		color: #aaa;
 	}
 
 	.incomplete-layout {
-		color: #CCC;
+		color: #ccc;
 	}
 }
 
@@ -305,7 +308,7 @@
 .tree-pages {
 	.tree-node-selected {
 		.tree-label a {
-			color: #0090D9;
+			color: #0090d9;
 			cursor: move;
 		}
 	}
@@ -315,7 +318,7 @@
 	margin: 2rem 0;
 
 	label.process-summary-label {
-		font-size: .875rem;
+		font-size: 0.875rem;
 	}
 }
 

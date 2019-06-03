@@ -6,9 +6,7 @@ import templates from './form.soy';
 let FormTemplates = [];
 
 if (!window.ddm) {
-	window.ddm = {
-
-	};
+	window.ddm = {};
 }
 
 for (let template in templates) {
@@ -17,12 +15,10 @@ for (let template in templates) {
 
 		Soy.register(C, templates, template);
 
-		FormTemplates.push(
-			{
-				component: C,
-				key: template
-			}
-		);
+		FormTemplates.push({
+			component: C,
+			key: template
+		});
 
 		window.ddm[template] = C;
 	}

@@ -1,8 +1,7 @@
 AUI.add(
 	'liferay-ddm-form-renderer-tabs',
 	function(A) {
-		var FormTabsSupport = function() {
-		};
+		var FormTabsSupport = function() {};
 
 		FormTabsSupport.prototype = {
 			initializer: function() {
@@ -27,13 +26,13 @@ AUI.add(
 				var tabView = instance._tabView;
 
 				if (!tabView || (tabView && tabView.get('destroyed'))) {
-					var tabs = instance.get('container').one('.lfr-ddm-form-tabs');
+					var tabs = instance
+						.get('container')
+						.one('.lfr-ddm-form-tabs');
 
-					tabView = new A.TabView(
-						{
-							srcNode: tabs
-						}
-					);
+					tabView = new A.TabView({
+						srcNode: tabs
+					});
 
 					instance._tabView = tabView;
 				}

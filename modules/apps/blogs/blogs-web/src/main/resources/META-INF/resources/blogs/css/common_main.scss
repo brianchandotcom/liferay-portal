@@ -1,4 +1,4 @@
-@import "mixins";
+@import 'mixins';
 
 .portlet-blogs {
 	.edit-entry {
@@ -62,19 +62,31 @@
 		}
 	}
 
-	.entry-body, .widget-mode-detail .widget-mode-detail-text, .widget-mode-simple-entry .widget-content {
+	.entry-body,
+	.widget-mode-detail .widget-mode-detail-text,
+	.widget-mode-simple-entry .widget-content {
 		word-wrap: break-word;
 
-		img, .cke_widget_embedurl, .cke_widget_image, .embed-responsive {
-			&[style*="float: left;"], &[style*="float:left;"] {
+		img,
+		.cke_widget_embedurl,
+		.cke_widget_image,
+		.embed-responsive {
+			&[style*='float: left;'],
+			&[style*='float:left;'] {
 				margin-right: 24px;
 			}
 
-			&[style*="float: right;"], &[style*="float:right;"] {
+			&[style*='float: right;'],
+			&[style*='float:right;'] {
 				margin-left: 24px;
 			}
 
-			&[style*="display: block;"][style*="margin-left: auto;"][style*="margin-right: auto;"], &[style*="display:block;"][style*="margin-left:auto;"][style*="margin-right:auto;"], &[style*="float: left;"], &[style*="float:left;"], &[style*="float: right;"], &[style*="float:right;"] {
+			&[style*='display: block;'][style*='margin-left: auto;'][style*='margin-right: auto;'],
+			&[style*='display:block;'][style*='margin-left:auto;'][style*='margin-right:auto;'],
+			&[style*='float: left;'],
+			&[style*='float:left;'],
+			&[style*='float: right;'],
+			&[style*='float:right;'] {
 				margin-bottom: 24px;
 				margin-top: 24px;
 			}

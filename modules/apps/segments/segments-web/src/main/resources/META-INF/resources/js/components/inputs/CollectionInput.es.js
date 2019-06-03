@@ -23,7 +23,7 @@ class CollectionInput extends React.Component {
 		const {value} = this._stringToKeyValueObject(this.props.value);
 
 		this.props.onChange({value: `${event.target.value}=${value}`});
-	}
+	};
 
 	/**
 	 * Updates the right-side of the '=' character in the value.
@@ -33,7 +33,7 @@ class CollectionInput extends React.Component {
 		const {key} = this._stringToKeyValueObject(this.props.value);
 
 		this.props.onChange({value: `${key}=${event.target.value}`});
-	}
+	};
 
 	/**
 	 * Prevents an '=' character from being entered into the input.
@@ -43,7 +43,7 @@ class CollectionInput extends React.Component {
 		if (event.key === '=') {
 			event.preventDefault();
 		}
-	}
+	};
 
 	/**
 	 * Takes a string value in the format 'key=value' and returns an object
@@ -52,13 +52,14 @@ class CollectionInput extends React.Component {
 	 * @returns {Object} Object with key and value properties.
 	 */
 	_stringToKeyValueObject = stringValue => {
-		const [key = '', value = ''] = (typeof stringValue == 'string') ? stringValue.split('=') : [];
+		const [key = '', value = ''] =
+			typeof stringValue == 'string' ? stringValue.split('=') : [];
 
 		return {
 			key,
 			value
 		};
-	}
+	};
 
 	render() {
 		const {disabled} = this.props;
@@ -67,24 +68,24 @@ class CollectionInput extends React.Component {
 		return (
 			<React.Fragment>
 				<input
-					className="criterion-input form-control"
-					data-testid="collection-key-input"
+					className='criterion-input form-control'
+					data-testid='collection-key-input'
 					disabled={disabled}
 					onChange={this._handleKeyChange}
 					onKeyDown={this._handleKeyDown}
 					placeholder={Liferay.Language.get('key')}
-					type="text"
+					type='text'
 					value={key}
 				/>
 
 				<input
-					className="criterion-input form-control"
-					data-testid="collection-value-input"
+					className='criterion-input form-control'
+					data-testid='collection-value-input'
 					disabled={disabled}
 					onChange={this._handleValueChange}
 					onKeyDown={this._handleKeyDown}
 					placeholder={Liferay.Language.get('value')}
-					type="text"
+					type='text'
 					value={value}
 				/>
 			</React.Fragment>

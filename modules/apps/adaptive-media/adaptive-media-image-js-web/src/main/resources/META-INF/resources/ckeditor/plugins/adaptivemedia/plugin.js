@@ -3,152 +3,174 @@
 
 	var IE9AndLater = AUI.Env.UA.ie >= 9;
 
-	var STR_ADAPTIVE_MEDIA_FILE_ENTRY_RETURN_TYPE = 'com.liferay.adaptive.media.image.item.selector.AMImageFileEntryItemSelectorReturnType';
+	var STR_ADAPTIVE_MEDIA_FILE_ENTRY_RETURN_TYPE =
+		'com.liferay.adaptive.media.image.item.selector.AMImageFileEntryItemSelectorReturnType';
 
-	var STR_ADAPTIVE_MEDIA_URL_RETURN_TYPE = 'com.liferay.adaptive.media.image.item.selector.AMImageURLItemSelectorReturnType';
+	var STR_ADAPTIVE_MEDIA_URL_RETURN_TYPE =
+		'com.liferay.adaptive.media.image.item.selector.AMImageURLItemSelectorReturnType';
 
-	var TPL_PICTURE_TAG = '<picture {fileEntryAttributeName}="{fileEntryId}">{sources}<img src="{defaultSrc}"></picture>';
+	var TPL_PICTURE_TAG =
+		'<picture {fileEntryAttributeName}="{fileEntryId}">{sources}<img src="{defaultSrc}"></picture>';
 
 	var TPL_SOURCE_TAG = '<source srcset="{srcset}" media="{media}">';
 
-	CKEDITOR.plugins.add(
-		'adaptivemedia',
-		{
-			init: function(editor) {
-				var instance = this;
+	CKEDITOR.plugins.add('adaptivemedia', {
+		init: function(editor) {
+			var instance = this;
 
-				instance._bindEvent(editor);
-			},
+			instance._bindEvent(editor);
+		},
 
-			_bindEvent: function(editor) {
-				var instance = this;
+		_bindEvent: function(editor) {
+			var instance = this;
 
-				editor.on(
-					'beforeCommandExec',
-					function(event) {
-						if (event.data.name === 'imageselector') {
-							event.removeListener();
+			editor.on('beforeCommandExec', function(event) {
+				if (event.data.name === 'imageselector') {
+					event.removeListener();
 
-							event.cancel();
+					event.cancel();
 
-							var onSelectedImageChangeFn = instance._onSelectedImageChange.bind(instance, editor);
+					var onSelectedImageChangeFn = instance._onSelectedImageChange.bind(
+						instance,
+						editor
+					);
 
-							editor.execCommand('imageselector', onSelectedImageChangeFn);
+					editor.execCommand(
+						'imageselector',
+						onSelectedImageChangeFn
+					);
 
-							instance._bindEvent(editor);
-						}
-					}
+					instance._bindEvent(editor);
+				}
+			});
+		},
+
+		_getImgElement: function(
+			imageSrc,
+			selectedItem,
+			fileEntryAttributeName
+		) {
+			var imgEl = CKEDITOR.dom.element.createFromHtml('<img>');
+
+			if (
+				selectedItem.returnType ===
+				STR_ADAPTIVE_MEDIA_FILE_ENTRY_RETURN_TYPE
+			) {
+				var itemValue = JSON.parse(selectedItem.value);
+
+				imgEl.setAttribute('src', itemValue.url);
+				imgEl.setAttribute(
+					fileEntryAttributeName,
+					itemValue.fileEntryId
 				);
-			},
+			} else {
+				imgEl.setAttribute('src', imageSrc);
+			}
 
-			_getImgElement: function(imageSrc, selectedItem, fileEntryAttributeName) {
-				var imgEl = CKEDITOR.dom.element.createFromHtml('<img>');
+			return imgEl;
+		},
 
-				if (selectedItem.returnType === STR_ADAPTIVE_MEDIA_FILE_ENTRY_RETURN_TYPE) {
-					var itemValue = JSON.parse(selectedItem.value);
+		_getPictureElement: function(selectedItem, fileEntryAttributeName) {
+			var pictureEl;
 
-					imgEl.setAttribute('src', itemValue.url);
-					imgEl.setAttribute(fileEntryAttributeName, itemValue.fileEntryId);
-				}
-				else {
-					imgEl.setAttribute('src', imageSrc);
-				}
+			try {
+				var itemValue = JSON.parse(selectedItem.value);
 
-				return imgEl;
-			},
+				var sources = '';
 
-			_getPictureElement: function(selectedItem, fileEntryAttributeName) {
-				var pictureEl;
-
-				try {
-					var itemValue = JSON.parse(selectedItem.value);
-
-					var sources = '';
-
-					itemValue.sources.forEach(
-						function(source) {
-							var propertyNames = Object.getOwnPropertyNames(source.attributes);
-
-							var mediaText = propertyNames.reduce(
-								function(previous, current) {
-									var value = '(' + current + ':' + source.attributes[current] + ')';
-
-									return previous ? previous + ' and ' + value : value;
-								},
-								''
-							);
-
-							sources += Lang.sub(
-								TPL_SOURCE_TAG,
-								{
-									media: mediaText,
-									srcset: source.src
-								}
-							);
-						}
+				itemValue.sources.forEach(function(source) {
+					var propertyNames = Object.getOwnPropertyNames(
+						source.attributes
 					);
 
-					var pictureHtml = Lang.sub(
-						TPL_PICTURE_TAG,
-						{
-							defaultSrc: itemValue.defaultSource,
-							fileEntryAttributeName: fileEntryAttributeName,
-							fileEntryId: itemValue.fileEntryId,
-							sources: sources
-						}
-					);
+					var mediaText = propertyNames.reduce(function(
+						previous,
+						current
+					) {
+						var value =
+							'(' +
+							current +
+							':' +
+							source.attributes[current] +
+							')';
 
-					pictureEl = CKEDITOR.dom.element.createFromHtml(pictureHtml);
-				}
-				catch (e) {
-				}
+						return previous ? previous + ' and ' + value : value;
+					},
+					'');
 
-				return pictureEl;
-			},
+					sources += Lang.sub(TPL_SOURCE_TAG, {
+						media: mediaText,
+						srcset: source.src
+					});
+				});
 
-			_isEmptySelection: function(editor) {
-				var selection = editor.getSelection();
+				var pictureHtml = Lang.sub(TPL_PICTURE_TAG, {
+					defaultSrc: itemValue.defaultSource,
+					fileEntryAttributeName: fileEntryAttributeName,
+					fileEntryId: itemValue.fileEntryId,
+					sources: sources
+				});
 
-				var ranges = selection.getRanges();
+				pictureEl = CKEDITOR.dom.element.createFromHtml(pictureHtml);
+			} catch (e) {}
 
-				return selection.getType() === CKEDITOR.SELECTION_NONE || (ranges.length === 1 && (ranges[0].collapsed || IE9AndLater));
-			},
+			return pictureEl;
+		},
 
-			_onSelectedImageChange: function(editor, imageSrc, selectedItem) {
-				var instance = this;
+		_isEmptySelection: function(editor) {
+			var selection = editor.getSelection();
 
-				var el;
+			var ranges = selection.getRanges();
 
-				var fileEntryAttributeName = editor.config.adaptiveMediaFileEntryAttributeName;
+			return (
+				selection.getType() === CKEDITOR.SELECTION_NONE ||
+				(ranges.length === 1 && (ranges[0].collapsed || IE9AndLater))
+			);
+		},
 
-				if (selectedItem.returnType === STR_ADAPTIVE_MEDIA_URL_RETURN_TYPE) {
-					el = instance._getPictureElement(selectedItem, fileEntryAttributeName);
-				}
-				else {
-					el = instance._getImgElement(imageSrc, selectedItem, fileEntryAttributeName);
-				}
+		_onSelectedImageChange: function(editor, imageSrc, selectedItem) {
+			var instance = this;
 
-				var elementOuterHtml = el.getOuterHtml();
+			var el;
 
-				editor.insertHtml(elementOuterHtml);
+			var fileEntryAttributeName =
+				editor.config.adaptiveMediaFileEntryAttributeName;
 
-				if (instance._isEmptySelection(editor)) {
-					if (IE9AndLater) {
-						var emptySelectionMarkup = '<br />';
+			if (
+				selectedItem.returnType === STR_ADAPTIVE_MEDIA_URL_RETURN_TYPE
+			) {
+				el = instance._getPictureElement(
+					selectedItem,
+					fileEntryAttributeName
+				);
+			} else {
+				el = instance._getImgElement(
+					imageSrc,
+					selectedItem,
+					fileEntryAttributeName
+				);
+			}
 
-						var usingAlloyEditor = typeof AlloyEditor == 'undefined';
+			var elementOuterHtml = el.getOuterHtml();
 
-						if (!usingAlloyEditor) {
-							emptySelectionMarkup = elementOuterHtml + emptySelectionMarkup;
-						}
+			editor.insertHtml(elementOuterHtml);
 
-						editor.insertHtml(emptySelectionMarkup);
+			if (instance._isEmptySelection(editor)) {
+				if (IE9AndLater) {
+					var emptySelectionMarkup = '<br />';
+
+					var usingAlloyEditor = typeof AlloyEditor == 'undefined';
+
+					if (!usingAlloyEditor) {
+						emptySelectionMarkup =
+							elementOuterHtml + emptySelectionMarkup;
 					}
-					else {
-						editor.execCommand('enter');
-					}
+
+					editor.insertHtml(emptySelectionMarkup);
+				} else {
+					editor.execCommand('enter');
 				}
 			}
 		}
-	);
+	});
 })();

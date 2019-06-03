@@ -36,19 +36,15 @@ const PREVIEW_SIZES = Object.keys(SIZE_RATIO);
  * Renders the preview of a fragment and allows modifications to the preview.
  */
 class FragmentPreview extends PortletBase {
-
 	/**
 	 * @inheritDoc
 	 */
 	attached() {
-		this._updatePreview = debounce(
-			this._updatePreview.bind(this),
-			500
-		);
+		this._updatePreview = debounce(this._updatePreview.bind(this), 500);
 
 		this._updatePreviewSize = debounce(
 			this._updatePreviewSize.bind(this),
-			100,
+			100
 		);
 
 		window.addEventListener('resize', this._updatePreviewSize);
@@ -99,7 +95,8 @@ class FragmentPreview extends PortletBase {
 	 * @protected
 	 */
 	_handlePreviewSizeButtonClick(event) {
-		this._currentPreviewSize = event.delegateTarget.dataset.previewSize || null;
+		this._currentPreviewSize =
+			event.delegateTarget.dataset.previewSize || null;
 	}
 
 	/**
@@ -125,25 +122,19 @@ class FragmentPreview extends PortletBase {
 		if (!this._loading) {
 			this._loading = true;
 
-			this.fetch(
-				this.urls.render,
-				{
-					css: this.css,
-					html: this.html,
-					js: this.js
-				}
-			)
-				.then(
-					response => response.text()
-				).then(
-					response => {
-						this._loading = false;
-						this.refs.previewFrame.contentWindow.postMessage(
-							JSON.stringify({data: response}),
-							'*'
-						);
-					}
-				);
+			this.fetch(this.urls.render, {
+				css: this.css,
+				html: this.html,
+				js: this.js
+			})
+				.then(response => response.text())
+				.then(response => {
+					this._loading = false;
+					this.refs.previewFrame.contentWindow.postMessage(
+						JSON.stringify({data: response}),
+						'*'
+					);
+				});
 		}
 	}
 
@@ -164,15 +155,14 @@ class FragmentPreview extends PortletBase {
 					const wrapperRect = wrapper.getBoundingClientRect();
 
 					const scale = Math.min(
-						wrapperRect.width * 0.9 / ratio.width,
-						wrapperRect.height * 0.8 / ratio.height,
+						(wrapperRect.width * 0.9) / ratio.width,
+						(wrapperRect.height * 0.8) / ratio.height
 					);
 
 					preview.style.width = `${ratio.width * scale}px`;
 					preview.style.height = `${ratio.height * scale}px`;
 				}
-			}
-			else {
+			} else {
 				preview.style.width = '';
 				preview.style.height = '';
 			}
@@ -187,7 +177,6 @@ class FragmentPreview extends PortletBase {
  * @static
  */
 FragmentPreview.STATE = {
-
 	/**
 	 * CSS content of the preview.
 	 *
@@ -233,11 +222,9 @@ FragmentPreview.STATE = {
 	 *  render: !string
 	 * }}
 	 */
-	urls: Config.shapeOf(
-		{
-			render: Config.string().required()
-		}
-	).required(),
+	urls: Config.shapeOf({
+		render: Config.string().required()
+	}).required(),
 
 	/**
 	 * Ratio of the preview being rendered. This property is modified internally

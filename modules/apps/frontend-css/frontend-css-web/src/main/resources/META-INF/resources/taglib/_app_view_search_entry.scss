@@ -30,8 +30,9 @@
 		margin-top: 20px;
 	}
 
-	.entry-discussion, .entry-attachment {
-		border-top: 1px solid #CCC;
+	.entry-discussion,
+	.entry-attachment {
+		border-top: 1px solid #ccc;
 		display: block;
 		margin: 0.5em 4em;
 		overflow: hidden;
@@ -46,7 +47,8 @@
 			float: left;
 			padding: 5px;
 
-			img.avatar, img.attachment {
+			img.avatar,
+			img.attachment {
 				width: 45px;
 			}
 		}

@@ -6,9 +6,9 @@
 	padding: 8px 0;
 
 	&.criterion-row-root-error {
-		background: #FEEFEF;
-		border: 1px solid #F48989;
-		border-left: 3px solid #F48989;
+		background: #feefef;
+		border: 1px solid #f48989;
+		border-left: 3px solid #f48989;
 		border-radius: 4px;
 		padding: 16px;
 	}
@@ -40,7 +40,8 @@
 		}
 	}
 
-	.operator, .operator-input {
+	.operator,
+	.operator-input {
 		text-transform: lowercase;
 	}
 

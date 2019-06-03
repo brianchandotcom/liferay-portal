@@ -3,7 +3,7 @@
 }
 
 .dialog-content {
-	border: 1px solid #C8C9CA;
+	border: 1px solid #c8c9ca;
 	padding: 5px;
 }
 
@@ -40,10 +40,12 @@
 	.portlet-configuration-body-content,
 	.process-list,
 	.roles-selector-body {
-		> .container-fluid-1280, .container-view {
+		> .container-fluid-1280,
+		.container-view {
 			padding-top: 20px;
 
-			> .nav-tabs-default, .nav-tabs-underline {
+			> .nav-tabs-default,
+			.nav-tabs-underline {
 				margin-left: -$grid-gutter-width / 2;
 				margin-right: -$grid-gutter-width / 2;
 				margin-top: -20px;
@@ -137,13 +139,15 @@
 }
 
 .dialog-with-footer {
-	#main-content, #wrapper {
+	#main-content,
+	#wrapper {
 		@include md {
 			height: calc(100% - #{$dialog-footer-height});
 		}
 	}
 
-	.button-holder, .sheet-footer {
+	.button-holder,
+	.sheet-footer {
 		&.dialog-footer {
 			background-color: $dialog-footer-bg;
 			border-top: 1px solid $dialog-footer-border-color;
@@ -201,7 +205,8 @@
 				overflow: auto;
 			}
 
-			.table-responsive, .table-responsive-lg {
+			.table-responsive,
+			.table-responsive-lg {
 				overflow: visible;
 			}
 		}

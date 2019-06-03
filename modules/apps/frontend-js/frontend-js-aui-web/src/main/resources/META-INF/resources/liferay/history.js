@@ -17,43 +17,43 @@ AUI.add(
 
 		var LOCATION = WIN.location;
 
-		var History = A.Component.create(
-			{
-				EXTENDS: A.History,
+		var History = A.Component.create({
+			EXTENDS: A.History,
 
-				NAME: 'liferayhistory',
+			NAME: 'liferayhistory',
 
-				prototype: {
-					get: function(key) {
-						var instance = this;
+			prototype: {
+				get: function(key) {
+					var instance = this;
 
-						var value = History.superclass.get.apply(this, arguments);
+					var value = History.superclass.get.apply(this, arguments);
 
-						if (!isValue(value) && isValue(key)) {
-							var query = LOCATION.search;
+					if (!isValue(value) && isValue(key)) {
+						var query = LOCATION.search;
 
-							var queryMap = instance._parse(query.substr(1));
+						var queryMap = instance._parse(query.substr(1));
 
-							if (queryMap.hasOwnProperty(key)) {
-								value = queryMap[key];
-							}
+						if (queryMap.hasOwnProperty(key)) {
+							value = queryMap[key];
 						}
+					}
 
-						return value;
-					},
-
-					_parse: A.cached(
-						function(str) {
-							return QueryString.parse(str, History.PAIR_SEPARATOR, History.VALUE_SEPARATOR);
-						}
-					)
+					return value;
 				},
 
-				PAIR_SEPARATOR: '&',
+				_parse: A.cached(function(str) {
+					return QueryString.parse(
+						str,
+						History.PAIR_SEPARATOR,
+						History.VALUE_SEPARATOR
+					);
+				})
+			},
 
-				VALUE_SEPARATOR: '='
-			}
-		);
+			PAIR_SEPARATOR: '&',
+
+			VALUE_SEPARATOR: '='
+		});
 
 		Liferay.History = History;
 	},

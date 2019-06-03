@@ -12,7 +12,7 @@ class DateTimeInput extends React.Component {
 		value: propTypes.string
 	};
 
-	state = {}
+	state = {};
 
 	static getDerivedStateFromProps(props, state) {
 		let returnVal = null;
@@ -30,7 +30,7 @@ class DateTimeInput extends React.Component {
 		const value = event.target.value;
 
 		this.setState({value});
-	}
+	};
 
 	_handleDateBlur = event => {
 		const date = dateFns.format(event.target.value, INPUT_DATE_FORMAT);
@@ -41,16 +41,15 @@ class DateTimeInput extends React.Component {
 					value: date
 				},
 				() => {
-					this.props.onChange(
-						{
-							type: PROPERTY_TYPES.DATE_TIME,
-							value: dateFns.parse(date, INPUT_DATE_FORMAT).toISOString()
-						}
-					);
+					this.props.onChange({
+						type: PROPERTY_TYPES.DATE_TIME,
+						value: dateFns
+							.parse(date, INPUT_DATE_FORMAT)
+							.toISOString()
+					});
 				}
 			);
-		}
-		else {
+		} else {
 			const resetDate = dateFns.format(new Date(), INPUT_DATE_FORMAT);
 
 			this.setState(
@@ -58,30 +57,30 @@ class DateTimeInput extends React.Component {
 					value: resetDate
 				},
 				() => {
-					this.props.onChange(
-						{
-							type: PROPERTY_TYPES.DATE_TIME,
-							value: dateFns.parse(resetDate, INPUT_DATE_FORMAT).toISOString()
-						}
-					);
+					this.props.onChange({
+						type: PROPERTY_TYPES.DATE_TIME,
+						value: dateFns
+							.parse(resetDate, INPUT_DATE_FORMAT)
+							.toISOString()
+					});
 				}
 			);
 		}
-	}
+	};
 
 	render() {
 		const {value} = this.state;
 		const {disabled} = this.props;
 
 		return (
-			<div className="criterion-input date-input">
+			<div className='criterion-input date-input'>
 				<input
-					className="form-control"
-					data-testid="date-input"
+					className='form-control'
+					data-testid='date-input'
 					disabled={disabled}
 					onBlur={this._handleDateBlur}
 					onChange={this._handleDateChange}
-					type="date"
+					type='date'
 					value={value}
 				/>
 			</div>

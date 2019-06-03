@@ -35,7 +35,6 @@ export const VALIDATIONS = {
 			regex: /^(.+)\>\=(\d+\.?\d*)?$/,
 			template: '{name}>={parameter}'
 		}
-
 	],
 	string: [
 		{

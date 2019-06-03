@@ -1,8 +1,8 @@
 $colors: (
-	"white": #fff
+	'white': #fff
 );
 $theme-colors: (
-	"primary": #0b5fff
+	'primary': #0b5fff
 );
 $toolbar-height: 3rem;
 
@@ -11,8 +11,8 @@ body {
 }
 
 .google-docs-toolbar {
-	background-color: map-get($theme-colors, "primary");
-	color: map-get($colors, "white");
+	background-color: map-get($theme-colors, 'primary');
+	color: map-get($colors, 'white');
 	height: $toolbar-height;
 	max-height: $toolbar-height;
 }

@@ -16,98 +16,82 @@ import editableValuesMigrator from '../utils/fragmentMigrator.es';
  * @review
  */
 function addPortletReducer(state, action) {
-	return new Promise(
-		resolve => {
-			let nextState = state;
+	return new Promise(resolve => {
+		let nextState = state;
 
-			if (action.type === ADD_PORTLET) {
-				let fragmentEntryLink = null;
-				let nextData = null;
+		if (action.type === ADD_PORTLET) {
+			let fragmentEntryLink = null;
+			let nextData = null;
 
-				_addPortlet(
-					nextState.addPortletURL,
-					action.portletId,
-					nextState.classNameId,
-					nextState.classPK,
-					nextState.portletNamespace,
-					nextState.defaultSegmentsExperienceId
-				)
-					.then(
-						response => {
-							fragmentEntryLink = response;
+			_addPortlet(
+				nextState.addPortletURL,
+				action.portletId,
+				nextState.classNameId,
+				nextState.classPK,
+				nextState.portletNamespace,
+				nextState.defaultSegmentsExperienceId
+			)
+				.then(response => {
+					fragmentEntryLink = response;
 
-							nextData = addFragment(
-								fragmentEntryLink.fragmentEntryLinkId,
-								nextState.dropTargetBorder,
-								nextState.dropTargetItemId,
-								nextState.dropTargetItemType,
-								nextState.layoutData
-							);
-
-							return updatePageEditorLayoutData(
-								nextData,
-								nextState.segmentsExperienceId
-							);
-						}
-					)
-					.then(
-						() => getFragmentEntryLinkContent(
-							nextState.renderFragmentEntryURL,
-							fragmentEntryLink,
-							nextState.portletNamespace
-						)
-					)
-					.then(
-						response => {
-							fragmentEntryLink = response;
-
-							fragmentEntryLink.portletId = action.portletId;
-
-							nextState = setIn(
-								nextState,
-								[
-									'fragmentEntryLinks',
-									fragmentEntryLink.fragmentEntryLinkId
-								],
-								fragmentEntryLink
-							);
-
-							if (!action.instanceable) {
-								const widgetPath = getWidgetPath(
-									nextState.widgets,
-									action.portletId
-								);
-
-								nextState = setIn(
-									nextState,
-									[
-										...widgetPath,
-										'used'
-									],
-									true
-								);
-							}
-
-							nextState = setIn(
-								nextState,
-								['layoutData'],
-								nextData
-							);
-
-							resolve(nextState);
-						}
-					)
-					.catch(
-						() => {
-							resolve(nextState);
-						}
+					nextData = addFragment(
+						fragmentEntryLink.fragmentEntryLinkId,
+						nextState.dropTargetBorder,
+						nextState.dropTargetItemId,
+						nextState.dropTargetItemType,
+						nextState.layoutData
 					);
-			}
-			else {
-				resolve(nextState);
-			}
+
+					return updatePageEditorLayoutData(
+						nextData,
+						nextState.segmentsExperienceId
+					);
+				})
+				.then(() =>
+					getFragmentEntryLinkContent(
+						nextState.renderFragmentEntryURL,
+						fragmentEntryLink,
+						nextState.portletNamespace
+					)
+				)
+				.then(response => {
+					fragmentEntryLink = response;
+
+					fragmentEntryLink.portletId = action.portletId;
+
+					nextState = setIn(
+						nextState,
+						[
+							'fragmentEntryLinks',
+							fragmentEntryLink.fragmentEntryLinkId
+						],
+						fragmentEntryLink
+					);
+
+					if (!action.instanceable) {
+						const widgetPath = getWidgetPath(
+							nextState.widgets,
+							action.portletId
+						);
+
+						nextState = setIn(
+							nextState,
+							[...widgetPath, 'used'],
+							true
+						);
+					}
+
+					nextState = setIn(nextState, ['layoutData'], nextData);
+
+					resolve(nextState);
+				})
+				.catch(() => {
+					resolve(nextState);
+				});
+		} else {
+			resolve(nextState);
 		}
-	);
+	});
 }
 
 /**
@@ -134,35 +118,28 @@ function _addPortlet(
 	formData.append(`${portletNamespace}classNameId`, classNameId);
 	formData.append(`${portletNamespace}classPK`, classPK);
 
-	return fetch(
-		addPortletURL,
-		{
-			body: formData,
-			credentials: 'include',
-			method: 'POST'
-		}
-	)
-		.then(
-			response => response.json()
-		)
-		.then(
-			response => {
-				if (!response.fragmentEntryLinkId) {
-					throw new Error();
-				}
-
-				return {
-					config: {},
-					content: response.content,
-					editableValues: editableValuesMigrator(
-						response.editableValues,
-						prefixSegmentsExperienceId(defaultSegmentsExperienceId)
-					),
-					fragmentEntryLinkId: response.fragmentEntryLinkId,
-					name: response.name
-				};
+	return fetch(addPortletURL, {
+		body: formData,
+		credentials: 'include',
+		method: 'POST'
+	})
+		.then(response => response.json())
+		.then(response => {
+			if (!response.fragmentEntryLinkId) {
+				throw new Error();
 			}
-		);
+
+			return {
+				config: {},
+				content: response.content,
+				editableValues: editableValuesMigrator(
+					response.editableValues,
+					prefixSegmentsExperienceId(defaultSegmentsExperienceId)
+				),
+				fragmentEntryLinkId: response.fragmentEntryLinkId,
+				name: response.name
+			};
+		});
 }
 
 export {addPortletReducer};

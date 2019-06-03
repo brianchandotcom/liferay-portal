@@ -14,17 +14,17 @@
 
 			successCallback = isFunction(arguments[1]) ? arguments[1] : null;
 			failureCallback = isFunction(arguments[2]) ? arguments[2] : null;
-		}
-		else {
+		} else {
 			modules = [];
 
 			for (var i = 0; i < arguments.length; ++i) {
 				if (typeof arguments[i] === 'string') {
 					modules[i] = arguments[i];
-				}
-				else if (isFunction(arguments[i])) {
+				} else if (isFunction(arguments[i])) {
 					successCallback = arguments[i];
-					failureCallback = isFunction(arguments[++i]) ? arguments[i] : null;
+					failureCallback = isFunction(arguments[++i])
+						? arguments[i]
+						: null;
 					break;
 				}
 			}

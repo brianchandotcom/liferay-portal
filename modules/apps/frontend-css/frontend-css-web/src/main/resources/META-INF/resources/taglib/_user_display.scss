@@ -1,4 +1,4 @@
-@import "mixins";
+@import 'mixins';
 
 .taglib-user-display {
 	padding: 0.5em;
@@ -20,7 +20,8 @@
 	}
 
 	&.display-style-2 {
-		.user-profile-image, .user-name {
+		.user-profile-image,
+		.user-name {
 			clear: both;
 			display: block;
 			min-height: 20px;

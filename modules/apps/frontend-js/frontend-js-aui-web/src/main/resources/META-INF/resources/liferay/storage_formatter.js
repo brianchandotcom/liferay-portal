@@ -7,8 +7,7 @@ AUI.add(
 
 		var STR_SUFFIX_KB = 'suffixKB';
 
-		var StorageFormatter = function() {
-		};
+		var StorageFormatter = function() {};
 
 		StorageFormatter.NAME = 'storageformatter';
 
@@ -66,14 +65,13 @@ AUI.add(
 					size /= denominator;
 				}
 
-				return A.Number.format(
-					size,
-					{
-						decimalPlaces: instance._getDecimalPlaces(size, suffix),
-						decimalSeparator: instance.get('decimalSeparator'),
-						suffix: instance.get('addSpaceBeforeSuffix') ? STR_SPACE + suffix : suffix
-					}
-				);
+				return A.Number.format(size, {
+					decimalPlaces: instance._getDecimalPlaces(size, suffix),
+					decimalSeparator: instance.get('decimalSeparator'),
+					suffix: instance.get('addSpaceBeforeSuffix')
+						? STR_SPACE + suffix
+						: suffix
+				});
 			},
 
 			_getDecimalPlaces: function(size, suffix) {

@@ -23,7 +23,8 @@
 			padding: 6px 8px;
 		}
 
-		.browse-folder, .nav-item-label {
+		.browse-folder,
+		.nav-item-label {
 			@include ellipsis;
 
 			vertical-align: middle;

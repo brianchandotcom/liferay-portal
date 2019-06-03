@@ -19,37 +19,27 @@ class ClayAlert extends Component {
 	};
 
 	render() {
-		const {
-			className,
-			title,
-			message,
-			type
-		} = this.props;
+		const {className, title, message, type} = this.props;
 
-		const classes = getCN(
-			'alert',
-			type ? `alert-${type}` : 'alert-info',
-			{
-				[className]: className
-			}
-		);
+		const classes = getCN('alert', type ? `alert-${type}` : 'alert-info', {
+			[className]: className
+		});
 
 		const iconName = _getIconNameByAlertType(type);
 
 		return (
-			<div className={classes} role="alert">
-				<span class="alert-indicator">
-					<svg class="lexicon-icon lexicon-icon-check-circle-full" focusable="false" role="presentation">
-						<use href={`${this.context.spritemap}#${iconName}`}></use>
+			<div className={classes} role='alert'>
+				<span class='alert-indicator'>
+					<svg
+						class='lexicon-icon lexicon-icon-check-circle-full'
+						focusable='false'
+						role='presentation'
+					>
+						<use href={`${this.context.spritemap}#${iconName}`} />
 					</svg>
 				</span>
-				{
-					title &&
-					<strong class="lead">{ title }:</strong>
-				}
-				{
-					message
-				}
+				{title && <strong class='lead'>{title}:</strong>}
+				{message}
 			</div>
 		);
 	}
@@ -59,7 +49,7 @@ export default ClayAlert;
 
 function _getIconNameByAlertType(alertType) {
 	let iconName = 'info-circle';
-	switch(alertType) {
+	switch (alertType) {
 		case 'danger':
 			iconName = 'exclamation-full';
 			break;

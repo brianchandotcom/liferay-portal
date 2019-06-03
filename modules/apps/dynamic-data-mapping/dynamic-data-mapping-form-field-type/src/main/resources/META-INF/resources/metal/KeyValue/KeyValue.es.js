@@ -6,9 +6,7 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './KeyValue.soy.js';
 import {Config} from 'metal-state';
-import {
-	normalizeFieldName
-} from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/util/fields.es';
+import {normalizeFieldName} from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/util/fields.es';
 
 /**
  * KeyValue.
@@ -18,31 +16,24 @@ import {
 class KeyValue extends Component {
 	willReceiveState(changes) {
 		if (changes.keyword) {
-			this.setState(
-				{
-					_keyword: changes.keyword.newVal
-				}
-			);
+			this.setState({
+				_keyword: changes.keyword.newVal
+			});
 		}
 
 		if (changes.value) {
-			this.setState(
-				{
-					_value: changes.value.newVal
-				}
-			);
+			this.setState({
+				_value: changes.value.newVal
+			});
 		}
 	}
 
 	_handleKeywordInputBlurred(event) {
-		this.emit(
-			'fieldBlurred',
-			{
-				fieldInstance: this,
-				originalEvent: event,
-				value: event.target.value
-			}
-		);
+		this.emit('fieldBlurred', {
+			fieldInstance: this,
+			originalEvent: event,
+			value: event.target.value
+		});
 	}
 
 	_handleKeywordInputChanged(event) {
@@ -59,27 +50,21 @@ class KeyValue extends Component {
 				keyword: value
 			},
 			() => {
-				this.emit(
-					'fieldKeywordEdited',
-					{
-						fieldInstance: this,
-						originalEvent: event,
-						value
-					}
-				);
+				this.emit('fieldKeywordEdited', {
+					fieldInstance: this,
+					originalEvent: event,
+					value
+				});
 			}
 		);
 	}
 
 	_handleValueInputBlurred({originalEvent, value}) {
-		this.emit(
-			'fieldBlurred',
-			{
-				fieldInstance: this,
-				originalEvent,
-				value
-			}
-		);
+		this.emit('fieldBlurred', {
+			fieldInstance: this,
+			originalEvent,
+			value
+		});
 	}
 
 	_handleValueInputEdited(event) {
@@ -97,35 +82,26 @@ class KeyValue extends Component {
 				value
 			},
 			() => {
-				this.emit(
-					'fieldKeywordEdited',
-					{
-						fieldInstance: this,
-						originalEvent,
-						value: keyword
-					}
-				);
-				this.emit(
-					'fieldEdited',
-					{
-						fieldInstance: this,
-						originalEvent,
-						value
-					}
-				);
+				this.emit('fieldKeywordEdited', {
+					fieldInstance: this,
+					originalEvent,
+					value: keyword
+				});
+				this.emit('fieldEdited', {
+					fieldInstance: this,
+					originalEvent,
+					value
+				});
 			}
 		);
 	}
 
 	_handleValueInputFocused({originalEvent, value}) {
-		this.emit(
-			'fieldFocused',
-			{
-				fieldInstance: this,
-				originalEvent,
-				value
-			}
-		);
+		this.emit('fieldFocused', {
+			fieldInstance: this,
+			originalEvent,
+			value
+		});
 	}
 
 	_internalKeywordFn() {
@@ -142,10 +118,13 @@ class KeyValue extends Component {
 }
 
 KeyValue.STATE = {
+	_keyword: Config.string()
+		.internal()
+		.valueFn('_internalKeywordFn'),
 
-	_keyword: Config.string().internal().valueFn('_internalKeywordFn'),
-
-	_value: Config.string().internal().valueFn('_internalValueFn'),
+	_value: Config.string()
+		.internal()
+		.valueFn('_internalValueFn'),
 
 	/**
 	 * @default undefined
@@ -179,7 +158,7 @@ KeyValue.STATE = {
 	 * @instance
 	 * @memberof KeyValue
 	 * @type {?(string|undefined)}
-	*/
+	 */
 
 	keyword: Config.string(),
 
@@ -188,7 +167,7 @@ KeyValue.STATE = {
 	 * @instance
 	 * @memberof KeyValue
 	 * @type {?boolean}
-	*/
+	 */
 
 	keywordReadOnly: Config.bool().value(false),
 

@@ -7,13 +7,11 @@ function generateItems(times) {
 	const items = [];
 
 	for (let i = 0; i < times; i++) {
-		items.push(
-			{
-				operatorName: EQ,
-				propertyName: 'firstName',
-				value: 'test'
-			}
-		);
+		items.push({
+			operatorName: EQ,
+			propertyName: 'firstName',
+			value: 'test'
+		});
 	}
 
 	return items;

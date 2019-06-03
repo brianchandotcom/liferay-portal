@@ -1,4 +1,8 @@
-.lfr-status-alert-label, .lfr-status-error-label, .lfr-status-info-label, .lfr-status-progress-label, .lfr-status-success-label {
+.lfr-status-alert-label,
+.lfr-status-error-label,
+.lfr-status-info-label,
+.lfr-status-progress-label,
+.lfr-status-success-label {
 	background: none no-repeat 0 50%;
 	padding: 3px 3px 3px 20px;
 }
@@ -13,9 +17,11 @@
 	color: #900;
 }
 
-.lfr-status-help-label, .lfr-status-info-label, .lfr-status-progress-label {
+.lfr-status-help-label,
+.lfr-status-info-label,
+.lfr-status-progress-label {
 	background-image: url(../images/messages/info.png);
-	color: #34404F;
+	color: #34404f;
 }
 
 .lfr-status-help-label {
@@ -28,5 +34,5 @@
 
 .lfr-status-success-label {
 	background-image: url(../images/messages/success.png);
-	color: #384F34;
+	color: #384f34;
 }

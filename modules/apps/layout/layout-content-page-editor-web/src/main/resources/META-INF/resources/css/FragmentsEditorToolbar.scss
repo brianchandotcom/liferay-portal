@@ -1,14 +1,16 @@
-@import "./variables";
+@import './variables';
 
 .fragments-editor-toolbar {
-	background-color: #FFF;
+	background-color: #fff;
 	border-bottom: $toolbarBorderWidth solid $toolbarBorderColor;
-	color: #6B6C7E;
+	color: #6b6c7e;
 	height: $managementBarHeight;
 	left: 0;
 	position: fixed;
 	top: $controlMenuHeight;
-	transition: left ease $productMenuTransitionDuration, right ease $productMenuTransitionDuration, width ease $productMenuTransitionDuration;
+	transition: left ease $productMenuTransitionDuration,
+		right ease $productMenuTransitionDuration,
+		width ease $productMenuTransitionDuration;
 	width: 100%;
 	will-change: left, right, width;
 	z-index: $managementBarZIndex;
@@ -24,15 +26,15 @@
 	}
 
 	button {
-		color: #6B6C7E;
+		color: #6b6c7e;
 	}
 
 	button.btn-primary {
-		color: #FFF;
+		color: #fff;
 	}
 
 	button.btn-secondary {
-		color: #6B6C7E;
+		color: #6b6c7e;
 	}
 
 	& > .container-fluid {
@@ -62,7 +64,7 @@
 
 	&__add-fragment-button {
 		border: none;
-		color: #FFF;
+		color: #fff;
 		padding: 0;
 	}
 
@@ -100,19 +102,19 @@
 			text-transform: uppercase;
 
 			&.default {
-				border-color: #5A70C2;
-				color: #5A70C2;
+				border-color: #5a70c2;
+				color: #5a70c2;
 			}
 
 			&.untranslated,
 			&.translating {
-				border-color: #FEA500;
-				color: #FEA500;
+				border-color: #fea500;
+				color: #fea500;
 			}
 
 			&.translated {
-				border-color: #33A766;
-				color: #33A766;
+				border-color: #33a766;
+				color: #33a766;
 			}
 		}
 	}

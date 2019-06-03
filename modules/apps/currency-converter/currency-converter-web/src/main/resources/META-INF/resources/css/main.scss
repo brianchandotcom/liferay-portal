@@ -1,4 +1,4 @@
-@import "mixins";
+@import 'mixins';
 
 .portlet-currency-converter {
 	.portlet-body {
@@ -14,12 +14,12 @@
 		}
 
 		.conversion-graph .currency-graph {
-			border: 1px solid #DDD;
+			border: 1px solid #ddd;
 			padding: 5px;
 		}
 
 		.form {
-			input[type="text"] {
+			input[type='text'] {
 				margin-bottom: 0;
 			}
 

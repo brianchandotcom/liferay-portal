@@ -11,18 +11,19 @@
 	}
 }
 
-.portlet-barebone, .portlet-borderless {
+.portlet-barebone,
+.portlet-borderless {
 	.panel {
 		background-color: transparent;
 
 		&.card {
-			border-color: #CDCED9;
+			border-color: #cdced9;
 			box-shadow: none;
 		}
 	}
 
 	.panel-default {
-		border-color: #CDCED9;
+		border-color: #cdced9;
 	}
 
 	.widget-mode-detail {

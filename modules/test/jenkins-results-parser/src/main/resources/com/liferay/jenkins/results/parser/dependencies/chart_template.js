@@ -1,4 +1,4 @@
-var ctx = document.getElementById("timeline");
+var ctx = document.getElementById('timeline');
 
 var timeline = new Chart(ctx, {
 	data: {
@@ -53,19 +53,19 @@ var timeline = new Chart(ctx, {
 							seconds = seconds.toString();
 
 							if (hours.length == 1) {
-								 hours = '0' + hours;
+								hours = '0' + hours;
 							}
 
 							if (minutes.length == 1) {
-								 minutes = '0' + minutes;
+								minutes = '0' + minutes;
 							}
 
 							if (seconds.length == 1) {
-								 seconds = '0' + seconds;
+								seconds = '0' + seconds;
 							}
 
 							return hours + ':' + minutes + ':' + seconds;
-						 }
+						}
 					}
 				}
 			],

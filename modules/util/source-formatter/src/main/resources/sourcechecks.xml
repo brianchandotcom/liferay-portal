@@ -62,11 +62,17 @@
 	</source-processor>
 	<source-processor name="CSSSourceProcessor">
 		<check name="CSSCommentsCheck" />
-		<check name="CSSEmptyLinesCheck" />
-		<check name="CSSHexColorsCheck" />
+		<check name="CSSEmptyLinesCheck">
+			<property name="enabled" value="false" />
+		</check>
+		<check name="CSSHexColorsCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="CSSImportsCheck" />
 		<check name="CSSPropertiesOrderCheck" />
-		<check name="CSSWhitespaceCheck" />
+		<check name="CSSWhitespaceCheck">
+			<property name="enabled" value="false" />
+		</check>
 	</source-processor>
 	<source-processor name="DockerfileSourceProcessor">
 		<check name="DockerfileEmptyLinesCheck" />
@@ -387,8 +393,12 @@
 		<check name="JSLodashDependencyCheck">
 			<property name="enabled" value="false" />
 		</check>
-		<check name="JSStylingCheck" />
-		<check name="JSWhitespaceCheck" />
+		<check name="JSStylingCheck">
+			<property name="enabled" value="false" />
+		</check>
+		<check name="JSWhitespaceCheck">
+			<property name="enabled" value="false" />
+		</check>
 
 		<!-- Portal checks -->
 

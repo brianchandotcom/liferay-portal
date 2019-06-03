@@ -10,7 +10,7 @@ class Paragraph extends Component {}
 
 Paragraph.STATE = {
 	text: {
-		'isHtml': true,
+		isHtml: true,
 		value: ''
 	}
 };
@@ -22,9 +22,7 @@ Soy.register(Paragraph, templates, 'render');
 Paragraph.Soy = Soy;
 
 if (!window.DDMParagraph) {
-	window.DDMParagraph = {
-
-	};
+	window.DDMParagraph = {};
 }
 
 window.DDMParagraph.render = Paragraph;

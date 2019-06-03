@@ -1,24 +1,4 @@
 {
-	"csfConfig": {
-		"path:**/*.js": {
-			"js": {
-				"lint": {
-					"rules": {
-						"no-console": 0
-					}
-				}
-			}
-		},
-		"path:**/*.jsp": {
-			"js": {
-				"lint": {
-					"rules": {
-						"no-console": 0
-					}
-				}
-			}
-		}
-	},
 	"dependencies": {
 		"metal-dom": "2.16.8",
 		"metal-events": "2.16.8",

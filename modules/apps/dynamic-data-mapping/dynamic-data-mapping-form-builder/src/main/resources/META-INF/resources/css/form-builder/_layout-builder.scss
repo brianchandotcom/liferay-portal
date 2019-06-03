@@ -27,7 +27,8 @@ $c: '.ddm-layout-builder';
 		width: 21px;
 	}
 
-	.ddm-resize-handle, .ddm-resize-column {
+	.ddm-resize-handle,
+	.ddm-resize-column {
 		top: 0 !important;
 	}
 
@@ -40,14 +41,15 @@ $c: '.ddm-layout-builder';
 	.ddm-field-container {
 		.ddm-resize-handle-left,
 		.ddm-resize-handle-right {
-			background-color: #1C67FB;
+			background-color: #1c67fb;
 			opacity: 0;
 			transition: all ease-out 0.3s;
 			visibility: hidden;
 		}
 
-		&:hover, &:active {
-			border-color: #CDCED9;
+		&:hover,
+		&:active {
+			border-color: #cdced9;
 
 			.ddm-resize-handle-left,
 			.ddm-resize-handle-right {
@@ -65,7 +67,8 @@ $c: '.ddm-layout-builder';
 	}
 }
 
-.ddm-resize-handle, .ddm-resize-column {
+.ddm-resize-handle,
+.ddm-resize-column {
 	height: 100%;
 	position: absolute;
 	width: 5px;

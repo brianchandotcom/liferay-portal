@@ -51,7 +51,8 @@
 }
 
 .portlet {
-	&:hover, &.focus {
+	&:hover,
+	&.focus {
 		> .portlet-content-editable {
 			@extend %display-portlet-content-editable;
 		}
@@ -127,12 +128,15 @@
 	margin: 0;
 	padding-left: 0;
 
-	> a, > span > a, .lfr-icon-menu > a {
+	> a,
+	> span > a,
+	.lfr-icon-menu > a {
 		color: $portlet-topper-link-color;
 	}
 
 	> a {
-		&:focus, &:hover {
+		&:focus,
+		&:hover {
 			text-decoration: none;
 		}
 	}
@@ -145,7 +149,9 @@
 
 	@include media-query(sm) {
 		.portlet {
-			&:hover, &.focus, &.open {
+			&:hover,
+			&.focus,
+			&.open {
 				.portlet-topper {
 					opacity: 0.5;
 				}

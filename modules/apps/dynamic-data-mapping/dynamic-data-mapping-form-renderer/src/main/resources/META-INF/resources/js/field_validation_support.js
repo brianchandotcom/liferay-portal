@@ -3,8 +3,7 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var FieldValidationSupport = function() {
-		};
+		var FieldValidationSupport = function() {};
 
 		FieldValidationSupport.ATTRS = {
 			required: {
@@ -30,7 +29,11 @@ AUI.add(
 			hasErrors: function() {
 				var instance = this;
 
-				return instance.get('enabled') && instance.get('visible') && !instance.get('valid');
+				return (
+					instance.get('enabled') &&
+					instance.get('visible') &&
+					!instance.get('valid')
+				);
 			},
 
 			validate: function(callback) {
@@ -39,22 +42,18 @@ AUI.add(
 				var evaluator = instance.get('evaluator');
 
 				if (!instance.get('readOnly') && evaluator) {
-					evaluator.evaluate(
-						instance,
-						function(result) {
-							if (callback) {
-								var hasErrors = instance.hasErrors();
+					evaluator.evaluate(instance, function(result) {
+						if (callback) {
+							var hasErrors = instance.hasErrors();
 
-								if (!result || !Lang.isObject(result)) {
-									hasErrors = true;
-								}
-
-								callback.call(instance, hasErrors, result);
+							if (!result || !Lang.isObject(result)) {
+								hasErrors = true;
 							}
+
+							callback.call(instance, hasErrors, result);
 						}
-					);
-				}
-				else if (callback) {
+					});
+				} else if (callback) {
 					callback.call(instance, true);
 				}
 			},
@@ -65,24 +64,20 @@ AUI.add(
 				var evaluator = instance.get('evaluator');
 
 				if (evaluator && evaluator.isEvaluating()) {
-					evaluator.onceAfter(
-						'evaluationEnded',
-						function() {
-							if (!instance.hasFocus()) {
-								instance.showErrorMessage();
-							}
+					evaluator.onceAfter('evaluationEnded', function() {
+						if (!instance.hasFocus()) {
+							instance.showErrorMessage();
 						}
-					);
-				}
-				else if (['checkbox_multiple', 'radio'].indexOf(instance.get('type')) !== -1) {
-					setTimeout(
-						function() {
-							instance.showPendingErrorMessage();
-						},
-						100
-					);
-				}
-				else {
+					});
+				} else if (
+					['checkbox_multiple', 'radio'].indexOf(
+						instance.get('type')
+					) !== -1
+				) {
+					setTimeout(function() {
+						instance.showPendingErrorMessage();
+					}, 100);
+				} else {
 					instance.showErrorMessage();
 				}
 			},
@@ -92,14 +87,15 @@ AUI.add(
 
 				if (event.newVal) {
 					instance.hideErrorMessage();
-				}
-				else if (!instance.hasFocus()) {
+				} else if (!instance.hasFocus()) {
 					instance.showErrorMessage();
 				}
 			}
 		};
 
-		Liferay.namespace('DDM.Renderer').FieldValidationSupport = FieldValidationSupport;
+		Liferay.namespace(
+			'DDM.Renderer'
+		).FieldValidationSupport = FieldValidationSupport;
 	},
 	'',
 	{

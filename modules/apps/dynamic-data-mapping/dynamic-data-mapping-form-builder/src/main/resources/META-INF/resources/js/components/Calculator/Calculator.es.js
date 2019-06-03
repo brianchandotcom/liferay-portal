@@ -12,7 +12,6 @@ import {Config} from 'metal-state';
  */
 
 class Calculator extends Component {
-
 	addTokenToExpression(tokenType, tokenValue) {
 		const {expression, index} = this;
 		const newToken = new Token(tokenType, tokenValue);
@@ -24,19 +23,14 @@ class Calculator extends Component {
 
 		tokens.push(newToken);
 
-		this.setState(
-			{
-				expression: Tokenizer.stringifyTokens(tokens)
-			}
-		);
+		this.setState({
+			expression: Tokenizer.stringifyTokens(tokens)
+		});
 
-		this.emit(
-			'editExpression',
-			{
-				expression: this.expression,
-				index
-			}
-		);
+		this.emit('editExpression', {
+			expression: this.expression,
+			index
+		});
 	}
 
 	getStateBasedOnExpression(expression) {
@@ -61,10 +55,8 @@ class Calculator extends Component {
 
 		if (
 			tokens.length === 0 ||
-			(
-				tokens.length > 0 &&
-				tokens[tokens.length - 1].type !== Token.LITERAL
-			)
+			(tokens.length > 0 &&
+				tokens[tokens.length - 1].type !== Token.LITERAL)
 		) {
 			disableDot = true;
 		}
@@ -102,25 +94,22 @@ class Calculator extends Component {
 		const removedToken = tokens.pop();
 
 		if (
-			removedToken && removedToken.type === Token.LEFT_PARENTHESIS &&
-			tokens.length && tokens[tokens.length - 1].type === Token.FUNCTION
+			removedToken &&
+			removedToken.type === Token.LEFT_PARENTHESIS &&
+			tokens.length &&
+			tokens[tokens.length - 1].type === Token.FUNCTION
 		) {
 			tokens.pop();
 		}
 
-		this.setState(
-			{
-				expression: Tokenizer.stringifyTokens(tokens)
-			}
-		);
+		this.setState({
+			expression: Tokenizer.stringifyTokens(tokens)
+		});
 
-		this.emit(
-			'editExpression',
-			{
-				expression: this.expression,
-				index
-			}
-		);
+		this.emit('editExpression', {
+			expression: this.expression,
+			index
+		});
 	}
 
 	shouldAddImplicitMultiplication(tokens, newToken) {
@@ -128,33 +117,19 @@ class Calculator extends Component {
 
 		return (
 			lastToken !== undefined &&
-			(
-				(
-					newToken.type === Token.LEFT_PARENTHESIS &&
+			((newToken.type === Token.LEFT_PARENTHESIS &&
+				lastToken.type !== Token.OPERATOR &&
+				lastToken.type !== Token.FUNCTION &&
+				lastToken.type !== Token.LEFT_PARENTHESIS) ||
+				(newToken.type === Token.FUNCTION &&
 					lastToken.type !== Token.OPERATOR &&
-					lastToken.type !== Token.FUNCTION &&
-					lastToken.type !== Token.LEFT_PARENTHESIS
-				) ||
-				(
-					newToken.type === Token.FUNCTION &&
-					lastToken.type !== Token.OPERATOR &&
-					lastToken.type !== Token.LEFT_PARENTHESIS
-				) ||
-				(
-					newToken.type === Token.VARIABLE &&
-					(
-						lastToken.type === Token.VARIABLE ||
-						lastToken.type === Token.LITERAL
-					)
-				) ||
-				(
-					newToken.type === Token.LITERAL &&
-					(
-						lastToken.type === Token.VARIABLE ||
-						lastToken.type === Token.FUNCTION
-					)
-				)
-			)
+					lastToken.type !== Token.LEFT_PARENTHESIS) ||
+				(newToken.type === Token.VARIABLE &&
+					(lastToken.type === Token.VARIABLE ||
+						lastToken.type === Token.LITERAL)) ||
+				(newToken.type === Token.LITERAL &&
+					(lastToken.type === Token.VARIABLE ||
+						lastToken.type === Token.FUNCTION)))
 		);
 	}
 
@@ -163,8 +138,7 @@ class Calculator extends Component {
 
 		if (tokenValue === 'backspace') {
 			this.removeTokenFromExpression();
-		}
-		else {
+		} else {
 			this.addTokenToExpression(tokenType, tokenValue);
 		}
 	}
@@ -194,14 +168,12 @@ Calculator.STATE = {
 	expression: Config.string().value(''),
 
 	fields: Config.arrayOf(
-		Config.shapeOf(
-			{
-				fieldName: Config.string(),
-				label: Config.string(),
-				repeatable: Config.bool(),
-				value: Config.string()
-			}
-		)
+		Config.shapeOf({
+			fieldName: Config.string(),
+			label: Config.string(),
+			repeatable: Config.bool(),
+			value: Config.string()
+		})
 	).value([]),
 
 	functions: Config.array().value([]),

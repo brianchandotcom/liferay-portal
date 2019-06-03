@@ -1,6 +1,6 @@
 definition {
 
-	macro addMessage {
+	macro addMessageReply {
 		var messageId = JSONMBMessage.getmessageId();
 
 		var portalURL = JSONCompany.getPortalURL();

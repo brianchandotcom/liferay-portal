@@ -26,7 +26,7 @@ dependencies {
 	testCompile group: "easyconf", name: "easyconf", version: "0.9.5"
 	testCompile group: "org.jodd", name: "jodd-json", version: "3.6.8"
 	testCompile group: "org.json", name: "json", version: "20180813"
-	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.2"
+	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.26"
 	testCompile group: "org.springframework", name: "spring-web", version: "4.1.9.RELEASE"
 	testCompile project(":core:petra:petra-memory")
 	testCompile project(":core:petra:petra-nio")

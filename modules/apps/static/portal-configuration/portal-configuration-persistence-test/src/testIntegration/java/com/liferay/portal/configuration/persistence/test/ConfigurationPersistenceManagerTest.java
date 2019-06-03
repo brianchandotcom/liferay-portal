@@ -59,35 +59,26 @@ public class ConfigurationPersistenceManagerTest {
 
 	@Test
 	public void testCreateFactoryConfiguration() throws Exception {
-		Configuration configuration =
-			_configurationAdmin.createFactoryConfiguration(
-				"test.pid", StringPool.QUESTION);
-
-		_assertConfiguration(configuration);
-	}
-
-	@Test
-	public void testExists() throws Exception {
-		Configuration configuration = _configurationAdmin.getConfiguration(
-			"test.pid", StringPool.QUESTION);
-
-		Assert.assertTrue(_persistenceManager.exists("test.pid"));
-
-		configuration.delete();
-
-		Assert.assertFalse(_persistenceManager.exists("test.pid"));
+		_assertConfiguration(true);
 	}
 
 	@Test
 	public void testGetConfiguration() throws Exception {
-		Configuration configuration = _configurationAdmin.getConfiguration(
-			"test.pid");
-
-		_assertConfiguration(configuration);
+		_assertConfiguration(false);
 	}
 
-	private void _assertConfiguration(Configuration configuration)
-		throws IOException {
+	private void _assertConfiguration(boolean factory) throws IOException {
+		Configuration configuration = null;
+
+		if (factory) {
+			configuration = _configurationAdmin.getConfiguration("test.pid");
+
+			Assert.assertTrue(_persistenceManager.exists("test.pid"));
+		}
+		else {
+			configuration = _configurationAdmin.createFactoryConfiguration(
+				"test.pid", StringPool.QUESTION);
+		}
 
 		String pid = configuration.getPid();
 

@@ -90,10 +90,6 @@ public class LiferayPortlet extends GenericPortlet {
 		throws IOException, PortletException {
 
 		try {
-			if (!isProcessActionRequest(actionRequest)) {
-				return;
-			}
-
 			if (!callActionMethod(actionRequest, actionResponse)) {
 				return;
 			}
@@ -136,10 +132,6 @@ public class LiferayPortlet extends GenericPortlet {
 	public void serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
-
-		if (!isProcessResourceRequest(resourceRequest)) {
-			return;
-		}
 
 		if (!callResourceMethod(resourceRequest, resourceResponse)) {
 			return;
@@ -284,12 +276,6 @@ public class LiferayPortlet extends GenericPortlet {
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
-
-		if (!isProcessRenderRequest(renderRequest)) {
-			renderRequest.setAttribute(WebKeys.PORTLET_DECORATE, Boolean.FALSE);
-
-			return;
-		}
 
 		WindowState windowState = renderRequest.getWindowState();
 
@@ -572,18 +558,34 @@ public class LiferayPortlet extends GenericPortlet {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	protected boolean isProcessActionRequest(ActionRequest actionRequest) {
 		return isProcessPortletRequest(actionRequest);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	protected boolean isProcessPortletRequest(PortletRequest portletRequest) {
 		return _PROCESS_PORTLET_REQUEST;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	protected boolean isProcessRenderRequest(RenderRequest renderRequest) {
 		return isProcessPortletRequest(renderRequest);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	protected boolean isProcessResourceRequest(
 		ResourceRequest resourceRequest) {
 

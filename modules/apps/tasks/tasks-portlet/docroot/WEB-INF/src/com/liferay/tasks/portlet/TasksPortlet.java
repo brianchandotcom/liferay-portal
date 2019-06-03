@@ -86,10 +86,6 @@ public class TasksPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
 
-		if (!isProcessActionRequest(actionRequest)) {
-			return;
-		}
-
 		if (!callActionMethod(actionRequest, actionResponse)) {
 			return;
 		}

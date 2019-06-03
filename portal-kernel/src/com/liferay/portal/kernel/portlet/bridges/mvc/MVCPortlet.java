@@ -459,13 +459,6 @@ public class MVCPortlet extends LiferayPortlet {
 		String path = getPath(renderRequest, renderResponse);
 
 		if (path != null) {
-			if (!isProcessRenderRequest(renderRequest)) {
-				renderRequest.setAttribute(
-					WebKeys.PORTLET_DECORATE, Boolean.FALSE);
-
-				return;
-			}
-
 			WindowState windowState = renderRequest.getWindowState();
 
 			if (windowState.equals(WindowState.MINIMIZED)) {

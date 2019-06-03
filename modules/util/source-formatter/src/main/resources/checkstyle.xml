@@ -258,6 +258,7 @@
 			<message key="persistence.call.illegal" value="Illegal call to class ''{0}'', see LPS-68923" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.RedundantBranchingStatementCheck">
+			<property name="enabled" value="false" />
 			<message key="branching.statement.redundant" value="Redundant ''{0}'' statement" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.RedundantVariableDeclarationCheck">

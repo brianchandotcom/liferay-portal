@@ -70,7 +70,7 @@ public class WikiPageStagedModelDataHandlerTest
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testDeletesAttachments() throws Exception {
+	public void testDeleteAttachmentsFileEntry() throws Exception {
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
 			addDependentStagedModelsMap(stagingGroup);
 
@@ -88,11 +88,11 @@ public class WikiPageStagedModelDataHandlerTest
 		List<FileEntry> attachmentsFileEntries =
 			wikiPage.getAttachmentsFileEntries();
 
-		FileEntry attachment = attachmentsFileEntries.get(0);
+		FileEntry attachmentFileEntry = attachmentsFileEntries.get(0);
 
 		WikiPageServiceUtil.movePageAttachmentToTrash(
 			wikiPage.getNodeId(), wikiPage.getTitle(),
-			attachment.getFileName());
+			attachmentFileEntry.getFileName());
 
 		exportImportStagedModel(wikiPage);
 

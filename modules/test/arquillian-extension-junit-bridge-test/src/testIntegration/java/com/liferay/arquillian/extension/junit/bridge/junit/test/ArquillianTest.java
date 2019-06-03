@@ -21,6 +21,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.test.item.BeforeAfter
 import com.liferay.arquillian.extension.junit.bridge.junit.test.item.ClassRuleTestItem;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.item.ExpectedExceptionTestItem;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.item.IgnoreTestItem;
+import com.liferay.arquillian.extension.junit.bridge.junit.test.item.NoExpectedExceptionTestItem;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.item.NotSerializableExceptionTestItem;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.item.NotSerializableExceptionTestItem.UnserializableException;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.item.RuleTestItem;
@@ -131,6 +132,32 @@ public class ArquillianTest {
 		finally {
 			IgnoreTestItem.assertAndTearDown();
 		}
+	}
+
+	@Test
+	public void testNoExpectedException() {
+		AtomicReference<Throwable> throwableContainer = new AtomicReference<>();
+
+		BridgeJUnitTestRunner.runBridgeTests(
+			new BridgeJUnitTestRunner.BridgeRunListener(ArquillianTest.class) {
+
+				@Override
+				public void testFailure(Failure failure) {
+					throwableContainer.set(failure.getException());
+				}
+
+			},
+			NoExpectedExceptionTestItem.class);
+
+		Throwable throwable = throwableContainer.get();
+
+		Assert.assertNotNull(throwable);
+
+		Assert.assertEquals(AssertionError.class, throwable.getClass());
+
+		Assert.assertEquals(
+			"Expected test to throw " + IOException.class,
+			throwable.getMessage());
 	}
 
 	@Test

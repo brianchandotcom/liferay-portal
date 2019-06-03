@@ -288,6 +288,11 @@ public class BundleServletContextAdapter
 	}
 
 	@Override
+	public String getVirtualServerName() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void log(Exception e, String s) {
 		throw new UnsupportedOperationException();
 	}

@@ -214,20 +214,8 @@ public class CTPublishBackgroundTaskExecutor
 
 		User user = UserLocalServiceUtil.getUser(userId);
 
-		Optional<CTCollection> productionCTCollectionOptional =
-			_ctEngineManager.getProductionCTCollectionOptional(
-				user.getCompanyId());
-
-		long productionCTCollectionId = productionCTCollectionOptional.map(
-			CTCollection::getCtCollectionId
-		).orElseThrow(
-			() -> new CTEngineException(
-				user.getCompanyId(),
-				"Unable to find production the change tracking collection")
-		);
-
 		for (CTEntry ctEntry : ctEntries) {
-			_publishCTEntry(ctEntry, productionCTCollectionId, ignoreCollision);
+			_publishCTEntry(ctEntry, ignoreCollision);
 
 			CTProcessMessageSenderUtil.logCTEntryPublished(ctEntry);
 		}
@@ -236,9 +224,7 @@ public class CTPublishBackgroundTaskExecutor
 			Stream<CTEntryAggregate> ctEntryAggregatesStream =
 				ctEntryAggregates.stream();
 
-			ctEntryAggregatesStream.forEach(
-				ctEntryAggregate -> _publishCTEntryAggregate(
-					ctEntryAggregate, productionCTCollectionId));
+			ctEntryAggregatesStream.forEach(this::_publishCTEntryAggregate);
 		}
 
 		Optional<CTCollection> ctCollectionOptional =
@@ -265,15 +251,10 @@ public class CTPublishBackgroundTaskExecutor
 		}
 	}
 
-	private void _publishCTEntry(
-			CTEntry ctEntry, long productionCTCollectionId,
-			boolean ignoreCollision)
+	private void _publishCTEntry(CTEntry ctEntry, boolean ignoreCollision)
 		throws CTEntryCollisionCTEngineException {
 
 		_checkExistingCollisions(ctEntry, ignoreCollision);
-
-		CTEntryLocalServiceUtil.addCTCollectionCTEntry(
-			productionCTCollectionId, ctEntry);
 
 		CTEntryLocalServiceUtil.updateStatus(
 			ctEntry.getCtEntryId(), WorkflowConstants.STATUS_APPROVED);
@@ -281,12 +262,7 @@ public class CTPublishBackgroundTaskExecutor
 		CTEntryCollisionUtil.checkCollidingCTEntries(ctEntry);
 	}
 
-	private void _publishCTEntryAggregate(
-		CTEntryAggregate ctEntryAggregate, long productionCTCollectionId) {
-
-		CTEntryAggregateLocalServiceUtil.addCTCollectionCTEntryAggregate(
-			productionCTCollectionId, ctEntryAggregate);
-
+	private void _publishCTEntryAggregate(CTEntryAggregate ctEntryAggregate) {
 		CTEntryAggregateLocalServiceUtil.updateStatus(
 			ctEntryAggregate.getCtEntryAggregateId(),
 			WorkflowConstants.STATUS_APPROVED);

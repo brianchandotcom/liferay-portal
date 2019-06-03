@@ -193,7 +193,7 @@ public class DDMFormPortlet extends MVCPortlet {
 		Layout layout = themeDisplay.getLayout();
 
 		if (ddmFormInstanceSettings.requireAuthentication() &&
-			!layout.isPrivateLayout()) {
+			!layout.isPrivateLayout() && !layout.isTypePortlet()) {
 
 			throw new PrincipalException.MustBeAuthenticated(
 				themeDisplay.getUserId());

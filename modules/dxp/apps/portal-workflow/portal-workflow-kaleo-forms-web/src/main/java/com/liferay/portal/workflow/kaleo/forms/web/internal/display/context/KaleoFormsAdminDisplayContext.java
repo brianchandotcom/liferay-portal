@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.forms.web.internal.display.context;
 
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
@@ -28,6 +29,7 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -69,6 +71,7 @@ public class KaleoFormsAdminDisplayContext {
 
 	public KaleoFormsAdminDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse,
+		DDLRecordLocalService ddlRecordLocalService,
 		DDMDisplayRegistry ddmDisplayRegistry,
 		KaleoDefinitionVersionLocalService kaleoDefinitionVersionLocalService,
 		KaleoFormsWebConfiguration kaleoFormsWebConfiguration,
@@ -76,6 +79,7 @@ public class KaleoFormsAdminDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+		_ddlRecordLocalService = ddlRecordLocalService;
 		_ddmDisplayRegistry = ddmDisplayRegistry;
 		_kaleoDefinitionVersionLocalService =
 			kaleoDefinitionVersionLocalService;
@@ -208,6 +212,14 @@ public class KaleoFormsAdminDisplayContext {
 					});
 			}
 		};
+	}
+
+	public KaleoFormsViewRecordsDisplayContext
+			getKaleoFormsViewRecordsDisplayContext()
+		throws PortalException {
+
+		return new KaleoFormsViewRecordsDisplayContext(
+			_renderRequest, _renderResponse, _ddlRecordLocalService);
 	}
 
 	public OrderByComparator<KaleoProcess> getKaleoProcessOrderByComparator(
@@ -471,6 +483,7 @@ public class KaleoFormsAdminDisplayContext {
 
 	private static final String[] _DISPLAY_VIEWS = {"list"};
 
+	private final DDLRecordLocalService _ddlRecordLocalService;
 	private final DDMDisplayRegistry _ddmDisplayRegistry;
 	private final KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;

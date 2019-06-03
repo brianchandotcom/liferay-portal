@@ -27,11 +27,9 @@ if (Validator.isNull(redirect)) {
 	redirect = redirectURL.toString();
 }
 
-KaleoFormsViewRecordsDisplayContext kaleoFormsViewRecordsDisplayContext = new KaleoFormsViewRecordsDisplayContext(liferayPortletRequest, liferayPortletResponse);
+KaleoFormsViewRecordsDisplayContext kaleoFormsViewRecordsDisplayContext = kaleoFormsAdminDisplayContext.getKaleoFormsViewRecordsDisplayContext();
 
 KaleoProcess kaleoProcess = kaleoFormsViewRecordsDisplayContext.getKaleoProcess();
-
-DDLRecordSet recordSet = kaleoFormsViewRecordsDisplayContext.getDDLRecordSet();
 
 boolean hasSubmitPermission = KaleoProcessPermission.contains(permissionChecker, kaleoProcess, ActionKeys.SUBMIT);
 
@@ -40,112 +38,51 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcPath", "/admin/view_kaleo_process.jsp");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("kaleoProcessId", String.valueOf(kaleoProcess.getKaleoProcessId()));
-
-List<String> headerNames = new ArrayList<String>();
-
-List<DDMFormField> ddmFormfields = kaleoFormsViewRecordsDisplayContext.getDDMFormFields();
-
-for (DDMFormField ddmFormField : ddmFormfields) {
-	LocalizedValue label = ddmFormField.getLabel();
-
-	headerNames.add(label.getString(locale));
-}
-
-if (hasSubmitPermission) {
-	headerNames.add("status");
-	headerNames.add("modified-date");
-	headerNames.add("author");
-}
-
-headerNames.add(StringPool.BLANK);
-
-SearchContainer recordSearchContainer = new SearchContainer(renderRequest, new DisplayTerms(request), null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, LanguageUtil.format(request, "no-x-records-were-found", HtmlUtil.escape(kaleoProcess.getName(locale)), false));
-
-if (!user.isDefaultUser()) {
-	recordSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
-}
-
-OrderByComparator<DDLRecord> orderByComparator = kaleoFormsViewRecordsDisplayContext.getDDLRecordOrderByComparator(kaleoFormsViewRecordsDisplayContext.getOrderByCol(), kaleoFormsViewRecordsDisplayContext.getOrderByType());
-
-recordSearchContainer.setOrderByCol(kaleoFormsViewRecordsDisplayContext.getOrderByCol());
-recordSearchContainer.setOrderByComparator(orderByComparator);
-recordSearchContainer.setOrderByType(kaleoFormsViewRecordsDisplayContext.getOrderByType());
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="<%= kaleoProcess.getName(locale) %>" selected="<%= true %>" />
-	</aui:nav>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	navigationItems="<%= kaleoFormsViewRecordsDisplayContext.getNavigationItems() %>"
+/>
 
-	<aui:nav-bar-search searchContainer="<%= recordSearchContainer %>">
-		<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="searchURL">
-			<portlet:param name="mvcPath" value='<%= "/admin/view_kaleo_process.jsp" %>' />
-			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcess.getKaleoProcessId()) %>" />
-		</portlet:renderURL>
-
-		<aui:form action="<%= searchURL.toString() %>" name="fm1">
-			<%@ include file="/admin/record_search.jspf" %>
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
-
-<liferay-frontend:management-bar
-	includeCheckBox="<%= !user.isDefaultUser() %>"
-	searchContainerId="ddlRecord"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= kaleoFormsViewRecordsDisplayContext.getOrderByCol() %>"
-			orderByType="<%= kaleoFormsViewRecordsDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"create-date", "modified-date"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteRecords();" %>'
-			icon="trash"
-			label="delete"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	actionDropdownItems="<%= kaleoFormsViewRecordsDisplayContext.getActionItemsDropdownItems() %>"
+	clearResultsURL="<%= kaleoFormsViewRecordsDisplayContext.getClearResultsURL() %>"
+	componentId="kaleoFormsRecordsManagementToolbar"
+	creationMenu="<%= kaleoFormsViewRecordsDisplayContext.getCreationMenu() %>"
+	disabled="<%= kaleoFormsViewRecordsDisplayContext.isDisabledManagementBar() %>"
+	filterDropdownItems="<%= kaleoFormsViewRecordsDisplayContext.getFilterItemsDropdownItems() %>"
+	itemsTotal="<%= kaleoFormsViewRecordsDisplayContext.getTotalItems() %>"
+	namespace="<%= renderResponse.getNamespace() %>"
+	searchActionURL="<%= kaleoFormsViewRecordsDisplayContext.getSearchActionURL() %>"
+	searchContainerId="<%= kaleoFormsViewRecordsDisplayContext.getSearchContainerId() %>"
+	searchFormName="fm"
+	sortingOrder="<%= kaleoFormsViewRecordsDisplayContext.getOrderByType() %>"
+	sortingURL="<%= kaleoFormsViewRecordsDisplayContext.getSortingURL() %>"
+/>
 
 <div class="container-fluid-1280" id="<portlet:namespace />formContainer">
-	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+	<aui:form action="<%= portletURL.toString() %>" method="post" name="searchContainerForm">
 		<aui:input name="ddlRecordIds" type="hidden" />
 
 		<liferay-ui:search-container
-			id="ddlRecord"
-			searchContainer="<%= recordSearchContainer %>"
+			id="<%= kaleoFormsViewRecordsDisplayContext.getSearchContainerId() %>"
+			searchContainer="<%= kaleoFormsViewRecordsDisplayContext.getSearch() %>"
 		>
-			<liferay-ui:search-container-results>
-				<%@ include file="/admin/record_search_results.jspf" %>
-			</liferay-ui:search-container-results>
+			<liferay-ui:search-container-row
+				className="com.liferay.dynamic.data.lists.model.DDLRecord"
+				keyProperty="recordId"
+				modelVar="record"
+			>
 
-			<%
-			List resultRows = searchContainer.getResultRows();
-
-			for (int i = 0; i < results.size(); i++) {
-				DDLRecord record = (DDLRecord)results.get(i);
+				<%
+				row.setParameter("kaleoProcessId", String.valueOf(kaleoProcess.getKaleoProcessId()));
 
 				DDLRecordVersion recordVersion = record.getRecordVersion();
 
 				DDMFormValues ddmFormValues = kaleoFormsAdminDisplayContext.getDDMFormValues(recordVersion.getDDMStorageId());
 
 				Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap = ddmFormValues.getDDMFormFieldValuesMap();
-
-				ResultRow row = new ResultRow(record, record.getRecordId(), i);
-
-				row.setCssClass("entry-display-style");
-
-				row.setParameter("kaleoProcessId", String.valueOf(kaleoProcess.getKaleoProcessId()));
 
 				PortletURL rowURL = renderResponse.createRenderURL();
 
@@ -157,7 +94,7 @@ recordSearchContainer.setOrderByType(kaleoFormsViewRecordsDisplayContext.getOrde
 
 				// Columns
 
-				for (DDMFormField ddmFormField : ddmFormfields) {
+				for (DDMFormField ddmFormField : kaleoFormsViewRecordsDisplayContext.getDDMFormFields()) {
 					String value = StringPool.BLANK;
 
 					List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(ddmFormField.getName());
@@ -167,67 +104,61 @@ recordSearchContainer.setOrderByType(kaleoFormsViewRecordsDisplayContext.getOrde
 
 						value = ddmFormFieldValueRenderer.render(ddmFormFieldValues, themeDisplay.getLocale());
 					}
+				%>
 
-					row.addText(value);
+					<liferay-ui:search-container-column-text
+						name="<%= HtmlUtil.escape(kaleoFormsViewRecordsDisplayContext.getColumnName(ddmFormField)) %>"
+						value="<%= value %>"
+					/>
+
+				<%
 				}
+				%>
 
-				if (hasSubmitPermission) {
-					row.addStatus(recordVersion.getStatus(), recordVersion.getStatusByUserId(), recordVersion.getStatusDate(), rowURL);
-					row.addDate(record.getModifiedDate(), rowURL);
-					row.addText(HtmlUtil.escape(PortalUtil.getUserName(recordVersion)), rowURL);
-				}
+				<c:if test="<%= hasSubmitPermission %>">
+					<liferay-ui:search-container-column-status
+						name="status"
+						status="<%= recordVersion.getStatus() %>"
+						statusByUserId="<%= recordVersion.getStatusByUserId() %>"
+						statusDate="<%= recordVersion.getStatusDate() %>"
+					/>
 
-				// Action
+					<liferay-ui:search-container-column-date
+						name="modified-date"
+						value="<%= record.getModifiedDate() %>"
+					/>
 
-				row.addJSP("/admin/record_action.jsp", "entry-action", application, request, response);
+					<liferay-ui:search-container-column-text
+						name="author"
+						value="<%= HtmlUtil.escape(PortalUtil.getUserName(recordVersion)) %>"
+					/>
+				</c:if>
 
-				// Add result row
-
-				resultRows.add(row);
-			}
-			%>
+				<liferay-ui:search-container-column-jsp
+					path="/admin/record_action.jsp"
+				/>
+			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator
 				displayStyle="<%= kaleoFormsViewRecordsDisplayContext.getDisplayStyle() %>"
 				markupView="lexicon"
+				paginate="<%= false %>"
+				searchContainer="<%= kaleoFormsViewRecordsDisplayContext.getSearch() %>"
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
 </div>
 
-<c:if test="<%= hasSubmitPermission %>">
-	<portlet:renderURL var="submitURL">
-		<portlet:param name="mvcPath" value="/admin/edit_request.jsp" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="backURL" value="<%= currentURL %>" />
-		<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcess.getKaleoProcessId()) %>" />
-	</portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item
-			title='<%= LanguageUtil.format(request, "submit-new-x", HtmlUtil.escape(kaleoProcess.getName(locale)), false) %>'
-			url="<%= submitURL.toString() %>"
-		/>
-	</liferay-frontend:add-menu>
-</c:if>
+<div class="container-fluid-1280">
+	<liferay-ui:search-paginator
+		searchContainer="<%= kaleoFormsViewRecordsDisplayContext.getSearch() %>"
+	/>
+</div>
 
 <%@ include file="/admin/export_kaleo_process.jspf" %>
 
 <aui:script>
 	AUI().use('liferay-portlet-dynamic-data-lists');
-
-	function <portlet:namespace />deleteRecords() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
-			var form = AUI.$(document.<portlet:namespace />fm);
-
-			var searchContainer = AUI.$('#<portlet:namespace />ddlRecord', form);
-
-			form.attr('method', 'post');
-			form.fm('ddlRecordIds').val(Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds'));
-
-			submitForm(form, '<portlet:actionURL name="deleteDDLRecord"><portlet:param name="mvcPath" value="/admin/view_kaleo_process.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
-		}
-	}
 
 	Liferay.provide(
 		window,
@@ -255,6 +186,51 @@ recordSearchContainer.setOrderByType(kaleoFormsViewRecordsDisplayContext.getOrde
 			}
 		},
 		['liferay-util-window']
+	);
+</aui:script>
+
+<aui:script sandbox="<%= true %>">
+	var deleteRecords = function() {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
+			var searchContainer = document.getElementById('<portlet:namespace /><%= kaleoFormsViewRecordsDisplayContext.getSearchContainerId() %>');
+
+			if (searchContainer) {
+				Liferay.Util.postForm(
+					document.<portlet:namespace />searchContainerForm,
+					{
+						data: {
+							ddlRecordIds: Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds')
+						},
+
+						<portlet:actionURL name="deleteDDLRecord" var="deleteDDLRecordURL">
+							<portlet:param name="mvcPath" value="/admin/view_kaleo_process.jsp" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+						</portlet:actionURL>
+
+						url: '<%= deleteDDLRecordURL %>'
+					}
+				);
+			}
+		}
+	};
+
+	var ACTIONS = {
+		'deleteRecords': deleteRecords
+	};
+
+	Liferay.componentReady('kaleoFormsRecordsManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+			['actionItemClicked'],
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
 	);
 </aui:script>
 

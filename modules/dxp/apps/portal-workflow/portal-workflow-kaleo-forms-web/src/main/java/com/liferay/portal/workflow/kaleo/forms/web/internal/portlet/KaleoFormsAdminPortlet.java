@@ -113,6 +113,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
@@ -379,13 +380,13 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		try {
 			String resourceID = resourceRequest.getResourceID();
 
-			if (resourceID.equals("kaleoDraftDefinitions")) {
+			if (Objects.equals(resourceID, "kaleoDraftDefinitions")) {
 				serveKaleoDraftDefinitions(resourceRequest, resourceResponse);
 			}
-			else if (resourceID.equals("kaleoProcess")) {
+			else if (Objects.equals(resourceID, "kaleoProcess")) {
 				serveKaleoProcess(resourceRequest, resourceResponse);
 			}
-			else if (resourceID.equals("saveInPortletSession")) {
+			else if (Objects.equals(resourceID, "saveInPortletSession")) {
 				saveInPortletSession(resourceRequest, resourceResponse);
 			}
 		}
@@ -890,7 +891,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		while (enumeration.hasMoreElements()) {
 			String name = enumeration.nextElement();
 
-			if (name.equals("doAsUserId")) {
+			if (Objects.equals(name, "doAsUserId")) {
 				continue;
 			}
 

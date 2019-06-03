@@ -1,5 +1,34 @@
 components:
     schemas:
+        Collection:
+            properties:
+                additionCount:
+                    type: integer
+                collectionId:
+                    type: integer
+                companyId:
+                    type: integer
+                deletionCount:
+                    type: integer
+                description:
+                    type: string
+                modificationCount:
+                    type: integer
+                name:
+                    type: string
+                statusByUserName:
+                    type: string
+                statusDate:
+                    format: date-time
+                    type: string
+            type: object
+        CollectionUpdate:
+            properties:
+                description:
+                    type: string
+                name:
+                    type: string
+            type: object
         Settings:
             properties:
                 changeTrackingAllowed:
@@ -34,6 +63,188 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
+    "/collections":
+        get:
+            operationId: getCollectionsPage
+            parameters:
+                - in: query
+                  name: companyId
+                  required: false
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: type
+                  required: false
+                  schema:
+                      default: "all"
+                      type: string
+                - in: query
+                  name: userId
+                  required: false
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Collection"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Collection"
+                                type: array
+                    description: ""
+        post:
+            operationId: postCollection
+            parameters:
+                - in: query
+                  name: companyId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: userId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/CollectionUpdate"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/CollectionUpdate"
+            responses:
+                200:
+                    content:
+                        applcation/xml:
+                            schema:
+                                $ref: "#/components/schemas/Collection"
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Collection"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Collection"
+                    description: ""
+    "/collections/{collectionId}":
+        delete:
+            parameters:
+                - in: path
+                  name: collectionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    description: ""
+                400:
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                    description: ""
+                404:
+                    description: ""
+        get:
+            operationId: getCollection
+            parameters:
+                - in: path
+                  name: collectionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        applcation/xml:
+                            schema:
+                                $ref: "#/components/schemas/Collection"
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Collection"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Collection"
+                    description: ""
+                400:
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                    description: ""
+    "/collections/{collectionId}/checkout":
+        post:
+            parameters:
+                - in: path
+                  name: collectionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: userId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                202:
+                    description: ""
+    "/collections/{collectionId}/publish":
+        post:
+            parameters:
+                - in: path
+                  name: collectionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: ignoreCollision
+                  required: true
+                  schema:
+                      type: boolean
+                - in: query
+                  name: userId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                202:
+                    description: ""
+                400:
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                    description: ""
     "/settings":
         get:
             operationId: getSettingsPage

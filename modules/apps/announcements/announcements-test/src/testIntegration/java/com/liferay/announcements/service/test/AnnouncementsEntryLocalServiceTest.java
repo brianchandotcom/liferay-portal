@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -240,7 +240,7 @@ public class AnnouncementsEntryLocalServiceTest {
 		LinkedHashMap<Long, long[]> scopes = new LinkedHashMap<>();
 
 		scopes.put(
-			PortalUtil.getClassNameId(Group.class.getName()),
+			_portal.getClassNameId(Group.class.getName()),
 			new long[] {group.getGroupId()});
 
 		List<AnnouncementsEntry> hiddenEntries =
@@ -317,10 +317,10 @@ public class AnnouncementsEntryLocalServiceTest {
 		return _announcementsEntryLocalService.addEntry(
 			_user.getUserId(), classNameId, classPK, StringUtil.randomString(),
 			StringUtil.randomString(), "http://localhost", "general",
-			PortalUtil.getDate(
+			_portal.getDate(
 				1, 1, 1990, 1, 1, _user.getTimeZone(),
 				EntryDisplayDateException.class),
-			PortalUtil.getDate(
+			_portal.getDate(
 				1, 1, 3000, 1, 1, _user.getTimeZone(),
 				EntryExpirationDateException.class),
 			1, false);
@@ -368,6 +368,9 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@Inject
 	private OrganizationLocalService _organizationLocalService;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

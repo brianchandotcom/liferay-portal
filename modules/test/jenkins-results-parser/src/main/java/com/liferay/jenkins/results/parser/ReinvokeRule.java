@@ -214,8 +214,6 @@ public class ReinvokeRule {
 
 			if (name.equals("topLevelJobName")) {
 				topLevelBuildJobNamePattern = pattern;
-
-				continue;
 			}
 		}
 	}

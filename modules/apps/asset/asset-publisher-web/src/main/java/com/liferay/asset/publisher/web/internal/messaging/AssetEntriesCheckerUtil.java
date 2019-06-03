@@ -200,7 +200,6 @@ public class AssetEntriesCheckerUtil {
 				}
 			}
 			catch (Exception e) {
-				continue;
 			}
 		}
 

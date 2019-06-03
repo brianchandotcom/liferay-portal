@@ -132,8 +132,6 @@ public class MergeCentralGitSubrepositoryUtil {
 				failedGitrepoPaths.add(gitrepoFile.getParent());
 
 				e.printStackTrace();
-
-				continue;
 			}
 		}
 

@@ -59,7 +59,6 @@ public class PortalPreferencesUserSegmentsEntrySimulator
 				break;
 			}
 			catch (ConcurrentModificationException cme) {
-				continue;
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -120,7 +119,6 @@ public class PortalPreferencesUserSegmentsEntrySimulator
 				break;
 			}
 			catch (ConcurrentModificationException cme) {
-				continue;
 			}
 			catch (Exception e) {
 				_log.error(e, e);

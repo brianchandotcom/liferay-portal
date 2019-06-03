@@ -33,8 +33,6 @@ public abstract class BaseHost implements Host {
 			}
 			catch (Exception e) {
 				System.out.println(e.getMessage());
-
-				continue;
 			}
 		}
 	}

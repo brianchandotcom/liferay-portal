@@ -188,8 +188,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				if (Objects.equals(testSuiteName, targetTestSuiteName)) {
 					return propertyName;
 				}
-
-				continue;
 			}
 		}
 

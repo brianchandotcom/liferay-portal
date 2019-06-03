@@ -822,8 +822,6 @@ public class AutoCloseUtil {
 
 					if (matcher.matches()) {
 						filteredDownstreamBuilds.add(downstreamBuild);
-
-						continue;
 					}
 				}
 			}

@@ -400,8 +400,6 @@ public class PortletTracker
 			}
 			catch (IllegalArgumentException iae) {
 				_log.error("Application type " + applicationTypeValue);
-
-				continue;
 			}
 		}
 

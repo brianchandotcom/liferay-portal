@@ -70,7 +70,6 @@ public class RenderedImageUtil {
 				return imageReader.read(0);
 			}
 			catch (Exception e) {
-				continue;
 			}
 			finally {
 				if (imageReader != null) {

@@ -93,7 +93,8 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			if (part.equals(".")) {
 				continue;
 			}
-			else if (part.equals("..")) {
+
+			if (part.equals("..")) {
 				parents++;
 			}
 			else {

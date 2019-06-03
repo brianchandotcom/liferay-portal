@@ -448,7 +448,6 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 				}
 			}
 			catch (Exception e) {
-				continue;
 			}
 		}
 

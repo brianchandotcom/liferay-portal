@@ -193,7 +193,6 @@ public class AuthVerifierTest {
 				serviceRegistration.unregister();
 			}
 			catch (Exception e) {
-				continue;
 			}
 		}
 	}

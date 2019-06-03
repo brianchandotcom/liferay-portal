@@ -180,8 +180,6 @@ public class LiferayVideoThumbnailConverter extends LiferayConverter {
 					}
 
 					onlyDecodeKeyPackets = true;
-
-					continue;
 				}
 				else if (value == DECODE_VIDEO_THUMBNAIL) {
 					cleanUp(inputIPacket, null);

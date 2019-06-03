@@ -914,8 +914,6 @@ public class CustomSQLImpl implements CustomSQL {
 				sb.insert(i, CharPool.BACK_SLASH);
 
 				i++;
-
-				continue;
 			}
 		}
 

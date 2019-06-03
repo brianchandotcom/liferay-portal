@@ -137,8 +137,6 @@ public class BlogImagesDisplayContext {
 								"Documents and Media search index is stale ",
 								"and contains file entry ", fileEntryId));
 					}
-
-					continue;
 				}
 			}
 

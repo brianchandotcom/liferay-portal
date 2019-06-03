@@ -124,7 +124,6 @@ public class SessionClicks {
 				break;
 			}
 			catch (ConcurrentModificationException cme) {
-				continue;
 			}
 			catch (Exception e) {
 				_log.error(e, e);

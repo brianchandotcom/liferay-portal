@@ -642,8 +642,6 @@ public class WebFormPortlet extends MVCPortlet {
 					fieldValue, fieldsMap, validationScript)) {
 
 				validationErrors.add(fieldLabel);
-
-				continue;
 			}
 		}
 

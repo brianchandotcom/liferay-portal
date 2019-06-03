@@ -722,7 +722,6 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 				groupIds.add(groupId);
 			}
 			catch (Exception e) {
-				continue;
 			}
 		}
 

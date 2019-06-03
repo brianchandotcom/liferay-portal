@@ -481,8 +481,6 @@ public abstract class BaseBuild implements Build {
 				 result.equals(downstreamBuild.getResult()))) {
 
 				filteredDownstreamBuilds.add(downstreamBuild);
-
-				continue;
 			}
 		}
 

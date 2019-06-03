@@ -80,7 +80,6 @@ public class ArchetyperArchetypeArtifactManager
 				}
 			}
 			catch (Exception e) {
-				continue;
 			}
 		}
 

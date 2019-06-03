@@ -2018,8 +2018,6 @@ public class LayoutTypePortletImpl
 
 			if (!key.startsWith(portletNamespace)) {
 				newTypeSettingsProperties.setProperty(key, entry.getValue());
-
-				continue;
 			}
 		}
 

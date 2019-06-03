@@ -786,8 +786,6 @@ public class JournalArticleStagedModelDataHandler
 									"Unable to import attachment for file " +
 										"entry " + fileEntry.getFileEntryId());
 							}
-
-							continue;
 						}
 					}
 					finally {

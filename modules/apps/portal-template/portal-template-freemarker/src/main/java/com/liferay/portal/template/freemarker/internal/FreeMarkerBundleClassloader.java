@@ -89,7 +89,6 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 				return bundle.loadClass(name);
 			}
 			catch (ClassNotFoundException cnfe) {
-				continue;
 			}
 		}
 

@@ -889,8 +889,6 @@ public class CustomSQL {
 				sb.insert(i, CharPool.BACK_SLASH);
 
 				i++;
-
-				continue;
 			}
 		}
 

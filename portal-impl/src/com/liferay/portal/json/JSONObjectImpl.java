@@ -269,7 +269,9 @@ public class JSONObjectImpl implements JSONObject {
 	@Override
 	public JSONObject put(String key, JSONArray value) {
 		try {
-			_jsonObject.put(key, ((JSONArrayImpl)value).getJSONArray());
+			JSONArrayImpl jsonArrayImpl = (JSONArrayImpl)value;
+
+			_jsonObject.put(key, jsonArrayImpl.getJSONArray());
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -283,7 +285,9 @@ public class JSONObjectImpl implements JSONObject {
 	@Override
 	public JSONObject put(String key, JSONObject value) {
 		try {
-			_jsonObject.put(key, ((JSONObjectImpl)value).getJSONObject());
+			JSONObjectImpl jsonObjectImpl = (JSONObjectImpl)value;
+
+			_jsonObject.put(key, jsonObjectImpl.getJSONObject());
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

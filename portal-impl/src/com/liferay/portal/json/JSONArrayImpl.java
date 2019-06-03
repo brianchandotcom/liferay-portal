@@ -188,14 +188,18 @@ public class JSONArrayImpl implements JSONArray {
 
 	@Override
 	public JSONArray put(JSONArray value) {
-		_jsonArray.put(((JSONArrayImpl)value).getJSONArray());
+		JSONArrayImpl jsonArrayImpl = (JSONArrayImpl)value;
+
+		_jsonArray.put(jsonArrayImpl.getJSONArray());
 
 		return this;
 	}
 
 	@Override
 	public JSONArray put(JSONObject value) {
-		_jsonArray.put(((JSONObjectImpl)value).getJSONObject());
+		JSONObjectImpl jsonObjectImpl = (JSONObjectImpl)value;
+
+		_jsonArray.put(jsonObjectImpl.getJSONObject());
 
 		return this;
 	}

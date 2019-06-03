@@ -758,10 +758,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		LayoutType layoutType = layout.getLayoutType();
 
-		if ((layoutType instanceof LayoutTypePortlet) &&
-			((LayoutTypePortlet)layoutType).hasPortletId(portletId)) {
+		if (layoutType instanceof LayoutTypePortlet) {
+			LayoutTypePortlet layoutTypePortlet = (LayoutTypePortlet)layoutType;
 
-			return true;
+			if (layoutTypePortlet.hasPortletId(portletId)) {
+				return true;
+			}
 		}
 
 		return false;

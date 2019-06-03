@@ -32,6 +32,10 @@ public interface BaseClayCard {
 		return null;
 	}
 
+	public default String getAspectRatioClasses() {
+		return null;
+	}
+
 	public default Map<String, String> getData() {
 		return null;
 	}

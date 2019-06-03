@@ -36,10 +36,6 @@ public class ImageCardTag extends BaseClayCardTag {
 		return super.doStartTag();
 	}
 
-	public void setAspectRatioClasses(String aspectRatioClasses) {
-		putValue("aspectRatioClasses", aspectRatioClasses);
-	}
-
 	public void setIcon(String icon) {
 		putValue("icon", icon);
 	}
@@ -104,6 +100,10 @@ public class ImageCardTag extends BaseClayCardTag {
 
 	private void _populateContext() {
 		Map<String, Object> context = getContext();
+
+		if (context.get("aspectRatioClasses") == null) {
+			setAspectRatioClasses(_imageCard.getAspectRatioClasses());
+		}
 
 		if (context.get("icon") == null) {
 			setIcon(_imageCard.getIcon());

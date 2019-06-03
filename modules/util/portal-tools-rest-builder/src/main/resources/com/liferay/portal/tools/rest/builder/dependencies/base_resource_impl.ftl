@@ -25,7 +25,6 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -104,7 +103,7 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 	protected void preparePatch(${schemaName} ${schemaVarName}, ${schemaName} existing${schemaVarName?cap_first}) {
 	}
 
-	protected <T, R> List<R> transform(Collection<T> collection, UnsafeFunction<T, R, Exception> unsafeFunction) {
+	protected <T, R> List<R> transform(java.util.Collection<T> collection, UnsafeFunction<T, R, Exception> unsafeFunction) {
 		return TransformUtil.transform(collection, unsafeFunction);
 	}
 
@@ -112,7 +111,7 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 		return TransformUtil.transform(array, unsafeFunction, clazz);
 	}
 
-	protected <T, R> R[] transformToArray(Collection<T> collection, UnsafeFunction<T, R, Exception> unsafeFunction, Class<?> clazz) {
+	protected <T, R> R[] transformToArray(java.util.Collection<T> collection, UnsafeFunction<T, R, Exception> unsafeFunction, Class<?> clazz) {
 		return TransformUtil.transformToArray(collection, unsafeFunction, clazz);
 	}
 

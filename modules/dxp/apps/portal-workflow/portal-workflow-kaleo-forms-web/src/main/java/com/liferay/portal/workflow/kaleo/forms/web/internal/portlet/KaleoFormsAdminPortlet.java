@@ -234,6 +234,14 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		UploadPortletRequest uploadPortletRequest =
+			_portal.getUploadPortletRequest(actionRequest);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DDLRecord.class.getName(), uploadPortletRequest);
+
+		checkKaleoProcessPermission(serviceContext, ActionKeys.DELETE);
+
 		final ThemeDisplay themeDisplay =
 			(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
@@ -245,7 +253,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 
 					@Override
 					public Void call() throws Exception {
-						_ddlRecordService.deleteRecord(ddlRecordId);
+						_ddlRecordLocalService.deleteRecord(ddlRecordId);
 
 						_workflowInstanceLinkLocalService.
 							deleteWorkflowInstanceLinks(

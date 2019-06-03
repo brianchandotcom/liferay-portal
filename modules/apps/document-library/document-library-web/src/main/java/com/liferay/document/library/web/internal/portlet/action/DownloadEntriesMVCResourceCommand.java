@@ -122,8 +122,9 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 
 				return;
 			}
-			else if ((fileEntries.size() == 1) && fileShortcuts.isEmpty() &&
-					 folders.isEmpty()) {
+
+			if ((fileEntries.size() == 1) && fileShortcuts.isEmpty() &&
+				folders.isEmpty()) {
 
 				FileEntry fileEntry = fileEntries.get(0);
 

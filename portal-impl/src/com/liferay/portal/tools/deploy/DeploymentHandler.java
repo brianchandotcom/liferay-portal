@@ -123,10 +123,6 @@ public class DeploymentHandler {
 		while (!_error && !_started) {
 			wait();
 		}
-
-		if (_error) {
-			return;
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

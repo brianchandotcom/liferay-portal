@@ -370,9 +370,6 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 
 			cmisJunction.add(cmisConjunction);
 		}
-		else if (query instanceof TermRangeQuery) {
-			return;
-		}
 	}
 
 	protected void traversePropertiesQuery(

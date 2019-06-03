@@ -72,10 +72,6 @@ public class LoggerExportImportLifecycleListener
 	public void onExportImportLifecycleEvent(
 			ExportImportLifecycleEvent exportImportLifecycleEvent)
 		throws Exception {
-
-		if (!_log.isDebugEnabled()) {
-			return;
-		}
 	}
 
 	@Override

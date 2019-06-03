@@ -197,8 +197,6 @@ public class AutoDeployDir {
 				_log.error(e, e);
 
 				stop();
-
-				return;
 			}
 		}
 		else {

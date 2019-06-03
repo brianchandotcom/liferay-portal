@@ -144,7 +144,6 @@ public class ServiceTrackerMapModelAdapterBuilderLocator
 							_getKey(adapteeModelClass, adaptedModelClass));
 					}
 					catch (ClassCastException cce) {
-						return;
 					}
 				}
 

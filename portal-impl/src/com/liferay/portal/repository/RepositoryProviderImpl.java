@@ -411,8 +411,6 @@ public class RepositoryProviderImpl implements RepositoryProvider {
 						_log.debug(nsfe, nsfe);
 					}
 				}
-
-				return;
 			}
 		}
 		catch (NoSuchRepositoryException nsre) {

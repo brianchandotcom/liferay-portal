@@ -96,8 +96,6 @@ public class DeleteOrganizationsAndUsersMVCActionCommand
 
 				if (Validator.isNotNull(redirect)) {
 					sendRedirect(actionRequest, actionResponse, redirect);
-
-					return;
 				}
 			}
 			else {

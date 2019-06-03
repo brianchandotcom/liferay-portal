@@ -172,8 +172,6 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 					_folderModelResourcePermission, getPermissionChecker(),
 					repository.getGroupId(), repository.getDlFolderId(),
 					ActionKeys.VIEW);
-
-				return;
 			}
 		}
 		catch (NoSuchRepositoryException nsre) {

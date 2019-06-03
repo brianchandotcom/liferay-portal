@@ -104,7 +104,6 @@ public class StoreProvider {
 				_serviceRegistration.unregister();
 			}
 			catch (IllegalStateException ise) {
-				return;
 			}
 		}
 

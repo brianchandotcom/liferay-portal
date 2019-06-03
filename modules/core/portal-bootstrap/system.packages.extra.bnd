@@ -130,7 +130,7 @@ Export-Package:\
 	\
 	javax.persistence.*;version='2.0',\
 	\
-	javax.portlet.*;version='2.0',\
+	javax.portlet.*;version='3.0',\
 	\
 	javax.rmi;version='1.0.5.Final',\
 	\

@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
-import com.liferay.dynamic.data.lists.service.DDLRecordService;
 import com.liferay.dynamic.data.mapping.exception.RequiredStructureException;
 import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
@@ -1000,58 +999,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			resourceRequest, resourceResponse, fileName, bytes, contentType);
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDLExporterFactory(
-		DDLExporterFactory ddlExporterFactory) {
-
-		_ddlExporterFactory = ddlExporterFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDLRecordLocalService(
-		DDLRecordLocalService ddlRecordLocalService) {
-
-		_ddlRecordLocalService = ddlRecordLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDLRecordService(DDLRecordService ddlRecordService) {
-		_ddlRecordService = ddlRecordService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDM(DDM ddm) {
-		_ddm = ddm;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMDisplayRegistry(
-		DDMDisplayRegistry ddmDisplayRegistry) {
-
-		_ddmDisplayRegistry = ddmDisplayRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormDeserializerTracker(
-		DDMFormDeserializerTracker ddmFormDeserializerTracker) {
-
-		_ddmFormDeserializerTracker = ddmFormDeserializerTracker;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormValuesMerger(
-		DDMFormValuesMerger ddmFormValuesMerger) {
-
-		_ddmFormValuesMerger = ddmFormValuesMerger;
-	}
-
 	/**
 	 * Stores the {@link KaleoFormsAdminDisplayContext} as an attribute in the
 	 * request.
@@ -1070,48 +1017,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, kaleoFormsAdminDisplayContext);
-	}
-
-	@Reference(unbind = "-")
-	protected void setFieldsToDDMFormValuesConverter(
-		FieldsToDDMFormValuesConverter fieldsToDDMFormValuesConverter) {
-
-		_fieldsToDDMFormValuesConverter = fieldsToDDMFormValuesConverter;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKaleoDefinitionVersionLocalService(
-		KaleoDefinitionVersionLocalService kaleoDefinitionVersionLocalService) {
-
-		_kaleoDefinitionVersionLocalService =
-			kaleoDefinitionVersionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKaleoProcessService(
-		KaleoProcessService kaleoProcessService) {
-
-		_kaleoProcessService = kaleoProcessService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setStorageEngine(StorageEngine storageEngine) {
-		this.storageEngine = storageEngine;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWorkflowDefinitionLinkLocalService(
-		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
-
-		_workflowDefinitionLinkLocalService =
-			workflowDefinitionLinkLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWorkflowInstanceLinkLocalService(
-		WorkflowInstanceLinkLocalService workflowInstanceLinkLocalService) {
-
-		_workflowInstanceLinkLocalService = workflowInstanceLinkLocalService;
 	}
 
 	/**
@@ -1242,6 +1147,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		return ddlRecord;
 	}
 
+	@Reference
 	protected StorageEngine storageEngine;
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -1251,25 +1157,47 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
+	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
 	private DDLExporterFactory _ddlExporterFactory;
+
+	@Reference
 	private DDLRecordLocalService _ddlRecordLocalService;
-	private DDLRecordService _ddlRecordService;
+
+	@Reference
 	private DDM _ddm;
+
+	@Reference
 	private DDMDisplayRegistry _ddmDisplayRegistry;
+
+	@Reference
 	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
+
+	@Reference
 	private DDMFormValuesMerger _ddmFormValuesMerger;
+
+	@Reference
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
+
+	@Reference
 	private KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
+
 	private volatile KaleoFormsWebConfiguration _kaleoFormsWebConfiguration;
+
+	@Reference
 	private KaleoProcessService _kaleoProcessService;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
+
+	@Reference
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 }

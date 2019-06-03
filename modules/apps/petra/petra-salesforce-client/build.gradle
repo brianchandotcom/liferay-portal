@@ -19,7 +19,7 @@ dependencies {
 	compileInclude group: "org.eclipse.jetty", name: "jetty-http", version: "9.4.14.v20181114"
 	compileInclude group: "org.eclipse.jetty", name: "jetty-io", version: "9.4.14.v20181114"
 	compileInclude group: "org.eclipse.jetty", name: "jetty-util", version: "9.4.14.v20181114"
-	compileInclude group: "org.slf4j", name: "slf4j-api", version: "1.7.25"
+	compileInclude group: "org.slf4j", name: "slf4j-api", version: "1.7.26"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: "1.1.0"

@@ -41,6 +41,7 @@ import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -70,7 +71,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -1150,7 +1150,7 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			userId, kaleoProcess.getGroupId(), kaleoProcess.getCreateDate(),
 			kaleoProcess.getModifiedDate(), KaleoProcess.class.getName(),
 			ddlRecord.getRecordId(), kaleoProcess.getUuid(), 0,
-			assetCategoryIds, assetTagNames, true, true, null, null, null,
+			assetCategoryIds, assetTagNames, true, true, null, null, null, null,
 			ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null, null,
 			0, 0, priority);
 	}

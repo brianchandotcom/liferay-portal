@@ -14,14 +14,18 @@
 
 package com.liferay.change.tracking.rest.internal.graphql.mutation.v1_0;
 
+import com.liferay.change.tracking.rest.dto.v1_0.Collection;
+import com.liferay.change.tracking.rest.dto.v1_0.CollectionUpdate;
 import com.liferay.change.tracking.rest.dto.v1_0.Settings;
 import com.liferay.change.tracking.rest.dto.v1_0.SettingsUpdate;
+import com.liferay.change.tracking.rest.resource.v1_0.CollectionResource;
 import com.liferay.change.tracking.rest.resource.v1_0.SettingsResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 
+import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
 import graphql.annotations.annotationTypes.GraphQLName;
 
@@ -36,12 +40,35 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Mutation {
 
+	public static void setCollectionResourceComponentServiceObjects(
+		ComponentServiceObjects<CollectionResource>
+			collectionResourceComponentServiceObjects) {
+
+		_collectionResourceComponentServiceObjects =
+			collectionResourceComponentServiceObjects;
+	}
+
 	public static void setSettingsResourceComponentServiceObjects(
 		ComponentServiceObjects<SettingsResource>
 			settingsResourceComponentServiceObjects) {
 
 		_settingsResourceComponentServiceObjects =
 			settingsResourceComponentServiceObjects;
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection postCollection(
+			@GraphQLName("companyId") Long companyId,
+			@GraphQLName("userId") Long userId,
+			@GraphQLName("collectionUpdate") CollectionUpdate collectionUpdate)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_collectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			collectionResource -> collectionResource.postCollection(
+				companyId, userId, collectionUpdate));
 	}
 
 	@GraphQLInvokeDetached
@@ -96,6 +123,14 @@ public class Mutation {
 		}
 	}
 
+	private void _populateResourceContext(CollectionResource collectionResource)
+		throws Exception {
+
+		collectionResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private void _populateResourceContext(SettingsResource settingsResource)
 		throws Exception {
 
@@ -104,6 +139,8 @@ public class Mutation {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	private static ComponentServiceObjects<CollectionResource>
+		_collectionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SettingsResource>
 		_settingsResourceComponentServiceObjects;
 

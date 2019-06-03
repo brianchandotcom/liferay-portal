@@ -22,6 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 Object[] objArray = (Object[])row.getObject();
 
 BlogsStatsUser statsUser = (BlogsStatsUser)objArray[0];
+int entryCount = statsUser.getEntryCount();
 String rowHREF = (String)objArray[1];
 %>
 
@@ -30,7 +31,14 @@ String rowHREF = (String)objArray[1];
 	userId="<%= statsUser.getUserId() %>"
 >
 	<div class="blogger-post-count">
-		<span><liferay-ui:message key="posts" />:</span> <%= statsUser.getEntryCount() %>
+		<c:choose>
+			<c:when test="<%= entryCount == 1 %>">
+				<span><liferay-ui:message key="post" />:</span> <%= entryCount %>
+			</c:when>
+			<c:otherwise>
+				<span><liferay-ui:message key="posts" />:</span> <%= entryCount %>
+			</c:otherwise>
+		</c:choose>
 	</div>
 
 	<div class="blogger-stars">

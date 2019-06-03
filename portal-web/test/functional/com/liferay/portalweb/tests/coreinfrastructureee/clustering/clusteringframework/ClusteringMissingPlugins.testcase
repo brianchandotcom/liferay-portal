@@ -84,7 +84,6 @@ definition {
 			value1 = "test.key=test.value");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test CacheReplicationbyCopy {
 		property custom.properties = "ehcache.bootstrap.cache.loader.enabled=false${line.separator}ehcache.replicator.properties.test.cache=replicatePutsViaCopy=true";

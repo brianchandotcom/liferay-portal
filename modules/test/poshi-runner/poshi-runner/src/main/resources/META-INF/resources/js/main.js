@@ -70,7 +70,8 @@ function macroHover(node, enter) {
 
 	if (enter) {
 		lineGroup.classList.add('hover');
-	} else {
+	}
+	else {
 		lineGroup.classList.remove('hover');
 	}
 }
@@ -121,16 +122,33 @@ function setText(id, text) {
 	}
 }
 
-var loggerInterface = YUI().use('liferay-qa-poshi-logger', function(Y) {
-	var logger = new Y.PoshiLogger({
-		contentBox: '.poshi-logger',
-		sidebar: '.sidebar',
-		syntaxLog: '.syntax-log'
-	}).render();
+var loggerInterface = YUI().use(
+	'liferay-qa-poshi-logger',
+	function(Y) {
+		var logger = new Y.PoshiLogger(
+			{
+				contentBox: '.poshi-logger',
+				sidebar: '.sidebar',
+				syntaxLog: '.syntax-log'
+			}
+		).render();
 
-	Y.on('command-complete', logger.handleCommandCompleted, logger);
+		Y.on(
+			'command-complete',
+			logger.handleCommandCompleted,
+			logger
+		);
 
-	Y.on('line-trigger', logger.handleLineTrigger, logger);
+		Y.on(
+			'line-trigger',
+			logger.handleLineTrigger,
+			logger
+		);
 
-	Y.on('pause-trigger', logger.handlePauseBtn, logger);
-});
+		Y.on(
+			'pause-trigger',
+			logger.handlePauseBtn,
+			logger
+		);
+	}
+);

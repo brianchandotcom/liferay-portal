@@ -16,8 +16,6 @@ package com.liferay.portal.search.solr7.internal.groupby;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.QueryConfig;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -25,6 +23,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.groupby.GroupByRequest;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import org.apache.solr.client.solrj.SolrQuery;
@@ -40,15 +39,17 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 
 	@Override
 	public void translate(
-		SolrQuery solrQuery, GroupByRequest groupByRequest,
-		SearchContext searchContext) {
+		SolrQuery solrQuery, GroupByRequest groupByRequest, Locale locale,
+		String[] highlightFieldNames, boolean highlightEnabled,
+		boolean highlightRequireFieldMatch, int highlightFragmentSize,
+		int highlightSnippetSize) {
 
 		configureGroups(solrQuery, groupByRequest);
 
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		if (queryConfig.isHighlightEnabled()) {
-			addHighlights(solrQuery, queryConfig);
+		if (highlightEnabled) {
+			addHighlights(
+				solrQuery, highlightFragmentSize, highlightRequireFieldMatch,
+				highlightSnippetSize, highlightFieldNames, locale);
 		}
 	}
 
@@ -64,27 +65,29 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 	}
 
 	protected void addHighlightedField(
-		SolrQuery solrQuery, QueryConfig queryConfig, String fieldName) {
+		SolrQuery solrQuery, Locale locale, String fieldName) {
 
 		solrQuery.addHighlightField(fieldName);
 
-		String localizedFieldName = Field.getLocalizedName(
-			queryConfig.getLocale(), fieldName);
+		String localizedFieldName = Field.getLocalizedName(locale, fieldName);
 
 		solrQuery.addHighlightField(localizedFieldName);
 	}
 
-	protected void addHighlights(SolrQuery solrQuery, QueryConfig queryConfig) {
+	protected void addHighlights(
+		SolrQuery solrQuery, int highlightFragmentSize,
+		boolean highlightRequireFieldMatch, int highlightSnippetSize,
+		String[] highlightFieldNames, Locale locale) {
+
 		solrQuery.setHighlight(true);
-		solrQuery.setHighlightFragsize(queryConfig.getHighlightFragmentSize());
-		solrQuery.setHighlightRequireFieldMatch(
-			queryConfig.isHighlightRequireFieldMatch());
+		solrQuery.setHighlightFragsize(highlightFragmentSize);
+		solrQuery.setHighlightRequireFieldMatch(highlightRequireFieldMatch);
 		solrQuery.setHighlightSimplePost(HighlightUtil.HIGHLIGHT_TAG_CLOSE);
 		solrQuery.setHighlightSimplePre(HighlightUtil.HIGHLIGHT_TAG_OPEN);
-		solrQuery.setHighlightSnippets(queryConfig.getHighlightSnippetSize());
+		solrQuery.setHighlightSnippets(highlightSnippetSize);
 
-		for (String highlightFieldName : queryConfig.getHighlightFieldNames()) {
-			addHighlightedField(solrQuery, queryConfig, highlightFieldName);
+		for (String highlightFieldName : highlightFieldNames) {
+			addHighlightedField(solrQuery, locale, highlightFieldName);
 		}
 	}
 

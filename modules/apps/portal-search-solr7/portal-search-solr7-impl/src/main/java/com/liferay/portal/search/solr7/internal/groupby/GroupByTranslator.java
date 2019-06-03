@@ -14,8 +14,9 @@
 
 package com.liferay.portal.search.solr7.internal.groupby;
 
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.search.groupby.GroupByRequest;
+
+import java.util.Locale;
 
 import org.apache.solr.client.solrj.SolrQuery;
 
@@ -25,7 +26,9 @@ import org.apache.solr.client.solrj.SolrQuery;
 public interface GroupByTranslator {
 
 	public void translate(
-		SolrQuery solrQuery, GroupByRequest groupByRequest,
-		SearchContext searchContext);
+		SolrQuery solrQuery, GroupByRequest groupByRequest, Locale locale,
+		String[] highlightFieldNames, boolean highlightEnabled,
+		boolean highlightRequireFieldMatch, int highlightFragmentSize,
+		int highlightSnippetSize);
 
 }

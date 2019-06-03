@@ -320,8 +320,15 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 			GroupByRequest groupByRequest =
 				_groupByRequestFactory.getGroupByRequest(groupBy);
 
+			QueryConfig queryConfig = searchContext.getQueryConfig();
+
 			_groupByTranslator.translate(
-				solrQuery, groupByRequest, searchContext);
+				solrQuery, groupByRequest, searchContext.getLocale(),
+				queryConfig.getHighlightFieldNames(),
+				queryConfig.isHighlightEnabled(),
+				queryConfig.isHighlightRequireFieldMatch(),
+				queryConfig.getHighlightFragmentSize(),
+				queryConfig.getHighlightSnippetSize());
 		}
 	}
 
@@ -333,8 +340,15 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 			searchRequest.getGroupByRequests();
 
 		if (ListUtil.isNotEmpty(groupByRequests)) {
+			QueryConfig queryConfig = searchContext.getQueryConfig();
+
 			_groupByTranslator.translate(
-				solrQuery, groupByRequests.get(0), searchContext);
+				solrQuery, groupByRequests.get(0), searchContext.getLocale(),
+				queryConfig.getHighlightFieldNames(),
+				queryConfig.isHighlightEnabled(),
+				queryConfig.isHighlightRequireFieldMatch(),
+				queryConfig.getHighlightFragmentSize(),
+				queryConfig.getHighlightSnippetSize());
 		}
 	}
 

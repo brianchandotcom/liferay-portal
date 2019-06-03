@@ -52,6 +52,8 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.test.rule.PersistenceTestRule;
+import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.sql.Timestamp;
 
@@ -60,8 +62,6 @@ import java.time.temporal.ChronoUnit;
 
 import java.util.List;
 
-import com.liferay.portal.test.rule.PersistenceTestRule;
-import com.liferay.portal.test.rule.TransactionalTestRule;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -85,7 +85,6 @@ public class FragmentEntryServiceTest {
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(
 				Propagation.REQUIRED, "com.liferay.fragment.service"));
-
 
 	@Before
 	public void setUp() throws Exception {

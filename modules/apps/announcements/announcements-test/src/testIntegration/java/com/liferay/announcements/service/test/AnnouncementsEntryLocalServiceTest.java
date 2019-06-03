@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
@@ -51,7 +50,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -145,11 +143,9 @@ public class AnnouncementsEntryLocalServiceTest {
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			RandomTestUtil.randomString(), false);
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			Organization.class);
-
 		AnnouncementsEntry entry = addEntry(
-			classNameId, organization.getOrganizationId());
+			_classNameLocalService.getClassNameId(Organization.class),
+			organization.getOrganizationId());
 
 		Assert.assertNotNull(
 			_announcementsEntryLocalService.fetchAnnouncementsEntry(
@@ -171,9 +167,9 @@ public class AnnouncementsEntryLocalServiceTest {
 
 		Group group = organization.getGroup();
 
-		long classNameId = _classNameLocalService.getClassNameId(Group.class);
-
-		AnnouncementsEntry entry = addEntry(classNameId, group.getGroupId());
+		AnnouncementsEntry entry = addEntry(
+			_classNameLocalService.getClassNameId(Group.class),
+			group.getGroupId());
 
 		Assert.assertNotNull(
 			_announcementsEntryLocalService.fetchAnnouncementsEntry(
@@ -199,21 +195,17 @@ public class AnnouncementsEntryLocalServiceTest {
 			_user.getCompanyId(), _user.getUserId(),
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
 		UserGroup userGroup = _userGroupLocalService.addUserGroup(
 			_user.getUserId(), _user.getCompanyId(),
 			RandomTestUtil.randomString(
 				NumericStringRandomizerBumper.INSTANCE,
 				UniqueStringRandomizerBumper.INSTANCE),
-			RandomTestUtil.randomString(50), serviceContext);
-
-		long classNameId = _classNameLocalService.getClassNameId(
-			UserGroup.class);
+			RandomTestUtil.randomString(50),
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		AnnouncementsEntry entry = addEntry(
-			classNameId, userGroup.getUserGroupId());
+			_classNameLocalService.getClassNameId(UserGroup.class),
+			userGroup.getUserGroupId());
 
 		Assert.assertNotNull(
 			_announcementsEntryLocalService.fetchAnnouncementsEntry(
@@ -278,20 +270,20 @@ public class AnnouncementsEntryLocalServiceTest {
 	public void testGetEntriesCountInDifferentCompany() throws Exception {
 		addEntry(0, 0);
 
-		int entriesCount = _announcementsEntryLocalService.getEntriesCount(
-			_company2.getCompanyId(), 0, 0, false);
-
-		Assert.assertEquals(0, entriesCount);
+		Assert.assertEquals(
+			0,
+			_announcementsEntryLocalService.getEntriesCount(
+				_company2.getCompanyId(), 0, 0, false));
 	}
 
 	@Test
 	public void testGetEntriesCountInSameCompany() throws Exception {
 		addEntry(0, 0);
 
-		int entriesCount = _announcementsEntryLocalService.getEntriesCount(
-			_user.getCompanyId(), 0, 0, false);
-
-		Assert.assertEquals(1, entriesCount);
+		Assert.assertEquals(
+			1,
+			_announcementsEntryLocalService.getEntriesCount(
+				_user.getCompanyId(), 0, 0, false));
 	}
 
 	@Test
@@ -323,17 +315,16 @@ public class AnnouncementsEntryLocalServiceTest {
 	protected AnnouncementsEntry addEntry(long classNameId, long classPK)
 		throws Exception {
 
-		Date displayDate = PortalUtil.getDate(
-			1, 1, 1990, 1, 1, _user.getTimeZone(),
-			EntryDisplayDateException.class);
-		Date expirationDate = PortalUtil.getDate(
-			1, 1, 3000, 1, 1, _user.getTimeZone(),
-			EntryExpirationDateException.class);
-
 		return _announcementsEntryLocalService.addEntry(
 			_user.getUserId(), classNameId, classPK, StringUtil.randomString(),
 			StringUtil.randomString(), "http://localhost", "general",
-			displayDate, expirationDate, 1, false);
+			PortalUtil.getDate(
+				1, 1, 1990, 1, 1, _user.getTimeZone(),
+				EntryDisplayDateException.class),
+			PortalUtil.getDate(
+				1, 1, 3000, 1, 1, _user.getTimeZone(),
+				EntryExpirationDateException.class),
+			1, false);
 	}
 
 	protected void deleteRoleAnnouncements(int roleType) throws Exception {

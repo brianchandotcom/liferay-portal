@@ -60,7 +60,15 @@ public class JSConfigGeneratorPackage {
 
 		Version version = _bundle.getVersion();
 
-		_version = version.toString();
+		String jsVersion = version.toString();
+
+		int pos = jsVersion.indexOf(".hotfix");
+
+		if (pos > -1) {
+			jsVersion = jsVersion.substring(0, pos);
+		}
+
+		_version = jsVersion;
 
 		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 

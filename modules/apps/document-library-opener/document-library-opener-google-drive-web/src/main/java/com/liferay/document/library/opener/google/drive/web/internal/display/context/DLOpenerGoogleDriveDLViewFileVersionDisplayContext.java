@@ -113,11 +113,12 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 			FileEntry fileEntry = fileVersion.getFileEntry();
 
 			if (fileEntry.hasLock()) {
-				Collection<MenuItem> menuItems = menu.getMenuItems();
+				List<MenuItem> menuItems = menu.getMenuItems();
 
 				_updateCancelCheckoutAndCheckinMenuItems(menuItems);
 
-				menuItems.add(
+				_addEditInGoogleDocsUIItem(
+					menuItems,
 					_createEditInGoogleDocsMenuItem(
 						DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_EDIT));
 			}

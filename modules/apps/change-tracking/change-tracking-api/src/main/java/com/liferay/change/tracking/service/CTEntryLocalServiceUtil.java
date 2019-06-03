@@ -538,12 +538,22 @@ public class CTEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getRelatedOwnerCTEntries(long, QueryDefinition)}
+	 */
+	@Deprecated
 	public static java.util.List<com.liferay.change.tracking.model.CTEntry>
 		getRelatedOwnerCTEntries(long ctEntryId) {
 
 		return getService().getRelatedOwnerCTEntries(ctEntryId);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getRelatedOwnerCTEntries(long, QueryDefinition)}
+	 */
+	@Deprecated
 	public static java.util.List<com.liferay.change.tracking.model.CTEntry>
 		getRelatedOwnerCTEntries(
 			long ctEntryId, int start, int end,
@@ -565,6 +575,21 @@ public class CTEntryLocalServiceUtil {
 			companyId, ctCollectionId, ctEntryId, keywords, queryDefinition);
 	}
 
+	public static java.util.List<com.liferay.change.tracking.model.CTEntry>
+		getRelatedOwnerCTEntries(
+			long ctEntryId,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition
+				<com.liferay.change.tracking.model.CTEntry> queryDefinition) {
+
+		return getService().getRelatedOwnerCTEntries(
+			ctEntryId, queryDefinition);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getRelatedOwnerCTEntriesCount(long, QueryDefinition)}
+	 */
+	@Deprecated
 	public static int getRelatedOwnerCTEntriesCount(long ctEntryId) {
 		return getService().getRelatedOwnerCTEntriesCount(ctEntryId);
 	}
@@ -576,6 +601,15 @@ public class CTEntryLocalServiceUtil {
 
 		return getService().getRelatedOwnerCTEntriesCount(
 			companyId, ctCollectionId, ctEntryId, keywords, queryDefinition);
+	}
+
+	public static int getRelatedOwnerCTEntriesCount(
+		long ctEntryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition
+			<com.liferay.change.tracking.model.CTEntry> queryDefinition) {
+
+		return getService().getRelatedOwnerCTEntriesCount(
+			ctEntryId, queryDefinition);
 	}
 
 	public static boolean hasCTCollectionCTEntries(long ctCollectionId) {

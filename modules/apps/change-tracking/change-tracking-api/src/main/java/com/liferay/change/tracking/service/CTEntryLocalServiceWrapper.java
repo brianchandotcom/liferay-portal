@@ -591,6 +591,11 @@ public class CTEntryLocalServiceWrapper
 		return _ctEntryLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getRelatedOwnerCTEntries(long, QueryDefinition)}
+	 */
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.change.tracking.model.CTEntry>
 		getRelatedOwnerCTEntries(long ctEntryId) {
@@ -598,6 +603,11 @@ public class CTEntryLocalServiceWrapper
 		return _ctEntryLocalService.getRelatedOwnerCTEntries(ctEntryId);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getRelatedOwnerCTEntries(long, QueryDefinition)}
+	 */
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.change.tracking.model.CTEntry>
 		getRelatedOwnerCTEntries(
@@ -622,6 +632,22 @@ public class CTEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.change.tracking.model.CTEntry>
+		getRelatedOwnerCTEntries(
+			long ctEntryId,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition
+				<com.liferay.change.tracking.model.CTEntry> queryDefinition) {
+
+		return _ctEntryLocalService.getRelatedOwnerCTEntries(
+			ctEntryId, queryDefinition);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getRelatedOwnerCTEntriesCount(long, QueryDefinition)}
+	 */
+	@Deprecated
+	@Override
 	public int getRelatedOwnerCTEntriesCount(long ctEntryId) {
 		return _ctEntryLocalService.getRelatedOwnerCTEntriesCount(ctEntryId);
 	}
@@ -634,6 +660,16 @@ public class CTEntryLocalServiceWrapper
 
 		return _ctEntryLocalService.getRelatedOwnerCTEntriesCount(
 			companyId, ctCollectionId, ctEntryId, keywords, queryDefinition);
+	}
+
+	@Override
+	public int getRelatedOwnerCTEntriesCount(
+		long ctEntryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition
+			<com.liferay.change.tracking.model.CTEntry> queryDefinition) {
+
+		return _ctEntryLocalService.getRelatedOwnerCTEntriesCount(
+			ctEntryId, queryDefinition);
 	}
 
 	@Override

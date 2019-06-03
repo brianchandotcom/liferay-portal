@@ -79,7 +79,10 @@ public class DataRecordValuesUtil {
 
 			DataDefinitionField dataDefinitionField = entry.getValue();
 
-			if (dataDefinitionField.getLocalizable()) {
+			if (dataDefinitionField.getLocalizable() &&
+				(dataRecordValues.get(dataDefinitionField.getName()) instanceof
+					Map)) {
+
 				jsonObject.put(
 					entry.getKey(),
 					_toJSONObject(
@@ -104,7 +107,9 @@ public class DataRecordValuesUtil {
 	private static Object _toDataRecordValue(
 		DataDefinitionField dataDefinitionField, JSONObject jsonObject) {
 
-		if (dataDefinitionField.getLocalizable()) {
+		if (dataDefinitionField.getLocalizable() &&
+			(jsonObject.getJSONObject(dataDefinitionField.getName()) != null)) {
+
 			Map<String, Object> localizedValues = new HashMap<>();
 
 			JSONObject dataRecordValueJSONObject = jsonObject.getJSONObject(

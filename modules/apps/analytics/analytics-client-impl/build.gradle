@@ -3,7 +3,7 @@ dependencies {
 	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.3"
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.6"
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore-nio", version: "4.4.6"
-	compileInclude group: "org.slf4j", name: "slf4j-api", version: "1.7.2"
+	compileInclude group: "org.slf4j", name: "slf4j-api", version: "1.7.26"
 	compileInclude project(":apps:petra:petra-json-web-service-client")
 
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.9.9"

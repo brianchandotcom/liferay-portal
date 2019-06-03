@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -70,7 +69,7 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
 	@Before

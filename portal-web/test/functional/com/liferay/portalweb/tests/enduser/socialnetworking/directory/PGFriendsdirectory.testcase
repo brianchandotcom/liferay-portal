@@ -100,10 +100,6 @@ definition {
 			privacy = "Public Pages",
 			sitePageType = "Widget Page");
 
-		Navigator.gotoPage(pageName = "Friends Directory Page");
-
-		ProductMenuHelper.openProductMenu();
-
 		Navigator.gotoPersonalSite();
 
 		var key_pageName = "Friends Request Page";

@@ -9,5 +9,6 @@
 		<suppress checks="JavaVariableTypeCheck" files="modules/util/portal-tools-theme-builder/src/main/java/com/liferay/portal/tools/theme/builder/maven/BuildThemeMojo\.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="modules/util/portal-tools-db-support/.*" />
 		<suppress checks="PrimitiveWrapperInstantiationCheck" files="modules/util/portal-tools-upgrade-table-builder/src/main/java/com/liferay/portal/tools/upgrade/table/builder/UpgradeTableBuilder\.java" />
+		<suppress checks="StringMethodsCheck" files="modules/util/portal-tools-rest-builder/src/main/java/com/liferay/portal/tools/rest/builder/internal/freemarker/tool/java/parser/ResourceOpenAPIParser\.java" />
 	</source-check>
 </suppressions>

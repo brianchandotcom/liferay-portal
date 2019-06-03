@@ -242,7 +242,8 @@ public class CTPublishBackgroundTaskExecutor
 		}
 
 		Optional<CTCollection> ctCollectionOptional =
-			_ctEngineManager.getCTCollectionOptional(ctCollectionId);
+			_ctEngineManager.getCTCollectionOptional(
+				user.getCompanyId(), ctCollectionId);
 
 		CTCollection ctCollection = ctCollectionOptional.orElseThrow(
 			() -> new CTEngineException(

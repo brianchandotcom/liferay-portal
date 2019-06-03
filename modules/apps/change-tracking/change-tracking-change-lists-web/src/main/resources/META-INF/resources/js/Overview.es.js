@@ -481,7 +481,7 @@ class Overview extends PortletBase {
 					foundEntriesLink.type
 				);
 				this._fetchChangeEntries(
-					foundEntriesLink.href,
+					foundEntriesLink.href + '?companyId=' + Liferay.ThemeDisplay.getCompanyId(),
 					foundEntriesLink.type
 				);
 			}

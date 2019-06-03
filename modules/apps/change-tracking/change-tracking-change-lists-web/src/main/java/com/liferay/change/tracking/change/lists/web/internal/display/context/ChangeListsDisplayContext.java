@@ -341,7 +341,8 @@ public class ChangeListsDisplayContext {
 
 	public boolean hasCollision(long ctCollectionId) {
 		Optional<CTCollection> ctCollectionOptional =
-			_ctEngineManager.getCTCollectionOptional(ctCollectionId);
+			_ctEngineManager.getCTCollectionOptional(
+				_themeDisplay.getCompanyId(), ctCollectionId);
 
 		if (!ctCollectionOptional.isPresent()) {
 			return false;

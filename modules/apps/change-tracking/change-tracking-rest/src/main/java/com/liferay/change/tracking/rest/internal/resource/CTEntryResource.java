@@ -75,6 +75,7 @@ public class CTEntryResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Page<CTEntryModel> searchCollectionCTEntryModels(
 		@PathParam("collectionId") long ctCollectionId,
+		@QueryParam("companyId") long companyId,
 		@QueryParam("groupId") String groupIdFilter,
 		@QueryParam("userId") String userIdFilter,
 		@QueryParam("classNameId") String classNameIdFilter,
@@ -84,7 +85,7 @@ public class CTEntryResource {
 		@QueryParam("sort") String sort, @Context Pagination pagination) {
 
 		Optional<CTCollection> ctCollectionOptional =
-			_ctEngineManager.getCTCollectionOptional(ctCollectionId);
+			_ctEngineManager.getCTCollectionOptional(companyId, ctCollectionId);
 
 		if (!ctCollectionOptional.isPresent()) {
 			throw new IllegalArgumentException(

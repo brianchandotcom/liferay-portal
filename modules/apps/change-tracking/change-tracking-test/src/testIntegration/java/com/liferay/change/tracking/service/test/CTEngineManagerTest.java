@@ -471,7 +471,7 @@ public class CTEngineManagerTest {
 
 		Optional<CTCollection> ctCollectionOptional2 =
 			_ctEngineManager.getCTCollectionOptional(
-				ctCollection.getCtCollectionId());
+				ctCollection.getCompanyId(), ctCollection.getCtCollectionId());
 
 		Assert.assertEquals(
 			"Change tracking collections must be equal", ctCollection,

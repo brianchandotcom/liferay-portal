@@ -158,11 +158,12 @@ public class CTCollectionResource {
 	@DELETE
 	@Path("/{ctCollectionId}")
 	public Response deleteCTCollection(
-			@PathParam("ctCollectionId") long ctCollectionId)
+			@PathParam("ctCollectionId") long ctCollectionId,
+			@QueryParam("companyId") long companyId)
 		throws JaxRsCTEngineException {
 
 		Optional<CTCollection> ctCollectionOptional =
-			_ctEngineManager.getCTCollectionOptional(ctCollectionId);
+			_ctEngineManager.getCTCollectionOptional(companyId, ctCollectionId);
 
 		if (!ctCollectionOptional.isPresent()) {
 			return Response.status(
@@ -173,7 +174,7 @@ public class CTCollectionResource {
 		_ctEngineManager.deleteCTCollection(ctCollectionId);
 
 		ctCollectionOptional = _ctEngineManager.getCTCollectionOptional(
-			ctCollectionId);
+			companyId, ctCollectionId);
 
 		if (ctCollectionOptional.isPresent()) {
 			throw new CannotDeleteCTCollectionCTEngineException(
@@ -191,10 +192,11 @@ public class CTCollectionResource {
 	@Path("/{ctCollectionId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public CTCollectionModel getCTCollectionModel(
-		@PathParam("ctCollectionId") long ctCollectionId) {
+		@PathParam("ctCollectionId") long ctCollectionId,
+		@QueryParam("companyId") long companyId) {
 
 		Optional<CTCollection> ctCollectionOptional =
-			_ctEngineManager.getCTCollectionOptional(ctCollectionId);
+			_ctEngineManager.getCTCollectionOptional(companyId, ctCollectionId);
 
 		CTCollection ctCollection = ctCollectionOptional.orElseThrow(
 			() -> new IllegalArgumentException(

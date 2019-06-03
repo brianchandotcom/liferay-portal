@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PROGRESS_DISABLED</td>
+	<td>//tr/td[contains(.,'${key_imageName}')]//following-sibling::td[2]//div[contains(@class,'disabled')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROGRESS_SUCCESS</td>
 	<td>//tr/td[contains(.,'${key_imageName}')]//following-sibling::td[2]//div[contains(@class,'progress-success')]//div[(@class='progress-group-feedback')]</td>
 	<td></td>

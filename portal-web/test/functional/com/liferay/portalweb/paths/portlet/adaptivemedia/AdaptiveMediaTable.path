@@ -39,11 +39,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PROGRESS_BAR_COLOR</td>
-	<td>//tr/td[contains(.,'${key_imageName}')]//following-sibling::td[2]//div[contains(@class,'progress-success')]//div[contains(@class,'progress-bar')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PROGRESS_DISABLED</td>
 	<td>//tr/td[contains(.,'${key_imageName}')]//following-sibling::td[2]//div[contains(@class,'disabled')]</td>
 	<td></td>

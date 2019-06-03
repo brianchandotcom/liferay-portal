@@ -65,7 +65,7 @@ dependencies {
 	testCompile group: "org.apache.tomcat", name: "tomcat-jdbc", version: "8.0.32"
 	testCompile group: "org.jodd", name: "jodd-json", version: "3.6.8"
 	testCompile group: "org.json", name: "json", version: "20180813"
-	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.2"
+	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.26"
 	testCompile group: "org.springframework", name: "spring-context", version: "4.1.9.RELEASE"
 	testCompile project(":apps:petra:petra-log4j")
 	testCompile project(":core:osgi-service-tracker-collections")

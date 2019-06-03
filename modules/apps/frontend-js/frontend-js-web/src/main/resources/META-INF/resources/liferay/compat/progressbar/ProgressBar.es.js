@@ -9,7 +9,6 @@ import templates from './ProgressBar.soy';
  */
 
 class ProgressBar extends Component {
-
 	/**
 	 * Setter function for the `value` state key. Makes sure the value
 	 * is between the current `min` and `max` state keys.
@@ -58,7 +57,6 @@ class ProgressBar extends Component {
  */
 
 ProgressBar.STATE = {
-
 	/**
 	 * Optional CSS classes to be added to the inner progress bar element,
 	 * like 'progress-bar-danger'.
@@ -77,9 +75,11 @@ ProgressBar.STATE = {
 
 	label: {
 		validator: label => {
-			return !core.isDefAndNotNull(label) ||
+			return (
+				!core.isDefAndNotNull(label) ||
 				core.isString(label) ||
-				core.isFunction(label);
+				core.isFunction(label)
+			);
 		}
 	},
 

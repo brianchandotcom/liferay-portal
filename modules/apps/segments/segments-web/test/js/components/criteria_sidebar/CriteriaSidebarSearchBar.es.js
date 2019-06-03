@@ -14,7 +14,7 @@ class TestComponent extends Component {
 
 	static defaultProps = {
 		initialValue: ''
-	}
+	};
 
 	constructor(props) {
 		super(props);
@@ -35,83 +35,63 @@ class TestComponent extends Component {
 	}
 }
 
-describe(
-	'CriteriaSidebarSearchBar',
-	() => {
-		afterEach(cleanup);
+describe('CriteriaSidebarSearchBar', () => {
+	afterEach(cleanup);
 
-		it(
-			'should render',
-			() => {
-				const {asFragment} = render(
-					<CriteriaSidebarSearchBar onChange={jest.fn()} />
-				);
-
-				expect(asFragment()).toMatchSnapshot();
-			}
+	it('should render', () => {
+		const {asFragment} = render(
+			<CriteriaSidebarSearchBar onChange={jest.fn()} />
 		);
 
-		it(
-			'should render with a blank search input with no search value',
-			() => {
-				const {getByTestId} = render(
-					<CriteriaSidebarSearchBar onChange={jest.fn()} />
-				);
+		expect(asFragment()).toMatchSnapshot();
+	});
 
-				const searchInput = getByTestId(SEARCH_INPUT_TESTID);
-
-				expect(searchInput.value).toEqual('');
-			}
+	it('should render with a blank search input with no search value', () => {
+		const {getByTestId} = render(
+			<CriteriaSidebarSearchBar onChange={jest.fn()} />
 		);
 
-		it(
-			'should render with the value in the search input',
-			() => {
-				const {getByTestId} = render(
-					<CriteriaSidebarSearchBar
-						onChange={jest.fn()}
-						searchValue={'test'}
-					/>
-				);
+		const searchInput = getByTestId(SEARCH_INPUT_TESTID);
 
-				const searchInput = getByTestId(SEARCH_INPUT_TESTID);
+		expect(searchInput.value).toEqual('');
+	});
 
-				expect(searchInput.value).toEqual('test');
-			}
+	it('should render with the value in the search input', () => {
+		const {getByTestId} = render(
+			<CriteriaSidebarSearchBar
+				onChange={jest.fn()}
+				searchValue={'test'}
+			/>
 		);
 
-		it(
-			'should render a button with a times icon when an input is entered',
-			() => {
-				const {getByTestId} = render(
-					<CriteriaSidebarSearchBar
-						onChange={jest.fn()}
-						searchValue={'test'}
-					/>
-				);
+		const searchInput = getByTestId(SEARCH_INPUT_TESTID);
 
-				const searchButton = getByTestId(SEARCH_BUTTON_TESTID);
+		expect(searchInput.value).toEqual('test');
+	});
 
-				expect(searchButton).toMatchSnapshot();
-			}
+	it('should render a button with a times icon when an input is entered', () => {
+		const {getByTestId} = render(
+			<CriteriaSidebarSearchBar
+				onChange={jest.fn()}
+				searchValue={'test'}
+			/>
 		);
 
-		it(
-			'should clear the input when the times icon is clicked',
-			() => {
-				const {getByTestId} = render(
-					<TestComponent initialValue="test" />
-				);
+		const searchButton = getByTestId(SEARCH_BUTTON_TESTID);
 
-				const searchButton = getByTestId(SEARCH_BUTTON_TESTID);
-				const searchInput = getByTestId(SEARCH_INPUT_TESTID);
+		expect(searchButton).toMatchSnapshot();
+	});
 
-				expect(searchInput.value).toEqual('test');
+	it('should clear the input when the times icon is clicked', () => {
+		const {getByTestId} = render(<TestComponent initialValue='test' />);
 
-				fireEvent.click(searchButton);
+		const searchButton = getByTestId(SEARCH_BUTTON_TESTID);
+		const searchInput = getByTestId(SEARCH_INPUT_TESTID);
 
-				expect(searchInput.value).toEqual('');
-			}
-		);
-	}
-);
+		expect(searchInput.value).toEqual('test');
+
+		fireEvent.click(searchButton);
+
+		expect(searchInput.value).toEqual('');
+	});
+});

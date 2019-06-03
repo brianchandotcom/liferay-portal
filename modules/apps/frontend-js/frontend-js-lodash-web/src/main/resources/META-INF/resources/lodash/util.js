@@ -1,31 +1,28 @@
-_.mixin(
-	{
-		bindKeyRight: function(context, key) {
-			var args = _.toArray(arguments).slice(2);
+_.mixin({
+	bindKeyRight: function(context, key) {
+		var args = _.toArray(arguments).slice(2);
 
-			args.unshift(_.bindKey(context, key));
+		args.unshift(_.bindKey(context, key));
 
-			return _.partialRight.apply(_, args);
-		},
+		return _.partialRight.apply(_, args);
+	},
 
-		bindRight: function(fn, context) {
-			var args = _.toArray(arguments).slice(2);
+	bindRight: function(fn, context) {
+		var args = _.toArray(arguments).slice(2);
 
-			args.unshift(_.bind(fn, context));
+		args.unshift(_.bind(fn, context));
 
-			return _.partialRight.apply(_, args);
-		},
+		return _.partialRight.apply(_, args);
+	},
 
-		cached: function(fn) {
-			return _.memoize(
-				fn,
-				function() {
-					return (arguments.length > 1) ? Array.prototype.join.call(arguments, '_') : String(arguments[0]);
-				}
-			);
-		}
+	cached: function(fn) {
+		return _.memoize(fn, function() {
+			return arguments.length > 1
+				? Array.prototype.join.call(arguments, '_')
+				: String(arguments[0]);
+		});
 	}
-);
+});
 
 _.mixin(
 	{

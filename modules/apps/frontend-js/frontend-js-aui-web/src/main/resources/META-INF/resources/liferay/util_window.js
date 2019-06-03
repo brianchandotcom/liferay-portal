@@ -21,522 +21,517 @@ AUI.add(
 			}
 		};
 
-		var LiferayModal = A.Component.create(
-			{
-				ATTRS: {
-					autoHeight: {
-						value: false
-					},
+		var LiferayModal = A.Component.create({
+			ATTRS: {
+				autoHeight: {
+					value: false
+				},
 
-					autoHeightRatio: {
-						value: 0.95
-					},
+				autoHeightRatio: {
+					value: 0.95
+				},
 
-					autoSizeNode: {
-						setter: A.one
-					},
+				autoSizeNode: {
+					setter: A.one
+				},
 
-					autoWidth: {
-						value: false
-					},
+				autoWidth: {
+					value: false
+				},
 
-					autoWidthRatio: {
-						value: 0.95
-					},
+				autoWidthRatio: {
+					value: 0.95
+				},
 
-					toolbars: {
-						valueFn: function() {
-							var instance = this;
+				toolbars: {
+					valueFn: function() {
+						var instance = this;
 
-							return {
-								header: [
-									{
-										cssClass: 'close',
-										discardDefaultButtonCssClasses: true,
-										labelHTML: '<svg class="lexicon-icon" focusable="false"><use data-href="' + Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg#times" /><title>' + Liferay.Language.get('close') + '</title></svg>',
-										on: {
-											click: function(event) {
-												instance.hide();
+						return {
+							header: [
+								{
+									cssClass: 'close',
+									discardDefaultButtonCssClasses: true,
+									labelHTML:
+										'<svg class="lexicon-icon" focusable="false"><use data-href="' +
+										Liferay.ThemeDisplay.getPathThemeImages() +
+										'/lexicon/icons.svg#times" /><title>' +
+										Liferay.Language.get('close') +
+										'</title></svg>',
+									on: {
+										click: function(event) {
+											instance.hide();
 
-												event.domEvent.stopPropagation();
-											}
-										},
-										render: true
-									}
-								]
-							};
+											event.domEvent.stopPropagation();
+										}
+									},
+									render: true
+								}
+							]
+						};
+					}
+				}
+			},
+
+			EXTENDS: A.Modal,
+
+			NAME: A.Modal.NAME,
+
+			prototype: {}
+		});
+
+		A.mix(Window, {
+			DEFAULTS: {
+				centered: true,
+				modal: true,
+				visible: true,
+				zIndex: Liferay.zIndex.WINDOW
+			},
+
+			IFRAME_SUFFIX: '_iframe_',
+
+			TITLE_TEMPLATE: '<h3 class="modal-title" />',
+
+			getByChild: function(child) {
+				var instance = this;
+
+				var node = A.one(child).ancestor('.modal', true);
+
+				return A.Widget.getByNode(node);
+			},
+
+			getWindow: function(config) {
+				var instance = this;
+
+				instance._ensureDefaultId(config);
+
+				var modal = instance._getWindow(config);
+
+				instance._bindDOMWinResizeIfNeeded();
+
+				modal.render();
+
+				instance._setWindowDefaultSizeIfNeeded(modal);
+
+				modal.align();
+
+				return modal;
+			},
+
+			hideByChild: function(child) {
+				var instance = this;
+
+				return instance.getByChild(child).hide();
+			},
+
+			refreshByChild: function(child) {
+				var instance = this;
+
+				var dialog = instance.getByChild(child);
+
+				if (dialog && dialog.io) {
+					dialog.io.start();
+				}
+			},
+
+			_bindDOMWinResizeIfNeeded: function() {
+				var instance = this;
+
+				if (!instance._winResizeHandler) {
+					instance._winResizeHandler = A.getWin().after(
+						'windowresize',
+						instance._syncWindowsUI,
+						instance
+					);
+				}
+			},
+
+			_bindWindowHooks: function(modal, config) {
+				var instance = this;
+
+				var id = modal.get('id');
+
+				var openingWindow = config.openingWindow;
+
+				var refreshWindow = config.refreshWindow;
+
+				modal._opener = openingWindow;
+				modal._refreshWindow = refreshWindow;
+
+				modal.after('destroy', function(event) {
+					if (modal._opener) {
+						var openerInFrame = !!modal._opener.frameElement;
+
+						if (openerInFrame) {
+							if (IE9) {
+								instance._syncWindowsUI();
+							} else if (IE11) {
+								instance._resetFocus(modal);
+							}
 						}
 					}
-				},
 
-				EXTENDS: A.Modal,
+					instance._unregister(modal);
 
-				NAME: A.Modal.NAME,
+					modal = null;
+				});
 
-				prototype: {
+				var liferayHandles = modal._liferayHandles;
+
+				liferayHandles.push(
+					Liferay.after('hashChange', function(event) {
+						modal.iframe.set('uri', event.uri);
+					})
+				);
+
+				liferayHandles.push(
+					Liferay.after('popupReady', function(event) {
+						var iframeId = id + instance.IFRAME_SUFFIX;
+
+						if (event.windowName === iframeId) {
+							event.dialog = modal;
+							event.details[0].dialog = modal;
+
+							if (event.doc) {
+								Util.afterIframeLoaded(event);
+
+								var modalUtil = event.win.Liferay.Util;
+
+								modalUtil.Window._opener = modal._opener;
+
+								modalUtil.Window._name = id;
+							}
+
+							var iframeNode = modal.iframe.node;
+
+							iframeNode.focus();
+
+							if (UA.ios) {
+								iframeNode.attr('scrolling', 'no');
+							}
+						}
+					})
+				);
+			},
+
+			_ensureDefaultId: function(config) {
+				var instance = this;
+
+				if (!Lang.isValue(config.id)) {
+					config.id = A.guid();
 				}
-			}
-		);
 
-		A.mix(
-			Window,
-			{
-				DEFAULTS: {
-					centered: true,
-					modal: true,
-					visible: true,
-					zIndex: Liferay.zIndex.WINDOW
-				},
+				if (!config.iframeId) {
+					config.iframeId = config.id + instance.IFRAME_SUFFIX;
+				}
+			},
 
-				IFRAME_SUFFIX: '_iframe_',
+			_getDialogIframeConfig: function(config) {
+				var instance = this;
 
-				TITLE_TEMPLATE: '<h3 class="modal-title" />',
+				var dialogIframeConfig;
 
-				getByChild: function(child) {
-					var instance = this;
+				var iframeId = config.iframeId;
 
-					var node = A.one(child).ancestor('.modal', true);
+				var uri = config.uri;
 
-					return A.Widget.getByNode(node);
-				},
-
-				getWindow: function(config) {
-					var instance = this;
-
-					instance._ensureDefaultId(config);
-
-					var modal = instance._getWindow(config);
-
-					instance._bindDOMWinResizeIfNeeded();
-
-					modal.render();
-
-					instance._setWindowDefaultSizeIfNeeded(modal);
-
-					modal.align();
-
-					return modal;
-				},
-
-				hideByChild: function(child) {
-					var instance = this;
-
-					return instance.getByChild(child).hide();
-				},
-
-				refreshByChild: function(child) {
-					var instance = this;
-
-					var dialog = instance.getByChild(child);
-
-					if (dialog && dialog.io) {
-						dialog.io.start();
+				if (uri) {
+					if (config.cache === false) {
+						uri = Liferay.Util.addParams(
+							A.guid() + '=' + Date.now(),
+							uri
+						);
 					}
-				},
 
-				_bindDOMWinResizeIfNeeded: function() {
-					var instance = this;
+					var iframeURL = new A.Url(uri);
 
-					if (!instance._winResizeHandler) {
-						instance._winResizeHandler = A.getWin().after('windowresize', instance._syncWindowsUI, instance);
+					var namespace = iframeURL.getParameter('p_p_id');
+
+					var bodyCssClass = ['dialog-iframe-popup'];
+
+					if (
+						config.dialogIframe &&
+						config.dialogIframe.bodyCssClass
+					) {
+						bodyCssClass.push(config.dialogIframe.bodyCssClass);
 					}
-				},
 
-				_bindWindowHooks: function(modal, config) {
-					var instance = this;
+					iframeURL.addParameter(
+						'_' + namespace + '_bodyCssClass',
+						bodyCssClass.join(' ')
+					);
 
-					var id = modal.get('id');
+					uri = iframeURL.toString();
+
+					var defaultDialogIframeConfig = {
+						bodyCssClass: ''
+					};
+
+					dialogIframeConfig = A.merge(
+						defaultDialogIframeConfig,
+						config.dialogIframe,
+						{
+							bindLoadHandler: function() {
+								var instance = this;
+
+								var modal = instance.get('host');
+
+								var popupReady = false;
+
+								var liferayHandles = modal._liferayHandles;
+
+								liferayHandles.push(
+									Liferay.on('popupReady', function(event) {
+										instance.fire('load', event);
+
+										popupReady = true;
+									})
+								);
+
+								liferayHandles.push(
+									instance.node.on('load', function(event) {
+										if (!popupReady) {
+											Liferay.fire('popupReady', {
+												windowName: iframeId
+											});
+										}
+
+										popupReady = false;
+									})
+								);
+							},
+
+							iframeId: iframeId,
+							iframeTitle: config.title || '',
+							uri: uri
+						}
+					);
+				}
+
+				return dialogIframeConfig;
+			},
+
+			_getWindow: function(config) {
+				var instance = this;
+
+				var id = config.id;
+
+				var modalConfig = instance._getWindowConfig(config);
+
+				var dialogIframeConfig = instance._getDialogIframeConfig(
+					config
+				);
+
+				var modal = instance.getById(id);
+
+				if (!modal) {
+					var titleNode = A.Node.create(instance.TITLE_TEMPLATE);
+
+					if (config.stack !== false) {
+						A.mix(modalConfig, {
+							plugins: [Liferay.WidgetZIndex]
+						});
+					}
+
+					modal = new LiferayModal(
+						A.merge(
+							{
+								cssClass: 'modal-full-screen',
+								headerContent: titleNode,
+								id: id
+							},
+							modalConfig
+						)
+					);
+
+					Liferay.once('screenLoad', function() {
+						modal.destroy();
+					});
+
+					modal.titleNode = titleNode;
+
+					instance._register(modal);
+
+					instance._bindWindowHooks(modal, config);
+				} else {
+					if (!config.zIndex && modal.hasPlugin('zindex')) {
+						delete modalConfig.zIndex;
+					}
 
 					var openingWindow = config.openingWindow;
 
-					var refreshWindow = config.refreshWindow;
-
 					modal._opener = openingWindow;
-					modal._refreshWindow = refreshWindow;
+					modal._refreshWindow = config.refreshWindow;
 
-					modal.after(
-						'destroy',
-						function(event) {
-							if (modal._opener) {
-								var openerInFrame = !!modal._opener.frameElement;
+					instance._map[id]._opener = openingWindow;
 
-								if (openerInFrame) {
-									if (IE9) {
-										instance._syncWindowsUI();
-									}
-									else if (IE11) {
-										instance._resetFocus(modal);
-									}
-								}
-							}
+					modal.setAttrs(modalConfig);
+				}
 
-							instance._unregister(modal);
+				if (dialogIframeConfig) {
+					modal.iframeConfig = dialogIframeConfig;
+					modal.plug(A.Plugin.DialogIframe, dialogIframeConfig);
 
-							modal = null;
-						}
-					);
+					// LPS-93620
 
-					var liferayHandles = modal._liferayHandles;
+					var originalFn = modal.iframe._onLoadIframe;
 
-					liferayHandles.push(
-						Liferay.after(
-							'hashChange',
-							function(event) {
-								modal.iframe.set('uri', event.uri);
-							}
-						)
-					);
+					modal.iframe._onLoadIframe = function() {
+						try {
+							originalFn.call(this);
+						} catch (err) {}
+					};
 
-					liferayHandles.push(
-						Liferay.after(
-							'popupReady',
-							function(event) {
-								var iframeId = id + instance.IFRAME_SUFFIX;
+					modal.get('boundingBox').addClass('dialog-iframe-modal');
+				}
 
-								if (event.windowName === iframeId) {
-									event.dialog = modal;
-									event.details[0].dialog = modal;
+				if (!Lang.isValue(config.title)) {
+					config.title = '&nbsp;';
+				}
 
-									if (event.doc) {
-										Util.afterIframeLoaded(event);
+				modal.titleNode.html(config.title);
 
-										var modalUtil = event.win.Liferay.Util;
+				modal.fillHeight(modal.bodyNode);
 
-										modalUtil.Window._opener = modal._opener;
+				return modal;
+			},
 
-										modalUtil.Window._name = id;
-									}
+			_getWindowConfig: function(config) {
+				var instance = this;
 
-									var iframeNode = modal.iframe.node;
+				var modalConfig = A.merge(instance.DEFAULTS, config.dialog);
 
-									iframeNode.focus();
+				var height = modalConfig.height;
+				var width = modalConfig.width;
 
-									if (UA.ios) {
-										iframeNode.attr('scrolling', 'no');
-									}
-								}
-							}
-						)
-					);
-				},
+				if (
+					height === 'auto' ||
+					height === '' ||
+					height === undefined ||
+					height > DOM.winHeight()
+				) {
+					modalConfig.autoHeight = true;
+				}
 
-				_ensureDefaultId: function(config) {
-					var instance = this;
+				if (
+					width === 'auto' ||
+					width === '' ||
+					width === undefined ||
+					width > DOM.winWidth()
+				) {
+					modalConfig.autoWidth = true;
+				}
 
-					if (!Lang.isValue(config.id)) {
-						config.id = A.guid();
+				modalConfig.id = config.id;
+
+				return modalConfig;
+			},
+
+			_register: function(modal) {
+				var instance = this;
+
+				var id = modal.get('id');
+
+				modal._liferayHandles = [];
+
+				instance._map[id] = modal;
+				instance._map[id + instance.IFRAME_SUFFIX] = modal;
+			},
+
+			_resetFocus: function(modal) {
+				var contentBox = modal.get('contentBox');
+
+				var input = contentBox.one('input[type=text]');
+
+				if (input) {
+					input.getDOM().focus();
+				}
+			},
+
+			_setWindowDefaultSizeIfNeeded: function(modal) {
+				var instance = this;
+
+				var autoSizeNode = modal.get('autoSizeNode');
+
+				if (modal.get('autoHeight')) {
+					var height;
+
+					if (autoSizeNode) {
+						height = autoSizeNode.get('offsetHeight');
+					} else {
+						height = DOM.winHeight();
 					}
 
-					if (!config.iframeId) {
-						config.iframeId = config.id + instance.IFRAME_SUFFIX;
+					height *= modal.get('autoHeightRatio');
+
+					if (modal.get('height') === 'auto') {
+						modal._fillMaxHeight(height);
+					} else {
+						modal.set('height', height);
 					}
-				},
+				}
 
-				_getDialogIframeConfig: function(config) {
-					var instance = this;
+				var widthInitial = modal.get('width');
 
-					var dialogIframeConfig;
-
-					var iframeId = config.iframeId;
-
-					var uri = config.uri;
-
-					if (uri) {
-						if (config.cache === false) {
-							uri = Liferay.Util.addParams(A.guid() + '=' + Date.now(), uri);
-						}
-
-						var iframeURL = new A.Url(uri);
-
-						var namespace = iframeURL.getParameter('p_p_id');
-
-						var bodyCssClass = ['dialog-iframe-popup'];
-
-						if (config.dialogIframe && config.dialogIframe.bodyCssClass) {
-							bodyCssClass.push(config.dialogIframe.bodyCssClass);
-						}
-
-						iframeURL.addParameter('_' + namespace + '_bodyCssClass', bodyCssClass.join(' '));
-
-						uri = iframeURL.toString();
-
-						var defaultDialogIframeConfig = {
-							bodyCssClass: ''
-						};
-
-						dialogIframeConfig = A.merge(
-							defaultDialogIframeConfig,
-							config.dialogIframe,
-							{
-								bindLoadHandler: function() {
-									var instance = this;
-
-									var modal = instance.get('host');
-
-									var popupReady = false;
-
-									var liferayHandles = modal._liferayHandles;
-
-									liferayHandles.push(
-										Liferay.on(
-											'popupReady',
-											function(event) {
-												instance.fire('load', event);
-
-												popupReady = true;
-											}
-										)
-									);
-
-									liferayHandles.push(
-										instance.node.on(
-											'load',
-											function(event) {
-												if (!popupReady) {
-													Liferay.fire(
-														'popupReady',
-														{
-															windowName: iframeId
-														}
-													);
-												}
-
-												popupReady = false;
-											}
-										)
-									);
-								},
-
-								iframeId: iframeId,
-								iframeTitle: config.title || '',
-								uri: uri
-							}
-						);
-					}
-
-					return dialogIframeConfig;
-				},
-
-				_getWindow: function(config) {
-					var instance = this;
-
-					var id = config.id;
-
-					var modalConfig = instance._getWindowConfig(config);
-
-					var dialogIframeConfig = instance._getDialogIframeConfig(config);
-
-					var modal = instance.getById(id);
-
-					if (!modal) {
-						var titleNode = A.Node.create(instance.TITLE_TEMPLATE);
-
-						if (config.stack !== false) {
-							A.mix(
-								modalConfig,
-								{
-									plugins: [Liferay.WidgetZIndex]
-								}
-							);
-						}
-
-						modal = new LiferayModal(
-							A.merge(
-								{
-									cssClass: 'modal-full-screen',
-									headerContent: titleNode,
-									id: id
-								},
-								modalConfig
-							)
-						);
-
-						Liferay.once(
-							'screenLoad',
-							function() {
-								modal.destroy();
-							}
-						);
-
-						modal.titleNode = titleNode;
-
-						instance._register(modal);
-
-						instance._bindWindowHooks(modal, config);
-					}
-					else {
-						if (!config.zIndex && modal.hasPlugin('zindex')) {
-							delete modalConfig.zIndex;
-						}
-
-						var openingWindow = config.openingWindow;
-
-						modal._opener = openingWindow;
-						modal._refreshWindow = config.refreshWindow;
-
-						instance._map[id]._opener = openingWindow;
-
-						modal.setAttrs(modalConfig);
-					}
-
-					if (dialogIframeConfig) {
-						modal.iframeConfig = dialogIframeConfig;
-						modal.plug(A.Plugin.DialogIframe, dialogIframeConfig);
-
-						// LPS-93620
-
-						var originalFn = modal.iframe._onLoadIframe;
-
-						modal.iframe._onLoadIframe = function() {
-							try {
-								originalFn.call(this);
-							}
-							catch (err) {}
-						};
-
-						modal.get('boundingBox').addClass('dialog-iframe-modal');
-					}
-
-					if (!Lang.isValue(config.title)) {
-						config.title = '&nbsp;';
-					}
-
-					modal.titleNode.html(config.title);
-
-					modal.fillHeight(modal.bodyNode);
-
-					return modal;
-				},
-
-				_getWindowConfig: function(config) {
-					var instance = this;
-
-					var modalConfig = A.merge(instance.DEFAULTS, config.dialog);
-
-					var height = modalConfig.height;
-					var width = modalConfig.width;
-
-					if (height === 'auto' || height === '' || height === undefined || height > DOM.winHeight()) {
-						modalConfig.autoHeight = true;
-					}
-
-					if (width === 'auto' || width === '' || width === undefined || width > DOM.winWidth()) {
-						modalConfig.autoWidth = true;
-					}
-
-					modalConfig.id = config.id;
-
-					return modalConfig;
-				},
-
-				_register: function(modal) {
-					var instance = this;
-
-					var id = modal.get('id');
-
-					modal._liferayHandles = [];
-
-					instance._map[id] = modal;
-					instance._map[id + instance.IFRAME_SUFFIX] = modal;
-				},
-
-				_resetFocus: function(modal) {
-					var contentBox = modal.get('contentBox');
-
-					var input = contentBox.one('input[type=text]');
-
-					if (input) {
-						input.getDOM().focus();
-					}
-				},
-
-				_setWindowDefaultSizeIfNeeded: function(modal) {
-					var instance = this;
-
-					var autoSizeNode = modal.get('autoSizeNode');
-
-					if (modal.get('autoHeight')) {
-						var height;
+				if (widthInitial !== 'auto') {
+					if (modal.get('autoWidth')) {
+						var width;
 
 						if (autoSizeNode) {
-							height = autoSizeNode.get('offsetHeight');
-						}
-						else {
-							height = DOM.winHeight();
+							width = autoSizeNode.get('offsetWidth');
+						} else {
+							width = DOM.winWidth();
 						}
 
-						height *= modal.get('autoHeightRatio');
+						width *= modal.get('autoWidthRatio');
 
-						if (modal.get('height') === 'auto') {
-							modal._fillMaxHeight(height);
+						if (width != widthInitial) {
+							modal.set('width', width);
+						} else {
+							setWidth(modal, widthInitial);
 						}
-						else {
-							modal.set('height', height);
-						}
+					} else {
+						setWidth(modal, modal.get('width'));
 					}
+				}
+			},
 
-					var widthInitial = modal.get('width');
+			_syncWindowsUI: function() {
+				var instance = this;
 
-					if (widthInitial !== 'auto') {
-						if (modal.get('autoWidth')) {
-							var width;
+				var modals = instance._map;
 
-							if (autoSizeNode) {
-								width = autoSizeNode.get('offsetWidth');
-							}
-							else {
-								width = DOM.winWidth();
-							}
+				A.each(modals, function(modal) {
+					if (modal.get('visible')) {
+						instance._setWindowDefaultSizeIfNeeded(modal);
 
-							width *= modal.get('autoWidthRatio');
-
-							if (width != widthInitial) {
-								modal.set('width', width);
-							}
-							else {
-								setWidth(modal, widthInitial);
-							}
-						}
-						else {
-							setWidth(modal, modal.get('width'));
-						}
+						modal.align();
 					}
-				},
+				});
+			},
 
-				_syncWindowsUI: function() {
-					var instance = this;
+			_unregister: function(modal) {
+				var instance = this;
 
-					var modals = instance._map;
+				var id = modal.get('id');
 
-					A.each(
-						modals,
-						function(modal) {
-							if (modal.get('visible')) {
-								instance._setWindowDefaultSizeIfNeeded(modal);
+				delete instance._map[id];
+				delete instance._map[id + instance.IFRAME_SUFFIX];
 
-								modal.align();
-							}
-						}
-					);
-				},
+				A.Array.invoke(modal._liferayHandles, 'detach');
+			},
 
-				_unregister: function(modal) {
-					var instance = this;
-
-					var id = modal.get('id');
-
-					delete instance._map[id];
-					delete instance._map[id + instance.IFRAME_SUFFIX];
-
-					A.Array.invoke(modal._liferayHandles, 'detach');
-				},
-
-				_winResizeHandler: null
-			}
-		);
+			_winResizeHandler: null
+		});
 	},
 	'',
 	{
-		requires: ['aui-dialog-iframe-deprecated', 'aui-modal', 'aui-url', 'event-resize', 'liferay-widget-zindex']
+		requires: [
+			'aui-dialog-iframe-deprecated',
+			'aui-modal',
+			'aui-url',
+			'event-resize',
+			'liferay-widget-zindex'
+		]
 	}
 );

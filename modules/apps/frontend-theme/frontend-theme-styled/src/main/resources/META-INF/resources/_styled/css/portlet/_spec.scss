@@ -11,15 +11,17 @@
 /* ---------- Sections ---------- */
 
 .portlet-section-selected {
-	&, a {
-		background: #727C81;
-		color: #FFF;
+	&,
+	a {
+		background: #727c81;
+		color: #fff;
 		font-weight: bold;
 		text-decoration: none;
 	}
 
-	a:hover, a:focus {
-		background-color: #727C81;
+	a:hover,
+	a:focus {
+		background-color: #727c81;
 	}
 }
 

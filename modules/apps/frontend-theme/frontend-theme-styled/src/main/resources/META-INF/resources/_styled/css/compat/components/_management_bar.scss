@@ -15,8 +15,9 @@
 			z-index: inherit;
 		}
 
-		.btn-action, .btn-action-secondary > .btn {
-			color: #FFF;
+		.btn-action,
+		.btn-action-secondary > .btn {
+			color: #fff;
 			height: 2.1rem;
 			line-height: 2.1rem;
 			width: 2.1rem;
@@ -49,7 +50,10 @@
 	.management-bar-header-right > .btn,
 	.management-bar-header > .dropdown,
 	.management-bar-header-right > .dropdown {
-		margin: $management-bar-btn-padding-vertical 0 $management-bar-btn-padding-vertical $management-bar-btn-padding-horizontal;
+		margin: $management-bar-btn-padding-vertical
+			0
+			$management-bar-btn-padding-vertical
+			$management-bar-btn-padding-horizontal;
 		padding: 0;
 
 		@if (variable-exists(atlas-theme)) {
@@ -96,10 +100,26 @@
 	.management-bar-nav > li > .checkbox,
 	.management-bar-nav > li > .radio {
 		float: left;
-		padding-bottom: (($management-bar-height - 1.5rem - $management-bar-border-bottom-width - $management-bar-border-top-width) / 2);
+		padding-bottom: (
+			(
+					$management-bar-height -
+						1.5rem -
+						$management-bar-border-bottom-width -
+						$management-bar-border-top-width
+				) /
+				2
+		);
 		padding-left: $management-bar-padding-horizontal;
 		padding-right: 0;
-		padding-top: (($management-bar-height - 1.5rem - $management-bar-border-bottom-width - $management-bar-border-top-width) / 2);
+		padding-top: (
+			(
+					$management-bar-height -
+						1.5rem -
+						$management-bar-border-bottom-width -
+						$management-bar-border-top-width
+				) /
+				2
+		);
 
 		@if (variable-exists(atlas-theme)) {
 			@include media-breakpoint-up(md) {
@@ -116,8 +136,8 @@
 			padding-top: 12px;
 
 			.input-group-btn .btn-default {
-				background-color: #F1F2F5;
-				border-color: #E7E7ED;
+				background-color: #f1f2f5;
+				border-color: #e7e7ed;
 			}
 
 			.form-control {
@@ -149,7 +169,8 @@
 		> span {
 			display: block;
 			float: left;
-			padding: $management-bar-padding-vertical $management-bar-padding-horizontal;
+			padding: $management-bar-padding-vertical
+				$management-bar-padding-horizontal;
 
 			@if (variable-exists(atlas-theme)) {
 				@include media-breakpoint-up(md) {
@@ -167,7 +188,8 @@
 	.management-bar-header-item {
 		float: left;
 		height: $management-bar-height;
-		padding: $management-bar-padding-vertical $management-bar-padding-horizontal;
+		padding: $management-bar-padding-vertical
+			$management-bar-padding-horizontal;
 
 		&:hover,
 		&:focus {
@@ -224,7 +246,8 @@
 
 		&.management-bar-toggle {
 			margin: 0;
-			padding: $management-bar-padding-vertical $management-bar-padding-horizontal;
+			padding: $management-bar-padding-vertical
+				$management-bar-padding-horizontal;
 		}
 
 		&:focus,
@@ -316,7 +339,8 @@
 	}
 
 	.management-bar-nav {
-		margin: ($management-bar-padding-vertical / 2) (-$management-bar-padding-horizontal);
+		margin: ($management-bar-padding-vertical / 2)
+			(-$management-bar-padding-horizontal);
 
 		@include media-breakpoint-up(md) {
 			float: left;
@@ -331,7 +355,8 @@
 			> a,
 			> span {
 				display: block;
-				padding: $management-bar-padding-vertical $management-bar-padding-horizontal;
+				padding: $management-bar-padding-vertical
+					$management-bar-padding-horizontal;
 
 				@if (variable-exists(atlas-theme)) {
 					@include media-breakpoint-up(md) {
@@ -527,7 +552,7 @@
 		}
 	}
 
-	.management-bar-header .form-inline input[type="checkbox"] {
+	.management-bar-header .form-inline input[type='checkbox'] {
 		margin-left: -1.25rem;
 	}
 
@@ -541,7 +566,7 @@
 	}
 
 	.management-bar-secondary-bar {
-		background-color: #F0F5FF;
+		background-color: #f0f5ff;
 		border-bottom: 1px solid $primary;
 	}
 }

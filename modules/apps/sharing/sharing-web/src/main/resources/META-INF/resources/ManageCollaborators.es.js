@@ -12,7 +12,6 @@ import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
  * collaborators for a file entry.
  */
 class ManageCollaborators extends PortletBase {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -57,11 +56,9 @@ class ManageCollaborators extends PortletBase {
 		const keys = Object.keys(sharingEntryObject);
 		let result = [];
 
-		keys.forEach(
-			key => {
-				result.push(key + ',' + sharingEntryObject[key]);
-			}
-		);
+		keys.forEach(key => {
+			result.push(key + ',' + sharingEntryObject[key]);
+		});
 
 		return result;
 	}
@@ -74,7 +71,8 @@ class ManageCollaborators extends PortletBase {
 	 */
 	_findExpirationDateError() {
 		let collaborator = this.collaborators.find(
-			collaborator => collaborator.sharingEntryExpirationDateError === true
+			collaborator =>
+				collaborator.sharingEntryExpirationDateError === true
 		);
 
 		this.expirationDateError = collaborator != null;
@@ -117,7 +115,9 @@ class ManageCollaborators extends PortletBase {
 		let sharingEntryId = event.target.getAttribute('name');
 		let sharingEntryPermissionKey = event.target.value;
 
-		this._sharingEntryIdsAndPermissions[sharingEntryId] = sharingEntryPermissionKey;
+		this._sharingEntryIdsAndPermissions[
+			sharingEntryId
+		] = sharingEntryPermissionKey;
 	}
 
 	/**
@@ -137,9 +137,13 @@ class ManageCollaborators extends PortletBase {
 		collaborator.sharingEntryExpirationDateError = dateError;
 
 		if (!dateError) {
-			collaborator.sharingEntryExpirationDateTooltip = this._getTooltipDate(sharingEntryExpirationDate);
+			collaborator.sharingEntryExpirationDateTooltip = this._getTooltipDate(
+				sharingEntryExpirationDate
+			);
 
-			this._sharingEntryIdsAndExpirationDate[sharingEntryId] = sharingEntryExpirationDate;
+			this._sharingEntryIdsAndExpirationDate[
+				sharingEntryId
+			] = sharingEntryExpirationDate;
 		}
 
 		this.collaborators = this.collaborators;
@@ -206,7 +210,9 @@ class ManageCollaborators extends PortletBase {
 		let collaborator = this._getCollaborator(collaboratorId);
 
 		if (collaborator) {
-			const sharingEntryExpirationDate = enabled ? this._tomorrowDate : '';
+			const sharingEntryExpirationDate = enabled
+				? this._tomorrowDate
+				: '';
 			collaborator.enabledExpirationDate = enabled;
 
 			if (!enabled) {
@@ -215,9 +221,13 @@ class ManageCollaborators extends PortletBase {
 			}
 
 			collaborator.sharingEntryExpirationDate = sharingEntryExpirationDate;
-			collaborator.sharingEntryExpirationDateTooltip = this._getTooltipDate(sharingEntryExpirationDate);
+			collaborator.sharingEntryExpirationDateTooltip = this._getTooltipDate(
+				sharingEntryExpirationDate
+			);
 
-			this._sharingEntryIdsAndExpirationDate[collaborator.sharingEntryId] = sharingEntryExpirationDate;
+			this._sharingEntryIdsAndExpirationDate[
+				collaborator.sharingEntryId
+			] = sharingEntryExpirationDate;
 
 			this.collaborators = this.collaborators;
 		}
@@ -232,8 +242,11 @@ class ManageCollaborators extends PortletBase {
 	_handleExpandCollaborator(event) {
 		const invalidElements = 'select,option,button';
 
-		if (invalidElements.indexOf(event.target.nodeName.toLowerCase()) == -1) {
-			this.expandedCollaboratorId = event.delegateTarget.dataset.collaboratorid;
+		if (
+			invalidElements.indexOf(event.target.nodeName.toLowerCase()) == -1
+		) {
+			this.expandedCollaboratorId =
+				event.delegateTarget.dataset.collaboratorid;
 		}
 	}
 
@@ -248,44 +261,40 @@ class ManageCollaborators extends PortletBase {
 			return;
 		}
 
-		this.fetch(
-			this.actionUrl,
-			{
-				deleteSharingEntryIds: this._deleteSharingEntryIds,
-				sharingEntryIdActionIdPairs: this._convertToPair(this._sharingEntryIdsAndPermissions),
-				sharingEntryIdExpirationDatePairs: this._convertToPair(this._sharingEntryIdsAndExpirationDate),
-				sharingEntryIdShareablePairs: this._convertToPair(this._sharingEntryIdsAndShareables)
-			}
-		)
-			.then(
-				response => {
-					this.submitting = false;
-
-					const jsonResponse = response.json();
-
-					return response.ok ?
-						jsonResponse :
-						jsonResponse.then(
-							json => {
-								const error = new Error(json.errorMessage || response.statusText);
-								throw Object.assign(error, {response});
-							}
-						)
-					;
-				}
+		this.fetch(this.actionUrl, {
+			deleteSharingEntryIds: this._deleteSharingEntryIds,
+			sharingEntryIdActionIdPairs: this._convertToPair(
+				this._sharingEntryIdsAndPermissions
+			),
+			sharingEntryIdExpirationDatePairs: this._convertToPair(
+				this._sharingEntryIdsAndExpirationDate
+			),
+			sharingEntryIdShareablePairs: this._convertToPair(
+				this._sharingEntryIdsAndShareables
 			)
-			.then(
-				json => {
-					this._loadingResponse = false;
-					this._showNotification(json.successMessage);
-				}
-			)
-			.catch(
-				error => {
-					this._loadingResponse = false;
-					this._showNotification(error.message, true);
-				}
-			);
+		})
+			.then(response => {
+				this.submitting = false;
+
+				const jsonResponse = response.json();
+
+				return response.ok
+					? jsonResponse
+					: jsonResponse.then(json => {
+							const error = new Error(
+								json.errorMessage || response.statusText
+							);
+							throw Object.assign(error, {response});
+					  });
+			})
+			.then(json => {
+				this._loadingResponse = false;
+				this._showNotification(json.successMessage);
+			})
+			.catch(error => {
+				this._loadingResponse = false;
+				this._showNotification(error.message, true);
+			});
 
 		this._loadingResponse = true;
 	}
@@ -300,7 +309,9 @@ class ManageCollaborators extends PortletBase {
 	_getTooltipDate(expirationDate) {
 		return Liferay.Util.sub(
 			Liferay.Language.get('until-x'),
-			new Date(expirationDate).toLocaleDateString(Liferay.ThemeDisplay.getBCP47LanguageId())
+			new Date(expirationDate).toLocaleDateString(
+				Liferay.ThemeDisplay.getBCP47LanguageId()
+			)
 		);
 	}
 
@@ -325,7 +336,7 @@ class ManageCollaborators extends PortletBase {
 
 		const openToastParams = {
 			events: {
-				'attached': this._closeDialog.bind(this)
+				attached: this._closeDialog.bind(this)
 			},
 			message
 		};
@@ -346,7 +357,6 @@ class ManageCollaborators extends PortletBase {
  * @type {!Object}
  */
 ManageCollaborators.STATE = {
-
 	/**
 	 * Uri to send the manage collaborators fetch request.
 	 * @instance
@@ -360,25 +370,21 @@ ManageCollaborators.STATE = {
 	 * @type {Array.<Object>}
 	 */
 	collaborators: Config.arrayOf(
-		Config.shapeOf(
-			{
-				fullName: Config.string(),
-				sharingEntryExpirationDate: Config.string(),
-				sharingEntryExpirationDateTooltip: Config.string(),
-				sharingEntryId: Config.string(),
-				sharingEntryPermissionDisplaySelectOptions: Config.arrayOf(
-					Config.shapeOf(
-						{
-							label: Config.string(),
-							selected: Config.bool(),
-							value: Config.string()
-						}
-					)
-				),
-				sharingEntryShareable: Config.bool(),
-				userId: Config.number()
-			}
-		)
+		Config.shapeOf({
+			fullName: Config.string(),
+			sharingEntryExpirationDate: Config.string(),
+			sharingEntryExpirationDateTooltip: Config.string(),
+			sharingEntryId: Config.string(),
+			sharingEntryPermissionDisplaySelectOptions: Config.arrayOf(
+				Config.shapeOf({
+					label: Config.string(),
+					selected: Config.bool(),
+					value: Config.string()
+				})
+			),
+			sharingEntryShareable: Config.bool(),
+			userId: Config.number()
+		})
 	).required(),
 
 	/**

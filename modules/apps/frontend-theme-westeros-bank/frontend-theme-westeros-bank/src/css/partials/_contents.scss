@@ -1,4 +1,5 @@
-.portlet-layout.row > .col-md-12, .portlet {
+.portlet-layout.row > .col-md-12,
+.portlet {
 	margin-bottom: 0;
 	padding-bottom: 0;
 	padding-left: 0;
@@ -87,7 +88,8 @@
 	a {
 		color: $brand-color-3;
 
-		&:hover, &:focus {
+		&:hover,
+		&:focus {
 			text-decoration: underline;
 		}
 	}
@@ -104,8 +106,8 @@
 			position: relative;
 
 			&:before {
-				border-right: 1px solid #5EA7CB;
-				content: " ";
+				border-right: 1px solid #5ea7cb;
+				content: ' ';
 				display: block;
 				height: 100%;
 				position: absolute;
@@ -248,7 +250,7 @@
 
 	.content-wrapper {
 		background-color: $brand-bg-color-3;
-		border: 1px solid #EDEDED;
+		border: 1px solid #ededed;
 		border-top-width: 0;
 		padding: 15px;
 
@@ -274,8 +276,8 @@
 		color: $default-text-lighter;
 	}
 
-	[class^="col-"] {
-		border-left: 1px solid #F3F4F6;
+	[class^='col-'] {
+		border-left: 1px solid #f3f4f6;
 		margin-bottom: 30px;
 		padding-top: 50px;
 	}

@@ -1,7 +1,19 @@
-import {disableSavingChangesStatusAction, enableSavingChangesStatusAction, updateLastSaveDateAction} from './saveChanges.es';
+import {
+	disableSavingChangesStatusAction,
+	enableSavingChangesStatusAction,
+	updateLastSaveDateAction
+} from './saveChanges.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../utils/constants';
-import {deleteIn, setIn, updateIn} from '../utils/FragmentsEditorUpdateUtils.es';
-import {UPDATE_EDITABLE_VALUE_ERROR, UPDATE_EDITABLE_VALUE_LOADING, UPDATE_EDITABLE_VALUE_SUCCESS} from './actions.es';
+import {
+	deleteIn,
+	setIn,
+	updateIn
+} from '../utils/FragmentsEditorUpdateUtils.es';
+import {
+	UPDATE_EDITABLE_VALUE_ERROR,
+	UPDATE_EDITABLE_VALUE_LOADING,
+	UPDATE_EDITABLE_VALUE_SUCCESS
+} from './actions.es';
 import {updateEditableValues} from '../utils/FragmentsEditorFetchUtils.es';
 import debouncedAlert from '../utils/debouncedAlert.es';
 
@@ -18,13 +30,12 @@ const UPDATE_EDITABLE_VALUES_DELAY = 1500;
  * @review
  */
 const debouncedUpdateEditableValues = debouncedAlert(
-
 	/**
 	 * @param {function} dispatch
 	 * @param {string} fragmentEntryLinkId
 	 * @param {object} previousEditableValues
 	 * @param {object} nextEditableValues
- 	 * @review
+	 * @review
 	 */
 	(
 		dispatch,
@@ -32,17 +43,13 @@ const debouncedUpdateEditableValues = debouncedAlert(
 		previousEditableValues,
 		nextEditableValues
 	) => {
-		updateEditableValues(
-			fragmentEntryLinkId,
-			nextEditableValues
-		).then(
-			() => {
+		updateEditableValues(fragmentEntryLinkId, nextEditableValues)
+			.then(() => {
 				dispatch(updateEditableValueSuccessAction());
 				dispatch(disableSavingChangesStatusAction());
 				dispatch(updateLastSaveDateAction());
-			}
-		).catch(
-			() => {
+			})
+			.catch(() => {
 				dispatch(
 					updateEditableValueErrorAction(
 						fragmentEntryLinkId,
@@ -51,8 +58,7 @@ const debouncedUpdateEditableValues = debouncedAlert(
 				);
 
 				dispatch(disableSavingChangesStatusAction());
-			}
-		);
+			});
 	},
 
 	UPDATE_EDITABLE_VALUES_DELAY
@@ -107,64 +113,53 @@ function updateEditableValuesAction(
 	return function(dispatch, getState) {
 		const state = getState();
 
-		const previousEditableValues = state
-			.fragmentEntryLinks[fragmentEntryLinkId]
-			.editableValues;
+		const previousEditableValues =
+			state.fragmentEntryLinks[fragmentEntryLinkId].editableValues;
 
-		const keysTreeArray = editableValueSegmentsExperienceId ? [
-			processor,
-			editableId,
-			editableValueSegmentsExperienceId
-		] : [
-			processor,
-			editableId
-		];
+		const keysTreeArray = editableValueSegmentsExperienceId
+			? [processor, editableId, editableValueSegmentsExperienceId]
+			: [processor, editableId];
 
 		let nextEditableValues = previousEditableValues;
 
-		editableValues.forEach(
-			editableValue => {
-				if (!editableValue.content) {
-					nextEditableValues = deleteIn(
-						nextEditableValues,
-						[...keysTreeArray, editableValue.editableValueId],
-					);
-				}
-				else {
-					nextEditableValues = setIn(
-						nextEditableValues,
-						[...keysTreeArray, editableValue.editableValueId],
-						editableValue.content
-					);
-				}
-
-				if (editableValue.editableValueId === 'mappedField') {
-					nextEditableValues = updateIn(
-						nextEditableValues,
-						keysTreeArray,
-						previousEditableValue => {
-							const nextEditableValue = Object.assign(
-								{},
-								previousEditableValue
-							);
-
-							[
-								'config',
-								state.defaultSegmentsEntryId,
-								...Object.keys(state.availableLanguages),
-								...Object.keys(state.availableSegmentsEntries)
-							].forEach(
-								key => {
-									delete nextEditableValue[key];
-								}
-							);
-
-							return nextEditableValue;
-						}
-					);
-				}
+		editableValues.forEach(editableValue => {
+			if (!editableValue.content) {
+				nextEditableValues = deleteIn(nextEditableValues, [
+					...keysTreeArray,
+					editableValue.editableValueId
+				]);
+			} else {
+				nextEditableValues = setIn(
+					nextEditableValues,
+					[...keysTreeArray, editableValue.editableValueId],
+					editableValue.content
+				);
 			}
-		);
+
+			if (editableValue.editableValueId === 'mappedField') {
+				nextEditableValues = updateIn(
+					nextEditableValues,
+					keysTreeArray,
+					previousEditableValue => {
+						const nextEditableValue = Object.assign(
+							{},
+							previousEditableValue
+						);
+
+						[
+							'config',
+							state.defaultSegmentsEntryId,
+							...Object.keys(state.availableLanguages),
+							...Object.keys(state.availableSegmentsEntries)
+						].forEach(key => {
+							delete nextEditableValue[key];
+						});
+
+						return nextEditableValue;
+					}
+				);
+			}
+		});
 
 		dispatch(
 			updateEditableValueLoadingAction(

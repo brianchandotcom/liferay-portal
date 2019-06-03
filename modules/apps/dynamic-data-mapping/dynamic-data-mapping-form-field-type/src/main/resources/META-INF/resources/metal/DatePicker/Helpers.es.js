@@ -35,27 +35,23 @@ export function getWeekArray(d, firstDayOfWeek = 0) {
 	for (let i = 1; i <= daysInMonth; i += 1) {
 		const genDay = new Date(d.getFullYear(), d.getMonth(), i, 12);
 
-		dayArray.push(
-			{
-				date: genDay,
-				dateString: setDateSelected(genDay),
-				number: genDay.getDate()
-			}
-		);
+		dayArray.push({
+			date: genDay,
+			dateString: setDateSelected(genDay),
+			number: genDay.getDate()
+		});
 	}
 
-	dayArray.forEach(
-		day => {
-			if (week.length > 0 && day.date.getDay() === firstDayOfWeek) {
-				weekArray.push(week);
-				week = [];
-			}
-			week.push(day);
-			if (dayArray.indexOf(day) === dayArray.length - 1) {
-				weekArray.push(week);
-			}
+	dayArray.forEach(day => {
+		if (week.length > 0 && day.date.getDay() === firstDayOfWeek) {
+			weekArray.push(week);
+			week = [];
 		}
-	);
+		week.push(day);
+		if (dayArray.indexOf(day) === dayArray.length - 1) {
+			weekArray.push(week);
+		}
+	});
 
 	const firstWeek = weekArray[0];
 
@@ -63,14 +59,12 @@ export function getWeekArray(d, firstDayOfWeek = 0) {
 		const outsideDate = clone(firstWeek[0].date);
 
 		outsideDate.setDate(firstWeek[0].date.getDate() - 1);
-		firstWeek.unshift(
-			{
-				date: outsideDate,
-				dateString: setDateSelected(outsideDate),
-				number: outsideDate.getDate(),
-				outside: true
-			}
-		);
+		firstWeek.unshift({
+			date: outsideDate,
+			dateString: setDateSelected(outsideDate),
+			number: outsideDate.getDate(),
+			outside: true
+		});
 	}
 
 	const lastWeek = weekArray[weekArray.length - 1];
@@ -79,14 +73,12 @@ export function getWeekArray(d, firstDayOfWeek = 0) {
 		const outsideDate = clone(lastWeek[lastWeek.length - 1].date);
 
 		outsideDate.setDate(lastWeek[lastWeek.length - 1].date.getDate() + 1);
-		lastWeek.push(
-			{
-				date: outsideDate,
-				dateString: setDateSelected(outsideDate),
-				number: outsideDate.getDate(),
-				outside: true
-			}
-		);
+		lastWeek.push({
+			date: outsideDate,
+			dateString: setDateSelected(outsideDate),
+			number: outsideDate.getDate(),
+			outside: true
+		});
 	}
 
 	return weekArray;

@@ -1,11 +1,19 @@
 /* ---------- Portal ---------- */
 
 #main-content .knowledge-base-portlet-admin .lfr-panel-container .lfr-panel,
-#main-content .knowledge-base-portlet-admin .lfr-panel-container .lfr-panel .lfr-panel-content {
+#main-content
+	.knowledge-base-portlet-admin
+	.lfr-panel-container
+	.lfr-panel
+	.lfr-panel-content {
 	background: none;
 }
 
-#main-content .knowledge-base-portlet-admin .lfr-panel-container .lfr-panel .lfr-panel-titlebar {
+#main-content
+	.knowledge-base-portlet-admin
+	.lfr-panel-container
+	.lfr-panel
+	.lfr-panel-titlebar {
 	border-bottom: none;
 }
 

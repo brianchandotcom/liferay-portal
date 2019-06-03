@@ -17,7 +17,6 @@ class AudioPreviewer extends Component {}
  * @type {!Object}
  */
 AudioPreviewer.STATE = {
-
 	/**
 	 * The max witdh of audio player based in
 	 * video player width
@@ -36,12 +35,10 @@ AudioPreviewer.STATE = {
 	 * @type {!Array<object>}
 	 */
 	audioSources: Config.arrayOf(
-		Config.shapeOf(
-			{
-				type: Config.string().required(),
-				url: Config.string().required()
-			}
-		)
+		Config.shapeOf({
+			type: Config.string().required(),
+			url: Config.string().required()
+		})
 	).required()
 };
 

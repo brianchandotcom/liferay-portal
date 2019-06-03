@@ -22,15 +22,20 @@ class SucessPage extends Component {
 		const {dispatch, store} = this.context;
 		const {editingLanguageId} = store.props;
 		const {delegateTarget} = event;
-		const {dataset: {setting}, value} = delegateTarget;
+		const {
+			dataset: {setting},
+			value
+		} = delegateTarget;
 		const {successPageSettings} = this;
 
-		dispatch('successPageChanged', setValue(successPageSettings, editingLanguageId, setting, value));
+		dispatch(
+			'successPageChanged',
+			setValue(successPageSettings, editingLanguageId, setting, value)
+		);
 	}
 }
 
 SucessPage.STATE = {
-
 	/**
 	 * @instance
 	 * @memberof SucessPage

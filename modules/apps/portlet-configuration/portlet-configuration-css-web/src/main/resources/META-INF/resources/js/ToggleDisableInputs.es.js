@@ -12,7 +12,6 @@ import templates from './ToggleDisableInputs.soy';
  */
 
 class ToggleDisableInputs extends Component {
-
 	/**
 	 * Toggles the state of the switch
 	 */
@@ -47,7 +46,6 @@ class ToggleDisableInputs extends Component {
  */
 
 ToggleDisableInputs.STATE = {
-
 	/**
 	 * Switch state
 	 * @type {Boolean}

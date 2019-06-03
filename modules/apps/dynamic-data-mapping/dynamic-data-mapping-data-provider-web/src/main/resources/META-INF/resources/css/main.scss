@@ -1,12 +1,13 @@
-@import "mixins";
+@import 'mixins';
 
 .lfr-ddm-edit-data-provider .has-success .form-control {
-	background-color: #F1F2F5;
-	border: 0.0625rem solid #E7E7ED;
+	background-color: #f1f2f5;
+	border: 0.0625rem solid #e7e7ed;
 }
 
 .portlet-dynamic-data-mapping-data-provider {
-	.data-provider-instance-id, .data-provider-instance-modified-date {
+	.data-provider-instance-id,
+	.data-provider-instance-modified-date {
 		margin-right: 20px;
 	}
 

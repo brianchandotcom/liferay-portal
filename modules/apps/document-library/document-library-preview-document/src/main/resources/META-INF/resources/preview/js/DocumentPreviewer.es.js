@@ -15,7 +15,25 @@ const KEY_CODE_ESC = 27;
  * Includes backspace, tab, arrows, delete and numbers
  * @type {Array<number>}
  */
-const VALID_KEY_CODES = [8, 9, 37, 38, 39, 40, 46, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57];
+const VALID_KEY_CODES = [
+	8,
+	9,
+	37,
+	38,
+	39,
+	40,
+	46,
+	48,
+	49,
+	50,
+	51,
+	52,
+	53,
+	54,
+	55,
+	56,
+	57
+];
 
 /**
  * Milisecons between goToPage calls
@@ -28,7 +46,6 @@ const WAIT_BETWEEN_GO_TO_PAGE = 250;
  * @review
  */
 class DocumentPreviewer extends Component {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -71,8 +88,7 @@ class DocumentPreviewer extends Component {
 		) {
 			this.currentPageLoading = true;
 			this._goToPageDebounced(currentPage);
-		}
-		else {
+		} else {
 			this.currentPageLoading = false;
 		}
 	}
@@ -103,7 +119,8 @@ class DocumentPreviewer extends Component {
 	 * @review
 	 */
 	_loadPage(page) {
-		let pagePromise = this._loadedPages[page] && this._loadedPages[page].pagePromise;
+		let pagePromise =
+			this._loadedPages[page] && this._loadedPages[page].pagePromise;
 
 		if (!pagePromise) {
 			pagePromise = imagePromise(`${this.baseImageURL}${page}`).then(
@@ -129,14 +146,12 @@ class DocumentPreviewer extends Component {
 	 * @review
 	 */
 	_goToPage(page) {
-		this._loadPage(page).then(
-			() => {
-				if (page === this.currentPage) {
-					this.currentPageLoading = false;
-					this._loadPages(page);
-				}
+		this._loadPage(page).then(() => {
+			if (page === this.currentPage) {
+				this.currentPageLoading = false;
+				this._loadPages(page);
 			}
-		);
+		});
 	}
 
 	/**
@@ -163,14 +178,11 @@ class DocumentPreviewer extends Component {
 
 		if (action === 'expandToggle') {
 			this.expanded = !this.expanded;
-		}
-		else if (action === 'go') {
+		} else if (action === 'go') {
 			this.showPageInput = true;
-		}
-		else if (action === 'next') {
+		} else if (action === 'next') {
 			this.currentPage++;
-		}
-		else if (action === 'previous') {
+		} else if (action === 'previous') {
 			this.currentPage--;
 		}
 	}
@@ -188,11 +200,9 @@ class DocumentPreviewer extends Component {
 		if (code === KEY_CODE_ENTER) {
 			this.currentPage = event.delegateTarget.value;
 			this._hidePageInput();
-		}
-		else if (code === KEY_CODE_ESC) {
+		} else if (code === KEY_CODE_ESC) {
 			this._hidePageInput();
-		}
-		else if (VALID_KEY_CODES.indexOf(code) === -1) {
+		} else if (VALID_KEY_CODES.indexOf(code) === -1) {
 			event.preventDefault();
 		}
 	}
@@ -221,12 +231,9 @@ class DocumentPreviewer extends Component {
 	_setCurrentPage(page) {
 		const pageNumber = Number.parseInt(page, 10);
 
-		return pageNumber ?
-			Math.min(
-				Math.max(1, pageNumber),
-				this.totalPages
-			) :
-			this.currentPage;
+		return pageNumber
+			? Math.min(Math.max(1, pageNumber), this.totalPages)
+			: this.currentPage;
 	}
 }
 
@@ -237,7 +244,6 @@ class DocumentPreviewer extends Component {
  * @type {!Object}
  */
 DocumentPreviewer.STATE = {
-
 	/**
 	 * Base path to page images.
 	 * @type {String}
@@ -248,9 +254,9 @@ DocumentPreviewer.STATE = {
 	 * Current page
 	 * @type {Number}
 	 */
-	currentPage: Config.oneOfType(
-		[Config.number(), Config.string()]
-	).required().setter('_setCurrentPage'),
+	currentPage: Config.oneOfType([Config.number(), Config.string()])
+		.required()
+		.setter('_setCurrentPage'),
 
 	/**
 	 * Flag that indicate if currentPgae is loading.

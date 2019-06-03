@@ -14,9 +14,7 @@ class Options extends Component {}
 Soy.register(Options, templates, 'render');
 
 if (!window.DDMOptions) {
-	window.DDMOptions = {
-
-	};
+	window.DDMOptions = {};
 }
 
 window.DDMOptions.render = Options;

@@ -7,8 +7,7 @@ import templates from './SidebarElementsPanel.soy';
 /**
  * SidebarElementsPanel
  */
-class SidebarElementsPanel extends Component {
-}
+class SidebarElementsPanel extends Component {}
 
 /**
  * State definition.

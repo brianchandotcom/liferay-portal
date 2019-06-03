@@ -39,7 +39,6 @@ let instance;
  * regular intervals.
  */
 class Analytics {
-
 	/**
 	 * Returns an Analytics instance and triggers the automatic flush loop
 	 * @param {object} config object to instantiate the Analytics tool
@@ -69,7 +68,9 @@ class Analytics {
 
 		// Initializes default plugins
 
-		instance._pluginDisposers = defaultPlugins.map(plugin => plugin(instance));
+		instance._pluginDisposers = defaultPlugins.map(plugin =>
+			plugin(instance)
+		);
 
 		// Starts flush loop
 
@@ -288,26 +289,25 @@ class Analytics {
 		if (!this.isFlushInProgress && this.events.length) {
 			this.isFlushInProgress = true;
 
-			const eventKeys = this.events
-				.map(event => this._getEventKey(event));
+			const eventKeys = this.events.map(event =>
+				this._getEventKey(event)
+			);
 
-			result = Promise.race(
-				[
-					this._getUserId().then(userId => instance._sendData(userId)),
-					this._timeout(REQUEST_TIMEOUT)
-				]
-			).then(
-				() => {
+			result = Promise.race([
+				this._getUserId().then(userId => instance._sendData(userId)),
+				this._timeout(REQUEST_TIMEOUT)
+			])
+				.then(() => {
 					const events = this.events.filter(
 						event =>
 							eventKeys.indexOf(this._getEventKey(event)) > -1
 					);
 
 					this.reset(events);
-				}
-			).catch().then(() => (this.isFlushInProgress = false));
-		}
-		else {
+				})
+				.catch()
+				.then(() => (this.isFlushInProgress = false));
+		} else {
 			result = Promise.resolve();
 		}
 
@@ -348,19 +348,14 @@ class Analytics {
 	 */
 	reset(events) {
 		if (events) {
-			this.events = this.events.filter(
-				event => {
-					const eventKey = this._getEventKey(event);
+			this.events = this.events.filter(event => {
+				const eventKey = this._getEventKey(event);
 
-					return !events.find(
-						evt => {
-							return this._getEventKey(evt) === eventKey;
-						}
-					);
-				}
-			);
-		}
-		else {
+				return !events.find(evt => {
+					return this._getEventKey(evt) === eventKey;
+				});
+			});
+		} else {
 			this.events.length = 0;
 		}
 
@@ -419,7 +414,9 @@ class Analytics {
 	setIdentity(identity) {
 		this.config.identity = identity;
 
-		return this._getUserId().then(userId => this._sendIdentity(identity, userId));
+		return this._getUserId().then(userId =>
+			this._sendIdentity(identity, userId)
+		);
 	}
 
 	/**

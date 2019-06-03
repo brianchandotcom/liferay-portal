@@ -5,7 +5,7 @@ $c: '.ddm-field-options';
 	display: flex;
 
 	&.dragging {
-		background: #FFF;
+		background: #fff;
 		border-radius: 4px;
 		box-shadow: 0 1px 50px rgba(0, 0, 0, 0.35);
 		padding: 1rem;
@@ -14,7 +14,7 @@ $c: '.ddm-field-options';
 	}
 
 	.lexicon-icon-drag {
-		color: #A7A9BC;
+		color: #a7a9bc;
 		font-size: 29px;
 		margin-left: -8px;
 		margin-top: 4px;
@@ -30,7 +30,7 @@ $c: '.ddm-field-options';
 
 		.key-value-editor {
 			label {
-				color: #C4CFD6;
+				color: #c4cfd6;
 				display: inline-block;
 				margin-right: 5px;
 			}
@@ -38,12 +38,13 @@ $c: '.ddm-field-options';
 			input {
 				background: transparent;
 				border: none;
-				color: #6B6C7E;
+				color: #6b6c7e;
 				display: inline-block;
 				outline: none;
 			}
 
-			label, input {
+			label,
+			input {
 				font-size: 11px;
 			}
 		}
@@ -84,8 +85,8 @@ $c: '.ddm-field-options';
 }
 
 .ddm-options-target {
-	background: #F1F5FF;
-	border: solid 2px #82AAF8;
+	background: #f1f5ff;
+	border: solid 2px #82aaf8;
 	height: 10px;
 	margin: 6px 0;
 	opacity: 0;

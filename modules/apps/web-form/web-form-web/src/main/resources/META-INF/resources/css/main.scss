@@ -24,7 +24,8 @@
 			margin-left: 2em;
 		}
 
-		.field.options, .validation .field {
+		.field.options,
+		.validation .field {
 			clear: both;
 			display: block;
 		}
@@ -50,7 +51,8 @@
 		margin-top: 0;
 	}
 
-	.label-name input, .options input {
+	.label-name input,
+	.options input {
 		width: 200px;
 	}
 

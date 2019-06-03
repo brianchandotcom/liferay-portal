@@ -1,9 +1,23 @@
-import {disableSavingChangesStatusAction, enableSavingChangesStatusAction, updateLastSaveDateAction} from './saveChanges.es';
-import {getRowFragmentEntryLinkIds, getRowIndex} from '../utils/FragmentsEditorGetUtils.es';
+import {
+	disableSavingChangesStatusAction,
+	enableSavingChangesStatusAction,
+	updateLastSaveDateAction
+} from './saveChanges.es';
+import {
+	getRowFragmentEntryLinkIds,
+	getRowIndex
+} from '../utils/FragmentsEditorGetUtils.es';
 import {MAX_COLUMNS} from '../utils/rowConstants';
-import {removeFragmentEntryLinks, updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
+import {
+	removeFragmentEntryLinks,
+	updatePageEditorLayoutData
+} from '../utils/FragmentsEditorFetchUtils.es';
 import {setIn, updateIn} from '../utils/FragmentsEditorUpdateUtils.es';
-import {UPDATE_ROW_COLUMNS_NUMBER_ERROR, UPDATE_ROW_COLUMNS_NUMBER_LOADING, UPDATE_ROW_COLUMNS_NUMBER_SUCCESS} from './actions.es';
+import {
+	UPDATE_ROW_COLUMNS_NUMBER_ERROR,
+	UPDATE_ROW_COLUMNS_NUMBER_LOADING,
+	UPDATE_ROW_COLUMNS_NUMBER_SUCCESS
+} from './actions.es';
 
 /**
  * @param {number} numberOfColumns
@@ -16,10 +30,7 @@ function updateRowColumnsNumberAction(numberOfColumns, rowId) {
 		const state = getState();
 
 		const columnsSize = Math.floor(MAX_COLUMNS / numberOfColumns);
-		const rowIndex = getRowIndex(
-			state.layoutData.structure,
-			rowId
-		);
+		const rowIndex = getRowIndex(state.layoutData.structure, rowId);
 
 		let columns = state.layoutData.structure[rowIndex].columns;
 		let nextData;
@@ -31,8 +42,7 @@ function updateRowColumnsNumberAction(numberOfColumns, rowId) {
 				numberOfColumns,
 				columnsSize
 			);
-		}
-		else {
+		} else {
 			nextData = _removeColumns(
 				state.layoutData,
 				rowIndex,
@@ -41,28 +51,22 @@ function updateRowColumnsNumberAction(numberOfColumns, rowId) {
 			);
 		}
 
-		let fragmentEntryLinkIdsToRemove = getRowFragmentEntryLinkIds(
-			{
-				columns: columns.slice(
-					numberOfColumns - columns.length
-				)
-			}
-		);
+		let fragmentEntryLinkIdsToRemove = getRowFragmentEntryLinkIds({
+			columns: columns.slice(numberOfColumns - columns.length)
+		});
 
 		dispatch(updateRowColumnsNumberLoadingAction());
 		dispatch(enableSavingChangesStatusAction());
 
-		updatePageEditorLayoutData(
-			nextData,
-			state.segmentsExperienceId
-		).then(
-			() => removeFragmentEntryLinks(
-				nextData,
-				fragmentEntryLinkIdsToRemove,
-				state.segmentsExperienceId
+		updatePageEditorLayoutData(nextData, state.segmentsExperienceId)
+			.then(() =>
+				removeFragmentEntryLinks(
+					nextData,
+					fragmentEntryLinkIdsToRemove,
+					state.segmentsExperienceId
+				)
 			)
-		).then(
-			() => {
+			.then(() => {
 				dispatch(
 					updateRowColumnsNumberSuccessAction(
 						fragmentEntryLinkIdsToRemove,
@@ -72,13 +76,11 @@ function updateRowColumnsNumberAction(numberOfColumns, rowId) {
 
 				dispatch(updateLastSaveDateAction());
 				dispatch(disableSavingChangesStatusAction());
-			}
-		).catch(
-			() => {
+			})
+			.catch(() => {
 				dispatch(updateRowColumnsNumberErrorAction());
 				dispatch(disableSavingChangesStatusAction());
-			}
-		);
+			});
 	};
 }
 
@@ -137,8 +139,8 @@ function _addColumns(layoutData, rowIndex, numberOfColumns, columnsSize) {
 		layoutData,
 		['structure', rowIndex, 'columns'],
 		columns => {
-			const newColumns = columns.map(
-				(column, index) => setIn(
+			const newColumns = columns.map((column, index) =>
+				setIn(
 					column,
 					['size'],
 					_getColumnSize(numberOfColumns, columnsSize, index)
@@ -149,13 +151,15 @@ function _addColumns(layoutData, rowIndex, numberOfColumns, columnsSize) {
 			const numberOfOldColumns = columns.length;
 
 			for (let i = 0; i < numberOfNewColumns; i++) {
-				newColumns.push(
-					{
-						columnId: `${nextColumnId}`,
-						fragmentEntryLinkIds: [],
-						size: _getColumnSize(numberOfColumns, columnsSize, (i + numberOfOldColumns))
-					}
-				);
+				newColumns.push({
+					columnId: `${nextColumnId}`,
+					fragmentEntryLinkIds: [],
+					size: _getColumnSize(
+						numberOfColumns,
+						columnsSize,
+						i + numberOfOldColumns
+					)
+				});
 
 				nextColumnId += 1;
 			}
@@ -184,7 +188,7 @@ function _getColumnSize(numberOfColumns, columnsSize, columnIndex) {
 	const middleColumnPosition = Math.ceil(numberOfColumns / 2) - 1;
 
 	if (middleColumnPosition === columnIndex) {
-		newColumnSize = MAX_COLUMNS - ((numberOfColumns - 1) * columnsSize);
+		newColumnSize = MAX_COLUMNS - (numberOfColumns - 1) * columnsSize;
 	}
 
 	return newColumnSize.toString();
@@ -207,8 +211,8 @@ function _removeColumns(layoutData, rowIndex, numberOfColumns, columnsSize) {
 		columns => {
 			let newColumns = columns.slice(0, numberOfColumns);
 
-			newColumns = newColumns.map(
-				(column, index) => setIn(
+			newColumns = newColumns.map((column, index) =>
+				setIn(
 					column,
 					['size'],
 					_getColumnSize(numberOfColumns, columnsSize, index)
@@ -222,6 +226,4 @@ function _removeColumns(layoutData, rowIndex, numberOfColumns, columnsSize) {
 	return nextData;
 }
 
-export {
-	updateRowColumnsNumberAction
-};
+export {updateRowColumnsNumberAction};

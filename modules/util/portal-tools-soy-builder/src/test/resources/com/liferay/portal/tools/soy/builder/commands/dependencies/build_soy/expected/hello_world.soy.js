@@ -6,12 +6,13 @@
  * @public
  */
 
-if (typeof samples == 'undefined') { var samples = {}; }
-
+if (typeof samples == 'undefined') {
+	var samples = {};
+}
 
 samples.helloWorld = function(opt_data, opt_ignored) {
-  return soydata.VERY_UNSAFE.ordainSanitizedHtml('Hello world!');
+	return soydata.VERY_UNSAFE.ordainSanitizedHtml('Hello world!');
 };
 if (goog.DEBUG) {
-  samples.helloWorld.soyTemplateName = 'samples.helloWorld';
+	samples.helloWorld.soyTemplateName = 'samples.helloWorld';
 }

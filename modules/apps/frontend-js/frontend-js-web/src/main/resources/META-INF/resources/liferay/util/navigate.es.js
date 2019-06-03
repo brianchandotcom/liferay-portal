@@ -13,14 +13,11 @@ export default function(url, listeners) {
 		Liferay.SPA.app.navigate(url);
 
 		if (listeners) {
-			Object.keys(listeners).forEach(
-				key => {
-					Liferay.once(key, listeners[key]);
-				}
-			);
+			Object.keys(listeners).forEach(key => {
+				Liferay.once(key, listeners[key]);
+			});
 		}
-	}
-	else {
+	} else {
 		window.location.href = url;
 	}
 }

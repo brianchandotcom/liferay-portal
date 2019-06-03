@@ -16,14 +16,12 @@ AUI.add(
 				if (Array.isArray(key)) {
 					method = 'getAll';
 				}
-			}
-			else {
+			} else {
 				method = 'set';
 
 				if (isObject(key)) {
 					method = 'setAll';
-				}
-				else if (arguments.length == 1) {
+				} else if (arguments.length == 1) {
 					method = null;
 				}
 			}
@@ -33,102 +31,102 @@ AUI.add(
 			}
 		};
 
-		A.mix(
-			Store,
-			{
-				get: function(key, callback) {
-					var instance = this;
+		A.mix(Store, {
+			get: function(key, callback) {
+				var instance = this;
 
-					instance._getValues('get', key, callback);
-				},
+				instance._getValues('get', key, callback);
+			},
 
-				getAll: function(keys, callback) {
-					var instance = this;
+			getAll: function(keys, callback) {
+				var instance = this;
 
-					instance._getValues('getAll', keys, callback);
-				},
+				instance._getValues('getAll', keys, callback);
+			},
 
-				set: function(key, value) {
-					var instance = this;
+			set: function(key, value) {
+				var instance = this;
 
-					var obj = {};
+				var obj = {};
 
-					if (isObject(value)) {
-						value = TOKEN_SERIALIZE + JSON.stringify(value);
-					}
-
-					obj[key] = value;
-
-					instance._setValues(obj);
-				},
-
-				setAll: function(obj) {
-					var instance = this;
-
-					instance._setValues(obj);
-				},
-
-				_getValues: function(cmd, key, callback) {
-					var instance = this;
-
-					var config = {
-						after: {
-							success: function(event) {
-								var responseData = this.get('responseData');
-
-								if (Lang.isString(responseData) && responseData.indexOf(TOKEN_SERIALIZE) === 0) {
-									try {
-										responseData = JSON.parse(responseData.substring(TOKEN_SERIALIZE.length));
-									}
-									catch (e) {
-									}
-								}
-
-								callback(responseData);
-							}
-						},
-						data: {
-							cmd: cmd
-						}
-					};
-
-					config.data.key = key;
-
-					if (cmd == 'getAll') {
-						config.dataType = 'json';
-					}
-
-					instance._ioRequest(config);
-				},
-
-				_ioRequest: function(config) {
-					var instance = this;
-
-					config.data.p_auth = Liferay.authToken;
-
-					var doAsUserIdEncoded = themeDisplay.getDoAsUserIdEncoded();
-
-					if (doAsUserIdEncoded) {
-						config.data.doAsUserId = doAsUserIdEncoded;
-					}
-
-					A.io.request(
-						themeDisplay.getPathMain() + '/portal/session_click',
-						config
-					);
-				},
-
-				_setValues: function(data) {
-					var instance = this;
-
-					instance._ioRequest(
-						{
-							data: data
-						}
-					);
+				if (isObject(value)) {
+					value = TOKEN_SERIALIZE + JSON.stringify(value);
 				}
+
+				obj[key] = value;
+
+				instance._setValues(obj);
+			},
+
+			setAll: function(obj) {
+				var instance = this;
+
+				instance._setValues(obj);
+			},
+
+			_getValues: function(cmd, key, callback) {
+				var instance = this;
+
+				var config = {
+					after: {
+						success: function(event) {
+							var responseData = this.get('responseData');
+
+							if (
+								Lang.isString(responseData) &&
+								responseData.indexOf(TOKEN_SERIALIZE) === 0
+							) {
+								try {
+									responseData = JSON.parse(
+										responseData.substring(
+											TOKEN_SERIALIZE.length
+										)
+									);
+								} catch (e) {}
+							}
+
+							callback(responseData);
+						}
+					},
+					data: {
+						cmd: cmd
+					}
+				};
+
+				config.data.key = key;
+
+				if (cmd == 'getAll') {
+					config.dataType = 'json';
+				}
+
+				instance._ioRequest(config);
+			},
+
+			_ioRequest: function(config) {
+				var instance = this;
+
+				config.data.p_auth = Liferay.authToken;
+
+				var doAsUserIdEncoded = themeDisplay.getDoAsUserIdEncoded();
+
+				if (doAsUserIdEncoded) {
+					config.data.doAsUserId = doAsUserIdEncoded;
+				}
+
+				A.io.request(
+					themeDisplay.getPathMain() + '/portal/session_click',
+					config
+				);
+			},
+
+			_setValues: function(data) {
+				var instance = this;
+
+				instance._ioRequest({
+					data: data
+				});
 			}
-		);
+		});
 
 		Liferay.Store = Store;
 	},

@@ -1,10 +1,10 @@
-@import "bourbon";
-@import "mixins";
+@import 'bourbon';
+@import 'mixins';
 
 .so-portlet-invite-members {
 	.search {
 		border: 1px solid;
-		border-color: #BFBFBF #DEDEDE #DEDEDE #BFBFBF;
+		border-color: #bfbfbf #dedede #dedede #bfbfbf;
 		height: 300px;
 		margin-bottom: 1em;
 		overflow-x: hidden;
@@ -17,13 +17,15 @@
 			text-align: center;
 
 			&:hover {
-				background-color: #CCE6F7;
+				background-color: #cce6f7;
 			}
 		}
 	}
 
-	.invited, .user {
-		background: transparent url(@theme_image_path@/lexicon/plus.svg) no-repeat 1% 50%;
+	.invited,
+	.user {
+		background: transparent url(@theme_image_path@/lexicon/plus.svg)
+			no-repeat 1% 50%;
 		background-size: 16px;
 		border-bottom: 1px solid transparent;
 		border-top: 1px solid transparent;
@@ -37,10 +39,11 @@
 		}
 	}
 
-	.email-invited .user, .user-invited .user {
+	.email-invited .user,
+	.user-invited .user {
 		background: url(@theme_image_path@/lexicon/times.svg) no-repeat 99% 50%;
 		background-size: 16px;
-		border-bottom: 1px solid #CCC;
+		border-bottom: 1px solid #ccc;
 		padding: 0.5em 1.5em 0.5em 0.5em;
 	}
 
@@ -87,7 +90,7 @@
 	}
 
 	span.email {
-		color: #AAA;
+		color: #aaa;
 		font-size: 0.8em;
 		margin-left: 0.5em;
 	}

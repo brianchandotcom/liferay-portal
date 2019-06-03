@@ -1,4 +1,4 @@
-;(function() {
+(function() {
 	var ALLOY = YUI();
 
 	if (ALLOY.html5shiv) {

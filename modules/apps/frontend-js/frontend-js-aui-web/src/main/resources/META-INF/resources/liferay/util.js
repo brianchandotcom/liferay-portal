@@ -1,4 +1,4 @@
-;(function(A, $, Liferay) {
+(function(A, $, Liferay) {
 	A.use('aui-base-lang');
 
 	var AArray = A.Array;
@@ -32,8 +32,11 @@
 
 	var STR_RIGHT_SQUARE_BRACKET = ']';
 
-	var TPL_LEXICON_ICON = '<svg class="lexicon-icon lexicon-icon-{0} {1}" focusable="false" role="image">' +
-			'<use data-href="' + themeDisplay.getPathThemeImages() + '/lexicon/icons.svg#{0}" />' +
+	var TPL_LEXICON_ICON =
+		'<svg class="lexicon-icon lexicon-icon-{0} {1}" focusable="false" role="image">' +
+		'<use data-href="' +
+		themeDisplay.getPathThemeImages() +
+		'/lexicon/icons.svg#{0}" />' +
 		'</svg>';
 
 	var Window = {
@@ -50,32 +53,30 @@
 		submitCountdown: 0,
 
 		addInputCancel: function() {
-			A.use(
-				'aui-button-search-cancel',
-				function(A) {
-					new A.ButtonSearchCancel(
-						{
-							trigger: 'input[type=password], input[type=search], input.clearable, input.search-query'
-						}
-					);
-				}
-			);
+			A.use('aui-button-search-cancel', function(A) {
+				new A.ButtonSearchCancel({
+					trigger:
+						'input[type=password], input[type=search], input.clearable, input.search-query'
+				});
+			});
 
-			Util.addInputCancel = function() {
-			};
+			Util.addInputCancel = function() {};
 		},
 
 		addParams: function(params, url) {
 			if (typeof params === 'object') {
 				var paramKeys = Object.keys(params);
 
-				params = paramKeys.map(
-					function(key) {
-						return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
-					}
-				).join('&');
-			}
-			else {
+				params = paramKeys
+					.map(function(key) {
+						return (
+							encodeURIComponent(key) +
+							'=' +
+							encodeURIComponent(params[key])
+						);
+					})
+					.join('&');
+			} else {
 				params = String(params).trim();
 			}
 
@@ -95,8 +96,7 @@
 
 				if (loc.indexOf('?') == -1) {
 					params = '?' + params;
-				}
-				else {
+				} else {
 					params = '&' + params;
 				}
 
@@ -109,7 +109,6 @@
 					if (!url) {
 						location.href = finalUrl;
 					}
-
 				}
 			}
 
@@ -124,9 +123,11 @@
 				var selector;
 
 				if (Array.isArray(name)) {
-					selector = 'input[name=' + name.join('], input[name=') + STR_RIGHT_SQUARE_BRACKET;
-				}
-				else {
+					selector =
+						'input[name=' +
+						name.join('], input[name=') +
+						STR_RIGHT_SQUARE_BRACKET;
+				} else {
 					selector = 'input[name=' + name + STR_RIGHT_SQUARE_BRACKET;
 				}
 
@@ -134,18 +135,19 @@
 
 				var allBoxChecked = $(allBox).prop(STR_CHECKED);
 
-				form.find(selector).each(
-					function(index, item) {
-						item = $(item);
+				form.find(selector).each(function(index, item) {
+					item = $(item);
 
-						if (!item.prop('disabled')) {
-							item.prop(STR_CHECKED, allBoxChecked);
-						}
+					if (!item.prop('disabled')) {
+						item.prop(STR_CHECKED, allBoxChecked);
 					}
-				);
+				});
 
 				if (selectClassName) {
-					form.find(selectClassName).toggleClass('info', allBoxChecked);
+					form.find(selectClassName).toggleClass(
+						'info',
+						allBoxChecked
+					);
 				}
 			}
 		},
@@ -173,19 +175,20 @@
 					name = [name];
 				}
 
-				inputs.each(
-					function(index, item) {
-						item = $(item);
+				inputs.each(function(index, item) {
+					item = $(item);
 
-						if (!item.is(allBoxNodes) && name.indexOf(item.attr('name')) > -1) {
-							totalBoxes++;
+					if (
+						!item.is(allBoxNodes) &&
+						name.indexOf(item.attr('name')) > -1
+					) {
+						totalBoxes++;
 
-							if (item.prop(STR_CHECKED)) {
-								totalOn++;
-							}
+						if (item.prop(STR_CHECKED)) {
+							totalOn++;
 						}
 					}
-				);
+				});
 
 				allBoxNodes.prop(STR_CHECKED, totalBoxes == totalOn);
 			}
@@ -197,12 +200,9 @@
 			if (document.all && window.event.keyCode == 9) {
 				box.selection = document.selection.createRange();
 
-				setTimeout(
-					function() {
-						Util.processTab(box.id);
-					},
-					0
-				);
+				setTimeout(function() {
+					Util.processTab(box.id);
+				}, 0);
 			}
 		},
 
@@ -248,25 +248,15 @@
 			inputs.setStyle('opacity', 0.5);
 
 			if (A.UA.gecko) {
-				A.getWin().on(
-					'unload',
-					function(event) {
-						inputs.attr('disabled', false);
-					}
-				);
-			}
-			else if (A.UA.safari) {
-				A.use(
-					'node-event-html5',
-					function(A) {
-						A.getWin().on(
-							'pagehide',
-							function(event) {
-								Util.enableFormButtons(inputs, form);
-							}
-						);
-					}
-				);
+				A.getWin().on('unload', function(event) {
+					inputs.attr('disabled', false);
+				});
+			} else if (A.UA.safari) {
+				A.use('node-event-html5', function(A) {
+					A.getWin().on('pagehide', function(event) {
+						Util.enableFormButtons(inputs, form);
+					});
+				});
 			}
 		},
 
@@ -274,14 +264,14 @@
 			var checkBox = $('#' + checkBoxId);
 			var toggleBox = $('#' + toggleBoxId);
 
-			toggleBox.prop('disabled', checkDisabled && checkBox.prop(STR_CHECKED));
-
-			checkBox.on(
-				EVENT_CLICK,
-				function() {
-					toggleBox.prop('disabled', !toggleBox.prop('disabled'));
-				}
+			toggleBox.prop(
+				'disabled',
+				checkDisabled && checkBox.prop(STR_CHECKED)
 			);
+
+			checkBox.on(EVENT_CLICK, function() {
+				toggleBox.prop('disabled', !toggleBox.prop('disabled'));
+			});
 		},
 
 		enableFormButtons: function(inputs) {
@@ -291,21 +281,17 @@
 		},
 
 		escapeCDATA: function(str) {
-			return str.replace(
-				/<!\[CDATA\[|\]\]>/gi,
-				function(match) {
-					var str = '';
+			return str.replace(/<!\[CDATA\[|\]\]>/gi, function(match) {
+				var str = '';
 
-					if (match == ']]>') {
-						str = ']]&gt;';
-					}
-					else if (match == '<![CDATA[') {
-						str = '&lt;![CDATA[';
-					}
-
-					return str;
+				if (match == ']]>') {
+					str = ']]&gt;';
+				} else if (match == '<![CDATA[') {
+					str = '&lt;![CDATA[';
 				}
-			);
+
+				return str;
+			});
 		},
 
 		focusFormField: function(el) {
@@ -317,24 +303,23 @@
 
 			el = $(el);
 
-			doc.on(
-				'click.focusFormField',
-				function(event) {
-					interacting = true;
+			doc.on('click.focusFormField', function(event) {
+				interacting = true;
 
-					doc.off('click.focusFormField');
-				}
-			);
+				doc.off('click.focusFormField');
+			});
 
 			if (!interacting && Util.inBrowserView(el)) {
 				var form = el.closest('form');
 
-				var focusable = !el.is(':disabled') && !el.is(':hidden') && !el.parents(':disabled').length;
+				var focusable =
+					!el.is(':disabled') &&
+					!el.is(':hidden') &&
+					!el.parents(':disabled').length;
 
 				if (!form.length || focusable) {
 					el.focus();
-				}
-				else {
+				} else {
 					var portletName = form.data('fm-namespace');
 
 					var formReadyEventName = portletName + 'formReady';
@@ -346,7 +331,10 @@
 						if (elFormName === formName) {
 							el.focus();
 
-							Liferay.detach(formReadyEventName, formReadyHandler);
+							Liferay.detach(
+								formReadyEventName,
+								formReadyHandler
+							);
 						}
 					};
 
@@ -405,12 +393,10 @@
 					if (getterString) {
 						if (name.indexOf(attributeGetter) === 0) {
 							name = name.substr(attributeGetter.length);
-						}
-						else {
+						} else {
 							continue;
 						}
-					}
-					else if (getterFn) {
+					} else if (getterFn) {
 						value = attributeGetter(value, name, attrs);
 
 						if (value === false) {
@@ -452,8 +438,7 @@
 					fallback,
 					options
 				);
-			}
-			else if (fallback) {
+			} else if (fallback) {
 				fallback();
 			}
 		},
@@ -513,15 +498,19 @@
 						}
 
 						parentThemeDisplay = parentWindow.themeDisplay;
-					}
-					catch (e) {
+					} catch (e) {
 						break;
 					}
 
-					if (!parentThemeDisplay || window.name === 'simulationDeviceIframe') {
+					if (
+						!parentThemeDisplay ||
+						window.name === 'simulationDeviceIframe'
+					) {
 						break;
-					}
-					else if (!parentThemeDisplay.isStatePopUp() || parentWindow == parentWindow.parent) {
+					} else if (
+						!parentThemeDisplay.isStatePopUp() ||
+						parentWindow == parentWindow.parent
+					) {
 						topWindow = parentWindow;
 
 						break;
@@ -620,7 +609,8 @@
 				winRegion.top = win.scrollTop();
 				winRegion.bottom = winRegion.top + win.height();
 
-				viewable = nodeRegion.bottom <= winRegion.bottom &&
+				viewable =
+					nodeRegion.bottom <= winRegion.bottom &&
 					nodeRegion.left >= winRegion.left &&
 					nodeRegion.right <= winRegion.right &&
 					nodeRegion.top >= winRegion.top;
@@ -641,7 +631,11 @@
 						nodeRegion.top += yOffset;
 						nodeRegion.bottom += yOffset;
 
-						viewable = Util.inBrowserView(node, win.prop('parent'), nodeRegion);
+						viewable = Util.inBrowserView(
+							node,
+							win.prop('parent'),
+							nodeRegion
+						);
 					}
 				}
 			}
@@ -674,20 +668,26 @@
 				selector += '[name=' + name + ']';
 			}
 
-			return $(form).find(selector).toArray().reduce(
-				function(prev, item, index) {
+			return $(form)
+				.find(selector)
+				.toArray()
+				.reduce(function(prev, item, index) {
 					item = $(item);
 
 					var val = item.val();
 
-					if (val && item.attr('name') != except && item.prop('checked') == checked && !item.prop('disabled')) {
+					if (
+						val &&
+						item.attr('name') != except &&
+						item.prop('checked') == checked &&
+						!item.prop('disabled')
+					) {
 						prev.push(val);
 					}
 
 					return prev;
-				},
-				[]
-			).join();
+				}, [])
+				.join();
 		},
 
 		listCheckedExcept: function(form, except, name) {
@@ -697,8 +697,10 @@
 		listSelect: function(select, delimeter) {
 			select = Util.getDOM(select);
 
-			return $(select).find('option').toArray().reduce(
-				function(prev, item, index) {
+			return $(select)
+				.find('option')
+				.toArray()
+				.reduce(function(prev, item, index) {
 					var val = $(item).val();
 
 					if (val) {
@@ -706,9 +708,8 @@
 					}
 
 					return prev;
-				},
-				[]
-			).join(delimeter || ',');
+				}, [])
+				.join(delimeter || ',');
 		},
 
 		listUncheckedExcept: function(form, except, name) {
@@ -737,7 +738,8 @@
 			config = A.mix(A.merge({}, currentTarget.data()), config);
 
 			if (!config.uri) {
-				config.uri = currentTarget.data('href') || currentTarget.attr('href');
+				config.uri =
+					currentTarget.data('href') || currentTarget.attr('href');
 			}
 
 			if (!config.title) {
@@ -763,10 +765,15 @@
 		},
 
 		randomInt: function() {
-			return Math.ceil(Math.random() * (new Date()).getTime());
+			return Math.ceil(Math.random() * new Date().getTime());
 		},
 
-		removeEntitySelection: function(entityIdString, entityNameString, removeEntityButton, namespace) {
+		removeEntitySelection: function(
+			entityIdString,
+			entityNameString,
+			removeEntityButton,
+			namespace
+		) {
 			$('#' + namespace + entityIdString).val(0);
 
 			$('#' + namespace + entityNameString).val('');
@@ -783,13 +790,14 @@
 
 			if (box.prop('selectedIndex') == -1) {
 				box.prop('selectedIndex', 0);
-			}
-			else {
+			} else {
 				var selectedItems = box.find('option:selected');
 
 				if (down) {
-					selectedItems.get().reverse().forEach(
-						function(item, index) {
+					selectedItems
+						.get()
+						.reverse()
+						.forEach(function(item, index) {
 							item = $(item);
 
 							var itemIndex = item.prop('index');
@@ -798,33 +806,33 @@
 
 							if (itemIndex === lastIndex) {
 								box.prepend(item);
-							}
-							else {
+							} else {
 								item.insertAfter(item.next());
 							}
-						}
-					);
-				}
-				else {
-					selectedItems.get().forEach(
-						function(item, index) {
-							item = $(item);
+						});
+				} else {
+					selectedItems.get().forEach(function(item, index) {
+						item = $(item);
 
-							var itemIndex = item.prop('index');
+						var itemIndex = item.prop('index');
 
-							if (itemIndex === 0) {
-								box.append(item);
-							}
-							else {
-								item.insertBefore(item.prev());
-							}
+						if (itemIndex === 0) {
+							box.append(item);
+						} else {
+							item.insertBefore(item.prev());
 						}
-					);
+					});
 				}
 			}
 		},
 
-		rowCheckerCheckAllBox: function(ancestorTable, ancestorRow, checkboxesIds, checkboxAllIds, cssClass) {
+		rowCheckerCheckAllBox: function(
+			ancestorTable,
+			ancestorRow,
+			checkboxesIds,
+			checkboxAllIds,
+			cssClass
+		) {
 			Util.checkAllBox(ancestorTable, checkboxesIds, checkboxAllIds);
 
 			if (ancestorRow) {
@@ -839,67 +847,66 @@
 					plid: 0,
 					portletId: 0,
 					title: '',
-					url: themeDisplay.getPathMain() + '/portal/update_portlet_title'
+					url:
+						themeDisplay.getPathMain() +
+						'/portal/update_portlet_title'
 				},
 				params
 			);
 
-			$.ajax(
-				params.url,
-				{
-					data: {
-						doAsUserId: params.doAsUserId,
-						p_auth: Liferay.authToken,
-						p_l_id: params.plid,
-						portletId: params.portletId,
-						title: params.title
-					}
+			$.ajax(params.url, {
+				data: {
+					doAsUserId: params.doAsUserId,
+					p_auth: Liferay.authToken,
+					p_l_id: params.plid,
+					portletId: params.portletId,
+					title: params.title
 				}
-			);
+			});
 		},
 
-		selectEntityHandler: function(container, selectEventName, disableButton) {
+		selectEntityHandler: function(
+			container,
+			selectEventName,
+			disableButton
+		) {
 			container = $(container);
 
 			var openingLiferay = Util.getOpener().Liferay;
 
 			var selectorButtons = container.find('.selector-button');
 
-			container.on(
-				'click',
-				'.selector-button',
-				function(event) {
-					var target = $(event.target);
+			container.on('click', '.selector-button', function(event) {
+				var target = $(event.target);
 
-					if (!target.attr('data-prevent-selection')) {
-						var currentTarget = $(event.currentTarget);
+				if (!target.attr('data-prevent-selection')) {
+					var currentTarget = $(event.currentTarget);
 
-						var confirmSelection = currentTarget.attr('data-confirm-selection') === 'true';
-						var confirmSelectionMessage = currentTarget.attr('data-confirm-selection-message');
+					var confirmSelection =
+						currentTarget.attr('data-confirm-selection') === 'true';
+					var confirmSelectionMessage = currentTarget.attr(
+						'data-confirm-selection-message'
+					);
 
-						if (!confirmSelection || confirm(confirmSelectionMessage)) {
-							if (disableButton !== false) {
-								selectorButtons.prop('disabled', false);
+					if (!confirmSelection || confirm(confirmSelectionMessage)) {
+						if (disableButton !== false) {
+							selectorButtons.prop('disabled', false);
 
-								currentTarget.prop('disabled', true);
-							}
-
-							var result = Util.getAttributes(currentTarget, 'data-');
-
-							openingLiferay.fire(selectEventName, result);
-
-							Util.getWindow().hide();
+							currentTarget.prop('disabled', true);
 						}
+
+						var result = Util.getAttributes(currentTarget, 'data-');
+
+						openingLiferay.fire(selectEventName, result);
+
+						Util.getWindow().hide();
 					}
 				}
-			);
+			});
 
-			openingLiferay.on(
-				'entitySelectionRemoved',
-				function(event) {
-					selectorButtons.prop('disabled', false);
-				}
-			);
+			openingLiferay.on('entitySelectionRemoved', function(event) {
+				selectorButtons.prop('disabled', false);
+			});
 		},
 
 		selectFolder: function(folderData, namespace) {
@@ -933,8 +940,7 @@
 				el.focus();
 
 				el.setSelectionRange(selectionStart, selectionEnd);
-			}
-			else if (el.createTextRange) {
+			} else if (el.createTextRange) {
 				var textRange = el.createTextRange();
 
 				textRange.collapse(true);
@@ -955,7 +961,10 @@
 
 			var display = 'none';
 
-			if (keyCode >= 65 && keyCode <= 90 && !shiftKey || keyCode >= 97 && keyCode <= 122 && shiftKey) {
+			if (
+				(keyCode >= 65 && keyCode <= 90 && !shiftKey) ||
+				(keyCode >= 97 && keyCode <= 122 && shiftKey)
+			) {
 				display = '';
 			}
 
@@ -978,23 +987,30 @@
 		},
 
 		sub: function(string, data) {
-			if (arguments.length > 2 || (typeof data !== 'object' && typeof data !== 'function')) {
+			if (
+				arguments.length > 2 ||
+				(typeof data !== 'object' && typeof data !== 'function')
+			) {
 				data = Array.prototype.slice.call(arguments, 1);
 			}
 
-			return string.replace ? string.replace(
-				REGEX_SUB,
-				function(match, key) {
-					return data[key] === undefined ? match : data[key];
-				}
-			) : string;
+			return string.replace
+				? string.replace(REGEX_SUB, function(match, key) {
+						return data[key] === undefined ? match : data[key];
+				  })
+				: string;
 		},
 
 		submitForm: function(form) {
 			form.submit();
 		},
 
-		toggleBoxes: function(checkBoxId, toggleBoxId, displayWhenUnchecked, toggleChildCheckboxes) {
+		toggleBoxes: function(
+			checkBoxId,
+			toggleBoxId,
+			displayWhenUnchecked,
+			toggleChildCheckboxes
+		) {
 			var checkBox = $('#' + checkBoxId);
 			var toggleBox = $('#' + toggleBoxId);
 
@@ -1006,18 +1022,20 @@
 
 			toggleBox.toggleClass('hide', !checked);
 
-			checkBox.on(
-				EVENT_CLICK,
-				function() {
-					toggleBox.toggleClass('hide');
+			checkBox.on(EVENT_CLICK, function() {
+				toggleBox.toggleClass('hide');
 
-					if (toggleChildCheckboxes) {
-						var childCheckboxes = toggleBox.find('input[type=checkbox]');
+				if (toggleChildCheckboxes) {
+					var childCheckboxes = toggleBox.find(
+						'input[type=checkbox]'
+					);
 
-						childCheckboxes.prop(STR_CHECKED, checkBox.prop(STR_CHECKED));
-					}
+					childCheckboxes.prop(
+						STR_CHECKED,
+						checkBox.prop(STR_CHECKED)
+					);
 				}
-			);
+			});
 		},
 
 		toggleDisabled: function(button, state) {
@@ -1025,15 +1043,13 @@
 
 			button = $(button);
 
-			button.each(
-				function(index, item) {
-					item = $(item);
+			button.each(function(index, item) {
+				item = $(item);
 
-					item.prop('disabled', state);
+				item.prop('disabled', state);
 
-					item.toggleClass('disabled', state);
-				}
-			);
+				item.toggleClass('disabled', state);
+			});
 		},
 
 		toggleRadio: function(radioId, showBoxIds, hideBoxIds) {
@@ -1051,30 +1067,35 @@
 				showBoxes.toggleClass('hide', !radioButton.prop(STR_CHECKED));
 			}
 
-			radioButton.on(
-				'change',
-				function() {
-					if (showBoxes) {
-						showBoxes.removeClass('hide');
-					}
-
-					if (hideBoxIds) {
-						if (Array.isArray(hideBoxIds)) {
-							hideBoxIds = hideBoxIds.join(',#');
-						}
-
-						$('#' + hideBoxIds).addClass('hide');
-					}
+			radioButton.on('change', function() {
+				if (showBoxes) {
+					showBoxes.removeClass('hide');
 				}
-			);
+
+				if (hideBoxIds) {
+					if (Array.isArray(hideBoxIds)) {
+						hideBoxIds = hideBoxIds.join(',#');
+					}
+
+					$('#' + hideBoxIds).addClass('hide');
+				}
+			});
 		},
 
-		toggleSearchContainerButton: function(buttonId, searchContainerId, form, ignoreFieldName) {
+		toggleSearchContainerButton: function(
+			buttonId,
+			searchContainerId,
+			form,
+			ignoreFieldName
+		) {
 			$(searchContainerId).on(
 				EVENT_CLICK,
 				'input[type=checkbox]',
 				function() {
-					Util.toggleDisabled(buttonId, !Util.listCheckedExcept(form, ignoreFieldName));
+					Util.toggleDisabled(
+						buttonId,
+						!Util.listCheckedExcept(form, ignoreFieldName)
+					);
 				}
 			);
 		},
@@ -1134,7 +1155,9 @@
 
 				var singleSubmit = event.singleSubmit;
 
-				var inputs = form.all('button[type=submit], input[type=button], input[type=image], input[type=reset], input[type=submit]');
+				var inputs = form.all(
+					'button[type=submit], input[type=button], input[type=image], input[type=reset], input[type=submit]'
+				);
 
 				Util.disableFormButtons(inputs, form);
 
@@ -1145,8 +1168,7 @@
 						Util.enableFormButtons,
 						[inputs, form]
 					);
-				}
-				else {
+				} else {
 					Util._submitLocked = true;
 				}
 
@@ -1155,8 +1177,7 @@
 				if (searchParamsIndex === -1) {
 					var baseURL = action;
 					var queryString = '';
-				}
-				else {
+				} else {
 					var baseURL = action.slice(0, searchParamsIndex);
 					var queryString = action.slice(searchParamsIndex + 1);
 				}
@@ -1165,7 +1186,11 @@
 
 				var authToken = searchParams.get('p_auth') || '';
 
-				form.append('<input name="p_auth" type="hidden" value="' + authToken + '" />');
+				form.append(
+					'<input name="p_auth" type="hidden" value="' +
+						authToken +
+						'" />'
+				);
 
 				if (authToken) {
 					searchParams.delete('p_auth');
@@ -1187,53 +1212,53 @@
 			var editable = Util._EDITABLE;
 
 			if (!editable) {
-				editable = new A.Editable(
-					{
-						after: {
-							contentTextChange: function(event) {
-								var instance = this;
+				editable = new A.Editable({
+					after: {
+						contentTextChange: function(event) {
+							var instance = this;
 
-								if (!event.initial) {
-									var title = instance.get('node');
+							if (!event.initial) {
+								var title = instance.get('node');
 
-									var portletTitleEditOptions = title.getData('portletTitleEditOptions');
+								var portletTitleEditOptions = title.getData(
+									'portletTitleEditOptions'
+								);
 
-									Util.savePortletTitle(
-										{
-											doAsUserId: portletTitleEditOptions.doAsUserId,
-											plid: portletTitleEditOptions.plid,
-											portletId: portletTitleEditOptions.portletId,
-											title: event.newVal
-										}
-									);
-								}
-							},
-							startEditing: function(event) {
-								var instance = this;
-
-								var Layout = Liferay.Layout;
-
-								if (Layout) {
-									instance._dragListener = Layout.getLayoutHandler().on(
-										'drag:start',
-										function(event) {
-											instance.fire('save');
-										}
-									);
-								}
-							},
-							stopEditing: function(event) {
-								var instance = this;
-
-								if (instance._dragListener) {
-									instance._dragListener.detach();
-								}
+								Util.savePortletTitle({
+									doAsUserId:
+										portletTitleEditOptions.doAsUserId,
+									plid: portletTitleEditOptions.plid,
+									portletId:
+										portletTitleEditOptions.portletId,
+									title: event.newVal
+								});
 							}
 						},
-						cssClass: 'lfr-portlet-title-editable',
-						node: title
-					}
-				);
+						startEditing: function(event) {
+							var instance = this;
+
+							var Layout = Liferay.Layout;
+
+							if (Layout) {
+								instance._dragListener = Layout.getLayoutHandler().on(
+									'drag:start',
+									function(event) {
+										instance.fire('save');
+									}
+								);
+							}
+						},
+						stopEditing: function(event) {
+							var instance = this;
+
+							if (instance._dragListener) {
+								instance._dragListener.detach();
+							}
+						}
+					},
+					cssClass: 'lfr-portlet-title-editable',
+					node: title
+				});
 
 				Util._EDITABLE = editable;
 			}
@@ -1266,10 +1291,15 @@
 
 			iframeBody.addClass('dialog-iframe-popup');
 
-			if (lfrFormContent && iframeBody.one('.button-holder.dialog-footer')) {
+			if (
+				lfrFormContent &&
+				iframeBody.one('.button-holder.dialog-footer')
+			) {
 				iframeBody.addClass('dialog-with-footer');
 
-				var stagingAlert = iframeBody.one('.portlet-body > .lfr-portlet-message-staging-alert');
+				var stagingAlert = iframeBody.one(
+					'.portlet-body > .lfr-portlet-message-staging-alert'
+				);
 
 				if (stagingAlert) {
 					stagingAlert.remove();
@@ -1297,7 +1327,9 @@
 						dialog.set(
 							'visible',
 							false,
-							event.currentTarget.hasClass('lfr-hide-dialog') ? SRC_HIDE_LINK : null
+							event.currentTarget.hasClass('lfr-hide-dialog')
+								? SRC_HIDE_LINK
+								: null
 						);
 
 						detachEventHandles();
@@ -1319,63 +1351,90 @@
 				eventName: 'selectStructure'
 			};
 
-			config = A.merge(defaultValues,	config);
+			config = A.merge(defaultValues, config);
 
 			var ddmURL;
 
 			if (config.basePortletURL) {
 				ddmURL = Liferay.PortletURL.createURL(config.basePortletURL);
-			}
-			else {
+			} else {
 				ddmURL = Liferay.PortletURL.createRenderURL();
 			}
 
 			ddmURL.setEscapeXML(false);
 
-			ddmURL.setDoAsGroupId(config.doAsGroupId || themeDisplay.getScopeGroupId());
+			ddmURL.setDoAsGroupId(
+				config.doAsGroupId || themeDisplay.getScopeGroupId()
+			);
 
 			ddmURL.setParameter('classNameId', config.classNameId);
 			ddmURL.setParameter('classPK', config.classPK);
-			ddmURL.setParameter('resourceClassNameId', config.resourceClassNameId);
+			ddmURL.setParameter(
+				'resourceClassNameId',
+				config.resourceClassNameId
+			);
 			ddmURL.setParameter('eventName', config.eventName);
 			ddmURL.setParameter('groupId', config.groupId);
 			ddmURL.setParameter('mode', config.mode);
 
 			if (config.mvcPath) {
 				ddmURL.setParameter('mvcPath', config.mvcPath);
-			}
-			else {
+			} else {
 				ddmURL.setParameter('mvcPath', '/view.jsp');
 			}
 
 			if ('navigationStartsOn' in config) {
-				ddmURL.setParameter('navigationStartsOn', config.navigationStartsOn);
+				ddmURL.setParameter(
+					'navigationStartsOn',
+					config.navigationStartsOn
+				);
 			}
 
-			ddmURL.setParameter('portletResourceNamespace', config.portletResourceNamespace);
+			ddmURL.setParameter(
+				'portletResourceNamespace',
+				config.portletResourceNamespace
+			);
 
 			if ('redirect' in config) {
 				ddmURL.setParameter('redirect', config.redirect);
 			}
 
 			if ('refererPortletName' in config) {
-				ddmURL.setParameter('refererPortletName', config.refererPortletName);
+				ddmURL.setParameter(
+					'refererPortletName',
+					config.refererPortletName
+				);
 			}
 
 			if ('refererWebDAVToken' in config) {
-				ddmURL.setParameter('refererWebDAVToken', config.refererWebDAVToken);
+				ddmURL.setParameter(
+					'refererWebDAVToken',
+					config.refererWebDAVToken
+				);
 			}
 
 			ddmURL.setParameter('scopeTitle', config.title);
 
 			if ('searchRestriction' in config) {
-				ddmURL.setParameter('searchRestriction', config.searchRestriction);
-				ddmURL.setParameter('searchRestrictionClassNameId', config.searchRestrictionClassNameId);
-				ddmURL.setParameter('searchRestrictionClassPK', config.searchRestrictionClassPK);
+				ddmURL.setParameter(
+					'searchRestriction',
+					config.searchRestriction
+				);
+				ddmURL.setParameter(
+					'searchRestrictionClassNameId',
+					config.searchRestrictionClassNameId
+				);
+				ddmURL.setParameter(
+					'searchRestrictionClassPK',
+					config.searchRestrictionClassPK
+				);
 			}
 
 			if ('showAncestorScopes' in config) {
-				ddmURL.setParameter('showAncestorScopes', config.showAncestorScopes);
+				ddmURL.setParameter(
+					'showAncestorScopes',
+					config.showAncestorScopes
+				);
 			}
 
 			if ('showBackURL' in config) {
@@ -1383,7 +1442,10 @@
 			}
 
 			if ('showCacheableInput' in config) {
-				ddmURL.setParameter('showCacheableInput', config.showCacheableInput);
+				ddmURL.setParameter(
+					'showCacheableInput',
+					config.showCacheableInput
+				);
 			}
 
 			if ('showHeader' in config) {
@@ -1391,10 +1453,16 @@
 			}
 
 			if ('showManageTemplates' in config) {
-				ddmURL.setParameter('showManageTemplates', config.showManageTemplates);
+				ddmURL.setParameter(
+					'showManageTemplates',
+					config.showManageTemplates
+				);
 			}
 
-			ddmURL.setParameter('structureAvailableFields', config.structureAvailableFields);
+			ddmURL.setParameter(
+				'structureAvailableFields',
+				config.structureAvailableFields
+			);
 			ddmURL.setParameter('templateId', config.templateId);
 
 			ddmURL.setPortletId(Liferay.PortletKeys.DYNAMIC_DATA_MAPPING);
@@ -1414,16 +1482,18 @@
 
 			var detachSelectionOnHideFn = function(event) {
 				if (!event.newVal) {
-					(new A.EventHandle(eventHandles)).detach();
+					new A.EventHandle(eventHandles).detach();
 				}
 			};
 
-			Util.openWindow(
-				config,
-				function(dialogWindow) {
-					eventHandles.push(dialogWindow.after(['destroy', 'visibleChange'], detachSelectionOnHideFn));
-				}
-			);
+			Util.openWindow(config, function(dialogWindow) {
+				eventHandles.push(
+					dialogWindow.after(
+						['destroy', 'visibleChange'],
+						detachSelectionOnHideFn
+					)
+				);
+			});
 		},
 		['liferay-portlet-url']
 	);
@@ -1434,16 +1504,16 @@
 		function(webDavUrl, onSuccess, onError) {
 			if (A.UA.ie) {
 				try {
-					var executor = new A.config.win.ActiveXObject('SharePoint.OpenDocuments');
+					var executor = new A.config.win.ActiveXObject(
+						'SharePoint.OpenDocuments'
+					);
 
 					executor.EditDocument(webDavUrl);
 
 					if (Lang.isFunction(onSuccess)) {
 						onSuccess();
 					}
-
-				}
-				catch (e) {
+				} catch (e) {
 					if (Lang.isFunction(onError)) {
 						onError(e);
 					}
@@ -1465,26 +1535,23 @@
 				if (title && !title.hasClass('not-editable')) {
 					title.addClass('portlet-title-editable');
 
-					title.on(
-						EVENT_CLICK,
-						function(event) {
-							var editable = Util._getEditableInstance(title);
+					title.on(EVENT_CLICK, function(event) {
+						var editable = Util._getEditableInstance(title);
 
-							var rendered = editable.get('rendered');
+						var rendered = editable.get('rendered');
 
-							if (rendered) {
-								editable.fire('stopEditing');
-							}
-
-							editable.set('node', event.currentTarget);
-
-							if (rendered) {
-								editable.syncUI();
-							}
-
-							editable._startEditing(event);
+						if (rendered) {
+							editable.fire('stopEditing');
 						}
-					);
+
+						editable.set('node', event.currentTarget);
+
+						if (rendered) {
+							editable.syncUI();
+						}
+
+						editable._startEditing(event);
+					});
 
 					title.setData('portletTitleEditOptions', options);
 				}
@@ -1505,22 +1572,29 @@
 
 			var detachSelectionOnHideFn = function(event) {
 				if (!event.newVal) {
-					(new A.EventHandle(eventHandles)).detach();
+					new A.EventHandle(eventHandles).detach();
 				}
 			};
 
 			if (dialog) {
-				eventHandles.push(dialog.after(['destroy', 'visibleChange'], detachSelectionOnHideFn));
+				eventHandles.push(
+					dialog.after(
+						['destroy', 'visibleChange'],
+						detachSelectionOnHideFn
+					)
+				);
 
 				dialog.show();
-			}
-			else {
+			} else {
 				var destroyDialog = function(event) {
 					var dialogId = config.id;
 
 					var dialogWindow = Util.getWindow(dialogId);
 
-					if (dialogWindow && Util.getPortletId(dialogId) === event.portletId) {
+					if (
+						dialogWindow &&
+						Util.getPortletId(dialogId) === event.portletId
+					) {
 						dialogWindow.destroy();
 
 						Liferay.detach('destroyPortlet', destroyDialog);
@@ -1546,16 +1620,16 @@
 					config.dialogIframe || {}
 				);
 
-				Util.openWindow(
-					config,
-					function(dialogWindow) {
-						eventHandles.push(
-							dialogWindow.after(['destroy', 'visibleChange'], detachSelectionOnHideFn)
-						);
+				Util.openWindow(config, function(dialogWindow) {
+					eventHandles.push(
+						dialogWindow.after(
+							['destroy', 'visibleChange'],
+							detachSelectionOnHideFn
+						)
+					);
 
-						Liferay.on('destroyPortlet', destroyDialog);
-					}
-				);
+					Liferay.on('destroyPortlet', destroyDialog);
+				});
 			}
 		},
 		['aui-base', 'liferay-portlet-url', 'liferay-util-window']
@@ -1579,65 +1653,80 @@
 
 			var detachSelectionOnHideFn = function(event) {
 				if (!event.newVal) {
-					(new A.EventHandle(eventHandles)).detach();
+					new A.EventHandle(eventHandles).detach();
 				}
 			};
 
 			var disableSelectedAssets = function(event) {
 				if (selectedData && selectedData.length) {
-					var currentWindow = event.currentTarget.node.get('contentWindow.document');
-
-					var selectorButtons = currentWindow.all('.lfr-search-container-wrapper .selector-button');
-
-					A.some(
-						selectorButtons,
-						function(item, index) {
-							var assetEntryId = item.attr('data-entityid') || item.attr('data-entityname');
-
-							var assetEntryIndex = selectedData.indexOf(assetEntryId);
-
-							if (assetEntryIndex > -1) {
-								item.attr('data-prevent-selection', true);
-								item.attr('disabled', true);
-
-								selectedData.splice(assetEntryIndex, 1);
-							}
-
-							return !selectedData.length;
-						}
+					var currentWindow = event.currentTarget.node.get(
+						'contentWindow.document'
 					);
+
+					var selectorButtons = currentWindow.all(
+						'.lfr-search-container-wrapper .selector-button'
+					);
+
+					A.some(selectorButtons, function(item, index) {
+						var assetEntryId =
+							item.attr('data-entityid') ||
+							item.attr('data-entityname');
+
+						var assetEntryIndex = selectedData.indexOf(
+							assetEntryId
+						);
+
+						if (assetEntryIndex > -1) {
+							item.attr('data-prevent-selection', true);
+							item.attr('disabled', true);
+
+							selectedData.splice(assetEntryIndex, 1);
+						}
+
+						return !selectedData.length;
+					});
 				}
 			};
 
 			if (dialog) {
-				eventHandles.push(dialog.after(['destroy', 'visibleChange'], detachSelectionOnHideFn));
+				eventHandles.push(
+					dialog.after(
+						['destroy', 'visibleChange'],
+						detachSelectionOnHideFn
+					)
+				);
 
 				dialog.show();
-			}
-			else {
+			} else {
 				var destroyDialog = function(event) {
 					var dialogId = config.id;
 
 					var dialogWindow = Util.getWindow(dialogId);
 
-					if (dialogWindow && Util.getPortletId(dialogId) === event.portletId) {
+					if (
+						dialogWindow &&
+						Util.getPortletId(dialogId) === event.portletId
+					) {
 						dialogWindow.destroy();
 
 						Liferay.detach('destroyPortlet', destroyDialog);
 					}
 				};
 
-				Util.openWindow(
-					config,
-					function(dialogWindow) {
-						eventHandles.push(
-							dialogWindow.after(['destroy', 'visibleChange'], detachSelectionOnHideFn),
-							dialogWindow.iframe.after(['load'], disableSelectedAssets)
-						);
+				Util.openWindow(config, function(dialogWindow) {
+					eventHandles.push(
+						dialogWindow.after(
+							['destroy', 'visibleChange'],
+							detachSelectionOnHideFn
+						),
+						dialogWindow.iframe.after(
+							['load'],
+							disableSelectedAssets
+						)
+					);
 
-						Liferay.on('destroyPortlet', destroyDialog);
-					}
-				);
+					Liferay.on('destroyPortlet', destroyDialog);
+				});
 			}
 		},
 		['aui-base', 'liferay-util-window']
@@ -1666,57 +1755,53 @@
 
 				docBody.addClass(currentState.cssClass);
 
-				Liferay.fire(
-					'toggleControls',
-					{
-						enabled: controlsVisible
-					}
-				);
+				Liferay.fire('toggleControls', {
+					enabled: controlsVisible
+				});
 
-				trigger.on(
-					'tap',
-					function(event) {
-						controlsVisible = !controlsVisible;
+				trigger.on('tap', function(event) {
+					controlsVisible = !controlsVisible;
 
-						var prevState = currentState;
+					var prevState = currentState;
 
-						currentState = MAP_TOGGLE_STATE[controlsVisible];
+					currentState = MAP_TOGGLE_STATE[controlsVisible];
 
-						docBody.toggleClass(prevState.cssClass);
-						docBody.toggleClass(currentState.cssClass);
+					docBody.toggleClass(prevState.cssClass);
+					docBody.toggleClass(currentState.cssClass);
 
-						var editControlsIconClass = currentState.iconCssClass;
-						var editControlsState = currentState.state;
+					var editControlsIconClass = currentState.iconCssClass;
+					var editControlsState = currentState.state;
 
-						if (icon) {
-							var newIcon = currentState.icon;
+					if (icon) {
+						var newIcon = currentState.icon;
 
-							if (!newIcon) {
-								newIcon = Util.getLexiconIcon(editControlsIconClass);
+						if (!newIcon) {
+							newIcon = Util.getLexiconIcon(
+								editControlsIconClass
+							);
 
-								newIcon = A.one(newIcon);
+							newIcon = A.one(newIcon);
 
-								currentState.icon = newIcon;
-							}
-
-							icon.replace(newIcon);
-
-							icon = newIcon;
+							currentState.icon = newIcon;
 						}
 
-						Liferay._editControlsState = editControlsState;
+						icon.replace(newIcon);
 
-						Liferay.Store('com.liferay.frontend.js.web_toggleControls', editControlsState);
-
-						Liferay.fire(
-							'toggleControls',
-							{
-								enabled: controlsVisible,
-								src: 'ui'
-							}
-						);
+						icon = newIcon;
 					}
-				);
+
+					Liferay._editControlsState = editControlsState;
+
+					Liferay.Store(
+						'com.liferay.frontend.js.web_toggleControls',
+						editControlsState
+					);
+
+					Liferay.fire('toggleControls', {
+						enabled: controlsVisible,
+						src: 'ui'
+					});
+				});
 			}
 		},
 		['event-tap', 'liferay-store']
@@ -1731,26 +1816,20 @@
 					form = form[0];
 				}
 
-				Liferay.fire(
-					'submitForm',
-					{
-						action: action,
-						form: A.one(form),
-						singleSubmit: singleSubmit,
-						validate: validate !== false
-					}
-				);
+				Liferay.fire('submitForm', {
+					action: action,
+					form: A.one(form),
+					singleSubmit: singleSubmit,
+					validate: validate !== false
+				});
 			}
 		},
 		['aui-base', 'aui-form-validator', 'aui-url', 'liferay-form']
 	);
 
-	Liferay.publish(
-		'submitForm',
-		{
-			defaultFn: Util._defaultSubmitFormFn
-		}
-	);
+	Liferay.publish('submitForm', {
+		defaultFn: Util._defaultSubmitFormFn
+	});
 
 	Liferay.provide(
 		Util,
@@ -1765,42 +1844,41 @@
 		['liferay-util-window']
 	);
 
-	Liferay.after(
-		'closeWindow',
-		function(event) {
-			var id = event.id;
+	Liferay.after('closeWindow', function(event) {
+		var id = event.id;
 
-			var dialog = Liferay.Util.getTop().Liferay.Util.Window.getById(id);
+		var dialog = Liferay.Util.getTop().Liferay.Util.Window.getById(id);
 
-			if (dialog && dialog.iframe) {
-				var dialogWindow = dialog.iframe.node.get('contentWindow').getDOM();
+		if (dialog && dialog.iframe) {
+			var dialogWindow = dialog.iframe.node.get('contentWindow').getDOM();
 
-				var openingWindow = dialogWindow.Liferay.Util.getOpener();
-				var redirect = event.redirect;
+			var openingWindow = dialogWindow.Liferay.Util.getOpener();
+			var redirect = event.redirect;
 
-				if (redirect) {
-					openingWindow.Liferay.Util.navigate(redirect);
-				}
-				else {
-					var refresh = event.refresh;
+			if (redirect) {
+				openingWindow.Liferay.Util.navigate(redirect);
+			} else {
+				var refresh = event.refresh;
 
-					if (refresh && openingWindow) {
-						var data;
+				if (refresh && openingWindow) {
+					var data;
 
-						if (!event.portletAjaxable) {
-							data = {
-								portletAjaxable: false
-							};
-						}
-
-						openingWindow.Liferay.Portlet.refresh('#p_p_id_' + refresh + '_', data);
+					if (!event.portletAjaxable) {
+						data = {
+							portletAjaxable: false
+						};
 					}
-				}
 
-				dialog.hide();
+					openingWindow.Liferay.Portlet.refresh(
+						'#p_p_id_' + refresh + '_',
+						data
+					);
+				}
 			}
+
+			dialog.hide();
 		}
-	);
+	});
 
 	Util.Window = Window;
 

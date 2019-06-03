@@ -11,12 +11,10 @@ import INITIAL_STATE from './state.es';
  * @return {Component}
  */
 const getConnectedComponent = (Component, properties) => {
-
 	/**
 	 * ConnectedComponent
 	 */
 	class ConnectedComponent extends Component {
-
 		/**
 		 * @inheritdoc
 		 * @param {object} props
@@ -25,57 +23,53 @@ const getConnectedComponent = (Component, properties) => {
 		constructor(props, ...args) {
 			super(props, ...args);
 
-			this.on(
-				'storeChanged',
-				change => {
-					const newStore = change.newVal;
-					const prevStore = change.prevVal;
+			this.on('storeChanged', change => {
+				const newStore = change.newVal;
+				const prevStore = change.prevVal;
 
-					if (newStore !== prevStore) {
-						disconnect(this);
+				if (newStore !== prevStore) {
+					disconnect(this);
 
-						if (newStore instanceof Store) {
-							connect(this, newStore);
-						}
+					if (newStore instanceof Store) {
+						connect(
+							this,
+							newStore
+						);
 					}
 				}
-			);
+			});
 
-			this.on(
-				'disposed',
-				() => {
-					disconnect(this);
-				}
-			);
+			this.on('disposed', () => {
+				disconnect(this);
+			});
 
 			if (props.store instanceof Store) {
-				connect(this, props.store);
+				connect(
+					this,
+					props.store
+				);
 			}
 		}
-
 	}
 
 	/**
 	 * Connected component state
 	 */
 	ConnectedComponent.STATE = {
-		store: Config
-			.instanceOf(Store)
-			.value(null)
+		store: Config.instanceOf(Store).value(null)
 	};
 
-	properties.forEach(
-		property => {
-			try {
-				ConnectedComponent.STATE[property] = INITIAL_STATE[property].internal();
-			}
-			catch (e) {
-				throw new Error(
-					`${property} is not available from ${Component.name}`
-				);
-			}
+	properties.forEach(property => {
+		try {
+			ConnectedComponent.STATE[property] = INITIAL_STATE[
+				property
+			].internal();
+		} catch (e) {
+			throw new Error(
+				`${property} is not available from ${Component.name}`
+			);
 		}
-	);
+	});
 
 	return ConnectedComponent;
 };

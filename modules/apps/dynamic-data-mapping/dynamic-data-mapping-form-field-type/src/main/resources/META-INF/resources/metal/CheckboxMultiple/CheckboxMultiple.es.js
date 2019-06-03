@@ -16,27 +16,21 @@ class CheckboxMultiple extends Component {
 	handleInputChangeEvent(event) {
 		const value = event.delegateTarget.checked;
 
-		this.setState(
-			{
-				value
-			}
-		);
+		this.setState({
+			value
+		});
 
-		this.emit(
-			'fieldEdited',
-			{
-				fieldInstance: this,
-				originalEvent: event,
-				value
-			}
-		);
+		this.emit('fieldEdited', {
+			fieldInstance: this,
+			originalEvent: event,
+			value
+		});
 	}
 }
 
 Soy.register(CheckboxMultiple, templates);
 
 CheckboxMultiple.STATE = {
-
 	/**
 	 * @default 'string'
 	 * @instance
@@ -90,23 +84,19 @@ CheckboxMultiple.STATE = {
 	 */
 
 	options: Config.arrayOf(
-		Config.shapeOf(
-			{
-				label: Config.string(),
-				name: Config.string(),
-				value: Config.string()
-			}
-		)
-	).value(
-		[
-			{
-				label: 'Option 1'
-			},
-			{
-				label: 'Option 2'
-			}
-		]
-	),
+		Config.shapeOf({
+			label: Config.string(),
+			name: Config.string(),
+			value: Config.string()
+		})
+	).value([
+		{
+			label: 'Option 1'
+		},
+		{
+			label: 'Option 2'
+		}
+	]),
 
 	/**
 	 * @default undefined

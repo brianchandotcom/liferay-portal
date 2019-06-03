@@ -11,16 +11,22 @@ AUI.add(
 
 		var FieldTypes = Renderer.FieldTypes;
 
-		var SELECTOR_REPEAT_BUTTONS = '.lfr-ddm-form-field-repeatable-add-button, .lfr-ddm-form-field-repeatable-delete-button';
+		var SELECTOR_REPEAT_BUTTONS =
+			'.lfr-ddm-form-field-repeatable-add-button, .lfr-ddm-form-field-repeatable-delete-button';
 
-		var TPL_REPEATABLE_ADD = '<a class="icon-plus-sign lfr-ddm-form-field-repeatable-add-button" href="javascript:;"></a>';
+		var TPL_REPEATABLE_ADD =
+			'<a class="icon-plus-sign lfr-ddm-form-field-repeatable-add-button" href="javascript:;"></a>';
 
-		var TPL_REPEATABLE_DELETE = '<a class="hide icon-minus-sign lfr-ddm-form-field-repeatable-delete-button" href="javascript:;"></a>';
+		var TPL_REPEATABLE_DELETE =
+			'<a class="hide icon-minus-sign lfr-ddm-form-field-repeatable-delete-button" href="javascript:;"></a>';
 
-		var TPL_REPEATABLE_TOOLBAR = '<div class="lfr-ddm-form-field-repeatable-toolbar">' + TPL_REPEATABLE_DELETE + TPL_REPEATABLE_ADD + '</div>';
+		var TPL_REPEATABLE_TOOLBAR =
+			'<div class="lfr-ddm-form-field-repeatable-toolbar">' +
+			TPL_REPEATABLE_DELETE +
+			TPL_REPEATABLE_ADD +
+			'</div>';
 
-		var FieldRepetitionSupport = function() {
-		};
+		var FieldRepetitionSupport = function() {};
 
 		FieldRepetitionSupport.ATTRS = {
 			repeatable: {
@@ -44,7 +50,10 @@ AUI.add(
 
 				if (instance.get('repeatable')) {
 					instance._eventHandlers.push(
-						instance.after('render', instance._afterRepeatableFieldRender)
+						instance.after(
+							'render',
+							instance._afterRepeatableFieldRender
+						)
 					);
 				}
 			},
@@ -57,11 +66,9 @@ AUI.add(
 				instance._syncOtherRepeatableFields();
 
 				if (instance._DOMEventHandlers) {
-					instance._DOMEventHandlers.forEach(
-						function(handler) {
-							handler.detach();
-						}
-					);
+					instance._DOMEventHandlers.forEach(function(handler) {
+						handler.detach();
+					});
 
 					instance._DOMEventHandlers = null;
 				}
@@ -86,27 +93,28 @@ AUI.add(
 
 				var repetitions = instance.get('repetitions');
 
-				var config = A.merge(
-					context,
-					{
-						context: A.clone(context),
-						enableEvaluations: instance.get('enableEvaluations'),
-						fieldName: instance.get('fieldName'),
-						parent: instance.get('parent'),
-						portletNamespace: instance.get('portletNamespace'),
-						repeatable: instance.get('repeatable'),
-						repeatedIndex: repetitions.length,
-						repetitions: repetitions,
-						type: instance.get('type'),
-						visible: instance.get('visible')
-					}
-				);
+				var config = A.merge(context, {
+					context: A.clone(context),
+					enableEvaluations: instance.get('enableEvaluations'),
+					fieldName: instance.get('fieldName'),
+					parent: instance.get('parent'),
+					portletNamespace: instance.get('portletNamespace'),
+					repeatable: instance.get('repeatable'),
+					repeatedIndex: repetitions.length,
+					repetitions: repetitions,
+					type: instance.get('type'),
+					visible: instance.get('visible')
+				});
 
 				var newInstanceId = Util.generateInstanceId(8);
 				var oldInstanceId = config.instanceId;
 
 				instance._updateInstanceIdConfiguration(config, newInstanceId);
-				instance._updateNameConfiguration(config, oldInstanceId, newInstanceId);
+				instance._updateNameConfiguration(
+					config,
+					oldInstanceId,
+					newInstanceId
+				);
 				instance._updateValueConfiguration(config);
 
 				return config;
@@ -173,11 +181,11 @@ AUI.add(
 
 				copiedField.render();
 
-				repetitions.filter(
-					function(repetition, currentIndex) {
+				repetitions
+					.filter(function(repetition, currentIndex) {
 						return currentIndex > index;
-					}
-				).forEach(A.bind('_syncRepeatableField', instance));
+					})
+					.forEach(A.bind('_syncRepeatableField', instance));
 
 				return copiedField;
 			},
@@ -188,7 +196,9 @@ AUI.add(
 				if (!instance.get('readOnly')) {
 					var container = instance.get('container');
 
-					container.one('.lfr-ddm-form-field-repeatable-delete-button').toggle(instance.get('repeatedIndex') > 0);
+					container
+						.one('.lfr-ddm-form-field-repeatable-delete-button')
+						.toggle(instance.get('repeatedIndex') > 0);
 				}
 			},
 
@@ -200,10 +210,15 @@ AUI.add(
 				instance.renderRepeatable();
 
 				if (!instance.get('readOnly')) {
-					(new A.EventHandle(instance._DOMEventHandlers)).detach();
+					new A.EventHandle(instance._DOMEventHandlers).detach();
 
 					instance._DOMEventHandlers = [
-						container.delegate('click', instance._handleToolbarClick, SELECTOR_REPEAT_BUTTONS, instance)
+						container.delegate(
+							'click',
+							instance._handleToolbarClick,
+							SELECTOR_REPEAT_BUTTONS,
+							instance
+						)
 					];
 				}
 			},
@@ -213,10 +228,13 @@ AUI.add(
 
 				var currentTarget = event.currentTarget;
 
-				if (currentTarget.hasClass('lfr-ddm-form-field-repeatable-delete-button')) {
+				if (
+					currentTarget.hasClass(
+						'lfr-ddm-form-field-repeatable-delete-button'
+					)
+				) {
 					instance.remove();
-				}
-				else {
+				} else {
 					instance.repeat();
 				}
 
@@ -266,13 +284,20 @@ AUI.add(
 				config.instanceId = config.context.instanceId = newInstanceId;
 			},
 
-			_updateNameConfiguration: function(config, oldInstanceId, newInstanceId) {
+			_updateNameConfiguration: function(
+				config,
+				oldInstanceId,
+				newInstanceId
+			) {
 				var instance = this;
 
 				var name = config.name;
 
 				if (name) {
-					config.name = config.context.name = name.replace(oldInstanceId, newInstanceId);
+					config.name = config.context.name = name.replace(
+						oldInstanceId,
+						newInstanceId
+					);
 				}
 			},
 
@@ -284,14 +309,11 @@ AUI.add(
 
 				if (predefinedValue) {
 					value = predefinedValue;
-				}
-				else if (Lang.isArray(value)) {
+				} else if (Lang.isArray(value)) {
 					value = [];
-				}
-				else if (Lang.isObject(value)) {
+				} else if (Lang.isObject(value)) {
 					value = {};
-				}
-				else {
+				} else {
 					value = '';
 				}
 
@@ -305,10 +327,15 @@ AUI.add(
 			}
 		};
 
-		Liferay.namespace('DDM.Renderer').FieldRepetitionSupport = FieldRepetitionSupport;
+		Liferay.namespace(
+			'DDM.Renderer'
+		).FieldRepetitionSupport = FieldRepetitionSupport;
 	},
 	'',
 	{
-		requires: ['liferay-ddm-form-renderer-types', 'liferay-ddm-form-renderer-util']
+		requires: [
+			'liferay-ddm-form-renderer-types',
+			'liferay-ddm-form-renderer-util'
+		]
 	}
 );

@@ -1,4 +1,4 @@
-;(function(Liferay) {
+(function(Liferay) {
 	var DOMTaskRunner = {
 		addTask: function(task) {
 			var instance = this;

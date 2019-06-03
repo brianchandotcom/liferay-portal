@@ -1,25 +1,26 @@
 .taglib-diff-html {
 	div {
 		&.diff-removed-image {
-			background: #FDC6C6 url(../images/diff/minus.png);
+			background: #fdc6c6 url(../images/diff/minus.png);
 		}
 
 		&.diff-added-image {
-			background: #CFC url(../images/diff/plus.png) no-repeat;
+			background: #cfc url(../images/diff/plus.png) no-repeat;
 		}
 
-		&.diff-removed-image, &.diff-added-image {
+		&.diff-removed-image,
+		&.diff-added-image {
 			opacity: 0.55;
 		}
 	}
 
 	span {
 		&.diff-html-added {
-			background-color: #CFC;
+			background-color: #cfc;
 			font-size: 1em;
 
 			img {
-				border-color: #CFC;
+				border-color: #cfc;
 			}
 		}
 
@@ -32,12 +33,12 @@
 		}
 
 		&.diff-html-removed {
-			background-color: #FDC6C6;
+			background-color: #fdc6c6;
 			font-size: 1em;
 			text-decoration: line-through;
 
 			img {
-				border-color: #FDC6C6;
+				border-color: #fdc6c6;
 			}
 		}
 	}

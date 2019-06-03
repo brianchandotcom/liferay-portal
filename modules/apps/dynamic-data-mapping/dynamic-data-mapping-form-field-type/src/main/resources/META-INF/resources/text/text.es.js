@@ -14,9 +14,7 @@ class Text extends Component {}
 Soy.register(Text, templates, 'render');
 
 if (!window.DDMText) {
-	window.DDMText = {
-
-	};
+	window.DDMText = {};
 }
 
 window.DDMText.render = Text;

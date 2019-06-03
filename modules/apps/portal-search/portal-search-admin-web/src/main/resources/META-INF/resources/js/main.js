@@ -19,185 +19,231 @@ AUI.add(
 
 		var STR_URL = 'url';
 
-		var Admin = A.Component.create(
-			{
-				ATTRS: {
-					form: {
-						setter: A.one,
-						value: null
-					},
-
-					indexActionsPanel: {
-						value: null
-					},
-
-					redirectUrl: {
-						validator: Lang.isString,
-						value: null
-					},
-
-					submitButton: {
-						validator: Lang.isString,
-						value: null
-					},
-
-					url: {
-						value: null
-					}
+		var Admin = A.Component.create({
+			ATTRS: {
+				form: {
+					setter: A.one,
+					value: null
 				},
 
-				AUGMENTS: [Liferay.PortletBase],
+				indexActionsPanel: {
+					value: null
+				},
 
-				EXTENDS: A.Base,
+				redirectUrl: {
+					validator: Lang.isString,
+					value: null
+				},
 
-				NAME: 'admin',
+				submitButton: {
+					validator: Lang.isString,
+					value: null
+				},
 
-				prototype: {
-					initializer: function(config) {
-						var instance = this;
+				url: {
+					value: null
+				}
+			},
 
-						instance._eventHandles = [];
+			AUGMENTS: [Liferay.PortletBase],
 
-						instance.bindUI();
+			EXTENDS: A.Base,
 
-						instance._laterTimeout = A.later(INTERVAL_RENDER_IN_PROGRESS, instance, '_updateIndexActions');
-					},
+			NAME: 'admin',
 
-					bindUI: function() {
-						var instance = this;
+			prototype: {
+				initializer: function(config) {
+					var instance = this;
 
-						instance._eventHandles.push(
-							instance.get(STR_FORM).delegate(
+					instance._eventHandles = [];
+
+					instance.bindUI();
+
+					instance._laterTimeout = A.later(
+						INTERVAL_RENDER_IN_PROGRESS,
+						instance,
+						'_updateIndexActions'
+					);
+				},
+
+				bindUI: function() {
+					var instance = this;
+
+					instance._eventHandles.push(
+						instance
+							.get(STR_FORM)
+							.delegate(
 								STR_CLICK,
 								A.bind('_onSubmit', instance),
 								instance.get('submitButton')
 							)
+					);
+				},
+
+				destructor: function() {
+					var instance = this;
+
+					A.Array.invoke(instance._eventHandles, 'detach');
+
+					instance._eventHandles = null;
+
+					A.clearTimeout(instance._laterTimeout);
+				},
+
+				_addInputsFromData: function(data) {
+					var instance = this;
+
+					var form = instance.get(STR_FORM);
+
+					var inputsArray = A.Object.map(data, function(value, key) {
+						key = MAP_DATA_PARAMS[key] || key;
+
+						var nsKey = instance.ns(key);
+
+						return (
+							'<input id="' +
+							nsKey +
+							'" name="' +
+							nsKey +
+							'" type="hidden" value="' +
+							value +
+							'" />'
 						);
-					},
+					});
 
-					destructor: function() {
-						var instance = this;
+					form.append(inputsArray.join(''));
+				},
 
-						A.Array.invoke(instance._eventHandles, 'detach');
+				_isBackgroundTaskInProgress: function() {
+					var instance = this;
 
-						instance._eventHandles = null;
+					var indexActionsNode = A.one(
+						instance.get(STR_INDEX_ACTIONS_PANEL)
+					);
 
-						A.clearTimeout(instance._laterTimeout);
-					},
+					return !!(
+						indexActionsNode &&
+						indexActionsNode.one(
+							'.background-task-status-in-progress'
+						)
+					);
+				},
 
-					_addInputsFromData: function(data) {
-						var instance = this;
+				_onSubmit: function(event) {
+					var instance = this;
 
-						var form = instance.get(STR_FORM);
+					var data = event.currentTarget.getData();
+					var form = instance.get(STR_FORM);
 
-						var inputsArray = A.Object.map(
-							data,
-							function(value, key) {
-								key = MAP_DATA_PARAMS[key] || key;
+					var redirect = instance.one('#redirect', form);
 
-								var nsKey = instance.ns(key);
+					if (redirect) {
+						redirect.val(instance.get('redirectURL'));
+					}
 
-								return '<input id="' + nsKey + '" name="' + nsKey + '" type="hidden" value="' + value + '" />';
-							}
-						);
+					instance._addInputsFromData(data);
 
-						form.append(inputsArray.join(''));
-					},
+					submitForm(form, instance.get(STR_URL));
+				},
 
-					_isBackgroundTaskInProgress: function() {
-						var instance = this;
+				_updateIndexActions: function() {
+					var instance = this;
 
-						var indexActionsNode = A.one(instance.get(STR_INDEX_ACTIONS_PANEL));
+					var renderInterval = INTERVAL_RENDER_IDLE;
 
-						return !!(indexActionsNode && indexActionsNode.one('.background-task-status-in-progress'));
-					},
+					if (instance._isBackgroundTaskInProgress()) {
+						renderInterval = INTERVAL_RENDER_IN_PROGRESS;
+					}
 
-					_onSubmit: function(event) {
-						var instance = this;
+					var currentAdminIndexPanel = A.one(
+						instance.get(STR_INDEX_ACTIONS_PANEL)
+					);
 
-						var data = event.currentTarget.getData();
-						var form = instance.get(STR_FORM);
+					if (currentAdminIndexPanel) {
+						A.io.request(instance.get(STR_URL), {
+							on: {
+								success: function(event, id, obj) {
+									var responseDataNode = A.Node.create(
+										this.get('responseData')
+									);
 
-						var redirect = instance.one('#redirect', form);
+									var responseAdminIndexPanel = responseDataNode.one(
+										instance.get(STR_INDEX_ACTIONS_PANEL)
+									);
 
-						if (redirect) {
-							redirect.val(instance.get('redirectURL'));
-						}
+									var responseAdminIndexNodeList = responseAdminIndexPanel.all(
+										'.index-action-wrapper'
+									);
 
-						instance._addInputsFromData(data);
+									var currentAdminIndexNodeList = currentAdminIndexPanel.all(
+										'.index-action-wrapper'
+									);
 
-						submitForm(
-							form,
-							instance.get(STR_URL)
-						);
-					},
+									currentAdminIndexNodeList.each(function(
+										item,
+										index
+									) {
+										var inProgress = item.one('.progress');
 
-					_updateIndexActions: function() {
-						var instance = this;
+										var responseAdminIndexNode = responseAdminIndexNodeList.item(
+											index
+										);
 
-						var renderInterval = INTERVAL_RENDER_IDLE;
-
-						if (instance._isBackgroundTaskInProgress()) {
-							renderInterval = INTERVAL_RENDER_IN_PROGRESS;
-						}
-
-						var currentAdminIndexPanel = A.one(instance.get(STR_INDEX_ACTIONS_PANEL));
-
-						if (currentAdminIndexPanel) {
-							A.io.request(
-								instance.get(STR_URL),
-								{
-									on: {
-										success: function(event, id, obj) {
-											var responseDataNode = A.Node.create(this.get('responseData'));
-
-											var responseAdminIndexPanel = responseDataNode.one(instance.get(STR_INDEX_ACTIONS_PANEL));
-
-											var responseAdminIndexNodeList = responseAdminIndexPanel.all('.index-action-wrapper');
-
-											var currentAdminIndexNodeList = currentAdminIndexPanel.all('.index-action-wrapper');
-
-											currentAdminIndexNodeList.each(
-												function(item, index) {
-													var inProgress = item.one('.progress');
-
-													var responseAdminIndexNode = responseAdminIndexNodeList.item(index);
-
-													if (!inProgress) {
-														inProgress = responseAdminIndexNode.one('.progress');
-													}
-
-													if (inProgress) {
-														item.replace(responseAdminIndexNode);
-													}
-												}
+										if (!inProgress) {
+											inProgress = responseAdminIndexNode.one(
+												'.progress'
 											);
-
-											var controlMenuId = '#' + instance.ns('controlMenu');
-
-											var currentControlMenu = A.one(controlMenuId);
-
-											var responseControlMenu = responseDataNode.one(controlMenuId);
-
-											if (currentControlMenu && responseControlMenu) {
-												currentControlMenu.replace(responseControlMenu);
-											}
 										}
+
+										if (inProgress) {
+											item.replace(
+												responseAdminIndexNode
+											);
+										}
+									});
+
+									var controlMenuId =
+										'#' + instance.ns('controlMenu');
+
+									var currentControlMenu = A.one(
+										controlMenuId
+									);
+
+									var responseControlMenu = responseDataNode.one(
+										controlMenuId
+									);
+
+									if (
+										currentControlMenu &&
+										responseControlMenu
+									) {
+										currentControlMenu.replace(
+											responseControlMenu
+										);
 									}
 								}
-							);
-						}
-
-						instance._laterTimeout = A.later(renderInterval, instance, '_updateIndexActions');
+							}
+						});
 					}
+
+					instance._laterTimeout = A.later(
+						renderInterval,
+						instance,
+						'_updateIndexActions'
+					);
 				}
 			}
-		);
+		});
 
 		Liferay.Portlet.Admin = Admin;
 	},
 	'',
 	{
-		requires: ['aui-io-plugin-deprecated', 'aui-io-request', 'liferay-portlet-base', 'querystring-parse']
+		requires: [
+			'aui-io-plugin-deprecated',
+			'aui-io-request',
+			'liferay-portlet-base',
+			'querystring-parse'
+		]
 	}
 );

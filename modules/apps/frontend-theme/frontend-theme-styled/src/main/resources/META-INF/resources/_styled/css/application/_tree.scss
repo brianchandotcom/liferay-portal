@@ -3,7 +3,7 @@
 		padding-right: 2px;
 
 		&:before {
-			content: "\f096";
+			content: '\f096';
 		}
 	}
 
@@ -12,12 +12,12 @@
 			padding-right: 0;
 
 			&:before {
-				content: "\f046";
+				content: '\f046';
 			}
 		}
 	}
 
-	[class ^="icon-"] {
+	[class^='icon-'] {
 		margin-right: 5px;
 	}
 

@@ -8,33 +8,33 @@ const handleFieldSetAdded = (props, state, event) => {
 
 	const visitor = new PagesVisitor(fieldSetPages);
 
-	const newFieldsetPages = visitor.mapFields(
-		field => {
-			const name = generateFieldName(pages, field.fieldName);
+	const newFieldsetPages = visitor.mapFields(field => {
+		const name = generateFieldName(pages, field.fieldName);
 
-			const settingsContextVisitor = new PagesVisitor(field.settingsContext.pages);
+		const settingsContextVisitor = new PagesVisitor(
+			field.settingsContext.pages
+		);
 
-			return {
-				...field,
-				fieldName: name,
-				settingsContext: {
-					...field.settingsContext,
-					pages: settingsContextVisitor.mapFields(
-						settingsContextField => {
-							if (settingsContextField.fieldName === 'name') {
-								settingsContextField = {
-									...settingsContextField,
-									value: name
-								};
-							}
-
-							return settingsContextField;
+		return {
+			...field,
+			fieldName: name,
+			settingsContext: {
+				...field.settingsContext,
+				pages: settingsContextVisitor.mapFields(
+					settingsContextField => {
+						if (settingsContextField.fieldName === 'name') {
+							settingsContextField = {
+								...settingsContextField,
+								value: name
+							};
 						}
-					)
-				}
-			};
-		}
-	);
+
+						return settingsContextField;
+					}
+				)
+			}
+		};
+	});
 
 	const rows = newFieldsetPages[0].rows;
 

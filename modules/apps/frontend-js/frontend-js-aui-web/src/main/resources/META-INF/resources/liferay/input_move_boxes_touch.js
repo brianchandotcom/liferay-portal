@@ -32,24 +32,32 @@ AUI.add(
 
 		var STR_TRUE = 'true';
 
-		var TPL_EDIT_SELECTION = '<button class="btn btn-default edit-selection" type="button">' +
-				'<i class="icon-edit"></i> ' +
-				'<span class="btn-text">{0}</span>' +
+		var TPL_EDIT_SELECTION =
+			'<button class="btn btn-default edit-selection" type="button">' +
+			'<i class="icon-edit"></i> ' +
+			'<span class="btn-text">{0}</span>' +
 			'</button>';
 
 		var TPL_MOVE_OPTION = new A.Template(
 			'<tpl for="options">',
-				'<div class="handle move-option {[ values.selected ? "', STR_SELECTED, '" : "" ]}" data-value="{value}">',
-					'<i class="handle icon-reorder"></i>',
+			'<div class="handle move-option {[ values.selected ? "',
+			STR_SELECTED,
+			'" : "" ]}" data-value="{value}">',
+			'<i class="handle icon-reorder"></i>',
 
-					'<input {[ values.selected ? "', STR_CHECKED, '" : "" ]} class="checkbox" id="{value}CheckBox" type="checkbox" value="{value}" />',
+			'<input {[ values.selected ? "',
+			STR_CHECKED,
+			'" : "" ]} class="checkbox" id="{value}CheckBox" type="checkbox" value="{value}" />',
 
-					'<label class="title" for="{value}CheckBox" title="{name}">{name}</label>',
-				'</div>',
+			'<label class="title" for="{value}CheckBox" title="{name}">{name}</label>',
+			'</div>',
 			'</tpl>'
 		);
 
-		var TPL_SORTABLE_CONTAINER = '<div class="sortable-container ' + STR_SORT_LIST_ACTIVE + '"></div>';
+		var TPL_SORTABLE_CONTAINER =
+			'<div class="sortable-container ' +
+			STR_SORT_LIST_ACTIVE +
+			'"></div>';
 
 		A.mix(
 			Liferay.InputMoveBoxes.prototype,
@@ -59,7 +67,9 @@ AUI.add(
 
 					instance._contentBox = instance.get('contentBox');
 
-					instance._sortableContainer = A.Node.create(TPL_SORTABLE_CONTAINER);
+					instance._sortableContainer = A.Node.create(
+						TPL_SORTABLE_CONTAINER
+					);
 
 					instance._contentBox.append(instance._sortableContainer);
 
@@ -67,7 +77,11 @@ AUI.add(
 					instance._renderButtons();
 					instance._renderSortList();
 
-					instance._afterDropHitTask = A.debounce('_afterDropHitFn', 50, instance);
+					instance._afterDropHitTask = A.debounce(
+						'_afterDropHitFn',
+						50,
+						instance
+					);
 				},
 
 				bindUI: function() {
@@ -80,15 +94,9 @@ AUI.add(
 						A.bind('_onEditSelectionClick', instance)
 					);
 
-					dd.after(
-						'drag:drophit',
-						A.bind('_afterDropHit', instance)
-					);
+					dd.after('drag:drophit', A.bind('_afterDropHit', instance));
 
-					dd.after(
-						'drag:start',
-						A.bind('_afterDragStart', instance)
-					);
+					dd.after('drag:start', A.bind('_afterDragStart', instance));
 
 					instance._contentBox.delegate(
 						STR_CLICK,
@@ -121,12 +129,10 @@ AUI.add(
 
 					var value = dragNode.attr('data-value');
 
-					instance._afterDropHitTask(
-						{
-							dropNode: dropNode,
-							value: value
-						}
-					);
+					instance._afterDropHitTask({
+						dropNode: dropNode,
+						value: value
+					});
 				},
 
 				_afterDropHitFn: function(event) {
@@ -137,14 +143,16 @@ AUI.add(
 					var dropNode = event.dropNode;
 					var value = event.value;
 
-					var moveOption = instance._sortableContainer.one(SELECTOR_MOVE_OPTION + '[data-value="' + value + '"]');
+					var moveOption = instance._sortableContainer.one(
+						SELECTOR_MOVE_OPTION + '[data-value="' + value + '"]'
+					);
 
 					var selectedSortList = instance._selectedSortList;
 
 					var dragNodeIndex = selectedSortList.indexOf(moveOption);
 					var dropNodeIndex = selectedSortList.indexOf(dropNode);
 
-					var referenceNodeIndex = (dragNodeIndex + 1);
+					var referenceNodeIndex = dragNodeIndex + 1;
 
 					if (dropNodeIndex > dragNodeIndex) {
 						referenceNodeIndex = dragNodeIndex;
@@ -211,33 +219,35 @@ AUI.add(
 				_renderButtons: function() {
 					var instance = this;
 
-					var buttonTpl = Lang.sub(TPL_EDIT_SELECTION, [Liferay.Language.get('edit')]);
+					var buttonTpl = Lang.sub(TPL_EDIT_SELECTION, [
+						Liferay.Language.get('edit')
+					]);
 
 					instance._editSelection = A.Node.create(buttonTpl);
 
-					instance._sortableContainer.placeBefore(instance._editSelection);
+					instance._sortableContainer.placeBefore(
+						instance._editSelection
+					);
 				},
 
 				_renderSortList: function() {
 					var instance = this;
 
-					var options = instance._contentBox.all('.choice-selector option');
+					var options = instance._contentBox.all(
+						'.choice-selector option'
+					);
 
 					var sortableContainer = instance._sortableContainer;
 
 					var data = [];
 
-					options.each(
-						function(item, index) {
-							data.push(
-								{
-									name: item.html(),
-									selected: (item.attr('data-selected') === STR_TRUE),
-									value: item.val()
-								}
-							);
-						}
-					);
+					options.each(function(item, index) {
+						data.push({
+							name: item.html(),
+							selected: item.attr('data-selected') === STR_TRUE,
+							value: item.val()
+						});
+					});
 
 					TPL_MOVE_OPTION.render(
 						{
@@ -246,26 +256,20 @@ AUI.add(
 						sortableContainer
 					);
 
-					instance._sortable = new A.Sortable(
-						{
-							container: sortableContainer,
-							handles: [sortableContainer.all('.handle')],
-							nodes: SELECTOR_MOVE_OPTION,
-							opacity: '0.2'
-						}
-					);
+					instance._sortable = new A.Sortable({
+						container: sortableContainer,
+						handles: [sortableContainer.all('.handle')],
+						nodes: SELECTOR_MOVE_OPTION,
+						opacity: '0.2'
+					});
 
-					instance._sortable.delegate.dd.plug(
-						A.Plugin.DDConstrained,
-						{
+					instance._sortable.delegate.dd
+						.plug(A.Plugin.DDConstrained, {
 							constrain: sortableContainer
-						}
-					).plug(
-						A.Plugin.DDWinScroll,
-						{
+						})
+						.plug(A.Plugin.DDWinScroll, {
 							horizontal: false
-						}
-					);
+						});
 
 					instance._syncSelectedSortList();
 				},
@@ -283,7 +287,9 @@ AUI.add(
 				_syncSelectedSortList: function() {
 					var instance = this;
 
-					instance._selectedSortList = instance._sortableContainer.all(SELECTOR_MOVE_OPTION + SELECTOR_SELECTED);
+					instance._selectedSortList = instance._sortableContainer.all(
+						SELECTOR_MOVE_OPTION + SELECTOR_SELECTED
+					);
 				},
 
 				_toggleMoveOption: function(checkbox, option) {
@@ -296,7 +302,9 @@ AUI.add(
 					instance._syncSelectedSortList();
 
 					if (moveOption.hasClass(STR_SELECTED)) {
-						var index = instance._selectedSortList.indexOf(moveOption);
+						var index = instance._selectedSortList.indexOf(
+							moveOption
+						);
 
 						instance._sortLeftBox(option, index);
 					}
@@ -307,6 +315,13 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-template-deprecated', 'dd-constrain', 'dd-scroll', 'liferay-input-move-boxes', 'sortable']
+		requires: [
+			'aui-base',
+			'aui-template-deprecated',
+			'dd-constrain',
+			'dd-scroll',
+			'liferay-input-move-boxes',
+			'sortable'
+		]
 	}
 );

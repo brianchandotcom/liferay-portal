@@ -12,7 +12,6 @@ import GoogleMapsSearch from './GoogleMapsSearch.es';
  * @review
  */
 class MapGoogleMaps extends MapBase {
-
 	/**
 	 * Creates a new map using Google Map's API
 	 * @param  {Array} args List of arguments to be passed to State
@@ -43,8 +42,8 @@ class MapGoogleMaps extends MapBase {
 		if (this.data && this.data.features) {
 			const bounds = new google.maps.LatLngBounds();
 
-			this.data.features.forEach(
-				feature => bounds.extend(
+			this.data.features.forEach(feature =>
+				bounds.extend(
 					new google.maps.LatLng(
 						feature.geometry.coordinates[1],
 						feature.geometry.coordinates[0]

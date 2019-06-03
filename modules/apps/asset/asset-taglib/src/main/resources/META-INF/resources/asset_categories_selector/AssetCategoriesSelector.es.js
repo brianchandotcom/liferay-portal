@@ -21,7 +21,6 @@ class AssetCategoriesSelector extends Component {
 }
 
 AssetCategoriesSelector.STATE = {
-
 	/**
 	 * Event name which fires when user selects a display page using item selector
 	 * @default undefined

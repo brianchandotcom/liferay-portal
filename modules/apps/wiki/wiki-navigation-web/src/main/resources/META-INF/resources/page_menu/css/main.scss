@@ -16,12 +16,13 @@
 			padding: 0 20px;
 
 			&:hover {
-				background-color: #4EA9DA;
-				color: #FFF;
+				background-color: #4ea9da;
+				color: #fff;
 			}
 		}
 
-		&, li {
+		&,
+		li {
 			list-style-image: none;
 			list-style-position: outside;
 			list-style-type: none;

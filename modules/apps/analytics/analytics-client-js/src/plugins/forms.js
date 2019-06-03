@@ -87,14 +87,10 @@ function trackFieldBlurred(analytics) {
 
 		const focusDuration = perfData.duration;
 
-		analytics.send(
-			'fieldBlurred',
-			applicationId,
-			{
-				...payload,
-				focusDuration
-			}
-		);
+		analytics.send('fieldBlurred', applicationId, {
+			...payload,
+			focusDuration
+		});
 
 		performance.clearMarks('focusDuration');
 	};
@@ -159,21 +155,16 @@ function trackFormSubmitted(analytics) {
  * @param {object} The Analytics client instance
  */
 function trackFormViewed(analytics) {
-	return onReady(
-		() => {
-			Array.prototype.slice.call(
-				document.querySelectorAll('form')
-			).filter(
-				form => isTrackableForm(form)
-			).forEach(
-				form => {
-					const payload = getFormPayload(form);
+	return onReady(() => {
+		Array.prototype.slice
+			.call(document.querySelectorAll('form'))
+			.filter(form => isTrackableForm(form))
+			.forEach(form => {
+				const payload = getFormPayload(form);
 
-					analytics.send('formViewed', applicationId, payload);
-				}
-			);
-		}
-	);
+				analytics.send('formViewed', applicationId, payload);
+			});
+	});
 }
 
 /**

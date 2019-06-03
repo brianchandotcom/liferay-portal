@@ -1,6 +1,6 @@
-@import "bourbon";
-@import "mixins";
-@import "variables";
+@import 'bourbon';
+@import 'mixins';
+@import 'variables';
 
 body {
 	&.open #wrapper {
@@ -9,13 +9,15 @@ body {
 		}
 	}
 
-	&.open .control-menu, &.open .affix {
+	&.open .control-menu,
+	&.open .affix {
 		@include sm() {
 			left: $product-menu-width;
 		}
 	}
 
-	&.open, &.sidenav-transition {
+	&.open,
+	&.sidenav-transition {
 		@include sm() {
 			overflow-x: hidden;
 		}
@@ -60,25 +62,25 @@ body {
 
 .product-menu {
 	.form-control {
-		background-color: #1B2228;
+		background-color: #1b2228;
 		border-radius: 0;
 		border-width: 0;
 		box-shadow: none;
-		color: #869CAD;
+		color: #869cad;
 		height: 40px;
 		padding: 8px 12px;
 
 		@include placeholder {
-			color: #869CAD;
+			color: #869cad;
 		}
 
 		&:focus {
-			background-color: #1B2228;
+			background-color: #1b2228;
 			box-shadow: $product-menu-focus-box-shadow;
-			color: #FFF;
+			color: #fff;
 
 			@include placeholder {
-				color: #FFF;
+				color: #fff;
 			}
 		}
 	}
@@ -116,20 +118,25 @@ body {
 	}
 
 	.nav-equal-height {
-		.nav > .active, > .active {
+		.nav > .active,
+		> .active {
 			border-left: 4px solid $product-menu-nav-link-active-color;
 			font-weight: 700;
 			margin-left: -24px;
 			padding-left: 20px;
 		}
 
-		> .active > a, .nav > .active > a {
-			&, &:focus, &:hover {
+		> .active > a,
+		.nav > .active > a {
+			&,
+			&:focus,
+			&:hover {
 				color: $product-menu-nav-link-active-color;
 			}
 		}
 
-		> .active, .nav > .active {
+		> .active,
+		.nav > .active {
 			border-left-color: $product-menu-nav-link-active-color;
 		}
 	}
@@ -143,7 +150,8 @@ body {
 		a {
 			color: $product-menu-header-link-color;
 
-			&:focus, &:hover {
+			&:focus,
+			&:hover {
 				color: $product-menu-header-link-hover-color;
 			}
 		}
@@ -151,7 +159,9 @@ body {
 }
 
 .product-menu {
-	a.list-group-heading, button.list-group-heading, .list-group-heading[data-toggle="collapse"] {
+	a.list-group-heading,
+	button.list-group-heading,
+	.list-group-heading[data-toggle='collapse'] {
 		border-color: transparent;
 		color: $product-menu-list-group-heading-color;
 	}
@@ -203,7 +213,9 @@ body {
 		@include word-wrap(normal);
 
 		&.active {
-			&, &:hover, &:focus {
+			&,
+			&:hover,
+			&:focus {
 				background-color: $product-menu-list-group-heading-active-bg;
 			}
 
@@ -212,7 +224,8 @@ body {
 			}
 		}
 
-		&:focus, &:hover {
+		&:focus,
+		&:hover {
 			background-color: $product-menu-list-group-heading-bg;
 		}
 
@@ -255,14 +268,16 @@ body {
 		padding: 8px 8px 8px 24px;
 	}
 
-	.collapse, .collapsing {
+	.collapse,
+	.collapsing {
 		> .list-group-item {
 			background-color: $product-menu-list-group-item-bg;
 		}
 	}
 
 	.nav > li > a {
-		&:focus, &:hover {
+		&:focus,
+		&:hover {
 			background-color: transparent;
 		}
 
@@ -301,17 +316,20 @@ body {
 		}
 
 		.panel-heading + .panel-collapse {
-			> .panel-body, > .list-group {
+			> .panel-body,
+			> .list-group {
 				border-top-width: 0;
 			}
 
-			&.in, &.collapsing {
+			&.in,
+			&.collapsing {
 				border-bottom: 2px solid $product-menu-panel-title-active-border;
 			}
 		}
 	}
 
-	.panel-header, .panel-heading {
+	.panel-header,
+	.panel-heading {
 		border-bottom-width: 1px;
 		font-size: inherit;
 		line-height: 1.5;
@@ -320,9 +338,12 @@ body {
 		.panel-title > .panel-toggler {
 			&:not(.collapsed) {
 				background-color: $product-menu-panel-title-active-bg;
-				border-left: $product-menu-panel-title-active-border-left-width $product-menu-panel-title-active-border-style $product-menu-panel-title-active-border;
+				border-left: $product-menu-panel-title-active-border-left-width
+					$product-menu-panel-title-active-border-style
+					$product-menu-panel-title-active-border;
 				font-weight: 700;
-				padding-left: 24px - $product-menu-panel-title-active-border-left-width;
+				padding-left: 24px -
+					$product-menu-panel-title-active-border-left-width;
 			}
 
 			&:hover {
@@ -336,14 +357,17 @@ body {
 				top: 4px;
 			}
 
-			.category-name, .user-name, .site-name {
+			.category-name,
+			.user-name,
+			.site-name {
 				color: $product-menu-panel-title-color;
 			}
 		}
 	}
 
 	.panel-header {
-		.collapse-icon-closed, .collapse-icon-open {
+		.collapse-icon-closed,
+		.collapse-icon-open {
 			font-size: inherit;
 			top: 50%;
 		}
@@ -360,7 +384,8 @@ body {
 }
 
 .product-menu {
-	.user-icon, .sticker {
+	.user-icon,
+	.sticker {
 		display: inline-block;
 		float: left;
 		margin-right: 16px;
@@ -385,7 +410,8 @@ body {
 
 .product-menu {
 	.staging-links {
-		a, .links-separator {
+		a,
+		.links-separator {
 			color: $product-menu-nav-link-color;
 		}
 

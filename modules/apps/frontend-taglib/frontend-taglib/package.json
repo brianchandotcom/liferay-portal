@@ -1,18 +1,4 @@
 {
-	"csfConfig": {
-		"path:**/*.js": {
-			"js": {
-				"lint": {
-					"globals": {
-						"$": true,
-						"AlloyEditor": true,
-						"CKEDITOR": true,
-						"MODULE_PATH": true
-					}
-				}
-			}
-		}
-	},
 	"dependencies": {
 		"clay-dropdown": "2.16.0",
 		"clay-modal": "2.16.0",

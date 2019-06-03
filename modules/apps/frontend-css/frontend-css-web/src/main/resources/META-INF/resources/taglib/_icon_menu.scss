@@ -1,4 +1,4 @@
-@import "mixins";
+@import 'mixins';
 
 .lfr-icon-menu .lfr-icon-menu-icon {
 	max-width: none;
@@ -14,7 +14,8 @@
 	overflow-y: auto;
 	position: relative;
 
-	&.direction-left, &.direction-right {
+	&.direction-left,
+	&.direction-right {
 		margin: 0 2px;
 	}
 
@@ -52,7 +53,8 @@
 	.table-cell.last .lfr-icon-menu .dropdown-toggle {
 		text-align: center;
 
-		> img, .lfr-icon-menu-text {
+		> img,
+		.lfr-icon-menu-text {
 			display: none;
 		}
 	}

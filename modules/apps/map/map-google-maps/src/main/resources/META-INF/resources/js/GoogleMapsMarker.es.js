@@ -5,7 +5,6 @@ import MarkerBase from 'map-common/js/MarkerBase.es';
  * @review
  */
 class GoogleMapsMarker extends MarkerBase {
-
 	/**
 	 * If a marked has been created, sets the marker location to the given one
 	 * @param {Object} location Location to set the native marker in
@@ -23,13 +22,11 @@ class GoogleMapsMarker extends MarkerBase {
 	 */
 	_getNativeMarker(location, map) {
 		if (!this._nativeMarker) {
-			this._nativeMarker = new google.maps.Marker(
-				{
-					draggable: true,
-					map: map,
-					position: location
-				}
-			);
+			this._nativeMarker = new google.maps.Marker({
+				draggable: true,
+				map: map,
+				position: location
+			});
 
 			google.maps.event.addListener(
 				this._nativeMarker,

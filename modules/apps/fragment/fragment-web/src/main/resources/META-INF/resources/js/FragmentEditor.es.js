@@ -14,15 +14,11 @@ import './SourceEditor.es';
  * a <code>&lt;FragmentPreview /></code> component for the preview.
  */
 class FragmentEditor extends PortletBase {
-
 	/**
 	 * @inheritDoc
 	 */
 	shouldUpdate(changes) {
-		return changes._html ||
-			changes._js ||
-			changes._css ||
-			changes._saving;
+		return changes._html || changes._js || changes._css || changes._saving;
 	}
 
 	/**
@@ -36,11 +32,11 @@ class FragmentEditor extends PortletBase {
 	 * }}
 	 */
 	getContent() {
-		return ({
+		return {
 			css: this._css,
 			html: this._html,
 			js: this._js
-		});
+		};
 	}
 
 	/**
@@ -61,10 +57,7 @@ class FragmentEditor extends PortletBase {
 	 * @private
 	 */
 	_handleContentChanged() {
-		this.emit(
-			'contentChanged',
-			this.getContent()
-		);
+		this.emit('contentChanged', this.getContent());
 	}
 
 	/**
@@ -115,63 +108,46 @@ class FragmentEditor extends PortletBase {
 		if (this.isHtmlValid()) {
 			this._saving = true;
 
-			this.fetch(
-				this.urls.edit,
-				{
-					cssContent: content.css,
-					fragmentCollectionId: this.fragmentCollectionId,
-					fragmentEntryId: this.fragmentEntryId,
-					htmlContent: content.html,
-					jsContent: content.js,
-					name: this.name,
-					status
-				}
-			)
-				.then(
-					response => response.json()
-				)
-				.then(
-					response => {
-						if (response.error) {
-							throw response.error;
-						}
-
-						return response;
+			this.fetch(this.urls.edit, {
+				cssContent: content.css,
+				fragmentCollectionId: this.fragmentCollectionId,
+				fragmentEntryId: this.fragmentEntryId,
+				htmlContent: content.html,
+				jsContent: content.js,
+				name: this.name,
+				status
+			})
+				.then(response => response.json())
+				.then(response => {
+					if (response.error) {
+						throw response.error;
 					}
-				)
-				.then(
-					response => {
-						const redirectURL = (
-							response.redirect ||
-							this.urls.redirect
-						);
 
-						Liferay.Util.navigate(redirectURL);
-					}
-				)
-				.catch(
-					error => {
-						this._saving = false;
+					return response;
+				})
+				.then(response => {
+					const redirectURL = response.redirect || this.urls.redirect;
 
-						const message = typeof error === 'string' ?
-							error :
-							Liferay.Language.get('error');
+					Liferay.Util.navigate(redirectURL);
+				})
+				.catch(error => {
+					this._saving = false;
 
-						openToast(
-							{
-								message,
-								title: Liferay.Language.get('error'),
-								type: 'danger'
-							}
-						);
-					}
-				);
-		}
-		else {
+					const message =
+						typeof error === 'string'
+							? error
+							: Liferay.Language.get('error');
+
+					openToast({
+						message,
+						title: Liferay.Language.get('error'),
+						type: 'danger'
+					});
+				});
+		} else {
 			alert(Liferay.Language.get('fragment-html-is-invalid'));
 		}
 	}
-
 }
 
 /**
@@ -181,7 +157,6 @@ class FragmentEditor extends PortletBase {
  * @type {!Object}
  */
 FragmentEditor.STATE = {
-
 	/**
 	 * List of tags for custom autocompletion in the HTML editor.
 	 *
@@ -191,12 +166,10 @@ FragmentEditor.STATE = {
 	 * @type Array
 	 */
 	autocompleteTags: Config.arrayOf(
-		Config.shapeOf(
-			{
-				content: Config.string(),
-				name: Config.string()
-			}
-		)
+		Config.shapeOf({
+			content: Config.string(),
+			name: Config.string()
+		})
 	),
 
 	/**
@@ -239,12 +212,10 @@ FragmentEditor.STATE = {
 	 *	redirect: !string
 	 * }}
 	 */
-	urls: Config.shapeOf(
-		{
-			edit: Config.string().required(),
-			redirect: Config.string().required()
-		}
-	).required(),
+	urls: Config.shapeOf({
+		edit: Config.string().required(),
+		redirect: Config.string().required()
+	}).required(),
 
 	/**
 	 * Updated CSS content of the editor. This value is propagated to the

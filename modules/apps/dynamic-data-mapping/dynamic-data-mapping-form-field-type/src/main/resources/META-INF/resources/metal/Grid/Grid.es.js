@@ -8,7 +8,6 @@ import {Config} from 'metal-state';
 class Grid extends Component {}
 
 Grid.STATE = {
-
 	/**
 	 * @default undefined
 	 * @instance
@@ -17,20 +16,16 @@ Grid.STATE = {
 	 */
 
 	columns: Config.arrayOf(
-		Config.shapeOf(
-			{
-				label: Config.string(),
-				value: Config.string()
-			}
-		)
-	).value(
-		[
-			{
-				label: 'col1',
-				value: 'fieldId'
-			}
-		]
-	),
+		Config.shapeOf({
+			label: Config.string(),
+			value: Config.string()
+		})
+	).value([
+		{
+			label: 'col1',
+			value: 'fieldId'
+		}
+	]),
 
 	/**
 	 * @default undefined
@@ -76,20 +71,16 @@ Grid.STATE = {
 	 */
 
 	rows: Config.arrayOf(
-		Config.shapeOf(
-			{
-				label: Config.string(),
-				value: Config.string()
-			}
-		)
-	).value(
-		[
-			{
-				label: 'row',
-				value: 'jehf'
-			}
-		]
-	),
+		Config.shapeOf({
+			label: Config.string(),
+			value: Config.string()
+		})
+	).value([
+		{
+			label: 'row',
+			value: 'jehf'
+		}
+	]),
 
 	/**
 	 * @default true

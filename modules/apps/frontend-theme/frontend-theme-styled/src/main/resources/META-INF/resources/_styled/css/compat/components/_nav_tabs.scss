@@ -12,7 +12,8 @@
 			@include border-top-radius($border-radius);
 
 			@include hover-focus {
-				border-color: $nav-tabs-link-hover-border-color $nav-tabs-link-hover-border-color $nav-tabs-border-color;
+				border-color: $nav-tabs-link-hover-border-color
+					$nav-tabs-link-hover-border-color $nav-tabs-border-color;
 			}
 		}
 	}
@@ -20,11 +21,14 @@
 	.nav-tabs > li > a.active,
 	.nav-tabs > .active > a {
 		background-color: $nav-tabs-link-active-bg;
-		border-color: $nav-tabs-link-active-border-color $nav-tabs-link-active-border-color $nav-tabs-link-active-bg;
+		border-color: $nav-tabs-link-active-border-color
+			$nav-tabs-link-active-border-color
+			$nav-tabs-link-active-bg;
 		color: $nav-tabs-link-active-color;
 
 		@include hover-focus {
-			border-color: $nav-tabs-link-active-border-color $nav-tabs-link-active-border-color $nav-tabs-link-active-bg;
+			border-color: $nav-tabs-link-active-border-color
+				$nav-tabs-link-active-border-color $nav-tabs-link-active-bg;
 		}
 	}
 
@@ -33,7 +37,8 @@
 
 		> li > a {
 			color: $nav-underline-link-color;
-			padding: $nav-underline-link-padding-y $nav-underline-link-padding-x;
+			padding: $nav-underline-link-padding-y
+				$nav-underline-link-padding-x;
 
 			@include hover-focus {
 				color: $nav-underline-link-hover-color;
@@ -62,11 +67,19 @@
 			color: $nav-underline-link-active-color;
 
 			&:after {
-				@if not ($nav-underline-link-active-content == $nav-underline-link-highlight-content) {
+				@if not(
+					$nav-underline-link-active-content ==
+						$nav-underline-link-highlight-content
+				)
+				{
 					content: $nav-underline-link-active-content;
 				}
 
-				@if not ($nav-underline-link-active-highlight-height == $nav-underline-link-highlight-height) {
+				@if not(
+					$nav-underline-link-active-highlight-height ==
+						$nav-underline-link-highlight-height
+				)
+				{
 					height: $nav-underline-link-active-highlight-height;
 				}
 			}

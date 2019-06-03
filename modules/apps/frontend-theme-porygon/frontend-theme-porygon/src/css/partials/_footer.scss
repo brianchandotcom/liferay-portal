@@ -8,7 +8,10 @@
 		color: $brand-color-3;
 		font-size: 12px;
 
-		&:hover, &:focus, &.active, &.open {
+		&:hover,
+		&:focus,
+		&.active,
+		&.open {
 			color: $secondary-header-color;
 			text-decoration: none;
 		}

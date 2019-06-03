@@ -1,4 +1,4 @@
-@import "variables";
+@import 'variables';
 
 .fragments-editor__topper {
 	background-color: $topperBackgroundColor;
@@ -15,7 +15,9 @@
 	padding: 0 8px;
 	position: absolute;
 	transform: translateY(100%);
-	transition: box-shadow ease $topperShowDuration, transform ease ($topperShowDuration * 2), opacity ease ($topperShowDuration * 0.667);
+	transition: box-shadow ease $topperShowDuration,
+		transform ease ($topperShowDuration * 2),
+		opacity ease ($topperShowDuration * 0.667);
 	z-index: $topperZIndex;
 
 	&__icon {
@@ -42,7 +44,8 @@
 	}
 
 	&-wrapper:after {
-		box-shadow: inset 0 0 0 $topperBorderWidth fade_out($topperBorderColor, 1);
+		box-shadow: inset 0 0 0 $topperBorderWidth
+			fade_out($topperBorderColor, 1);
 		content: '';
 		display: block;
 		height: 100%;
@@ -84,7 +87,10 @@
 	&-wrapper--hovered > & {
 		opacity: 1;
 		transform: translateY(1px);
-		transition: box-shadow ease $topperShowDuration $topperShowDelay, transform ease ($topperShowDuration * 0.667) $topperShowDelay, opacity ease $topperShowDuration $topperShowDelay, z-index linear 1ms ($topperShowDuration + $topperShowDelay);
+		transition: box-shadow ease $topperShowDuration $topperShowDelay,
+			transform ease ($topperShowDuration * 0.667) $topperShowDelay,
+			opacity ease $topperShowDuration $topperShowDelay,
+			z-index linear 1ms ($topperShowDuration + $topperShowDelay);
 		z-index: $topperHoverZIndex;
 	}
 
@@ -100,11 +106,13 @@
 
 		> .fragments-editor__topper {
 			background-color: $fragmentEntryLinkErrorBorderColor;
-			box-shadow: 0 0 0 $topperBorderWidth $fragmentEntryLinkErrorBorderColor;
+			box-shadow: 0 0 0 $topperBorderWidth
+				$fragmentEntryLinkErrorBorderColor;
 		}
 
 		&:after {
-			box-shadow: inset 0 0 0 $topperFocusedBorderWidth $fragmentEntryLinkErrorBorderColor;
+			box-shadow: inset 0 0 0 $topperFocusedBorderWidth
+				$fragmentEntryLinkErrorBorderColor;
 			transition: box-shadow ease ($topperShowDuration * 0.5);
 		}
 	}

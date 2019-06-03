@@ -1,5 +1,5 @@
-@import "bourbon";
-@import "mixins";
+@import 'bourbon';
+@import 'mixins';
 
 .breadcrumbs {
 	margin-bottom: 10px;
@@ -13,7 +13,8 @@
 .js {
 	@include respond-to(phone) {
 		.controls-hidden {
-			.lfr-meta-actions, .lfr-configurator-visibility {
+			.lfr-meta-actions,
+			.lfr-configurator-visibility {
 				display: none;
 			}
 		}
@@ -24,7 +25,8 @@
 	}
 }
 
-.configuration-frame, .control-panel-frame {
+.configuration-frame,
+.control-panel-frame {
 	border-width: 0;
 	overflow: auto;
 	width: 100%;
@@ -46,18 +48,23 @@
 	border-collapse: collapse;
 	clear: both;
 
-	> tbody, > thead, > tfoot {
+	> tbody,
+	> thead,
+	> tfoot {
 		> tr {
-			> td, > th {
+			> td,
+			> th {
 				padding: 0 5px;
 
 				@include word-wrap(break-all);
 
-				&:first-child, &.first-child {
+				&:first-child,
+				&.first-child {
 					padding-left: 0;
 				}
 
-				&:last-child, &.last-child {
+				&:last-child,
+				&.last-child {
 					padding-right: 0;
 				}
 			}

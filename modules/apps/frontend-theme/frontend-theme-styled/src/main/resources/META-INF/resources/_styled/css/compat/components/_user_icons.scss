@@ -121,7 +121,8 @@
 	.user-icon-circle {
 		&.user-icon,
 		.user-icon {
-			@if not ($user-icon-border-radius == $user-icon-circle-border-radius) {
+			@if not($user-icon-border-radius == $user-icon-circle-border-radius)
+			{
 				border-radius: $user-icon-circle-border-radius;
 			}
 		}
@@ -130,7 +131,10 @@
 	.user-icon-rounded {
 		&.user-icon,
 		.user-icon {
-			@if not ($user-icon-border-radius == $user-icon-rounded-border-radius) {
+			@if not(
+				$user-icon-border-radius == $user-icon-rounded-border-radius
+			)
+			{
 				border-radius: $user-icon-rounded-border-radius;
 			}
 		}
@@ -139,7 +143,8 @@
 	.user-icon-square {
 		&.user-icon,
 		.user-icon {
-			@if not ($user-icon-border-radius == $user-icon-square-border-radius) {
+			@if not($user-icon-border-radius == $user-icon-square-border-radius)
+			{
 				border-radius: $user-icon-square-border-radius;
 			}
 		}

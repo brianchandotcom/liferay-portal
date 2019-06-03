@@ -1,4 +1,4 @@
-;(function() {
+(function() {
 	var A = AUI();
 
 	var BBCodeUtil = Liferay.BBCodeUtil;
@@ -52,16 +52,16 @@
 	};
 
 	var MAP_IMAGE_ATTRIBUTES = {
-		'alt': 1,
-		'class': 1,
-		'dir': 1,
-		'height': 1,
-		'id': 1,
-		'lang': 1,
-		'longdesc': 1,
-		'style': 1,
-		'title': 1,
-		'width': 1
+		alt: 1,
+		class: 1,
+		dir: 1,
+		height: 1,
+		id: 1,
+		lang: 1,
+		longdesc: 1,
+		style: 1,
+		title: 1,
+		width: 1
 	};
 
 	var MAP_ORDERED_LIST_STYLES = {
@@ -151,7 +151,9 @@
 
 	var TOKEN_TAG_START = Parser.TOKEN_TAG_START;
 
-	var tplImage = new CKEDITOR.template('<img src="{imageSrc}" {attributes} />');
+	var tplImage = new CKEDITOR.template(
+		'<img src="{imageSrc}" {attributes} />'
+	);
 
 	var Converter = function(config) {
 		var instance = this;
@@ -186,21 +188,22 @@
 
 			var length = parsedData.length;
 
-			for (instance._tokenPointer = 0; instance._tokenPointer < length; instance._tokenPointer++) {
+			for (
+				instance._tokenPointer = 0;
+				instance._tokenPointer < length;
+				instance._tokenPointer++
+			) {
 				var token = parsedData[instance._tokenPointer];
 
 				var type = token.type;
 
 				if (type === TOKEN_TAG_START) {
 					instance._handleTagStart(token);
-				}
-				else if (type === TOKEN_TAG_END) {
+				} else if (type === TOKEN_TAG_END) {
 					instance._handleTagEnd(token);
-				}
-				else if (type === TOKEN_DATA) {
+				} else if (type === TOKEN_DATA) {
 					instance._handleData(token);
-				}
-				else {
+				} else {
 					throw 'Internal error. Invalid token type';
 				}
 			}
@@ -229,9 +232,11 @@
 				if (token && token.type === TOKEN_DATA) {
 					result.push(token.value);
 				}
-
-			}
-			while (token && token.type !== TOKEN_TAG_END && token.value !== toTagName);
+			} while (
+				token &&
+				token.type !== TOKEN_TAG_END &&
+				token.value !== toTagName
+			);
 
 			if (consume) {
 				instance._tokenPointer = index - 1;
@@ -263,7 +268,12 @@
 				colorName = 'inherit';
 			}
 
-			instance._result.push(STR_TAG_SPAN_STYLE_OPEN + 'color: ' + colorName + STR_TAG_ATTR_CLOSE);
+			instance._result.push(
+				STR_TAG_SPAN_STYLE_OPEN +
+					'color: ' +
+					colorName +
+					STR_TAG_ATTR_CLOSE
+			);
 
 			instance._stack.push(STR_TAG_SPAN_CLOSE);
 		},
@@ -283,15 +293,19 @@
 				var length = emoticonSymbols.length;
 
 				for (var i = 0; i < length; i++) {
-					var image = tplImage.output(
-						{
-							imageSrc: emoticonPath + emoticonImages[i]
-						}
+					var image = tplImage.output({
+						imageSrc: emoticonPath + emoticonImages[i]
+					});
+
+					var escapedSymbol = emoticonSymbols[i].replace(
+						REGEX_ESCAPE_REGEX,
+						'\\$&'
 					);
 
-					var escapedSymbol = emoticonSymbols[i].replace(REGEX_ESCAPE_REGEX, '\\$&');
-
-					value = value.replace(new RegExp(escapedSymbol, 'g'), image);
+					value = value.replace(
+						new RegExp(escapedSymbol, 'g'),
+						image
+					);
 				}
 			}
 
@@ -309,7 +323,8 @@
 
 			var href = STR_BLANK;
 
-			var hrefInput = token.attribute || instance._extractData(STR_EMAIL, false);
+			var hrefInput =
+				token.attribute || instance._extractData(STR_EMAIL, false);
 
 			if (REGEX_URI.test(hrefInput)) {
 				if (hrefInput.indexOf(STR_MAILTO) !== 0) {
@@ -319,7 +334,9 @@
 				href = CKTools.htmlEncodeAttr(hrefInput);
 			}
 
-			instance._result.push(STR_TAG_ATTR_HREF_OPEN + href + STR_TAG_ATTR_CLOSE);
+			instance._result.push(
+				STR_TAG_ATTR_HREF_OPEN + href + STR_TAG_ATTR_CLOSE
+			);
 
 			instance._stack.push(STR_TAG_A_CLOSE);
 		},
@@ -331,7 +348,12 @@
 
 			fontName = CKTools.htmlEncodeAttr(fontName);
 
-			instance._result.push(STR_TAG_SPAN_STYLE_OPEN + 'font-family: ' + fontName + STR_TAG_ATTR_CLOSE);
+			instance._result.push(
+				STR_TAG_SPAN_STYLE_OPEN +
+					'font-family: ' +
+					fontName +
+					STR_TAG_ATTR_CLOSE
+			);
 
 			instance._stack.push(STR_TAG_SPAN_CLOSE);
 		},
@@ -347,12 +369,10 @@
 				imageSrc = CKTools.htmlEncodeAttr(imageSrcInput);
 			}
 
-			var result = tplImage.output(
-				{
-					attributes: instance._handleImageAttributes(token, token.value),
-					imageSrc: imageSrc
-				}
-			);
+			var result = tplImage.output({
+				attributes: instance._handleImageAttributes(token, token.value),
+				imageSrc: imageSrc
+			});
 
 			instance._result.push(result);
 		},
@@ -365,14 +385,19 @@
 			if (token.attribute) {
 				var bbCodeAttr;
 
-				while (bbCodeAttr = REGEX_ATTRS.exec(token.attribute)) {
+				while ((bbCodeAttr = REGEX_ATTRS.exec(token.attribute))) {
 					var attrName = bbCodeAttr[1];
 
 					if (MAP_IMAGE_ATTRIBUTES[attrName]) {
 						var attrValue = bbCodeAttr[2];
 
 						if (attrValue) {
-							attrs += ' ' + attrName + '="' + instance._escapeHTML(attrValue) + '"';
+							attrs +=
+								' ' +
+								attrName +
+								'="' +
+								instance._escapeHTML(attrValue) +
+								'"';
 						}
 					}
 				}
@@ -390,7 +415,7 @@
 			if (token.attribute) {
 				var listAttribute;
 
-				while (listAttribute = REGEX_ATTRS.exec(token.attribute)) {
+				while ((listAttribute = REGEX_ATTRS.exec(token.attribute))) {
 					var attrName = listAttribute[1];
 					var attrValue = listAttribute[2];
 
@@ -401,22 +426,25 @@
 							styleAttr = MAP_ORDERED_LIST_STYLES[attrValue];
 
 							tag = 'ol';
-						}
-						else {
+						} else {
 							styleAttr = MAP_UNORDERED_LIST_STYLES[attrValue];
 						}
 
 						if (styleAttr) {
 							listAttributes += ' style="' + styleAttr + '"';
 						}
-					}
-					else if (attrName === STR_START && REGEX_NUMBER.test(attrValue)) {
+					} else if (
+						attrName === STR_START &&
+						REGEX_NUMBER.test(attrValue)
+					) {
 						listAttributes += ' start="' + attrValue + '"';
 					}
 				}
 			}
 
-			instance._result.push(STR_TAG_OPEN + tag + listAttributes + STR_TAG_END_CLOSE);
+			instance._result.push(
+				STR_TAG_OPEN + tag + listAttributes + STR_TAG_END_CLOSE
+			);
 
 			instance._stack.push(STR_TAG_END_OPEN + tag + STR_TAG_END_CLOSE);
 		},
@@ -434,31 +462,35 @@
 
 			if (!instance._noParse) {
 				if (REGEX_STRING_IS_NEW_LINE.test(value)) {
-					nextToken = instance._parsedData[instance._tokenPointer + 1];
+					nextToken =
+						instance._parsedData[instance._tokenPointer + 1];
 
-					if (nextToken &&
-						hasOwnProperty.call(MAP_TOKENS_EXCLUDE_NEW_LINE, nextToken.value) &&
-						nextToken.type & MAP_TOKENS_EXCLUDE_NEW_LINE[nextToken.value]) {
-
+					if (
+						nextToken &&
+						hasOwnProperty.call(
+							MAP_TOKENS_EXCLUDE_NEW_LINE,
+							nextToken.value
+						) &&
+						nextToken.type &
+							MAP_TOKENS_EXCLUDE_NEW_LINE[nextToken.value]
+					) {
 						value = STR_BLANK;
 					}
-				}
-				else if (REGEX_LASTCHAR_NEWLINE.test(value)) {
-					nextToken = instance._parsedData[instance._tokenPointer + 1];
+				} else if (REGEX_LASTCHAR_NEWLINE.test(value)) {
+					nextToken =
+						instance._parsedData[instance._tokenPointer + 1];
 
-					if (nextToken &&
+					if (
+						nextToken &&
 						nextToken.type === TOKEN_TAG_END &&
-						nextToken.value === STR_TAG_LIST_ITEM_SHORT) {
-
+						nextToken.value === STR_TAG_LIST_ITEM_SHORT
+					) {
 						value = value.substring(0, value.length - 1);
 					}
 				}
 
 				if (value) {
-					value = value.replace(
-						REGEX_NEW_LINE,
-						'<br>'
-					);
+					value = value.replace(REGEX_NEW_LINE, '<br>');
 				}
 			}
 
@@ -488,7 +520,9 @@
 
 			instance._result.push(STR_TAG_OPEN, tagName, STR_TAG_END_CLOSE);
 
-			instance._stack.push(STR_TAG_END_OPEN + tagName + STR_TAG_END_CLOSE);
+			instance._stack.push(
+				STR_TAG_END_OPEN + tagName + STR_TAG_END_CLOSE
+			);
 		},
 
 		_handleSimpleTags: function(token) {
@@ -506,7 +540,13 @@
 				size = '1';
 			}
 
-			instance._result.push(STR_TAG_SPAN_STYLE_OPEN, 'font-size: ', instance._getFontSize(size), 'px;', STR_TAG_ATTR_CLOSE);
+			instance._result.push(
+				STR_TAG_SPAN_STYLE_OPEN,
+				'font-size: ',
+				instance._getFontSize(size),
+				'px;',
+				STR_TAG_ATTR_CLOSE
+			);
 
 			instance._stack.push(STR_TAG_SPAN_CLOSE);
 		},
@@ -572,7 +612,11 @@
 		_handleTextAlign: function(token) {
 			var instance = this;
 
-			instance._result.push(STR_TEXT_ALIGN, token.value, STR_TAG_ATTR_CLOSE);
+			instance._result.push(
+				STR_TEXT_ALIGN,
+				token.value,
+				STR_TAG_ATTR_CLOSE
+			);
 
 			instance._stack.push(STR_TAG_P_CLOSE);
 		},
@@ -582,13 +626,16 @@
 
 			var href = STR_BLANK;
 
-			var hrefInput = token.attribute || instance._extractData(STR_TAG_URL, false);
+			var hrefInput =
+				token.attribute || instance._extractData(STR_TAG_URL, false);
 
 			if (REGEX_URI.test(hrefInput)) {
 				href = CKTools.htmlEncodeAttr(hrefInput);
 			}
 
-			instance._result.push(STR_TAG_ATTR_HREF_OPEN + href + STR_TAG_ATTR_CLOSE);
+			instance._result.push(
+				STR_TAG_ATTR_HREF_OPEN + href + STR_TAG_ATTR_CLOSE
+			);
 
 			instance._stack.push(STR_TAG_A_CLOSE);
 		},

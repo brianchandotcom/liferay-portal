@@ -16,7 +16,7 @@
 		"liferay-npm-bridge-generator": "2.7.1",
 		"liferay-npm-bundler": "2.7.1",
 		"liferay-npm-bundler-preset-standard": "2.7.1",
-		"liferay-npm-scripts": "1.8.0",
+		"liferay-npm-scripts": "2.1.0",
 		"liferay-theme-es2015-hook": "8.0.0-rc.2",
 		"metal-jest-serializer": "2.0.0"
 	},

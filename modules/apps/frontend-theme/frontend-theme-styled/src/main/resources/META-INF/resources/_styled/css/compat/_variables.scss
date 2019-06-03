@@ -38,7 +38,7 @@ $compat-utilities: true !default;
 
 // Map Bootstrap 4 Variables to Bootstrap 3 equivalent
 
-@import "clay/variables/icons";
+@import 'clay/variables/icons';
 
 $icon-monospaced-size: 2rem !default;
 
@@ -51,12 +51,12 @@ $navbar-border-left-width: 0 !default;
 $navbar-border-right-width: 0 !default;
 $navbar-border-top-width: 0 !default;
 
-$navbar-light-active-highlight: lighten(#1865FB, 22%) !default;
-$navbar-light-bg: #FFF !default;
+$navbar-light-active-highlight: lighten(#1865fb, 22%) !default;
+$navbar-light-bg: #fff !default;
 $navbar-light-border-color: transparent !default;
 
-$navbar-dark-active-highlight: lighten(#1865FB, 22%) !default;
-$navbar-dark-bg: #31323F !default;
+$navbar-dark-active-highlight: lighten(#1865fb, 22%) !default;
+$navbar-dark-bg: #31323f !default;
 $navbar-dark-border-color: transparent !default;
 
 $zindex-basic-search-close: 5 !default;
@@ -67,7 +67,9 @@ $management-bar-border-bottom-width: 0.0625rem !default; // 1px
 $management-bar-border-left-width: 0.0625rem !default; // 1px
 $management-bar-border-right-width: 0.0625rem !default; // 1px
 $management-bar-border-top-width: 0.0625rem !default; // 1px
-$management-bar-border-width: $management-bar-border-top-width $management-bar-border-right-width $management-bar-border-bottom-width $management-bar-border-left-width !default;
+$management-bar-border-width: $management-bar-border-top-width
+	$management-bar-border-right-width $management-bar-border-bottom-width
+	$management-bar-border-left-width !default;
 
 $management-bar-dropdown-menu-margin-top: 0 !default;
 
@@ -81,17 +83,24 @@ $management-bar-margin-bottom: 1.25rem !default; // 20px
 $management-bar-desktop-padding-horizontal: null !default;
 $management-bar-desktop-padding-vertical: null !default;
 $management-bar-padding-horizontal: $nav-link-padding-x !default;
-$management-bar-padding-vertical: ($management-bar-height - 1.25rem - $management-bar-border-bottom-width - $management-bar-border-top-width) / 2 !default;
+$management-bar-padding-vertical: (
+		$management-bar-height - 1.25rem - $management-bar-border-bottom-width -
+			$management-bar-border-top-width
+	) / 2 !default;
 
 $management-bar-btn-padding-horizontal: $management-bar-padding-horizontal !default;
-$management-bar-btn-padding-vertical: ($management-bar-height - $management-bar-border-bottom-width - $management-bar-border-top-width - $icon-monospaced-size) / 2 !default;
+$management-bar-btn-padding-vertical: (
+		$management-bar-height - $management-bar-border-bottom-width -
+			$management-bar-border-top-width - $icon-monospaced-size
+	) / 2 !default;
 
-$management-bar-toggle-height: 2.5rem + $management-bar-border-bottom-width + $management-bar-border-top-width !default;
+$management-bar-toggle-height: 2.5rem + $management-bar-border-bottom-width +
+	$management-bar-border-top-width !default;
 
 $management-bar-collapse-bg: $dropdown-bg !default;
 $management-bar-collapse-border: transparent !default;
 
-$management-bar-default-bg: #FFF !default;
+$management-bar-default-bg: #fff !default;
 $management-bar-default-border: transparent !default;
 $management-bar-default-box-shadow: null !default;
 $management-bar-default-color: $secondary !default;
@@ -101,7 +110,7 @@ $management-bar-default-collapse-border: $management-bar-default-border !default
 
 $management-bar-default-link-color: $secondary !default;
 
-$management-bar-default-link-hover-bg: rgba(39,40,51,0.03) !default;
+$management-bar-default-link-hover-bg: rgba(39, 40, 51, 0.03) !default;
 $management-bar-default-link-hover-color: $navbar-light-hover-color !default;
 
 $management-bar-default-link-active-bg: darken($body-bg, 6.5%) !default;
@@ -125,7 +134,7 @@ $management-bar-default-btn-default-active-color: $management-bar-default-btn-de
 // Icons
 
 $help-icon-default-bg: lighten(map-get($theme-colors, secondary), 24%) !default;
-$help-icon-default-color: #FFF !default;
+$help-icon-default-color: #fff !default;
 $help-icon-default-hover-color: $help-icon-default-color !default;
 
 // Grid
@@ -163,10 +172,10 @@ $progress-bar-xs-height: 8px !default;
 
 // List groups
 
-$list-group-border: #DDD !default;
+$list-group-border: #ddd !default;
 $list-group-border-radius: $border-radius-base !default;
 
-$list-group-hover-bg: #F5F5F5 !default;
+$list-group-hover-bg: #f5f5f5 !default;
 
 $list-group-link-heading-color: #333 !default;
 
@@ -237,16 +246,19 @@ $user-icon-danger-bg: map-get($theme-colors, danger) !default;
 
 // Multi Step Progress
 
-$multi-step-progress-bar-active-icon: "\f111" !default;
-$multi-step-progress-bar-complete-icon: "\f00c" !default;
-$multi-step-progress-bar-icon: "\f10c" !default;
+$multi-step-progress-bar-active-icon: '\f111' !default;
+$multi-step-progress-bar-complete-icon: '\f00c' !default;
+$multi-step-progress-bar-icon: '\f10c' !default;
 
-$multi-step-progress-bar-color: #BBB !default;
+$multi-step-progress-bar-color: #bbb !default;
 
 $multi-step-progress-bar-active-color: map-get($theme-colors, primary) !default;
 
 $multi-step-progress-bar-complete-color: map-get($colors, gray) !default;
-$multi-step-progress-bar-complete-icon-color: map-get($theme-colors, primary) !default;
+$multi-step-progress-bar-complete-icon-color: map-get(
+	$theme-colors,
+	primary
+) !default;
 
 $multi-step-progress-bar-divider-height: 1px !default;
 

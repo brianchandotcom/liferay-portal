@@ -48,22 +48,21 @@ AUI.add(
 			};
 
 			if (!basePortletURL) {
-				instance.options.basePortletURL = themeDisplay.getPathMain() + '/portal/layout?p_l_id=' + themeDisplay.getPlid();
+				instance.options.basePortletURL =
+					themeDisplay.getPathMain() +
+					'/portal/layout?p_l_id=' +
+					themeDisplay.getPlid();
 			}
 
-			A.each(
-				params,
-				function(item, index) {
-					if (Lang.isValue(item)) {
-						if (instance._isReservedParam(index)) {
-							instance.reservedParams[index] = item;
-						}
-						else {
-							instance.params[index] = item;
-						}
+			A.each(params, function(item, index) {
+				if (Lang.isValue(item)) {
+					if (instance._isReservedParam(index)) {
+						instance.reservedParams[index] = item;
+					} else {
+						instance.params[index] = item;
 					}
 				}
-			);
+			});
 
 			if (lifecycle) {
 				instance.setLifecycle(lifecycle);
@@ -71,7 +70,6 @@ AUI.add(
 		};
 
 		PortletURL.prototype = {
-
 			/*
 			 * @deprecated
 			 */
@@ -124,11 +122,9 @@ AUI.add(
 				if (lifecycle === PortletURL.ACTION_PHASE) {
 					reservedParams.p_auth = Liferay.authToken;
 					reservedParams.p_p_lifecycle = PortletURL.ACTION_PHASE;
-				}
-				else if (lifecycle === PortletURL.RENDER_PHASE) {
+				} else if (lifecycle === PortletURL.RENDER_PHASE) {
 					reservedParams.p_p_lifecycle = PortletURL.RENDER_PHASE;
-				}
-				else if (lifecycle === PortletURL.RESOURCE_PHASE) {
+				} else if (lifecycle === PortletURL.RESOURCE_PHASE) {
 					reservedParams.p_p_lifecycle = PortletURL.RESOURCE_PHASE;
 					reservedParams.p_p_cacheability = 'cacheLevelPage';
 				}
@@ -149,8 +145,7 @@ AUI.add(
 
 				if (instance._isReservedParam(key)) {
 					instance.reservedParams[key] = value;
-				}
-				else {
+				} else {
 					instance.params[key] = value;
 				}
 
@@ -160,12 +155,9 @@ AUI.add(
 			setParameters: function(parameters) {
 				var instance = this;
 
-				A.each(
-					parameters,
-					function(item, index) {
-						instance.setParameter(index, item);
-					}
-				);
+				A.each(parameters, function(item, index) {
+					instance.setParameter(index, item);
+				});
 
 				return instance;
 			},
@@ -213,8 +205,8 @@ AUI.add(
 			},
 
 			/*
-			* @deprecated since 7.2, unused
-			*/
+			 * @deprecated since 7.2, unused
+			 */
 			setSecure: function(secure) {
 				var instance = this;
 
@@ -248,23 +240,17 @@ AUI.add(
 
 				var namespacePrefix = Util.getPortletNamespace(portletId);
 
-				A.each(
-					reservedParams,
-					function(item, index) {
-						if (Lang.isValue(item)) {
-							resultURL.setParameter(index, item);
-						}
+				A.each(reservedParams, function(item, index) {
+					if (Lang.isValue(item)) {
+						resultURL.setParameter(index, item);
 					}
-				);
+				});
 
-				A.each(
-					instance.params,
-					function(item, index) {
-						if (Lang.isValue(item)) {
-							resultURL.setParameter(namespacePrefix + index, item);
-						}
+				A.each(instance.params, function(item, index) {
+					if (Lang.isValue(item)) {
+						resultURL.setParameter(namespacePrefix + index, item);
 					}
-				);
+				});
 
 				if (options.secure) {
 					resultURL.setProtocol('https');
@@ -284,50 +270,49 @@ AUI.add(
 
 				var result = false;
 
-				A.each(
-					instance.reservedParams,
-					function(item, index) {
-						if (index === paramName) {
-							result = true;
-						}
+				A.each(instance.reservedParams, function(item, index) {
+					if (index === paramName) {
+						result = true;
 					}
-				);
+				});
 
 				return result;
 			}
 		};
 
-		A.mix(
-			PortletURL,
-			{
-				ACTION_PHASE: '1',
+		A.mix(PortletURL, {
+			ACTION_PHASE: '1',
 
-				RENDER_PHASE: '0',
+			RENDER_PHASE: '0',
 
-				RESOURCE_PHASE: '2',
+			RESOURCE_PHASE: '2',
 
-				createActionURL: function() {
-					return new PortletURL(PortletURL.ACTION_PHASE);
-				},
+			createActionURL: function() {
+				return new PortletURL(PortletURL.ACTION_PHASE);
+			},
 
-				createRenderURL: function() {
-					return new PortletURL(PortletURL.RENDER_PHASE);
-				},
+			createRenderURL: function() {
+				return new PortletURL(PortletURL.RENDER_PHASE);
+			},
 
-				createResourceURL: function() {
-					return new PortletURL(PortletURL.RESOURCE_PHASE);
-				},
+			createResourceURL: function() {
+				return new PortletURL(PortletURL.RESOURCE_PHASE);
+			},
 
-				createURL: function(basePortletURL, params) {
-					return new PortletURL(null, params, basePortletURL);
-				}
+			createURL: function(basePortletURL, params) {
+				return new PortletURL(null, params, basePortletURL);
 			}
-		);
+		});
 
 		Liferay.PortletURL = PortletURL;
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-io-request', 'aui-url', 'querystring-stringify-simple']
+		requires: [
+			'aui-base',
+			'aui-io-request',
+			'aui-url',
+			'querystring-stringify-simple'
+		]
 	}
 );

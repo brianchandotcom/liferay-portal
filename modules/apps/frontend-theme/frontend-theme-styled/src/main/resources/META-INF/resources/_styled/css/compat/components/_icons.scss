@@ -1,6 +1,8 @@
 @if $compat-icons {
 	.icon-monospaced {
-		&, &[class^="icon-"], &[class*=" icon-"] {
+		&,
+		&[class^='icon-'],
+		&[class*=' icon-'] {
 			display: inline-block;
 			height: $icon-monospaced-size;
 			line-height: 34px;
@@ -25,7 +27,8 @@
 
 		text-align: center;
 
-		&:hover, &:focus {
+		&:hover,
+		&:focus {
 			text-decoration: none;
 		}
 
@@ -38,7 +41,8 @@
 		background-color: $help-icon-default-bg;
 		color: $help-icon-default-color;
 
-		&:focus, &:hover {
+		&:focus,
+		&:hover {
 			color: $help-icon-default-hover-color;
 		}
 	}

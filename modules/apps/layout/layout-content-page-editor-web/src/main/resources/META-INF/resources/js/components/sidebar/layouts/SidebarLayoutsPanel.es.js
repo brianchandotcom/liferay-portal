@@ -16,7 +16,6 @@ import templates from './SidebarLayoutsPanel.soy';
  * SidebarLayoutsPanel
  */
 class SidebarLayoutsPanel extends Component {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -42,14 +41,12 @@ class SidebarLayoutsPanel extends Component {
 	_handleDragLayout(eventData) {
 		const {hoveredRowBorder, hoveredRowId} = eventData;
 
-		this.store.dispatch(
-			{
-				dropTargetBorder: hoveredRowBorder,
-				dropTargetItemId: hoveredRowId,
-				dropTargetItemType: FRAGMENTS_EDITOR_ITEM_TYPES.row,
-				type: UPDATE_DROP_TARGET
-			}
-		);
+		this.store.dispatch({
+			dropTargetBorder: hoveredRowBorder,
+			dropTargetItemId: hoveredRowId,
+			dropTargetItemType: FRAGMENTS_EDITOR_ITEM_TYPES.row,
+			type: UPDATE_DROP_TARGET
+		});
 	}
 
 	/**
@@ -62,22 +59,18 @@ class SidebarLayoutsPanel extends Component {
 	_handleDropLayout(eventData) {
 		const layoutColumns = this._layouts[eventData.layoutIndex].columns;
 
-		this.store.dispatch(
-			{
+		this.store
+			.dispatch({
 				layoutColumns,
 				type: ADD_ROW
-			}
-		).dispatch(
-			{
+			})
+			.dispatch({
 				type: CLEAR_DROP_TARGET
-			}
-		);
+			});
 
-		requestAnimationFrame(
-			() => {
-				this._initializeSidebarLayoutsDragDrop();
-			}
-		);
+		requestAnimationFrame(() => {
+			this._initializeSidebarLayoutsDragDrop();
+		});
 	}
 
 	/**
@@ -87,11 +80,9 @@ class SidebarLayoutsPanel extends Component {
 	 * @review
 	 */
 	_handleLeaveLayoutTarget() {
-		this.store.dispatch(
-			{
-				type: CLEAR_DROP_TARGET
-			}
-		);
+		this.store.dispatch({
+			type: CLEAR_DROP_TARGET
+		});
 	}
 
 	/**
@@ -121,7 +112,6 @@ class SidebarLayoutsPanel extends Component {
 			this._handleLeaveLayoutTarget.bind(this)
 		);
 	}
-
 }
 
 /**
@@ -131,7 +121,6 @@ class SidebarLayoutsPanel extends Component {
  * @type {!Object}
  */
 SidebarLayoutsPanel.STATE = {
-
 	/**
 	 * Store instance
 	 * @default undefined
@@ -151,51 +140,29 @@ SidebarLayoutsPanel.STATE = {
 	 * @type {Array}
 	 */
 	_layouts: Config.arrayOf(
-		Config.shapeOf(
-			{
-				columns: Config.arrayOf(Config.string())
-			}
-		)
-	).value(
-		[
-			{
-				columns: ['12']
-			},
-			{
-				columns: [
-					'6',
-					'6'
-				]
-			},
-			{
-				columns: [
-					'8',
-					'4'
-				]
-			},
-			{
-				columns: [
-					'4',
-					'8'
-				]
-			},
-			{
-				columns: [
-					'4',
-					'4',
-					'4'
-				]
-			},
-			{
-				columns: [
-					'3',
-					'3',
-					'3',
-					'3'
-				]
-			}
-		]
-	),
+		Config.shapeOf({
+			columns: Config.arrayOf(Config.string())
+		})
+	).value([
+		{
+			columns: ['12']
+		},
+		{
+			columns: ['6', '6']
+		},
+		{
+			columns: ['8', '4']
+		},
+		{
+			columns: ['4', '8']
+		},
+		{
+			columns: ['4', '4', '4']
+		},
+		{
+			columns: ['3', '3', '3', '3']
+		}
+	]),
 
 	/**
 	 * Internal SidebarLayoutsDragDrop instance

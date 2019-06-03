@@ -5,8 +5,7 @@ const onReady = fn => {
 		document.readyState === 'loaded'
 	) {
 		fn();
-	}
-	else {
+	} else {
 		document.addEventListener('DOMContentLoaded', fn);
 	}
 

@@ -18,202 +18,257 @@ AUI.add(
 
 		var STR_VALUE = 'value';
 
-		var LiferayAlloyEditorSource = A.Component.create(
-			{
-				ATTRS: {
-					strings: {
-						value: {
-							cancel: Liferay.Language.get('cancel'),
-							done: Liferay.Language.get('done'),
-							editContent: Liferay.Language.get('edit-content')
-						}
+		var LiferayAlloyEditorSource = A.Component.create({
+			ATTRS: {
+				strings: {
+					value: {
+						cancel: Liferay.Language.get('cancel'),
+						done: Liferay.Language.get('done'),
+						editContent: Liferay.Language.get('edit-content')
+					}
+				}
+			},
+
+			EXTENDS: A.Plugin.Base,
+
+			NAME: 'liferayalloyeditorsource',
+
+			NS: 'liferayalloyeditorsource',
+
+			prototype: {
+				initializer: function() {
+					var instance = this;
+
+					var host = instance.get(STR_HOST);
+
+					instance._editorFullscreen = host.one('#Fullscreen');
+					instance._editorSource = host.one('#Source');
+					instance._editorSwitch = host.one('#Switch');
+					instance._editorSwitchTheme = host.one('#SwitchTheme');
+					instance._editorWrapper = host.one('#Wrapper');
+
+					instance._toggleSourceSwitchFn = A.debounce(
+						instance._toggleSourceSwitch,
+						100,
+						instance
+					);
+
+					host.getNativeEditor().on(
+						'editorUpdate',
+						A.bind('_onEditorUpdate', instance)
+					);
+
+					instance._eventHandles = [
+						instance._editorFullscreen.on(
+							'click',
+							instance._onFullScreenBtnClick,
+							instance
+						),
+						instance._editorSwitch.on(
+							'blur',
+							instance._onSwitchBlur,
+							instance
+						),
+						instance._editorSwitch.on(
+							'click',
+							instance._switchMode,
+							instance
+						),
+						instance._editorSwitch.on(
+							'focus',
+							instance._onSwitchFocus,
+							instance
+						),
+						instance._editorSwitch.on(
+							'mousedown',
+							instance._onSwitchMouseDown,
+							instance
+						),
+						instance._editorSwitch.on(
+							'mouseout',
+							instance._onSwitchMouseOut,
+							instance
+						),
+						instance._editorSwitchTheme.on(
+							'click',
+							instance._switchTheme,
+							instance
+						),
+						instance.doAfter(
+							'getHTML',
+							instance._getHTML,
+							instance
+						),
+						instance.doAfter('setHTML', instance._setHTML, instance)
+					];
+				},
+
+				destructor: function() {
+					var instance = this;
+
+					var sourceEditor = instance._sourceEditor;
+
+					if (sourceEditor) {
+						sourceEditor.destroy();
+					}
+
+					var fullScreenEditor = instance._fullScreenEditor;
+
+					if (fullScreenEditor) {
+						fullScreenEditor.destroy();
+					}
+
+					var fullScreenDialog = instance._fullScreenDialog;
+
+					if (fullScreenDialog) {
+						fullScreenDialog.destroy();
+					}
+
+					new A.EventHandle(instance._eventHandles).detach();
+				},
+
+				_createSourceEditor: function() {
+					var instance = this;
+
+					var host = instance.get(STR_HOST);
+
+					var sourceEditor = new A.LiferaySourceEditor({
+						boundingBox: instance._editorSource,
+						mode: 'html',
+						on: {
+							themeSwitched: function(event) {
+								var editorSwitchTheme =
+									instance._editorSwitchTheme;
+
+								var nextTheme =
+									event.themes[event.nextThemeIndex];
+
+								editorSwitchTheme
+									.one('.lexicon-icon')
+									.replace(nextTheme.icon);
+
+								editorSwitchTheme.setAttribute(
+									'data-title',
+									nextTheme.tooltip
+								);
+							}
+						},
+						value: host.getHTML()
+					}).render();
+
+					instance._toggleEditorModeUI();
+
+					instance._sourceEditor = sourceEditor;
+				},
+
+				_getEditorStateLexiconIcon: function() {
+					var instance = this;
+
+					var currentState = MAP_TOGGLE_STATE[instance._isVisible];
+
+					var icon = currentState.icon;
+
+					if (!icon) {
+						icon = Liferay.Util.getLexiconIcon(
+							currentState.iconCssClass
+						);
+
+						currentState.icon = icon;
+					}
+
+					return icon;
+				},
+
+				_getHTML: function() {
+					var instance = this;
+
+					var sourceEditor = instance._sourceEditor;
+
+					if (sourceEditor && instance._isVisible) {
+						var text = sourceEditor.get('value');
+
+						return new A.Do.AlterReturn(
+							'Modified source editor text',
+							text
+						);
 					}
 				},
 
-				EXTENDS: A.Plugin.Base,
+				_onEditorUpdate: function(event) {
+					var instance = this;
 
-				NAME: 'liferayalloyeditorsource',
+					instance._toggleSourceSwitchFn(event.data.state);
+				},
 
-				NS: 'liferayalloyeditorsource',
+				_onFullScreenBtnClick: function() {
+					var instance = this;
 
-				prototype: {
-					initializer: function() {
-						var instance = this;
+					var host = instance.get(STR_HOST);
+					var strings = instance.get(STRINGS);
 
-						var host = instance.get(STR_HOST);
+					var fullScreenDialog = instance._fullScreenDialog;
+					var fullScreenEditor = instance._fullScreenEditor;
 
-						instance._editorFullscreen = host.one('#Fullscreen');
-						instance._editorSource = host.one('#Source');
-						instance._editorSwitch = host.one('#Switch');
-						instance._editorSwitchTheme = host.one('#SwitchTheme');
-						instance._editorWrapper = host.one('#Wrapper');
+					if (fullScreenDialog) {
+						fullScreenEditor.set('value', host.getHTML());
 
-						instance._toggleSourceSwitchFn = A.debounce(instance._toggleSourceSwitch, 100, instance);
-
-						host.getNativeEditor().on('editorUpdate', A.bind('_onEditorUpdate', instance));
-
-						instance._eventHandles = [
-							instance._editorFullscreen.on('click', instance._onFullScreenBtnClick, instance),
-							instance._editorSwitch.on('blur', instance._onSwitchBlur, instance),
-							instance._editorSwitch.on('click', instance._switchMode, instance),
-							instance._editorSwitch.on('focus', instance._onSwitchFocus, instance),
-							instance._editorSwitch.on('mousedown', instance._onSwitchMouseDown, instance),
-							instance._editorSwitch.on('mouseout', instance._onSwitchMouseOut, instance),
-							instance._editorSwitchTheme.on('click', instance._switchTheme, instance),
-							instance.doAfter('getHTML', instance._getHTML, instance),
-							instance.doAfter('setHTML', instance._setHTML, instance)
-						];
-					},
-
-					destructor: function() {
-						var instance = this;
-
-						var sourceEditor = instance._sourceEditor;
-
-						if (sourceEditor) {
-							sourceEditor.destroy();
-						}
-
-						var fullScreenEditor = instance._fullScreenEditor;
-
-						if (fullScreenEditor) {
-							fullScreenEditor.destroy();
-						}
-
-						var fullScreenDialog = instance._fullScreenDialog;
-
-						if (fullScreenDialog) {
-							fullScreenDialog.destroy();
-						}
-
-						(new A.EventHandle(instance._eventHandles)).detach();
-					},
-
-					_createSourceEditor: function() {
-						var instance = this;
-
-						var host = instance.get(STR_HOST);
-
-						var sourceEditor = new A.LiferaySourceEditor(
+						fullScreenDialog.show();
+					} else {
+						Liferay.Util.openWindow(
 							{
-								boundingBox: instance._editorSource,
-								mode: 'html',
-								on: {
-									themeSwitched: function(event) {
-										var editorSwitchTheme = instance._editorSwitchTheme;
-
-										var nextTheme = event.themes[event.nextThemeIndex];
-
-										editorSwitchTheme.one('.lexicon-icon').replace(nextTheme.icon);
-
-										editorSwitchTheme.setAttribute('data-title', nextTheme.tooltip);
-									}
-								},
-								value: host.getHTML()
-							}
-						).render();
-
-						instance._toggleEditorModeUI();
-
-						instance._sourceEditor = sourceEditor;
-					},
-
-					_getEditorStateLexiconIcon: function() {
-						var instance = this;
-
-						var currentState = MAP_TOGGLE_STATE[instance._isVisible];
-
-						var icon = currentState.icon;
-
-						if (!icon) {
-							icon = Liferay.Util.getLexiconIcon(currentState.iconCssClass);
-
-							currentState.icon = icon;
-						}
-
-						return icon;
-					},
-
-					_getHTML: function() {
-						var instance = this;
-
-						var sourceEditor = instance._sourceEditor;
-
-						if (sourceEditor && instance._isVisible) {
-							var text = sourceEditor.get('value');
-
-							return new A.Do.AlterReturn(
-								'Modified source editor text',
-								text
-							);
-						}
-					},
-
-					_onEditorUpdate: function(event) {
-						var instance = this;
-
-						instance._toggleSourceSwitchFn(event.data.state);
-					},
-
-					_onFullScreenBtnClick: function() {
-						var instance = this;
-
-						var host = instance.get(STR_HOST);
-						var strings = instance.get(STRINGS);
-
-						var fullScreenDialog = instance._fullScreenDialog;
-						var fullScreenEditor = instance._fullScreenEditor;
-
-						if (fullScreenDialog) {
-							fullScreenEditor.set('value', host.getHTML());
-
-							fullScreenDialog.show();
-						}
-						else {
-							Liferay.Util.openWindow(
-								{
-									dialog: {
-										constrain: true,
-										cssClass: 'lfr-fulscreen-source-editor-dialog modal-full-screen',
-										modal: true,
-										'toolbars.footer': [
-											{
-												label: strings.cancel,
-												on: {
-													click: function() {
-														fullScreenDialog.hide();
-													}
-												}
-											},
-											{
-												cssClass: 'btn-primary',
-												label: strings.done,
-												on: {
-													click: function() {
-														fullScreenDialog.hide();
-														instance._switchMode(
-															{
-																content: fullScreenEditor.get('value')
-															}
-														);
-													}
+								dialog: {
+									constrain: true,
+									cssClass:
+										'lfr-fulscreen-source-editor-dialog modal-full-screen',
+									modal: true,
+									'toolbars.footer': [
+										{
+											label: strings.cancel,
+											on: {
+												click: function() {
+													fullScreenDialog.hide();
 												}
 											}
-										]
-									},
-									title: strings.editContent
+										},
+										{
+											cssClass: 'btn-primary',
+											label: strings.done,
+											on: {
+												click: function() {
+													fullScreenDialog.hide();
+													instance._switchMode({
+														content: fullScreenEditor.get(
+															'value'
+														)
+													});
+												}
+											}
+										}
+									]
 								},
-								function(dialog) {
-									fullScreenDialog = dialog;
+								title: strings.editContent
+							},
+							function(dialog) {
+								fullScreenDialog = dialog;
 
-									Liferay.Util.getTop().AUI().use(
+								Liferay.Util.getTop()
+									.AUI()
+									.use(
 										'liferay-fullscreen-source-editor',
 										function(A) {
 											fullScreenEditor = new A.LiferayFullScreenSourceEditor(
 												{
-													boundingBox: dialog.getStdModNode(A.WidgetStdMod.BODY).appendChild('<div></div>'),
-													dataProcessor: host.getNativeEditor().dataProcessor,
-													previewCssClass: 'alloy-editor alloy-editor-placeholder',
+													boundingBox: dialog
+														.getStdModNode(
+															A.WidgetStdMod.BODY
+														)
+														.appendChild(
+															'<div></div>'
+														),
+													dataProcessor: host.getNativeEditor()
+														.dataProcessor,
+													previewCssClass:
+														'alloy-editor alloy-editor-placeholder',
 													value: host.getHTML()
 												}
 											).render();
@@ -223,148 +278,160 @@ AUI.add(
 											instance._fullScreenEditor = fullScreenEditor;
 										}
 									);
-								}
-							);
-						}
-					},
-
-					_onSwitchBlur: function(event) {
-						var instance = this;
-
-						instance._isFocused = false;
-
-						instance._toggleSourceSwitchFn(
-							{
-								hidden: true
 							}
 						);
-					},
-
-					_onSwitchFocus: function(event) {
-						var instance = this;
-
-						instance._isFocused = true;
-
-						instance._toggleSourceSwitchFn(
-							{
-								hidden: false
-							}
-						);
-					},
-
-					_onSwitchMouseDown: function() {
-						var instance = this;
-
-						instance._isClicked = true;
-					},
-
-					_onSwitchMouseOut: function() {
-						var instance = this;
-
-						instance._isClicked = false;
-					},
-
-					_refreshTooltip: function() {
-						if (Liferay.Data.LFR_PORTAL_TOOLTIP) {
-							Liferay.Data.LFR_PORTAL_TOOLTIP.getTooltip().renderUI();
-						}
-					},
-
-					_setHTML: function(value) {
-						var instance = this;
-
-						var sourceEditor = instance._sourceEditor;
-
-						if (sourceEditor && instance._isVisible) {
-							sourceEditor.set(STR_VALUE, value);
-						}
-					},
-
-					_switchMode: function(event) {
-						var instance = this;
-
-						instance._isClicked = false;
-
-						var host = instance.get(STR_HOST);
-
-						var editor = instance._sourceEditor;
-
-						if (instance._isVisible) {
-							var content = event.content || (editor ? editor.get(STR_VALUE) : '');
-
-							host.setHTML(content);
-
-							instance._toggleEditorModeUI();
-						}
-						else if (editor) {
-							var currentContent = event.content || host.getHTML();
-
-							if (currentContent !== editor.get(STR_VALUE)) {
-								editor.set(STR_VALUE, currentContent);
-							}
-
-							instance._toggleEditorModeUI();
-						}
-						else {
-							instance._createSourceEditor();
-						}
-					},
-
-					_switchTheme: function(event) {
-						var instance = this;
-
-						instance._sourceEditor.switchTheme();
-
-						instance._refreshTooltip();
-					},
-
-					_toggleEditorModeUI: function() {
-						var instance = this;
-
-						var editorFullscreen = instance._editorFullscreen;
-						var editorSwitch = instance._editorSwitch;
-						var editorSwitchContainer = editorSwitch.ancestor();
-						var editorSwitchTheme = instance._editorSwitchTheme;
-						var editorWrapper = instance._editorWrapper;
-
-						editorWrapper.toggleClass(CSS_SHOW_SOURCE);
-						editorSwitchContainer.toggleClass(CSS_SHOW_SOURCE);
-						editorFullscreen.toggleClass('hide');
-						editorSwitchTheme.toggleClass('hide');
-
-						instance._isVisible = editorWrapper.hasClass(CSS_SHOW_SOURCE);
-
-						editorSwitch.one('.lexicon-icon').replace(instance._getEditorStateLexiconIcon());
-						editorSwitch.setAttribute('data-title', instance._isVisible ? Liferay.Language.get('text-view') : Liferay.Language.get('code-view'));
-
-						instance._refreshTooltip();
-
-						instance._toggleSourceSwitchFn(
-							{
-								hidden: true
-							}
-						);
-					},
-
-					_toggleSourceSwitch: function(editorState) {
-						var instance = this;
-
-						var showSourceSwitch = true;
-
-						if (!instance._isClicked) {
-							showSourceSwitch = instance._isVisible || instance._isFocused || !editorState.hidden;
-						}
-
-						instance._editorSwitch.ancestor().toggleClass('hide', !showSourceSwitch);
 					}
+				},
+
+				_onSwitchBlur: function(event) {
+					var instance = this;
+
+					instance._isFocused = false;
+
+					instance._toggleSourceSwitchFn({
+						hidden: true
+					});
+				},
+
+				_onSwitchFocus: function(event) {
+					var instance = this;
+
+					instance._isFocused = true;
+
+					instance._toggleSourceSwitchFn({
+						hidden: false
+					});
+				},
+
+				_onSwitchMouseDown: function() {
+					var instance = this;
+
+					instance._isClicked = true;
+				},
+
+				_onSwitchMouseOut: function() {
+					var instance = this;
+
+					instance._isClicked = false;
+				},
+
+				_refreshTooltip: function() {
+					if (Liferay.Data.LFR_PORTAL_TOOLTIP) {
+						Liferay.Data.LFR_PORTAL_TOOLTIP.getTooltip().renderUI();
+					}
+				},
+
+				_setHTML: function(value) {
+					var instance = this;
+
+					var sourceEditor = instance._sourceEditor;
+
+					if (sourceEditor && instance._isVisible) {
+						sourceEditor.set(STR_VALUE, value);
+					}
+				},
+
+				_switchMode: function(event) {
+					var instance = this;
+
+					instance._isClicked = false;
+
+					var host = instance.get(STR_HOST);
+
+					var editor = instance._sourceEditor;
+
+					if (instance._isVisible) {
+						var content =
+							event.content ||
+							(editor ? editor.get(STR_VALUE) : '');
+
+						host.setHTML(content);
+
+						instance._toggleEditorModeUI();
+					} else if (editor) {
+						var currentContent = event.content || host.getHTML();
+
+						if (currentContent !== editor.get(STR_VALUE)) {
+							editor.set(STR_VALUE, currentContent);
+						}
+
+						instance._toggleEditorModeUI();
+					} else {
+						instance._createSourceEditor();
+					}
+				},
+
+				_switchTheme: function(event) {
+					var instance = this;
+
+					instance._sourceEditor.switchTheme();
+
+					instance._refreshTooltip();
+				},
+
+				_toggleEditorModeUI: function() {
+					var instance = this;
+
+					var editorFullscreen = instance._editorFullscreen;
+					var editorSwitch = instance._editorSwitch;
+					var editorSwitchContainer = editorSwitch.ancestor();
+					var editorSwitchTheme = instance._editorSwitchTheme;
+					var editorWrapper = instance._editorWrapper;
+
+					editorWrapper.toggleClass(CSS_SHOW_SOURCE);
+					editorSwitchContainer.toggleClass(CSS_SHOW_SOURCE);
+					editorFullscreen.toggleClass('hide');
+					editorSwitchTheme.toggleClass('hide');
+
+					instance._isVisible = editorWrapper.hasClass(
+						CSS_SHOW_SOURCE
+					);
+
+					editorSwitch
+						.one('.lexicon-icon')
+						.replace(instance._getEditorStateLexiconIcon());
+					editorSwitch.setAttribute(
+						'data-title',
+						instance._isVisible
+							? Liferay.Language.get('text-view')
+							: Liferay.Language.get('code-view')
+					);
+
+					instance._refreshTooltip();
+
+					instance._toggleSourceSwitchFn({
+						hidden: true
+					});
+				},
+
+				_toggleSourceSwitch: function(editorState) {
+					var instance = this;
+
+					var showSourceSwitch = true;
+
+					if (!instance._isClicked) {
+						showSourceSwitch =
+							instance._isVisible ||
+							instance._isFocused ||
+							!editorState.hidden;
+					}
+
+					instance._editorSwitch
+						.ancestor()
+						.toggleClass('hide', !showSourceSwitch);
 				}
 			}
-		);
+		});
 
 		A.Plugin.LiferayAlloyEditorSource = LiferayAlloyEditorSource;
 	},
 	'',
 	{
-		requires: ['aui-debounce', 'liferay-fullscreen-source-editor', 'liferay-source-editor', 'plugin']
+		requires: [
+			'aui-debounce',
+			'liferay-fullscreen-source-editor',
+			'liferay-source-editor',
+			'plugin'
+		]
 	}
 );

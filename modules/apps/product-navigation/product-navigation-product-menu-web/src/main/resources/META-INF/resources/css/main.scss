@@ -1,5 +1,5 @@
-@import "bourbon";
-@import "mixins";
+@import 'bourbon';
+@import 'mixins';
 
 .product-menu {
 	.sidebar-header {
@@ -65,7 +65,12 @@
 	}
 
 	.list-group-heading {
-		h1, h2, h3, h4, h5, h6 {
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
 			margin-bottom: 0;
 			margin-top: 0;
 		}
@@ -83,7 +88,7 @@
 	}
 
 	&.popover {
-		background-color: #FFF;
+		background-color: #fff;
 	}
 
 	.impersonation-message {
@@ -102,7 +107,8 @@
 			height: auto;
 		}
 
-		.list-group-item-content, .list-group-item-field {
+		.list-group-item-content,
+		.list-group-item-field {
 			vertical-align: middle;
 		}
 
@@ -135,7 +141,7 @@
 	width: 20px;
 
 	.pm {
-		border-left: 1px solid #FFF;
+		border-left: 1px solid #fff;
 		border-radius: 1px;
 		height: 16px;
 		left: 0;
@@ -147,7 +153,7 @@
 	}
 
 	.cn {
-		border: 1px solid #FFF;
+		border: 1px solid #fff;
 		border-radius: 1px;
 		content: '';
 		height: 18px;

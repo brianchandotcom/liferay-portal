@@ -3,7 +3,9 @@
 }
 
 .lfr-table {
-	> tbody, > thead, > tfoot {
+	> tbody,
+	> thead,
+	> tfoot {
 		> tr > th {
 			font-weight: bold;
 		}

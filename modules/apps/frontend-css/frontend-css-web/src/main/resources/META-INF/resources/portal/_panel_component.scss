@@ -1,8 +1,11 @@
-.lfr-panel-container, .lfr-floating-container {
+.lfr-panel-container,
+.lfr-floating-container {
 	clear: both;
 }
 
-.lfr-panel.lfr-extended, .lfr-panel-container, .lfr-floating-container {
+.lfr-panel.lfr-extended,
+.lfr-panel-container,
+.lfr-floating-container {
 	border: 1px solid transparent;
 }
 
@@ -10,7 +13,8 @@
 	position: relative;
 }
 
-.lfr-floating-container .lfr-form-row, .lfr-panel-container .lfr-panel {
+.lfr-floating-container .lfr-form-row,
+.lfr-panel-container .lfr-panel {
 	border-width: 0;
 }
 
@@ -103,7 +107,8 @@
 		width: auto;
 	}
 
-	.language-value, select {
+	.language-value,
+	select {
 		display: inline-block;
 		vertical-align: top;
 	}

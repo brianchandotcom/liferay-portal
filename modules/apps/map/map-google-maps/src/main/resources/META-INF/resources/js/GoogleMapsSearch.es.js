@@ -8,7 +8,6 @@ import {isInputNode} from 'map-common/js/validators.es';
  * @review
  */
 class GoogleMapsSearch extends State {
-
 	/**
 	 * Creates a new search handler using Google Map's API
 	 * @param  {Array} args List of arguments to be passed to State
@@ -28,11 +27,9 @@ class GoogleMapsSearch extends State {
 	 * @review
 	 */
 	destructor() {
-		this._eventHandlers.forEach(
-			item => {
-				google.maps.event.removeListener(item);
-			}
-		);
+		this._eventHandlers.forEach(item => {
+			google.maps.event.removeListener(item);
+		});
 	}
 
 	/**
@@ -64,18 +61,15 @@ class GoogleMapsSearch extends State {
 		if (place && typeof place === 'object' && place.geometry) {
 			const geolocation = place.geometry.location;
 
-			this.emit(
-				'search',
-				{
-					position: {
-						address: place.formatted_address,
-						location: {
-							lat: geolocation.lat(),
-							lng: geolocation.lng()
-						}
+			this.emit('search', {
+				position: {
+					address: place.formatted_address,
+					location: {
+						lat: geolocation.lat(),
+						lng: geolocation.lng()
 					}
 				}
-			);
+			});
 		}
 	}
 }
@@ -87,7 +81,6 @@ class GoogleMapsSearch extends State {
  * @type {!Object}
  */
 GoogleMapsSearch.STATE = {
-
 	/**
 	 * Input element that will be used for searching addresses.
 	 * @review

@@ -1,14 +1,14 @@
-@import "mixins";
+@import 'mixins';
 
 .portlet-users-admin {
 	#header-bottom {
-		background-color: #F6F8FB;
+		background-color: #f6f8fb;
 		height: 34px;
 		margin: 0 0 10px;
 	}
 
 	#header-menu {
-		background-color: #F3F5F5;
+		background-color: #f3f5f5;
 		font-size: 11px;
 		line-height: 34px;
 		margin: 0 0 10px;
@@ -17,7 +17,7 @@
 	}
 
 	#header-title {
-		background-color: #C1CABC;
+		background-color: #c1cabc;
 		font-size: 20px;
 		font-weight: 500;
 		margin: 0 0 10px;
@@ -77,7 +77,7 @@
 
 		h3 {
 			background: no-repeat scroll 2px 50%;
-			border-bottom: 1px solid #CCC;
+			border-bottom: 1px solid #ccc;
 			line-height: 1.5;
 			margin-bottom: 0.5em;
 			padding-left: 25px;
@@ -102,8 +102,10 @@
 	}
 
 	.form-navigator {
-		.user-info, .organization-info {
-			.user-logo, .organization-logo {
+		.user-info,
+		.organization-info {
+			.user-logo,
+			.organization-logo {
 				margin-right: 5px;
 				width: 35px;
 			}
@@ -118,7 +120,8 @@
 		margin-top: 1em;
 	}
 
-	.instant-messenger, .social-network {
+	.instant-messenger,
+	.social-network {
 		clear: both;
 		margin-bottom: 2em;
 		overflow: hidden;
@@ -144,7 +147,9 @@
 		margin: 10px 0 0 10px;
 	}
 
-	.organization-icon, .plugin-thumbnail, .site-icon {
+	.organization-icon,
+	.plugin-thumbnail,
+	.site-icon {
 		float: left;
 		margin-right: 5px;
 	}
@@ -193,7 +198,8 @@
 				margin: 0.5em;
 			}
 
-			.permission-navigation-item-content .permission-navigation-item-container {
+			.permission-navigation-item-content
+				.permission-navigation-item-container {
 				cursor: pointer;
 				line-height: 1.8em;
 				overflow: hidden;
@@ -287,7 +293,8 @@
 
 .lfr-floating-container {
 	.field {
-		input, img {
+		input,
+		img {
 			vertical-align: top;
 		}
 	}
@@ -303,5 +310,5 @@
 }
 
 .contact-information-edit-form {
-	background-color: #FFF;
+	background-color: #fff;
 }

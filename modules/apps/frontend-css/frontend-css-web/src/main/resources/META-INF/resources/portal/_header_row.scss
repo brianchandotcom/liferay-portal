@@ -12,7 +12,8 @@
 	padding: 3px 4px 0;
 }
 
-.lfr-header-row, .lfr-header-row-content {
+.lfr-header-row,
+.lfr-header-row-content {
 	&:after {
 		clear: both;
 		content: '';

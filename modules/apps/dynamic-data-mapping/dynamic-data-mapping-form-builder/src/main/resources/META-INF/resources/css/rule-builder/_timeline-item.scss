@@ -58,18 +58,21 @@
 				margin-bottom: 15px;
 			}
 
-			.data-provider-parameter-output, .data-provider-parameter-input {
+			.data-provider-parameter-output,
+			.data-provider-parameter-input {
 				margin-right: 10px;
 			}
 
-			.data-provider-parameter-output-container, .data-provider-parameter-input-container {
-				background-color: #F8F8F8;
-				border-top: 1px solid #DCE0E3;
+			.data-provider-parameter-output-container,
+			.data-provider-parameter-input-container {
+				background-color: #f8f8f8;
+				border-top: 1px solid #dce0e3;
 				margin-top: 15px;
 				padding: 20px 55px;
 			}
 
-			.data-provider-parameter-output-list, .data-provider-parameter-input-list {
+			.data-provider-parameter-output-list,
+			.data-provider-parameter-input-list {
 				.container-input-field {
 					margin-bottom: 10px;
 				}
@@ -116,7 +119,7 @@
 		}
 
 		.calculate-container {
-			background-color: #F8F8F8;
+			background-color: #f8f8f8;
 			display: flex;
 			flex-wrap: wrap;
 			margin-top: 15px;
@@ -127,8 +130,8 @@
 			padding: 8px 25px 25px;
 
 			textarea {
-				background-color: #F5F5F5;
-				border: 1px solid #CCC;
+				background-color: #f5f5f5;
+				border: 1px solid #ccc;
 				border-radius: 2px;
 				color: #333;
 				font-family: Menlo;
@@ -189,7 +192,8 @@
 					overflow: inherit;
 					padding: 0;
 
-					li.calculator-button, .calculator-add-operator-button-area {
+					li.calculator-button,
+					.calculator-add-operator-button-area {
 						align-items: center;
 						cursor: pointer;
 						display: flex;
@@ -217,7 +221,7 @@
 							}
 
 							.drop-chosen {
-								border: solid 1px #DDE1E3;
+								border: solid 1px #dde1e3;
 								border-radius: 4px;
 								left: -17px;
 								padding: 5px 0;
@@ -270,18 +274,19 @@
 		}
 	}
 
-	.form-group-item div.dropdown, .action {
+	.form-group-item div.dropdown,
+	.action {
 		position: relative !important;
 		right: inherit !important;
 		top: inherit !important;
 	}
 
 	.timeline-item {
-		color: #869CAD;
+		color: #869cad;
 		position: relative;
 
 		&:not(:nth-of-type(1)) .timeline-icon {
-			background-color: #6B6C7E;
+			background-color: #6b6c7e;
 		}
 
 		.action-panel {
@@ -293,7 +298,8 @@
 			margin: 0;
 		}
 
-		.form-group, .form-group-autofit {
+		.form-group,
+		.form-group-autofit {
 			margin: 0;
 		}
 
@@ -306,7 +312,7 @@
 		}
 
 		& .timeline-icon {
-			border: 2px solid #6B6C7E;
+			border: 2px solid #6b6c7e;
 			margin-right: 2px;
 		}
 	}

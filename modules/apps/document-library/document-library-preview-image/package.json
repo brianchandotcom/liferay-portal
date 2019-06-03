@@ -1,15 +1,4 @@
 {
-	"csfConfig": {
-		"path:**/test/**/*.es.js": {
-			"js": {
-				"lint": {
-					"env": {
-						"jest": true
-					}
-				}
-			}
-		}
-	},
 	"dependencies": {
 		"clay-button": "2.16.0",
 		"clay-icon": "2.16.0",

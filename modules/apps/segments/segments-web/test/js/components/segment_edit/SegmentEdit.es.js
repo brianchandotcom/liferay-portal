@@ -6,130 +6,112 @@ import {SOURCES} from 'utils/constants.es';
 
 const SOURCE_ICON_TESTID = 'source-icon';
 
-describe(
-	'SegmentEdit',
-	() => {
-		afterEach(cleanup);
+describe('SegmentEdit', () => {
+	afterEach(cleanup);
 
-		it(
-			'should render',
-			() => {
-				const {asFragment} = render(
-					<SegmentEdit
-						availableLocales={{
-							'en_US': ''
-						}}
-						defaultLanguageId="en_US"
-						initialSegmentName={{
-							'en_US': 'Segment title'
-						}}
-						locale="en_US"
-						redirect="/test-url"
-					/>
-				);
-
-				expect(asFragment()).toMatchSnapshot();
-			}
+	it('should render', () => {
+		const {asFragment} = render(
+			<SegmentEdit
+				availableLocales={{
+					en_US: ''
+				}}
+				defaultLanguageId='en_US'
+				initialSegmentName={{
+					en_US: 'Segment title'
+				}}
+				locale='en_US'
+				redirect='/test-url'
+			/>
 		);
 
-		it(
-			'should render with an analytics cloud icon',
-			() => {
-				const {icon, name} = SOURCES.ASAH_FARO_BACKEND;
+		expect(asFragment()).toMatchSnapshot();
+	});
 
-				const {getByTestId} = render(
-					<SegmentEdit
-						availableLocales={{
-							'en_US': ''
-						}}
-						defaultLanguageId="en_US"
-						initialSegmentName={{
-							'en_US': 'Segment title'
-						}}
-						locale="en_US"
-						redirect="/test-url"
-						source={name}
-					/>
-				);
+	it('should render with an analytics cloud icon', () => {
+		const {icon, name} = SOURCES.ASAH_FARO_BACKEND;
 
-				const image = getByTestId(SOURCE_ICON_TESTID);
-
-				expect(image).toHaveAttribute('src', icon);
-			}
+		const {getByTestId} = render(
+			<SegmentEdit
+				availableLocales={{
+					en_US: ''
+				}}
+				defaultLanguageId='en_US'
+				initialSegmentName={{
+					en_US: 'Segment title'
+				}}
+				locale='en_US'
+				redirect='/test-url'
+				source={name}
+			/>
 		);
 
-		it(
-			'should render with a dxp icon',
-			() => {
-				const {icon, name} = SOURCES.DEFAULT;
+		const image = getByTestId(SOURCE_ICON_TESTID);
 
-				const {getByTestId} = render(
-					<SegmentEdit
-						availableLocales={{
-							'en_US': ''
-						}}
-						defaultLanguageId="en_US"
-						initialSegmentName={{
-							'en_US': 'Segment title'
-						}}
-						locale="en_US"
-						redirect="/test-url"
-						source={name}
-					/>
-				);
+		expect(image).toHaveAttribute('src', icon);
+	});
 
-				const image = getByTestId(SOURCE_ICON_TESTID);
+	it('should render with a dxp icon', () => {
+		const {icon, name} = SOURCES.DEFAULT;
 
-				expect(image).toHaveAttribute('src', icon);
-			}
+		const {getByTestId} = render(
+			<SegmentEdit
+				availableLocales={{
+					en_US: ''
+				}}
+				defaultLanguageId='en_US'
+				initialSegmentName={{
+					en_US: 'Segment title'
+				}}
+				locale='en_US'
+				redirect='/test-url'
+				source={name}
+			/>
 		);
 
-		it(
-			'should render with edit buttons if the user has update permissions',
-			() => {
-				const hasUpdatePermission = true;
+		const image = getByTestId(SOURCE_ICON_TESTID);
 
-				const {asFragment} = render(
-					<SegmentEdit
-						availableLocales={{
-							'en_US': ''
-						}}
-						defaultLanguageId="en_US"
-						hasUpdatePermission={hasUpdatePermission}
-						initialSegmentName={{
-							'en_US': 'Segment title'
-						}}
-						locale="en_US"
-						redirect="/test-url"
-					/>
-				);
+		expect(image).toHaveAttribute('src', icon);
+	});
 
-				expect(asFragment()).toMatchSnapshot();
-			}
+	it('should render with edit buttons if the user has update permissions', () => {
+		const hasUpdatePermission = true;
+
+		const {asFragment} = render(
+			<SegmentEdit
+				availableLocales={{
+					en_US: ''
+				}}
+				defaultLanguageId='en_US'
+				hasUpdatePermission={hasUpdatePermission}
+				initialSegmentName={{
+					en_US: 'Segment title'
+				}}
+				locale='en_US'
+				redirect='/test-url'
+			/>
 		);
 
-		it(
-			'should render without edit buttons if the user does not have update permissions',
-			() => {
-				const hasUpdatePermission = false;
+		expect(asFragment()).toMatchSnapshot();
+	});
 
-				const {asFragment} = render(
-					<SegmentEdit
-						availableLocales={{
-							'en_US': ''
-						}}
-						defaultLanguageId="en_US"
-						hasUpdatePermission={hasUpdatePermission}
-						initialSegmentName={{
-							'en_US': 'Segment title'
-						}}
-						locale="en_US"
-						redirect="/test-url"
-					/>
-				);
+	it('should render without edit buttons if the user does not have update permissions', () => {
+		const hasUpdatePermission = false;
 
-				expect(asFragment()).toMatchSnapshot();
-			}
+		const {asFragment} = render(
+			<SegmentEdit
+				availableLocales={{
+					en_US: ''
+				}}
+				defaultLanguageId='en_US'
+				hasUpdatePermission={hasUpdatePermission}
+				initialSegmentName={{
+					en_US: 'Segment title'
+				}}
+				locale='en_US'
+				redirect='/test-url'
+			/>
 		);
-	}
-);
+
+		expect(asFragment()).toMatchSnapshot();
+	});
+});

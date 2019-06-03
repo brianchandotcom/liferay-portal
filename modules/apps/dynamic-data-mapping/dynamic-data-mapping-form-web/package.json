@@ -1,48 +1,4 @@
 {
-	"csfConfig": {
-		"path:**/*.js": {
-			"js": {
-				"lint": {
-					"env": {
-						"browser": true,
-						"jest": true
-					},
-					"extends": "liferay",
-					"parser": "babel-eslint",
-					"parserOptions": {
-						"ecmaVersion": 7
-					},
-					"rules": {
-						"no-unknown-property": [
-							2,
-							{
-								"ignore": [
-									"class"
-								]
-							}
-						]
-					}
-				}
-			}
-		},
-		"path:**/*.jsp": {
-			"js": {
-				"lint": {
-					"env": {
-						"browser": true,
-						"jest": true,
-						"mocha": true
-					},
-					"extends": "liferay",
-					"globals": {
-						"$": true,
-						"MODULE_PATH": true,
-						"ShareFormPopover": true
-					}
-				}
-			}
-		}
-	},
 	"dependencies": {
 		"classnames": "^2.2.6",
 		"clay-alert": "2.16.0",

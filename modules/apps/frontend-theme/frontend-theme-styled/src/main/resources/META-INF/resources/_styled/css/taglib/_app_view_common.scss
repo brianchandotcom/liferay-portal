@@ -1,16 +1,20 @@
 .app-view-entry {
 	&:hover .entry-thumbnail {
-		border-color: #7ABFDD;
+		border-color: #7abfdd;
 	}
 
-	&.selected{
+	&.selected {
 		.entry-thumbnail {
-			border-color: #057CB0;
+			border-color: #057cb0;
 		}
 
 		.entry-metadata {
-			dt, dd, .entry-categories, .entry-tags, .entry-description {
-				color: #F0F0F0;
+			dt,
+			dd,
+			.entry-categories,
+			.entry-tags,
+			.entry-description {
+				color: #f0f0f0;
 			}
 		}
 	}
@@ -24,7 +28,11 @@
 	}
 
 	.entry-metadata {
-		dt, dd, .entry-categories, .entry-tags, .entry-description {
+		dt,
+		dd,
+		.entry-categories,
+		.entry-tags,
+		.entry-description {
 			color: #333;
 			word-wrap: break-word;
 		}
@@ -38,13 +46,16 @@
 		}
 	}
 
-	&.selected, &.selected:hover {
-		background-color: #00A2EA;
+	&.selected,
+	&.selected:hover {
+		background-color: #00a2ea;
 	}
 
 	&.selected a {
-		&, &:focus, &:hover {
-			color: #FFF;
+		&,
+		&:focus,
+		&:hover {
+			color: #fff;
 		}
 
 		.lfr-icon-menu-arrow {
@@ -52,12 +63,15 @@
 		}
 	}
 
-	&.active-area, &.active-area.hover, &.active-area td {
-		background-color: #5AD300;
+	&.active-area,
+	&.active-area.hover,
+	&.active-area td {
+		background-color: #5ad300;
 	}
 
-	&:hover, &.hover {
-		background-color: #D3E8F1;
+	&:hover,
+	&.hover {
+		background-color: #d3e8f1;
 	}
 
 	a.entry-link:hover {

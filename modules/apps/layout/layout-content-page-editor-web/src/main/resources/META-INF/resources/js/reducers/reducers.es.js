@@ -1,13 +1,45 @@
-import {addFragmentEntryLinkReducer, clearFragmentEditorReducer, disableFragmentEditorReducer, enableFragmentEditorReducer, moveFragmentEntryLinkReducer, removeFragmentEntryLinkReducer, updateEditableValueReducer, updateFragmentEntryLinkConfigReducer} from './fragments.es';
+import {
+	addFragmentEntryLinkReducer,
+	clearFragmentEditorReducer,
+	disableFragmentEditorReducer,
+	enableFragmentEditorReducer,
+	moveFragmentEntryLinkReducer,
+	removeFragmentEntryLinkReducer,
+	updateEditableValueReducer,
+	updateFragmentEntryLinkConfigReducer
+} from './fragments.es';
 import {addMappingAssetEntry} from './mapping.es';
 import {addPortletReducer} from './portlets.es';
-import {addRowReducer, moveRowReducer, removeRowReducer, updateRowColumnsNumberReducer, updateRowColumnsReducer, updateRowConfigReducer} from './rows.es';
-import {createSegmentsExperienceReducer, deleteSegmentsExperienceReducer, editSegmentsExperienceReducer, selectSegmentsExperienceReducer, updateSegmentsExperiencePriorityReducer} from './segmentsExperiences.es';
+import {
+	addRowReducer,
+	moveRowReducer,
+	removeRowReducer,
+	updateRowColumnsNumberReducer,
+	updateRowColumnsReducer,
+	updateRowConfigReducer
+} from './rows.es';
+import {
+	createSegmentsExperienceReducer,
+	deleteSegmentsExperienceReducer,
+	editSegmentsExperienceReducer,
+	selectSegmentsExperienceReducer,
+	updateSegmentsExperiencePriorityReducer
+} from './segmentsExperiences.es';
 import {updateSelectedSidebarPanelId} from './sidebar.es';
-import {hideMappingDialogReducer, hideMappingTypeDialogReducer, openAssetTypeDialogReducer, openMappingFieldsDialogReducer, selectMappeableTypeReducer} from './dialogs.es';
+import {
+	hideMappingDialogReducer,
+	hideMappingTypeDialogReducer,
+	openAssetTypeDialogReducer,
+	openMappingFieldsDialogReducer,
+	selectMappeableTypeReducer
+} from './dialogs.es';
 import {languageIdReducer} from './translations.es';
 import {saveChangesReducer} from './changes.es';
-import {updateActiveItemReducer, updateDropTargetReducer, updateHoveredItemReducer} from './placeholders.es';
+import {
+	updateActiveItemReducer,
+	updateDropTargetReducer,
+	updateHoveredItemReducer
+} from './placeholders.es';
 
 /**
  * List of reducers

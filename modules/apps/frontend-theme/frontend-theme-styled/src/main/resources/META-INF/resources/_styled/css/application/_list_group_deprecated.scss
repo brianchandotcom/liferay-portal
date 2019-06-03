@@ -1,8 +1,9 @@
 .nav.list-group {
 	li > a {
-		&:focus, &:hover {
-			background-color: #E5F5FC;
-			color: #009AE5;
+		&:focus,
+		&:hover {
+			background-color: #e5f5fc;
+			color: #009ae5;
 		}
 	}
 
@@ -10,10 +11,12 @@
 		border-width: 1px 0 0 0;
 
 		> a {
-			&, &:focus, &:hover {
-				background-color: #60BFEF;
-				border: 1px solid #60BFEF;
-				color: #FFF;
+			&,
+			&:focus,
+			&:hover {
+				background-color: #60bfef;
+				border: 1px solid #60bfef;
+				color: #fff;
 			}
 		}
 	}
@@ -22,7 +25,7 @@
 		padding: 0;
 
 		&.nav-header {
-			background-color: #F3F3F3;
+			background-color: #f3f3f3;
 			padding-left: 10px;
 			padding-right: 10px;
 		}

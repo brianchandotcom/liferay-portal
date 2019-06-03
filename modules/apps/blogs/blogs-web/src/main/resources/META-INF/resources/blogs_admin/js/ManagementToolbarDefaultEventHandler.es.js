@@ -3,19 +3,24 @@ import {Config} from 'metal-state';
 
 class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	deleteEntries() {
-		if (this.trashEnabled || confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this'))) {
+		if (
+			this.trashEnabled ||
+			confirm(
+				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+			)
+		) {
 			const form = this.one('#fm');
 
-			Liferay.Util.postForm(
-				form,
-				{
-					data: {
-						cmd: this.deleteEntriesCmd,
-						deleteEntryIds: Liferay.Util.listCheckedExcept(form, this.ns('allRowIds'))
-					},
-					url: this.deleteEntriesURL
-				}
-			);
+			Liferay.Util.postForm(form, {
+				data: {
+					cmd: this.deleteEntriesCmd,
+					deleteEntryIds: Liferay.Util.listCheckedExcept(
+						form,
+						this.ns('allRowIds')
+					)
+				},
+				url: this.deleteEntriesURL
+			});
 		}
 	}
 }

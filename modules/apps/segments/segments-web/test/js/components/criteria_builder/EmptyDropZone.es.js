@@ -4,26 +4,20 @@ import {cleanup, render} from 'react-testing-library';
 
 const connectDnd = jest.fn(el => el);
 
-describe(
-	'EmptyDropZone',
-	() => {
-		afterEach(cleanup);
+describe('EmptyDropZone', () => {
+	afterEach(cleanup);
 
-		it(
-			'should render',
-			() => {
-				const OriginalEmptyDropZone = EmptyDropZone.DecoratedComponent;
+	it('should render', () => {
+		const OriginalEmptyDropZone = EmptyDropZone.DecoratedComponent;
 
-				const {asFragment} = render(
-					<OriginalEmptyDropZone
-						connectDropTarget={connectDnd}
-						onCriterionAdd={jest.fn()}
-						propertyKey="user"
-					/>
-				);
-
-				expect(asFragment()).toMatchSnapshot();
-			}
+		const {asFragment} = render(
+			<OriginalEmptyDropZone
+				connectDropTarget={connectDnd}
+				onCriterionAdd={jest.fn()}
+				propertyKey='user'
+			/>
 		);
-	}
-);
+
+		expect(asFragment()).toMatchSnapshot();
+	});
+});

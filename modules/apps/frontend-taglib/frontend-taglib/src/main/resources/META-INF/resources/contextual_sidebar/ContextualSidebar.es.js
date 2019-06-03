@@ -11,7 +11,6 @@ import templates from './ContextualSidebar.soy';
  */
 
 class ContextualSidebar extends Component {
-
 	/**
 	 * @inheritDoc
 	 * @review
@@ -51,14 +50,10 @@ class ContextualSidebar extends Component {
 	 */
 
 	prepareStateForRender(state) {
-		return Object.assign(
-			{},
-			state,
-			{
-				body: Soy.toIncDom(this.body || ''),
-				header: Soy.toIncDom(this.header || '')
-			}
-		);
+		return Object.assign({}, state, {
+			body: Soy.toIncDom(this.body || ''),
+			header: Soy.toIncDom(this.header || '')
+		});
 	}
 
 	/**
@@ -79,8 +74,7 @@ class ContextualSidebar extends Component {
 			document.body.classList.add('contextual-sidebar-visible');
 
 			this._productMenuToggle.sideNavigation('hide');
-		}
-		else {
+		} else {
 			document.body.classList.remove('contextual-sidebar-visible');
 		}
 	}
@@ -106,7 +100,6 @@ class ContextualSidebar extends Component {
  */
 
 ContextualSidebar.STATE = {
-
 	/**
 	 * Sidebar body content
 	 * @default undefined
@@ -117,11 +110,11 @@ ContextualSidebar.STATE = {
 	 */
 
 	body: Config.any()
-		.setter(
-			body => {
-				return isObject(body) && !isFunction(body) ? body.value.content : body;
-			}
-		)
+		.setter(body => {
+			return isObject(body) && !isFunction(body)
+				? body.value.content
+				: body;
+		})
 		.required(),
 
 	/**
@@ -156,11 +149,11 @@ ContextualSidebar.STATE = {
 	 */
 
 	header: Config.any()
-		.setter(
-			header => {
-				return isObject(header) && !isFunction(header) ? header.value.content : header;
-			}
-		)
+		.setter(header => {
+			return isObject(header) && !isFunction(header)
+				? header.value.content
+				: header;
+		})
 		.required(),
 
 	/**

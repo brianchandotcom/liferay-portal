@@ -2,7 +2,11 @@ import * as FormSupport from '../Form/FormSupport.es';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 import {DragDrop} from 'metal-drag-drop';
-import {focusedFieldStructure, pageStructure, ruleStructure} from '../../util/config.es';
+import {
+	focusedFieldStructure,
+	pageStructure,
+	ruleStructure
+} from '../../util/config.es';
 
 const withMoveableFields = ChildComponent => {
 	class MoveableFields extends Component {
@@ -11,20 +15,21 @@ const withMoveableFields = ChildComponent => {
 		}
 
 		createDragAndDrop() {
-			this._dragAndDrop = new DragDrop(
-				{
-					sources: '.moveable .ddm-drag',
-					targets: '.moveable .ddm-target',
-					useShim: false
-				}
-			);
+			this._dragAndDrop = new DragDrop({
+				sources: '.moveable .ddm-drag',
+				targets: '.moveable .ddm-target',
+				useShim: false
+			});
 
 			this._dragAndDrop.on(
 				DragDrop.Events.END,
 				this._handleDragAndDropEnd.bind(this)
 			);
 
-			this._dragAndDrop.on(DragDrop.Events.DRAG, this._handleDragStarted.bind(this));
+			this._dragAndDrop.on(
+				DragDrop.Events.DRAG,
+				this._handleDragStarted.bind(this)
+			);
 		}
 
 		disposeDragAndDrop() {
@@ -54,11 +59,11 @@ const withMoveableFields = ChildComponent => {
 		}
 
 		willReceiveProps() {
-			this._dragAndDrop.setState(
-				{
-					targets: this._dragAndDrop.setterTargetsFn_('.moveable .ddm-target')
-				}
-			);
+			this._dragAndDrop.setState({
+				targets: this._dragAndDrop.setterTargetsFn_(
+					'.moveable .ddm-target'
+				)
+			});
 		}
 
 		_handleDragAndDropEnd({source, target}) {
@@ -73,19 +78,21 @@ const withMoveableFields = ChildComponent => {
 				const sourceIndex = FormSupport.getIndexes(
 					source.parentElement.parentElement
 				);
-				const targetIndex = FormSupport.getIndexes(target.parentElement);
+				const targetIndex = FormSupport.getIndexes(
+					target.parentElement
+				);
 
 				source.innerHTML = '';
 
-				const addedToPlaceholder = !([].concat(target.parentElement.parentElement.classList)).includes('position-relative');
+				const addedToPlaceholder = ![]
+					.concat(target.parentElement.parentElement.classList)
+					.includes('position-relative');
 
-				this._handleFieldMoved(
-					{
-						addedToPlaceholder,
-						source: sourceIndex,
-						target: targetIndex
-					}
-				);
+				this._handleFieldMoved({
+					addedToPlaceholder,
+					source: sourceIndex,
+					target: targetIndex
+				});
 			}
 
 			this._refreshDragAndDrop();
@@ -95,7 +102,10 @@ const withMoveableFields = ChildComponent => {
 			const {height} = source.getBoundingClientRect();
 			const {parentElement} = source;
 
-			parentElement.setAttribute('style', `height: ${height}px !important;`);
+			parentElement.setAttribute(
+				'style',
+				`height: ${height}px !important;`
+			);
 			parentElement.classList.add('ddm-parent-dragging');
 		}
 
@@ -112,7 +122,6 @@ const withMoveableFields = ChildComponent => {
 	}
 
 	MoveableFields.PROPS = {
-
 		/**
 		 * @default
 		 * @instance

@@ -37,13 +37,12 @@ function destroy() {
  * @return {object[]} Floating toolbar panels
  */
 function getFloatingToolbarButtons(editableValues) {
-	return editableValues.mappedField || editableValues.fieldId ? [
-		FLOATING_TOOLBAR_BUTTONS.textProperties,
-		FLOATING_TOOLBAR_BUTTONS.map
-	] : [
-		FLOATING_TOOLBAR_BUTTONS.edit,
-		FLOATING_TOOLBAR_BUTTONS.map
-	];
+	return editableValues.mappedField || editableValues.fieldId
+		? [
+				FLOATING_TOOLBAR_BUTTONS.textProperties,
+				FLOATING_TOOLBAR_BUTTONS.map
+		  ]
+		: [FLOATING_TOOLBAR_BUTTONS.edit, FLOATING_TOOLBAR_BUTTONS.map];
 }
 
 /**
@@ -80,7 +79,9 @@ function init(
 	wrapper.dataset.lfrEditableId = editableElement.id;
 	wrapper.innerHTML = editableContent;
 
-	const editorName = `${portletNamespace}FragmentEntryLinkEditable_${editableElement.id}`;
+	const editorName = `${portletNamespace}FragmentEntryLinkEditable_${
+		editableElement.id
+	}`;
 
 	wrapper.setAttribute('id', editorName);
 	wrapper.setAttribute('name', editorName);
@@ -105,43 +106,28 @@ function init(
 
 	const nativeEditor = _editor.get('nativeEditor');
 
+	_editorEventHandler.add(nativeEditor.on('key', _handleNativeEditorKey));
+
 	_editorEventHandler.add(
-		nativeEditor.on(
-			'key',
-			_handleNativeEditorKey
+		nativeEditor.on('change', () => changedCallback(nativeEditor.getData()))
+	);
+
+	_editorEventHandler.add(
+		nativeEditor.on('actionPerformed', () =>
+			changedCallback(nativeEditor.getData())
 		)
 	);
 
 	_editorEventHandler.add(
-		nativeEditor.on(
-			'change',
-			() => changedCallback(nativeEditor.getData())
-		)
-	);
-
-	_editorEventHandler.add(
-		nativeEditor.on(
-			'actionPerformed',
-			() => changedCallback(nativeEditor.getData())
-		)
-	);
-
-	_editorEventHandler.add(
-		nativeEditor.on(
-			'blur',
-			() => {
-				if (_editor._mainUI.state.hidden) {
-					requestAnimationFrame(destroy);
-				}
+		nativeEditor.on('blur', () => {
+			if (_editor._mainUI.state.hidden) {
+				requestAnimationFrame(destroy);
 			}
-		)
+		})
 	);
 
 	_editorEventHandler.add(
-		nativeEditor.on(
-			'instanceReady',
-			() => nativeEditor.focus()
-		)
+		nativeEditor.on('instanceReady', () => nativeEditor.focus())
 	);
 }
 
@@ -170,23 +156,19 @@ function _getEditorConfiguration(
 	defaultEditorConfiguration,
 	editorName
 ) {
-	return object.mixin(
-		{},
-		defaultEditorConfiguration.editorConfig || {},
-		{
-			filebrowserImageBrowseLinkUrl: defaultEditorConfiguration
-				.editorConfig
-				.filebrowserImageBrowseLinkUrl
-				.replace('_EDITOR_NAME_', editorName),
+	return object.mixin({}, defaultEditorConfiguration.editorConfig || {}, {
+		filebrowserImageBrowseLinkUrl: defaultEditorConfiguration.editorConfig.filebrowserImageBrowseLinkUrl.replace(
+			'_EDITOR_NAME_',
+			editorName
+		),
 
-			filebrowserImageBrowseUrl: defaultEditorConfiguration
-				.editorConfig
-				.filebrowserImageBrowseUrl
-				.replace('_EDITOR_NAME_', editorName),
+		filebrowserImageBrowseUrl: defaultEditorConfiguration.editorConfig.filebrowserImageBrowseUrl.replace(
+			'_EDITOR_NAME_',
+			editorName
+		),
 
-			title: editorName
-		}
-	);
+		title: editorName
+	});
 }
 
 /**

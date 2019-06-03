@@ -1,7 +1,8 @@
-@import "mixins";
+@import 'mixins';
 
 .taglib-form-navigator {
-	.error-notice, .modified-notice {
+	.error-notice,
+	.modified-notice {
 		display: none;
 	}
 

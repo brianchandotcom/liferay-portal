@@ -38,12 +38,7 @@ class CriteriaSidebarItem extends Component {
 	static propTypes = {
 		className: PropTypes.string,
 		connectDragSource: PropTypes.func,
-		defaultValue: PropTypes.oneOfType(
-			[
-				PropTypes.string,
-				PropTypes.number
-			]
-		),
+		defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 		dragging: PropTypes.bool,
 		label: PropTypes.string,
 		name: PropTypes.string,
@@ -63,17 +58,17 @@ class CriteriaSidebarItem extends Component {
 		const classes = getCN(
 			'criteria-sidebar-item-root',
 			{dragging},
-			className,
+			className
 		);
 
 		return connectDragSource(
 			<li className={classes}>
-				<span className="inline-item">
-					<ClayIcon iconName="drag" />
+				<span className='inline-item'>
+					<ClayIcon iconName='drag' />
 				</span>
 
-				<span className="criteria-sidebar-item-type sticker sticker-light">
-					<span className="inline-item">
+				<span className='criteria-sidebar-item-type sticker sticker-light'>
+					<span className='inline-item'>
 						<ClayIcon iconName={TYPE_ICON_MAP[type] || 'text'} />
 					</span>
 				</span>

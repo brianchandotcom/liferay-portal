@@ -11,7 +11,11 @@ import withMultiplePages from './withMultiplePages.es';
 import withResizeableColumns from './withResizeableColumns.es';
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
-import {focusedFieldStructure, pageStructure, ruleStructure} from '../../util/config.es';
+import {
+	focusedFieldStructure,
+	pageStructure,
+	ruleStructure
+} from '../../util/config.es';
 import {generateFieldName} from '../LayoutProvider/util/fields.es';
 import {makeFetch} from '../../util/fetch.es';
 import {normalizeSettingsContextPages} from '../../util/fieldSupport.es';
@@ -23,12 +27,13 @@ import {PagesVisitor} from '../../util/visitors.es';
  */
 
 class FormBuilderBase extends Component {
-
 	attached() {
 		const {activePage, pages} = this.props;
 		const {store} = this.context;
 		const formBasicInfo = document.querySelector('.ddm-form-basic-info');
-		const translationManager = document.querySelector('.ddm-translation-manager');
+		const translationManager = document.querySelector(
+			'.ddm-translation-manager'
+		);
 
 		if (formBasicInfo && translationManager) {
 			formBasicInfo.classList.remove('hide');
@@ -46,7 +51,9 @@ class FormBuilderBase extends Component {
 
 	created() {
 		this._eventHandler = new EventHandler();
-		this._handleCancelChangesModalButtonClicked = this._handleCancelChangesModalButtonClicked.bind(this);
+		this._handleCancelChangesModalButtonClicked = this._handleCancelChangesModalButtonClicked.bind(
+			this
+		);
 	}
 
 	disposeInternal() {
@@ -65,7 +72,9 @@ class FormBuilderBase extends Component {
 		return {
 			fieldAdded: this._handleFieldAdded.bind(this),
 			fieldBlurred: this._handleSidebarFieldBlurred.bind(this),
-			fieldChangesCanceled: this._handleCancelFieldChangesModal.bind(this),
+			fieldChangesCanceled: this._handleCancelFieldChangesModal.bind(
+				this
+			),
 			fieldDeleted: this._handleFieldDeleted.bind(this),
 			fieldDuplicated: this._handleFieldDuplicated.bind(this),
 			fieldSetAdded: this._handleFieldSetAdded.bind(this),
@@ -84,24 +93,24 @@ class FormBuilderBase extends Component {
 	preparePagesForRender(pages) {
 		const visitor = new PagesVisitor(pages);
 
-		return visitor.mapFields(
-			field => {
-				if (field.type === 'select' && field.dataSourceType !== 'manual') {
-					field = {
-						...field,
-						options: [
-							{
-								label: Liferay.Language.get('dynamically-loaded-data'),
-								value: 'dynamic'
-							}
-						],
-						value: 'dynamic'
-					};
-				}
-
-				return field;
+		return visitor.mapFields(field => {
+			if (field.type === 'select' && field.dataSourceType !== 'manual') {
+				field = {
+					...field,
+					options: [
+						{
+							label: Liferay.Language.get(
+								'dynamically-loaded-data'
+							),
+							value: 'dynamic'
+						}
+					],
+					value: 'dynamic'
+				};
 			}
-		);
+
+			return field;
+		});
 	}
 
 	render() {
@@ -123,8 +132,8 @@ class FormBuilderBase extends Component {
 
 		return (
 			<div>
-				<div class="container ddm-form-builder">
-					<div class="sheet">
+				<div class='container ddm-form-builder'>
+					<div class='sheet'>
 						<FormRenderer
 							activePage={activePage}
 							editable={true}
@@ -132,14 +141,17 @@ class FormBuilderBase extends Component {
 							events={this.getFormRendererEvents()}
 							pages={this.preparePagesForRender(pages)}
 							paginationMode={paginationMode}
-							ref="FormRenderer"
+							ref='FormRenderer'
 							spritemap={spritemap}
 						/>
 
 						<ClayModal
-							body={Liferay.Language.get('are-you-sure-you-want-to-cancel')}
+							body={Liferay.Language.get(
+								'are-you-sure-you-want-to-cancel'
+							)}
 							events={{
-								clickButton: this._handleCancelChangesModalButtonClicked
+								clickButton: this
+									._handleCancelChangesModalButtonClicked
 							}}
 							footerButtons={[
 								{
@@ -155,10 +167,12 @@ class FormBuilderBase extends Component {
 									type: 'button'
 								}
 							]}
-							ref="cancelChangesModal"
-							size="sm"
+							ref='cancelChangesModal'
+							size='sm'
 							spritemap={spritemap}
-							title={Liferay.Language.get('cancel-field-changes-question')}
+							title={Liferay.Language.get(
+								'cancel-field-changes-question'
+							)}
 						/>
 					</div>
 				</div>
@@ -171,7 +185,7 @@ class FormBuilderBase extends Component {
 					fieldTypes={fieldTypes}
 					focusedField={focusedField}
 					namespace={namespace}
-					ref="sidebar"
+					ref='sidebar'
 					rules={rules}
 					spritemap={spritemap}
 					visible={visible}
@@ -192,15 +206,16 @@ class FormBuilderBase extends Component {
 
 		if (defaultLanguageId === editingLanguageId) {
 			addButton.classList.remove('invisible');
-		}
-		else {
+		} else {
 			addButton.classList.add('invisible');
 		}
 	}
 
 	syncVisible(visible) {
 		const addButton = document.querySelector('#addFieldButton');
-		const translationManager = document.querySelector('.ddm-translation-manager');
+		const translationManager = document.querySelector(
+			'.ddm-translation-manager'
+		);
 
 		super.syncVisible(visible);
 
@@ -209,10 +224,13 @@ class FormBuilderBase extends Component {
 			translationManager.classList.remove('hide');
 
 			this._eventHandler.add(
-				dom.on('#addFieldButton', 'click', this._handleAddFieldButtonClicked.bind(this))
+				dom.on(
+					'#addFieldButton',
+					'click',
+					this._handleAddFieldButtonClicked.bind(this)
+				)
 			);
-		}
-		else {
+		} else {
 			this._eventHandler.removeAllListeners();
 		}
 	}
@@ -254,18 +272,14 @@ class FormBuilderBase extends Component {
 			namespace
 		} = this.props;
 
-		return makeFetch(
-			{
-				method: 'GET',
-				url: `${fieldSetDefinitionURL}?ddmStructureId=${fieldSetId}&languageId=${editingLanguageId}&portletNamespace=${namespace}&scopeGroupId=${groupId}`
-			}
-		).then(
-			({pages}) => pages
-		).catch(
-			error => {
+		return makeFetch({
+			method: 'GET',
+			url: `${fieldSetDefinitionURL}?ddmStructureId=${fieldSetId}&languageId=${editingLanguageId}&portletNamespace=${namespace}&scopeGroupId=${groupId}`
+		})
+			.then(({pages}) => pages)
+			.catch(error => {
 				throw new Error(error);
-			}
-		);
+			});
 	}
 
 	_handleAddFieldButtonClicked() {
@@ -303,28 +317,35 @@ class FormBuilderBase extends Component {
 		const {editingLanguageId} = this.props;
 		const {settingsContext} = fieldType;
 		const {pages} = settingsContext;
-		const newFieldName = generateFieldName(this.props.pages, fieldType.label);
+		const newFieldName = generateFieldName(
+			this.props.pages,
+			fieldType.label
+		);
 
 		const focusedField = {
 			...fieldType,
 			fieldName: newFieldName,
 			settingsContext: {
 				...settingsContext,
-				pages: normalizeSettingsContextPages(pages, editingLanguageId, fieldType, newFieldName),
+				pages: normalizeSettingsContextPages(
+					pages,
+					editingLanguageId,
+					fieldType,
+					newFieldName
+				),
 				type: fieldType.name
 			}
 		};
 
-		const addedToPlaceholder = !event.data.target.parentElement.parentElement.classList.contains('position-relative');
-
-		dispatch(
-			'fieldAdded',
-			{
-				...event,
-				addedToPlaceholder,
-				focusedField
-			}
+		const addedToPlaceholder = !event.data.target.parentElement.parentElement.classList.contains(
+			'position-relative'
 		);
+
+		dispatch('fieldAdded', {
+			...event,
+			addedToPlaceholder,
+			focusedField
+		});
 
 		this.openSidebar();
 	}
@@ -350,30 +371,22 @@ class FormBuilderBase extends Component {
 		const {dispatch} = this.context;
 		const {fieldSetId} = data.source.dataset;
 
-		this._fetchFieldSet(fieldSetId).then(
-			pages => {
-				dispatch(
-					'fieldSetAdded',
-					{
-						...event,
-						fieldSetPages: pages
-					}
-				);
-			}
-		);
+		this._fetchFieldSet(fieldSetId).then(pages => {
+			dispatch('fieldSetAdded', {
+				...event,
+				fieldSetPages: pages
+			});
+		});
 	}
 
 	_handleFocusedFieldUpdated(focusedField) {
 		const {dispatch} = this.context;
 		const settingsContext = focusedField.settingsContext;
 
-		dispatch(
-			'focusedFieldUpdated',
-			{
-				...focusedField,
-				settingsContext
-			}
-		);
+		dispatch('focusedFieldUpdated', {
+			...focusedField,
+			settingsContext
+		});
 	}
 
 	_handleSettingsFieldBlurred({fieldInstance, value}) {
@@ -381,14 +394,11 @@ class FormBuilderBase extends Component {
 		const {editingLanguageId} = this.props;
 		const {fieldName} = fieldInstance;
 
-		store.emit(
-			'fieldBlurred',
-			{
-				editingLanguageId,
-				propertyName: fieldName,
-				propertyValue: value
-			}
-		);
+		store.emit('fieldBlurred', {
+			editingLanguageId,
+			propertyName: fieldName,
+			propertyValue: value
+		});
 	}
 
 	_handleSettingsFieldEdited({fieldInstance, value}) {
@@ -397,14 +407,11 @@ class FormBuilderBase extends Component {
 			const {fieldName} = fieldInstance;
 			const {store} = this.context;
 
-			store.emit(
-				'fieldEdited',
-				{
-					editingLanguageId,
-					propertyName: fieldName,
-					propertyValue: value
-				}
-			);
+			store.emit('fieldEdited', {
+				editingLanguageId,
+				propertyName: fieldName,
+				propertyValue: value
+			});
 		}
 	}
 
@@ -423,18 +430,15 @@ class FormBuilderBase extends Component {
 
 		let hasFields = false;
 
-		visitor.mapFields(
-			() => {
-				hasFields = true;
-			}
-		);
+		visitor.mapFields(() => {
+			hasFields = true;
+		});
 
 		return hasFields;
 	}
 }
 
 FormBuilderBase.PROPS = {
-
 	/**
 	 * @default
 	 * @instance

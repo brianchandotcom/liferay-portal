@@ -1,7 +1,15 @@
-import {disableSavingChangesStatusAction, enableSavingChangesStatusAction, updateLastSaveDateAction} from './saveChanges.es';
+import {
+	disableSavingChangesStatusAction,
+	enableSavingChangesStatusAction,
+	updateLastSaveDateAction
+} from './saveChanges.es';
 import {getRowIndex} from '../utils/FragmentsEditorGetUtils.es';
 import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
-import {UPDATE_ROW_COLUMNS_ERROR, UPDATE_ROW_COLUMNS_LOADING, UPDATE_ROW_COLUMNS_SUCCESS} from './actions.es';
+import {
+	UPDATE_ROW_COLUMNS_ERROR,
+	UPDATE_ROW_COLUMNS_LOADING,
+	UPDATE_ROW_COLUMNS_SUCCESS
+} from './actions.es';
 import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
 
 /**
@@ -14,10 +22,7 @@ function updateRowColumnsAction(columns, rowId) {
 	return function(dispatch, getState) {
 		const state = getState();
 
-		const rowIndex = getRowIndex(
-			state.layoutData.structure,
-			rowId
-		);
+		const rowIndex = getRowIndex(state.layoutData.structure, rowId);
 
 		const previousData = state.layoutData;
 
@@ -26,11 +31,7 @@ function updateRowColumnsAction(columns, rowId) {
 		if (rowIndex !== -1) {
 			nextData = setIn(
 				previousData,
-				[
-					'structure',
-					rowIndex.toString(),
-					'columns'
-				],
+				['structure', rowIndex.toString(), 'columns'],
 				columns
 			);
 		}
@@ -38,21 +39,16 @@ function updateRowColumnsAction(columns, rowId) {
 		dispatch(updateRowColumnsLoadingAction(nextData));
 		dispatch(enableSavingChangesStatusAction());
 
-		updatePageEditorLayoutData(
-			nextData,
-			state.segmentsExperienceId
-		).then(
-			() => {
+		updatePageEditorLayoutData(nextData, state.segmentsExperienceId)
+			.then(() => {
 				dispatch(updateRowColumnsSuccessAction());
 				dispatch(disableSavingChangesStatusAction());
 				dispatch(updateLastSaveDateAction());
-			}
-		).catch(
-			() => {
+			})
+			.catch(() => {
 				dispatch(updateRowColumnsErrorAction(previousData));
 				dispatch(disableSavingChangesStatusAction());
-			}
-		);
+			});
 	};
 }
 
@@ -90,6 +86,4 @@ function updateRowColumnsSuccessAction() {
 	};
 }
 
-export {
-	updateRowColumnsAction
-};
+export {updateRowColumnsAction};

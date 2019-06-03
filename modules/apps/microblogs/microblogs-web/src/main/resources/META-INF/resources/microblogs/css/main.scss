@@ -1,7 +1,7 @@
-@import "bourbon";
-@import "mixins";
+@import 'bourbon';
+@import 'mixins';
 
-$microblogs-border-color: #EAEAEA;
+$microblogs-border-color: #eaeaea;
 
 .microblogs-portlet {
 	.taglib-header {
@@ -59,11 +59,11 @@ $microblogs-border-color: #EAEAEA;
 		}
 
 		.microblogs-countdown {
-			background: #CFD8E1;
+			background: #cfd8e1;
 
 			border-radius: 3px;
 
-			color: #FFF;
+			color: #fff;
 			opacity: 0.5;
 			padding: 2px;
 			position: absolute;
@@ -72,7 +72,7 @@ $microblogs-border-color: #EAEAEA;
 		}
 
 		.microblogs-countdown-warned {
-			background: #F89406;
+			background: #f89406;
 		}
 
 		&.reply {
@@ -82,16 +82,19 @@ $microblogs-border-color: #EAEAEA;
 	}
 
 	.autocomplete {
-		&, &.textarea {
-			background-color: #FFF;
+		&,
+		&.textarea {
+			background-color: #fff;
 			margin-bottom: 10px;
 			min-height: 32px;
 			padding: 5px 8px;
 			position: relative;
 		}
 
-		&, &:focus, &.inactive {
-			border: 1px solid #EAEAEA;
+		&,
+		&:focus,
+		&.inactive {
+			border: 1px solid #eaeaea;
 
 			border-radius: 3px;
 		}
@@ -144,13 +147,15 @@ $microblogs-border-color: #EAEAEA;
 		}
 
 		.hashtag-link {
-			&, &:active, &:hover {
+			&,
+			&:active,
+			&:hover {
 				color: inherit;
 			}
 		}
 
 		.footer {
-			color: #CCC;
+			color: #ccc;
 			font-size: 0.9em;
 
 			.action {
@@ -164,7 +169,8 @@ $microblogs-border-color: #EAEAEA;
 			}
 
 			.action-container {
-				.comment, .repost {
+				.comment,
+				.repost {
 					display: inline-block;
 				}
 			}
@@ -179,7 +185,7 @@ $microblogs-border-color: #EAEAEA;
 				border: 5px solid $microblogs-border-color;
 				border-color: transparent transparent $microblogs-border-color;
 				bottom: -8px;
-				content: "";
+				content: '';
 				display: block;
 				left: 50%;
 				margin-left: -5px;
@@ -203,13 +209,15 @@ $microblogs-border-color: #EAEAEA;
 			margin-left: 40px;
 		}
 
-		.microblogs-entry, .microblogs-entry-form {
+		.microblogs-entry,
+		.microblogs-entry-form {
 			border-bottom-width: 0;
 			border-top: 1px solid $microblogs-border-color;
 			margin: 0;
 		}
 
-		.content, .user-name {
+		.content,
+		.user-name {
 			display: inline;
 		}
 
@@ -217,7 +225,8 @@ $microblogs-border-color: #EAEAEA;
 			margin-left: 35px;
 		}
 
-		.microblogs-entry-content, .autocomplete {
+		.microblogs-entry-content,
+		.autocomplete {
 			margin-left: 40px;
 		}
 
@@ -230,9 +239,10 @@ $microblogs-border-color: #EAEAEA;
 		display: none;
 	}
 
-	.microblogs-entry-form:after, .microblogs-entry:after {
+	.microblogs-entry-form:after,
+	.microblogs-entry:after {
 		clear: both;
-		content: "";
+		content: '';
 		display: block;
 	}
 
@@ -257,7 +267,7 @@ $microblogs-border-color: #EAEAEA;
 		}
 
 		span {
-			background-color: #97D1FF;
+			background-color: #97d1ff;
 			border-radius: 3px;
 			color: rgba(0, 0, 0, 0.9);
 			padding: 2px 0;

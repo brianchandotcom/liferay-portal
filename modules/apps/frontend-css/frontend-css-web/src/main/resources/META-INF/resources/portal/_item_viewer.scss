@@ -106,7 +106,8 @@
 			margin: 0 10px;
 			position: relative;
 
-			&:focus, &:hover {
+			&:focus,
+			&:hover {
 				text-decoration: none;
 			}
 		}
@@ -166,7 +167,8 @@
 	float: right;
 	font-size: 20px;
 
-	&:focus, &:hover {
+	&:focus,
+	&:hover {
 		text-decoration: none;
 	}
 }

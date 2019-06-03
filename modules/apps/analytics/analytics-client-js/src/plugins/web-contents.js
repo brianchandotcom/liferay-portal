@@ -56,8 +56,7 @@ function trackWebContentClicked(analytics) {
 		if (tagName === 'a') {
 			payload.href = target.href;
 			payload.text = target.innerText;
-		}
-		else if (tagName === 'img') {
+		} else if (tagName === 'img') {
 			payload.src = target.src;
 		}
 
@@ -74,30 +73,27 @@ function trackWebContentClicked(analytics) {
  * @param {object} The Analytics client instance
  */
 function trackWebContentViewed(analytics) {
-	const stopTrackingOnReady = onReady(
-		() => {
-			Array.prototype.slice.call(
+	const stopTrackingOnReady = onReady(() => {
+		Array.prototype.slice
+			.call(
 				document.querySelectorAll(
 					'[data-analytics-asset-type="web-content"]'
 				)
-			).filter(
-				element => isTrackableWebContent(element)
-			).forEach(
-				element => {
-					const numberOfWords = getNumberOfWords(element);
+			)
+			.filter(element => isTrackableWebContent(element))
+			.forEach(element => {
+				const numberOfWords = getNumberOfWords(element);
 
-					let payload = getWebContentPayload(element);
+				let payload = getWebContentPayload(element);
 
-					payload = {
-						...payload,
-						numberOfWords
-					};
+				payload = {
+					...payload,
+					numberOfWords
+				};
 
-					analytics.send('webContentViewed', applicationId, payload);
-				}
-			);
-		}
-	);
+				analytics.send('webContentViewed', applicationId, payload);
+			});
+	});
 	return () => stopTrackingOnReady();
 }
 

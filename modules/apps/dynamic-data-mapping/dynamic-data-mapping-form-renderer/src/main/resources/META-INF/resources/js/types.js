@@ -9,12 +9,9 @@ AUI.add(
 			get: function(type) {
 				var instance = this;
 
-				return AArray.find(
-					_fieldTypes,
-					function(item, index) {
-						return item.get('name') === type;
-					}
-				);
+				return AArray.find(_fieldTypes, function(item, index) {
+					return item.get('name') === type;
+				});
 			},
 
 			getAll: function(includeSystem) {
@@ -36,25 +33,26 @@ AUI.add(
 			_getFieldType: function(config) {
 				var instance = this;
 
-				var fieldType = new Liferay.DDM.FormRendererFieldType(
-					{
-						defaultConfig: {
-							type: config.name
-						},
-						description: config.description,
-						fieldClass: Liferay.DDM.Renderer.Field,
-						group: config.group,
-						icon: config.icon,
-						label: config.label
-					}
-				);
+				var fieldType = new Liferay.DDM.FormRendererFieldType({
+					defaultConfig: {
+						type: config.name
+					},
+					description: config.description,
+					fieldClass: Liferay.DDM.Renderer.Field,
+					group: config.group,
+					icon: config.icon,
+					label: config.label
+				});
 
 				fieldType.set('className', config.javaScriptClass);
 				fieldType.set('name', config.name);
 				fieldType.set('system', config.system);
 
 				if (config.templateNamespace) {
-					fieldType.set('templateNamespace', config.templateNamespace);
+					fieldType.set(
+						'templateNamespace',
+						config.templateNamespace
+					);
 				}
 
 				return fieldType;

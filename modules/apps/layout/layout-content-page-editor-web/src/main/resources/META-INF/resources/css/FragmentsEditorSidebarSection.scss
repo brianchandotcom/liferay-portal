@@ -1,4 +1,4 @@
-@import "./variables";
+@import './variables';
 
 .fragments-editor-sidebar-section {
 	background-color: $sidebarContentBackgroundColor;
@@ -179,7 +179,8 @@
 	.sidebar-fragments-section .search-bar {
 		flex-wrap: nowrap;
 
-		.input-group-input, .input-group-inset {
+		.input-group-input,
+		.input-group-inset {
 			width: 100%;
 		}
 

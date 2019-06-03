@@ -13,7 +13,6 @@ import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
  * @review
  */
 class FragmentsEditorToolbar extends Component {
-
 	prepareStateForRender(state) {
 		const {lastSaveDate, savingChanges} = state;
 
@@ -21,18 +20,13 @@ class FragmentsEditorToolbar extends Component {
 
 		if (savingChanges) {
 			lastSaveText = Liferay.Language.get('saving-changes');
-		}
-		else if (lastSaveDate) {
+		} else if (lastSaveDate) {
 			let placeholder = Liferay.Language.get('draft-saved-at-x');
 
 			lastSaveText = placeholder.replace('{0}', lastSaveDate);
 		}
 
-		const nextState = setIn(
-			state,
-			['_lastSaveText'],
-			lastSaveText
-		);
+		const nextState = setIn(state, ['_lastSaveText'], lastSaveText);
 
 		return nextState;
 	}
@@ -43,7 +37,13 @@ class FragmentsEditorToolbar extends Component {
 	 * @review
 	 */
 	_handleDiscardDraft(event) {
-		if (!confirm(Liferay.Language.get('are-you-sure-you-want-to-discard-current-draft-and-apply-latest-published-changes'))) {
+		if (
+			!confirm(
+				Liferay.Language.get(
+					'are-you-sure-you-want-to-discard-current-draft-and-apply-latest-published-changes'
+				)
+			)
+		) {
 			event.preventDefault();
 		}
 	}
@@ -53,13 +53,10 @@ class FragmentsEditorToolbar extends Component {
 	 * @review
 	 */
 	_handleToggleContextualSidebarButtonClick() {
-		this.store.dispatch(
-			{
-				type: TOGGLE_SIDEBAR
-			}
-		);
+		this.store.dispatch({
+			type: TOGGLE_SIDEBAR
+		});
 	}
-
 }
 
 const ConnectedFragmentsEditorToolbar = getConnectedComponent(

@@ -55,23 +55,21 @@ import SimpleInputModal from '../components/SimpleInputModal.es';
  *   disposed.
  */
 
-function openSimpleInputModal(
-	{
-		checkboxFieldLabel = '',
-		checkboxFieldName = '',
-		checkboxFieldValue = false,
-		dialogTitle,
-		formSubmitURL,
-		idFieldName = '',
-		idFieldValue = '',
-		mainFieldLabel,
-		mainFieldName,
-		mainFieldPlaceholder = '',
-		mainFieldValue = '',
-		namespace,
-		spritemap
-	}
-) {
+function openSimpleInputModal({
+	checkboxFieldLabel = '',
+	checkboxFieldName = '',
+	checkboxFieldValue = false,
+	dialogTitle,
+	formSubmitURL,
+	idFieldName = '',
+	idFieldValue = '',
+	mainFieldLabel,
+	mainFieldName,
+	mainFieldPlaceholder = '',
+	mainFieldValue = '',
+	namespace,
+	spritemap
+}) {
 	const fixFormData = Liferay.Browser.isIe();
 
 	let simpleInputModal = null;
@@ -101,41 +99,35 @@ function openSimpleInputModal(
 
 	function handleSimpleInputModalSubmission(serverResponseContent) {
 		if (serverResponseContent.redirectURL) {
-			Liferay.Util.navigate(
-				serverResponseContent.redirectURL,
-				{
-					'beforeScreenFlip': handleSimpleInputModalDisposal.bind(this)
-				}
-			);
-		}
-		else {
+			Liferay.Util.navigate(serverResponseContent.redirectURL, {
+				beforeScreenFlip: handleSimpleInputModalDisposal.bind(this)
+			});
+		} else {
 			handleSimpleInputModalDisposal();
 		}
 	}
 
-	simpleInputModal = new SimpleInputModal(
-		{
-			checkboxFieldLabel,
-			checkboxFieldName,
-			checkboxFieldValue,
-			dialogTitle,
-			events: {
-				cancelButtonClicked: handleSimpleInputModalDisposal,
-				dialogHidden: handleSimpleInputModalDisposal,
-				formSuccess: handleSimpleInputModalSubmission
-			},
-			fixFormData,
-			formSubmitURL,
-			idFieldName,
-			idFieldValue,
-			mainFieldLabel,
-			mainFieldName,
-			mainFieldPlaceholder,
-			mainFieldValue,
-			namespace,
-			spritemap
-		}
-	);
+	simpleInputModal = new SimpleInputModal({
+		checkboxFieldLabel,
+		checkboxFieldName,
+		checkboxFieldValue,
+		dialogTitle,
+		events: {
+			cancelButtonClicked: handleSimpleInputModalDisposal,
+			dialogHidden: handleSimpleInputModalDisposal,
+			formSuccess: handleSimpleInputModalSubmission
+		},
+		fixFormData,
+		formSubmitURL,
+		idFieldName,
+		idFieldValue,
+		mainFieldLabel,
+		mainFieldName,
+		mainFieldPlaceholder,
+		mainFieldValue,
+		namespace,
+		spritemap
+	});
 
 	return simpleInputModal;
 }

@@ -14,9 +14,7 @@ class Editor extends Component {}
 Soy.register(Editor, templates, 'render');
 
 if (!window.DDMEditor) {
-	window.DDMEditor = {
-
-	};
+	window.DDMEditor = {};
 }
 
 window.DDMEditor.render = Editor;

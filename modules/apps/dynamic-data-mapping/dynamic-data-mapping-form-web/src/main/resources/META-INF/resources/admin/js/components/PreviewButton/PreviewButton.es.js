@@ -8,17 +8,16 @@ class PreviewButton extends Component {
 		const {resolvePreviewURL} = this.props;
 
 		return resolvePreviewURL()
-			.then(
-				previewURL => {
-					window.open(previewURL, '_blank');
+			.then(previewURL => {
+				window.open(previewURL, '_blank');
 
-					return previewURL;
-				}
-			).catch(
-				() => {
-					Notifications.showError(Liferay.Language.get('your-request-failed-to-complete'));
-				}
-			);
+				return previewURL;
+			})
+			.catch(() => {
+				Notifications.showError(
+					Liferay.Language.get('your-request-failed-to-complete')
+				);
+			});
 	}
 
 	render() {
@@ -27,11 +26,9 @@ class PreviewButton extends Component {
 		return (
 			<ClayButton
 				elementClasses={'btn-default'}
-				events={
-					{
-						click: this._handleButtonClicked.bind(this)
-					}
-				}
+				events={{
+					click: this._handleButtonClicked.bind(this)
+				}}
 				label={Liferay.Language.get('preview-form')}
 				ref={'button'}
 				spritemap={spritemap}

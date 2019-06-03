@@ -9,7 +9,6 @@ import {OPEN_MAPPING_FIELDS_DIALOG} from '../../actions/actions.es';
  * Creates a Fragment Style Editor component.
  */
 class FragmentStyleEditor extends State {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -53,30 +52,27 @@ class FragmentStyleEditor extends State {
 	 * @private
 	 */
 	_handleNodeClick(event) {
-		if (this.node &&
-			(event.target === this.node || this.node.contains(event.target))) {
-
+		if (
+			this.node &&
+			(event.target === this.node || this.node.contains(event.target))
+		) {
 			event.preventDefault();
 			event.stopPropagation();
 
 			if (this._tooltip) {
 				this.disposeStyleTooltip();
-			}
-			else if (this._styleEditor) {
+			} else if (this._styleEditor) {
 				this.emit('openTooltip');
 
-				this._tooltip = new FragmentEditableFieldTooltip(
-					{
-						alignElement: this.node,
-						buttons: this._styleEditor.getButtons(this.showMapping),
-						store: this.store
-					}
-				);
+				this._tooltip = new FragmentEditableFieldTooltip({
+					alignElement: this.node,
+					buttons: this._styleEditor.getButtons(this.showMapping),
+					store: this.store
+				});
 
 				this._tooltip.on('buttonClick', this._handleButtonClick);
 			}
-		}
-		else if (this._tooltip) {
+		} else if (this._tooltip) {
 			this.disposeStyleTooltip();
 		}
 	}
@@ -105,27 +101,20 @@ class FragmentStyleEditor extends State {
 	 */
 	_handleChangeStyle(event) {
 		if (event.eventType === 'map') {
-			this.store
-				.dispatch(
-					{
-						editableId: `${this.selectorText} ${event.name}`,
-						editableType: event.type,
-						fragmentEntryLinkId: this.fragmentEntryLinkId,
-						mappedFieldId: '',
-						type: OPEN_MAPPING_FIELDS_DIALOG
-					}
-				);
+			this.store.dispatch({
+				editableId: `${this.selectorText} ${event.name}`,
+				editableType: event.type,
+				fragmentEntryLinkId: this.fragmentEntryLinkId,
+				mappedFieldId: '',
+				type: OPEN_MAPPING_FIELDS_DIALOG
+			});
 
 			this.disposeStyleTooltip();
-		}
-		else {
-			this.emit(
-				'styleChanged',
-				{
-					name: `${this.selectorText} ${event.name}`,
-					value: event.value
-				}
-			);
+		} else {
+			this.emit('styleChanged', {
+				name: `${this.selectorText} ${event.name}`,
+				value: event.value
+			});
 		}
 	}
 
@@ -139,7 +128,6 @@ class FragmentStyleEditor extends State {
 			this._tooltip = null;
 		}
 	}
-
 }
 
 /**
@@ -148,7 +136,6 @@ class FragmentStyleEditor extends State {
  * @type {!Object}
  */
 FragmentStyleEditor.STATE = {
-
 	/**
 	 * CSS rules text.
 	 * @default undefined
@@ -236,11 +223,9 @@ FragmentStyleEditor.STATE = {
 	 * @memberOf FragmentStyleEditor
 	 * @type {FragmentStyleEditors}
 	 */
-	_styleEditor: Config
-		.internal()
+	_styleEditor: Config.internal()
 		.object()
 		.value(null)
-
 };
 
 export {FragmentStyleEditor};

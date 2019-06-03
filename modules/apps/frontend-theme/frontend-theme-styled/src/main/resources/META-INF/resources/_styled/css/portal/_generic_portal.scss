@@ -10,16 +10,16 @@
 }
 
 .lfr-code {
-	background: #FFF;
+	background: #fff;
 	border-color: #777;
 	font-family: monospace;
 
 	tr td.line-numbers {
-		background: #FAFAFA;
+		background: #fafafa;
 
 		&:before {
-			color: #AAA;
-			text-shadow: 1px 1px #FFF;
+			color: #aaa;
+			text-shadow: 1px 1px #fff;
 		}
 	}
 }
@@ -30,21 +30,22 @@
 }
 
 .lfr-token {
-	background-color: #B3DAEF;
-	border-color: #5FA8FF;
+	background-color: #b3daef;
+	border-color: #5fa8ff;
 	color: #444;
 	text-decoration: none;
 
 	&:hover {
-		background-color: #D1E5EF;
+		background-color: #d1e5ef;
 	}
 }
 
 .lfr-token-primary {
 	font-weight: bold;
 
-	&, &:hover {
-		background-color: #B3DAEF;
+	&,
+	&:hover {
+		background-color: #b3daef;
 	}
 }
 

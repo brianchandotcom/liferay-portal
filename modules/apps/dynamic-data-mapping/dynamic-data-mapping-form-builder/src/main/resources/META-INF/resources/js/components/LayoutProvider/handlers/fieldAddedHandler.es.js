@@ -1,5 +1,8 @@
 import * as FormSupport from '../../Form/FormSupport.es';
-import {generateInstanceId, getFieldProperties} from '../../../util/fieldSupport.es';
+import {
+	generateInstanceId,
+	getFieldProperties
+} from '../../../util/fieldSupport.es';
 
 const handleFieldAdded = (props, state, event) => {
 	const {addedToPlaceholder, focusedField, target} = event;
@@ -10,7 +13,11 @@ const handleFieldAdded = (props, state, event) => {
 	let {columnIndex} = target;
 
 	const fieldProperties = {
-		...getFieldProperties(settingsContext, defaultLanguageId, editingLanguageId),
+		...getFieldProperties(
+			settingsContext,
+			defaultLanguageId,
+			editingLanguageId
+		),
 		fieldName,
 		instanceId: generateInstanceId(8),
 		name,

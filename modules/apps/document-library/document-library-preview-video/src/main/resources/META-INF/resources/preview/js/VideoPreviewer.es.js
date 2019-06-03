@@ -17,7 +17,6 @@ class VideoPreviewer extends Component {}
  * @type {!Object}
  */
 VideoPreviewer.STATE = {
-
 	/**
 	 * List of of video sources
 	 * @instance
@@ -26,12 +25,10 @@ VideoPreviewer.STATE = {
 	 * @type {!Array<object>}
 	 */
 	videoSources: Config.arrayOf(
-		Config.shapeOf(
-			{
-				type: Config.string().required(),
-				url: Config.string().required()
-			}
-		)
+		Config.shapeOf({
+			type: Config.string().required(),
+			url: Config.string().required()
+		})
 	).required(),
 
 	/**

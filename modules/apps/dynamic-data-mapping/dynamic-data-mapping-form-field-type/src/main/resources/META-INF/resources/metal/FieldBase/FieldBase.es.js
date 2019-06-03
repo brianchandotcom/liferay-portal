@@ -8,7 +8,6 @@ import {Config} from 'metal-state';
 class FieldBase extends Component {}
 
 FieldBase.STATE = {
-
 	/**
 	 * @default input
 	 * @instance

@@ -13,7 +13,10 @@ import {Config} from 'metal-state';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import {EventHandler} from 'metal-events';
 import {focusedFieldStructure} from '../../util/config.es';
-import {getFieldProperties, normalizeSettingsContextPages} from '../../util/fieldSupport.es';
+import {
+	getFieldProperties,
+	normalizeSettingsContextPages
+} from '../../util/fieldSupport.es';
 import {PagesVisitor, RulesVisitor} from '../../util/visitors.es';
 import {selectText} from '../../util/dom.es';
 
@@ -25,7 +28,6 @@ const FormWithEvaluator = WithEvaluator(FormRenderer);
  */
 
 class Sidebar extends Component {
-
 	attached() {
 		this._bindDragAndDrop();
 
@@ -35,38 +37,50 @@ class Sidebar extends Component {
 	}
 
 	changeFieldType(type) {
-		const {defaultLanguageId, editingLanguageId, fieldTypes, focusedField} = this.props;
+		const {
+			defaultLanguageId,
+			editingLanguageId,
+			fieldTypes,
+			focusedField
+		} = this.props;
 		const newFieldType = fieldTypes.find(({name}) => name === type);
 		const newSettingsContext = {
 			...newFieldType.settingsContext,
-			pages: normalizeSettingsContextPages(newFieldType.settingsContext.pages, editingLanguageId, newFieldType, focusedField.fieldName)
+			pages: normalizeSettingsContextPages(
+				newFieldType.settingsContext.pages,
+				editingLanguageId,
+				newFieldType,
+				focusedField.fieldName
+			)
 		};
 		let {settingsContext} = focusedField;
 
 		if (type !== focusedField.type) {
-			settingsContext = this._mergeFieldTypeSettings(settingsContext, newSettingsContext);
+			settingsContext = this._mergeFieldTypeSettings(
+				settingsContext,
+				newSettingsContext
+			);
 		}
 
-		this.emit(
-			'focusedFieldUpdated',
-			{
-				...focusedField,
-				...newFieldType,
-				...getFieldProperties(settingsContext, defaultLanguageId, editingLanguageId),
+		this.emit('focusedFieldUpdated', {
+			...focusedField,
+			...newFieldType,
+			...getFieldProperties(
 				settingsContext,
-				type: newFieldType.name
-			}
-		);
+				defaultLanguageId,
+				editingLanguageId
+			),
+			settingsContext,
+			type: newFieldType.name
+		});
 
 		this.refs.evaluableForm.evaluate();
 	}
 
 	close() {
-		this.setState(
-			{
-				open: false
-			}
-		);
+		this.setState({
+			open: false
+		});
 	}
 
 	created() {
@@ -76,18 +90,34 @@ class Sidebar extends Component {
 		this.supportsTransitionEnd = transitionEnd !== false;
 		this.transitionEnd = transitionEnd || 'transitionend';
 
-		this._handleChangeFieldTypeItemClicked = this._handleChangeFieldTypeItemClicked.bind(this);
-		this._handleCloseButtonClicked = this._handleCloseButtonClicked.bind(this);
-		this._handleDocumentMouseDown = this._handleDocumentMouseDown.bind(this);
+		this._handleChangeFieldTypeItemClicked = this._handleChangeFieldTypeItemClicked.bind(
+			this
+		);
+		this._handleCloseButtonClicked = this._handleCloseButtonClicked.bind(
+			this
+		);
+		this._handleDocumentMouseDown = this._handleDocumentMouseDown.bind(
+			this
+		);
 		this._handleDragEnded = this._handleDragEnded.bind(this);
 		this._handleDragStarted = this._handleDragStarted.bind(this);
 		this._handleEvaluatorChanged = this._handleEvaluatorChanged.bind(this);
-		this._handleFieldSettingsClicked = this._handleFieldSettingsClicked.bind(this);
-		this._handlePreviousButtonClicked = this._handlePreviousButtonClicked.bind(this);
-		this._handleSettingsFieldBlurred = this._handleSettingsFieldBlurred.bind(this);
-		this._handleSettingsFieldEdited = this._handleSettingsFieldEdited.bind(this);
+		this._handleFieldSettingsClicked = this._handleFieldSettingsClicked.bind(
+			this
+		);
+		this._handlePreviousButtonClicked = this._handlePreviousButtonClicked.bind(
+			this
+		);
+		this._handleSettingsFieldBlurred = this._handleSettingsFieldBlurred.bind(
+			this
+		);
+		this._handleSettingsFieldEdited = this._handleSettingsFieldEdited.bind(
+			this
+		);
 		this._handleTabItemClicked = this._handleTabItemClicked.bind(this);
-		this._renderFieldTypeDropdownLabel = this._renderFieldTypeDropdownLabel.bind(this);
+		this._renderFieldTypeDropdownLabel = this._renderFieldTypeDropdownLabel.bind(
+			this
+		);
 	}
 
 	disposeDragAndDrop() {
@@ -111,16 +141,14 @@ class Sidebar extends Component {
 
 		return {
 			...settingsContext,
-			pages: visitor.mapFields(
-				field => {
-					return {
-						...field,
-						defaultLanguageId,
-						editingLanguageId,
-						readOnly: this.isFieldReadOnly(field)
-					};
-				}
-			)
+			pages: visitor.mapFields(field => {
+				return {
+					...field,
+					defaultLanguageId,
+					editingLanguageId,
+					readOnly: this.isFieldReadOnly(field)
+				};
+			})
 		};
 	}
 
@@ -138,56 +166,44 @@ class Sidebar extends Component {
 		const {defaultLanguageId, editingLanguageId} = this.props;
 
 		return (
-			defaultLanguageId !== editingLanguageId && (
-				!localizable ||
-				type === 'validation'
-			)
+			defaultLanguageId !== editingLanguageId &&
+			(!localizable || type === 'validation')
 		);
 	}
 
 	open() {
 		const {transitionEnd} = this;
 
-		dom.once(
-			this.refs.container,
-			transitionEnd,
-			() => {
-				if (this._isEditMode()) {
-					const firstInput = this.element.querySelector('input');
+		dom.once(this.refs.container, transitionEnd, () => {
+			if (this._isEditMode()) {
+				const firstInput = this.element.querySelector('input');
 
-					if (firstInput && document.activeElement !== firstInput) {
-						firstInput.focus();
-						selectText(firstInput);
-					}
+				if (firstInput && document.activeElement !== firstInput) {
+					firstInput.focus();
+					selectText(firstInput);
 				}
 			}
-		);
+		});
 
-		this.setState(
-			{
-				activeTab: 0,
-				open: true
-			}
-		);
+		this.setState({
+			activeTab: 0,
+			open: true
+		});
 
 		this.refreshDragAndDrop();
 	}
 
 	refreshDragAndDrop() {
-		this._dragAndDrop.setState(
-			{
-				targets: UA.isIE ? this._dragAndDrop.setterTargetsFn_('.ddm-target') : '.ddm-target'
-			}
-		);
+		this._dragAndDrop.setState({
+			targets: UA.isIE
+				? this._dragAndDrop.setterTargetsFn_('.ddm-target')
+				: '.ddm-target'
+		});
 	}
 
 	render() {
 		const {activeTab, open} = this.state;
-		const {
-			editingLanguageId,
-			focusedField,
-			spritemap
-		} = this.props;
+		const {editingLanguageId, focusedField, spritemap} = this.props;
 
 		const layoutRenderEvents = {
 			evaluated: this._handleEvaluatorChanged,
@@ -200,52 +216,54 @@ class Sidebar extends Component {
 		const styles = classnames('sidebar-container', {open});
 
 		return (
-			<div class={styles} ref="container">
-				<div class="sidebar sidebar-light">
-					<nav class="component-tbar tbar">
-						<div class="container-fluid">
+			<div class={styles} ref='container'>
+				<div class='sidebar sidebar-light'>
+					<nav class='component-tbar tbar'>
+						<div class='container-fluid'>
 							{this._renderTopBar()}
 						</div>
 					</nav>
-					<nav class="component-navigation-bar navbar navigation-bar navbar-collapse-absolute navbar-expand-md navbar-underline">
+					<nav class='component-navigation-bar navbar navigation-bar navbar-collapse-absolute navbar-expand-md navbar-underline'>
 						<a
-							aria-controls="sidebarLightCollapse00"
-							aria-expanded="false"
-							aria-label="Toggle Navigation"
-							class="collapsed navbar-toggler navbar-toggler-link"
-							data-toggle="collapse"
-							href="#sidebarLightCollapse00"
-							role="button"
+							aria-controls='sidebarLightCollapse00'
+							aria-expanded='false'
+							aria-label='Toggle Navigation'
+							class='collapsed navbar-toggler navbar-toggler-link'
+							data-toggle='collapse'
+							href='#sidebarLightCollapse00'
+							role='button'
 						>
-							<span class="navbar-text-truncate">{'Details'}</span>
+							<span class='navbar-text-truncate'>
+								{'Details'}
+							</span>
 							<svg
-								aria-hidden="true"
-								class="lexicon-icon lexicon-icon-caret-bottom"
+								aria-hidden='true'
+								class='lexicon-icon lexicon-icon-caret-bottom'
 							>
 								<use xlink:href={`${spritemap}#caret-bottom`} />
 							</svg>
 						</a>
 						<div
-							class="collapse navbar-collapse"
-							id="sidebarLightCollapse00"
+							class='collapse navbar-collapse'
+							id='sidebarLightCollapse00'
 						>
-							<ul class="nav navbar-nav" role="tablist">
+							<ul class='nav navbar-nav' role='tablist'>
 								{this._renderNavItems()}
 							</ul>
 						</div>
 					</nav>
-					<div class="ddm-sidebar-body">
-						{!editMode && (activeTab == 0) &&
-							this._renderFieldTypeGroups()
-						}
+					<div class='ddm-sidebar-body'>
+						{!editMode &&
+							activeTab == 0 &&
+							this._renderFieldTypeGroups()}
 
-						{!editMode && (activeTab == 1) &&
-							this._renderElementSets()
-						}
+						{!editMode &&
+							activeTab == 1 &&
+							this._renderElementSets()}
 
 						{editMode && (
-							<div class="sidebar-body ddm-field-settings">
-								<div class="tab-content">
+							<div class='sidebar-body ddm-field-settings'>
+								<div class='tab-content'>
 									<FormWithEvaluator
 										activePage={activeTab}
 										editable={true}
@@ -253,8 +271,8 @@ class Sidebar extends Component {
 										events={layoutRenderEvents}
 										fieldType={focusedField.type}
 										formContext={this.getFormContext()}
-										paginationMode="tabbed"
-										ref="evaluableForm"
+										paginationMode='tabbed'
+										ref='evaluableForm'
 										spritemap={spritemap}
 										url={EVALUATOR_URL}
 									/>
@@ -282,20 +300,15 @@ class Sidebar extends Component {
 	}
 
 	_bindDragAndDrop() {
-		this._dragAndDrop = new DragDrop(
-			{
-				dragPlaceholder: Drag.Placeholder.CLONE,
-				sources: '.ddm-drag-item',
-				targets: '.ddm-target',
-				useShim: false
-			}
-		);
+		this._dragAndDrop = new DragDrop({
+			dragPlaceholder: Drag.Placeholder.CLONE,
+			sources: '.ddm-drag-item',
+			targets: '.ddm-target',
+			useShim: false
+		});
 
 		this._eventHandler.add(
-			this._dragAndDrop.on(
-				DragDrop.Events.END,
-				this._handleDragEnded
-			),
+			this._dragAndDrop.on(DragDrop.Events.END, this._handleDragEnded),
 			this._dragAndDrop.on(Drag.Events.START, this._handleDragStarted)
 		);
 	}
@@ -311,18 +324,16 @@ class Sidebar extends Component {
 	_dropdownFieldTypesValueFn() {
 		const {fieldTypes} = this.props;
 
-		return fieldTypes.filter(
-			({system}) => {
+		return fieldTypes
+			.filter(({system}) => {
 				return !system;
-			}
-		).map(
-			fieldType => {
+			})
+			.map(fieldType => {
 				return {
 					...fieldType,
 					type: 'item'
 				};
-			}
-		);
+			});
 	}
 
 	_duplicateField(indexes) {
@@ -342,16 +353,13 @@ class Sidebar extends Component {
 			}
 		};
 
-		return fieldTypes.reduce(
-			(prev, next) => {
-				if (next.group && !next.system) {
-					prev[next.group].fields.push(next);
-				}
+		return fieldTypes.reduce((prev, next) => {
+			if (next.group && !next.system) {
+				prev[next.group].fields.push(next);
+			}
 
-				return prev;
-			},
-			group
-		);
+			return prev;
+		}, group);
 	}
 
 	_getTransitionEndEvent() {
@@ -392,17 +400,14 @@ class Sidebar extends Component {
 
 		if (
 			this._isCloseButton(target) ||
-			(open && (
-				!this._isSidebarElement(target) &&
-				!this._isTranslationItem(target)
-			))
+			(open &&
+				(!this._isSidebarElement(target) &&
+					!this._isTranslationItem(target)))
 		) {
 			this.close();
 
-			dom.once(
-				this.refs.container,
-				transitionEnd,
-				() => this.emit('fieldBlurred')
+			dom.once(this.refs.container, transitionEnd, () =>
+				this.emit('fieldBlurred')
 			);
 
 			if (!this._isModalElement(target)) {
@@ -423,33 +428,24 @@ class Sidebar extends Component {
 		const target = FormSupport.getIndexes(data.target.parentElement);
 
 		if (fieldSetId) {
-			this.emit(
-				'fieldSetAdded',
-				{
-					data,
-					fieldSetId,
-					target
-				}
-			);
-		}
-		else {
-			const fieldType = fieldTypes.find(
-				({name}) => {
-					return name === data.source.dataset.fieldTypeName;
-				}
-			);
+			this.emit('fieldSetAdded', {
+				data,
+				fieldSetId,
+				target
+			});
+		} else {
+			const fieldType = fieldTypes.find(({name}) => {
+				return name === data.source.dataset.fieldTypeName;
+			});
 
-			this.emit(
-				'fieldAdded',
-				{
-					data,
-					fieldType: {
-						...fieldType,
-						editable: true
-					},
-					target
-				}
-			);
+			this.emit('fieldAdded', {
+				data,
+				fieldType: {
+					...fieldType,
+					editable: true
+				},
+				target
+			});
 		}
 	}
 
@@ -462,16 +458,13 @@ class Sidebar extends Component {
 	_handleEvaluatorChanged(pages) {
 		const {focusedField} = this.props;
 
-		this.emit(
-			'focusedFieldUpdated',
-			{
-				...focusedField,
-				settingsContext: {
-					...focusedField.settingsContext,
-					pages
-				}
+		this.emit('focusedFieldUpdated', {
+			...focusedField,
+			settingsContext: {
+				...focusedField.settingsContext,
+				pages
 			}
-		);
+		});
 	}
 
 	_handleFieldSettingsClicked({data: {item}}) {
@@ -486,11 +479,9 @@ class Sidebar extends Component {
 		if (!item.disabled) {
 			if (settingsItem === 'duplicate-field') {
 				this._duplicateField(indexes);
-			}
-			else if (settingsItem === 'delete-field') {
+			} else if (settingsItem === 'delete-field') {
 				this._deleteField(indexes);
-			}
-			else if (settingsItem === 'cancel-field-changes') {
+			} else if (settingsItem === 'cancel-field-changes') {
 				this._cancelFieldChanges(indexes);
 			}
 		}
@@ -501,14 +492,10 @@ class Sidebar extends Component {
 
 		this.close();
 
-		dom.once(
-			this.refs.container,
-			transitionEnd,
-			() => {
-				this.emit('fieldBlurred');
-				this.open();
-			}
-		);
+		dom.once(this.refs.container, transitionEnd, () => {
+			this.emit('fieldBlurred');
+			this.open();
+		});
 	}
 
 	_handleSettingsFieldBlurred(event) {
@@ -521,15 +508,15 @@ class Sidebar extends Component {
 
 	_handleTabItemClicked(event) {
 		const {target} = event;
-		const {dataset: {index}} = dom.closest(target, '.nav-item');
+		const {
+			dataset: {index}
+		} = dom.closest(target, '.nav-item');
 
 		event.preventDefault();
 
-		this.setState(
-			{
-				activeTab: parseInt(index, 10)
-			}
-		);
+		this.setState({
+			activeTab: parseInt(index, 10)
+		});
 	}
 
 	_hasRuleExpression(fieldName) {
@@ -579,8 +566,11 @@ class Sidebar extends Component {
 		const fieldTypesDropdownNode = dom.closest(node, '.dropdown-menu');
 
 		return (
-			alloyEditorToolbarNode || fieldTypesDropdownNode || fieldColumnNode ||
-			element.contains(node) || this._isSettingsElement(node)
+			alloyEditorToolbarNode ||
+			fieldTypesDropdownNode ||
+			fieldColumnNode ||
+			element.contains(node) ||
+			this._isSettingsElement(node)
 		);
 	}
 
@@ -592,55 +582,47 @@ class Sidebar extends Component {
 		const newVisitor = new PagesVisitor(newSettingsContext.pages);
 		const oldVisitor = new PagesVisitor(oldSettingsContext.pages);
 
-		const excludedFields = [
-			'indexType',
-			'type',
-			'validation'
-		];
+		const excludedFields = ['indexType', 'type', 'validation'];
 
 		const getPreviousField = ({fieldName, type}) => {
 			let field;
 
-			oldVisitor.findField(
-				oldField => {
-					if (
-						excludedFields.indexOf(fieldName) === -1 &&
-						oldField.fieldName === fieldName &&
-						oldField.type === type
-					) {
-						field = oldField;
-					}
-
-					return field;
+			oldVisitor.findField(oldField => {
+				if (
+					excludedFields.indexOf(fieldName) === -1 &&
+					oldField.fieldName === fieldName &&
+					oldField.type === type
+				) {
+					field = oldField;
 				}
-			);
+
+				return field;
+			});
 
 			return field;
 		};
 
 		return {
 			...newSettingsContext,
-			pages: newVisitor.mapFields(
-				newField => {
-					const previousField = getPreviousField(newField);
+			pages: newVisitor.mapFields(newField => {
+				const previousField = getPreviousField(newField);
 
-					if (previousField) {
-						newField.value = previousField.value;
+				if (previousField) {
+					newField.value = previousField.value;
 
-						if (newField.localizable && previousField.localizable) {
-							newField.localizedValue = {
-								...previousField.localizedValue
-							};
-						}
-
-						if (newField.fieldName === 'predefinedValue') {
-							delete newField.value;
-						}
+					if (newField.localizable && previousField.localizable) {
+						newField.localizedValue = {
+							...previousField.localizedValue
+						};
 					}
 
-					return newField;
+					if (newField.fieldName === 'predefinedValue') {
+						delete newField.value;
+					}
 				}
-			)
+
+				return newField;
+			})
 		};
 	}
 
@@ -652,8 +634,7 @@ class Sidebar extends Component {
 
 		if (groups.length > 0) {
 			elementSetsArea = this._renderElementSetsGroups(groups);
-		}
-		else {
+		} else {
 			elementSetsArea = this._renderEmptyElementSets();
 		}
 
@@ -663,58 +644,69 @@ class Sidebar extends Component {
 	_renderElementSetsGroups(groups) {
 		const {fieldSets, spritemap} = this.props;
 		return (
-			<div aria-orientation="vertical" class="ddm-field-types-panel panel-group" id="accordion03" role="tablist">
-				{groups.map(
-					key => (
-						<div
-							aria-labelledby={`#ddm-field-types-${key}-header`}
-							class="panel-collapse show"
-							id={`ddm-field-types-${key}-body`}
-							key={key}
-							role="tabpanel"
-						>
-							<div class="panel-body p-0 m-0 list-group">
-								<div
-									class="ddm-drag-item list-group-item list-group-item-flex"
-									data-field-set-id={fieldSets[key].id}
-									data-field-set-name={fieldSets[key].name}
-									key={`fieldType_${fieldSets[key].name}`}
-									ref={`fieldType_${fieldSets[key].name}`}
-								>
-									<div class="autofit-col">
-										<span class="sticker sticker-secondary">
-											<span class="inline-item">
-												<svg
-													aria-hidden="true"
-													class={`lexicon-icon lexicon-icon-${fieldSets[key].icon}`}
-												>
-													<use
-														xlink:href={`${spritemap}#${fieldSets[key].icon}`}
-													/>
-												</svg>
-											</span>
+			<div
+				aria-orientation='vertical'
+				class='ddm-field-types-panel panel-group'
+				id='accordion03'
+				role='tablist'
+			>
+				{groups.map(key => (
+					<div
+						aria-labelledby={`#ddm-field-types-${key}-header`}
+						class='panel-collapse show'
+						id={`ddm-field-types-${key}-body`}
+						key={key}
+						role='tabpanel'
+					>
+						<div class='panel-body p-0 m-0 list-group'>
+							<div
+								class='ddm-drag-item list-group-item list-group-item-flex'
+								data-field-set-id={fieldSets[key].id}
+								data-field-set-name={fieldSets[key].name}
+								key={`fieldType_${fieldSets[key].name}`}
+								ref={`fieldType_${fieldSets[key].name}`}
+							>
+								<div class='autofit-col'>
+									<span class='sticker sticker-secondary'>
+										<span class='inline-item'>
+											<svg
+												aria-hidden='true'
+												class={`lexicon-icon lexicon-icon-${
+													fieldSets[key].icon
+												}`}
+											>
+												<use
+													xlink:href={`${spritemap}#${
+														fieldSets[key].icon
+													}`}
+												/>
+											</svg>
 										</span>
-									</div>
-									<div class="autofit-col autofit-col-expand">
-										<h4 class="list-group-title text-truncate">
-											<span>{fieldSets[key].name}</span>
-										</h4>
-									</div>
+									</span>
+								</div>
+								<div class='autofit-col autofit-col-expand'>
+									<h4 class='list-group-title text-truncate'>
+										<span>{fieldSets[key].name}</span>
+									</h4>
 								</div>
 							</div>
 						</div>
-					)
-				)}
+					</div>
+				))}
 			</div>
 		);
 	}
 
 	_renderEmptyElementSets() {
 		return (
-			<div class="list-group-body  list-group">
-				<div class="main-content-body">
-					<div class="text-center text-muted">
-						<p class="text-default">{Liferay.Language.get('there-are-no-element-sets-yet')}</p>
+			<div class='list-group-body  list-group'>
+				<div class='main-content-body'>
+					<div class='text-center text-muted'>
+						<p class='text-default'>
+							{Liferay.Language.get(
+								'there-are-no-element-sets-yet'
+							)}
+						</p>
 					</div>
 				</div>
 			</div>
@@ -723,7 +715,9 @@ class Sidebar extends Component {
 
 	_renderFieldTypeDropdownLabel() {
 		const {fieldTypes, focusedField, spritemap} = this.props;
-		const {icon, label} = fieldTypes.find(({name}) => name === focusedField.type);
+		const {icon, label} = fieldTypes.find(
+			({name}) => name === focusedField.type
+		);
 
 		return (
 			<Fragment>
@@ -748,54 +742,69 @@ class Sidebar extends Component {
 		const group = Object.keys(fieldTypesGroup);
 
 		return (
-			<div aria-orientation="vertical" class="ddm-field-types-panel panel-group" id="accordion03" role="tablist">
-				{group.map(
-					(key, index) => (
-						<div class="panel panel-secondary" key={`fields-group-${key}-${index}`}>
-							<a
-								aria-controls="collapseTwo"
-								aria-expanded="true"
-								class="collapse-icon panel-header panel-header-link"
-								data-parent="#accordion03"
-								data-toggle="collapse"
-								href={`#ddm-field-types-${key}-body`}
-								id={`ddm-field-types-${key}-header`}
-								role="tab"
-							>
-								<span class="panel-title">{fieldTypesGroup[key].label}</span>
-								<span class="collapse-icon-closed">
-									<svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
-										<use xlink:href={`${spritemap}#angle-right`} />
-									</svg>
-								</span>
-								<span class="collapse-icon-open">
-									<svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down">
-										<use xlink:href={`${spritemap}#angle-down`} />
-									</svg>
-								</span>
-							</a>
-							<div
-								aria-labelledby={`#ddm-field-types-${key}-header`}
-								class="panel-collapse show"
-								id={`ddm-field-types-${key}-body`}
-								role="tabpanel"
-							>
-
-								<div class="panel-body p-0 m-0 list-group">
-									{fieldTypesGroup[key].fields.map(
-										fieldType => (
-											<FieldTypeBox
-												fieldType={fieldType}
-												key={fieldType.name}
-												spritemap={spritemap}
-											/>
-										)
-									)}
-								</div>
+			<div
+				aria-orientation='vertical'
+				class='ddm-field-types-panel panel-group'
+				id='accordion03'
+				role='tablist'
+			>
+				{group.map((key, index) => (
+					<div
+						class='panel panel-secondary'
+						key={`fields-group-${key}-${index}`}
+					>
+						<a
+							aria-controls='collapseTwo'
+							aria-expanded='true'
+							class='collapse-icon panel-header panel-header-link'
+							data-parent='#accordion03'
+							data-toggle='collapse'
+							href={`#ddm-field-types-${key}-body`}
+							id={`ddm-field-types-${key}-header`}
+							role='tab'
+						>
+							<span class='panel-title'>
+								{fieldTypesGroup[key].label}
+							</span>
+							<span class='collapse-icon-closed'>
+								<svg
+									aria-hidden='true'
+									class='lexicon-icon lexicon-icon-angle-right'
+								>
+									<use
+										xlink:href={`${spritemap}#angle-right`}
+									/>
+								</svg>
+							</span>
+							<span class='collapse-icon-open'>
+								<svg
+									aria-hidden='true'
+									class='lexicon-icon lexicon-icon-angle-down'
+								>
+									<use
+										xlink:href={`${spritemap}#angle-down`}
+									/>
+								</svg>
+							</span>
+						</a>
+						<div
+							aria-labelledby={`#ddm-field-types-${key}-header`}
+							class='panel-collapse show'
+							id={`ddm-field-types-${key}-body`}
+							role='tabpanel'
+						>
+							<div class='panel-body p-0 m-0 list-group'>
+								{fieldTypesGroup[key].fields.map(fieldType => (
+									<FieldTypeBox
+										fieldType={fieldType}
+										key={fieldType.name}
+										spritemap={spritemap}
+									/>
+								))}
 							</div>
 						</div>
-					)
-				)}
+					</div>
+				))}
 			</div>
 		);
 	}
@@ -805,29 +814,26 @@ class Sidebar extends Component {
 
 		return tabs[this._isEditMode() ? 'edit' : 'add'].items.map(
 			(name, index) => {
-				const style = classnames(
-					'nav-link',
-					{
-						active: index === activeTab
-					}
-				);
+				const style = classnames('nav-link', {
+					active: index === activeTab
+				});
 
 				return (
 					<li
-						class="nav-item"
+						class='nav-item'
 						data-index={index}
 						data-onclick={this._handleTabItemClicked}
 						key={`tab${index}`}
 						ref={`tab${index}`}
 					>
 						<a
-							aria-controls="sidebarLightDetails"
+							aria-controls='sidebarLightDetails'
 							class={style}
-							data-toggle="tab"
-							href="javascript:;"
-							role="tab"
+							data-toggle='tab'
+							href='javascript:;'
+							role='tab'
 						>
-							<span class="navbar-text-truncate">{name}</span>
+							<span class='navbar-text-truncate'>{name}</span>
 						</a>
 					</li>
 				);
@@ -854,41 +860,46 @@ class Sidebar extends Component {
 				settingsItem: 'cancel-field-changes'
 			}
 		];
-		const focusedFieldType = fieldTypes.find(({name}) => name === focusedField.type);
+		const focusedFieldType = fieldTypes.find(
+			({name}) => name === focusedField.type
+		);
 		const previousButtonEvents = {
 			click: this._handlePreviousButtonClicked
 		};
 
 		return (
-			<ul class="tbar-nav">
+			<ul class='tbar-nav'>
 				{!editMode && (
-					<li class="tbar-item tbar-item-expand text-left">
-						<div class="tbar-section">
-							<span class="text-truncate-inline">
-								<span class="text-truncate">{Liferay.Language.get('add-elements')}</span>
+					<li class='tbar-item tbar-item-expand text-left'>
+						<div class='tbar-section'>
+							<span class='text-truncate-inline'>
+								<span class='text-truncate'>
+									{Liferay.Language.get('add-elements')}
+								</span>
 							</span>
 						</div>
 					</li>
 				)}
 				{editMode && (
 					<Fragment>
-						<li class="tbar-item">
+						<li class='tbar-item'>
 							<ClayButton
 								disabled={this.isActionsDisabled()}
 								events={previousButtonEvents}
-								icon="angle-left"
-								ref="previousButton"
-								size="sm"
+								icon='angle-left'
+								ref='previousButton'
+								size='sm'
 								spritemap={spritemap}
-								style="secondary"
+								style='secondary'
 							/>
 						</li>
-						<li class="tbar-item ddm-fieldtypes-dropdown tbar-item-expand text-left">
+						<li class='tbar-item ddm-fieldtypes-dropdown tbar-item-expand text-left'>
 							<div>
 								<ClayDropdownBase
 									disabled={!this.isChangeFieldTypeEnabled()}
 									events={{
-										itemClicked: this._handleChangeFieldTypeItemClicked
+										itemClicked: this
+											._handleChangeFieldTypeItemClicked
 									}}
 									icon={focusedFieldType.icon}
 									items={this.state.dropdownFieldTypes}
@@ -900,34 +911,33 @@ class Sidebar extends Component {
 								/>
 							</div>
 						</li>
-						<li class="tbar-item">
+						<li class='tbar-item'>
 							<ClayActionsDropdown
 								events={{
-									itemClicked: this._handleFieldSettingsClicked
+									itemClicked: this
+										._handleFieldSettingsClicked
 								}}
 								items={fieldActions}
-								ref="fieldSettingsActions"
+								ref='fieldSettingsActions'
 								spritemap={spritemap}
 								triggerClasses={'component-action'}
 							/>
 						</li>
 					</Fragment>
 				)}
-				<li class="tbar-item">
+				<li class='tbar-item'>
 					<a
-						class="component-action sidebar-close"
+						class='component-action sidebar-close'
 						data-onclick={this._handleCloseButtonClicked}
-						href="#1"
-						ref="closeButton"
-						role="button"
+						href='#1'
+						ref='closeButton'
+						role='button'
 					>
 						<svg
-							aria-hidden="true"
-							class="lexicon-icon lexicon-icon-times"
+							aria-hidden='true'
+							class='lexicon-icon lexicon-icon-times'
 						>
-							<use
-								xlink:href={`${spritemap}#times`}
-							/>
+							<use xlink:href={`${spritemap}#times`} />
 						</svg>
 					</a>
 				</li>
@@ -937,7 +947,6 @@ class Sidebar extends Component {
 }
 
 Sidebar.STATE = {
-
 	/**
 	 * @default 0
 	 * @instance
@@ -945,7 +954,9 @@ Sidebar.STATE = {
 	 * @type {?number}
 	 */
 
-	activeTab: Config.number().value(0).internal(),
+	activeTab: Config.number()
+		.value(0)
+		.internal(),
 
 	/**
 	 * @default _dropdownFieldTypesValueFn
@@ -971,7 +982,9 @@ Sidebar.STATE = {
 	 * @type {?bool}
 	 */
 
-	open: Config.bool().internal().value(false),
+	open: Config.bool()
+		.internal()
+		.value(false),
 
 	/**
 	 * @default object
@@ -980,8 +993,8 @@ Sidebar.STATE = {
 	 * @type {?object}
 	 */
 
-	tabs: Config.object().value(
-		{
+	tabs: Config.object()
+		.value({
 			add: {
 				items: [
 					Liferay.Language.get('elements'),
@@ -994,12 +1007,11 @@ Sidebar.STATE = {
 					Liferay.Language.get('properties')
 				]
 			}
-		}
-	).internal()
+		})
+		.internal()
 };
 
 Sidebar.PROPS = {
-
 	/**
 	 * @default undefined
 	 * @instance

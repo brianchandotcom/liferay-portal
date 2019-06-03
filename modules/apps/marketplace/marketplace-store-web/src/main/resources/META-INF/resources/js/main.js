@@ -1,7 +1,7 @@
 AUI.add(
 	'liferay-marketplace-messenger',
 	function(A) {
-		var NATIVE_MSG = !!(window.postMessage);
+		var NATIVE_MSG = !!window.postMessage;
 
 		var MarketplaceMessenger = {
 			init: function(options, initMessage) {
@@ -9,8 +9,7 @@ AUI.add(
 
 				if (A.Lang.isString(options)) {
 					instance._targetURI = options;
-				}
-				else if (A.Lang.isObject(options)) {
+				} else if (A.Lang.isObject(options)) {
 					var targetFrame = options.targetFrame;
 
 					instance._targetFrame = A.one(targetFrame);
@@ -27,13 +26,20 @@ AUI.add(
 				var instance = this;
 
 				if (NATIVE_MSG) {
-					A.postMessage(message, instance._targetURI, instance._targetFrame);
-				}
-				else {
+					A.postMessage(
+						message,
+						instance._targetURI,
+						instance._targetFrame
+					);
+				} else {
 					instance._messages.push(message);
 
 					if (instance._messages.length == 1) {
-						A.postMessage(message, instance._targetURI, instance._targetFrame);
+						A.postMessage(
+							message,
+							instance._targetURI,
+							instance._targetFrame
+						);
 					}
 				}
 			},
@@ -45,8 +51,7 @@ AUI.add(
 
 				if (NATIVE_MSG) {
 					A.receiveMessage(callback, validator);
-				}
-				else {
+				} else {
 					var wrappedCallback = function(event) {
 						var response = event.responseData;
 
@@ -58,15 +63,18 @@ AUI.add(
 
 						if (instance._messages.length > 0) {
 							message = instance._messages[0];
-						}
-						else if (!response.empty) {
+						} else if (!response.empty) {
 							message = {
 								empty: true
 							};
 						}
 
 						if (message) {
-							A.postMessage(message, instance._targetURI, instance._targetFrame);
+							A.postMessage(
+								message,
+								instance._targetURI,
+								instance._targetFrame
+							);
 						}
 					};
 
@@ -104,12 +112,9 @@ AUI.add(
 
 				var keys = A.Object.keys(object);
 
-				A.Array.each(
-					keys,
-					function(key) {
-						returnObject[namespace + key] = object[key];
-					}
-				);
+				A.Array.each(keys, function(key) {
+					returnObject[namespace + key] = object[key];
+				});
 
 				return returnObject;
 			}

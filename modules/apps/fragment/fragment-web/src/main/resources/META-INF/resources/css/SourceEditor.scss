@@ -1,6 +1,6 @@
-@import "mixins";
+@import 'mixins';
 
-@import "variables";
+@import 'variables';
 
 .source-editor {
 	border-bottom: solid $editorBorderWidth $editorBorderColor;
@@ -29,9 +29,9 @@
 	}
 
 	&__fixed-text {
-		background-color: #FFF;
-		border-bottom: solid thin #F0F0F0;
-		border-left: 2.25ch solid #F0F0F0;
+		background-color: #fff;
+		border-bottom: solid thin #f0f0f0;
+		border-left: 2.25ch solid #f0f0f0;
 		font-size: 0.85rem;
 		line-height: 1.5rem;
 		padding: 0 0 0 0.75ch;

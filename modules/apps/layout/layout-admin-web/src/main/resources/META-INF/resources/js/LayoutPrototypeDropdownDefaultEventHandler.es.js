@@ -2,7 +2,11 @@ import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es'
 
 class LayoutPrototypeDropdownDefaultEventHandler extends DefaultEventHandler {
 	deleteLayoutPrototype(itemData) {
-		if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this'))) {
+		if (
+			confirm(
+				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+			)
+		) {
 			this._send(itemData.deleteLayoutPrototypeURL);
 		}
 	}
@@ -20,19 +24,17 @@ class LayoutPrototypeDropdownDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	_openWindow(label, url) {
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					destroyOnHide: true,
-					modal: true
-				},
-				dialogIframe: {
-					bodyCssClass: 'dialog-with-footer'
-				},
-				title: Liferay.Language.get(label),
-				uri: url
-			}
-		);
+		Liferay.Util.openWindow({
+			dialog: {
+				destroyOnHide: true,
+				modal: true
+			},
+			dialogIframe: {
+				bodyCssClass: 'dialog-with-footer'
+			},
+			title: Liferay.Language.get(label),
+			uri: url
+		});
 	}
 
 	_send(url) {

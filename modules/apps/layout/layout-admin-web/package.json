@@ -1,19 +1,4 @@
 {
-	"csfConfig": {
-		"path:**/*.js": {
-			"js": {
-				"lint": {
-					"globals": {
-						"$": true,
-						"AlloyEditor": true,
-						"CKEDITOR": true,
-						"MODULE_PATH": true,
-						"_": true
-					}
-				}
-			}
-		}
-	},
 	"dependencies": {
 		"clay-badge": "2.16.0",
 		"clay-checkbox": "2.16.0",

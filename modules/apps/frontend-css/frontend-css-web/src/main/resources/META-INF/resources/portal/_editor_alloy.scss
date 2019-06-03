@@ -1,4 +1,4 @@
-* [class*="ae-toolbar-"][role="toolbar"] {
+* [class*='ae-toolbar-'][role='toolbar'] {
 	z-index: 980;
 
 	@media (max-width: $screen-sm) {
@@ -21,7 +21,7 @@
 		overflow: hidden;
 		text-align: start;
 
-		&[dir="rtl"] + .alloy-editor-icon {
+		&[dir='rtl'] + .alloy-editor-icon {
 			left: 8px;
 		}
 
@@ -39,7 +39,7 @@
 				padding-left: 10px;
 			}
 
-			&.ae-placeholder[data-required="true"]:not(:focus):before {
+			&.ae-placeholder[data-required='true']:not(:focus):before {
 				content: attr(data-placeholder) ' *';
 			}
 		}
@@ -62,7 +62,7 @@
 
 		.cke_widget_embedurl {
 			.embed-help-message {
-				color: #FFF;
+				color: #fff;
 				font-weight: 600;
 				opacity: 0;
 				position: absolute;
@@ -90,7 +90,8 @@
 			}
 
 			&.cke_widget_wrapper {
-				&:hover, &.cke_widget_focused {
+				&:hover,
+				&.cke_widget_focused {
 					.cke_widget_element {
 						outline: none;
 					}

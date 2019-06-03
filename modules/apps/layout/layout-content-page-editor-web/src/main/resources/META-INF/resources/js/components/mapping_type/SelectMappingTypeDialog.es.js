@@ -11,18 +11,15 @@ import templates from './SelectMappingTypeDialog.soy';
  * SelectMappingTypeDialog
  */
 class SelectMappingTypeDialog extends Component {
-
 	/**
 	 * Change asset type selection dialog visibility.
 	 * @private
 	 * @review
 	 */
 	_handleVisibleChanged() {
-		this.store.dispatch(
-			{
-				type: HIDE_MAPPING_TYPE_DIALOG
-			}
-		);
+		this.store.dispatch({
+			type: HIDE_MAPPING_TYPE_DIALOG
+		});
 	}
 }
 
@@ -36,10 +33,7 @@ SelectMappingTypeDialog.STATE = {};
 
 const ConnectedSelectMappingTypeDialog = getConnectedComponent(
 	SelectMappingTypeDialog,
-	[
-		'selectMappingTypeDialogVisible',
-		'spritemap'
-	]
+	['selectMappingTypeDialogVisible', 'spritemap']
 );
 
 Soy.register(ConnectedSelectMappingTypeDialog, templates);

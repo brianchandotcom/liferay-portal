@@ -1,14 +1,16 @@
 .taglib-search-toggle .toggle-advanced {
 	color: inherit;
 
-	&, &:hover, &:focus {
+	&,
+	&:hover,
+	&:focus {
 		text-decoration: none;
 	}
 }
 
 .taglib-search-toggle-advanced-wrapper .taglib-search-toggle-advanced {
-	background-color: #FCFCFC;
-	border-color: #DDD;
+	background-color: #fcfcfc;
+	border-color: #ddd;
 
 	.btn.close {
 		margin-right: 5px;

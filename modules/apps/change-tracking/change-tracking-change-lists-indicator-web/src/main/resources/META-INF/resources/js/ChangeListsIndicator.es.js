@@ -22,24 +22,26 @@ const TOOLTIP_QUERY_SELECTOR = '.yui3-widget.tooltip';
  * @review
  */
 class ChangeListsIndicator extends PortletBase {
-
 	/**
 	 * @inheritDoc
 	 */
 	created() {
 		this._eventHandler = new EventHandler();
-		let urlActiveCollection = this.urlCollectionsBase + '?companyId=' + Liferay.ThemeDisplay.getCompanyId() + '&userId=' + Liferay.ThemeDisplay.getUserId() + '&type=active';
+		let urlActiveCollection =
+			this.urlCollectionsBase +
+			'?companyId=' +
+			Liferay.ThemeDisplay.getCompanyId() +
+			'&userId=' +
+			Liferay.ThemeDisplay.getUserId() +
+			'&type=active';
 
 		this._render(urlActiveCollection);
 
 		let instance = this;
 
-		Liferay.on(
-			'refreshChangeTrackingIndicator',
-			function() {
-				instance._render(urlActiveCollection);
-			}
-		);
+		Liferay.on('refreshChangeTrackingIndicator', function() {
+			instance._render(urlActiveCollection);
+		});
 	}
 
 	/**
@@ -81,14 +83,11 @@ class ChangeListsIndicator extends PortletBase {
 	 * @private
 	 */
 	_addTooltipCssClass(cssClassName) {
-		this._checkElement(TOOLTIP_QUERY_SELECTOR)
-			.then(
-				(element) => {
-					if (element && !element.classList.contains(cssClassName)) {
-						element.classList.add(cssClassName);
-					}
-				}
-			);
+		this._checkElement(TOOLTIP_QUERY_SELECTOR).then(element => {
+			if (element && !element.classList.contains(cssClassName)) {
+				element.classList.add(cssClassName);
+			}
+		});
 	}
 
 	/**
@@ -103,7 +102,9 @@ class ChangeListsIndicator extends PortletBase {
 		var result = Promise.resolve(element);
 
 		if (element && this._getStyle(element, 'display') != 'none') {
-			result = this._rafAsync().then(() => this._checkElementHidden(selector));
+			result = this._rafAsync().then(() =>
+				this._checkElementHidden(selector)
+			);
 		}
 
 		return result;
@@ -131,21 +132,20 @@ class ChangeListsIndicator extends PortletBase {
 		fetch(url, init)
 			.then(response => response.json())
 			.then(response => callback(response))
-			.catch(
-				(error) => {
-					const message = typeof error === 'string' ?
-						error :
-						Liferay.Language.get('an-error-occured-while-getting-the-active-change-list');
+			.catch(error => {
+				const message =
+					typeof error === 'string'
+						? error
+						: Liferay.Language.get(
+								'an-error-occured-while-getting-the-active-change-list'
+						  );
 
-					openToast(
-						{
-							message,
-							title: Liferay.Language.get('error'),
-							type: 'danger'
-						}
-					);
-				}
-			);
+				openToast({
+					message,
+					title: Liferay.Language.get('error'),
+					type: 'danger'
+				});
+			});
 	}
 
 	/**
@@ -159,9 +159,10 @@ class ChangeListsIndicator extends PortletBase {
 
 		if (element && element.currentStyle) {
 			result = element.currentStyle[property];
-		}
-		else if (window.getComputedStyle) {
-			result = window.getComputedStyle(element, null).getPropertyValue(property);
+		} else if (window.getComputedStyle) {
+			result = window
+				.getComputedStyle(element, null)
+				.getPropertyValue(property);
 		}
 
 		return result;
@@ -234,11 +235,9 @@ class ChangeListsIndicator extends PortletBase {
 	 * @private
 	 */
 	_rafAsync() {
-		return new Promise(
-			resolve => {
-				requestAnimationFrame(resolve);
-			}
-		);
+		return new Promise(resolve => {
+			requestAnimationFrame(resolve);
+		});
 	}
 
 	/**
@@ -248,14 +247,11 @@ class ChangeListsIndicator extends PortletBase {
 	 * @private
 	 */
 	_removeTooltipCssClass(cssClassName) {
-		this._checkElementHidden(TOOLTIP_QUERY_SELECTOR)
-			.then(
-				(element) => {
-					if (element && element.classList.contains(cssClassName)) {
-						element.classList.remove(cssClassName);
-					}
-				}
-			);
+		this._checkElementHidden(TOOLTIP_QUERY_SELECTOR).then(element => {
+			if (element && element.classList.contains(cssClassName)) {
+				element.classList.remove(cssClassName);
+			}
+		});
 	}
 
 	/**
@@ -264,16 +260,13 @@ class ChangeListsIndicator extends PortletBase {
 	 * @private
 	 */
 	_render(urlActiveCollection) {
-		this._getDataRequest(
-			urlActiveCollection,
-			response => {
-				if (response) {
-					this.activeChangeListName = response[0].name;
-					this._setTooltipCssClassName(this.activeChangeListName);
-					this._setEventHandlers();
-				}
+		this._getDataRequest(urlActiveCollection, response => {
+			if (response) {
+				this.activeChangeListName = response[0].name;
+				this._setTooltipCssClassName(this.activeChangeListName);
+				this._setEventHandlers();
 			}
-		);
+		});
 	}
 
 	/**
@@ -324,7 +317,9 @@ class ChangeListsIndicator extends PortletBase {
 	 * @private
 	 */
 	_setEventHandlers() {
-		this._setChangeListIndicatorEventHandler(CHANGE_LISTS_INDICATOR_QUERY_SELECTOR);
+		this._setChangeListIndicatorEventHandler(
+			CHANGE_LISTS_INDICATOR_QUERY_SELECTOR
+		);
 		this._seTooltipEventHandlers(TOOLTIP_QUERY_SELECTOR);
 	}
 
@@ -335,7 +330,10 @@ class ChangeListsIndicator extends PortletBase {
 	 * @private
 	 */
 	_setTooltipCssClassName(activeChangeListName) {
-		this._tooltipCssClassName = activeChangeListName != PRODUCTION_COLLECTION_NAME ? BLUE_BACKGROUND_TOOLTIP_CSS_CLASS_NAME : GREEN_BACKGROUND_TOOLTIP_CSS_CLASS_NAME;
+		this._tooltipCssClassName =
+			activeChangeListName != PRODUCTION_COLLECTION_NAME
+				? BLUE_BACKGROUND_TOOLTIP_CSS_CLASS_NAME
+				: GREEN_BACKGROUND_TOOLTIP_CSS_CLASS_NAME;
 	}
 
 	/**
@@ -363,7 +361,6 @@ class ChangeListsIndicator extends PortletBase {
  * @type {!Object}
  */
 ChangeListsIndicator.STATE = {
-
 	/**
 	 * Name of the tooltip css class.
 	 * @default
@@ -418,7 +415,6 @@ ChangeListsIndicator.STATE = {
 	 */
 
 	urlCollectionsBase: Config.string()
-
 };
 
 Soy.register(ChangeListsIndicator, templates);

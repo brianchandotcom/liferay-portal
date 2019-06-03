@@ -1,81 +1,77 @@
 AUI.add(
 	'liferay-calendar-session-listener',
 	function(A) {
-		var CalendarSessionListener = A.Component.create(
-			{
-				ATTRS: {
-					calendars: {
-						value: []
-					},
-
-					scheduler: {
-						value: null
-					}
+		var CalendarSessionListener = A.Component.create({
+			ATTRS: {
+				calendars: {
+					value: []
 				},
 
-				NAME: 'calendar-session-listener',
+				scheduler: {
+					value: null
+				}
+			},
 
-				prototype: {
-					initializer: function() {
-						var instance = this;
+			NAME: 'calendar-session-listener',
 
-						Liferay.on('sessionExpired', A.bind(instance._onSessionExpired, instance));
-					},
+			prototype: {
+				initializer: function() {
+					var instance = this;
 
-					_disableCalendars: function() {
-						var instance = this;
+					Liferay.on(
+						'sessionExpired',
+						A.bind(instance._onSessionExpired, instance)
+					);
+				},
 
-						var calendars = instance.get('calendars');
+				_disableCalendars: function() {
+					var instance = this;
 
-						A.Object.each(
-							calendars,
-							function(calendar) {
-								var permissions = calendar.get('permissions');
+					var calendars = instance.get('calendars');
 
-								permissions.DELETE = false;
-								permissions.MANAGE_BOOKINGS = false;
-								permissions.UPDATE = false;
-								permissions.PERMISSIONS = false;
-							}
-						);
-					},
+					A.Object.each(calendars, function(calendar) {
+						var permissions = calendar.get('permissions');
 
-					_disableEvents: function() {
-						var instance = this;
+						permissions.DELETE = false;
+						permissions.MANAGE_BOOKINGS = false;
+						permissions.UPDATE = false;
+						permissions.PERMISSIONS = false;
+					});
+				},
 
-						var scheduler = instance.get('scheduler');
+				_disableEvents: function() {
+					var instance = this;
 
-						scheduler.getEvents().forEach(
-							function(event) {
-								event.set('disabled', true);
-							}
-						);
-					},
+					var scheduler = instance.get('scheduler');
 
-					_disableScheduler: function() {
-						var instance = this;
+					scheduler.getEvents().forEach(function(event) {
+						event.set('disabled', true);
+					});
+				},
 
-						var addEventButtons = A.all('.calendar-add-event-btn');
+				_disableScheduler: function() {
+					var instance = this;
 
-						var scheduler = instance.get('scheduler');
+					var addEventButtons = A.all('.calendar-add-event-btn');
 
-						addEventButtons.set('disabled', true);
+					var scheduler = instance.get('scheduler');
 
-						scheduler.set('eventRecorder', null);
-					},
+					addEventButtons.set('disabled', true);
 
-					_onSessionExpired: function() {
-						var instance = this;
+					scheduler.set('eventRecorder', null);
+				},
 
-						instance._disableCalendars();
+				_onSessionExpired: function() {
+					var instance = this;
 
-						instance._disableScheduler();
+					instance._disableCalendars();
 
-						instance._disableEvents();
-					}
+					instance._disableScheduler();
+
+					instance._disableEvents();
 				}
 			}
-		);
+		});
 
 		Liferay.CalendarSessionListener = CalendarSessionListener;
 	},

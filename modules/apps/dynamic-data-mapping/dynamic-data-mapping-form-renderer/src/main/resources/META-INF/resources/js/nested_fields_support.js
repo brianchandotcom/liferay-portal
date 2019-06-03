@@ -3,8 +3,7 @@ AUI.add(
 	function(A) {
 		var AArray = A.Array;
 
-		var NestedFieldsSupport = function() {
-		};
+		var NestedFieldsSupport = function() {};
 
 		NestedFieldsSupport.ATTRS = {
 			fields: {
@@ -74,15 +73,17 @@ AUI.add(
 			filterNodes: function(fn) {
 				var instance = this;
 
-				var nodes = instance.get('container').all('.lfr-ddm-form-field-container');
+				var nodes = instance
+					.get('container')
+					.all('.lfr-ddm-form-field-container');
 
-				return nodes.filter(
-					function(item) {
-						var qualifiedName = item.one('.form-group').getData('fieldname');
+				return nodes.filter(function(item) {
+					var qualifiedName = item
+						.one('.form-group')
+						.getData('fieldname');
 
-						return fn.call(instance, qualifiedName, item);
-					}
-				);
+					return fn.call(instance, qualifiedName, item);
+				});
 			},
 
 			getField: function(name, instanceId) {
@@ -90,21 +91,21 @@ AUI.add(
 
 				var field;
 
-				instance.eachNestedField(
-					function(item) {
-						if (item.get('fieldName') === name) {
-							field = item;
-						}
-
-						if (field && instanceId &&
-							instanceId !== field.get('instanceId')) {
-
-							field = undefined;
-						}
-
-						return field !== undefined;
+				instance.eachNestedField(function(item) {
+					if (item.get('fieldName') === name) {
+						field = item;
 					}
-				);
+
+					if (
+						field &&
+						instanceId &&
+						instanceId !== field.get('instanceId')
+					) {
+						field = undefined;
+					}
+
+					return field !== undefined;
+				});
 
 				return field;
 			},
@@ -114,12 +115,9 @@ AUI.add(
 
 				var fields = [];
 
-				instance.eachNestedField(
-					function(field) {
-						fields.push(field);
-					},
-					true
-				);
+				instance.eachNestedField(function(field) {
+					fields.push(field);
+				}, true);
 
 				return fields;
 			},
@@ -129,11 +127,9 @@ AUI.add(
 
 				var root;
 
-				instance.eachParent(
-					function(parent) {
-						root = parent;
-					}
-				);
+				instance.eachParent(function(parent) {
+					root = parent;
+				});
 
 				return root;
 			},
@@ -173,18 +169,22 @@ AUI.add(
 			_setFields: function(fields) {
 				var instance = this;
 
-				fields.forEach(
-					function(field) {
-						field.set('parent', instance);
-					}
-				);
+				fields.forEach(function(field) {
+					field.set('parent', instance);
+				});
 			}
 		};
 
-		Liferay.namespace('DDM.Renderer').NestedFieldsSupport = NestedFieldsSupport;
+		Liferay.namespace(
+			'DDM.Renderer'
+		).NestedFieldsSupport = NestedFieldsSupport;
 	},
 	'',
 	{
-		requires: ['array-invoke', 'liferay-ddm-form-renderer-types', 'liferay-ddm-form-renderer-util']
+		requires: [
+			'array-invoke',
+			'liferay-ddm-form-renderer-types',
+			'liferay-ddm-form-renderer-util'
+		]
 	}
 );

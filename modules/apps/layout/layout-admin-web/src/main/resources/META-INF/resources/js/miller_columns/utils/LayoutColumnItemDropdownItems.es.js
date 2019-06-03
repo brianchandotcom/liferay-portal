@@ -15,7 +15,6 @@ const LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS = [
 	},
 
 	{
-
 		/**
 		 * Handle copy layout click in order to show simple input modal.
 		 * @param {Event} event
@@ -25,30 +24,26 @@ const LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS = [
 		handleClick: (event, layoutColumn) => {
 			event.preventDefault();
 
-			Liferay.Util.openWindow(
-				{
-					dialog: {
-						destroyOnHide: true,
-						height: 480,
-						resizable: false,
-						width: 640
-					},
-					dialogIframe: {
-						bodyCssClass: 'dialog-with-footer'
-					},
-					id: event.data.item.namespace + 'addLayoutDialog',
-					title: Liferay.Language.get('copy-page'),
-					uri: event.data.item.href
-				}
-			);
+			Liferay.Util.openWindow({
+				dialog: {
+					destroyOnHide: true,
+					height: 480,
+					resizable: false,
+					width: 640
+				},
+				dialogIframe: {
+					bodyCssClass: 'dialog-with-footer'
+				},
+				id: event.data.item.namespace + 'addLayoutDialog',
+				title: Liferay.Language.get('copy-page'),
+				uri: event.data.item.href
+			});
 		},
 		label: Liferay.Language.get('copy-page'),
 		name: 'copyLayoutURL'
-
 	},
 
 	{
-
 		/**
 		 * Handle permission item click in order to open the target href in a dialog.
 		 * @param {Event} event
@@ -56,13 +51,9 @@ const LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS = [
 		 */
 		handleClick: event => {
 			Liferay.Util.openInDialog(
-				Object.assign(
-					{},
-					event,
-					{
-						currentTarget: event.target.element
-					}
-				),
+				Object.assign({}, event, {
+					currentTarget: event.target.element
+				}),
 				{
 					dialog: {
 						destroyOnHide: true
@@ -84,7 +75,6 @@ const LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS = [
 	},
 
 	{
-
 		/**
 		 * Handle delete item click in order to show a previous confirmation alert.
 		 * @param {Event} event

@@ -2,17 +2,27 @@ import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarImagePropertiesPanelDelegateTemplate.soy';
-import {EDITABLE_FIELD_CONFIG_KEYS, TARGET_TYPES} from '../../../utils/constants';
-import {disableSavingChangesStatusAction, enableSavingChangesStatusAction, updateLastSaveDateAction} from '../../../actions/saveChanges.es';
+import {
+	EDITABLE_FIELD_CONFIG_KEYS,
+	TARGET_TYPES
+} from '../../../utils/constants';
+import {
+	disableSavingChangesStatusAction,
+	enableSavingChangesStatusAction,
+	updateLastSaveDateAction
+} from '../../../actions/saveChanges.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import templates from './FloatingToolbarImagePropertiesPanel.soy';
-import {CLEAR_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, UPDATE_CONFIG_ATTRIBUTES} from '../../../actions/actions.es';
+import {
+	CLEAR_FRAGMENT_EDITOR,
+	ENABLE_FRAGMENT_EDITOR,
+	UPDATE_CONFIG_ATTRIBUTES
+} from '../../../actions/actions.es';
 
 /**
  * FloatingToolbarImagePropertiesPanel
  */
 class FloatingToolbarImagePropertiesPanel extends Component {
-
 	/**
 	 * Updates fragment configuration
 	 * @param {object} config Configuration
@@ -22,14 +32,12 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 	_updateFragmentConfig(config) {
 		this.store
 			.dispatch(enableSavingChangesStatusAction())
-			.dispatch(
-				{
-					config,
-					editableId: this.item.editableId,
-					fragmentEntryLinkId: this.item.fragmentEntryLinkId,
-					type: UPDATE_CONFIG_ATTRIBUTES
-				}
-			)
+			.dispatch({
+				config,
+				editableId: this.item.editableId,
+				fragmentEntryLinkId: this.item.fragmentEntryLinkId,
+				type: UPDATE_CONFIG_ATTRIBUTES
+			})
 			.dispatch(updateLastSaveDateAction())
 			.dispatch(disableSavingChangesStatusAction());
 	}
@@ -40,12 +48,10 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 	 * @review
 	 */
 	_handleClearImageButtonClick() {
-		this.store.dispatch(
-			{
-				itemId: this.itemId,
-				type: CLEAR_FRAGMENT_EDITOR
-			}
-		);
+		this.store.dispatch({
+			itemId: this.itemId,
+			type: CLEAR_FRAGMENT_EDITOR
+		});
 	}
 
 	/**
@@ -55,11 +61,9 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 	 * @review
 	 */
 	_handleImageLinkInputChange(event) {
-		this._updateFragmentConfig(
-			{
-				[EDITABLE_FIELD_CONFIG_KEYS.imageLink]: event.delegateTarget.value
-			}
-		);
+		this._updateFragmentConfig({
+			[EDITABLE_FIELD_CONFIG_KEYS.imageLink]: event.delegateTarget.value
+		});
 	}
 
 	/**
@@ -69,11 +73,9 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 	 * @review
 	 */
 	_handleImageTargetOptionChange(event) {
-		this._updateFragmentConfig(
-			{
-				[EDITABLE_FIELD_CONFIG_KEYS.imageTarget]: event.delegateTarget.value
-			}
-		);
+		this._updateFragmentConfig({
+			[EDITABLE_FIELD_CONFIG_KEYS.imageTarget]: event.delegateTarget.value
+		});
 	}
 
 	/**
@@ -82,12 +84,10 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 	 * @review
 	 */
 	_handleSelectImageButtonClick() {
-		this.store.dispatch(
-			{
-				itemId: this.itemId,
-				type: ENABLE_FRAGMENT_EDITOR
-			}
-		);
+		this.store.dispatch({
+			itemId: this.itemId,
+			type: ENABLE_FRAGMENT_EDITOR
+		});
 	}
 }
 
@@ -98,7 +98,6 @@ class FloatingToolbarImagePropertiesPanel extends Component {
  * @type {!Object}
  */
 FloatingToolbarImagePropertiesPanel.STATE = {
-
 	/**
 	 * @default TARGET_TYPES
 	 * @memberOf FloatingToolbarImagePropertiesPanel
@@ -106,8 +105,7 @@ FloatingToolbarImagePropertiesPanel.STATE = {
 	 * @review
 	 * @type {object[]}
 	 */
-	_imageTargetOptions: Config
-		.array()
+	_imageTargetOptions: Config.array()
 		.internal()
 		.value(TARGET_TYPES),
 
@@ -125,9 +123,7 @@ FloatingToolbarImagePropertiesPanel.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-	itemId: Config
-		.string()
-		.required(),
+	itemId: Config.string().required(),
 
 	/**
 	 * @default undefined
@@ -135,20 +131,18 @@ FloatingToolbarImagePropertiesPanel.STATE = {
 	 * @review
 	 * @type {object}
 	 */
-	store: Config
-		.object()
-		.value(null)
+	store: Config.object().value(null)
 };
 
 const ConnectedFloatingToolbarImagePropertiesPanel = getConnectedComponent(
 	FloatingToolbarImagePropertiesPanel,
-	[
-		'imageSelectorURL',
-		'portletNamespace'
-	]
+	['imageSelectorURL', 'portletNamespace']
 );
 
 Soy.register(ConnectedFloatingToolbarImagePropertiesPanel, templates);
 
-export {ConnectedFloatingToolbarImagePropertiesPanel, FloatingToolbarImagePropertiesPanel};
+export {
+	ConnectedFloatingToolbarImagePropertiesPanel,
+	FloatingToolbarImagePropertiesPanel
+};
 export default FloatingToolbarImagePropertiesPanel;

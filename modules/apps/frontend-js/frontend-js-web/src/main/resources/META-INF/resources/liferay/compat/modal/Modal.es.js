@@ -13,7 +13,6 @@ const KEY_CODE_ESC = 27;
  */
 
 class Modal extends Component {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -80,8 +79,7 @@ class Modal extends Component {
 			this._eventHandler.add(
 				dom.on(document, 'keyup', this._handleKeyup.bind(this))
 			);
-		}
-		else {
+		} else {
 			this._eventHandler.removeAllListeners();
 		}
 	}
@@ -94,7 +92,9 @@ class Modal extends Component {
 	syncOverlay(overlay) {
 		const willShowOverlay = overlay && this.visible;
 
-		dom[willShowOverlay ? 'enterDocument' : 'exitDocument'](this.overlayElement);
+		dom[willShowOverlay ? 'enterDocument' : 'exitDocument'](
+			this.overlayElement
+		);
 	}
 
 	/**
@@ -105,12 +105,12 @@ class Modal extends Component {
 		this.syncOverlay(this.overlay);
 
 		if (this.visible) {
-			this._lastFocusedElement = this._lastFocusedElement || document.activeElement;
+			this._lastFocusedElement =
+				this._lastFocusedElement || document.activeElement;
 
 			this._autoFocus(this.autoFocus);
 			this._restrictFocus();
-		}
-		else {
+		} else {
 			this._unrestrictFocus();
 			this._shiftFocusBack();
 		}
@@ -214,12 +214,12 @@ class Modal extends Component {
 	 */
 
 	_valueOverlayElementFn() {
-		return dom.buildFragment('<div class="modal-backdrop fade show"></div>').firstChild;
+		return dom.buildFragment('<div class="modal-backdrop fade show"></div>')
+			.firstChild;
 	}
 }
 
 Modal.STATE = {
-
 	/**
 	 * A selector for the element that should be automatically focused when the modal
 	 * becomes visible, or `false` if no auto focus should happen. Defaults to the
@@ -238,8 +238,7 @@ Modal.STATE = {
 	 * @type {string|function()}
 	 */
 
-	body: {
-	},
+	body: {},
 
 	/**
 	 * The id used by the body element.
@@ -265,8 +264,7 @@ Modal.STATE = {
 	 * @type {string|function()}
 	 */
 
-	footer: {
-	},
+	footer: {},
 
 	/**
 	 * The id used by the header element.
@@ -283,8 +281,7 @@ Modal.STATE = {
 	 * @type {string|function()}
 	 */
 
-	header: {
-	},
+	header: {},
 
 	/**
 	 * Whether modal should hide on esc.

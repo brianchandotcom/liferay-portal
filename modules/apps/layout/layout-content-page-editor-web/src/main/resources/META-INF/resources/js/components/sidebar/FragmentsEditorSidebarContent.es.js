@@ -17,7 +17,6 @@ import templates from './FragmentsEditorSidebarContent.soy';
  * @review
  */
 class FragmentsEditorSidebarContent extends Component {
-
 	/**
 	 * @inheritdoc
 	 * @param {object} state
@@ -28,7 +27,8 @@ class FragmentsEditorSidebarContent extends Component {
 
 		if (state.selectedSidebarPanelId && state.sidebarPanels) {
 			const selectedSidebarPanel = state.sidebarPanels.find(
-				sidebarPanel => sidebarPanel.sidebarPanelId === state.selectedSidebarPanelId
+				sidebarPanel =>
+					sidebarPanel.sidebarPanelId === state.selectedSidebarPanelId
 			);
 
 			if (selectedSidebarPanel) {
@@ -38,7 +38,6 @@ class FragmentsEditorSidebarContent extends Component {
 					selectedSidebarPanel
 				);
 			}
-
 		}
 
 		return nextState;
@@ -64,20 +63,15 @@ class FragmentsEditorSidebarContent extends Component {
 		const {sidebarPanelId} = event.delegateTarget.dataset;
 
 		if (this.selectedSidebarPanelId === sidebarPanelId) {
-			this.store.dispatch(
-				{
-					sidebarPanelId: '',
-					type: UPDATE_SELECTED_SIDEBAR_PANEL_ID
-				}
-			);
-		}
-		else {
-			this.store.dispatch(
-				{
-					sidebarPanelId,
-					type: UPDATE_SELECTED_SIDEBAR_PANEL_ID
-				}
-			);
+			this.store.dispatch({
+				sidebarPanelId: '',
+				type: UPDATE_SELECTED_SIDEBAR_PANEL_ID
+			});
+		} else {
+			this.store.dispatch({
+				sidebarPanelId,
+				type: UPDATE_SELECTED_SIDEBAR_PANEL_ID
+			});
 		}
 	}
 
@@ -87,24 +81,16 @@ class FragmentsEditorSidebarContent extends Component {
 	 * @review
 	 */
 	_hideSidebar() {
-		this.store.dispatch(
-			{
-				sidebarPanelId: '',
-				type: UPDATE_SELECTED_SIDEBAR_PANEL_ID
-			}
-		);
+		this.store.dispatch({
+			sidebarPanelId: '',
+			type: UPDATE_SELECTED_SIDEBAR_PANEL_ID
+		});
 	}
-
 }
 
 const ConnectedFragmentsEditorSidebarContent = getConnectedComponent(
 	FragmentsEditorSidebarContent,
-	[
-		'lookAndFeelURL',
-		'selectedSidebarPanelId',
-		'sidebarPanels',
-		'spritemap'
-	]
+	['lookAndFeelURL', 'selectedSidebarPanelId', 'sidebarPanels', 'spritemap']
 );
 
 Soy.register(ConnectedFragmentsEditorSidebarContent, templates);

@@ -6,10 +6,7 @@ import {destroy, init} from './EditableTextFragmentProcessor.es';
  * @return {object[]} Floating toolbar panels
  */
 function getFloatingToolbarButtons(editableValues) {
-	return [
-		FLOATING_TOOLBAR_BUTTONS.edit,
-		FLOATING_TOOLBAR_BUTTONS.link
-	];
+	return [FLOATING_TOOLBAR_BUTTONS.edit, FLOATING_TOOLBAR_BUTTONS.link];
 }
 
 /**
@@ -37,18 +34,15 @@ function render(content, value, editableValues) {
 			link.target = config.target;
 		}
 
-		Array.from(link.classList).forEach(
-			elementClass => {
-				if ((elementClass.indexOf('btn-') === 0) || (elementClass === 'btn')) {
-					link.classList.remove(elementClass);
-				}
+		Array.from(link.classList).forEach(elementClass => {
+			if (elementClass.indexOf('btn-') === 0 || elementClass === 'btn') {
+				link.classList.remove(elementClass);
 			}
-		);
+		});
 
 		if (config.buttonType && config.buttonType === 'link') {
 			link.classList.add('link');
-		}
-		else {
+		} else {
 			link.classList.add('btn');
 			link.classList.add(`btn-${config.buttonType}`);
 		}

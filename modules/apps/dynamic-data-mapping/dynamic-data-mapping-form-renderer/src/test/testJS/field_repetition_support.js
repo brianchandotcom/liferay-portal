@@ -17,93 +17,79 @@ var createField = function(config) {
 	).render(document.body);
 };
 
-describe(
-	'DDM Repetition Event Support',
-	function() {
-		before(
-			function(done) {
-				A.use(
-					'liferay-ddm-form-renderer-field',
-					function(A) {
-						Liferay.DDM.Renderer.FieldTypes.register(
-							{
-								'javaScriptClass': 'window.TestField',
-								'name': 'field',
-								'templateNamespace': 'ddm.test'
-							}
-						);
+describe('DDM Repetition Event Support', function() {
+	before(function(done) {
+		A.use('liferay-ddm-form-renderer-field', function(A) {
+			Liferay.DDM.Renderer.FieldTypes.register({
+				javaScriptClass: 'window.TestField',
+				name: 'field',
+				templateNamespace: 'ddm.test'
+			});
 
-						window.TestField = A.Component.create(
-							{
-								ATTRS: {},
-								EXTENDS: Liferay.DDM.Renderer.Field,
-								prototype: {
-									getTemplateRenderer: function() {
-										return function(context) {
-											return '<input class="field-test" name="' + context.name + '" />';
-										};
-									}
-								}
-							}
-						);
-
-						done();
+			window.TestField = A.Component.create({
+				ATTRS: {},
+				EXTENDS: Liferay.DDM.Renderer.Field,
+				prototype: {
+					getTemplateRenderer: function() {
+						return function(context) {
+							return (
+								'<input class="field-test" name="' +
+								context.name +
+								'" />'
+							);
+						};
 					}
-				);
-			}
-		);
+				}
+			});
 
-		describe(
-			'.copy()',
-			function() {
-				it(
-					'should create a copy of the Field',
-					function(done) {
-						var field = createField();
-						var copiedField = field.copy();
+			done();
+		});
+	});
 
-						var fieldContext = field.get('context');
-						var copiedFieldContext = copiedField.get('context');
+	describe('.copy()', function() {
+		it('should create a copy of the Field', function(done) {
+			var field = createField();
+			var copiedField = field.copy();
 
-						assert.isTrue(A.instanceOf(copiedField, field.getFieldClass()));
+			var fieldContext = field.get('context');
+			var copiedFieldContext = copiedField.get('context');
 
-						delete fieldContext.fieldName;
-						delete copiedFieldContext.fieldName;
-						delete fieldContext.repeatedIndex;
-						delete copiedFieldContext.repeatedIndex;
-						delete fieldContext.instanceId;
-						delete copiedFieldContext.instanceId;
-						delete copiedFieldContext.value;
+			assert.isTrue(A.instanceOf(copiedField, field.getFieldClass()));
 
-						assert.deepEqual(fieldContext, copiedFieldContext);
+			delete fieldContext.fieldName;
+			delete copiedFieldContext.fieldName;
+			delete fieldContext.repeatedIndex;
+			delete copiedFieldContext.repeatedIndex;
+			delete fieldContext.instanceId;
+			delete copiedFieldContext.instanceId;
+			delete copiedFieldContext.value;
 
-						field.destroy();
-						copiedField.destroy();
+			assert.deepEqual(fieldContext, copiedFieldContext);
 
-						done();
-					}
-				);
-			}
-		);
+			field.destroy();
+			copiedField.destroy();
 
-		describe(
-			'.repeat()',
-			function() {
-				it(
-					'should add a copy of the Field above itself when the repeat function is called',
-					function(done) {
-						var field = createField();
+			done();
+		});
+	});
 
-						assert.equal(1, document.body.getElementsByClassName('field-test').length);
+	describe('.repeat()', function() {
+		it('should add a copy of the Field above itself when the repeat function is called', function(done) {
+			var field = createField();
 
-						field.repeat();
+			assert.equal(
+				1,
+				document.body.getElementsByClassName('field-test').length
+			);
 
-						assert.equal(2, document.body.getElementsByClassName('field-test').length);
+			field.repeat();
 
-						done();
-					}
-				);
-			}
-		);
-	}
-);
+			assert.equal(
+				2,
+				document.body.getElementsByClassName('field-test').length
+			);
+
+			done();
+		});
+	});
+});

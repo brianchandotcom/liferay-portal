@@ -14,9 +14,7 @@ class Date extends Component {}
 Soy.register(Date, templates, 'render');
 
 if (!window.DDMDate) {
-	window.DDMDate = {
-
-	};
+	window.DDMDate = {};
 }
 
 window.DDMDate.vanillaTextMask = vanillaTextMask;

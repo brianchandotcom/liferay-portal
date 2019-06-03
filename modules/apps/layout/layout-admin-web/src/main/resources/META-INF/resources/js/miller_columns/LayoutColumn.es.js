@@ -11,7 +11,6 @@ import templates from './LayoutColumn.soy';
  * LayoutColumn
  */
 class LayoutColumn extends Component {
-
 	/**
 	 * Get layout column item dropdown options
 	 * @param {object} layoutColumnItem
@@ -21,19 +20,15 @@ class LayoutColumn extends Component {
 	static _getLayoutColumnItemDropDownItems(layoutColumnItem, namespace) {
 		const {actionURLs = {}} = layoutColumnItem;
 
-		const dropdownItems = LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS
-			.filter(
-				dropdownItem => actionURLs[dropdownItem.name]
-			)
-			.map(
-				dropdownItem => ({
-					handleClick: dropdownItem.handleClick || null,
-					href: actionURLs[dropdownItem.name],
-					label: dropdownItem.label,
-					layoutColumnItem,
-					namespace
-				})
-			);
+		const dropdownItems = LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS.filter(
+			dropdownItem => actionURLs[dropdownItem.name]
+		).map(dropdownItem => ({
+			handleClick: dropdownItem.handleClick || null,
+			href: actionURLs[dropdownItem.name],
+			label: dropdownItem.label,
+			layoutColumnItem,
+			namespace
+		}));
 
 		return dropdownItems;
 	}
@@ -43,25 +38,18 @@ class LayoutColumn extends Component {
 	 * @inheritdoc
 	 */
 	prepareStateForRender(state) {
-		const layoutColumn = this.layoutColumn.map(
-			layoutColumnItem => Object.assign(
-				{},
-				layoutColumnItem,
-				{
-					dropdownItems: LayoutColumn._getLayoutColumnItemDropDownItems(
-						layoutColumnItem,
-						this.portletNamespace
-					)
-				}
-			)
+		const layoutColumn = this.layoutColumn.map(layoutColumnItem =>
+			Object.assign({}, layoutColumnItem, {
+				dropdownItems: LayoutColumn._getLayoutColumnItemDropDownItems(
+					layoutColumnItem,
+					this.portletNamespace
+				)
+			})
 		);
 
-		return Object.assign(
-			state,
-			{
-				layoutColumn
-			}
-		);
+		return Object.assign(state, {
+			layoutColumn
+		});
 	}
 
 	/**
@@ -83,7 +71,6 @@ class LayoutColumn extends Component {
 			event.data.item.handleClick(event, this);
 		}
 	}
-
 }
 
 /**
@@ -93,7 +80,6 @@ class LayoutColumn extends Component {
  */
 
 LayoutColumn.STATE = {
-
 	/**
 	 * List of layouts in the current column
 	 * @default undefined
@@ -103,18 +89,16 @@ LayoutColumn.STATE = {
 	 */
 
 	layoutColumn: Config.arrayOf(
-		Config.shapeOf(
-			{
-				actions: Config.string().required(),
-				actionURLs: Config.object().required(),
-				active: Config.bool().required(),
-				description: Config.string().required(),
-				hasChild: Config.bool().required(),
-				plid: Config.string().required(),
-				title: Config.string().required(),
-				url: Config.string().required()
-			}
-		)
+		Config.shapeOf({
+			actions: Config.string().required(),
+			actionURLs: Config.object().required(),
+			active: Config.bool().required(),
+			description: Config.string().required(),
+			hasChild: Config.bool().required(),
+			plid: Config.string().required(),
+			title: Config.string().required(),
+			url: Config.string().required()
+		})
 	).required(),
 
 	/**
@@ -155,7 +139,6 @@ LayoutColumn.STATE = {
 	 */
 
 	styleModifier: Config.string()
-
 };
 
 Soy.register(LayoutColumn, templates);

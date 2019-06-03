@@ -13,7 +13,6 @@ import templates from './BulkStatus.soy';
  */
 
 class BulkStatus extends Component {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -63,18 +62,14 @@ class BulkStatus extends Component {
 
 		fetch(this.pathModule + this.bulkStatusUrl, request)
 			.then(response => response.json())
-			.then(
-				response => {
-					if (!response.actionInProgress) {
-						this._onBulkFinish(false);
-					}
+			.then(response => {
+				if (!response.actionInProgress) {
+					this._onBulkFinish(false);
 				}
-			)
-			.catch(
-				e => {
-					this._onBulkFinish(true);
-				}
-			);
+			})
+			.catch(e => {
+				this._onBulkFinish(true);
+			});
 	}
 
 	/**
@@ -102,8 +97,7 @@ class BulkStatus extends Component {
 
 		if (error) {
 			message = Liferay.Language.get('an-unexpected-error-occurred');
-		}
-		else {
+		} else {
 			message = Liferay.Language.get('changes-saved');
 		}
 
@@ -135,12 +129,9 @@ class BulkStatus extends Component {
 		);
 
 		if (!this.bulkInProgress) {
-			this.visibleTimeOut = setTimeout(
-				() => {
-					this.bulkInProgress = true;
-				},
-				this.waitingTime
-			);
+			this.visibleTimeOut = setTimeout(() => {
+				this.bulkInProgress = true;
+			}, this.waitingTime);
 		}
 	}
 }
@@ -152,7 +143,6 @@ class BulkStatus extends Component {
  * @type {!Object}
  */
 BulkStatus.STATE = {
-
 	/**
 	 * Wether to show the component or not
 	 * @type {Boolean}

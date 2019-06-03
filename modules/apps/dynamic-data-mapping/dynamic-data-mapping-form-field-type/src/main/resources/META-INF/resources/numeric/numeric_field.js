@@ -1,187 +1,214 @@
 AUI.add(
 	'liferay-ddm-form-field-numeric',
 	function(A) {
-		var CSS_SETTINGS_SIDEBAR = A.getClassName('liferay', 'ddm', 'form', 'builder', 'field', 'settings', 'sidebar', 'content');
-
-		new A.TooltipDelegate(
-			{
-				cssClass: 'clay-tooltip',
-				opacity: 1,
-				position: 'right',
-				trigger: '.liferay-ddm-form-field-numeric .trigger-tooltip',
-				triggerHideEvent: ['blur', 'mouseleave'],
-				triggerShowEvent: ['focus', 'mouseover'],
-				visible: false
-			}
+		var CSS_SETTINGS_SIDEBAR = A.getClassName(
+			'liferay',
+			'ddm',
+			'form',
+			'builder',
+			'field',
+			'settings',
+			'sidebar',
+			'content'
 		);
 
-		var NumericField = A.Component.create(
-			{
-				ATTRS: {
-					dataType: {
-						value: 'integer'
-					},
+		new A.TooltipDelegate({
+			cssClass: 'clay-tooltip',
+			opacity: 1,
+			position: 'right',
+			trigger: '.liferay-ddm-form-field-numeric .trigger-tooltip',
+			triggerHideEvent: ['blur', 'mouseleave'],
+			triggerShowEvent: ['focus', 'mouseover'],
+			visible: false
+		});
 
-					placeholder: {
-						state: true,
-						value: ''
-					},
+		var NumericField = A.Component.create({
+			ATTRS: {
+				dataType: {
+					value: 'integer'
+				},
 
-					predefinedValue: {
-						value: ''
-					},
+				placeholder: {
+					state: true,
+					value: ''
+				},
 
-					symbols: {
-						value: {
-							decimalSymbol: '.',
-							thousandsSeparator: ','
-						}
-					},
+				predefinedValue: {
+					value: ''
+				},
 
-					type: {
-						value: 'numeric'
+				symbols: {
+					value: {
+						decimalSymbol: '.',
+						thousandsSeparator: ','
 					}
 				},
 
-				EXTENDS: Liferay.DDM.Renderer.Field,
+				type: {
+					value: 'numeric'
+				}
+			},
 
-				NAME: 'liferay-ddm-form-field-numeric',
+			EXTENDS: Liferay.DDM.Renderer.Field,
 
-				prototype: {
-					initializer: function() {
-						var instance = this;
+			NAME: 'liferay-ddm-form-field-numeric',
 
-						instance._eventHandlers.push(
-							instance.after('render', instance._afterNumericFieldRender, instance)
+			prototype: {
+				initializer: function() {
+					var instance = this;
+
+					instance._eventHandlers.push(
+						instance.after(
+							'render',
+							instance._afterNumericFieldRender,
+							instance
+						)
+					);
+
+					instance.evaluate = A.debounce(function() {
+						NumericField.superclass.evaluate.apply(
+							instance,
+							arguments
 						);
+					}, 300);
+				},
 
-						instance.evaluate = A.debounce(
-							function() {
-								NumericField.superclass.evaluate.apply(instance, arguments);
-							},
-							300
-						);
-					},
+				applyMask: function(fieldNode) {
+					var instance = this;
 
-					applyMask: function(fieldNode) {
-						var instance = this;
+					var dataType = instance.get('dataType');
+					var maskController = fieldNode.getData('mask-controller');
+					var value = instance.get('value');
 
-						var dataType = instance.get('dataType');
-						var maskController = fieldNode.getData('mask-controller');
-						var value = instance.get('value');
-
-						if (maskController) {
-							maskController.destroy();
-						}
-
-						var numberMaskOptions = instance.getIntegerMaskConfig();
-
-						if (dataType == 'double') {
-							numberMaskOptions = instance.getDecimalMaskConfig();
-						}
-
-						var numberMask = DDMNumeric.createNumberMask(numberMaskOptions);
-
-						instance.maskedInputController = DDMNumeric.vanillaTextMask(
-							{
-								inputElement: fieldNode.getDOM(),
-								mask: numberMask
-							}
-						);
-
-						fieldNode.setData('mask-controller', instance.maskedInputController);
-
-						if (value && dataType == 'integer') {
-							value = Math.round(value);
-						}
-
-						instance.maskedInputController.textMaskInputElement.update(
-							value,
-							{
-								inputElement: fieldNode.getDOM(),
-								mask: numberMask
-							}
-						);
-					},
-
-					getChangeEventName: function() {
-						return 'input';
-					},
-
-					getDecimalMaskConfig: function() {
-						var instance = this;
-
-						var symbols = instance.get('symbols');
-
-						return {
-							allowDecimal: true,
-							allowLeadingZeroes: true,
-							decimalLimit: null,
-							decimalSymbol: symbols.decimalSymbol,
-							includeThousandsSeparator: false,
-							prefix: ''
-						};
-					},
-
-					getEvaluationContext: function(context) {
-						return {
-							dataType: context.dataType
-						};
-					},
-
-					getIntegerMaskConfig: function() {
-						return {
-							allowLeadingZeroes: true,
-							includeThousandsSeparator: false,
-							prefix: ''
-						};
-					},
-
-					getTemplateContext: function() {
-						var instance = this;
-
-						return A.merge(
-							NumericField.superclass.getTemplateContext.apply(instance, arguments),
-							{
-								predefinedValue: instance.get('predefinedValue')
-							}
-						);
-					},
-
-					setValue: function(value) {
-						var instance = this;
-
-						instance.set('value', value);
-						instance._afterNumericFieldRender();
-					},
-
-					showErrorMessage: function() {
-						var instance = this;
-
-						NumericField.superclass.showErrorMessage.apply(instance, arguments);
-					},
-
-					_afterNumericFieldRender: function() {
-						var instance = this;
-
-						var fieldNode = instance.getInputNode();
-						var fieldSidebar = A.one('.' + CSS_SETTINGS_SIDEBAR + ' .liferay-ddm-form-field-numeric');
-
-						if (instance.maskedInputController && fieldSidebar) {
-							fieldNode = fieldSidebar.one('input');
-						}
-
-						instance.applyMask(fieldNode);
+					if (maskController) {
+						maskController.destroy();
 					}
 
+					var numberMaskOptions = instance.getIntegerMaskConfig();
+
+					if (dataType == 'double') {
+						numberMaskOptions = instance.getDecimalMaskConfig();
+					}
+
+					var numberMask = DDMNumeric.createNumberMask(
+						numberMaskOptions
+					);
+
+					instance.maskedInputController = DDMNumeric.vanillaTextMask(
+						{
+							inputElement: fieldNode.getDOM(),
+							mask: numberMask
+						}
+					);
+
+					fieldNode.setData(
+						'mask-controller',
+						instance.maskedInputController
+					);
+
+					if (value && dataType == 'integer') {
+						value = Math.round(value);
+					}
+
+					instance.maskedInputController.textMaskInputElement.update(
+						value,
+						{
+							inputElement: fieldNode.getDOM(),
+							mask: numberMask
+						}
+					);
+				},
+
+				getChangeEventName: function() {
+					return 'input';
+				},
+
+				getDecimalMaskConfig: function() {
+					var instance = this;
+
+					var symbols = instance.get('symbols');
+
+					return {
+						allowDecimal: true,
+						allowLeadingZeroes: true,
+						decimalLimit: null,
+						decimalSymbol: symbols.decimalSymbol,
+						includeThousandsSeparator: false,
+						prefix: ''
+					};
+				},
+
+				getEvaluationContext: function(context) {
+					return {
+						dataType: context.dataType
+					};
+				},
+
+				getIntegerMaskConfig: function() {
+					return {
+						allowLeadingZeroes: true,
+						includeThousandsSeparator: false,
+						prefix: ''
+					};
+				},
+
+				getTemplateContext: function() {
+					var instance = this;
+
+					return A.merge(
+						NumericField.superclass.getTemplateContext.apply(
+							instance,
+							arguments
+						),
+						{
+							predefinedValue: instance.get('predefinedValue')
+						}
+					);
+				},
+
+				setValue: function(value) {
+					var instance = this;
+
+					instance.set('value', value);
+					instance._afterNumericFieldRender();
+				},
+
+				showErrorMessage: function() {
+					var instance = this;
+
+					NumericField.superclass.showErrorMessage.apply(
+						instance,
+						arguments
+					);
+				},
+
+				_afterNumericFieldRender: function() {
+					var instance = this;
+
+					var fieldNode = instance.getInputNode();
+					var fieldSidebar = A.one(
+						'.' +
+							CSS_SETTINGS_SIDEBAR +
+							' .liferay-ddm-form-field-numeric'
+					);
+
+					if (instance.maskedInputController && fieldSidebar) {
+						fieldNode = fieldSidebar.one('input');
+					}
+
+					instance.applyMask(fieldNode);
 				}
 			}
-		);
+		});
 
 		Liferay.namespace('DDM.Field').Numeric = NumericField;
 	},
 	'',
 	{
-		requires: ['aui-autosize-deprecated', 'aui-tooltip', 'liferay-ddm-form-renderer-field']
+		requires: [
+			'aui-autosize-deprecated',
+			'aui-tooltip',
+			'liferay-ddm-form-renderer-field'
+		]
 	}
 );

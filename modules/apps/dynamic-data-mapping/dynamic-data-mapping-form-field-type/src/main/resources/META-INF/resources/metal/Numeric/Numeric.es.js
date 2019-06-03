@@ -20,12 +20,10 @@ class Numeric extends Component {
 
 		const mask = createNumberMask(numberMaskOptions);
 
-		this.maskInstance = vanillaTextMask(
-			{
-				inputElement,
-				mask
-			}
-		);
+		this.maskInstance = vanillaTextMask({
+			inputElement,
+			mask
+		});
 	}
 
 	attached() {
@@ -65,11 +63,9 @@ class Numeric extends Component {
 		}
 
 		if (changes.value) {
-			this.setState(
-				{
-					_value: changes.value.newVal
-				}
-			);
+			this.setState({
+				_value: changes.value.newVal
+			});
 		}
 	}
 
@@ -80,14 +76,12 @@ class Numeric extends Component {
 			{
 				value
 			},
-			() => this.emit(
-				'fieldEdited',
-				{
+			() =>
+				this.emit('fieldEdited', {
 					fieldInstance: this,
 					originalEvent: event,
 					value
-				}
-			)
+				})
 		);
 	}
 
@@ -99,7 +93,6 @@ class Numeric extends Component {
 }
 
 Numeric.STATE = {
-
 	/**
 	 * @default undefined
 	 * @instance
@@ -107,7 +100,9 @@ Numeric.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
-	_value: Config.oneOfType([Config.number(), Config.string()]).internal().valueFn('_internalValueFn'),
+	_value: Config.oneOfType([Config.number(), Config.string()])
+		.internal()
+		.valueFn('_internalValueFn'),
 
 	/**
 	 * @default 'integer'
@@ -223,17 +218,13 @@ Numeric.STATE = {
 	 * @type {object}
 	 */
 
-	symbols: Config.shapeOf(
-		{
-			decimalSymbol: Config.string(),
-			thousandsSeparator: Config.string()
-		}
-	).value(
-		{
-			decimalSymbol: '.',
-			thousandsSeparator: ','
-		}
-	),
+	symbols: Config.shapeOf({
+		decimalSymbol: Config.string(),
+		thousandsSeparator: Config.string()
+	}).value({
+		decimalSymbol: '.',
+		thousandsSeparator: ','
+	}),
 
 	/**
 	 * @default undefined

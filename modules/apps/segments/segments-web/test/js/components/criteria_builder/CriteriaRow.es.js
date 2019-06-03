@@ -1,7 +1,7 @@
 import CriteriaRow from 'components/criteria_builder/CriteriaRow.es';
 import React from 'react';
 import {cleanup, render} from 'react-testing-library';
-import {PROPERTY_TYPES, SUPPORTED_PROPERTY_TYPES} from 'utils/constants.es';
+import {PROPERTY_TYPES} from 'utils/constants.es';
 
 const connectDnd = jest.fn(el => el);
 

@@ -10,7 +10,7 @@ targetCompatibility = "1.6"
 
 dependencies {
 	compile group: "axis", name: "axis", optional, version: "1.4"
-	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.1.0"
 }
 
 patch {

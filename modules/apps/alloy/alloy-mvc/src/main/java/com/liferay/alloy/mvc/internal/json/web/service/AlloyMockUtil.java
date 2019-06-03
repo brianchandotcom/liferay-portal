@@ -73,6 +73,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionContext;
+import javax.servlet.http.HttpUpgradeHandler;
 import javax.servlet.http.Part;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
@@ -270,6 +271,11 @@ public class AlloyMockUtil {
 		}
 
 		@Override
+		public String changeSessionId() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
 		public AsyncContext getAsyncContext() {
 			throw new UnsupportedOperationException();
 		}
@@ -296,6 +302,11 @@ public class AlloyMockUtil {
 
 		@Override
 		public int getContentLength() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public long getContentLengthLong() {
 			throw new UnsupportedOperationException();
 		}
 
@@ -604,6 +615,11 @@ public class AlloyMockUtil {
 			throw new UnsupportedOperationException();
 		}
 
+		@Override
+		public <T extends HttpUpgradeHandler> T upgrade(Class<T> handlerClass) {
+			throw new UnsupportedOperationException();
+		}
+
 		protected Map<String, Object> attributeMap = new HashMap<>();
 
 	}
@@ -760,6 +776,11 @@ public class AlloyMockUtil {
 
 		@Override
 		public void setContentLength(int contentLength) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void setContentLengthLong(long contentLength) {
 			throw new UnsupportedOperationException();
 		}
 

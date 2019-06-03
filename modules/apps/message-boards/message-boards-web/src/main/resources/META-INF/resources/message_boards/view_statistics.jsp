@@ -58,7 +58,14 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 					<%= numberFormat.format(categoryDisplay.getAllCategoriesCount()) %>
 				</dd>
 				<dt>
-					<liferay-ui:message key="posts" />:
+					<c:choose>
+						<c:when test="<%= MBStatsUserLocalServiceUtil.getMessageCountByGroupId(scopeGroupId) == 1 %>">
+							<liferay-ui:message key="post" />:
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:message key="posts" />:
+						</c:otherwise>
+					</c:choose>
 				</dt>
 				<dd>
 					<%= numberFormat.format(MBStatsUserLocalServiceUtil.getMessageCountByGroupId(scopeGroupId)) %>

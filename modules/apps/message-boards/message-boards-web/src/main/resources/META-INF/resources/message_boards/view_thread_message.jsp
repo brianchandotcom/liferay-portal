@@ -113,7 +113,14 @@ if (message.isAnonymous()) {
 					</c:if>
 
 					<span class="h5 text-default">
-						<span><liferay-ui:message key="posts" />:</span> <%= posts %>
+						<c:choose>
+							<c:when test="<%= posts == 1 %>">
+								<span><liferay-ui:message key="post" />:</span> <%= posts %>
+							</c:when>
+							<c:otherwise>
+								<span><liferay-ui:message key="posts" />:</span> <%= posts %>
+							</c:otherwise>
+						</c:choose>
 					</span>
 
 					<c:if test="<%= !message.isAnonymous() %>">

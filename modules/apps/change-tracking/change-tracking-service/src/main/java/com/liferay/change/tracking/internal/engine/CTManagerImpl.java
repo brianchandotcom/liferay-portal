@@ -413,7 +413,8 @@ public class CTManagerImpl implements CTManager {
 
 	@Override
 	public int getRelatedOwnerCTEntriesCount(long ctEntryId) {
-		return _ctEntryLocalService.getRelatedOwnerCTEntriesCount(ctEntryId);
+		return _ctEntryLocalService.getRelatedOwnerCTEntriesCount(
+			ctEntryId, new QueryDefinition<>());
 	}
 
 	@Override

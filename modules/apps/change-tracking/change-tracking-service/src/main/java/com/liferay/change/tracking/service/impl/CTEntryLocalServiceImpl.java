@@ -190,13 +190,27 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 			ctCollectionId, queryDefinition);
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getRelatedOwnerCTEntries(long, QueryDefinition)}
+	 */
+	@Deprecated
 	@Override
 	public List<CTEntry> getRelatedOwnerCTEntries(long ctEntryId) {
-		return getRelatedOwnerCTEntries(
-			ctEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		QueryDefinition<CTEntry> queryDefinition = new QueryDefinition<>();
+
+		queryDefinition.setEnd(QueryUtil.ALL_POS);
+		queryDefinition.setStart(QueryUtil.ALL_POS);
+		queryDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+		return getRelatedOwnerCTEntries(ctEntryId, queryDefinition);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getRelatedOwnerCTEntries(long, QueryDefinition)}
+	 */
+	@Deprecated
 	@Override
 	public List<CTEntry> getRelatedOwnerCTEntries(
 		long ctEntryId, int start, int end,
@@ -209,7 +223,7 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		queryDefinition.setStart(start);
 		queryDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
 
-		return ctEntryFinder.findByRelatedCTEntries(ctEntryId, queryDefinition);
+		return getRelatedOwnerCTEntries(ctEntryId, queryDefinition);
 	}
 
 	@Override
@@ -218,7 +232,8 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		QueryDefinition<CTEntry> queryDefinition) {
 
 		Query query = _buildQuery(
-			companyId, ctCollectionId, ctEntryId, keywords);
+			companyId, ctCollectionId, ctEntryId, keywords,
+			queryDefinition.getStatus(), queryDefinition.isExcludeStatus());
 
 		SearchResponse searchResponse = _search(
 			companyId, query, queryDefinition);
@@ -227,13 +242,24 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<CTEntry> getRelatedOwnerCTEntries(
+		long ctEntryId, QueryDefinition<CTEntry> queryDefinition) {
+
+		return ctEntryFinder.findByRelatedCTEntries(ctEntryId, queryDefinition);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getRelatedOwnerCTEntriesCount(long, QueryDefinition)}
+	 */
+	@Deprecated
+	@Override
 	public int getRelatedOwnerCTEntriesCount(long ctEntryId) {
 		QueryDefinition<CTEntry> queryDefinition = new QueryDefinition<>();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
 
-		return ctEntryFinder.countByRelatedCTEntries(
-			ctEntryId, queryDefinition);
+		return getRelatedOwnerCTEntriesCount(ctEntryId, queryDefinition);
 	}
 
 	@Override
@@ -242,12 +268,21 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		QueryDefinition<CTEntry> queryDefinition) {
 
 		Query query = _buildQuery(
-			companyId, ctCollectionId, ctEntryId, keywords);
+			companyId, ctCollectionId, ctEntryId, keywords,
+			queryDefinition.getStatus(), queryDefinition.isExcludeStatus());
 
 		SearchResponse searchResponse = _search(
 			companyId, query, queryDefinition);
 
 		return searchResponse.getTotalHits();
+	}
+
+	@Override
+	public int getRelatedOwnerCTEntriesCount(
+		long ctEntryId, QueryDefinition<CTEntry> queryDefinition) {
+
+		return ctEntryFinder.countByRelatedCTEntries(
+			ctEntryId, queryDefinition);
 	}
 
 	@Override
@@ -409,7 +444,8 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	}
 
 	private Query _buildQuery(
-		long companyId, long ctCollectionId, long ctEntryId, String keywords) {
+		long companyId, long ctCollectionId, long ctEntryId, String keywords,
+		int status, boolean excludeStatus) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -420,8 +456,16 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		booleanQuery.addFilterQueryClauses(
 			_queries.term("affectedBy", ctEntryId));
 
-		booleanQuery.addFilterQueryClauses(
-			_queries.term(Field.STATUS, WorkflowConstants.STATUS_DRAFT));
+		if (WorkflowConstants.STATUS_ANY != status) {
+			if (excludeStatus) {
+				booleanQuery.addMustNotQueryClauses(
+					_queries.term(Field.STATUS, status));
+			}
+			else {
+				booleanQuery.addMustQueryClauses(
+					_queries.term(Field.STATUS, status));
+			}
+		}
 
 		if (Validator.isNotNull(keywords)) {
 			booleanQuery.addMustQueryClauses(

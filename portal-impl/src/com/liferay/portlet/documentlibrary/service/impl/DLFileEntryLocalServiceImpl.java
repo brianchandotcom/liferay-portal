@@ -178,8 +178,8 @@ public class DLFileEntryLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		folderId = dlFolderLocalService.getFolderId(
-			user.getCompanyId(), folderId);
+		folderId = DLFolderLocalServiceImpl.getFolderId(
+			dlFolderPersistence, user.getCompanyId(), folderId);
 
 		String name = String.valueOf(
 			counterLocalService.increment(DLFileEntry.class.getName()));
@@ -190,7 +190,8 @@ public class DLFileEntryLocalServiceImpl
 
 		if (fileEntryTypeId == -1) {
 			fileEntryTypeId =
-				dlFileEntryTypeLocalService.getDefaultFileEntryTypeId(folderId);
+				DLFileEntryTypeLocalServiceImpl.getDefaultFileEntryTypeId(
+					dlFolderPersistence, folderId);
 		}
 
 		validateFileEntryTypeId(
@@ -213,7 +214,7 @@ public class DLFileEntryLocalServiceImpl
 		DLFolder repositoryDLFolder = null;
 
 		if (repositoryId != groupId) {
-			Repository repository = repositoryLocalService.getRepository(
+			Repository repository = repositoryPersistence.findByPrimaryKey(
 				repositoryId);
 
 			repositoryDLFolder = dlFolderPersistence.findByPrimaryKey(
@@ -2418,8 +2419,8 @@ public class DLFileEntryLocalServiceImpl
 				_log.debug(ifete, ifete);
 			}
 
-			return dlFileEntryTypeLocalService.getDefaultFileEntryTypeId(
-				dlFileEntry.getFolderId());
+			return DLFileEntryTypeLocalServiceImpl.getDefaultFileEntryTypeId(
+				dlFolderPersistence, dlFileEntry.getFolderId());
 		}
 	}
 

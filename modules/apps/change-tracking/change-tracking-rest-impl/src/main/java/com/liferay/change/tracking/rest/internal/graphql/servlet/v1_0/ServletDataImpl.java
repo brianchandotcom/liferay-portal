@@ -16,6 +16,7 @@ package com.liferay.change.tracking.rest.internal.graphql.servlet.v1_0;
 
 import com.liferay.change.tracking.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.change.tracking.rest.internal.graphql.query.v1_0.Query;
+import com.liferay.change.tracking.rest.resource.v1_0.CollectionResource;
 import com.liferay.change.tracking.rest.resource.v1_0.SettingsResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -38,9 +39,13 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
+		Mutation.setCollectionResourceComponentServiceObjects(
+			_collectionResourceComponentServiceObjects);
 		Mutation.setSettingsResourceComponentServiceObjects(
 			_settingsResourceComponentServiceObjects);
 
+		Query.setCollectionResourceComponentServiceObjects(
+			_collectionResourceComponentServiceObjects);
 		Query.setSettingsResourceComponentServiceObjects(
 			_settingsResourceComponentServiceObjects);
 	}
@@ -59,6 +64,10 @@ public class ServletDataImpl implements ServletData {
 	public Query getQuery() {
 		return new Query();
 	}
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<CollectionResource>
+		_collectionResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SettingsResource>

@@ -15,19 +15,19 @@
 package com.liferay.change.tracking.rest.internal.resource.v1_0;
 
 import com.liferay.change.tracking.rest.dto.v1_0.Collection;
-import com.liferay.change.tracking.rest.dto.v1_0.Settings;
-import com.liferay.change.tracking.rest.dto.v1_0.SettingsUpdate;
-import com.liferay.change.tracking.rest.resource.v1_0.SettingsResource;
+import com.liferay.change.tracking.rest.dto.v1_0.CollectionUpdate;
+import com.liferay.change.tracking.rest.resource.v1_0.CollectionResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.util.Collections;
@@ -39,8 +39,9 @@ import javax.validation.constraints.NotNull;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
@@ -52,23 +53,28 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseSettingsResourceImpl implements SettingsResource {
+public abstract class BaseCollectionResourceImpl implements CollectionResource {
 
 	@Override
 	@GET
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "companyId"),
-			@Parameter(in = ParameterIn.QUERY, name = "userId")
+			@Parameter(in = ParameterIn.QUERY, name = "type"),
+			@Parameter(in = ParameterIn.QUERY, name = "userId"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
-	@Path("/settings")
-	@Produces({"application/json", "application/xml", "text/plain"})
-	@Tags(value = {@Tag(name = "Settings")})
-	public Page<Settings> getSettingsPage(
-			@NotNull @Parameter(hidden = true) @QueryParam("companyId") Long
-				companyId,
-			@Parameter(hidden = true) @QueryParam("userId") Long userId)
+	@Path("/collections")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {})
+	public Page<Collection> getCollectionsPage(
+			@Parameter(hidden = true) @QueryParam("companyId") Long companyId,
+			@Parameter(hidden = true) @QueryParam("type") String type,
+			@Parameter(hidden = true) @QueryParam("userId") Long userId,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -76,31 +82,51 @@ public abstract class BaseSettingsResourceImpl implements SettingsResource {
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PUT
+	@POST
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "companyId"),
 			@Parameter(in = ParameterIn.QUERY, name = "userId")
 		}
 	)
-	@Path("/settings")
-	@Produces({"application/json", "application/xml", "text/plain"})
-	@Tags(value = {@Tag(name = "Settings")})
-	public Settings putSettings(
+	@Path("/collections")
+	@Produces({"applcation/xml", "application/json", "application/xml"})
+	@Tags(value = {})
+	public Collection postCollection(
 			@NotNull @Parameter(hidden = true) @QueryParam("companyId") Long
 				companyId,
-			@Parameter(hidden = true) @QueryParam("userId") Long userId,
-			SettingsUpdate settingsUpdate)
+			@NotNull @Parameter(hidden = true) @QueryParam("userId") Long
+				userId,
+			CollectionUpdate collectionUpdate)
 		throws Exception {
 
-		return new Settings();
+		return new Collection();
+	}
+
+	@Override
+	@GET
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "collectionId")}
+	)
+	@Path("/collections/{collectionId}")
+	@Produces(
+		{"applcation/xml", "application/json", "application/xml", "text/plain"}
+	)
+	@Tags(value = {})
+	public Collection getCollection(
+			@NotNull @Parameter(hidden = true) @PathParam("collectionId") Long
+				collectionId)
+		throws Exception {
+
+		return new Collection();
 	}
 
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(Settings settings, Settings existingSettings) {
+	protected void preparePatch(
+		Collection collection, Collection existingCollection) {
 	}
 
 	protected <T, R> List<R> transform(

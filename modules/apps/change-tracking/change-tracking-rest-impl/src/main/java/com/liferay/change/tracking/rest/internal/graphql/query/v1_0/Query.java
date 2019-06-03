@@ -14,19 +14,21 @@
 
 package com.liferay.change.tracking.rest.internal.graphql.query.v1_0;
 
+import com.liferay.change.tracking.rest.dto.v1_0.Collection;
 import com.liferay.change.tracking.rest.dto.v1_0.Settings;
+import com.liferay.change.tracking.rest.resource.v1_0.CollectionResource;
 import com.liferay.change.tracking.rest.resource.v1_0.SettingsResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
 import graphql.annotations.annotationTypes.GraphQLName;
-
-import java.util.Collection;
 
 import javax.annotation.Generated;
 
@@ -39,6 +41,14 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Query {
 
+	public static void setCollectionResourceComponentServiceObjects(
+		ComponentServiceObjects<CollectionResource>
+			collectionResourceComponentServiceObjects) {
+
+		_collectionResourceComponentServiceObjects =
+			collectionResourceComponentServiceObjects;
+	}
+
 	public static void setSettingsResourceComponentServiceObjects(
 		ComponentServiceObjects<SettingsResource>
 			settingsResourceComponentServiceObjects) {
@@ -49,7 +59,42 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Settings> getSettingsPage(
+	public java.util.Collection<Collection> getCollectionsPage(
+			@GraphQLName("companyId") Long companyId,
+			@GraphQLName("type") String type,
+			@GraphQLName("userId") Long userId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_collectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			collectionResource -> {
+				Page paginationPage = collectionResource.getCollectionsPage(
+					companyId, type, userId, Pagination.of(pageSize, page),
+					sorts);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection getCollection(
+			@GraphQLName("collectionId") Long collectionId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_collectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			collectionResource -> collectionResource.getCollection(
+				collectionId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public java.util.Collection<Settings> getSettingsPage(
 			@GraphQLName("companyId") Long companyId,
 			@GraphQLName("userId") Long userId)
 		throws Exception {
@@ -84,6 +129,14 @@ public class Query {
 		}
 	}
 
+	private void _populateResourceContext(CollectionResource collectionResource)
+		throws Exception {
+
+		collectionResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private void _populateResourceContext(SettingsResource settingsResource)
 		throws Exception {
 
@@ -92,6 +145,8 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	private static ComponentServiceObjects<CollectionResource>
+		_collectionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SettingsResource>
 		_settingsResourceComponentServiceObjects;
 

@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.change.tracking.rest.client.dto.v1_0.Collection;
 import com.liferay.change.tracking.rest.client.dto.v1_0.Settings;
 import com.liferay.change.tracking.rest.client.http.HttpInvoker;
 import com.liferay.change.tracking.rest.client.pagination.Page;
@@ -49,7 +50,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -340,7 +340,7 @@ public abstract class BaseSettingsResourceTestCase {
 	protected void assertValid(Page<Settings> page) {
 		boolean valid = false;
 
-		Collection<Settings> settingses = page.getItems();
+		java.util.Collection<Settings> settingses = page.getItems();
 
 		int size = settingses.size();
 
@@ -466,7 +466,9 @@ public abstract class BaseSettingsResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_settingsResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
@@ -487,7 +489,7 @@ public abstract class BaseSettingsResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 

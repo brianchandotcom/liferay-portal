@@ -1893,11 +1893,6 @@ rerun your task.
 									dir="test-classes/${current.test.dir}"
 									includes="@{test.includes}"
 								>
-									<exclude name="**/DLAppServiceHttpTest.class" />
-									<exclude name="**/DLAppServiceJsonTest.class" />
-									<exclude name="**/DLAppServiceSoapTest.class" />
-									<exclude name="**/UserServiceHttpTest.class" />
-									<exclude name="**/UserServiceSoapTest.class" />
 									<exclude name="${test.excludes}" />
 									<filename negate="true" regex="${junit.test.excludes}" />
 								</fileset>

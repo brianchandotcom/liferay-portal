@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.announcements.service;
+package com.liferay.announcements.service.test;
 
 import com.liferay.announcements.kernel.exception.EntryDisplayDateException;
 import com.liferay.announcements.kernel.exception.EntryExpirationDateException;
@@ -20,6 +20,7 @@ import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.kernel.model.AnnouncementsFlagConstants;
 import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalServiceUtil;
 import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalServiceUtil;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -58,12 +59,14 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Christopher Kian
  * @author Hugo Huijser
  * @author Roberto Díaz
  */
+@RunWith(Arquillian.class)
 public class AnnouncementsEntryLocalServiceTest {
 
 	@ClassRule

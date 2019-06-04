@@ -14,16 +14,27 @@
 
 package com.liferay.segments.asah.connector.internal.cache;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.segments.asah.connector.internal.configuration.SegmentsAsahConfiguration;
 
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author David Arques
  */
-@Component(immediate = true, service = SegmentsAsahCache.class)
+@Component(
+	configurationPid = "com.liferay.segments.asah.connector.internal.configuration.SegmentsAsahConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	service = SegmentsAsahCache.class
+)
 public class SegmentsAsahCache {
 
 	public long[] getSegmentsEntryIds(String userId) {
@@ -32,8 +43,18 @@ public class SegmentsAsahCache {
 
 	public void putSegmentsEntryIds(String userId, long[] segmentsEntryIds) {
 		_portalCache.put(
-			_generateCacheKey(userId), segmentsEntryIds,
-			_TIME_TO_LIVE_IN_SECONDS);
+			_generateCacheKey(userId), segmentsEntryIds, _timeToLiveInSeconds);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		SegmentsAsahConfiguration segmentsAsahConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SegmentsAsahConfiguration.class, properties);
+
+		_timeToLiveInSeconds =
+			segmentsAsahConfiguration.anonymousUserSegmentsLifespan();
 	}
 
 	@Reference(unbind = "-")
@@ -48,9 +69,7 @@ public class SegmentsAsahCache {
 
 	private static final String _CACHE_PREFIX = "segments-";
 
-	private static final int _TIME_TO_LIVE_IN_SECONDS =
-		PortalCache.DEFAULT_TIME_TO_LIVE;
-
 	private PortalCache<String, long[]> _portalCache;
+	private int _timeToLiveInSeconds = PortalCache.DEFAULT_TIME_TO_LIVE;
 
 }

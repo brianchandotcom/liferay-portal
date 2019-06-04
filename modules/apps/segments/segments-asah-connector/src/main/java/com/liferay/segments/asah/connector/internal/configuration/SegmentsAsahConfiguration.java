@@ -34,4 +34,10 @@ public interface SegmentsAsahConfiguration {
 	@Meta.AD(deflt = "15", name = "check-interval", required = false)
 	public int checkInterval();
 
+	@Meta.AD(
+		deflt = "86400", name = "anonymous-user-segments-lifespan",
+		required = false
+	)
+	public int anonymousUserSegmentsLifespan();
+
 }

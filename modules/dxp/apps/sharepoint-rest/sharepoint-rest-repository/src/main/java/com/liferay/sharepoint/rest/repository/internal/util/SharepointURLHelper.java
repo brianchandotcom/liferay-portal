@@ -122,7 +122,7 @@ public class SharepointURLHelper {
 		ExtRepositoryFileEntry extRepositoryFileEntry, String versionId) {
 
 		return String.format(
-			"%s/_api/web/getfilebyserverrelativeurl('%s')/versions(%s)",
+			"%s/_api/web/GetFileByServerRelativeUrl('%s')/Versions(%s)",
 			_siteAbsoluteURL, extRepositoryFileEntry.getExtRepositoryModelKey(),
 			versionId);
 	}

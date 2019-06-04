@@ -25,8 +25,8 @@ module.exports = function(config) {
 		},
 		{
 			included: true,
-			pattern: 'src/test/testJS/*_util.js'
+			pattern: 'test/*_util.js'
 		},
-		'src/test/testJS/*_test.js'
+		'test/*_test.js'
 	);
 };

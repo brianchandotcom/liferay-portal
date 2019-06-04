@@ -278,6 +278,8 @@ AUI.add(
 					_renderContentTabs: function() {
 						var instance = this;
 
+						instance.closeEditProperties();
+
 						if (!instance.contentTabView) {
 							var contentTabView = new A.TabView(instance.get('contentTabView'));
 

@@ -17,6 +17,7 @@ package com.liferay.segments.asah.connector.internal.client;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NestableRuntimeException;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.asah.connector.internal.client.data.binding.IndividualJSONObjectMapper;
 import com.liferay.segments.asah.connector.internal.client.data.binding.IndividualSegmentJSONObjectMapper;
@@ -64,6 +65,48 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 	}
 
 	@Override
+	public Individual getIndividual(String individualPK) {
+		try {
+			FilterBuilder filterBuilder = new FilterBuilder();
+
+			filterBuilder.addFilter(
+				"dataSourceId", FilterConstants.COMPARISON_OPERATOR_EQUALS,
+				getDataSourceId());
+			filterBuilder.addFilter(
+				"dataSourceIndividualPKs/individualPKs",
+				FilterConstants.COMPARISON_OPERATOR_EQUALS, individualPK);
+
+			MultivaluedHashMap<String, Object> uriVariables =
+				new MultivaluedHashMap<>();
+
+			uriVariables.putSingle("includeAnonymousUser", true);
+
+			String response = _jsonWebServiceClient.doGet(
+				_PATH_INDIVIDUALS,
+				_getParameters(
+					filterBuilder,
+					FilterConstants.FIELD_NAME_CONTEXT_INDIVIDUAL, 1, 1, null,
+					uriVariables),
+				_headers);
+
+			Results<Individual> individualResults =
+				_individualJSONObjectMapper.mapToResults(response);
+
+			List<Individual> items = individualResults.getItems();
+
+			if (!ListUtil.isEmpty(items)) {
+				return items.get(0);
+			}
+
+			return null;
+		}
+		catch (IOException ioe) {
+			throw new NestableRuntimeException(
+				_ERROR_MSG + ioe.getMessage(), ioe);
+		}
+	}
+
+	@Override
 	public Results<Individual> getIndividualResults(
 		String individualSegmentId, int cur, int delta,
 		List<OrderByField> orderByFields) {
@@ -83,7 +126,7 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		}
 		catch (IOException ioe) {
 			throw new NestableRuntimeException(
-				"Unable to handle JSON response: " + ioe.getMessage(), ioe);
+				_ERROR_MSG + ioe.getMessage(), ioe);
 		}
 	}
 
@@ -113,7 +156,7 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		}
 		catch (IOException ioe) {
 			throw new NestableRuntimeException(
-				"Unable to handle JSON response: " + ioe.getMessage(), ioe);
+				_ERROR_MSG + ioe.getMessage(), ioe);
 		}
 	}
 
@@ -129,12 +172,31 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		return uriVariables;
 	}
 
+	private MultivaluedMap<String, Object> _getParameters(
+		FilterBuilder filterBuilder, String fieldNameContext, int cur,
+		int delta, List<OrderByField> orderByFields,
+		MultivaluedMap<String, Object> initialUriVariables) {
+
+		MultivaluedMap<String, Object> uriVariables = _getUriVariables(
+			cur, delta, orderByFields, fieldNameContext, initialUriVariables);
+
+		uriVariables.putSingle("filter", filterBuilder.build());
+
+		return uriVariables;
+	}
+
 	private MultivaluedMap<String, Object> _getUriVariables(
 		int cur, int delta, List<OrderByField> orderByFields,
 		String fieldNameContext) {
 
-		MultivaluedMap<String, Object> uriVariables =
-			new MultivaluedHashMap<>();
+		return _getUriVariables(
+			cur, delta, orderByFields, fieldNameContext,
+			new MultivaluedHashMap<>());
+	}
+
+	private MultivaluedMap<String, Object> _getUriVariables(
+		int cur, int delta, List<OrderByField> orderByFields,
+		String fieldNameContext, MultivaluedMap<String, Object> uriVariables) {
 
 		uriVariables.putSingle("page", cur - 1);
 		uriVariables.putSingle("size", delta);
@@ -161,11 +223,15 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		return uriVariables;
 	}
 
+	private static final String _ERROR_MSG = "Unable to handle JSON response: ";
+
 	private static final String _PATH_INDIVIDUAL_SEGMENTS =
 		"api/1.0/individual-segments";
 
 	private static final String _PATH_INDIVIDUAL_SEGMENTS_INDIVIDUALS =
 		_PATH_INDIVIDUAL_SEGMENTS + "/{id}/individuals";
+
+	private static final String _PATH_INDIVIDUALS = "api/1.0/individuals";
 
 	private static final IndividualJSONObjectMapper
 		_individualJSONObjectMapper = new IndividualJSONObjectMapper();

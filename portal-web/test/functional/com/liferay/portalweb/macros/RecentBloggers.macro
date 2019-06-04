@@ -7,9 +7,16 @@ definition {
 			locator1 = "Blogs#RECENT_BLOGGER_USER_NAME",
 			value1 = "${entryAuthor}");
 
-		AssertTextEquals(
-			locator1 = "Blogs#RECENT_BLOGGER_POSTS",
-			value1 = "Posts: ${postCount}");
+		if ("${postCount}" == "1") {
+			AssertTextEquals(
+				locator1 = "Blogs#RECENT_BLOGGER_POSTS",
+				value1 = "Post: ${postCount}");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "Blogs#RECENT_BLOGGER_POSTS",
+				value1 = "Posts: ${postCount}");
+		}
 	}
 
 }

@@ -35,7 +35,6 @@ import java.util.Dictionary;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.function.Predicate;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -180,9 +179,8 @@ public class LanguageExtension {
 
 			ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>
 				serviceTracker = new PredicateServiceTracker(
-					_bundleContext, filter,
-					new ResourceBundleLoaderPredicate(
-						bundleSymbolicName, baseName, limit));
+					_bundleContext, filter, bundleSymbolicName, baseName,
+					limit);
 
 			serviceTracker.open();
 
@@ -287,18 +285,20 @@ public class LanguageExtension {
 
 		public PredicateServiceTracker(
 			BundleContext bundleContext, Filter filter,
-			Predicate<ServiceReference<ResourceBundleLoader>> predicate) {
+			String bundleSymbolicName, String baseName, int limit) {
 
 			super(bundleContext, filter, null);
 
-			_predicate = predicate;
+			_bundleSymbolicName = bundleSymbolicName;
+			_baseName = baseName;
+			_limit = limit;
 		}
 
 		@Override
 		public ResourceBundleLoader addingService(
 			ServiceReference<ResourceBundleLoader> serviceReference) {
 
-			if (_predicate.test(serviceReference)) {
+			if (_test(serviceReference)) {
 				return context.getService(serviceReference);
 			}
 
@@ -310,7 +310,7 @@ public class LanguageExtension {
 			ServiceReference<ResourceBundleLoader> serviceReference,
 			ResourceBundleLoader resourceBundleLoader) {
 
-			if (!_predicate.test(serviceReference)) {
+			if (!_test(serviceReference)) {
 				context.ungetService(serviceReference);
 
 				remove(serviceReference);
@@ -319,24 +319,7 @@ public class LanguageExtension {
 			super.modifiedService(serviceReference, resourceBundleLoader);
 		}
 
-		private final Predicate<ServiceReference<ResourceBundleLoader>>
-			_predicate;
-
-	}
-
-	private static class ResourceBundleLoaderPredicate
-		implements Predicate<ServiceReference<ResourceBundleLoader>> {
-
-		public ResourceBundleLoaderPredicate(
-			String bundleSymbolicName, String baseName, int limit) {
-
-			_bundleSymbolicName = bundleSymbolicName;
-			_baseName = baseName;
-			_limit = limit;
-		}
-
-		@Override
-		public boolean test(
+		private boolean _test(
 			ServiceReference<ResourceBundleLoader> serviceReference) {
 
 			String bundleSymbolicName = null;
@@ -380,8 +363,8 @@ public class LanguageExtension {
 			return true;
 		}
 
-		private final String _baseName;
 		private final String _bundleSymbolicName;
+		private final String _baseName;
 		private final int _limit;
 
 	}

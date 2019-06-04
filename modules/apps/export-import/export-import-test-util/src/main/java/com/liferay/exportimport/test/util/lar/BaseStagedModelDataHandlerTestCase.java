@@ -64,9 +64,9 @@ import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
-import com.liferay.portlet.ratings.util.test.RatingsTestUtil;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil;
+import com.liferay.ratings.test.util.RatingsTestUtil;
 
 import java.io.Serializable;
 

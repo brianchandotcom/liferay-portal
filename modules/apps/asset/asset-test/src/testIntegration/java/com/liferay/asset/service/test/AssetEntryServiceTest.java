@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.ratings.util.test.RatingsTestUtil;
+import com.liferay.ratings.test.util.RatingsTestUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;

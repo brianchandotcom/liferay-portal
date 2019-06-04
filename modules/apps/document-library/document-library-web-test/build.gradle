@@ -6,5 +6,6 @@ dependencies {
 	testIntegrationCompile project(":apps:document-library:document-library-api")
 	testIntegrationCompile project(":apps:export-import:export-import-api")
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")
+	testIntegrationCompile project(":apps:ratings:ratings-test-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.WorkflowTaskDueDateException;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
 import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
@@ -253,6 +254,12 @@ public class DefaultTaskManagerImpl
 			}
 
 			if (dueDate != null) {
+				Date createDate = kaleoTaskInstanceToken.getCreateDate();
+
+				if (createDate.after(dueDate)) {
+					throw new WorkflowTaskDueDateException();
+				}
+
 				kaleoTaskInstanceToken =
 					kaleoTaskInstanceTokenLocalService.updateDueDate(
 						workflowTaskInstanceId, dueDate, serviceContext);

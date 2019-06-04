@@ -62,8 +62,11 @@ public class OpenAPIUtil {
 	}
 
 	public static String formatSingular(String s) {
-		if (s.endsWith("ses")) {
-			s = s.substring(0, s.length() - 3) + "s";
+		if (s.endsWith("ases")) {
+			s = s.substring(0, s.length() - 1);
+		}
+		else if (s.endsWith("ses")) {
+			s = s.substring(0, s.length() - 2);
 		}
 		else if (s.endsWith("ies")) {
 			s = s.substring(0, s.length() - 3) + "y";

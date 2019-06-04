@@ -158,37 +158,9 @@ public class LanguageExtension {
 		String aggregate, String bundleSymbolicName, String baseName,
 		int limit) {
 
-		List<String> filterStrings = StringUtil.split(aggregate);
-
-		List<ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>>
-			serviceTrackers = new ArrayList<>(filterStrings.size());
-
-		for (String filterString : filterStrings) {
-			Filter filter = null;
-
-			filterString = StringBundler.concat(
-				"(&(objectClass=", ResourceBundleLoader.class.getName(), ")",
-				filterString, ")");
-
-			try {
-				filter = _bundleContext.createFilter(filterString);
-			}
-			catch (InvalidSyntaxException ise) {
-				throw new IllegalArgumentException(ise);
-			}
-
-			ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>
-				serviceTracker = new PredicateServiceTracker(
-					_bundleContext, filter, bundleSymbolicName, baseName,
-					limit);
-
-			serviceTracker.open();
-
-			serviceTrackers.add(serviceTracker);
-		}
-
 		ServiceTrackerResourceBundleLoader serviceTrackerResourceBundleLoader =
-			new ServiceTrackerResourceBundleLoader(serviceTrackers);
+			new ServiceTrackerResourceBundleLoader(
+				_bundleContext, aggregate, bundleSymbolicName, baseName, limit);
 
 		_serviceTrackerResourceBundleLoaders.add(
 			serviceTrackerResourceBundleLoader);
@@ -230,10 +202,36 @@ public class LanguageExtension {
 		implements ResourceBundleLoader {
 
 		public ServiceTrackerResourceBundleLoader(
-			List<ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>>
-				serviceTrackers) {
+			BundleContext bundleContext, String aggregate,
+			String bundleSymbolicName, String baseName, int limit) {
 
-			_serviceTrackers = serviceTrackers;
+			List<String> filterStrings = StringUtil.split(aggregate);
+
+			_serviceTrackers = new ArrayList<>(filterStrings.size());
+
+			for (String filterString : filterStrings) {
+				Filter filter = null;
+
+				filterString = StringBundler.concat(
+					"(&(objectClass=", ResourceBundleLoader.class.getName(),
+					")", filterString, ")");
+
+				try {
+					filter = bundleContext.createFilter(filterString);
+				}
+				catch (InvalidSyntaxException ise) {
+					throw new IllegalArgumentException(ise);
+				}
+
+				ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>
+					serviceTracker = new PredicateServiceTracker(
+						bundleContext, filter, bundleSymbolicName, baseName,
+						limit);
+
+				serviceTracker.open();
+
+				_serviceTrackers.add(serviceTracker);
+			}
 		}
 
 		public void close() {

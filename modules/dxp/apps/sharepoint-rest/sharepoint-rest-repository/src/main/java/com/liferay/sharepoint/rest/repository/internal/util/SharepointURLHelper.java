@@ -36,7 +36,7 @@ public class SharepointURLHelper {
 	public String getAddFileURL(String extRepositoryFolderKey, String name) {
 		return String.format(
 			"%s/_api/web/GetFolderByServerRelativeUrl('%s')/Files/Add" +
-				"(overwrite=true,url='%s')",
+				"(overwrite=false,url='%s')",
 			_siteAbsoluteURL, extRepositoryFolderKey, name);
 	}
 

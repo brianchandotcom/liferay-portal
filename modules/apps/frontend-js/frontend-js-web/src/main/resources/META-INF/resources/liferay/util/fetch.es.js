@@ -12,11 +12,8 @@ const DEFAULT_INIT = {
  */
 
 export default function defaultFetch(resource, init = {}) {
-	return fetch(
-		resource,
-		{
-			...DEFAULT_INIT,
-			...init
-		}
-	);
+	return fetch(resource, {
+		...DEFAULT_INIT,
+		...init
+	});
 }

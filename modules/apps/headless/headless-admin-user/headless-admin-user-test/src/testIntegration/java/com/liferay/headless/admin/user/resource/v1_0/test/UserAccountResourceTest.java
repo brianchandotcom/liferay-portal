@@ -21,11 +21,14 @@ import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.UserAccountResource;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -65,15 +68,33 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		UserLocalServiceUtil.deleteGroupUser(
 			testGroup.getGroupId(), _testUser.getUserId());
 
-		Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			_testUser.getModelClassName());
+		// See LPS-94496 for why we have to delete all users except for the
+		// test user
 
 		List<User> users = UserLocalServiceUtil.getUsers(
 			PortalUtil.getDefaultCompanyId(), false,
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		indexer.reindex(users);
+		for (User user : users) {
+			if (user.getUserId() != _testUser.getUserId()) {
+				UserLocalServiceUtil.deleteUser(user);
+			}
+		}
+
+		Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			_testUser.getModelClassName());
+
+		List<Company> companies = CompanyLocalServiceUtil.getCompanies();
+
+		for (Company company : companies) {
+			IndexWriterHelperUtil.deleteEntityDocuments(
+				indexer.getSearchEngineId(), company.getCompanyId(),
+				_testUser.getModelClassName(), true);
+
+			indexer.reindex(
+				new String[] {String.valueOf(company.getCompanyId())});
+		}
 	}
 
 	@Override
@@ -103,21 +124,6 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	@Override
 	@Test
 	public void testGetUserAccountsPage() throws Exception {
-
-		// See LPS-94496 for why we have to delete all users except for the
-		// test user
-
-		List<User> users = UserLocalServiceUtil.getUsers(
-			PortalUtil.getDefaultCompanyId(), false,
-			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-
-		for (User user : users) {
-			if (user.getUserId() != _testUser.getUserId()) {
-				UserLocalServiceUtil.deleteUser(user);
-			}
-		}
-
 		UserAccount userAccount1 = testGetUserAccountsPage_addUserAccount(
 			randomUserAccount());
 		UserAccount userAccount2 = testGetUserAccountsPage_addUserAccount(

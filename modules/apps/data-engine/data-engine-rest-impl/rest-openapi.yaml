@@ -986,14 +986,14 @@ paths:
             operationId: getSiteDataDefinition
             parameters:
                 - in: path
-                  name: dataDefinitionKey
-                  schema:
-                      type: string
-                - in: path
                   name: siteId
                   schema:
                       format: int64
                       type: integer
+                - in: path
+                  name: dataDefinitionKey
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -1076,14 +1076,14 @@ paths:
             operationId: getSiteDataLayout
             parameters:
                 - in: path
-                  name: dataLayoutKey
-                  schema:
-                      type: string
-                - in: path
                   name: siteId
                   schema:
                       format: int64
                       type: integer
+                - in: path
+                  name: dataLayoutKey
+                  schema:
+                      type: string
             responses:
                 200:
                     content:

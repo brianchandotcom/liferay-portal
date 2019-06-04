@@ -14,10 +14,17 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.validation;
 
+import java.util.Collections;
+import java.util.List;
+
 import javax.validation.Validation;
+import javax.validation.ValidationProviderResolver;
 import javax.validation.Validator;
+import javax.validation.spi.ValidationProvider;
 
 import org.hibernate.validator.HibernateValidator;
+import org.hibernate.validator.HibernateValidatorConfiguration;
+import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;
 
 /**
  * @author Javier Gamarra
@@ -25,18 +32,32 @@ import org.hibernate.validator.HibernateValidator;
 public class ValidatorFactory {
 
 	public static Validator getValidator() {
-		return _validatorFactory.getValidator();
+		HibernateValidatorConfiguration hibernateValidatorConfiguration =
+			(HibernateValidatorConfiguration)Validation.byDefaultProvider(
+			).providerResolver(
+				new OSGiServiceDiscoverer()
+			).configure();
+
+		hibernateValidatorConfiguration.
+			allowOverridingMethodAlterParameterConstraint(true);
+
+		hibernateValidatorConfiguration.messageInterpolator(
+			new ParameterMessageInterpolator());
+
+		javax.validation.ValidatorFactory validatorFactory =
+			hibernateValidatorConfiguration.buildValidatorFactory();
+
+		return validatorFactory.getValidator();
 	}
 
-	private static final javax.validation.ValidatorFactory _validatorFactory;
+	private static class OSGiServiceDiscoverer
+		implements ValidationProviderResolver {
 
-	static {
-		_validatorFactory = Validation.byProvider(
-			HibernateValidator.class
-		).configure(
-		).allowOverridingMethodAlterParameterConstraint(
-			true
-		).buildValidatorFactory();
+		@Override
+		public List<ValidationProvider<?>> getValidationProviders() {
+			return Collections.singletonList(new HibernateValidator());
+		}
+
 	}
 
 }

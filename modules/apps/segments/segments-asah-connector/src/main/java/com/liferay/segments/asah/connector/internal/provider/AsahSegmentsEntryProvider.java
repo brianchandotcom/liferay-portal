@@ -90,7 +90,8 @@ public class AsahSegmentsEntryProvider implements SegmentsEntryProvider {
 			return new long[0];
 		}
 
-		String userId = GetterUtil.getString(context.get(Context.USER_ID));
+		String userId = GetterUtil.getString(
+			context.get(Context.AC_CLIENT_USER_ID));
 
 		if (Validator.isNull(userId)) {
 			return new long[0];

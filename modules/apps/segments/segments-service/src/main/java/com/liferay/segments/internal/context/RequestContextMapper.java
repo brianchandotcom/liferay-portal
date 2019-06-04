@@ -76,6 +76,8 @@ public class RequestContextMapper {
 	public Context map(HttpServletRequest httpServletRequest) {
 		Context context = new Context();
 
+		context.put(Context.AC_CLIENT_USER_ID, _getUserId(httpServletRequest));
+
 		context.put(
 			Context.BROWSER, _browserSniffer.getBrowserId(httpServletRequest));
 		context.put(Context.COOKIES, _getCookies(httpServletRequest));
@@ -142,8 +144,6 @@ public class RequestContextMapper {
 
 		context.put(Context.USER_AGENT, userAgent);
 
-		context.put(Context.USER_ID, _getUserId(httpServletRequest));
-
 		for (RequestContextContributor requestContextContributor :
 				_requestContextContributorServiceTrackerMap.values()) {
 
@@ -202,7 +202,8 @@ public class RequestContextMapper {
 		return Stream.of(
 			cookies
 		).filter(
-			cookie -> Objects.equals(cookie.getName(), Context.USER_ID)
+			cookie -> Objects.equals(
+				cookie.getName(), Context.AC_CLIENT_USER_ID)
 		).map(
 			Cookie::getValue
 		).findFirst(

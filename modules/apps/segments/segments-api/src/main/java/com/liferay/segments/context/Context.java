@@ -30,6 +30,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public class Context {
 
+	public static final String AC_CLIENT_USER_ID = "ac_client_user_id";
+
 	public static final String BROWSER = "browser";
 
 	public static final String COOKIES = "cookies";
@@ -57,8 +59,6 @@ public class Context {
 	public static final String URL = "url";
 
 	public static final String USER_AGENT = "userAgent";
-
-	public static final String USER_ID = "userId";
 
 	public Serializable get(String key) {
 		return _map.get(key);

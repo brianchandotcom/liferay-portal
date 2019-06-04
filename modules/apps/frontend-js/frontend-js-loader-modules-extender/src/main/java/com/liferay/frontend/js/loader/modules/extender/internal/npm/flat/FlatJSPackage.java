@@ -59,8 +59,6 @@ public class FlatJSPackage implements JSPackage {
 		_version = version;
 		_mainModuleName = mainModuleName;
 
-		_resolvedId = name + StringPool.AT + version;
-
 		if (root) {
 			_basePath = "META-INF/resources/";
 		}
@@ -112,7 +110,8 @@ public class FlatJSPackage implements JSPackage {
 	@Override
 	public String getId() {
 		return StringBundler.concat(
-			_flatJSBundle.getId(), StringPool.SLASH, _resolvedId);
+			_flatJSBundle.getId(), StringPool.SLASH, _name, StringPool.AT,
+			_version);
 	}
 
 	@Override
@@ -152,7 +151,7 @@ public class FlatJSPackage implements JSPackage {
 
 	@Override
 	public String getResolvedId() {
-		return _resolvedId;
+		return StringBundler.concat(_name, StringPool.AT, _version);
 	}
 
 	@Override
@@ -180,7 +179,6 @@ public class FlatJSPackage implements JSPackage {
 		new HashMap<>();
 	private final String _mainModuleName;
 	private final String _name;
-	private final String _resolvedId;
 	private final String _version;
 
 }

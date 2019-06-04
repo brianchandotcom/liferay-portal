@@ -2038,6 +2038,13 @@ org.apache.level=WARNING]]>
 		<replace
 			file="${app.server.tomcat.dir}/conf/server.xml"
 		>
+			<replacetoken><![CDATA[<Connector port="8009" protocol="AJP/1.3" redirectPort="8443" URIEncoding="UTF-8" />]]></replacetoken>
+			<replacevalue><![CDATA[<!-- <Connector port="8009" protocol="AJP/1.3" redirectPort="8443" URIEncoding="UTF-8" /> -->]]></replacevalue>
+		</replace>
+
+		<replace
+			file="${app.server.tomcat.dir}/conf/server.xml"
+		>
 			<replacetoken><![CDATA[<Valve className="org.apache.catalina.valves.AccessLogValve"]]></replacetoken>
 			<replacevalue><![CDATA[<!-- <Valve className="org.apache.catalina.valves.AccessLogValve"]]></replacevalue>
 		</replace>

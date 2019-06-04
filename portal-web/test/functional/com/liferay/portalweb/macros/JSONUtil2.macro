@@ -78,6 +78,34 @@ definition {
 		return "${JSON}";
 	}
 
+	@summary = "Helper function to convert a localized list into JSON"
+	macro _convertLocalizedListToMap {
+		// Create list using '${listMap'
+
+		var localizedMap = "{";
+
+		for (var i : list "${listMap}") {
+			var locale = StringUtil.extractFirst("${i}", ":");
+			var translated = StringUtil.extractLast("${i}", ":");
+
+			var localizedMap = '''${localizedMap}"${locale}":"${translated}",''';
+		}
+
+		// Replace last comma with }
+
+		var localizedMap = RegexUtil.replace("${localizedMap}", "(.*)(?=,)", "1");
+		var localizedMap = "${localizedMap}}";
+
+		return "${localizedMap}";
+	}
+
+	@summary = "checks if either A or B is set, but not both"
+	macro _exclusiveOrCheck {
+		if (((isSet(A)) && (isSet(B))) || ((!(isSet(B))) && (!(isSet(A))))) {
+			fail("${failMessage}");
+		}
+	}
+
 	macro _getScopeGroupId {
 		var javaScript = '''
 		var groupId = Liferay.ThemeDisplay.getScopeGroupId();

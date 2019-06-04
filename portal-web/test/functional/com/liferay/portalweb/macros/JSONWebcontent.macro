@@ -57,10 +57,9 @@ definition {
 		}
 
 		if (isSet(titleMap)) {
-			var titleMap = JSONWebcontent._convertLocalizedListToMap(listMap = "${titleMap}");
+			var titleMap = JSONUtil2._convertLocalizedListToMap(listMap = "${titleMap}");
 		}
 		else {
-
 			var titleMap = '''{"en_US":"${title}"}''';
 		}
 
@@ -94,40 +93,12 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
-	@summary = "Helper function to convert a localized list into JSON"
-	macro _convertLocalizedListToMap {
-		// Create list using '${listMap'
-
-		var localizedMap = "{";
-
-		for (var i : list "${listMap}") {
-			var locale = StringUtil.extractFirst("${i}", ":");
-			var translated = StringUtil.extractLast("${i}", ":");
-
-			var localizedMap = '''${localizedMap}"${locale}":"${translated}",''';
-		}
-
-		// Replace last comma with }
-
-		var localizedMap = RegexUtil.replace("${localizedMap}", "(.*)(?=,)", "1");
-		var localizedMap = "${localizedMap}}";
-
-		return "${localizedMap}";
-	}
-
 	@summary = "Helper function to help input content html info"
 	macro _convertToXML {
 
 		var contentXML = '''<root available-locales="en_US" default-locale="en_US"> <dynamic-element name="content" type="text_area" index-type="text"> <dynamic-content language-id="en_US">${content}</dynamic-content> </dynamic-element> </root> ''';
 
 		return "${contentXML}";
-	}
-
-	@summary = "checks if either A or B is set, but not both"
-	macro _exclusiveOrCheck {
-		if (((isSet(A)) && (isSet(B))) || ((!(isSet(B))) && (!(isSet(A))))) {
-			fail("${failMessage}");
-		}
 	}
 
 	@summary = "Helper function to help input localized content html info"
@@ -163,12 +134,12 @@ definition {
 
 	@summary = "Add a localized WC Article via JSON using the Basic Web Content Structure with Title: '${title}' or '${titleMap}', Content: '${content}' or '${contentMap}', and Site Name: ${groupName}. The mapped inputs should be inputted in a format the same as 'en_US:Title,es_ES:Titulo'"
 	macro addBasicWebContentLocalized {
-		JSONWebcontent._exclusiveOrCheck(
+		JSONUtil2._exclusiveOrCheck(
 			A = "${title}",
 			B = "${titleMap}",
 			failMessage = "Please only set &apos;title&apos; or only &apos;titleMap&apos; but not both or none.");
 
-		JSONWebcontent._exclusiveOrCheck(
+		JSONUtil2._exclusiveOrCheck(
 			A = "${content}",
 			B = "${contentMap}",
 			failMessage = "Please only set &apos;content&apos; or only &apos;contentMap&apos; but not both or none.");

@@ -55,6 +55,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.data.CalendarOutputter;
@@ -68,6 +69,9 @@ import net.fortuna.ical4j.model.Parameter;
 import net.fortuna.ical4j.model.ParameterList;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.PropertyList;
+import net.fortuna.ical4j.model.Recur;
+import net.fortuna.ical4j.model.TimeZoneRegistry;
+import net.fortuna.ical4j.model.TimeZoneRegistryFactory;
 import net.fortuna.ical4j.model.component.VAlarm;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.parameter.Cn;
@@ -566,11 +570,17 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 		return iCalCalendar;
 	}
 
-	protected DateTime toICalDateTime(long time) {
+	protected DateTime toICalDateTime(long time, TimeZone timeZone) {
 		DateTime dateTime = new DateTime();
 
 		dateTime.setTime(time);
-		dateTime.setUtc(true);
+
+		if (timeZone == null) {
+			dateTime.setUtc(true);
+		}
+		else {
+			dateTime.setTimeZone(_toICalTimeZone(timeZone));
+		}
 
 		return dateTime;
 	}
@@ -641,12 +651,16 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 		}
 		else {
 			DtStart dtStart = new DtStart(
-				toICalDateTime(calendarBooking.getStartTime()));
+				toICalDateTime(
+					calendarBooking.getStartTime(),
+					calendarBooking.getTimeZone()));
 
 			propertyList.add(dtStart);
 
 			DtEnd dtEnd = new DtEnd(
-				toICalDateTime(calendarBooking.getEndTime()));
+				toICalDateTime(
+					calendarBooking.getEndTime(),
+					calendarBooking.getTimeZone()));
 
 			propertyList.add(dtEnd);
 		}
@@ -710,9 +724,13 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 
 			RRule rRule = new RRule(value);
 
+			_addHourMinuteToUntilDate(rRule.getRecur());
+
 			propertyList.add(rRule);
 
-			ExDate exDate = toICalExDate(calendarBooking.getRecurrenceObj());
+			ExDate exDate = toICalExDate(
+				calendarBooking.getRecurrenceObj(),
+				calendarBooking.getTimeZone());
 
 			if (exDate != null) {
 				propertyList.add(exDate);
@@ -773,7 +791,7 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 		return vEvent;
 	}
 
-	protected ExDate toICalExDate(Recurrence recurrence) {
+	protected ExDate toICalExDate(Recurrence recurrence, TimeZone timeZone) {
 		List<java.util.Calendar> exceptionJCalendars =
 			recurrence.getExceptionJCalendars();
 
@@ -787,7 +805,7 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 
 		for (java.util.Calendar exceptionJCalendar : exceptionJCalendars) {
 			DateTime dateTime = toICalDateTime(
-				exceptionJCalendar.getTimeInMillis());
+				exceptionJCalendar.getTimeInMillis(), timeZone);
 
 			dateList.add(dateTime);
 		}
@@ -815,11 +833,47 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 		return unsyncStringWriter.toString();
 	}
 
+	private void _addHourMinuteToUntilDate(Recur recur) {
+		if (recur.getUntil() == null) {
+			return;
+		}
+
+		java.util.Calendar calendar = java.util.Calendar.getInstance();
+
+		calendar.setTime(recur.getUntil());
+
+		calendar.add(java.util.Calendar.HOUR_OF_DAY, 23);
+		calendar.add(java.util.Calendar.MINUTE, 59);
+
+		recur.setUntil(new DateTime(calendar.getTimeInMillis()));
+	}
+
+	private TimeZoneRegistry _getTimeZoneRegistry() {
+		if (_timeZoneRegistry == null) {
+			TimeZoneRegistryFactory timeZoneRegistryFactory =
+				TimeZoneRegistryFactory.getInstance();
+
+			_timeZoneRegistry = timeZoneRegistryFactory.createRegistry();
+		}
+
+		return _timeZoneRegistry;
+	}
+
+	private net.fortuna.ical4j.model.TimeZone _toICalTimeZone(
+		TimeZone timeZone) {
+
+		TimeZoneRegistry timeZoneRegistry = _getTimeZoneRegistry();
+
+		return timeZoneRegistry.getTimeZone(timeZone.getID());
+	}
+
 	private static final String _EXDATE =
 		"EXDATE;TZID=\"UTC\";VALUE=DATE-TIME:";
 
 	private static final String _EXDATE_FORMAT = "%04d%02d%02dT%02d%02d%02dZ";
 
 	private static final String _RRULE = "RRULE:";
+
+	private static TimeZoneRegistry _timeZoneRegistry;
 
 }

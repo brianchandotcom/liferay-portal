@@ -14,24 +14,27 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.npm.flat;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
-import com.liferay.frontend.js.loader.modules.extender.npm.builtin.BuiltInJSModule;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
- * Provides a complete implementation of {@link
- * com.liferay.frontend.js.loader.modules.extender.npm.JSModule}.
+ * Provides a complete implementation of {@link JSModule}.
  *
  * @author Iván Zaera
  */
-public class FlatJSModule extends BuiltInJSModule {
+public class FlatJSModule implements JSModule {
 
 	/**
 	 * Constructs a <code>FlatJSModule</code> with the module's package, name,
@@ -44,7 +47,9 @@ public class FlatJSModule extends BuiltInJSModule {
 	public FlatJSModule(
 		JSPackage jsPackage, String name, Collection<String> dependencies) {
 
-		super(jsPackage, name, dependencies);
+		_jsPackage = jsPackage;
+		_name = name;
+		_dependencies = dependencies;
 
 		String fileName = ModuleNameUtil.toFileName(getName());
 
@@ -53,8 +58,66 @@ public class FlatJSModule extends BuiltInJSModule {
 	}
 
 	@Override
+	public Collection<String> getDependencies() {
+		return _dependencies;
+	}
+
+	@Override
+	public Collection<String> getDependencyPackageNames() {
+		List<String> dependencyPackageNames = new ArrayList<>();
+
+		for (String dependency : _dependencies) {
+			String packageName = ModuleNameUtil.getPackageName(dependency);
+
+			if (packageName != null) {
+				dependencyPackageNames.add(packageName);
+			}
+		}
+
+		return dependencyPackageNames;
+	}
+
+	@Override
+	public String getId() {
+		return ModuleNameUtil.getModuleId(_jsPackage, _name);
+	}
+
+	@Override
 	public InputStream getInputStream() throws IOException {
 		return _jsURL.openStream();
+	}
+
+	@Override
+	public JSPackage getJSPackage() {
+		return _jsPackage;
+	}
+
+	@Override
+	public String getName() {
+		return _name;
+	}
+
+	@Override
+	public String getResolvedId() {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(_jsPackage.getName());
+		sb.append(StringPool.AT);
+		sb.append(_jsPackage.getVersion());
+		sb.append(StringPool.SLASH);
+		sb.append(_name);
+
+		return sb.toString();
+	}
+
+	@Override
+	public String getResolvedURL() {
+		StringBundler sb = new StringBundler(2);
+
+		sb.append("/o/js/resolved-module/");
+		sb.append(getResolvedId());
+
+		return sb.toString();
 	}
 
 	@Override
@@ -63,11 +126,24 @@ public class FlatJSModule extends BuiltInJSModule {
 	}
 
 	@Override
+	public String getURL() {
+		StringBundler sb = new StringBundler(2);
+
+		sb.append("/o/js/module/");
+		sb.append(ModuleNameUtil.getModuleId(_jsPackage, _name));
+
+		return sb.toString();
+	}
+
+	@Override
 	public String toString() {
 		return getId();
 	}
 
+	private final Collection<String> _dependencies;
+	private final JSPackage _jsPackage;
 	private final URL _jsURL;
+	private final String _name;
 	private final URL _sourceMapURL;
 
 }

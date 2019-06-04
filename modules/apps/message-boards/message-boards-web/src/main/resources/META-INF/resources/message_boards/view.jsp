@@ -407,7 +407,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 					<%
 					SearchContainer threadEntriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur2", 0, mbListDisplayContext.getThreadEntriesDelta(), PortletURLUtil.clone(portletURL, renderResponse), null, "there-are-no-threads-or-categories");
 
-					mbListDisplayContext.setThreadEntriesDelta(categoryEntriesSearchContainer);
+					mbListDisplayContext.setThreadEntriesDelta(threadEntriesSearchContainer);
 
 					threadEntriesSearchContainer.setOrderByCol(orderByCol);
 					threadEntriesSearchContainer.setOrderByComparator(threadOrderByComparator);

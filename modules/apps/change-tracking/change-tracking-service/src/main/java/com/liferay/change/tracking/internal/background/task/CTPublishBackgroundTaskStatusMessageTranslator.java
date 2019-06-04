@@ -51,10 +51,13 @@ public class CTPublishBackgroundTaskStatusMessageTranslator
 
 		CTProcessLogEntry.Builder builder = new CTProcessLogEntry.Builder();
 
+		CTProcessMessageSenderUtil.Level level =
+			(CTProcessMessageSenderUtil.Level)message.get("level");
+
 		final CTProcessLogEntry ctProcessLogEntry = builder.date(
 			(Date)message.get("date")
 		).level(
-			((CTProcessMessageSenderUtil.Level)message.get("level")).getLabel()
+			level.getLabel()
 		).messageKey(
 			message.getString("message")
 		).messageParameters(

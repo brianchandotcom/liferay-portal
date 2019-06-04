@@ -477,7 +477,9 @@ public class CMISFolder extends CMISModel implements Folder {
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey(((Long)primaryKeyObj).longValue());
+		Long primaryKeyLong = (Long)primaryKeyObj;
+
+		setPrimaryKey(primaryKeyLong.longValue());
 	}
 
 	@Override

@@ -1202,15 +1202,18 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 
 		if (isRespondingTo("json")) {
 			if (object instanceof AlloySearchResult) {
-				Hits hits = ((AlloySearchResult)object).getHits();
+				AlloySearchResult alloySearchResult = (AlloySearchResult)object;
+
+				Hits hits = alloySearchResult.getHits();
 
 				Document[] documents = hits.getDocs();
 
 				data = toJSONArray(documents);
 			}
 			else if (object instanceof Collection) {
-				Object[] objects = ((Collection)object).toArray(
-					new BaseModel[0]);
+				Collection<?> collection = (Collection<?>)object;
+
+				Object[] objects = collection.toArray(new BaseModel[0]);
 
 				data = toJSONArray(objects);
 			}

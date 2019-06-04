@@ -111,9 +111,12 @@ public class DummyFolderWithMissingDummyPortletDataHandler
 			Element dummyFolderElement =
 				portletDataContext.getExportDataElement(dummyFolder);
 
+			DummyStagedModelRepository dummyStagedModelRepository =
+				(DummyStagedModelRepository)_dummyStagedModelRepository;
+
 			List<Dummy> dummies =
-				((DummyStagedModelRepository)_dummyStagedModelRepository).
-					fetchDummiesByFolderId(dummyFolder.getId());
+				dummyStagedModelRepository.fetchDummiesByFolderId(
+					dummyFolder.getId());
 
 			for (Dummy dummy : dummies) {
 				portletDataContext.addReferenceElement(

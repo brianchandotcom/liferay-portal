@@ -1215,32 +1215,44 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 			if (ddmExpressionFunction instanceof
 					DDMExpressionActionHandlerAware) {
 
-				((DDMExpressionActionHandlerAware)ddmExpressionFunction).
-					setDDMExpressionActionHandler(
-						ddmFormEvaluatorHelper.
-							ddmFormEvaluatorExpressionActionHandler);
+				DDMExpressionActionHandlerAware
+					ddmExpressionActionHandlerAware =
+						(DDMExpressionActionHandlerAware)ddmExpressionFunction;
+
+				ddmExpressionActionHandlerAware.setDDMExpressionActionHandler(
+					ddmFormEvaluatorHelper.
+						ddmFormEvaluatorExpressionActionHandler);
 			}
 
 			if (ddmExpressionFunction instanceof
 					DDMExpressionFieldAccessorAware) {
 
-				((DDMExpressionFieldAccessorAware)ddmExpressionFunction).
-					setDDMExpressionFieldAccessor(
-						ddmFormEvaluatorHelper.
-							ddmFormEvaluatorDDMExpressionFieldAccessor);
+				DDMExpressionFieldAccessorAware
+					ddmExpressionFieldAccessorAware =
+						(DDMExpressionFieldAccessorAware)ddmExpressionFunction;
+
+				ddmExpressionFieldAccessorAware.setDDMExpressionFieldAccessor(
+					ddmFormEvaluatorHelper.
+						ddmFormEvaluatorDDMExpressionFieldAccessor);
 			}
 
 			if (ddmExpressionFunction instanceof DDMExpressionObserverAware) {
-				((DDMExpressionObserverAware)ddmExpressionFunction).
-					setDDMExpressionObserver(
-						ddmFormEvaluatorHelper.
-							ddmFormEvaluatorExpressionObserver);
+				DDMExpressionObserverAware ddmExpressionObserverAware =
+					(DDMExpressionObserverAware)ddmExpressionFunction;
+
+				ddmExpressionObserverAware.setDDMExpressionObserver(
+					ddmFormEvaluatorHelper.ddmFormEvaluatorExpressionObserver);
 			}
 
 			if (ddmExpressionFunction instanceof
 					DDMExpressionParameterAccessorAware) {
 
-				((DDMExpressionParameterAccessorAware)ddmExpressionFunction).
+				DDMExpressionParameterAccessorAware
+					ddmExpressionParameterAccessorAware =
+						(DDMExpressionParameterAccessorAware)
+							ddmExpressionFunction;
+
+				ddmExpressionParameterAccessorAware.
 					setDDMExpressionParameterAccessor(
 						ddmFormEvaluatorHelper.
 							ddmFormEvaluatorExpressionParameterAccessor);

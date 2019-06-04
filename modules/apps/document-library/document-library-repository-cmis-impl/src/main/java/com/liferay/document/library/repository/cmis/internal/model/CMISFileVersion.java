@@ -400,7 +400,9 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey(((Long)primaryKeyObj).longValue());
+		Long primaryKeyLong = (Long)primaryKeyObj;
+
+		setPrimaryKey(primaryKeyLong.longValue());
 	}
 
 	@Override

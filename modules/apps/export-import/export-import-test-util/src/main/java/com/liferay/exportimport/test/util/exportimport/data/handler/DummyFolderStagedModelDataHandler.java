@@ -57,9 +57,11 @@ public class DummyFolderStagedModelDataHandler
 		Element dummyFolderElement = portletDataContext.getExportDataElement(
 			dummyFolder);
 
-		List<Dummy> dummies =
-			((DummyStagedModelRepository)_dummyStagedModelRepository).
-				fetchDummiesByFolderId(dummyFolder.getId());
+		DummyStagedModelRepository dummyStagedModelRepository =
+			(DummyStagedModelRepository)_dummyStagedModelRepository;
+
+		List<Dummy> dummies = dummyStagedModelRepository.fetchDummiesByFolderId(
+			dummyFolder.getId());
 
 		for (Dummy dummy : dummies) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(

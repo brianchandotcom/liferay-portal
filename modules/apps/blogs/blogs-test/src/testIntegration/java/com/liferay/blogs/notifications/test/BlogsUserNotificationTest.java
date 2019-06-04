@@ -85,8 +85,10 @@ public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 
 		serviceContext.setAttribute("sendEmailEntryUpdated", Boolean.TRUE);
 
+		BlogsEntry blogsEntry = (BlogsEntry)baseModel;
+
 		return BlogsEntryLocalServiceUtil.updateEntry(
-			TestPropsValues.getUserId(), ((BlogsEntry)baseModel).getEntryId(),
+			TestPropsValues.getUserId(), blogsEntry.getEntryId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 	}

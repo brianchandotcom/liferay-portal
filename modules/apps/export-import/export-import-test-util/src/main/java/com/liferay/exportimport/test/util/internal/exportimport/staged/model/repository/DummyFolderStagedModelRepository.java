@@ -371,8 +371,10 @@ public class DummyFolderStagedModelRepository
 	public class DummyFolderBaseLocalServiceImpl extends BaseLocalServiceImpl {
 
 		public List<DummyFolder> dynamicQuery(DynamicQuery dynamicQuery) {
+			DynamicQueryImpl dynamicQueryImpl = (DynamicQueryImpl)dynamicQuery;
+
 			DetachedCriteria detachedCriteria =
-				((DynamicQueryImpl)dynamicQuery).getDetachedCriteria();
+				dynamicQueryImpl.getDetachedCriteria();
 
 			Class<?> detachedCriteriaClass = detachedCriteria.getClass();
 

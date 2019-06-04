@@ -749,7 +749,9 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey(((Long)primaryKeyObj).longValue());
+		Long primaryKeyLong = (Long)primaryKeyObj;
+
+		setPrimaryKey(primaryKeyLong.longValue());
 	}
 
 	@Override

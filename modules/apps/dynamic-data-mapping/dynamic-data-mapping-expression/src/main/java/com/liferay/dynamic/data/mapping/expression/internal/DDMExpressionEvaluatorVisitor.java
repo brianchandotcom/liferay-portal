@@ -154,26 +154,39 @@ public class DDMExpressionEvaluatorVisitor
 			_ddmExpressionFunctions.get(functionName);
 
 		if (ddmExpressionFunction instanceof DDMExpressionObserverAware) {
-			((DDMExpressionObserverAware)ddmExpressionFunction).
-				setDDMExpressionObserver(_ddmExpressionObserver);
+			DDMExpressionObserverAware ddmExpressionObserverAware =
+				(DDMExpressionObserverAware)ddmExpressionFunction;
+
+			ddmExpressionObserverAware.setDDMExpressionObserver(
+				_ddmExpressionObserver);
 		}
 
 		if (ddmExpressionFunction instanceof DDMExpressionActionHandlerAware) {
-			((DDMExpressionActionHandlerAware)ddmExpressionFunction).
-				setDDMExpressionActionHandler(_ddmExpressionActionHandler);
+			DDMExpressionActionHandlerAware ddmExpressionActionHandlerAware =
+				(DDMExpressionActionHandlerAware)ddmExpressionFunction;
+
+			ddmExpressionActionHandlerAware.setDDMExpressionActionHandler(
+				_ddmExpressionActionHandler);
 		}
 
 		if (ddmExpressionFunction instanceof
 				DDMExpressionParameterAccessorAware) {
 
-			((DDMExpressionParameterAccessorAware)ddmExpressionFunction).
+			DDMExpressionParameterAccessorAware
+				ddmExpressionParameterAccessorAware =
+					(DDMExpressionParameterAccessorAware)ddmExpressionFunction;
+
+			ddmExpressionParameterAccessorAware.
 				setDDMExpressionParameterAccessor(
 					_ddmExpressionParameterAccessor);
 		}
 
 		if (ddmExpressionFunction instanceof DDMExpressionFieldAccessorAware) {
-			((DDMExpressionFieldAccessorAware)ddmExpressionFunction).
-				setDDMExpressionFieldAccessor(_ddmExpressionFieldAccessor);
+			DDMExpressionFieldAccessorAware ddmExpressionFieldAccessorAware =
+				(DDMExpressionFieldAccessorAware)ddmExpressionFunction;
+
+			ddmExpressionFieldAccessorAware.setDDMExpressionFieldAccessor(
+				_ddmExpressionFieldAccessor);
 		}
 
 		Object[] params = getFunctionParameters(context.functionParameters());

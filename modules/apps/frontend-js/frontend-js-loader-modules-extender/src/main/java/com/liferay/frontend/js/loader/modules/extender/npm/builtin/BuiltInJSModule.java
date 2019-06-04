@@ -99,7 +99,7 @@ public abstract class BuiltInJSModule implements JSModule {
 		StringBundler sb = new StringBundler(2);
 
 		sb.append("/o/js/resolved-module/");
-		sb.append(_getResolvedId(_jsPackage, _name));
+		sb.append(getResolvedId());
 
 		return sb.toString();
 	}

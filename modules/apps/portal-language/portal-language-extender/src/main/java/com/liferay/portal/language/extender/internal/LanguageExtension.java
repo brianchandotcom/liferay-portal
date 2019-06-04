@@ -128,7 +128,19 @@ public class LanguageExtension {
 			}
 
 			if (resourceBundleLoader != null) {
-				registerResourceBundleLoader(attributes, resourceBundleLoader);
+				if (Validator.isNull(attributes.get("bundle.symbolic.name"))) {
+					attributes.put(
+						"bundle.symbolic.name", _bundle.getSymbolicName());
+				}
+
+				if (Validator.isNull(attributes.get("service.ranking"))) {
+					attributes.put("service.ranking", Integer.MIN_VALUE);
+				}
+
+				_serviceRegistrations.add(
+					_bundleContext.registerService(
+						ResourceBundleLoader.class, resourceBundleLoader,
+						attributes));
 			}
 			else if (_log.isWarnEnabled()) {
 				_log.warn(
@@ -195,23 +207,6 @@ public class LanguageExtension {
 				ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 
 		return new CacheResourceBundleLoader(aggregateResourceBundleLoader);
-	}
-
-	protected void registerResourceBundleLoader(
-		Dictionary<String, Object> attributes,
-		ResourceBundleLoader resourceBundleLoader) {
-
-		if (Validator.isNull(attributes.get("bundle.symbolic.name"))) {
-			attributes.put("bundle.symbolic.name", _bundle.getSymbolicName());
-		}
-
-		if (Validator.isNull(attributes.get("service.ranking"))) {
-			attributes.put("service.ranking", Integer.MIN_VALUE);
-		}
-
-		_serviceRegistrations.add(
-			_bundleContext.registerService(
-				ResourceBundleLoader.class, resourceBundleLoader, attributes));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

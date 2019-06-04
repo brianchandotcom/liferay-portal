@@ -606,8 +606,6 @@ public class LiferaySourceOrSink
 				i18nMessages.getMessage(
 					"error.validation.connection.password"));
 			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
-
-			return;
 		}
 	}
 

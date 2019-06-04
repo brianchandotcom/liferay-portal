@@ -67,6 +67,83 @@ public class ChainingCheck extends BaseCheck {
 			return;
 		}
 
+		_checkChainingOnMethodCalls(detailAST);
+	}
+
+	private void _checkAllowedChaining(DetailAST methodCallDetailAST) {
+		DetailAST parentDetailAST = methodCallDetailAST.getParent();
+
+		while (true) {
+			if ((parentDetailAST.getType() == TokenTypes.DOT) ||
+				(parentDetailAST.getType() == TokenTypes.METHOD_CALL)) {
+
+				parentDetailAST = parentDetailAST.getParent();
+
+				continue;
+			}
+
+			break;
+		}
+
+		if (parentDetailAST.getType() != TokenTypes.EXPR) {
+			return;
+		}
+
+		parentDetailAST = parentDetailAST.getParent();
+
+		if (parentDetailAST.getType() != TokenTypes.ASSIGN) {
+			return;
+		}
+
+		parentDetailAST = parentDetailAST.getParent();
+
+		if (parentDetailAST.getType() != TokenTypes.VARIABLE_DEF) {
+			return;
+		}
+
+		String classOrVariableName = _getClassOrVariableName(
+			methodCallDetailAST);
+
+		if (!Objects.equals(classOrVariableName, "Optional") &&
+			!Objects.equals(classOrVariableName, "Stream") &&
+			!Objects.equals(classOrVariableName, "Try")) {
+
+			return;
+		}
+
+		DetailAST variableNameDetailAST = parentDetailAST.findFirstToken(
+			TokenTypes.IDENT);
+
+		String variableName = variableNameDetailAST.getText();
+
+		String variableTypeName = DetailASTUtil.getVariableTypeName(
+			methodCallDetailAST, variableName, false);
+
+		if (!classOrVariableName.equals(variableTypeName)) {
+			return;
+		}
+
+		List<DetailAST> identDetailASTList = _getIdentDetailASTList(
+			parentDetailAST.getParent(), variableName);
+
+		if ((identDetailASTList.size() == 2) &&
+			Objects.equals(
+				_findFirstParent(
+					identDetailASTList.get(0), TokenTypes.ELIST,
+					TokenTypes.LITERAL_IF),
+				_findFirstParent(
+					identDetailASTList.get(1), TokenTypes.ELIST,
+					TokenTypes.LITERAL_IF))) {
+
+			log(
+				methodCallDetailAST, _MSG_ALLOWED_CHAINING,
+				StringBundler.concat(
+					classOrVariableName, StringPool.PERIOD,
+					DetailASTUtil.getMethodName(methodCallDetailAST)));
+		}
+	}
+
+	private void _checkChainingOnMethodCalls(DetailAST detailAST) {
 		List<DetailAST> methodCallDetailASTList =
 			DetailASTUtil.getAllChildTokens(
 				detailAST, true, TokenTypes.METHOD_CALL);
@@ -140,79 +217,6 @@ public class ChainingCheck extends BaseCheck {
 			log(
 				methodCallDetailAST, _MSG_AVOID_CHAINING,
 				DetailASTUtil.getMethodName(methodCallDetailAST));
-		}
-	}
-
-	private void _checkAllowedChaining(DetailAST methodCallDetailAST) {
-		DetailAST parentDetailAST = methodCallDetailAST.getParent();
-
-		while (true) {
-			if ((parentDetailAST.getType() == TokenTypes.DOT) ||
-				(parentDetailAST.getType() == TokenTypes.METHOD_CALL)) {
-
-				parentDetailAST = parentDetailAST.getParent();
-
-				continue;
-			}
-
-			break;
-		}
-
-		if (parentDetailAST.getType() != TokenTypes.EXPR) {
-			return;
-		}
-
-		parentDetailAST = parentDetailAST.getParent();
-
-		if (parentDetailAST.getType() != TokenTypes.ASSIGN) {
-			return;
-		}
-
-		parentDetailAST = parentDetailAST.getParent();
-
-		if (parentDetailAST.getType() != TokenTypes.VARIABLE_DEF) {
-			return;
-		}
-
-		String classOrVariableName = _getClassOrVariableName(
-			methodCallDetailAST);
-
-		if (!Objects.equals(classOrVariableName, "Optional") &&
-			!Objects.equals(classOrVariableName, "Stream") &&
-			!Objects.equals(classOrVariableName, "Try")) {
-
-			return;
-		}
-
-		DetailAST variableNameDetailAST = parentDetailAST.findFirstToken(
-			TokenTypes.IDENT);
-
-		String variableName = variableNameDetailAST.getText();
-
-		String variableTypeName = DetailASTUtil.getVariableTypeName(
-			methodCallDetailAST, variableName, false);
-
-		if (!classOrVariableName.equals(variableTypeName)) {
-			return;
-		}
-
-		List<DetailAST> identDetailASTList = _getIdentDetailASTList(
-			parentDetailAST.getParent(), variableName);
-
-		if ((identDetailASTList.size() == 2) &&
-			Objects.equals(
-				_findFirstParent(
-					identDetailASTList.get(0), TokenTypes.ELIST,
-					TokenTypes.LITERAL_IF),
-				_findFirstParent(
-					identDetailASTList.get(1), TokenTypes.ELIST,
-					TokenTypes.LITERAL_IF))) {
-
-			log(
-				methodCallDetailAST, _MSG_ALLOWED_CHAINING,
-				StringBundler.concat(
-					classOrVariableName, StringPool.PERIOD,
-					DetailASTUtil.getMethodName(methodCallDetailAST)));
 		}
 	}
 

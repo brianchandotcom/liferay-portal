@@ -788,10 +788,8 @@ public class ChainingCheck extends BaseCheck {
 		return false;
 	}
 
-	private boolean _isInsideConstructorThisCall(
-		DetailAST methodCallDetailAST) {
-
-		DetailAST parentDetailAST = methodCallDetailAST.getParent();
+	private boolean _isInsideConstructorThisCall(DetailAST detailAST) {
+		DetailAST parentDetailAST = detailAST.getParent();
 
 		while (parentDetailAST != null) {
 			String parentDetailASTText = parentDetailAST.getText();

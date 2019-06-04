@@ -23,15 +23,22 @@ AUI.add(
 			filter: function() {
 				var instance = this;
 
+				var ModifiedFacetFilterUtil =
+					Liferay.Search.ModifiedFacetFilterUtil;
+
 				var fromDate = instance.fromInputDatePicker.getDate();
 
 				var toDate = instance.toInputDatePicker.getDate();
 
-				var modifiedFromParameter = fromDate.toISOString().slice(0, 10);
+				var modifiedFromParameter = ModifiedFacetFilterUtil.toLocaleDateStringFormatted(
+					fromDate
+				);
 
-				var modifiedToParameter = toDate.toISOString().slice(0, 10);
+				var modifiedToParameter = ModifiedFacetFilterUtil.toLocaleDateStringFormatted(
+					toDate
+				);
 
-				var param = Liferay.Search.ModifiedFacetFilterUtil.getParameterName();
+				var param = ModifiedFacetFilterUtil.getParameterName();
 				var paramFrom = param + 'From';
 				var paramTo = param + 'To';
 
@@ -102,6 +109,21 @@ AUI.add(
 
 			getParameterName: function() {
 				return 'modified';
+			},
+
+			/**
+			 * Formats a date to 'YYYY-MM-DD' format.
+			 * @param {Date} date The date to format.
+			 * @returns {String} The date string.
+			 */
+			toLocaleDateStringFormatted: function(date) {
+				var localDate = new Date(date);
+
+				localDate.setMinutes(
+					date.getMinutes() - date.getTimezoneOffset()
+				);
+
+				return localDate.toISOString().split('T')[0];
 			}
 		};
 

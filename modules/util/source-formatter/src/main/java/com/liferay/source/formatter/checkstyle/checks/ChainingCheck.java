@@ -62,7 +62,9 @@ public class ChainingCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		if (detailAST.getType() == TokenTypes.TYPECAST) {
+		if ((detailAST.getType() == TokenTypes.TYPECAST) &&
+			isAttributeValue(_APPLY_TO_TYPE_CAST_KEY)) {
+
 			_checkChainingOnTypeCast(detailAST);
 
 			return;
@@ -859,6 +861,8 @@ public class ChainingCheck extends BaseCheck {
 
 	private static final String _ALLOWED_VARIABLE_TYPE_NAMES_KEY =
 		"allowedVariableTypeNames";
+
+	private static final String _APPLY_TO_TYPE_CAST_KEY = "applyToTypeCast";
 
 	private static final String _MSG_ALLOWED_CHAINING = "chaining.allowed";
 

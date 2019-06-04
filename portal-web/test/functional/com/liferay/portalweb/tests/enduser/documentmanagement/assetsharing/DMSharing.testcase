@@ -815,7 +815,7 @@ definition {
 		MenuItem.viewNotPresent(menuItem = "Share");
 	}
 
-	@description = "This test makes sure only owners see the Collaborators List. Collaborators will only see the owner of the document. This usecase also tests that a user can successfully remove collaborators through Manage Collaborators and asserts that empty message displays when all collaborators are removed."
+	@description = "This test makes sure all collaborators will view all collaborators of the document that was shared to him. This usecase also tests that a user can successfully remove collaborators through Manage Collaborators and asserts that empty message displays when all collaborators are removed."
 	@priority = "5"
 	test ViewAndRemoveCollaborators {
 		JSONUser.addUser(
@@ -878,7 +878,7 @@ definition {
 		var key_collaborator = "userfn";
 		var key_text = "Manage Collaborators";
 
-		AssertNotVisible(
+		AssertVisible(
 			locator1 = "DocumentsAndMediaShare#COLLABORATOR_TOOLTIP",
 			value1 = "userfn");
 

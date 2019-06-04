@@ -43,20 +43,16 @@ public class RatingsTestUtil {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	public static RatingsStats addStats(String className, long classPK)
-		throws Exception {
-
+	public static RatingsStats addStats(String className, long classPK) {
 		return addStats(className, classPK, RandomTestUtil.randomInt());
 	}
 
 	public static RatingsStats addStats(
-			String className, long classPK, double averageScore)
-		throws Exception {
-
-		long statsId = CounterLocalServiceUtil.increment();
+		String className, long classPK, double averageScore) {
 
 		RatingsStats ratingsStats =
-			RatingsStatsLocalServiceUtil.createRatingsStats(statsId);
+			RatingsStatsLocalServiceUtil.createRatingsStats(
+				CounterLocalServiceUtil.increment());
 
 		ratingsStats.setClassName(className);
 		ratingsStats.setClassPK(classPK);

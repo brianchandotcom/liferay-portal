@@ -43,10 +43,8 @@ public abstract class BaseRatingsTestCase {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
-		BaseModel<?> baseModel = addBaseModel(parentBaseModel, serviceContext);
+		BaseModel<?> baseModel = addBaseModel(
+			getParentBaseModel(group, serviceContext), serviceContext);
 
 		RatingsStats ratingsStats = RatingsTestUtil.addStats(
 			_getBaseModelClassName(), getRatingsClassPK(baseModel));

@@ -58,28 +58,7 @@ public class FlatJSPackage implements JSPackage {
 		_name = name;
 		_version = version;
 		_mainModuleName = mainModuleName;
-
-		if (root) {
-			_basePath = "META-INF/resources/";
-		}
-		else {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("META-INF/resources/node_modules/");
-
-			if (name.startsWith(StringPool.AT)) {
-				sb.append(name.replace(StringPool.SLASH, "%2F"));
-			}
-			else {
-				sb.append(name);
-			}
-
-			sb.append(StringPool.AT);
-			sb.append(getVersion());
-			sb.append(StringPool.SLASH);
-
-			_basePath = sb.toString();
-		}
+		_root = root;
 	}
 
 	/**
@@ -158,7 +137,32 @@ public class FlatJSPackage implements JSPackage {
 	public URL getResourceURL(String location) {
 		JSBundle jsBundle = getJSBundle();
 
-		return jsBundle.getResourceURL(_basePath + location);
+		String path = "META-INF/resources/";
+
+		if (_root) {
+			path = path.concat(location);
+		}
+		else {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append("META-INF/resources/node_modules/");
+
+			if (_name.startsWith(StringPool.AT)) {
+				sb.append(_name.replace(StringPool.SLASH, "%2F"));
+			}
+			else {
+				sb.append(_name);
+			}
+
+			sb.append(StringPool.AT);
+			sb.append(_version);
+			sb.append(StringPool.SLASH);
+			sb.append(location);
+
+			path = sb.toString();
+		}
+
+		return jsBundle.getResourceURL(path);
 	}
 
 	@Override
@@ -171,7 +175,6 @@ public class FlatJSPackage implements JSPackage {
 		return getId();
 	}
 
-	private final String _basePath;
 	private final FlatJSBundle _flatJSBundle;
 	private final List<JSModuleAlias> _jsModuleAliases = new ArrayList<>();
 	private final List<JSModule> _jsModules = new ArrayList<>();
@@ -179,6 +182,7 @@ public class FlatJSPackage implements JSPackage {
 		new HashMap<>();
 	private final String _mainModuleName;
 	private final String _name;
+	private final boolean _root;
 	private final String _version;
 
 }

@@ -281,9 +281,7 @@ public class LiferayWriter
 			}
 			else if (AvroUtils.isSameType(
 						unwrappedSchema, AvroUtils._logicalTimestamp()) ||
-					 AvroUtils.isSameType(unwrappedSchema, AvroUtils._date()) ||
-					 AvroUtils.isSameType(
-						 unwrappedSchema, AvroUtils._string())) {
+					 AvroUtils.isSameType(unwrappedSchema, AvroUtils._date())) {
 
 				if (fieldName.contains("_")) {
 					String[] nameParts = fieldName.split("_");
@@ -361,6 +359,44 @@ public class LiferayWriter
 				else {
 					objectNode.put(
 						fieldName, (long)indexedRecord.get(field.pos()));
+				}
+			}
+			else if (AvroUtils.isSameType(
+						unwrappedSchema, AvroUtils._string())) {
+
+				try {
+					if (fieldName.contains("_")) {
+						String[] nameParts = fieldName.split("_");
+
+						objectNode.with(
+							nameParts[0]
+						).put(
+							nameParts[1],
+							_mapper.readTree(
+								(String)indexedRecord.get(field.pos()))
+						);
+					}
+					else {
+						objectNode.put(
+							fieldName,
+							_mapper.readTree(
+								(String)indexedRecord.get(field.pos())));
+					}
+				}
+				catch (IOException ioe) {
+					if (fieldName.contains("_")) {
+						String[] nameParts = fieldName.split("_");
+
+						objectNode.with(
+							nameParts[0]
+						).put(
+							nameParts[1], (String)indexedRecord.get(field.pos())
+						);
+					}
+					else {
+						objectNode.put(
+							fieldName, (String)indexedRecord.get(field.pos()));
+					}
 				}
 			}
 			else {

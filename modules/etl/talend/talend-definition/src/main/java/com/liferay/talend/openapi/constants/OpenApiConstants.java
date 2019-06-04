@@ -19,6 +19,8 @@ package com.liferay.talend.openapi.constants;
  */
 public class OpenApiConstants {
 
+	public static final String ADDITIONAL_PROPERTIES = "additionalProperties";
+
 	public static final String APPLICATION_JSON = "application/json";
 
 	public static final String COMPONENTS = "components";

@@ -19,8 +19,8 @@ package com.liferay.talend.openapi;
  */
 public enum OpenAPIType {
 
-	ARRAY("array"), BOOLEAN("boolean"), DICTIONARY("dictionary"),
-	INTEGER("integer"), NUMBER("number"), OBJECT("object"), STRING("string");
+	ARRAY("array"), BOOLEAN("boolean"), INTEGER("integer"), NUMBER("number"),
+	OBJECT("object"), STRING("string");
 
 	public static OpenAPIType fromDefinition(String openAPITypeDefinition) {
 		for (OpenAPIType openAPIType : values()) {

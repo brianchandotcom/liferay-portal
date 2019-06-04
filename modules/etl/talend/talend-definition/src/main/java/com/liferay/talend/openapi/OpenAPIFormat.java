@@ -25,7 +25,7 @@ public enum OpenAPIFormat {
 	BYTE("byte", OpenAPIType.STRING, false),
 	DATE("date", OpenAPIType.STRING, false),
 	DATE_TIME("date-time", OpenAPIType.STRING, false),
-	DICTIONARY(null, OpenAPIType.DICTIONARY, true),
+	DICTIONARY("string", OpenAPIType.OBJECT, true),
 	DOUBLE("double", OpenAPIType.NUMBER, false),
 	FLOAT("float", OpenAPIType.NUMBER, true),
 	INT32("int32", OpenAPIType.INTEGER, true),

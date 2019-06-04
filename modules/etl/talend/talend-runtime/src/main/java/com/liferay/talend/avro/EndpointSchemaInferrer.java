@@ -181,19 +181,24 @@ public class EndpointSchemaInferrer {
 
 		JsonNode propertyJsonNode = propertyEntry.getValue();
 
+		JsonNode openAPIFormatDefinitionJsonNode = propertyJsonNode.path(
+			OpenApiConstants.FORMAT);
+
 		OpenAPIType openAPIType = OpenAPIType.fromDefinition(
 			propertyJsonNode.path(
 				OpenApiConstants.TYPE
 			).asText());
 
-		if ((openAPIType == OpenAPIType.ARRAY) ||
-			(openAPIType == OpenAPIType.OBJECT)) {
-
+		if (openAPIType == OpenAPIType.ARRAY) {
 			return designField;
 		}
-
-		JsonNode openAPIFormatDefinitionJsonNode = propertyJsonNode.path(
-			OpenApiConstants.FORMAT);
+		else if (openAPIType == OpenAPIType.OBJECT) {
+			openAPIFormatDefinitionJsonNode = propertyJsonNode.path(
+				OpenApiConstants.ADDITIONAL_PROPERTIES
+			).path(
+				OpenApiConstants.TYPE
+			);
+		}
 
 		String openAPIFormatDefinition = null;
 
@@ -223,6 +228,11 @@ public class EndpointSchemaInferrer {
 			designField = new Schema.Field(
 				fieldName,
 				AvroUtils.wrapAsNullable(AvroUtils._logicalTimestamp()), null,
+				(Object)null);
+		}
+		else if (openAPIFormat == OpenAPIFormat.DICTIONARY) {
+			designField = new Schema.Field(
+				fieldName, AvroUtils.wrapAsNullable(AvroUtils._string()), null,
 				(Object)null);
 		}
 		else if (openAPIFormat == OpenAPIFormat.DOUBLE) {

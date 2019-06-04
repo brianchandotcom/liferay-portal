@@ -84,9 +84,9 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@Test
 	public void testDeleteEntriesInDifferentCompany() throws Exception {
-		_entries.add(addEntry(0, 0));
-		_entries.add(addEntry(0, 0));
-		_entries.add(addEntry(0, 0));
+		_announcementsEntries.add(addEntry(0, 0));
+		_announcementsEntries.add(addEntry(0, 0));
+		_announcementsEntries.add(addEntry(0, 0));
 
 		_announcementsEntryLocalService.deleteEntries(
 			_company2.getCompanyId(), 0, 0);
@@ -101,9 +101,9 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@Test
 	public void testDeleteEntriesInSameCompany() throws Exception {
-		_entries.add(addEntry(0, 0));
-		_entries.add(addEntry(0, 0));
-		_entries.add(addEntry(0, 0));
+		_announcementsEntries.add(addEntry(0, 0));
+		_announcementsEntries.add(addEntry(0, 0));
+		_announcementsEntries.add(addEntry(0, 0));
 
 		_announcementsEntryLocalService.deleteEntries(
 			_user.getCompanyId(), 0, 0);
@@ -125,7 +125,7 @@ public class AnnouncementsEntryLocalServiceTest {
 		AnnouncementsEntry entry = addEntry(
 			group.getClassNameId(), group.getGroupId());
 
-		_entries.add(entry);
+		_announcementsEntries.add(entry);
 
 		Assert.assertNotNull(
 			_announcementsEntryLocalService.fetchAnnouncementsEntry(
@@ -149,7 +149,7 @@ public class AnnouncementsEntryLocalServiceTest {
 			_classNameLocalService.getClassNameId(Organization.class),
 			organization.getOrganizationId());
 
-		_entries.add(entry);
+		_announcementsEntries.add(entry);
 
 		Assert.assertNotNull(
 			_announcementsEntryLocalService.fetchAnnouncementsEntry(
@@ -175,7 +175,7 @@ public class AnnouncementsEntryLocalServiceTest {
 			_classNameLocalService.getClassNameId(Group.class),
 			group.getGroupId());
 
-		_entries.add(entry);
+		_announcementsEntries.add(entry);
 
 		Assert.assertNotNull(
 			_announcementsEntryLocalService.fetchAnnouncementsEntry(
@@ -213,7 +213,7 @@ public class AnnouncementsEntryLocalServiceTest {
 			_classNameLocalService.getClassNameId(UserGroup.class),
 			userGroup.getUserGroupId());
 
-		_entries.add(entry);
+		_announcementsEntries.add(entry);
 
 		Assert.assertNotNull(
 			_announcementsEntryLocalService.fetchAnnouncementsEntry(
@@ -239,9 +239,9 @@ public class AnnouncementsEntryLocalServiceTest {
 		AnnouncementsEntry entry3 = addEntry(
 			group.getClassNameId(), group.getGroupId());
 
-		_entries.add(entry1);
-		_entries.add(entry2);
-		_entries.add(entry3);
+		_announcementsEntries.add(entry1);
+		_announcementsEntries.add(entry2);
+		_announcementsEntries.add(entry3);
 
 		_announcementsFlagLocalService.addFlag(
 			_user.getUserId(), entry1.getEntryId(),
@@ -280,7 +280,7 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@Test
 	public void testGetEntriesCountInDifferentCompany() throws Exception {
-		_entries.add(addEntry(0, 0));
+		_announcementsEntries.add(addEntry(0, 0));
 
 		Assert.assertEquals(
 			0,
@@ -290,7 +290,7 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@Test
 	public void testGetEntriesCountInSameCompany() throws Exception {
-		_entries.add(addEntry(0, 0));
+		_announcementsEntries.add(addEntry(0, 0));
 
 		Assert.assertEquals(
 			1,
@@ -300,7 +300,7 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@Test
 	public void testGetEntriesInDifferentCompany() throws Exception {
-		_entries.add(addEntry(0, 0));
+		_announcementsEntries.add(addEntry(0, 0));
 
 		List<AnnouncementsEntry> entries =
 			_announcementsEntryLocalService.getEntries(
@@ -314,7 +314,7 @@ public class AnnouncementsEntryLocalServiceTest {
 	public void testGetEntriesInSameCompany() throws Exception {
 		AnnouncementsEntry entry = addEntry(0, 0);
 
-		_entries.add(entry);
+		_announcementsEntries.add(entry);
 
 		List<AnnouncementsEntry> entries =
 			_announcementsEntryLocalService.getEntries(
@@ -363,6 +363,10 @@ public class AnnouncementsEntryLocalServiceTest {
 				entry.getEntryId()));
 	}
 
+	@DeleteAfterTestRun
+	private final List<AnnouncementsEntry> _announcementsEntries =
+		new ArrayList<>();
+
 	@Inject
 	private AnnouncementsEntryLocalService _announcementsEntryLocalService;
 
@@ -377,9 +381,6 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private Company _company2;
-
-	@DeleteAfterTestRun
-	private final List<AnnouncementsEntry> _entries = new ArrayList<>();
 
 	@Inject
 	private GroupLocalService _groupLocalService;

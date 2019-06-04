@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Ratings Test Utilities
+Bundle-SymbolicName: com.liferay.ratings.test.util
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.ratings.test.util

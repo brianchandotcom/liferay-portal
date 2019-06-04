@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.ratings.test.BaseRatingsTestCase;
+import com.liferay.ratings.test.util.BaseRatingsTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;

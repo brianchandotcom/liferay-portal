@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portlet.ratings.test.BaseRatingsTestCase;
+import com.liferay.ratings.test.util.BaseRatingsTestCase;
 
 import java.util.Date;
 

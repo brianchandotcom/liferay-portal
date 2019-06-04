@@ -8,6 +8,7 @@ dependencies {
 	testIntegrationCompile project(":apps:portal-search:portal-search-test-util")
 	testIntegrationCompile project(":apps:portal-security:portal-security-permission-test-util")
 	testIntegrationCompile project(":apps:portal:portal-verify-test-util")
+	testIntegrationCompile project(":apps:ratings:ratings-test-util")
 	testIntegrationCompile project(":apps:social:social-activity-test-util")
 	testIntegrationCompile project(":apps:subscription:subscription-api")
 	testIntegrationCompile project(":apps:trash:trash-api")

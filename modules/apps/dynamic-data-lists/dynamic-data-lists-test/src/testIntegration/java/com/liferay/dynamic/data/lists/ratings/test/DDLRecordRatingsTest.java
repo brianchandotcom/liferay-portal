@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.ratings.test.BaseRatingsTestCase;
+import com.liferay.ratings.test.util.BaseRatingsTestCase;
 
 import java.util.HashSet;
 import java.util.Locale;

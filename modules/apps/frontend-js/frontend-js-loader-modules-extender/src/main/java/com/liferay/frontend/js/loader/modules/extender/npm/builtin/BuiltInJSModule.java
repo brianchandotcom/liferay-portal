@@ -54,14 +54,6 @@ public abstract class BuiltInJSModule implements JSModule {
 		_jsPackage = jsPackage;
 		_name = name;
 		_dependencies = dependencies;
-
-		for (String dependency : dependencies) {
-			String packageName = ModuleNameUtil.getPackageName(dependency);
-
-			if (packageName != null) {
-				_dependencyPackageNames.add(packageName);
-			}
-		}
 	}
 
 	@Override
@@ -71,7 +63,17 @@ public abstract class BuiltInJSModule implements JSModule {
 
 	@Override
 	public Collection<String> getDependencyPackageNames() {
-		return _dependencyPackageNames;
+		List<String> dependencyPackageNames = new ArrayList<>();
+
+		for (String dependency : _dependencies) {
+			String packageName = ModuleNameUtil.getPackageName(dependency);
+
+			if (packageName != null) {
+				dependencyPackageNames.add(packageName);
+			}
+		}
+
+		return dependencyPackageNames;
 	}
 
 	@Override
@@ -123,7 +125,6 @@ public abstract class BuiltInJSModule implements JSModule {
 	}
 
 	private final Collection<String> _dependencies;
-	private final List<String> _dependencyPackageNames = new ArrayList<>();
 	private final JSPackage _jsPackage;
 	private final String _name;
 

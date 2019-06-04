@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Change Tracking Headless Test
-Bundle-SymbolicName: com.liferay.change.tracking.headless.test
-Bundle-Version: 1.0.0
--includeresource: com.liferay.change.tracking.headless.client.jar=com.liferay.change.tracking.headless.client-[0-9]*.jar;lib:=true

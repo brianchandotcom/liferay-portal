@@ -1,9 +1,0 @@
-apiDir: "../change-tracking-headless-api/src/main/java"
-apiPackagePath: "com.liferay.change.tracking.headless"
-application:
-    baseURI: "/change-tracking-headless"
-    className: "ChangeTrackingHeadlessApplication"
-    name: "Liferay.Change.Tracking.Headless"
-author: "Mate Thurzo"
-clientDir: "../change-tracking-headless-client/src/main/java"
-testDir: "../change-tracking-headless-test/src/testIntegration/java"

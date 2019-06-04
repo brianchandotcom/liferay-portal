@@ -15,8 +15,6 @@ Export-Package:\
 	com.liferay.portlet.expando.util.test,\
 	com.liferay.portlet.messageboards.util.test,\
 	com.liferay.portlet.passwordpoliciesadmin.util.test,\
-	com.liferay.portlet.ratings.test,\
-	com.liferay.portlet.ratings.util.test,\
 	\
 	junit.*,\
 	\

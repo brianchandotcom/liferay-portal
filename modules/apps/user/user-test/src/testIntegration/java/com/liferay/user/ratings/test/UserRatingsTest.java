@@ -18,9 +18,10 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.ratings.test.BaseRatingsTestCase;
 
@@ -52,12 +53,15 @@ public class UserRatingsTest extends BaseRatingsTestCase {
 			BaseModel<?> baseModel, ServiceContext serviceContext)
 		throws Exception {
 
-		return UserLocalServiceUtil.deleteUser((User)baseModel);
+		return _userLocalService.deleteUser((User)baseModel);
 	}
 
 	@Override
 	protected Class<?> getBaseModelClass() {
 		return User.class;
 	}
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

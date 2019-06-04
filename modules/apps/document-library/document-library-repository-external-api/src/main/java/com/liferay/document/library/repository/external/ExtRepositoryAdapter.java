@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.document.library.repository.external.model.ExtRepositoryFileEntryAdapter;
@@ -1187,6 +1188,10 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 
 	protected String getExtRepositoryObjectKey(long repositoryEntryId)
 		throws PortalException {
+
+		if (repositoryEntryId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return _extRepository.getRootFolderKey();
+		}
 
 		RepositoryEntry repositoryEntry =
 			repositoryEntryLocalService.fetchRepositoryEntry(repositoryEntryId);

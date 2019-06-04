@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Settings")
 public class Settings {
 
-	@Schema(description = "True if change tracking is allowed.")
+	@Schema
 	public Boolean getChangeTrackingAllowed() {
 		return changeTrackingAllowed;
 	}
@@ -74,7 +74,7 @@ public class Settings {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean changeTrackingAllowed;
 
-	@Schema(description = "True if change tracking is enabled.")
+	@Schema
 	public Boolean getChangeTrackingEnabled() {
 		return changeTrackingEnabled;
 	}
@@ -103,7 +103,7 @@ public class Settings {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean changeTrackingEnabled;
 
-	@Schema(description = "True if the checkout configuration is enabled.")
+	@Schema
 	public Boolean getCheckoutCTCollectionConfirmationEnabled() {
 		return checkoutCTCollectionConfirmationEnabled;
 	}
@@ -136,9 +136,7 @@ public class Settings {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean checkoutCTCollectionConfirmationEnabled;
 
-	@Schema(
-		description = "The company id of the change tracking configuration."
-	)
+	@Schema
 	public Integer getCompanyId() {
 		return companyId;
 	}
@@ -166,7 +164,7 @@ public class Settings {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer companyId;
 
-	@Schema(description = "The language keys of the supported content types'.")
+	@Schema
 	public String[] getSupportedContentTypeLanguageKeys() {
 		return supportedContentTypeLanguageKeys;
 	}
@@ -199,7 +197,7 @@ public class Settings {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] supportedContentTypeLanguageKeys;
 
-	@Schema(description = "The supported content types.")
+	@Schema
 	public String[] getSupportedContentTypes() {
 		return supportedContentTypes;
 	}
@@ -228,7 +226,7 @@ public class Settings {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] supportedContentTypes;
 
-	@Schema(description = "The user id of the change tracking settings.")
+	@Schema
 	public Integer getUserId() {
 		return userId;
 	}

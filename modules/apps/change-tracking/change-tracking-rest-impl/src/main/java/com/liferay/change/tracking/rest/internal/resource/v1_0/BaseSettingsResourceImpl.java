@@ -23,7 +23,6 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -57,9 +56,6 @@ public abstract class BaseSettingsResourceImpl implements SettingsResource {
 
 	@Override
 	@GET
-	@Operation(
-		description = "Retrieves a change tracking setting for a company or a specific user."
-	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "companyId"),
@@ -80,9 +76,6 @@ public abstract class BaseSettingsResourceImpl implements SettingsResource {
 
 	@Override
 	@Consumes({"application/json", "application/xml"})
-	@Operation(
-		description = "Updates a change tracking setting for a company or a specific user."
-	)
 	@PUT
 	@Parameters(
 		value = {

@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "SettingsUpdate")
 public class SettingsUpdate {
 
-	@Schema(description = "True if change tracking is enabled.")
+	@Schema
 	public Boolean getChangeTrackingEnabled() {
 		return changeTrackingEnabled;
 	}
@@ -74,7 +74,7 @@ public class SettingsUpdate {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean changeTrackingEnabled;
 
-	@Schema(description = "True if the checkout configuration is enabled.")
+	@Schema
 	public Boolean getCheckoutCTCollectionConfirmationEnabled() {
 		return checkoutCTCollectionConfirmationEnabled;
 	}

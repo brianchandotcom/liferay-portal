@@ -21,9 +21,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.ratings.kernel.exception.NoSuchStatsException;
 import com.liferay.ratings.kernel.model.RatingsStats;
-import com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil;
+import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -51,7 +52,7 @@ public abstract class BaseRatingsTestCase {
 
 		deleteBaseModel(baseModel, serviceContext);
 
-		RatingsStatsLocalServiceUtil.getRatingsStats(ratingsStats.getStatsId());
+		_ratingsStatsLocalService.getRatingsStats(ratingsStats.getStatsId());
 	}
 
 	protected abstract BaseModel<?> addBaseModel(
@@ -83,5 +84,8 @@ public abstract class BaseRatingsTestCase {
 
 		return clazz.getName();
 	}
+
+	@Inject
+	private RatingsStatsLocalService _ratingsStatsLocalService;
 
 }

@@ -10,7 +10,9 @@ describe('MapBase', () => {
 		_handlePositionChanged(data) {
 			const geolocation = (data && data.location) || getLocation();
 
-			return super._handlePositionChanged({newVal: {location: geolocation}});
+			return super._handlePositionChanged({
+				newVal: {location: geolocation}
+			});
 		}
 
 		_createMap(location, controlsConfig) {
@@ -39,13 +41,13 @@ describe('MapBase', () => {
 	let geocoderImpl = {
 		reverse: function(location, cb) {
 			cb({data: {name: 'data', location}});
-		},
+		}
 	};
 
 	let GeocoderImpl = jest.fn().mockImplementation(() => geocoderImpl);
 
 	let geoJSONImpl = {
-		on: jest.fn(),
+		on: jest.fn()
 	};
 
 	let GeoJSONImpl = jest.fn().mockImplementation(({map}) => geoJSONImpl);
@@ -53,8 +55,8 @@ describe('MapBase', () => {
 	beforeEach(() => {
 		window.Liferay = {
 			Util: {
-				getGeolocation: jest.fn(),
-			},
+				getGeolocation: jest.fn()
+			}
 		};
 
 		MapImpl.MarkerImpl = MarkerImpl;
@@ -74,7 +76,7 @@ describe('MapBase', () => {
 			locations: [],
 			extend: function(location) {
 				this.locations.push(location);
-			},
+			}
 		};
 	});
 
@@ -107,22 +109,24 @@ describe('MapBase', () => {
 			expect(mapImpl.addMarker).toHaveBeenCalledTimes(1);
 			expect(result).toBe(undefined);
 		});
-
 	});
 
 	describe('constructor()', () => {
 		it('should call _initializeMap as a fallback', () => {
 			window.Liferay = {
 				Util: {
-					getGeolocation: jest.fn((success, fallback) => fallback()),
-				},
+					getGeolocation: jest.fn((success, fallback) => fallback())
+				}
 			};
 
 			jest.spyOn(MapImpl.prototype, '_initializeMap');
 
 			const mapImpl = new MapImpl();
 
-			expect(mapImpl._initializeMap.mock.calls[0][0].location).toEqual({lat: 0, lng: 0});
+			expect(mapImpl._initializeMap.mock.calls[0][0].location).toEqual({
+				lat: 0,
+				lng: 0
+			});
 			expect(mapImpl.zoom).toBe(2);
 		});
 	});
@@ -146,7 +150,9 @@ describe('MapBase', () => {
 
 			mapImpl._customControls = {[MapImpl.CONTROLS.SEARCH]: control};
 
-			expect(mapImpl._customControls[MapImpl.CONTROLS.SEARCH]).toBe(control);
+			expect(mapImpl._customControls[MapImpl.CONTROLS.SEARCH]).toBe(
+				control
+			);
 
 			mapImpl.destructor();
 
@@ -196,7 +202,7 @@ describe('MapBase', () => {
 
 			expect(mapImpl._geoJSONLayer.on.mock.calls[0]).toEqual([
 				'featuresAdded',
-				mapImpl._handleGeoJSONLayerFeaturesAdded,
+				mapImpl._handleGeoJSONLayerFeaturesAdded
 			]);
 		});
 
@@ -208,7 +214,7 @@ describe('MapBase', () => {
 
 			expect(mapImpl._geolocationMarker.on.mock.calls[0]).toEqual([
 				'dragend',
-				mapImpl._handleGeoLocationMarkerDragended,
+				mapImpl._handleGeoLocationMarkerDragended
 			]);
 		});
 
@@ -216,24 +222,28 @@ describe('MapBase', () => {
 			mapImpl._handleHomeButtonClicked = jest.fn();
 
 			mapImpl._customControls = {
-				[MapImpl.CONTROLS.HOME]: {addEventListener: jest.fn()},
+				[MapImpl.CONTROLS.HOME]: {addEventListener: jest.fn()}
 			};
 
 			mapImpl._bindUIMB();
 
 			expect(
-				mapImpl._customControls[MapImpl.CONTROLS.HOME].addEventListener.mock.calls[0]
+				mapImpl._customControls[MapImpl.CONTROLS.HOME].addEventListener
+					.mock.calls[0]
 			).toEqual(['click', mapImpl._handleHomeButtonClicked]);
 		});
 
 		it('should bind handlers to search event on customControls[SEARCH]', () => {
 			mapImpl._handleSearchButtonClicked = jest.fn();
-			mapImpl._customControls = {[MapImpl.CONTROLS.SEARCH]: {on: jest.fn()}};
+			mapImpl._customControls = {
+				[MapImpl.CONTROLS.SEARCH]: {on: jest.fn()}
+			};
 
 			mapImpl._bindUIMB();
 
 			expect(
-				mapImpl._customControls[MapImpl.CONTROLS.SEARCH].on.mock.calls[0]
+				mapImpl._customControls[MapImpl.CONTROLS.SEARCH].on.mock
+					.calls[0]
 			).toEqual(['search', mapImpl._handleSearchButtonClicked]);
 		});
 	});
@@ -294,7 +304,9 @@ describe('MapBase', () => {
 
 			mapImpl._initializeGeoJSONData();
 
-			expect(mapImpl._geoJSONLayer.addData.mock.calls[0][0]).toBe(mapImpl.data);
+			expect(mapImpl._geoJSONLayer.addData.mock.calls[0][0]).toBe(
+				mapImpl.data
+			);
 		});
 	});
 
@@ -423,15 +435,13 @@ describe('MapBase', () => {
 			const featureA = new Feature();
 			const featureB = new Feature();
 
-			mapImpl._handleGeoJSONLayerFeaturesAdded(
-				{
-					features: [featureA, featureB],
-				}
-			);
+			mapImpl._handleGeoJSONLayerFeaturesAdded({
+				features: [featureA, featureB]
+			});
 
 			expect(mapImpl.getBounds().locations).toEqual([
 				featureA.geometry.location,
-				featureB.geometry.location,
+				featureB.geometry.location
 			]);
 		});
 	});
@@ -458,7 +468,9 @@ describe('MapBase', () => {
 
 			mapImpl._handleGeoLocationMarkerDragended({location});
 
-			expect(mapImpl._getGeocoder().reverse.mock.calls[0][0]).toBe(location);
+			expect(mapImpl._getGeocoder().reverse.mock.calls[0][0]).toBe(
+				location
+			);
 		});
 
 		it('should update the instance position', () => {
@@ -509,7 +521,9 @@ describe('MapBase', () => {
 
 			mapImpl._geolocationMarker = mapImpl.addMarker(locationA);
 
-			expect(mapImpl._geolocationMarker.location.location).toEqual(locationA);
+			expect(mapImpl._geolocationMarker.location.location).toEqual(
+				locationA
+			);
 
 			mapImpl._handlePositionChanged({location: locationB});
 
@@ -529,31 +543,25 @@ describe('MapBase', () => {
 
 	describe('getBounds()', () => {
 		it('should throw a not implemented Error', () => {
-			expect(
-				() => {
-					new MapBase().getBounds();
-				}
-			).toThrow();
+			expect(() => {
+				new MapBase().getBounds();
+			}).toThrow();
 		});
 	});
 
 	describe('setCenter()', () => {
 		it('should throw a not implemented Error', () => {
-			expect(
-				() => {
-					new MapBase().setCenter();
-				}
-			).toThrow();
+			expect(() => {
+				new MapBase().setCenter();
+			}).toThrow();
 		});
 	});
 
 	describe('_createMap()', () => {
 		it('should throw a not implemented Error', () => {
-			expect(
-				() => {
-					new MapBase()._createMap();
-				}
-			).toThrow();
+			expect(() => {
+				new MapBase()._createMap();
+			}).toThrow();
 		});
 	});
 });

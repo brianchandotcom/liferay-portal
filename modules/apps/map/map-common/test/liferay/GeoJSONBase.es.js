@@ -37,7 +37,9 @@ describe('GeoJSONBase', () => {
 			geoJSONChild.addData('some data to be parsed');
 
 			expect(geoJSONChild._getNativeFeatures).toHaveBeenCalledTimes(1);
-			expect(geoJSONChild._getNativeFeatures).toHaveBeenCalledWith('some data to be parsed');
+			expect(geoJSONChild._getNativeFeatures).toHaveBeenCalledWith(
+				'some data to be parsed'
+			);
 		});
 
 		it('should emit a featuresAdded event after adding data', () => {
@@ -60,12 +62,10 @@ describe('GeoJSONBase', () => {
 
 			const eventData = geoJSONChild.emit.mock.calls[0][1];
 
-			eventData.features.forEach(
-				(wrappedFeature, index) => {
-					expect(wrappedFeature.wrapped);
-					expect(wrappedFeature.feature).toBe(features[index]);
-				}
-			);
+			eventData.features.forEach((wrappedFeature, index) => {
+				expect(wrappedFeature.wrapped);
+				expect(wrappedFeature.feature).toBe(features[index]);
+			});
 		});
 	});
 
@@ -84,32 +84,26 @@ describe('GeoJSONBase', () => {
 
 			const eventData = geoJSONChild.emit.mock.calls[0][1];
 
-			expect(eventData.feature).toEqual(
-				{
-					feature: 'Nice feature baby',
-					wrapped: true,
-				}
-			);
+			expect(eventData.feature).toEqual({
+				feature: 'Nice feature baby',
+				wrapped: true
+			});
 		});
 	});
 
 	describe('_getNativeFeatures()', () => {
 		it('should throw a not implemented error', () => {
-			expect(
-				() => {
-					geoJSONBase._getNativeFeatures();
-				}
-			).toThrow();
+			expect(() => {
+				geoJSONBase._getNativeFeatures();
+			}).toThrow();
 		});
 	});
 
 	describe('_wrapNativeFeature()', () => {
 		it('should throw a not implemented error', () => {
-			expect(
-				() => {
-					geoJSONBase._wrapNativeFeature();
-				}
-			).toThrow();
+			expect(() => {
+				geoJSONBase._wrapNativeFeature();
+			}).toThrow();
 		});
 	});
 });

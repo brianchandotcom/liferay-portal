@@ -8,186 +8,128 @@ const defaultRadioConfig = {
 	spritemap
 };
 
-describe(
-	'Field Radio',
-	() => {
-		afterEach(
-			() => {
-				if (component) {
-					component.dispose();
+describe('Field Radio', () => {
+	afterEach(() => {
+		if (component) {
+			component.dispose();
+		}
+	});
+
+	it('should be not edidable', () => {
+		component = new Radio({
+			...defaultRadioConfig,
+			readOnly: false
+		});
+
+		expect(component).toMatchSnapshot();
+	});
+
+	it('should have a helptext', () => {
+		component = new Radio({
+			...defaultRadioConfig,
+			tip: 'Type something'
+		});
+
+		expect(component).toMatchSnapshot();
+	});
+
+	it('should render options', () => {
+		component = new Radio({
+			...defaultRadioConfig,
+			options: [
+				{
+					checked: false,
+					disabled: false,
+					id: 'id',
+					inline: false,
+					label: 'label',
+					name: 'name',
+					showLabel: true,
+					value: 'item'
+				},
+				{
+					checked: false,
+					disabled: false,
+					id: 'id',
+					inline: false,
+					label: 'label2',
+					name: 'name',
+					showLabel: true,
+					value: 'item'
 				}
-			}
-		);
+			]
+		});
 
-		it(
-			'should be not edidable',
-			() => {
-				component = new Radio(
-					{
-						...defaultRadioConfig,
-						readOnly: false
-					}
-				);
+		expect(component).toMatchSnapshot();
+	});
 
-				expect(component).toMatchSnapshot();
-			}
-		);
+	it('should render no options when options is empty', () => {
+		component = new Radio({
+			...defaultRadioConfig,
+			options: []
+		});
 
-		it(
-			'should have a helptext',
-			() => {
-				component = new Radio(
-					{
-						...defaultRadioConfig,
-						tip: 'Type something'
-					}
-				);
+		expect(component).toMatchSnapshot();
+	});
 
-				expect(component).toMatchSnapshot();
-			}
-		);
+	it('should have an id', () => {
+		component = new Radio({
+			...defaultRadioConfig,
+			id: 'ID'
+		});
 
-		it(
-			'should render options',
-			() => {
-				component = new Radio(
-					{
-						...defaultRadioConfig,
-						options: [
-							{
-								checked: false,
-								disabled: false,
-								id: 'id',
-								inline: false,
-								label: 'label',
-								name: 'name',
-								showLabel: true,
-								value: 'item'
-							},
-							{
-								checked: false,
-								disabled: false,
-								id: 'id',
-								inline: false,
-								label: 'label2',
-								name: 'name',
-								showLabel: true,
-								value: 'item'
-							}
-						]
-					}
-				);
+		expect(component).toMatchSnapshot();
+	});
 
-				expect(component).toMatchSnapshot();
-			}
-		);
+	it('should have a label', () => {
+		component = new Radio({
+			...defaultRadioConfig,
+			label: 'label'
+		});
 
-		it(
-			'should render no options when options is empty',
-			() => {
-				component = new Radio(
-					{
-						...defaultRadioConfig,
-						options: []
-					}
-				);
+		expect(component).toMatchSnapshot();
+	});
 
-				expect(component).toMatchSnapshot();
-			}
-		);
+	it('should have a predefined Value', () => {
+		component = new Radio({
+			...defaultRadioConfig,
+			placeholder: 'Option 1'
+		});
 
-		it(
-			'should have an id',
-			() => {
-				component = new Radio(
-					{
-						...defaultRadioConfig,
-						id: 'ID'
-					}
-				);
+		expect(component).toMatchSnapshot();
+	});
 
-				expect(component).toMatchSnapshot();
-			}
-		);
+	it('should not be required', () => {
+		component = new Radio({
+			...defaultRadioConfig,
+			required: false
+		});
 
-		it(
-			'should have a label',
-			() => {
-				component = new Radio(
-					{
-						...defaultRadioConfig,
-						label: 'label'
-					}
-				);
+		expect(component).toMatchSnapshot();
+	});
 
-				expect(component).toMatchSnapshot();
-			}
-		);
+	it('should render Label if showLabel is true', () => {
+		component = new Radio({
+			...defaultRadioConfig,
+			label: 'text',
+			showLabel: true
+		});
 
-		it(
-			'should have a predefined Value',
-			() => {
-				component = new Radio(
-					{
-						...defaultRadioConfig,
-						placeholder: 'Option 1'
-					}
-				);
+		expect(component).toMatchSnapshot();
+	});
 
-				expect(component).toMatchSnapshot();
-			}
-		);
+	it('should have a spritemap', () => {
+		component = new Radio(defaultRadioConfig);
 
-		it(
-			'should not be required',
-			() => {
-				component = new Radio(
-					{
-						...defaultRadioConfig,
-						required: false
-					}
-				);
+		expect(component).toMatchSnapshot();
+	});
 
-				expect(component).toMatchSnapshot();
-			}
-		);
+	it('should have a value', () => {
+		component = new Radio({
+			...defaultRadioConfig,
+			value: 'value'
+		});
 
-		it(
-			'should render Label if showLabel is true',
-			() => {
-				component = new Radio(
-					{
-						...defaultRadioConfig,
-						label: 'text',
-						showLabel: true
-					}
-				);
-
-				expect(component).toMatchSnapshot();
-			}
-		);
-
-		it(
-			'should have a spritemap',
-			() => {
-				component = new Radio(defaultRadioConfig);
-
-				expect(component).toMatchSnapshot();
-			}
-		);
-
-		it(
-			'should have a value',
-			() => {
-				component = new Radio(
-					{
-						...defaultRadioConfig,
-						value: 'value'
-					}
-				);
-
-				expect(component).toMatchSnapshot();
-			}
-		);
-	}
-);
+		expect(component).toMatchSnapshot();
+	});
+});

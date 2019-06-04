@@ -8,21 +8,18 @@ class MockField extends Component {
 	emitFieldEdited(value, fieldName) {
 		this.value = value;
 
-		this.emit(
-			'fieldEdited',
-			{
-				fieldInstance: this,
-				originalEvent: {
-					delegateTarget: this.element.querySelector('p'),
-					target: {
-						getAttribute: () => {
-							return fieldName;
-						}
+		this.emit('fieldEdited', {
+			fieldInstance: this,
+			originalEvent: {
+				delegateTarget: this.element.querySelector('p'),
+				target: {
+					getAttribute: () => {
+						return fieldName;
 					}
-				},
-				value
-			}
-		);
+				}
+			},
+			value
+		});
 	}
 }
 

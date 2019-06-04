@@ -1,13 +1,15 @@
-const preset = require('liferay-npm-scripts/src/presets/standard');
+const PRETTIER_GLOBS = [
+	'*.js',
+	'.*.js',
+	'apps/**/{src,test}/**/*.{js,scss}',
+	'!yarn-*.js',
+	'!**/classes/**/*.{js,scss}',
+	'!**/css/clay/**/*.scss',
+	'!modules/tests/poshi-runner'
+];
 
 module.exports = {
-	format: [
-		'apps/**/src/**/*.js',
-		'apps/**/src/**/*.scss',
-		'!**/classes/**/*.js',
-		'!**/classes/**/*.scss',
-		'!modules/tests/poshi-runner'
-	],
+	format: PRETTIER_GLOBS,
 	preset: 'liferay-npm-scripts/src/presets/standard',
-	lint: [],
+	lint: PRETTIER_GLOBS
 };

@@ -13,50 +13,37 @@ const props = {
 
 let shareFormIcon;
 
-describe(
-	'ShareFormPopover',
-	() => {
-		let component;
+describe('ShareFormPopover', () => {
+	let component;
 
-		afterEach(
-			() => {
-				if (component) {
-					component.dispose();
-				}
-			}
-		);
+	afterEach(() => {
+		if (component) {
+			component.dispose();
+		}
+	});
 
-		beforeEach(
-			() => {
-				shareFormIcon = document.createElement('span');
-				shareFormIcon.classList.add('share-form-icon');
+	beforeEach(() => {
+		shareFormIcon = document.createElement('span');
+		shareFormIcon.classList.add('share-form-icon');
 
-				document.querySelector('body').appendChild(shareFormIcon);
+		document.querySelector('body').appendChild(shareFormIcon);
 
-				jest.useFakeTimers();
-				fetch.resetMocks();
-			}
-		);
+		jest.useFakeTimers();
+		fetch.resetMocks();
+	});
 
-		it(
-			'should render the default markup',
-			() => {
-				component = new ShareFormPopover(props);
-				expect(component).toMatchSnapshot();
-			}
-		);
+	it('should render the default markup', () => {
+		component = new ShareFormPopover(props);
+		expect(component).toMatchSnapshot();
+	});
 
-		it(
-			'should copy the sharable URL to user\'s clipboard',
-			() => {
-				component = new ShareFormPopover(props);
-				component._clipboard.emit('success');
+	it("should copy the sharable URL to user's clipboard", () => {
+		component = new ShareFormPopover(props);
+		component._clipboard.emit('success');
 
-				jest.runAllTimers();
+		jest.runAllTimers();
 
-				expect(component.state.success).toBeTruthy();
-				expect(component).toMatchSnapshot();
-			}
-		);
-	}
-);
+		expect(component.state.success).toBeTruthy();
+		expect(component).toMatchSnapshot();
+	});
+});

@@ -4,8 +4,9 @@ import {expect} from 'chai';
 describe('getNumberOfWords', () => {
 	it('should return the number of words', () => {
 		const content = {
-			description: 'Build portals, intranets, websites and connected experiences on the most flexible platform around.',
-			title: 'Digital Experience Software Tailored to Your Needs',
+			description:
+				'Build portals, intranets, websites and connected experiences on the most flexible platform around.',
+			title: 'Digital Experience Software Tailored to Your Needs'
 		};
 
 		const markup = `<header class="header">

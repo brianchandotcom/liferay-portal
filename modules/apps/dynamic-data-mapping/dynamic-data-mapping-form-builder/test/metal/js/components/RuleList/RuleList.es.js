@@ -60,54 +60,40 @@ const configDefault = {
 	spritemap
 };
 
-describe(
-	'RuleList',
-	() => {
-		beforeEach(
-			() => {
-				jest.useFakeTimers();
+describe('RuleList', () => {
+	beforeEach(() => {
+		jest.useFakeTimers();
+	});
+	afterEach(() => {
+		if (component) {
+			component.dispose();
+		}
+	});
+
+	it('should return the field label for each action', () => {
+		component = new RuleList(configDefault);
+
+		const contextLabel =
+			component.pages[0].rows[0].columns[0].fields[0].label;
+
+		const actionLabel = component.rules[0].actions[0].label;
+
+		jest.runAllTimers();
+
+		expect(actionLabel).toEqual(contextLabel);
+	});
+
+	it('should show message when rule list is empty', () => {
+		component = new RuleList({
+			pages,
+			rules: [],
+			spritemap,
+			strings: {
+				emptyListText:
+					'there-are-no-rules-yet-click-on-plus-icon-below-to-add-the-first'
 			}
-		);
-		afterEach(
-			() => {
-				if (component) {
-					component.dispose();
-				}
-			}
-		);
+		});
 
-		it(
-			'should return the field label for each action',
-			() => {
-				component = new RuleList(configDefault);
-
-				const contextLabel = component.pages[0].rows[0].columns[0].fields[0].label;
-
-				const actionLabel = component.rules[0].actions[0].label;
-
-				jest.runAllTimers();
-
-				expect(actionLabel).toEqual(contextLabel);
-			}
-		);
-
-		it(
-			'should show message when rule list is empty',
-			() => {
-				component = new RuleList(
-					{
-						pages,
-						rules: [],
-						spritemap,
-						strings: {
-							emptyListText: 'there-are-no-rules-yet-click-on-plus-icon-below-to-add-the-first'
-						}
-					}
-				);
-
-				expect(component).toMatchSnapshot();
-
-			}
-		);
-	}
-);
+		expect(component).toMatchSnapshot();
+	});
+});

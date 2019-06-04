@@ -20,7 +20,8 @@ const getPage = () => {
 
 	const page = document.createElement('div');
 	page.style.width = '600px';
-	page.innerHTML = divElement + divElement + blogElement + divElement + divElement;
+	page.innerHTML =
+		divElement + divElement + blogElement + divElement + divElement;
 
 	document.body.appendChild(page);
 
@@ -66,7 +67,10 @@ describe('getDepth from a element', () => {
 		const {top, bottom} = blogElementNode.getBoundingClientRect();
 
 		expect(top <= 0 && bottom > 0).to.equal(true);
-		expect(scroll.getDepth(blogElementNode) >=0 && scroll.getDepth(blogElementNode) <= 100).to.equal(true);
+		expect(
+			scroll.getDepth(blogElementNode) >= 0 &&
+				scroll.getDepth(blogElementNode) <= 100
+		).to.equal(true);
 
 		page.innerHTML = '';
 

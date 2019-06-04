@@ -8,170 +8,138 @@ let component;
 let componentProps = null;
 let page = null;
 
-describe(
-	'PageRenderer',
-	() => {
-		beforeEach(
-			() => {
-				page = {...mockPages[0]};
+describe('PageRenderer', () => {
+	beforeEach(() => {
+		page = {...mockPages[0]};
 
-				componentProps = {
-					activePage: 0,
-					contentRenderer: 'grid',
-					editable: true,
-					page,
-					pageId: 0,
-					spritemap,
-					total: 1
-				};
+		componentProps = {
+			activePage: 0,
+			contentRenderer: 'grid',
+			editable: true,
+			page,
+			pageId: 0,
+			spritemap,
+			total: 1
+		};
 
-				jest.useFakeTimers();
+		jest.useFakeTimers();
+	});
+
+	it('should display empty drag message when there are rows with no columns specified', () => {
+		component = new PageRenderer({
+			...componentProps,
+			page: {
+				rows: [{}]
 			}
+		});
+		expect(component).toMatchSnapshot();
+	});
+
+	it('should change the page title', () => {
+		component = new PageRenderer({
+			...componentProps
+		});
+
+		const pageTitle = component.element.querySelector(
+			'.form-builder-page-header-title'
 		);
+		const spy = jest.spyOn(component, 'emit');
 
-		it(
-			'should display empty drag message when there are rows with no columns specified',
-			() => {
-				component = new PageRenderer(
-					{
-						...componentProps,
-						page: {
-							rows: [{}]
-						}
-					}
-				);
-				expect(component).toMatchSnapshot();
-			}
+		pageTitle.value = 'Page Title';
+
+		jest.runAllTimers();
+		MetalTestUtil.triggerEvent(pageTitle, 'keyup', {});
+
+		expect(spy).toHaveBeenCalled();
+		expect(spy).toHaveBeenCalledWith('updatePage', expect.any(Object));
+
+		expect(component).toMatchSnapshot();
+	});
+
+	it('should change the page title', () => {
+		component = new PageRenderer({
+			...componentProps
+		});
+
+		const pageDescription = component.element.querySelector(
+			'.form-builder-page-header-description'
 		);
+		const spy = jest.spyOn(component, 'emit');
 
-		it(
-			'should change the page title',
-			() => {
-				component = new PageRenderer(
-					{
-						...componentProps
-					}
-				);
+		pageDescription.value = 'Page Description';
 
-				const pageTitle = component.element.querySelector('.form-builder-page-header-title');
-				const spy = jest.spyOn(component, 'emit');
+		jest.runAllTimers();
+		MetalTestUtil.triggerEvent(pageDescription, 'keyup', {});
 
-				pageTitle.value = 'Page Title';
+		expect(spy).toHaveBeenCalled();
+		expect(spy).toHaveBeenCalledWith('updatePage', expect.any(Object));
 
-				jest.runAllTimers();
-				MetalTestUtil.triggerEvent(pageTitle, 'keyup', {});
+		expect(component).toMatchSnapshot();
+	});
 
-				expect(spy).toHaveBeenCalled();
-				expect(spy).toHaveBeenCalledWith('updatePage', expect.any(Object));
+	it('should render a layout and emit an event when delete button is clicked', () => {
+		component = new PageRenderer({
+			...componentProps
+		});
 
-				expect(component).toMatchSnapshot();
-			}
+		const spy = jest.spyOn(component, 'emit');
+
+		component.element.querySelector("button[aria-label='trash']").click();
+
+		expect(spy).toHaveBeenCalled();
+		expect(spy).toHaveBeenCalledWith(
+			'deleteButtonClicked',
+			expect.any(Object)
 		);
+	});
 
-		it(
-			'should change the page title',
-			() => {
-				component = new PageRenderer(
-					{
-						...componentProps
-					}
-				);
+	it('should render a layout and emit an event when duplicate button is clicked', () => {
+		component = new PageRenderer({
+			...componentProps
+		});
 
-				const pageDescription = component.element.querySelector('.form-builder-page-header-description');
-				const spy = jest.spyOn(component, 'emit');
+		const spy = jest.spyOn(component, 'emit');
 
-				pageDescription.value = 'Page Description';
+		component.element.querySelector("button[aria-label='paste']").click();
 
-				jest.runAllTimers();
-				MetalTestUtil.triggerEvent(pageDescription, 'keyup', {});
-
-				expect(spy).toHaveBeenCalled();
-				expect(spy).toHaveBeenCalledWith('updatePage', expect.any(Object));
-
-				expect(component).toMatchSnapshot();
-			}
+		expect(spy).toHaveBeenCalled();
+		expect(spy).toHaveBeenCalledWith(
+			'duplicateButtonClicked',
+			expect.any(Object)
 		);
+	});
 
-		it(
-			'should render a layout and emit an event when delete button is clicked',
-			() => {
-				component = new PageRenderer(
-					{
-						...componentProps
-					}
-				);
+	it('should render a layout with emit an field clicked event', () => {
+		component = new PageRenderer({
+			...componentProps
+		});
 
-				const spy = jest.spyOn(component, 'emit');
+		const spy = jest.spyOn(component, 'emit');
 
-				component.element.querySelector('button[aria-label=\'trash\']').click();
+		component.element.querySelector('.ddm-drag').click();
 
-				expect(spy).toHaveBeenCalled();
-				expect(spy).toHaveBeenCalledWith('deleteButtonClicked', expect.any(Object));
-			}
+		expect(spy).toHaveBeenCalled();
+		expect(spy).toHaveBeenCalledWith('fieldClicked', expect.any(Object));
+	});
+
+	it('should emit a fieldClicked event with the field location', () => {
+		component = new PageRenderer({
+			...componentProps,
+			dragAndDropDisabled: true
+		});
+
+		const spy = jest.spyOn(component, 'emit');
+
+		component.element.querySelector('.ddm-drag').click();
+
+		expect(spy).toHaveBeenCalled();
+		expect(spy).toHaveBeenCalledWith(
+			'fieldClicked',
+			expect.objectContaining({
+				columnIndex: expect.anything(),
+				pageIndex: expect.any(Number),
+				rowIndex: expect.any(Number)
+			})
 		);
-
-		it(
-			'should render a layout and emit an event when duplicate button is clicked',
-			() => {
-				component = new PageRenderer(
-					{
-						...componentProps
-					}
-				);
-
-				const spy = jest.spyOn(component, 'emit');
-
-				component.element.querySelector('button[aria-label=\'paste\']').click();
-
-				expect(spy).toHaveBeenCalled();
-				expect(spy).toHaveBeenCalledWith('duplicateButtonClicked', expect.any(Object));
-			}
-		);
-
-		it(
-			'should render a layout with emit an field clicked event',
-			() => {
-				component = new PageRenderer(
-					{
-						...componentProps
-					}
-				);
-
-				const spy = jest.spyOn(component, 'emit');
-
-				component.element.querySelector('.ddm-drag').click();
-
-				expect(spy).toHaveBeenCalled();
-				expect(spy).toHaveBeenCalledWith('fieldClicked', expect.any(Object));
-			}
-		);
-
-		it(
-			'should emit a fieldClicked event with the field location',
-			() => {
-				component = new PageRenderer(
-					{
-						...componentProps,
-						dragAndDropDisabled: true
-					}
-				);
-
-				const spy = jest.spyOn(component, 'emit');
-
-				component.element.querySelector('.ddm-drag').click();
-
-				expect(spy).toHaveBeenCalled();
-				expect(spy).toHaveBeenCalledWith(
-					'fieldClicked',
-					expect.objectContaining(
-						{
-							columnIndex: expect.anything(),
-							pageIndex: expect.any(Number),
-							rowIndex: expect.any(Number)
-						}
-					)
-				);
-			}
-		);
-	}
-);
+	});
+});

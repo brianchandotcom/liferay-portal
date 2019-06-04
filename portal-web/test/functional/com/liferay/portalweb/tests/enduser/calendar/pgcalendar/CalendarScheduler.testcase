@@ -174,7 +174,7 @@ definition {
 			startDateTime = "08:00 PM");
 
 		Navigator.gotoSpecificURLPage(
-			pageName = "Home",
+			pageName = "My Profile",
 			url = "localhost:8080/web/test");
 
 		CalendarEvent.viewSiteCalendarEventWithDefaultPermissions(

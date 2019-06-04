@@ -120,13 +120,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 
 		try {
-			ClearThreadLocalUtil.clearThreadLocal();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		try {
 			DirectServletRegistryUtil.clearServlets();
 		}
 		catch (Exception e) {
@@ -170,17 +163,24 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		ModuleFrameworkUtilAdapter.unregisterContext(_arrayApplicationContext);
 
+		_arrayApplicationContext.close();
+
+		ClassLoaderPool.unregister(_portalServletContextName);
+		ServletContextClassLoaderPool.unregister(_portalServletContextName);
+
+		try {
+			ClearThreadLocalUtil.clearThreadLocal();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
 		try {
 			ClearTimerThreadUtil.clearTimerThread();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
-
-		_arrayApplicationContext.close();
-
-		ClassLoaderPool.unregister(_portalServletContextName);
-		ServletContextClassLoaderPool.unregister(_portalServletContextName);
 	}
 
 	@Override

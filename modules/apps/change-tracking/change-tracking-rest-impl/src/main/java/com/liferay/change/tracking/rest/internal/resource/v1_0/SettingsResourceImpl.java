@@ -19,10 +19,10 @@ import com.liferay.change.tracking.constants.CTSettingsKeys;
 import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.rest.dto.v1_0.Settings;
 import com.liferay.change.tracking.rest.dto.v1_0.SettingsUpdate;
-import com.liferay.change.tracking.rest.internal.exception.NoSuchUserCTEngineException;
-import com.liferay.change.tracking.rest.internal.util.CTJaxRsUtil;
+import com.liferay.change.tracking.rest.internal.util.ChangeTrackingRestUtil;
 import com.liferay.change.tracking.rest.resource.v1_0.SettingsResource;
 import com.liferay.change.tracking.settings.CTSettingsManager;
+import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -61,16 +61,16 @@ public class SettingsResourceImpl extends BaseSettingsResourceImpl {
 	public Page<Settings> getSettingsPage(Long companyId, Long userId)
 		throws Exception {
 
-		CTJaxRsUtil.checkCompany(companyId);
+		ChangeTrackingRestUtil.checkCompany(companyId);
 
 		try {
-			User user = CTJaxRsUtil.getUser(userId);
+			User user = _userLocalService.getUser(userId);
 
 			return Page.of(
 				Collections.singleton(
 					_getUserSettings(companyId, user.getUserId())));
 		}
-		catch (NoSuchUserCTEngineException | NullPointerException e) {
+		catch (NoSuchUserException | NullPointerException e) {
 
 			// No user found need to return company settings
 
@@ -85,16 +85,16 @@ public class SettingsResourceImpl extends BaseSettingsResourceImpl {
 			@NotNull Long companyId, Long userId, SettingsUpdate settingsUpdate)
 		throws Exception {
 
-		CTJaxRsUtil.checkCompany(companyId);
+		ChangeTrackingRestUtil.checkCompany(companyId);
 
 		try {
-			User user = CTJaxRsUtil.getUser(userId);
+			User user = _userLocalService.getUser(userId);
 
 			_updateUserSettings(user.getUserId(), settingsUpdate);
 
 			return _getUserSettings(companyId, user.getUserId());
 		}
-		catch (NoSuchUserCTEngineException | NullPointerException e) {
+		catch (NoSuchUserException | NullPointerException e) {
 
 			// No user, update company settings
 

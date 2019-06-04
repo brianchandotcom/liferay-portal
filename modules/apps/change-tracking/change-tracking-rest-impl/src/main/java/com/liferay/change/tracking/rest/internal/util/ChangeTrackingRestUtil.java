@@ -12,25 +12,18 @@
  * details.
  */
 
-package com.liferay.change.tracking.rest.internal.exception;
+package com.liferay.change.tracking.rest.internal.util;
 
-import javax.ws.rs.core.Response;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 
 /**
  * @author Máté Thurzó
  */
-public class NoSuchUserCTEngineException extends JaxRsCTEngineException {
+public class ChangeTrackingRestUtil {
 
-	public NoSuchUserCTEngineException(long companyId) {
-		super(companyId);
-
-		setResponseStatus(Response.Status.BAD_REQUEST);
-	}
-
-	public NoSuchUserCTEngineException(long companyId, String msg) {
-		super(companyId, msg);
-
-		setResponseStatus(Response.Status.BAD_REQUEST);
+	public static void checkCompany(long companyId) throws PortalException {
+		CompanyLocalServiceUtil.getCompany(companyId);
 	}
 
 }

@@ -42,9 +42,9 @@ export function initialContributorsToContributors(
 	initialContributors,
 	propertyGroups
 ) {
-	const {conjunctionId: initialConjunction} = initialContributors.find(
-		c => c.conjunctionId
-	) || {conjunctionId: CONJUNCTIONS.AND};
+	const DEFAULT_CONTRIBUTOR = {conjunctionId: CONJUNCTIONS.AND};
+	const {conjunctionId: initialConjunction} =
+		initialContributors.find(c => c.conjunctionId) || DEFAULT_CONTRIBUTOR;
 
 	return initialContributors.map(initialContributor => {
 		const propertyGroup =

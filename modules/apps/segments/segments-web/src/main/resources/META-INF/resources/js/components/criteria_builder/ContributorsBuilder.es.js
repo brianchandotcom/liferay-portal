@@ -64,6 +64,7 @@ class ContributorBuilder extends React.Component {
 
 	_handleCriteriaChange = (criteriaChange, index) => {
 		const {onQueryChange} = this.props;
+
 		onQueryChange(criteriaChange, index);
 	};
 
@@ -113,6 +114,7 @@ class ContributorBuilder extends React.Component {
 										<h2 className='sheet-title mb-2'>
 											{Liferay.Language.get('conditions')}
 										</h2>
+
 										<div className='criterion-string'>
 											<div className='btn-group'>
 												<div className='btn-group-item inline-item'>

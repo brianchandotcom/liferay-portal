@@ -67,7 +67,8 @@ class SegmentEdit extends Component {
 			contributors: initialContributors,
 			initialMembersCount,
 			propertyGroups,
-			showInEditMode
+			showInEditMode,
+			values
 		} = props;
 
 		const contributors = initialContributorsToContributors(
@@ -80,7 +81,7 @@ class SegmentEdit extends Component {
 			disabledSave: this._isQueryEmpty(contributors),
 			editing: showInEditMode,
 			membersCount: initialMembersCount,
-			validTitle: !!props.values.name[props.defaultLanguageId]
+			validTitle: !!values.name[props.defaultLanguageId]
 		};
 
 		this._debouncedFetchMembersCount = debounce(
@@ -182,9 +183,7 @@ class SegmentEdit extends Component {
 	 * @return {boolean} True if none of the contributor's queries have a value.
 	 */
 	_isQueryEmpty = contributors =>
-		contributors.every(contributor => {
-			return !contributor.query;
-		});
+		contributors.every(contributor => !contributor.query);
 
 	_renderContributors = () => {
 		const {
@@ -231,8 +230,8 @@ class SegmentEdit extends Component {
 	 * @memberof SegmentEdit
 	 */
 	_handlePreviewMembers = () => {
-		const {locale, previewMembersURL} = this.props;
-		const {name} = this.props.values;
+		const {locale, previewMembersURL, values} = this.props;
+		const {name} = values;
 		const segmentLocalizedName = name[locale];
 
 		Liferay.Util.openWindow({

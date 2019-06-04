@@ -96,7 +96,12 @@ public abstract class BuiltInJSModule implements JSModule {
 
 	@Override
 	public String getResolvedURL() {
-		return _getResolvedURL(_jsPackage, _name);
+		StringBundler sb = new StringBundler(2);
+
+		sb.append("/o/js/resolved-module/");
+		sb.append(_getResolvedId(_jsPackage, _name));
+
+		return sb.toString();
 	}
 
 	@Override
@@ -126,24 +131,6 @@ public abstract class BuiltInJSModule implements JSModule {
 		sb.append(jsPackage.getVersion());
 		sb.append(StringPool.SLASH);
 		sb.append(moduleName);
-
-		return sb.toString();
-	}
-
-	/**
-	 * Composes a resolved URL given the package and module name.
-	 *
-	 * @param  jsPackage the NPM package
-	 * @param  moduleName the module's name
-	 * @return a resolved URL
-	 */
-	private static String _getResolvedURL(
-		JSPackage jsPackage, String moduleName) {
-
-		StringBundler sb = new StringBundler(2);
-
-		sb.append("/o/js/resolved-module/");
-		sb.append(_getResolvedId(jsPackage, moduleName));
 
 		return sb.toString();
 	}

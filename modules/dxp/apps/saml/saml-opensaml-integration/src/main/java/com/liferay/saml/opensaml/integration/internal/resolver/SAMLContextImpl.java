@@ -33,9 +33,11 @@ public class SAMLContextImpl<MessageType, R extends Resolver>
 	}
 
 	public <T> T resolve(SAMLCommand<T, ? super R> samlCommand) {
+		SAMLCommandImpl<MessageType, T, R> samlCommandImpl =
+			(SAMLCommandImpl<MessageType, T, R>)samlCommand;
+
 		Function<MessageContext<MessageType>, T> function =
-			((SAMLCommandImpl<MessageType, T, R>)samlCommand).
-				getMessageContextFunction();
+			samlCommandImpl.getMessageContextFunction();
 
 		return function.apply(_messageContext);
 	}

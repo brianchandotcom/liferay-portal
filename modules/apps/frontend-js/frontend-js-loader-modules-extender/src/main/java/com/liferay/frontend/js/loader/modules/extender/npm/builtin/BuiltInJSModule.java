@@ -91,7 +91,15 @@ public abstract class BuiltInJSModule implements JSModule {
 
 	@Override
 	public String getResolvedId() {
-		return _getResolvedId(_jsPackage, _name);
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(_jsPackage.getName());
+		sb.append(StringPool.AT);
+		sb.append(_jsPackage.getVersion());
+		sb.append(StringPool.SLASH);
+		sb.append(_name);
+
+		return sb.toString();
 	}
 
 	@Override
@@ -110,27 +118,6 @@ public abstract class BuiltInJSModule implements JSModule {
 
 		sb.append("/o/js/module/");
 		sb.append(ModuleNameUtil.getModuleId(_jsPackage, _name));
-
-		return sb.toString();
-	}
-
-	/**
-	 * Composes a resolved ID given the package and module name.
-	 *
-	 * @param  jsPackage the NPM package
-	 * @param  moduleName the module's name
-	 * @return a resolved ID
-	 */
-	private static String _getResolvedId(
-		JSPackage jsPackage, String moduleName) {
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(jsPackage.getName());
-		sb.append(StringPool.AT);
-		sb.append(jsPackage.getVersion());
-		sb.append(StringPool.SLASH);
-		sb.append(moduleName);
 
 		return sb.toString();
 	}

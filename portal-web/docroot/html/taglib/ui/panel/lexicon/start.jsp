@@ -71,5 +71,5 @@ if (persistState) {
 		</div>
 	</div>
 
-	<div aria-labelledby="<%= id %>Header" class="<%= collapsible ? "collapse panel-collapse" : StringPool.BLANK %> <%= !collapsed ? "in" : StringPool.BLANK %>" data-parent="#<%= accordion ? parentId : StringPool.BLANK %>" id="<%= id %>Content" role="tabpanel">
+	<div aria-labelledby="<%= id %>Header" class="<%= collapsible ? "collapse panel-collapse" : StringPool.BLANK %> <%= !collapsed ? "in" : StringPool.BLANK %>" <%= accordion ? "data-parent='#" + parentId + "'" : StringPool.BLANK %> id="<%= id %>Content" role="tabpanel">
 		<div class="panel-body">

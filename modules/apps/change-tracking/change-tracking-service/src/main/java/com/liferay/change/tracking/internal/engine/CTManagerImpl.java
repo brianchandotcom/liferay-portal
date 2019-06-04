@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.internal.engine;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.definition.CTDefinition;
 import com.liferay.change.tracking.definition.CTDefinitionRegistry;
 import com.liferay.change.tracking.engine.CTEngineManager;
@@ -87,18 +88,18 @@ public class CTManagerImpl implements CTManager {
 			return Optional.empty();
 		}
 
-		long activeCTCollectionId = activeCTCollectionOptional.map(
-			CTCollection::getCtCollectionId
-		).orElse(
-			0L
-		);
+		CTCollection activeCTCollection = activeCTCollectionOptional.get();
+
+		if (activeCTCollection.isProduction()) {
+			return Optional.empty();
+		}
 
 		try {
 			CTEntryAggregate ctEntryAggregate = TransactionInvokerUtil.invoke(
 				_transactionConfig,
 				() -> _addCTEntryAggregate(
-					userId, activeCTCollectionId, ownerCTEntry, relatedCTEntry,
-					force));
+					userId, activeCTCollection.getCtCollectionId(),
+					ownerCTEntry, relatedCTEntry, force));
 
 			return Optional.of(ctEntryAggregate);
 		}
@@ -449,6 +450,10 @@ public class CTManagerImpl implements CTManager {
 
 		CTCollection ctCollection = ctCollectionOptional.get();
 
+		if (ctCollection.isProduction()) {
+			return Optional.empty();
+		}
+
 		Optional<CTEntry> ctEntryOptional = Optional.empty();
 
 		try {
@@ -486,6 +491,19 @@ public class CTManagerImpl implements CTManager {
 			!_ctEngineManager.isChangeTrackingSupported(
 				companyId, classNameId)) {
 
+			return;
+		}
+
+		Optional<CTCollection> ctCollectionOptional =
+			getActiveCTCollectionOptional(companyId, userId);
+
+		if (!ctCollectionOptional.isPresent()) {
+			return;
+		}
+
+		CTCollection ctCollection = ctCollectionOptional.get();
+
+		if (ctCollection.isProduction()) {
 			return;
 		}
 

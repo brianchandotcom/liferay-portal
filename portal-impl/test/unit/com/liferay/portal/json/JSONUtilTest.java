@@ -124,6 +124,74 @@ public class JSONUtilTest {
 	}
 
 	@Test
+	public void testJSONArrayEqualsWithStrictChecking() {
+		Assert.assertTrue(
+			JSONUtil.equals(
+				JSONUtil.putAll("a", "1"), JSONUtil.putAll("a", "1")));
+
+		Assert.assertFalse(
+			JSONUtil.equals(
+				JSONUtil.putAll("a", "1"), JSONUtil.putAll("1", "a")));
+
+		Assert.assertFalse(
+			JSONUtil.equals(
+				JSONUtil.put(
+					JSONUtil.put(
+						"innerDouble", 0.532049
+					).put(
+						"innerFoo", "bar"
+					).put(
+						"innerJSONArray1", JSONUtil.putAll(9, 5, 3, 4)
+					).put(
+						"innerJSONArray2",
+						JSONUtil.put(
+							JSONUtil.put(
+								"integer3", 3
+							).put(
+								"integer1", 1
+							).put(
+								"integer2", 2
+							)
+						).put(
+							JSONUtil.put(
+								"double1", 1.0
+							).put(
+								"foo1", "bar1"
+							)
+						)
+					).put(
+						"innerJSONArray3", JSONUtil.putAll("9", "5", "3", "4")
+					)),
+				JSONUtil.put(
+					JSONUtil.put(
+						"innerJSONArray2",
+						JSONUtil.put(
+							JSONUtil.put(
+								"integer1", 1
+							).put(
+								"integer2", 2
+							).put(
+								"integer3", 3
+							)
+						).put(
+							JSONUtil.put(
+								"foo1", "bar1"
+							).put(
+								"double1", 1.0
+							)
+						)
+					).put(
+						"innerDouble", 0.532049
+					).put(
+						"innerJSONArray3", JSONUtil.putAll("5", "9", "4", "3")
+					).put(
+						"innerFoo", "bar"
+					).put(
+						"innerJSONArray1", JSONUtil.putAll(5, 9, 4, 3)
+					))));
+	}
+
+	@Test
 	public void testMerge() throws Exception {
 		JSONObject jsonObject1 = JSONUtil.put("alpha", "1");
 		JSONObject jsonObject2 = JSONUtil.put(

@@ -85,6 +85,16 @@ public class JSONUtil {
 			JSONUtil::_createJSONArray, JSONArray::put, JSONUtil::concat);
 	}
 
+	public static boolean equals(JSONArray jsonArray1, JSONArray jsonArray2) {
+		return Objects.equals(jsonArray1.toString(), jsonArray2.toString());
+	}
+
+	public static boolean equals(
+		JSONObject jsonObject1, JSONObject jsonObject2) {
+
+		return Objects.equals(jsonObject1.toString(), jsonObject2.toString());
+	}
+
 	public static Object getValue(Object object, String... paths) {
 		Object value = null;
 

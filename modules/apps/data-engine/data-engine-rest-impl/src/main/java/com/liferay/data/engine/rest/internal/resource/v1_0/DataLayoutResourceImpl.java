@@ -333,6 +333,7 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 		dataLayout.setName(
 			LocalizedValueUtil.toStringObjectMap(
 				ddmStructureLayout.getNameMap()));
+		dataLayout.setSiteId(ddmStructureLayout.getGroupId());
 		dataLayout.setUserId(ddmStructureLayout.getUserId());
 
 		return dataLayout;

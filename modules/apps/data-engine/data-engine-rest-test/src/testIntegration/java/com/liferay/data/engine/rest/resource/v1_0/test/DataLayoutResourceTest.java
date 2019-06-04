@@ -60,6 +60,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 						put("en_US", RandomTestUtil.randomString());
 					}
 				};
+				siteId = testGroup.getGroupId();
 			}
 		};
 	}
@@ -100,6 +101,13 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 
 		return DataLayoutResource.postDataDefinitionDataLayout(
 			dataLayout.getDataDefinitionId(), dataLayout);
+	}
+
+	@Override
+	protected Long testGetSiteDataLayoutPage_getIrrelevantSiteId()
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

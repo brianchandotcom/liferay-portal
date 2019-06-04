@@ -61,6 +61,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -317,6 +318,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 		dataLayout.setDataLayoutKey(dataDefinitionKey);
 		dataLayout.setDescription(dataDefinition.getDescription());
+		dataLayout.setDefaultLanguageId(
+			contextAcceptLanguage.getPreferredLanguageId());
 		dataLayout.setName(dataDefinition.getName());
 
 		List<DataLayoutRow> dataLayoutRows = new ArrayList<>();
@@ -338,7 +341,17 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			}
 		);
 
-		DataLayoutPage dataLayoutPage = new DataLayoutPage();
+		DataLayoutPage dataLayoutPage = new DataLayoutPage() {
+			{
+				title = new HashMap<String, Object>() {
+					{
+						put(
+							contextAcceptLanguage.getPreferredLanguageId(),
+							"Page");
+					}
+				};
+			}
+		};
 
 		dataLayoutPage.setDataLayoutRows(
 			dataLayoutRows.toArray(new DataLayoutRow[0]));

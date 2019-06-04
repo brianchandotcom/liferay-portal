@@ -264,9 +264,7 @@ if (portletTitleBasedNavigation) {
 						}
 						%>
 
-						<h4>
-							<liferay-ui:message key="url" />
-						</h4>
+						<label><liferay-ui:message key="url" /></label>
 
 						<div class="form-group" id="<portlet:namespace />urlOptions">
 							<aui:input checked="<%= automaticURL %>" helpMessage="the-url-will-be-based-on-the-entry-title" label="automatic" name="automaticURL" type="radio" value="<%= true %>" />

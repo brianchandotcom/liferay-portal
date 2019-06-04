@@ -14,23 +14,26 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.npm.flat;
 
-import com.liferay.frontend.js.loader.modules.extender.npm.model.JSBundleAdapter;
+import com.liferay.frontend.js.loader.modules.extender.npm.JSBundle;
+import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
 import java.net.URL;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.Version;
 
 /**
- * Provides a complete implementation of {@link
- * com.liferay.frontend.js.loader.modules.extender.npm.JSBundle}.
+ * Provides a complete implementation of {@link JSBundle}.
  *
  * @author Iván Zaera
  */
-public class FlatJSBundle extends JSBundleAdapter {
+public class FlatJSBundle implements JSBundle {
 
 	/**
 	 * Constructs a <code>FlatJSBundle</code> with the OSGi bundle.
@@ -38,11 +41,16 @@ public class FlatJSBundle extends JSBundleAdapter {
 	 * @param bundle the OSGi bundle to which this object refers
 	 */
 	public FlatJSBundle(Bundle bundle) {
-		super(
-			String.valueOf(bundle.getBundleId()), bundle.getSymbolicName(),
-			bundle.getVersion().toString());
-
 		_bundle = bundle;
+	}
+
+	/**
+	 * Adds the NPM package description to the bundle.
+	 *
+	 * @param jsPackage the NPM package
+	 */
+	public void addJSPackage(JSPackage jsPackage) {
+		_jsPackages.add(jsPackage);
 	}
 
 	/**
@@ -61,8 +69,30 @@ public class FlatJSBundle extends JSBundleAdapter {
 	}
 
 	@Override
+	public String getId() {
+		return String.valueOf(_bundle.getBundleId());
+	}
+
+	@Override
+	public Collection<JSPackage> getJSPackages() {
+		return _jsPackages;
+	}
+
+	@Override
+	public String getName() {
+		return _bundle.getSymbolicName();
+	}
+
+	@Override
 	public URL getResourceURL(String location) {
 		return _bundle.getResource(location);
+	}
+
+	@Override
+	public String getVersion() {
+		Version version = _bundle.getVersion();
+
+		return version.toString();
 	}
 
 	@Override
@@ -79,5 +109,6 @@ public class FlatJSBundle extends JSBundleAdapter {
 	}
 
 	private final Bundle _bundle;
+	private final Collection<JSPackage> _jsPackages = new ArrayList<>();
 
 }

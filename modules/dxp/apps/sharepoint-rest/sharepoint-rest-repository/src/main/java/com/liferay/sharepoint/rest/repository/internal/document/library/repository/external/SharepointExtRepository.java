@@ -124,8 +124,8 @@ public class SharepointExtRepository implements ExtRepository {
 			return _sharepointServerResponseConverter.getExtRepositoryFolder(
 				jsonObject);
 		}
-		catch (IOException | UnirestException e) {
-			throw new PortalException(e);
+		catch (UnirestException ue) {
+			throw new PortalException(ue);
 		}
 	}
 
@@ -475,7 +475,7 @@ public class SharepointExtRepository implements ExtRepository {
 	}
 
 	@Override
-	public String getRootFolderKey() throws PortalException {
+	public String getRootFolderKey() {
 		return _libraryPath;
 	}
 
@@ -518,9 +518,8 @@ public class SharepointExtRepository implements ExtRepository {
 
 	@Override
 	public void initRepository(
-			UnicodeProperties typeSettingsProperties,
-			CredentialsProvider credentialsProvider)
-		throws PortalException {
+		UnicodeProperties typeSettingsProperties,
+		CredentialsProvider credentialsProvider) {
 
 		_libraryPath = _strip(
 			GetterUtil.getString(
@@ -822,7 +821,7 @@ public class SharepointExtRepository implements ExtRepository {
 	}
 
 	private JSONObject _post(String url, JSONObject jsonObject)
-		throws IOException, PortalException, UnirestException {
+		throws PortalException, UnirestException {
 
 		HttpRequestWithBody httpRequestWithBody = Unirest.post(url);
 

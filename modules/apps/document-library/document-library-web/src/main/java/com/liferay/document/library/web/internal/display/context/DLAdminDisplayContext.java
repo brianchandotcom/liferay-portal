@@ -224,7 +224,9 @@ public class DLAdminDisplayContext {
 			return folder.getRepositoryId();
 		}
 
-		return _themeDisplay.getScopeGroupId();
+		return ParamUtil.getLong(
+			_httpServletRequest, "repositoryId",
+			_themeDisplay.getScopeGroupId());
 	}
 
 	public long getRootFolderId() {

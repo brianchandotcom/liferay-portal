@@ -37,13 +37,12 @@ public interface AsahFaroBackendClient {
 
 	/**
 	 * Returns an {@link Individual} who contains the provided
-	 * <code>individualPK</code> for the data source
-	 * {@link #getDataSourceId()}.
+	 * <code>individualPK</code> for the data source {@link #getDataSourceId()}.
 	 *
-	 * @param individualPK the individual PK
-	 * @return an {@link Individual} that matches the
-	 * {@link #getDataSourceId()}/<code>individualPK</code> otherwise a null
-	 * is returned
+	 * @param  individualPK the individual PK
+	 * @return an {@link Individual} that matches the {@link
+	 *         #getDataSourceId()}/<code>individualPK</code> otherwise a
+	 *         <code>null</code> is returned
 	 * @review
 	 */
 	public Individual getIndividual(String individualPK);

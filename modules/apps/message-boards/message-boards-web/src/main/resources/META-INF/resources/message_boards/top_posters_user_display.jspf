@@ -43,10 +43,10 @@ User topUser = UserLocalServiceUtil.fetchUserById(statsUser.getUserId());
 		<span class="h5 text-default">
 			<c:choose>
 				<c:when test="<%= statsUser.getMessageCount() == 1 %>">
-					<liferay-ui:message key="post" />:<%= statsUser.getMessageCount() %>
+					<liferay-ui:message key="post" />: <%= statsUser.getMessageCount() %>
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:message key="posts" />:<%= statsUser.getMessageCount() %>
+					<liferay-ui:message key="posts" />: <%= statsUser.getMessageCount() %>
 				</c:otherwise>
 			</c:choose>
 		</span>

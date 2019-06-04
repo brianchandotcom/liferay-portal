@@ -16,6 +16,7 @@ package com.liferay.portal.language.extender.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
@@ -155,10 +156,10 @@ public class LanguageExtension {
 		String aggregate, final String bundleSymbolicName, String baseName,
 		final int limit) {
 
-		String[] filterStrings = aggregate.split(",");
+		List<String> filterStrings = StringUtil.split(aggregate);
 
 		List<ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>>
-			serviceTrackers = new ArrayList<>(filterStrings.length);
+			serviceTrackers = new ArrayList<>(filterStrings.size());
 
 		for (String filterString : filterStrings) {
 			Filter filter = null;

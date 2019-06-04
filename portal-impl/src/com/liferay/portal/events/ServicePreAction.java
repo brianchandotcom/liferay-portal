@@ -1190,6 +1190,10 @@ public class ServicePreAction extends Action {
 
 					if (siblingLayoutSet.isLogo()) {
 						logoId = siblingLayoutSet.getLogoId();
+
+						if (logoId == 0) {
+							logoId = siblingLayoutSet.getLiveLogoId();
+						}
 					}
 				}
 

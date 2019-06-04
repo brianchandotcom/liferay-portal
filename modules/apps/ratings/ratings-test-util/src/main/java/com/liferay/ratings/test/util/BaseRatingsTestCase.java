@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.ratings.test;
+package com.liferay.ratings.test.util;
 
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;

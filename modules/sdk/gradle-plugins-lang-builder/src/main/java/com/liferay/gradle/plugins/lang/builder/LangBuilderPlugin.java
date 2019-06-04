@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins.lang.builder;
 
-import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.plugins.lang.builder.internal.util.GradleUtil;
 
 import java.io.File;
 
@@ -40,6 +40,8 @@ import org.gradle.api.tasks.TaskContainer;
  */
 public class LangBuilderPlugin implements Plugin<Project> {
 
+	public static final String APP_BUILD_LANG_TASK_NAME = "appBuildLang";
+
 	public static final String BUILD_LANG_TASK_NAME = "buildLang";
 
 	public static final String CONFIGURATION_NAME = "langBuilder";
@@ -49,7 +51,9 @@ public class LangBuilderPlugin implements Plugin<Project> {
 		Configuration langBuilderConfiguration = _addConfigurationLangBuilder(
 			project);
 
-		_addTaskBuildLang(project);
+		BuildLangTask buildLangTask = _addTaskBuildLang(project);
+
+		_configureTaskBuildLang(buildLangTask);
 
 		_configureTasksBuildLang(project, langBuilderConfiguration);
 	}
@@ -81,6 +85,21 @@ public class LangBuilderPlugin implements Plugin<Project> {
 			"com.liferay.lang.builder", "latest.release");
 	}
 
+	private BuildLangTask _addTaskAppBuildLang(
+		Project project, File appLangFile) {
+
+		BuildLangTask buildLangTask = GradleUtil.addTask(
+			project, APP_BUILD_LANG_TASK_NAME, BuildLangTask.class);
+
+		buildLangTask.setDescription(
+			"Runs Liferay Lang Builder to translate language property files " +
+				"for the app.");
+		buildLangTask.setLangDir(appLangFile.getParentFile());
+		buildLangTask.setLangFileName("bundle");
+
+		return buildLangTask;
+	}
+
 	private BuildLangTask _addTaskBuildLang(Project project) {
 		final BuildLangTask buildLangTask = GradleUtil.addTask(
 			project, BUILD_LANG_TASK_NAME, BuildLangTask.class);
@@ -105,10 +124,50 @@ public class LangBuilderPlugin implements Plugin<Project> {
 		return buildLangTask;
 	}
 
+	private void _configureTaskBuildLang(BuildLangTask buildLangTask) {
+		Project project = buildLangTask.getProject();
+
+		Project parentProject = project.getParent();
+
+		if (parentProject != null) {
+			File appLangFile = new File(
+				parentProject.getProjectDir(),
+				"app.bnd-localization/bundle.properties");
+
+			if (appLangFile.exists()) {
+				BuildLangTask appBuildLangTask = null;
+
+				if (GradleUtil.hasTask(
+						parentProject, APP_BUILD_LANG_TASK_NAME)) {
+
+					appBuildLangTask = (BuildLangTask)GradleUtil.getTask(
+						project.getParent(), APP_BUILD_LANG_TASK_NAME);
+				}
+				else {
+					appBuildLangTask = _addTaskAppBuildLang(
+						parentProject, appLangFile);
+				}
+
+				buildLangTask.dependsOn(appBuildLangTask);
+			}
+		}
+	}
+
 	private void _configureTaskBuildLangClasspath(
 		BuildLangTask buildLangTask, FileCollection fileCollection) {
 
 		buildLangTask.setClasspath(fileCollection);
+
+		Project project = buildLangTask.getProject();
+
+		if ((project.getParent() != null) &&
+			GradleUtil.hasTask(project.getParent(), APP_BUILD_LANG_TASK_NAME)) {
+
+			BuildLangTask appBuildLangTask = (BuildLangTask)GradleUtil.getTask(
+				project.getParent(), APP_BUILD_LANG_TASK_NAME);
+
+			appBuildLangTask.setClasspath(fileCollection);
+		}
 	}
 
 	private void _configureTaskBuildLangForJavaPlugin(

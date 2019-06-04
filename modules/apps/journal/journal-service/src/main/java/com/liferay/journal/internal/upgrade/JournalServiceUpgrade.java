@@ -193,7 +193,11 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 				UpgradeDiscussionSubscriptionClassName.DeletionMode.ADD_NEW));
 
 		registry.register(
-			"1.1.7", "2.0.0",
+			"1.1.7", "1.1.8",
+			new com.liferay.journal.internal.upgrade.v1_1_7.UpgradeUrlTitle());
+
+		registry.register(
+			"1.1.8", "2.0.0",
 			new BaseUpgradeSQLServerDatetime(
 				new Class<?>[] {
 					JournalArticleTable.class, JournalFeedTable.class,

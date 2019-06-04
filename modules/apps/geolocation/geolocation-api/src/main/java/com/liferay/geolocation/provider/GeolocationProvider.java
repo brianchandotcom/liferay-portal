@@ -25,14 +25,44 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface GeolocationProvider {
 
+	/**
+	 * Performs a reverse geocoding process, converting the geographic
+	 * coordinates in the {@code GeolocationPosition} into a human-readable
+	 * {@code GeolocationAddress}.
+	 *
+	 * @param  geolocationPosition the geographic coordinates
+	 * @return the human-readable address
+	 */
 	public GeolocationAddress getGeolocationAddress(
 		GeolocationPosition geolocationPosition);
 
+	/**
+	 * Performs a reverse IP geocoding process, converting the IP address into a
+	 * human-readable {@code GeolocationAddress}.
+	 *
+	 * @param  ipAddress the IP address
+	 * @return the human-readable address
+	 */
 	public GeolocationAddress getGeolocationAddress(String ipAddress);
 
+	/**
+	 * Performs a geocoding process, converting the human-readable {@code
+	 * GeolocationAddress} into a {@code GeolocationPosition} with geographic
+	 * coordinates.
+	 *
+	 * @param  geolocationAddress the human-readable address
+	 * @return the geographic coordinates
+	 */
 	public GeolocationPosition getGeolocationPosition(
 		GeolocationAddress geolocationAddress);
 
+	/**
+	 * Performs a IP geocoding process, converting the the IP address into a
+	 * {@code GeolocationPosition} with geographic coordinates.
+	 *
+	 * @param  ipAddress the IP address
+	 * @return the geographic coordinates
+	 */
 	public GeolocationPosition getGeolocationPosition(String ipAddress);
 
 }

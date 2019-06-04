@@ -21,8 +21,18 @@ public interface GeolocationAddress {
 
 	public String getCity();
 
+	/**
+	 * Returns the country ISO-3166 code.
+	 *
+	 * @return the country ISO-3166 code
+	 */
 	public String getCountryCode();
 
+	/**
+	 * Returns the region (subdivision) ISO-3166 code.
+	 *
+	 * @return the region (subdivision) ISO-3166 code
+	 */
 	public String getRegionCode();
 
 	public String getStreet();

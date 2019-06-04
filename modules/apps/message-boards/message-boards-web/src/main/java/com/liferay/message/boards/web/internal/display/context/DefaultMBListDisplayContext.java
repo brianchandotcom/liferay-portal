@@ -58,11 +58,30 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 
 	public DefaultMBListDisplayContext(
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, long categoryId) {
+		HttpServletResponse httpServletResponse, long categoryId,
+		String mvcRenderCommandName) {
 
 		_httpServletRequest = httpServletRequest;
 
 		_categoryId = categoryId;
+
+		boolean showMyPosts = false;
+		boolean showRecentPosts = false;
+		boolean showSearch = false;
+
+		if (mvcRenderCommandName.equals("/message_boards/view_my_posts")) {
+			showMyPosts = true;
+		}
+		else if (_isShowRecentPosts(mvcRenderCommandName)) {
+			showRecentPosts = true;
+		}
+		else if (_isShowSearch(mvcRenderCommandName)) {
+			showSearch = true;
+		}
+
+		_showMyPosts = showMyPosts;
+		_showRecentPosts = showRecentPosts;
+		_showSearch = showSearch;
 	}
 
 	@Override
@@ -96,51 +115,17 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 
 	@Override
 	public boolean isShowMyPosts() {
-		String mvcRenderCommandName = ParamUtil.getString(
-			_httpServletRequest, "mvcRenderCommandName");
-
-		if (mvcRenderCommandName.equals("/message_boards/view_my_posts")) {
-			return true;
-		}
-
-		return false;
+		return _showMyPosts;
 	}
 
 	@Override
 	public boolean isShowRecentPosts() {
-		String mvcRenderCommandName = ParamUtil.getString(
-			_httpServletRequest, "mvcRenderCommandName");
-
-		if (mvcRenderCommandName.equals("/message_boards/view_recent_posts")) {
-			return true;
-		}
-
-		String entriesNavigation = ParamUtil.getString(
-			_httpServletRequest, "entriesNavigation");
-
-		if (entriesNavigation.equals("recent")) {
-			return true;
-		}
-
-		return false;
+		return _showRecentPosts;
 	}
 
 	@Override
 	public boolean isShowSearch() {
-		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
-
-		if (Validator.isNotNull(keywords)) {
-			return true;
-		}
-
-		String mvcRenderCommandName = ParamUtil.getString(
-			_httpServletRequest, "mvcRenderCommandName");
-
-		if (mvcRenderCommandName.equals("/message_boards/search")) {
-			return true;
-		}
-
-		return false;
+		return _showSearch;
 	}
 
 	@Override
@@ -357,10 +342,42 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 		}
 	}
 
+	private boolean _isShowRecentPosts(String mvcRenderCommandName) {
+		if (mvcRenderCommandName.equals("/message_boards/view_recent_posts")) {
+			return true;
+		}
+
+		String entriesNavigation = ParamUtil.getString(
+			_httpServletRequest, "entriesNavigation");
+
+		if (entriesNavigation.equals("recent")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isShowSearch(String mvcRenderCommandName) {
+		if (Validator.isNotNull(
+				ParamUtil.getString(_httpServletRequest, "keywords"))) {
+
+			return true;
+		}
+
+		if (mvcRenderCommandName.equals("/message_boards/search")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final UUID _UUID = UUID.fromString(
 		"c29b2669-a9ce-45e3-aa4e-9ec766a4ffad");
 
 	private final long _categoryId;
 	private final HttpServletRequest _httpServletRequest;
+	private final boolean _showMyPosts;
+	private final boolean _showRecentPosts;
+	private final boolean _showSearch;
 
 }

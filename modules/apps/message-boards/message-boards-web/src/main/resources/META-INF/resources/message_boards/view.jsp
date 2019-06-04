@@ -79,7 +79,7 @@ if (orderByCol.equals("modified-date")) {
 	threadOrderByComparator = new ThreadModifiedDateComparator(orderByAsc);
 }
 
-MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDisplayContext(request, response, categoryId);
+MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDisplayContext(request, response, categoryId, mvcRenderCommandName);
 
 request.setAttribute("view.jsp-categorySubscriptionClassPKs", categorySubscriptionClassPKs);
 request.setAttribute("view.jsp-threadSubscriptionClassPKs", threadSubscriptionClassPKs);

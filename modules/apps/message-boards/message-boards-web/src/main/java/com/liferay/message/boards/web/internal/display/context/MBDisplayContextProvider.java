@@ -81,11 +81,13 @@ public class MBDisplayContextProvider {
 
 	public MBListDisplayContext getMbListDisplayContext(
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, long categoryId) {
+		HttpServletResponse httpServletResponse, long categoryId,
+		String mvcRenderCommandName) {
 
 		MBListDisplayContext mbListDisplayContext =
 			new DefaultMBListDisplayContext(
-				httpServletRequest, httpServletResponse, categoryId);
+				httpServletRequest, httpServletResponse, categoryId,
+				mvcRenderCommandName);
 
 		for (MBDisplayContextFactory mbDisplayContextFactory :
 				_mbDisplayContextFactories) {

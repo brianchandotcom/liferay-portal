@@ -73,16 +73,6 @@ class ContributorBuilder extends React.Component {
 		});
 	};
 
-	_handlePreviewClick = () => {
-		this.props.onPreviewMembers();
-	};
-
-	_handleRootConjunctionClick = event => {
-		const {onConjunctionChange} = this.props;
-
-		onConjunctionChange();
-	};
-
 	render() {
 		const {
 			contributors,
@@ -90,6 +80,8 @@ class ContributorBuilder extends React.Component {
 			emptyContributors,
 			membersCount,
 			membersCountLoading,
+			onConjunctionChange,
+			onPreviewMembers,
 			propertyGroups,
 			supportedConjunctions,
 			supportedOperators,
@@ -156,8 +148,7 @@ class ContributorBuilder extends React.Component {
 															'view-members'
 														)}
 														onClick={
-															this
-																._handlePreviewClick
+															onPreviewMembers
 														}
 														size='sm'
 														type='button'
@@ -199,8 +190,7 @@ class ContributorBuilder extends React.Component {
 																	editing
 																}
 																onClick={
-																	this
-																		._handleRootConjunctionClick
+																	onConjunctionChange
 																}
 																supportedConjunctions={
 																	supportedConjunctions

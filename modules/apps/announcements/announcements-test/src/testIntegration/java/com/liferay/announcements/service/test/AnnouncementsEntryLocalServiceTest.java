@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -83,9 +84,9 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@Test
 	public void testDeleteEntriesInDifferentCompany() throws Exception {
-		addEntry(0, 0);
-		addEntry(0, 0);
-		addEntry(0, 0);
+		_entries.add(addEntry(0, 0));
+		_entries.add(addEntry(0, 0));
+		_entries.add(addEntry(0, 0));
 
 		_announcementsEntryLocalService.deleteEntries(
 			_company2.getCompanyId(), 0, 0);
@@ -100,9 +101,9 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@Test
 	public void testDeleteEntriesInSameCompany() throws Exception {
-		addEntry(0, 0);
-		addEntry(0, 0);
-		addEntry(0, 0);
+		_entries.add(addEntry(0, 0));
+		_entries.add(addEntry(0, 0));
+		_entries.add(addEntry(0, 0));
 
 		_announcementsEntryLocalService.deleteEntries(
 			_user.getCompanyId(), 0, 0);
@@ -123,6 +124,8 @@ public class AnnouncementsEntryLocalServiceTest {
 
 		AnnouncementsEntry entry = addEntry(
 			group.getClassNameId(), group.getGroupId());
+
+		_entries.add(entry);
 
 		Assert.assertNotNull(
 			_announcementsEntryLocalService.fetchAnnouncementsEntry(
@@ -145,6 +148,8 @@ public class AnnouncementsEntryLocalServiceTest {
 		AnnouncementsEntry entry = addEntry(
 			_classNameLocalService.getClassNameId(Organization.class),
 			organization.getOrganizationId());
+
+		_entries.add(entry);
 
 		Assert.assertNotNull(
 			_announcementsEntryLocalService.fetchAnnouncementsEntry(
@@ -169,6 +174,8 @@ public class AnnouncementsEntryLocalServiceTest {
 		AnnouncementsEntry entry = addEntry(
 			_classNameLocalService.getClassNameId(Group.class),
 			group.getGroupId());
+
+		_entries.add(entry);
 
 		Assert.assertNotNull(
 			_announcementsEntryLocalService.fetchAnnouncementsEntry(
@@ -206,6 +213,8 @@ public class AnnouncementsEntryLocalServiceTest {
 			_classNameLocalService.getClassNameId(UserGroup.class),
 			userGroup.getUserGroupId());
 
+		_entries.add(entry);
+
 		Assert.assertNotNull(
 			_announcementsEntryLocalService.fetchAnnouncementsEntry(
 				entry.getEntryId()));
@@ -229,6 +238,10 @@ public class AnnouncementsEntryLocalServiceTest {
 			group.getClassNameId(), group.getGroupId());
 		AnnouncementsEntry entry3 = addEntry(
 			group.getClassNameId(), group.getGroupId());
+
+		_entries.add(entry1);
+		_entries.add(entry2);
+		_entries.add(entry3);
 
 		_announcementsFlagLocalService.addFlag(
 			_user.getUserId(), entry1.getEntryId(),
@@ -267,7 +280,7 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@Test
 	public void testGetEntriesCountInDifferentCompany() throws Exception {
-		addEntry(0, 0);
+		_entries.add(addEntry(0, 0));
 
 		Assert.assertEquals(
 			0,
@@ -277,7 +290,7 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@Test
 	public void testGetEntriesCountInSameCompany() throws Exception {
-		addEntry(0, 0);
+		_entries.add(addEntry(0, 0));
 
 		Assert.assertEquals(
 			1,
@@ -287,7 +300,7 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@Test
 	public void testGetEntriesInDifferentCompany() throws Exception {
-		addEntry(0, 0);
+		_entries.add(addEntry(0, 0));
 
 		List<AnnouncementsEntry> entries =
 			_announcementsEntryLocalService.getEntries(
@@ -300,6 +313,8 @@ public class AnnouncementsEntryLocalServiceTest {
 	@Test
 	public void testGetEntriesInSameCompany() throws Exception {
 		AnnouncementsEntry entry = addEntry(0, 0);
+
+		_entries.add(entry);
 
 		List<AnnouncementsEntry> entries =
 			_announcementsEntryLocalService.getEntries(
@@ -362,6 +377,9 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private Company _company2;
+
+	@DeleteAfterTestRun
+	private final List<AnnouncementsEntry> _entries = new ArrayList<>();
 
 	@Inject
 	private GroupLocalService _groupLocalService;

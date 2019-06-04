@@ -114,7 +114,7 @@
 			<property name="allowedVariableTypeNames" value="^(?!String).+Builder(Impl)?,Column,CompletableFuture,.*Consumer,ContactsEngineClient,Dataset,Description,ExecuteActionRequest,(FormsEventDataset)?Filter,.*Function[0-9]*,HttpSecurity,InOrder,JSONArray,JSONObject,JsonPath,.*Mapper,NestedRepresentor.*,Optional,Predicate,RequestSpecification,Response,SoyContext,(Double|Int|Long)?Stream,Try,UpdateFieldPropertyRequest,ValidatableResponse,WebTarget" />
 			<message key="chaining.allowed" value="Chaining is allowed on ''{0}''. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/chaining.markdown" />
 			<message key="chaining.avoid.method" value="Avoid chaining on method ''{0}''. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/chaining.markdown" />
-			<message key="chaining.avoid.typecast" value="Avoid chaining on typecast" />
+			<message key="chaining.avoid.type.cast" value="Avoid chaining on Type Cast" />
 			<message key="chaining.required" value="Chaining on ''{0}'' is preferred. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/chaining.markdown" />
 			<message key="concat.avoid.too.many" value="Use StringBundler instead of chaining concat when there is more than 3 parts" />
 		</module>

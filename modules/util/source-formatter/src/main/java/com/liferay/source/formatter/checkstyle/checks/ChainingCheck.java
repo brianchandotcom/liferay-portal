@@ -63,7 +63,7 @@ public class ChainingCheck extends BaseCheck {
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
 		if (detailAST.getType() == TokenTypes.TYPECAST) {
-			_checkChainingOnTypecast(detailAST);
+			_checkChainingOnTypeCast(detailAST);
 
 			return;
 		}
@@ -227,7 +227,7 @@ public class ChainingCheck extends BaseCheck {
 		}
 	}
 
-	private void _checkChainingOnTypecast(DetailAST detailAST) {
+	private void _checkChainingOnTypeCast(DetailAST detailAST) {
 		if (_isInsideConstructorThisCall(detailAST) ||
 			DetailASTUtil.hasParentWithTokenType(
 				detailAST, TokenTypes.SUPER_CTOR_CALL)) {
@@ -238,7 +238,7 @@ public class ChainingCheck extends BaseCheck {
 		DetailAST parentDetailAST = detailAST.getParent();
 
 		if (parentDetailAST.getType() == TokenTypes.DOT) {
-			log(detailAST, _MSG_AVOID_TYPECAST_CHAINING);
+			log(detailAST, _MSG_AVOID_TYPE_CAST_CHAINING);
 		}
 	}
 
@@ -868,8 +868,8 @@ public class ChainingCheck extends BaseCheck {
 	private static final String _MSG_AVOID_TOO_MANY_CONCAT =
 		"concat.avoid.too.many";
 
-	private static final String _MSG_AVOID_TYPECAST_CHAINING =
-		"chaining.avoid.typecast";
+	private static final String _MSG_AVOID_TYPE_CAST_CHAINING =
+		"chaining.avoid.type.cast";
 
 	private static final String _MSG_REQUIRED_CHAINING = "chaining.required";
 

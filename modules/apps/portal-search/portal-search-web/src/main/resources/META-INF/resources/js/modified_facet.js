@@ -1,6 +1,8 @@
 AUI.add(
 	'liferay-search-modified-facet',
 	function(A) {
+		var FacetUtil = Liferay.Search.FacetUtil;
+
 		var ModifiedFacetFilter = function(
 			form,
 			fromInputDatePicker,
@@ -23,9 +25,6 @@ AUI.add(
 			filter: function() {
 				var instance = this;
 
-				var ModifiedFacetFilterUtil =
-					Liferay.Search.ModifiedFacetFilterUtil;
-
 				var fromDate = instance.fromInputDatePicker.getDate();
 
 				var toDate = instance.toInputDatePicker.getDate();
@@ -46,34 +45,34 @@ AUI.add(
 					.substr(1)
 					.split('&');
 
-				parameterArray = Liferay.Search.FacetUtil.removeURLParameters(
+				parameterArray = FacetUtil.removeURLParameters(
 					param,
 					parameterArray
 				);
 
-				parameterArray = Liferay.Search.FacetUtil.removeURLParameters(
+				parameterArray = FacetUtil.removeURLParameters(
 					paramFrom,
 					parameterArray
 				);
 
-				parameterArray = Liferay.Search.FacetUtil.removeURLParameters(
+				parameterArray = FacetUtil.removeURLParameters(
 					paramTo,
 					parameterArray
 				);
 
-				parameterArray = Liferay.Search.FacetUtil.addURLParameter(
+				parameterArray = FacetUtil.addURLParameter(
 					paramFrom,
 					modifiedFromParameter,
 					parameterArray
 				);
 
-				parameterArray = Liferay.Search.FacetUtil.addURLParameter(
+				parameterArray = FacetUtil.addURLParameter(
 					paramTo,
 					modifiedToParameter,
 					parameterArray
 				);
 
-				document.location.search = parameterArray.join('&');
+				ModifiedFacetFilterUtil.submitSearch(parameterArray.join('&'));
 			}
 		});
 
@@ -81,7 +80,7 @@ AUI.add(
 
 		var ModifiedFacetFilterUtil = {
 			clearSelections: function(event) {
-				var param = Liferay.Search.ModifiedFacetFilterUtil.getParameterName();
+				var param = this.getParameterName();
 				var paramFrom = param + 'From';
 				var paramTo = param + 'To';
 
@@ -89,26 +88,30 @@ AUI.add(
 					.substr(1)
 					.split('&');
 
-				parameterArray = Liferay.Search.FacetUtil.removeURLParameters(
+				parameterArray = FacetUtil.removeURLParameters(
 					param,
 					parameterArray
 				);
 
-				parameterArray = Liferay.Search.FacetUtil.removeURLParameters(
+				parameterArray = FacetUtil.removeURLParameters(
 					paramFrom,
 					parameterArray
 				);
 
-				parameterArray = Liferay.Search.FacetUtil.removeURLParameters(
+				parameterArray = FacetUtil.removeURLParameters(
 					paramTo,
 					parameterArray
 				);
 
-				document.location.search = parameterArray.join('&');
+				this.submitSearch(parameterArray.join('&'));
 			},
 
 			getParameterName: function() {
 				return 'modified';
+			},
+
+			submitSearch: function(parameterString) {
+				document.location.search = parameterString;
 			},
 
 			/**

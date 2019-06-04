@@ -15,19 +15,28 @@
 package com.liferay.frontend.js.loader.modules.extender.internal.npm.flat;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.JSBundle;
-import com.liferay.frontend.js.loader.modules.extender.npm.model.JSPackageAdapter;
+import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
+import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
+import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
+import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
 import java.net.URL;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Provides a complete implementation of {@link
- * com.liferay.frontend.js.loader.modules.extender.npm.JSPackage}.
+ * JSPackage}.
  *
  * @author Iván Zaera
  */
-public class FlatJSPackage extends JSPackageAdapter {
+public class FlatJSPackage implements JSPackage {
 
 	/**
 	 * Constructs a <code>FlatJSPackage</code> with the package's bundle, name,
@@ -45,7 +54,14 @@ public class FlatJSPackage extends JSPackageAdapter {
 		FlatJSBundle flatJSBundle, String name, String version,
 		String mainModuleName, boolean root) {
 
-		super(flatJSBundle, name, version, mainModuleName);
+		_flatJSBundle = flatJSBundle;
+		_name = name;
+		_version = version;
+		_mainModuleName = mainModuleName;
+
+		_resolvedId = name + StringPool.AT + version;
+
+		_id = flatJSBundle.getId() + StringPool.SLASH + _resolvedId;
 
 		if (root) {
 			_basePath = "META-INF/resources/";
@@ -70,9 +86,74 @@ public class FlatJSPackage extends JSPackageAdapter {
 		}
 	}
 
+	/**
+	 * Adds the module to the package.
+	 *
+	 * @param jsModule the NPM module
+	 */
+	public void addJSModule(JSModule jsModule) {
+		_jsModules.add(jsModule);
+	}
+
+	public void addJSModuleAlias(JSModuleAlias jsModuleAlias) {
+		_jsModuleAliases.add(jsModuleAlias);
+	}
+
+	/**
+	 * Adds the dependency to another NPM package.
+	 *
+	 * @param jsPackageDependency the NPM package dependency
+	 */
+	public void addJSPackageDependency(
+		JSPackageDependency jsPackageDependency) {
+
+		_jsPackageDependencies.put(
+			jsPackageDependency.getPackageName(), jsPackageDependency);
+	}
+
+	@Override
+	public String getId() {
+		return _id;
+	}
+
 	@Override
 	public FlatJSBundle getJSBundle() {
-		return (FlatJSBundle)super.getJSBundle();
+		return _flatJSBundle;
+	}
+
+	@Override
+	public Collection<JSModuleAlias> getJSModuleAliases() {
+		return _jsModuleAliases;
+	}
+
+	@Override
+	public Collection<JSModule> getJSModules() {
+		return _jsModules;
+	}
+
+	@Override
+	public Collection<JSPackageDependency> getJSPackageDependencies() {
+		return _jsPackageDependencies.values();
+	}
+
+	@Override
+	public JSPackageDependency getJSPackageDependency(String packageName) {
+		return _jsPackageDependencies.get(packageName);
+	}
+
+	@Override
+	public String getMainModuleName() {
+		return _mainModuleName;
+	}
+
+	@Override
+	public String getName() {
+		return _name;
+	}
+
+	@Override
+	public String getResolvedId() {
+		return _resolvedId;
 	}
 
 	@Override
@@ -83,10 +164,25 @@ public class FlatJSPackage extends JSPackageAdapter {
 	}
 
 	@Override
+	public String getVersion() {
+		return _version;
+	}
+
+	@Override
 	public String toString() {
 		return getId();
 	}
 
 	private final String _basePath;
+	private final FlatJSBundle _flatJSBundle;
+	private final String _id;
+	private final List<JSModuleAlias> _jsModuleAliases = new ArrayList<>();
+	private final List<JSModule> _jsModules = new ArrayList<>();
+	private final Map<String, JSPackageDependency> _jsPackageDependencies =
+		new HashMap<>();
+	private final String _mainModuleName;
+	private final String _name;
+	private final String _resolvedId;
+	private final String _version;
 
 }

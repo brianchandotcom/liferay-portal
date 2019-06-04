@@ -50,10 +50,6 @@ public class FlatJSModule implements JSModule {
 		_jsPackage = jsPackage;
 		_name = name;
 		_dependencies = dependencies;
-
-		String fileName = ModuleNameUtil.toFileName(getName());
-
-		_jsURL = jsPackage.getResourceURL(fileName);
 	}
 
 	@Override
@@ -83,7 +79,11 @@ public class FlatJSModule implements JSModule {
 
 	@Override
 	public InputStream getInputStream() throws IOException {
-		return _jsURL.openStream();
+		String fileName = ModuleNameUtil.toFileName(getName());
+
+		URL jsURL = _jsPackage.getResourceURL(fileName);
+
+		return jsURL.openStream();
 	}
 
 	@Override
@@ -145,7 +145,6 @@ public class FlatJSModule implements JSModule {
 
 	private final Collection<String> _dependencies;
 	private final JSPackage _jsPackage;
-	private final URL _jsURL;
 	private final String _name;
 
 }

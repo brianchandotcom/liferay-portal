@@ -31,9 +31,16 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 
 	<div class="row">
 		<div class="col-md-4">
-			<c:if test="<%= article != null %>">
-				<liferay-util:include page="/journal_article_resources.jsp" servletContext="<%= application %>" />
-			</c:if>
+			<c:choose>
+				<c:when test="<%= !journalContentDisplayContext.isArticleInScope() %>">
+					<div class="alert alert-info text-justify">
+						<liferay-ui:message key="the-selected-web-content-cannot-be-shown-because-it-does-not-belong-in-the-scope-of-this-widget" />
+					</div>
+				</c:when>
+				<c:when test="<%= article != null %>">
+					<liferay-util:include page="/journal_article_resources.jsp" servletContext="<%= application %>" />
+				</c:when>
+			</c:choose>
 		</div>
 	</div>
 

@@ -32,6 +32,11 @@ if (journalContentDisplayContext.isShowArticle()) {
 %>
 
 <c:choose>
+	<c:when test="<%= !journalContentDisplayContext.isArticleInScope() %>">
+		<div class="alert alert-info text-center">
+			<liferay-ui:message key="the-selected-web-content-cannot-be-shown-because-it-does-not-belong-in-the-scope-of-this-widget" />
+		</div>
+	</c:when>
 	<c:when test="<%= article == null %>">
 		<c:choose>
 			<c:when test="<%= Validator.isNull(journalContentDisplayContext.getArticleId()) %>">

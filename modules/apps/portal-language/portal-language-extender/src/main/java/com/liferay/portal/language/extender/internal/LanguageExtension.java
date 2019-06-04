@@ -105,9 +105,17 @@ public class LanguageExtension {
 				int serviceRanking = GetterUtil.getInteger(
 					attributes.get("service.ranking"), Integer.MIN_VALUE);
 
-				resourceBundleLoader = processAggregate(
-					(String)aggregate, bundleSymbolicName, (String)baseName,
-					serviceRanking);
+				ServiceTrackerResourceBundleLoader
+					serviceTrackerResourceBundleLoader =
+						new ServiceTrackerResourceBundleLoader(
+							_bundleContext, (String)aggregate,
+							bundleSymbolicName, (String)baseName,
+							serviceRanking);
+
+				_serviceTrackerResourceBundleLoaders.add(
+					serviceTrackerResourceBundleLoader);
+
+				resourceBundleLoader = serviceTrackerResourceBundleLoader;
 			}
 			else if (baseName instanceof String) {
 				Object excludePortalResources = attributes.get(
@@ -152,20 +160,6 @@ public class LanguageExtension {
 						_bundle.getSymbolicName()));
 			}
 		}
-	}
-
-	protected ResourceBundleLoader processAggregate(
-		String aggregate, String bundleSymbolicName, String baseName,
-		int limit) {
-
-		ServiceTrackerResourceBundleLoader serviceTrackerResourceBundleLoader =
-			new ServiceTrackerResourceBundleLoader(
-				_bundleContext, aggregate, bundleSymbolicName, baseName, limit);
-
-		_serviceTrackerResourceBundleLoaders.add(
-			serviceTrackerResourceBundleLoader);
-
-		return serviceTrackerResourceBundleLoader;
 	}
 
 	protected ResourceBundleLoader processBaseName(

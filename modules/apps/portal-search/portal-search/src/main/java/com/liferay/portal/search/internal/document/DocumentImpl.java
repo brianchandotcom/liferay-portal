@@ -213,7 +213,9 @@ public class DocumentImpl implements Document {
 		}
 
 		if (value instanceof Collection) {
-			if (((Collection)value).isEmpty()) {
+			Collection<?> collection = (Collection<?>)value;
+
+			if (collection.isEmpty()) {
 				return true;
 			}
 		}

@@ -189,8 +189,10 @@ public class FreeMarkerTemplate extends BaseTemplate {
 
 		@Override
 		public TemplateModel getAPI() throws TemplateModelException {
-			return ((ObjectWrapperWithAPISupport)_objectWrapper).wrapAsAPI(
-				_map);
+			ObjectWrapperWithAPISupport objectWrapperWithAPISupport =
+				(ObjectWrapperWithAPISupport)_objectWrapper;
+
+			return objectWrapperWithAPISupport.wrapAsAPI(_map);
 		}
 
 		@Override

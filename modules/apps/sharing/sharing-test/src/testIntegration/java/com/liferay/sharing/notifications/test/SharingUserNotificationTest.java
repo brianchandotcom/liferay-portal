@@ -121,12 +121,14 @@ public class SharingUserNotificationTest extends BaseUserNotificationTestCase {
 	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
 		throws Exception {
 
+		SharingEntry sharingEntry = (SharingEntry)baseModel;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
 		return _sharingEntryLocalService.updateSharingEntry(
-			user.getUserId(), ((SharingEntry)baseModel).getSharingEntryId(),
+			user.getUserId(), sharingEntry.getSharingEntryId(),
 			Arrays.asList(SharingEntryAction.VIEW), false, null,
 			serviceContext);
 	}

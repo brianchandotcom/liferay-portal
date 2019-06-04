@@ -318,9 +318,9 @@ public class ContextExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			 Objects.equals(entityField.getType(), EntityField.Type.INTEGER) ||
 			 Objects.equals(entityField.getType(), EntityField.Type.STRING))) {
 
-			return p ->
-				((Comparable)fieldValue).compareTo(
-					p.get(entityField.getName())) <= 0;
+			Comparable comparable = (Comparable)fieldValue;
+
+			return p -> comparable.compareTo(p.get(entityField.getName())) <= 0;
 		}
 
 		throw new UnsupportedOperationException(
@@ -339,9 +339,9 @@ public class ContextExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			 Objects.equals(entityField.getType(), EntityField.Type.INTEGER) ||
 			 Objects.equals(entityField.getType(), EntityField.Type.STRING))) {
 
-			return p ->
-				((Comparable)fieldValue).compareTo(
-					p.get(entityField.getName())) < 0;
+			Comparable comparable = (Comparable)fieldValue;
+
+			return p -> comparable.compareTo(p.get(entityField.getName())) < 0;
 		}
 
 		throw new UnsupportedOperationException(
@@ -423,9 +423,9 @@ public class ContextExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			 Objects.equals(entityField.getType(), EntityField.Type.INTEGER) ||
 			 Objects.equals(entityField.getType(), EntityField.Type.STRING))) {
 
-			return p ->
-				((Comparable)fieldValue).compareTo(
-					p.get(entityField.getName())) >= 0;
+			Comparable comparable = (Comparable)fieldValue;
+
+			return p -> comparable.compareTo(p.get(entityField.getName())) >= 0;
 		}
 
 		throw new UnsupportedOperationException(
@@ -444,9 +444,9 @@ public class ContextExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			 Objects.equals(entityField.getType(), EntityField.Type.INTEGER) ||
 			 Objects.equals(entityField.getType(), EntityField.Type.STRING))) {
 
-			return p ->
-				((Comparable)fieldValue).compareTo(
-					p.get(entityField.getName())) > 0;
+			Comparable comparable = (Comparable)fieldValue;
+
+			return p -> comparable.compareTo(p.get(entityField.getName())) > 0;
 		}
 
 		throw new UnsupportedOperationException(

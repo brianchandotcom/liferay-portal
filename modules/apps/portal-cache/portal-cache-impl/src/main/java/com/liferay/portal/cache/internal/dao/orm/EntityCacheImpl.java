@@ -245,7 +245,9 @@ public class EntityCacheImpl
 						result = StringPool.BLANK;
 					}
 					else {
-						result = ((BaseModel<?>)loadResult).toCacheModel();
+						BaseModel<?> baseModel = (BaseModel<?>)loadResult;
+
+						result = baseModel.toCacheModel();
 
 						PortalCacheHelperUtil.putWithoutReplicator(
 							portalCache, primaryKey, result);
@@ -298,7 +300,9 @@ public class EntityCacheImpl
 			return;
 		}
 
-		result = ((BaseModel<?>)result).toCacheModel();
+		BaseModel<?> baseModel = (BaseModel<?>)result;
+
+		result = baseModel.toCacheModel();
 
 		if (_isLocalCacheEnabled()) {
 			Map<Serializable, Serializable> localCache = _localCache.get();

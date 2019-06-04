@@ -51,8 +51,10 @@ public class TrashContainerActionDropdownItemsProvider {
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		ClassedModel classedModel = (ClassedModel)trashedModel;
+
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			((ClassedModel)trashedModel).getModelClassName());
+			classedModel.getModelClassName());
 
 		_trashRenderer = trashHandler.getTrashRenderer(
 			trashedModel.getTrashEntryClassPK());

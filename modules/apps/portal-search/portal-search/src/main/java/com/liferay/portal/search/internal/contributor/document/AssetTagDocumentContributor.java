@@ -96,15 +96,21 @@ public class AssetTagDocumentContributor implements DocumentContributor {
 
 	protected Long getGroupId(BaseModel baseModel) {
 		if (baseModel instanceof GroupedModel) {
-			return ((GroupedModel)baseModel).getGroupId();
+			GroupedModel groupedModel = (GroupedModel)baseModel;
+
+			return groupedModel.getGroupId();
 		}
 
 		if (baseModel instanceof Organization) {
-			return ((Organization)baseModel).getGroupId();
+			Organization organization = (Organization)baseModel;
+
+			return organization.getGroupId();
 		}
 
 		if (baseModel instanceof User) {
-			return ((User)baseModel).getGroupId();
+			User user = (User)baseModel;
+
+			return user.getGroupId();
 		}
 
 		return null;

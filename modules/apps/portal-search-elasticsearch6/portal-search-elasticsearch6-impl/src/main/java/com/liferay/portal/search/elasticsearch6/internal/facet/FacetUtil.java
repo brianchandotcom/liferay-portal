@@ -23,8 +23,10 @@ public class FacetUtil {
 
 	public static String getAggregationName(Facet facet) {
 		if (facet instanceof com.liferay.portal.search.facet.Facet) {
-			return ((com.liferay.portal.search.facet.Facet)facet).
-				getAggregationName();
+			com.liferay.portal.search.facet.Facet facet2 =
+				(com.liferay.portal.search.facet.Facet)facet;
+
+			return facet2.getAggregationName();
 		}
 
 		return facet.getFieldName();

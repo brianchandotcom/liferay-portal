@@ -152,8 +152,11 @@ public class EntityModelFieldMapper {
 		EntityField.Type entityFieldType = entityField.getType();
 
 		if (entityFieldType == EntityField.Type.COMPLEX) {
+			ComplexEntityField complexEntityField =
+				(ComplexEntityField)entityField;
+
 			Map<String, EntityField> entityFieldsMap =
-				((ComplexEntityField)entityField).getEntityFieldsMap();
+				complexEntityField.getEntityFieldsMap();
 
 			return _getComplexFields(
 				entityModel.getName(), entityField.getName(), entityFieldsMap,

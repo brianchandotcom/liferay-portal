@@ -58,10 +58,11 @@ public class UserModelListener extends BaseLDAPExportModelListener<User> {
 
 		try {
 			if (associationClassName.equals(Group.class.getName())) {
-				long userId = ((Long)classPK).longValue();
-				long groupId = ((Long)associationClassPK).longValue();
+				Long userId = (Long)classPK;
+				Long groupId = (Long)associationClassPK;
 
-				updateMembershipRequestStatus(userId, groupId);
+				updateMembershipRequestStatus(
+					userId.longValue(), groupId.longValue());
 			}
 		}
 		catch (Exception e) {

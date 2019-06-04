@@ -243,8 +243,10 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 		Layout layout = themeDisplay.getLayout();
 
 		while (actionResponse instanceof ActionResponseWrapper) {
-			actionResponse =
-				((ActionResponseWrapper)actionResponse).getResponse();
+			ActionResponseWrapper actionResponseWrapper =
+				(ActionResponseWrapper)actionResponse;
+
+			actionResponse = actionResponseWrapper.getResponse();
 		}
 
 		LiferayPortletURL liferayPortletURL = new PortletURLImplWrapper(

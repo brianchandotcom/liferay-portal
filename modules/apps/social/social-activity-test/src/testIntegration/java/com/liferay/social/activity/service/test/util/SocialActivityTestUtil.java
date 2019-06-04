@@ -88,11 +88,17 @@ public class SocialActivityTestUtil {
 
 		if (owner instanceof User) {
 			classNameId = PortalUtil.getClassNameId(User.class.getName());
-			classPK = ((User)owner).getUserId();
+
+			User user = (User)owner;
+
+			classPK = user.getUserId();
 		}
 		else if (owner instanceof AssetEntry) {
-			classNameId = ((AssetEntry)owner).getClassNameId();
-			classPK = ((AssetEntry)owner).getClassPK();
+			AssetEntry assetEntry = (AssetEntry)owner;
+
+			classNameId = assetEntry.getClassNameId();
+			classPK = assetEntry.getClassPK();
+
 			ownerType = SocialActivityCounterConstants.TYPE_ASSET;
 		}
 

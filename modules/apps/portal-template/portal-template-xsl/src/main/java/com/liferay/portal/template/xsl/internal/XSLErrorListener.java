@@ -88,8 +88,9 @@ public class XSLErrorListener implements ErrorListener {
 				rootCause = cause;
 			}
 			else if (cause instanceof TransformerException) {
-				SourceLocator causeLocator =
-					((TransformerException)cause).getLocator();
+				TransformerException te = (TransformerException)cause;
+
+				SourceLocator causeLocator = te.getLocator();
 
 				if (causeLocator != null) {
 					locator = causeLocator;
@@ -98,13 +99,19 @@ public class XSLErrorListener implements ErrorListener {
 			}
 
 			if (cause instanceof TransformerException) {
-				cause = ((TransformerException)cause).getCause();
+				TransformerException te = (TransformerException)cause;
+
+				cause = te.getCause();
 			}
 			else if (cause instanceof WrappedRuntimeException) {
-				cause = ((WrappedRuntimeException)cause).getException();
+				WrappedRuntimeException wre = (WrappedRuntimeException)cause;
+
+				cause = wre.getException();
 			}
 			else if (cause instanceof SAXException) {
-				cause = ((SAXException)cause).getException();
+				SAXException saxe = (SAXException)cause;
+
+				cause = saxe.getException();
 			}
 			else {
 				cause = null;

@@ -54,7 +54,6 @@ public class FlatJSModule implements JSModule {
 		String fileName = ModuleNameUtil.toFileName(getName());
 
 		_jsURL = jsPackage.getResourceURL(fileName);
-		_sourceMapURL = jsPackage.getResourceURL(fileName + ".map");
 	}
 
 	@Override
@@ -122,7 +121,11 @@ public class FlatJSModule implements JSModule {
 
 	@Override
 	public InputStream getSourceMapInputStream() throws IOException {
-		return _sourceMapURL.openStream();
+		String fileName = ModuleNameUtil.toFileName(getName());
+
+		URL sourceMapURL = _jsPackage.getResourceURL(fileName + ".map");
+
+		return sourceMapURL.openStream();
 	}
 
 	@Override
@@ -144,6 +147,5 @@ public class FlatJSModule implements JSModule {
 	private final JSPackage _jsPackage;
 	private final URL _jsURL;
 	private final String _name;
-	private final URL _sourceMapURL;
 
 }

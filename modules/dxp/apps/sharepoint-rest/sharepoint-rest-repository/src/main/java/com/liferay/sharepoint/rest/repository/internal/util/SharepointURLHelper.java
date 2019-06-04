@@ -33,16 +33,6 @@ public class SharepointURLHelper {
 		_resultsSourceId = resultsSourceId;
 	}
 
-	public String getAbsoluteURL(String relativeURL) {
-		if (_siteAbsoluteURL.endsWith(StringPool.SLASH) ||
-			relativeURL.startsWith(StringPool.SLASH)) {
-
-			return _siteAbsoluteURL + relativeURL;
-		}
-
-		return _siteAbsoluteURL + StringPool.SLASH + relativeURL;
-	}
-
 	public String getAddFileURL(String extRepositoryFolderKey, String name) {
 		return String.format(
 			"%s/_api/web/GetFolderByServerRelativeUrl('%s')/Files/Add" +

@@ -53,7 +53,9 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 
 				for (Node child : childNodes) {
 					if (child instanceof TextNode) {
-						sb.append(((TextNode)child).getText());
+						TextNode textNode = (TextNode)child;
+
+						sb.append(textNode.getText());
 					}
 				}
 

@@ -72,7 +72,9 @@ public class CustomFieldsUtil {
 		int attributeType, Locale locale, Object value) {
 
 		if (ExpandoColumnConstants.STRING_LOCALIZED == attributeType) {
-			return ((Map<Locale, String>)value).get(locale);
+			Map<Locale, String> map = (Map<Locale, String>)value;
+
+			return map.get(locale);
 		}
 		else if (ExpandoColumnConstants.DATE == attributeType) {
 			return DateUtil.getDate(

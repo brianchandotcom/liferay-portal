@@ -170,7 +170,9 @@ public class MailingListMessageListener extends BaseMessageListener {
 			Address address = addresses[0];
 
 			if (address instanceof InternetAddress) {
-				from = ((InternetAddress)address).getAddress();
+				InternetAddress internetAddress = (InternetAddress)address;
+
+				from = internetAddress.getAddress();
 			}
 			else {
 				from = address.toString();

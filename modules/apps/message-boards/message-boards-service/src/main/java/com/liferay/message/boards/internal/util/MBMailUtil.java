@@ -68,7 +68,9 @@ public class MBMailUtil {
 			byte[] bytes = null;
 
 			if (partContent instanceof String) {
-				bytes = ((String)partContent).getBytes();
+				String s = (String)partContent;
+
+				bytes = s.getBytes();
 			}
 			else if (partContent instanceof InputStream) {
 				bytes = JavaMailUtil.getBytes(part);

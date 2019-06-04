@@ -91,7 +91,10 @@ public class ByteChannelReader {
 
 	public void position(int position) throws IOException {
 		if (isSeekable()) {
-			((SeekableByteChannel)_readableByteChannel).position(position);
+			SeekableByteChannel seekableByteChannel =
+				(SeekableByteChannel)_readableByteChannel;
+
+			seekableByteChannel.position(position);
 
 			_byteBuffer.clear();
 			_byteBuffer.flip();

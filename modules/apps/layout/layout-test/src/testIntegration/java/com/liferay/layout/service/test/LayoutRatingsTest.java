@@ -55,8 +55,9 @@ public class LayoutRatingsTest extends BaseRatingsTestCase {
 			BaseModel<?> baseModel, ServiceContext serviceContext)
 		throws Exception {
 
-		LayoutLocalServiceUtil.deleteLayout(
-			((Layout)baseModel).getPlid(), serviceContext);
+		Layout layout = (Layout)baseModel;
+
+		LayoutLocalServiceUtil.deleteLayout(layout.getPlid(), serviceContext);
 
 		return null;
 	}

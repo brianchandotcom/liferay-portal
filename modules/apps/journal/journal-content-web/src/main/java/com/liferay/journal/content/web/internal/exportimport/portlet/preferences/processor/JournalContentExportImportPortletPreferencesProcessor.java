@@ -353,9 +353,10 @@ public class JournalContentExportImportPortletPreferencesProcessor
 					int prefOwnerType = -1;
 
 					if (portletPreferences instanceof PortletPreferencesImpl) {
-						prefOwnerType =
-							((PortletPreferencesImpl)portletPreferences).
-								getOwnerType();
+						PortletPreferencesImpl portletPreferencesImpl =
+							(PortletPreferencesImpl)portletPreferences;
+
+						prefOwnerType = portletPreferencesImpl.getOwnerType();
 					}
 
 					if ((portletDataContext.getPlid() > 0) &&

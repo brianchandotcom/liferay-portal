@@ -44,8 +44,13 @@ public class FolderArticleArticleIdComparator
 		if ((object1 instanceof JournalArticle) &&
 			(object2 instanceof JournalArticle)) {
 
-			String articleId1 = ((JournalArticle)object1).getArticleId();
-			String articleId2 = ((JournalArticle)object2).getArticleId();
+			JournalArticle journalArticle1 = (JournalArticle)object1;
+
+			String articleId1 = journalArticle1.getArticleId();
+
+			JournalArticle journalArticle2 = (JournalArticle)object2;
+
+			String articleId2 = journalArticle2.getArticleId();
 
 			value = articleId1.compareTo(articleId2);
 		}

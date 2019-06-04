@@ -330,8 +330,10 @@ public class LayoutFriendlyURLTest {
 				layoutFriendlyURLExceptions.size());
 
 			for (Exception e : layoutFriendlyURLExceptions) {
-				String keywordsConflict =
-					((LayoutFriendlyURLException)e).getKeywordConflict();
+				LayoutFriendlyURLException lfurle2 =
+					(LayoutFriendlyURLException)e;
+
+				String keywordsConflict = lfurle2.getKeywordConflict();
 
 				Assert.assertEquals("tags", keywordsConflict);
 			}

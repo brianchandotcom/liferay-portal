@@ -128,7 +128,9 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 		Map<String, Object> context = getContext();
 
 		if (context instanceof SoyContext) {
-			((SoyContext)context).putHTML(key, value);
+			SoyContext soyContext = (SoyContext)context;
+
+			soyContext.putHTML(key, value);
 		}
 		else {
 			putValue(key, value);

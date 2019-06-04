@@ -62,7 +62,9 @@ public class MixedDataColumn extends Column {
 			data.add(value);
 		}
 		else if (value instanceof Collection) {
-			data.add(((Collection)value).toArray());
+			Collection<?> collection = (Collection<?>)value;
+
+			data.add(collection.toArray());
 		}
 		else if (clazz.isArray()) {
 			data.add(value);

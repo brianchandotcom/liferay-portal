@@ -125,8 +125,10 @@ public class MBThreadTrashHandlerTest
 	public boolean isAssetEntryVisible(ClassedModel classedModel, long classPK)
 		throws Exception {
 
+		MBThread mbThread = (MBThread)classedModel;
+
 		MBMessage rootMessage = MBMessageLocalServiceUtil.getMBMessage(
-			((MBThread)classedModel).getRootMessageId());
+			mbThread.getRootMessageId());
 
 		return _whenIsAssetable.isAssetEntryVisible(
 			rootMessage, getAssetClassPK(rootMessage));

@@ -43,8 +43,13 @@ public class FolderArticleTitleComparator extends OrderByComparator<Object> {
 		if ((object1 instanceof JournalArticle) &&
 			(object2 instanceof JournalArticle)) {
 
-			String name1 = ((JournalArticle)object1).getTitle();
-			String name2 = ((JournalArticle)object2).getTitle();
+			JournalArticle journalArticle1 = (JournalArticle)object1;
+
+			String name1 = journalArticle1.getTitle();
+
+			JournalArticle journalArticle2 = (JournalArticle)object2;
+
+			String name2 = journalArticle2.getTitle();
 
 			value = name1.compareTo(name2);
 		}

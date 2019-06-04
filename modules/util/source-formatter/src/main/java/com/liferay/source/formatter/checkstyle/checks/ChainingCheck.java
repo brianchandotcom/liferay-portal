@@ -55,12 +55,19 @@ public class ChainingCheck extends BaseCheck {
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {
-			TokenTypes.CLASS_DEF, TokenTypes.ENUM_DEF, TokenTypes.INTERFACE_DEF
+			TokenTypes.CLASS_DEF, TokenTypes.ENUM_DEF, TokenTypes.INTERFACE_DEF,
+			TokenTypes.TYPECAST
 		};
 	}
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		if (detailAST.getType() == TokenTypes.TYPECAST) {
+			_checkChainingOnTypecast(detailAST);
+
+			return;
+		}
+
 		DetailAST parentDetailAST = detailAST.getParent();
 
 		if (parentDetailAST != null) {
@@ -215,8 +222,23 @@ public class ChainingCheck extends BaseCheck {
 			}
 
 			log(
-				methodCallDetailAST, _MSG_AVOID_CHAINING,
+				methodCallDetailAST, _MSG_AVOID_METHOD_CHAINING,
 				DetailASTUtil.getMethodName(methodCallDetailAST));
+		}
+	}
+
+	private void _checkChainingOnTypecast(DetailAST detailAST) {
+		if (_isInsideConstructorThisCall(detailAST) ||
+			DetailASTUtil.hasParentWithTokenType(
+				detailAST, TokenTypes.SUPER_CTOR_CALL)) {
+
+			return;
+		}
+
+		DetailAST parentDetailAST = detailAST.getParent();
+
+		if (parentDetailAST.getType() == TokenTypes.DOT) {
+			log(detailAST, _MSG_AVOID_TYPECAST_CHAINING);
 		}
 	}
 
@@ -231,7 +253,7 @@ public class ChainingCheck extends BaseCheck {
 			!DetailASTUtil.hasParentWithTokenType(
 				methodCallDetailAST, TokenTypes.SUPER_CTOR_CALL)) {
 
-			log(methodCallDetailAST, _MSG_AVOID_CHAINING, methodName);
+			log(methodCallDetailAST, _MSG_AVOID_METHOD_CHAINING, methodName);
 		}
 	}
 
@@ -842,10 +864,14 @@ public class ChainingCheck extends BaseCheck {
 
 	private static final String _MSG_ALLOWED_CHAINING = "chaining.allowed";
 
-	private static final String _MSG_AVOID_CHAINING = "chaining.avoid";
+	private static final String _MSG_AVOID_METHOD_CHAINING =
+		"chaining.avoid.method";
 
 	private static final String _MSG_AVOID_TOO_MANY_CONCAT =
 		"concat.avoid.too.many";
+
+	private static final String _MSG_AVOID_TYPECAST_CHAINING =
+		"chaining.avoid.typecast";
 
 	private static final String _MSG_REQUIRED_CHAINING = "chaining.required";
 

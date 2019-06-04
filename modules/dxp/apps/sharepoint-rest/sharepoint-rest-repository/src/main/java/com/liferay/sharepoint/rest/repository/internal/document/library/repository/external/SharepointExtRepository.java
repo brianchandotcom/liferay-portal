@@ -691,14 +691,7 @@ public class SharepointExtRepository implements ExtRepository {
 		httpRequestWithBody.header(
 			"Authorization", "Bearer " + _getAccessToken());
 
-		HttpResponse<InputStream> httpResponse = httpRequestWithBody.asBinary();
-
-		if (httpResponse.getStatus() >= 300) {
-			throw new PrincipalException(
-				String.format(
-					"Unable to delete %s: %d %s", url, httpResponse.getStatus(),
-					httpResponse.getStatusText()));
-		}
+		_handleHttpResponseError(httpRequestWithBody.asBinary(), url);
 	}
 
 	private String _getAccessToken() throws PortalException {
@@ -752,12 +745,7 @@ public class SharepointExtRepository implements ExtRepository {
 
 		HttpResponse<InputStream> httpResponse = getRequest.asBinary();
 
-		if (httpResponse.getStatus() >= 300) {
-			throw new PrincipalException(
-				String.format(
-					"Unable to get %s: %d %s", url, httpResponse.getStatus(),
-					httpResponse.getStatusText()));
-		}
+		_handleHttpResponseError(httpResponse, url);
 
 		return httpResponse.getBody();
 	}
@@ -772,14 +760,30 @@ public class SharepointExtRepository implements ExtRepository {
 
 		HttpResponse<String> httpResponse = getRequest.asString();
 
+		_handleHttpResponseError(httpResponse, url);
+
+		return JSONFactoryUtil.createJSONObject(httpResponse.getBody());
+	}
+
+	private void _handleHttpResponseError(
+			HttpResponse<?> httpResponse, String url)
+		throws PortalException {
+
+		if (httpResponse.getStatus() == 400) {
+			throw new PortalException(
+				String.format(
+					"Unable to post to %s: %d %s%n%s", url,
+					httpResponse.getStatus(), httpResponse.getStatusText(),
+					httpResponse.getBody()));
+		}
+
 		if (httpResponse.getStatus() >= 300) {
 			throw new PrincipalException(
 				String.format(
-					"Unable to get %s: %d %s", url, httpResponse.getStatus(),
-					httpResponse.getStatusText()));
+					"Unable to post to %s: %d %s%n%s", url,
+					httpResponse.getStatus(), httpResponse.getStatusText(),
+					httpResponse.getBody()));
 		}
-
-		return JSONFactoryUtil.createJSONObject(httpResponse.getBody());
 	}
 
 	private void _post(String url) throws PortalException, UnirestException {
@@ -788,14 +792,7 @@ public class SharepointExtRepository implements ExtRepository {
 		httpRequestWithBody.header(
 			"Authorization", "Bearer " + _getAccessToken());
 
-		HttpResponse<InputStream> httpResponse = httpRequestWithBody.asBinary();
-
-		if (httpResponse.getStatus() >= 300) {
-			throw new PrincipalException(
-				String.format(
-					"Unable to post to %s: %d %s", url,
-					httpResponse.getStatus(), httpResponse.getStatusText()));
-		}
+		_handleHttpResponseError(httpRequestWithBody.asBinary(), url);
 	}
 
 	private JSONObject _post(String url, InputStream inputStream)
@@ -810,12 +807,7 @@ public class SharepointExtRepository implements ExtRepository {
 
 		HttpResponse<String> httpResponse = httpRequestWithBody.asString();
 
-		if (httpResponse.getStatus() >= 300) {
-			throw new PrincipalException(
-				String.format(
-					"Unable to post to %s: %d %s", url,
-					httpResponse.getStatus(), httpResponse.getStatusText()));
-		}
+		_handleHttpResponseError(httpResponse, url);
 
 		return JSONFactoryUtil.createJSONObject(httpResponse.getBody());
 	}
@@ -834,12 +826,7 @@ public class SharepointExtRepository implements ExtRepository {
 
 		HttpResponse<String> httpResponse = httpRequestWithBody.asString();
 
-		if (httpResponse.getStatus() >= 300) {
-			throw new PrincipalException(
-				String.format(
-					"Unable to post to %s: %d %s", url,
-					httpResponse.getStatus(), httpResponse.getStatusText()));
-		}
+		_handleHttpResponseError(httpResponse, url);
 
 		return JSONFactoryUtil.createJSONObject(httpResponse.getBody());
 	}
@@ -856,12 +843,9 @@ public class SharepointExtRepository implements ExtRepository {
 
 		HttpResponse<String> httpResponse = httpRequestWithBody.asString();
 
-		if (httpResponse.getStatus() >= 300) {
-			throw new PrincipalException(
-				String.format(
-					"Unable to post to %s: %d %s", url,
-					httpResponse.getStatus(), httpResponse.getStatusText()));
-		}
+		_handleHttpResponseError(httpResponse, url);
+
+		JSONFactoryUtil.createJSONObject(httpResponse.getBody());
 	}
 
 	private String _strip(String s) {

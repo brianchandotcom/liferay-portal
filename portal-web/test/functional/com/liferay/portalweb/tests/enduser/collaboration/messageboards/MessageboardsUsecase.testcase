@@ -92,14 +92,7 @@ definition {
 
 	@priority = "5"
 	test DeleteMessageboardsThread {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
-
-		MessageboardsThread.addCP(
+		JSONMBMessage.addMessage(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
@@ -148,14 +141,7 @@ definition {
 
 	@priority = "5"
 	test RestoreMessageboardsThread {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
-
-		MessageboardsThread.addCP(
+		JSONMBMessage.addMessage(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
@@ -267,9 +253,7 @@ definition {
 
 		Portlet.addPG(portletName = "Message Boards");
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.addPG(
+		JSONMBMessage.addMessage(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
@@ -331,9 +315,7 @@ definition {
 
 		Portlet.addPG(portletName = "Message Boards");
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.addPG(
+		JSONMBMessage.addMessage(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
@@ -638,9 +620,7 @@ definition {
 				roleTitle = "User");
 		}
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.addPG(
+		JSONMBMessage.addMessage(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
@@ -728,15 +708,15 @@ definition {
 
 		Portlet.addPG(portletName = "Message Boards");
 
-		MessageboardsThread.addPG(
+		JSONMBMessage.addMessage(
 			threadBody = "MB Thread Message Body 1",
 			threadSubject = "MB Thread Message Subject 1");
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.addPG(
+		JSONMBMessage.addMessage(
 			threadBody = "MB Thread Message Body 2",
 			threadSubject = "MB Thread Message Subject 2");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		RSS.viewFeed(
 			entryContent = "MB Thread Message Body 2",
@@ -789,9 +769,7 @@ definition {
 
 		Portlet.addPG(portletName = "Message Boards");
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.addPG(
+		JSONMBMessage.addMessage(
 			threadBody = "MB Thread1 Message Body",
 			threadSubject = "MB Thread1 Message Subject");
 
@@ -830,9 +808,7 @@ definition {
 			startedByUserName = "Test Test",
 			threadPostNumber = "1");
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.addPG(
+		JSONMBMessage.addMessage(
 			threadBody = "MB Thread2 Message Body",
 			threadSubject = "MB Thread2 Message Subject");
 
@@ -955,9 +931,7 @@ definition {
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.addPG(
+		JSONMBMessage.addMessage(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
@@ -1136,7 +1110,7 @@ definition {
 
 		MessageboardsThread.viewMarkAsQuestionCheckedCP(threadSubject = "Thread Subject");
 
-		MessageboardsThread.addCP(
+		JSONMBMessage.addMessage(
 			threadBody = "Thread Body",
 			threadSubject = "Thread Subject");
 

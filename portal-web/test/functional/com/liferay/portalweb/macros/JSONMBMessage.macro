@@ -1,4 +1,37 @@
 definition {
+	macro addMessage {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(categoryId))) {
+			var categoryId = "0";
+		}
+
+		if (!(isSet(groupId))) {
+			var groupId = "20123";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/mb.mbmessage/add-message \
+			-u test@liferay.com:test \
+			-d groupId=${groupId} \
+			-d categoryId=${categoryId} \
+			-d subject=${threadSubject} \
+			-d body=${threadBody} \
+			-d format='bbcode' \
+			-d inputStreamOVPs= \
+			-d anonymous=false \
+			-d priority=0 \
+			-d allowPingbacks=true
+		''';
+
+		echo("## Adding a 'Message' with the following info using JSONWS:");
+
+		echo("## * Subject: ${threadSubject}");
+
+		echo("## * Body: ${threadBody}");
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
 
 	macro addMessageReply {
 		var messageId = JSONMBMessage.getmessageId();
@@ -28,6 +61,14 @@ definition {
 		echo("## * Body: ${threadBody}");
 
 		var messageId = JSONCurlUtil.post("${curl}", "$['messageId']");
+	}
+
+	macro getCategoryId {
+		var messageBoardsCategoryURL = selenium.getLocation();
+		var portalURL = PropsUtil.get("portal.url");
+		var categoryId = StringUtil.replace("${messageBoardsCategoryURL}", "${portalURL}/web/guest/message-boards-page/-/message_boards/message/", "");
+
+		return "${messageId}";
 	}
 
 	macro getmessageId {

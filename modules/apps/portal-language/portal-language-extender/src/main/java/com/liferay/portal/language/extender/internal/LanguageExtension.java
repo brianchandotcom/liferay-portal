@@ -180,7 +180,7 @@ public class LanguageExtension {
 
 			ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>
 				serviceTracker = new PredicateServiceTracker(
-					filter,
+					_bundleContext, filter,
 					new ResourceBundleLoaderPredicate(
 						bundleSymbolicName, baseName, limit));
 
@@ -282,14 +282,14 @@ public class LanguageExtension {
 
 	}
 
-	private class PredicateServiceTracker
+	private static class PredicateServiceTracker
 		extends ServiceTracker<ResourceBundleLoader, ResourceBundleLoader> {
 
 		public PredicateServiceTracker(
-			Filter filter,
+			BundleContext bundleContext, Filter filter,
 			Predicate<ServiceReference<ResourceBundleLoader>> predicate) {
 
-			super(_bundleContext, filter, null);
+			super(bundleContext, filter, null);
 
 			_predicate = predicate;
 		}
@@ -299,7 +299,7 @@ public class LanguageExtension {
 			ServiceReference<ResourceBundleLoader> serviceReference) {
 
 			if (_predicate.test(serviceReference)) {
-				return _bundleContext.getService(serviceReference);
+				return context.getService(serviceReference);
 			}
 
 			return null;
@@ -311,7 +311,7 @@ public class LanguageExtension {
 			ResourceBundleLoader resourceBundleLoader) {
 
 			if (!_predicate.test(serviceReference)) {
-				_bundleContext.ungetService(serviceReference);
+				context.ungetService(serviceReference);
 
 				remove(serviceReference);
 			}
@@ -324,7 +324,7 @@ public class LanguageExtension {
 
 	}
 
-	private class ResourceBundleLoaderPredicate
+	private static class ResourceBundleLoaderPredicate
 		implements Predicate<ServiceReference<ResourceBundleLoader>> {
 
 		public ResourceBundleLoaderPredicate(

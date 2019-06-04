@@ -57,8 +57,6 @@ public abstract class BuiltInJSModule implements JSModule {
 		_resolvedId = _getResolvedId(jsPackage, name);
 		_dependencies = dependencies;
 
-		_id = ModuleNameUtil.getModuleId(jsPackage, name);
-
 		for (String dependency : dependencies) {
 			String packageName = ModuleNameUtil.getPackageName(dependency);
 
@@ -80,7 +78,7 @@ public abstract class BuiltInJSModule implements JSModule {
 
 	@Override
 	public String getId() {
-		return _id;
+		return ModuleNameUtil.getModuleId(_jsPackage, _name);
 	}
 
 	@Override
@@ -154,7 +152,6 @@ public abstract class BuiltInJSModule implements JSModule {
 
 	private final Collection<String> _dependencies;
 	private final List<String> _dependencyPackageNames = new ArrayList<>();
-	private final String _id;
 	private final JSPackage _jsPackage;
 	private final String _name;
 	private final String _resolvedId;

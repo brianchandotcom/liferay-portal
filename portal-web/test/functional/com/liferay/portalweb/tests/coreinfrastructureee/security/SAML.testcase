@@ -140,7 +140,7 @@ definition {
 		SAML.configureLiferaySAMLAsSP(
 			idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
 			samlEntityID = "samlsp",
-			spKeepAlive = "http://www.able.com:9080/c/portal/saml/keep_alive",
+			spKeepAliveURL = "http://www.able.com:9080/c/portal/saml/keep_alive",
 			spURL = "http://www.able.com:9080/");
 
 		SAML.configureLiferaySAMLAsSP(
@@ -183,11 +183,9 @@ definition {
 
 		var count = Page.getTextCountFromHtmlSource(text = "document.write");
 
-		// Workaround for LPS-94699
-
-		/*if (!("${count}" == "2")) {
+		if (!("${count}" == "2")) {
 			fail("That response should contain two document.write commands");
-		}*/
+		}
 	}
 
 	@priority = "4"

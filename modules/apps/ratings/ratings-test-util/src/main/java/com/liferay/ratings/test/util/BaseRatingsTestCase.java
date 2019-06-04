@@ -47,8 +47,10 @@ public abstract class BaseRatingsTestCase {
 		BaseModel<?> baseModel = addBaseModel(
 			getParentBaseModel(group, serviceContext), serviceContext);
 
+		Class<?> clazz = getBaseModelClass();
+
 		RatingsStats ratingsStats = RatingsTestUtil.addStats(
-			_getBaseModelClassName(), getRatingsClassPK(baseModel));
+			clazz.getName(), getRatingsClassPK(baseModel));
 
 		deleteBaseModel(baseModel, serviceContext);
 
@@ -78,12 +80,6 @@ public abstract class BaseRatingsTestCase {
 
 	@DeleteAfterTestRun
 	protected Group group;
-
-	private String _getBaseModelClassName() {
-		Class<?> clazz = getBaseModelClass();
-
-		return clazz.getName();
-	}
 
 	@Inject
 	private RatingsStatsLocalService _ratingsStatsLocalService;

@@ -14,6 +14,8 @@
  */
 --%>
 
+<liferay-ui:error exception="<%= WorkflowTaskDueDateException.class %>" message="please-enter-a-valid-due-date" />
+
 <liferay-ui:search-container
 	id="workflowTasks"
 	searchContainer="<%= workflowTaskDisplayContext.getWorkflowTaskSearch() %>"

@@ -64,7 +64,9 @@ renderResponse.setTitle(headerTitle);
 				request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 				%>
 
-				<liferay-util:include page="/workflow_task_action.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/workflow_task_action.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="mvcPath" value="/edit_workflow_task.jsp" />
+				</liferay-util:include>
 
 				<aui:col width="<%= 50 %>">
 					<aui:field-wrapper label="assigned-to">

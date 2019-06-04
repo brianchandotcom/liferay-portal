@@ -19,6 +19,8 @@
 <%
 String randomId = workflowTaskDisplayContext.getWorkflowTaskRandomId();
 
+String mvcPath = ParamUtil.getString(request, "mvcPath", "/view.jsp");
+
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
@@ -104,7 +106,7 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 		/>
 
 		<liferay-portlet:actionURL name="updateWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="updateDueDateURL">
-			<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
+			<portlet:param name="mvcPath" value="<%= mvcPath %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="workflowTaskId" value="<%= StringUtil.valueOf(workflowTask.getWorkflowTaskId()) %>" />
 		</liferay-portlet:actionURL>

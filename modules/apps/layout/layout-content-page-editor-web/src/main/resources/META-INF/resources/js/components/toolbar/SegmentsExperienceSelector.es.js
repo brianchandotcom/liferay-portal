@@ -40,22 +40,6 @@ function comparePriority(obj1, obj2) {
 }
 
 /**
- * Searchs for a segment based on its Id
- * and returns its label
- * @param {Array} segments
- * @param {string} segmentsEntryId
- * @returns {string|undefined}
- * @review
- */
-function findSegmentsEntryNameById(segments, segmentsEntryId) {
-	const mostWantedSegment = segments.find(
-		segment => segment.segmentsEntryId === segmentsEntryId
-	);
-
-	return mostWantedSegment && mostWantedSegment.name;
-}
-
-/**
  * SegmentsExperienceSelector
  */
 class SegmentsExperienceSelector extends Component {
@@ -71,10 +55,9 @@ class SegmentsExperienceSelector extends Component {
 		)
 			.sort(comparePriority)
 			.map(experience => {
-				const name = findSegmentsEntryNameById(
-					Object.values(state.availableSegmentsEntries),
-					experience.segmentsEntryId
-				);
+				const segmentEntry =
+					state.availableSegmentsEntries[experience.segmentsEntryId];
+				const name = segmentEntry && segmentEntry.name;
 
 				const updatedExperience = setIn(
 					experience,

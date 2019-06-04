@@ -21,6 +21,7 @@
 			<package-name>com.ctc.wstx.*</package-name>
 			<package-name>com.google.common.*</package-name>
 			<package-name>com.sun.xml.ws.*</package-name>
+			<package-name>javax.validation.*</package-name>
 			<package-name>org.antlr.*</package-name>
 			<package-name>org.apache.commons.fileupload.*</package-name>
 			<package-name>org.apache.commons.io.*</package-name>

@@ -66,21 +66,21 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 
 	@Override
 	public Individual getIndividual(String individualPK) {
+		FilterBuilder filterBuilder = new FilterBuilder();
+
+		filterBuilder.addFilter(
+			"dataSourceId", FilterConstants.COMPARISON_OPERATOR_EQUALS,
+			getDataSourceId());
+		filterBuilder.addFilter(
+			"dataSourceIndividualPKs/individualPKs",
+			FilterConstants.COMPARISON_OPERATOR_EQUALS, individualPK);
+
+		MultivaluedHashMap<String, Object> uriVariables =
+			new MultivaluedHashMap<>();
+
+		uriVariables.putSingle("includeAnonymousUser", true);
+
 		try {
-			FilterBuilder filterBuilder = new FilterBuilder();
-
-			filterBuilder.addFilter(
-				"dataSourceId", FilterConstants.COMPARISON_OPERATOR_EQUALS,
-				getDataSourceId());
-			filterBuilder.addFilter(
-				"dataSourceIndividualPKs/individualPKs",
-				FilterConstants.COMPARISON_OPERATOR_EQUALS, individualPK);
-
-			MultivaluedHashMap<String, Object> uriVariables =
-				new MultivaluedHashMap<>();
-
-			uriVariables.putSingle("includeAnonymousUser", true);
-
 			String response = _jsonWebServiceClient.doGet(
 				_PATH_INDIVIDUALS,
 				_getParameters(

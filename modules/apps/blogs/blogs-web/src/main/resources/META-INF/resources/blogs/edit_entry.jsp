@@ -192,8 +192,11 @@ if (portletTitleBasedNavigation) {
 									name="titleEditor"
 									onChangeMethod="OnChangeTitle"
 									placeholder="title"
+									required="<%= true %>"
 									showSource="<%= false %>"
-								/>
+								>
+									<aui:validator name="required" />
+								</liferay-ui:input-editor>
 							</h1>
 						</div>
 

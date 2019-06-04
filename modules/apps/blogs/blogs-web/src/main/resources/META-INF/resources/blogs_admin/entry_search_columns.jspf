@@ -35,7 +35,7 @@
 				<liferay-ui:message arguments="<%= new String[] {entry.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
 			</span>
 
-			<h2 class="h5">
+			<p class="font-weight-bold h5">
 				<c:choose>
 					<c:when test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
 						<aui:a href="<%= rowURL.toString() %>">
@@ -46,7 +46,7 @@
 						<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %>
 					</c:otherwise>
 				</c:choose>
-			</h2>
+			</p>
 
 			<span class="text-default">
 				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />

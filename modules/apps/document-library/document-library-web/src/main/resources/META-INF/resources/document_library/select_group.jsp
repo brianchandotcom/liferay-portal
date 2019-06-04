@@ -32,9 +32,6 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 		<liferay-ui:search-container
 			searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
 		>
-			<liferay-ui:input-search />
-
-			<div class="separator"><!-- --></div>
 
 			<%
 			GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();

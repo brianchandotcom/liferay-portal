@@ -162,7 +162,9 @@ public class DLBreadcrumbUtil {
 
 		List<Folder> ancestorFolders = Collections.emptyList();
 
-		if ((folder != null) && (folder.getFolderId() != rootFolderId)) {
+		if ((folder != null) && (folder.getFolderId() != rootFolderId) &&
+			!folder.isRoot()) {
+
 			ancestorFolders = folder.getAncestors();
 
 			int indexOfRootFolder = -1;

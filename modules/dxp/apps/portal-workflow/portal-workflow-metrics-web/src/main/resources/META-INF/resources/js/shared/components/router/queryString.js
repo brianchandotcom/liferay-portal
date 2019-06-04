@@ -1,6 +1,6 @@
 import qs from 'qs';
 
-const options = { allowDots: true, arrayFormat: 'bracket' };
+const options = {allowDots: true, arrayFormat: 'bracket'};
 
 export function parse(queryString) {
 	if (queryString && queryString.length) {

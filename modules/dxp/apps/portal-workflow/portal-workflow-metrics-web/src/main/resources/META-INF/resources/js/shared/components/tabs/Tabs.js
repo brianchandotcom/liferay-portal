@@ -2,7 +2,7 @@ import autobind from 'autobind-decorator';
 import Icon from '../Icon';
 import React from 'react';
 import TabItem from './TabItem';
-import { withRouter } from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 class Tabs extends React.Component {
 	constructor(props) {
@@ -28,9 +28,9 @@ class Tabs extends React.Component {
 	}
 
 	render() {
-		const { expanded } = this.state;
+		const {expanded} = this.state;
 		const {
-			location: { pathname, search },
+			location: {pathname, search},
 			tabs
 		} = this.props;
 
@@ -47,8 +47,8 @@ class Tabs extends React.Component {
 		}
 
 		return (
-			<nav className="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-secondary">
-				<div className="container-fluid container-fluid-max-xl">
+			<nav className='navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-secondary'>
+				<div className='container-fluid container-fluid-max-xl'>
 					<button
 						aria-expanded={expanded}
 						aria-label={Liferay.Language.get('toggle-navigation')}
@@ -57,19 +57,25 @@ class Tabs extends React.Component {
 					>
 						{activeTab.name}
 
-						<Icon iconName="caret-bottom" />
+						<Icon iconName='caret-bottom' />
 					</button>
 
-					<div className={`collapse navbar-collapse ${navbarClassName}`}>
-						<div className="container-fluid container-fluid-max-xl">
-							<ul className="navbar-nav">
+					<div
+						className={`collapse navbar-collapse ${navbarClassName}`}
+					>
+						<div className='container-fluid container-fluid-max-xl'>
+							<ul className='navbar-nav'>
 								{tabs.map((tab, index) => (
 									<li
-										className="nav-item"
+										className='nav-item'
 										key={index}
 										onClick={this.hideNavbar}
 									>
-										<TabItem {...tab} active={isActive(tab)} query={search} />
+										<TabItem
+											{...tab}
+											active={isActive(tab)}
+											query={search}
+										/>
 									</li>
 								))}
 							</ul>
@@ -82,4 +88,4 @@ class Tabs extends React.Component {
 }
 
 export default withRouter(Tabs);
-export { Tabs };
+export {Tabs};

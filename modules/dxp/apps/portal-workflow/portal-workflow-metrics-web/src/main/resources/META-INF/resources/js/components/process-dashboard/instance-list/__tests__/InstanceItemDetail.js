@@ -2,7 +2,7 @@ import fetch from '../../../../test/mock/fetch';
 import InstanceItemDetail from '../InstanceItemDetail';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { MockRouter as Router } from '../../../../test/mock/MockRouter';
+import {MockRouter as Router} from '../../../../test/mock/MockRouter';
 
 test('Should render component', () => {
 	const component = renderer.create(
@@ -19,8 +19,8 @@ test('Should render component', () => {
 test('Should render Item component', () => {
 	const component = renderer.create(
 		<InstanceItemDetail.Item
-			dateOverdue="2019-05-20T17:09:30.348Z"
-			name="test"
+			dateOverdue='2019-05-20T17:09:30.348Z'
+			name='test'
 			onTime={false}
 			remainingTime={-1558363436797}
 			status
@@ -35,8 +35,8 @@ test('Should render Item component', () => {
 test('Should render Item component onTime', () => {
 	const component = renderer.create(
 		<InstanceItemDetail.Item
-			dateOverdue="2019-05-20T17:09:30.348Z"
-			name="test"
+			dateOverdue='2019-05-20T17:09:30.348Z'
+			name='test'
 			onTime
 			remainingTime={1558363436797}
 			status
@@ -51,11 +51,11 @@ test('Should render Item component onTime', () => {
 test('Should render Item component status Paused', () => {
 	const component = renderer.create(
 		<InstanceItemDetail.Item
-			dateOverdue="2019-05-20T17:09:30.348Z"
-			name="test"
+			dateOverdue='2019-05-20T17:09:30.348Z'
+			name='test'
 			onTime
 			remainingTime={1558363436797}
-			status="Paused"
+			status='Paused'
 		/>
 	);
 
@@ -67,11 +67,11 @@ test('Should render Item component status Paused', () => {
 test('Should render Item component status Running', () => {
 	const component = renderer.create(
 		<InstanceItemDetail.Item
-			dateOverdue="2019-05-20T17:09:30.348Z"
-			name="test"
+			dateOverdue='2019-05-20T17:09:30.348Z'
+			name='test'
 			onTime
 			remainingTime={1558363436797}
-			status="Running"
+			status='Running'
 		/>
 	);
 
@@ -83,11 +83,11 @@ test('Should render Item component status Running', () => {
 test('Should render Item component status Running and overdue', () => {
 	const component = renderer.create(
 		<InstanceItemDetail.Item
-			dateOverdue="2019-05-20T17:09:30.348Z"
-			name="test"
+			dateOverdue='2019-05-20T17:09:30.348Z'
+			name='test'
 			onTime={false}
 			remainingTime={-1558363436797}
-			status="Running"
+			status='Running'
 		/>
 	);
 
@@ -99,11 +99,11 @@ test('Should render Item component status Running and overdue', () => {
 test('Should render Item component status Stopped', () => {
 	const component = renderer.create(
 		<InstanceItemDetail.Item
-			dateOverdue="2019-05-20T17:09:30.348Z"
-			name="test"
+			dateOverdue='2019-05-20T17:09:30.348Z'
+			name='test'
 			onTime
 			remainingTime={1558363436797}
-			status="Stopped"
+			status='Stopped'
 		/>
 	);
 
@@ -115,11 +115,11 @@ test('Should render Item component status Stopped', () => {
 test('Should render Item component status Stopped overdue', () => {
 	const component = renderer.create(
 		<InstanceItemDetail.Item
-			dateOverdue="2019-05-20T17:09:30.348Z"
-			name="test"
+			dateOverdue='2019-05-20T17:09:30.348Z'
+			name='test'
 			onTime={false}
 			remainingTime={-1558363436797}
-			status="Stopped"
+			status='Stopped'
 		/>
 	);
 
@@ -130,7 +130,7 @@ test('Should render Item component status Stopped overdue', () => {
 
 test('Should render SectionAttribute component', () => {
 	const component = renderer.create(
-		<InstanceItemDetail.SectionAttribute description="test" detail="test" />
+		<InstanceItemDetail.SectionAttribute description='test' detail='test' />
 	);
 
 	const tree = component.toJSON();
@@ -155,7 +155,7 @@ test('Should test componentWillReceiveProps', () => {
 
 	const component = mount(
 		<Router client={fetch(data)}>
-			<InstanceItemDetail instanceId="123" processId="123" />
+			<InstanceItemDetail instanceId='123' processId='123' />
 		</Router>
 	);
 
@@ -174,7 +174,7 @@ test('Should test fetchData', () => {
 
 	const component = mount(
 		<Router client={fetch(data)}>
-			<InstanceItemDetail instanceId="123" processId="123" />
+			<InstanceItemDetail instanceId='123' processId='123' />
 		</Router>
 	);
 
@@ -216,7 +216,7 @@ test('Should test render with status OnTime', () => {
 
 	const component = mount(
 		<Router client={fetch(data)}>
-			<InstanceItemDetail instanceId="123" processId="123" />
+			<InstanceItemDetail instanceId='123' processId='123' />
 		</Router>
 	);
 

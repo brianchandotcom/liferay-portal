@@ -26,7 +26,7 @@ export default class MultiSelect extends React.Component {
 	}
 
 	addTag(tagId) {
-		const { onChangeTags, selectedTagsId } = this.props;
+		const {onChangeTags, selectedTagsId} = this.props;
 
 		this.setState(
 			{
@@ -44,7 +44,7 @@ export default class MultiSelect extends React.Component {
 
 	@autobind
 	cancelDropList() {
-		const event = new Event('mousedown', { bubbles: true });
+		const event = new Event('mousedown', {bubbles: true});
 
 		this.wrapperRef.dispatchEvent(event);
 	}
@@ -52,7 +52,7 @@ export default class MultiSelect extends React.Component {
 	@autobind
 	changeSearch(event) {
 		const {
-			target: { value: searchKey }
+			target: {value: searchKey}
 		} = event;
 
 		this.setState({
@@ -62,20 +62,20 @@ export default class MultiSelect extends React.Component {
 	}
 
 	get dataFiltered() {
-		const { data, fieldId = 'id', selectedTagsId } = this.props;
-		const { searchKey } = this.state;
+		const {data, fieldId = 'id', selectedTagsId} = this.props;
+		const {searchKey} = this.state;
 
 		const term = searchKey.toLowerCase().trim();
 
 		return data
 			.filter(node => !selectedTagsId.includes(`${node[fieldId]}`))
 			.filter(
-				({ desc }) => term === '' || desc.toLowerCase().indexOf(term) > -1
+				({desc}) => term === '' || desc.toLowerCase().indexOf(term) > -1
 			);
 	}
 
 	getSelectedTags() {
-		const { data, fieldId = 'id', selectedTagsId } = this.props;
+		const {data, fieldId = 'id', selectedTagsId} = this.props;
 
 		return data.filter(node => selectedTagsId.includes(`${node[fieldId]}`));
 	}
@@ -89,20 +89,20 @@ export default class MultiSelect extends React.Component {
 
 	@autobind
 	hideDropList() {
-		this.setState({ active: false, highlighted: false });
+		this.setState({active: false, highlighted: false});
 	}
 
 	@autobind
 	onSearch(event) {
 		const dataFiltered = this.dataFiltered;
-		const { fieldId = 'id' } = this.props;
+		const {fieldId = 'id'} = this.props;
 		const keyArrowDown = 38;
 		const keyArrowUp = 40;
-		const { keyCode } = event;
+		const {keyCode} = event;
 		const keyEnter = 13;
 		const keyEscape = 27;
 		const keyTab = 9;
-		let { verticalIndex } = this.state;
+		let {verticalIndex} = this.state;
 
 		if ([keyArrowDown, keyArrowUp].includes(keyCode)) {
 			const dataCount = dataFiltered.length;
@@ -116,23 +116,25 @@ export default class MultiSelect extends React.Component {
 						? dataCount - 1
 						: verticalIndex;
 
-			this.setState({ verticalIndex });
+			this.setState({verticalIndex});
 		}
 		else if (keyCode === keyEnter && verticalIndex > -1) {
 			this.addTag(`${dataFiltered[verticalIndex][fieldId]}`);
 		}
 		else if (keyCode === keyEscape) {
-			this.setState({ active: false });
+			this.setState({active: false});
 		}
 		else if (![keyTab, keyEnter].includes(keyCode)) {
-			this.showDropList({ active: true });
+			this.showDropList({active: true});
 		}
 	}
 
 	@autobind
 	removeTag(event) {
-		const tagIndex = Number(event.currentTarget.getAttribute('data-tag-index'));
-		const { onChangeTags, selectedTagsId } = this.props;
+		const tagIndex = Number(
+			event.currentTarget.getAttribute('data-tag-index')
+		);
+		const {onChangeTags, selectedTagsId} = this.props;
 
 		selectedTagsId.splice(tagIndex, 1);
 
@@ -158,28 +160,28 @@ export default class MultiSelect extends React.Component {
 
 	@autobind
 	showDropList() {
-		this.setState({ active: true, highlighted: true });
+		this.setState({active: true, highlighted: true});
 	}
 
 	@autobind
 	toggleDropList() {
-		const { active } = this.state;
+		const {active} = this.state;
 
 		if (!active) {
 			this.inputRef.focus();
 		}
 		else {
-			this.setState({ active: !active });
+			this.setState({active: !active});
 		}
 	}
 
 	render() {
-		const { active, highlighted, searchKey, verticalIndex } = this.state;
+		const {active, highlighted, searchKey, verticalIndex} = this.state;
 		const {
 			dataFiltered,
-			dataFiltered: { length: dataFilteredLength }
+			dataFiltered: {length: dataFilteredLength}
 		} = this;
-		const { fieldId = 'id' } = this.props;
+		const {fieldId = 'id'} = this.props;
 		const selectedTags = this.getSelectedTags();
 
 		const className = `${
@@ -190,23 +192,23 @@ export default class MultiSelect extends React.Component {
 
 		const tagRender = (tagId, tagIndex, text) => (
 			<span
-				className="label label-dismissible label-secondary"
+				className='label label-dismissible label-secondary'
 				key={tagIndex}
-				tabIndex="-1"
+				tabIndex='-1'
 			>
-				<span className="label-item label-item-expand">{text}</span>
+				<span className='label-item label-item-expand'>{text}</span>
 
-				<span className="label-item label-item-after">
+				<span className='label-item label-item-after'>
 					<button
-						aria-label="Close"
-						className="close"
+						aria-label='Close'
+						className='close'
 						data-tag-id={`${tagId}`}
 						data-tag-index={`${tagIndex}`}
 						onClick={this.removeTag}
-						tabIndex="-1"
-						type="button"
+						tabIndex='-1'
+						type='button'
 					>
-						<Icon iconName="times" />
+						<Icon iconName='times' />
 					</button>
 				</span>
 			</span>
@@ -223,48 +225,55 @@ export default class MultiSelect extends React.Component {
 				onFocus={this.cancelDropList}
 				ref={this.setWrapperRef}
 			>
-				<div className="col-11 p-0 d-flex flex-wrap">
+				<div className='col-11 p-0 d-flex flex-wrap'>
 					{selectedTags.map((node, index) =>
 						tagRender(node[fieldId], index, node.desc)
 					)}
 
 					<input
-						className="form-control-inset"
+						className='form-control-inset'
 						onChange={this.changeSearch}
 						onFocus={this.showDropList}
 						onKeyUp={this.onSearch}
 						placeholder={placeholder}
 						ref={this.setInputRef}
-						type="text"
+						type='text'
 						value={searchKey}
 					/>
 				</div>
 
 				<div
-					className="col-1 drop-icon mt-1 text-right"
+					className='col-1 drop-icon mt-1 text-right'
 					onClick={this.toggleDropList}
 				>
-					<Icon iconName="caret-double" />
+					<Icon iconName='caret-double' />
 				</div>
 
 				{active && (
-					<div className="drop-suggestion dropdown-menu" tabIndex="-1">
-						<ul className="list-unstyled" tabIndex="-1">
+					<div
+						className='drop-suggestion dropdown-menu'
+						tabIndex='-1'
+					>
+						<ul className='list-unstyled' tabIndex='-1'>
 							{dataFiltered.map((node, index) => (
 								<li
 									data-tag-id={`${node[fieldId]}`}
 									key={index}
 									onClick={this.selectTag}
-									tabIndex="-1"
+									tabIndex='-1'
 								>
 									<a
 										className={`dropdown-item ${
-											index === verticalIndex ? 'active' : ''
+											index === verticalIndex
+												? 'active'
+												: ''
 										}`}
 										data-senna-off
-										href="javascript:;"
-										{...(isLast(index) ? { onBlur: this.hideDropList } : {})}
-										tabIndex="-1"
+										href='javascript:;'
+										{...(isLast(index)
+											? {onBlur: this.hideDropList}
+											: {})}
+										tabIndex='-1'
 									>
 										{node.desc}
 									</a>
@@ -272,14 +281,16 @@ export default class MultiSelect extends React.Component {
 							))}
 
 							{dataFilteredLength === 0 && (
-								<li className="no-results" tabIndex="-1">
+								<li className='no-results' tabIndex='-1'>
 									<a
-										className="dropdown-item"
+										className='dropdown-item'
 										data-senna-off
-										href="javascript:;"
-										tabIndex="-1"
+										href='javascript:;'
+										tabIndex='-1'
 									>
-										{Liferay.Language.get('no-results-found')}
+										{Liferay.Language.get(
+											'no-results-found'
+										)}
 									</a>
 								</li>
 							)}

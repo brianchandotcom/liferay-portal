@@ -9,7 +9,7 @@ export default class ReloadButton extends React.Component {
 
 	render() {
 		return (
-			<button className="btn btn-link btn-sm" onClick={this.reloadPage}>
+			<button className='btn btn-link btn-sm' onClick={this.reloadPage}>
 				{Liferay.Language.get('reload-page')}
 			</button>
 		);

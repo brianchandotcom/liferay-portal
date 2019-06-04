@@ -1,13 +1,13 @@
 import autobind from 'autobind-decorator';
 import Icon from '../../../shared/components/Icon';
-import { InstanceContext } from './InstanceContext';
+import {InstanceContext} from './InstanceContext';
 import moment from 'moment';
 import React from 'react';
 
 class InstanceListItem extends React.Component {
 	@autobind
 	updateId() {
-		const { id } = this.props;
+		const {id} = this.props;
 
 		this.context.setInstanceId(id);
 	}
@@ -57,8 +57,12 @@ class InstanceListItem extends React.Component {
 			<tr>
 				<td>
 					{statusIcon && (
-						<span className={`mr-3 sticker sticker-sm ${statusIcon.bgColor}`}>
-							<span className="inline-item">
+						<span
+							className={`mr-3 sticker sticker-sm ${
+								statusIcon.bgColor
+							}`}
+						>
+							<span className='inline-item'>
 								<Icon
 									elementClasses={statusIcon.iconColor}
 									iconName={statusIcon.iconName}
@@ -68,13 +72,13 @@ class InstanceListItem extends React.Component {
 					)}
 				</td>
 
-				<td className="lfr-title-column table-title">
+				<td className='lfr-title-column table-title'>
 					<a
-						data-target="#instanceDetailModal"
-						data-toggle="modal"
-						href="javascript:;"
+						data-target='#instanceDetailModal'
+						data-toggle='modal'
+						href='javascript:;'
 						onClick={this.updateId}
-						tabIndex="-1"
+						tabIndex='-1'
 					>
 						<strong>{id}</strong>
 					</a>
@@ -90,7 +94,7 @@ class InstanceListItem extends React.Component {
 
 				<td>{userName}</td>
 
-				<td className="pr-4 text-right">
+				<td className='pr-4 text-right'>
 					{moment(dateCreated).format('MMM DD, LT')}
 				</td>
 			</tr>

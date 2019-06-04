@@ -1,4 +1,4 @@
-import { AppContext } from '../../AppContext';
+import {AppContext} from '../../AppContext';
 import Icon from '../../../shared/components/Icon';
 import ListView from '../../../shared/components/list/ListView';
 import PaginationBar from '../../../shared/components/pagination/PaginationBar';
@@ -33,14 +33,14 @@ class WorkloadByStepCard extends React.Component {
 	}
 
 	loadData(props = this.props) {
-		const { loading } = this.state;
+		const {loading} = this.state;
 
 		if (loading) {
 			return;
 		}
 
 		return this.requestData(props)
-			.then(({ items, totalCount }) =>
+			.then(({items, totalCount}) =>
 				this.setState({
 					error: null,
 					items,
@@ -57,8 +57,8 @@ class WorkloadByStepCard extends React.Component {
 			);
 	}
 
-	requestData({ page, pageSize, processId, sort }) {
-		const { client } = this.context;
+	requestData({page, pageSize, processId, sort}) {
+		const {client} = this.context;
 
 		this.setState({
 			loading: true
@@ -68,7 +68,7 @@ class WorkloadByStepCard extends React.Component {
 			.get(
 				`/processes/${processId}/tasks?page=${page}&pageSize=${pageSize}&sort=${sort}`
 			)
-			.then(({ data }) => {
+			.then(({data}) => {
 				this.setState({
 					loading: false
 				});
@@ -87,22 +87,24 @@ class WorkloadByStepCard extends React.Component {
 		const emptyMessageText = Liferay.Language.get(
 			'there-are-no-pending-items-at-the-moment'
 		);
-		const { error, items = [], loading, totalCount } = this.state;
-		const { page, pageSize, processId } = this.props;
+		const {error, items = [], loading, totalCount} = this.state;
+		const {page, pageSize, processId} = this.props;
 
 		const fetching = !loading && !totalCount;
 
 		return (
-			<Panel className="container-fluid-1280 mt-4">
+			<Panel className='container-fluid-1280 mt-4'>
 				<Panel.Header elementClasses={'dashboard-panel-header'}>
 					<div>
 						<span className={'mr-3'}>
 							{Liferay.Language.get('workload-by-step')}
 						</span>
 						<Tooltip
-							message={Liferay.Language.get('workload-by-step-description')}
-							position="right"
-							width="288"
+							message={Liferay.Language.get(
+								'workload-by-step-description'
+							)}
+							position='right'
+							width='288'
 						>
 							<Icon iconName={'question-circle-full'} />
 						</Tooltip>
@@ -110,16 +112,19 @@ class WorkloadByStepCard extends React.Component {
 				</Panel.Header>
 				<Panel.Body>
 					<ListView
-						className="border-0"
+						className='border-0'
 						emptyActionButton={<ReloadButton />}
-						emptyMessageClassName="small"
+						emptyMessageClassName='small'
 						emptyMessageText={emptyMessageText}
 						errorMessageText={error}
 						fetching={fetching}
 						hideAnimation
 						loading={loading}
 					>
-						<WorkloadByStepTable items={items} processId={processId} />
+						<WorkloadByStepTable
+							items={items}
+							processId={processId}
+						/>
 
 						<PaginationBar
 							page={page}

@@ -1,7 +1,7 @@
 import fetch from '../../../test/mock/fetch';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { MockRouter as Router } from '../../../test/mock/MockRouter';
+import {MockRouter as Router} from '../../../test/mock/MockRouter';
 import SLAConfirmDialog from '../SLAConfirmDialog';
 import SLAListCard from '../SLAListCard';
 
@@ -52,7 +52,7 @@ test('Should cancel dialog through SLA List', () => {
 		</Router>
 	);
 
-	const { slaContextState } = component.find(SLAListCard).instance();
+	const {slaContextState} = component.find(SLAListCard).instance();
 
 	slaContextState.showConfirmDialog(1234);
 	jest.runAllTimers();

@@ -1,7 +1,7 @@
 import getCN from 'classnames';
 import React from 'react';
 
-const Body = ({ children, elementClasses }) => {
+const Body = ({children, elementClasses}) => {
 	const classes = getCN('panel-body', elementClasses);
 
 	if (!children) return null;
@@ -9,7 +9,7 @@ const Body = ({ children, elementClasses }) => {
 	return <div className={classes}>{children}</div>;
 };
 
-const Footer = ({ children, elementClasses, label }) => {
+const Footer = ({children, elementClasses, label}) => {
 	const classes = getCN('panel-footer', elementClasses);
 
 	if (!children) return null;
@@ -24,12 +24,12 @@ const Footer = ({ children, elementClasses, label }) => {
 };
 
 const Header = props => {
-	const { children, elementClasses, title } = props;
+	const {children, elementClasses, title} = props;
 	const classes = getCN('panel-header', elementClasses);
 
 	return (
 		<div className={classes}>
-			{title && <div className="panel-title">{title}</div>}
+			{title && <div className='panel-title'>{title}</div>}
 			{!!children && <div>{children}</div>}
 		</div>
 	);
@@ -37,7 +37,7 @@ const Header = props => {
 
 export default class Panel extends React.Component {
 	render() {
-		const { children, elementClasses } = this.props;
+		const {children, elementClasses} = this.props;
 		const classes = getCN('panel', 'panel-secondary', elementClasses);
 
 		return (

@@ -1,7 +1,7 @@
 import InstanceListTable from '../InstanceListTable';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { MockRouter as Router } from '../../../../test/mock/MockRouter';
+import {MockRouter as Router} from '../../../../test/mock/MockRouter';
 
 test('Should render component', () => {
 	const data = [

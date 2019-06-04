@@ -1,7 +1,7 @@
-import { Filter } from '../Filter';
+import {Filter} from '../Filter';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { MockRouter as Router } from '../../../../test/mock/MockRouter';
+import {MockRouter as Router} from '../../../../test/mock/MockRouter';
 
 function mockItems(count) {
 	const items = [];
@@ -27,12 +27,12 @@ test('Should active item when input is checked', () => {
 	];
 
 	const component = mount(
-		<Router query="?filters.slaStatus%5B0%5D=overdue">
+		<Router query='?filters.slaStatus%5B0%5D=overdue'>
 			<Filter
-				filterKey="slaStatus"
+				filterKey='slaStatus'
 				items={items}
-				location={{ search: '?filters.slaStatus%5B0%5D=overdue' }}
-				name="SLA Status"
+				location={{search: '?filters.slaStatus%5B0%5D=overdue'}}
+				name='SLA Status'
 			/>
 		</Router>
 	);
@@ -40,7 +40,7 @@ test('Should active item when input is checked', () => {
 	const instance = component.find(Filter).instance();
 
 	instance.onInputChange({
-		target: { checked: true, dataset: { key: 'overdue' } }
+		target: {checked: true, dataset: {key: 'overdue'}}
 	});
 
 	expect(instance.state.items[0].active).toEqual(true);
@@ -56,13 +56,13 @@ test('Should hide dropdown when click outside filter', () => {
 	];
 
 	const component = mount(
-		<Router query="?filters.slaStatus%5B0%5D=overdue">
+		<Router query='?filters.slaStatus%5B0%5D=overdue'>
 			<Filter
-				filterKey="slaStatus"
+				filterKey='slaStatus'
 				items={items}
-				location={{ search: '?filters.slaStatus%5B0%5D=overdue' }}
-				match={{ params: { page: 3 }, path: '/instances/:page' }}
-				name="SLA Status"
+				location={{search: '?filters.slaStatus%5B0%5D=overdue'}}
+				match={{params: {page: 3}, path: '/instances/:page'}}
+				name='SLA Status'
 			/>
 		</Router>
 	);
@@ -71,7 +71,7 @@ test('Should hide dropdown when click outside filter', () => {
 
 	instance.toggleDropDown();
 	instance.onInputChange({
-		target: { checked: true, dataset: { key: 'overdue' } }
+		target: {checked: true, dataset: {key: 'overdue'}}
 	});
 	instance.onClickOutside(document.body);
 
@@ -88,12 +88,12 @@ test('Should keep dropdown open when click inside filter', () => {
 	];
 
 	const component = mount(
-		<Router query="?filters.slaStatus%5B0%5D=overdue">
+		<Router query='?filters.slaStatus%5B0%5D=overdue'>
 			<Filter
-				filterKey="slaStatus"
+				filterKey='slaStatus'
 				items={items}
-				location={{ search: '?filters.slaStatus%5B0%5D=overdue' }}
-				name="SLA Status"
+				location={{search: '?filters.slaStatus%5B0%5D=overdue'}}
+				name='SLA Status'
 			/>
 		</Router>
 	);
@@ -102,15 +102,15 @@ test('Should keep dropdown open when click inside filter', () => {
 
 	instance.toggleDropDown();
 
-	instance.onClickOutside({ target: instance.wrapperRef });
+	instance.onClickOutside({target: instance.wrapperRef});
 
 	expect(instance.state.expanded).toEqual(true);
 });
 
 test('Should render component', () => {
 	const component = renderer.create(
-		<Router query="?filters.slaStatus%5B0%5D=overdue">
-			<Filter filterKey="slaStatus" name="SLA Status" />
+		<Router query='?filters.slaStatus%5B0%5D=overdue'>
+			<Filter filterKey='slaStatus' name='SLA Status' />
 		</Router>
 	);
 
@@ -123,8 +123,8 @@ test('Should render component with search wrapper', () => {
 	const items = mockItems(15);
 
 	const component = renderer.create(
-		<Router query="?filters.slaStatus%5B0%5D=overdue">
-			<Filter filterKey="slaStatus" items={items} name="SLA Status" />
+		<Router query='?filters.slaStatus%5B0%5D=overdue'>
+			<Filter filterKey='slaStatus' items={items} name='SLA Status' />
 		</Router>
 	);
 
@@ -148,8 +148,8 @@ test('Should search items', () => {
 	];
 
 	const component = mount(
-		<Router query="?filters.slaStatus%5B0%5D=overdue">
-			<Filter filterKey="slaStatus" items={items} name="SLA Status" />
+		<Router query='?filters.slaStatus%5B0%5D=overdue'>
+			<Filter filterKey='slaStatus' items={items} name='SLA Status' />
 		</Router>
 	);
 
@@ -166,8 +166,8 @@ test('Should search items', () => {
 
 test('Should toggle dropdown', () => {
 	const component = mount(
-		<Router query="?filters.slaStatus%5B0%5D=overdue">
-			<Filter filterKey="slaStatus" name="SLA Status" />
+		<Router query='?filters.slaStatus%5B0%5D=overdue'>
+			<Filter filterKey='slaStatus' name='SLA Status' />
 		</Router>
 	);
 

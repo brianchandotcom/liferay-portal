@@ -2,16 +2,16 @@ import MultiSelect from '../MultiSelect';
 import React from 'react';
 
 const data = [
-	{ desc: 'ops', id: '1' },
-	{ desc: 'message', id: '2' },
-	{ desc: 'meeting', id: '3' },
-	{ desc: 'assist', id: '4' },
-	{ desc: 'not real', id: '5' },
-	{ desc: 'advocate', id: '6' },
-	{ desc: 'Maybe', id: '7' },
-	{ desc: 'much', id: '8' },
-	{ desc: 'so much', id: '9' },
-	{ desc: 'to do any', id: '10' },
+	{desc: 'ops', id: '1'},
+	{desc: 'message', id: '2'},
+	{desc: 'meeting', id: '3'},
+	{desc: 'assist', id: '4'},
+	{desc: 'not real', id: '5'},
+	{desc: 'advocate', id: '6'},
+	{desc: 'Maybe', id: '7'},
+	{desc: 'much', id: '8'},
+	{desc: 'so much', id: '9'},
+	{desc: 'to do any', id: '10'},
 	{
 		desc: 'a long component text example to test its overflow behavior.',
 		id: '11'
@@ -69,7 +69,7 @@ test('Should search', () => {
 
 	instance.onSearch({
 		keyCode: 84,
-		target: { value: 'test' }
+		target: {value: 'test'}
 	});
 	expect(component).toMatchSnapshot();
 });
@@ -102,7 +102,7 @@ test('Should test keydown press', () => {
 
 	instance.onSearch({
 		keyCode: 38,
-		target: { value: '' }
+		target: {value: ''}
 	});
 	expect(component).toMatchSnapshot();
 });
@@ -116,11 +116,11 @@ test('Should test keyenter press', () => {
 
 	instance.onSearch({
 		keyCode: 38,
-		target: { value: '' }
+		target: {value: ''}
 	});
 	instance.onSearch({
 		keyCode: 13,
-		target: { value: '' }
+		target: {value: ''}
 	});
 	expect(component).toMatchSnapshot();
 });
@@ -134,7 +134,7 @@ test('Should test keyup press', () => {
 
 	instance.onSearch({
 		keyCode: 40,
-		target: { value: '' }
+		target: {value: ''}
 	});
 	expect(component).toMatchSnapshot();
 });

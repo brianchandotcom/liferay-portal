@@ -1,10 +1,10 @@
 import fetch from '../../../../test/mock/fetch';
 import fetchFailure from '../../../../test/mock/fetchFailure';
-import { getRequestUrl } from '../../../../shared/components/filter/util/filterUtil';
+import {getRequestUrl} from '../../../../shared/components/filter/util/filterUtil';
 import InstanceListCard from '../InstanceListCard';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { MockRouter as Router } from '../../../../test/mock/MockRouter';
+import {MockRouter as Router} from '../../../../test/mock/MockRouter';
 
 test('Should build request url with query filters', () => {
 	const data = {
@@ -29,7 +29,7 @@ test('Should build request url with query filters', () => {
 				page={1}
 				pageSize={10}
 				processId={12351}
-				query="?filters.status%5B0%5D=pending&filters.slaStatus%5B0%5D=overdue&filters.slaStatus%5B0%5D=ontime"
+				query='?filters.status%5B0%5D=pending&filters.slaStatus%5B0%5D=overdue&filters.slaStatus%5B0%5D=ontime'
 			/>
 		</Router>
 	);
@@ -101,7 +101,7 @@ test('Should component receive props', () => {
 				page={1}
 				pageSize={10}
 				processId={12351}
-				query="?filters.slaStatus%5B0%5D=overdue"
+				query='?filters.slaStatus%5B0%5D=overdue'
 			/>
 		</Router>
 	);
@@ -111,7 +111,8 @@ test('Should component receive props', () => {
 	instance.componentWillReceiveProps({
 		...instance.props,
 		page: 2,
-		query: 'filters.slaStatus%5B0%5D=overdue&filters.slaStatus%5B1%5D=ontime'
+		query:
+			'filters.slaStatus%5B0%5D=overdue&filters.slaStatus%5B1%5D=ontime'
 	});
 
 	expect(component).toMatchSnapshot();
@@ -162,7 +163,7 @@ test('Should not reload component while loading state is true', () => {
 
 	instance.state.loading = true;
 
-	const result = instance.loadInstances({ ...instance.props, page: 2 });
+	const result = instance.loadInstances({...instance.props, page: 2});
 
 	expect(result).toBeNil();
 });
@@ -178,7 +179,7 @@ test('Should not reload process while loading state is true', () => {
 
 	instance.state.loading = true;
 
-	const result = instance.loadProcess({ ...instance.props });
+	const result = instance.loadProcess({...instance.props});
 
 	expect(result).toBeNil();
 });
@@ -208,7 +209,7 @@ test('Should render component', () => {
 
 	const instance = component.find(InstanceListCard).instance();
 
-	instance.componentWillReceiveProps({ page: 2 });
+	instance.componentWillReceiveProps({page: 2});
 
 	expect(component).toMatchSnapshot();
 });

@@ -1,4 +1,4 @@
-import Tooltip, { TooltipBase } from '../Tooltip';
+import Tooltip, {TooltipBase} from '../Tooltip';
 import React from 'react';
 
 describe('Tooltip', () => {

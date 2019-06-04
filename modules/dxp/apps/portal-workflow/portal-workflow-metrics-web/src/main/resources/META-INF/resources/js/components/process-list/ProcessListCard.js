@@ -2,7 +2,7 @@ import {
 	REQUEST_ORIGIN_TYPE_FETCH,
 	REQUEST_ORIGIN_TYPE_SEARCH
 } from './Constants';
-import { AppContext } from '../AppContext';
+import {AppContext} from '../AppContext';
 import ListView from '../../shared/components/list/ListView';
 import PaginationBar from '../../shared/components/pagination/PaginationBar';
 import ProcessListTable from './ProcessListTable';
@@ -30,7 +30,7 @@ class ProcessListCard extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.requestData(nextProps).then(({ items, totalCount }) =>
+		this.requestData(nextProps).then(({items, totalCount}) =>
 			this.setState({
 				items,
 				totalCount
@@ -41,8 +41,8 @@ class ProcessListCard extends React.Component {
 	/**
 	 * @desc request data
 	 */
-	requestData({ page, pageSize, search, sort }) {
-		const { client } = this.context;
+	requestData({page, pageSize, search, sort}) {
+		const {client} = this.context;
 
 		const searching = typeof search === 'string' && search ? true : false;
 
@@ -56,7 +56,7 @@ class ProcessListCard extends React.Component {
 			params.title = decodeURIComponent(search);
 		}
 
-		return client.get('/processes', { params }).then(({ data }) => {
+		return client.get('/processes', {params}).then(({data}) => {
 			if (data && data.totalCount === 0) {
 				this.requestOriginType = searching
 					? REQUEST_ORIGIN_TYPE_SEARCH
@@ -68,16 +68,17 @@ class ProcessListCard extends React.Component {
 	}
 
 	render() {
-		const { requestOriginType } = this;
-		const { items = [], totalCount } = this.state;
-		const { page, pageSize } = this.props;
+		const {requestOriginType} = this;
+		const {items = [], totalCount} = this.state;
+		const {page, pageSize} = this.props;
 
 		const emptyTitleText = Liferay.Language.get('no-current-metrics');
 		const fetching =
 			requestOriginType === REQUEST_ORIGIN_TYPE_FETCH && totalCount === 0;
 		const loading = !requestOriginType && totalCount === 0;
 		const searching =
-			requestOriginType === REQUEST_ORIGIN_TYPE_SEARCH && totalCount === 0;
+			requestOriginType === REQUEST_ORIGIN_TYPE_SEARCH &&
+			totalCount === 0;
 
 		const emptyMessageText = searching
 			? Liferay.Language.get('no-results-were-found')
@@ -87,9 +88,9 @@ class ProcessListCard extends React.Component {
 
 		return (
 			<div>
-				<nav className="management-bar management-bar-light navbar navbar-expand-md">
-					<div className="container-fluid container-fluid-max-xl">
-						<div className="navbar-form navbar-form-autofit">
+				<nav className='management-bar management-bar-light navbar navbar-expand-md'>
+					<div className='container-fluid container-fluid-max-xl'>
+						<div className='navbar-form navbar-form-autofit'>
 							<Search disabled={fetching} />
 						</div>
 					</div>
@@ -97,7 +98,7 @@ class ProcessListCard extends React.Component {
 
 				{this.props.search && <ResultsBar totalCount={totalCount} />}
 
-				<div className="container-fluid-1280">
+				<div className='container-fluid-1280'>
 					<ListView
 						emptyMessageText={emptyMessageText}
 						emptyTitleText={emptyTitleText}

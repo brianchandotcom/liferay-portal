@@ -18,7 +18,7 @@ test('Should render component on container', () => {
 	const container = document.getElementById('workflow');
 
 	const component = renderer.create(
-		<HeaderTitle container={container} title="Metrics" />
+		<HeaderTitle container={container} title='Metrics' />
 	);
 
 	const tree = component.toJSON();
@@ -32,7 +32,7 @@ test('Should set document title', () => {
 	const container = document.getElementById('workflow');
 
 	const component = shallow(
-		<HeaderTitle container={container} title="Metrics" />
+		<HeaderTitle container={container} title='Metrics' />
 	);
 
 	const instance = component.instance();
@@ -48,10 +48,10 @@ test('Should set document title if title prop changed', () => {
 	const container = document.getElementById('workflow');
 
 	const component = shallow(
-		<HeaderTitle container={container} title="Metrics" />
+		<HeaderTitle container={container} title='Metrics' />
 	);
 
-	component.setProps({ title: 'SLAs' });
+	component.setProps({title: 'SLAs'});
 
 	expect(document.title).toEqual('SLAs');
 });

@@ -1,4 +1,4 @@
-import { CalendarStore } from '../calendarStore';
+import {CalendarStore} from '../calendarStore';
 import client from '../../../../test/mock/fetch';
 
 test('Should fetch calendars', () => {
@@ -35,7 +35,7 @@ test('Should get default calendar', () => {
 		}
 	];
 
-	calendarStore.setState({ calendars });
+	calendarStore.setState({calendars});
 
 	expect(calendarStore.defaultCalendar).toMatchObject(calendars[0]);
 });
@@ -61,7 +61,7 @@ test('Should return empty json when there is no default calendar', () => {
 		}
 	];
 
-	calendarStore.setState({ calendars });
+	calendarStore.setState({calendars});
 
 	expect(calendarStore.defaultCalendar).toBeEmpty();
 });

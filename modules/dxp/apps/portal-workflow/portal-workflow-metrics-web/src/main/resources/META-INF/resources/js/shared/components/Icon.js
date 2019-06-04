@@ -3,7 +3,7 @@ import React from 'react';
 
 export default class Icon extends React.Component {
 	render() {
-		const { elementClasses, iconName } = this.props;
+		const {elementClasses, iconName} = this.props;
 		const classes = getCN(
 			'lexicon-icon',
 			`lexicon-icon-${iconName}`,
@@ -15,9 +15,9 @@ export default class Icon extends React.Component {
 		return (
 			<svg
 				className={classes}
-				dangerouslySetInnerHTML={{ __html: useTag }}
-				focusable="false"
-				role="presentation"
+				dangerouslySetInnerHTML={{__html: useTag}}
+				focusable='false'
+				role='presentation'
 			/>
 		);
 	}

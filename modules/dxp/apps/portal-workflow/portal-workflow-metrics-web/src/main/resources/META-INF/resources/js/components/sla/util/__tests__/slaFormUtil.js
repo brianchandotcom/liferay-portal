@@ -18,7 +18,7 @@ test('Should test duration', () => {
 
 test('Should test errors', () => {
 	expect(hasErrors({})).toBe(false);
-	expect(hasErrors({ A: 'TESTE' })).toBe(true);
+	expect(hasErrors({A: 'TESTE'})).toBe(true);
 });
 
 test('Should test hours', () => {

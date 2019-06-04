@@ -1,6 +1,6 @@
-import { Link, withRouter } from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import Icon from '../Icon';
-import { parse } from '../router/queryString';
+import {parse} from '../router/queryString';
 import PortalComponent from './PortalComponent';
 import React from 'react';
 
@@ -9,7 +9,7 @@ class HeaderMenuBackItem extends React.Component {
 		const {
 			basePath,
 			container,
-			location: { pathname, search }
+			location: {pathname, search}
 		} = this.props;
 
 		const isFirstPage = pathname === basePath || pathname === '/';
@@ -18,13 +18,13 @@ class HeaderMenuBackItem extends React.Component {
 		return (
 			<PortalComponent container={container}>
 				{!isFirstPage && query.backPath && (
-					<li className="control-menu-nav-item">
+					<li className='control-menu-nav-item'>
 						<Link
-							className="control-menu-icon lfr-icon-item"
+							className='control-menu-icon lfr-icon-item'
 							to={query.backPath}
 						>
-							<span className="icon-monospaced">
-								<Icon iconName="angle-left" />
+							<span className='icon-monospaced'>
+								<Icon iconName='angle-left' />
 							</span>
 						</Link>
 					</li>

@@ -15,17 +15,17 @@ export default class Tooltip extends React.Component {
 
 	@autobind
 	hideTooltip() {
-		this.setState({ displayTooltip: false });
+		this.setState({displayTooltip: false});
 	}
 
 	@autobind
 	showTooltip() {
-		this.setState({ displayTooltip: true });
+		this.setState({displayTooltip: true});
 	}
 
 	render() {
-		const { message, position = 'top', width } = this.props;
-		const { displayTooltip } = this.state;
+		const {message, position = 'top', width} = this.props;
+		const {displayTooltip} = this.state;
 
 		return (
 			<span className={CLASSNAME} onMouseLeave={this.hideTooltip}>
@@ -37,7 +37,10 @@ export default class Tooltip extends React.Component {
 						width={width}
 					/>
 				)}
-				<span className="tooltip-trigger" onMouseOver={this.showTooltip}>
+				<span
+					className='tooltip-trigger'
+					onMouseOver={this.showTooltip}
+				>
 					{this.props.children}
 				</span>
 			</span>
@@ -47,7 +50,7 @@ export default class Tooltip extends React.Component {
 
 export class TooltipBase extends React.Component {
 	render() {
-		const { position, title, visible, width } = this.props;
+		const {position, title, visible, width} = this.props;
 
 		const classes = getCN('tooltip', {
 			[`clay-tooltip-${position}`]: position,
@@ -58,9 +61,9 @@ export class TooltipBase extends React.Component {
 		const classesArrow = getCN('arrow', 'workflow-tooltip-arrow');
 
 		return (
-			<div className={classes} style={{ width: `${width}px` }}>
+			<div className={classes} style={{width: `${width}px`}}>
 				{position !== 'none' && <div className={classesArrow} />}
-				<div className="tooltip-inner">
+				<div className='tooltip-inner'>
 					<div>{title}</div>
 				</div>
 			</div>

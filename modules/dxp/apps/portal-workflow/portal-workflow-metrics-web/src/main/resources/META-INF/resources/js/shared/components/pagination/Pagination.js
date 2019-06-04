@@ -1,7 +1,7 @@
 import PageItem from './PageItem';
 import PageLink from './PageLink';
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 /**
  * @class
@@ -15,11 +15,11 @@ class Pagination extends React.Component {
 
 	getProps() {
 		const {
-			match: { params },
+			match: {params},
 			maxPages,
 			totalCount
 		} = this.props;
-		const { page = 1, pageSize = 20 } = params || {};
+		const {page = 1, pageSize = 20} = params || {};
 
 		return {
 			maxPages,
@@ -42,20 +42,23 @@ class Pagination extends React.Component {
 		}
 
 		return (
-			<li className="dropdown page-item" key={`process_list_pag_${initCount}`}>
+			<li
+				className='dropdown page-item'
+				key={`process_list_pag_${initCount}`}
+			>
 				<a
-					className="dropdown-toggle page-link"
+					className='dropdown-toggle page-link'
 					data-senna-off
-					data-toggle="dropdown"
-					href="javascript:;"
+					data-toggle='dropdown'
+					href='javascript:;'
 				>
-					<span aria-hidden="true">{'...'}</span>
+					<span aria-hidden='true'>{'...'}</span>
 
-					<span className="sr-only" />
+					<span className='sr-only' />
 				</a>
-				<div className="dropdown-menu dropdown-menu-top-center">
+				<div className='dropdown-menu dropdown-menu-top-center'>
 					<ul
-						className="inline-scroller link-list"
+						className='inline-scroller link-list'
 						data-current-index={`${initCount}`}
 						key={`process_list_pag_sublist_${initCount}`}
 					>
@@ -183,14 +186,19 @@ class Pagination extends React.Component {
 						2,
 						this.buildDropMenu(
 							2,
-							maxPages > activePage - 1 ? activePage - 1 : maxPages
+							maxPages > activePage - 1
+								? activePage - 1
+								: maxPages
 						)
 					);
 				}
 				else {
 					for (
 						let i = 2,
-							x = maxPages > activePage - 1 ? activePage - 1 : maxPages;
+							x =
+								maxPages > activePage - 1
+									? activePage - 1
+									: maxPages;
 						i < x;
 						i++
 					) {
@@ -234,7 +242,9 @@ class Pagination extends React.Component {
 					);
 				}
 				const remainingPages =
-					pages - activePage + 2 < maxPages ? pages : activePage + maxPages + 2;
+					pages - activePage + 2 < maxPages
+						? pages
+						: activePage + maxPages + 2;
 
 				if (activePage + 3 < pages) {
 					addPage(
@@ -269,12 +279,12 @@ class Pagination extends React.Component {
 		};
 
 		return (
-			<ul className="pagination pull-right">
+			<ul className='pagination pull-right'>
 				<PageItem
 					disabled={!hasPreviousPage}
 					key={`process_list_pag_prev_${prevPage}`}
 					page={hasPreviousPage ? prevPage : 1}
-					type="prev"
+					type='prev'
 				/>
 
 				{renderPageItems()}
@@ -283,7 +293,7 @@ class Pagination extends React.Component {
 					disabled={!hasNextPage}
 					key={`process_list_pag_next_${nextPage}`}
 					page={nextPage}
-					type="next"
+					type='next'
 				/>
 			</ul>
 		);
@@ -292,4 +302,4 @@ class Pagination extends React.Component {
 
 export default withRouter(Pagination);
 
-export { Pagination };
+export {Pagination};

@@ -19,4 +19,4 @@ const isValidNumber = number => {
 	return !isNaN(number) && number !== Infinity ? true : false;
 };
 
-export { getPercentage, isValidNumber };
+export {getPercentage, isValidNumber};

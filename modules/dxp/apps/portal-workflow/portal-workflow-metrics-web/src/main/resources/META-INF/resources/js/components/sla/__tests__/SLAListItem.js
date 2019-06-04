@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { MockRouter as Router } from '../../../test/mock/MockRouter';
+import {MockRouter as Router} from '../../../test/mock/MockRouter';
 import SLAListItem from '../SLAListItem';
 
 test('Should render component', () => {
@@ -8,10 +8,10 @@ test('Should render component', () => {
 		<Router>
 			<SLAListItem
 				id={1234}
-				instancesCount="10"
-				onTime="5"
-				overdue="5"
-				processName="Process test"
+				instancesCount='10'
+				onTime='5'
+				overdue='5'
+				processName='Process test'
 			/>
 		</Router>
 	);
@@ -25,10 +25,10 @@ test('Should render component', () => {
 	const component = mount(
 		<Router>
 			<SLAListItem
-				instancesCount="10"
-				onTime="5"
-				overdue="5"
-				processName="Process test"
+				instancesCount='10'
+				onTime='5'
+				overdue='5'
+				processName='Process test'
 			/>
 		</Router>
 	);
@@ -48,11 +48,11 @@ test('Should render component blocked', () => {
 	const component = mount(
 		<Router>
 			<SLAListItem
-				dateModified="2019-05-06T20:32:18.811Z"
-				instancesCount="10"
-				onTime="5"
-				overdue="5"
-				processName="Process test"
+				dateModified='2019-05-06T20:32:18.811Z'
+				instancesCount='10'
+				onTime='5'
+				overdue='5'
+				processName='Process test'
 				status={2}
 			/>
 		</Router>

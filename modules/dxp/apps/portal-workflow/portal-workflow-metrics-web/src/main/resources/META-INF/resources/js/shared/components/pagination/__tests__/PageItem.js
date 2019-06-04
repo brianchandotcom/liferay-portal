@@ -1,7 +1,7 @@
 import PageItem from '../PageItem';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { MockRouter as Router } from '../../../../test/mock/MockRouter';
+import {MockRouter as Router} from '../../../../test/mock/MockRouter';
 
 test('Should render component as type default', () => {
 	const component = renderer.create(
@@ -30,7 +30,7 @@ test('Should render component as active', () => {
 test('Should render component as type Next', () => {
 	const component = renderer.create(
 		<Router>
-			<PageItem page={1} type="next" />
+			<PageItem page={1} type='next' />
 		</Router>
 	);
 
@@ -42,7 +42,7 @@ test('Should render component as type Next', () => {
 test('Should render component as type Previous', () => {
 	const component = renderer.create(
 		<Router>
-			<PageItem page={1} type="prev" />
+			<PageItem page={1} type='prev' />
 		</Router>
 	);
 

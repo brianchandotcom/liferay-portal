@@ -1,7 +1,7 @@
-import { FilterResultsBar } from '../FilterResultsBar';
+import {FilterResultsBar} from '../FilterResultsBar';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { MockRouter as Router } from '../../../../test/mock/MockRouter';
+import {MockRouter as Router} from '../../../../test/mock/MockRouter';
 
 test('Should clear filters', () => {
 	const filters = [
@@ -27,8 +27,8 @@ test('Should clear filters', () => {
 			<FilterResultsBar
 				filters={filters}
 				history={mockHistory}
-				location={{ search: '?filters.slaStatus%5B0%5D=overdue' }}
-				match={{ params: { page: 3 }, path: '/instances/:page' }}
+				location={{search: '?filters.slaStatus%5B0%5D=overdue'}}
+				match={{params: {page: 3}, path: '/instances/:page'}}
 				totalCount={1}
 			/>
 		</Router>

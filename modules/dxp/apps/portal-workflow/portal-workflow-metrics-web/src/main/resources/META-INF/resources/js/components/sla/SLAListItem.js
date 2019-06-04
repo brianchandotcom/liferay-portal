@@ -1,6 +1,6 @@
 import autobind from 'autobind-decorator';
-import { ChildLink } from '../../shared/components/router/routerWrapper';
-import { formatDuration } from '../../shared/util/duration';
+import {ChildLink} from '../../shared/components/router/routerWrapper';
+import {formatDuration} from '../../shared/util/duration';
 import Icon from '../../shared/components/Icon';
 import React from 'react';
 import SLAListCardContext from './SLAListCardContext';
@@ -8,7 +8,7 @@ import SLAListCardContext from './SLAListCardContext';
 class SLAListItem extends React.Component {
 	@autobind
 	showConfirmDialog() {
-		const { id } = this.props;
+		const {id} = this.props;
 
 		this.context.showConfirmDialog(id);
 	}
@@ -39,7 +39,7 @@ class SLAListItem extends React.Component {
 			const date = new Date(dateModified);
 			const month = date.toLocaleString(
 				Liferay.ThemeDisplay.getBCP47LanguageId(),
-				{ month: 'short' }
+				{month: 'short'}
 			);
 
 			const dayOfMonth = `${date.getDate()}`.padStart(2, '0');
@@ -49,12 +49,17 @@ class SLAListItem extends React.Component {
 
 		return (
 			<tr>
-				<td className="table-cell-expand">
-					<div className="table-list-title">
+				<td className='table-cell-expand'>
+					<div className='table-list-title'>
 						{blocked && (
-							<Icon elementClasses="text-danger" iconName="exclamation-full" />
+							<Icon
+								elementClasses='text-danger'
+								iconName='exclamation-full'
+							/>
 						)}{' '}
-						<ChildLink to={`/sla/edit/${processId}/${id}`}>{name}</ChildLink>
+						<ChildLink to={`/sla/edit/${processId}/${id}`}>
+							{name}
+						</ChildLink>
 					</div>
 				</td>
 
@@ -67,26 +72,26 @@ class SLAListItem extends React.Component {
 				<td>{dateModifiedText}</td>
 
 				<td>
-					<div className="dropdown dropdown-action">
+					<div className='dropdown dropdown-action'>
 						<a
-							aria-expanded="false"
-							aria-haspopup="true"
-							className="component-action dropdown-toggle"
-							data-toggle="dropdown"
-							href="#1"
-							id="dropdownAction1"
-							role="button"
+							aria-expanded='false'
+							aria-haspopup='true'
+							className='component-action dropdown-toggle'
+							data-toggle='dropdown'
+							href='#1'
+							id='dropdownAction1'
+							role='button'
 						>
-							<Icon iconName="ellipsis-v" />
+							<Icon iconName='ellipsis-v' />
 						</a>
 
 						<ul
-							aria-labelledby=""
-							className="dropdown-menu dropdown-menu-right"
+							aria-labelledby=''
+							className='dropdown-menu dropdown-menu-right'
 						>
 							<li>
 								<ChildLink
-									className="dropdown-item"
+									className='dropdown-item'
 									to={`/sla/edit/${processId}/${id}`}
 								>
 									{Liferay.Language.get('edit')}
@@ -95,7 +100,7 @@ class SLAListItem extends React.Component {
 
 							<li>
 								<button
-									className="dropdown-item"
+									className='dropdown-item'
 									onClick={this.showConfirmDialog}
 								>
 									{Liferay.Language.get('delete')}

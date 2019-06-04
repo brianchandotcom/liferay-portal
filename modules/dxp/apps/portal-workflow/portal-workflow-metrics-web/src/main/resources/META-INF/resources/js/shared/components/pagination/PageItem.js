@@ -1,5 +1,5 @@
-import { Link, withRouter } from 'react-router-dom';
-import React, { Fragment } from 'react';
+import {Link, withRouter} from 'react-router-dom';
+import React, {Fragment} from 'react';
 import Icon from '../Icon';
 import pathToRegexp from 'path-to-regexp';
 
@@ -12,7 +12,7 @@ class PageItem extends React.Component {
 		const {
 			disabled,
 			highlighted,
-			location: { search },
+			location: {search},
 			match,
 			page,
 			type
@@ -28,7 +28,7 @@ class PageItem extends React.Component {
 
 		const renderLink = () => {
 			const pathname = pathToRegexp.compile(match.path)(
-				Object.assign({}, match.params, { page })
+				Object.assign({}, match.params, {page})
 			);
 
 			if (type) {
@@ -41,13 +41,13 @@ class PageItem extends React.Component {
 					const children = () => (
 						<Fragment>
 							<Icon iconName={iconType} />
-							<span className="sr-only">{displayType}</span>
+							<span className='sr-only'>{displayType}</span>
 						</Fragment>
 					);
 
 					if (disabled) {
 						return (
-							<a className="page-link" href="javascript:;">
+							<a className='page-link' href='javascript:;'>
 								{children()}
 							</a>
 						);
@@ -55,7 +55,7 @@ class PageItem extends React.Component {
 
 					return (
 						<Link
-							className="page-link"
+							className='page-link'
 							to={{
 								pathname,
 								search
@@ -71,7 +71,7 @@ class PageItem extends React.Component {
 
 			return (
 				<Link
-					className="page-link"
+					className='page-link'
 					to={{
 						pathname,
 						search

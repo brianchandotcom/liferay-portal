@@ -1,5 +1,5 @@
-import { AppContext } from '../AppContext';
-import { ChildLink } from '../../shared/components/router/routerWrapper';
+import {AppContext} from '../AppContext';
+import {ChildLink} from '../../shared/components/router/routerWrapper';
 import React from 'react';
 
 /**
@@ -18,7 +18,7 @@ class ProcessListItem extends React.Component {
 
 		return (
 			<tr>
-				<td className="table-cell-expand table-cell-minw-200 table-title lfr-title-column">
+				<td className='table-cell-expand table-cell-minw-200 table-title lfr-title-column'>
 					<ChildLink to={`/dashboard/${id}`}>
 						<span>{title}</span>
 					</ChildLink>

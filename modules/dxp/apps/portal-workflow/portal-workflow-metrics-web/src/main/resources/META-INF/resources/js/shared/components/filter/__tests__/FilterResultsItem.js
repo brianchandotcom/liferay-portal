@@ -1,7 +1,7 @@
-import { FilterResultsItem } from '../FilterResultsItem';
+import {FilterResultsItem} from '../FilterResultsItem';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { MockRouter as Router } from '../../../../test/mock/MockRouter';
+import {MockRouter as Router} from '../../../../test/mock/MockRouter';
 
 test('Should render component', () => {
 	const filter = {
@@ -30,7 +30,7 @@ test('Should render component', () => {
 					pathname: '/instances/3',
 					search: '?filters.slaStatus%5B0%5D=overdue'
 				}}
-				match={{ params: { page: 3 }, path: '/instances/:page' }}
+				match={{params: {page: 3}, path: '/instances/:page'}}
 			/>
 		</Router>
 	);
@@ -72,7 +72,7 @@ test('Should remove item', () => {
 					pathname: '/instances/3',
 					search: '?filters.slaStatus%5B0%5D=overdue'
 				}}
-				match={{ params: { page: 3 }, path: '/instances/:page' }}
+				match={{params: {page: 3}, path: '/instances/:page'}}
 			/>
 		</Router>
 	);

@@ -2,7 +2,7 @@ import fetch from '../../../../test/mock/fetch';
 import fetchFailure from '../../../../test/mock/fetchFailure';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { MockRouter as Router } from '../../../../test/mock/MockRouter';
+import {MockRouter as Router} from '../../../../test/mock/MockRouter';
 import WorkloadByStepCard from '../WorkloadByStepCard';
 
 test('Should component receive props', () => {
@@ -78,7 +78,7 @@ test('Should not reload component while loading state is true', () => {
 				page={1}
 				pageSize={10}
 				processId={35315}
-				sort="name:desc"
+				sort='name:desc'
 			/>
 		</Router>
 	);
@@ -87,7 +87,7 @@ test('Should not reload component while loading state is true', () => {
 
 	instance.state.loading = true;
 
-	const result = instance.loadData({ ...instance.props, page: 2 });
+	const result = instance.loadData({...instance.props, page: 2});
 
 	expect(result).toBeNil();
 });
@@ -113,7 +113,7 @@ test('Should render component', () => {
 
 	const instance = component.find(WorkloadByStepCard).instance();
 
-	instance.componentWillReceiveProps({ page: 2 });
+	instance.componentWillReceiveProps({page: 2});
 
 	expect(component).toMatchSnapshot();
 });

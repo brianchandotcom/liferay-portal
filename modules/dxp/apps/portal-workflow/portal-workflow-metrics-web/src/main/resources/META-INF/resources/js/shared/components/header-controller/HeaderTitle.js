@@ -2,8 +2,8 @@ import PortalComponent from './PortalComponent';
 import React from 'react';
 
 export default class HeaderTitle extends React.Component {
-	componentDidUpdate({ title: prevTitle }) {
-		const { title } = this.props;
+	componentDidUpdate({title: prevTitle}) {
+		const {title} = this.props;
 
 		if (prevTitle != title) {
 			this.setDocumentTitle(prevTitle, title);
@@ -15,7 +15,7 @@ export default class HeaderTitle extends React.Component {
 	}
 
 	render() {
-		const { container, title } = this.props;
+		const {container, title} = this.props;
 
 		return (
 			<PortalComponent container={container} replace>

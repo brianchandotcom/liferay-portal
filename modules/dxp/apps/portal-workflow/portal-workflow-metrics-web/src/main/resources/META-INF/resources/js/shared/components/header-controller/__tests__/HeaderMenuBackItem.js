@@ -1,5 +1,5 @@
 import HeaderMenuBackItem from '../HeaderMenuBackItem';
-import { MockRouter } from '../../../../test/mock/MockRouter';
+import {MockRouter} from '../../../../test/mock/MockRouter';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';
@@ -21,7 +21,7 @@ test('Should render component on container', () => {
 	const component = renderer.create(
 		<MockRouter>
 			<HeaderMenuBackItem
-				basePath="/"
+				basePath='/'
 				container={container}
 				location={{
 					pathname: '/slas',

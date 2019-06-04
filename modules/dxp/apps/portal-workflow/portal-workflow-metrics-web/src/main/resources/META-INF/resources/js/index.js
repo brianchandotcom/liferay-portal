@@ -24,7 +24,7 @@ export default function(defaultDelta, deltas, maxPages, namespace, portletId) {
 		buildContainer();
 	}
 
-	Liferay.once('beforeNavigate', ({ path = '' }) => {
+	Liferay.once('beforeNavigate', ({path = ''}) => {
 		if (path.indexOf(portletId) > -1) {
 			ReactDOM.unmountComponentAtNode(container);
 			buildContainer();

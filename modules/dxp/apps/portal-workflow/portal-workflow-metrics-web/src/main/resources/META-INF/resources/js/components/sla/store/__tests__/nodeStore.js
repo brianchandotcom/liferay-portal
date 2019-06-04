@@ -1,5 +1,5 @@
 import client from '../../../../test/mock/fetch';
-import { NodeStore } from '../nodeStore';
+import {NodeStore} from '../nodeStore';
 
 test('Should test fetch', () => {
 	const defaultData = {
@@ -62,7 +62,7 @@ test('Should test fetch', () => {
 	const nodeStore = new NodeStore(client(defaultData));
 
 	nodeStore.fetchNodes('1').then(() => {
-		expect(nodeStore.getNodes().map(({ id }) => id)).toMatchObject([
+		expect(nodeStore.getNodes().map(({id}) => id)).toMatchObject([
 			26603,
 			26605,
 			26610,
@@ -74,15 +74,19 @@ test('Should test fetch', () => {
 		expect(
 			nodeStore
 				.getPauseNodes(startNodeKeys, stopNodeKeys)
-				.map(({ compositeId }) => compositeId)
+				.map(({compositeId}) => compositeId)
 		).toMatchObject([26610]);
 
 		expect(
-			nodeStore.getStartNodes(pauseNodeKeys, stopNodeKeys).map(({ id }) => id)
+			nodeStore
+				.getStartNodes(pauseNodeKeys, stopNodeKeys)
+				.map(({id}) => id)
 		).toMatchObject([26605, '26610:enter', '26625:enter', '26610:leave']);
 
 		expect(
-			nodeStore.getStopNodes(pauseNodeKeys, startNodeKeys).map(({ id }) => id)
+			nodeStore
+				.getStopNodes(pauseNodeKeys, startNodeKeys)
+				.map(({id}) => id)
 		).toMatchObject([
 			26603,
 			'26610:enter',
@@ -91,22 +95,28 @@ test('Should test fetch', () => {
 			'26625:leave'
 		]);
 
-		nodeStore.setState({ nodes: [] });
+		nodeStore.setState({nodes: []});
 
-		expect(nodeStore.getState()).toMatchObject({ nodes: [] });
+		expect(nodeStore.getState()).toMatchObject({nodes: []});
 
-		expect(nodeStore.getNodes().map(({ id }) => id)).toMatchObject([]);
+		expect(nodeStore.getNodes().map(({id}) => id)).toMatchObject([]);
 
 		expect(
-			nodeStore.getPauseNodes(startNodeKeys, stopNodeKeys).map(({ id }) => id)
+			nodeStore
+				.getPauseNodes(startNodeKeys, stopNodeKeys)
+				.map(({id}) => id)
 		).toMatchObject([]);
 
 		expect(
-			nodeStore.getStartNodes(pauseNodeKeys, stopNodeKeys).map(({ id }) => id)
+			nodeStore
+				.getStartNodes(pauseNodeKeys, stopNodeKeys)
+				.map(({id}) => id)
 		).toMatchObject([]);
 
 		expect(
-			nodeStore.getStopNodes(pauseNodeKeys, startNodeKeys).map(({ id }) => id)
+			nodeStore
+				.getStopNodes(pauseNodeKeys, startNodeKeys)
+				.map(({id}) => id)
 		).toMatchObject([]);
 	});
 });
@@ -124,8 +134,8 @@ test('Should test initial state', () => {
 test('Should test sort', () => {
 	const nodeStore = new NodeStore(client());
 
-	const nodeA = { name: 'a' };
-	const nodeB = { name: 'b' };
+	const nodeA = {name: 'a'};
+	const nodeB = {name: 'b'};
 
 	expect(nodeStore.compareToName(nodeA, nodeB)).toBe(-1);
 	expect(nodeStore.compareToName(nodeB, nodeA)).toBe(1);

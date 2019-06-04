@@ -1,7 +1,7 @@
 import PageLink from '../PageLink';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { MockRouter as Router } from '../../../../test/mock/MockRouter';
+import {MockRouter as Router} from '../../../../test/mock/MockRouter';
 
 test('Should render component as type default', () => {
 	const component = renderer.create(

@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { MockRouter as Router } from '../../../test/mock/MockRouter';
+import {MockRouter as Router} from '../../../test/mock/MockRouter';
 import SLAListTable from '../SLAListTable';
 
 test('Should render component', () => {

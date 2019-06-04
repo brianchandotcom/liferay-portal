@@ -1,7 +1,7 @@
-import { CalendarStore } from '../calendarStore';
+import {CalendarStore} from '../calendarStore';
 import client from '../../../../test/mock/fetch';
-import { NodeStore } from '../nodeStore';
-import { SLAStore } from '../slaStore';
+import {NodeStore} from '../nodeStore';
+import {SLAStore} from '../slaStore';
 
 test('Should test fetch data', () => {
 	const data = {
@@ -9,10 +9,10 @@ test('Should test fetch data', () => {
 		description: '',
 		hours: '',
 		name: 'test',
-		pauseNodeKeys: { nodeKeys: [] },
+		pauseNodeKeys: {nodeKeys: []},
 		processId: '',
-		startNodeKeys: { nodeKeys: [] },
-		stopNodeKeys: { nodeKeys: [] }
+		startNodeKeys: {nodeKeys: []},
+		stopNodeKeys: {nodeKeys: []}
 	};
 
 	const slaStore = new SLAStore(
@@ -57,10 +57,10 @@ test('Should test initial state', () => {
 		description: '',
 		hours: '',
 		name: '',
-		pauseNodeKeys: { nodeKeys: [] },
+		pauseNodeKeys: {nodeKeys: []},
 		processId: '',
-		startNodeKeys: { nodeKeys: [] },
-		stopNodeKeys: { nodeKeys: [] }
+		startNodeKeys: {nodeKeys: []},
+		stopNodeKeys: {nodeKeys: []}
 	};
 
 	expect(slaStore.getState()).toMatchObject(defaultData);
@@ -78,13 +78,13 @@ test('Should test reset', () => {
 		description: '',
 		hours: '',
 		name: '',
-		pauseNodeKeys: { nodeKeys: [] },
+		pauseNodeKeys: {nodeKeys: []},
 		processId: '',
-		startNodeKeys: { nodeKeys: [] },
-		stopNodeKeys: { nodeKeys: [] }
+		startNodeKeys: {nodeKeys: []},
+		stopNodeKeys: {nodeKeys: []}
 	};
 
-	slaStore.setState({ description: 'test' });
+	slaStore.setState({description: 'test'});
 
 	slaStore.reset();
 
@@ -97,10 +97,10 @@ test('Should test save data', () => {
 		description: '',
 		hours: '',
 		name: 'test',
-		pauseNodeKeys: { nodeKeys: [] },
+		pauseNodeKeys: {nodeKeys: []},
 		processId: '',
-		startNodeKeys: { nodeKeys: [] },
-		stopNodeKeys: { nodeKeys: [] }
+		startNodeKeys: {nodeKeys: []},
+		stopNodeKeys: {nodeKeys: []}
 	};
 
 	const slaStore = new SLAStore(
@@ -120,10 +120,10 @@ test('Should test update data', () => {
 		description: '',
 		hours: '',
 		name: 'test',
-		pauseNodeKeys: { nodeKeys: [] },
+		pauseNodeKeys: {nodeKeys: []},
 		processId: '',
-		startNodeKeys: { nodeKeys: [] },
-		stopNodeKeys: { nodeKeys: [] }
+		startNodeKeys: {nodeKeys: []},
+		stopNodeKeys: {nodeKeys: []}
 	};
 
 	const slaStore = new SLAStore(

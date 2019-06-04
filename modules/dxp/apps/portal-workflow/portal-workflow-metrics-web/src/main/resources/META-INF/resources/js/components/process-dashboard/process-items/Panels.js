@@ -1,4 +1,4 @@
-import { slaStatusKeys } from '../instance-list/filterConstants';
+import {slaStatusKeys} from '../instance-list/filterConstants';
 
 const PANELS = [
 	{

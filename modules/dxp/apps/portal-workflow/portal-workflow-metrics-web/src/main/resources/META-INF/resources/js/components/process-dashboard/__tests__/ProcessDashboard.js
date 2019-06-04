@@ -3,8 +3,8 @@ import fetchFailure from '../../../test/mock/fetchFailure';
 import PendingItemsCard from '../process-items/PendingItemsCard';
 import ProcessDashboard from '../ProcessDashboard';
 import React from 'react';
-import { MockRouter as Router } from '../../../test/mock/MockRouter';
-import { withParams } from '../../../shared/components/router/routerUtil';
+import {MockRouter as Router} from '../../../test/mock/MockRouter';
+import {withParams} from '../../../shared/components/router/routerUtil';
 import WorkloadByStepCard from '../workload-by-step/WorkloadByStepCard';
 
 beforeAll(() => {
@@ -22,7 +22,7 @@ beforeAll(() => {
 
 test('Should render component with completed tab activated', () => {
 	const component = mount(
-		<Router client={fetchFailure()} initialPath="/dashboard/35315">
+		<Router client={fetchFailure()} initialPath='/dashboard/35315'>
 			<ProcessDashboard processId={35315} />
 		</Router>
 	);
@@ -40,7 +40,7 @@ test('Should render component with default tab activated', () => {
 	};
 
 	const component = mount(
-		<Router client={fetch(data)} initialPath="/dashboard/35315">
+		<Router client={fetch(data)} initialPath='/dashboard/35315'>
 			<ProcessDashboard processId={35315} />
 		</Router>
 	);
@@ -50,7 +50,10 @@ test('Should render component with default tab activated', () => {
 
 test('Should render component with failure state', () => {
 	const component = mount(
-		<Router client={fetchFailure()} initialPath="/dashboard/35315/completed">
+		<Router
+			client={fetchFailure()}
+			initialPath='/dashboard/35315/completed'
+		>
 			<ProcessDashboard processId={35315} />
 		</Router>
 	);
@@ -79,14 +82,17 @@ test('Should render dashboard route children', () => {
 
 test('Should render with blocked SLA', () => {
 	const component = mount(
-		<Router client={fetchFailure()} initialPath="/dashboard/35315/completed">
-			<ProcessDashboard processId="123" />
+		<Router
+			client={fetchFailure()}
+			initialPath='/dashboard/35315/completed'
+		>
+			<ProcessDashboard processId='123' />
 		</Router>
 	);
 
 	const instance = component.find(ProcessDashboard).instance();
 
-	instance.setState({ blockedSLACount: 1 }, () => {
+	instance.setState({blockedSLACount: 1}, () => {
 		expect(component).toMatchSnapshot();
 	});
 });

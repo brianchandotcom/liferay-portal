@@ -1,4 +1,4 @@
-import { AppContext } from '../../../components/AppContext';
+import {AppContext} from '../../../components/AppContext';
 import DisplayResult from './DisplayResult';
 import PageSizeEntries from './PageSizeEntries';
 import Pagination from './Pagination';
@@ -10,7 +10,7 @@ import React from 'react';
  */
 class PaginationBar extends React.Component {
 	render() {
-		const { deltas, maxPages } = this.context;
+		const {deltas, maxPages} = this.context;
 		const {
 			page,
 			pageCount,
@@ -20,11 +20,11 @@ class PaginationBar extends React.Component {
 		} = this.props;
 
 		if (totalCount <= pageSizes[0]) {
-			return <div className="pagination-bar" />;
+			return <div className='pagination-bar' />;
 		}
 
 		return (
-			<div className="pagination-bar">
+			<div className='pagination-bar'>
 				<PageSizeEntries
 					pageSizeEntries={pageSizes}
 					selectedPageSize={pageSize}

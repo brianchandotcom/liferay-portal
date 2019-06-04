@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { MockRouter as Router } from '../../../../test/mock/MockRouter';
-import { Tabs } from '../Tabs';
+import {MockRouter as Router} from '../../../../test/mock/MockRouter';
+import {Tabs} from '../Tabs';
 
 const tabs = [
 	{

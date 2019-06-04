@@ -5,14 +5,14 @@ import {
 import autobind from 'autobind-decorator';
 import FilterResultsItem from './FilterResultsItem';
 import React from 'react';
-import { sub } from '../../../shared/util/lang';
-import { withRouter } from 'react-router-dom';
+import {sub} from '../../../shared/util/lang';
+import {withRouter} from 'react-router-dom';
 
 class FilterResultsBar extends React.Component {
 	@autobind
 	onClearAllButtonClick() {
 		const {
-			location: { search }
+			location: {search}
 		} = this.props;
 
 		const query = removeFilters(search);
@@ -21,7 +21,7 @@ class FilterResultsBar extends React.Component {
 	}
 
 	get selectedFilters() {
-		const { filters } = this.props;
+		const {filters} = this.props;
 
 		return filters.filter(filter => {
 			filter.items = filter.items
@@ -33,13 +33,13 @@ class FilterResultsBar extends React.Component {
 	}
 
 	render() {
-		const { selectedFilters } = this;
+		const {selectedFilters} = this;
 
 		if (!selectedFilters.length) {
 			return null;
 		}
 
-		const { totalCount } = this.props;
+		const {totalCount} = this.props;
 
 		let resultText = Liferay.Language.get('x-results-for-x');
 
@@ -48,13 +48,13 @@ class FilterResultsBar extends React.Component {
 		}
 
 		return (
-			<nav className="subnav-tbar subnav-tbar-primary tbar tbar-inline-xs-down">
-				<div className="container-fluid container-fluid-max-xl">
-					<ul className="tbar-nav tbar-nav-wrap">
-						<li className="tbar-item">
-							<div className="tbar-section">
-								<span className="component-text text-truncate-inline">
-									<span className="text-truncate">
+			<nav className='subnav-tbar subnav-tbar-primary tbar tbar-inline-xs-down'>
+				<div className='container-fluid container-fluid-max-xl'>
+					<ul className='tbar-nav tbar-nav-wrap'>
+						<li className='tbar-item'>
+							<div className='tbar-section'>
+								<span className='component-text text-truncate-inline'>
+									<span className='text-truncate'>
 										{sub(resultText, [totalCount, ''])}
 									</span>
 								</span>
@@ -63,16 +63,20 @@ class FilterResultsBar extends React.Component {
 
 						{selectedFilters.map(filter =>
 							filter.items.map((item, index) => (
-								<FilterResultsItem filter={filter} item={item} key={index} />
+								<FilterResultsItem
+									filter={filter}
+									item={item}
+									key={index}
+								/>
 							))
 						)}
 
-						<li className="tbar-item tbar-item-expand">
-							<div className="tbar-section text-right">
+						<li className='tbar-item tbar-item-expand'>
+							<div className='tbar-section text-right'>
 								<button
-									className="btn btn-unstyled component-link tbar-link"
+									className='btn btn-unstyled component-link tbar-link'
 									onClick={this.onClearAllButtonClick}
-									type="button"
+									type='button'
 								>
 									{Liferay.Language.get('clear-all')}
 								</button>
@@ -86,4 +90,4 @@ class FilterResultsBar extends React.Component {
 }
 
 export default withRouter(FilterResultsBar);
-export { FilterResultsBar };
+export {FilterResultsBar};

@@ -1,12 +1,12 @@
-import { AppContext } from '../../components/AppContext';
+import {AppContext} from '../../components/AppContext';
 import React from 'react';
-import { MemoryRouter as Router } from 'react-router-dom';
+import {MemoryRouter as Router} from 'react-router-dom';
 
 export class MockRouter extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const { client, page = 1, query, search, sort } = this.props;
+		const {client, page = 1, query, search, sort} = this.props;
 
 		this.contextState = {
 			client,
@@ -39,7 +39,9 @@ export class MockRouter extends React.Component {
 	}
 
 	render() {
-		const defaultPath = `/processes/1/10/${encodeURIComponent('title:asc')}`;
+		const defaultPath = `/processes/1/10/${encodeURIComponent(
+			'title:asc'
+		)}`;
 
 		const {
 			initialPath = defaultPath,

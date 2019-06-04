@@ -2,8 +2,8 @@ import {
 	getFiltersParam,
 	verifySelectedItems
 } from '../../../shared/components/filter/util/filterUtil';
-import { AppContext } from '../../AppContext';
-import { filterKeys } from '../instance-list/filterConstants';
+import {AppContext} from '../../AppContext';
+import {filterKeys} from '../instance-list/filterConstants';
 import ProcessItemsCard from './ProcessItemsCard';
 import React from 'react';
 import timeRangeStore from '../store/timeRangeStore';
@@ -26,7 +26,7 @@ class CompletedItemsCard extends React.Component {
 	}
 
 	get filter() {
-		const { timeRanges } = timeRangeStore.getState();
+		const {timeRanges} = timeRangeStore.getState();
 
 		if (!timeRanges.length) {
 			return null;
@@ -41,7 +41,7 @@ class CompletedItemsCard extends React.Component {
 			name: Liferay.Language.get('completion-period')
 		};
 
-		const { query } = this.props;
+		const {query} = this.props;
 
 		const filtersParam = getFiltersParam(query);
 
@@ -51,7 +51,7 @@ class CompletedItemsCard extends React.Component {
 			timeRanges: filter.items
 		});
 
-		const { selectedTimeRange } = timeRangeStore;
+		const {selectedTimeRange} = timeRangeStore;
 
 		if (selectedTimeRange) {
 			filter.name = selectedTimeRange.name;
@@ -61,13 +61,15 @@ class CompletedItemsCard extends React.Component {
 	}
 
 	render() {
-		const { processId } = this.props;
-		const { selectedTimeRange } = timeRangeStore;
+		const {processId} = this.props;
+		const {selectedTimeRange} = timeRangeStore;
 
 		return (
 			<ProcessItemsCard
 				completed
-				description={Liferay.Language.get('completed-items-description')}
+				description={Liferay.Language.get(
+					'completed-items-description'
+				)}
 				filter={this.filter}
 				processId={processId}
 				timeRange={selectedTimeRange}

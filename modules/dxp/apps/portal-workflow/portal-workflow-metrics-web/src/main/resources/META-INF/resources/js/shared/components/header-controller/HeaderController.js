@@ -1,12 +1,14 @@
-import React, { Fragment } from 'react';
+import React, {Fragment} from 'react';
 import HeaderMenuBackItem from './HeaderMenuBackItem';
 import HeaderTitle from './HeaderTitle';
 
 export default class HeaderController extends React.Component {
 	componentWillMount() {
-		const { namespace } = this.props;
+		const {namespace} = this.props;
 
-		const headerContainer = document.getElementById(`${namespace}controlMenu`);
+		const headerContainer = document.getElementById(
+			`${namespace}controlMenu`
+		);
 
 		if (headerContainer) {
 			this.backButtonContainer = headerContainer.querySelector(
@@ -19,7 +21,7 @@ export default class HeaderController extends React.Component {
 	}
 
 	render() {
-		const { basePath, title } = this.props;
+		const {basePath, title} = this.props;
 
 		return (
 			<Fragment>

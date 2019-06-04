@@ -8,46 +8,55 @@ import React from 'react';
  */
 export default class ProcessListTable extends React.Component {
 	render() {
-		const { items } = this.props;
+		const {items} = this.props;
 		const onTimeTitle = Liferay.Language.get('on-time');
 		const overdueTitle = Liferay.Language.get('overdue');
 		const processNameTitle = Liferay.Language.get('process-name');
 		const totalPendingTitle = Liferay.Language.get('total-pending');
 
 		return (
-			<div className="table-responsive">
-				<table className="show-quick-actions-on-hover table table-autofit table-heading-nowrap table-hover table-list">
+			<div className='table-responsive'>
+				<table className='show-quick-actions-on-hover table table-autofit table-heading-nowrap table-hover table-list'>
 					<thead>
 						<tr>
 							<th
-								className="table-cell-expand table-head-title"
-								style={{ width: '70%' }}
+								className='table-cell-expand table-head-title'
+								style={{width: '70%'}}
 							>
-								<ListHeadItem name="title" title={processNameTitle} />
+								<ListHeadItem
+									name='title'
+									title={processNameTitle}
+								/>
 							</th>
 
 							<th
-								className="table-cell-expand table-head-title"
-								style={{ width: '15%' }}
+								className='table-cell-expand table-head-title'
+								style={{width: '15%'}}
 							>
 								<ListHeadItem
-									name="overdueInstanceCount"
+									name='overdueInstanceCount'
 									title={overdueTitle}
 								/>
 							</th>
 
 							<th
-								className="table-cell-expand table-head-title"
-								style={{ width: '15%' }}
+								className='table-cell-expand table-head-title'
+								style={{width: '15%'}}
 							>
-								<ListHeadItem name="onTimeInstanceCount" title={onTimeTitle} />
+								<ListHeadItem
+									name='onTimeInstanceCount'
+									title={onTimeTitle}
+								/>
 							</th>
 
 							<th
-								className="table-cell-expand table-head-title"
-								style={{ width: '15%' }}
+								className='table-cell-expand table-head-title'
+								style={{width: '15%'}}
 							>
-								<ListHeadItem name="instanceCount" title={totalPendingTitle} />
+								<ListHeadItem
+									name='instanceCount'
+									title={totalPendingTitle}
+								/>
 							</th>
 						</tr>
 					</thead>

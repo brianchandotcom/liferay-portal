@@ -8,7 +8,7 @@ export default class PortalComponent extends React.Component {
 	}
 
 	componentDidMount() {
-		const { container, replace } = this.props;
+		const {container, replace} = this.props;
 
 		if (!container) {
 			return;
@@ -27,7 +27,7 @@ export default class PortalComponent extends React.Component {
 	}
 
 	render() {
-		const { children, container } = this.props;
+		const {children, container} = this.props;
 
 		if (!container) {
 			return null;

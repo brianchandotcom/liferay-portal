@@ -26,7 +26,7 @@ describe('Panel', () => {
 			<Panel>
 				<Panel.Header>{'Header'}</Panel.Header>
 				<Panel.Body>{'Body'}</Panel.Body>
-				<Panel.Footer label="Footer Label">{'Footer'}</Panel.Footer>
+				<Panel.Footer label='Footer Label'>{'Footer'}</Panel.Footer>
 			</Panel>
 		);
 
@@ -39,7 +39,9 @@ describe('Panel', () => {
 				<Panel.Header elementClass={'custom-class-header'}>
 					{'Header'}
 				</Panel.Header>
-				<Panel.Body elementClass={'custom-class-body'}>{'Body'}</Panel.Body>
+				<Panel.Body elementClass={'custom-class-body'}>
+					{'Body'}
+				</Panel.Body>
 				<Panel.Footer elementClass={'custom-class-footer'}>
 					{'Footer'}
 				</Panel.Footer>

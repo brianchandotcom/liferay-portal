@@ -9,7 +9,7 @@ import {
 	START_NODE_KEYS,
 	STOP_NODE_KEYS
 } from './Constants';
-import { AppContext, AppStatus } from '../AppContext';
+import {AppContext, AppStatus} from '../AppContext';
 import {
 	BackLink,
 	BackRedirect
@@ -31,9 +31,9 @@ import LoadingState from '../../shared/components/loading/LoadingState';
 import MaskedInput from 'react-text-mask';
 import MultiSelect from '../../shared/components/MultiSelect';
 import nodeStore from './store/nodeStore';
-import { openErrorToast } from '../../shared/util/toast';
+import {openErrorToast} from '../../shared/util/toast';
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import slaStore from './store/slaStore';
 
 /**
@@ -58,17 +58,17 @@ class SLAForm extends React.Component {
 	@autobind
 	handleChange(
 		{
-			target: { name, value = '' }
+			target: {name, value = ''}
 		},
 		callback
 	) {
-		slaStore.setState({ [name]: value });
+		slaStore.setState({[name]: value});
 		this.setState({}, callback);
 	}
 
 	handleErrors(responseErrors) {
 		if (Array.isArray(responseErrors)) {
-			const { errors } = this.state;
+			const {errors} = this.state;
 
 			responseErrors.forEach(error => {
 				const errorKey = error.fieldName || ALERT_MESSAGE;
@@ -86,11 +86,11 @@ class SLAForm extends React.Component {
 				this.reloadNodes().then(() => {
 					slaStore.resetNodes();
 
-					this.setState({ errors });
+					this.setState({errors});
 				});
 			}
 			else {
-				this.setState({ errors });
+				this.setState({errors});
 			}
 		}
 		else {
@@ -104,42 +104,46 @@ class SLAForm extends React.Component {
 
 	@autobind
 	handlePauseNodesChange(nodeKeys) {
-		const { errors } = this.state;
-		const { startNodeKeys, stopNodeKeys } = slaStore.getState();
+		const {errors} = this.state;
+		const {startNodeKeys, stopNodeKeys} = slaStore.getState();
 
 		const pauseNodeKeys = nodeStore
 			.getPauseNodes(startNodeKeys.nodeKeys, stopNodeKeys.nodeKeys)
-			.filter(({ compositeId }) => nodeKeys.includes(`${compositeId}`));
+			.filter(({compositeId}) => nodeKeys.includes(`${compositeId}`));
 
-		slaStore.setState({ pauseNodeKeys: { nodeKeys: pauseNodeKeys } });
+		slaStore.setState({pauseNodeKeys: {nodeKeys: pauseNodeKeys}});
 		errors[PAUSE_NODE_KEYS] = '';
-		this.setState({ errors });
+		this.setState({errors});
 	}
 
 	@autobind
 	handleStartNodes(nodeKeys) {
-		const { errors } = this.state;
+		const {errors} = this.state;
 		const startNodeKeys = nodeStore
 			.getState()
-			.nodes.filter(({ compositeId }) => nodeKeys.includes(`${compositeId}`));
+			.nodes.filter(({compositeId}) =>
+				nodeKeys.includes(`${compositeId}`)
+			);
 
 		errors[ALERT_MESSAGE] = '';
 		errors[START_NODE_KEYS] = validateNodeKeys(startNodeKeys);
-		slaStore.setState({ startNodeKeys: { nodeKeys: startNodeKeys } });
-		this.setState({ errors });
+		slaStore.setState({startNodeKeys: {nodeKeys: startNodeKeys}});
+		this.setState({errors});
 	}
 
 	@autobind
 	handleStopNodesChange(nodeKeys) {
-		const { errors } = this.state;
+		const {errors} = this.state;
 		const stopNodeKeys = nodeStore
 			.getState()
-			.nodes.filter(({ compositeId }) => nodeKeys.includes(`${compositeId}`));
+			.nodes.filter(({compositeId}) =>
+				nodeKeys.includes(`${compositeId}`)
+			);
 
 		errors[ALERT_MESSAGE] = '';
 		errors[STOP_NODE_KEYS] = validateNodeKeys(stopNodeKeys);
-		slaStore.setState({ stopNodeKeys: { nodeKeys: stopNodeKeys } });
-		this.setState({ errors });
+		slaStore.setState({stopNodeKeys: {nodeKeys: stopNodeKeys}});
+		this.setState({errors});
 	}
 
 	@autobind
@@ -151,7 +155,7 @@ class SLAForm extends React.Component {
 			startNodeKeys,
 			stopNodeKeys
 		} = slaStore.getState();
-		const { errors } = this.state;
+		const {errors} = this.state;
 
 		errors[ALERT_MESSAGE] = '';
 		errors[DURATION] = validateDuration(days, hours);
@@ -166,23 +170,25 @@ class SLAForm extends React.Component {
 				'please-fill-in-the-required-fields'
 			);
 
-			this.setState({ errors });
+			this.setState({errors});
 		}
 		else {
-			const { id, processId } = this.props;
+			const {id, processId} = this.props;
 
 			return slaStore
 				.saveSLA(processId, id)
 				.then(() => {
-					const status = id ? AppStatus.slaUpdated : AppStatus.slaSaved;
+					const status = id
+						? AppStatus.slaUpdated
+						: AppStatus.slaSaved;
 
 					this.context.setStatus(status, () => {
-						this.setState({ redirectToSLAList: true });
+						this.setState({redirectToSLAList: true});
 					});
 				})
 				.catch(result => {
 					const {
-						response: { data }
+						response: {data}
 					} = result;
 
 					this.handleErrors(data);
@@ -192,11 +198,11 @@ class SLAForm extends React.Component {
 
 	@autobind
 	hideDropLists() {
-		document.dispatchEvent(new Event('mousedown', { bubbles: true }));
+		document.dispatchEvent(new Event('mousedown', {bubbles: true}));
 	}
 
 	loadData() {
-		const { id, processId } = this.props;
+		const {id, processId} = this.props;
 
 		slaStore.reset();
 
@@ -211,11 +217,15 @@ class SLAForm extends React.Component {
 	}
 
 	loadDataCallback(id) {
-		const { errors } = this.state;
+		const {errors} = this.state;
 		const errorText = Liferay.Language.get(
 			'selected-option-is-no-longer-available'
 		);
-		const { pauseNodeKeys, startNodeKeys, stopNodeKeys } = slaStore.getState();
+		const {
+			pauseNodeKeys,
+			startNodeKeys,
+			stopNodeKeys
+		} = slaStore.getState();
 
 		if (startNodeKeys.status === 2 && !pauseNodeKeys.nodeKeys.length) {
 			errors[START_NODE_KEYS] = errorText;
@@ -240,40 +250,40 @@ class SLAForm extends React.Component {
 
 	@autobind
 	onDurationChanged() {
-		const { errors } = this.state;
-		const { days, hours } = slaStore.getState();
+		const {errors} = this.state;
+		const {days, hours} = slaStore.getState();
 
 		errors[ALERT_MESSAGE] = '';
 		errors[DURATION] = validateDuration(days, hours);
 		errors[HOURS] = '';
 
-		this.setState({ errors });
+		this.setState({errors});
 	}
 
 	@autobind
 	onHoursBlurred() {
-		const { errors } = this.state;
-		const { hours } = slaStore.getState();
+		const {errors} = this.state;
+		const {hours} = slaStore.getState();
 
 		errors[ALERT_MESSAGE] = '';
 		errors[HOURS] = validateHours(hours);
 
-		this.setState({ errors });
+		this.setState({errors});
 	}
 
 	@autobind
 	onNameChanged() {
-		const { errors } = this.state;
-		const { name } = slaStore.getState();
+		const {errors} = this.state;
+		const {name} = slaStore.getState();
 
 		errors[ALERT_MESSAGE] = '';
 		errors[NAME] = validateName(name);
 
-		this.setState({ errors });
+		this.setState({errors});
 	}
 
 	reloadNodes() {
-		const { processId } = this.props;
+		const {processId} = this.props;
 
 		this.setState({
 			loading: true
@@ -287,9 +297,9 @@ class SLAForm extends React.Component {
 	}
 
 	render() {
-		const { defaultDelta } = this.context;
-		const { errors, loading = false, redirectToSLAList = false } = this.state;
-		const { id, processId, query } = this.props;
+		const {defaultDelta} = this.context;
+		const {errors, loading = false, redirectToSLAList = false} = this.state;
+		const {id, processId, query} = this.props;
 
 		if (loading) {
 			return <LoadingState />;
@@ -310,7 +320,7 @@ class SLAForm extends React.Component {
 			);
 		}
 
-		const { calendars } = calendarStore.getState();
+		const {calendars} = calendarStore.getState();
 
 		const showCalendarField = calendars.length > 1;
 
@@ -320,10 +330,10 @@ class SLAForm extends React.Component {
 			description,
 			hours,
 			name,
-			pauseNodeKeys: { nodeKeys: pauseNodeKeys },
-			startNodeKeys: { nodeKeys: startNodeKeys },
+			pauseNodeKeys: {nodeKeys: pauseNodeKeys},
+			startNodeKeys: {nodeKeys: startNodeKeys},
 			status,
-			stopNodeKeys: { nodeKeys: stopNodeKeys }
+			stopNodeKeys: {nodeKeys: stopNodeKeys}
 		} = slaStore.getState();
 		const daysMask = createNumberMask({
 			allowLeadingZeroes: true,
@@ -339,29 +349,33 @@ class SLAForm extends React.Component {
 		const stopNodes = nodeStore.getStopNodes(pauseNodeKeys, startNodeKeys);
 
 		const [pauseNodeTagIds, startNodeTagIds, stopNodeTagIds] = [
-			pauseNodes.filter(({ id }) => pauseNodeKeys.find(node => node.id == id)),
-			startNodes.filter(({ compositeId }) =>
+			pauseNodes.filter(({id}) =>
+				pauseNodeKeys.find(node => node.id == id)
+			),
+			startNodes.filter(({compositeId}) =>
 				startNodeKeys.find(
 					node => `${node.id}:${node.executionType}` === compositeId
 				)
 			),
-			stopNodes.filter(({ compositeId }) =>
+			stopNodes.filter(({compositeId}) =>
 				stopNodeKeys.find(
 					node => `${node.id}:${node.executionType}` === compositeId
 				)
 			)
-		].map(nodeKeys => nodeKeys.map(({ compositeId }) => `${compositeId}`));
+		].map(nodeKeys => nodeKeys.map(({compositeId}) => `${compositeId}`));
 
 		return (
-			<div className="sla-form">
+			<div className='sla-form'>
 				{errors[ALERT_MESSAGE] && (
-					<div className="alert-container">
-						<div className="alert alert-danger" role="alert">
-							<span className="alert-indicator">
-								<Icon iconName="exclamation-full" />
+					<div className='alert-container'>
+						<div className='alert alert-danger' role='alert'>
+							<span className='alert-indicator'>
+								<Icon iconName='exclamation-full' />
 							</span>
 
-							<strong className="lead">{Liferay.Language.get('error')}</strong>
+							<strong className='lead'>
+								{Liferay.Language.get('error')}
+							</strong>
 
 							<span>{errors[ALERT_MESSAGE]}</span>
 						</div>
@@ -369,264 +383,308 @@ class SLAForm extends React.Component {
 				)}
 
 				{status === 2 && (
-					<div className="alert-container">
-						<div className="alert alert-danger alert-dismissible" role="alert">
-							<span className="alert-indicator">
-								<Icon iconName="exclamation-full" />
+					<div className='alert-container'>
+						<div
+							className='alert alert-danger alert-dismissible'
+							role='alert'
+						>
+							<span className='alert-indicator'>
+								<Icon iconName='exclamation-full' />
 							</span>
 
-							<strong className="lead">{Liferay.Language.get('error')}</strong>
+							<strong className='lead'>
+								{Liferay.Language.get('error')}
+							</strong>
 
 							{Liferay.Language.get(
 								'the-time-frame-options-changed-in-the-workflow-definition'
 							)}
 
 							<button
-								aria-label="Close"
-								className="close"
-								data-dismiss="alert"
-								type="button"
+								aria-label='Close'
+								className='close'
+								data-dismiss='alert'
+								type='button'
 							>
-								<Icon iconName="times" />
+								<Icon iconName='times' />
 							</button>
 						</div>
 					</div>
 				)}
 
-				<form className="sheet sheet-lg" role="form">
-					<div className="sheet-header">
-						<h2 className="sheet-title">
+				<form className='sheet sheet-lg' role='form'>
+					<div className='sheet-header'>
+						<h2 className='sheet-title'>
 							{Liferay.Language.get('sla-definition')}
 						</h2>
 					</div>
 
-					<div className="sheet-section">
-						<div className="row">
+					<div className='sheet-section'>
+						<div className='row'>
 							<div
 								className={`col col-sm-5 form-group ${
 									errors[NAME] ? 'has-error' : ''
 								}`}
 							>
 								<FieldLabel
-									fieldId="sla_name"
+									fieldId='sla_name'
 									required
 									text={Liferay.Language.get('name')}
 								/>
 
 								<input
 									autoFocus
-									className="form-control"
+									className='form-control'
 									defaultValue={name}
-									id="sla_name"
+									id='sla_name'
 									maxLength={75}
-									name="name"
-									onInput={onChangeHandler(this.onNameChanged)}
-									type="text"
+									name='name'
+									onInput={onChangeHandler(
+										this.onNameChanged
+									)}
+									type='text'
 								/>
 
-								{errors[NAME] && <FieldError error={errors[NAME]} />}
+								{errors[NAME] && (
+									<FieldError error={errors[NAME]} />
+								)}
 							</div>
 
-							<div className="col col-sm-7 form-group">
+							<div className='col col-sm-7 form-group'>
 								<FieldLabel
-									fieldId="sla_description"
+									fieldId='sla_description'
 									text={Liferay.Language.get('description')}
 								/>
 
 								<input
-									className="form-control"
+									className='form-control'
 									defaultValue={description}
-									id="sla_description"
-									name="description"
+									id='sla_description'
+									name='description'
 									onFocus={this.hideDropLists}
 									onInput={onChangeHandler()}
-									type="text"
+									type='text'
 								/>
 							</div>
 						</div>
 
-						<h3 className="sheet-subtitle">
+						<h3 className='sheet-subtitle'>
 							<FieldLabel
-								fieldId="sla_time_start"
-								text={Liferay.Language.get('time-frame').toUpperCase()}
+								fieldId='sla_time_start'
+								text={Liferay.Language.get(
+									'time-frame'
+								).toUpperCase()}
 							/>
 						</h3>
 
-						<div className="sheet-text">
+						<div className='sheet-text'>
 							{Liferay.Language.get(
 								'define-when-time-should-be-tracked-based-on-workflow-steps'
 							)}
 						</div>
 
-						<div className="row">
+						<div className='row'>
 							<div
 								className={`col col-sm-12 form-group ${
 									errors[START_NODE_KEYS] ? 'has-error' : ''
 								}`}
 							>
 								<FieldLabel
-									fieldId="sla_time_start"
+									fieldId='sla_time_start'
 									required
 									text={Liferay.Language.get('start')}
 								/>
 
-								<div className="form-text">
-									{Liferay.Language.get('time-will-begin-counting-when')}
+								<div className='form-text'>
+									{Liferay.Language.get(
+										'time-will-begin-counting-when'
+									)}
 								</div>
 
 								<MultiSelect
 									data={startNodes}
-									fieldId="compositeId"
+									fieldId='compositeId'
 									onChangeTags={this.handleStartNodes}
 									selectedTagsId={startNodeTagIds}
 								/>
 
 								{errors[START_NODE_KEYS] && (
-									<FieldError error={errors[START_NODE_KEYS]} />
+									<FieldError
+										error={errors[START_NODE_KEYS]}
+									/>
 								)}
 							</div>
 						</div>
 
-						<div className="row">
-							<div className="col col-sm-12 form-group">
+						<div className='row'>
+							<div className='col col-sm-12 form-group'>
 								<FieldLabel
-									fieldId="sla_time_pause"
+									fieldId='sla_time_pause'
 									text={Liferay.Language.get('pause')}
 								/>
 
-								<div className="form-text">
-									{Liferay.Language.get('time-wont-be-considered-when')}
+								<div className='form-text'>
+									{Liferay.Language.get(
+										'time-wont-be-considered-when'
+									)}
 								</div>
 
 								<MultiSelect
 									data={pauseNodes}
-									fieldId="compositeId"
+									fieldId='compositeId'
 									onChangeTags={this.handlePauseNodesChange}
 									selectedTagsId={pauseNodeTagIds}
 								/>
 							</div>
 						</div>
 
-						<div className="row">
+						<div className='row'>
 							<div
 								className={`col col-sm-12 form-group ${
 									errors[STOP_NODE_KEYS] ? 'has-error' : ''
 								}`}
 							>
 								<FieldLabel
-									fieldId="sla_time_stop"
+									fieldId='sla_time_stop'
 									required
 									text={Liferay.Language.get('stop')}
 								/>
 
-								<div className="form-text">
-									{Liferay.Language.get('time-will-stop-counting-when')}
+								<div className='form-text'>
+									{Liferay.Language.get(
+										'time-will-stop-counting-when'
+									)}
 								</div>
 
 								<MultiSelect
 									data={stopNodes}
-									fieldId="compositeId"
+									fieldId='compositeId'
 									onChangeTags={this.handleStopNodesChange}
 									selectedTagsId={stopNodeTagIds}
 								/>
 
 								{errors[STOP_NODE_KEYS] && (
-									<FieldError error={errors[STOP_NODE_KEYS]} />
+									<FieldError
+										error={errors[STOP_NODE_KEYS]}
+									/>
 								)}
 							</div>
 						</div>
 
-						<h3 className="sheet-subtitle">
+						<h3 className='sheet-subtitle'>
 							<FieldLabel
-								fieldId="sla_duration_days"
+								fieldId='sla_duration_days'
 								required
-								text={Liferay.Language.get('duration').toUpperCase()}
+								text={Liferay.Language.get(
+									'duration'
+								).toUpperCase()}
 							/>
 						</h3>
 
-						<div className="sheet-text">
+						<div className='sheet-text'>
 							{showCalendarField
 								? Liferay.Language.get(
 									'define-the-sla-duration-and-calendar-format'
 								  )
-								: Liferay.Language.get('define-the-sla-duration')}
+								: Liferay.Language.get(
+									'define-the-sla-duration'
+								  )}
 						</div>
 
-						<div className="row">
+						<div className='row'>
 							<div
 								className={`col col-sm-3 form-group ${
 									errors[DURATION] ? 'has-error' : ''
 								}`}
 							>
 								<FieldLabel
-									fieldId="sla_duration_days"
+									fieldId='sla_duration_days'
 									text={Liferay.Language.get('days')}
 								/>
 
 								<MaskedInput
-									className="form-control"
+									className='form-control'
 									defaultValue={days}
-									id="sla_duration_days"
+									id='sla_duration_days'
 									mask={daysMask}
 									maxLength={4}
 									name={DAYS}
 									onFocus={this.hideDropLists}
-									onInput={onChangeHandler(this.onDurationChanged)}
+									onInput={onChangeHandler(
+										this.onDurationChanged
+									)}
 								/>
 
-								{errors[DURATION] && <FieldError error={errors[DURATION]} />}
+								{errors[DURATION] && (
+									<FieldError error={errors[DURATION]} />
+								)}
 
-								<div className="form-text">
-									{Liferay.Language.get('enter-a-whole-number')}
+								<div className='form-text'>
+									{Liferay.Language.get(
+										'enter-a-whole-number'
+									)}
 								</div>
 							</div>
 
 							<div
 								className={`col col-sm-3 form-group ${
-									errors[DURATION] || errors[HOURS] ? 'has-error' : ''
+									errors[DURATION] || errors[HOURS]
+										? 'has-error'
+										: ''
 								}`}
 							>
 								<FieldLabel
-									fieldId="sla_duration_hours"
+									fieldId='sla_duration_hours'
 									text={Liferay.Language.get('hours')}
 								/>
 
 								<MaskedInput
-									className="form-control"
-									id="sla_duration_hours"
+									className='form-control'
+									id='sla_duration_hours'
 									mask={[/\d/, /\d/, ':', /\d/, /\d/]}
 									name={HOURS}
 									onBlur={this.onHoursBlurred}
-									onChange={onChangeHandler(this.onDurationChanged)}
+									onChange={onChangeHandler(
+										this.onDurationChanged
+									)}
 									onInput={onChangeHandler()}
-									placeholder="00:00"
+									placeholder='00:00'
 									value={hours}
 								/>
 
-								{errors[DURATION] && <FieldError error={errors[DURATION]} />}
-								{errors[HOURS] && <FieldError error={errors[HOURS]} />}
+								{errors[DURATION] && (
+									<FieldError error={errors[DURATION]} />
+								)}
+								{errors[HOURS] && (
+									<FieldError error={errors[HOURS]} />
+								)}
 							</div>
 
 							{showCalendarField && (
-								<div className="col col-sm-6 form-group">
+								<div className='col col-sm-6 form-group'>
 									<FieldLabel
-										fieldId="sla_calendar_key"
+										fieldId='sla_calendar_key'
 										text={Liferay.Language.get('calendar')}
 									/>
 
 									<select
-										className="form-control"
-										id="sla_calendar_key"
+										className='form-control'
+										id='sla_calendar_key'
 										name={CALENDAR_KEY}
 										onChange={this.handleChange}
 										value={calendarKey}
 									>
 										{calendars.map((calendar, index) => (
-											<option key={index} value={calendar.key}>
+											<option
+												key={index}
+												value={calendar.key}
+											>
 												{calendar.title}
 
 												{calendar.defaultCalendar &&
-													` (${Liferay.Language.get('system-default')})`}
+													` (${Liferay.Language.get(
+														'system-default'
+													)})`}
 											</option>
 										))}
 									</select>
@@ -635,13 +693,13 @@ class SLAForm extends React.Component {
 						</div>
 					</div>
 
-					<div className="sheet-footer sheet-footer-btn-block-sm-down">
-						<div className="btn-group">
-							<div className="btn-group-item">
+					<div className='sheet-footer sheet-footer-btn-block-sm-down'>
+						<div className='btn-group'>
+							<div className='btn-group-item'>
 								<button
-									className="btn btn-primary"
+									className='btn btn-primary'
 									onClick={this.handleSubmit}
-									type="button"
+									type='button'
 								>
 									{id
 										? Liferay.Language.get('update')
@@ -649,8 +707,8 @@ class SLAForm extends React.Component {
 								</button>
 							</div>
 
-							<div className="btn-group-item">
-								<BackLink className="btn btn-secondary">
+							<div className='btn-group-item'>
+								<BackLink className='btn btn-secondary'>
 									{Liferay.Language.get('cancel')}
 								</BackLink>
 							</div>

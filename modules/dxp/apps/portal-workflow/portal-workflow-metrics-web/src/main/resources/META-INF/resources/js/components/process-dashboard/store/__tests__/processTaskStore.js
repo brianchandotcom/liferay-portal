@@ -1,5 +1,5 @@
 import client from '../../../../test/mock/fetch';
-import { ProcessTaskStore } from '../processTaskStore';
+import {ProcessTaskStore} from '../processTaskStore';
 
 test('Should fetch process tasks', () => {
 	const data = {

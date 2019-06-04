@@ -23,14 +23,16 @@ class NodeStore {
 	fetchNodes(processId) {
 		return this.client
 			.get(`/processes/${processId}/nodes`)
-			.then(({ data: { items } }) => {
+			.then(({data: {items}}) => {
 				const entersTaskString = Liferay.Language.get('enters-task');
 				const leavesTaskString = Liferay.Language.get('leaves-task');
 				const nodeBegins = [];
 				const nodeEnds = [];
 				const nodeEnters = [];
 				const nodeLeaves = [];
-				const processBeginsString = Liferay.Language.get('process-begins');
+				const processBeginsString = Liferay.Language.get(
+					'process-begins'
+				);
 				const processEndsString = Liferay.Language.get('process-ends');
 
 				items.forEach(node => {
@@ -78,7 +80,7 @@ class NodeStore {
 					compositeId: `${node.id}:${node.executionType}`
 				}));
 
-				this.setState({ nodes });
+				this.setState({nodes});
 
 				return nodes;
 			});
@@ -86,17 +88,17 @@ class NodeStore {
 
 	getPauseNodes(startNodeKeys, stopNodeKeys) {
 		const selectedNodes = [...startNodeKeys, ...stopNodeKeys]
-			.map(({ id }) => `${id}`)
+			.map(({id}) => `${id}`)
 			.filter((id, index, self) => self.indexOf(id) === index);
 
 		const onTaskString = Liferay.Language.get('on-task');
 
 		return this.getState()
-			.nodes.filter(({ type }) => type === 'TASK')
-			.filter(({ id }) => !selectedNodes.includes(`${id}`))
+			.nodes.filter(({type}) => type === 'TASK')
+			.filter(({id}) => !selectedNodes.includes(`${id}`))
 			.filter(
 				(node, index, self) =>
-					self.findIndex(({ id }) => id == node.id) === index
+					self.findIndex(({id}) => id == node.id) === index
 			)
 			.map(node => ({
 				...node,
@@ -107,20 +109,20 @@ class NodeStore {
 	}
 
 	getStartNodes(pauseNodeKeys, stopNodeKeys) {
-		const pauseNodeKeyIds = pauseNodeKeys.map(({ id }) => `${id}`);
+		const pauseNodeKeyIds = pauseNodeKeys.map(({id}) => `${id}`);
 
 		const nodeKeyCompositeIds = stopNodeKeys.map(
-			({ executionType, id }) => `${id}:${executionType}`
+			({executionType, id}) => `${id}:${executionType}`
 		);
 
 		return this.getState()
 			.nodes.filter(
-				({ compositeId, id }) =>
+				({compositeId, id}) =>
 					!nodeKeyCompositeIds.includes(`${compositeId}`) &&
 					!pauseNodeKeyIds.includes(`${id}`)
 			)
 			.filter(
-				({ initial, type }) =>
+				({initial, type}) =>
 					(type === 'STATE' && initial === true) || type === 'TASK'
 			);
 	}
@@ -130,20 +132,20 @@ class NodeStore {
 	}
 
 	getStopNodes(pauseNodeKeys, startNodeKeys) {
-		const pauseNodeKeyIds = pauseNodeKeys.map(({ id }) => `${id}`);
+		const pauseNodeKeyIds = pauseNodeKeys.map(({id}) => `${id}`);
 
 		const nodeKeyCompositeIds = startNodeKeys.map(
-			({ executionType, id }) => `${id}:${executionType}`
+			({executionType, id}) => `${id}:${executionType}`
 		);
 
 		return this.getState()
 			.nodes.filter(
-				({ compositeId, id }) =>
+				({compositeId, id}) =>
 					!nodeKeyCompositeIds.includes(`${compositeId}`) &&
 					!pauseNodeKeyIds.includes(`${id}`)
 			)
 			.filter(
-				({ terminal, type }) =>
+				({terminal, type}) =>
 					(type === 'STATE' && terminal === true) || type === 'TASK'
 			);
 	}
@@ -154,4 +156,4 @@ class NodeStore {
 }
 
 export default new NodeStore(client);
-export { NodeStore };
+export {NodeStore};

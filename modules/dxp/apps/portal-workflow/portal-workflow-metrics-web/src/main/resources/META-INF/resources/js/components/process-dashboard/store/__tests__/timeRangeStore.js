@@ -1,5 +1,5 @@
 import client from '../../../../test/mock/fetch';
-import { TimeRangeStore } from '../timeRangeStore';
+import {TimeRangeStore} from '../timeRangeStore';
 
 test('Should fetch time ranges', () => {
 	const data = {
@@ -79,7 +79,9 @@ test('Should format time range description', () => {
 		timeRangeStore
 			.getState()
 			.timeRanges.forEach((timeRange, index) =>
-				expect(timeRange.description).toEqual(timeRangeDescriptions[index])
+				expect(timeRange.description).toEqual(
+					timeRangeDescriptions[index]
+				)
 			);
 	});
 });
@@ -103,7 +105,7 @@ test('Should get default time range', () => {
 		}
 	];
 
-	timeRangeStore.setState({ timeRanges });
+	timeRangeStore.setState({timeRanges});
 
 	expect(timeRangeStore.defaultTimeRange.key).toEqual(timeRanges[0].key);
 });
@@ -129,7 +131,7 @@ test('Should get selected time range', () => {
 		}
 	];
 
-	timeRangeStore.setState({ timeRanges });
+	timeRangeStore.setState({timeRanges});
 
 	expect(timeRangeStore.selectedTimeRange.key).toEqual(timeRanges[0].key);
 });
@@ -155,7 +157,7 @@ test('Should return empty json when there is no default time range', () => {
 		}
 	];
 
-	timeRangeStore.setState({ timeRanges });
+	timeRangeStore.setState({timeRanges});
 
 	expect(timeRangeStore.defaultTimeRange).toBeNull();
 });
@@ -175,7 +177,7 @@ test('Should return null when there is no selected time range', () => {
 		}
 	];
 
-	timeRangeStore.setState({ timeRanges });
+	timeRangeStore.setState({timeRanges});
 
 	expect(timeRangeStore.selectedTimeRange).toBeNull();
 });

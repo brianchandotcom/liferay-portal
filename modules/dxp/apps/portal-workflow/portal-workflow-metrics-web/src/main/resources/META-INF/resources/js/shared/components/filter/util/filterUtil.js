@@ -1,4 +1,4 @@
-import { parse, stringify } from '../../router/queryString';
+import {parse, stringify} from '../../router/queryString';
 import pathToRegexp from 'path-to-regexp';
 
 export function getFiltersParam(queryString) {
@@ -61,11 +61,11 @@ export function isSelected(filterKey, itemKey, queryString) {
 export function pushToHistory(filterQuery, routerProps) {
 	const {
 		history,
-		location: { search },
-		match: { params, path }
+		location: {search},
+		match: {params, path}
 	} = routerProps;
 
-	const pathname = pathToRegexp.compile(path)({ ...params, page: 1 });
+	const pathname = pathToRegexp.compile(path)({...params, page: 1});
 
 	if (filterQuery !== search) {
 		history.push({

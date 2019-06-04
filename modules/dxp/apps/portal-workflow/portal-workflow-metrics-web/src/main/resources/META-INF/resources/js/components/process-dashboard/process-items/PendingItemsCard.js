@@ -3,7 +3,7 @@ import React from 'react';
 
 export default class PendingItemsCard extends React.Component {
 	render() {
-		const { processId } = this.props;
+		const {processId} = this.props;
 
 		return (
 			<ProcessItemsCard

@@ -1,4 +1,4 @@
-import { AppContext } from '../../AppContext';
+import {AppContext} from '../../AppContext';
 import Icon from '../../../shared/components/Icon';
 import moment from 'moment';
 import React from 'react';
@@ -10,21 +10,23 @@ class InstanceItemDetail extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		const { instanceId, processId } = nextProps;
+		const {instanceId, processId} = nextProps;
 
 		if (instanceId) {
-			this.fetchData(instanceId, processId).then(data => this.setState(data));
+			this.fetchData(instanceId, processId).then(data =>
+				this.setState(data)
+			);
 		}
 	}
 
 	fetchData(instanceId, processId) {
 		return this.context.client
 			.get(`/processes/${processId}/instances/${instanceId}`)
-			.then(({ data }) => data);
+			.then(({data}) => data);
 	}
 
 	render() {
-		const { instanceId } = this.props;
+		const {instanceId} = this.props;
 		const {
 			assetTitle,
 			assetType,
@@ -37,8 +39,10 @@ class InstanceItemDetail extends React.Component {
 			userName
 		} = this.state;
 
-		const slaResolved = slaResults.filter(({ status }) => status === 'Stopped');
-		const slaOpen = slaResults.filter(({ status }) =>
+		const slaResolved = slaResults.filter(
+			({status}) => status === 'Stopped'
+		);
+		const slaOpen = slaResults.filter(({status}) =>
 			['Running', 'Paused'].includes(status)
 		);
 
@@ -69,79 +73,93 @@ class InstanceItemDetail extends React.Component {
 
 		return (
 			<div
-				aria-labelledby="instanceDetailModalLabel"
-				className="fade modal"
-				id="instanceDetailModal"
-				role="dialog"
-				style={{ display: 'none' }}
-				tabIndex="-1"
+				aria-labelledby='instanceDetailModalLabel'
+				className='fade modal'
+				id='instanceDetailModal'
+				role='dialog'
+				style={{display: 'none'}}
+				tabIndex='-1'
 			>
-				<div className="modal-dialog modal-lg">
-					<div className="modal-content">
-						<div className="modal-header">
+				<div className='modal-dialog modal-lg'>
+					<div className='modal-content'>
+						<div className='modal-header'>
 							<div
-								className="font-weight-medium modal-title"
-								id="instanceDetailModalLabel"
+								className='font-weight-medium modal-title'
+								id='instanceDetailModalLabel'
 							>
-								<span className={`modal-title-indicator ${styleName}`}>
+								<span
+									className={`modal-title-indicator ${styleName}`}
+								>
 									<Icon iconName={iconTitleName} />
 								</span>
 
-								{`${Liferay.Language.get('item')} #${instanceId}`}
+								{`${Liferay.Language.get(
+									'item'
+								)} #${instanceId}`}
 							</div>
 							<button
-								aria-labelledby="Close"
-								className="close"
-								data-dismiss="modal"
-								role="button"
-								type="button"
+								aria-labelledby='Close'
+								className='close'
+								data-dismiss='modal'
+								role='button'
+								type='button'
 							>
-								<Icon iconName="times" />
+								<Icon iconName='times' />
 							</button>
 						</div>
-						<div className="modal-body">
+						<div className='modal-body'>
 							<InstanceItemDetail.SectionTitle>
 								{Liferay.Language.get('due-date-by-sla')}
 							</InstanceItemDetail.SectionTitle>
 
 							{slaResults.length === 0 && (
 								<p>
-									<span className="font-weight-medium text-muted">
-										{Liferay.Language.get('no-sla-records-for-this-item')}
+									<span className='font-weight-medium text-muted'>
+										{Liferay.Language.get(
+											'no-sla-records-for-this-item'
+										)}
 									</span>
 								</p>
 							)}
 
 							{!!slaOpen.length && (
 								<InstanceItemDetail.SectionSubTitle>
-									{`${Liferay.Language.get('open').toUpperCase()} (${
-										slaOpen.length
-									})`}
+									{`${Liferay.Language.get(
+										'open'
+									).toUpperCase()} (${slaOpen.length})`}
 								</InstanceItemDetail.SectionSubTitle>
 							)}
 
 							{slaOpen.map(item => (
-								<InstanceItemDetail.Item key={item.id} {...item} />
+								<InstanceItemDetail.Item
+									key={item.id}
+									{...item}
+								/>
 							))}
 
 							{!!slaResolved.length && (
 								<InstanceItemDetail.SectionSubTitle>
-									{`${Liferay.Language.get('resolved').toUpperCase()} (${
-										slaResolved.length
-									})`}
+									{`${Liferay.Language.get(
+										'resolved'
+									).toUpperCase()} (${slaResolved.length})`}
 								</InstanceItemDetail.SectionSubTitle>
 							)}
 
 							{slaResolved.map(item => (
-								<InstanceItemDetail.Item key={item.id} {...item} />
+								<InstanceItemDetail.Item
+									key={item.id}
+									{...item}
+								/>
 							))}
 
-							<InstanceItemDetail.SectionTitle className="mt-5">
+							<InstanceItemDetail.SectionTitle className='mt-5'>
 								{Liferay.Language.get('process-details')}
 							</InstanceItemDetail.SectionTitle>
 
 							<InstanceItemDetail.SectionAttribute
-								description={Liferay.Language.get('process-status')}
+								description={Liferay.Language.get(
+									'process-status'
+								)}
 								detail={status}
 							/>
 
@@ -152,8 +170,12 @@ class InstanceItemDetail extends React.Component {
 
 							{!!dateCreated && (
 								<InstanceItemDetail.SectionAttribute
-									description={Liferay.Language.get('creation-date')}
-									detail={moment(dateCreated).format('MMM DD, LT')}
+									description={Liferay.Language.get(
+										'creation-date'
+									)}
+									detail={moment(dateCreated).format(
+										'MMM DD, LT'
+									)}
 								/>
 							)}
 
@@ -163,33 +185,41 @@ class InstanceItemDetail extends React.Component {
 							/>
 
 							<InstanceItemDetail.SectionAttribute
-								description={Liferay.Language.get('asset-title')}
+								description={Liferay.Language.get(
+									'asset-title'
+								)}
 								detail={assetTitle}
 							/>
 
 							{!completed && (
 								<InstanceItemDetail.SectionAttribute
-									description={Liferay.Language.get('current-step')}
+									description={Liferay.Language.get(
+										'current-step'
+									)}
 									detail={taskNames.join(', ')}
 								/>
 							)}
 
 							{completed && !!dateCompletion && (
 								<InstanceItemDetail.SectionAttribute
-									description={Liferay.Language.get('end-date')}
-									detail={moment(dateCompletion).format('MMM DD, LT')}
+									description={Liferay.Language.get(
+										'end-date'
+									)}
+									detail={moment(dateCompletion).format(
+										'MMM DD, LT'
+									)}
 								/>
 							)}
 
 							<a
-								className="btn btn-secondary btn-sm mb-1 font-weight-medium mt-3"
+								className='btn btn-secondary btn-sm mb-1 font-weight-medium mt-3'
 								href={`/group/control_panel/manage/-/workflow_instance/view/${instanceId}`}
-								target="_blank"
+								target='_blank'
 							>
 								{Liferay.Language.get('go-to-submission-page')}
 
-								<span className="inline-item inline-item-after">
-									<Icon iconName="shortcut" />
+								<span className='inline-item inline-item-after'>
+									<Icon iconName='shortcut' />
 								</span>
 							</a>
 						</div>
@@ -222,7 +252,9 @@ InstanceItemDetail.Item = ({
 		statusText = `(${Liferay.Language.get('resolved-on-time')})`;
 	}
 	else if (status === 'Running') {
-		const remainingTimePositive = onTime ? remainingTime : remainingTime * -1;
+		const remainingTimePositive = onTime
+			? remainingTime
+			: remainingTime * -1;
 
 		const durationText = moment
 			.utc(remainingTimePositive)
@@ -244,38 +276,40 @@ InstanceItemDetail.Item = ({
 		<p>
 			<span
 				className={`bg-${bgColor}-light sticker`}
-				style={{ height: '1.5rem', width: '1.5rem' }}
+				style={{height: '1.5rem', width: '1.5rem'}}
 			>
-				<span className="inline-item" style={{ fontSize: '10px' }}>
+				<span className='inline-item' style={{fontSize: '10px'}}>
 					<Icon elementClasses={iconClassName} iconName={iconName} />
 				</span>
 			</span>
 
-			<span className="font-weight-medium small text-secondary">{` ${name} `}</span>
+			<span className='font-weight-medium small text-secondary'>{` ${name} `}</span>
 
-			<span className="small">{statusText}</span>
+			<span className='small'>{statusText}</span>
 		</p>
 	);
 };
 
-InstanceItemDetail.SectionTitle = ({ children, className = '' }) => {
+InstanceItemDetail.SectionTitle = ({children, className = ''}) => {
 	const classNames = `${className} font-weight-medium mb-4`;
 
 	return <h4 className={classNames}>{children}</h4>;
 };
 
-InstanceItemDetail.SectionSubTitle = ({ children }) => {
+InstanceItemDetail.SectionSubTitle = ({children}) => {
 	return (
-		<h5 className="font-weight-medium mb-4 mt-4 text-secondary">{children}</h5>
+		<h5 className='font-weight-medium mb-4 mt-4 text-secondary'>
+			{children}
+		</h5>
 	);
 };
 
-InstanceItemDetail.SectionAttribute = ({ description, detail }) => {
+InstanceItemDetail.SectionAttribute = ({description, detail}) => {
 	return (
-		<p className="row">
-			<span className="col-2 font-weight-medium small text-secondary">{`${description} `}</span>
+		<p className='row'>
+			<span className='col-2 font-weight-medium small text-secondary'>{`${description} `}</span>
 
-			<span className="col small">{detail}</span>
+			<span className='col small'>{detail}</span>
 		</p>
 	);
 };

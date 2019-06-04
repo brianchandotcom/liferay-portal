@@ -1,8 +1,4 @@
-import {
-	filterKeys,
-	processStatusKeys,
-	slaStatusKeys
-} from './filterConstants';
+import {filterKeys, processStatusKeys, slaStatusKeys} from './filterConstants';
 
 const completionPeriodFilter = {
 	key: filterKeys.completionPeriod,

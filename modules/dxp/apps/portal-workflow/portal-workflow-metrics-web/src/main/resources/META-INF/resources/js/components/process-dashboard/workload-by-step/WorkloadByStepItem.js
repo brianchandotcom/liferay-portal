@@ -1,9 +1,6 @@
-import {
-	filterKeys,
-	processStatusKeys
-} from '../instance-list/filterConstants';
-import { AppContext } from '../../AppContext';
-import { ChildLink } from '../../../shared/components/router/routerWrapper';
+import {filterKeys, processStatusKeys} from '../instance-list/filterConstants';
+import {AppContext} from '../../AppContext';
+import {ChildLink} from '../../../shared/components/router/routerWrapper';
 import React from 'react';
 
 class WorkloadByStepItem extends React.Component {
@@ -12,7 +9,7 @@ class WorkloadByStepItem extends React.Component {
 	}
 
 	getFiltersQuery(slaStatusFilter) {
-		const { taskKey } = this.props;
+		const {taskKey} = this.props;
 
 		return {
 			[filterKeys.processStatus]: [processStatusKeys.pending],
@@ -22,7 +19,7 @@ class WorkloadByStepItem extends React.Component {
 	}
 
 	render() {
-		const { defaultDelta } = this.context;
+		const {defaultDelta} = this.context;
 		const {
 			instanceCount = '-',
 			name,
@@ -35,34 +32,34 @@ class WorkloadByStepItem extends React.Component {
 
 		return (
 			<tr>
-				<td className="lfr-title-column table-cell-expand table-cell-minw-200 table-title">
+				<td className='lfr-title-column table-cell-expand table-cell-minw-200 table-title'>
 					{name}
 				</td>
 
-				<td className="text-right">
+				<td className='text-right'>
 					<ChildLink
-						className="workload-by-step-link"
-						query={{ filters: this.getFiltersQuery('Overdue') }}
+						className='workload-by-step-link'
+						query={{filters: this.getFiltersQuery('Overdue')}}
 						to={instancesListPath}
 					>
 						{overdueInstanceCount}
 					</ChildLink>
 				</td>
 
-				<td className="text-right">
+				<td className='text-right'>
 					<ChildLink
-						className="workload-by-step-link"
-						query={{ filters: this.getFiltersQuery('OnTime') }}
+						className='workload-by-step-link'
+						query={{filters: this.getFiltersQuery('OnTime')}}
 						to={instancesListPath}
 					>
 						{onTimeInstanceCount}
 					</ChildLink>
 				</td>
 
-				<td className="text-right">
+				<td className='text-right'>
 					<ChildLink
-						className="workload-by-step-link"
-						query={{ filters: this.getFiltersQuery() }}
+						className='workload-by-step-link'
+						query={{filters: this.getFiltersQuery()}}
 						to={instancesListPath}
 					>
 						{instanceCount}

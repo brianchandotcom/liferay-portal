@@ -37,7 +37,7 @@ afterAll(() => {
 });
 
 test('Should render default component', () => {
-	const component = renderer.create(<App namespace="workflow_" />);
+	const component = renderer.create(<App namespace='workflow_' />);
 
 	const tree = component.toJSON();
 

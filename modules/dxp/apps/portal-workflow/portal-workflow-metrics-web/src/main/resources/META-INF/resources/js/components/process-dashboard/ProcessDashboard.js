@@ -1,51 +1,50 @@
-import {
-	Redirect,
-	Route,
-	HashRouter as Router,
-	Switch
-} from 'react-router-dom';
+import {Redirect, Route, HashRouter as Router, Switch} from 'react-router-dom';
 import AlertMessage from './AlertMessage';
-import { AppContext } from '../AppContext';
-import { ChildLink } from '../../shared/components/router/routerWrapper';
+import {AppContext} from '../AppContext';
+import {ChildLink} from '../../shared/components/router/routerWrapper';
 import CompletedItemsCard from './process-items/CompletedItemsCard';
 import DropDownHeader from './DropDownHeader';
-import { getPathname } from '../../shared/components/tabs/TabItem';
+import {getPathname} from '../../shared/components/tabs/TabItem';
 import PendingItemsCard from './process-items/PendingItemsCard';
 import React from 'react';
-import { sub } from '../../shared/util/lang';
+import {sub} from '../../shared/util/lang';
 import Tabs from '../../shared/components/tabs/Tabs';
-import { withParams } from '../../shared/components/router/routerUtil';
+import {withParams} from '../../shared/components/router/routerUtil';
 import WorkloadByStepCard from './workload-by-step/WorkloadByStepCard';
 
 class ProcessDashboard extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { blockedSLACount: 0, slaCount: null };
+		this.state = {blockedSLACount: 0, slaCount: null};
 	}
 
 	componentDidMount() {
 		Promise.all([this.loadBlockedSLACount(), this.loadSLACount()]).then(
 			([blockedSLACount, slaCount]) =>
-				this.setState({ blockedSLACount, slaCount })
+				this.setState({blockedSLACount, slaCount})
 		);
 	}
 
 	loadBlockedSLACount() {
 		return this.context.client
-			.get(`/processes/${this.props.processId}/slas?page=1&pageSize=1&status=2`)
-			.then(({ data: { totalCount } }) => totalCount);
+			.get(
+				`/processes/${
+					this.props.processId
+				}/slas?page=1&pageSize=1&status=2`
+			)
+			.then(({data: {totalCount}}) => totalCount);
 	}
 
 	loadSLACount() {
 		return this.context.client
 			.get(`/processes/${this.props.processId}/slas?page=1&pageSize=1`)
-			.then(({ data: { totalCount } }) => totalCount);
+			.then(({data: {totalCount}}) => totalCount);
 	}
 
 	render() {
-		const { blockedSLACount = 0, slaCount } = this.state;
-		const { processId, query } = this.props;
-		const { defaultDelta } = this.context;
+		const {blockedSLACount = 0, slaCount} = this.state;
+		const {processId, query} = this.props;
+		const {defaultDelta} = this.context;
 
 		let blockedSLAText = Liferay.Language.get('x-sla-is-blocked');
 
@@ -78,11 +77,11 @@ class ProcessDashboard extends React.Component {
 		const defaultPathname = getPathname(pendingTab.params, pendingTab.path);
 
 		return (
-			<div className="workflow-process-dashboard">
+			<div className='workflow-process-dashboard'>
 				<DropDownHeader>
 					<DropDownHeader.Item>
 						<ChildLink
-							className="dropdown-item"
+							className='dropdown-item'
 							to={`/slas/${processId}/${defaultDelta}/1`}
 						>
 							{Liferay.Language.get('sla-settings')}
@@ -93,7 +92,7 @@ class ProcessDashboard extends React.Component {
 				<Tabs tabs={[pendingTab, completedTab]} />
 
 				{!!blockedSLACount && (
-					<AlertMessage iconName="exclamation-full">
+					<AlertMessage iconName='exclamation-full'>
 						<React.Fragment>
 							{`${sub(blockedSLAText, [
 								blockedSLACount
@@ -101,22 +100,28 @@ class ProcessDashboard extends React.Component {
 								'fix-the-sla-configuration-to-resume-accurate-reporting'
 							)} `}
 
-							<ChildLink to={`/slas/${processId}/${defaultDelta}/1`}>
-								<strong>{Liferay.Language.get('set-up-slas')}</strong>
+							<ChildLink
+								to={`/slas/${processId}/${defaultDelta}/1`}
+							>
+								<strong>
+									{Liferay.Language.get('set-up-slas')}
+								</strong>
 							</ChildLink>
 						</React.Fragment>
 					</AlertMessage>
 				)}
 
 				{slaCount === 0 && (
-					<AlertMessage iconName="warning-full" type="warning">
+					<AlertMessage iconName='warning-full' type='warning'>
 						<React.Fragment>
 							{`${Liferay.Language.get(
 								'no-slas-are-defined-for-this-process'
 							)} `}
 
 							<ChildLink to={`/sla/new/${processId}`}>
-								<strong>{Liferay.Language.get('add-a-new-sla')}</strong>
+								<strong>
+									{Liferay.Language.get('add-a-new-sla')}
+								</strong>
 							</ChildLink>
 						</React.Fragment>
 					</AlertMessage>
@@ -126,7 +131,7 @@ class ProcessDashboard extends React.Component {
 					<Switch>
 						<Redirect
 							exact
-							from="/dashboard/:processId"
+							from='/dashboard/:processId'
 							to={{
 								pathname: defaultPathname,
 								search: query
@@ -136,7 +141,10 @@ class ProcessDashboard extends React.Component {
 						<Route
 							exact
 							path={pendingTab.path}
-							render={withParams(PendingItemsCard, WorkloadByStepCard)}
+							render={withParams(
+								PendingItemsCard,
+								WorkloadByStepCard
+							)}
 						/>
 
 						<Route

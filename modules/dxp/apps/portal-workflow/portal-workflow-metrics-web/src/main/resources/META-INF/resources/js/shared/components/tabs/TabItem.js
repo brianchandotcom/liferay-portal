@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import pathToRegexp from 'path-to-regexp';
 import React from 'react';
 
 export default class TabItem extends React.Component {
 	render() {
-		const { active, name, params, path, query } = this.props;
+		const {active, name, params, path, query} = this.props;
 
 		const activeClassName = active ? 'active' : '';
 		const activeLabel = active ? Liferay.Language.get('current-page') : '';
@@ -18,7 +18,7 @@ export default class TabItem extends React.Component {
 					search: query
 				}}
 			>
-				<span className="navbar-text-truncate">{name}</span>
+				<span className='navbar-text-truncate'>{name}</span>
 			</Link>
 		);
 	}

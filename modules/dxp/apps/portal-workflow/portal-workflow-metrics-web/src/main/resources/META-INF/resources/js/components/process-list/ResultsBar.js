@@ -1,7 +1,7 @@
-import { Link, withRouter } from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import pathToRegexp from 'path-to-regexp';
 import React from 'react';
-import { sub } from '../../shared/util/lang';
+import {sub} from '../../shared/util/lang';
 
 /**
  * Results bar component.
@@ -11,15 +11,15 @@ import { sub } from '../../shared/util/lang';
 class ResultsBar extends React.Component {
 	render() {
 		const {
-			location: { search },
+			location: {search},
 			match: {
-				params: { page, pageSize, search: term, sort },
+				params: {page, pageSize, search: term, sort},
 				path
 			},
 			totalCount
 		} = this.props;
 
-		const pathname = pathToRegexp.compile(path)({ page, pageSize, sort });
+		const pathname = pathToRegexp.compile(path)({page, pageSize, sort});
 
 		let resultText = Liferay.Language.get('x-results-for-x');
 
@@ -28,29 +28,31 @@ class ResultsBar extends React.Component {
 		}
 
 		return (
-			<nav className="tbar tbar-inline-xs-down subnav-tbar subnav-tbar-primary">
-				<div className="container-fluid container-fluid-max-xl">
-					<ul className="tbar-nav tbar-nav-wrap">
-						<li className="tbar-item tbar-item-expand">
-							<div className="tbar-section">
-								<span className="component-text text-truncate-inline">
-									<span className="text-truncate">
+			<nav className='tbar tbar-inline-xs-down subnav-tbar subnav-tbar-primary'>
+				<div className='container-fluid container-fluid-max-xl'>
+					<ul className='tbar-nav tbar-nav-wrap'>
+						<li className='tbar-item tbar-item-expand'>
+							<div className='tbar-section'>
+								<span className='component-text text-truncate-inline'>
+									<span className='text-truncate'>
 										{sub(resultText, [totalCount, term])}
 									</span>
 								</span>
 							</div>
 						</li>
 
-						<li className="tbar-item">
-							<div className="tbar-section">
+						<li className='tbar-item'>
+							<div className='tbar-section'>
 								<Link
-									className="component-link tbar-link"
+									className='component-link tbar-link'
 									to={{
 										pathname,
 										search
 									}}
 								>
-									<span>{Liferay.Language.get('clear-all')}</span>
+									<span>
+										{Liferay.Language.get('clear-all')}
+									</span>
 								</Link>
 							</div>
 						</li>
@@ -62,4 +64,4 @@ class ResultsBar extends React.Component {
 }
 
 export default withRouter(ResultsBar);
-export { ResultsBar };
+export {ResultsBar};

@@ -9,7 +9,7 @@ class CalendarStore {
 	}
 
 	fetchCalendars() {
-		return this.client.get('/calendars').then(({ data }) =>
+		return this.client.get('/calendars').then(({data}) =>
 			this.setState({
 				calendars: data.items
 			})
@@ -34,4 +34,4 @@ class CalendarStore {
 }
 
 export default new CalendarStore(client);
-export { CalendarStore };
+export {CalendarStore};

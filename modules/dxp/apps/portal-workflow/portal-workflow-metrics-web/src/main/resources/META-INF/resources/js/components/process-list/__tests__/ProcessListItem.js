@@ -1,7 +1,7 @@
 import ProcessListItem from '../ProcessListItem';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { MockRouter as Router } from '../../../test/mock/MockRouter';
+import {MockRouter as Router} from '../../../test/mock/MockRouter';
 
 test('Should render component with one list item', () => {
 	const component = renderer.create(
@@ -11,7 +11,7 @@ test('Should render component with one list item', () => {
 				instanceCount={10}
 				onTimeInstanceCount={5}
 				overdueInstanceCount={5}
-				title="Process test"
+				title='Process test'
 			/>
 		</Router>
 	);
@@ -29,7 +29,7 @@ test('Should render component with 1 instance count', () => {
 				instanceCount={1}
 				onTimeInstanceCount={5}
 				overdueInstanceCount={5}
-				title="Process test"
+				title='Process test'
 			/>
 		</Router>
 	);

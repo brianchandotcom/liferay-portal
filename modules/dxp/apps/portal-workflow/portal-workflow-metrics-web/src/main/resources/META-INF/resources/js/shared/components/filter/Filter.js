@@ -1,11 +1,11 @@
-import { getSelectedItemsQuery, pushToHistory } from './util/filterUtil';
+import {getSelectedItemsQuery, pushToHistory} from './util/filterUtil';
 import autobind from 'autobind-decorator';
 import FilterItem from './FilterItem';
 import FilterSearch from './FilterSearch';
 import getClassName from 'classnames';
 import Icon from '../Icon';
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 class Filter extends React.Component {
 	constructor(props) {
@@ -45,7 +45,7 @@ class Filter extends React.Component {
 	}
 
 	get filteredItems() {
-		const { items, searchTerm } = this.state;
+		const {items, searchTerm} = this.state;
 
 		if (searchTerm) {
 			const searchTermLowerCase = searchTerm.toLowerCase();
@@ -61,17 +61,17 @@ class Filter extends React.Component {
 	get filterQuery() {
 		const {
 			filterKey,
-			location: { search }
+			location: {search}
 		} = this.props;
-		const { items } = this.state;
+		const {items} = this.state;
 
 		return getSelectedItemsQuery(items, filterKey, search);
 	}
 
 	@autobind
-	onInputChange({ target }) {
-		const { items } = this.state;
-		const { multiple } = this.props;
+	onInputChange({target}) {
+		const {items} = this.state;
+		const {multiple} = this.props;
 
 		if (!multiple) {
 			items.forEach(item => {
@@ -109,18 +109,20 @@ class Filter extends React.Component {
 	}
 
 	@autobind
-	onSearchChange({ target }) {
+	onSearchChange({target}) {
 		this.setState({
 			searchTerm: target.value
 		});
 	}
 
-	selectDefaultItem({ defaultItem, items, multiple }) {
+	selectDefaultItem({defaultItem, items, multiple}) {
 		if (defaultItem && !multiple) {
 			const selectedItems = items.filter(item => item.active);
 
 			if (!selectedItems.length) {
-				const index = items.findIndex(item => item.key == defaultItem.key);
+				const index = items.findIndex(
+					item => item.key == defaultItem.key
+				);
 
 				items[index].active = true;
 
@@ -148,8 +150,8 @@ class Filter extends React.Component {
 	}
 
 	render() {
-		const { expanded, items } = this.state;
-		const { hideControl = false, multiple, name, position } = this.props;
+		const {expanded, items} = this.state;
+		const {hideControl = false, multiple, name, position} = this.props;
 
 		const className = getClassName(
 			'dropdown-menu',
@@ -158,26 +160,26 @@ class Filter extends React.Component {
 		);
 
 		return (
-			<li className="dropdown nav-item" ref={this.setWrapperRef}>
+			<li className='dropdown nav-item' ref={this.setWrapperRef}>
 				<button
 					aria-expanded={expanded}
-					aria-haspopup="true"
-					className="dropdown-toggle nav-link"
+					aria-haspopup='true'
+					className='dropdown-toggle nav-link'
 					onClick={this.toggleDropDown}
-					type="button"
+					type='button'
 				>
-					<span className="mr-2 navbar-text-truncate">{name}</span>
+					<span className='mr-2 navbar-text-truncate'>{name}</span>
 
-					<Icon iconName="caret-bottom" />
+					<Icon iconName='caret-bottom' />
 				</button>
 
-				<div className={className} role="menu">
+				<div className={className} role='menu'>
 					<FilterSearch
 						filteredItems={this.filteredItems}
 						onChange={this.onSearchChange}
 						totalCount={items.length}
 					>
-						<ul className="list-unstyled">
+						<ul className='list-unstyled'>
 							{this.filteredItems.map((item, index) => (
 								<FilterItem
 									{...item}
@@ -197,4 +199,4 @@ class Filter extends React.Component {
 }
 
 export default withRouter(Filter);
-export { Filter };
+export {Filter};

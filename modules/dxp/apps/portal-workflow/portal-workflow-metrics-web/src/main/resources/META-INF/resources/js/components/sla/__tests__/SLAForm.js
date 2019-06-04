@@ -1,10 +1,10 @@
 import fetch from '../../../test/mock/fetch';
 import fetchFailure from '../../../test/mock/fetchFailure';
 import nodeStore from '../store/nodeStore';
-import { PAUSE_NODE_KEYS } from '../Constants';
+import {PAUSE_NODE_KEYS} from '../Constants';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { MockRouter as Router } from '../../../test/mock/MockRouter';
+import {MockRouter as Router} from '../../../test/mock/MockRouter';
 import SLAForm from '../SLAForm';
 import slaStore from '../store/slaStore';
 
@@ -58,10 +58,10 @@ test('Should render component in edit mode', () => {
 		description: 'Total time to complete the request.',
 		duration: 1553879089,
 		name: 'Total resolution time',
-		pauseNodeKeys: { nodeKeys: [] },
+		pauseNodeKeys: {nodeKeys: []},
 		processId: '',
-		startNodeKeys: { nodeKeys: [] },
-		stopNodeKeys: { nodeKeys: [] }
+		startNodeKeys: {nodeKeys: []},
+		stopNodeKeys: {nodeKeys: []}
 	};
 
 	const component = mount(
@@ -84,7 +84,7 @@ test('Should submit a new SLA with valid values', () => {
 
 	const component = mount(
 		<Router client={fetch(data)}>
-			<SLAForm processId="123" />
+			<SLAForm processId='123' />
 		</Router>
 	);
 
@@ -120,7 +120,7 @@ test('Should display errors when input blur with invalid values', () => {
 
 	jest.runAllTimers();
 
-	const { errors } = instance.state;
+	const {errors} = instance.state;
 
 	expect(errors.hours).toBe('value-must-be-an-hour-below');
 	expect(component).toMatchSnapshot();
@@ -137,7 +137,7 @@ test('Should display errors when duration was changed but keep empty', () => {
 
 	instance.onDurationChanged();
 
-	const { errors } = instance.state;
+	const {errors} = instance.state;
 
 	expect(errors.duration).toBe('a-duration-time-is-required');
 	expect(component).toMatchSnapshot();
@@ -173,7 +173,7 @@ test('Should display error when submitting the form with empty name', () => {
 
 	instance.handleSubmit();
 
-	const { errors } = instance.state;
+	const {errors} = instance.state;
 
 	expect(errors.name).toBe('a-name-is-required');
 	expect(component).toMatchSnapshot();
@@ -203,7 +203,7 @@ test('Should display error on alert when receive a server error after submit', (
 	});
 
 	instance.handleSubmit().then(() => {
-		const { errors } = instance.state;
+		const {errors} = instance.state;
 
 		expect(errors['alertMessage']).toBe('Error during SLA creation.');
 		expect(component).toMatchSnapshot();
@@ -237,9 +237,11 @@ test('Should display error on field when receive a server error after submit', (
 	instance.handleSubmit();
 
 	instance.handleSubmit().then(() => {
-		const { errors } = instance.state;
+		const {errors} = instance.state;
 
-		expect(errors['name']).toBe('An SLA with the same name already exists.');
+		expect(errors['name']).toBe(
+			'An SLA with the same name already exists.'
+		);
 		expect(component).toMatchSnapshot();
 	});
 });
@@ -261,7 +263,7 @@ test('Should display error when submitting the form with invalid hours', () => {
 	});
 
 	instance.handleSubmit().then(() => {
-		const { errors } = instance.state;
+		const {errors} = instance.state;
 
 		expect(errors.hours).toBe('Value must be an hour below 23:59.');
 		expect(component).toMatchSnapshot();
@@ -313,7 +315,7 @@ test('Should edit the SLA with valid values', () => {
 
 	const component = mount(
 		<Router client={fetch(data)}>
-			<SLAForm id={1234} processId="123" />
+			<SLAForm id={1234} processId='123' />
 		</Router>
 	);
 
@@ -337,20 +339,20 @@ test('Should update state after input changes', () => {
 	component
 		.find('#sla_name')
 		.simulate('focus')
-		.simulate('input', { target: { name: 'name', value: 'New SLA' } })
+		.simulate('input', {target: {name: 'name', value: 'New SLA'}})
 		.simulate('blur');
 
-	const { name: filledName } = slaStore.getState();
+	const {name: filledName} = slaStore.getState();
 
 	expect(filledName).toBe('New SLA');
 
 	component
 		.find('#sla_name')
 		.simulate('focus')
-		.simulate('input', { target: { name: 'name' } })
+		.simulate('input', {target: {name: 'name'}})
 		.simulate('blur');
 
-	const { name: emptyName } = slaStore.getState();
+	const {name: emptyName} = slaStore.getState();
 
 	instance.handlePauseNodesChange([]);
 	instance.handleStartNodes([]);
@@ -364,7 +366,7 @@ test('Should update state after input changes', () => {
 test('Should redirect to SLA list', () => {
 	const component = mount(
 		<Router>
-			<SLAForm processId="123" />
+			<SLAForm processId='123' />
 		</Router>
 	);
 
@@ -406,19 +408,19 @@ test('Should redirect to SLA list with blocked nodes', () => {
 		name: 'Total resolution time'
 	};
 
-	nodeStore.client = fetch({ data: { items: [] } });
+	nodeStore.client = fetch({data: {items: []}});
 	slaStore.client = fetch(slaData);
 	slaStore.setState(slaData);
 
 	const component = mount(
 		<Router client={fetch(slaFormData)}>
-			<SLAForm client={fetch(slaFormData)} id="123" processId="123" />
+			<SLAForm client={fetch(slaFormData)} id='123' processId='123' />
 		</Router>
 	);
 
 	const instance = component.find(SLAForm).instance();
 
-	nodeStore.client = fetch({ data: { items: [] } });
+	nodeStore.client = fetch({data: {items: []}});
 	slaStore.client = fetch(slaData);
 	slaStore.setState(slaData);
 
@@ -437,7 +439,7 @@ test('Should redirect to SLA list with blocked nodes', () => {
 test('Should test handler erros', () => {
 	const component = mount(
 		<Router>
-			<SLAForm processId="123" />
+			<SLAForm processId='123' />
 		</Router>
 	);
 
@@ -451,7 +453,7 @@ test('Should test handler erros', () => {
 test('Should test handler erros at start node keys', () => {
 	const component = mount(
 		<Router>
-			<SLAForm processId="123" />
+			<SLAForm processId='123' />
 		</Router>
 	);
 
@@ -477,7 +479,7 @@ test('Should test handler erros at start node keys', () => {
 test('Should test handler no array erros', () => {
 	const component = mount(
 		<Router>
-			<SLAForm processId="123" />
+			<SLAForm processId='123' />
 		</Router>
 	);
 
@@ -491,7 +493,7 @@ test('Should test handler no array erros', () => {
 test('Should test load data callback', () => {
 	const component = mount(
 		<Router>
-			<SLAForm processId="123" />
+			<SLAForm processId='123' />
 		</Router>
 	);
 

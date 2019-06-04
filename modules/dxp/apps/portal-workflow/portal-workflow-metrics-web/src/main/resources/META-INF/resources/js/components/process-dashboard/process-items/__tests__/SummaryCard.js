@@ -1,5 +1,5 @@
 import React from 'react';
-import { MockRouter as Router } from '../../../../test/mock/MockRouter';
+import {MockRouter as Router} from '../../../../test/mock/MockRouter';
 import SummaryCard from '../SummaryCard';
 
 test('Should format percentage', () => {

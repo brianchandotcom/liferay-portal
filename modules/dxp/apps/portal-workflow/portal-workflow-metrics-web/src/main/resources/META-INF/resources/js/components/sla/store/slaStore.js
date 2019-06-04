@@ -17,17 +17,25 @@ class SLAStore {
 	}
 
 	fetchData(slaId) {
-		return this.client.get(`/slas/${slaId}`).then(({ data }) => {
-			const { calendarKey, description = '', duration, name, status } = data;
+		return this.client.get(`/slas/${slaId}`).then(({data}) => {
+			const {
+				calendarKey,
+				description = '',
+				duration,
+				name,
+				status
+			} = data;
 
-			const { days, hours, minutes } = getDurationValues(duration);
+			const {days, hours, minutes} = getDurationValues(duration);
 
 			const formattedHours = formatHours(hours, minutes);
-			const nodeKeys = this.nodeStore.getState().nodes.map(({ id }) => `${id}`);
+			const nodeKeys = this.nodeStore
+				.getState()
+				.nodes.map(({id}) => `${id}`);
 
 			const addNodeKeys = node => {
 				if (node.nodeKeys) {
-					node.nodeKeys = node.nodeKeys.filter(({ id }) =>
+					node.nodeKeys = node.nodeKeys.filter(({id}) =>
 						nodeKeys.includes(id)
 					);
 				}
@@ -123,7 +131,8 @@ class SLAStore {
 
 		const duration = durationAsMilliseconds(days, hours);
 
-		let submit = body => this.client.post(`/processes/${processId}/slas`, body);
+		let submit = body =>
+			this.client.post(`/processes/${processId}/slas`, body);
 
 		if (slaId) {
 			submit = body => this.client.put(`/slas/${slaId}`, body);
@@ -135,7 +144,7 @@ class SLAStore {
 			duration,
 			name,
 			pauseNodeKeys: {
-				nodeKeys: pauseNodeKeys.nodeKeys.map(({ executionType, id }) => ({
+				nodeKeys: pauseNodeKeys.nodeKeys.map(({executionType, id}) => ({
 					executionType,
 					id
 				})),
@@ -143,7 +152,7 @@ class SLAStore {
 			},
 			processId,
 			startNodeKeys: {
-				nodeKeys: startNodeKeys.nodeKeys.map(({ executionType, id }) => ({
+				nodeKeys: startNodeKeys.nodeKeys.map(({executionType, id}) => ({
 					executionType,
 					id
 				})),
@@ -151,7 +160,7 @@ class SLAStore {
 			},
 			status: 0,
 			stopNodeKeys: {
-				nodeKeys: stopNodeKeys.nodeKeys.map(({ executionType, id }) => ({
+				nodeKeys: stopNodeKeys.nodeKeys.map(({executionType, id}) => ({
 					executionType,
 					id
 				})),
@@ -166,4 +175,4 @@ class SLAStore {
 }
 
 export default new SLAStore(calendarStore, client, nodeStore);
-export { SLAStore };
+export {SLAStore};

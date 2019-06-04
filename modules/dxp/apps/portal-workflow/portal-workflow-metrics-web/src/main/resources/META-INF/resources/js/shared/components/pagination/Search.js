@@ -1,4 +1,4 @@
-import { Redirect, withRouter } from 'react-router-dom';
+import {Redirect, withRouter} from 'react-router-dom';
 import autobind from 'autobind-decorator';
 import Icon from '../Icon';
 import pathToRegexp from 'path-to-regexp';
@@ -11,12 +11,12 @@ import React from 'react';
 class Search extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { redirect: false, value: '' };
+		this.state = {redirect: false, value: ''};
 	}
 
-	componentWillReceiveProps({ match: { params } }) {
-		const { search = '' } = params || {};
-		const { value } = this.state;
+	componentWillReceiveProps({match: {params}}) {
+		const {search = ''} = params || {};
+		const {value} = this.state;
 
 		if (search !== value) {
 			this.setState({
@@ -27,27 +27,27 @@ class Search extends React.Component {
 
 	@autobind
 	handleChange(event) {
-		this.setState({ value: event.target.value });
+		this.setState({value: event.target.value});
 	}
 
 	@autobind
 	handleSubmit(event) {
 		event.preventDefault();
 
-		this.setState({ redirect: true });
+		this.setState({redirect: true});
 	}
 
 	render() {
-		const { disabled } = this.props;
-		const { redirect, value } = this.state;
+		const {disabled} = this.props;
+		const {redirect, value} = this.state;
 
 		if (redirect) {
 			const {
-				location: { search },
-				match: { params, path }
+				location: {search},
+				match: {params, path}
 			} = this.props;
 
-			const values = { page: 1 };
+			const values = {page: 1};
 
 			delete params.search;
 
@@ -61,28 +61,28 @@ class Search extends React.Component {
 
 			this.state.redirect = false;
 
-			return <Redirect to={{ pathname, search }} />;
+			return <Redirect to={{pathname, search}} />;
 		}
 
 		return (
-			<form method="GET" onSubmit={this.handleSubmit} role="search">
-				<div className="input-group">
-					<div className="input-group-item">
+			<form method='GET' onSubmit={this.handleSubmit} role='search'>
+				<div className='input-group'>
+					<div className='input-group-item'>
 						<input
-							className="form-control input-group-inset input-group-inset-after"
+							className='form-control input-group-inset input-group-inset-after'
 							disabled={disabled}
 							onChange={this.handleChange}
 							placeholder={Liferay.Language.get('search-for')}
-							type="text"
+							type='text'
 							value={value}
 						/>
-						<span className="input-group-inset-item input-group-inset-item-after">
+						<span className='input-group-inset-item input-group-inset-item-after'>
 							<button
-								className="btn btn-unstyled"
+								className='btn btn-unstyled'
 								disabled={disabled}
-								type="submit"
+								type='submit'
 							>
-								<Icon iconName="search" />
+								<Icon iconName='search' />
 							</button>
 						</span>
 					</div>

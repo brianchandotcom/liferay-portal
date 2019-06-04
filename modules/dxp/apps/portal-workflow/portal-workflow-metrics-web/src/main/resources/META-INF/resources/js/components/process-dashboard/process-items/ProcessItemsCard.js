@@ -1,4 +1,4 @@
-import { AppContext } from '../../AppContext';
+import {AppContext} from '../../AppContext';
 import Filter from '../../../shared/components/filter/Filter';
 import Icon from '../../../shared/components/Icon';
 import LoadingState from '../../../shared/components/loading/LoadingState';
@@ -52,8 +52,8 @@ export default class ProcessItemsCard extends React.Component {
 	}
 
 	requestData(props = this.props) {
-		const { client } = this.context;
-		const { completed = false, processId, timeRange } = props;
+		const {client} = this.context;
+		const {completed = false, processId, timeRange} = props;
 
 		let urlRequest = `/processes/${processId}?completed=${completed}`;
 
@@ -65,11 +65,11 @@ export default class ProcessItemsCard extends React.Component {
 			loading: true
 		});
 
-		return client.get(urlRequest).then(({ data }) => data);
+		return client.get(urlRequest).then(({data}) => data);
 	}
 
 	render() {
-		const { error, loading, process } = this.state;
+		const {error, loading, process} = this.state;
 		const {
 			completed,
 			description,
@@ -81,8 +81,8 @@ export default class ProcessItemsCard extends React.Component {
 
 		const errorRender = Component =>
 			(error && (
-				<div className="pb-6 pt-5 text-center">
-					<p className="small">{error}</p>
+				<div className='pb-6 pt-5 text-center'>
+					<p className='small'>{error}</p>
 					<ReloadButton />
 				</div>
 			)) ||
@@ -90,7 +90,7 @@ export default class ProcessItemsCard extends React.Component {
 
 		const loadingRender = Component =>
 			(loading && (
-				<div className="pb-6 pt-5">
+				<div className='pb-6 pt-5'>
 					<LoadingState />
 				</div>
 			)) ||
@@ -99,21 +99,32 @@ export default class ProcessItemsCard extends React.Component {
 		return (
 			<Panel>
 				<Panel.Header
-					elementClasses={['dashboard-panel-header', filter && 'pb-0']}
+					elementClasses={[
+						'dashboard-panel-header',
+						filter && 'pb-0'
+					]}
 				>
-					<div className="autofit-row">
-						<div className="autofit-col autofit-col-expand flex-row">
-							<span className="mr-3">{title}</span>
+					<div className='autofit-row'>
+						<div className='autofit-col autofit-col-expand flex-row'>
+							<span className='mr-3'>{title}</span>
 
-							<Tooltip message={description} position="right" width="288">
+							<Tooltip
+								message={description}
+								position='right'
+								width='288'
+							>
 								<Icon iconName={'question-circle-full'} />
 							</Tooltip>
 						</div>
 
 						{filter && (
-							<div className="autofit-col m-0 management-bar management-bar-light navbar">
-								<ul className="navbar-nav">
-									<Filter {...filter} filterKey={filter.key} position="right" />
+							<div className='autofit-col m-0 management-bar management-bar-light navbar'>
+								<ul className='navbar-nav'>
+									<Filter
+										{...filter}
+										filterKey={filter.key}
+										position='right'
+									/>
 								</ul>
 							</div>
 						)}
@@ -131,7 +142,10 @@ export default class ProcessItemsCard extends React.Component {
 										key={index}
 										processId={processId}
 										timeRange={timeRange}
-										total={panel.addressedToField === panel.totalField}
+										total={
+											panel.addressedToField ===
+											panel.totalField
+										}
 										totalValue={process[panel.totalField]}
 										value={process[panel.addressedToField]}
 									/>

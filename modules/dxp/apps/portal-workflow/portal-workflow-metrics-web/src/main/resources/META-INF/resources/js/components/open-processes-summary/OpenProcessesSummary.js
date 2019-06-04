@@ -22,33 +22,42 @@ export default class OpenProcessesSummary extends React.Component {
 		};
 
 		return (
-			<div className="row card-panel">
-				<div className="col-9">
-					<div className="card">
-						<div className="card-header bg-transparent border-secondary card-header-default text-secondary semi-bold">
+			<div className='row card-panel'>
+				<div className='col-9'>
+					<div className='card'>
+						<div className='card-header bg-transparent border-secondary card-header-default text-secondary semi-bold'>
 							{Liferay.Language.get('open-processes-summary')}
 						</div>
 
-						<div className="card-body">
+						<div className='card-body'>
 							<div
-								className="row d-flex justify-content-start"
-								style={{ marginTop: '8px' }}
+								className='row d-flex justify-content-start'
+								style={{marginTop: '8px'}}
 							>
 								<SummaryCard
-									description={Liferay.Language.get('total-open')}
-									total="15"
+									description={Liferay.Language.get(
+										'total-open'
+									)}
+									total='15'
 								/>
 								<SummaryCard
-									description={Liferay.Language.get('on-time')}
-									total="82"
+									description={Liferay.Language.get(
+										'on-time'
+									)}
+									total='82'
 								/>
 								<SummaryCard
-									description={Liferay.Language.get('overdue')}
-									total="33"
+									description={Liferay.Language.get(
+										'overdue'
+									)}
+									total='33'
 								/>
 							</div>
 
-							<div className="col-12" style={{ paddingTop: '30px' }}>
+							<div
+								className='col-12'
+								style={{paddingTop: '30px'}}
+							>
 								<ClayCharts data={CHART_DATA} />
 							</div>
 						</div>

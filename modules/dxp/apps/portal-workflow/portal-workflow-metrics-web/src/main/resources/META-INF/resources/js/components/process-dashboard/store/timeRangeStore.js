@@ -1,5 +1,5 @@
 import client from '../../../shared/rest/fetch';
-import { completionPeriodKeys } from '../instance-list/filterConstants';
+import {completionPeriodKeys} from '../instance-list/filterConstants';
 import moment from 'moment';
 
 class TimeRangeStore {
@@ -19,7 +19,7 @@ class TimeRangeStore {
 	}
 
 	fetchTimeRanges() {
-		return this.client.get('/time-ranges').then(({ data }) => {
+		return this.client.get('/time-ranges').then(({data}) => {
 			const timeRanges = data.items.map(item => ({
 				...item,
 				description: this.formatTimeRange(item),
@@ -40,7 +40,7 @@ class TimeRangeStore {
 	}
 
 	formatTimeRange(timeRange) {
-		const { dateEnd, dateStart } = timeRange;
+		const {dateEnd, dateStart} = timeRange;
 
 		if (!dateEnd && !dateStart) {
 			return null;
@@ -49,11 +49,14 @@ class TimeRangeStore {
 		const dateEndMoment = moment.utc(dateEnd);
 		const dateStartMoment = moment.utc(dateStart);
 
-		const formatPattern = this.getFormatPattern(dateEndMoment, dateStartMoment);
+		const formatPattern = this.getFormatPattern(
+			dateEndMoment,
+			dateStartMoment
+		);
 
-		return `${dateStartMoment.format(formatPattern)} - ${dateEndMoment.format(
+		return `${dateStartMoment.format(
 			formatPattern
-		)}`;
+		)} - ${dateEndMoment.format(formatPattern)}`;
 	}
 
 	getFormatPattern(dateEndMoment, dateStartMoment) {
@@ -77,7 +80,7 @@ class TimeRangeStore {
 	}
 
 	get selectedTimeRange() {
-		const { timeRanges } = this.state;
+		const {timeRanges} = this.state;
 
 		if (!timeRanges || !timeRanges.length) {
 			return null;
@@ -94,4 +97,4 @@ class TimeRangeStore {
 }
 
 export default new TimeRangeStore(client);
-export { TimeRangeStore };
+export {TimeRangeStore};

@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { MockRouter as Router } from '../../../../test/mock/MockRouter';
+import {MockRouter as Router} from '../../../../test/mock/MockRouter';
 import Search from '../Search';
 
 test('Should render component', () => {
@@ -23,7 +23,7 @@ test('Should change search value', () => {
 	);
 
 	component.find('input').simulate('keyPress', {
-		target: { value: 'test' }
+		target: {value: 'test'}
 	});
 	component.find('form').simulate('submit', {
 		preventDefault: () => {}

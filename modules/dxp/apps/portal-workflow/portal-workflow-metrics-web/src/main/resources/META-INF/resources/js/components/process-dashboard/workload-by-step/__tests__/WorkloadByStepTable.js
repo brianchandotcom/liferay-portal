@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { MockRouter as Router } from '../../../../test/mock/MockRouter';
+import {MockRouter as Router} from '../../../../test/mock/MockRouter';
 import WorkloadByStepTable from '../WorkloadByStepTable';
 
 test('Should display hyphen when the task has no count', () => {

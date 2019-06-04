@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react';
-import { AppContext } from '../../AppContext';
+import React, {Fragment} from 'react';
+import {AppContext} from '../../AppContext';
 import autobind from 'autobind-decorator';
-import { completionPeriodKeys } from './filterConstants';
-import { getRequestUrl } from '../../../shared/components/filter/util/filterUtil';
-import { InstanceContext } from './InstanceContext';
+import {completionPeriodKeys} from './filterConstants';
+import {getRequestUrl} from '../../../shared/components/filter/util/filterUtil';
+import {InstanceContext} from './InstanceContext';
 import InstanceItemDetail from './InstanceItemDetail';
 import InstanceListFilter from './InstanceListFilter';
 import InstanceListTable from './InstanceListTable';
@@ -42,8 +42,8 @@ class InstanceListCard extends React.Component {
 	}
 
 	loadInstances(props = this.props) {
-		const { loading } = this.state;
-		const { page, pageSize, processId, query } = props;
+		const {loading} = this.state;
+		const {page, pageSize, processId, query} = props;
 
 		if (loading) {
 			return;
@@ -56,7 +56,7 @@ class InstanceListCard extends React.Component {
 		);
 
 		return this.requestData(requestUrl)
-			.then(({ items, totalCount }) => {
+			.then(({items, totalCount}) => {
 				this.setState({
 					items,
 					totalCount
@@ -65,8 +65,8 @@ class InstanceListCard extends React.Component {
 			.catch(this.handleRequestError);
 	}
 
-	loadProcess({ processId } = this.props) {
-		const { loading } = this.state;
+	loadProcess({processId} = this.props) {
+		const {loading} = this.state;
 
 		if (loading) {
 			return;
@@ -74,19 +74,21 @@ class InstanceListCard extends React.Component {
 
 		return this.requestData(`/processes/${processId}/title`)
 			.then(data => {
-				this.context.setTitle(`${data}: ${Liferay.Language.get('all-items')}`);
+				this.context.setTitle(
+					`${data}: ${Liferay.Language.get('all-items')}`
+				);
 			})
 			.catch(this.handleRequestError);
 	}
 
 	requestData(endpoint) {
-		const { client } = this.context;
+		const {client} = this.context;
 
 		this.setState({
 			loading: true
 		});
 
-		return client.get(endpoint).then(({ data }) => {
+		return client.get(endpoint).then(({data}) => {
 			this.setState({
 				error: null,
 				loading: false
@@ -97,12 +99,12 @@ class InstanceListCard extends React.Component {
 	}
 
 	setInstanceId(instanceId) {
-		this.setState({ instanceId });
+		this.setState({instanceId});
 	}
 
 	render() {
-		const { error, instanceId, items = [], loading, totalCount } = this.state;
-		const { page, pageSize, processId, query } = this.props;
+		const {error, instanceId, items = [], loading, totalCount} = this.state;
+		const {page, pageSize, processId, query} = this.props;
 
 		const fetching = !loading && !totalCount;
 
@@ -114,9 +116,9 @@ class InstanceListCard extends React.Component {
 					totalCount={totalCount}
 				/>
 				<InstanceContext.Provider
-					value={{ setInstanceId: this.setInstanceId.bind(this) }}
+					value={{setInstanceId: this.setInstanceId.bind(this)}}
 				>
-					<div className="container-fluid-1280 mt-4">
+					<div className='container-fluid-1280 mt-4'>
 						<ListView
 							emptyActionButton={<ReloadButton />}
 							emptyMessageText={Liferay.Language.get(
@@ -137,7 +139,10 @@ class InstanceListCard extends React.Component {
 						</ListView>
 					</div>
 
-					<InstanceItemDetail instanceId={instanceId} processId={processId} />
+					<InstanceItemDetail
+						instanceId={instanceId}
+						processId={processId}
+					/>
 				</InstanceContext.Provider>
 			</Fragment>
 		);

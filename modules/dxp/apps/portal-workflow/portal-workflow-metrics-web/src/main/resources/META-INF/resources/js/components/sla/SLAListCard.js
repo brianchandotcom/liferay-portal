@@ -1,11 +1,11 @@
-import { AppContext, AppStatus } from '../AppContext';
-import { openErrorToast, openSuccessToast } from '../../shared/util/toast';
-import { ChildLink } from '../../shared/components/router/routerWrapper';
+import {AppContext, AppStatus} from '../AppContext';
+import {openErrorToast, openSuccessToast} from '../../shared/util/toast';
+import {ChildLink} from '../../shared/components/router/routerWrapper';
 import Icon from '../../shared/components/Icon';
 import ListView from '../../shared/components/list/ListView';
 import PaginationBar from '../../shared/components/pagination/PaginationBar';
 import React from 'react';
-import { REQUEST_ORIGIN_TYPE_FETCH } from './Constants';
+import {REQUEST_ORIGIN_TYPE_FETCH} from './Constants';
 import SLAConfirmDialog from './SLAConfirmDialog';
 import SLAListCardContext from './SLAListCardContext';
 import SLAListTable from './SLAListTable';
@@ -26,7 +26,8 @@ class SLAListCard extends React.Component {
 		};
 
 		this.slaContextState = {
-			hideConfirmDialog: () => this.setConfirmDialogVisibility(null, false),
+			hideConfirmDialog: () =>
+				this.setConfirmDialogVisibility(null, false),
 			removeItem: this.removeItem.bind(this),
 			showConfirmDialog: (id, callback) =>
 				this.setConfirmDialogVisibility(id, true, callback)
@@ -47,13 +48,13 @@ class SLAListCard extends React.Component {
 	}
 
 	loadData(props = this.props) {
-		const { page, pageSize, processId } = props;
+		const {page, pageSize, processId} = props;
 
 		this.requestData({
 			page,
 			pageSize,
 			processId
-		}).then(({ items, totalCount }) =>
+		}).then(({items, totalCount}) =>
 			this.setState({
 				items,
 				totalCount
@@ -62,12 +63,12 @@ class SLAListCard extends React.Component {
 	}
 
 	loadBlockedSLA() {
-		const { client } = this.context;
-		const { processId } = this.props;
+		const {client} = this.context;
+		const {processId} = this.props;
 
 		client
 			.get(`/processes/${processId}/slas?page=1&pageSize=1&status=2`)
-			.then(({ data: { totalCount: blockedSLACount } }) => {
+			.then(({data: {totalCount: blockedSLACount}}) => {
 				this.setState({
 					blockedSLACount
 				});
@@ -75,7 +76,7 @@ class SLAListCard extends React.Component {
 	}
 
 	removeItem(id) {
-		const { client } = this.context;
+		const {client} = this.context;
 
 		client
 			.delete(`/slas/${id}`)
@@ -102,7 +103,7 @@ class SLAListCard extends React.Component {
 	}
 
 	showStatusMessage() {
-		const { status } = this.context;
+		const {status} = this.context;
 
 		if (status === AppStatus.slaUpdated || status === AppStatus.slaSaved) {
 			if (status === AppStatus.slaUpdated) {
@@ -123,12 +124,14 @@ class SLAListCard extends React.Component {
 	 * @param {number} configuration.pageSize
 	 * @param {number} configuration.processId
 	 */
-	requestData({ page, pageSize, processId }) {
-		const { client } = this.context;
+	requestData({page, pageSize, processId}) {
+		const {client} = this.context;
 
 		return client
-			.get(`/processes/${processId}/slas?page=${page}&pageSize=${pageSize}`)
-			.then(({ data }) => {
+			.get(
+				`/processes/${processId}/slas?page=${page}&pageSize=${pageSize}`
+			)
+			.then(({data}) => {
 				this.requestOriginType = REQUEST_ORIGIN_TYPE_FETCH;
 
 				return data;
@@ -137,7 +140,7 @@ class SLAListCard extends React.Component {
 	}
 
 	render() {
-		const { requestOriginType } = this;
+		const {requestOriginType} = this;
 		const {
 			blockedSLACount = 0,
 			items = [],
@@ -146,7 +149,7 @@ class SLAListCard extends React.Component {
 			showSLAsUpdatingAlert,
 			totalCount
 		} = this.state;
-		const { page, pageSize, processId } = this.props;
+		const {page, pageSize, processId} = this.props;
 		const emptyMessageText = Liferay.Language.get(
 			'sla-allows-to-define-and-measure-process-performance'
 		);
@@ -158,20 +161,20 @@ class SLAListCard extends React.Component {
 
 		return (
 			<SLAListCardContext.Provider value={this.slaContextState}>
-				<nav className="management-bar management-bar-light navbar navbar-expand-md">
-					<div className="container-fluid container-fluid-max-xl">
-						<ul className="navbar-nav autofit-row">
-							<li className="nav-item autofit-col-expand autofit-float-end">
+				<nav className='management-bar management-bar-light navbar navbar-expand-md'>
+					<div className='container-fluid container-fluid-max-xl'>
+						<ul className='navbar-nav autofit-row'>
+							<li className='nav-item autofit-col-expand autofit-float-end'>
 								<Tooltip
 									message={Liferay.Language.get('new-sla')}
-									position="bottom"
-									width="85"
+									position='bottom'
+									width='85'
 								>
 									<ChildLink
-										className="btn btn-primary nav-btn nav-btn-monospaced"
+										className='btn btn-primary nav-btn nav-btn-monospaced'
 										to={`/sla/new/${processId}`}
 									>
-										<Icon iconName="plus" />
+										<Icon iconName='plus' />
 									</ChildLink>
 								</Tooltip>
 							</li>
@@ -179,39 +182,51 @@ class SLAListCard extends React.Component {
 					</div>
 				</nav>
 
-				{showConfirmDialog && <SLAConfirmDialog itemToRemove={itemToRemove} />}
+				{showConfirmDialog && (
+					<SLAConfirmDialog itemToRemove={itemToRemove} />
+				)}
 
-				<div className="container-fluid-1280">
+				<div className='container-fluid-1280'>
 					{!!blockedSLACount && (
-						<div className="alert alert-danger alert-dismissible" role="alert">
-							<span className="alert-indicator">
-								<Icon iconName="exclamation-full" />
+						<div
+							className='alert alert-danger alert-dismissible'
+							role='alert'
+						>
+							<span className='alert-indicator'>
+								<Icon iconName='exclamation-full' />
 							</span>
 
-							<strong className="lead">{Liferay.Language.get('error')}</strong>
+							<strong className='lead'>
+								{Liferay.Language.get('error')}
+							</strong>
 
 							{Liferay.Language.get(
 								'fix-blocked-slas-to-resume-accurate-reporting'
 							)}
 
 							<button
-								aria-label="Close"
-								className="close"
-								data-dismiss="alert"
-								type="button"
+								aria-label='Close'
+								className='close'
+								data-dismiss='alert'
+								type='button'
 							>
-								<Icon iconName="times" />
+								<Icon iconName='times' />
 							</button>
 						</div>
 					)}
 
 					{showSLAsUpdatingAlert && (
-						<div className="alert alert-dismissible alert-info" role="alert">
-							<span className="alert-indicator">
-								<Icon iconName="exclamation-full" />
+						<div
+							className='alert alert-dismissible alert-info'
+							role='alert'
+						>
+							<span className='alert-indicator'>
+								<Icon iconName='exclamation-full' />
 							</span>
 
-							<strong className="lead">{Liferay.Language.get('info')}</strong>
+							<strong className='lead'>
+								{Liferay.Language.get('info')}
+							</strong>
 
 							<span>
 								{`${Liferay.Language.get(
@@ -222,12 +237,12 @@ class SLAListCard extends React.Component {
 							</span>
 
 							<button
-								aria-label="Close"
-								className="close"
-								data-dismiss="alert"
-								type="button"
+								aria-label='Close'
+								className='close'
+								data-dismiss='alert'
+								type='button'
 							>
-								<Icon iconName="times" />
+								<Icon iconName='times' />
 							</button>
 						</div>
 					)}

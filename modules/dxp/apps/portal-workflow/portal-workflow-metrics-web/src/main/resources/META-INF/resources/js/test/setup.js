@@ -35,7 +35,7 @@ window.Liferay = {
 	}
 };
 
-global.console = { error: jest.fn(), log: console.log };
+global.console = {error: jest.fn(), log: console.log};
 
 global.localStorage = (() => {
 	let store = {};
@@ -53,7 +53,7 @@ global.localStorage = (() => {
 	};
 })();
 
-enzyme.configure({ adapter: new EnzymeAdapter() });
+enzyme.configure({adapter: new EnzymeAdapter()});
 
 global.mount = enzyme.mount;
 global.shallow = enzyme.shallow;

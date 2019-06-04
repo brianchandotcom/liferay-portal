@@ -11,7 +11,7 @@ class ProcessTaskStore {
 	fetchProcessTasks(processId) {
 		return this.client
 			.get(`/processes/${processId}/tasks?page=0&pageSize=0`)
-			.then(({ data }) =>
+			.then(({data}) =>
 				this.setState({
 					processTasks: data.items
 				})
@@ -28,4 +28,4 @@ class ProcessTaskStore {
 }
 
 export default new ProcessTaskStore(client);
-export { ProcessTaskStore };
+export {ProcessTaskStore};

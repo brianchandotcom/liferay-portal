@@ -122,7 +122,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 	@Override
 	public DataDefinition getSiteDataDefinition(
-			String dataDefinitionKey, Long siteId)
+			Long siteId, String dataDefinitionKey)
 		throws Exception {
 
 		DataDefinition dataDefinition = DataDefinitionUtil.toDataDefinition(

@@ -116,7 +116,7 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 	}
 
 	@Override
-	public DataLayout getSiteDataLayout(String dataLayoutKey, Long siteId)
+	public DataLayout getSiteDataLayout(Long siteId, String dataLayoutKey)
 		throws Exception {
 
 		DDMStructureLayout ddmStructureLayout =

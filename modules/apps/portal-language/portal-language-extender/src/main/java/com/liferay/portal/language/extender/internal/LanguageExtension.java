@@ -63,8 +63,11 @@ public class LanguageExtension {
 	}
 
 	public void destroy() {
-		for (Runnable closingRunnable : _closingRunnables) {
-			closingRunnable.run();
+		for (ServiceTrackerResourceBundleLoader
+				serviceTrackerResourceBundleLoader :
+					_serviceTrackerResourceBundleLoaders) {
+
+			serviceTrackerResourceBundleLoader.close();
 		}
 
 		for (ServiceRegistration<ResourceBundleLoader> serviceRegistration :
@@ -153,8 +156,8 @@ public class LanguageExtension {
 	}
 
 	protected ResourceBundleLoader processAggregate(
-		String aggregate, final String bundleSymbolicName, String baseName,
-		final int limit) {
+		String aggregate, String bundleSymbolicName, String baseName,
+		int limit) {
 
 		List<String> filterStrings = StringUtil.split(aggregate);
 
@@ -183,12 +186,16 @@ public class LanguageExtension {
 
 			serviceTracker.open();
 
-			_closingRunnables.add(serviceTracker::close);
-
 			serviceTrackers.add(serviceTracker);
 		}
 
-		return new ServiceTrackerResourceBundleLoader(serviceTrackers);
+		ServiceTrackerResourceBundleLoader serviceTrackerResourceBundleLoader =
+			new ServiceTrackerResourceBundleLoader(serviceTrackers);
+
+		_serviceTrackerResourceBundleLoaders.add(
+			serviceTrackerResourceBundleLoader);
+
+		return serviceTrackerResourceBundleLoader;
 	}
 
 	protected ResourceBundleLoader processBaseName(
@@ -216,9 +223,10 @@ public class LanguageExtension {
 	private final Bundle _bundle;
 	private final List<BundleCapability> _bundleCapabilities;
 	private final BundleContext _bundleContext;
-	private final List<Runnable> _closingRunnables = new ArrayList<>();
 	private final Collection<ServiceRegistration<ResourceBundleLoader>>
 		_serviceRegistrations = new ArrayList<>();
+	private final List<ServiceTrackerResourceBundleLoader>
+		_serviceTrackerResourceBundleLoaders = new ArrayList<>();
 
 	private static class ServiceTrackerResourceBundleLoader
 		implements ResourceBundleLoader {
@@ -228,6 +236,12 @@ public class LanguageExtension {
 				serviceTrackers) {
 
 			_serviceTrackers = serviceTrackers;
+		}
+
+		public void close() {
+			for (ServiceTracker<?, ?> serviceTracker : _serviceTrackers) {
+				serviceTracker.close();
+			}
 		}
 
 		@Override

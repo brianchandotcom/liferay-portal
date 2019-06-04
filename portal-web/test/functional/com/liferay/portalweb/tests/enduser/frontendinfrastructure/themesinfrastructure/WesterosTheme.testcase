@@ -25,49 +25,36 @@ definition {
 		property osgi.app.includes = "frontend-theme-westeros-bank";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WesterosTheme#AddThemeSite";
-		var themeContainsResources = PropsUtil.get("theme.contains.resources");
 
-		if ("${themeContainsResources}" == "true") {
-			ProductMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
 
-			Site.addSiteTemplateCP(
-				siteName = "Westeros Bank Theme Site",
-				siteTemplateName = "Westeros Bank Theme");
+		Site.addSiteTemplateCP(
+			siteName = "Westeros Bank Theme Site",
+			siteTemplateName = "Westeros Bank Theme");
 
-			ProductMenu.gotoSite(site = "Westeros Bank Theme Site");
+		ProductMenu.gotoSite(site = "Westeros Bank Theme Site");
 
-			AssertClick(
-				key_pageName = "For You",
-				locator1 = "Home#PAGE",
-				value1 = "FOR YOU");
+		AssertClick(
+			key_pageName = "For You",
+			locator1 = "Home#PAGE",
+			value1 = "FOR YOU");
 
-			MouseOver(
-				key_pageName = "Checking and Credit Cards",
-				locator1 = "Home#PAGE");
+		MouseOver(
+			key_pageName = "Checking and Credit Cards",
+			locator1 = "Home#PAGE");
 
-			AssertClick(
-				key_childPageName = "All credit cards",
-				locator1 = "Home#PAGE_CHILD_PAGE",
-				value1 = "All credit cards");
+		AssertClick(
+			key_childPageName = "All credit cards",
+			locator1 = "Home#PAGE_CHILD_PAGE",
+			value1 = "All credit cards");
 
-			AssertTextEquals(
-				key_title = "We help you to achieve your goals",
-				locator1 = "Header#H2_TITLE",
-				value1 = "We help you to achieve your goals");
-		}
-		else {
-			var appName = "westeros-bank-theme";
-
-			ProductMenu.gotoPortlet(
-				category = "Apps",
-				panel = "Control Panel",
-				portlet = "App Manager");
-
-			AppManager.viewAppCP(appName = "westeros-bank-theme");
-		}
+		AssertTextEquals(
+			key_title = "We help you to achieve your goals",
+			locator1 = "Header#H2_TITLE",
+			value1 = "We help you to achieve your goals");
 	}
 
 }

@@ -20,9 +20,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -81,6 +83,24 @@ public class JSONUtilTest {
 		JSONUtil.addToStringCollection(values, null, "alpha");
 
 		Assert.assertEquals(values.toString(), 3, values.size());
+	}
+
+	@Test
+	public void testCreateCollector() {
+		List<String> strings = Arrays.asList("foo", "bar", "baz");
+
+		Stream<String> stringStream = strings.stream();
+
+		JSONArray jsonArray = stringStream.map(
+			String::toUpperCase
+		).collect(
+			JSONUtil.createCollector()
+		);
+
+		Assert.assertTrue(
+			JSONUtil.equals(
+				JSONUtil.concat(JSONUtil.putAll("FOO", "BAR", "BAZ")),
+				jsonArray));
 	}
 
 	@Test

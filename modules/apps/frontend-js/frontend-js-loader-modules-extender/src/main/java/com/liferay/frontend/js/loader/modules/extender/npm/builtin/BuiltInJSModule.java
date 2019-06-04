@@ -14,13 +14,15 @@
 
 package com.liferay.frontend.js.loader.modules.extender.npm.builtin;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
-import com.liferay.frontend.js.loader.modules.extender.npm.model.JSModuleAdapter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Provides an incomplete implementation of {@link JSModule} that lets its
@@ -36,7 +38,7 @@ import java.util.Collection;
  *
  * @author Iván Zaera
  */
-public abstract class BuiltInJSModule extends JSModuleAdapter {
+public abstract class BuiltInJSModule implements JSModule {
 
 	/**
 	 * Constructs a <code>BuiltInJSModule</code> with the module's JS package,
@@ -49,10 +51,62 @@ public abstract class BuiltInJSModule extends JSModuleAdapter {
 	public BuiltInJSModule(
 		JSPackage jsPackage, String name, Collection<String> dependencies) {
 
-		super(
-			jsPackage, name, _getURL(jsPackage, name),
-			_getResolvedURL(jsPackage, name), _getResolvedId(jsPackage, name),
-			dependencies);
+		_jsPackage = jsPackage;
+		_name = name;
+		_url = _getURL(jsPackage, name);
+		_resolvedURL = _getResolvedURL(jsPackage, name);
+		_resolvedId = _getResolvedId(jsPackage, name);
+		_dependencies = dependencies;
+
+		_id = ModuleNameUtil.getModuleId(jsPackage, name);
+
+		for (String dependency : dependencies) {
+			String packageName = ModuleNameUtil.getPackageName(dependency);
+
+			if (packageName != null) {
+				_dependencyPackageNames.add(packageName);
+			}
+		}
+	}
+
+	@Override
+	public Collection<String> getDependencies() {
+		return _dependencies;
+	}
+
+	@Override
+	public Collection<String> getDependencyPackageNames() {
+		return _dependencyPackageNames;
+	}
+
+	@Override
+	public String getId() {
+		return _id;
+	}
+
+	@Override
+	public JSPackage getJSPackage() {
+		return _jsPackage;
+	}
+
+	@Override
+	public String getName() {
+		return _name;
+	}
+
+	@Override
+	public String getResolvedId() {
+		return _resolvedId;
+	}
+
+	@Override
+	public String getResolvedURL() {
+		return _resolvedURL;
+	}
+
+	@Override
+	public String getURL() {
+		return _url;
 	}
 
 	/**
@@ -108,5 +162,14 @@ public abstract class BuiltInJSModule extends JSModuleAdapter {
 
 		return sb.toString();
 	}
+
+	private final Collection<String> _dependencies;
+	private final List<String> _dependencyPackageNames = new ArrayList<>();
+	private final String _id;
+	private final JSPackage _jsPackage;
+	private final String _name;
+	private final String _resolvedId;
+	private final String _resolvedURL;
+	private final String _url;
 
 }

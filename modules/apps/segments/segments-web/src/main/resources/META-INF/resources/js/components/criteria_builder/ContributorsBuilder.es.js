@@ -159,7 +159,7 @@ class ContributorBuilder extends React.Component {
 									</div>
 
 									{emptyContributors &&
-										(editingId == undefined ||
+										(editingId === undefined ||
 											!editing) && <EmptyPlaceholder />}
 
 									{contributors
@@ -169,7 +169,7 @@ class ContributorBuilder extends React.Component {
 													criteria.propertyKey &&
 												editing;
 											const emptyCriteriaQuery =
-												criteria.query == '';
+												criteria.query === '';
 
 											return (
 												editingCriteria ||

@@ -77,6 +77,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletMode;
@@ -783,6 +784,27 @@ public class JournalContentDisplayContext {
 		AssetEntryServiceUtil.incrementViewCounter(
 			JournalArticle.class.getName(),
 			articleDisplay.getResourcePrimKey());
+	}
+
+	public boolean isArticleInScope() throws Exception {
+		JournalArticle article = getArticle();
+
+		if (article == null) {
+			return true;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long[] groupIds = Optional.ofNullable(
+			getSelectedGroupIds()
+		).orElse(
+			PortalUtil.getSharedContentSiteGroupIds(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				themeDisplay.getUserId())
+		);
+
+		return ArrayUtil.contains(groupIds, article.getGroupId());
 	}
 
 	public boolean isDefaultTemplate() {

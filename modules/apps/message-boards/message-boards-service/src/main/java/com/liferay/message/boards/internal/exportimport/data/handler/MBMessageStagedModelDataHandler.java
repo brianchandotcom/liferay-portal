@@ -373,6 +373,12 @@ public class MBMessageStagedModelDataHandler
 
 			_mbThreadLocalService.updateMBThread(thread);
 
+			if (importedMessage.getCategoryId() != parentCategoryId) {
+				_mbThreadLocalService.moveThread(
+					thread.getGroupId(), parentCategoryId,
+					thread.getThreadId());
+			}
+
 			portletDataContext.importClassedModel(message, importedMessage);
 		}
 		finally {

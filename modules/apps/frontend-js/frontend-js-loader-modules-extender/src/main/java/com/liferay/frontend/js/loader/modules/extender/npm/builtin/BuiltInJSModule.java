@@ -53,7 +53,6 @@ public abstract class BuiltInJSModule implements JSModule {
 
 		_jsPackage = jsPackage;
 		_name = name;
-		_resolvedURL = _getResolvedURL(jsPackage, name);
 		_dependencies = dependencies;
 
 		for (String dependency : dependencies) {
@@ -97,7 +96,7 @@ public abstract class BuiltInJSModule implements JSModule {
 
 	@Override
 	public String getResolvedURL() {
-		return _resolvedURL;
+		return _getResolvedURL(_jsPackage, _name);
 	}
 
 	@Override
@@ -153,6 +152,5 @@ public abstract class BuiltInJSModule implements JSModule {
 	private final List<String> _dependencyPackageNames = new ArrayList<>();
 	private final JSPackage _jsPackage;
 	private final String _name;
-	private final String _resolvedURL;
 
 }

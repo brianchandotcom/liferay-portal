@@ -188,4 +188,8 @@ definition {
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
+	macro openBlogsAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_blogs_web_portlet_BlogsAdminPortlet");
+	}
+
 }

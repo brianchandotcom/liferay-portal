@@ -474,7 +474,7 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 
 			Layout layout = _layoutLocalService.addLayout(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				false, parentLayout.getLayoutId(), nameMap, new HashMap<>(),
+				true, parentLayout.getLayoutId(), nameMap, new HashMap<>(),
 				new HashMap<>(), new HashMap<>(), new HashMap<>(), "content",
 				StringPool.BLANK, false, new HashMap<>(), serviceContext);
 

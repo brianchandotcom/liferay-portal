@@ -24,6 +24,8 @@ import com.liferay.talend.tliferayoutput.TLiferayOutputProperties;
 
 import java.io.IOException;
 
+import java.net.URI;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -43,6 +45,7 @@ import org.talend.components.api.container.RuntimeContainer;
 import org.talend.daikon.avro.AvroUtils;
 import org.talend.daikon.avro.converter.AvroConverter;
 import org.talend.daikon.avro.converter.string.StringStringConverter;
+import org.talend.daikon.exception.TalendRuntimeException;
 import org.talend.daikon.i18n.GlobalI18N;
 import org.talend.daikon.i18n.I18nMessageProvider;
 import org.talend.daikon.i18n.I18nMessages;
@@ -81,28 +84,28 @@ public class LiferayWriter
 	}
 
 	public void doDelete(IndexedRecord indexedRecord) throws IOException {
-		String resourceURL =
-			_tLiferayOutputProperties.resource.getEndpointURL();
+		URI resourceURI = _tLiferayOutputProperties.resource.getEndpointURI();
 
-		_liferaySink.doDeleteRequest(_runtimeContainer, resourceURL);
+		_liferaySink.doDeleteRequest(
+			_runtimeContainer, resourceURI.toASCIIString());
 	}
 
 	public void doInsert(IndexedRecord indexedRecord) throws IOException {
 		ObjectNode objectNode = _createEndpointRequestPayload(indexedRecord);
 
-		String resourceURL =
-			_tLiferayOutputProperties.resource.getEndpointURL();
+		URI resourceURI = _tLiferayOutputProperties.resource.getEndpointURI();
 
-		_liferaySink.doPostRequest(_runtimeContainer, resourceURL, objectNode);
+		_liferaySink.doPostRequest(
+			_runtimeContainer, resourceURI.toASCIIString(), objectNode);
 	}
 
 	public void doUpdate(IndexedRecord indexedRecord) throws IOException {
 		ObjectNode objectNode = _createEndpointRequestPayload(indexedRecord);
 
-		String resourceURL =
-			_tLiferayOutputProperties.resource.getEndpointURL();
+		URI resourceURI = _tLiferayOutputProperties.resource.getEndpointURI();
 
-		_liferaySink.doPatchRequest(_runtimeContainer, resourceURL, objectNode);
+		_liferaySink.doPatchRequest(
+			_runtimeContainer, resourceURI.toASCIIString(), objectNode);
 	}
 
 	@Override
@@ -158,6 +161,10 @@ public class LiferayWriter
 			}
 			else if (Action.Update == action) {
 				doUpdate(indexedRecord);
+			}
+			else {
+				throw TalendRuntimeException.createUnexpectedException(
+					"Unexpected Operation in Output component");
 			}
 
 			_handleSuccessRecord(indexedRecord);
@@ -236,17 +243,130 @@ public class LiferayWriter
 
 			Schema.Type fieldType = unwrappedSchema.getType();
 
-			if (fieldType == Schema.Type.STRING) {
-				objectNode.put(
-					fieldName, (String)indexedRecord.get(field.pos()));
+			if (fieldType == Schema.Type.NULL) {
+				continue;
 			}
-			else if (fieldType == Schema.Type.NULL) {
-				objectNode.put(fieldName, "");
+
+			if (AvroUtils.isSameType(unwrappedSchema, AvroUtils._boolean())) {
+				if (fieldName.contains("_")) {
+					String[] nameParts = fieldName.split("_");
+
+					objectNode.with(
+						nameParts[0]
+					).put(
+						nameParts[1], (boolean)indexedRecord.get(field.pos())
+					);
+				}
+				else {
+					objectNode.put(
+						fieldName, (boolean)indexedRecord.get(field.pos()));
+				}
+			}
+			else if (AvroUtils.isSameType(
+						unwrappedSchema, AvroUtils._bytes())) {
+
+				if (fieldName.contains("_")) {
+					String[] nameParts = fieldName.split("_");
+
+					objectNode.with(
+						nameParts[0]
+					).put(
+						nameParts[1], (byte[])indexedRecord.get(field.pos())
+					);
+				}
+				else {
+					objectNode.put(
+						fieldName, (byte[])indexedRecord.get(field.pos()));
+				}
+			}
+			else if (AvroUtils.isSameType(
+						unwrappedSchema, AvroUtils._logicalTimestamp()) ||
+					 AvroUtils.isSameType(unwrappedSchema, AvroUtils._date()) ||
+					 AvroUtils.isSameType(
+						 unwrappedSchema, AvroUtils._string())) {
+
+				if (fieldName.contains("_")) {
+					String[] nameParts = fieldName.split("_");
+
+					objectNode.with(
+						nameParts[0]
+					).put(
+						nameParts[1], (String)indexedRecord.get(field.pos())
+					);
+				}
+				else {
+					objectNode.put(
+						fieldName, (String)indexedRecord.get(field.pos()));
+				}
+			}
+			else if (AvroUtils.isSameType(
+						unwrappedSchema, AvroUtils._double())) {
+
+				if (fieldName.contains("_")) {
+					String[] nameParts = fieldName.split("_");
+
+					objectNode.with(
+						nameParts[0]
+					).put(
+						nameParts[1], (double)indexedRecord.get(field.pos())
+					);
+				}
+				else {
+					objectNode.put(
+						fieldName, (double)indexedRecord.get(field.pos()));
+				}
+			}
+			else if (AvroUtils.isSameType(
+						unwrappedSchema, AvroUtils._float())) {
+
+				if (fieldName.contains("_")) {
+					String[] nameParts = fieldName.split("_");
+
+					objectNode.with(
+						nameParts[0]
+					).put(
+						nameParts[1], (float)indexedRecord.get(field.pos())
+					);
+				}
+				else {
+					objectNode.put(
+						fieldName, (float)indexedRecord.get(field.pos()));
+				}
+			}
+			else if (AvroUtils.isSameType(unwrappedSchema, AvroUtils._int())) {
+				if (fieldName.contains("_")) {
+					String[] nameParts = fieldName.split("_");
+
+					objectNode.with(
+						nameParts[0]
+					).put(
+						nameParts[1], (int)indexedRecord.get(field.pos())
+					);
+				}
+				else {
+					objectNode.put(
+						fieldName, (int)indexedRecord.get(field.pos()));
+				}
+			}
+			else if (AvroUtils.isSameType(unwrappedSchema, AvroUtils._long())) {
+				if (fieldName.contains("_")) {
+					String[] nameParts = fieldName.split("_");
+
+					objectNode.with(
+						nameParts[0]
+					).put(
+						nameParts[1], (long)indexedRecord.get(field.pos())
+					);
+				}
+				else {
+					objectNode.put(
+						fieldName, (long)indexedRecord.get(field.pos()));
+				}
 			}
 			else {
 				throw new IOException(
 					i18nMessages.getMessage(
-						"error.unsupported.field.schema", field.name(),
+						"error.unsupported.field.schema", fieldName,
 						fieldType.getName()));
 			}
 		}

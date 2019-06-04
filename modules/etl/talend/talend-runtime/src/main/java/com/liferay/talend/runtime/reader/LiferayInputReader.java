@@ -85,11 +85,11 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
 		_hasMore = true;
 
-		String endpointURL =
-			liferayConnectionResourceBaseProperties.resource.getEndpointURL();
+		URI endpointURI =
+			liferayConnectionResourceBaseProperties.resource.getEndpointURI();
 
-		_endpointJsonNode = _getEndpointJsonNode(endpointURL, ++actual, 1);
-		_inputRecordsJsonNode = _getItemsJsonNode(endpointURL, ++actual, -1);
+		_endpointJsonNode = _getEndpointJsonNode(endpointURI, ++actual, 1);
+		_inputRecordsJsonNode = _getItemsJsonNode(endpointURI, ++actual, -1);
 
 		_inputRecordsIndex = 0;
 
@@ -132,11 +132,11 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
 	@Override
 	public boolean start() throws IOException {
-		String endpointURL =
-			liferayConnectionResourceBaseProperties.resource.getEndpointURL();
+		URI endpointURI =
+			liferayConnectionResourceBaseProperties.resource.getEndpointURI();
 
-		_endpointJsonNode = _getEndpointJsonNode(endpointURL, 1, 1);
-		_inputRecordsJsonNode = _getItemsJsonNode(endpointURL, 1, -1);
+		_endpointJsonNode = _getEndpointJsonNode(endpointURI, 1, 1);
+		_inputRecordsJsonNode = _getItemsJsonNode(endpointURI, 1, -1);
 
 		boolean start = false;
 
@@ -175,9 +175,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	}
 
 	private JsonNode _getEndpointJsonNode(
-		String endpointURL, int page, int pageSize) {
-
-		UriBuilder uriBuilder = UriBuilder.fromPath(endpointURL);
+		URI endpointURI, int page, int pageSize) {
 
 		if (page <= 0) {
 			page = 1;
@@ -189,13 +187,13 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 					getValue();
 		}
 
+		UriBuilder uriBuilder = UriBuilder.fromUri(endpointURI);
+
 		URI resourceURI = uriBuilder.queryParam(
 			"page", page
 		).queryParam(
 			"pageSize", pageSize
-		).build(
-			liferayConnectionResourceBaseProperties.connection.siteId.getValue()
-		);
+		).build();
 
 		URI decoratedResourceURI = URIUtils.addQueryConditionToURL(
 			resourceURI.toASCIIString(), _queryCondition);
@@ -212,10 +210,10 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	}
 
 	private JsonNode _getItemsJsonNode(
-		String endpointURL, int page, int pageSize) {
+		URI endpointURI, int page, int pageSize) {
 
 		JsonNode responseJsonNode = _getEndpointJsonNode(
-			endpointURL, page, pageSize);
+			endpointURI, page, pageSize);
 
 		return responseJsonNode.path("items");
 	}

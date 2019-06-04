@@ -14,18 +14,17 @@
 
 package com.liferay.talend.runtime;
 
-import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.runtime.writer.LiferayWriteOperation;
 import com.liferay.talend.tliferayoutput.TLiferayOutputProperties;
 
 import org.talend.components.api.component.runtime.Sink;
 import org.talend.components.api.component.runtime.WriteOperation;
 import org.talend.components.api.container.RuntimeContainer;
-import org.talend.components.api.exception.ComponentException;
 import org.talend.daikon.i18n.GlobalI18N;
 import org.talend.daikon.i18n.I18nMessageProvider;
 import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.properties.ValidationResult;
+import org.talend.daikon.properties.ValidationResultMutable;
 
 /**
  * @author Zoltán Takács
@@ -34,50 +33,44 @@ public class LiferaySink extends LiferaySourceOrSink implements Sink {
 
 	@Override
 	public WriteOperation<?> createWriteOperation() {
-		if (liferayConnectionPropertiesProvider instanceof
-				TLiferayOutputProperties) {
-
-			TLiferayOutputProperties tLiferayOutputProperties =
-				(TLiferayOutputProperties)liferayConnectionPropertiesProvider;
-
-			LiferayConnectionProperties liferayConnectionProperties =
-				getEffectiveConnection(null);
-
-			tLiferayOutputProperties.connection = liferayConnectionProperties;
-
-			return new LiferayWriteOperation(this, tLiferayOutputProperties);
-		}
-
-		Class<?> propertiesClass =
-			liferayConnectionPropertiesProvider.getClass();
-
-		throw new ComponentException(
-			new RuntimeException(
-				i18nMessages.getMessage(
-					"error.validation.properties",
-					propertiesClass.getCanonicalName())));
+		return new LiferayWriteOperation(this, _tLiferayOutputProperties);
 	}
 
 	@Override
 	public ValidationResult validate(RuntimeContainer runtimeContainer) {
-		ValidationResult validate = super.validate(runtimeContainer);
+		ValidationResult validationResult = super.validate(runtimeContainer);
 
-		if (validate.getStatus() != ValidationResult.Result.ERROR) {
-			Class<?> propertiesClass =
-				liferayConnectionPropertiesProvider.getClass();
-
-			if (!(liferayConnectionPropertiesProvider instanceof
-					TLiferayOutputProperties)) {
-
-				return new ValidationResult(
-					ValidationResult.Result.ERROR,
-					i18nMessages.getMessage(
-						"error.validation.properties",
-						propertiesClass.getCanonicalName()));
-			}
+		if (validationResult.getStatus() == ValidationResult.Result.ERROR) {
+			return validationResult;
 		}
 
-		return validate;
+		ValidationResultMutable validationResultMutable =
+			new ValidationResultMutable(validationResult);
+
+		Class<?> propertiesClass =
+			liferayConnectionPropertiesProvider.getClass();
+
+		if (!(liferayConnectionPropertiesProvider instanceof
+				TLiferayOutputProperties)) {
+
+			validationResultMutable.setMessage(
+				i18nMessages.getMessage(
+					"error.validation.properties",
+					propertiesClass.getCanonicalName()));
+			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
+
+			return validationResultMutable;
+		}
+
+		_tLiferayOutputProperties =
+			(TLiferayOutputProperties)liferayConnectionPropertiesProvider;
+
+		_tLiferayOutputProperties.connection = getEffectiveConnection(
+			runtimeContainer);
+		_tLiferayOutputProperties.resource.connection = getEffectiveConnection(
+			runtimeContainer);
+
+		return validationResultMutable;
 	}
 
 	protected static final I18nMessages i18nMessages;
@@ -88,5 +81,7 @@ public class LiferaySink extends LiferaySourceOrSink implements Sink {
 
 		i18nMessages = i18nMessageProvider.getI18nMessages(LiferaySink.class);
 	}
+
+	private TLiferayOutputProperties _tLiferayOutputProperties;
 
 }

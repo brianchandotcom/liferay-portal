@@ -14,11 +14,10 @@
 
 package com.liferay.talend.runtime;
 
-import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.runtime.reader.LiferayInputReader;
 import com.liferay.talend.tliferayinput.TLiferayInputProperties;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -27,6 +26,8 @@ import org.slf4j.LoggerFactory;
 import org.talend.components.api.component.runtime.BoundedReader;
 import org.talend.components.api.component.runtime.BoundedSource;
 import org.talend.components.api.container.RuntimeContainer;
+import org.talend.daikon.properties.ValidationResult;
+import org.talend.daikon.properties.ValidationResultMutable;
 
 /**
  * @author Zoltán Takács
@@ -40,26 +41,8 @@ public class LiferaySource
 			_log.debug("Creating reader for fetching data from the datastore");
 		}
 
-		if (liferayConnectionPropertiesProvider instanceof
-				TLiferayInputProperties) {
-
-			TLiferayInputProperties tLiferayInputProperties =
-				(TLiferayInputProperties)liferayConnectionPropertiesProvider;
-
-			LiferayConnectionProperties liferayConnectionProperties =
-				getEffectiveConnection(runtimeContainer);
-
-			tLiferayInputProperties.connection = liferayConnectionProperties;
-
-			return new LiferayInputReader(
-				runtimeContainer, this, tLiferayInputProperties);
-		}
-
-		_log.error("Unexpected property instance");
-
 		return new LiferayInputReader(
-			runtimeContainer, this,
-			(TLiferayInputProperties)liferayConnectionPropertiesProvider);
+			runtimeContainer, this, _tLiferayInputProperties);
 	}
 
 	@Override
@@ -77,16 +60,51 @@ public class LiferaySource
 			long desiredBundleSizeBytes, RuntimeContainer runtimeContainer)
 		throws Exception {
 
-		List<BoundedSource> boundedSources = new ArrayList<>();
+		return Collections.singletonList(this);
+	}
 
-		boundedSources.add(this);
+	@Override
+	public ValidationResult validate(RuntimeContainer runtimeContainer) {
+		ValidationResult validationResult = super.validate(runtimeContainer);
 
-		return boundedSources;
+		if (validationResult.getStatus() == ValidationResult.Result.ERROR) {
+			return validationResult;
+		}
+
+		ValidationResultMutable validationResultMutable =
+			new ValidationResultMutable(validationResult);
+
+		Class<?> propertiesClass =
+			liferayConnectionPropertiesProvider.getClass();
+
+		if (!(liferayConnectionPropertiesProvider instanceof
+				TLiferayInputProperties)) {
+
+			validationResultMutable.setMessage(
+				i18nMessages.getMessage(
+					"error.validation.properties",
+					propertiesClass.getCanonicalName()));
+			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
+
+			return validationResultMutable;
+		}
+
+		_tLiferayInputProperties =
+			(TLiferayInputProperties)liferayConnectionPropertiesProvider;
+
+		_tLiferayInputProperties.connection = getEffectiveConnection(
+			runtimeContainer);
+		_tLiferayInputProperties.resource.connection = getEffectiveConnection(
+			runtimeContainer);
+
+		return validationResultMutable;
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(
 		LiferaySource.class);
 
 	private static final long serialVersionUID = 7966201253956643887L;
+
+	private TLiferayInputProperties _tLiferayInputProperties;
 
 }

@@ -24,11 +24,14 @@ import com.liferay.talend.utils.URIUtils;
 
 import java.io.IOException;
 
+import java.net.URI;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import javax.ws.rs.HttpMethod;
+import javax.ws.rs.core.UriBuilder;
 
 import org.apache.avro.Schema;
 
@@ -157,10 +160,20 @@ public class LiferayResourceProperties
 		return null;
 	}
 
-	public String getEndpointURL() {
+	public URI getEndpointURI() {
 		String applicationBaseHref = connection.getApplicationBaseHref();
 
-		return applicationBaseHref.concat(endpoint.getValue());
+		String endpointHref = applicationBaseHref.concat(endpoint.getValue());
+
+		UriBuilder uriBuilder = UriBuilder.fromPath(endpointHref);
+
+		LiferayConnectionProperties liferayConnectionProperties =
+			getEffectiveLiferayConnectionProperties();
+
+		uriBuilder.resolveTemplate(
+			_SITE_ID, liferayConnectionProperties.siteId.getValue());
+
+		return uriBuilder.build();
 	}
 
 	@Override
@@ -335,6 +348,8 @@ public class LiferayResourceProperties
 
 		refreshLayout(referenceForm);
 	}
+
+	private static final String _SITE_ID = "siteId";
 
 	private static final Logger _log = LoggerFactory.getLogger(
 		LiferayResourceProperties.class);

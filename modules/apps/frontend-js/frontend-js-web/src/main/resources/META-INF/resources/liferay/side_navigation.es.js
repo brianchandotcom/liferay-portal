@@ -147,7 +147,13 @@ SideNavigation.prototype = {
 	init: function(toggler, options) {
 		const instance = this;
 
-		const useDataAttribute = toggler.dataset.toggle === 'sidenav';
+		/**
+		 * For compatibility, we use a data-toggle attribute of
+		 * "liferay-sidenav" to distinguish our internal uses from
+		 * possible external uses of the old jQuery plugin (which used
+		 * "sidenav').
+		 */
+		const useDataAttribute = toggler.dataset.toggle === 'liferay-sidenav';
 
 		options = Object.assign({}, defaults, options);
 
@@ -929,7 +935,9 @@ const defaults = {
 };
 
 function onReady() {
-	const togglers = document.querySelectorAll('[data-toggle="sidenav"]');
+	const togglers = document.querySelectorAll(
+		'[data-toggle="liferay-sidenav"]'
+	);
 
 	Array.from(togglers).forEach(SideNavigation.initialize);
 }

@@ -98,7 +98,7 @@ AUI.add(
 			'</span></a>';
 
 		var TPL_INFO_ICON =
-			'<a class="lfr-item-viewer-icon-info-link" data-content=".image-viewer-focused" data-target=".image-viewer-sidenav" data-toggle="sidenav" data-type="fixed-push" href="" title="' +
+			'<a class="lfr-item-viewer-icon-info-link" data-content=".image-viewer-focused" data-target=".image-viewer-sidenav" data-toggle="liferay-sidenav" data-type="fixed-push" href="" title="' +
 			Liferay.Language.get('image-info') +
 			'" ><span class="' +
 			CSS_ICON_MONOSPACED +
@@ -466,7 +466,7 @@ AUI.add(
 						instance.get(STR_RENDER_SIDEBAR)
 					) {
 						var togglers = document.querySelectorAll(
-							'[data-toggle="sidenav"]'
+							'[data-toggle="liferay-sidenav"]'
 						);
 
 						Array.from(togglers).forEach(

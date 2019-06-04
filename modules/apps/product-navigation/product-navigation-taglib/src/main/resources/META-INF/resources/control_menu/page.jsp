@@ -106,7 +106,7 @@ for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory :
 	<aui:script use="liferay-product-navigation-control-menu">
 		Liferay.ControlMenu.init('#<portlet:namespace />controlMenu');
 
-		var sidenavToggles = document.querySelectorAll('#<portlet:namespace />ControlMenu [data-toggle="sidenav"]');
+		var sidenavToggles = document.querySelectorAll('#<portlet:namespace />ControlMenu [data-toggle="liferay-sidenav"]');
 
 		var sidenavInstances = Array.from(sidenavToggles).map(
 			function(toggle) {

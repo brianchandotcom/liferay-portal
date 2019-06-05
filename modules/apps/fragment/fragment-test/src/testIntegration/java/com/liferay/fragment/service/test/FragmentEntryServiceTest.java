@@ -109,7 +109,7 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testAddFragmentEntries() throws Exception, PortalException {
+	public void testAddFragmentEntries() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), _groupUser.getUserId());
@@ -142,7 +142,7 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testAddFragmentEntry() throws Exception, PortalException {
+	public void testAddFragmentEntry() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), _groupUser.getUserId());
@@ -243,9 +243,7 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testAddFragmentEntryWithFragmentEntryKey()
-		throws Exception, PortalException {
-
+	public void testAddFragmentEntryWithFragmentEntryKey() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), _groupUser.getUserId());
@@ -272,7 +270,7 @@ public class FragmentEntryServiceTest {
 
 	@Test
 	public void testAddFragmentEntryWithFragmentEntryKeyAndType()
-		throws Exception, PortalException {
+		throws Exception {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -332,8 +330,7 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testAddFragmentEntryWithHTML()
-		throws Exception, PortalException {
+	public void testAddFragmentEntryWithHTML() throws Exception {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -392,8 +389,7 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testAddFragmentEntryWithType()
-		throws Exception, PortalException {
+	public void testAddFragmentEntryWithType() throws Exception {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -418,7 +414,7 @@ public class FragmentEntryServiceTest {
 
 	@Test
 	public void testAddFragmentEntryWithTypeAndHTML()
-		throws Exception, PortalException {
+		throws Exception {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -556,10 +552,9 @@ public class FragmentEntryServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		FragmentEntry copyFragmentEntry =
-			_fragmentEntryService.copyFragmentEntry(
-				_group.getGroupId(), fragmentEntry.getFragmentEntryId(),
-				fragmentEntry.getFragmentCollectionId(), serviceContext);
+		_fragmentEntryService.copyFragmentEntry(
+			_group.getGroupId(), fragmentEntry.getFragmentEntryId(),
+			fragmentEntry.getFragmentCollectionId(), serviceContext);
 	}
 
 	@Test
@@ -1295,8 +1290,6 @@ public class FragmentEntryServiceTest {
 			_fragmentCollection.getFragmentCollectionId(), "AA Fragment Entry",
 			WorkflowConstants.STATUS_APPROVED,
 			Timestamp.valueOf(localDateTime));
-
-		localDateTime = localDateTime.plus(1, ChronoUnit.SECONDS);
 
 		FragmentEntryCreateDateComparator fragmentEntryCreateDateComparatorAsc =
 			new FragmentEntryCreateDateComparator(true);

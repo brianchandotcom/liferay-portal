@@ -378,7 +378,7 @@ EditTags.STATE = {
 	 * @review
 	 * @type {String}
 	 */
-	urlTags: Config.string().value('/bulk-rest/v1.0/keywords/common'),
+	urlTags: Config.string().value('/bulk/v1.0/keywords/common'),
 
 	/**
 	 * Url to backend service that provides
@@ -389,7 +389,7 @@ EditTags.STATE = {
 	 * @review
 	 * @type {String}
 	 */
-	urlSelection: Config.string().value('/bulk-rest/v1.0/bulk-selection'),
+	urlSelection: Config.string().value('/bulk/v1.0/bulk-selection'),
 
 	/**
 	 * Url to backend service that updates
@@ -400,7 +400,7 @@ EditTags.STATE = {
 	 * @review
 	 * @type {String}
 	 */
-	urlUpdateTags: Config.string().value('/bulk-rest/v1.0/keywords/batch')
+	urlUpdateTags: Config.string().value('/bulk/v1.0/keywords/batch')
 };
 
 // Register component

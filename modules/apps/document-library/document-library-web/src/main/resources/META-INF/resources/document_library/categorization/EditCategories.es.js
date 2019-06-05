@@ -36,7 +36,7 @@ class EditCategories extends Component {
 	created() {
 		this.append = true;
 		this.dataSource = [];
-		this.urlCategories = `/bulk-rest/v1.0/sites/${
+		this.urlCategories = `/bulk/v1.0/sites/${
 			this.groupIds[0]
 		}/taxonomy-vocabularies/common`;
 
@@ -534,7 +534,7 @@ EditCategories.STATE = {
 	 * @review
 	 * @type {String}
 	 */
-	urlSelection: Config.string().value('/bulk-rest/v1.0/bulk-selection'),
+	urlSelection: Config.string().value('/bulk/v1.0/bulk-selection'),
 
 	/**
 	 * Url to backend service that updates
@@ -546,7 +546,7 @@ EditCategories.STATE = {
 	 * @type {String}
 	 */
 	urlUpdateCategories: Config.string().value(
-		'/bulk-rest/v1.0/taxonomy-categories/batch'
+		'/bulk/v1.0/taxonomy-categories/batch'
 	),
 
 	/**

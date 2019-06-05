@@ -104,7 +104,7 @@ JSONArray samlSloRequestInfosJSONArray = samlSloContextJSONObject.getJSONArray("
 	};
 
 	eventHandlers.push(
-		A.on(
+		A.getWin().on(
 			'beforeunload',
 			function(event) {
 				event.preventDefault('<liferay-ui:message key="leaving-this-window-might-leave-logout-unfinished" />');

@@ -126,7 +126,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		throws Exception {
 
 		DataDefinition dataDefinition = DataDefinitionUtil.toDataDefinition(
-			_ddmStructureService.getStructure(
+			_ddmStructureLocalService.getStructure(
 				siteId, _getClassNameId(), dataDefinitionKey));
 
 		_modelResourcePermission.check(

@@ -133,6 +133,11 @@ public abstract class BaseDBProcess implements DBProcess {
 		return dbInspector.hasColumn(tableName, columnName);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 * 				#hasColumnType(String, String, String)}
+	 */
+	@Deprecated
 	protected boolean hasColumnType(
 			Class<?> tableClass, String columnName, String columnType)
 		throws Exception {
@@ -140,6 +145,15 @@ public abstract class BaseDBProcess implements DBProcess {
 		DBInspector dbInspector = new DBInspector(connection);
 
 		return dbInspector.hasColumnType(tableClass, columnName, columnType);
+	}
+
+	protected boolean hasColumnType(
+			String tableName, String columnName, String columnType)
+		throws Exception {
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		return dbInspector.hasColumnType(tableName, columnName, columnType);
 	}
 
 	protected boolean hasRows(Connection connection, String tableName) {

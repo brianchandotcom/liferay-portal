@@ -16,10 +16,8 @@ package com.liferay.portal.language.extender.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.CacheResourceBundleLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -33,19 +31,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Dictionary;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
-import org.osgi.framework.Filter;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleWiring;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Carlos Sierra Andrés
@@ -180,84 +173,5 @@ public class LanguageExtension {
 		_serviceRegistrations = new ArrayList<>();
 	private final List<ServiceTrackerResourceBundleLoader>
 		_serviceTrackerResourceBundleLoaders = new ArrayList<>();
-
-	private static class ServiceTrackerResourceBundleLoader
-		implements ResourceBundleLoader {
-
-		public ServiceTrackerResourceBundleLoader(
-			BundleContext bundleContext, String aggregate, int aggregateId) {
-
-			List<String> filterStrings = StringUtil.split(aggregate);
-
-			_serviceTrackers = new ArrayList<>(filterStrings.size());
-
-			for (String filterString : filterStrings) {
-				Filter filter = null;
-
-				filterString = StringBundler.concat(
-					"(&(objectClass=", ResourceBundleLoader.class.getName(),
-					")", filterString, "(|(!(aggregateId=*))(!(aggregateId=",
-					aggregateId, "))))");
-
-				try {
-					filter = bundleContext.createFilter(filterString);
-				}
-				catch (InvalidSyntaxException ise) {
-					throw new IllegalArgumentException(ise);
-				}
-
-				ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>
-					serviceTracker = new ServiceTracker<>(
-						bundleContext, filter, null);
-
-				serviceTracker.open();
-
-				_serviceTrackers.add(serviceTracker);
-			}
-		}
-
-		public void close() {
-			for (ServiceTracker<?, ?> serviceTracker : _serviceTrackers) {
-				serviceTracker.close();
-			}
-		}
-
-		@Override
-		public ResourceBundle loadResourceBundle(Locale locale) {
-			List<ResourceBundle> resourceBundles = new ArrayList<>();
-
-			for (ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>
-					serviceTracker : _serviceTrackers) {
-
-				ResourceBundleLoader resourceBundleLoader =
-					serviceTracker.getService();
-
-				if (resourceBundleLoader != null) {
-					ResourceBundle resourceBundle =
-						resourceBundleLoader.loadResourceBundle(locale);
-
-					if (resourceBundle != null) {
-						resourceBundles.add(resourceBundle);
-					}
-				}
-			}
-
-			if (resourceBundles.isEmpty()) {
-				return null;
-			}
-
-			if (resourceBundles.size() == 1) {
-				return resourceBundles.get(0);
-			}
-
-			return new AggregateResourceBundle(
-				resourceBundles.toArray(new ResourceBundle[0]));
-		}
-
-		private final List
-			<ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>>
-				_serviceTrackers;
-
-	}
 
 }

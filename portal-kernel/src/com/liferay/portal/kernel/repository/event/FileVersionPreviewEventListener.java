@@ -22,8 +22,40 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
  */
 public interface FileVersionPreviewEventListener {
 
+	public void deleteDLFileVersionPreviews(long fileEntryId);
+
+	public long getDLFileVersionPreviewId(
+		long fileEntryId, long fileVersionId, int fileVersionPreviewStatus);
+
 	public void onFailure(FileVersion fileVersion);
 
 	public void onSuccess(FileVersion fileVersion);
+
+	public enum DLFileEntryPreviewType {
+
+		FAIL(0), NOT_GENERATED(1), SUCCESS(2);
+
+		public static DLFileEntryPreviewType fromInteger(int value) {
+			for (DLFileEntryPreviewType dlFileEntryPreviewType : values()) {
+				if (dlFileEntryPreviewType.toInteger() == value) {
+					return dlFileEntryPreviewType;
+				}
+			}
+
+			throw new IllegalArgumentException(
+				"No DLFileEntryPreviewType exists with value " + value);
+		}
+
+		public int toInteger() {
+			return _value;
+		}
+
+		private DLFileEntryPreviewType(int value) {
+			_value = value;
+		}
+
+		private final int _value;
+
+	}
 
 }

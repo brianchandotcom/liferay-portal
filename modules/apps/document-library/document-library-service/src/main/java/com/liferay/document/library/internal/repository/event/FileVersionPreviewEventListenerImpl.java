@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.event.FileVersionPreviewEventListener;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -33,6 +35,33 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = FileVersionPreviewEventListener.class)
 public class FileVersionPreviewEventListenerImpl
 	implements FileVersionPreviewEventListener {
+
+	public void deleteDLFileVersionPreviews(long fileEntryId) {
+		List<DLFileVersionPreview> fileVersionPreviews =
+			_dlFileVersionPreviewLocalService.getFileEntryDLFileVersionPreviews(
+				fileEntryId);
+
+		for (DLFileVersionPreview dlFileVersionPreview : fileVersionPreviews) {
+			_dlFileVersionPreviewLocalService.
+				deleteDLFileEntryFileVersionPreviews(
+					dlFileVersionPreview.getDlFileVersionPreviewId());
+		}
+	}
+
+	@Override
+	public long getDLFileVersionPreviewId(
+		long fileEntryId, long fileVersionId, int fileVersionPreviewStatus) {
+
+		DLFileVersionPreview dlFileVersionPreview =
+			_dlFileVersionPreviewLocalService.fetchDLFileVersionPreview(
+				fileEntryId, fileVersionId, fileVersionPreviewStatus);
+
+		if (dlFileVersionPreview == null) {
+			return 0;
+		}
+
+		return dlFileVersionPreview.getDlFileVersionPreviewId();
+	}
 
 	@Override
 	public void onFailure(FileVersion fileVersion) {

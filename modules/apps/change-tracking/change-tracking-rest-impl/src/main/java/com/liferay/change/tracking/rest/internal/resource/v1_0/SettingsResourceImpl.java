@@ -36,7 +36,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import javax.ws.rs.core.Context;
 
@@ -116,19 +115,15 @@ public class SettingsResourceImpl extends BaseSettingsResourceImpl {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		Stream<CTConfiguration<?, ?>> stream = _ctConfigurations.stream();
+		for (CTConfiguration<?, ?> ctConfiguration : _ctConfigurations) {
+			supportedContentTypeLanguageKeys.add(
+				ctConfiguration.getContentTypeLanguageKey());
 
-		stream.forEach(
-			ctConfiguration -> {
-				supportedContentTypeLanguageKeys.add(
-					ctConfiguration.getContentTypeLanguageKey());
+			String contentType = LanguageUtil.get(
+				resourceBundle, ctConfiguration.getContentTypeLanguageKey());
 
-				String contentType = LanguageUtil.get(
-					resourceBundle,
-					ctConfiguration.getContentTypeLanguageKey());
-
-				supportedContentTypes.add(contentType);
-			});
+			supportedContentTypes.add(contentType);
+		}
 
 		Settings settings = new Settings();
 

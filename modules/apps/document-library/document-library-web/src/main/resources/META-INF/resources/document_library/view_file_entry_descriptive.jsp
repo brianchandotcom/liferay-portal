@@ -93,7 +93,7 @@ rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 	</span>
 </c:if>
 
-<span>
+<span class="file-entry-status">
 	<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
 
 	<c:choose>

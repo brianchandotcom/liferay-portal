@@ -293,8 +293,20 @@
 		margin-top: 3em;
 	}
 
+	.file-entry-status,
+	.card-detail {
+		align-items: center;
+		display: flex;
+		font-size: 1rem;
+		margin-bottom: -5px;
+	}
+
 	.taglib-workflow-status {
-		margin-bottom: 5px;
+		margin-right: 4px;
+
+		.workflow-status {
+			vertical-align: text-bottom;
+		}
 	}
 
 	.document-library-breadcrumb ul {

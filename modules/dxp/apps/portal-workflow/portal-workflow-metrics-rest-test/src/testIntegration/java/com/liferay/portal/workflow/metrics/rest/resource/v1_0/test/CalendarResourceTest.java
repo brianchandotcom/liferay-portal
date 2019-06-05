@@ -76,35 +76,12 @@ public class CalendarResourceTest extends BaseCalendarResourceTestCase {
 
 		Assert.assertEquals(calendars.toString(), 1, calendars.size());
 
-		Calendar calendar = calendars.get(0);
+		Calendar defaultCalendar = calendars.get(0);
 
-		Assert.assertEquals(true, calendar.getDefaultCalendar());
-		Assert.assertEquals("default", calendar.getKey());
-		Assert.assertEquals("24/7", calendar.getTitle());
-	}
+		Assert.assertEquals(true, defaultCalendar.getDefaultCalendar());
+		Assert.assertEquals("default", defaultCalendar.getKey());
+		Assert.assertEquals("24/7", defaultCalendar.getTitle());
 
-	@Test
-	public void testGetCalendarsPageWithCustomCalendars() throws Exception {
-		_registerCustomWorkflowMetricsSLACalendar();
-
-		Page<Calendar> calendarsPage = CalendarResource.getCalendarsPage();
-
-		List<Calendar> calendars = (List<Calendar>)calendarsPage.getItems();
-
-		Assert.assertEquals(calendars.toString(), 2, calendars.size());
-
-		for (Calendar calendar : calendars) {
-			if (calendar.getDefaultCalendar()) {
-				continue;
-			}
-
-			Assert.assertEquals(false, calendar.getDefaultCalendar());
-			Assert.assertEquals("custom", calendar.getKey());
-			Assert.assertEquals("Custom", calendar.getTitle());
-		}
-	}
-
-	private void _registerCustomWorkflowMetricsSLACalendar() {
 		_serviceRegistration = _bundleContext.registerService(
 			WorkflowMetricsSLACalendar.class,
 			new WorkflowMetricsSLACalendar() {
@@ -136,6 +113,22 @@ public class CalendarResourceTest extends BaseCalendarResourceTestCase {
 					put("sla.calendar.key", "custom");
 				}
 			});
+
+		calendarsPage = CalendarResource.getCalendarsPage();
+
+		calendars = (List<Calendar>)calendarsPage.getItems();
+
+		Assert.assertEquals(calendars.toString(), 2, calendars.size());
+
+		for (Calendar calendar : calendars) {
+			if (calendar.getDefaultCalendar()) {
+				continue;
+			}
+
+			Assert.assertEquals(false, calendar.getDefaultCalendar());
+			Assert.assertEquals("custom", calendar.getKey());
+			Assert.assertEquals("Custom", calendar.getTitle());
+		}
 	}
 
 	private static BundleContext _bundleContext;

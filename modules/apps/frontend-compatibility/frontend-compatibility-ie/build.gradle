@@ -138,10 +138,10 @@ buildClassList {
 	eachFile new StripPathSegmentsAction(5)
 
 	from {
-		zipTree(configurations.arrayOf.singleFile)
+		zipTree(configurations.classList.singleFile)
 	}
 
-	include "META-INF/resources/webjars/mdn-polyfills/5.8.0/Element.prototype.classList.js"
+	include "META-INF/resources/webjars/mdn-polyfills/5.16.0/Element.prototype.classList.js"
 	includeEmptyDirs = false
 	into "classes/META-INF/resources"
 
@@ -166,10 +166,10 @@ buildForEach {
 	eachFile new StripPathSegmentsAction(5)
 
 	from {
-		zipTree(configurations.arrayOf.singleFile)
+		zipTree(configurations.forEach.singleFile)
 	}
 
-	include "META-INF/resources/webjars/mdn-polyfills/5.8.0/NodeList.prototype.forEach.js"
+	include "META-INF/resources/webjars/mdn-polyfills/5.16.0/NodeList.prototype.forEach.js"
 	includeEmptyDirs = false
 	into "classes/META-INF/resources"
 
@@ -339,7 +339,7 @@ dependencies {
 
 	arrayOf group: "org.webjars.npm", name: "array.of", transitive: false, version: "0.1.1"
 
-	classList group: "org.webjars.npm", name: "mdn-polyfills", transitive: false, version: "5.8.0"
+	classList group: "org.webjars.npm", name: "mdn-polyfills", transitive: false, version: "5.16.0"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -350,7 +350,7 @@ dependencies {
 
 	fetch group: "org.webjars.npm", name: "whatwg-fetch", transitive: false, version: "2.0.4"
 
-	forEach group: "org.webjars.npm", name: "mdn-polyfills", transitive: false, version: "5.8.0"
+	forEach group: "org.webjars.npm", name: "mdn-polyfills", transitive: false, version: "5.16.0"
 
 	formData group: "org.webjars.npm", name: "formdata-polyfill", transitive: false, version: "3.0.9"
 

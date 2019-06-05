@@ -141,12 +141,8 @@ SearchContainer searchContainer = assetPublisherDisplayContext.getSearchContaine
 	/>
 </c:if>
 
-<aui:script use="querystring-parse">
-	var queryString = window.location.search.substring(1);
-
-	var queryParamObj = new A.QueryString.parse(queryString);
-
-	var assetEntryId = queryParamObj['<portlet:namespace />assetEntryId'];
+<aui:script>
+	const assetEntryId = <%= assetPublisherDisplayContext.getAssetEntryId() %>
 
 	if (assetEntryId) {
 		window.location.hash = assetEntryId;

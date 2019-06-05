@@ -63,12 +63,10 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 	public void tearDown() throws Exception {
 		super.tearDown();
 
-		if (_process == null) {
-			return;
+		if (_process != null) {
+			_workflowMetricsRESTTestHelper.deleteProcess(
+				testGroup.getCompanyId(), _process.getId());
 		}
-
-		_workflowMetricsRESTTestHelper.deleteProcess(
-			testGroup.getCompanyId(), _process.getId());
 
 		for (Node node : _nodes) {
 			_workflowMetricsRESTTestHelper.deleteNode(
@@ -80,49 +78,30 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 
 	@Test
 	public void testGetProcessNodesPageLatestVersion() throws Exception {
-		_nodes.add(
-			_workflowMetricsRESTTestHelper.addNode(
-				testGroup.getCompanyId(), _process.getId(), "1.0",
-				new Node() {
-					{
-						id = 1L;
-						name = "A";
-					}
-				}));
-		_nodes.add(
-			_workflowMetricsRESTTestHelper.addNode(
-				testGroup.getCompanyId(), _process.getId(), "1.0",
-				new Node() {
-					{
-						id = 2L;
-						name = "B";
-					}
-				}));
+		Node node1 = randomNode();
+
+		node1.setId(1L);
+		node1.setName("A");
+
+		node1 = testGetProcessNodesPage_addNode(_process.getId(), node1);
+
+		Node node2 = randomNode();
+
+		node2.setId(2L);
+		node2.setName("B");
+
+		node2 = testGetProcessNodesPage_addNode(_process.getId(), node2);
 
 		_workflowMetricsRESTTestHelper.updateProcess(
 			testGroup.getCompanyId(), _process.getId(), "2.0");
 
-		Node node1 = new Node() {
-			{
-				id = 3L;
-				name = "A";
-			}
-		};
+		node1.setId(3L);
 
-		_nodes.add(
-			_workflowMetricsRESTTestHelper.addNode(
-				testGroup.getCompanyId(), _process.getId(), "2.0", node1));
+		node1 = testGetProcessNodesPage_addNode(_process.getId(), "2.0", node1);
 
-		Node node2 = new Node() {
-			{
-				id = 4L;
-				name = "B";
-			}
-		};
+		node2.setId(4L);
 
-		_nodes.add(
-			_workflowMetricsRESTTestHelper.addNode(
-				testGroup.getCompanyId(), _process.getId(), "2.0", node2));
+		node2 = testGetProcessNodesPage_addNode(_process.getId(), "2.0", node2);
 
 		Page<Node> page = NodeResource.getProcessNodesPage(_process.getId());
 
@@ -142,8 +121,15 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 	protected Node testGetProcessNodesPage_addNode(Long processId, Node node)
 		throws Exception {
 
+		return testGetProcessNodesPage_addNode(processId, "1.0", node);
+	}
+
+	protected Node testGetProcessNodesPage_addNode(
+			Long processId, String version, Node node)
+		throws Exception {
+
 		node = _workflowMetricsRESTTestHelper.addNode(
-			testGroup.getCompanyId(), processId, "1.0", node);
+			testGroup.getCompanyId(), processId, version, node);
 
 		_nodes.add(node);
 

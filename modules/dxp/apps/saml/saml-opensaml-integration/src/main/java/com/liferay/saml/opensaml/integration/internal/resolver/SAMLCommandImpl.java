@@ -15,7 +15,6 @@
 package com.liferay.saml.opensaml.integration.internal.resolver;
 
 import com.liferay.saml.opensaml.integration.resolver.Resolver;
-import com.liferay.saml.opensaml.integration.resolver.Resolver.SAMLCommand;
 
 import java.util.function.Function;
 
@@ -25,7 +24,7 @@ import org.opensaml.messaging.context.MessageContext;
  * @author Tomas Polesovsky
  */
 public class SAMLCommandImpl<MessageType, T, R extends Resolver>
-	implements SAMLCommand<T, R> {
+	implements Resolver.SAMLCommand<T, R> {
 
 	public SAMLCommandImpl(
 		Function<MessageContext<MessageType>, T> messageContextFunction) {

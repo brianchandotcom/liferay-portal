@@ -14,7 +14,6 @@
 
 package com.liferay.portal.workflow.metrics.internal.sla.processor;
 
-import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessor.TaskInterval;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
 
 import java.time.LocalDateTime;
@@ -33,7 +32,7 @@ public class WorkflowMetricsSLAStopwatch {
 		_workfowMetricsSLAStatus = workfowMetricsSLAStatus;
 	}
 
-	public List<TaskInterval> getTaskIntervals() {
+	public List<WorkflowMetricsSLAProcessor.TaskInterval> getTaskIntervals() {
 		return _taskIntervals;
 	}
 
@@ -67,7 +66,8 @@ public class WorkflowMetricsSLAStopwatch {
 		}
 
 		if (!isEmpty()) {
-			TaskInterval taskInterval = _taskIntervals.peek();
+			WorkflowMetricsSLAProcessor.TaskInterval taskInterval =
+				_taskIntervals.peek();
 
 			taskInterval.setEndLocalDateTime(endLocalDateTime);
 		}
@@ -84,7 +84,8 @@ public class WorkflowMetricsSLAStopwatch {
 			return;
 		}
 
-		TaskInterval taskInterval = new TaskInterval();
+		WorkflowMetricsSLAProcessor.TaskInterval taskInterval =
+			new WorkflowMetricsSLAProcessor.TaskInterval();
 
 		taskInterval.setEndLocalDateTime(LocalDateTime.MAX);
 		taskInterval.setStartLocalDateTime(startLocalDateTime);
@@ -100,7 +101,8 @@ public class WorkflowMetricsSLAStopwatch {
 		}
 
 		if (!isEmpty()) {
-			TaskInterval taskInterval = _taskIntervals.peek();
+			WorkflowMetricsSLAProcessor.TaskInterval taskInterval =
+				_taskIntervals.peek();
 
 			taskInterval.setEndLocalDateTime(endLocalDateTime);
 		}
@@ -108,7 +110,8 @@ public class WorkflowMetricsSLAStopwatch {
 		_workfowMetricsSLAStatus = WorkfowMetricsSLAStatus.STOPPED;
 	}
 
-	private final Stack<TaskInterval> _taskIntervals = new Stack<>();
+	private final Stack<WorkflowMetricsSLAProcessor.TaskInterval>
+		_taskIntervals = new Stack<>();
 	private WorkfowMetricsSLAStatus _workfowMetricsSLAStatus;
 
 }

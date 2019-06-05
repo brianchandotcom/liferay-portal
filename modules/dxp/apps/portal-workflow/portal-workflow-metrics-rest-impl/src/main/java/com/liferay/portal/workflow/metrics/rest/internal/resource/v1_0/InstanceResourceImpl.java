@@ -49,8 +49,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance.SLAStatus;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance.Status;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLAResult;
 import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.TimeRangeUtil;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
@@ -267,10 +265,12 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		TermsQuery termsQuery = _queries.terms("completed");
 
 		for (String status : statuses) {
-			if (Objects.equals(Status.COMPLETED.getValue(), status)) {
+			if (Objects.equals(Instance.Status.COMPLETED.getValue(), status)) {
 				termsQuery.addValue(Boolean.TRUE.toString());
 			}
-			else if (Objects.equals(Status.PENDING.getValue(), status)) {
+			else if (Objects.equals(
+						Instance.Status.PENDING.getValue(), status)) {
+
 				termsQuery.addValue(Boolean.FALSE.toString());
 			}
 		}
@@ -559,12 +559,12 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		return SLAResult.Status.RUNNING;
 	}
 
-	private Status _getStatus(Boolean completed) {
+	private Instance.Status _getStatus(Boolean completed) {
 		if (completed) {
-			return Status.COMPLETED;
+			return Instance.Status.COMPLETED;
 		}
 
-		return Status.PENDING;
+		return Instance.Status.PENDING;
 	}
 
 	private List<String> _getTaskNames(Bucket bucket) {
@@ -637,13 +637,13 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 	private void _setSLAStatus(Bucket bucket, Instance instance) {
 		if (_isOverdue(bucket)) {
-			instance.setSLAStatus(SLAStatus.OVERDUE);
+			instance.setSLAStatus(Instance.SLAStatus.OVERDUE);
 		}
 		else if (_isOnTime(bucket)) {
-			instance.setSLAStatus(SLAStatus.ON_TIME);
+			instance.setSLAStatus(Instance.SLAStatus.ON_TIME);
 		}
 		else {
-			instance.setSLAStatus(SLAStatus.UNTRACKED);
+			instance.setSLAStatus(Instance.SLAStatus.UNTRACKED);
 		}
 	}
 

@@ -17,7 +17,6 @@ package com.liferay.saml.web.internal.display.context;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.saml.runtime.metadata.LocalEntityManager;
-import com.liferay.saml.runtime.metadata.LocalEntityManager.CertificateUsage;
 
 import java.security.KeyStoreException;
 import java.security.UnrecoverableKeyException;
@@ -38,11 +37,12 @@ public class GeneralTabDefaultViewDisplayContext {
 	}
 
 	public X509CertificateStatus getX509CertificateStatus() {
-		return getX509CertificateStatus(CertificateUsage.SIGNING);
+		return getX509CertificateStatus(
+			LocalEntityManager.CertificateUsage.SIGNING);
 	}
 
 	public X509CertificateStatus getX509CertificateStatus(
-		CertificateUsage certificateUsage) {
+		LocalEntityManager.CertificateUsage certificateUsage) {
 
 		X509CertificateStatus x509CertificateStatus =
 			_x509CertificateStatuses.get(certificateUsage);
@@ -188,7 +188,7 @@ public class GeneralTabDefaultViewDisplayContext {
 		GeneralTabDefaultViewDisplayContext.class);
 
 	private final LocalEntityManager _localEntityManager;
-	private Map<CertificateUsage, X509CertificateStatus>
+	private Map<LocalEntityManager.CertificateUsage, X509CertificateStatus>
 		_x509CertificateStatuses = new HashMap<>();
 
 }

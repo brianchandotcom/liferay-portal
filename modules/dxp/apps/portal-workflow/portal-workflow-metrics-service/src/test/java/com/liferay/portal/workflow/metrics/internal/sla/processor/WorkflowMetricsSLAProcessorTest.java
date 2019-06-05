@@ -33,7 +33,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Optional;
 
 import org.junit.Assert;
@@ -364,7 +363,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 	private Document _createDocument(Map<String, Object> values) {
 		DocumentBuilder documentBuilder = new DocumentBuilderImpl();
 
-		for (Entry<String, Object> entry : values.entrySet()) {
+		for (Map.Entry<String, Object> entry : values.entrySet()) {
 			documentBuilder.setValue(entry.getKey(), entry.getValue());
 		}
 

@@ -28,7 +28,6 @@ import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.exception.CertificateKeyPasswordException;
 import com.liferay.saml.runtime.exception.UnsupportedBindingException;
 import com.liferay.saml.runtime.metadata.LocalEntityManager;
-import com.liferay.saml.runtime.metadata.LocalEntityManager.CertificateUsage;
 import com.liferay.saml.util.PortletPropsKeys;
 import com.liferay.saml.web.internal.constants.SamlAdminPortletKeys;
 
@@ -61,8 +60,9 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		CertificateUsage certificateUsage = CertificateUsage.valueOf(
-			ParamUtil.getString(actionRequest, "certificateUsage"));
+		LocalEntityManager.CertificateUsage certificateUsage =
+			LocalEntityManager.CertificateUsage.valueOf(
+				ParamUtil.getString(actionRequest, "certificateUsage"));
 
 		UnicodeProperties properties = PropertiesParamUtil.getProperties(
 			actionRequest, "settings--");
@@ -94,7 +94,7 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		_localEntityManager.deleteLocalEntityCertificate(
-			CertificateUsage.valueOf(
+			LocalEntityManager.CertificateUsage.valueOf(
 				ParamUtil.getString(actionRequest, "certificateUsage")));
 	}
 
@@ -117,14 +117,17 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected String getKeystoreCredentialPassword(
-			CertificateUsage certificateUsage, UnicodeProperties properties)
+			LocalEntityManager.CertificateUsage certificateUsage,
+			UnicodeProperties properties)
 		throws UnsupportedBindingException {
 
-		if (certificateUsage == CertificateUsage.SIGNING) {
+		if (certificateUsage == LocalEntityManager.CertificateUsage.SIGNING) {
 			return properties.getProperty(
 				PortletPropsKeys.SAML_KEYSTORE_CREDENTIAL_PASSWORD);
 		}
-		else if (certificateUsage == CertificateUsage.ENCRYPTION) {
+		else if (certificateUsage ==
+					LocalEntityManager.CertificateUsage.ENCRYPTION) {
+
 			return properties.getProperty(
 				PortletPropsKeys.SAML_KEYSTORE_ENCRYPTION_CREDENTIAL_PASSWORD);
 		}
@@ -140,8 +143,9 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 		UnicodeProperties properties = PropertiesParamUtil.getProperties(
 			actionRequest, "settings--");
 
-		CertificateUsage certificateUsage = CertificateUsage.valueOf(
-			ParamUtil.getString(actionRequest, "certificateUsage"));
+		LocalEntityManager.CertificateUsage certificateUsage =
+			LocalEntityManager.CertificateUsage.valueOf(
+				ParamUtil.getString(actionRequest, "certificateUsage"));
 
 		String keystoreCredentialPassword = getKeystoreCredentialPassword(
 			certificateUsage, properties);

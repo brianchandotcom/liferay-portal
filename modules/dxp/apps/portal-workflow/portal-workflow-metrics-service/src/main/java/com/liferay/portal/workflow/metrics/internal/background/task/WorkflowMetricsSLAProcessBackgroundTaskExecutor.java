@@ -45,7 +45,6 @@ import java.time.format.DateTimeFormatter;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -359,10 +358,11 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		Map<Long, LocalDateTime> createLocalDateTimes, long startNodeId,
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
 
-		Set<Entry<Long, LocalDateTime>> entrySet =
+		Set<Map.Entry<Long, LocalDateTime>> entrySet =
 			createLocalDateTimes.entrySet();
 
-		Stream<Entry<Long, LocalDateTime>> stream = entrySet.parallelStream();
+		Stream<Map.Entry<Long, LocalDateTime>> stream =
+			entrySet.parallelStream();
 
 		stream.map(
 			entry -> _workflowMetricsSLAProcessor.process(

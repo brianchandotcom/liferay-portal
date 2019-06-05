@@ -17,7 +17,6 @@ package com.liferay.saml.opensaml.integration.internal.resolver;
 import com.liferay.saml.opensaml.integration.internal.util.SamlUtil;
 import com.liferay.saml.opensaml.integration.resolver.AttributeResolver;
 import com.liferay.saml.opensaml.integration.resolver.Resolver;
-import com.liferay.saml.opensaml.integration.resolver.Resolver.SAMLCommand;
 import com.liferay.saml.opensaml.integration.resolver.UserResolver;
 
 import java.io.Serializable;
@@ -50,9 +49,10 @@ import org.opensaml.saml.saml2.metadata.SingleSignOnService;
  */
 public interface SAMLCommands {
 
-	public static SAMLCommand<Map<String, List<Serializable>>, UserResolver>
-		bearerAssertionAttributesWithMapping(
-			Properties userAttributeMappingsProperties) {
+	public static Resolver.SAMLCommand
+		<Map<String, List<Serializable>>, UserResolver>
+			bearerAssertionAttributesWithMapping(
+				Properties userAttributeMappingsProperties) {
 
 		return new UserResolverSAMLCommand<>(
 			messageContext -> {
@@ -131,7 +131,7 @@ public interface SAMLCommands {
 			});
 	}
 
-	public static SAMLCommand<List<String>, AttributeResolver>
+	public static Resolver.SAMLCommand<List<String>, AttributeResolver>
 		ssoServicesLocationForBinding(String binding) {
 
 		return new AttributeResolverSAMLCommand<>(
@@ -167,16 +167,17 @@ public interface SAMLCommands {
 			});
 	}
 
-	public SAMLCommand<String, Resolver> peerEntityId = new SAMLCommandImpl<>(
-		messageContext -> {
-			SAMLPeerEntityContext samlPeerEntityContext =
-				messageContext.getSubcontext(
-					SAMLPeerEntityContext.class, false);
+	public Resolver.SAMLCommand<String, Resolver> peerEntityId =
+		new SAMLCommandImpl<>(
+			messageContext -> {
+				SAMLPeerEntityContext samlPeerEntityContext =
+					messageContext.getSubcontext(
+						SAMLPeerEntityContext.class, false);
 
-			return samlPeerEntityContext.getEntityId();
-		});
+				return samlPeerEntityContext.getEntityId();
+			});
 
-	public SAMLCommand<String, Resolver> subjectNameFormat =
+	public Resolver.SAMLCommand<String, Resolver> subjectNameFormat =
 		new SAMLCommandImpl<>(
 			messageContext -> {
 				SAMLSubjectNameIdentifierContext
@@ -194,7 +195,7 @@ public interface SAMLCommands {
 				return nameID.getFormat();
 			});
 
-	public SAMLCommand<String, Resolver> subjectNameIdentifier =
+	public Resolver.SAMLCommand<String, Resolver> subjectNameIdentifier =
 		new SAMLCommandImpl<>(
 			messageContext -> {
 				SAMLSubjectNameIdentifierContext

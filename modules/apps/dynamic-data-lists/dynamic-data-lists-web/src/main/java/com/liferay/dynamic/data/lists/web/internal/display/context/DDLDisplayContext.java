@@ -826,9 +826,11 @@ public class DDLDisplayContext {
 
 		_hasAddRecordPermission = false;
 
-		if (_recordSet != null) {
+		DDLRecordSet recordSet = getRecordSet();
+
+		if (recordSet != null) {
 			_hasAddRecordPermission = DDLRecordSetPermission.contains(
-				getPermissionChecker(), _recordSet, DDLActionKeys.ADD_RECORD);
+				getPermissionChecker(), recordSet, DDLActionKeys.ADD_RECORD);
 		}
 
 		return _hasAddRecordPermission;

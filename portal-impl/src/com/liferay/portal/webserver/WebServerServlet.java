@@ -1515,69 +1515,61 @@ public class WebServerServlet extends HttpServlet {
 		final HttpServletRequest httpServletRequest,
 		final HttpServletResponse httpServletResponse, final User user) {
 
-		return new Callable<Void>() {
+		return () -> {
+			String path = HttpUtil.fixPath(httpServletRequest.getPathInfo());
 
-			@Override
-			public Void call() throws Exception {
-				String path = HttpUtil.fixPath(
-					httpServletRequest.getPathInfo());
+			String[] pathArray = StringUtil.split(path, CharPool.SLASH);
 
-				String[] pathArray = StringUtil.split(path, CharPool.SLASH);
-
-				if (pathArray.length == 0) {
-					sendGroups(
-						httpServletResponse, user,
-						httpServletRequest.getServletPath() + StringPool.SLASH +
-							path);
+			if (pathArray.length == 0) {
+				sendGroups(
+					httpServletResponse, user,
+					httpServletRequest.getServletPath() + StringPool.SLASH +
+						path);
+			}
+			else {
+				if (Validator.isNumber(pathArray[0])) {
+					sendFile(
+						httpServletRequest, httpServletResponse, user,
+						pathArray);
+				}
+				else if (PATH_PORTLET_FILE_ENTRY.equals(pathArray[0])) {
+					sendPortletFileEntry(
+						httpServletRequest, httpServletResponse, pathArray);
 				}
 				else {
-					if (Validator.isNumber(pathArray[0])) {
-						sendFile(
-							httpServletRequest, httpServletResponse, user,
-							pathArray);
+					if (PropsValues.WEB_SERVER_SERVLET_CHECK_IMAGE_GALLERY) {
+						if (isLegacyImageGalleryImageId(
+								httpServletRequest, httpServletResponse)) {
+
+							return null;
+						}
 					}
-					else if (PATH_PORTLET_FILE_ENTRY.equals(pathArray[0])) {
-						sendPortletFileEntry(
-							httpServletRequest, httpServletResponse, pathArray);
+
+					Image image = getImage(httpServletRequest, true);
+
+					if (image != null) {
+						if ((image.getCompanyId() != user.getCompanyId()) &&
+							_processCompanyInactiveRequest(
+								httpServletRequest, httpServletResponse,
+								image.getCompanyId())) {
+
+							return null;
+						}
+
+						writeImage(
+							image, httpServletRequest, httpServletResponse);
 					}
 					else {
-						if (PropsValues.
-								WEB_SERVER_SERVLET_CHECK_IMAGE_GALLERY) {
-
-							if (isLegacyImageGalleryImageId(
-									httpServletRequest, httpServletResponse)) {
-
-								return null;
-							}
-						}
-
-						Image image = getImage(httpServletRequest, true);
-
-						if (image != null) {
-							if ((image.getCompanyId() != user.getCompanyId()) &&
-								_processCompanyInactiveRequest(
-									httpServletRequest, httpServletResponse,
-									image.getCompanyId())) {
-
-								return null;
-							}
-
-							writeImage(
-								image, httpServletRequest, httpServletResponse);
-						}
-						else {
-							sendDocumentLibrary(
-								httpServletRequest, httpServletResponse, user,
-								httpServletRequest.getServletPath() +
-									StringPool.SLASH + path,
-								pathArray);
-						}
+						sendDocumentLibrary(
+							httpServletRequest, httpServletResponse, user,
+							httpServletRequest.getServletPath() +
+								StringPool.SLASH + path,
+							pathArray);
 					}
 				}
-
-				return null;
 			}
 
+			return null;
 		};
 	}
 

@@ -35,13 +35,13 @@ import java.util.Dictionary;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.Filter;
 import org.osgi.framework.InvalidSyntaxException;
-import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleWiring;
@@ -87,30 +87,17 @@ public class LanguageExtension {
 
 			Object aggregate = attributes.get("resource.bundle.aggregate");
 
-			String bundleSymbolicName = null;
-
-			Object bundleSymbolicNameObject = attributes.get(
-				"bundle.symbolic.name");
-
-			if (Validator.isNull(bundleSymbolicNameObject)) {
-				bundleSymbolicName = _bundle.getSymbolicName();
-			}
-			else {
-				bundleSymbolicName = bundleSymbolicNameObject.toString();
-			}
-
 			Object baseName = attributes.get("resource.bundle.base.name");
 
 			if (aggregate instanceof String) {
-				int serviceRanking = GetterUtil.getInteger(
-					attributes.get("service.ranking"), Integer.MIN_VALUE);
+				int aggregateId = _atomicInteger.incrementAndGet();
 
 				ServiceTrackerResourceBundleLoader
 					serviceTrackerResourceBundleLoader =
 						new ServiceTrackerResourceBundleLoader(
-							_bundleContext, (String)aggregate,
-							bundleSymbolicName, (String)baseName,
-							serviceRanking);
+							_bundleContext, (String)aggregate, aggregateId);
+
+				attributes.put("aggregateId", String.valueOf(aggregateId));
 
 				_serviceTrackerResourceBundleLoaders.add(
 					serviceTrackerResourceBundleLoader);
@@ -184,6 +171,8 @@ public class LanguageExtension {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LanguageExtension.class);
 
+	private static final AtomicInteger _atomicInteger = new AtomicInteger();
+
 	private final Bundle _bundle;
 	private final List<BundleCapability> _bundleCapabilities;
 	private final BundleContext _bundleContext;
@@ -196,8 +185,7 @@ public class LanguageExtension {
 		implements ResourceBundleLoader {
 
 		public ServiceTrackerResourceBundleLoader(
-			BundleContext bundleContext, String aggregate,
-			String bundleSymbolicName, String baseName, int limit) {
+			BundleContext bundleContext, String aggregate, int aggregateId) {
 
 			List<String> filterStrings = StringUtil.split(aggregate);
 
@@ -208,7 +196,8 @@ public class LanguageExtension {
 
 				filterString = StringBundler.concat(
 					"(&(objectClass=", ResourceBundleLoader.class.getName(),
-					")", filterString, ")");
+					")", filterString, "(|(!(aggregateId=*))(!(aggregateId=",
+					aggregateId, "))))");
 
 				try {
 					filter = bundleContext.createFilter(filterString);
@@ -218,9 +207,8 @@ public class LanguageExtension {
 				}
 
 				ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>
-					serviceTracker = new PredicateServiceTracker(
-						bundleContext, filter, bundleSymbolicName, baseName,
-						limit);
+					serviceTracker = new ServiceTracker<>(
+						bundleContext, filter, null);
 
 				serviceTracker.open();
 
@@ -269,95 +257,6 @@ public class LanguageExtension {
 		private final List
 			<ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>>
 				_serviceTrackers;
-
-	}
-
-	private static class PredicateServiceTracker
-		extends ServiceTracker<ResourceBundleLoader, ResourceBundleLoader> {
-
-		public PredicateServiceTracker(
-			BundleContext bundleContext, Filter filter,
-			String bundleSymbolicName, String baseName, int limit) {
-
-			super(bundleContext, filter, null);
-
-			_bundleSymbolicName = bundleSymbolicName;
-			_baseName = baseName;
-			_limit = limit;
-		}
-
-		@Override
-		public ResourceBundleLoader addingService(
-			ServiceReference<ResourceBundleLoader> serviceReference) {
-
-			if (_test(serviceReference)) {
-				return context.getService(serviceReference);
-			}
-
-			return null;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<ResourceBundleLoader> serviceReference,
-			ResourceBundleLoader resourceBundleLoader) {
-
-			if (!_test(serviceReference)) {
-				context.ungetService(serviceReference);
-
-				remove(serviceReference);
-			}
-
-			super.modifiedService(serviceReference, resourceBundleLoader);
-		}
-
-		private boolean _test(
-			ServiceReference<ResourceBundleLoader> serviceReference) {
-
-			String bundleSymbolicName = null;
-
-			Object bundleSymbolicNameObject = serviceReference.getProperty(
-				"bundle.symbolic.name");
-
-			if (bundleSymbolicNameObject == null) {
-				Bundle bundle = serviceReference.getBundle();
-
-				bundleSymbolicName = bundle.getSymbolicName();
-			}
-			else {
-				bundleSymbolicName = bundleSymbolicNameObject.toString();
-			}
-
-			String bundleBaseName = null;
-
-			Object bundleBaseNameObject = serviceReference.getProperty(
-				"resource.bundle.base.name");
-
-			if (bundleBaseNameObject == null) {
-				bundleBaseName = "content.Language";
-			}
-			else {
-				bundleBaseName = bundleBaseNameObject.toString();
-			}
-
-			if (_bundleSymbolicName.equals(bundleSymbolicName) &&
-				_baseName.equals(bundleBaseName)) {
-
-				int serviceRanking = GetterUtil.getInteger(
-					serviceReference.getProperty("service.ranking"),
-					Integer.MIN_VALUE);
-
-				if (_limit <= serviceRanking) {
-					return false;
-				}
-			}
-
-			return true;
-		}
-
-		private final String _bundleSymbolicName;
-		private final String _baseName;
-		private final int _limit;
 
 	}
 

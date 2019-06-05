@@ -39,6 +39,7 @@
 	</definition>
 
 	<definition extends="portal" name="portal.license">
+		<put name="pop_up" value="true" />
 		<put name="title" value="license" />
 		<put name="content" value="/portal/license.jsp" />
 	</definition>

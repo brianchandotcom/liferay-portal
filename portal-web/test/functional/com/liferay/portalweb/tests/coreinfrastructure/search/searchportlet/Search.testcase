@@ -1407,6 +1407,56 @@ definition {
 			searchAssetType = "Wiki Page");
 	}
 
+	test SearchWithNonLiferayIndex {
+		property test.name.skip.portal.instance = "Search#SearchWithNonLiferayIndex";
+
+		AntCommand(
+			locator1 = "build-test-elasticsearch6.xml",
+			value1 = "add-boston-dataset-index");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Search Page");
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-page");
+
+		SearchPortlets.addWidgets(searchPortletList = "Custom Filter,Low Level Search Options,Search Results,Search Bar");
+
+		SearchPortlets.configureCustomFilter(
+			customParameterName = "q",
+			federatedSearchKey = "s1",
+			filterField = "case_title,closure_reason",
+			filterQueryType = "Multi Match");
+
+		SearchPortlets.configureLowLevelSearchOptions(
+			federatedSearchKey = "s1",
+			indexes = "boston311");
+
+		SearchResultPortlet.configureSearchResults(
+			federatedSearchKey = "s1",
+			fieldsToDisplay = "case_title,closure_reason,case_enquiry_id");
+
+		SearchPortlets.searchWidget(searchTerm = "bicycle");
+
+		AssertTextEquals.assertPartialText(
+			key_searchAssetTitle = "Abandoned Bicycle",
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
+			value1 = "Abandoned Bicycle");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SearchResults#RESULTS_PORTLET_SEARCH_QUERY",
+			value1 = "1 results for bicycle");
+	}
+
 	@priority = "4"
 	test SearchXSSAsset {
 		ProductMenu.gotoPortlet(

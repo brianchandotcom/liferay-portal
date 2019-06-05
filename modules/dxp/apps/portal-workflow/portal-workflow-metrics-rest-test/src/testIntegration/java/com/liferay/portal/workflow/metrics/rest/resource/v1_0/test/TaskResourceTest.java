@@ -15,7 +15,8 @@
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.test.rule.Inject;
@@ -29,6 +30,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -50,11 +52,8 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_singleApproverDocument =
-			_workflowMetricsRESTTestHelper.getSingleApproverDocument(
-				testGroup.getCompanyId());
-
-		_workflowMetricsRESTTestHelper.deleteProcess(_singleApproverDocument);
+		_process = _workflowMetricsRESTTestHelper.addProcess(
+			testGroup.getCompanyId());
 	}
 
 	@After
@@ -62,21 +61,58 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 	public void tearDown() throws Exception {
 		super.tearDown();
 
-		_workflowMetricsRESTTestHelper.restoreProcess(_singleApproverDocument);
-
-		if (_process == null) {
-			return;
+		if (_process != null) {
+			_workflowMetricsRESTTestHelper.deleteProcess(
+				testGroup.getCompanyId(), _process.getId());
 		}
-
-		_workflowMetricsRESTTestHelper.deleteProcess(
-			testGroup.getCompanyId(), _process.getId());
 
 		for (Task task : _tasks) {
 			_workflowMetricsRESTTestHelper.deleteTask(
-				testGroup.getCompanyId(), _process.getId(), task.getName());
+				testGroup.getCompanyId(), _process.getId(), task.getKey());
 		}
 
 		_tasks = new ArrayList<>();
+	}
+
+	@Override
+	@Test
+	public void testGetProcessTasksPageWithSortInteger() throws Exception {
+		testGetProcessTasksPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, task1, task2) -> {
+				task1.setInstanceCount(0L);
+				task1.setOnTimeInstanceCount(0L);
+				task1.setOverdueInstanceCount(0L);
+
+				task2.setInstanceCount(3L);
+				task2.setOnTimeInstanceCount(1L);
+				task2.setOverdueInstanceCount(1L);
+			});
+	}
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {
+			"instanceCount", "key", "onTimeInstanceCount",
+			"overdueInstanceCount"
+		};
+	}
+
+	@Override
+	protected Task randomTask() throws Exception {
+		Task task = super.randomTask();
+
+		int instanceCount = RandomTestUtil.randomInt(0, 20);
+
+		task.setInstanceCount((long)instanceCount);
+		int onTimeInstanceCount = RandomTestUtil.randomInt(0, instanceCount);
+
+		task.setOnTimeInstanceCount((long)onTimeInstanceCount);
+		task.setOverdueInstanceCount(
+			(long)RandomTestUtil.randomInt(
+				0, instanceCount - onTimeInstanceCount));
+
+		return task;
 	}
 
 	@Override
@@ -93,9 +129,6 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 	@Override
 	protected Long testGetProcessTasksPage_getProcessId() throws Exception {
-		_process = _workflowMetricsRESTTestHelper.addProcess(
-			testGroup.getCompanyId());
-
 		return _process.getId();
 	}
 
@@ -105,7 +138,6 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 	@Inject
 	private static SearchEngineAdapter _searchEngineAdapter;
 
-	private static Document _singleApproverDocument;
 	private static WorkflowMetricsRESTTestHelper _workflowMetricsRESTTestHelper;
 
 	private Process _process;

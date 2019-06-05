@@ -179,6 +179,26 @@ public class WorkflowMetricsRESTTestHelper {
 			slaDefinitionId);
 	}
 
+	public void addSLATaskResult(
+			long companyId, Instance instance, boolean onTime, long taskId,
+			String taskName)
+		throws Exception {
+
+		long slaDefinitionId = RandomTestUtil.randomLong();
+
+		_invokeAddDocument(
+			_getIndexer(_CLASS_NAME_SLA_TASK_RESULT_INDEXER),
+			_creatWorkflowMetricsSLATaskResultDocument(
+				companyId, instance.getProcessId(), instance.getId(),
+				slaDefinitionId, onTime, taskId, taskName));
+
+		_retryAssertCount(
+			"workflow-metrics-sla-task-results", "slaDefinitionId",
+			slaDefinitionId);
+
+		addToken(companyId, instance, taskId, taskName);
+	}
+
 	public Task addTask(long companyId, long processId, Task task)
 		throws Exception {
 
@@ -187,14 +207,37 @@ public class WorkflowMetricsRESTTestHelper {
 		_invokeAddDocument(
 			_getIndexer(_CLASS_NAME_NODE_INDEXER),
 			_createWorkflowMetricsNodeDocument(
-				companyId, taskId, task.getName(), processId, "TASK", "1.0"));
+				companyId, taskId, task.getKey(), processId, "TASK", "1.0"));
 
 		_retryAssertCount("workflow-metrics-nodes", "nodeId", taskId);
 		_retryAssertCount(
 			"workflow-metrics-sla-task-results", "taskId", taskId);
 		_retryAssertCount("workflow-metrics-tokens", "taskId", taskId);
 
-		return task;
+		return new Task() {
+			{
+				instanceCount = 0L;
+				key = task.getKey();
+				name = task.getName();
+				onTimeInstanceCount = 0L;
+				overdueInstanceCount = 0L;
+			}
+		};
+	}
+
+	public void addToken(
+			long companyId, Instance instance, long taskId, String taskName)
+		throws Exception {
+
+		long tokenId = RandomTestUtil.randomLong();
+
+		_invokeAddDocument(
+			_getIndexer(_CLASS_NAME_TOKEN_INDEXER),
+			_creatWorkflowMetricsTokenDocument(
+				companyId, instance.getProcessId(), instance.getId(), taskId,
+				taskName, tokenId, "1.0"));
+
+		_retryAssertCount("workflow-metrics-tokens", "tokenId", tokenId);
 	}
 
 	public void deleteInstance(long companyId, long instanceId, long processId)
@@ -381,6 +424,51 @@ public class WorkflowMetricsRESTTestHelper {
 		return document;
 	}
 
+	private Document _creatWorkflowMetricsSLATaskResultDocument(
+		long companyId, long processId, long instanceId, long slaDefinitionId,
+		boolean onTime, long taskId, String taskName) {
+
+		Document document = new DocumentImpl();
+
+		document.addUID(
+			"WorkflowMetricsSLATaskResult",
+			_digest(companyId, instanceId, processId, processId, taskId));
+		document.addKeyword("companyId", companyId);
+		document.addKeyword("deleted", false);
+		document.addKeyword("elapsedTime", onTime ? 1000 : -1000);
+		document.addKeyword("instanceId", instanceId);
+		document.addKeyword("onTime", onTime);
+		document.addKeyword("processId", processId);
+		document.addKeyword("slaDefinitionId", slaDefinitionId);
+		document.addKeyword("status", "RUNNING");
+		document.addKeyword("taskId", taskId);
+		document.addKeyword("taskName", taskName);
+
+		return document;
+	}
+
+	private Document _creatWorkflowMetricsTokenDocument(
+		long companyId, long processId, long instanceId, long taskId,
+		String taskName, long tokenId, String version) {
+
+		Document document = new DocumentImpl();
+
+		document.addUID(
+			"WorkflowMetricsToken",
+			_digest(companyId, instanceId, processId, taskId, tokenId));
+		document.addKeyword("companyId", companyId);
+		document.addKeyword("completed", false);
+		document.addKeyword("deleted", false);
+		document.addKeyword("instanceId", instanceId);
+		document.addKeyword("processId", processId);
+		document.addKeyword("taskId", taskId);
+		document.addKeyword("taskName", taskName);
+		document.addKeyword("tokenId", tokenId);
+		document.addKeyword("version", version);
+
+		return document;
+	}
+
 	private String _digest(Serializable... parts) {
 		StringBuilder sb = new StringBuilder();
 
@@ -452,13 +540,15 @@ public class WorkflowMetricsRESTTestHelper {
 
 		Method method = null;
 
-		try {
-			method = ReflectionUtil.getDeclaredMethod(
-				indexerClass, methodName, Document.class);
-		}
-		catch (NoSuchMethodException nsme) {
-			method = ReflectionUtil.getDeclaredMethod(
-				indexerClass.getSuperclass(), methodName, Document.class);
+		while ((indexerClass != Object.class) && (method == null)) {
+			try {
+				method = ReflectionUtil.getDeclaredMethod(
+					indexerClass, methodName, Document.class);
+			}
+			catch (NoSuchMethodException nsme) {
+			}
+
+			indexerClass = indexerClass.getSuperclass();
 		}
 
 		method.invoke(indexer, document);
@@ -506,6 +596,14 @@ public class WorkflowMetricsRESTTestHelper {
 	private static final String _CLASS_NAME_SLA_PROCESS_RESULT_INDEXER =
 		"com.liferay.portal.workflow.metrics.internal.search.index." +
 			"SLAProcessResultWorkflowMetricsIndexer";
+
+	private static final String _CLASS_NAME_SLA_TASK_RESULT_INDEXER =
+		"com.liferay.portal.workflow.metrics.internal.search.index." +
+			"SLATaskResultWorkflowMetricsIndexer";
+
+	private static final String _CLASS_NAME_TOKEN_INDEXER =
+		"com.liferay.portal.workflow.metrics.internal.search.index." +
+			"TokenWorkflowMetricsIndexer";
 
 	private static Map<String, Object> _indexers = new HashMap<>();
 

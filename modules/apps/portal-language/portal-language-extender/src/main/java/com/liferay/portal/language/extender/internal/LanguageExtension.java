@@ -36,6 +36,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleWiring;
@@ -69,7 +70,7 @@ public class LanguageExtension {
 		}
 	}
 
-	public void start() {
+	public void start() throws InvalidSyntaxException {
 		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 
 		for (BundleCapability bundleCapability : _bundleCapabilities) {

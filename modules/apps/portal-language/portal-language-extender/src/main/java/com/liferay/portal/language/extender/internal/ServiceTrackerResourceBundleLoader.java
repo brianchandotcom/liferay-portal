@@ -36,26 +36,19 @@ public class ServiceTrackerResourceBundleLoader
 	implements ResourceBundleLoader {
 
 	public ServiceTrackerResourceBundleLoader(
-		BundleContext bundleContext, String aggregate, int aggregateId) {
+			BundleContext bundleContext, String aggregate, int aggregateId)
+		throws InvalidSyntaxException {
 
 		List<String> filterStrings = StringUtil.split(aggregate);
 
 		_serviceTrackers = new ArrayList<>(filterStrings.size());
 
 		for (String filterString : filterStrings) {
-			Filter filter = null;
-
-			filterString = StringBundler.concat(
-				"(&(objectClass=", ResourceBundleLoader.class.getName(), ")",
-				filterString, "(|(!(aggregateId=*))(!(aggregateId=",
-				aggregateId, "))))");
-
-			try {
-				filter = bundleContext.createFilter(filterString);
-			}
-			catch (InvalidSyntaxException ise) {
-				throw new IllegalArgumentException(ise);
-			}
+			Filter filter = bundleContext.createFilter(
+				StringBundler.concat(
+					"(&(objectClass=", ResourceBundleLoader.class.getName(),
+					")", filterString, "(|(!(aggregateId=*))(!(aggregateId=",
+					aggregateId, "))))"));
 
 			ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>
 				serviceTracker = new ServiceTracker<>(

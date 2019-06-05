@@ -21,6 +21,7 @@ import java.util.List;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
@@ -53,7 +54,14 @@ public class LanguageExtender
 		LanguageExtension languageExtension = new LanguageExtension(
 			_bundleContext, bundle, bundleCapabilities);
 
-		languageExtension.start();
+		try {
+			languageExtension.start();
+		}
+		catch (InvalidSyntaxException ise) {
+			languageExtension.destroy();
+
+			throw new RuntimeException(ise);
+		}
 
 		return languageExtension;
 	}

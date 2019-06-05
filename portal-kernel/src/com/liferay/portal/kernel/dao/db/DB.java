@@ -63,11 +63,11 @@ public interface DB {
 		return null;
 	}
 
+	public Integer getSqlType(String templateType);
+
 	public String getTemplateBlob();
 
 	public String getTemplateFalse();
-
-	public Integer getSqlType(String templateType);
 
 	public String getTemplateTrue();
 

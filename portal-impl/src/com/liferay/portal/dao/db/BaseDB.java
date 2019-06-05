@@ -233,6 +233,10 @@ public abstract class BaseDB implements DB {
 		return _minorVersion;
 	}
 
+	public Integer getSqlType(String templateType) {
+		return sqlTypesMap.get(templateType);
+	}
+
 	@Override
 	public String getTemplateBlob() {
 		return getTemplate()[5];
@@ -241,10 +245,6 @@ public abstract class BaseDB implements DB {
 	@Override
 	public String getTemplateFalse() {
 		return getTemplate()[2];
-	}
-
-	public Integer getSqlType(String templateType) {
-		return sqlTypesMap.get(templateType);
 	}
 
 	@Override

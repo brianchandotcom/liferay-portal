@@ -217,7 +217,7 @@ public class DBInspector {
 
 		DB db = DBManagerUtil.getDB();
 
-		return db.getTemplateFieldType(matcher.group(1));
+		return db.getSqlType(matcher.group(1));
 	}
 
 	private int _getColumnSize(String columnType) throws UpgradeException {

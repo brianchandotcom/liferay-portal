@@ -44,6 +44,8 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.http.context.ServletContextHelper;
+import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -156,26 +158,51 @@ public class GraphQLServletExtender {
 				_graphQLObjectHandler.getObject(
 					query.getClass(), processingElementsContainer));
 
+			Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+			Class<? extends ServletData> clazz = servletData.getClass();
+
+			String path = servletData.getPath();
+
+			String servletContextName = path.split("/")[1];
+
+			properties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
+				clazz.getName());
+
+			properties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN, "/*");
+
+			properties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
+				servletContextName);
+
+			Dictionary<String, Object> helperProperties =
+				new HashMapDictionary<>();
+
+			helperProperties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
+				servletContextName);
+			helperProperties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH, path);
+			helperProperties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET,
+				clazz.getName());
+			helperProperties.put("liferay.graphql.auth", true);
+
+			_servletContextHelperServiceRegistration =
+				_bundleContext.registerService(
+					ServletContextHelper.class,
+					new ServletContextHelper(_bundleContext.getBundle()) {
+					},
+					helperProperties);
+
 			// Servlet
 
 			SimpleGraphQLHttpServlet.Builder servletBuilder =
 				SimpleGraphQLHttpServlet.newBuilder(schemaBuilder.build());
 
 			Servlet servlet = servletBuilder.build();
-
-			Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-			String path = servletData.getPath();
-
-			properties.put("osgi.http.whiteboard.context.path", path);
-
-			Class<? extends ServletData> clazz = servletData.getClass();
-
-			properties.put(
-				"osgi.http.whiteboard.servlet.name", clazz.getName());
-
-			properties.put(
-				"osgi.http.whiteboard.servlet.pattern", path.concat("/*"));
 
 			return _bundleContext.registerService(
 				Servlet.class, servlet, properties);
@@ -192,6 +219,8 @@ public class GraphQLServletExtender {
 			ServiceReference<ServletData> serviceReference,
 			ServiceRegistration<Servlet> serviceRegistration) {
 
+			_servletContextHelperServiceRegistration.unregister();
+
 			serviceRegistration.unregister();
 
 			_bundleContext.ungetService(serviceReference);
@@ -204,6 +233,8 @@ public class GraphQLServletExtender {
 		}
 
 		private final BundleContext _bundleContext;
+		private ServiceRegistration<ServletContextHelper>
+			_servletContextHelperServiceRegistration;
 
 	}
 

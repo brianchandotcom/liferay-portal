@@ -15,6 +15,7 @@ dependencies {
 	testIntegrationCompile project(":core:petra:petra-function")
 	testIntegrationCompile project(":core:petra:petra-reflect")
 	testIntegrationCompile project(":core:petra:petra-string")
+	testIntegrationCompile project(":private:apps:portal-workflow:portal-workflow-metrics-api")
 	testIntegrationCompile project(":private:apps:portal-workflow:portal-workflow-metrics-rest-api")
 	testIntegrationCompile project(":private:apps:portal-workflow:portal-workflow-metrics-rest-client")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

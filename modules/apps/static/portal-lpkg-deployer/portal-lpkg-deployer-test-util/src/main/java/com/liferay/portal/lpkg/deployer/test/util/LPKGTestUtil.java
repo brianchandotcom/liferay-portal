@@ -34,6 +34,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import org.osgi.framework.Constants;
+import org.osgi.framework.Version;
 
 /**
  * @author Matthew Tambara
@@ -41,6 +42,12 @@ import org.osgi.framework.Constants;
 public class LPKGTestUtil {
 
 	public static InputStream createJAR(String symbolicName)
+		throws IOException {
+
+		return createJAR(symbolicName, _DEFAULT_VERSION);
+	}
+
+	public static InputStream createJAR(String symbolicName, Version version)
 		throws IOException {
 
 		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
@@ -56,7 +63,8 @@ public class LPKGTestUtil {
 				attributes.putValue(Constants.BUNDLE_MANIFESTVERSION, "2");
 				attributes.putValue(
 					Constants.BUNDLE_SYMBOLICNAME, symbolicName);
-				attributes.putValue(Constants.BUNDLE_VERSION, "1.0.0");
+				attributes.putValue(
+					Constants.BUNDLE_VERSION, version.toString());
 				attributes.putValue("Manifest-Version", "2");
 
 				jarOutputStream.putNextEntry(
@@ -77,17 +85,28 @@ public class LPKGTestUtil {
 			Path path, String symbolicName, boolean createWar)
 		throws IOException {
 
+		createLPKG(
+			path, symbolicName, createWar, _DEFAULT_VERSION, _DEFAULT_VERSION);
+	}
+
+	public static void createLPKG(
+			Path path, String symbolicName, boolean createWar,
+			Version lpkgVersion, Version jarVersion)
+		throws IOException {
+
 		try (ZipOutputStream zipOutputStream = new ZipOutputStream(
 				new FileOutputStream(path.toFile()))) {
 
 			zipOutputStream.putNextEntry(
 				new ZipEntry("liferay-marketplace.properties"));
 
-			StringBundler sb = new StringBundler(13);
+			StringBundler sb = new StringBundler(16);
 
 			sb.append("bundles=");
 			sb.append(symbolicName);
-			sb.append("#1.0.0##\n");
+			sb.append("#");
+			sb.append(jarVersion.toString());
+			sb.append("##\n");
 			sb.append("category=Test\n");
 			sb.append("context-names=\n");
 			sb.append("description=Test\n");
@@ -103,7 +122,8 @@ public class LPKGTestUtil {
 
 			sb.append(name.substring(0, name.indexOf(".lpkg")));
 
-			sb.append("\nversion=1.0");
+			sb.append("\nversion=");
+			sb.append(lpkgVersion.toString());
 
 			String properties = sb.toString();
 
@@ -112,9 +132,11 @@ public class LPKGTestUtil {
 			zipOutputStream.closeEntry();
 
 			zipOutputStream.putNextEntry(
-				new ZipEntry(symbolicName.concat("-1.0.0.jar")));
+				new ZipEntry(
+					StringBundler.concat(
+						symbolicName, "-", jarVersion.toString(), ".jar")));
 
-			try (InputStream inputStream = createJAR(symbolicName);
+			try (InputStream inputStream = createJAR(symbolicName, jarVersion);
 				OutputStream outputStream = StreamUtil.uncloseable(
 					zipOutputStream)) {
 
@@ -176,5 +198,7 @@ public class LPKGTestUtil {
 				unsyncByteArrayOutputStream.size());
 		}
 	}
+
+	private static final Version _DEFAULT_VERSION = new Version(1, 0, 0);
 
 }

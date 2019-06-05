@@ -181,4 +181,5 @@ definition {
 				locator1 = "Message#INFO_SPECIFIC");
 		}
 	}
+
 }

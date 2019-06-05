@@ -29,31 +29,31 @@ public class ServerInfo {
 
 	public static boolean isCompatible(SyncContext syncContext) {
 		return isCompatible(
-			syncContext.getPluginVersion(), "1.0.0", "2.0.0", "3.0.0",
+			syncContext.getPluginVersion(), "1.0.0", "2.0.0", "3.0.0", "4.0.0",
 			"6.2.0.4");
 	}
 
 	public static boolean supportsDeviceRegistration(long syncAccountId) {
 		return isCompatible(
-			syncAccountId, "1.0.0", "2.0.0", "3.0.0", "6.2.0.7");
+			syncAccountId, "1.0.0", "2.0.0", "3.0.0", "4.0.0", "6.2.0.7");
 	}
 
 	public static boolean supportsModuleFramework(long syncAccountId) {
-		return isCompatible(syncAccountId, "1.0.0", "2.0.0", "3.0.0");
+		return isCompatible(syncAccountId, "1.0.0", "2.0.0", "3.0.0", "4.0.0");
 	}
 
 	public static boolean supportsModuleFramework(String pluginVersion) {
-		return isCompatible(pluginVersion, "1.0.0", "2.0.0", "3.0.0");
+		return isCompatible(pluginVersion, "1.0.0", "2.0.0", "3.0.0", "4.0.0");
 	}
 
 	public static boolean supportsPartialDownloads(long syncAccountId) {
 		return isCompatible(
-			syncAccountId, "1.0.0", "2.0.0", "3.0.0", "6.2.0.5");
+			syncAccountId, "1.0.0", "2.0.0", "3.0.0", "4.0.0", "6.2.0.5");
 	}
 
 	public static boolean supportsRetrieveFromCache(long syncAccountId) {
 		return isCompatible(
-			syncAccountId, "1.0.0", "2.0.0", "3.0.0", "6.2.0.5");
+			syncAccountId, "1.0.0", "2.0.0", "3.0.0", "4.0.0", "6.2.0.5");
 	}
 
 	protected static int getPluginMajorVersion(String pluginVersion) {

@@ -54,8 +54,7 @@ public class FinderPath {
 		_columnBitmask = columnBitmask;
 
 		if (BaseModel.class.isAssignableFrom(_resultClass)) {
-			_cacheKeyGeneratorCacheName =
-				FinderCache.class.getName() + "#BaseModel";
+			_cacheKeyGeneratorCacheName = _BASE_MODEL_CACHE_KEY_GENERATOR_NAME;
 		}
 		else {
 			_cacheKeyGeneratorCacheName = FinderCache.class.getName();
@@ -194,6 +193,9 @@ public class FinderPath {
 	}
 
 	private static final String _ARGS_SEPARATOR = "_A_";
+
+	private static final String _BASE_MODEL_CACHE_KEY_GENERATOR_NAME =
+		FinderCache.class.getName() + "#BaseModel";
 
 	private static final String _PARAMS_SEPARATOR = "_P_";
 

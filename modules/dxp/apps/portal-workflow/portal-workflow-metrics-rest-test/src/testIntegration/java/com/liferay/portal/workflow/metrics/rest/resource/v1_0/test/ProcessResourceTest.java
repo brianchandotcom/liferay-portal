@@ -106,6 +106,21 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 	}
 
 	@Test
+	public void testGetProcessesPageWithTitle() throws Exception {
+		Process process = randomProcess();
+
+		testGetProcessesPage_addProcess(process);
+
+		testGetProcessesPage_addProcess(randomProcess());
+
+		Page<Process> page = ProcessResource.getProcessesPage(
+			process.getTitle(), Pagination.of(1, 2), null);
+
+		assertEquals(
+			Collections.singletonList(process), (List<Process>)page.getItems());
+	}
+
+	@Test
 	public void testGetProcessPendingInstances() throws Exception {
 		Process postProcess = randomProcess();
 

@@ -89,14 +89,18 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 				row.setParameter("hasDeletePermission", String.valueOf(ddlViewRecordsDisplayContext.hasDeletePermission()));
 				row.setParameter("hasUpdatePermission", String.valueOf(ddlViewRecordsDisplayContext.hasUpdatePermission()));
 
-				PortletURL rowURL = renderResponse.createRenderURL();
+				PortletURL rowURL = null;
 
-				rowURL.setParameter("mvcPath", "/view_record.jsp");
-				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("recordId", String.valueOf(record.getRecordId()));
-				rowURL.setParameter("version", recordVersion.getVersion());
-				rowURL.setParameter("editable", String.valueOf(ddlViewRecordsDisplayContext.isEditable()));
-				rowURL.setParameter("formDDMTemplateId", String.valueOf(formDDMTemplateId));
+				if (ddlViewRecordsDisplayContext.isEditable()) {
+					rowURL = renderResponse.createRenderURL();
+
+					rowURL.setParameter("mvcPath", "/view_record.jsp");
+					rowURL.setParameter("redirect", currentURL);
+					rowURL.setParameter("recordId", String.valueOf(record.getRecordId()));
+					rowURL.setParameter("version", recordVersion.getVersion());
+					rowURL.setParameter("editable", String.valueOf(ddlViewRecordsDisplayContext.isEditable()));
+					rowURL.setParameter("formDDMTemplateId", String.valueOf(formDDMTemplateId));
+				}
 
 				// Columns
 
@@ -111,12 +115,7 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 						value = ddmFormFieldValueRenderer.render(ddmFormFieldValues, themeDisplay.getLocale());
 					}
 
-					if (ddlViewRecordsDisplayContext.isEditable()) {
-						row.addText(value, rowURL);
-					}
-					else {
-						row.addText(value);
-					}
+					row.addText(value, rowURL);
 				}
 
 				if (ddlViewRecordsDisplayContext.hasUpdatePermission()) {

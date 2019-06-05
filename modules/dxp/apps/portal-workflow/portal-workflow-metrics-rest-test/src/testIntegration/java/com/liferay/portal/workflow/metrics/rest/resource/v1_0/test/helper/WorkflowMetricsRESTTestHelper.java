@@ -431,7 +431,7 @@ public class WorkflowMetricsRESTTestHelper {
 
 		document.addUID(
 			"WorkflowMetricsSLAProcessResult",
-			_digest(companyId, instanceId, processId, processId));
+			_digest(companyId, instanceId, processId));
 		document.addKeyword("companyId", companyId);
 		document.addKeyword("deleted", false);
 		document.addKeyword("elapsedTime", onTime ? 1000 : -1000);
@@ -452,7 +452,7 @@ public class WorkflowMetricsRESTTestHelper {
 
 		document.addUID(
 			"WorkflowMetricsSLATaskResult",
-			_digest(companyId, instanceId, processId, processId, taskId));
+			_digest(companyId, instanceId, processId, taskId));
 		document.addKeyword("companyId", companyId);
 		document.addKeyword("deleted", false);
 		document.addKeyword("elapsedTime", onTime ? 1000 : -1000);

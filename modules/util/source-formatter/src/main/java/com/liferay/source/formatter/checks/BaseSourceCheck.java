@@ -315,18 +315,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	protected String getGitContent(String fileName, String branchName)
 		throws IOException {
 
-		URL url = _getPortalGitURL(fileName, branchName);
-
-		if (url == null) {
-			return null;
-		}
-
-		try {
-			return StringUtil.read(url.openStream());
-		}
-		catch (IOException ioe) {
-			return null;
-		}
+		return SourceFormatterUtil.getGitContent(fileName, branchName);
 	}
 
 	protected int getLeadingTabCount(String line) {
@@ -492,7 +481,8 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		String portalBranchName = getAttributeValue(
 			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, absolutePath);
 
-		URL url = _getPortalGitURL(fileName, portalBranchName);
+		URL url = SourceFormatterUtil.getPortalGitURL(
+			fileName, portalBranchName);
 
 		if (url != null) {
 			return url.openStream();
@@ -696,22 +686,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";
-
-	private URL _getPortalGitURL(String fileName, String portalBranchName) {
-		if (Validator.isNull(portalBranchName)) {
-			return null;
-		}
-
-		try {
-			return new URL(
-				StringBundler.concat(
-					SourceFormatterUtil.GIT_LIFERAY_PORTAL_URL,
-					portalBranchName, StringPool.SLASH, fileName));
-		}
-		catch (Exception e) {
-			return null;
-		}
-	}
 
 	private JSONObject _attributesJSONObject = new JSONObjectImpl();
 	private final Map<String, String> _attributeValueMap =

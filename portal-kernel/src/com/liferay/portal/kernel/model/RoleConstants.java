@@ -25,7 +25,10 @@ import java.util.Locale;
  * and the role types.
  *
  * @author Brian Wing Shun Chan
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ *             com.liferay.portal.kernel.model.role.RoleConstants}
  */
+@Deprecated
 public class RoleConstants {
 
 	public static final String ADMINISTRATOR = "Administrator";

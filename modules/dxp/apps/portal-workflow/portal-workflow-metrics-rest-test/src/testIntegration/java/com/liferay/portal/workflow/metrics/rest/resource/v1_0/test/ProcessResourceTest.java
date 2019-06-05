@@ -105,6 +105,24 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 		assertValid(getProcess);
 	}
 
+	@Test
+	public void testGetProcessPendingInstances() throws Exception {
+		Process postProcess = randomProcess();
+
+		postProcess.setInstanceCount(1L);
+		postProcess.setOnTimeInstanceCount(0L);
+		postProcess.setOverdueInstanceCount(0L);
+		postProcess.setUntrackedInstanceCount(1L);
+
+		testGetProcessesPage_addProcess(postProcess);
+
+		Process getProcess = ProcessResource.getProcess(
+			postProcess.getId(), false, null);
+
+		assertEquals(postProcess, getProcess);
+		assertValid(getProcess);
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {

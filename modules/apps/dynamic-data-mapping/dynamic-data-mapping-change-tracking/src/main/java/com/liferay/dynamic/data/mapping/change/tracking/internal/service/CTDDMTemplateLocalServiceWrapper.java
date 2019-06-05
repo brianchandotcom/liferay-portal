@@ -18,7 +18,6 @@ import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.engine.CTManager;
 import com.liferay.change.tracking.engine.exception.CTEngineException;
-import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
@@ -183,7 +182,11 @@ public class CTDDMTemplateLocalServiceWrapper
 			ddmTemplateVersions.stream();
 
 		return ddmTemplateVersionStream.filter(
-			this::_isRetrievableVersion
+			ddmTemplateVersion -> _ctManager.isRetrievableVersion(
+				ddmTemplateVersion.getCompanyId(),
+				PrincipalThreadLocal.getUserId(),
+				_portal.getClassNameId(DDMTemplateVersion.class.getName()),
+				ddmTemplateVersion.getTemplateVersionId())
 		).findFirst();
 	}
 
@@ -221,10 +224,7 @@ public class CTDDMTemplateLocalServiceWrapper
 			return false;
 		}
 
-		if (!_ctEngineManager.isChangeTrackingEnabled(
-				ddmTemplate.getCompanyId()) ||
-			_isBasicWebContent(ddmTemplate)) {
-
+		if (_isBasicWebContent(ddmTemplate)) {
 			return true;
 		}
 
@@ -235,33 +235,6 @@ public class CTDDMTemplateLocalServiceWrapper
 		return _getRetrievableVersionOptional(
 			ddmTemplate
 		).isPresent();
-	}
-
-	private boolean _isRetrievableVersion(
-		DDMTemplateVersion ddmTemplateVersion) {
-
-		if (!_ctManager.isDraftChange(
-				_portal.getClassNameId(DDMTemplateVersion.class.getName()),
-				ddmTemplateVersion.getTemplateVersionId())) {
-
-			return true;
-		}
-
-		if (_ctManager.isProductionCheckedOut(
-				ddmTemplateVersion.getCompanyId(),
-				PrincipalThreadLocal.getUserId())) {
-
-			return false;
-		}
-
-		Optional<CTEntry> ctEntryOptional =
-			_ctManager.getActiveCTCollectionCTEntryOptional(
-				ddmTemplateVersion.getCompanyId(),
-				PrincipalThreadLocal.getUserId(),
-				_portal.getClassNameId(DDMTemplateVersion.class.getName()),
-				ddmTemplateVersion.getTemplateVersionId());
-
-		return ctEntryOptional.isPresent();
 	}
 
 	private DDMTemplate _populateDDMTemplate(DDMTemplate ddmTemplate) {

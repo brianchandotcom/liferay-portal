@@ -311,6 +311,22 @@ public interface CTManager {
 	public boolean isProductionCheckedOut(long companyId, long userId);
 
 	/**
+	 * Returns <code>true</code> if the version entity specified by the given
+	 * classNameId and classPK is retrievable considering the current change
+	 * tracking environment.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the primary key of the user
+	 * @param modelClassNameId the primary key of the version model's class
+	 * @param modelClassPK the primary key of the version model
+	 * @return <code>true</code> if the version entity specified by the given
+	 *         classNameId and classPK is retrievable considering the current
+	 *         change tracking environment
+	 */
+	public boolean isRetrievableVersion(
+		long companyId, long userId, long modelClassNameId, long modelClassPK);
+
+	/**
 	 * Registers the model change into the change tracking framework for the
 	 * current user's active change collection. A
 	 * <code>DuplicateCTEntryException</code> is thrown if the change tracking

@@ -446,6 +446,32 @@ public class CTManagerImpl implements CTManager {
 	}
 
 	@Override
+	public boolean isRetrievableVersion(
+		long companyId, long userId, long modelClassNameId, long modelClassPK) {
+
+		if (!_ctEngineManager.isChangeTrackingEnabled(companyId) ||
+			!_ctEngineManager.isChangeTrackingSupported(
+				companyId, modelClassNameId)) {
+
+			return true;
+		}
+
+		if (!isDraftChange(modelClassNameId, modelClassPK)) {
+			return true;
+		}
+
+		if (isProductionCheckedOut(companyId, userId)) {
+			return false;
+		}
+
+		Optional<CTEntry> ctEntryOptional =
+			getActiveCTCollectionCTEntryOptional(
+				companyId, userId, modelClassNameId, modelClassPK);
+
+		return ctEntryOptional.isPresent();
+	}
+
+	@Override
 	public Optional<CTEntry> registerModelChange(
 			long companyId, long userId, long modelClassNameId,
 			long modelClassPK, long modelResourcePrimKey, int changeType)

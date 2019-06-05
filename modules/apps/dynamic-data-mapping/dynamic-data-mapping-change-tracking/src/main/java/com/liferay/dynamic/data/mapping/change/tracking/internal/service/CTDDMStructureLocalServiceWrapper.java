@@ -19,7 +19,6 @@ import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.engine.CTManager;
 import com.liferay.change.tracking.engine.exception.CTEngineException;
 import com.liferay.change.tracking.engine.exception.CTEntryCTEngineException;
-import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -226,7 +225,11 @@ public class CTDDMStructureLocalServiceWrapper
 			ddmStructureVersions.stream();
 
 		return ddmStructureVersionStream.filter(
-			this::_isRetrievableVersion
+			ddmStructureVersion -> _ctManager.isRetrievableVersion(
+				ddmStructureVersion.getCompanyId(),
+				PrincipalThreadLocal.getUserId(),
+				_portal.getClassNameId(DDMStructureVersion.class.getName()),
+				ddmStructureVersion.getStructureVersionId())
 		).findFirst();
 	}
 
@@ -269,10 +272,7 @@ public class CTDDMStructureLocalServiceWrapper
 			return false;
 		}
 
-		if (!_ctEngineManager.isChangeTrackingEnabled(
-				ddmStructure.getCompanyId()) ||
-			_isBasicWebContent(ddmStructure)) {
-
+		if (_isBasicWebContent(ddmStructure)) {
 			return true;
 		}
 
@@ -283,33 +283,6 @@ public class CTDDMStructureLocalServiceWrapper
 		return _getRetrievableVersionOptional(
 			ddmStructure
 		).isPresent();
-	}
-
-	private boolean _isRetrievableVersion(
-		DDMStructureVersion ddmStructureVersion) {
-
-		if (!_ctManager.isDraftChange(
-				_portal.getClassNameId(DDMStructureVersion.class.getName()),
-				ddmStructureVersion.getStructureVersionId())) {
-
-			return true;
-		}
-
-		if (_ctManager.isProductionCheckedOut(
-				ddmStructureVersion.getCompanyId(),
-				PrincipalThreadLocal.getUserId())) {
-
-			return false;
-		}
-
-		Optional<CTEntry> ctEntryOptional =
-			_ctManager.getActiveCTCollectionCTEntryOptional(
-				ddmStructureVersion.getCompanyId(),
-				PrincipalThreadLocal.getUserId(),
-				_portal.getClassNameId(DDMStructureVersion.class.getName()),
-				ddmStructureVersion.getStructureVersionId());
-
-		return ctEntryOptional.isPresent();
 	}
 
 	private DDMStructure _populateDDMStructure(DDMStructure ddmStructure) {

@@ -38,6 +38,10 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 List<String> attributeNames = Collections.list(expandoBridge.getAttributeNames());
 
 ExpandoDisplayContext expandoDisplayContext = new ExpandoDisplayContext(request);
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "custom-field"), String.valueOf(renderResponse.createRenderURL()));
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-attributes"), null);
 %>
 
 <clay:navigation-bar
@@ -58,6 +62,15 @@ ExpandoDisplayContext expandoDisplayContext = new ExpandoDisplayContext(request)
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 	<aui:input name="columnIds" type="hidden" />
+
+	<div class="container-fluid container-fluid-max-xl">
+		<liferay-ui:breadcrumb
+			showCurrentGroup="<%= false %>"
+			showGuestGroup="<%= false %>"
+			showLayout="<%= false %>"
+			showPortletBreadcrumb="<%= true %>"
+		/>
+	</div>
 
 	<liferay-ui:search-container
 		emptyResultsMessage='<%= LanguageUtil.format(request, "no-custom-fields-are-defined-for-x", HtmlUtil.escape(modelResourceName), false) %>'

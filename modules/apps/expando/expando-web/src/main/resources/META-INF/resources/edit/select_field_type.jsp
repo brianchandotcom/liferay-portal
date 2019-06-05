@@ -34,7 +34,28 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(modelResourceName + ": " + ((expandoColumn == null) ? LanguageUtil.get(request, "new-custom-field") : expandoColumn.getName()));
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "custom-field"), String.valueOf(renderResponse.createRenderURL()));
+
+PortletURL viewAttributesURL = renderResponse.createRenderURL();
+
+viewAttributesURL.setParameter("mvcPath", "/view_attributes.jsp");
+viewAttributesURL.setParameter("redirect", redirect);
+viewAttributesURL.setParameter("modelResource", modelResource);
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-attributes"), viewAttributesURL.toString());
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "new-custom-field"), null);
 %>
+
+<div class="container-fluid container-fluid-max-xl">
+	<liferay-ui:breadcrumb
+		showCurrentGroup="<%= false %>"
+		showGuestGroup="<%= false %>"
+		showLayout="<%= false %>"
+		showPortletBreadcrumb="<%= true %>"
+	/>
+</div>
 
 <liferay-frontend:edit-form>
 	<liferay-frontend:edit-form-body>

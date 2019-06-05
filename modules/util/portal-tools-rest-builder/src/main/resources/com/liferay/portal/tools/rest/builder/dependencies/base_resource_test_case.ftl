@@ -259,6 +259,40 @@ public abstract class Base${schemaName}ResourceTestCase {
 			<#else>
 				@Test
 				public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
+					Page<${schemaName}> page;
+
+					<#if freeMarkerTool.hasQueryParameter(javaMethodSignature)>
+						page = ${schemaName}Resource.${javaMethodSignature.methodName}(
+
+						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+							<#if !javaMethodParameter?is_first>
+								,
+							</#if>
+
+							<#if stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
+								Pagination.of(1, 2)
+							<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+								test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
+							<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
+								RandomTestUtil.randomString()
+							<#elseif stringUtil.equals(javaMethodParameter.parameterType, "boolean")>
+								RandomTestUtil.randomBoolean();
+							<#elseif stringUtil.equals(javaMethodParameter.parameterType, "double")>
+								RandomTestUtil.randomDouble();
+							<#elseif stringUtil.equals(javaMethodParameter.parameterType, "long")>
+								RandomTestUtil.randomLong();
+							<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.util.Date")>
+								RandomTestUtil.nextDate();
+							<#else>
+								null
+							</#if>
+						</#list>
+
+						);
+
+						Assert.assertEquals(0, page.getTotalCount());
+					</#if>
+
 					<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
 						${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}();
 						${javaMethodParameter.parameterType} irrelevant${javaMethodParameter.parameterName?cap_first} = test${javaMethodSignature.methodName?cap_first}_getIrrelevant${javaMethodParameter.parameterName?cap_first}();
@@ -281,7 +315,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 							randomIrrelevant${schemaName}());
 
-							Page<${schemaName}> page = ${schemaName}Resource.${javaMethodSignature.methodName}(
+							page = ${schemaName}Resource.${javaMethodSignature.methodName}(
 
 							<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 								<#if !javaMethodParameter?is_first>
@@ -322,7 +356,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					random${schemaName}());
 
-					Page<${schemaName}> page = ${schemaName}Resource.${javaMethodSignature.methodName}(
+					page = ${schemaName}Resource.${javaMethodSignature.methodName}(
 
 					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 						<#if !javaMethodParameter?is_first>
@@ -344,38 +378,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					assertEqualsIgnoringOrder(Arrays.asList(${schemaVarName}1, ${schemaVarName}2), (List<${schemaName}>)page.getItems());
 					assertValid(page);
-
-					<#if freeMarkerTool.hasQueryParameter(javaMethodSignature)>
-						page = ${schemaName}Resource.${javaMethodSignature.methodName}(
-
-						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-							<#if !javaMethodParameter?is_first>
-								,
-							</#if>
-
-							<#if stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
-								Pagination.of(1, 2)
-							<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
-								test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
-							<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
-								RandomTestUtil.randomString()
-							<#elseif stringUtil.equals(javaMethodParameter.parameterType, "boolean")>
-								RandomTestUtil.randomBoolean();
-							<#elseif stringUtil.equals(javaMethodParameter.parameterType, "double")>
-								RandomTestUtil.randomDouble();
-							<#elseif stringUtil.equals(javaMethodParameter.parameterType, "long")>
-								RandomTestUtil.randomLong();
-							<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.util.Date")>
-								RandomTestUtil.nextDate();
-							<#else>
-								null
-							</#if>
-						</#list>
-
-						);
-
-						Assert.assertEquals(0, page.getTotalCount());
-					</#if>
 				}
 
 				<#if parameters?contains("Filter filter")>

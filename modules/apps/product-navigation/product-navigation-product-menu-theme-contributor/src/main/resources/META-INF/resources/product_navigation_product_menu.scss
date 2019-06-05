@@ -378,9 +378,10 @@ body {
 		}
 	}
 
-	.panel-header-link {
+	.panel-header-link:focus {
 		box-shadow: none;
 	}
+
 }
 
 .product-menu {

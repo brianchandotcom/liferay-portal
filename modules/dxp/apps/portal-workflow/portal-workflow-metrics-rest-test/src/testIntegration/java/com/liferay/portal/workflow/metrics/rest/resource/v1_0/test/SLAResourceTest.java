@@ -111,6 +111,27 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 		assertValid(page);
 	}
 
+	@Test
+	public void testGetProcessSLAsPageBlocked() throws Exception {
+		testGetProcessSLAsPage_addSLA(_process.getId(), randomSLA());
+
+		SLA sla = randomSLA();
+
+		sla.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+		sla = testGetProcessSLAsPage_addSLA(_process.getId(), sla);
+
+		Page<SLA> page = SLAResource.getProcessSLAsPage(
+			_process.getId(), WorkflowConstants.STATUS_DRAFT,
+			Pagination.of(1, 2));
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertEquals(
+			Collections.singletonList(sla), (List<SLA>)page.getItems());
+		assertValid(page);
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {

@@ -886,6 +886,12 @@ public class DDMDisplayContext {
 				"showAncestorScopes", String.valueOf(showAncestorScopes));
 		}
 
+		String eventName = ParamUtil.getString(_renderRequest, "eventName");
+
+		if (Validator.isNotNull(eventName)) {
+			portletURL.setParameter("eventName", eventName);
+		}
+
 		return portletURL;
 	}
 

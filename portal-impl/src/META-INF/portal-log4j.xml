@@ -1056,18 +1056,6 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="org.apache.struts">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="org.apache.struts.action.RequestProcessor">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="org.apache.struts.tiles.TilesRequestProcessor">
-		<priority value="ERROR" />
-	</category>
-
 	<category name="org.apache.velocity">
 		<priority value="ERROR" />
 	</category>

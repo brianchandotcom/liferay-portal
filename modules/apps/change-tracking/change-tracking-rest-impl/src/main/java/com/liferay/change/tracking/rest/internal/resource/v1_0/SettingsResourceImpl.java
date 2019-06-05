@@ -32,6 +32,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -41,8 +42,6 @@ import javax.ws.rs.core.Context;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -110,14 +109,6 @@ public class SettingsResourceImpl extends BaseSettingsResourceImpl {
 		}
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC, unbind = "_removeCTConfiguration"
-	)
-	private void _addCTConfiguration(CTConfiguration<?, ?> ctConfiguration) {
-		_ctConfigurations.add(ctConfiguration);
-	}
-
 	private Settings _getSettings(Long companyId, Locale locale) {
 		Set<String> supportedContentTypeLanguageKeys = new HashSet<>();
 		Set<String> supportedContentTypes = new HashSet<>();
@@ -169,15 +160,11 @@ public class SettingsResourceImpl extends BaseSettingsResourceImpl {
 		return settings;
 	}
 
-	private void _removeCTConfiguration(CTConfiguration<?, ?> ctConfiguration) {
-		_ctConfigurations.remove(ctConfiguration);
-	}
-
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private final Set<CTConfiguration<?, ?>> _ctConfigurations =
-		new HashSet<>();
+	@Reference
+	private volatile List<CTConfiguration<?, ?>> _ctConfigurations;
 
 	@Reference
 	private CTEngineManager _ctEngineManager;

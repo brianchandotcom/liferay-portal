@@ -112,10 +112,6 @@ liferayOSGi {
 }
 
 processResources {
-	dependsOn projectTemplateProjects.collect {
-		"${it.path}:install"
-	}
-
 	from configurations.projectTemplates
 	from projectTemplateJarVersions
 }
@@ -145,10 +141,6 @@ projectTemplateJarVersions {
 }
 
 test {
-	dependsOn projectTemplateProjects.collect {
-		"${it.path}:install"
-	}
-
 	dependsOn writeProjectTemplateVersions
 
 	doFirst {

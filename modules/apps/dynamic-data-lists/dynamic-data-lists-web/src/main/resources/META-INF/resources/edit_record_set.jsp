@@ -37,12 +37,10 @@ if (recordSet != null) {
 String ddmStructureName = StringPool.BLANK;
 
 if (ddmStructureId > 0) {
-	try {
-		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(ddmStructureId);
+	DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchDDMStructure(ddmStructureId);
 
+	if (ddmStructure != null) {
 		ddmStructureName = HtmlUtil.escape(ddmStructure.getName(locale));
-	}
-	catch (NoSuchStructureException nsse) {
 	}
 }
 

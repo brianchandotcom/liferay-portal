@@ -55,7 +55,6 @@ page import="com.liferay.dynamic.data.lists.web.internal.display.context.DDLView
 page import="com.liferay.dynamic.data.lists.web.internal.security.permission.resource.DDLRecordSetPermission" %><%@
 page import="com.liferay.dynamic.data.lists.web.internal.security.permission.resource.DDMTemplatePermission" %><%@
 page import="com.liferay.dynamic.data.lists.web.internal.template.DDLDisplayTemplateTransformer" %><%@
-page import="com.liferay.dynamic.data.mapping.exception.NoSuchStructureException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMFormField" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMStructure" %><%@

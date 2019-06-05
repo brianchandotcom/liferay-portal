@@ -113,6 +113,7 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 				%>
 
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
 						href="<%= href %>"
 						name="<%= label.getString(themeDisplay.getLocale()) %>"
 						value="<%= value %>"

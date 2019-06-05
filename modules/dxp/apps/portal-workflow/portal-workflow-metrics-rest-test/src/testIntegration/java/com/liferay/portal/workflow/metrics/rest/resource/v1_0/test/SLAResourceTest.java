@@ -58,6 +58,7 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 	}
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

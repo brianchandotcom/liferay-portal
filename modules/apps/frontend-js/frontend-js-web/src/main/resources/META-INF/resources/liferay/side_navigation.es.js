@@ -725,7 +725,7 @@ SideNavigation.prototype = {
 			loading.innerHTML = instance.options.loadingIndicatorTPL;
 
 			sidebar.appendChild(loading);
-			instance._fetchPromise = fetch(url);
+			instance._fetchPromise = Liferay.Util.fetch(url);
 
 			instance._fetchPromise
 				.then(response => {

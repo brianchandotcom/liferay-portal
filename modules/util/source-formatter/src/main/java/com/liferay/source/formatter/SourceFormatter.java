@@ -42,6 +42,7 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.StringReader;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -667,6 +668,21 @@ public class SourceFormatter {
 		return pluginsInsideModulesDirectoryNames;
 	}
 
+	private String _getPortalBranchName() {
+		for (Map.Entry<String, Properties> entry : _propertiesMap.entrySet()) {
+			Properties properties = entry.getValue();
+
+			if (properties.containsKey(
+					SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH)) {
+
+				return properties.getProperty(
+					SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH);
+			}
+		}
+
+		return null;
+	}
+
 	private String _getProjectPathPrefix() throws IOException {
 		if (!_subrepository) {
 			return null;
@@ -747,6 +763,19 @@ public class SourceFormatter {
 
 		for (String modulePropertiesFileName : modulePropertiesFileNames) {
 			_readProperties(new File(modulePropertiesFileName));
+		}
+
+		if (!_portalSource && _containsDir("modules/private/apps")) {
+
+			// Grab and read properties from portal branch
+
+			String propertiesContent = SourceFormatterUtil.getGitContent(
+				_PROPERTIES_FILE_NAME, _getPortalBranchName());
+
+			_readProperties(
+				propertiesContent,
+				SourceUtil.getAbsolutePath(
+					_sourceFormatterArgs.getBaseDirName()));
 		}
 
 		_addDependentFileNames();
@@ -833,6 +862,12 @@ public class SourceFormatter {
 
 		propertiesFileLocation = propertiesFileLocation.substring(0, pos);
 
+		_readProperties(properties, propertiesFileLocation);
+	}
+
+	private void _readProperties(
+		Properties properties, String propertiesFileLocation) {
+
 		String value = properties.getProperty("source.formatter.excludes");
 
 		if (value == null) {
@@ -853,6 +888,20 @@ public class SourceFormatter {
 		properties.remove("source.formatter.excludes");
 
 		_propertiesMap.put(propertiesFileLocation, properties);
+	}
+
+	private void _readProperties(String content, String propertiesFileLocation)
+		throws IOException {
+
+		Properties properties = new Properties();
+
+		properties.load(new StringReader(content));
+
+		if (properties.isEmpty()) {
+			return;
+		}
+
+		_readProperties(properties, propertiesFileLocation);
 	}
 
 	private void _runSourceProcessor(SourceProcessor sourceProcessor)

@@ -174,7 +174,7 @@ public class LiferayConnectionProperties
 	}
 
 	public URL getServerURL() {
-		URL apiSpecURL = URIUtils.toURL(apiSpecURL.getValue());
+		URL apiSpecURL = URIUtils.toURL(this.apiSpecURL.getValue());
 
 		return URIUtils.extractServerURL(apiSpecURL);
 	}

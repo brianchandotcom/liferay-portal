@@ -302,13 +302,15 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			DataDefinition dataDefinition, String dataDefinitionKey)
 		throws Exception {
 
-		DataLayout dataLayout = new DataLayout();
-
-		dataLayout.setDataLayoutKey(dataDefinitionKey);
-		dataLayout.setDescription(dataDefinition.getDescription());
-		dataLayout.setDefaultLanguageId(
-			contextAcceptLanguage.getPreferredLanguageId());
-		dataLayout.setName(dataDefinition.getName());
+		DataLayout dataLayout = new DataLayout() {
+			{
+				dataLayoutKey = dataDefinitionKey;
+				description = dataDefinition.getDescription();
+				defaultLanguageId =
+					contextAcceptLanguage.getPreferredLanguageId();
+				name = dataDefinition.getName();
+			}
+		};
 
 		List<DataLayoutRow> dataLayoutRows = new ArrayList<>();
 
@@ -316,16 +318,24 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			dataDefinition.getDataDefinitionFields()
 		).forEach(
 			dataDefinitionField -> {
-				DataLayoutColumn dataLayoutColumn = new DataLayoutColumn();
+				DataLayoutColumn dataLayoutColumn = new DataLayoutColumn() {
+					{
+						columnSize = 12;
+						fieldNames = new String[] {
+							dataDefinitionField.getName()
+						};
+					}
+				};
 
-				dataLayoutColumn.setColumnSize(12);
-				dataLayoutColumn.setFieldNames(
-					new String[] {dataDefinitionField.getName()});
+				DataLayoutRow dataLayoutRow = new DataLayoutRow() {
+					{
+						dataLayoutColums = new DataLayoutColumn[] {
+							dataLayoutColumn
+						};
+					}
+				};
 
-				DataLayoutRow dataLayoutRow = new DataLayoutRow();
-
-				dataLayoutRow.setDataLayoutColums(
-					new DataLayoutColumn[] {dataLayoutColumn});
+				dataLayoutRows.add(dataLayoutRow);
 			}
 		);
 
@@ -352,7 +362,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			_ddmStructureLayoutLocalService.addStructureLayout(
 				PrincipalThreadLocal.getUserId(), dataDefinition.getSiteId(),
 				_getDDMStructureVersionId(dataDefinition.getId()),
-				_getClassNameId(),
+				_portal.getClassNameId(InternalDataLayout.class),
 				LocalizedValueUtil.toLocaleStringMap(dataLayout.getName()),
 				LocalizedValueUtil.toLocaleStringMap(
 					dataLayout.getDescription()),
@@ -372,11 +382,13 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			DataDefinition dataDefinition, String dataDefinitionKey)
 		throws Exception {
 
-		DataRecordCollection dataRecordCollection = new DataRecordCollection();
-
-		dataRecordCollection.setDataRecordCollectionKey(dataDefinitionKey);
-		dataRecordCollection.setDescription(dataDefinition.getDescription());
-		dataRecordCollection.setName(dataDefinition.getName());
+		DataRecordCollection dataRecordCollection = new DataRecordCollection() {
+			{
+				dataRecordCollectionKey = dataDefinitionKey;
+				description = dataDefinition.getDescription();
+				name = dataDefinition.getName();
+			}
+		};
 
 		ServiceContext serviceContext = new ServiceContext();
 

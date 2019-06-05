@@ -16,8 +16,8 @@ package com.liferay.users.admin.demo.data.creator.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.users.admin.demo.data.creator.OmniAdminUserDemoDataCreator;
 

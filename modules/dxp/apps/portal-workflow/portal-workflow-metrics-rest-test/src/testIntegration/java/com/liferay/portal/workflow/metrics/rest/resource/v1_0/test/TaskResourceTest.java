@@ -105,9 +105,11 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		int instanceCount = RandomTestUtil.randomInt(0, 20);
 
 		task.setInstanceCount((long)instanceCount);
+
 		int onTimeInstanceCount = RandomTestUtil.randomInt(0, instanceCount);
 
 		task.setOnTimeInstanceCount((long)onTimeInstanceCount);
+
 		task.setOverdueInstanceCount(
 			(long)RandomTestUtil.randomInt(
 				0, instanceCount - onTimeInstanceCount));

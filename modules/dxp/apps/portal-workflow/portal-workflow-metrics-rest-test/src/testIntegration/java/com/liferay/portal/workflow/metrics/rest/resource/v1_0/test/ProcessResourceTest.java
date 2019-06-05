@@ -79,6 +79,32 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 		_processes = new ArrayList<>();
 	}
 
+	@Test
+	public void testGetProcessCompletedInstances() throws Exception {
+		Process postProcess = randomProcess();
+
+		postProcess.setInstanceCount(0L);
+		postProcess.setOnTimeInstanceCount(0L);
+		postProcess.setOverdueInstanceCount(0L);
+		postProcess.setUntrackedInstanceCount(0L);
+
+		testGetProcessesPage_addProcess(postProcess);
+
+		_workflowMetricsRESTTestHelper.addInstance(
+			testGroup.getCompanyId(), true, postProcess.getId());
+
+		postProcess.setInstanceCount(1L);
+		postProcess.setOnTimeInstanceCount(0L);
+		postProcess.setOverdueInstanceCount(0L);
+		postProcess.setUntrackedInstanceCount(1L);
+
+		Process getProcess = ProcessResource.getProcess(
+			postProcess.getId(), true, null);
+
+		assertEquals(postProcess, getProcess);
+		assertValid(getProcess);
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {

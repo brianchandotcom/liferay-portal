@@ -1468,9 +1468,7 @@ public class WebServerServlet extends HttpServlet {
 
 		User user = UserLocalServiceUtil.getUserByScreenName(companyId, name);
 
-		group = user.getGroup();
-
-		return group;
+		return user.getGroup();
 	}
 
 	private static User _getUser(HttpServletRequest httpServletRequest)
@@ -1494,17 +1492,14 @@ public class WebServerServlet extends HttpServlet {
 		if ((userIdString != null) && (password != null)) {
 			long userId = GetterUtil.getLong(userIdString);
 
-			user = UserLocalServiceUtil.getUser(userId);
-		}
-		else {
-			long companyId = PortalUtil.getCompanyId(httpServletRequest);
-
-			Company company = CompanyLocalServiceUtil.getCompany(companyId);
-
-			user = company.getDefaultUser();
+			return UserLocalServiceUtil.getUser(userId);
 		}
 
-		return user;
+		long companyId = PortalUtil.getCompanyId(httpServletRequest);
+
+		Company company = CompanyLocalServiceUtil.getCompany(companyId);
+
+		return company.getDefaultUser();
 	}
 
 	private static boolean _isDirectoryIndexingEnabled(Group group) {

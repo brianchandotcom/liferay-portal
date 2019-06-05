@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.dao.db;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -123,12 +124,11 @@ public class DBInspectorTest {
 				TABLE_NAME, "typeVarchar", "VARCHAR(75) null"));
 	}
 
-	private static final String _CREATE_TABLE =
-		"create table FieldTypes (typeBlob BLOB, typeSBlob SBLOB, " +
-			"typeBoolean BOOLEAN, typeDate DATE null, typeDouble DOUBLE, " +
-				"typeInteger INTEGER, typeLong LONG not null primary key, " +
-					"typeString STRING null, typeText TEXT null, typeVarchar " +
-						"VARCHAR(75) null);";
+	private static final String _CREATE_TABLE = StringBundler.concat(
+		"create table FieldTypes (typeBlob BLOB, typeSBlob SBLOB, typeBoolean ",
+		"BOOLEAN, typeDate DATE null, typeDouble DOUBLE, typeInteger INTEGER, ",
+		"typeLong LONG not null primary key, typeString STRING null, typeText ",
+		"TEXT null, typeVarchar VARCHAR(75) null);");
 
 	private static final String _DROP_TABLE = "drop table FieldTypes";
 

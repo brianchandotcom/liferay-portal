@@ -36,6 +36,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
+		_dataLayoutResource = new DataLayoutResource();
 		_ddmStructure = DataDefinitionTestUtil.addDDMStructure(testGroup);
 		_irrelevantDDMStructure = DataDefinitionTestUtil.addDDMStructure(
 			irrelevantGroup);
@@ -77,7 +78,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 
 	@Override
 	protected DataLayout testDeleteDataLayout_addDataLayout() throws Exception {
-		return DataLayoutResource.postDataDefinitionDataLayout(
+		return _dataLayoutResource.postDataDefinitionDataLayout(
 			_ddmStructure.getStructureId(), randomDataLayout());
 	}
 
@@ -90,7 +91,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 
 	@Override
 	protected DataLayout testGetDataLayout_addDataLayout() throws Exception {
-		return DataLayoutResource.postDataDefinitionDataLayout(
+		return _dataLayoutResource.postDataDefinitionDataLayout(
 			_ddmStructure.getStructureId(), randomDataLayout());
 	}
 
@@ -99,7 +100,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 			Long siteId, DataLayout dataLayout)
 		throws Exception {
 
-		return DataLayoutResource.postDataDefinitionDataLayout(
+		return _dataLayoutResource.postDataDefinitionDataLayout(
 			dataLayout.getDataDefinitionId(), dataLayout);
 	}
 
@@ -112,10 +113,11 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 
 	@Override
 	protected DataLayout testPutDataLayout_addDataLayout() throws Exception {
-		return DataLayoutResource.postDataDefinitionDataLayout(
+		return _dataLayoutResource.postDataDefinitionDataLayout(
 			_ddmStructure.getStructureId(), randomDataLayout());
 	}
 
+	private DataLayoutResource _dataLayoutResource;
 	private DDMStructure _ddmStructure;
 	private DDMStructure _irrelevantDDMStructure;
 

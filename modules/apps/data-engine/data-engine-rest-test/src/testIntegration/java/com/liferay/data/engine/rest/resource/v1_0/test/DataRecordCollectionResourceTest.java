@@ -37,6 +37,7 @@ public class DataRecordCollectionResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
+		_dataRecordCollectionResource = new DataRecordCollectionResource();
 		_ddmStructure = DataDefinitionTestUtil.addDDMStructure(testGroup);
 		_irrelevantDDMStructure = DataDefinitionTestUtil.addDDMStructure(
 			irrelevantGroup);
@@ -66,7 +67,7 @@ public class DataRecordCollectionResourceTest
 			testDeleteDataRecordCollection_addDataRecordCollection()
 		throws Exception {
 
-		return DataRecordCollectionResource.
+		return _dataRecordCollectionResource.
 			postDataDefinitionDataRecordCollection(
 				_ddmStructure.getStructureId(), randomDataRecordCollection());
 	}
@@ -84,7 +85,7 @@ public class DataRecordCollectionResourceTest
 			testGetDataRecordCollection_addDataRecordCollection()
 		throws Exception {
 
-		return DataRecordCollectionResource.
+		return _dataRecordCollectionResource.
 			postDataDefinitionDataRecordCollection(
 				_ddmStructure.getStructureId(), randomDataRecordCollection());
 	}
@@ -101,7 +102,7 @@ public class DataRecordCollectionResourceTest
 			dataDefinitionId = _irrelevantDDMStructure.getStructureId();
 		}
 
-		return DataRecordCollectionResource.
+		return _dataRecordCollectionResource.
 			postDataDefinitionDataRecordCollection(
 				dataDefinitionId, randomDataRecordCollection());
 	}
@@ -112,7 +113,7 @@ public class DataRecordCollectionResourceTest
 				DataRecordCollection dataRecordCollection)
 		throws Exception {
 
-		return DataRecordCollectionResource.
+		return _dataRecordCollectionResource.
 			postDataDefinitionDataRecordCollection(
 				_ddmStructure.getStructureId(), dataRecordCollection);
 	}
@@ -122,11 +123,12 @@ public class DataRecordCollectionResourceTest
 			testPutDataRecordCollection_addDataRecordCollection()
 		throws Exception {
 
-		return DataRecordCollectionResource.
+		return _dataRecordCollectionResource.
 			postDataDefinitionDataRecordCollection(
 				_ddmStructure.getStructureId(), randomDataRecordCollection());
 	}
 
+	private DataRecordCollectionResource _dataRecordCollectionResource;
 	private DDMStructure _ddmStructure;
 	private DDMStructure _irrelevantDDMStructure;
 

@@ -41,6 +41,13 @@ public class DataDefinitionResourceTest
 	extends BaseDataDefinitionResourceTestCase {
 
 	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_dataDefinitionResource = new DataDefinitionResource();
+	}
+
+	@Override
 	public void testPostDataDefinitionDataDefinitionPermission()
 		throws Exception {
 
@@ -51,7 +58,7 @@ public class DataDefinitionResourceTest
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		DataDefinitionResource.postDataDefinitionDataDefinitionPermission(
+		_dataDefinitionResource.postDataDefinitionDataDefinitionPermission(
 			ddmStructure.getStructureId(), _OPERATION_SAVE_PERMISSION,
 			new DataDefinitionPermission() {
 				{
@@ -67,7 +74,7 @@ public class DataDefinitionResourceTest
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		DataDefinitionResource.postSiteDataDefinitionPermission(
+		_dataDefinitionResource.postSiteDataDefinitionPermission(
 			testGroup.getGroupId(), _OPERATION_SAVE_PERMISSION,
 			new DataDefinitionPermission() {
 				{
@@ -142,5 +149,8 @@ public class DataDefinitionResourceTest
 	}
 
 	private static final String _OPERATION_SAVE_PERMISSION = "save";
+
+	private DataDefinitionResource _dataDefinitionResource =
+		new DataDefinitionResource();
 
 }

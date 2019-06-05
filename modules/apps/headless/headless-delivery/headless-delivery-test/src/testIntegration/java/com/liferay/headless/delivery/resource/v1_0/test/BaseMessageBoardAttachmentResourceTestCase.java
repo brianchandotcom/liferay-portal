@@ -51,7 +51,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -557,7 +556,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 	protected void assertValid(Page<MessageBoardAttachment> page) {
 		boolean valid = false;
 
-		Collection<MessageBoardAttachment> messageBoardAttachments =
+		java.util.Collection<MessageBoardAttachment> messageBoardAttachments =
 			page.getItems();
 
 		int size = messageBoardAttachments.size();
@@ -665,7 +664,9 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_messageBoardAttachmentResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
@@ -686,7 +687,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 

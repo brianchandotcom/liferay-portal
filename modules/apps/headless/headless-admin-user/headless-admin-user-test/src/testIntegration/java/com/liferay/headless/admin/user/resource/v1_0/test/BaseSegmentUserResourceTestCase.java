@@ -50,7 +50,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -375,7 +374,7 @@ public abstract class BaseSegmentUserResourceTestCase {
 	protected void assertValid(Page<SegmentUser> page) {
 		boolean valid = false;
 
-		Collection<SegmentUser> segmentUsers = page.getItems();
+		java.util.Collection<SegmentUser> segmentUsers = page.getItems();
 
 		int size = segmentUsers.size();
 
@@ -446,7 +445,9 @@ public abstract class BaseSegmentUserResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_segmentUserResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
@@ -467,7 +468,7 @@ public abstract class BaseSegmentUserResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 

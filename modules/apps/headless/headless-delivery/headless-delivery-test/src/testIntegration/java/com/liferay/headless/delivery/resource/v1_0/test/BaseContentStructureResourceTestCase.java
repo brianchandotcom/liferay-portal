@@ -51,7 +51,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -620,7 +619,8 @@ public abstract class BaseContentStructureResourceTestCase {
 	protected void assertValid(Page<ContentStructure> page) {
 		boolean valid = false;
 
-		Collection<ContentStructure> contentStructures = page.getItems();
+		java.util.Collection<ContentStructure> contentStructures =
+			page.getItems();
 
 		int size = contentStructures.size();
 
@@ -758,7 +758,9 @@ public abstract class BaseContentStructureResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_contentStructureResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
@@ -779,7 +781,7 @@ public abstract class BaseContentStructureResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 

@@ -51,7 +51,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -1043,7 +1042,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	protected void assertValid(Page<DocumentFolder> page) {
 		boolean valid = false;
 
-		Collection<DocumentFolder> documentFolders = page.getItems();
+		java.util.Collection<DocumentFolder> documentFolders = page.getItems();
 
 		int size = documentFolders.size();
 
@@ -1201,7 +1200,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_documentFolderResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
@@ -1222,7 +1223,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 

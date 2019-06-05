@@ -48,7 +48,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -279,7 +278,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	protected void assertValid(Page<TaxonomyCategory> page) {
 		boolean valid = false;
 
-		Collection<TaxonomyCategory> taxonomyCategories = page.getItems();
+		java.util.Collection<TaxonomyCategory> taxonomyCategories =
+			page.getItems();
 
 		int size = taxonomyCategories.size();
 
@@ -346,7 +346,9 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_taxonomyCategoryResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
@@ -367,7 +369,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 

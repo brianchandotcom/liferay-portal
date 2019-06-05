@@ -49,7 +49,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -496,7 +495,7 @@ public abstract class BasePostalAddressResourceTestCase {
 	protected void assertValid(Page<PostalAddress> page) {
 		boolean valid = false;
 
-		Collection<PostalAddress> postalAddresses = page.getItems();
+		java.util.Collection<PostalAddress> postalAddresses = page.getItems();
 
 		int size = postalAddresses.size();
 
@@ -651,7 +650,9 @@ public abstract class BasePostalAddressResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_postalAddressResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
@@ -672,7 +673,7 @@ public abstract class BasePostalAddressResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 

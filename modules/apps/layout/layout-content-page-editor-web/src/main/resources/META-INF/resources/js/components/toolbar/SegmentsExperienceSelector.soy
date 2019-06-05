@@ -80,7 +80,7 @@
 			>
 				<div class="align-items-end d-flex justify-content-between mb-4">
 					<h3 class="mb-0">{msg desc=""}select-experience{/msg}</h3>
-					{let $disabledExperienceButton: not ($availableSegmentsEntries != null and length($availableSegmentsEntries) > 0) /}
+					{let $disabledExperienceButton: false /}
 
 					{let $newExperience kind="text"}
 						{msg desc=""}new-experience{/msg}

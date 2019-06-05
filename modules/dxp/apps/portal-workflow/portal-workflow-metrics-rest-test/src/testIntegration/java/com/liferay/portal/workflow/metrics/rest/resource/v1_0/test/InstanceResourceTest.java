@@ -100,6 +100,31 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 			(List<Instance>)page.getItems());
 	}
 
+	@Test
+	public void testGetProcessInstancesPageCompletedAndPending()
+		throws Exception {
+
+		Long processId = testGetProcessInstancesPage_getProcessId();
+
+		Instance instance1 = randomInstance();
+
+		instance1.setDateCompletion(RandomTestUtil.nextDate());
+
+		testGetProcessInstancesPage_addInstance(processId, instance1);
+
+		Instance instance2 = randomInstance();
+
+		testGetProcessInstancesPage_addInstance(processId, instance2);
+
+		Page<Instance> page = InstanceResource.getProcessInstancesPage(
+			processId, null, new String[] {"Completed", "Pending"}, null, null,
+			Pagination.of(1, 2));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(instance1, instance2),
+			(List<Instance>)page.getItems());
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {

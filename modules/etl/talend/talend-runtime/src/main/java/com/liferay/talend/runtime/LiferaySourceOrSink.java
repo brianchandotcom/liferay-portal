@@ -16,7 +16,6 @@ package com.liferay.talend.runtime;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import com.liferay.talend.avro.EndpointSchemaInferrer;
 import com.liferay.talend.connection.LiferayConnectionProperties;
@@ -173,9 +172,7 @@ public class LiferaySourceOrSink
 
 		List<NamedThing> webSitesList = new ArrayList<>();
 
-		if (!siteBriefsJsonNode.isArray() &&
-			(((ArrayNode)siteBriefsJsonNode).size() == 0)) {
-
+		if (!siteBriefsJsonNode.isArray()) {
 			return webSitesList;
 		}
 

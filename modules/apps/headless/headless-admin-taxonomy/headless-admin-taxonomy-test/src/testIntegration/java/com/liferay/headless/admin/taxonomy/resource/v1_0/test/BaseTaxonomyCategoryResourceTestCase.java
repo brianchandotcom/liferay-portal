@@ -189,6 +189,13 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	public void testGetTaxonomyCategoryTaxonomyCategoriesPage()
 		throws Exception {
 
+		page =
+			TaxonomyCategoryResource.getTaxonomyCategoryTaxonomyCategoriesPage(
+				testGetTaxonomyCategoryTaxonomyCategoriesPage_getParentTaxonomyCategoryId(),
+				RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long parentTaxonomyCategoryId =
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_getParentTaxonomyCategoryId();
 		Long irrelevantParentTaxonomyCategoryId =
@@ -233,13 +240,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			Arrays.asList(taxonomyCategory1, taxonomyCategory2),
 			(List<TaxonomyCategory>)page.getItems());
 		assertValid(page);
-
-		page =
-			TaxonomyCategoryResource.getTaxonomyCategoryTaxonomyCategoriesPage(
-				testGetTaxonomyCategoryTaxonomyCategoriesPage_getParentTaxonomyCategoryId(),
-				RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test
@@ -623,6 +623,15 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	public void testGetTaxonomyVocabularyTaxonomyCategoriesPage()
 		throws Exception {
 
+		page =
+			TaxonomyCategoryResource.
+				getTaxonomyVocabularyTaxonomyCategoriesPage(
+					testGetTaxonomyVocabularyTaxonomyCategoriesPage_getTaxonomyVocabularyId(),
+					RandomTestUtil.randomString(), null, Pagination.of(1, 2),
+					null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long taxonomyVocabularyId =
 			testGetTaxonomyVocabularyTaxonomyCategoriesPage_getTaxonomyVocabularyId();
 		Long irrelevantTaxonomyVocabularyId =
@@ -668,15 +677,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			Arrays.asList(taxonomyCategory1, taxonomyCategory2),
 			(List<TaxonomyCategory>)page.getItems());
 		assertValid(page);
-
-		page =
-			TaxonomyCategoryResource.
-				getTaxonomyVocabularyTaxonomyCategoriesPage(
-					testGetTaxonomyVocabularyTaxonomyCategoriesPage_getTaxonomyVocabularyId(),
-					RandomTestUtil.randomString(), null, Pagination.of(1, 2),
-					null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test

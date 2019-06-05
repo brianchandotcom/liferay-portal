@@ -267,6 +267,12 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 	@Test
 	public void testGetSiteDataDefinitionsPage() throws Exception {
+		page = DataDefinitionResource.getSiteDataDefinitionsPage(
+			testGetSiteDataDefinitionsPage_getSiteId(),
+			RandomTestUtil.randomString(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long siteId = testGetSiteDataDefinitionsPage_getSiteId();
 		Long irrelevantSiteId =
 			testGetSiteDataDefinitionsPage_getIrrelevantSiteId();
@@ -306,12 +312,6 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			Arrays.asList(dataDefinition1, dataDefinition2),
 			(List<DataDefinition>)page.getItems());
 		assertValid(page);
-
-		page = DataDefinitionResource.getSiteDataDefinitionsPage(
-			testGetSiteDataDefinitionsPage_getSiteId(),
-			RandomTestUtil.randomString(), Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test

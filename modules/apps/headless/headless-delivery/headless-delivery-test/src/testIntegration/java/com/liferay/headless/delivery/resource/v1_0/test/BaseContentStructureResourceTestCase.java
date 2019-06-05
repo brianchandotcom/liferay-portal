@@ -207,6 +207,12 @@ public abstract class BaseContentStructureResourceTestCase {
 
 	@Test
 	public void testGetSiteContentStructuresPage() throws Exception {
+		page = ContentStructureResource.getSiteContentStructuresPage(
+			testGetSiteContentStructuresPage_getSiteId(),
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long siteId = testGetSiteContentStructuresPage_getSiteId();
 		Long irrelevantSiteId =
 			testGetSiteContentStructuresPage_getIrrelevantSiteId();
@@ -246,12 +252,6 @@ public abstract class BaseContentStructureResourceTestCase {
 			Arrays.asList(contentStructure1, contentStructure2),
 			(List<ContentStructure>)page.getItems());
 		assertValid(page);
-
-		page = ContentStructureResource.getSiteContentStructuresPage(
-			testGetSiteContentStructuresPage_getSiteId(),
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test

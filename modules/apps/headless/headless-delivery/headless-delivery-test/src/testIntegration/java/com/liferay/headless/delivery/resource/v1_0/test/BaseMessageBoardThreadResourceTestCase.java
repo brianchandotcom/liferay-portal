@@ -194,6 +194,15 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	public void testGetMessageBoardSectionMessageBoardThreadsPage()
 		throws Exception {
 
+		page =
+			MessageBoardThreadResource.
+				getMessageBoardSectionMessageBoardThreadsPage(
+					testGetMessageBoardSectionMessageBoardThreadsPage_getMessageBoardSectionId(),
+					RandomTestUtil.randomString(), null, Pagination.of(1, 2),
+					null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long messageBoardSectionId =
 			testGetMessageBoardSectionMessageBoardThreadsPage_getMessageBoardSectionId();
 		Long irrelevantMessageBoardSectionId =
@@ -239,15 +248,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			Arrays.asList(messageBoardThread1, messageBoardThread2),
 			(List<MessageBoardThread>)page.getItems());
 		assertValid(page);
-
-		page =
-			MessageBoardThreadResource.
-				getMessageBoardSectionMessageBoardThreadsPage(
-					testGetMessageBoardSectionMessageBoardThreadsPage_getMessageBoardSectionId(),
-					RandomTestUtil.randomString(), null, Pagination.of(1, 2),
-					null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test
@@ -689,6 +689,12 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 	@Test
 	public void testGetSiteMessageBoardThreadsPage() throws Exception {
+		page = MessageBoardThreadResource.getSiteMessageBoardThreadsPage(
+			testGetSiteMessageBoardThreadsPage_getSiteId(), null,
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long siteId = testGetSiteMessageBoardThreadsPage_getSiteId();
 		Long irrelevantSiteId =
 			testGetSiteMessageBoardThreadsPage_getIrrelevantSiteId();
@@ -729,12 +735,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			Arrays.asList(messageBoardThread1, messageBoardThread2),
 			(List<MessageBoardThread>)page.getItems());
 		assertValid(page);
-
-		page = MessageBoardThreadResource.getSiteMessageBoardThreadsPage(
-			testGetSiteMessageBoardThreadsPage_getSiteId(), null,
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test

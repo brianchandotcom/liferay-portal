@@ -330,6 +330,12 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 	@Test
 	public void testGetSiteBlogPostingsPage() throws Exception {
+		page = BlogPostingResource.getSiteBlogPostingsPage(
+			testGetSiteBlogPostingsPage_getSiteId(),
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long siteId = testGetSiteBlogPostingsPage_getSiteId();
 		Long irrelevantSiteId =
 			testGetSiteBlogPostingsPage_getIrrelevantSiteId();
@@ -366,12 +372,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			Arrays.asList(blogPosting1, blogPosting2),
 			(List<BlogPosting>)page.getItems());
 		assertValid(page);
-
-		page = BlogPostingResource.getSiteBlogPostingsPage(
-			testGetSiteBlogPostingsPage_getSiteId(),
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test

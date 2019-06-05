@@ -305,6 +305,15 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	public void testGetMessageBoardSectionMessageBoardSectionsPage()
 		throws Exception {
 
+		page =
+			MessageBoardSectionResource.
+				getMessageBoardSectionMessageBoardSectionsPage(
+					testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId(),
+					RandomTestUtil.randomString(), null, Pagination.of(1, 2),
+					null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long parentMessageBoardSectionId =
 			testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId();
 		Long irrelevantParentMessageBoardSectionId =
@@ -350,15 +359,6 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			Arrays.asList(messageBoardSection1, messageBoardSection2),
 			(List<MessageBoardSection>)page.getItems());
 		assertValid(page);
-
-		page =
-			MessageBoardSectionResource.
-				getMessageBoardSectionMessageBoardSectionsPage(
-					testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId(),
-					RandomTestUtil.randomString(), null, Pagination.of(1, 2),
-					null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test
@@ -642,6 +642,12 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 	@Test
 	public void testGetSiteMessageBoardSectionsPage() throws Exception {
+		page = MessageBoardSectionResource.getSiteMessageBoardSectionsPage(
+			testGetSiteMessageBoardSectionsPage_getSiteId(), null,
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long siteId = testGetSiteMessageBoardSectionsPage_getSiteId();
 		Long irrelevantSiteId =
 			testGetSiteMessageBoardSectionsPage_getIrrelevantSiteId();
@@ -682,12 +688,6 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			Arrays.asList(messageBoardSection1, messageBoardSection2),
 			(List<MessageBoardSection>)page.getItems());
 		assertValid(page);
-
-		page = MessageBoardSectionResource.getSiteMessageBoardSectionsPage(
-			testGetSiteMessageBoardSectionsPage_getSiteId(), null,
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test

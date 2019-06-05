@@ -353,6 +353,15 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	public void testGetMessageBoardMessageMessageBoardMessagesPage()
 		throws Exception {
 
+		page =
+			MessageBoardMessageResource.
+				getMessageBoardMessageMessageBoardMessagesPage(
+					testGetMessageBoardMessageMessageBoardMessagesPage_getParentMessageBoardMessageId(),
+					RandomTestUtil.randomString(), null, Pagination.of(1, 2),
+					null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long parentMessageBoardMessageId =
 			testGetMessageBoardMessageMessageBoardMessagesPage_getParentMessageBoardMessageId();
 		Long irrelevantParentMessageBoardMessageId =
@@ -398,15 +407,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			Arrays.asList(messageBoardMessage1, messageBoardMessage2),
 			(List<MessageBoardMessage>)page.getItems());
 		assertValid(page);
-
-		page =
-			MessageBoardMessageResource.
-				getMessageBoardMessageMessageBoardMessagesPage(
-					testGetMessageBoardMessageMessageBoardMessagesPage_getParentMessageBoardMessageId(),
-					RandomTestUtil.randomString(), null, Pagination.of(1, 2),
-					null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test
@@ -692,6 +692,15 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	public void testGetMessageBoardThreadMessageBoardMessagesPage()
 		throws Exception {
 
+		page =
+			MessageBoardMessageResource.
+				getMessageBoardThreadMessageBoardMessagesPage(
+					testGetMessageBoardThreadMessageBoardMessagesPage_getMessageBoardThreadId(),
+					RandomTestUtil.randomString(), null, Pagination.of(1, 2),
+					null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long messageBoardThreadId =
 			testGetMessageBoardThreadMessageBoardMessagesPage_getMessageBoardThreadId();
 		Long irrelevantMessageBoardThreadId =
@@ -737,15 +746,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			Arrays.asList(messageBoardMessage1, messageBoardMessage2),
 			(List<MessageBoardMessage>)page.getItems());
 		assertValid(page);
-
-		page =
-			MessageBoardMessageResource.
-				getMessageBoardThreadMessageBoardMessagesPage(
-					testGetMessageBoardThreadMessageBoardMessagesPage_getMessageBoardThreadId(),
-					RandomTestUtil.randomString(), null, Pagination.of(1, 2),
-					null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test

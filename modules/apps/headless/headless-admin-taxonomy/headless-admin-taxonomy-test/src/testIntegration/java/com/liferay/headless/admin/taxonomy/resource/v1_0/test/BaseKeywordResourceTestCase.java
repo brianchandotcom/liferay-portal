@@ -242,6 +242,12 @@ public abstract class BaseKeywordResourceTestCase {
 
 	@Test
 	public void testGetSiteKeywordsPage() throws Exception {
+		page = KeywordResource.getSiteKeywordsPage(
+			testGetSiteKeywordsPage_getSiteId(), RandomTestUtil.randomString(),
+			null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long siteId = testGetSiteKeywordsPage_getSiteId();
 		Long irrelevantSiteId = testGetSiteKeywordsPage_getIrrelevantSiteId();
 
@@ -274,12 +280,6 @@ public abstract class BaseKeywordResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(keyword1, keyword2), (List<Keyword>)page.getItems());
 		assertValid(page);
-
-		page = KeywordResource.getSiteKeywordsPage(
-			testGetSiteKeywordsPage_getSiteId(), RandomTestUtil.randomString(),
-			null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test

@@ -175,6 +175,10 @@ public abstract class BaseSettingsResourceTestCase {
 
 	@Test
 	public void testGetSettingsPage() throws Exception {
+		page = SettingsResource.getSettingsPage(null, null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Settings settings1 = testGetSettingsPage_addSettings(randomSettings());
 
 		Settings settings2 = testGetSettingsPage_addSettings(randomSettings());
@@ -187,10 +191,6 @@ public abstract class BaseSettingsResourceTestCase {
 			Arrays.asList(settings1, settings2),
 			(List<Settings>)page.getItems());
 		assertValid(page);
-
-		page = SettingsResource.getSettingsPage(null, null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	protected Settings testGetSettingsPage_addSettings(Settings settings)

@@ -188,6 +188,12 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 	@Test
 	public void testGetSiteTaxonomyVocabulariesPage() throws Exception {
+		page = TaxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
+			testGetSiteTaxonomyVocabulariesPage_getSiteId(),
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long siteId = testGetSiteTaxonomyVocabulariesPage_getSiteId();
 		Long irrelevantSiteId =
 			testGetSiteTaxonomyVocabulariesPage_getIrrelevantSiteId();
@@ -227,12 +233,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			Arrays.asList(taxonomyVocabulary1, taxonomyVocabulary2),
 			(List<TaxonomyVocabulary>)page.getItems());
 		assertValid(page);
-
-		page = TaxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-			testGetSiteTaxonomyVocabulariesPage_getSiteId(),
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test

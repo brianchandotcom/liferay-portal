@@ -184,9 +184,7 @@ public abstract class BaseProcessResourceTestCase {
 
 	@Test
 	public void testGetProcessesPage() throws Exception {
-		Page<Process> page;
-
-		page = ProcessResource.getProcessesPage(
+		Page<Process> page = ProcessResource.getProcessesPage(
 			RandomTestUtil.randomString(), Pagination.of(1, 2), null);
 
 		Assert.assertEquals(0, page.getTotalCount());

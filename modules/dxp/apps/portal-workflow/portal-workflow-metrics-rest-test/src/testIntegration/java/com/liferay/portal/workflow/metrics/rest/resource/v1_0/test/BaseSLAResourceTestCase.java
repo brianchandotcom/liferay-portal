@@ -185,9 +185,7 @@ public abstract class BaseSLAResourceTestCase {
 
 	@Test
 	public void testGetProcessSLAsPage() throws Exception {
-		Page<SLA> page;
-
-		page = SLAResource.getProcessSLAsPage(
+		Page<SLA> page = SLAResource.getProcessSLAsPage(
 			testGetProcessSLAsPage_getProcessId(), null, Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());

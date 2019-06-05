@@ -186,8 +186,6 @@ public abstract class BaseTaskResourceTestCase {
 
 	@Test
 	public void testGetProcessTasksPage() throws Exception {
-		Page<Task> page;
-
 		Long processId = testGetProcessTasksPage_getProcessId();
 		Long irrelevantProcessId =
 			testGetProcessTasksPage_getIrrelevantProcessId();
@@ -196,7 +194,7 @@ public abstract class BaseTaskResourceTestCase {
 			Task irrelevantTask = testGetProcessTasksPage_addTask(
 				irrelevantProcessId, randomIrrelevantTask());
 
-			page = TaskResource.getProcessTasksPage(
+			Page<Task> page = TaskResource.getProcessTasksPage(
 				irrelevantProcessId, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -210,7 +208,7 @@ public abstract class BaseTaskResourceTestCase {
 
 		Task task2 = testGetProcessTasksPage_addTask(processId, randomTask());
 
-		page = TaskResource.getProcessTasksPage(
+		Page<Task> page = TaskResource.getProcessTasksPage(
 			processId, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());

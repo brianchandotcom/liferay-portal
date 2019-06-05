@@ -50,7 +50,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -627,7 +626,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 	protected void assertValid(Page<DataLayout> page) {
 		boolean valid = false;
 
-		Collection<DataLayout> dataLayouts = page.getItems();
+		java.util.Collection<DataLayout> dataLayouts = page.getItems();
 
 		int size = dataLayouts.size();
 
@@ -774,7 +773,9 @@ public abstract class BaseDataLayoutResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_dataLayoutResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
@@ -795,7 +796,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 

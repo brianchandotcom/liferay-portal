@@ -60,8 +60,6 @@ import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
 import graphql.annotations.annotationTypes.GraphQLName;
 
-import java.util.Collection;
-
 import javax.annotation.Generated;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -231,7 +229,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<BlogPosting> getSiteBlogPostingsPage(
+	public java.util.Collection<BlogPosting> getSiteBlogPostingsPage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -268,7 +266,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<BlogPostingImage> getSiteBlogPostingImagesPage(
+	public java.util.Collection<BlogPostingImage> getSiteBlogPostingImagesPage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -291,7 +289,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Comment> getBlogPostingCommentsPage(
+	public java.util.Collection<Comment> getBlogPostingCommentsPage(
 			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -325,7 +323,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Comment> getCommentCommentsPage(
+	public java.util.Collection<Comment> getCommentCommentsPage(
 			@GraphQLName("parentCommentId") Long parentCommentId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -347,7 +345,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Comment> getDocumentCommentsPage(
+	public java.util.Collection<Comment> getDocumentCommentsPage(
 			@GraphQLName("documentId") Long documentId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -369,7 +367,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Comment> getStructuredContentCommentsPage(
+	public java.util.Collection<Comment> getStructuredContentCommentsPage(
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -392,10 +390,11 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<ContentSetElement> getContentSetContentSetElementsPage(
-			@GraphQLName("contentSetId") Long contentSetId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+	public java.util.Collection<ContentSetElement>
+			getContentSetContentSetElementsPage(
+				@GraphQLName("contentSetId") Long contentSetId,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -413,7 +412,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<ContentSetElement>
+	public java.util.Collection<ContentSetElement>
 			getSiteContentSetByKeyContentSetElementsPage(
 				@GraphQLName("siteId") Long siteId,
 				@GraphQLName("key") String key,
@@ -436,7 +435,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<ContentSetElement>
+	public java.util.Collection<ContentSetElement>
 			getSiteContentSetByUuidContentSetElementsPage(
 				@GraphQLName("siteId") Long siteId,
 				@GraphQLName("uuid") String uuid,
@@ -473,7 +472,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<ContentStructure> getSiteContentStructuresPage(
+	public java.util.Collection<ContentStructure> getSiteContentStructuresPage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -496,7 +495,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Document> getDocumentFolderDocumentsPage(
+	public java.util.Collection<Document> getDocumentFolderDocumentsPage(
 			@GraphQLName("documentFolderId") Long documentFolderId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -543,7 +542,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Document> getSiteDocumentsPage(
+	public java.util.Collection<Document> getSiteDocumentsPage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
@@ -579,12 +578,15 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<DocumentFolder> getDocumentFolderDocumentFoldersPage(
-			@GraphQLName("parentDocumentFolderId") Long parentDocumentFolderId,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
+	public java.util.Collection<DocumentFolder>
+			getDocumentFolderDocumentFoldersPage(
+				@GraphQLName("parentDocumentFolderId") Long
+					parentDocumentFolderId,
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") Filter filter,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -602,7 +604,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<DocumentFolder> getSiteDocumentFoldersPage(
+	public java.util.Collection<DocumentFolder> getSiteDocumentFoldersPage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
@@ -654,7 +656,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<KnowledgeBaseArticle>
+	public java.util.Collection<KnowledgeBaseArticle>
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 				@GraphQLName("parentKnowledgeBaseArticleId") Long
 					parentKnowledgeBaseArticleId,
@@ -681,7 +683,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<KnowledgeBaseArticle>
+	public java.util.Collection<KnowledgeBaseArticle>
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 				@GraphQLName("knowledgeBaseFolderId") Long
 					knowledgeBaseFolderId,
@@ -709,13 +711,15 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<KnowledgeBaseArticle> getSiteKnowledgeBaseArticlesPage(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("flatten") Boolean flatten,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
+	public java.util.Collection<KnowledgeBaseArticle>
+			getSiteKnowledgeBaseArticlesPage(
+				@GraphQLName("siteId") Long siteId,
+				@GraphQLName("flatten") Boolean flatten,
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") Filter filter,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -734,7 +738,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<KnowledgeBaseAttachment>
+	public java.util.Collection<KnowledgeBaseAttachment>
 			getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
 				@GraphQLName("knowledgeBaseArticleId") Long
 					knowledgeBaseArticleId)
@@ -784,7 +788,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<KnowledgeBaseFolder>
+	public java.util.Collection<KnowledgeBaseFolder>
 			getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
 				@GraphQLName("parentKnowledgeBaseFolderId") Long
 					parentKnowledgeBaseFolderId,
@@ -808,10 +812,11 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<KnowledgeBaseFolder> getSiteKnowledgeBaseFoldersPage(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+	public java.util.Collection<KnowledgeBaseFolder>
+			getSiteKnowledgeBaseFoldersPage(
+				@GraphQLName("siteId") Long siteId,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -843,7 +848,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<MessageBoardAttachment>
+	public java.util.Collection<MessageBoardAttachment>
 			getMessageBoardMessageMessageBoardAttachmentsPage(
 				@GraphQLName("messageBoardMessageId") Long
 					messageBoardMessageId)
@@ -864,7 +869,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<MessageBoardAttachment>
+	public java.util.Collection<MessageBoardAttachment>
 			getMessageBoardThreadMessageBoardAttachmentsPage(
 				@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
@@ -912,7 +917,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<MessageBoardMessage>
+	public java.util.Collection<MessageBoardMessage>
 			getMessageBoardMessageMessageBoardMessagesPage(
 				@GraphQLName("parentMessageBoardMessageId") Long
 					parentMessageBoardMessageId,
@@ -939,7 +944,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<MessageBoardMessage>
+	public java.util.Collection<MessageBoardMessage>
 			getMessageBoardThreadMessageBoardMessagesPage(
 				@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
 				@GraphQLName("search") String search,
@@ -979,7 +984,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<MessageBoardSection>
+	public java.util.Collection<MessageBoardSection>
 			getMessageBoardSectionMessageBoardSectionsPage(
 				@GraphQLName("parentMessageBoardSectionId") Long
 					parentMessageBoardSectionId,
@@ -1006,13 +1011,15 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<MessageBoardSection> getSiteMessageBoardSectionsPage(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("flatten") Boolean flatten,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
+	public java.util.Collection<MessageBoardSection>
+			getSiteMessageBoardSectionsPage(
+				@GraphQLName("siteId") Long siteId,
+				@GraphQLName("flatten") Boolean flatten,
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") Filter filter,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1030,7 +1037,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<MessageBoardThread>
+	public java.util.Collection<MessageBoardThread>
 			getMessageBoardSectionMessageBoardThreadsPage(
 				@GraphQLName("messageBoardSectionId") Long
 					messageBoardSectionId,
@@ -1085,13 +1092,15 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<MessageBoardThread> getSiteMessageBoardThreadsPage(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("flatten") Boolean flatten,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
+	public java.util.Collection<MessageBoardThread>
+			getSiteMessageBoardThreadsPage(
+				@GraphQLName("siteId") Long siteId,
+				@GraphQLName("flatten") Boolean flatten,
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") Filter filter,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1109,7 +1118,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<StructuredContent>
+	public java.util.Collection<StructuredContent>
 			getContentStructureStructuredContentsPage(
 				@GraphQLName("contentStructureId") Long contentStructureId,
 				@GraphQLName("search") String search,
@@ -1135,13 +1144,15 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<StructuredContent> getSiteStructuredContentsPage(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("flatten") Boolean flatten,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
+	public java.util.Collection<StructuredContent>
+			getSiteStructuredContentsPage(
+				@GraphQLName("siteId") Long siteId,
+				@GraphQLName("flatten") Boolean flatten,
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") Filter filter,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1188,7 +1199,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<StructuredContent>
+	public java.util.Collection<StructuredContent>
 			getStructuredContentFolderStructuredContentsPage(
 				@GraphQLName("structuredContentFolderId") Long
 					structuredContentFolderId,
@@ -1259,7 +1270,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<StructuredContentFolder>
+	public java.util.Collection<StructuredContentFolder>
 			getSiteStructuredContentFoldersPage(
 				@GraphQLName("siteId") Long siteId,
 				@GraphQLName("flatten") Boolean flatten,
@@ -1286,7 +1297,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<StructuredContentFolder>
+	public java.util.Collection<StructuredContentFolder>
 			getStructuredContentFolderStructuredContentFoldersPage(
 				@GraphQLName("parentStructuredContentFolderId") Long
 					parentStructuredContentFolderId,

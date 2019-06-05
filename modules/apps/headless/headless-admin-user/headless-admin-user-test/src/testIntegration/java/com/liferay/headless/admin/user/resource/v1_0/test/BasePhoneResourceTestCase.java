@@ -49,7 +49,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -408,7 +407,7 @@ public abstract class BasePhoneResourceTestCase {
 	protected void assertValid(Page<Phone> page) {
 		boolean valid = false;
 
-		Collection<Phone> phones = page.getItems();
+		java.util.Collection<Phone> phones = page.getItems();
 
 		int size = phones.size();
 
@@ -494,7 +493,9 @@ public abstract class BasePhoneResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_phoneResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
@@ -515,7 +516,7 @@ public abstract class BasePhoneResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 

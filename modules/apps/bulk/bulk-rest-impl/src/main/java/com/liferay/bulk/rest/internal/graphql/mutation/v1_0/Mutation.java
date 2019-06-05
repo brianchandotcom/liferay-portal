@@ -34,8 +34,6 @@ import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
 import graphql.annotations.annotationTypes.GraphQLName;
 
-import java.util.Collection;
-
 import javax.annotation.Generated;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -107,7 +105,7 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Keyword> postKeywordsCommonPage(
+	public java.util.Collection<Keyword> postKeywordsCommonPage(
 			@GraphQLName("documentBulkSelection") DocumentBulkSelection
 				documentBulkSelection)
 		throws Exception {
@@ -167,7 +165,7 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<TaxonomyVocabulary>
+	public java.util.Collection<TaxonomyVocabulary>
 			postSiteTaxonomyVocabulariesCommonPage(
 				@GraphQLName("siteId") Long siteId,
 				@GraphQLName("documentBulkSelection") DocumentBulkSelection

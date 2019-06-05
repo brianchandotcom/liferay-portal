@@ -51,7 +51,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -594,7 +593,7 @@ public abstract class BaseKeywordResourceTestCase {
 	protected void assertValid(Page<Keyword> page) {
 		boolean valid = false;
 
-		Collection<Keyword> keywords = page.getItems();
+		java.util.Collection<Keyword> keywords = page.getItems();
 
 		int size = keywords.size();
 
@@ -698,7 +697,9 @@ public abstract class BaseKeywordResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_keywordResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
@@ -719,7 +720,7 @@ public abstract class BaseKeywordResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 

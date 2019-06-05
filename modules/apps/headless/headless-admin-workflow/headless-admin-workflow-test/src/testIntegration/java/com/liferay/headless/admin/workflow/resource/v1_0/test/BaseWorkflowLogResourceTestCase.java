@@ -50,7 +50,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -452,7 +451,7 @@ public abstract class BaseWorkflowLogResourceTestCase {
 	protected void assertValid(Page<WorkflowLog> page) {
 		boolean valid = false;
 
-		Collection<WorkflowLog> workflowLogs = page.getItems();
+		java.util.Collection<WorkflowLog> workflowLogs = page.getItems();
 
 		int size = workflowLogs.size();
 
@@ -597,7 +596,9 @@ public abstract class BaseWorkflowLogResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_workflowLogResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
@@ -618,7 +619,7 @@ public abstract class BaseWorkflowLogResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 

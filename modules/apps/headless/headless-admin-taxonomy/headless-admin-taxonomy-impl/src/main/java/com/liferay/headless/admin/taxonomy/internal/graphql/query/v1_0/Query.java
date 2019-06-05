@@ -33,8 +33,6 @@ import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
 import graphql.annotations.annotationTypes.GraphQLName;
 
-import java.util.Collection;
-
 import javax.annotation.Generated;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -83,7 +81,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Keyword> getSiteKeywordsPage(
+	public java.util.Collection<Keyword> getSiteKeywordsPage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -105,7 +103,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<TaxonomyCategory>
+	public java.util.Collection<TaxonomyCategory>
 			getTaxonomyCategoryTaxonomyCategoriesPage(
 				@GraphQLName("parentTaxonomyCategoryId") Long
 					parentTaxonomyCategoryId,
@@ -146,7 +144,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<TaxonomyCategory>
+	public java.util.Collection<TaxonomyCategory>
 			getTaxonomyVocabularyTaxonomyCategoriesPage(
 				@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
 				@GraphQLName("search") String search,
@@ -172,12 +170,14 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<TaxonomyVocabulary> getSiteTaxonomyVocabulariesPage(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") Filter filter,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
+	public java.util.Collection<TaxonomyVocabulary>
+			getSiteTaxonomyVocabulariesPage(
+				@GraphQLName("siteId") Long siteId,
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") Filter filter,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

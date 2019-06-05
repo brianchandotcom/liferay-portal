@@ -51,7 +51,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -1397,7 +1396,7 @@ public abstract class BaseCommentResourceTestCase {
 	protected void assertValid(Page<Comment> page) {
 		boolean valid = false;
 
-		Collection<Comment> comments = page.getItems();
+		java.util.Collection<Comment> comments = page.getItems();
 
 		int size = comments.size();
 
@@ -1495,7 +1494,9 @@ public abstract class BaseCommentResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_commentResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
@@ -1516,7 +1517,7 @@ public abstract class BaseCommentResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 

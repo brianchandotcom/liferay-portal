@@ -51,7 +51,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -467,7 +466,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 	protected void assertValid(Page<KnowledgeBaseAttachment> page) {
 		boolean valid = false;
 
-		Collection<KnowledgeBaseAttachment> knowledgeBaseAttachments =
+		java.util.Collection<KnowledgeBaseAttachment> knowledgeBaseAttachments =
 			page.getItems();
 
 		int size = knowledgeBaseAttachments.size();
@@ -575,7 +574,9 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_knowledgeBaseAttachmentResource instanceof
 				EntityModelResource)) {
 
@@ -598,7 +599,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 

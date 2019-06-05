@@ -29,8 +29,6 @@ import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
 import graphql.annotations.annotationTypes.GraphQLName;
 
-import java.util.Collection;
-
 import javax.annotation.Generated;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -73,7 +71,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<WorkflowLog> getWorkflowTaskWorkflowLogsPage(
+	public java.util.Collection<WorkflowLog> getWorkflowTaskWorkflowLogsPage(
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -93,7 +91,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<WorkflowTask> getRoleWorkflowTasksPage(
+	public java.util.Collection<WorkflowTask> getRoleWorkflowTasksPage(
 			@GraphQLName("roleId") Long roleId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -113,7 +111,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<WorkflowTask> getWorkflowTasksAssignedToMePage(
+	public java.util.Collection<WorkflowTask> getWorkflowTasksAssignedToMePage(
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -132,9 +130,10 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<WorkflowTask> getWorkflowTasksAssignedToMyRolesPage(
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+	public java.util.Collection<WorkflowTask>
+			getWorkflowTasksAssignedToMyRolesPage(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

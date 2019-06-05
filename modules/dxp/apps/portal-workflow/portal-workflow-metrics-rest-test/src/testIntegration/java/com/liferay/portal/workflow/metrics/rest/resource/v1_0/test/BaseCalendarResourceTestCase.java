@@ -25,9 +25,12 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -90,6 +93,11 @@ public abstract class BaseCalendarResourceTestCase {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
 		testLocale = LocaleUtil.getDefault();
+
+		testCompany = CompanyLocalServiceUtil.getCompany(
+			testGroup.getCompanyId());
+
+		_calendarResource.setContextCompany(testCompany);
 	}
 
 	@After
@@ -282,6 +290,10 @@ public abstract class BaseCalendarResourceTestCase {
 		return new String[0];
 	}
 
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[0];
+	}
+
 	protected boolean equals(Calendar calendar1, Calendar calendar2) {
 		if (calendar1 == calendar2) {
 			return true;
@@ -355,7 +367,10 @@ public abstract class BaseCalendarResourceTestCase {
 		Stream<EntityField> stream = entityFields.stream();
 
 		return stream.filter(
-			entityField -> Objects.equals(entityField.getType(), type)
+			entityField ->
+				Objects.equals(entityField.getType(), type) &&
+				!ArrayUtil.contains(
+					getIgnoredEntityFieldNames(), entityField.getName())
 		).collect(
 			Collectors.toList()
 		);
@@ -420,6 +435,7 @@ public abstract class BaseCalendarResourceTestCase {
 	}
 
 	protected Group irrelevantGroup;
+	protected Company testCompany;
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";

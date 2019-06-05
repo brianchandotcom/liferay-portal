@@ -25,9 +25,12 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -46,7 +49,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -94,6 +96,11 @@ public abstract class BaseInstanceResourceTestCase {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
 		testLocale = LocaleUtil.getDefault();
+
+		testCompany = CompanyLocalServiceUtil.getCompany(
+			testGroup.getCompanyId());
+
+		_instanceResource.setContextCompany(testCompany);
 	}
 
 	@After
@@ -178,6 +185,14 @@ public abstract class BaseInstanceResourceTestCase {
 
 	@Test
 	public void testGetProcessInstancesPage() throws Exception {
+		Page<Instance> page;
+
+		page = InstanceResource.getProcessInstancesPage(
+			testGetProcessInstancesPage_getProcessId(), null, null, null, null,
+			Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long processId = testGetProcessInstancesPage_getProcessId();
 		Long irrelevantProcessId =
 			testGetProcessInstancesPage_getIrrelevantProcessId();
@@ -187,7 +202,7 @@ public abstract class BaseInstanceResourceTestCase {
 				testGetProcessInstancesPage_addInstance(
 					irrelevantProcessId, randomIrrelevantInstance());
 
-			Page<Instance> page = InstanceResource.getProcessInstancesPage(
+			page = InstanceResource.getProcessInstancesPage(
 				irrelevantProcessId, null, null, null, null,
 				Pagination.of(1, 2));
 
@@ -205,7 +220,7 @@ public abstract class BaseInstanceResourceTestCase {
 		Instance instance2 = testGetProcessInstancesPage_addInstance(
 			processId, randomInstance());
 
-		Page<Instance> page = InstanceResource.getProcessInstancesPage(
+		page = InstanceResource.getProcessInstancesPage(
 			processId, null, null, null, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -245,14 +260,12 @@ public abstract class BaseInstanceResourceTestCase {
 
 		Assert.assertEquals(instances2.toString(), 1, instances2.size());
 
+		Page<Instance> page3 = InstanceResource.getProcessInstancesPage(
+			processId, null, null, null, null, Pagination.of(1, 3));
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(instance1, instance2, instance3),
-			new ArrayList<Instance>() {
-				{
-					addAll(instances1);
-					addAll(instances2);
-				}
-			});
+			(List<Instance>)page3.getItems());
 	}
 
 	protected Instance testGetProcessInstancesPage_addInstance(
@@ -453,6 +466,10 @@ public abstract class BaseInstanceResourceTestCase {
 		return new String[0];
 	}
 
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[0];
+	}
+
 	protected boolean equals(Instance instance1, Instance instance2) {
 		if (instance1 == instance2) {
 			return true;
@@ -605,7 +622,10 @@ public abstract class BaseInstanceResourceTestCase {
 		Stream<EntityField> stream = entityFields.stream();
 
 		return stream.filter(
-			entityField -> Objects.equals(entityField.getType(), type)
+			entityField ->
+				Objects.equals(entityField.getType(), type) &&
+				!ArrayUtil.contains(
+					getIgnoredEntityFieldNames(), entityField.getName())
 		).collect(
 			Collectors.toList()
 		);
@@ -770,6 +790,7 @@ public abstract class BaseInstanceResourceTestCase {
 	}
 
 	protected Group irrelevantGroup;
+	protected Company testCompany;
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";

@@ -25,9 +25,12 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -91,6 +94,11 @@ public abstract class BaseNodeResourceTestCase {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
 		testLocale = LocaleUtil.getDefault();
+
+		testCompany = CompanyLocalServiceUtil.getCompany(
+			testGroup.getCompanyId());
+
+		_nodeResource.setContextCompany(testCompany);
 	}
 
 	@After
@@ -173,6 +181,8 @@ public abstract class BaseNodeResourceTestCase {
 
 	@Test
 	public void testGetProcessNodesPage() throws Exception {
+		Page<Node> page;
+
 		Long processId = testGetProcessNodesPage_getProcessId();
 		Long irrelevantProcessId =
 			testGetProcessNodesPage_getIrrelevantProcessId();
@@ -181,8 +191,7 @@ public abstract class BaseNodeResourceTestCase {
 			Node irrelevantNode = testGetProcessNodesPage_addNode(
 				irrelevantProcessId, randomIrrelevantNode());
 
-			Page<Node> page = NodeResource.getProcessNodesPage(
-				irrelevantProcessId);
+			page = NodeResource.getProcessNodesPage(irrelevantProcessId);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -195,7 +204,7 @@ public abstract class BaseNodeResourceTestCase {
 
 		Node node2 = testGetProcessNodesPage_addNode(processId, randomNode());
 
-		Page<Node> page = NodeResource.getProcessNodesPage(processId);
+		page = NodeResource.getProcessNodesPage(processId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -337,6 +346,10 @@ public abstract class BaseNodeResourceTestCase {
 		return new String[0];
 	}
 
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[0];
+	}
+
 	protected boolean equals(Node node1, Node node2) {
 		if (node1 == node2) {
 			return true;
@@ -423,7 +436,10 @@ public abstract class BaseNodeResourceTestCase {
 		Stream<EntityField> stream = entityFields.stream();
 
 		return stream.filter(
-			entityField -> Objects.equals(entityField.getType(), type)
+			entityField ->
+				Objects.equals(entityField.getType(), type) &&
+				!ArrayUtil.contains(
+					getIgnoredEntityFieldNames(), entityField.getName())
 		).collect(
 			Collectors.toList()
 		);
@@ -500,6 +516,7 @@ public abstract class BaseNodeResourceTestCase {
 	}
 
 	protected Group irrelevantGroup;
+	protected Company testCompany;
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";

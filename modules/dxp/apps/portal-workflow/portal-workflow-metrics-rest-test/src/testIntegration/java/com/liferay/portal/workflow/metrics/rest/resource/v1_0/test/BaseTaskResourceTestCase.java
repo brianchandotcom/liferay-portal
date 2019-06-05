@@ -22,12 +22,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -46,7 +50,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -96,6 +99,11 @@ public abstract class BaseTaskResourceTestCase {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
 		testLocale = LocaleUtil.getDefault();
+
+		testCompany = CompanyLocalServiceUtil.getCompany(
+			testGroup.getCompanyId());
+
+		_taskResource.setContextCompany(testCompany);
 	}
 
 	@After
@@ -178,6 +186,8 @@ public abstract class BaseTaskResourceTestCase {
 
 	@Test
 	public void testGetProcessTasksPage() throws Exception {
+		Page<Task> page;
+
 		Long processId = testGetProcessTasksPage_getProcessId();
 		Long irrelevantProcessId =
 			testGetProcessTasksPage_getIrrelevantProcessId();
@@ -186,7 +196,7 @@ public abstract class BaseTaskResourceTestCase {
 			Task irrelevantTask = testGetProcessTasksPage_addTask(
 				irrelevantProcessId, randomIrrelevantTask());
 
-			Page<Task> page = TaskResource.getProcessTasksPage(
+			page = TaskResource.getProcessTasksPage(
 				irrelevantProcessId, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -200,7 +210,7 @@ public abstract class BaseTaskResourceTestCase {
 
 		Task task2 = testGetProcessTasksPage_addTask(processId, randomTask());
 
-		Page<Task> page = TaskResource.getProcessTasksPage(
+		page = TaskResource.getProcessTasksPage(
 			processId, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -236,60 +246,51 @@ public abstract class BaseTaskResourceTestCase {
 
 		Assert.assertEquals(tasks2.toString(), 1, tasks2.size());
 
+		Page<Task> page3 = TaskResource.getProcessTasksPage(
+			processId, Pagination.of(1, 3), null);
+
 		assertEqualsIgnoringOrder(
-			Arrays.asList(task1, task2, task3),
-			new ArrayList<Task>() {
-				{
-					addAll(tasks1);
-					addAll(tasks2);
-				}
-			});
+			Arrays.asList(task1, task2, task3), (List<Task>)page3.getItems());
 	}
 
 	@Test
 	public void testGetProcessTasksPageWithSortDateTime() throws Exception {
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DATE_TIME);
+		testGetProcessTasksPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, task1, task2) -> {
+				BeanUtils.setProperty(
+					task1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		Long processId = testGetProcessTasksPage_getProcessId();
-
-		Task task1 = randomTask();
-		Task task2 = randomTask();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				task1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
-
-		task1 = testGetProcessTasksPage_addTask(processId, task1);
-
-		task2 = testGetProcessTasksPage_addTask(processId, task2);
-
-		for (EntityField entityField : entityFields) {
-			Page<Task> ascPage = TaskResource.getProcessTasksPage(
-				processId, Pagination.of(1, 2), entityField.getName() + ":asc");
-
-			assertEquals(
-				Arrays.asList(task1, task2), (List<Task>)ascPage.getItems());
-
-			Page<Task> descPage = TaskResource.getProcessTasksPage(
-				processId, Pagination.of(1, 2),
-				entityField.getName() + ":desc");
-
-			assertEquals(
-				Arrays.asList(task2, task1), (List<Task>)descPage.getItems());
-		}
+	@Test
+	public void testGetProcessTasksPageWithSortInteger() throws Exception {
+		testGetProcessTasksPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, task1, task2) -> {
+				BeanUtils.setProperty(task1, entityField.getName(), 0);
+				BeanUtils.setProperty(task2, entityField.getName(), 1);
+			});
 	}
 
 	@Test
 	public void testGetProcessTasksPageWithSortString() throws Exception {
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetProcessTasksPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, task1, task2) -> {
+				BeanUtils.setProperty(task1, entityField.getName(), "Aaa");
+				BeanUtils.setProperty(task2, entityField.getName(), "Bbb");
+			});
+	}
+
+	protected void testGetProcessTasksPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, Task, Task, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -301,8 +302,7 @@ public abstract class BaseTaskResourceTestCase {
 		Task task2 = randomTask();
 
 		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(task1, entityField.getName(), "Aaa");
-			BeanUtils.setProperty(task2, entityField.getName(), "Bbb");
+			unsafeTriConsumer.accept(entityField, task1, task2);
 		}
 
 		task1 = testGetProcessTasksPage_addTask(processId, task1);
@@ -466,6 +466,10 @@ public abstract class BaseTaskResourceTestCase {
 		return new String[0];
 	}
 
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[0];
+	}
+
 	protected boolean equals(Task task1, Task task2) {
 		if (task1 == task2) {
 			return true;
@@ -560,7 +564,10 @@ public abstract class BaseTaskResourceTestCase {
 		Stream<EntityField> stream = entityFields.stream();
 
 		return stream.filter(
-			entityField -> Objects.equals(entityField.getType(), type)
+			entityField ->
+				Objects.equals(entityField.getType(), type) &&
+				!ArrayUtil.contains(
+					getIgnoredEntityFieldNames(), entityField.getName())
 		).collect(
 			Collectors.toList()
 		);
@@ -637,6 +644,7 @@ public abstract class BaseTaskResourceTestCase {
 	}
 
 	protected Group irrelevantGroup;
+	protected Company testCompany;
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";

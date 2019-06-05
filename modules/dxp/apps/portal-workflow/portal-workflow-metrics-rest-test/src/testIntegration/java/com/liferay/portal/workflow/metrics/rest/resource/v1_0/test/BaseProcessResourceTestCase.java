@@ -22,12 +22,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -46,7 +50,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -96,6 +99,11 @@ public abstract class BaseProcessResourceTestCase {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
 		testLocale = LocaleUtil.getDefault();
+
+		testCompany = CompanyLocalServiceUtil.getCompany(
+			testGroup.getCompanyId());
+
+		_processResource.setContextCompany(testCompany);
 	}
 
 	@After
@@ -176,11 +184,18 @@ public abstract class BaseProcessResourceTestCase {
 
 	@Test
 	public void testGetProcessesPage() throws Exception {
+		Page<Process> page;
+
+		page = ProcessResource.getProcessesPage(
+			RandomTestUtil.randomString(), Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Process process1 = testGetProcessesPage_addProcess(randomProcess());
 
 		Process process2 = testGetProcessesPage_addProcess(randomProcess());
 
-		Page<Process> page = ProcessResource.getProcessesPage(
+		page = ProcessResource.getProcessesPage(
 			null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -214,59 +229,52 @@ public abstract class BaseProcessResourceTestCase {
 
 		Assert.assertEquals(processes2.toString(), 1, processes2.size());
 
+		Page<Process> page3 = ProcessResource.getProcessesPage(
+			null, Pagination.of(1, 3), null);
+
 		assertEqualsIgnoringOrder(
 			Arrays.asList(process1, process2, process3),
-			new ArrayList<Process>() {
-				{
-					addAll(processes1);
-					addAll(processes2);
-				}
-			});
+			(List<Process>)page3.getItems());
 	}
 
 	@Test
 	public void testGetProcessesPageWithSortDateTime() throws Exception {
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DATE_TIME);
+		testGetProcessesPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, process1, process2) -> {
+				BeanUtils.setProperty(
+					process1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		Process process1 = randomProcess();
-		Process process2 = randomProcess();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				process1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
-
-		process1 = testGetProcessesPage_addProcess(process1);
-
-		process2 = testGetProcessesPage_addProcess(process2);
-
-		for (EntityField entityField : entityFields) {
-			Page<Process> ascPage = ProcessResource.getProcessesPage(
-				null, Pagination.of(1, 2), entityField.getName() + ":asc");
-
-			assertEquals(
-				Arrays.asList(process1, process2),
-				(List<Process>)ascPage.getItems());
-
-			Page<Process> descPage = ProcessResource.getProcessesPage(
-				null, Pagination.of(1, 2), entityField.getName() + ":desc");
-
-			assertEquals(
-				Arrays.asList(process2, process1),
-				(List<Process>)descPage.getItems());
-		}
+	@Test
+	public void testGetProcessesPageWithSortInteger() throws Exception {
+		testGetProcessesPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, process1, process2) -> {
+				BeanUtils.setProperty(process1, entityField.getName(), 0);
+				BeanUtils.setProperty(process2, entityField.getName(), 1);
+			});
 	}
 
 	@Test
 	public void testGetProcessesPageWithSortString() throws Exception {
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetProcessesPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, process1, process2) -> {
+				BeanUtils.setProperty(process1, entityField.getName(), "Aaa");
+				BeanUtils.setProperty(process2, entityField.getName(), "Bbb");
+			});
+	}
+
+	protected void testGetProcessesPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, Process, Process, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -276,8 +284,7 @@ public abstract class BaseProcessResourceTestCase {
 		Process process2 = randomProcess();
 
 		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(process1, entityField.getName(), "Aaa");
-			BeanUtils.setProperty(process2, entityField.getName(), "Bbb");
+			unsafeTriConsumer.accept(entityField, process1, process2);
 		}
 
 		process1 = testGetProcessesPage_addProcess(process1);
@@ -462,6 +469,10 @@ public abstract class BaseProcessResourceTestCase {
 		return new String[0];
 	}
 
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[0];
+	}
+
 	protected boolean equals(Process process1, Process process2) {
 		if (process1 == process2) {
 			return true;
@@ -572,7 +583,10 @@ public abstract class BaseProcessResourceTestCase {
 		Stream<EntityField> stream = entityFields.stream();
 
 		return stream.filter(
-			entityField -> Objects.equals(entityField.getType(), type)
+			entityField ->
+				Objects.equals(entityField.getType(), type) &&
+				!ArrayUtil.contains(
+					getIgnoredEntityFieldNames(), entityField.getName())
 		).collect(
 			Collectors.toList()
 		);
@@ -652,6 +666,7 @@ public abstract class BaseProcessResourceTestCase {
 	}
 
 	protected Group irrelevantGroup;
+	protected Company testCompany;
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";

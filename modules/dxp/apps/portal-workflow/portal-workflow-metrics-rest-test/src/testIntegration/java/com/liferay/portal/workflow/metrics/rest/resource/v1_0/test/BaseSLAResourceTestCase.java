@@ -25,9 +25,12 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -46,7 +49,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -94,6 +96,11 @@ public abstract class BaseSLAResourceTestCase {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
 		testLocale = LocaleUtil.getDefault();
+
+		testCompany = CompanyLocalServiceUtil.getCompany(
+			testGroup.getCompanyId());
+
+		_slaResource.setContextCompany(testCompany);
 	}
 
 	@After
@@ -178,6 +185,13 @@ public abstract class BaseSLAResourceTestCase {
 
 	@Test
 	public void testGetProcessSLAsPage() throws Exception {
+		Page<SLA> page;
+
+		page = SLAResource.getProcessSLAsPage(
+			testGetProcessSLAsPage_getProcessId(), null, Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long processId = testGetProcessSLAsPage_getProcessId();
 		Long irrelevantProcessId =
 			testGetProcessSLAsPage_getIrrelevantProcessId();
@@ -186,7 +200,7 @@ public abstract class BaseSLAResourceTestCase {
 			SLA irrelevantSLA = testGetProcessSLAsPage_addSLA(
 				irrelevantProcessId, randomIrrelevantSLA());
 
-			Page<SLA> page = SLAResource.getProcessSLAsPage(
+			page = SLAResource.getProcessSLAsPage(
 				irrelevantProcessId, null, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -200,7 +214,7 @@ public abstract class BaseSLAResourceTestCase {
 
 		SLA sla2 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
 
-		Page<SLA> page = SLAResource.getProcessSLAsPage(
+		page = SLAResource.getProcessSLAsPage(
 			processId, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -236,14 +250,11 @@ public abstract class BaseSLAResourceTestCase {
 
 		Assert.assertEquals(slas2.toString(), 1, slas2.size());
 
+		Page<SLA> page3 = SLAResource.getProcessSLAsPage(
+			processId, null, Pagination.of(1, 3));
+
 		assertEqualsIgnoringOrder(
-			Arrays.asList(sla1, sla2, sla3),
-			new ArrayList<SLA>() {
-				{
-					addAll(slas1);
-					addAll(slas2);
-				}
-			});
+			Arrays.asList(sla1, sla2, sla3), (List<SLA>)page3.getItems());
 	}
 
 	protected SLA testGetProcessSLAsPage_addSLA(Long processId, SLA sla)
@@ -489,6 +500,10 @@ public abstract class BaseSLAResourceTestCase {
 		return new String[0];
 	}
 
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[0];
+	}
+
 	protected boolean equals(SLA sla1, SLA sla2) {
 		if (sla1 == sla2) {
 			return true;
@@ -635,7 +650,10 @@ public abstract class BaseSLAResourceTestCase {
 		Stream<EntityField> stream = entityFields.stream();
 
 		return stream.filter(
-			entityField -> Objects.equals(entityField.getType(), type)
+			entityField ->
+				Objects.equals(entityField.getType(), type) &&
+				!ArrayUtil.contains(
+					getIgnoredEntityFieldNames(), entityField.getName())
 		).collect(
 			Collectors.toList()
 		);
@@ -773,6 +791,7 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	protected Group irrelevantGroup;
+	protected Company testCompany;
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";

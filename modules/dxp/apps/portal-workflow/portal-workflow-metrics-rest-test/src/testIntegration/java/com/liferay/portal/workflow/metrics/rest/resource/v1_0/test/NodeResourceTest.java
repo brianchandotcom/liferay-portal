@@ -72,8 +72,6 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 			_workflowMetricsRESTTestHelper.deleteNode(
 				testGroup.getCompanyId(), _process.getId(), node.getName());
 		}
-
-		_nodes = new ArrayList<>();
 	}
 
 	@Test
@@ -148,7 +146,7 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 
 	private static WorkflowMetricsRESTTestHelper _workflowMetricsRESTTestHelper;
 
-	private List<Node> _nodes = new ArrayList<>();
+	private final List<Node> _nodes = new ArrayList<>();
 	private Process _process;
 
 }

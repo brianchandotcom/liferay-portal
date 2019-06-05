@@ -87,8 +87,6 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 		for (SLA sla : _slas) {
 			SLAResource.deleteSLA(sla.getId());
 		}
-
-		_slas = new ArrayList<>();
 	}
 
 	@Test
@@ -257,6 +255,6 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 
 	private Node _node;
 	private Process _process;
-	private List<SLA> _slas = new ArrayList<>();
+	private final List<SLA> _slas = new ArrayList<>();
 
 }

@@ -75,8 +75,6 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 			_workflowMetricsRESTTestHelper.deleteProcess(
 				testGroup.getCompanyId(), process.getId());
 		}
-
-		_processes = new ArrayList<>();
 	}
 
 	@Test
@@ -222,6 +220,6 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 	private static Document _singleApproverDocument;
 	private static WorkflowMetricsRESTTestHelper _workflowMetricsRESTTestHelper;
 
-	private List<Process> _processes = new ArrayList<>();
+	private final List<Process> _processes = new ArrayList<>();
 
 }

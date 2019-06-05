@@ -75,8 +75,6 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 			_workflowMetricsRESTTestHelper.deleteInstance(
 				testGroup.getCompanyId(), instance.getId(), _process.getId());
 		}
-
-		_instances = new ArrayList<>();
 	}
 
 	@Test
@@ -198,7 +196,7 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 	private static WorkflowMetricsRESTTestHelper _workflowMetricsRESTTestHelper;
 
-	private List<Instance> _instances = new ArrayList<>();
+	private final List<Instance> _instances = new ArrayList<>();
 	private Process _process;
 
 }

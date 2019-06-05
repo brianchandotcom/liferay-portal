@@ -70,8 +70,6 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			_workflowMetricsRESTTestHelper.deleteTask(
 				testGroup.getCompanyId(), _process.getId(), task.getKey());
 		}
-
-		_tasks = new ArrayList<>();
 	}
 
 	@Override
@@ -143,6 +141,6 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 	private static WorkflowMetricsRESTTestHelper _workflowMetricsRESTTestHelper;
 
 	private Process _process;
-	private List<Task> _tasks = new ArrayList<>();
+	private final List<Task> _tasks = new ArrayList<>();
 
 }

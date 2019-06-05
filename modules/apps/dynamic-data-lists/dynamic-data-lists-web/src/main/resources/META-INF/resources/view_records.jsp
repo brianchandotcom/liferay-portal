@@ -63,36 +63,28 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			searchContainer="<%= ddlViewRecordsDisplayContext.getSearch() %>"
 		>
+			<liferay-ui:search-container-row
+				className="com.liferay.dynamic.data.lists.model.DDLRecord"
+				keyProperty="recordId"
+				modelVar="record"
+			>
 
-			<%
-			List results = searchContainer.getResults();
-			List resultRows = searchContainer.getResultRows();
-
-			for (int i = 0; i < results.size(); i++) {
-				DDLRecord record = (DDLRecord)results.get(i);
-				List<DDMFormField> ddmFormfields = ddlViewRecordsDisplayContext.getDDMFormFields();
-
+				<%
 				DDLRecordVersion recordVersion = record.getRecordVersion();
 
 				if (ddlViewRecordsDisplayContext.isEditable()) {
 					recordVersion = record.getLatestRecordVersion();
 				}
 
-				Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap = ddlViewRecordsDisplayContext.getDDMFormFieldValuesMap(recordVersion);
-
-				ResultRow row = new ResultRow(record, record.getRecordId(), i);
-
-				row.setCssClass("entry-display-style");
-
 				row.setParameter("editable", String.valueOf(ddlViewRecordsDisplayContext.isEditable()));
 				row.setParameter("formDDMTemplateId", String.valueOf(formDDMTemplateId));
 				row.setParameter("hasDeletePermission", String.valueOf(ddlViewRecordsDisplayContext.hasDeletePermission()));
 				row.setParameter("hasUpdatePermission", String.valueOf(ddlViewRecordsDisplayContext.hasUpdatePermission()));
 
-				PortletURL rowURL = null;
+				String href = StringPool.BLANK;
 
 				if (ddlViewRecordsDisplayContext.isEditable()) {
-					rowURL = renderResponse.createRenderURL();
+					PortletURL rowURL = renderResponse.createRenderURL();
 
 					rowURL.setParameter("mvcPath", "/view_record.jsp");
 					rowURL.setParameter("redirect", currentURL);
@@ -100,11 +92,15 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 					rowURL.setParameter("version", recordVersion.getVersion());
 					rowURL.setParameter("editable", String.valueOf(ddlViewRecordsDisplayContext.isEditable()));
 					rowURL.setParameter("formDDMTemplateId", String.valueOf(formDDMTemplateId));
+
+					href = rowURL.toString();
 				}
 
-				// Columns
+				Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap = ddlViewRecordsDisplayContext.getDDMFormFieldValuesMap(recordVersion);
 
-				for (DDMFormField ddmFormField : ddmFormfields) {
+				for (DDMFormField ddmFormField : ddlViewRecordsDisplayContext.getDDMFormFields()) {
+					LocalizedValue label = ddmFormField.getLabel();
+
 					String value = StringPool.BLANK;
 
 					List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(ddmFormField.getName());
@@ -114,25 +110,44 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 
 						value = ddmFormFieldValueRenderer.render(ddmFormFieldValues, themeDisplay.getLocale());
 					}
+				%>
 
-					row.addText(value, rowURL);
+					<liferay-ui:search-container-column-text
+						href="<%= href %>"
+						name="<%= label.getString(themeDisplay.getLocale()) %>"
+						value="<%= value %>"
+					/>
+
+				<%
 				}
+				%>
 
-				if (ddlViewRecordsDisplayContext.hasUpdatePermission()) {
-					row.addStatus(recordVersion.getStatus(), recordVersion.getStatusByUserId(), recordVersion.getStatusDate(), rowURL);
-					row.addDate(record.getModifiedDate(), rowURL);
-					row.addText(HtmlUtil.escape(PortalUtil.getUserName(recordVersion)), rowURL);
-				}
+				<c:if test="<%= ddlViewRecordsDisplayContext.hasUpdatePermission() %>">
+					<liferay-ui:search-container-column-status
+						href="<%= href %>"
+						name="status"
+						status="<%= recordVersion.getStatus() %>"
+						statusByUserId="<%= recordVersion.getStatusByUserId() %>"
+						statusDate="<%= recordVersion.getStatusDate() %>"
+					/>
 
-				// Action
+					<liferay-ui:search-container-column-date
+						href="<%= href %>"
+						name="modified-date"
+						value="<%= record.getModifiedDate() %>"
+					/>
 
-				row.addJSP("/record_action.jsp", "entry-action", application, request, response);
+					<liferay-ui:search-container-column-text
+						href="<%= href %>"
+						name="author"
+						value="<%= HtmlUtil.escape(PortalUtil.getUserName(recordVersion)) %>"
+					/>
+				</c:if>
 
-				// Add result row
-
-				resultRows.add(row);
-			}
-			%>
+				<liferay-ui:search-container-column-jsp
+					path="/record_action.jsp"
+				/>
+			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator
 				displayStyle="<%= ddlViewRecordsDisplayContext.getDisplayStyle() %>"

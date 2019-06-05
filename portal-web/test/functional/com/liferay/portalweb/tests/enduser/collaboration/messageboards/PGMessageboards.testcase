@@ -57,7 +57,11 @@ definition {
 		for (var categoryName : list "MB Category1 Name,MB Category2 Name,MB Category3 Name") {
 			Navigator.gotoPage(pageName = "Message Boards Page");
 
-			MessageboardsCategory.addPG(categoryName = "${categoryName}");
+			JSONMBMessage.addCategory(
+				categoryDescription = "MB Category Description",
+				categoryName = "${categoryName}");
+
+			Refresh();
 
 			MessageboardsCategory.viewPG(categoryName = "${categoryName}");
 		}
@@ -98,9 +102,11 @@ definition {
 
 	@priority = "4"
 	test AddMBCategorySubcategory {
-		Navigator.gotoPage(pageName = "Message Boards Page");
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name");
 
-		MessageboardsCategory.addPG(categoryName = "MB Category Name");
+		Refresh();
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -120,9 +126,11 @@ definition {
 
 	@priority = "4"
 	test AddMBCategorySubcategoryNullName {
-		Navigator.gotoPage(pageName = "Message Boards Page");
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name");
 
-		MessageboardsCategory.addPG(categoryName = "MB Category Name");
+		Refresh();
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -143,9 +151,11 @@ definition {
 	test AddMBCategorySubcategoryThread {
 		property testray.component.names = "Training";
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name");
 
-		MessageboardsCategory.addPG(categoryName = "MB Category Name");
+		Refresh();
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -185,9 +195,11 @@ definition {
 
 	@priority = "4"
 	test AddMBCategoryThreadQuestion {
-		Navigator.gotoPage(pageName = "Message Boards Page");
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name");
 
-		MessageboardsCategory.addPG(categoryName = "MB Category Name");
+		Refresh();
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -215,9 +227,11 @@ definition {
 
 	@priority = "4"
 	test AddMBCategoryThreadUTF8 {
-		Navigator.gotoPage(pageName = "Message Boards Page");
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name");
 
-		MessageboardsCategory.addPG(categoryName = "MB Category Name");
+		Refresh();
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -470,9 +484,11 @@ definition {
 	test DeleteMBCategory {
 		property portal.acceptance = "true";
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name");
 
-		MessageboardsCategory.addPG(categoryName = "MB Category Name");
+		Refresh();
 
 		MessageboardsCategory.deletePG(categoryName = "MB Category Name");
 
@@ -498,9 +514,11 @@ definition {
 	test EditMBCategory {
 		property portal.acceptance = "true";
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name");
 
-		MessageboardsCategory.addPG(categoryName = "MB Category Name");
+		Refresh();
 
 		MessageboardsCategory.editPG(
 			categoryName = "MB Category Name",
@@ -619,9 +637,15 @@ definition {
 
 	@priority = "4"
 	test MoveMBCategory1ThreadToCategory2 {
-		Navigator.gotoPage(pageName = "Message Boards Page");
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category1 Name");
 
-		MessageboardsCategory.addPG(categoryName = "MB Category1 Name");
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category2 Name");
+
+		Refresh();
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -630,10 +654,6 @@ definition {
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.addPG(categoryName = "MB Category2 Name");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -661,9 +681,15 @@ definition {
 
 	@priority = "3"
 	test MoveMBCategory1ThreadWithExplanationPostToCategory2 {
-		Navigator.gotoPage(pageName = "Message Boards Page");
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category1 Name");
 
-		MessageboardsCategory.addPG(categoryName = "MB Category1 Name");
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category2 Name");
+
+		Refresh();
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -672,10 +698,6 @@ definition {
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.addPG(categoryName = "MB Category2 Name");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -901,9 +923,11 @@ definition {
 
 	@priority = "4"
 	test ViewSubcategorySubscriptionViaMySubscriptionsPage {
-		Navigator.gotoPage(pageName = "Message Boards Page");
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name");
 
-		MessageboardsCategory.addPG(categoryName = "MB Category Name");
+		Refresh();
 
 		MessageboardsCategory.addSubcategoryPG(
 			categoryName = "MB Category Name",

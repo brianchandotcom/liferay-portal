@@ -1,4 +1,34 @@
 definition {
+
+	macro addCategory {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(parentCategoryId))) {
+			var parentCategoryId = "0";
+		}
+
+		if (!(isSet(userId))) {
+			var userId = "20129";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/mb.mbcategory/add-category \
+			-u test@liferay.com:test \
+			-d userId=${userId} \
+			-d parentCategoryId=${parentCategoryId} \
+			-d name=${categoryName} \
+			-d description=${categoryDescription}
+		''';
+
+		echo("## Adding a 'Category' with the following info using JSONWS:");
+
+		echo("## * Name: ${categoryName}");
+
+		echo("## * Description: ${categoryDescription}");
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
 	macro addMessage {
 		var portalURL = JSONCompany.getPortalURL();
 

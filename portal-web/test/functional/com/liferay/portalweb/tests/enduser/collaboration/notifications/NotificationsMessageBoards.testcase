@@ -169,7 +169,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		MessageboardsCategory.addPG(categoryName = "MB Category Name");
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name");
+
+		Refresh();
 
 		MessageboardsCategory.subscribePG(categoryName = "MB Category Name");
 
@@ -217,7 +221,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		MessageboardsCategory.addPG(categoryName = "MB Category Name");
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name");
+
+		Refresh();
 
 		MessageboardsCategory.subscribePG(categoryName = "MB Category Name");
 
@@ -265,7 +273,11 @@ definition {
 	test ViewWebsiteNotificationForNewThreadInCategory {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		MessageboardsCategory.addPG(categoryName = "MB Category Name");
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name");
+
+		Refresh();
 
 		MessageboardsCategory.subscribePG(categoryName = "MB Category Name");
 
@@ -316,7 +328,11 @@ definition {
 	test ViewWebsiteNotificationForUpdatedThreadInCategory {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		MessageboardsCategory.addPG(categoryName = "MB Category Name");
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name");
+
+		Refresh();
 
 		MessageboardsCategory.subscribePG(categoryName = "MB Category Name");
 

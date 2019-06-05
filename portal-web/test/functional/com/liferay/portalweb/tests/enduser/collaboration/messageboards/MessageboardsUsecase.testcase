@@ -491,9 +491,11 @@ definition {
 
 		Portlet.addPG(portletName = "Message Boards");
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name");
 
-		MessageboardsCategory.addPG(categoryName = "MB Category Name");
+		Refresh();
 
 		User.logoutPG();
 

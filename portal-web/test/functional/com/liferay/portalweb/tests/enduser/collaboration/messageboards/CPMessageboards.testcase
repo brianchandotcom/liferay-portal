@@ -52,7 +52,11 @@ definition {
 			panel = "Site Administration",
 			portlet = "Message Boards");
 
-		MessageboardsCategory.addCP(categoryName = "MB Category Name");
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name");
+
+		Refresh();
 
 		MessageboardsCategory.gotoCP(categoryName = "MB Category Name");
 
@@ -135,13 +139,12 @@ definition {
 		Navigator.openURL();
 
 		for (var categoryName : list "MB Category1 Name,MB Category2 Name,MB Category3 Name") {
-			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
-				panel = "Site Administration",
-				portlet = "Message Boards");
-
-			MessageboardsCategory.addCP(categoryName = "${categoryName}");
+			JSONMBMessage.addCategory(
+				categoryDescription = "MB Category Description",
+				categoryName = "${categoryName}");
 		}
+
+		Refresh();
 
 		MessageboardsCategory.tearDownCP(assetType = "3 items");
 

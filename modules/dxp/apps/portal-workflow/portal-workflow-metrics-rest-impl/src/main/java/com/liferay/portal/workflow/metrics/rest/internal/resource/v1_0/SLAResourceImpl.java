@@ -138,37 +138,29 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 
 	@Override
 	public SLA postProcessSLA(Long processId, SLA sla) throws Exception {
-		PauseNodeKeys pauseNodeKeys = sla.getPauseNodeKeys();
-		StartNodeKeys startNodeKeys = sla.getStartNodeKeys();
-		StopNodeKeys stopNodeKeys = sla.getStopNodeKeys();
-
 		return _toSLA(
 			_workflowMetricsSLADefinitionLocalService.
 				addWorkflowMetricsSLADefinition(
 					sla.getName(), sla.getDescription(), sla.getDuration(),
 					sla.getCalendarKey(), processId,
-					_toStringArray(pauseNodeKeys.getNodeKeys()),
-					_toStringArray(startNodeKeys.getNodeKeys()),
-					_toStringArray(stopNodeKeys.getNodeKeys()),
+					_toStringArray(sla.getPauseNodeKeys()),
+					_toStringArray(sla.getStartNodeKeys()),
+					_toStringArray(sla.getStopNodeKeys()),
 					_createServiceContext()));
 	}
 
 	@Override
 	public SLA putSLA(Long slaId, SLA sla) throws Exception {
-		PauseNodeKeys pauseNodeKeys = sla.getPauseNodeKeys();
-		StartNodeKeys startNodeKeys = sla.getStartNodeKeys();
-		StopNodeKeys stopNodeKeys = sla.getStopNodeKeys();
-
 		return _toSLA(
 			_workflowMetricsSLADefinitionLocalService.
 				updateWorkflowMetricsSLADefinition(
 					slaId, sla.getName(), sla.getDescription(),
 					sla.getDuration(), sla.getCalendarKey(),
-					_toStringArray(pauseNodeKeys.getNodeKeys()),
-					_toStringArray(startNodeKeys.getNodeKeys()),
-					_toStringArray(stopNodeKeys.getNodeKeys()),
-					GetterUtil.getInteger(
-						sla.getStatus(), WorkflowConstants.STATUS_APPROVED),
+					_toStringArray(sla.getPauseNodeKeys()),
+					_toStringArray(sla.getStartNodeKeys()),
+					_toStringArray(sla.getStopNodeKeys()),
+						GetterUtil.getInteger(	
+							sla.getStatus(), WorkflowConstants.STATUS_APPROVED),
 					_createServiceContext()));
 	}
 
@@ -222,37 +214,49 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 				duration = workflowMetricsSLADefinition.getDuration();
 				id = workflowMetricsSLADefinition.getPrimaryKey();
 				name = workflowMetricsSLADefinition.getName();
-				pauseNodeKeys = new PauseNodeKeys() {
-					{
-						nodeKeys = _toNodeKeys(
-							StringUtil.split(
-								workflowMetricsSLADefinition.
-									getPauseNodeKeys()));
-						status = WorkflowConstants.STATUS_APPROVED;
-					}
-				};
+
+				String pauseNodeKeysString =
+					workflowMetricsSLADefinition.getPauseNodeKeys();
+
+				if (Validator.isNotNull(pauseNodeKeysString)) {
+					pauseNodeKeys = new PauseNodeKeys() {
+						{
+							nodeKeys = _toNodeKeys(
+								StringUtil.split(pauseNodeKeysString));
+							status = WorkflowConstants.STATUS_APPROVED;
+						}
+					};
+				}
+
 				processId = workflowMetricsSLADefinition.getProcessId();
-				startNodeKeys = new StartNodeKeys() {
-					{
-						nodeKeys = _toNodeKeys(
-							StringUtil.split(
-								workflowMetricsSLADefinition.
-									getStartNodeKeys()));
-						status = _toStatus(
-							workflowMetricsSLADefinition.getStartNodeKeys());
-					}
-				};
+
+				String startNodeKeysString =
+					workflowMetricsSLADefinition.getStartNodeKeys();
+
+				if (Validator.isNotNull(startNodeKeysString)) {
+					startNodeKeys = new StartNodeKeys() {
+						{
+							nodeKeys = _toNodeKeys(
+								StringUtil.split(startNodeKeysString));
+							status = _toStatus(startNodeKeysString);
+						}
+					};
+				}
+
 				status = workflowMetricsSLADefinition.getStatus();
-				stopNodeKeys = new StopNodeKeys() {
-					{
-						nodeKeys = _toNodeKeys(
-							StringUtil.split(
-								workflowMetricsSLADefinition.
-									getStopNodeKeys()));
-						status = _toStatus(
-							workflowMetricsSLADefinition.getStopNodeKeys());
-					}
-				};
+
+				String stopNodeKeysString =
+					workflowMetricsSLADefinition.getStopNodeKeys();
+
+				if (Validator.isNotNull(stopNodeKeysString)) {
+					stopNodeKeys = new StopNodeKeys() {
+						{
+							nodeKeys = _toNodeKeys(
+								StringUtil.split(stopNodeKeysString));
+							status = _toStatus(stopNodeKeysString);
+						}
+					};
+				}
 			}
 		};
 	}
@@ -285,6 +289,30 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 		).toArray(
 			String[]::new
 		);
+	}
+
+	private String[] _toStringArray(PauseNodeKeys pauseNodeKeys) {
+		if (pauseNodeKeys == null) {
+			return null;
+		}
+
+		return _toStringArray(pauseNodeKeys.getNodeKeys());
+	}
+
+	private String[] _toStringArray(StartNodeKeys startNodeKeys) {
+		if (startNodeKeys == null) {
+			return null;
+		}
+
+		return _toStringArray(startNodeKeys.getNodeKeys());
+	}
+
+	private String[] _toStringArray(StopNodeKeys stopNodeKeys) {
+		if (stopNodeKeys == null) {
+			return null;
+		}
+
+		return _toStringArray(stopNodeKeys.getNodeKeys());
 	}
 
 	@Reference

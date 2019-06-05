@@ -53,6 +53,7 @@ import com.liferay.portal.workflow.metrics.service.base.WorkflowMetricsSLADefini
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -424,6 +425,10 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 	}
 
 	private Set<String> _getNodeIds(String[] nodeKeys) {
+		if (nodeKeys == null) {
+			return Collections.emptySet();
+		}
+
 		return Stream.of(
 			nodeKeys
 		).map(

@@ -223,7 +223,9 @@ definition {
 
 		ProductMenuHelper.expandCategory(category = "Configuration");
 
-		AssertElementNotPresent(locator1 = "ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM");
+		AssertElementNotPresent(
+			key_portlet = "Settings",
+			locator1 = "ProductMenu#PORTLET");
 	}
 
 	@priority = "4"

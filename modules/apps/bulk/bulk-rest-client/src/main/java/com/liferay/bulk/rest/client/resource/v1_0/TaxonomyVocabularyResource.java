@@ -66,7 +66,7 @@ public class TaxonomyVocabularyResource {
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 		httpInvoker.path(
-			"http://localhost:8080/o/bulk-rest/v1.0/sites/{siteId}/taxonomy-vocabularies/common",
+			"http://localhost:8080/o/bulk/v1.0/sites/{siteId}/taxonomy-vocabularies/common",
 			siteId);
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");

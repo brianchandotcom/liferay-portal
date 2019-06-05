@@ -58,8 +58,7 @@ public class KeywordResource {
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
 
-		httpInvoker.path(
-			"http://localhost:8080/o/bulk-rest/v1.0/keywords/batch");
+		httpInvoker.path("http://localhost:8080/o/bulk/v1.0/keywords/batch");
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
@@ -94,8 +93,7 @@ public class KeywordResource {
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
-		httpInvoker.path(
-			"http://localhost:8080/o/bulk-rest/v1.0/keywords/batch");
+		httpInvoker.path("http://localhost:8080/o/bulk/v1.0/keywords/batch");
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
@@ -132,8 +130,7 @@ public class KeywordResource {
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
-		httpInvoker.path(
-			"http://localhost:8080/o/bulk-rest/v1.0/keywords/common");
+		httpInvoker.path("http://localhost:8080/o/bulk/v1.0/keywords/common");
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 

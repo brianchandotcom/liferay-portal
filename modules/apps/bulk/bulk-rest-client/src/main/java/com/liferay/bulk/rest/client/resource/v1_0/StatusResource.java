@@ -60,7 +60,7 @@ public class StatusResource {
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
-		httpInvoker.path("http://localhost:8080/o/bulk-rest/v1.0/status");
+		httpInvoker.path("http://localhost:8080/o/bulk/v1.0/status");
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 

@@ -69,8 +69,7 @@ public class SelectionResource {
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
-		httpInvoker.path(
-			"http://localhost:8080/o/bulk-rest/v1.0/bulk-selection");
+		httpInvoker.path("http://localhost:8080/o/bulk/v1.0/bulk-selection");
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 

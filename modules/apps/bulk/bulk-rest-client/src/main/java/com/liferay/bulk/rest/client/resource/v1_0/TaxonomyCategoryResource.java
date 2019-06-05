@@ -59,7 +59,7 @@ public class TaxonomyCategoryResource {
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
 
 		httpInvoker.path(
-			"http://localhost:8080/o/bulk-rest/v1.0/taxonomy-categories/batch");
+			"http://localhost:8080/o/bulk/v1.0/taxonomy-categories/batch");
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
@@ -96,7 +96,7 @@ public class TaxonomyCategoryResource {
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
 		httpInvoker.path(
-			"http://localhost:8080/o/bulk-rest/v1.0/taxonomy-categories/batch");
+			"http://localhost:8080/o/bulk/v1.0/taxonomy-categories/batch");
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 

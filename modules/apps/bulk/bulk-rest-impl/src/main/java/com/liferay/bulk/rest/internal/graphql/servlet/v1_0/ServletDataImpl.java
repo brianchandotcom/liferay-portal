@@ -62,7 +62,7 @@ public class ServletDataImpl implements ServletData {
 
 	@Override
 	public String getPath() {
-		return "/bulk-rest-graphql/v1_0";
+		return "/bulk-graphql/v1_0";
 	}
 
 	@Override

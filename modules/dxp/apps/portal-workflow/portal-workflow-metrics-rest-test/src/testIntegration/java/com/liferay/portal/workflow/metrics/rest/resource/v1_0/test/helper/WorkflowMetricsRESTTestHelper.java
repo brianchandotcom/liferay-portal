@@ -108,11 +108,11 @@ public class WorkflowMetricsRESTTestHelper {
 		node.setId(RandomTestUtil.randomLong());
 		node.setName(RandomTestUtil.randomString());
 
-		return addNode(companyId, processId, version, node);
+		return addNode(companyId, node, processId, version);
 	}
 
 	public Node addNode(
-			long companyId, long processId, String version, Node node)
+			long companyId, Node node, long processId, String version)
 		throws Exception {
 
 		_invokeAddDocument(

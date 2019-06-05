@@ -101,11 +101,22 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 				// Columns
 
 				for (DDMFormField ddmFormField : ddmFormfields) {
-			%>
+					String value = StringPool.BLANK;
 
-					<%@ include file="/record_row_value.jspf" %>
+					List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(ddmFormField.getName());
 
-			<%
+					if (ddmFormFieldValues != null) {
+						DDMFormFieldValueRenderer ddmFormFieldValueRenderer = DDMFormFieldValueRendererRegistryUtil.getDDMFormFieldValueRenderer(ddmFormField.getType());
+
+						value = ddmFormFieldValueRenderer.render(ddmFormFieldValues, themeDisplay.getLocale());
+					}
+
+					if (ddlViewRecordsDisplayContext.isEditable()) {
+						row.addText(value, rowURL);
+					}
+					else {
+						row.addText(value);
+					}
 				}
 
 				if (ddlViewRecordsDisplayContext.hasUpdatePermission()) {

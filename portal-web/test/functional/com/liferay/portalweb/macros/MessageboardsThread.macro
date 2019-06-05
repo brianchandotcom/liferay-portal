@@ -154,6 +154,8 @@ definition {
 
 		AssertElementPresent.assertElementPresent(locator1 = "TextInput#SUBJECT");
 
+		Click(locator1 = "TextInput#SUBJECT");
+
 		Type(
 			locator1 = "TextInput#SUBJECT",
 			value1 = "${threadSubject}");

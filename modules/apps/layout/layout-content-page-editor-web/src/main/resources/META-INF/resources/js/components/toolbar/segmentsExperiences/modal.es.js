@@ -49,6 +49,22 @@ class SegmentsExperienceSelectorModal extends Component {
 			nameInput.focus();
 		}
 	}
+
+	/**
+	 * @param {MouseEvent} event
+	 * @memberof SegmentsExperienceSelectorModal
+	 */
+	_handleNewSegmentClick(event) {
+		event.preventDefault();
+
+		const nameInput = this.refs.experienceModal.refs.experienceName;
+
+		if (nameInput) {
+			const name = nameInput.value;
+			this.onNewSegmentClick(this.type, name);
+			window.location.assign(this.editSegmentsEntryURL);
+		}
+	}
 }
 
 /**
@@ -67,7 +83,36 @@ SegmentsExperienceSelectorModal.STATE = {
 	 */
 	_requiredNameError: Config.bool()
 		.internal()
-		.value(false)
+		.value(false),
+
+	/**
+	 * Function to execute when clicking New Segment button
+	 *
+	 * @memberOf SegmentsExperienceSelectorModal
+	 * @review
+	 * @type {function}
+	 */
+	onNewSegmentClick: Config.func().required(),
+
+	/**
+	 * The type of experience modal, so it can inform when
+	 * executing prop functions
+	 *
+	 * @memberOf SegmentsExperienceSelectorModal
+	 * @review
+	 * @type {'edition'|'creation'}
+	 */
+	type: Config.string().required(),
+
+	/**
+	 * Where the user should be directed to when clicking
+	 * New Segment button
+	 *
+	 * @memberOf SegmentsExperienceSelectorModal
+	 * @review
+	 * @type {string}
+	 */
+	editSegmentsEntryURL: Config.string().required()
 };
 
 Soy.register(SegmentsExperienceSelectorModal, templates);

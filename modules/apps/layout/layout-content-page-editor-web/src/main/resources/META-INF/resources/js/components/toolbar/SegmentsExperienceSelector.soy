@@ -13,6 +13,7 @@
 		segmentsEntryId: string
 	]>}
 	{@param? defaultSegmentsExperienceId: string }
+	{@param? editSegmentsEntryURL: string }
 	{@param? _closeEditModal: any }
 	{@param? _closeCreateModal: any }
 	{@param? _dismissCreationError: any }
@@ -23,6 +24,7 @@
 	{@param? _handleMoveExperienceUpButtonClick: any }
 	{@param? _handleEditButtonClick: any }
 	{@param? _handleSegmentsExperienceClick: any}
+	{@param? _handleNewSegmentButtonClick: any}
 	{@param? _handleDropdownBlur: any}
 	{@param? _handleDropdownFocus: any}
 	{@param? _handleDropdownButtonClick: any}
@@ -40,7 +42,10 @@
 	{@param? openDropdown: bool}
 	{@param? portletNamespace: string}
 	{@param? modalStates: [
-		creation: bool,
+		creation: [
+			name: string | null,
+			segmentsEntryId: string | null
+		],
 		edition: [
 			name: string | null,
 			segmentsEntryId: string | null
@@ -320,7 +325,7 @@
 		{/let}
 
 		{let $creationModalCondition: ($modalStates and $modalStates.creation) ? true : false /}
-		{let $errorCreationCondition: ($_segmentsExperienceErrors and $_segmentsExperienceErrors.edition) ? true : false /}
+		{let $errorCreationCondition: ($_segmentsExperienceErrors and $_segmentsExperienceErrors.creation) ? true : false /}
 
 		{call com.liferay.layout.content.page.editor.web.SegmentsExperienceSeletorModal.render }
 			{param visible:  $creationModalCondition /}
@@ -329,6 +334,7 @@
 				'message': $errorCreatingMessage,
 				'onDismiss': $_dismissCreationError
 			] /}
+			{param editSegmentsEntryURL:  $editSegmentsEntryURL /}
 			{param title: $creationModalTitle /}
 			{param porletPrefix: $portletNamespace /}
 			{param experienceForm: [
@@ -338,19 +344,21 @@
 					'inputId': 'CreateExperience',
 					'placeholder': $experienceNamePlaceHolder,
 					'label': $experienceNameLabel,
-					'value': null
+					'value': ($modalStates and $modalStates.creation) ? $modalStates.creation.name : null
 				],
 				'segmentSelector': [
 					'inputId': 'SegmentSelector',
 					'segments':  $availableSegmentsEntries,
 					'label': $segmentLabel,
-					'value': null
+					'value': ($modalStates and $modalStates.creation) ? $modalStates.creation.segmentsEntryId : null
 				]
 			] /}
 
 			{param onClose: $_toggleCreateModal /}
 			{param spritemap: $spritemap /}
 			{param onDismiss: $_closeCreateModal /}
+			{param onNewSegmentClick: $_handleNewSegmentButtonClick /}
+			{param type: 'creation' /}
 		{/call}
 
 		{let $editionModalTitle kind="text"}
@@ -373,6 +381,7 @@
 			] /}
 			{param title: $editionModalTitle /}
 			{param porletPrefix: $portletNamespace /}
+			{param editSegmentsEntryURL:  $editSegmentsEntryURL /}
 			{param experienceForm: [
 				'onExperienceSubmit': $_handleEditFormSubmit,
 				'formId': 'EditForm',
@@ -393,6 +402,8 @@
 			{param onClose: $_toggleEditModal /}
 			{param spritemap: $spritemap /}
 			{param onDismiss: $_closeEditModal /}
+			{param onNewSegmentClick: $_handleNewSegmentButtonClick /}
+			{param type: 'edition' /}
 		{/call}
 	{/if}
 {/template}

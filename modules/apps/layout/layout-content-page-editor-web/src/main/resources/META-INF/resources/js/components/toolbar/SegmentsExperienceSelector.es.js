@@ -14,6 +14,105 @@ import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 
 const DISMISS_ALERT_ANIMATION_WAIT = 500;
+const MODAL_EXPERIENCE_STATE_KEY = 'modalExperienceState';
+const NEW_SEGMENT_TO_SELECT = 'segmentsEntryId';
+
+/**
+ * Stores a given modalState
+ *
+ * @param {object} modalState
+ * @param {'creation' | 'edition'} modalState.type
+ * @param {string} modalState.experienceName
+ * @param {string} modalState.segmentsExperienceId
+ * @param {string} modalState.classPK
+ * @returns {void}
+ */
+function storeExperiencesState(modalState) {
+	window.sessionStorage.setItem(
+		MODAL_EXPERIENCE_STATE_KEY,
+		JSON.stringify(modalState)
+	);
+}
+
+/**
+ * @typedef experienceState
+ * @property {object} modalStates
+ * @property {'creation'|'edition'} modalStates.type
+ * @property {string} modalStates.experienceName
+ * @property {string} modalStates.classPK
+ * @property {string} modalStates.segmentsExperienceId
+ * @property {string} selectedSegmentsExpereinceId
+ */
+
+/**
+ * Looks for a modalState stored, wipes it and returns it;
+ *
+ * @returns {experienceState|null}
+ */
+function restoreExperiencesState() {
+	const state = window.sessionStorage.getItem(MODAL_EXPERIENCE_STATE_KEY);
+	if (state !== null) {
+		window.sessionStorage.removeItem(MODAL_EXPERIENCE_STATE_KEY);
+		return JSON.parse(state);
+	}
+	return state;
+}
+
+/**
+ * @typedef modalState
+ * @property {Object} [edition]
+ * @property {string} edition.name
+ * @property {string} edition.segmentsEntryId
+ * @property {string} edition.segmentsExperienceId
+ * @property {Object} [creation]
+ * @property {string} creation.name
+ * @property {string} creation.segmentsEntryId
+ * @property {string} creation.segmentsExperienceId
+ */
+
+/**
+ * @typedef experiencesState
+ * @property {modalState} modalState
+ * @property {string} selectedSegmentsExperienceId
+ */
+
+/**
+ * This function provides an state to restore a desired internal experiences state
+ *
+ * The state is provided conditionally
+ * if there is a modalState stored
+ * if the current page matches the one provided by that modalState
+ * and if the current url provides a segment id
+ *
+ * @param {string} classPK
+ * @returns {modalState|null}
+ */
+function getExperiencesState(classPK) {
+	if (!classPK) return null;
+	const prevState = restoreExperiencesState();
+	const url = window.location.href;
+	const urlParams = new URLSearchParams(url);
+	const incomingSegmentId = urlParams.get(NEW_SEGMENT_TO_SELECT);
+
+	if (
+		incomingSegmentId &&
+		prevState &&
+		prevState.modalStates.classPK === classPK
+	) {
+		const {modalStates, selectedSegmentsExperienceId} = prevState;
+		return {
+			selectedSegmentsExperienceId,
+			modalStates: {
+				[prevState.modalStates.type]: {
+					name: modalStates.experienceName,
+					segmentsEntryId: incomingSegmentId,
+					segmentsExperienceId: modalStates.segmentsExperienceId
+				}
+			}
+		};
+	}
+	return null;
+}
 
 /**
  * Tells if a priority an `obj2`
@@ -87,10 +186,34 @@ class SegmentsExperienceSelector extends Component {
 				activeExperience && activeExperience.name,
 			availableSegmentsEntries,
 			availableSegmentsExperiences: availableSegmentsExperiencesArray,
+			classPK: state.classPK,
 			segmentsExperienceId: selectedSegmentsExperienceId
 		});
 
 		return innerState;
+	}
+
+	/**
+	 * The classPK only changes when the component is connected for the first time
+	 * with the store. This updates `this.modalStates` with previous persisted states
+	 * if neccesary
+	 *
+	 * @param {string} next
+	 * @review
+	 */
+	syncClassPK(next) {
+		if (next) {
+			const experiencesState = getExperiencesState(next);
+			this.modalStates = experiencesState && experiencesState.modalStates;
+			if (
+				experiencesState &&
+				experiencesState.selectedSegmentsExperienceId
+			) {
+				this._selectSegmentsExperience(
+					experiencesState.selectedSegmentsExperienceId
+				);
+			}
+		}
 	}
 
 	/**
@@ -356,6 +479,28 @@ class SegmentsExperienceSelector extends Component {
 	}
 
 	/**
+	 * @memberof SegmentsExperienceSelector
+	 */
+	_handleNewSegmentButtonClick(type, experienceName) {
+		const classPK = this.classPK;
+
+		const segmentsExperienceId =
+			(this.modalStates[type] &&
+				this.modalStates[type].segmentsExperienceId) ||
+			undefined;
+
+		storeExperiencesState({
+			modalStates: {
+				type,
+				experienceName,
+				classPK,
+				segmentsExperienceId
+			},
+			selectedSegmentsExperienceId: this.segmentsExperienceId
+		});
+	}
+
+	/**
 	 * Callback that is executed on experience click
 	 * @memberof SegmentsExperienceSelector
 	 * @param {Event} event
@@ -519,9 +664,9 @@ class SegmentsExperienceSelector extends Component {
 	}
 
 	/**
-	 * @param {object} [newState]
+	 * @param {object} [newState = {}]
 	 * @param {boolean} [newState.creation] - The status of the experience creation modal
-	 * @param {boolean} [newState.editon] - The status of the experience edition modal
+	 * @param {boolean} [newState.edition] - The status of the experience edition modal
 	 * @memberof SegmentsExperienceSelector
 	 */
 	_experiencesModalStateHandler(newState = {}) {
@@ -563,9 +708,10 @@ class SegmentsExperienceSelector extends Component {
 	 * @review
 	 */
 	_toggleEditModal() {
-		const modalEditAction = this.modalStates.edition
-			? this._closeEditModal
-			: this._openEditModal;
+		const modalEditAction =
+			this.modalStates && this.modalStates.edition
+				? this._closeEditModal
+				: this._openEditModal;
 
 		modalEditAction.call(this);
 	}
@@ -600,11 +746,17 @@ class SegmentsExperienceSelector extends Component {
 }
 
 SegmentsExperienceSelector.STATE = {
-	modalStates: Config.object().value(null),
+	/**
+	 * Contains the state of Experience edition and creation
+	 */
+	modalStates: Config.object(),
+
+	/**
+	 * Boolean to control the state of the experiences modal
+	 */
 	openDropdown: Config.bool()
 		.internal()
-		.value(false),
-	segmentsEntryId: Config.string().internal()
+		.value(false)
 };
 
 const ConnectedSegmentsExperienceSelector = getConnectedComponent(

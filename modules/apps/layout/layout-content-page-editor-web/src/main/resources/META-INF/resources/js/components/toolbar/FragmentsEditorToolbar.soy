@@ -5,6 +5,7 @@
  */
 {template .render}
 	{@param? availableSegmentsEntries: ?}
+	{@param? editSegmentsEntryURL: string}
 	{@param? _handleDiscardDraft: any}
 	{@param? _handleToggleContextualSidebarButtonClick: any}
 	{@param? classPK: ?}
@@ -39,6 +40,7 @@
 				{if $defaultSegmentsExperienceId }
 					<li class="nav-item">
 						{call com.liferay.layout.content.page.editor.web.SegmentsExperienceSelector.render}
+							{param editSegmentsEntryURL: $editSegmentsEntryURL /}
 							{param availableSegmentsEntries: $availableSegmentsEntries /}
 							{param defaultSegmentsExperienceId: $defaultSegmentsExperienceId /}
 							{param spritemap: $spritemap ?: '' /}

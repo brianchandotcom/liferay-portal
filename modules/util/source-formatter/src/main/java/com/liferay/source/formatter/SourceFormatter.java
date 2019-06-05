@@ -746,7 +746,6 @@ public class SourceFormatter {
 		_pluginsInsideModulesDirectoryNames =
 			_getPluginsInsideModulesDirectoryNames();
 
-		_portalSource = _isPortalSource();
 		_subrepository = _isSubrepository();
 
 		_projectPathPrefix = _getProjectPathPrefix();

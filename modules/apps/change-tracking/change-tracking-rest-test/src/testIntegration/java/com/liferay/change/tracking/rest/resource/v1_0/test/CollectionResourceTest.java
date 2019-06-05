@@ -20,7 +20,7 @@ import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @Ignore
 @RunWith(Arquillian.class)

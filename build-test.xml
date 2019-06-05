@@ -3532,8 +3532,6 @@ go</echo>
 		<sequential>
 			<setup-testable-tomcat-logging />
 
-			<setup-testable-tomcat-manager />
-
 			<setup-testable-tomcat-osgi-modules />
 
 			<setup-testable-tomcat-setenv />
@@ -3601,48 +3599,6 @@ go</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="setup-testable-tomcat-jmx">
-		<sequential>
-			<var name="testable.tomcat.jmx.opts" value="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=${jmx.remote.authenticate} -Dcom.sun.management.jmxremote.port=${jmx.remote.port} -Dcom.sun.management.jmxremote.ssl=${jmx.remote.ssl}" />
-
-			<if>
-				<not>
-					<resourcecontains
-						resource="${app.server.tomcat.dir}/bin/setenv.bat"
-						substring="${testable.tomcat.jmx.opts}"
-					/>
-				</not>
-				<then>
-					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.bat">
-						<![CDATA[
-							set "JMX_OPTS=${testable.tomcat.jmx.opts}"
-
-							set "CATALINA_OPTS=%CATALINA_OPTS% %JMX_OPTS%"
-						]]>
-					</echo>
-				</then>
-			</if>
-
-			<if>
-				<not>
-					<resourcecontains
-						resource="${app.server.tomcat.dir}/bin/setenv.sh"
-						substring="${testable.tomcat.jmx.opts}"
-					/>
-				</not>
-				<then>
-					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
-						<![CDATA[
-							JMX_OPTS="${testable.tomcat.jmx.opts}"
-
-							CATALINA_OPTS="${CATALINA_OPTS} ${JMX_OPTS} -Dsun.zip.disableMemoryMapping=true"
-						]]>
-					</echo>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="setup-testable-tomcat-jpda-address">
 		<sequential>
 			<if>
@@ -3689,146 +3645,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="setup-testable-tomcat-manager">
-		<sequential>
-			<if>
-				<not>
-					<available file="${app.server.tomcat.dir}/webapps/manager" type="dir" />
-				</not>
-				<then>
-					<antelope:stringutil property="tomcat.version.beginindex" string="${app.server.tomcat.dir}">
-						<antelope:indexof fromindex="0" string="tomcat-" />
-					</antelope:stringutil>
-
-					<antelope:math
-						datatype="int"
-						operand1="${tomcat.version.beginindex}"
-						operand2="7"
-						operation="+"
-						result="tomcat.version.beginindex"
-					/>
-
-					<antelope:stringutil property="tomcat.version" string="${app.server.tomcat.dir}">
-						<antelope:substring beginindex="${tomcat.version.beginindex}" />
-					</antelope:stringutil>
-
-					<antelope:stringutil property="tomcat.major.version.endindex" string="${tomcat.version}">
-						<antelope:indexof fromindex="0" string="." />
-					</antelope:stringutil>
-
-					<antelope:stringutil property="tomcat.major.version" string="${tomcat.version}">
-						<antelope:substring beginindex="0" endindex="${tomcat.major.version.endindex}" />
-					</antelope:stringutil>
-
-					<mirrors-get
-						dest="tomcat.zip"
-						src="${app.server.tomcat.zip.url}"
-					/>
-
-					<unzip
-						dest="${app.server.tomcat.dir}/webapps"
-						src="tomcat.zip"
-					>
-						<patternset
-							includes="apache-tomcat-${tomcat.version}/webapps/manager/**/*"
-						/>
-						<mapper>
-							<globmapper
-								from="apache-tomcat-${tomcat.version}/webapps/*"
-								to="*"
-							/>
-						</mapper>
-					</unzip>
-
-					<delete file="tomcat.zip" />
-				</then>
-			</if>
-
-			<xmltask dest="${app.server.tomcat.dir}/conf/tomcat-users.xml" source="${app.server.tomcat.dir}/conf/tomcat-users.xml">
-				<copy
-					path="/tomcat-users/role[@rolename='manager-gui']/@rolename"
-					property="tomcat.role.manager-gui.exists"
-				/>
-				<copy
-					path="/tomcat-users/role[@rolename='manager-jmx']/@rolename"
-					property="tomcat.role.manager-jmx.exists"
-				/>
-				<copy
-					path="/tomcat-users/role[@rolename='manager-script']/@rolename"
-					property="tomcat.role.manager-script.exists"
-				/>
-				<copy
-					path="/tomcat-users/role[@rolename='manager-status']/@rolename"
-					property="tomcat.role.manager-status.exists"
-				/>
-				<copy
-					path="/tomcat-users/role[@rolename='tomcat']/@rolename"
-					property="tomcat.role.tomcat.exists"
-				/>
-				<copy
-					path="/tomcat-users/user[@username='${app.server.tomcat.manager.user}']/@username"
-					property="tomcat.user.exists"
-				/>
-
-				<call path="/">
-					<actions>
-						<if>
-							<not>
-								<and>
-									<isset property="tomcat.role.manager-gui.exists" />
-									<isset property="tomcat.role.manager-script.exists" />
-									<isset property="tomcat.role.manager-jmx.exists" />
-									<isset property="tomcat.role.manager-status.exists" />
-									<isset property="tomcat.role.tomcat.exists" />
-									<isset property="tomcat.user.exists" />
-								</and>
-							</not>
-							<then>
-								<tstamp>
-									<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
-								</tstamp>
-
-								<copy
-									file="${app.server.tomcat.dir}/conf/tomcat-users.xml"
-									overwrite="true"
-									tofile="${app.server.tomcat.dir}/conf/tomcat-users.xml.${tstamp.value}"
-								/>
-							</then>
-						</if>
-					</actions>
-				</call>
-
-				<insert path="/tomcat-users" unless="tomcat.role.tomcat.exists"><![CDATA[
-					<role rolename="tomcat" />
-				]]></insert>
-
-				<insert path="/tomcat-users" unless="tomcat.role.manager-gui.exists"><![CDATA[
-					<role rolename="manager-gui" />
-				]]></insert>
-
-				<insert path="/tomcat-users" unless="tomcat.role.manager-script.exists"><![CDATA[
-					<role rolename="manager-script" />
-				]]></insert>
-
-				<insert path="/tomcat-users" unless="tomcat.role.manager-jmx.exists"><![CDATA[
-					<role rolename="manager-jmx" />
-				]]></insert>
-
-				<insert path="/tomcat-users" unless="tomcat.role.manager-status.exists"><![CDATA[
-					<role rolename="manager-status" />
-				]]></insert>
-
-				<insert path="/tomcat-users" unless="tomcat.user.exists"><![CDATA[
-					<user
-						password="${app.server.tomcat.manager.password}"
-						roles="tomcat,manager-gui,manager-script,manager-jmx,manager-status"
-						username="${app.server.tomcat.manager.user}"
-					/>
-				]]></insert>
-			</xmltask>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="setup-testable-tomcat-osgi-modules">
 		<sequential>
 			<condition else="${env.TEST_BATCH_NAME}" property="test.batch.name" value="${test.batch.name}">
@@ -3860,8 +3676,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<setup-testable-tomcat-jacoco-agent />
 
 			<setup-testable-tomcat-aspectj-agent />
-
-			<setup-testable-tomcat-jmx />
 
 			<setup-testable-tomcat-jpda-address />
 		</sequential>

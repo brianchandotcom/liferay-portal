@@ -21,12 +21,6 @@ DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(DDLWebKeys.DYNAMIC_D
 
 long displayDDMTemplateId = ParamUtil.getLong(request, "displayDDMTemplateId");
 
-boolean showAddRecordButton = false;
-
-if (ddlDisplayContext.isEditable()) {
-	showAddRecordButton = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), DDLActionKeys.ADD_RECORD);
-}
-
 DDLDisplayTemplateTransformer ddlDisplayTemplateTransformer = new DDLDisplayTemplateTransformer(displayDDMTemplateId, recordSet, themeDisplay, renderRequest);
 %>
 

@@ -180,21 +180,21 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 		return permissionChecker.getUserId();
 	}
 
-	private NodeKey[] _toNodeKeys(String[] nodeKeys) {
+	private NodeKey[] _toNodeKeys(String nodeKeysString) {
 		return Stream.of(
-			nodeKeys
+			StringUtil.split(nodeKeysString)
 		).map(
 			nodeKey -> StringUtil.split(nodeKey, StringPool.COLON)
 		).map(
-			nodeKeyParts -> new NodeKey() {
+			nodeKeyStringParts -> new NodeKey() {
 				{
-					id = nodeKeyParts[0];
+					id = nodeKeyStringParts[0];
 
-					if (nodeKeyParts.length == 1) {
+					if (nodeKeyStringParts.length == 1) {
 						executionType = StringPool.BLANK;
 					}
 					else {
-						executionType = nodeKeyParts[1];
+						executionType = nodeKeyStringParts[1];
 					}
 				}
 			}
@@ -214,55 +214,63 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 				duration = workflowMetricsSLADefinition.getDuration();
 				id = workflowMetricsSLADefinition.getPrimaryKey();
 				name = workflowMetricsSLADefinition.getName();
-
-				String pauseNodeKeysString =
-					workflowMetricsSLADefinition.getPauseNodeKeys();
-
-				if (Validator.isNotNull(pauseNodeKeysString)) {
-					pauseNodeKeys = new PauseNodeKeys() {
-						{
-							nodeKeys = _toNodeKeys(
-								StringUtil.split(pauseNodeKeysString));
-							status = WorkflowConstants.STATUS_APPROVED;
-						}
-					};
-				}
-
 				processId = workflowMetricsSLADefinition.getProcessId();
-
-				String startNodeKeysString =
-					workflowMetricsSLADefinition.getStartNodeKeys();
-
-				if (Validator.isNotNull(startNodeKeysString)) {
-					startNodeKeys = new StartNodeKeys() {
-						{
-							nodeKeys = _toNodeKeys(
-								StringUtil.split(startNodeKeysString));
-							status = _toStatus(startNodeKeysString);
-						}
-					};
-				}
-
 				status = workflowMetricsSLADefinition.getStatus();
 
-				String stopNodeKeysString =
-					workflowMetricsSLADefinition.getStopNodeKeys();
+				setPauseNodeKeys(
+					() -> {
+						String nodeKeysString =
+							workflowMetricsSLADefinition.getPauseNodeKeys();
 
-				if (Validator.isNotNull(stopNodeKeysString)) {
-					stopNodeKeys = new StopNodeKeys() {
-						{
-							nodeKeys = _toNodeKeys(
-								StringUtil.split(stopNodeKeysString));
-							status = _toStatus(stopNodeKeysString);
+						if (Validator.isNull(nodeKeysString)) {
+							return null;
 						}
-					};
-				}
+
+						return new PauseNodeKeys() {
+							{
+								nodeKeys = _toNodeKeys(nodeKeysString);
+								status = WorkflowConstants.STATUS_APPROVED;
+							}
+						};
+					});
+				setStartNodeKeys(
+					() -> {
+						String nodeKeysString =
+							workflowMetricsSLADefinition.getStartNodeKeys();
+
+						if (Validator.isNull(nodeKeysString)) {
+							return null;
+						}
+
+						return new StartNodeKeys() {
+							{
+								nodeKeys = _toNodeKeys(nodeKeysString);
+								status = _toStatus(nodeKeysString);
+							}
+						};
+					});
+				setStopNodeKeys(
+					() -> {
+						String nodeKeysString =
+							workflowMetricsSLADefinition.getStopNodeKeys();
+
+						if (Validator.isNull(nodeKeysString)) {
+							return null;
+						}
+
+						return new StopNodeKeys() {
+							{
+								nodeKeys = _toNodeKeys(nodeKeysString);
+								status = _toStatus(nodeKeysString);
+							}
+						};
+					});
 			}
 		};
 	}
 
-	private int _toStatus(String nodeKeys) {
-		if (Validator.isNull(nodeKeys)) {
+	private int _toStatus(String nodeKeysString) {
+		if (Validator.isNull(nodeKeysString)) {
 			return WorkflowConstants.STATUS_DRAFT;
 		}
 

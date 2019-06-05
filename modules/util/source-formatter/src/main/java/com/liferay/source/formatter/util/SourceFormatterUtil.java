@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.ExcludeSyntax;
 import com.liferay.source.formatter.ExcludeSyntaxPattern;
@@ -27,6 +28,8 @@ import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.io.File;
 import java.io.IOException;
+
+import java.net.URL;
 
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
@@ -184,6 +187,23 @@ public class SourceFormatterUtil {
 		return null;
 	}
 
+	public static String getGitContent(String fileName, String branchName)
+		throws IOException {
+
+		URL url = getPortalGitURL(fileName, branchName);
+
+		if (url == null) {
+			return null;
+		}
+
+		try {
+			return StringUtil.read(url.openStream());
+		}
+		catch (IOException ioe) {
+			return null;
+		}
+	}
+
 	public static File getPortalDir(String baseDirName) {
 		File portalImplDir = getFile(
 			baseDirName, "portal-impl", ToolsUtil.PORTAL_MAX_DIR_LEVEL);
@@ -193,6 +213,24 @@ public class SourceFormatterUtil {
 		}
 
 		return portalImplDir.getParentFile();
+	}
+
+	public static URL getPortalGitURL(
+		String fileName, String portalBranchName) {
+
+		if (Validator.isNull(portalBranchName)) {
+			return null;
+		}
+
+		try {
+			return new URL(
+				StringBundler.concat(
+					SourceFormatterUtil.GIT_LIFERAY_PORTAL_URL,
+					portalBranchName, StringPool.SLASH, fileName));
+		}
+		catch (Exception e) {
+			return null;
+		}
 	}
 
 	public static String getSimpleName(String name) {

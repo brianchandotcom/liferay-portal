@@ -1,7 +1,19 @@
+import autobind from 'autobind-decorator';
 import getClassName from 'classnames';
 import React from 'react';
 
 export default class FilterItem extends React.Component {
+	@autobind
+	onChange(event) {
+		const {multiple, onChange} = this.props;
+
+		onChange(event);
+
+		if (!multiple) {
+			document.dispatchEvent(new Event('mousedown'));
+		}
+	}
+
 	render() {
 		const {
 			active,
@@ -9,8 +21,7 @@ export default class FilterItem extends React.Component {
 			hideControl,
 			itemKey,
 			multiple,
-			name,
-			onChange
+			name
 		} = this.props;
 
 		const controlClassName = getClassName(
@@ -41,7 +52,7 @@ export default class FilterItem extends React.Component {
 						checked={!!active}
 						className='custom-control-input'
 						data-key={itemKey}
-						onChange={onChange}
+						onChange={this.onChange}
 					/>
 
 					<span className='custom-control-label'>

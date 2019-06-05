@@ -997,15 +997,32 @@ public class WebServerServlet extends HttpServlet {
 			return;
 		}
 
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		String portletId = null;
+
 		Group group = GroupLocalServiceUtil.getGroup(fileEntry.getGroupId());
 
 		if (group.isStagingGroup()) {
-			PermissionChecker permissionChecker =
-					PermissionThreadLocal.getPermissionChecker();
-
-			String portletId = PortletProviderUtil.getPortletId(
+			portletId = PortletProviderUtil.getPortletId(
 				FileEntry.class.getName(), PortletProvider.Action.VIEW);
+		}
 
+		if (fileEntry.isInTrash()) {
+			int status = ParamUtil.getInteger(
+				httpServletRequest, "status",
+				WorkflowConstants.STATUS_APPROVED);
+
+			if (status != WorkflowConstants.STATUS_IN_TRASH) {
+				throw new NoSuchFileEntryException();
+			}
+
+			portletId = PortletProviderUtil.getPortletId(
+				TrashEntry.class.getName(), PortletProvider.Action.VIEW);
+		}
+
+		if (portletId != null) {
 			if (!PortletPermissionUtil.hasControlPanelAccessPermission(
 					permissionChecker, fileEntry.getGroupId(), portletId)) {
 
@@ -1026,31 +1043,6 @@ public class WebServerServlet extends HttpServlet {
 
 		String tempFileId = DLUtil.getTempFileId(
 			fileEntry.getFileEntryId(), version);
-
-		if (fileEntry.isInTrash()) {
-			int status = ParamUtil.getInteger(
-				httpServletRequest, "status",
-				WorkflowConstants.STATUS_APPROVED);
-
-			if (status != WorkflowConstants.STATUS_IN_TRASH) {
-				throw new NoSuchFileEntryException();
-			}
-
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
-
-			String portletId = PortletProviderUtil.getPortletId(
-				TrashEntry.class.getName(), PortletProvider.Action.VIEW);
-
-			if (!PortletPermissionUtil.hasControlPanelAccessPermission(
-					permissionChecker, fileEntry.getGroupId(), portletId)) {
-
-				throw new PrincipalException.MustHavePermission(
-					permissionChecker, FileEntry.class.getName(),
-					fileEntry.getFileEntryId(),
-					ActionKeys.ACCESS_IN_CONTROL_PANEL);
-			}
-		}
 
 		FileVersion fileVersion = fileEntry.getFileVersion(version);
 

@@ -53,8 +53,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -256,6 +258,41 @@ public class FriendlyURLServletTest {
 
 		};
 
+		long groupId = _group.getGroupId();
+
+		Map<Locale, String> nameMap = new HashMap<>();
+		Map<Locale, String> friendlyURLMap = new HashMap<>();
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		nameMap.put(locale, "careers");
+		friendlyURLMap.put(locale, "/careers");
+
+		Layout careerLayout = LayoutTestUtil.addLayout(
+			groupId, false, nameMap, friendlyURLMap);
+
+		UnicodeProperties typeSettingsProperties =
+			_group.getTypeSettingsProperties();
+
+		typeSettingsProperties.put("url", careerLayout.getFriendlyURL());
+
+		String typeSettings = typeSettingsProperties.toString();
+
+		nameMap.put(locale, "friendly");
+		friendlyURLMap.put(locale, "/friendly");
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		Layout redirectLayout = LayoutLocalServiceUtil.addLayout(
+			serviceContext.getUserId(), groupId, false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, nameMap,
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), LayoutConstants.TYPE_URL,
+			typeSettings, false, friendlyURLMap, serviceContext);
+
 		mockServletContext.setContextPath("/");
 
 		_servlet.init(new MockServletConfig(mockServletContext));
@@ -264,7 +301,7 @@ public class FriendlyURLServletTest {
 
 		String requestURI =
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
-				getPath(_group, _layout);
+				getPath(_group, redirectLayout);
 
 		mockHttpServletRequest.setRequestURI(requestURI);
 
@@ -273,7 +310,9 @@ public class FriendlyURLServletTest {
 
 		_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
 
-		Assert.assertEquals(getURL(_layout), forwardPathReference.get());
+		Assert.assertEquals(null, forwardPathReference.get());
+
+		Assert.assertEquals(302, mockHttpServletResponse.getStatus());
 	}
 
 	@Test

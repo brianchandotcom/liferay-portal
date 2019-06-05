@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import java.util.HashMap;
 
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -38,6 +39,30 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 		_ddmStructure = DataDefinitionTestUtil.addDDMStructure(testGroup);
 		_irrelevantDDMStructure = DataDefinitionTestUtil.addDDMStructure(
 			irrelevantGroup);
+	}
+
+	@Test
+	public void testPostDataDefinitionDataLayout_addMultiplesDataLayout()
+		throws Exception {
+
+		DataLayout randomDataLayout = randomDataLayout();
+
+		DataLayout postDataLayout1 =
+			testPostDataDefinitionDataLayout_addDataLayout(randomDataLayout);
+
+		DataLayout postDataLayout2 =
+			testPostDataDefinitionDataLayout_addDataLayout(randomDataLayout);
+
+		DataLayout postDataLayout3 =
+			testPostDataDefinitionDataLayout_addDataLayout(randomDataLayout);
+
+		assertEquals(randomDataLayout, postDataLayout1);
+		assertEquals(randomDataLayout, postDataLayout2);
+		assertEquals(randomDataLayout, postDataLayout3);
+
+		assertValid(postDataLayout1);
+		assertValid(postDataLayout2);
+		assertValid(postDataLayout3);
 	}
 
 	@Override

@@ -476,17 +476,8 @@ public class WebServerServlet extends HttpServlet {
 					true, imageId);
 
 				if (layout != null) {
-					User user = PortalUtil.getUser(httpServletRequest);
-
-					if (user == null) {
-						long companyId = PortalUtil.getCompanyId(
-							httpServletRequest);
-
-						user = UserLocalServiceUtil.getDefaultUser(companyId);
-					}
-
-					PermissionChecker permissionChecker =
-						PermissionCheckerFactoryUtil.create(user);
+					PermissionChecker permissionChecker = _getPermissionChecker(
+						httpServletRequest);
 
 					if (!LayoutPermissionUtil.contains(
 							permissionChecker, layout, ActionKeys.VIEW)) {
@@ -503,17 +494,8 @@ public class WebServerServlet extends HttpServlet {
 						true, imageId);
 
 				if (layoutSet != null) {
-					User user = PortalUtil.getUser(httpServletRequest);
-
-					if (user == null) {
-						long companyId = PortalUtil.getCompanyId(
-							httpServletRequest);
-
-						user = UserLocalServiceUtil.getDefaultUser(companyId);
-					}
-
-					PermissionChecker permissionChecker =
-						PermissionCheckerFactoryUtil.create(user);
+					PermissionChecker permissionChecker = _getPermissionChecker(
+						httpServletRequest);
 
 					Group group = layoutSet.getGroup();
 
@@ -1602,6 +1584,21 @@ public class WebServerServlet extends HttpServlet {
 			}
 
 		};
+	}
+
+	private PermissionChecker _getPermissionChecker(
+			HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		User user = PortalUtil.getUser(httpServletRequest);
+
+		if (user == null) {
+			long companyId = PortalUtil.getCompanyId(httpServletRequest);
+
+			user = UserLocalServiceUtil.getDefaultUser(companyId);
+		}
+
+		return PermissionCheckerFactoryUtil.create(user);
 	}
 
 	private boolean _processCompanyInactiveRequest(

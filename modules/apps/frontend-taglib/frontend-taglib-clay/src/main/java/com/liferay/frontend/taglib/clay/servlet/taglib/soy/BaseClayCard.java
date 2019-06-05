@@ -28,7 +28,7 @@ public interface BaseClayCard {
 		return null;
 	}
 
-	public default String getAspectRatioClasses() {
+	public default String getAspectRatioCssClasses() {
 		return null;
 	}
 

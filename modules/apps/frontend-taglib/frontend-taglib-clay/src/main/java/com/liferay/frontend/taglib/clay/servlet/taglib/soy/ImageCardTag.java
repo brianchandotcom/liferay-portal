@@ -102,7 +102,7 @@ public class ImageCardTag extends BaseClayCardTag {
 		Map<String, Object> context = getContext();
 
 		if (context.get("aspectRatioClasses") == null) {
-			setAspectRatioClasses(_imageCard.getAspectRatioClasses());
+			setAspectRatioCssClasses(_imageCard.getAspectRatioCssClasses());
 		}
 
 		if (context.get("icon") == null) {

@@ -72,7 +72,7 @@ public class BlogsEntryVerticalCard extends BaseVerticalCard {
 	}
 
 	@Override
-	public String getAspectRatioClasses() {
+	public String getAspectRatioCssClasses() {
 		return "aspect-ratio-item-center-middle " +
 			"aspect-ratio-item-vertical-fluid";
 	}

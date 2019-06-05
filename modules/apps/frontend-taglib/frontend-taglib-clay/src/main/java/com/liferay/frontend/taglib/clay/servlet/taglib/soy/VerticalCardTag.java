@@ -115,7 +115,7 @@ public class VerticalCardTag extends BaseClayCardTag {
 		Map<String, Object> context = getContext();
 
 		if (context.get("aspectRatioClasses") == null) {
-			setAspectRatioClasses(_verticalCard.getAspectRatioClasses());
+			setAspectRatioCssClasses(_verticalCard.getAspectRatioCssClasses());
 		}
 
 		if (context.get("icon") == null) {

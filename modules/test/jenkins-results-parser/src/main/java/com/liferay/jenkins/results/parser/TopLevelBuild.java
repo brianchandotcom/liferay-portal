@@ -1382,10 +1382,15 @@ public class TopLevelBuild extends BaseBuild {
 		if (!branchName.startsWith("ee-") &&
 			getBaseGitRepositoryName().contains("liferay-portal")) {
 
-			Dom4JUtil.addToElement(
-				detailsElement,
-				Dom4JUtil.getNewElement("h4", null, companionBranchLabel),
-				getCompanionBranchDetailsElement());
+			try {
+				Dom4JUtil.addToElement(
+					detailsElement,
+					Dom4JUtil.getNewElement("h4", null, companionBranchLabel),
+					getCompanionBranchDetailsElement());
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		int successCount = getDownstreamBuildCountByResult("SUCCESS");

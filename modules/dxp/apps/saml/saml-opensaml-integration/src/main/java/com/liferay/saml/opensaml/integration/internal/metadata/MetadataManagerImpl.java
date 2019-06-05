@@ -526,8 +526,7 @@ public class MetadataManagerImpl
 	@Reference(
 		cardinality = ReferenceCardinality.AT_LEAST_ONE,
 		policyOption = ReferencePolicyOption.GREEDY,
-		scope = ReferenceScope.PROTOTYPE_REQUIRED,
-		unbind = "unsetMetadataResolver"
+		scope = ReferenceScope.PROTOTYPE_REQUIRED
 	)
 	public void setMetadataResolver(MetadataResolver metadataResolver) {
 		if (_log.isDebugEnabled()) {

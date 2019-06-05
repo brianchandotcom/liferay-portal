@@ -125,7 +125,7 @@ public class SyncOAuthHelperImpl implements SyncOAuthHelper {
 		return true;
 	}
 
-	@Reference(unbind = "unsetOAuthApplicationLocalService")
+	@Reference
 	protected void setOAuthApplicationLocalService(
 		OAuthApplicationLocalService oAuthApplicationLocalService) {
 

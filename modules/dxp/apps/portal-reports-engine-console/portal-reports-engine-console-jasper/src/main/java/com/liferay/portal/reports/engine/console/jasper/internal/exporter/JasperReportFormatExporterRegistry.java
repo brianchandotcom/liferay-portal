@@ -55,8 +55,7 @@ public class JasperReportFormatExporterRegistry
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unsetReportFormatExporter"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void setReportFormatExporter(
 		ReportFormatExporter reportFormatExporter,

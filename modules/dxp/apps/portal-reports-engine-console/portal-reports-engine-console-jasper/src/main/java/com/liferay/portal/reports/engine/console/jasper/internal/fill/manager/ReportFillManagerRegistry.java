@@ -75,8 +75,7 @@ public class ReportFillManagerRegistry {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unsetReportFillManager"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void setReportFillManager(
 		ReportFillManager reportFillManager, Map<String, Object> properties) {

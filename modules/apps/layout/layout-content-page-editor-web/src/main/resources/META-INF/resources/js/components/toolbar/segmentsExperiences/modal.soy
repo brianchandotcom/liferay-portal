@@ -93,40 +93,40 @@
 					</div>
 
 					<div class="form-group my-2">
-						{if $experienceForm.segmentSelector.segments and length($experienceForm.segmentSelector.segments) > 0}
-								<label for="{$porletPrefix}{$experienceForm.segmentSelector.inputId}">
-									{$experienceForm.segmentSelector.label}
-								</label>
+						<label for="{$porletPrefix}{$experienceForm.segmentSelector.inputId}">
+							{$experienceForm.segmentSelector.label}
+						</label>
 
-								<div class="d-flex">
-									<select
-										class="form-control"
-										id="{$porletPrefix}{$experienceForm.experienceName.inputId}"
-										name="experienceSegmentId"
-										ref="experienceSegmentId"
-									>
-										{foreach $segment in $experienceForm.segmentSelector.segments}
-											{let $optionAttributes kind="attributes"}
-												value="{$segment.segmentsEntryId}"
+						<div class="d-flex">
+							{if $experienceForm.segmentSelector.segments and length($experienceForm.segmentSelector.segments) > 0}
+								<select
+									class="form-control"
+									id="{$porletPrefix}{$experienceForm.experienceName.inputId}"
+									name="experienceSegmentId"
+									ref="experienceSegmentId"
+								>
+									{foreach $segment in $experienceForm.segmentSelector.segments}
+										{let $optionAttributes kind="attributes"}
+											value="{$segment.segmentsEntryId}"
 
-												{if $segment.segmentsEntryId == $experienceForm.segmentSelector.value    }
-													selected
-												{/if}
-											{/let}
+											{if $segment.segmentsEntryId == $experienceForm.segmentSelector.value}
+												selected
+											{/if}
+										{/let}
 
-											<option {$optionAttributes}>
-												{$segment.name}
-											</option>
-										{/foreach}
-									</select>
+										<option {$optionAttributes}>
+											{$segment.name}
+										</option>
+									{/foreach}
+								</select>
+							{/if}
 
-									<button type="button" class="btn btn-secondary flex-shrink-0 ml-2" data-onclick="{$_handleNewSegmentClick}">
-										{msg desc=""}
-											new-segment
-										{/msg}
-									</button>
-								</div>
-						{/if}
+							<button type="button" class="btn btn-secondary flex-shrink-0 ml-2" data-onclick="{$_handleNewSegmentClick}">
+								{msg desc=""}
+									new-segment
+								{/msg}
+							</button>
+						</div>
 					</div>
 				</form>
 			{/param}

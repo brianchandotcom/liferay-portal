@@ -551,12 +551,20 @@ public class SourceFormatter {
 		}
 	}
 
+	private boolean _containsDir(String dirName) {
+		File directory = SourceFormatterUtil.getFile(
+			_sourceFormatterArgs.getBaseDirName(), dirName,
+			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		if (directory != null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _excludeWorkingDirCheckoutPrivateApps(File portalDir)
 		throws IOException {
-
-		if (!_isPortalSource()) {
-			return;
-		}
 
 		File file = new File(portalDir, "working.dir.properties");
 
@@ -700,7 +708,7 @@ public class SourceFormatter {
 		_sourceFormatterExcludes = new SourceFormatterExcludes(
 			SetUtil.fromArray(DEFAULT_EXCLUDE_SYNTAX_PATTERNS));
 
-		_portalSource = _isPortalSource();
+		_portalSource = _containsDir("portal-impl");
 
 		if (_portalSource) {
 			File portalDir = SourceFormatterUtil.getPortalDir(
@@ -767,20 +775,8 @@ public class SourceFormatter {
 		}
 	}
 
-	private boolean _isPortalSource() {
-		File portalImplDir = SourceFormatterUtil.getFile(
-			_sourceFormatterArgs.getBaseDirName(), "portal-impl",
-			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
-
-		if (portalImplDir != null) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private boolean _isSubrepository() throws IOException {
-		if (_isPortalSource()) {
+		if (_portalSource) {
 			return false;
 		}
 

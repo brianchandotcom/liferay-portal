@@ -88,8 +88,11 @@ public class WorkflowMetricsRESTTestHelper {
 		_invokeAddDocument(
 			_getIndexer(_CLASS_NAME_INSTANCE_INDEXER),
 			_createWorkflowMetricsInstanceDocument(
-				companyId, instance.getDateCompletion() != null,
-				instance.getId(), instance.getProcessId()));
+				instance.getAssetTitle(), instance.getAssetType(), companyId,
+				instance.getDateCompletion() != null,
+				instance.getDateCompletion(), instance.getDateCreated(),
+				instance.getId(), instance.getProcessId(),
+				instance.getUserName()));
 
 		_retryAssertCount(
 			"workflow-metrics-instances", "instanceId", instance.getId());
@@ -200,7 +203,8 @@ public class WorkflowMetricsRESTTestHelper {
 		_invokeDeleteDocument(
 			_getIndexer(_CLASS_NAME_INSTANCE_INDEXER),
 			_createWorkflowMetricsInstanceDocument(
-				companyId, false, instanceId, processId));
+				null, null, companyId, false, null, null, instanceId, processId,
+				null));
 	}
 
 	public void deleteNode(long companyId, long processId, String name)
@@ -290,19 +294,27 @@ public class WorkflowMetricsRESTTestHelper {
 	}
 
 	private Document _createWorkflowMetricsInstanceDocument(
-		long companyId, boolean completed, long instanceId, long processId) {
+		String assetTitle, String assetType, long companyId, boolean completed,
+		Date completionDate, Date createDate, long instanceId, long processId,
+		String userName) {
 
 		Document document = new DocumentImpl();
 
 		document.addUID(
 			"WorkflowMetricsInstance",
 			_digest(companyId, processId, instanceId));
+		document.addLocalizedKeyword(
+			"assetTitle", _createLocalizationMap(assetTitle), false, true);
+		document.addLocalizedKeyword(
+			"assetType", _createLocalizationMap(assetType), false, true);
 		document.addKeyword("companyId", companyId);
 		document.addKeyword("completed", completed);
-		document.addDate("createDate", new Date());
+		document.addDateSortable("completionDate", completionDate);
+		document.addDateSortable("createDate", createDate);
 		document.addKeyword("deleted", false);
 		document.addKeyword("instanceId", instanceId);
 		document.addKeyword("processId", processId);
+		document.addKeyword("userName", userName);
 		document.addKeyword("version", "1.0");
 
 		return document;

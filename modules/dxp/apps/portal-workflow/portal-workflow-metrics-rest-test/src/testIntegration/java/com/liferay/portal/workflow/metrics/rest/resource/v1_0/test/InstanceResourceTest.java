@@ -15,20 +15,27 @@
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
+import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
+import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
+import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.InstanceResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -50,11 +57,8 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_singleApproverDocument =
-			_workflowMetricsRESTTestHelper.getSingleApproverDocument(
-				testGroup.getCompanyId());
-
-		_workflowMetricsRESTTestHelper.deleteProcess(_singleApproverDocument);
+		_process = _workflowMetricsRESTTestHelper.addProcess(
+			testGroup.getCompanyId());
 	}
 
 	@After
@@ -62,14 +66,10 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 	public void tearDown() throws Exception {
 		super.tearDown();
 
-		_workflowMetricsRESTTestHelper.restoreProcess(_singleApproverDocument);
-
-		if (_process == null) {
-			return;
+		if (_process != null) {
+			_workflowMetricsRESTTestHelper.deleteProcess(
+				testGroup.getCompanyId(), _process.getId());
 		}
-
-		_workflowMetricsRESTTestHelper.deleteProcess(
-			testGroup.getCompanyId(), _process.getId());
 
 		for (Instance instance : _instances) {
 			_workflowMetricsRESTTestHelper.deleteInstance(
@@ -80,20 +80,25 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 	}
 
 	@Override
-	protected Instance testGetProcessInstance_addInstance() throws Exception {
-		Instance instance = randomInstance();
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {
+			"assetTitle", "assetType", "processId", "userName"
+		};
+	}
 
-		_process = _workflowMetricsRESTTestHelper.addProcess(
-			testGroup.getCompanyId());
+	@Override
+	protected Instance randomInstance() throws Exception {
+		Instance instance = super.randomInstance();
 
-		instance.setProcessId(_process.getId());
-
-		instance = _workflowMetricsRESTTestHelper.addInstance(
-			testGroup.getCompanyId(), instance);
-
-		_instances.add(instance);
+		instance.setDateCompletion((Date)null);
 
 		return instance;
+	}
+
+	@Override
+	protected Instance testGetProcessInstance_addInstance() throws Exception {
+		return testGetProcessInstancesPage_addInstance(
+			_process.getId(), randomInstance());
 	}
 
 	@Override
@@ -113,9 +118,6 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 	@Override
 	protected Long testGetProcessInstancesPage_getProcessId() throws Exception {
-		_process = _workflowMetricsRESTTestHelper.addProcess(
-			testGroup.getCompanyId());
-
 		return _process.getId();
 	}
 
@@ -125,7 +127,6 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 	@Inject
 	private static SearchEngineAdapter _searchEngineAdapter;
 
-	private static Document _singleApproverDocument;
 	private static WorkflowMetricsRESTTestHelper _workflowMetricsRESTTestHelper;
 
 	private List<Instance> _instances = new ArrayList<>();

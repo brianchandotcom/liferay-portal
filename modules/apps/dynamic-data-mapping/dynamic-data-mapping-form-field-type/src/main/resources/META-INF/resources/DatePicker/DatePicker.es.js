@@ -321,8 +321,8 @@ class DatePicker extends Component {
 	_setValue(value) {
 		let newValue;
 
-		if (moment(value, this.dateFormat).isValid() && !isNaN(value)) {
-			if (typeof value == 'string') {
+		if (moment(value, this.dateFormat).isValid()) {
+			if (typeof (value) == 'string') {
 				newValue = value;
 			} else {
 				const date = moment(value)

@@ -16,18 +16,26 @@ package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
+import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
+import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
+import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.ProcessResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -45,6 +53,7 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 	}
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 
@@ -71,13 +80,36 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 	}
 
 	@Override
-	protected Process testGetProcess_addProcess() throws Exception {
-		Process process = _workflowMetricsRESTTestHelper.addProcess(
-			testGroup.getCompanyId());
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {
+			"instanceCount", "onTimeInstanceCount", "overdueInstanceCount",
+			"title", "untrackedInstanceCount"
+		};
+	}
 
-		_processes.add(process);
+	@Override
+	protected Process randomProcess() throws Exception {
+		Process process = super.randomProcess();
+
+		int instanceCount = RandomTestUtil.randomInt(0, 20);
+
+		process.setInstanceCount((long)instanceCount);
+		int onTimeInstanceCount = RandomTestUtil.randomInt(0, instanceCount);
+
+		process.setOnTimeInstanceCount((long)onTimeInstanceCount);
+		int overdueInstanceCount = RandomTestUtil.randomInt(
+			0, instanceCount - onTimeInstanceCount);
+
+		process.setOverdueInstanceCount((long)overdueInstanceCount);
+		process.setUntrackedInstanceCount(
+			(long)instanceCount - onTimeInstanceCount - overdueInstanceCount);
 
 		return process;
+	}
+
+	@Override
+	protected Process testGetProcess_addProcess() throws Exception {
+		return testGetProcessesPage_addProcess(randomProcess());
 	}
 
 	@Override

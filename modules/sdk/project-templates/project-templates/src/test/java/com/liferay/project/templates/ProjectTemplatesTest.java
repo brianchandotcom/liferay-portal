@@ -2715,6 +2715,36 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateServiceBuilderTargetPlatformEnabled72()
+		throws Exception {
+
+		File workspaceProjectDir = _buildTemplateWithGradle(
+			WorkspaceUtil.WORKSPACE, "workspace");
+
+		File gradleProperties = new File(
+			workspaceProjectDir, "gradle.properties");
+
+		Files.write(
+			gradleProperties.toPath(),
+			"\nliferay.workspace.target.platform.version=7.2.0".getBytes(),
+			StandardOpenOption.APPEND);
+
+		File modulesDir = new File(workspaceProjectDir, "modules");
+
+		_buildTemplateWithGradle(
+			modulesDir, "service-builder", "foo", "--package-name", "test",
+			"--liferayVersion", "7.2", "--dependency-management-enabled");
+
+		_executeGradle(
+			workspaceProjectDir,
+			":modules:foo:foo-service" + _GRADLE_TASK_PATH_BUILD_SERVICE);
+
+		_executeGradle(workspaceProjectDir, ":modules:foo:foo-api:build");
+
+		_executeGradle(workspaceProjectDir, ":modules:foo:foo-service:build");
+	}
+
+	@Test
 	public void testBuildTemplateServiceBuilderWithDashes70() throws Exception {
 		String name = "backend-integration";
 		String packageName = "com.liferay.docs.guestbook";

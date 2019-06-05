@@ -26,15 +26,21 @@ import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.SLA;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.StartNodeKeys;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.StopNodeKeys;
+import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
+import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.SLAResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -82,6 +88,27 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 		}
 
 		_slas = new ArrayList<>();
+	}
+
+	@Test
+	public void testGetProcessSLAsPageApproved() throws Exception {
+		SLA sla1 = testGetProcessSLAsPage_addSLA(_process.getId(), randomSLA());
+
+		SLA sla2 = randomSLA();
+
+		sla2.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+		sla2 = testGetProcessSLAsPage_addSLA(_process.getId(), sla2);
+
+		Page<SLA> page = SLAResource.getProcessSLAsPage(
+			_process.getId(), WorkflowConstants.STATUS_APPROVED,
+			Pagination.of(1, 2));
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertEquals(
+			Collections.singletonList(sla1), (List<SLA>)page.getItems());
+		assertValid(page);
 	}
 
 	@Override

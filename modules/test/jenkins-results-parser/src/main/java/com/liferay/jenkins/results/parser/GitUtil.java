@@ -354,6 +354,10 @@ public class GitUtil {
 
 					String modifiedCommand = modifiedCommands[i];
 
+					if (!modifiedCommand.contains(_HOSTNAME_GITHUB_CACHE_PROXY)) {
+						continue;
+					}
+
 					if (matcher != null) {
 						while (matcher.find()) {
 							modifiedCommand = modifiedCommand.replaceFirst(

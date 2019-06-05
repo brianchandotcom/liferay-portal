@@ -243,6 +243,10 @@ public abstract class BaseDB implements DB {
 		return getTemplate()[2];
 	}
 
+	public Integer getSqlType(String templateType) {
+		return sqlTypesMap.get(templateType);
+	}
+
 	@Override
 	public String getTemplateTrue() {
 		return getTemplate()[1];
@@ -1230,6 +1234,8 @@ public abstract class BaseDB implements DB {
 		" SBLOB", " BOOLEAN", " DATE", " DOUBLE", " INTEGER", " LONG",
 		" STRING", " TEXT", " VARCHAR", " IDENTITY", "COMMIT_TRANSACTION"
 	};
+
+	protected static final Map<String, Integer> sqlTypesMap = new HashMap<>();
 
 	private static final boolean _SUPPORTS_ALTER_COLUMN_NAME = true;
 

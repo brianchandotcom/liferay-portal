@@ -29,6 +29,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -217,5 +218,27 @@ public class MySQLDB extends BaseDB {
 	private static final boolean _SUPPORTS_NEW_UUID_FUNCTION = true;
 
 	private static final boolean _SUPPORTS_UPDATE_WITH_INNER_JOIN = true;
+
+	static {
+		sqlTypesMap.put(StringUtil.trim(TEMPLATE[5]), Types.LONGVARBINARY);
+
+		sqlTypesMap.put(StringUtil.trim(TEMPLATE[6]), Types.LONGVARBINARY);
+
+		sqlTypesMap.put(StringUtil.trim(TEMPLATE[7]), Types.TINYINT);
+
+		sqlTypesMap.put(StringUtil.trim(TEMPLATE[8]), Types.TIMESTAMP);
+
+		sqlTypesMap.put(StringUtil.trim(TEMPLATE[9]), Types.DOUBLE);
+
+		sqlTypesMap.put(StringUtil.trim(TEMPLATE[10]), Types.INTEGER);
+
+		sqlTypesMap.put(StringUtil.trim(TEMPLATE[11]), Types.BIGINT);
+
+		sqlTypesMap.put(StringUtil.trim(TEMPLATE[12]), Types.LONGVARCHAR);
+
+		sqlTypesMap.put(StringUtil.trim(TEMPLATE[13]), Types.LONGVARCHAR);
+
+		sqlTypesMap.put(StringUtil.trim(TEMPLATE[14]), Types.VARCHAR);
+	}
 
 }

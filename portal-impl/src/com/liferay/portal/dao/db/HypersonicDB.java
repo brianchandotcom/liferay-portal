@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
+import java.sql.Types;
+
 /**
  * @author Alexander Chow
  * @author Sandeep Soni
@@ -119,5 +121,27 @@ public class HypersonicDB extends BaseDB {
 		" blob", " bit", " timestamp", " double", " int", " bigint",
 		" longvarchar", " longvarchar", " varchar", "", "commit"
 	};
+
+	static {
+		sqlTypesMap.put(StringUtil.trim(TEMPLATE[5]), Types.BLOB);
+
+		sqlTypesMap.put(StringUtil.trim(TEMPLATE[6]), Types.BLOB);
+
+		sqlTypesMap.put(StringUtil.trim(TEMPLATE[7]), Types.BIT);
+
+		sqlTypesMap.put(StringUtil.trim(TEMPLATE[8]), Types.TIMESTAMP);
+
+		sqlTypesMap.put(StringUtil.trim(TEMPLATE[9]), Types.DOUBLE);
+
+		sqlTypesMap.put(StringUtil.trim(TEMPLATE[10]), Types.INTEGER);
+
+		sqlTypesMap.put(StringUtil.trim(TEMPLATE[11]), Types.BIGINT);
+
+		sqlTypesMap.put(StringUtil.trim(TEMPLATE[12]), Types.VARCHAR);
+
+		sqlTypesMap.put(StringUtil.trim(TEMPLATE[13]), Types.VARCHAR);
+
+		sqlTypesMap.put(StringUtil.trim(TEMPLATE[14]), Types.VARCHAR);
+	}
 
 }

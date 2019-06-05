@@ -58,6 +58,16 @@ configurations {
 	}
 }
 
+repositories {
+    File m2Dir = new File("System.properties['maven.repo.local']")
+
+    File tmpMavenRepositoryDir = new File(m2Dir, "-tmp")
+
+    maven {
+        url tmpMavenRepositoryDir
+    }
+}
+
 dependencies {
 	compileInclude group: "com.beust", name: "jcommander", version: "1.72"
 

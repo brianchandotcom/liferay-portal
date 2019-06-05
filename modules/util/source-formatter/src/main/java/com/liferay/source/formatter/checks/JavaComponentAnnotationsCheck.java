@@ -53,7 +53,19 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		String fileName, String absolutePath, JavaClass javaClass,
 		String annotation, String indent) {
 
-		if (!annotation.contains("@Component")) {
+		String trimmedAnnotation = StringUtil.trim(annotation);
+
+		if (!trimmedAnnotation.equals("@Component") &&
+			!trimmedAnnotation.startsWith("@Component(")) {
+
+			return annotation;
+		}
+
+		List<String> importNames = javaClass.getImports();
+
+		if (!importNames.contains(
+				"org.osgi.service.component.annotations.Component")) {
+
 			return annotation;
 		}
 

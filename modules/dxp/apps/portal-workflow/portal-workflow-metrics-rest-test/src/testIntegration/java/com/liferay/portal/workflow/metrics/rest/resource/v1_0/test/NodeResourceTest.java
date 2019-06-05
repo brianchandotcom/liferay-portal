@@ -97,11 +97,11 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 
 		node1.setId(3L);
 
-		node1 = testGetProcessNodesPage_addNode(_process.getId(), node1, "2.0");
+		node1 = addNode(_process.getId(), node1, "2.0");
 
 		node2.setId(4L);
 
-		node2 = testGetProcessNodesPage_addNode(_process.getId(), node2, "2.0");
+		node2 = addNode(_process.getId(), node2, "2.0");
 
 		Page<Node> page = NodeResource.getProcessNodesPage(_process.getId());
 
@@ -110,6 +110,17 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(node1, node2), (List<Node>)page.getItems());
 		assertValid(page);
+	}
+
+	protected Node addNode(Long processId, Node node, String version)
+		throws Exception {
+
+		node = _workflowMetricsRESTTestHelper.addNode(
+			testGroup.getCompanyId(), node, processId, version);
+
+		_nodes.add(node);
+
+		return node;
 	}
 
 	@Override
@@ -121,19 +132,7 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 	protected Node testGetProcessNodesPage_addNode(Long processId, Node node)
 		throws Exception {
 
-		return testGetProcessNodesPage_addNode(processId, node, "1.0");
-	}
-
-	protected Node testGetProcessNodesPage_addNode(
-			Long processId, Node node, String version)
-		throws Exception {
-
-		node = _workflowMetricsRESTTestHelper.addNode(
-			testGroup.getCompanyId(), node, processId, version);
-
-		_nodes.add(node);
-
-		return node;
+		return addNode(processId, node, "1.0");
 	}
 
 	@Override

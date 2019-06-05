@@ -139,6 +139,18 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 	}
 
 	@Override
+	@Test
+	public void testGetProcessTitle() throws Exception {
+		Process process = randomProcess();
+
+		testGetProcessesPage_addProcess(process);
+
+		String title = ProcessResource.getProcessTitle(process.getId());
+
+		Assert.assertEquals(process.getTitle(), title);
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
 			"instanceCount", "onTimeInstanceCount", "overdueInstanceCount",

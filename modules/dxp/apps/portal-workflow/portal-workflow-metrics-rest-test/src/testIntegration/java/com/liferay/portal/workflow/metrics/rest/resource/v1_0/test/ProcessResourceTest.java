@@ -105,6 +105,24 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 		assertValid(getProcess);
 	}
 
+	@Override
+	@Test
+	public void testGetProcessesPageWithSortInteger() throws Exception {
+		testGetProcessesPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, process1, process2) -> {
+				process1.setInstanceCount(0L);
+				process1.setOnTimeInstanceCount(0L);
+				process1.setOverdueInstanceCount(0L);
+				process1.setUntrackedInstanceCount(0L);
+
+				process2.setInstanceCount(3L);
+				process2.setOnTimeInstanceCount(1L);
+				process2.setOverdueInstanceCount(1L);
+				process2.setUntrackedInstanceCount(1L);
+			});
+	}
+
 	@Test
 	public void testGetProcessesPageWithTitle() throws Exception {
 		Process process = randomProcess();

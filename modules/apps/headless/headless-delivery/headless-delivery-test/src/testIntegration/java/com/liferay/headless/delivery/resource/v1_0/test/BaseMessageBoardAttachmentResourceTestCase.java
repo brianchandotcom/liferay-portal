@@ -248,6 +248,8 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 	public void testGetMessageBoardMessageMessageBoardAttachmentsPage()
 		throws Exception {
 
+		Page<MessageBoardAttachment> page;
+
 		Long messageBoardMessageId =
 			testGetMessageBoardMessageMessageBoardAttachmentsPage_getMessageBoardMessageId();
 		Long irrelevantMessageBoardMessageId =
@@ -259,7 +261,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 					irrelevantMessageBoardMessageId,
 					randomIrrelevantMessageBoardAttachment());
 
-			Page<MessageBoardAttachment> page =
+			page =
 				MessageBoardAttachmentResource.
 					getMessageBoardMessageMessageBoardAttachmentsPage(
 						irrelevantMessageBoardMessageId);
@@ -280,7 +282,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 			testGetMessageBoardMessageMessageBoardAttachmentsPage_addMessageBoardAttachment(
 				messageBoardMessageId, randomMessageBoardAttachment());
 
-		Page<MessageBoardAttachment> page =
+		page =
 			MessageBoardAttachmentResource.
 				getMessageBoardMessageMessageBoardAttachmentsPage(
 					messageBoardMessageId);
@@ -342,6 +344,8 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 	public void testGetMessageBoardThreadMessageBoardAttachmentsPage()
 		throws Exception {
 
+		Page<MessageBoardAttachment> page;
+
 		Long messageBoardThreadId =
 			testGetMessageBoardThreadMessageBoardAttachmentsPage_getMessageBoardThreadId();
 		Long irrelevantMessageBoardThreadId =
@@ -353,7 +357,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 					irrelevantMessageBoardThreadId,
 					randomIrrelevantMessageBoardAttachment());
 
-			Page<MessageBoardAttachment> page =
+			page =
 				MessageBoardAttachmentResource.
 					getMessageBoardThreadMessageBoardAttachmentsPage(
 						irrelevantMessageBoardThreadId);
@@ -374,7 +378,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 			testGetMessageBoardThreadMessageBoardAttachmentsPage_addMessageBoardAttachment(
 				messageBoardThreadId, randomMessageBoardAttachment());
 
-		Page<MessageBoardAttachment> page =
+		page =
 			MessageBoardAttachmentResource.
 				getMessageBoardThreadMessageBoardAttachmentsPage(
 					messageBoardThreadId);

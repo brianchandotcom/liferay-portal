@@ -176,6 +176,8 @@ public abstract class BaseDataRecordResourceTestCase {
 
 	@Test
 	public void testGetDataRecordCollectionDataRecordsPage() throws Exception {
+		Page<DataRecord> page;
+
 		Long dataRecordCollectionId =
 			testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId();
 		Long irrelevantDataRecordCollectionId =
@@ -187,9 +189,8 @@ public abstract class BaseDataRecordResourceTestCase {
 					irrelevantDataRecordCollectionId,
 					randomIrrelevantDataRecord());
 
-			Page<DataRecord> page =
-				DataRecordResource.getDataRecordCollectionDataRecordsPage(
-					irrelevantDataRecordCollectionId, Pagination.of(1, 2));
+			page = DataRecordResource.getDataRecordCollectionDataRecordsPage(
+				irrelevantDataRecordCollectionId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -207,9 +208,8 @@ public abstract class BaseDataRecordResourceTestCase {
 			testGetDataRecordCollectionDataRecordsPage_addDataRecord(
 				dataRecordCollectionId, randomDataRecord());
 
-		Page<DataRecord> page =
-			DataRecordResource.getDataRecordCollectionDataRecordsPage(
-				dataRecordCollectionId, Pagination.of(1, 2));
+		page = DataRecordResource.getDataRecordCollectionDataRecordsPage(
+			dataRecordCollectionId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 

@@ -242,6 +242,14 @@ public abstract class BaseKeywordResourceTestCase {
 
 	@Test
 	public void testGetSiteKeywordsPage() throws Exception {
+		Page<Keyword> page;
+
+		page = KeywordResource.getSiteKeywordsPage(
+			testGetSiteKeywordsPage_getSiteId(), RandomTestUtil.randomString(),
+			null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long siteId = testGetSiteKeywordsPage_getSiteId();
 		Long irrelevantSiteId = testGetSiteKeywordsPage_getIrrelevantSiteId();
 
@@ -249,7 +257,7 @@ public abstract class BaseKeywordResourceTestCase {
 			Keyword irrelevantKeyword = testGetSiteKeywordsPage_addKeyword(
 				irrelevantSiteId, randomIrrelevantKeyword());
 
-			Page<Keyword> page = KeywordResource.getSiteKeywordsPage(
+			page = KeywordResource.getSiteKeywordsPage(
 				irrelevantSiteId, null, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -266,7 +274,7 @@ public abstract class BaseKeywordResourceTestCase {
 		Keyword keyword2 = testGetSiteKeywordsPage_addKeyword(
 			siteId, randomKeyword());
 
-		Page<Keyword> page = KeywordResource.getSiteKeywordsPage(
+		page = KeywordResource.getSiteKeywordsPage(
 			siteId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -274,12 +282,6 @@ public abstract class BaseKeywordResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(keyword1, keyword2), (List<Keyword>)page.getItems());
 		assertValid(page);
-
-		page = KeywordResource.getSiteKeywordsPage(
-			testGetSiteKeywordsPage_getSiteId(), RandomTestUtil.randomString(),
-			null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test

@@ -302,6 +302,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	public void testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage()
 		throws Exception {
 
+		Page<KnowledgeBaseFolder> page;
+
 		Long parentKnowledgeBaseFolderId =
 			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getParentKnowledgeBaseFolderId();
 		Long irrelevantParentKnowledgeBaseFolderId =
@@ -313,7 +315,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 					irrelevantParentKnowledgeBaseFolderId,
 					randomIrrelevantKnowledgeBaseFolder());
 
-			Page<KnowledgeBaseFolder> page =
+			page =
 				KnowledgeBaseFolderResource.
 					getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
 						irrelevantParentKnowledgeBaseFolderId,
@@ -335,7 +337,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 				parentKnowledgeBaseFolderId, randomKnowledgeBaseFolder());
 
-		Page<KnowledgeBaseFolder> page =
+		page =
 			KnowledgeBaseFolderResource.
 				getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
 					parentKnowledgeBaseFolderId, Pagination.of(1, 2));
@@ -457,6 +459,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 	@Test
 	public void testGetSiteKnowledgeBaseFoldersPage() throws Exception {
+		Page<KnowledgeBaseFolder> page;
+
 		Long siteId = testGetSiteKnowledgeBaseFoldersPage_getSiteId();
 		Long irrelevantSiteId =
 			testGetSiteKnowledgeBaseFoldersPage_getIrrelevantSiteId();
@@ -466,9 +470,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				testGetSiteKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 					irrelevantSiteId, randomIrrelevantKnowledgeBaseFolder());
 
-			Page<KnowledgeBaseFolder> page =
-				KnowledgeBaseFolderResource.getSiteKnowledgeBaseFoldersPage(
-					irrelevantSiteId, Pagination.of(1, 2));
+			page = KnowledgeBaseFolderResource.getSiteKnowledgeBaseFoldersPage(
+				irrelevantSiteId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -486,9 +489,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testGetSiteKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 				siteId, randomKnowledgeBaseFolder());
 
-		Page<KnowledgeBaseFolder> page =
-			KnowledgeBaseFolderResource.getSiteKnowledgeBaseFoldersPage(
-				siteId, Pagination.of(1, 2));
+		page = KnowledgeBaseFolderResource.getSiteKnowledgeBaseFoldersPage(
+			siteId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 

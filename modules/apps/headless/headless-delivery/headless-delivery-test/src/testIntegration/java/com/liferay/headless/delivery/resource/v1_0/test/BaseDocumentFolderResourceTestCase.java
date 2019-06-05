@@ -293,6 +293,14 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 	@Test
 	public void testGetDocumentFolderDocumentFoldersPage() throws Exception {
+		Page<DocumentFolder> page;
+
+		page = DocumentFolderResource.getDocumentFolderDocumentFoldersPage(
+			testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId(),
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long parentDocumentFolderId =
 			testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId();
 		Long irrelevantParentDocumentFolderId =
@@ -304,10 +312,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 					irrelevantParentDocumentFolderId,
 					randomIrrelevantDocumentFolder());
 
-			Page<DocumentFolder> page =
-				DocumentFolderResource.getDocumentFolderDocumentFoldersPage(
-					irrelevantParentDocumentFolderId, null, null,
-					Pagination.of(1, 2), null);
+			page = DocumentFolderResource.getDocumentFolderDocumentFoldersPage(
+				irrelevantParentDocumentFolderId, null, null,
+				Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -325,9 +332,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			testGetDocumentFolderDocumentFoldersPage_addDocumentFolder(
 				parentDocumentFolderId, randomDocumentFolder());
 
-		Page<DocumentFolder> page =
-			DocumentFolderResource.getDocumentFolderDocumentFoldersPage(
-				parentDocumentFolderId, null, null, Pagination.of(1, 2), null);
+		page = DocumentFolderResource.getDocumentFolderDocumentFoldersPage(
+			parentDocumentFolderId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -335,12 +341,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			Arrays.asList(documentFolder1, documentFolder2),
 			(List<DocumentFolder>)page.getItems());
 		assertValid(page);
-
-		page = DocumentFolderResource.getDocumentFolderDocumentFoldersPage(
-			testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId(),
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test
@@ -604,6 +604,14 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 	@Test
 	public void testGetSiteDocumentFoldersPage() throws Exception {
+		Page<DocumentFolder> page;
+
+		page = DocumentFolderResource.getSiteDocumentFoldersPage(
+			testGetSiteDocumentFoldersPage_getSiteId(), null,
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long siteId = testGetSiteDocumentFoldersPage_getSiteId();
 		Long irrelevantSiteId =
 			testGetSiteDocumentFoldersPage_getIrrelevantSiteId();
@@ -613,10 +621,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				testGetSiteDocumentFoldersPage_addDocumentFolder(
 					irrelevantSiteId, randomIrrelevantDocumentFolder());
 
-			Page<DocumentFolder> page =
-				DocumentFolderResource.getSiteDocumentFoldersPage(
-					irrelevantSiteId, null, null, null, Pagination.of(1, 2),
-					null);
+			page = DocumentFolderResource.getSiteDocumentFoldersPage(
+				irrelevantSiteId, null, null, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -634,9 +640,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			testGetSiteDocumentFoldersPage_addDocumentFolder(
 				siteId, randomDocumentFolder());
 
-		Page<DocumentFolder> page =
-			DocumentFolderResource.getSiteDocumentFoldersPage(
-				siteId, null, null, null, Pagination.of(1, 2), null);
+		page = DocumentFolderResource.getSiteDocumentFoldersPage(
+			siteId, null, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -644,12 +649,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			Arrays.asList(documentFolder1, documentFolder2),
 			(List<DocumentFolder>)page.getItems());
 		assertValid(page);
-
-		page = DocumentFolderResource.getSiteDocumentFoldersPage(
-			testGetSiteDocumentFoldersPage_getSiteId(), null,
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test

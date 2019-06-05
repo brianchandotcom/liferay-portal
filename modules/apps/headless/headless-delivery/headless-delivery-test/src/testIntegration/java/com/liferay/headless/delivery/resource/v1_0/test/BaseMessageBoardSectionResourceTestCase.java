@@ -305,6 +305,17 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	public void testGetMessageBoardSectionMessageBoardSectionsPage()
 		throws Exception {
 
+		Page<MessageBoardSection> page;
+
+		page =
+			MessageBoardSectionResource.
+				getMessageBoardSectionMessageBoardSectionsPage(
+					testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId(),
+					RandomTestUtil.randomString(), null, Pagination.of(1, 2),
+					null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long parentMessageBoardSectionId =
 			testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId();
 		Long irrelevantParentMessageBoardSectionId =
@@ -316,7 +327,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 					irrelevantParentMessageBoardSectionId,
 					randomIrrelevantMessageBoardSection());
 
-			Page<MessageBoardSection> page =
+			page =
 				MessageBoardSectionResource.
 					getMessageBoardSectionMessageBoardSectionsPage(
 						irrelevantParentMessageBoardSectionId, null, null,
@@ -338,7 +349,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testGetMessageBoardSectionMessageBoardSectionsPage_addMessageBoardSection(
 				parentMessageBoardSectionId, randomMessageBoardSection());
 
-		Page<MessageBoardSection> page =
+		page =
 			MessageBoardSectionResource.
 				getMessageBoardSectionMessageBoardSectionsPage(
 					parentMessageBoardSectionId, null, null,
@@ -350,15 +361,6 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			Arrays.asList(messageBoardSection1, messageBoardSection2),
 			(List<MessageBoardSection>)page.getItems());
 		assertValid(page);
-
-		page =
-			MessageBoardSectionResource.
-				getMessageBoardSectionMessageBoardSectionsPage(
-					testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId(),
-					RandomTestUtil.randomString(), null, Pagination.of(1, 2),
-					null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test
@@ -642,6 +644,14 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 	@Test
 	public void testGetSiteMessageBoardSectionsPage() throws Exception {
+		Page<MessageBoardSection> page;
+
+		page = MessageBoardSectionResource.getSiteMessageBoardSectionsPage(
+			testGetSiteMessageBoardSectionsPage_getSiteId(), null,
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long siteId = testGetSiteMessageBoardSectionsPage_getSiteId();
 		Long irrelevantSiteId =
 			testGetSiteMessageBoardSectionsPage_getIrrelevantSiteId();
@@ -651,10 +661,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				testGetSiteMessageBoardSectionsPage_addMessageBoardSection(
 					irrelevantSiteId, randomIrrelevantMessageBoardSection());
 
-			Page<MessageBoardSection> page =
-				MessageBoardSectionResource.getSiteMessageBoardSectionsPage(
-					irrelevantSiteId, null, null, null, Pagination.of(1, 2),
-					null);
+			page = MessageBoardSectionResource.getSiteMessageBoardSectionsPage(
+				irrelevantSiteId, null, null, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -672,9 +680,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testGetSiteMessageBoardSectionsPage_addMessageBoardSection(
 				siteId, randomMessageBoardSection());
 
-		Page<MessageBoardSection> page =
-			MessageBoardSectionResource.getSiteMessageBoardSectionsPage(
-				siteId, null, null, null, Pagination.of(1, 2), null);
+		page = MessageBoardSectionResource.getSiteMessageBoardSectionsPage(
+			siteId, null, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -682,12 +689,6 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			Arrays.asList(messageBoardSection1, messageBoardSection2),
 			(List<MessageBoardSection>)page.getItems());
 		assertValid(page);
-
-		page = MessageBoardSectionResource.getSiteMessageBoardSectionsPage(
-			testGetSiteMessageBoardSectionsPage_getSiteId(), null,
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test

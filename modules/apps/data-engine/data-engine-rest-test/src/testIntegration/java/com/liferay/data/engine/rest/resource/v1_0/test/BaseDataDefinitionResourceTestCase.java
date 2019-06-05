@@ -267,6 +267,14 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 	@Test
 	public void testGetSiteDataDefinitionsPage() throws Exception {
+		Page<DataDefinition> page;
+
+		page = DataDefinitionResource.getSiteDataDefinitionsPage(
+			testGetSiteDataDefinitionsPage_getSiteId(),
+			RandomTestUtil.randomString(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long siteId = testGetSiteDataDefinitionsPage_getSiteId();
 		Long irrelevantSiteId =
 			testGetSiteDataDefinitionsPage_getIrrelevantSiteId();
@@ -276,9 +284,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 				testGetSiteDataDefinitionsPage_addDataDefinition(
 					irrelevantSiteId, randomIrrelevantDataDefinition());
 
-			Page<DataDefinition> page =
-				DataDefinitionResource.getSiteDataDefinitionsPage(
-					irrelevantSiteId, null, Pagination.of(1, 2));
+			page = DataDefinitionResource.getSiteDataDefinitionsPage(
+				irrelevantSiteId, null, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -296,9 +303,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			testGetSiteDataDefinitionsPage_addDataDefinition(
 				siteId, randomDataDefinition());
 
-		Page<DataDefinition> page =
-			DataDefinitionResource.getSiteDataDefinitionsPage(
-				siteId, null, Pagination.of(1, 2));
+		page = DataDefinitionResource.getSiteDataDefinitionsPage(
+			siteId, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -306,12 +312,6 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			Arrays.asList(dataDefinition1, dataDefinition2),
 			(List<DataDefinition>)page.getItems());
 		assertValid(page);
-
-		page = DataDefinitionResource.getSiteDataDefinitionsPage(
-			testGetSiteDataDefinitionsPage_getSiteId(),
-			RandomTestUtil.randomString(), Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test

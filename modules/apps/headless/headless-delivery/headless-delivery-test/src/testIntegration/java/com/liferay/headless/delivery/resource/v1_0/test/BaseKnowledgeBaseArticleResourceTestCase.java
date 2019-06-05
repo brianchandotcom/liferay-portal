@@ -362,6 +362,17 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	public void testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage()
 		throws Exception {
 
+		Page<KnowledgeBaseArticle> page;
+
+		page =
+			KnowledgeBaseArticleResource.
+				getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
+					testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId(),
+					RandomTestUtil.randomString(), null, Pagination.of(1, 2),
+					null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long parentKnowledgeBaseArticleId =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId();
 		Long irrelevantParentKnowledgeBaseArticleId =
@@ -373,7 +384,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 					irrelevantParentKnowledgeBaseArticleId,
 					randomIrrelevantKnowledgeBaseArticle());
 
-			Page<KnowledgeBaseArticle> page =
+			page =
 				KnowledgeBaseArticleResource.
 					getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 						irrelevantParentKnowledgeBaseArticleId, null, null,
@@ -395,7 +406,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				parentKnowledgeBaseArticleId, randomKnowledgeBaseArticle());
 
-		Page<KnowledgeBaseArticle> page =
+		page =
 			KnowledgeBaseArticleResource.
 				getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 					parentKnowledgeBaseArticleId, null, null,
@@ -407,15 +418,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			Arrays.asList(knowledgeBaseArticle1, knowledgeBaseArticle2),
 			(List<KnowledgeBaseArticle>)page.getItems());
 		assertValid(page);
-
-		page =
-			KnowledgeBaseArticleResource.
-				getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-					testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId(),
-					RandomTestUtil.randomString(), null, Pagination.of(1, 2),
-					null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test
@@ -706,6 +708,17 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	public void testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage()
 		throws Exception {
 
+		Page<KnowledgeBaseArticle> page;
+
+		page =
+			KnowledgeBaseArticleResource.
+				getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
+					testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_getKnowledgeBaseFolderId(),
+					null, RandomTestUtil.randomString(), null,
+					Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long knowledgeBaseFolderId =
 			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_getKnowledgeBaseFolderId();
 		Long irrelevantKnowledgeBaseFolderId =
@@ -717,7 +730,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 					irrelevantKnowledgeBaseFolderId,
 					randomIrrelevantKnowledgeBaseArticle());
 
-			Page<KnowledgeBaseArticle> page =
+			page =
 				KnowledgeBaseArticleResource.
 					getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 						irrelevantKnowledgeBaseFolderId, null, null, null,
@@ -739,7 +752,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				knowledgeBaseFolderId, randomKnowledgeBaseArticle());
 
-		Page<KnowledgeBaseArticle> page =
+		page =
 			KnowledgeBaseArticleResource.
 				getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 					knowledgeBaseFolderId, null, null, null,
@@ -751,15 +764,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			Arrays.asList(knowledgeBaseArticle1, knowledgeBaseArticle2),
 			(List<KnowledgeBaseArticle>)page.getItems());
 		assertValid(page);
-
-		page =
-			KnowledgeBaseArticleResource.
-				getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
-					testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_getKnowledgeBaseFolderId(),
-					null, RandomTestUtil.randomString(), null,
-					Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test
@@ -1048,6 +1052,14 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 	@Test
 	public void testGetSiteKnowledgeBaseArticlesPage() throws Exception {
+		Page<KnowledgeBaseArticle> page;
+
+		page = KnowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
+			testGetSiteKnowledgeBaseArticlesPage_getSiteId(), null,
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long siteId = testGetSiteKnowledgeBaseArticlesPage_getSiteId();
 		Long irrelevantSiteId =
 			testGetSiteKnowledgeBaseArticlesPage_getIrrelevantSiteId();
@@ -1057,7 +1069,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				testGetSiteKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 					irrelevantSiteId, randomIrrelevantKnowledgeBaseArticle());
 
-			Page<KnowledgeBaseArticle> page =
+			page =
 				KnowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
 					irrelevantSiteId, null, null, null, Pagination.of(1, 2),
 					null);
@@ -1078,9 +1090,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testGetSiteKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				siteId, randomKnowledgeBaseArticle());
 
-		Page<KnowledgeBaseArticle> page =
-			KnowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
-				siteId, null, null, null, Pagination.of(1, 2), null);
+		page = KnowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
+			siteId, null, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -1088,12 +1099,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			Arrays.asList(knowledgeBaseArticle1, knowledgeBaseArticle2),
 			(List<KnowledgeBaseArticle>)page.getItems());
 		assertValid(page);
-
-		page = KnowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
-			testGetSiteKnowledgeBaseArticlesPage_getSiteId(), null,
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test

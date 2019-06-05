@@ -183,6 +183,14 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 	@Test
 	public void testGetDataDefinitionDataLayoutsPage() throws Exception {
+		Page<DataLayout> page;
+
+		page = DataLayoutResource.getDataDefinitionDataLayoutsPage(
+			testGetDataDefinitionDataLayoutsPage_getDataDefinitionId(),
+			RandomTestUtil.randomString(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long dataDefinitionId =
 			testGetDataDefinitionDataLayoutsPage_getDataDefinitionId();
 		Long irrelevantDataDefinitionId =
@@ -193,9 +201,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 				testGetDataDefinitionDataLayoutsPage_addDataLayout(
 					irrelevantDataDefinitionId, randomIrrelevantDataLayout());
 
-			Page<DataLayout> page =
-				DataLayoutResource.getDataDefinitionDataLayoutsPage(
-					irrelevantDataDefinitionId, null, Pagination.of(1, 2));
+			page = DataLayoutResource.getDataDefinitionDataLayoutsPage(
+				irrelevantDataDefinitionId, null, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -213,9 +220,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 			testGetDataDefinitionDataLayoutsPage_addDataLayout(
 				dataDefinitionId, randomDataLayout());
 
-		Page<DataLayout> page =
-			DataLayoutResource.getDataDefinitionDataLayoutsPage(
-				dataDefinitionId, null, Pagination.of(1, 2));
+		page = DataLayoutResource.getDataDefinitionDataLayoutsPage(
+			dataDefinitionId, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -223,12 +229,6 @@ public abstract class BaseDataLayoutResourceTestCase {
 			Arrays.asList(dataLayout1, dataLayout2),
 			(List<DataLayout>)page.getItems());
 		assertValid(page);
-
-		page = DataLayoutResource.getDataDefinitionDataLayoutsPage(
-			testGetDataDefinitionDataLayoutsPage_getDataDefinitionId(),
-			RandomTestUtil.randomString(), Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test
@@ -388,6 +388,14 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 	@Test
 	public void testGetSiteDataLayoutPage() throws Exception {
+		Page<DataLayout> page;
+
+		page = DataLayoutResource.getSiteDataLayoutPage(
+			testGetSiteDataLayoutPage_getSiteId(),
+			RandomTestUtil.randomString(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long siteId = testGetSiteDataLayoutPage_getSiteId();
 		Long irrelevantSiteId = testGetSiteDataLayoutPage_getIrrelevantSiteId();
 
@@ -396,7 +404,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 				testGetSiteDataLayoutPage_addDataLayout(
 					irrelevantSiteId, randomIrrelevantDataLayout());
 
-			Page<DataLayout> page = DataLayoutResource.getSiteDataLayoutPage(
+			page = DataLayoutResource.getSiteDataLayoutPage(
 				irrelevantSiteId, null, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -413,7 +421,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 		DataLayout dataLayout2 = testGetSiteDataLayoutPage_addDataLayout(
 			siteId, randomDataLayout());
 
-		Page<DataLayout> page = DataLayoutResource.getSiteDataLayoutPage(
+		page = DataLayoutResource.getSiteDataLayoutPage(
 			siteId, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -422,12 +430,6 @@ public abstract class BaseDataLayoutResourceTestCase {
 			Arrays.asList(dataLayout1, dataLayout2),
 			(List<DataLayout>)page.getItems());
 		assertValid(page);
-
-		page = DataLayoutResource.getSiteDataLayoutPage(
-			testGetSiteDataLayoutPage_getSiteId(),
-			RandomTestUtil.randomString(), Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test

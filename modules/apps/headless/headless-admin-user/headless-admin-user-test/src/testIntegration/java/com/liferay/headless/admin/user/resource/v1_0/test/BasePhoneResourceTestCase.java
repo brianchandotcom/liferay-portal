@@ -183,6 +183,8 @@ public abstract class BasePhoneResourceTestCase {
 
 	@Test
 	public void testGetOrganizationPhonesPage() throws Exception {
+		Page<Phone> page;
+
 		Long organizationId = testGetOrganizationPhonesPage_getOrganizationId();
 		Long irrelevantOrganizationId =
 			testGetOrganizationPhonesPage_getIrrelevantOrganizationId();
@@ -191,7 +193,7 @@ public abstract class BasePhoneResourceTestCase {
 			Phone irrelevantPhone = testGetOrganizationPhonesPage_addPhone(
 				irrelevantOrganizationId, randomIrrelevantPhone());
 
-			Page<Phone> page = PhoneResource.getOrganizationPhonesPage(
+			page = PhoneResource.getOrganizationPhonesPage(
 				irrelevantOrganizationId);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -207,8 +209,7 @@ public abstract class BasePhoneResourceTestCase {
 		Phone phone2 = testGetOrganizationPhonesPage_addPhone(
 			organizationId, randomPhone());
 
-		Page<Phone> page = PhoneResource.getOrganizationPhonesPage(
-			organizationId);
+		page = PhoneResource.getOrganizationPhonesPage(organizationId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -255,6 +256,8 @@ public abstract class BasePhoneResourceTestCase {
 
 	@Test
 	public void testGetUserAccountPhonesPage() throws Exception {
+		Page<Phone> page;
+
 		Long userAccountId = testGetUserAccountPhonesPage_getUserAccountId();
 		Long irrelevantUserAccountId =
 			testGetUserAccountPhonesPage_getIrrelevantUserAccountId();
@@ -263,7 +266,7 @@ public abstract class BasePhoneResourceTestCase {
 			Phone irrelevantPhone = testGetUserAccountPhonesPage_addPhone(
 				irrelevantUserAccountId, randomIrrelevantPhone());
 
-			Page<Phone> page = PhoneResource.getUserAccountPhonesPage(
+			page = PhoneResource.getUserAccountPhonesPage(
 				irrelevantUserAccountId);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -279,8 +282,7 @@ public abstract class BasePhoneResourceTestCase {
 		Phone phone2 = testGetUserAccountPhonesPage_addPhone(
 			userAccountId, randomPhone());
 
-		Page<Phone> page = PhoneResource.getUserAccountPhonesPage(
-			userAccountId);
+		page = PhoneResource.getUserAccountPhonesPage(userAccountId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 

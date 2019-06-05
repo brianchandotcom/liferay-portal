@@ -182,6 +182,16 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	public void testGetDataDefinitionDataRecordCollectionsPage()
 		throws Exception {
 
+		Page<DataRecordCollection> page;
+
+		page =
+			DataRecordCollectionResource.
+				getDataDefinitionDataRecordCollectionsPage(
+					testGetDataDefinitionDataRecordCollectionsPage_getDataDefinitionId(),
+					RandomTestUtil.randomString(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long dataDefinitionId =
 			testGetDataDefinitionDataRecordCollectionsPage_getDataDefinitionId();
 		Long irrelevantDataDefinitionId =
@@ -193,7 +203,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 					irrelevantDataDefinitionId,
 					randomIrrelevantDataRecordCollection());
 
-			Page<DataRecordCollection> page =
+			page =
 				DataRecordCollectionResource.
 					getDataDefinitionDataRecordCollectionsPage(
 						irrelevantDataDefinitionId, null, Pagination.of(1, 2));
@@ -214,7 +224,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			testGetDataDefinitionDataRecordCollectionsPage_addDataRecordCollection(
 				dataDefinitionId, randomDataRecordCollection());
 
-		Page<DataRecordCollection> page =
+		page =
 			DataRecordCollectionResource.
 				getDataDefinitionDataRecordCollectionsPage(
 					dataDefinitionId, null, Pagination.of(1, 2));
@@ -225,14 +235,6 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			Arrays.asList(dataRecordCollection1, dataRecordCollection2),
 			(List<DataRecordCollection>)page.getItems());
 		assertValid(page);
-
-		page =
-			DataRecordCollectionResource.
-				getDataDefinitionDataRecordCollectionsPage(
-					testGetDataDefinitionDataRecordCollectionsPage_getDataDefinitionId(),
-					RandomTestUtil.randomString(), Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test
@@ -437,6 +439,14 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 
 	@Test
 	public void testGetSiteDataRecordCollectionsPage() throws Exception {
+		Page<DataRecordCollection> page;
+
+		page = DataRecordCollectionResource.getSiteDataRecordCollectionsPage(
+			testGetSiteDataRecordCollectionsPage_getSiteId(),
+			RandomTestUtil.randomString(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long siteId = testGetSiteDataRecordCollectionsPage_getSiteId();
 		Long irrelevantSiteId =
 			testGetSiteDataRecordCollectionsPage_getIrrelevantSiteId();
@@ -446,7 +456,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 				testGetSiteDataRecordCollectionsPage_addDataRecordCollection(
 					irrelevantSiteId, randomIrrelevantDataRecordCollection());
 
-			Page<DataRecordCollection> page =
+			page =
 				DataRecordCollectionResource.getSiteDataRecordCollectionsPage(
 					irrelevantSiteId, null, Pagination.of(1, 2));
 
@@ -466,9 +476,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			testGetSiteDataRecordCollectionsPage_addDataRecordCollection(
 				siteId, randomDataRecordCollection());
 
-		Page<DataRecordCollection> page =
-			DataRecordCollectionResource.getSiteDataRecordCollectionsPage(
-				siteId, null, Pagination.of(1, 2));
+		page = DataRecordCollectionResource.getSiteDataRecordCollectionsPage(
+			siteId, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -476,12 +485,6 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			Arrays.asList(dataRecordCollection1, dataRecordCollection2),
 			(List<DataRecordCollection>)page.getItems());
 		assertValid(page);
-
-		page = DataRecordCollectionResource.getSiteDataRecordCollectionsPage(
-			testGetSiteDataRecordCollectionsPage_getSiteId(),
-			RandomTestUtil.randomString(), Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test

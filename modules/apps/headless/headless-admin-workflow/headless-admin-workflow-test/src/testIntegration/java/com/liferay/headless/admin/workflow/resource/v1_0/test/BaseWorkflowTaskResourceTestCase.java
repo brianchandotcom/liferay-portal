@@ -185,6 +185,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 	@Test
 	public void testGetRoleWorkflowTasksPage() throws Exception {
+		Page<WorkflowTask> page;
+
 		Long roleId = testGetRoleWorkflowTasksPage_getRoleId();
 		Long irrelevantRoleId =
 			testGetRoleWorkflowTasksPage_getIrrelevantRoleId();
@@ -194,9 +196,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				testGetRoleWorkflowTasksPage_addWorkflowTask(
 					irrelevantRoleId, randomIrrelevantWorkflowTask());
 
-			Page<WorkflowTask> page =
-				WorkflowTaskResource.getRoleWorkflowTasksPage(
-					irrelevantRoleId, Pagination.of(1, 2));
+			page = WorkflowTaskResource.getRoleWorkflowTasksPage(
+				irrelevantRoleId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -214,7 +215,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			testGetRoleWorkflowTasksPage_addWorkflowTask(
 				roleId, randomWorkflowTask());
 
-		Page<WorkflowTask> page = WorkflowTaskResource.getRoleWorkflowTasksPage(
+		page = WorkflowTaskResource.getRoleWorkflowTasksPage(
 			roleId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());

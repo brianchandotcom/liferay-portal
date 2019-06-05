@@ -196,6 +196,8 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 	public void testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage()
 		throws Exception {
 
+		Page<KnowledgeBaseAttachment> page;
+
 		Long knowledgeBaseArticleId =
 			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getKnowledgeBaseArticleId();
 		Long irrelevantKnowledgeBaseArticleId =
@@ -207,7 +209,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 					irrelevantKnowledgeBaseArticleId,
 					randomIrrelevantKnowledgeBaseAttachment());
 
-			Page<KnowledgeBaseAttachment> page =
+			page =
 				KnowledgeBaseAttachmentResource.
 					getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
 						irrelevantKnowledgeBaseArticleId);
@@ -228,7 +230,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_addKnowledgeBaseAttachment(
 				knowledgeBaseArticleId, randomKnowledgeBaseAttachment());
 
-		Page<KnowledgeBaseAttachment> page =
+		page =
 			KnowledgeBaseAttachmentResource.
 				getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
 					knowledgeBaseArticleId);

@@ -195,6 +195,14 @@ public abstract class BaseDocumentResourceTestCase {
 
 	@Test
 	public void testGetDocumentFolderDocumentsPage() throws Exception {
+		Page<Document> page;
+
+		page = DocumentResource.getDocumentFolderDocumentsPage(
+			testGetDocumentFolderDocumentsPage_getDocumentFolderId(),
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long documentFolderId =
 			testGetDocumentFolderDocumentsPage_getDocumentFolderId();
 		Long irrelevantDocumentFolderId =
@@ -205,10 +213,9 @@ public abstract class BaseDocumentResourceTestCase {
 				testGetDocumentFolderDocumentsPage_addDocument(
 					irrelevantDocumentFolderId, randomIrrelevantDocument());
 
-			Page<Document> page =
-				DocumentResource.getDocumentFolderDocumentsPage(
-					irrelevantDocumentFolderId, null, null, Pagination.of(1, 2),
-					null);
+			page = DocumentResource.getDocumentFolderDocumentsPage(
+				irrelevantDocumentFolderId, null, null, Pagination.of(1, 2),
+				null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -224,7 +231,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Document document2 = testGetDocumentFolderDocumentsPage_addDocument(
 			documentFolderId, randomDocument());
 
-		Page<Document> page = DocumentResource.getDocumentFolderDocumentsPage(
+		page = DocumentResource.getDocumentFolderDocumentsPage(
 			documentFolderId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -233,12 +240,6 @@ public abstract class BaseDocumentResourceTestCase {
 			Arrays.asList(document1, document2),
 			(List<Document>)page.getItems());
 		assertValid(page);
-
-		page = DocumentResource.getDocumentFolderDocumentsPage(
-			testGetDocumentFolderDocumentsPage_getDocumentFolderId(),
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test
@@ -565,6 +566,14 @@ public abstract class BaseDocumentResourceTestCase {
 
 	@Test
 	public void testGetSiteDocumentsPage() throws Exception {
+		Page<Document> page;
+
+		page = DocumentResource.getSiteDocumentsPage(
+			testGetSiteDocumentsPage_getSiteId(), null,
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long siteId = testGetSiteDocumentsPage_getSiteId();
 		Long irrelevantSiteId = testGetSiteDocumentsPage_getIrrelevantSiteId();
 
@@ -572,7 +581,7 @@ public abstract class BaseDocumentResourceTestCase {
 			Document irrelevantDocument = testGetSiteDocumentsPage_addDocument(
 				irrelevantSiteId, randomIrrelevantDocument());
 
-			Page<Document> page = DocumentResource.getSiteDocumentsPage(
+			page = DocumentResource.getSiteDocumentsPage(
 				irrelevantSiteId, null, null, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -589,7 +598,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Document document2 = testGetSiteDocumentsPage_addDocument(
 			siteId, randomDocument());
 
-		Page<Document> page = DocumentResource.getSiteDocumentsPage(
+		page = DocumentResource.getSiteDocumentsPage(
 			siteId, null, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -598,12 +607,6 @@ public abstract class BaseDocumentResourceTestCase {
 			Arrays.asList(document1, document2),
 			(List<Document>)page.getItems());
 		assertValid(page);
-
-		page = DocumentResource.getSiteDocumentsPage(
-			testGetSiteDocumentsPage_getSiteId(), null,
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test

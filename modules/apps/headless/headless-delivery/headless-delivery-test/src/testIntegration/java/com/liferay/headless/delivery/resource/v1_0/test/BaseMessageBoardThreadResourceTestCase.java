@@ -194,6 +194,17 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	public void testGetMessageBoardSectionMessageBoardThreadsPage()
 		throws Exception {
 
+		Page<MessageBoardThread> page;
+
+		page =
+			MessageBoardThreadResource.
+				getMessageBoardSectionMessageBoardThreadsPage(
+					testGetMessageBoardSectionMessageBoardThreadsPage_getMessageBoardSectionId(),
+					RandomTestUtil.randomString(), null, Pagination.of(1, 2),
+					null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long messageBoardSectionId =
 			testGetMessageBoardSectionMessageBoardThreadsPage_getMessageBoardSectionId();
 		Long irrelevantMessageBoardSectionId =
@@ -205,7 +216,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 					irrelevantMessageBoardSectionId,
 					randomIrrelevantMessageBoardThread());
 
-			Page<MessageBoardThread> page =
+			page =
 				MessageBoardThreadResource.
 					getMessageBoardSectionMessageBoardThreadsPage(
 						irrelevantMessageBoardSectionId, null, null,
@@ -227,7 +238,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			testGetMessageBoardSectionMessageBoardThreadsPage_addMessageBoardThread(
 				messageBoardSectionId, randomMessageBoardThread());
 
-		Page<MessageBoardThread> page =
+		page =
 			MessageBoardThreadResource.
 				getMessageBoardSectionMessageBoardThreadsPage(
 					messageBoardSectionId, null, null, Pagination.of(1, 2),
@@ -239,15 +250,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			Arrays.asList(messageBoardThread1, messageBoardThread2),
 			(List<MessageBoardThread>)page.getItems());
 		assertValid(page);
-
-		page =
-			MessageBoardThreadResource.
-				getMessageBoardSectionMessageBoardThreadsPage(
-					testGetMessageBoardSectionMessageBoardThreadsPage_getMessageBoardSectionId(),
-					RandomTestUtil.randomString(), null, Pagination.of(1, 2),
-					null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test
@@ -689,6 +691,14 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 	@Test
 	public void testGetSiteMessageBoardThreadsPage() throws Exception {
+		Page<MessageBoardThread> page;
+
+		page = MessageBoardThreadResource.getSiteMessageBoardThreadsPage(
+			testGetSiteMessageBoardThreadsPage_getSiteId(), null,
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long siteId = testGetSiteMessageBoardThreadsPage_getSiteId();
 		Long irrelevantSiteId =
 			testGetSiteMessageBoardThreadsPage_getIrrelevantSiteId();
@@ -698,10 +708,8 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				testGetSiteMessageBoardThreadsPage_addMessageBoardThread(
 					irrelevantSiteId, randomIrrelevantMessageBoardThread());
 
-			Page<MessageBoardThread> page =
-				MessageBoardThreadResource.getSiteMessageBoardThreadsPage(
-					irrelevantSiteId, null, null, null, Pagination.of(1, 2),
-					null);
+			page = MessageBoardThreadResource.getSiteMessageBoardThreadsPage(
+				irrelevantSiteId, null, null, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -719,9 +727,8 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			testGetSiteMessageBoardThreadsPage_addMessageBoardThread(
 				siteId, randomMessageBoardThread());
 
-		Page<MessageBoardThread> page =
-			MessageBoardThreadResource.getSiteMessageBoardThreadsPage(
-				siteId, null, null, null, Pagination.of(1, 2), null);
+		page = MessageBoardThreadResource.getSiteMessageBoardThreadsPage(
+			siteId, null, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -729,12 +736,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			Arrays.asList(messageBoardThread1, messageBoardThread2),
 			(List<MessageBoardThread>)page.getItems());
 		assertValid(page);
-
-		page = MessageBoardThreadResource.getSiteMessageBoardThreadsPage(
-			testGetSiteMessageBoardThreadsPage_getSiteId(), null,
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test

@@ -189,13 +189,20 @@ public abstract class BaseOrganizationResourceTestCase {
 
 	@Test
 	public void testGetOrganizationsPage() throws Exception {
+		Page<Organization> page;
+
+		page = OrganizationResource.getOrganizationsPage(
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Organization organization1 = testGetOrganizationsPage_addOrganization(
 			randomOrganization());
 
 		Organization organization2 = testGetOrganizationsPage_addOrganization(
 			randomOrganization());
 
-		Page<Organization> page = OrganizationResource.getOrganizationsPage(
+		page = OrganizationResource.getOrganizationsPage(
 			null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -204,11 +211,6 @@ public abstract class BaseOrganizationResourceTestCase {
 			Arrays.asList(organization1, organization2),
 			(List<Organization>)page.getItems());
 		assertValid(page);
-
-		page = OrganizationResource.getOrganizationsPage(
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test
@@ -411,6 +413,14 @@ public abstract class BaseOrganizationResourceTestCase {
 
 	@Test
 	public void testGetOrganizationOrganizationsPage() throws Exception {
+		Page<Organization> page;
+
+		page = OrganizationResource.getOrganizationOrganizationsPage(
+			testGetOrganizationOrganizationsPage_getParentOrganizationId(),
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long parentOrganizationId =
 			testGetOrganizationOrganizationsPage_getParentOrganizationId();
 		Long irrelevantParentOrganizationId =
@@ -422,10 +432,9 @@ public abstract class BaseOrganizationResourceTestCase {
 					irrelevantParentOrganizationId,
 					randomIrrelevantOrganization());
 
-			Page<Organization> page =
-				OrganizationResource.getOrganizationOrganizationsPage(
-					irrelevantParentOrganizationId, null, null,
-					Pagination.of(1, 2), null);
+			page = OrganizationResource.getOrganizationOrganizationsPage(
+				irrelevantParentOrganizationId, null, null, Pagination.of(1, 2),
+				null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -443,9 +452,8 @@ public abstract class BaseOrganizationResourceTestCase {
 			testGetOrganizationOrganizationsPage_addOrganization(
 				parentOrganizationId, randomOrganization());
 
-		Page<Organization> page =
-			OrganizationResource.getOrganizationOrganizationsPage(
-				parentOrganizationId, null, null, Pagination.of(1, 2), null);
+		page = OrganizationResource.getOrganizationOrganizationsPage(
+			parentOrganizationId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -453,12 +461,6 @@ public abstract class BaseOrganizationResourceTestCase {
 			Arrays.asList(organization1, organization2),
 			(List<Organization>)page.getItems());
 		assertValid(page);
-
-		page = OrganizationResource.getOrganizationOrganizationsPage(
-			testGetOrganizationOrganizationsPage_getParentOrganizationId(),
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test

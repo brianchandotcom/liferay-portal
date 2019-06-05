@@ -330,6 +330,14 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 	@Test
 	public void testGetSiteBlogPostingsPage() throws Exception {
+		Page<BlogPosting> page;
+
+		page = BlogPostingResource.getSiteBlogPostingsPage(
+			testGetSiteBlogPostingsPage_getSiteId(),
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long siteId = testGetSiteBlogPostingsPage_getSiteId();
 		Long irrelevantSiteId =
 			testGetSiteBlogPostingsPage_getIrrelevantSiteId();
@@ -339,9 +347,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 				testGetSiteBlogPostingsPage_addBlogPosting(
 					irrelevantSiteId, randomIrrelevantBlogPosting());
 
-			Page<BlogPosting> page =
-				BlogPostingResource.getSiteBlogPostingsPage(
-					irrelevantSiteId, null, null, Pagination.of(1, 2), null);
+			page = BlogPostingResource.getSiteBlogPostingsPage(
+				irrelevantSiteId, null, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -357,7 +364,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		BlogPosting blogPosting2 = testGetSiteBlogPostingsPage_addBlogPosting(
 			siteId, randomBlogPosting());
 
-		Page<BlogPosting> page = BlogPostingResource.getSiteBlogPostingsPage(
+		page = BlogPostingResource.getSiteBlogPostingsPage(
 			siteId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -366,12 +373,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			Arrays.asList(blogPosting1, blogPosting2),
 			(List<BlogPosting>)page.getItems());
 		assertValid(page);
-
-		page = BlogPostingResource.getSiteBlogPostingsPage(
-			testGetSiteBlogPostingsPage_getSiteId(),
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test

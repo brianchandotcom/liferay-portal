@@ -181,6 +181,8 @@ public abstract class BaseWebUrlResourceTestCase {
 
 	@Test
 	public void testGetOrganizationWebUrlsPage() throws Exception {
+		Page<WebUrl> page;
+
 		Long organizationId =
 			testGetOrganizationWebUrlsPage_getOrganizationId();
 		Long irrelevantOrganizationId =
@@ -190,7 +192,7 @@ public abstract class BaseWebUrlResourceTestCase {
 			WebUrl irrelevantWebUrl = testGetOrganizationWebUrlsPage_addWebUrl(
 				irrelevantOrganizationId, randomIrrelevantWebUrl());
 
-			Page<WebUrl> page = WebUrlResource.getOrganizationWebUrlsPage(
+			page = WebUrlResource.getOrganizationWebUrlsPage(
 				irrelevantOrganizationId);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -206,8 +208,7 @@ public abstract class BaseWebUrlResourceTestCase {
 		WebUrl webUrl2 = testGetOrganizationWebUrlsPage_addWebUrl(
 			organizationId, randomWebUrl());
 
-		Page<WebUrl> page = WebUrlResource.getOrganizationWebUrlsPage(
-			organizationId);
+		page = WebUrlResource.getOrganizationWebUrlsPage(organizationId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -239,6 +240,8 @@ public abstract class BaseWebUrlResourceTestCase {
 
 	@Test
 	public void testGetUserAccountWebUrlsPage() throws Exception {
+		Page<WebUrl> page;
+
 		Long userAccountId = testGetUserAccountWebUrlsPage_getUserAccountId();
 		Long irrelevantUserAccountId =
 			testGetUserAccountWebUrlsPage_getIrrelevantUserAccountId();
@@ -247,7 +250,7 @@ public abstract class BaseWebUrlResourceTestCase {
 			WebUrl irrelevantWebUrl = testGetUserAccountWebUrlsPage_addWebUrl(
 				irrelevantUserAccountId, randomIrrelevantWebUrl());
 
-			Page<WebUrl> page = WebUrlResource.getUserAccountWebUrlsPage(
+			page = WebUrlResource.getUserAccountWebUrlsPage(
 				irrelevantUserAccountId);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -263,8 +266,7 @@ public abstract class BaseWebUrlResourceTestCase {
 		WebUrl webUrl2 = testGetUserAccountWebUrlsPage_addWebUrl(
 			userAccountId, randomWebUrl());
 
-		Page<WebUrl> page = WebUrlResource.getUserAccountWebUrlsPage(
-			userAccountId);
+		page = WebUrlResource.getUserAccountWebUrlsPage(userAccountId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 

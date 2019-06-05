@@ -188,6 +188,14 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 	@Test
 	public void testGetSiteTaxonomyVocabulariesPage() throws Exception {
+		Page<TaxonomyVocabulary> page;
+
+		page = TaxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
+			testGetSiteTaxonomyVocabulariesPage_getSiteId(),
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long siteId = testGetSiteTaxonomyVocabulariesPage_getSiteId();
 		Long irrelevantSiteId =
 			testGetSiteTaxonomyVocabulariesPage_getIrrelevantSiteId();
@@ -197,9 +205,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				testGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary(
 					irrelevantSiteId, randomIrrelevantTaxonomyVocabulary());
 
-			Page<TaxonomyVocabulary> page =
-				TaxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-					irrelevantSiteId, null, null, Pagination.of(1, 2), null);
+			page = TaxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
+				irrelevantSiteId, null, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -217,9 +224,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary(
 				siteId, randomTaxonomyVocabulary());
 
-		Page<TaxonomyVocabulary> page =
-			TaxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-				siteId, null, null, Pagination.of(1, 2), null);
+		page = TaxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
+			siteId, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -227,12 +233,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			Arrays.asList(taxonomyVocabulary1, taxonomyVocabulary2),
 			(List<TaxonomyVocabulary>)page.getItems());
 		assertValid(page);
-
-		page = TaxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-			testGetSiteTaxonomyVocabulariesPage_getSiteId(),
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	@Test

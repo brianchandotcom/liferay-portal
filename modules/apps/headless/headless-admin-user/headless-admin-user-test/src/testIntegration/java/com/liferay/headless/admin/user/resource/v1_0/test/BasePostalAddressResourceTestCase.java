@@ -193,6 +193,8 @@ public abstract class BasePostalAddressResourceTestCase {
 
 	@Test
 	public void testGetOrganizationPostalAddressesPage() throws Exception {
+		Page<PostalAddress> page;
+
 		Long organizationId =
 			testGetOrganizationPostalAddressesPage_getOrganizationId();
 		Long irrelevantOrganizationId =
@@ -203,9 +205,8 @@ public abstract class BasePostalAddressResourceTestCase {
 				testGetOrganizationPostalAddressesPage_addPostalAddress(
 					irrelevantOrganizationId, randomIrrelevantPostalAddress());
 
-			Page<PostalAddress> page =
-				PostalAddressResource.getOrganizationPostalAddressesPage(
-					irrelevantOrganizationId);
+			page = PostalAddressResource.getOrganizationPostalAddressesPage(
+				irrelevantOrganizationId);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -223,9 +224,8 @@ public abstract class BasePostalAddressResourceTestCase {
 			testGetOrganizationPostalAddressesPage_addPostalAddress(
 				organizationId, randomPostalAddress());
 
-		Page<PostalAddress> page =
-			PostalAddressResource.getOrganizationPostalAddressesPage(
-				organizationId);
+		page = PostalAddressResource.getOrganizationPostalAddressesPage(
+			organizationId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -279,6 +279,8 @@ public abstract class BasePostalAddressResourceTestCase {
 
 	@Test
 	public void testGetUserAccountPostalAddressesPage() throws Exception {
+		Page<PostalAddress> page;
+
 		Long userAccountId =
 			testGetUserAccountPostalAddressesPage_getUserAccountId();
 		Long irrelevantUserAccountId =
@@ -289,9 +291,8 @@ public abstract class BasePostalAddressResourceTestCase {
 				testGetUserAccountPostalAddressesPage_addPostalAddress(
 					irrelevantUserAccountId, randomIrrelevantPostalAddress());
 
-			Page<PostalAddress> page =
-				PostalAddressResource.getUserAccountPostalAddressesPage(
-					irrelevantUserAccountId);
+			page = PostalAddressResource.getUserAccountPostalAddressesPage(
+				irrelevantUserAccountId);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -309,9 +310,8 @@ public abstract class BasePostalAddressResourceTestCase {
 			testGetUserAccountPostalAddressesPage_addPostalAddress(
 				userAccountId, randomPostalAddress());
 
-		Page<PostalAddress> page =
-			PostalAddressResource.getUserAccountPostalAddressesPage(
-				userAccountId);
+		page = PostalAddressResource.getUserAccountPostalAddressesPage(
+			userAccountId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 

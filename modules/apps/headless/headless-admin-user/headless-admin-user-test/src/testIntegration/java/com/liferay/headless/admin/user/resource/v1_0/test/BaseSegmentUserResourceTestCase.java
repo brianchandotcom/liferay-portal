@@ -182,6 +182,8 @@ public abstract class BaseSegmentUserResourceTestCase {
 
 	@Test
 	public void testGetSegmentUserAccountsPage() throws Exception {
+		Page<SegmentUser> page;
+
 		Long segmentId = testGetSegmentUserAccountsPage_getSegmentId();
 		Long irrelevantSegmentId =
 			testGetSegmentUserAccountsPage_getIrrelevantSegmentId();
@@ -191,9 +193,8 @@ public abstract class BaseSegmentUserResourceTestCase {
 				testGetSegmentUserAccountsPage_addSegmentUser(
 					irrelevantSegmentId, randomIrrelevantSegmentUser());
 
-			Page<SegmentUser> page =
-				SegmentUserResource.getSegmentUserAccountsPage(
-					irrelevantSegmentId, Pagination.of(1, 2));
+			page = SegmentUserResource.getSegmentUserAccountsPage(
+				irrelevantSegmentId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -211,7 +212,7 @@ public abstract class BaseSegmentUserResourceTestCase {
 			testGetSegmentUserAccountsPage_addSegmentUser(
 				segmentId, randomSegmentUser());
 
-		Page<SegmentUser> page = SegmentUserResource.getSegmentUserAccountsPage(
+		page = SegmentUserResource.getSegmentUserAccountsPage(
 			segmentId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());

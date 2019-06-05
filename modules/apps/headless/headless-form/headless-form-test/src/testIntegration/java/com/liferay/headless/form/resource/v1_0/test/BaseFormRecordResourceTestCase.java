@@ -217,6 +217,8 @@ public abstract class BaseFormRecordResourceTestCase {
 
 	@Test
 	public void testGetFormFormRecordsPage() throws Exception {
+		Page<FormRecord> page;
+
 		Long formId = testGetFormFormRecordsPage_getFormId();
 		Long irrelevantFormId =
 			testGetFormFormRecordsPage_getIrrelevantFormId();
@@ -226,7 +228,7 @@ public abstract class BaseFormRecordResourceTestCase {
 				testGetFormFormRecordsPage_addFormRecord(
 					irrelevantFormId, randomIrrelevantFormRecord());
 
-			Page<FormRecord> page = FormRecordResource.getFormFormRecordsPage(
+			page = FormRecordResource.getFormFormRecordsPage(
 				irrelevantFormId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -243,7 +245,7 @@ public abstract class BaseFormRecordResourceTestCase {
 		FormRecord formRecord2 = testGetFormFormRecordsPage_addFormRecord(
 			formId, randomFormRecord());
 
-		Page<FormRecord> page = FormRecordResource.getFormFormRecordsPage(
+		page = FormRecordResource.getFormFormRecordsPage(
 			formId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());

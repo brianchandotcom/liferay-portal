@@ -185,6 +185,8 @@ public abstract class BaseSegmentResourceTestCase {
 
 	@Test
 	public void testGetSiteSegmentsPage() throws Exception {
+		Page<Segment> page;
+
 		Long siteId = testGetSiteSegmentsPage_getSiteId();
 		Long irrelevantSiteId = testGetSiteSegmentsPage_getIrrelevantSiteId();
 
@@ -192,7 +194,7 @@ public abstract class BaseSegmentResourceTestCase {
 			Segment irrelevantSegment = testGetSiteSegmentsPage_addSegment(
 				irrelevantSiteId, randomIrrelevantSegment());
 
-			Page<Segment> page = SegmentResource.getSiteSegmentsPage(
+			page = SegmentResource.getSiteSegmentsPage(
 				irrelevantSiteId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -209,8 +211,7 @@ public abstract class BaseSegmentResourceTestCase {
 		Segment segment2 = testGetSiteSegmentsPage_addSegment(
 			siteId, randomSegment());
 
-		Page<Segment> page = SegmentResource.getSiteSegmentsPage(
-			siteId, Pagination.of(1, 2));
+		page = SegmentResource.getSiteSegmentsPage(siteId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -276,6 +277,8 @@ public abstract class BaseSegmentResourceTestCase {
 
 	@Test
 	public void testGetSiteUserAccountSegmentsPage() throws Exception {
+		Page<Segment> page;
+
 		Long siteId = testGetSiteUserAccountSegmentsPage_getSiteId();
 		Long irrelevantSiteId =
 			testGetSiteUserAccountSegmentsPage_getIrrelevantSiteId();
@@ -290,7 +293,7 @@ public abstract class BaseSegmentResourceTestCase {
 					irrelevantSiteId, irrelevantUserAccountId,
 					randomIrrelevantSegment());
 
-			Page<Segment> page = SegmentResource.getSiteUserAccountSegmentsPage(
+			page = SegmentResource.getSiteUserAccountSegmentsPage(
 				irrelevantSiteId, irrelevantUserAccountId);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -307,7 +310,7 @@ public abstract class BaseSegmentResourceTestCase {
 		Segment segment2 = testGetSiteUserAccountSegmentsPage_addSegment(
 			siteId, userAccountId, randomSegment());
 
-		Page<Segment> page = SegmentResource.getSiteUserAccountSegmentsPage(
+		page = SegmentResource.getSiteUserAccountSegmentsPage(
 			siteId, userAccountId);
 
 		Assert.assertEquals(2, page.getTotalCount());

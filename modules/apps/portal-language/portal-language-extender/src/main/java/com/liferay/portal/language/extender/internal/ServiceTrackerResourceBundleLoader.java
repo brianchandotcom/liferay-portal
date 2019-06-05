@@ -54,9 +54,11 @@ public class ServiceTrackerResourceBundleLoader
 				serviceTracker = new ServiceTracker<>(
 					bundleContext, filter, null);
 
-			serviceTracker.open();
-
 			_serviceTrackers.add(serviceTracker);
+		}
+
+		for (ServiceTracker<?, ?> serviceTracker : _serviceTrackers) {
+			serviceTracker.open();
 		}
 	}
 

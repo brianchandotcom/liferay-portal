@@ -310,14 +310,9 @@ public class WebServerServlet extends HttpServlet {
 				_createFileServingCallable(
 					httpServletRequest, httpServletResponse, user));
 		}
-		catch (NoSuchFileEntryException nsfee) {
+		catch (NoSuchFileEntryException | NoSuchFolderException e) {
 			PortalUtil.sendError(
-				HttpServletResponse.SC_NOT_FOUND, nsfee, httpServletRequest,
-				httpServletResponse);
-		}
-		catch (NoSuchFolderException nsfe) {
-			PortalUtil.sendError(
-				HttpServletResponse.SC_NOT_FOUND, nsfe, httpServletRequest,
+				HttpServletResponse.SC_NOT_FOUND, e, httpServletRequest,
 				httpServletResponse);
 		}
 		catch (PrincipalException pe) {
@@ -390,11 +385,8 @@ public class WebServerServlet extends HttpServlet {
 
 			return image;
 		}
-		catch (PortalException pe) {
-			throw pe;
-		}
-		catch (SystemException se) {
-			throw se;
+		catch (PortalException | SystemException e) {
+			throw e;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -913,36 +905,20 @@ public class WebServerServlet extends HttpServlet {
 
 			return;
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFileEntryException ||
-				e instanceof PrincipalException) {
+		catch (NoSuchFileEntryException | PrincipalException e1) {
+			try {
+				sendFile(
+					httpServletResponse, user, groupId, folderId, "index.htm");
 
-				try {
-					sendFile(
-						httpServletResponse, user, groupId, folderId,
-						"index.htm");
-
-					return;
-				}
-				catch (NoSuchFileEntryException nsfee) {
-
-					// LPS-52675
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(nsfee, nsfee);
-					}
-				}
-				catch (PrincipalException pe) {
-
-					// LPS-52675
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(pe, pe);
-					}
-				}
+				return;
 			}
-			else {
-				throw e;
+			catch (NoSuchFileEntryException | PrincipalException e2) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(e2, e2);
+				}
 			}
 		}
 

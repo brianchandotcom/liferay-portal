@@ -58,19 +58,11 @@
 		<code class="source-editor__fixed-text__content">{$text}</code>
 
 		{if $helpMessage}
-			<span class="pull-right source-editor__fixed-text__help">
+			<span class="pull-right source-editor__fixed-text__help" data-title="{$helpMessage}">
 				<svg class="icon-monospaced lexicon-icon">
 					<use xlink:href="{$spritemap}#question-circle-full"></use>
 				</svg>
 			</span>
-
-			{call liferay.frontend.Tooltip.render}
-				{param elementClasses: 'source-editor__fixed-text__help__tooltip' /}
-				{param position: 3 /}
-				{param selector: '.source-editor__fixed-text__help' /}
-				{param title: $helpMessage /}
-				{param visible: false /}
-			{/call}
 		{/if}
 	</div>
 {/template}

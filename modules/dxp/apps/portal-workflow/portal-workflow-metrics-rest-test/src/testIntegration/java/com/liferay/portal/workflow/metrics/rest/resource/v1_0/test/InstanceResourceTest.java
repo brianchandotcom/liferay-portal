@@ -79,6 +79,27 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 		_instances = new ArrayList<>();
 	}
 
+	@Test
+	public void testGetProcessInstancesPageCompleted() throws Exception {
+		Long processId = testGetProcessInstancesPage_getProcessId();
+
+		Instance instance = randomInstance();
+
+		instance.setDateCompletion(RandomTestUtil.nextDate());
+
+		testGetProcessInstancesPage_addInstance(processId, instance);
+
+		testGetProcessInstancesPage_addInstance(processId, randomInstance());
+
+		Page<Instance> page = InstanceResource.getProcessInstancesPage(
+			processId, null, new String[] {"Completed"}, null, null,
+			Pagination.of(1, 2));
+
+		assertEquals(
+			Collections.singletonList(instance),
+			(List<Instance>)page.getItems());
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {

@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceWrapper;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,14 +34,17 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.io.File;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -165,6 +169,24 @@ public class CTDDMTemplateLocalServiceWrapper
 
 	}
 
+	private Optional<DDMTemplateVersion> _getRetrievableVersionOptional(
+		DDMTemplate ddmTemplate) {
+
+		List<DDMTemplateVersion> ddmTemplateVersions =
+			_ddmTemplateVersionLocalService.getTemplateVersions(
+				ddmTemplate.getTemplateId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS,
+				OrderByComparatorFactoryUtil.create(
+					"DDMTemplateVersion", "createDate", false));
+
+		Stream<DDMTemplateVersion> ddmTemplateVersionStream =
+			ddmTemplateVersions.stream();
+
+		return ddmTemplateVersionStream.filter(
+			this::_isRetrievableVersion
+		).findFirst();
+	}
+
 	private boolean _isBasicWebContent(DDMTemplate ddmTemplate) {
 		if (Objects.equals(ddmTemplate.getTemplateKey(), "BASIC-WEB-CONTENT")) {
 			return true;
@@ -210,30 +232,41 @@ public class CTDDMTemplateLocalServiceWrapper
 			return true;
 		}
 
+		return _getRetrievableVersionOptional(
+			ddmTemplate
+		).isPresent();
+	}
+
+	private boolean _isRetrievableVersion(
+		DDMTemplateVersion ddmTemplateVersion) {
+
+		if (!_ctManager.isDraftChange(
+				_portal.getClassNameId(DDMTemplateVersion.class.getName()),
+				ddmTemplateVersion.getTemplateVersionId())) {
+
+			return true;
+		}
+
+		if (_ctManager.isProductionCheckedOut(
+				ddmTemplateVersion.getCompanyId(),
+				PrincipalThreadLocal.getUserId())) {
+
+			return false;
+		}
+
 		Optional<CTEntry> ctEntryOptional =
-			_ctManager.getLatestModelChangeCTEntryOptional(
-				ddmTemplate.getCompanyId(), PrincipalThreadLocal.getUserId(),
-				ddmTemplate.getTemplateId());
+			_ctManager.getActiveCTCollectionCTEntryOptional(
+				ddmTemplateVersion.getCompanyId(),
+				PrincipalThreadLocal.getUserId(),
+				_portal.getClassNameId(DDMTemplateVersion.class.getName()),
+				ddmTemplateVersion.getTemplateVersionId());
 
 		return ctEntryOptional.isPresent();
 	}
 
 	private DDMTemplate _populateDDMTemplate(DDMTemplate ddmTemplate) {
-		Optional<CTEntry> ctEntryOptional =
-			_ctManager.getLatestModelChangeCTEntryOptional(
-				ddmTemplate.getCompanyId(), PrincipalThreadLocal.getUserId(),
-				ddmTemplate.getTemplateId());
-
-		if (!ctEntryOptional.isPresent()) {
-			return ddmTemplate;
-		}
-
 		Optional<DDMTemplateVersion> ddmTemplateVersionOptional =
-			ctEntryOptional.map(
-				CTEntry::getModelClassPK
-			).map(
-				_ddmTemplateVersionLocalService::fetchDDMTemplateVersion
-			);
+			_getRetrievableVersionOptional(ddmTemplate);
 
 		if (!ddmTemplateVersionOptional.isPresent()) {
 			return ddmTemplate;

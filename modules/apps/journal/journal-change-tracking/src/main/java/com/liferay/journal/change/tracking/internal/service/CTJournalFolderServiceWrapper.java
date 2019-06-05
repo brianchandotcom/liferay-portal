@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
@@ -169,10 +170,25 @@ public class CTJournalFolderServiceWrapper extends JournalFolderServiceWrapper {
 			return true;
 		}
 
+		if (!_ctManager.isDraftChange(
+				_portal.getClassNameId(JournalArticle.class.getName()),
+				journalArticle.getId())) {
+
+			return true;
+		}
+
+		if (_ctManager.isProductionCheckedOut(
+				journalArticle.getCompanyId(),
+				PrincipalThreadLocal.getUserId())) {
+
+			return false;
+		}
+
 		Optional<CTEntry> ctEntryOptional =
-			_ctManager.getLatestModelChangeCTEntryOptional(
+			_ctManager.getActiveCTCollectionCTEntryOptional(
 				journalArticle.getCompanyId(), PrincipalThreadLocal.getUserId(),
-				journalArticle.getResourcePrimKey());
+				_portal.getClassNameId(JournalArticle.class.getName()),
+				journalArticle.getId());
 
 		return ctEntryOptional.isPresent();
 	}
@@ -182,5 +198,8 @@ public class CTJournalFolderServiceWrapper extends JournalFolderServiceWrapper {
 
 	@Reference
 	private CTManager _ctManager;
+
+	@Reference
+	private Portal _portal;
 
 }

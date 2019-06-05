@@ -28,6 +28,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceWrapper;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
@@ -138,14 +140,7 @@ public class CTDDMStructureLocalServiceWrapper
 		Stream<DDMStructure> stream = structures.stream();
 
 		return stream.filter(
-			structure -> {
-				Optional<CTEntry> ctEntryOptional =
-					_ctManager.getLatestModelChangeCTEntryOptional(
-						companyId, PrincipalThreadLocal.getUserId(),
-						structure.getStructureId());
-
-				return ctEntryOptional.isPresent();
-			}
+			this::_isRetrievable
 		).skip(
 			start
 		).limit(
@@ -175,19 +170,7 @@ public class CTDDMStructureLocalServiceWrapper
 		Stream<DDMStructure> stream = structures.stream();
 
 		return stream.filter(
-			structure -> {
-				if (_isBasicWebContent(structure)) {
-					return true;
-				}
-
-				Optional<CTEntry> ctEntryOptional =
-					_ctManager.getLatestModelChangeCTEntryOptional(
-						structure.getCompanyId(),
-						PrincipalThreadLocal.getUserId(),
-						structure.getStructureId());
-
-				return ctEntryOptional.isPresent();
-			}
+			this::_isRetrievable
 		).map(
 			this::_populateDDMStructure
 		).collect(
@@ -227,6 +210,24 @@ public class CTDDMStructureLocalServiceWrapper
 
 		// Needed for synchronization
 
+	}
+
+	private Optional<DDMStructureVersion> _getRetrievableVersionOptional(
+		DDMStructure ddmStructure) {
+
+		List<DDMStructureVersion> ddmStructureVersions =
+			_ddmStructureVersionLocalService.getStructureVersions(
+				ddmStructure.getStructureId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS,
+				OrderByComparatorFactoryUtil.create(
+					"DDMStructureVersion", "createDate", false));
+
+		Stream<DDMStructureVersion> ddmStructureVersionStream =
+			ddmStructureVersions.stream();
+
+		return ddmStructureVersionStream.filter(
+			this::_isRetrievableVersion
+		).findFirst();
 	}
 
 	private boolean _isBasicWebContent(DDMStructure ddmStructure) {
@@ -279,30 +280,41 @@ public class CTDDMStructureLocalServiceWrapper
 			return true;
 		}
 
+		return _getRetrievableVersionOptional(
+			ddmStructure
+		).isPresent();
+	}
+
+	private boolean _isRetrievableVersion(
+		DDMStructureVersion ddmStructureVersion) {
+
+		if (!_ctManager.isDraftChange(
+				_portal.getClassNameId(DDMStructureVersion.class.getName()),
+				ddmStructureVersion.getStructureVersionId())) {
+
+			return true;
+		}
+
+		if (_ctManager.isProductionCheckedOut(
+				ddmStructureVersion.getCompanyId(),
+				PrincipalThreadLocal.getUserId())) {
+
+			return false;
+		}
+
 		Optional<CTEntry> ctEntryOptional =
-			_ctManager.getLatestModelChangeCTEntryOptional(
-				ddmStructure.getCompanyId(), PrincipalThreadLocal.getUserId(),
-				ddmStructure.getStructureId());
+			_ctManager.getActiveCTCollectionCTEntryOptional(
+				ddmStructureVersion.getCompanyId(),
+				PrincipalThreadLocal.getUserId(),
+				_portal.getClassNameId(DDMStructureVersion.class.getName()),
+				ddmStructureVersion.getStructureVersionId());
 
 		return ctEntryOptional.isPresent();
 	}
 
 	private DDMStructure _populateDDMStructure(DDMStructure ddmStructure) {
-		Optional<CTEntry> ctEntryOptional =
-			_ctManager.getLatestModelChangeCTEntryOptional(
-				ddmStructure.getCompanyId(), PrincipalThreadLocal.getUserId(),
-				ddmStructure.getStructureId());
-
-		if (!ctEntryOptional.isPresent()) {
-			return ddmStructure;
-		}
-
 		Optional<DDMStructureVersion> ddmStructureVersionOptional =
-			ctEntryOptional.map(
-				CTEntry::getModelClassPK
-			).map(
-				_ddmStructureVersionLocalService::fetchDDMStructureVersion
-			);
+			_getRetrievableVersionOptional(ddmStructure);
 
 		if (!ddmStructureVersionOptional.isPresent()) {
 			return ddmStructure;

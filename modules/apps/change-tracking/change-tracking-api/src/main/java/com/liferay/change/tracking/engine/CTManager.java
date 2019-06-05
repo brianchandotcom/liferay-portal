@@ -276,6 +276,17 @@ public interface CTManager {
 	public int getRelatedOwnerCTEntriesCount(long ctEntryId);
 
 	/**
+	 * Returns <code>true</code> if the given version model is a change that has
+	 * not been published to production.
+	 *
+	 * @param  modelClassNameId the primary key of the model's class
+	 * @param  modelClassPK the primary key of the model
+	 * @return <code>true</code> if the given version model is a change that has
+	 *         not been published to production
+	 */
+	public boolean isDraftChange(long modelClassNameId, long modelClassPK);
+
+	/**
 	 * Returns <code>true</code> if a model addition or update is in progress.
 	 * This only returns <code>true</code> if the addition or update is being
 	 * executed with {@link #executeModelUpdate(UnsafeSupplier)} and the
@@ -287,6 +298,17 @@ public interface CTManager {
 	 *         <code>false</code> otherwise
 	 */
 	public boolean isModelUpdateInProgress();
+
+	/**
+	 * Returns <code>true</code> if there is no active change collection
+	 * currently and the changes take place directly on production.
+	 *
+	 * @param  companyId the company ID
+	 * @param  userId the primary key of the user
+	 * @return <code>true</code> if there is no active change collection
+	 *         currently and the changes take place directly on production
+	 */
+	public boolean isProductionCheckedOut(long companyId, long userId);
 
 	/**
 	 * Registers the model change into the change tracking framework for the

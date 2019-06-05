@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -412,8 +413,36 @@ public class CTManagerImpl implements CTManager {
 	}
 
 	@Override
+	public boolean isDraftChange(long modelClassNameId, long modelClassPK) {
+		CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(
+			modelClassNameId, modelClassPK);
+
+		if (ctEntry == null) {
+			return false;
+		}
+
+		if (ctEntry.getStatus() == WorkflowConstants.STATUS_DRAFT) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isModelUpdateInProgress() {
 		return ChangeTrackingThreadLocal.isModelUpdateInProgress();
+	}
+
+	@Override
+	public boolean isProductionCheckedOut(long companyId, long userId) {
+		Optional<CTCollection> activeCTCollectionOptional =
+			getActiveCTCollectionOptional(companyId, userId);
+
+		return activeCTCollectionOptional.map(
+			CTCollection::isProduction
+		).orElse(
+			true
+		);
 	}
 
 	@Override

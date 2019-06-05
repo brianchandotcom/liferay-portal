@@ -51,4 +51,6 @@ for (DDLRecordVersion recordVersion : recordVersions) {
 		</p>
 	</div>
 
-	<%} %>
+<%
+}
+%>

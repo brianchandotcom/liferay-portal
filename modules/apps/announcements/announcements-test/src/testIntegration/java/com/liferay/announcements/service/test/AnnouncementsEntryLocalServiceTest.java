@@ -84,9 +84,9 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@Test
 	public void testDeleteEntriesInDifferentCompany() throws Exception {
-		_announcementsEntries.add(addEntry(0, 0));
-		_announcementsEntries.add(addEntry(0, 0));
-		_announcementsEntries.add(addEntry(0, 0));
+		_announcementsEntries.add(_addEntry(0, 0));
+		_announcementsEntries.add(_addEntry(0, 0));
+		_announcementsEntries.add(_addEntry(0, 0));
 
 		_announcementsEntryLocalService.deleteEntries(
 			_company2.getCompanyId(), 0, 0);
@@ -101,9 +101,9 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@Test
 	public void testDeleteEntriesInSameCompany() throws Exception {
-		_announcementsEntries.add(addEntry(0, 0));
-		_announcementsEntries.add(addEntry(0, 0));
-		_announcementsEntries.add(addEntry(0, 0));
+		_announcementsEntries.add(_addEntry(0, 0));
+		_announcementsEntries.add(_addEntry(0, 0));
+		_announcementsEntries.add(_addEntry(0, 0));
 
 		_announcementsEntryLocalService.deleteEntries(
 			_user.getCompanyId(), 0, 0);
@@ -122,7 +122,7 @@ public class AnnouncementsEntryLocalServiceTest {
 			_user.getCompanyId(), _user.getUserId(),
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-		AnnouncementsEntry entry = addEntry(
+		AnnouncementsEntry entry = _addEntry(
 			group.getClassNameId(), group.getGroupId());
 
 		_announcementsEntries.add(entry);
@@ -145,7 +145,7 @@ public class AnnouncementsEntryLocalServiceTest {
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			RandomTestUtil.randomString(), false);
 
-		AnnouncementsEntry entry = addEntry(
+		AnnouncementsEntry entry = _addEntry(
 			_classNameLocalService.getClassNameId(Organization.class),
 			organization.getOrganizationId());
 
@@ -171,7 +171,7 @@ public class AnnouncementsEntryLocalServiceTest {
 
 		Group group = organization.getGroup();
 
-		AnnouncementsEntry entry = addEntry(
+		AnnouncementsEntry entry = _addEntry(
 			_classNameLocalService.getClassNameId(Group.class),
 			group.getGroupId());
 
@@ -190,9 +190,9 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@Test
 	public void testDeleteRoleAnnouncements() throws Exception {
-		deleteRoleAnnouncements(RoleConstants.TYPE_ORGANIZATION);
-		deleteRoleAnnouncements(RoleConstants.TYPE_REGULAR);
-		deleteRoleAnnouncements(RoleConstants.TYPE_SITE);
+		_deleteRoleAnnouncements(RoleConstants.TYPE_ORGANIZATION);
+		_deleteRoleAnnouncements(RoleConstants.TYPE_REGULAR);
+		_deleteRoleAnnouncements(RoleConstants.TYPE_SITE);
 	}
 
 	@Test
@@ -209,7 +209,7 @@ public class AnnouncementsEntryLocalServiceTest {
 			RandomTestUtil.randomString(50),
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
-		AnnouncementsEntry entry = addEntry(
+		AnnouncementsEntry entry = _addEntry(
 			_classNameLocalService.getClassNameId(UserGroup.class),
 			userGroup.getUserGroupId());
 
@@ -232,11 +232,11 @@ public class AnnouncementsEntryLocalServiceTest {
 			_user.getCompanyId(), _user.getUserId(),
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-		AnnouncementsEntry entry1 = addEntry(
+		AnnouncementsEntry entry1 = _addEntry(
 			group.getClassNameId(), group.getGroupId());
-		AnnouncementsEntry entry2 = addEntry(
+		AnnouncementsEntry entry2 = _addEntry(
 			group.getClassNameId(), group.getGroupId());
-		AnnouncementsEntry entry3 = addEntry(
+		AnnouncementsEntry entry3 = _addEntry(
 			group.getClassNameId(), group.getGroupId());
 
 		_announcementsEntries.add(entry1);
@@ -280,7 +280,7 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@Test
 	public void testGetEntriesCountInDifferentCompany() throws Exception {
-		_announcementsEntries.add(addEntry(0, 0));
+		_announcementsEntries.add(_addEntry(0, 0));
 
 		Assert.assertEquals(
 			0,
@@ -290,7 +290,7 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@Test
 	public void testGetEntriesCountInSameCompany() throws Exception {
-		_announcementsEntries.add(addEntry(0, 0));
+		_announcementsEntries.add(_addEntry(0, 0));
 
 		Assert.assertEquals(
 			1,
@@ -300,7 +300,7 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@Test
 	public void testGetEntriesInDifferentCompany() throws Exception {
-		_announcementsEntries.add(addEntry(0, 0));
+		_announcementsEntries.add(_addEntry(0, 0));
 
 		List<AnnouncementsEntry> entries =
 			_announcementsEntryLocalService.getEntries(
@@ -312,7 +312,7 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	@Test
 	public void testGetEntriesInSameCompany() throws Exception {
-		AnnouncementsEntry entry = addEntry(0, 0);
+		AnnouncementsEntry entry = _addEntry(0, 0);
 
 		_announcementsEntries.add(entry);
 
@@ -326,7 +326,7 @@ public class AnnouncementsEntryLocalServiceTest {
 		Assert.assertEquals(entry, entries.get(0));
 	}
 
-	protected AnnouncementsEntry addEntry(long classNameId, long classPK)
+	private AnnouncementsEntry _addEntry(long classNameId, long classPK)
 		throws Exception {
 
 		return _announcementsEntryLocalService.addEntry(
@@ -341,7 +341,7 @@ public class AnnouncementsEntryLocalServiceTest {
 			1, false);
 	}
 
-	protected void deleteRoleAnnouncements(int roleType) throws Exception {
+	private void _deleteRoleAnnouncements(int roleType) throws Exception {
 		Role role = _roleLocalService.addRole(
 			_user.getUserId(), null, 0,
 			RandomTestUtil.randomString(
@@ -349,7 +349,7 @@ public class AnnouncementsEntryLocalServiceTest {
 				UniqueStringRandomizerBumper.INSTANCE),
 			null, null, roleType, null, null);
 
-		AnnouncementsEntry entry = addEntry(
+		AnnouncementsEntry entry = _addEntry(
 			role.getClassNameId(), role.getRoleId());
 
 		Assert.assertNotNull(

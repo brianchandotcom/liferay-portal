@@ -1284,8 +1284,7 @@ public class PortletTracker
 	}
 
 	protected void readResourceActions(
-		Configuration configuration, String servletContextName,
-		ClassLoader classLoader) {
+		Configuration configuration, ClassLoader classLoader) {
 
 		Properties properties = configuration.getProperties();
 
@@ -1446,9 +1445,7 @@ public class PortletTracker
 					ConfigurationFactoryUtil.getConfiguration(
 						classLoader, "portlet");
 
-				readResourceActions(
-					configuration, _bundlePortletApp.getServletContextName(),
-					classLoader);
+				readResourceActions(configuration, classLoader);
 			}
 		}
 

@@ -186,6 +186,9 @@ public class WorkflowDefinitionManagerImpl
 				kaleoDefinitions.toArray(new KaleoDefinition[size]),
 				orderByComparator);
 		}
+		catch (WorkflowException we) {
+			throw we;
+		}
 		catch (Exception e) {
 			throw new WorkflowException(e);
 		}
@@ -220,6 +223,9 @@ public class WorkflowDefinitionManagerImpl
 
 			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
 				kaleoDefinition);
+		}
+		catch (WorkflowException we) {
+			throw we;
 		}
 		catch (Exception e) {
 			throw new WorkflowException(e);
@@ -267,6 +273,9 @@ public class WorkflowDefinitionManagerImpl
 
 			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
 				kaleoDefinitionVersion);
+		}
+		catch (WorkflowException we) {
+			throw we;
 		}
 		catch (Exception e) {
 			throw new WorkflowException(e);
@@ -324,6 +333,9 @@ public class WorkflowDefinitionManagerImpl
 					new KaleoDefinitionVersion[size]),
 				orderByComparator);
 		}
+		catch (WorkflowException we) {
+			throw we;
+		}
 		catch (Exception e) {
 			throw new WorkflowException(e);
 		}
@@ -346,6 +358,9 @@ public class WorkflowDefinitionManagerImpl
 				kaleoDefinitionVersions.toArray(
 					new KaleoDefinitionVersion[size]),
 				orderByComparator);
+		}
+		catch (WorkflowException we) {
+			throw we;
 		}
 		catch (Exception e) {
 			throw new WorkflowException(e);
@@ -381,6 +396,9 @@ public class WorkflowDefinitionManagerImpl
 			_workflowEngine.deleteWorkflowDefinition(
 				name, version, serviceContext);
 		}
+		catch (WorkflowException we) {
+			throw we;
+		}
 		catch (Exception e) {
 			throw new WorkflowException(e);
 		}
@@ -409,6 +427,9 @@ public class WorkflowDefinitionManagerImpl
 
 			return getWorkflowDefinition(companyId, name, version);
 		}
+		catch (WorkflowException we) {
+			throw we;
+		}
 		catch (Exception e) {
 			throw new WorkflowException(e);
 		}
@@ -434,6 +455,9 @@ public class WorkflowDefinitionManagerImpl
 			return _workflowEngine.deployWorkflowDefinition(
 				title, name, new UnsyncByteArrayInputStream(content.getBytes()),
 				serviceContext);
+		}
+		catch (WorkflowException we) {
+			throw we;
 		}
 		catch (Exception e) {
 			throw new WorkflowException(e);

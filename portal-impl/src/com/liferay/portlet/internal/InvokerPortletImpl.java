@@ -160,9 +160,6 @@ public class InvokerPortletImpl
 
 			_portlet.destroy();
 		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
-		}
 		finally {
 			if (_portletClassLoader != null) {
 				currentThread.setContextClassLoader(contextClassLoader);
@@ -251,12 +248,7 @@ public class InvokerPortletImpl
 			_portlet.init(portletConfig);
 		}
 		catch (Throwable t) {
-			try {
-				cleanup();
-			}
-			catch (IOException ioe) {
-				_log.error("Unable to cleanup on failed init", ioe);
-			}
+			cleanup();
 
 			throw t;
 		}
@@ -537,10 +529,15 @@ public class InvokerPortletImpl
 	public void setPortletFilters() {
 	}
 
-	protected void cleanup() throws IOException {
-		Closeable closeable = (Closeable)_invokerFilterContainer;
+	protected void cleanup() {
+		try {
+			Closeable closeable = (Closeable)_invokerFilterContainer;
 
-		closeable.close();
+			closeable.close();
+		}
+		catch (IOException ioe) {
+			_log.error("Unable to close InvokerFilterContainer", ioe);
+		}
 	}
 
 	protected void invoke(

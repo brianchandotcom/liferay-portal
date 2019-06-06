@@ -380,10 +380,10 @@ public class SegmentsDisplayContext {
 			String sortFieldName = Field.getSortableFieldName(
 				"localized_name_".concat(_themeDisplay.getLanguageId()));
 
-			sort = new Sort(sortFieldName, Sort.STRING_TYPE, orderByAsc);
+			sort = new Sort(sortFieldName, Sort.STRING_TYPE, !orderByAsc);
 		}
 		else {
-			sort = new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
+			sort = new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);
 		}
 
 		return sort;

@@ -907,7 +907,7 @@ public class JournalDisplayContext {
 			Sort sort = null;
 
 			if (Objects.equals(getOrderByCol(), "display-date")) {
-				sort = new Sort("displayDate", Sort.LONG_TYPE, orderByAsc);
+				sort = new Sort("displayDate", Sort.LONG_TYPE, !orderByAsc);
 			}
 			else if (Objects.equals(getOrderByCol(), "id")) {
 				sort = new Sort(
@@ -916,7 +916,7 @@ public class JournalDisplayContext {
 			}
 			else if (Objects.equals(getOrderByCol(), "modified-date")) {
 				sort = new Sort(
-					Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
+					Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);
 			}
 			else if (Objects.equals(getOrderByCol(), "title")) {
 				sort = new Sort("title", Sort.STRING_TYPE, !orderByAsc);

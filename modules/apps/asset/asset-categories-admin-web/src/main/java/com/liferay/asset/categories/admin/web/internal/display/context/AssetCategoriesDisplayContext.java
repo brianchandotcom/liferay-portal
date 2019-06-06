@@ -259,10 +259,10 @@ public class AssetCategoriesDisplayContext {
 			Sort sort = null;
 
 			if (isFlattenedNavigationAllowed()) {
-				sort = new Sort("leftCategoryId", Sort.INT_TYPE, orderByAsc);
+				sort = new Sort("leftCategoryId", Sort.INT_TYPE, !orderByAsc);
 			}
 			else {
-				sort = new Sort("createDate", Sort.LONG_TYPE, orderByAsc);
+				sort = new Sort("createDate", Sort.LONG_TYPE, !orderByAsc);
 			}
 
 			assetCategoryDisplay =
@@ -497,7 +497,7 @@ public class AssetCategoriesDisplayContext {
 		String keywords = _getKeywords();
 
 		if (Validator.isNotNull(keywords)) {
-			Sort sort = new Sort("createDate", Sort.LONG_TYPE, orderByAsc);
+			Sort sort = new Sort("createDate", Sort.LONG_TYPE, !orderByAsc);
 
 			AssetVocabularyDisplay assetVocabularyDisplay =
 				AssetVocabularyServiceUtil.searchVocabulariesDisplay(

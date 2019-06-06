@@ -295,17 +295,17 @@ public class BlogEntriesDisplayContext {
 
 			Sort sort = null;
 
-			boolean orderByAsc = true;
+			boolean orderByAsc = false;
 
 			if (Objects.equals(orderByType, "asc")) {
-				orderByAsc = false;
+				orderByAsc = true;
 			}
 
 			if (Objects.equals(orderByCol, "display-date")) {
-				sort = new Sort(Field.DISPLAY_DATE, Sort.LONG_TYPE, orderByAsc);
+				sort = new Sort(Field.DISPLAY_DATE, Sort.LONG_TYPE, !orderByAsc);
 			}
 			else {
-				sort = new Sort(orderByCol, orderByAsc);
+				sort = new Sort(orderByCol, !orderByAsc);
 			}
 
 			searchContext.setSorts(sort);

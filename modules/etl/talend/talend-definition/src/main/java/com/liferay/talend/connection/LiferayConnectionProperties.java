@@ -345,7 +345,7 @@ public class LiferayConnectionProperties
 		apiSpecURL.setValue(_COMMERCE_CATALOG_OAS_URL);
 		followRedirects.setValue(true);
 		forceHttps.setValue(false);
-		loginType.setValue(LoginType.Basic);
+		loginType.setValue(LoginType.BASIC);
 		password.setValue(_PASSWORD);
 		userId.setValue(_USER_ID);
 		siteName.setValue("");
@@ -410,7 +410,7 @@ public class LiferayConnectionProperties
 
 	public enum LoginType {
 
-		Basic("Basic Authentication");
+		BASIC("Basic Authentication");
 
 		public String getDescription() {
 			return _description;

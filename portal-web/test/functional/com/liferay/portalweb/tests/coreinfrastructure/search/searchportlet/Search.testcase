@@ -160,6 +160,64 @@ definition {
 		}
 	}
 
+	test AssertNonAdminsCannotAddCertainWidgets {
+		JSONRole.addRegularRole(
+			roleKey = "Can Add Widgets",
+			roleTitle = "Can Add Widgets");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "MANAGE_LAYOUTS",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Can Add Widgets");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Can Add Widgets",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutPG();
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Profile");
+
+		if (IsNotVisible(locator1 = "ControlMenuAddPanel#CLOSE_ADD_PANEL")) {
+			Click.clickAt(locator1 = "ControlMenu#ADD");
+		}
+
+		Pause(locator1 = "5000");
+
+		Panel.expandSidebarApplicationsPanel();
+
+		Type.sendKeysApplicationSearch(
+			locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
+			value1 = "Low Level Search Options");
+
+		AssertElementNotPresent(
+			locator1 = "ControlMenuAddPanel#ADD_PORTLET_DRAG_LINK",
+			portletName = "Low Level Search Options");
+
+		Type(
+			locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
+			value1 = "Search Insights");
+
+		AssertElementNotPresent(
+			locator1 = "ControlMenuAddPanel#ADD_PORTLET_DRAG_LINK",
+			portletName = "Search Insights");
+	}
+
 	@priority = "4"
 	test AssertSearchInsightsExplain {
 		JSONWebcontent.addWebContent(

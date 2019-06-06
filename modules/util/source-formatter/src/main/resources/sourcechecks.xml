@@ -222,36 +222,6 @@
 		<check name="UnparameterizedClassCheck" />
 		<check name="ValidatorEqualsCheck" />
 
-		<!-- Module Source Checks -->
-
-		<check name="JavaModuleComponentCheck" />
-		<check name="JavaModuleExtendedObjectClassDefinitionCheck" />
-		<check name="JavaModuleIllegalImportsCheck">
-			<property name="checkRegistryInTestClasses" value="false" />
-		</check>
-		<check name="JavaModuleInternalImportsCheck" />
-		<check name="JavaModuleJavaxPortletInitParamTemplatePathCheck" />
-		<check name="JavaModuleServiceProxyFactoryCheck" />
-		<check name="JavaModuleServiceReferenceCheck" />
-		<check name="JavaModuleTestCheck" />
-		<check name="JavaOSGiReferenceCheck">
-			<property name="serviceReferenceUtilClassNames" value="com.liferay.exportimport.kernel.lar.ExportImportHelperUtil" />
-			<property name="serviceReferenceUtilClassNames" value="com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil" />
-			<property name="serviceReferenceUtilClassNames" value="com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil" />
-			<property name="serviceReferenceUtilClassNames" value="com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSenderUtill" />
-			<property name="serviceReferenceUtilClassNames" value="com.liferay.exportimport.kernel.staging.StagingUtil" />
-			<property name="serviceReferenceUtilClassNames" value="com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil" />
-			<property name="serviceReferenceUtilClassNames" value="com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplayFactoryUtil" />
-			<property name="serviceReferenceUtilClassNames" value="com.liferay.portal.kernel.captcha.CaptchaUtil" />
-			<property name="serviceReferenceUtilClassNames" value="com.liferay.portal.kernel.comment.CommentManagerUtil" />
-			<property name="serviceReferenceUtilClassNames" value="com.liferay.portal.kernel.util.HttpUtil" />
-			<property name="serviceReferenceUtilClassNames" value="com.liferay.portal.kernel.util.PortalUtil" />
-		</check>
-
-		<!-- Plugin Source Checks -->
-
-		<check name="CompatClassImportsCheck" />
-
 		<!-- Liferay Source Checks -->
 
 		<check name="JavaAnonymousInnerClassCheck">
@@ -313,6 +283,36 @@
 		<check name="ResourceBundleCheck" />
 		<check name="StringMethodsCheck" />
 		<check name="SubstringCheck" />
+
+		<!-- Module Source Checks -->
+
+		<check name="JavaModuleComponentCheck" />
+		<check name="JavaModuleExtendedObjectClassDefinitionCheck" />
+		<check name="JavaModuleIllegalImportsCheck">
+			<property name="checkRegistryInTestClasses" value="false" />
+		</check>
+		<check name="JavaModuleInternalImportsCheck" />
+		<check name="JavaModuleJavaxPortletInitParamTemplatePathCheck" />
+		<check name="JavaModuleServiceProxyFactoryCheck" />
+		<check name="JavaModuleServiceReferenceCheck" />
+		<check name="JavaModuleTestCheck" />
+		<check name="JavaOSGiReferenceCheck">
+			<property name="serviceReferenceUtilClassNames" value="com.liferay.exportimport.kernel.lar.ExportImportHelperUtil" />
+			<property name="serviceReferenceUtilClassNames" value="com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil" />
+			<property name="serviceReferenceUtilClassNames" value="com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil" />
+			<property name="serviceReferenceUtilClassNames" value="com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSenderUtill" />
+			<property name="serviceReferenceUtilClassNames" value="com.liferay.exportimport.kernel.staging.StagingUtil" />
+			<property name="serviceReferenceUtilClassNames" value="com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil" />
+			<property name="serviceReferenceUtilClassNames" value="com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplayFactoryUtil" />
+			<property name="serviceReferenceUtilClassNames" value="com.liferay.portal.kernel.captcha.CaptchaUtil" />
+			<property name="serviceReferenceUtilClassNames" value="com.liferay.portal.kernel.comment.CommentManagerUtil" />
+			<property name="serviceReferenceUtilClassNames" value="com.liferay.portal.kernel.util.HttpUtil" />
+			<property name="serviceReferenceUtilClassNames" value="com.liferay.portal.kernel.util.PortalUtil" />
+		</check>
+
+		<!-- Plugin Source Checks -->
+
+		<check name="CompatClassImportsCheck" />
 	</source-processor>
 	<source-processor name="JSONSourceProcessor">
 		<check name="JSONDeprecatedPackagesCheck">
@@ -366,17 +366,6 @@
 		<check name="UnparameterizedClassCheck" />
 		<check name="ValidatorEqualsCheck" />
 
-		<!-- Module Source Checks -->
-
-		<check name="JSPModuleIllegalImportsCheck" />
-		<check name="JSPServiceUtilCheck">
-			<property name="enabled" value="false" />
-		</check>
-
-		<!-- Plugin Source Checks -->
-
-		<check name="CompatClassImportsCheck" />
-
 		<!-- Liferay Source Checks -->
 
 		<check name="JSPLanguageKeysCheck" />
@@ -388,6 +377,17 @@
 		<check name="LocaleUtilCheck" />
 		<check name="ResourceBundleCheck" />
 		<check name="SubstringCheck" />
+
+		<!-- Module Source Checks -->
+
+		<check name="JSPModuleIllegalImportsCheck" />
+		<check name="JSPServiceUtilCheck">
+			<property name="enabled" value="false" />
+		</check>
+
+		<!-- Plugin Source Checks -->
+
+		<check name="CompatClassImportsCheck" />
 	</source-processor>
 	<source-processor name="JSSourceProcessor">
 		<check name="JSLodashDependencyCheck">

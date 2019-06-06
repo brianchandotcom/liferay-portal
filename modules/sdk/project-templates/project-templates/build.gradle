@@ -58,22 +58,6 @@ configurations {
 	}
 }
 
-repositories {
-	File dir = rootProject.projectDir
-
-	while (dir != null) {
-		File tmpMavenRepositoryDir = new File(dir, ".m2-tmp")
-
-		if (tmpMavenRepositoryDir.exists()) {
-			maven {
-				url tmpMavenRepositoryDir
-			}
-		}
-
-		dir = dir.getParentFile();
-	}
-}
-
 dependencies {
 	compileInclude group: "com.beust", name: "jcommander", version: "1.72"
 
@@ -153,6 +137,22 @@ projectTemplateJarVersions {
 
 	doLast {
 		properties.store(projectTemplateVersionsFile.newWriter(), null)
+	}
+}
+
+repositories {
+	File dir = rootProject.projectDir
+
+	while (dir != null) {
+		File tmpMavenRepositoryDir = new File(dir, ".m2-tmp")
+
+		if (tmpMavenRepositoryDir.exists()) {
+			maven {
+				url tmpMavenRepositoryDir
+			}
+		}
+
+		dir = dir.getParentFile();
 	}
 }
 

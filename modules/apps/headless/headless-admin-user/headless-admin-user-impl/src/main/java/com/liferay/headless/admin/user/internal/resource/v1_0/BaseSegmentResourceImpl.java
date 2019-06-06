@@ -95,6 +95,10 @@ public abstract class BaseSegmentResourceImpl implements SegmentResource {
 		return Page.of(Collections.emptyList());
 	}
 
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
+		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}

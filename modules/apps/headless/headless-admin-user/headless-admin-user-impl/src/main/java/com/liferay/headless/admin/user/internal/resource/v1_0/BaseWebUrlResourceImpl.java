@@ -101,6 +101,10 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 		return new WebUrl();
 	}
 
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
+		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}

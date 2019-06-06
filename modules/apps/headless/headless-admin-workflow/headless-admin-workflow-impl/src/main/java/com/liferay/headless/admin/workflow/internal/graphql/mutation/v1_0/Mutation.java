@@ -23,10 +23,15 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
 import graphql.annotations.annotationTypes.GraphQLName;
+
+import graphql.schema.DataFetchingEnvironment;
+
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -50,6 +55,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskAssignToMe(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
 			@GraphQLName("workflowTaskAssignToMe") WorkflowTaskAssignToMe
 				workflowTaskAssignToMe)
@@ -57,7 +63,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_workflowTaskResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			workflowTaskResource -> _populateResourceContext(
+				dataFetchingEnvironment, workflowTaskResource),
 			workflowTaskResource ->
 				workflowTaskResource.postWorkflowTaskAssignToMe(
 					workflowTaskId, workflowTaskAssignToMe));
@@ -66,6 +73,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskAssignToUser(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
 			@GraphQLName("workflowTaskAssignToUser") WorkflowTaskAssignToUser
 				workflowTaskAssignToUser)
@@ -73,7 +81,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_workflowTaskResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			workflowTaskResource -> _populateResourceContext(
+				dataFetchingEnvironment, workflowTaskResource),
 			workflowTaskResource ->
 				workflowTaskResource.postWorkflowTaskAssignToUser(
 					workflowTaskId, workflowTaskAssignToUser));
@@ -82,13 +91,15 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskChangeTransition(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
 			@GraphQLName("changeTransition") ChangeTransition changeTransition)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_workflowTaskResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			workflowTaskResource -> _populateResourceContext(
+				dataFetchingEnvironment, workflowTaskResource),
 			workflowTaskResource ->
 				workflowTaskResource.postWorkflowTaskChangeTransition(
 					workflowTaskId, changeTransition));
@@ -97,6 +108,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public WorkflowTask postWorkflowTaskUpdateDueDate(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
 			@GraphQLName("workflowTaskAssignToMe") WorkflowTaskAssignToMe
 				workflowTaskAssignToMe)
@@ -104,7 +116,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_workflowTaskResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			workflowTaskResource -> _populateResourceContext(
+				dataFetchingEnvironment, workflowTaskResource),
 			workflowTaskResource ->
 				workflowTaskResource.postWorkflowTaskUpdateDueDate(
 					workflowTaskId, workflowTaskAssignToMe));
@@ -149,14 +162,26 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			WorkflowTaskResource workflowTaskResource)
 		throws Exception {
+
+		workflowTaskResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		workflowTaskResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	public static void setAcceptLanguageFunction(
+		Function<Object, AcceptLanguage> acceptLanguageFunction) {
+
+		_acceptLanguageFunction = acceptLanguageFunction;
+	}
+
+	private static Function<Object, AcceptLanguage> _acceptLanguageFunction;
 	private static ComponentServiceObjects<WorkflowTaskResource>
 		_workflowTaskResourceComponentServiceObjects;
 

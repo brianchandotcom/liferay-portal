@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -45,7 +46,10 @@ import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import graphql.schema.DataFetchingEnvironment;
+
 import java.util.Collection;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -133,12 +137,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public EmailAddress getEmailAddress(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("emailAddressId") Long emailAddressId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_emailAddressResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			emailAddressResource -> _populateResourceContext(
+				dataFetchingEnvironment, emailAddressResource),
 			emailAddressResource -> emailAddressResource.getEmailAddress(
 				emailAddressId));
 	}
@@ -146,12 +152,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<EmailAddress> getOrganizationEmailAddressesPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_emailAddressResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			emailAddressResource -> _populateResourceContext(
+				dataFetchingEnvironment, emailAddressResource),
 			emailAddressResource -> {
 				Page paginationPage =
 					emailAddressResource.getOrganizationEmailAddressesPage(
@@ -164,12 +172,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<EmailAddress> getUserAccountEmailAddressesPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_emailAddressResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			emailAddressResource -> _populateResourceContext(
+				dataFetchingEnvironment, emailAddressResource),
 			emailAddressResource -> {
 				Page paginationPage =
 					emailAddressResource.getUserAccountEmailAddressesPage(
@@ -182,6 +192,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Organization> getOrganizationsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
@@ -190,7 +201,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_organizationResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			organizationResource -> _populateResourceContext(
+				dataFetchingEnvironment, organizationResource),
 			organizationResource -> {
 				Page paginationPage = organizationResource.getOrganizationsPage(
 					search, filter, Pagination.of(pageSize, page), sorts);
@@ -202,12 +214,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Organization getOrganization(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_organizationResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			organizationResource -> _populateResourceContext(
+				dataFetchingEnvironment, organizationResource),
 			organizationResource -> organizationResource.getOrganization(
 				organizationId));
 	}
@@ -215,6 +229,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Organization> getOrganizationOrganizationsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("parentOrganizationId") Long parentOrganizationId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -224,7 +239,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_organizationResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			organizationResource -> _populateResourceContext(
+				dataFetchingEnvironment, organizationResource),
 			organizationResource -> {
 				Page paginationPage =
 					organizationResource.getOrganizationOrganizationsPage(
@@ -238,12 +254,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Phone> getOrganizationPhonesPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_phoneResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			phoneResource -> _populateResourceContext(
+				dataFetchingEnvironment, phoneResource),
 			phoneResource -> {
 				Page paginationPage = phoneResource.getOrganizationPhonesPage(
 					organizationId);
@@ -254,24 +272,29 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Phone getPhone(@GraphQLName("phoneId") Long phoneId)
+	public Phone getPhone(
+			DataFetchingEnvironment dataFetchingEnvironment,
+			@GraphQLName("phoneId") Long phoneId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_phoneResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			phoneResource -> _populateResourceContext(
+				dataFetchingEnvironment, phoneResource),
 			phoneResource -> phoneResource.getPhone(phoneId));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Phone> getUserAccountPhonesPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_phoneResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			phoneResource -> _populateResourceContext(
+				dataFetchingEnvironment, phoneResource),
 			phoneResource -> {
 				Page paginationPage = phoneResource.getUserAccountPhonesPage(
 					userAccountId);
@@ -283,12 +306,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<PostalAddress> getOrganizationPostalAddressesPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_postalAddressResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			postalAddressResource -> _populateResourceContext(
+				dataFetchingEnvironment, postalAddressResource),
 			postalAddressResource -> {
 				Page paginationPage =
 					postalAddressResource.getOrganizationPostalAddressesPage(
@@ -301,12 +326,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public PostalAddress getPostalAddress(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("postalAddressId") Long postalAddressId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_postalAddressResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			postalAddressResource -> _populateResourceContext(
+				dataFetchingEnvironment, postalAddressResource),
 			postalAddressResource -> postalAddressResource.getPostalAddress(
 				postalAddressId));
 	}
@@ -314,12 +341,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<PostalAddress> getUserAccountPostalAddressesPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_postalAddressResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			postalAddressResource -> _populateResourceContext(
+				dataFetchingEnvironment, postalAddressResource),
 			postalAddressResource -> {
 				Page paginationPage =
 					postalAddressResource.getUserAccountPostalAddressesPage(
@@ -332,13 +361,15 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Role> getRolesPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_roleResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			roleResource -> _populateResourceContext(
+				dataFetchingEnvironment, roleResource),
 			roleResource -> {
 				Page paginationPage = roleResource.getRolesPage(
 					Pagination.of(pageSize, page));
@@ -349,16 +380,22 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Role getRole(@GraphQLName("roleId") Long roleId) throws Exception {
+	public Role getRole(
+			DataFetchingEnvironment dataFetchingEnvironment,
+			@GraphQLName("roleId") Long roleId)
+		throws Exception {
+
 		return _applyComponentServiceObjects(
 			_roleResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			roleResource -> _populateResourceContext(
+				dataFetchingEnvironment, roleResource),
 			roleResource -> roleResource.getRole(roleId));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Segment> getSiteSegmentsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -366,7 +403,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_segmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			segmentResource -> _populateResourceContext(
+				dataFetchingEnvironment, segmentResource),
 			segmentResource -> {
 				Page paginationPage = segmentResource.getSiteSegmentsPage(
 					siteId, Pagination.of(pageSize, page));
@@ -378,13 +416,15 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Segment> getSiteUserAccountSegmentsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_segmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			segmentResource -> _populateResourceContext(
+				dataFetchingEnvironment, segmentResource),
 			segmentResource -> {
 				Page paginationPage =
 					segmentResource.getSiteUserAccountSegmentsPage(
@@ -397,6 +437,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<SegmentUser> getSegmentUserAccountsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("segmentId") Long segmentId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -404,7 +445,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_segmentUserResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			segmentUserResource -> _populateResourceContext(
+				dataFetchingEnvironment, segmentUserResource),
 			segmentUserResource -> {
 				Page paginationPage =
 					segmentUserResource.getSegmentUserAccountsPage(
@@ -416,16 +458,21 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public UserAccount getMyUserAccount() throws Exception {
+	public UserAccount getMyUserAccount(
+			DataFetchingEnvironment dataFetchingEnvironment)
+		throws Exception {
+
 		return _applyComponentServiceObjects(
 			_userAccountResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			userAccountResource -> _populateResourceContext(
+				dataFetchingEnvironment, userAccountResource),
 			userAccountResource -> userAccountResource.getMyUserAccount());
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<UserAccount> getOrganizationUserAccountsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("organizationId") Long organizationId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -435,7 +482,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_userAccountResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			userAccountResource -> _populateResourceContext(
+				dataFetchingEnvironment, userAccountResource),
 			userAccountResource -> {
 				Page paginationPage =
 					userAccountResource.getOrganizationUserAccountsPage(
@@ -449,6 +497,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<UserAccount> getUserAccountsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
@@ -457,7 +506,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_userAccountResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			userAccountResource -> _populateResourceContext(
+				dataFetchingEnvironment, userAccountResource),
 			userAccountResource -> {
 				Page paginationPage = userAccountResource.getUserAccountsPage(
 					search, filter, Pagination.of(pageSize, page), sorts);
@@ -469,12 +519,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public UserAccount getUserAccount(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_userAccountResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			userAccountResource -> _populateResourceContext(
+				dataFetchingEnvironment, userAccountResource),
 			userAccountResource -> userAccountResource.getUserAccount(
 				userAccountId));
 	}
@@ -482,6 +534,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<UserAccount> getWebSiteUserAccountsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("webSiteId") Long webSiteId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -491,7 +544,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_userAccountResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			userAccountResource -> _populateResourceContext(
+				dataFetchingEnvironment, userAccountResource),
 			userAccountResource -> {
 				Page paginationPage =
 					userAccountResource.getWebSiteUserAccountsPage(
@@ -505,12 +559,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<WebUrl> getOrganizationWebUrlsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_webUrlResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			webUrlResource -> _populateResourceContext(
+				dataFetchingEnvironment, webUrlResource),
 			webUrlResource -> {
 				Page paginationPage = webUrlResource.getOrganizationWebUrlsPage(
 					organizationId);
@@ -522,12 +578,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<WebUrl> getUserAccountWebUrlsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_webUrlResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			webUrlResource -> _populateResourceContext(
+				dataFetchingEnvironment, webUrlResource),
 			webUrlResource -> {
 				Page paginationPage = webUrlResource.getUserAccountWebUrlsPage(
 					userAccountId);
@@ -538,12 +596,15 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public WebUrl getWebUrl(@GraphQLName("webUrlId") Long webUrlId)
+	public WebUrl getWebUrl(
+			DataFetchingEnvironment dataFetchingEnvironment,
+			@GraphQLName("webUrlId") Long webUrlId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_webUrlResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			webUrlResource -> _populateResourceContext(
+				dataFetchingEnvironment, webUrlResource),
 			webUrlResource -> webUrlResource.getWebUrl(webUrlId));
 	}
 
@@ -567,8 +628,13 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			EmailAddressResource emailAddressResource)
 		throws Exception {
+
+		emailAddressResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		emailAddressResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -576,16 +642,27 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			OrganizationResource organizationResource)
 		throws Exception {
+
+		organizationResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		organizationResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
 
-	private void _populateResourceContext(PhoneResource phoneResource)
+	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
+			PhoneResource phoneResource)
 		throws Exception {
+
+		phoneResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		phoneResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -593,24 +670,41 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			PostalAddressResource postalAddressResource)
 		throws Exception {
+
+		postalAddressResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		postalAddressResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
 
-	private void _populateResourceContext(RoleResource roleResource)
+	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
+			RoleResource roleResource)
 		throws Exception {
+
+		roleResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		roleResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
 
-	private void _populateResourceContext(SegmentResource segmentResource)
+	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
+			SegmentResource segmentResource)
 		throws Exception {
+
+		segmentResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		segmentResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -618,8 +712,13 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			SegmentUserResource segmentUserResource)
 		throws Exception {
+
+		segmentUserResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		segmentUserResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -627,22 +726,40 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			UserAccountResource userAccountResource)
 		throws Exception {
+
+		userAccountResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		userAccountResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
 
-	private void _populateResourceContext(WebUrlResource webUrlResource)
+	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
+			WebUrlResource webUrlResource)
 		throws Exception {
+
+		webUrlResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		webUrlResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	public static void setAcceptLanguageFunction(
+		Function<Object, AcceptLanguage> acceptLanguageFunction) {
+
+		_acceptLanguageFunction = acceptLanguageFunction;
+	}
+
+	private static Function<Object, AcceptLanguage> _acceptLanguageFunction;
 	private static ComponentServiceObjects<EmailAddressResource>
 		_emailAddressResourceComponentServiceObjects;
 	private static ComponentServiceObjects<OrganizationResource>

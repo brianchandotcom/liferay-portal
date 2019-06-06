@@ -22,6 +22,7 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -29,7 +30,10 @@ import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import graphql.schema.DataFetchingEnvironment;
+
 import java.util.Collection;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -61,12 +65,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public WorkflowLog getWorkflowLog(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("workflowLogId") Long workflowLogId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_workflowLogResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			workflowLogResource -> _populateResourceContext(
+				dataFetchingEnvironment, workflowLogResource),
 			workflowLogResource -> workflowLogResource.getWorkflowLog(
 				workflowLogId));
 	}
@@ -74,6 +80,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<WorkflowLog> getWorkflowTaskWorkflowLogsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -81,7 +88,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_workflowLogResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			workflowLogResource -> _populateResourceContext(
+				dataFetchingEnvironment, workflowLogResource),
 			workflowLogResource -> {
 				Page paginationPage =
 					workflowLogResource.getWorkflowTaskWorkflowLogsPage(
@@ -94,6 +102,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<WorkflowTask> getRoleWorkflowTasksPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("roleId") Long roleId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -101,7 +110,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_workflowTaskResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			workflowTaskResource -> _populateResourceContext(
+				dataFetchingEnvironment, workflowTaskResource),
 			workflowTaskResource -> {
 				Page paginationPage =
 					workflowTaskResource.getRoleWorkflowTasksPage(
@@ -114,13 +124,15 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<WorkflowTask> getWorkflowTasksAssignedToMePage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_workflowTaskResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			workflowTaskResource -> _populateResourceContext(
+				dataFetchingEnvironment, workflowTaskResource),
 			workflowTaskResource -> {
 				Page paginationPage =
 					workflowTaskResource.getWorkflowTasksAssignedToMePage(
@@ -133,13 +145,15 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<WorkflowTask> getWorkflowTasksAssignedToMyRolesPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_workflowTaskResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			workflowTaskResource -> _populateResourceContext(
+				dataFetchingEnvironment, workflowTaskResource),
 			workflowTaskResource -> {
 				Page paginationPage =
 					workflowTaskResource.getWorkflowTasksAssignedToMyRolesPage(
@@ -152,12 +166,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public WorkflowTask getWorkflowTask(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("workflowTaskId") Long workflowTaskId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_workflowTaskResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			workflowTaskResource -> _populateResourceContext(
+				dataFetchingEnvironment, workflowTaskResource),
 			workflowTaskResource -> workflowTaskResource.getWorkflowTask(
 				workflowTaskId));
 	}
@@ -182,8 +198,13 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			WorkflowLogResource workflowLogResource)
 		throws Exception {
+
+		workflowLogResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		workflowLogResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -191,14 +212,26 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			WorkflowTaskResource workflowTaskResource)
 		throws Exception {
+
+		workflowTaskResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		workflowTaskResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	public static void setAcceptLanguageFunction(
+		Function<Object, AcceptLanguage> acceptLanguageFunction) {
+
+		_acceptLanguageFunction = acceptLanguageFunction;
+	}
+
+	private static Function<Object, AcceptLanguage> _acceptLanguageFunction;
 	private static ComponentServiceObjects<WorkflowLogResource>
 		_workflowLogResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WorkflowTaskResource>

@@ -20,7 +20,10 @@ import com.liferay.headless.form.resource.v1_0.FormDocumentResource;
 import com.liferay.headless.form.resource.v1_0.FormRecordResource;
 import com.liferay.headless.form.resource.v1_0.FormResource;
 import com.liferay.headless.form.resource.v1_0.FormStructureResource;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
+
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -71,6 +74,14 @@ public class ServletDataImpl implements ServletData {
 	@Override
 	public Query getQuery() {
 		return new Query();
+	}
+
+	@Override
+	public void setAcceptLanguageFunction(
+		Function<Object, AcceptLanguage> acceptLanguageFunction) {
+
+		Query.setAcceptLanguageFunction(acceptLanguageFunction);
+		Mutation.setAcceptLanguageFunction(acceptLanguageFunction);
 	}
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)

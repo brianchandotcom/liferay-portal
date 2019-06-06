@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -60,7 +61,10 @@ import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import graphql.schema.DataFetchingEnvironment;
+
 import java.util.Collection;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -206,12 +210,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public BlogPosting getBlogPosting(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("blogPostingId") Long blogPostingId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_blogPostingResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			blogPostingResource -> _populateResourceContext(
+				dataFetchingEnvironment, blogPostingResource),
 			blogPostingResource -> blogPostingResource.getBlogPosting(
 				blogPostingId));
 	}
@@ -219,12 +225,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Rating getBlogPostingMyRating(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("blogPostingId") Long blogPostingId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_blogPostingResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			blogPostingResource -> _populateResourceContext(
+				dataFetchingEnvironment, blogPostingResource),
 			blogPostingResource -> blogPostingResource.getBlogPostingMyRating(
 				blogPostingId));
 	}
@@ -232,6 +240,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<BlogPosting> getSiteBlogPostingsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -241,7 +250,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_blogPostingResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			blogPostingResource -> _populateResourceContext(
+				dataFetchingEnvironment, blogPostingResource),
 			blogPostingResource -> {
 				Page paginationPage =
 					blogPostingResource.getSiteBlogPostingsPage(
@@ -255,12 +265,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public BlogPostingImage getBlogPostingImage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("blogPostingImageId") Long blogPostingImageId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_blogPostingImageResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			blogPostingImageResource -> _populateResourceContext(
+				dataFetchingEnvironment, blogPostingImageResource),
 			blogPostingImageResource ->
 				blogPostingImageResource.getBlogPostingImage(
 					blogPostingImageId));
@@ -269,6 +281,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<BlogPostingImage> getSiteBlogPostingImagesPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -278,7 +291,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_blogPostingImageResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			blogPostingImageResource -> _populateResourceContext(
+				dataFetchingEnvironment, blogPostingImageResource),
 			blogPostingImageResource -> {
 				Page paginationPage =
 					blogPostingImageResource.getSiteBlogPostingImagesPage(
@@ -292,6 +306,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Comment> getBlogPostingCommentsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -301,7 +316,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_commentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			commentResource -> _populateResourceContext(
+				dataFetchingEnvironment, commentResource),
 			commentResource -> {
 				Page paginationPage =
 					commentResource.getBlogPostingCommentsPage(
@@ -314,18 +330,22 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Comment getComment(@GraphQLName("commentId") Long commentId)
+	public Comment getComment(
+			DataFetchingEnvironment dataFetchingEnvironment,
+			@GraphQLName("commentId") Long commentId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_commentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			commentResource -> _populateResourceContext(
+				dataFetchingEnvironment, commentResource),
 			commentResource -> commentResource.getComment(commentId));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Comment> getCommentCommentsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("parentCommentId") Long parentCommentId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -335,7 +355,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_commentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			commentResource -> _populateResourceContext(
+				dataFetchingEnvironment, commentResource),
 			commentResource -> {
 				Page paginationPage = commentResource.getCommentCommentsPage(
 					parentCommentId, search, filter,
@@ -348,6 +369,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Comment> getDocumentCommentsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("documentId") Long documentId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -357,7 +379,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_commentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			commentResource -> _populateResourceContext(
+				dataFetchingEnvironment, commentResource),
 			commentResource -> {
 				Page paginationPage = commentResource.getDocumentCommentsPage(
 					documentId, search, filter, Pagination.of(pageSize, page),
@@ -370,6 +393,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Comment> getStructuredContentCommentsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -379,7 +403,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_commentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			commentResource -> _populateResourceContext(
+				dataFetchingEnvironment, commentResource),
 			commentResource -> {
 				Page paginationPage =
 					commentResource.getStructuredContentCommentsPage(
@@ -393,6 +418,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<ContentSetElement> getContentSetContentSetElementsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("contentSetId") Long contentSetId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -400,7 +426,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_contentSetElementResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			contentSetElementResource -> _populateResourceContext(
+				dataFetchingEnvironment, contentSetElementResource),
 			contentSetElementResource -> {
 				Page paginationPage =
 					contentSetElementResource.
@@ -415,6 +442,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<ContentSetElement>
 			getSiteContentSetByKeyContentSetElementsPage(
+				DataFetchingEnvironment dataFetchingEnvironment,
 				@GraphQLName("siteId") Long siteId,
 				@GraphQLName("key") String key,
 				@GraphQLName("pageSize") int pageSize,
@@ -423,7 +451,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_contentSetElementResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			contentSetElementResource -> _populateResourceContext(
+				dataFetchingEnvironment, contentSetElementResource),
 			contentSetElementResource -> {
 				Page paginationPage =
 					contentSetElementResource.
@@ -438,6 +467,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<ContentSetElement>
 			getSiteContentSetByUuidContentSetElementsPage(
+				DataFetchingEnvironment dataFetchingEnvironment,
 				@GraphQLName("siteId") Long siteId,
 				@GraphQLName("uuid") String uuid,
 				@GraphQLName("pageSize") int pageSize,
@@ -446,7 +476,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_contentSetElementResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			contentSetElementResource -> _populateResourceContext(
+				dataFetchingEnvironment, contentSetElementResource),
 			contentSetElementResource -> {
 				Page paginationPage =
 					contentSetElementResource.
@@ -460,12 +491,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public ContentStructure getContentStructure(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("contentStructureId") Long contentStructureId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_contentStructureResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			contentStructureResource -> _populateResourceContext(
+				dataFetchingEnvironment, contentStructureResource),
 			contentStructureResource ->
 				contentStructureResource.getContentStructure(
 					contentStructureId));
@@ -474,6 +507,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<ContentStructure> getSiteContentStructuresPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -483,7 +517,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_contentStructureResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			contentStructureResource -> _populateResourceContext(
+				dataFetchingEnvironment, contentStructureResource),
 			contentStructureResource -> {
 				Page paginationPage =
 					contentStructureResource.getSiteContentStructuresPage(
@@ -497,6 +532,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Document> getDocumentFolderDocumentsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("documentFolderId") Long documentFolderId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -506,7 +542,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			documentResource -> _populateResourceContext(
+				dataFetchingEnvironment, documentResource),
 			documentResource -> {
 				Page paginationPage =
 					documentResource.getDocumentFolderDocumentsPage(
@@ -519,24 +556,29 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Document getDocument(@GraphQLName("documentId") Long documentId)
+	public Document getDocument(
+			DataFetchingEnvironment dataFetchingEnvironment,
+			@GraphQLName("documentId") Long documentId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			documentResource -> _populateResourceContext(
+				dataFetchingEnvironment, documentResource),
 			documentResource -> documentResource.getDocument(documentId));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Rating getDocumentMyRating(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("documentId") Long documentId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			documentResource -> _populateResourceContext(
+				dataFetchingEnvironment, documentResource),
 			documentResource -> documentResource.getDocumentMyRating(
 				documentId));
 	}
@@ -544,6 +586,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Document> getSiteDocumentsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
@@ -554,7 +597,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			documentResource -> _populateResourceContext(
+				dataFetchingEnvironment, documentResource),
 			documentResource -> {
 				Page paginationPage = documentResource.getSiteDocumentsPage(
 					siteId, flatten, search, filter,
@@ -567,12 +611,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public DocumentFolder getDocumentFolder(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("documentFolderId") Long documentFolderId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_documentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			documentFolderResource -> _populateResourceContext(
+				dataFetchingEnvironment, documentFolderResource),
 			documentFolderResource -> documentFolderResource.getDocumentFolder(
 				documentFolderId));
 	}
@@ -580,6 +626,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<DocumentFolder> getDocumentFolderDocumentFoldersPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("parentDocumentFolderId") Long parentDocumentFolderId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -589,7 +636,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_documentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			documentFolderResource -> _populateResourceContext(
+				dataFetchingEnvironment, documentFolderResource),
 			documentFolderResource -> {
 				Page paginationPage =
 					documentFolderResource.getDocumentFolderDocumentFoldersPage(
@@ -603,6 +651,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<DocumentFolder> getSiteDocumentFoldersPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
@@ -613,7 +662,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_documentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			documentFolderResource -> _populateResourceContext(
+				dataFetchingEnvironment, documentFolderResource),
 			documentFolderResource -> {
 				Page paginationPage =
 					documentFolderResource.getSiteDocumentFoldersPage(
@@ -627,12 +677,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public KnowledgeBaseArticle getKnowledgeBaseArticle(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseArticleResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseArticleResource),
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.getKnowledgeBaseArticle(
 					knowledgeBaseArticleId));
@@ -641,12 +693,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Rating getKnowledgeBaseArticleMyRating(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseArticleResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseArticleResource),
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.getKnowledgeBaseArticleMyRating(
 					knowledgeBaseArticleId));
@@ -656,6 +710,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<KnowledgeBaseArticle>
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
+				DataFetchingEnvironment dataFetchingEnvironment,
 				@GraphQLName("parentKnowledgeBaseArticleId") Long
 					parentKnowledgeBaseArticleId,
 				@GraphQLName("search") String search,
@@ -667,7 +722,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseArticleResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseArticleResource),
 			knowledgeBaseArticleResource -> {
 				Page paginationPage =
 					knowledgeBaseArticleResource.
@@ -683,6 +739,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<KnowledgeBaseArticle>
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
+				DataFetchingEnvironment dataFetchingEnvironment,
 				@GraphQLName("knowledgeBaseFolderId") Long
 					knowledgeBaseFolderId,
 				@GraphQLName("flatten") Boolean flatten,
@@ -695,7 +752,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseArticleResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseArticleResource),
 			knowledgeBaseArticleResource -> {
 				Page paginationPage =
 					knowledgeBaseArticleResource.
@@ -710,6 +768,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<KnowledgeBaseArticle> getSiteKnowledgeBaseArticlesPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
@@ -720,7 +779,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseArticleResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseArticleResource),
 			knowledgeBaseArticleResource -> {
 				Page paginationPage =
 					knowledgeBaseArticleResource.
@@ -736,13 +796,15 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<KnowledgeBaseAttachment>
 			getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
+				DataFetchingEnvironment dataFetchingEnvironment,
 				@GraphQLName("knowledgeBaseArticleId") Long
 					knowledgeBaseArticleId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_knowledgeBaseAttachmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseAttachmentResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseAttachmentResource),
 			knowledgeBaseAttachmentResource -> {
 				Page paginationPage =
 					knowledgeBaseAttachmentResource.
@@ -756,13 +818,15 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public KnowledgeBaseAttachment getKnowledgeBaseAttachment(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("knowledgeBaseAttachmentId") Long
 				knowledgeBaseAttachmentId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_knowledgeBaseAttachmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseAttachmentResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseAttachmentResource),
 			knowledgeBaseAttachmentResource ->
 				knowledgeBaseAttachmentResource.getKnowledgeBaseAttachment(
 					knowledgeBaseAttachmentId));
@@ -771,12 +835,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public KnowledgeBaseFolder getKnowledgeBaseFolder(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_knowledgeBaseFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseFolderResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseFolderResource),
 			knowledgeBaseFolderResource ->
 				knowledgeBaseFolderResource.getKnowledgeBaseFolder(
 					knowledgeBaseFolderId));
@@ -786,6 +852,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<KnowledgeBaseFolder>
 			getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
+				DataFetchingEnvironment dataFetchingEnvironment,
 				@GraphQLName("parentKnowledgeBaseFolderId") Long
 					parentKnowledgeBaseFolderId,
 				@GraphQLName("pageSize") int pageSize,
@@ -794,7 +861,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_knowledgeBaseFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseFolderResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseFolderResource),
 			knowledgeBaseFolderResource -> {
 				Page paginationPage =
 					knowledgeBaseFolderResource.
@@ -809,6 +877,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<KnowledgeBaseFolder> getSiteKnowledgeBaseFoldersPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -816,7 +885,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_knowledgeBaseFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseFolderResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseFolderResource),
 			knowledgeBaseFolderResource -> {
 				Page paginationPage =
 					knowledgeBaseFolderResource.getSiteKnowledgeBaseFoldersPage(
@@ -829,13 +899,15 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public MessageBoardAttachment getMessageBoardAttachment(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardAttachmentId") Long
 				messageBoardAttachmentId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_messageBoardAttachmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardAttachmentResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardAttachmentResource),
 			messageBoardAttachmentResource ->
 				messageBoardAttachmentResource.getMessageBoardAttachment(
 					messageBoardAttachmentId));
@@ -845,13 +917,15 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<MessageBoardAttachment>
 			getMessageBoardMessageMessageBoardAttachmentsPage(
+				DataFetchingEnvironment dataFetchingEnvironment,
 				@GraphQLName("messageBoardMessageId") Long
 					messageBoardMessageId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_messageBoardAttachmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardAttachmentResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardAttachmentResource),
 			messageBoardAttachmentResource -> {
 				Page paginationPage =
 					messageBoardAttachmentResource.
@@ -866,12 +940,14 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<MessageBoardAttachment>
 			getMessageBoardThreadMessageBoardAttachmentsPage(
+				DataFetchingEnvironment dataFetchingEnvironment,
 				@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_messageBoardAttachmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardAttachmentResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardAttachmentResource),
 			messageBoardAttachmentResource -> {
 				Page paginationPage =
 					messageBoardAttachmentResource.
@@ -885,12 +961,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public MessageBoardMessage getMessageBoardMessage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardMessageResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardMessageResource),
 			messageBoardMessageResource ->
 				messageBoardMessageResource.getMessageBoardMessage(
 					messageBoardMessageId));
@@ -899,12 +977,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Rating getMessageBoardMessageMyRating(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardMessageResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardMessageResource),
 			messageBoardMessageResource ->
 				messageBoardMessageResource.getMessageBoardMessageMyRating(
 					messageBoardMessageId));
@@ -914,6 +994,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<MessageBoardMessage>
 			getMessageBoardMessageMessageBoardMessagesPage(
+				DataFetchingEnvironment dataFetchingEnvironment,
 				@GraphQLName("parentMessageBoardMessageId") Long
 					parentMessageBoardMessageId,
 				@GraphQLName("search") String search,
@@ -925,7 +1006,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardMessageResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardMessageResource),
 			messageBoardMessageResource -> {
 				Page paginationPage =
 					messageBoardMessageResource.
@@ -941,6 +1023,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<MessageBoardMessage>
 			getMessageBoardThreadMessageBoardMessagesPage(
+				DataFetchingEnvironment dataFetchingEnvironment,
 				@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
@@ -951,7 +1034,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardMessageResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardMessageResource),
 			messageBoardMessageResource -> {
 				Page paginationPage =
 					messageBoardMessageResource.
@@ -966,12 +1050,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public MessageBoardSection getMessageBoardSection(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_messageBoardSectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardSectionResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardSectionResource),
 			messageBoardSectionResource ->
 				messageBoardSectionResource.getMessageBoardSection(
 					messageBoardSectionId));
@@ -981,6 +1067,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<MessageBoardSection>
 			getMessageBoardSectionMessageBoardSectionsPage(
+				DataFetchingEnvironment dataFetchingEnvironment,
 				@GraphQLName("parentMessageBoardSectionId") Long
 					parentMessageBoardSectionId,
 				@GraphQLName("search") String search,
@@ -992,7 +1079,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_messageBoardSectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardSectionResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardSectionResource),
 			messageBoardSectionResource -> {
 				Page paginationPage =
 					messageBoardSectionResource.
@@ -1007,6 +1095,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<MessageBoardSection> getSiteMessageBoardSectionsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
@@ -1017,7 +1106,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_messageBoardSectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardSectionResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardSectionResource),
 			messageBoardSectionResource -> {
 				Page paginationPage =
 					messageBoardSectionResource.getSiteMessageBoardSectionsPage(
@@ -1032,6 +1122,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<MessageBoardThread>
 			getMessageBoardSectionMessageBoardThreadsPage(
+				DataFetchingEnvironment dataFetchingEnvironment,
 				@GraphQLName("messageBoardSectionId") Long
 					messageBoardSectionId,
 				@GraphQLName("search") String search,
@@ -1043,7 +1134,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_messageBoardThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardThreadResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardThreadResource),
 			messageBoardThreadResource -> {
 				Page paginationPage =
 					messageBoardThreadResource.
@@ -1058,12 +1150,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public MessageBoardThread getMessageBoardThread(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_messageBoardThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardThreadResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardThreadResource),
 			messageBoardThreadResource ->
 				messageBoardThreadResource.getMessageBoardThread(
 					messageBoardThreadId));
@@ -1072,12 +1166,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Rating getMessageBoardThreadMyRating(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_messageBoardThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardThreadResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardThreadResource),
 			messageBoardThreadResource ->
 				messageBoardThreadResource.getMessageBoardThreadMyRating(
 					messageBoardThreadId));
@@ -1086,6 +1182,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<MessageBoardThread> getSiteMessageBoardThreadsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
@@ -1096,7 +1193,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_messageBoardThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardThreadResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardThreadResource),
 			messageBoardThreadResource -> {
 				Page paginationPage =
 					messageBoardThreadResource.getSiteMessageBoardThreadsPage(
@@ -1111,6 +1209,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<StructuredContent>
 			getContentStructureStructuredContentsPage(
+				DataFetchingEnvironment dataFetchingEnvironment,
 				@GraphQLName("contentStructureId") Long contentStructureId,
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
@@ -1121,7 +1220,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			structuredContentResource -> _populateResourceContext(
+				dataFetchingEnvironment, structuredContentResource),
 			structuredContentResource -> {
 				Page paginationPage =
 					structuredContentResource.
@@ -1136,6 +1236,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<StructuredContent> getSiteStructuredContentsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
@@ -1146,7 +1247,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			structuredContentResource -> _populateResourceContext(
+				dataFetchingEnvironment, structuredContentResource),
 			structuredContentResource -> {
 				Page paginationPage =
 					structuredContentResource.getSiteStructuredContentsPage(
@@ -1160,12 +1262,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public StructuredContent getSiteStructuredContentByKey(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId, @GraphQLName("key") String key)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			structuredContentResource -> _populateResourceContext(
+				dataFetchingEnvironment, structuredContentResource),
 			structuredContentResource ->
 				structuredContentResource.getSiteStructuredContentByKey(
 					siteId, key));
@@ -1174,13 +1278,15 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public StructuredContent getSiteStructuredContentByUuid(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("uuid") String uuid)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			structuredContentResource -> _populateResourceContext(
+				dataFetchingEnvironment, structuredContentResource),
 			structuredContentResource ->
 				structuredContentResource.getSiteStructuredContentByUuid(
 					siteId, uuid));
@@ -1190,6 +1296,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<StructuredContent>
 			getStructuredContentFolderStructuredContentsPage(
+				DataFetchingEnvironment dataFetchingEnvironment,
 				@GraphQLName("structuredContentFolderId") Long
 					structuredContentFolderId,
 				@GraphQLName("search") String search,
@@ -1201,7 +1308,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			structuredContentResource -> _populateResourceContext(
+				dataFetchingEnvironment, structuredContentResource),
 			structuredContentResource -> {
 				Page paginationPage =
 					structuredContentResource.
@@ -1216,12 +1324,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public StructuredContent getStructuredContent(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("structuredContentId") Long structuredContentId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			structuredContentResource -> _populateResourceContext(
+				dataFetchingEnvironment, structuredContentResource),
 			structuredContentResource ->
 				structuredContentResource.getStructuredContent(
 					structuredContentId));
@@ -1230,12 +1340,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Rating getStructuredContentMyRating(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("structuredContentId") Long structuredContentId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			structuredContentResource -> _populateResourceContext(
+				dataFetchingEnvironment, structuredContentResource),
 			structuredContentResource ->
 				structuredContentResource.getStructuredContentMyRating(
 					structuredContentId));
@@ -1244,13 +1356,15 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public String getStructuredContentRenderedContentTemplate(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("templateId") Long templateId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			structuredContentResource -> _populateResourceContext(
+				dataFetchingEnvironment, structuredContentResource),
 			structuredContentResource ->
 				structuredContentResource.
 					getStructuredContentRenderedContentTemplate(
@@ -1261,6 +1375,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<StructuredContentFolder>
 			getSiteStructuredContentFoldersPage(
+				DataFetchingEnvironment dataFetchingEnvironment,
 				@GraphQLName("siteId") Long siteId,
 				@GraphQLName("flatten") Boolean flatten,
 				@GraphQLName("search") String search,
@@ -1272,7 +1387,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			structuredContentFolderResource -> _populateResourceContext(
+				dataFetchingEnvironment, structuredContentFolderResource),
 			structuredContentFolderResource -> {
 				Page paginationPage =
 					structuredContentFolderResource.
@@ -1288,6 +1404,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<StructuredContentFolder>
 			getStructuredContentFolderStructuredContentFoldersPage(
+				DataFetchingEnvironment dataFetchingEnvironment,
 				@GraphQLName("parentStructuredContentFolderId") Long
 					parentStructuredContentFolderId,
 				@GraphQLName("search") String search,
@@ -1299,7 +1416,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			structuredContentFolderResource -> _populateResourceContext(
+				dataFetchingEnvironment, structuredContentFolderResource),
 			structuredContentFolderResource -> {
 				Page paginationPage =
 					structuredContentFolderResource.
@@ -1314,13 +1432,15 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public StructuredContentFolder getStructuredContentFolder(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("structuredContentFolderId") Long
 				structuredContentFolderId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			structuredContentFolderResource -> _populateResourceContext(
+				dataFetchingEnvironment, structuredContentFolderResource),
 			structuredContentFolderResource ->
 				structuredContentFolderResource.getStructuredContentFolder(
 					structuredContentFolderId));
@@ -1346,8 +1466,13 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			BlogPostingResource blogPostingResource)
 		throws Exception {
+
+		blogPostingResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		blogPostingResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -1355,16 +1480,27 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			BlogPostingImageResource blogPostingImageResource)
 		throws Exception {
+
+		blogPostingImageResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		blogPostingImageResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
 
-	private void _populateResourceContext(CommentResource commentResource)
+	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
+			CommentResource commentResource)
 		throws Exception {
+
+		commentResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		commentResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -1372,8 +1508,13 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			ContentSetElementResource contentSetElementResource)
 		throws Exception {
+
+		contentSetElementResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		contentSetElementResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -1381,16 +1522,27 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			ContentStructureResource contentStructureResource)
 		throws Exception {
+
+		contentStructureResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		contentStructureResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
 
-	private void _populateResourceContext(DocumentResource documentResource)
+	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
+			DocumentResource documentResource)
 		throws Exception {
+
+		documentResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		documentResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -1398,8 +1550,13 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			DocumentFolderResource documentFolderResource)
 		throws Exception {
+
+		documentFolderResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		documentFolderResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -1407,8 +1564,13 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			KnowledgeBaseArticleResource knowledgeBaseArticleResource)
 		throws Exception {
+
+		knowledgeBaseArticleResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		knowledgeBaseArticleResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -1416,8 +1578,13 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			KnowledgeBaseAttachmentResource knowledgeBaseAttachmentResource)
 		throws Exception {
+
+		knowledgeBaseAttachmentResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		knowledgeBaseAttachmentResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -1425,8 +1592,13 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			KnowledgeBaseFolderResource knowledgeBaseFolderResource)
 		throws Exception {
+
+		knowledgeBaseFolderResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		knowledgeBaseFolderResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -1434,8 +1606,13 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			MessageBoardAttachmentResource messageBoardAttachmentResource)
 		throws Exception {
+
+		messageBoardAttachmentResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		messageBoardAttachmentResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -1443,8 +1620,13 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			MessageBoardMessageResource messageBoardMessageResource)
 		throws Exception {
+
+		messageBoardMessageResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		messageBoardMessageResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -1452,8 +1634,13 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			MessageBoardSectionResource messageBoardSectionResource)
 		throws Exception {
+
+		messageBoardSectionResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		messageBoardSectionResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -1461,8 +1648,13 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			MessageBoardThreadResource messageBoardThreadResource)
 		throws Exception {
+
+		messageBoardThreadResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		messageBoardThreadResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -1470,8 +1662,13 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			StructuredContentResource structuredContentResource)
 		throws Exception {
+
+		structuredContentResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		structuredContentResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -1479,14 +1676,26 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			StructuredContentFolderResource structuredContentFolderResource)
 		throws Exception {
+
+		structuredContentFolderResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		structuredContentFolderResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	public static void setAcceptLanguageFunction(
+		Function<Object, AcceptLanguage> acceptLanguageFunction) {
+
+		_acceptLanguageFunction = acceptLanguageFunction;
+	}
+
+	private static Function<Object, AcceptLanguage> _acceptLanguageFunction;
 	private static ComponentServiceObjects<BlogPostingResource>
 		_blogPostingResourceComponentServiceObjects;
 	private static ComponentServiceObjects<BlogPostingImageResource>

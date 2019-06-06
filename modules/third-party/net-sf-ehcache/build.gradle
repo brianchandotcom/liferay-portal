@@ -1,0 +1,20 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+dependencies {
+	compileOnly group: "net.sf.ehcache", name: "ehcache", transitive: false, version: "2.10.6"
+	compileOnly group: "org.slf4j", name: "slf4j-api", transitive: false, version: "1.7.25"
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "net/sf/ehcache/CacheManager.java"
+
+	originalLibModuleName = "ehcache"
+}

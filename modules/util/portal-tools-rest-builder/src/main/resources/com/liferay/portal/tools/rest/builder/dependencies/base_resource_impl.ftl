@@ -97,6 +97,10 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 		}
 	</#list>
 
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
+		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}

@@ -96,6 +96,7 @@ public class Mutation {
 
 	<#list schemaNames as schemaName>
 		private void _populateResourceContext(${schemaName}Resource ${freeMarkerTool.getSchemaVarName(schemaName)}Resource) throws Exception {
+			${freeMarkerTool.getSchemaVarName(schemaName)}Resource.setContextAcceptLanguage(LocaleThreadLocal.getDefaultLocale());
 			${freeMarkerTool.getSchemaVarName(schemaName)}Resource.setContextCompany(CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 		}
 	</#list>

@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -71,36 +72,38 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 
 		_workflowMetricsRESTTestHelper.restoreProcess(_singleApproverDocument);
 
-		for (Process process : _processes) {
-			_workflowMetricsRESTTestHelper.deleteProcess(
-				testGroup.getCompanyId(), process.getId());
-		}
+		_deleteProcesses();
 	}
 
+	@Override
 	@Test
-	public void testGetProcessCompletedInstances() throws Exception {
-		Process postProcess = randomProcess();
+	public void testGetProcess() throws Exception {
+		super.testGetProcess();
 
-		postProcess.setInstanceCount(0L);
-		postProcess.setOnTimeInstanceCount(0L);
-		postProcess.setOverdueInstanceCount(0L);
-		postProcess.setUntrackedInstanceCount(0L);
+		_testGetProcess(
+			true, (process1, process2) -> assertEquals(process1, process2));
+		_testGetProcess(
+			false, (process1, process2) -> assertEquals(process1, process2));
+	}
 
-		testGetProcessesPage_addProcess(postProcess);
+	@Override
+	@Test
+	public void testGetProcessesPage() throws Exception {
+		super.testGetProcessesPage();
 
-		_workflowMetricsRESTTestHelper.addInstance(
-			testGroup.getCompanyId(), true, postProcess.getId());
+		_deleteProcesses();
 
-		postProcess.setInstanceCount(1L);
-		postProcess.setOnTimeInstanceCount(0L);
-		postProcess.setOverdueInstanceCount(0L);
-		postProcess.setUntrackedInstanceCount(1L);
+		Process process = randomProcess();
 
-		Process getProcess = ProcessResource.getProcess(
-			postProcess.getId(), true, null);
+		testGetProcessesPage_addProcess(process);
 
-		assertEquals(postProcess, getProcess);
-		assertValid(getProcess);
+		testGetProcessesPage_addProcess(randomProcess());
+
+		Page<Process> page = ProcessResource.getProcessesPage(
+			process.getTitle(), Pagination.of(1, 2), null);
+
+		assertEquals(
+			Collections.singletonList(process), (List<Process>)page.getItems());
 	}
 
 	@Override
@@ -119,39 +122,6 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 				process2.setOverdueInstanceCount(1L);
 				process2.setUntrackedInstanceCount(1L);
 			});
-	}
-
-	@Test
-	public void testGetProcessesPageWithTitle() throws Exception {
-		Process process = randomProcess();
-
-		testGetProcessesPage_addProcess(process);
-
-		testGetProcessesPage_addProcess(randomProcess());
-
-		Page<Process> page = ProcessResource.getProcessesPage(
-			process.getTitle(), Pagination.of(1, 2), null);
-
-		assertEquals(
-			Collections.singletonList(process), (List<Process>)page.getItems());
-	}
-
-	@Test
-	public void testGetProcessPendingInstances() throws Exception {
-		Process postProcess = randomProcess();
-
-		postProcess.setInstanceCount(1L);
-		postProcess.setOnTimeInstanceCount(0L);
-		postProcess.setOverdueInstanceCount(0L);
-		postProcess.setUntrackedInstanceCount(1L);
-
-		testGetProcessesPage_addProcess(postProcess);
-
-		Process getProcess = ProcessResource.getProcess(
-			postProcess.getId(), false, null);
-
-		assertEquals(postProcess, getProcess);
-		assertValid(getProcess);
 	}
 
 	@Override
@@ -209,6 +179,43 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 		_processes.add(process);
 
 		return process;
+	}
+
+	private void _deleteProcesses() throws Exception {
+		for (Process process : _processes) {
+			_workflowMetricsRESTTestHelper.deleteProcess(
+				testGroup.getCompanyId(), process.getId());
+		}
+	}
+
+	private void _testGetProcess(
+			Boolean completed,
+			UnsafeBiConsumer<Process, Process, Exception> unsafeTriConsumer)
+		throws Exception {
+
+		_deleteProcesses();
+
+		Process postProcess = randomProcess();
+
+		postProcess.setInstanceCount(0L);
+		postProcess.setOnTimeInstanceCount(0L);
+		postProcess.setOverdueInstanceCount(0L);
+		postProcess.setUntrackedInstanceCount(0L);
+
+		testGetProcessesPage_addProcess(postProcess);
+
+		_workflowMetricsRESTTestHelper.addInstance(
+			testGroup.getCompanyId(), completed, postProcess.getId());
+
+		postProcess.setInstanceCount(1L);
+		postProcess.setOnTimeInstanceCount(0L);
+		postProcess.setOverdueInstanceCount(0L);
+		postProcess.setUntrackedInstanceCount(1L);
+
+		Process getProcess = ProcessResource.getProcess(
+			postProcess.getId(), completed, null);
+
+		unsafeTriConsumer.accept(postProcess, getProcess);
 	}
 
 	@Inject

@@ -159,8 +159,8 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 					_toStringArray(sla.getPauseNodeKeys()),
 					_toStringArray(sla.getStartNodeKeys()),
 					_toStringArray(sla.getStopNodeKeys()),
-						GetterUtil.getInteger(	
-							sla.getStatus(), WorkflowConstants.STATUS_APPROVED),
+					GetterUtil.getInteger(
+						sla.getStatus(), WorkflowConstants.STATUS_APPROVED),
 					_createServiceContext()));
 	}
 

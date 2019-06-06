@@ -75,51 +75,26 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 		_deleteInstances();
 	}
 
+	@Override
 	@Test
 	public void testGetProcessInstancesPage() throws Exception {
 		super.testGetProcessInstancesPage();
 
 		_testGetProcessInstancesPage(
 			new String[] {"Completed"},
-			(instance1, instance2, page) -> {
-				assertEquals(
-					Collections.singletonList(instance1),
-					(List<Instance>)page.getItems());
-			});
+			(instance1, instance2, page) -> assertEquals(
+				Collections.singletonList(instance1),
+				(List<Instance>)page.getItems()));
 		_testGetProcessInstancesPage(
 			new String[] {"Completed", "Pending"},
-			(instance1, instance2, page) -> {
-				assertEqualsIgnoringOrder(
-					Arrays.asList(instance1, instance2),
-					(List<Instance>)page.getItems());
-			});
+			(instance1, instance2, page) -> assertEqualsIgnoringOrder(
+				Arrays.asList(instance1, instance2),
+				(List<Instance>)page.getItems()));
 		_testGetProcessInstancesPage(
 			new String[] {"Pending"},
-			(instance1, instance2, page) -> {
-				assertEquals(
-					Collections.singletonList(instance2),
-					(List<Instance>)page.getItems());
-			});
-	}
-
-	private void _testGetProcessInstancesPage(String[] statuses, UnsafeTriConsumer<> unsafeTriConsumer) throws Exception {
-		_deleteInstances();
-
-		Instance instance1 = randomInstance();
-
-		instance1.setDateCompletion(RandomTestUtil.nextDate());
-
-		testGetProcessInstancesPage_addInstance(_process.getId(), instance1);
-
-		instance2 = randomInstance();
-
-		testGetProcessInstancesPage_addInstance(_process.getId(), instance2);
-
-		Page<Instance> page = InstanceResource.getProcessInstancesPage(
-			_process.getId(), null, statuses, null, null,
-			Pagination.of(1, 2));
-
-		unsafeTriConsumer.accept(instance1, instance2, page);
+			(instance1, instance2, page) -> assertEquals(
+				Collections.singletonList(instance2),
+				(List<Instance>)page.getItems()));
 	}
 
 	@Override
@@ -169,6 +144,30 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 			_workflowMetricsRESTTestHelper.deleteInstance(
 				testGroup.getCompanyId(), instance.getId(), _process.getId());
 		}
+	}
+
+	private void _testGetProcessInstancesPage(
+			String[] statuses,
+			UnsafeTriConsumer<Instance, Instance, Page<Instance>, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		_deleteInstances();
+
+		Instance instance1 = randomInstance();
+
+		instance1.setDateCompletion(RandomTestUtil.nextDate());
+
+		testGetProcessInstancesPage_addInstance(_process.getId(), instance1);
+
+		Instance instance2 = randomInstance();
+
+		testGetProcessInstancesPage_addInstance(_process.getId(), instance2);
+
+		Page<Instance> page = InstanceResource.getProcessInstancesPage(
+			_process.getId(), null, statuses, null, null, Pagination.of(1, 2));
+
+		unsafeTriConsumer.accept(instance1, instance2, page);
 	}
 
 	@Inject

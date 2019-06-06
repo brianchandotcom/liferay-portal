@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -37,7 +38,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -84,70 +84,26 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 				testGroup.getCompanyId(), _process.getId());
 		}
 
-		for (SLA sla : _slas) {
-			SLAResource.deleteSLA(sla.getId());
-		}
+		_deleteSLAs();
 	}
 
+	@Override
 	@Test
-	public void testGetProcessSLAsPageApproved() throws Exception {
-		SLA sla1 = testGetProcessSLAsPage_addSLA(_process.getId(), randomSLA());
+	public void testGetProcessSLAsPage() throws Exception {
+		super.testGetProcessSLAsPage();
 
-		SLA sla2 = randomSLA();
-
-		sla2.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-		sla2 = testGetProcessSLAsPage_addSLA(_process.getId(), sla2);
-
-		Page<SLA> page = SLAResource.getProcessSLAsPage(
-			_process.getId(), WorkflowConstants.STATUS_APPROVED,
-			Pagination.of(1, 2));
-
-		Assert.assertEquals(1, page.getTotalCount());
-
-		assertEquals(
-			Collections.singletonList(sla1), (List<SLA>)page.getItems());
-		assertValid(page);
-	}
-
-	@Test
-	public void testGetProcessSLAsPageBlocked() throws Exception {
-		testGetProcessSLAsPage_addSLA(_process.getId(), randomSLA());
-
-		SLA sla = randomSLA();
-
-		sla.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-		sla = testGetProcessSLAsPage_addSLA(_process.getId(), sla);
-
-		Page<SLA> page = SLAResource.getProcessSLAsPage(
-			_process.getId(), WorkflowConstants.STATUS_DRAFT,
-			Pagination.of(1, 2));
-
-		Assert.assertEquals(1, page.getTotalCount());
-
-		assertEquals(
-			Collections.singletonList(sla), (List<SLA>)page.getItems());
-		assertValid(page);
-	}
-
-	@Test
-	public void testGetProcessSLAsPageWithBlockedFirst() throws Exception {
-		SLA sla1 = testGetProcessSLAsPage_addSLA(_process.getId(), randomSLA());
-
-		SLA sla2 = randomSLA();
-
-		sla2.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-		sla2 = testGetProcessSLAsPage_addSLA(_process.getId(), sla2);
-
-		Page<SLA> page = SLAResource.getProcessSLAsPage(
-			_process.getId(), null, Pagination.of(1, 2));
-
-		Assert.assertEquals(2, page.getTotalCount());
-
-		assertEquals(Arrays.asList(sla2, sla1), (List<SLA>)page.getItems());
-		assertValid(page);
+		_testGetProcessSLAsPage(
+			WorkflowConstants.STATUS_APPROVED,
+			(sla1, sla2, page) -> assertEquals(
+				Collections.singletonList(sla1), (List<SLA>)page.getItems()));
+		_testGetProcessSLAsPage(
+			WorkflowConstants.STATUS_DRAFT,
+			(sla1, sla2, page) -> assertEquals(
+				Collections.singletonList(sla2), (List<SLA>)page.getItems()));
+		_testGetProcessSLAsPage(
+			null,
+			(sla1, sla2, page) -> assertEquals(
+				Arrays.asList(sla2, sla1), (List<SLA>)page.getItems()));
 	}
 
 	@Override
@@ -243,6 +199,33 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 		_slas.add(sla);
 
 		return sla;
+	}
+
+	private void _deleteSLAs() throws Exception {
+		for (SLA sla : _slas) {
+			SLAResource.deleteSLA(sla.getId());
+		}
+	}
+
+	private void _testGetProcessSLAsPage(
+			Integer status,
+			UnsafeTriConsumer<SLA, SLA, Page<SLA>, Exception> unsafeTriConsumer)
+		throws Exception {
+
+		_deleteSLAs();
+
+		SLA sla1 = testGetProcessSLAsPage_addSLA(_process.getId(), randomSLA());
+
+		SLA sla2 = testGetProcessSLAsPage_addSLA(_process.getId(), randomSLA());
+
+		sla2.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+		sla2 = SLAResource.putSLA(sla2.getId(), sla2);
+
+		Page<SLA> page = SLAResource.getProcessSLAsPage(
+			_process.getId(), status, Pagination.of(1, 2));
+
+		unsafeTriConsumer.accept(sla1, sla2, page);
 	}
 
 	@Inject

@@ -29,7 +29,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -68,14 +67,16 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 				testGroup.getCompanyId(), _process.getId());
 		}
 
-		for (Node node : _nodes) {
-			_workflowMetricsRESTTestHelper.deleteNode(
-				testGroup.getCompanyId(), _process.getId(), node.getName());
-		}
+		_deleteNodes();
 	}
 
+	@Override
 	@Test
-	public void testGetProcessNodesPageLatestVersion() throws Exception {
+	public void testGetProcessNodesPage() throws Exception {
+		super.testGetProcessNodesPage();
+
+		_deleteNodes();
+
 		Node node1 = randomNode();
 
 		node1.setId(1L);
@@ -103,11 +104,8 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 
 		Page<Node> page = NodeResource.getProcessNodesPage(_process.getId());
 
-		Assert.assertEquals(2, page.getTotalCount());
-
 		assertEqualsIgnoringOrder(
 			Arrays.asList(node1, node2), (List<Node>)page.getItems());
-		assertValid(page);
 	}
 
 	protected Node addNode(Long processId, Node node, String version)
@@ -136,6 +134,13 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 	@Override
 	protected Long testGetProcessNodesPage_getProcessId() throws Exception {
 		return _process.getId();
+	}
+
+	private void _deleteNodes() throws Exception {
+		for (Node node : _nodes) {
+			_workflowMetricsRESTTestHelper.deleteNode(
+				testGroup.getCompanyId(), _process.getId(), node.getName());
+		}
 	}
 
 	@Inject

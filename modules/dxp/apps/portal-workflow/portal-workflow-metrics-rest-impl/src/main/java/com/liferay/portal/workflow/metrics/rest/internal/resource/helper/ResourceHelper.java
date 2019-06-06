@@ -15,8 +15,6 @@
 package com.liferay.portal.workflow.metrics.rest.internal.resource.helper;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -108,18 +106,12 @@ public class ResourceHelper {
 		return scriptedMetricAggregation;
 	}
 
-	public Script createScript(Class<?> clazz, String resourceName) {
-		try {
-			return _scripts.script(
-				StringUtil.read(
-					clazz.getResourceAsStream("dependencies/" + resourceName)));
-		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
+	public Script createScript(Class<?> clazz, String resourceName)
+		throws IOException {
 
-			throw new IllegalStateException(
-				"Unable to read resource " + resourceName);
-		}
+		return _scripts.script(
+			StringUtil.read(
+				clazz.getResourceAsStream("dependencies/" + resourceName)));
 	}
 
 	public ScriptedMetricAggregation
@@ -234,7 +226,7 @@ public class ResourceHelper {
 	}
 
 	@Activate
-	protected void activate() {
+	protected void activate() throws IOException {
 		_workflowMetricsInstanceCountCombineScript = createScript(
 			getClass(),
 			"workflow-metrics-instance-count-combine-script.painless");
@@ -256,8 +248,6 @@ public class ResourceHelper {
 		_workflowMetricsSlaOverdueReduceScript = createScript(
 			getClass(), "workflow-metrics-sla-overdue-reduce-script.painless");
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(ResourceHelper.class);
 
 	@Reference
 	private Aggregations _aggregations;

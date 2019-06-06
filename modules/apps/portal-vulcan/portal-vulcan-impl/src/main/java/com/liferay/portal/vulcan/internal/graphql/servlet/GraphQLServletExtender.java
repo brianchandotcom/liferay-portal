@@ -34,6 +34,8 @@ import graphql.schema.GraphQLSchema;
 
 import graphql.servlet.SimpleGraphQLHttpServlet;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Dictionary;
 
 import javax.servlet.Servlet;
@@ -44,6 +46,8 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.http.context.ServletContextHelper;
+import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -128,10 +132,10 @@ public class GraphQLServletExtender {
 
 	private class ServletDataServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
-			<ServletData, ServiceRegistration<Servlet>> {
+			<ServletData, Collection<ServiceRegistration<?>>> {
 
 		@Override
-		public ServiceRegistration<Servlet> addingService(
+		public Collection<ServiceRegistration<?>> addingService(
 			ServiceReference<ServletData> serviceReference) {
 
 			// Schema
@@ -156,6 +160,48 @@ public class GraphQLServletExtender {
 				_graphQLObjectHandler.getObject(
 					query.getClass(), processingElementsContainer));
 
+			Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+			Class<? extends ServletData> clazz = servletData.getClass();
+
+			String path = servletData.getPath();
+
+			String servletContextName = path.split("/")[1];
+
+			properties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
+				clazz.getName());
+
+			properties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN, "/*");
+
+			properties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
+				servletContextName);
+
+			Dictionary<String, Object> helperProperties =
+				new HashMapDictionary<>();
+
+			helperProperties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
+				servletContextName);
+			helperProperties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH, path);
+			helperProperties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET,
+				clazz.getName());
+			helperProperties.put("liferay.graphql.auth", true);
+
+			Collection<ServiceRegistration<?>> serviceRegistrations =
+				new ArrayList<>();
+
+			serviceRegistrations.add(
+				_bundleContext.registerService(
+					ServletContextHelper.class,
+					new ServletContextHelper(_bundleContext.getBundle()) {
+					},
+					helperProperties));
+
 			// Servlet
 
 			SimpleGraphQLHttpServlet.Builder servletBuilder =
@@ -163,36 +209,29 @@ public class GraphQLServletExtender {
 
 			Servlet servlet = servletBuilder.build();
 
-			Dictionary<String, Object> properties = new HashMapDictionary<>();
+			serviceRegistrations.add(
+				_bundleContext.registerService(
+					Servlet.class, servlet, properties));
 
-			String path = servletData.getPath();
-
-			properties.put("osgi.http.whiteboard.context.path", path);
-
-			Class<? extends ServletData> clazz = servletData.getClass();
-
-			properties.put(
-				"osgi.http.whiteboard.servlet.name", clazz.getName());
-
-			properties.put(
-				"osgi.http.whiteboard.servlet.pattern", path.concat("/*"));
-
-			return _bundleContext.registerService(
-				Servlet.class, servlet, properties);
+			return serviceRegistrations;
 		}
 
 		@Override
 		public void modifiedService(
 			ServiceReference<ServletData> serviceReference,
-			ServiceRegistration<Servlet> serviceRegistration) {
+			Collection<ServiceRegistration<?>> serviceRegistrations) {
 		}
 
 		@Override
 		public void removedService(
 			ServiceReference<ServletData> serviceReference,
-			ServiceRegistration<Servlet> serviceRegistration) {
+			Collection<ServiceRegistration<?>> serviceRegistrations) {
 
-			serviceRegistration.unregister();
+			for (ServiceRegistration<?> serviceRegistration :
+					serviceRegistrations) {
+
+				serviceRegistration.unregister();
+			}
 
 			_bundleContext.ungetService(serviceReference);
 		}

@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.query.Queries;
@@ -71,79 +72,54 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 				testGroup.getCompanyId(), _process.getId());
 		}
 
-		for (Instance instance : _instances) {
-			_workflowMetricsRESTTestHelper.deleteInstance(
-				testGroup.getCompanyId(), instance.getId(), _process.getId());
-		}
+		_deleteInstances();
 	}
 
 	@Test
-	public void testGetProcessInstancesPageCompleted() throws Exception {
-		Long processId = testGetProcessInstancesPage_getProcessId();
+	public void testGetProcessInstancesPage() throws Exception {
+		super.testGetProcessInstancesPage();
 
-		Instance instance = randomInstance();
-
-		instance.setDateCompletion(RandomTestUtil.nextDate());
-
-		testGetProcessInstancesPage_addInstance(processId, instance);
-
-		testGetProcessInstancesPage_addInstance(processId, randomInstance());
-
-		Page<Instance> page = InstanceResource.getProcessInstancesPage(
-			processId, null, new String[] {"Completed"}, null, null,
-			Pagination.of(1, 2));
-
-		assertEquals(
-			Collections.singletonList(instance),
-			(List<Instance>)page.getItems());
+		_testGetProcessInstancesPage(
+			new String[] {"Completed"},
+			(instance1, instance2, page) -> {
+				assertEquals(
+					Collections.singletonList(instance1),
+					(List<Instance>)page.getItems());
+			});
+		_testGetProcessInstancesPage(
+			new String[] {"Completed", "Pending"},
+			(instance1, instance2, page) -> {
+				assertEqualsIgnoringOrder(
+					Arrays.asList(instance1, instance2),
+					(List<Instance>)page.getItems());
+			});
+		_testGetProcessInstancesPage(
+			new String[] {"Pending"},
+			(instance1, instance2, page) -> {
+				assertEquals(
+					Collections.singletonList(instance2),
+					(List<Instance>)page.getItems());
+			});
 	}
 
-	@Test
-	public void testGetProcessInstancesPageCompletedAndPending()
-		throws Exception {
-
-		Long processId = testGetProcessInstancesPage_getProcessId();
+	private void _testGetProcessInstancesPage(String[] statuses, UnsafeTriConsumer<> unsafeTriConsumer) throws Exception {
+		_deleteInstances();
 
 		Instance instance1 = randomInstance();
 
 		instance1.setDateCompletion(RandomTestUtil.nextDate());
 
-		testGetProcessInstancesPage_addInstance(processId, instance1);
+		testGetProcessInstancesPage_addInstance(_process.getId(), instance1);
 
-		Instance instance2 = randomInstance();
+		instance2 = randomInstance();
 
-		testGetProcessInstancesPage_addInstance(processId, instance2);
-
-		Page<Instance> page = InstanceResource.getProcessInstancesPage(
-			processId, null, new String[] {"Completed", "Pending"}, null, null,
-			Pagination.of(1, 2));
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(instance1, instance2),
-			(List<Instance>)page.getItems());
-	}
-
-	@Test
-	public void testGetProcessInstancesPagePending() throws Exception {
-		Long processId = testGetProcessInstancesPage_getProcessId();
-
-		Instance instance1 = randomInstance();
-
-		instance1.setDateCompletion(RandomTestUtil.nextDate());
-
-		testGetProcessInstancesPage_addInstance(processId, instance1);
-
-		Instance instance2 = randomInstance();
-
-		testGetProcessInstancesPage_addInstance(processId, instance2);
+		testGetProcessInstancesPage_addInstance(_process.getId(), instance2);
 
 		Page<Instance> page = InstanceResource.getProcessInstancesPage(
-			processId, null, new String[] {"Pending"}, null, null,
+			_process.getId(), null, statuses, null, null,
 			Pagination.of(1, 2));
 
-		assertEquals(
-			Collections.singletonList(instance2),
-			(List<Instance>)page.getItems());
+		unsafeTriConsumer.accept(instance1, instance2, page);
 	}
 
 	@Override
@@ -186,6 +162,13 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 	@Override
 	protected Long testGetProcessInstancesPage_getProcessId() throws Exception {
 		return _process.getId();
+	}
+
+	private void _deleteInstances() throws Exception {
+		for (Instance instance : _instances) {
+			_workflowMetricsRESTTestHelper.deleteInstance(
+				testGroup.getCompanyId(), instance.getId(), _process.getId());
+		}
 	}
 
 	@Inject

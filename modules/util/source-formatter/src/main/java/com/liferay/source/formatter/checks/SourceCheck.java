@@ -33,7 +33,7 @@ public interface SourceCheck {
 
 	public boolean isModulesCheck();
 
-	public boolean isPortalCheck();
+	public boolean isLiferaySourceCheck();
 
 	public void setAllFileNames(List<String> allFileNames);
 

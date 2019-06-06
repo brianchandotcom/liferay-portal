@@ -32,7 +32,7 @@ public class PropertiesLiferayPluginPackageLiferayVersionsCheck
 	extends BaseFileCheck {
 
 	@Override
-	public boolean isPortalCheck() {
+	public boolean isLiferaySourceCheck() {
 		return true;
 	}
 

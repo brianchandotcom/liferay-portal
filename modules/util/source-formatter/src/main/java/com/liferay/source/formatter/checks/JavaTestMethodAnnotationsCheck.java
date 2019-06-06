@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 
 	@Override
-	public boolean isPortalCheck() {
+	public boolean isLiferaySourceCheck() {
 		return true;
 	}
 

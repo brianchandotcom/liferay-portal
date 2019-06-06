@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 public class JavaStringBundlerInitialCapacityCheck extends BaseJavaTermCheck {
 
 	@Override
-	public boolean isPortalCheck() {
+	public boolean isLiferaySourceCheck() {
 		return true;
 	}
 

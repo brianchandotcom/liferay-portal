@@ -22,7 +22,7 @@ import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 public class JavaVerifyUpgradeConnectionCheck extends BaseFileCheck {
 
 	@Override
-	public boolean isPortalCheck() {
+	public boolean isLiferaySourceCheck() {
 		return true;
 	}
 

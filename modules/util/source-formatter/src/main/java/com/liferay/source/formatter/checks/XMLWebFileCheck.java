@@ -33,7 +33,7 @@ import java.util.TreeSet;
 public class XMLWebFileCheck extends BaseFileCheck {
 
 	@Override
-	public boolean isPortalCheck() {
+	public boolean isLiferaySourceCheck() {
 		return true;
 	}
 

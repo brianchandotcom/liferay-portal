@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 public class XMLEmptyLinesCheck extends EmptyLinesCheck {
 
 	@Override
-	public boolean isPortalCheck() {
+	public boolean isLiferaySourceCheck() {
 		return true;
 	}
 

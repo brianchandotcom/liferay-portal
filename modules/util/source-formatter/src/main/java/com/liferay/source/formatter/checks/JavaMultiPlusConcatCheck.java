@@ -35,7 +35,7 @@ import java.util.List;
 public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 
 	@Override
-	public boolean isPortalCheck() {
+	public boolean isLiferaySourceCheck() {
 		return true;
 	}
 

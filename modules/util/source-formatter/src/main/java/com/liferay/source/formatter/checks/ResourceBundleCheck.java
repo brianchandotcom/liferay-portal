@@ -20,7 +20,7 @@ package com.liferay.source.formatter.checks;
 public class ResourceBundleCheck extends BaseFileCheck {
 
 	@Override
-	public boolean isPortalCheck() {
+	public boolean isLiferaySourceCheck() {
 		return true;
 	}
 

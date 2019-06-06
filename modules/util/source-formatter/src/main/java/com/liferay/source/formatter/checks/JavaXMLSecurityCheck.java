@@ -22,7 +22,7 @@ import com.liferay.petra.string.StringBundler;
 public class JavaXMLSecurityCheck extends BaseFileCheck {
 
 	@Override
-	public boolean isPortalCheck() {
+	public boolean isLiferaySourceCheck() {
 		return true;
 	}
 

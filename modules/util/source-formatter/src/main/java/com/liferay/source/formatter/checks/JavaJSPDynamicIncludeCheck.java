@@ -40,7 +40,7 @@ import java.util.regex.Pattern;
 public class JavaJSPDynamicIncludeCheck extends BaseJavaTermCheck {
 
 	@Override
-	public boolean isPortalCheck() {
+	public boolean isLiferaySourceCheck() {
 		return true;
 	}
 

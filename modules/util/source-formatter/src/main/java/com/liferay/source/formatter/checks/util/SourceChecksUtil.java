@@ -274,7 +274,7 @@ public class SourceChecksUtil {
 			SourceCheck sourceCheck = (SourceCheck)instance;
 
 			if ((!portalSource && !subrepository &&
-				 sourceCheck.isPortalCheck()) ||
+				 sourceCheck.isLiferaySourceCheck()) ||
 				(!includeModuleChecks && sourceCheck.isModulesCheck())) {
 
 				continue;

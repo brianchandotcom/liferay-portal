@@ -21,7 +21,7 @@ package com.liferay.source.formatter.checks;
 public class JavaUnsafeCastingCheck extends BaseFileCheck {
 
 	@Override
-	public boolean isPortalCheck() {
+	public boolean isLiferaySourceCheck() {
 		return true;
 	}
 

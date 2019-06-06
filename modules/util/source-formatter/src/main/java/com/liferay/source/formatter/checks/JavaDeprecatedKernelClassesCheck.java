@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class JavaDeprecatedKernelClassesCheck extends BaseFileCheck {
 
 	@Override
-	public boolean isPortalCheck() {
+	public boolean isLiferaySourceCheck() {
 		return true;
 	}
 

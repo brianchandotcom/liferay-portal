@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 public class JavaLogClassNameCheck extends BaseFileCheck {
 
 	@Override
-	public boolean isPortalCheck() {
+	public boolean isLiferaySourceCheck() {
 		return true;
 	}
 

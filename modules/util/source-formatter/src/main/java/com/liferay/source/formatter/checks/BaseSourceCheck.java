@@ -83,7 +83,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
-	public boolean isPortalCheck() {
+	public boolean isLiferaySourceCheck() {
 		return false;
 	}
 

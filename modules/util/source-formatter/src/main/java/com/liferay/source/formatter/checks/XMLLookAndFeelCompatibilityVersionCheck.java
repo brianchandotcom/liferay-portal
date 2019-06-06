@@ -38,7 +38,7 @@ import org.dom4j.Element;
 public class XMLLookAndFeelCompatibilityVersionCheck extends BaseFileCheck {
 
 	@Override
-	public boolean isPortalCheck() {
+	public boolean isLiferaySourceCheck() {
 		return true;
 	}
 

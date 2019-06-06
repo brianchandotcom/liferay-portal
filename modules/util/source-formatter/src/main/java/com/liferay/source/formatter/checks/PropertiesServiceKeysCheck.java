@@ -22,7 +22,7 @@ import com.liferay.petra.string.StringPool;
 public class PropertiesServiceKeysCheck extends BaseFileCheck {
 
 	@Override
-	public boolean isPortalCheck() {
+	public boolean isLiferaySourceCheck() {
 		return true;
 	}
 

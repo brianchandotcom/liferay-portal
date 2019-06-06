@@ -53,7 +53,7 @@ import org.dom4j.Element;
 public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 
 	@Override
-	public boolean isPortalCheck() {
+	public boolean isLiferaySourceCheck() {
 		return true;
 	}
 

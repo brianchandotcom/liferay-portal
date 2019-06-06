@@ -5,6 +5,7 @@ Export-Package:\
 	com.liferay.portal.workflow.configuration,\
 	com.liferay.portal.workflow.constants,\
 	com.liferay.portal.workflow.definition.link.update.handler,\
+	com.liferay.portal.workflow.exception,\
 	com.liferay.portal.workflow.portlet.tab
 Provide-Capability:\
 	liferay.resource.bundle;\

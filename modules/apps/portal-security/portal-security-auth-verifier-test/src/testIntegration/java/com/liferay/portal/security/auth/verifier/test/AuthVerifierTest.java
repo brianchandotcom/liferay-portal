@@ -134,6 +134,7 @@ public class AuthVerifierTest {
 
 		properties.put(
 			"auth-verifier-tracker-test-servlet-context-helper", true);
+		properties.put("liferay.auth.verifier", false);
 
 		_registerServletContextHelper(
 			"auth-verifier-filter-tracker-disabled-test", properties);
@@ -269,7 +270,8 @@ public class AuthVerifierTest {
 				"test/remoteUser");
 
 		try (InputStream inputStream = url.openStream()) {
-			Assert.assertEquals("no-remote-user", StringUtil.read(inputStream));
+			Assert.assertEquals(
+				"remote-user-set", StringUtil.read(inputStream));
 		}
 	}
 

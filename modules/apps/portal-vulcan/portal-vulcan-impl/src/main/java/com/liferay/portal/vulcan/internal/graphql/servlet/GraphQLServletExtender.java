@@ -190,7 +190,6 @@ public class GraphQLServletExtender {
 			helperProperties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET,
 				clazz.getName());
-			helperProperties.put("liferay.graphql.auth", true);
 
 			Collection<ServiceRegistration<?>> serviceRegistrations =
 				new ArrayList<>();

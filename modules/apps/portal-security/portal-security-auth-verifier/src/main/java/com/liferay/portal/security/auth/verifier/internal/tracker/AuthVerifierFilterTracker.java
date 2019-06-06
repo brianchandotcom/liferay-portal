@@ -64,7 +64,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 		"default.registration.property=filter.init.guest.allowed=true",
 		"default.remote.access.filter.service.ranking:Integer=-10",
 		"default.whiteboard.property=" + HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET + "=cxf-servlet",
-		"servlet.context.helper.select.filter=(&(!(liferay.auth.verifier=false))(|(osgi.jaxrs.name=*)(liferay.graphql.auth=true)))"
+		"servlet.context.helper.select.filter=(!(liferay.auth.verifier=false))"
 	},
 	service = {}
 )

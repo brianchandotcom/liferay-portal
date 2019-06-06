@@ -21,10 +21,6 @@ import java.util.Map;
  */
 public class SPIDataDefinition {
 
-	public SPIDataDefinitionField[] getDataDefinitionFields() {
-		return _dataDefinitionFields;
-	}
-
 	public Map<String, Object> getDescription() {
 		return _description;
 	}
@@ -33,14 +29,12 @@ public class SPIDataDefinition {
 		return _name;
 	}
 
-	public String getStorageType() {
-		return _storageType;
+	public SPIDataDefinitionField[] getSPIDataDefinitionFields() {
+		return _spiDataDefinitionFields;
 	}
 
-	public void setDataDefinitionFields(
-		SPIDataDefinitionField[] dataDefinitionFields) {
-
-		_dataDefinitionFields = dataDefinitionFields;
+	public String getStorageType() {
+		return _storageType;
 	}
 
 	public void setDescription(Map<String, Object> description) {
@@ -51,13 +45,19 @@ public class SPIDataDefinition {
 		_name = name;
 	}
 
+	public void setSPIDataDefinitionFields(
+		SPIDataDefinitionField[] spiDataDefinitionFields) {
+
+		_spiDataDefinitionFields = spiDataDefinitionFields;
+	}
+
 	public void setStorageType(String storageType) {
 		_storageType = storageType;
 	}
 
-	private SPIDataDefinitionField[] _dataDefinitionFields;
 	private Map<String, Object> _description;
 	private Map<String, Object> _name;
+	private SPIDataDefinitionField[] _spiDataDefinitionFields;
 	private String _storageType;
 
 }

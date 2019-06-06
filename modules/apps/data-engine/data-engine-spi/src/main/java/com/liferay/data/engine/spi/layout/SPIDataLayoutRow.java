@@ -36,7 +36,8 @@ public class SPIDataLayoutRow {
 		SPIDataLayoutRow spiDataLayoutRow = (SPIDataLayoutRow)obj;
 
 		if (Objects.equals(
-				_dataLayoutColums, spiDataLayoutRow._dataLayoutColums)) {
+				_spiDataLayoutColumns,
+				spiDataLayoutRow._spiDataLayoutColumns)) {
 
 			return true;
 		}
@@ -44,19 +45,21 @@ public class SPIDataLayoutRow {
 		return false;
 	}
 
-	public SPIDataLayoutColumn[] getDataLayoutColums() {
-		return _dataLayoutColums;
+	public SPIDataLayoutColumn[] getSPIDataLayoutColumns() {
+		return _spiDataLayoutColumns;
 	}
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, _dataLayoutColums);
+		return HashUtil.hash(0, _spiDataLayoutColumns);
 	}
 
-	public void setDataLayoutColums(SPIDataLayoutColumn[] dataLayoutColums) {
-		_dataLayoutColums = dataLayoutColums;
+	public void setSPIDataLayoutColumns(
+		SPIDataLayoutColumn[] spiDataLayoutColumns) {
+
+		_spiDataLayoutColumns = spiDataLayoutColumns;
 	}
 
-	private SPIDataLayoutColumn[] _dataLayoutColums;
+	private SPIDataLayoutColumn[] _spiDataLayoutColumns;
 
 }

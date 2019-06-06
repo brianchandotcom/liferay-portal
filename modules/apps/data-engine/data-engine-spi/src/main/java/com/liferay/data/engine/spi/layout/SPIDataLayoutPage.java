@@ -37,7 +37,7 @@ public class SPIDataLayoutPage {
 		SPIDataLayoutPage spiDataLayoutPage = (SPIDataLayoutPage)obj;
 
 		if (Objects.equals(
-				_dataLayoutRows, spiDataLayoutPage._dataLayoutRows) &&
+				_spiDataLayoutRows, spiDataLayoutPage._spiDataLayoutRows) &&
 			Objects.equals(_description, spiDataLayoutPage._description) &&
 			Objects.equals(_title, spiDataLayoutPage._title)) {
 
@@ -47,12 +47,12 @@ public class SPIDataLayoutPage {
 		return false;
 	}
 
-	public SPIDataLayoutRow[] getDataLayoutRows() {
-		return _dataLayoutRows;
-	}
-
 	public Map<String, Object> getDescription() {
 		return _description;
+	}
+
+	public SPIDataLayoutRow[] getSPIDataLayoutRows() {
+		return _spiDataLayoutRows;
 	}
 
 	public Map<String, Object> getTitle() {
@@ -61,27 +61,27 @@ public class SPIDataLayoutPage {
 
 	@Override
 	public int hashCode() {
-		int hash = HashUtil.hash(0, _dataLayoutRows);
+		int hash = HashUtil.hash(0, _spiDataLayoutRows);
 
 		hash = HashUtil.hash(hash, _description);
 
 		return HashUtil.hash(hash, _title);
 	}
 
-	public void setDataLayoutRows(SPIDataLayoutRow[] dataLayoutRows) {
-		_dataLayoutRows = dataLayoutRows;
-	}
-
 	public void setDescription(Map<String, Object> description) {
 		_description = description;
+	}
+
+	public void setSPIDataLayoutRows(SPIDataLayoutRow[] spiDataLayoutRows) {
+		_spiDataLayoutRows = spiDataLayoutRows;
 	}
 
 	public void setTitle(Map<String, Object> title) {
 		_title = title;
 	}
 
-	private SPIDataLayoutRow[] _dataLayoutRows;
 	private Map<String, Object> _description;
+	private SPIDataLayoutRow[] _spiDataLayoutRows;
 	private Map<String, Object> _title;
 
 }

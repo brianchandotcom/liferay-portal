@@ -35,7 +35,8 @@ public class SPIDataLayout {
 
 		SPIDataLayout spiDataLayout = (SPIDataLayout)obj;
 
-		if (Objects.equals(_dataLayoutPages, spiDataLayout._dataLayoutPages) &&
+		if (Objects.equals(
+				_spiDataLayoutPages, spiDataLayout._spiDataLayoutPages) &&
 			Objects.equals(
 				_defaultLanguageId, spiDataLayout._defaultLanguageId) &&
 			Objects.equals(_paginationMode, spiDataLayout._paginationMode)) {
@@ -46,10 +47,6 @@ public class SPIDataLayout {
 		return false;
 	}
 
-	public SPIDataLayoutPage[] getDataLayoutPages() {
-		return _dataLayoutPages;
-	}
-
 	public String getDefaultLanguageId() {
 		return _defaultLanguageId;
 	}
@@ -58,17 +55,17 @@ public class SPIDataLayout {
 		return _paginationMode;
 	}
 
+	public SPIDataLayoutPage[] getSPIDataLayoutPages() {
+		return _spiDataLayoutPages;
+	}
+
 	@Override
 	public int hashCode() {
-		int hash = HashUtil.hash(0, _dataLayoutPages);
+		int hash = HashUtil.hash(0, _spiDataLayoutPages);
 
 		hash = HashUtil.hash(hash, _defaultLanguageId);
 
 		return HashUtil.hash(hash, _paginationMode);
-	}
-
-	public void setDataLayoutPages(SPIDataLayoutPage[] dataLayoutPages) {
-		_dataLayoutPages = dataLayoutPages;
 	}
 
 	public void setDefaultLanguageId(String defaultLanguageId) {
@@ -79,8 +76,12 @@ public class SPIDataLayout {
 		_paginationMode = paginationMode;
 	}
 
-	private SPIDataLayoutPage[] _dataLayoutPages;
+	public void setSPIDataLayoutPages(SPIDataLayoutPage[] spiDataLayoutPages) {
+		_spiDataLayoutPages = spiDataLayoutPages;
+	}
+
 	private String _defaultLanguageId;
 	private String _paginationMode;
+	private SPIDataLayoutPage[] _spiDataLayoutPages;
 
 }

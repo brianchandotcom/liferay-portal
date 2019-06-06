@@ -33,7 +33,7 @@ public class DataLayoutUtil {
 
 		return new SPIDataLayout() {
 			{
-				setDataLayoutPages(
+				setSPIDataLayoutPages(
 					JSONUtil.toArray(
 						jsonObject.getJSONArray("pages"),
 						pageJSONObject -> _toSPIDataLayoutPage(pageJSONObject),
@@ -61,7 +61,7 @@ public class DataLayoutUtil {
 
 		return new SPIDataLayoutPage() {
 			{
-				setDataLayoutRows(
+				setSPIDataLayoutRows(
 					JSONUtil.toArray(
 						jsonObject.getJSONArray("rows"),
 						rowJSONObject -> _toSPIDataLayoutRow(rowJSONObject),
@@ -81,7 +81,7 @@ public class DataLayoutUtil {
 
 		return new SPIDataLayoutRow() {
 			{
-				setDataLayoutColums(
+				setSPIDataLayoutColumns(
 					JSONUtil.toArray(
 						jsonObject.getJSONArray("columns"),
 						columnJSONObject -> _toSPIDataLayoutColumn(

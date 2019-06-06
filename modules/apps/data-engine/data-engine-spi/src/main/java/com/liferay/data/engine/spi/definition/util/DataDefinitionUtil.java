@@ -35,7 +35,7 @@ public class DataDefinitionUtil {
 
 		return new SPIDataDefinition() {
 			{
-				setDataDefinitionFields(
+				setSPIDataDefinitionFields(
 					JSONUtil.toArray(
 						jsonObject.getJSONArray("fields"),
 						fieldJSONObject -> _toSPIDataDefinitionField(

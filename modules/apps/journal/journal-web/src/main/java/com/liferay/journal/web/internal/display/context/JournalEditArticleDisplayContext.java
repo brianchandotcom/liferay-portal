@@ -694,6 +694,10 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	private boolean _isWorkflowEnabled() throws PortalException {
+		if (getClassNameId() > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
+			return false;
+		}
+
 		if (_hasInheritedWorkflowDefinitionLink()) {
 			return true;
 		}

@@ -16,10 +16,4 @@ dependencies {
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-string")
-
-	testCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
-	testCompile group: "easyconf", name: "easyconf", version: "0.9.5"
-	testCompile group: "org.springframework", name: "spring-web", version: "4.1.9.RELEASE"
-	testCompile project(":core:petra:petra-lang")
-	testCompile project(":core:registry-api")
 }

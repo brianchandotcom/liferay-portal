@@ -295,7 +295,9 @@ AUI.add(
 
 					instance.after('fieldsChange', instance._afterFieldsChange);
 
-					instance.addTarget(Liferay.Util.getOpener().Liferay);
+					if (themeDisplay.isStatePopUp()) {
+						instance.addTarget(Liferay.Util.getOpener().Liferay);
+					}
 
 					instance._toggleInputDirection(
 						translationManager.get('defaultLocale')

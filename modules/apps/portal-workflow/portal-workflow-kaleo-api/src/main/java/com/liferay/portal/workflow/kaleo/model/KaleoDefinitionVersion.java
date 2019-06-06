@@ -68,6 +68,10 @@ public interface KaleoDefinitionVersion
 	public KaleoNode getKaleoStartNode()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public boolean hasIncompleteKaleoInstances();
 
 }

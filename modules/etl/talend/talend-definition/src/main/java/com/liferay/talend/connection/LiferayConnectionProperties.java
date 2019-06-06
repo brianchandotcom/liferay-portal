@@ -26,6 +26,7 @@ import java.net.URL;
 
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,7 @@ import org.talend.daikon.i18n.GlobalI18N;
 import org.talend.daikon.i18n.I18nMessageProvider;
 import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.properties.PresentationItem;
+import org.talend.daikon.properties.Properties;
 import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.ValidationResultMutable;
 import org.talend.daikon.properties.presentation.Form;
@@ -60,6 +62,15 @@ public class LiferayConnectionProperties
 	}
 
 	public void afterAnonymousLogin() {
+		refreshLayout(getForm(Form.MAIN));
+		refreshLayout(getForm(FORM_WIZARD));
+	}
+
+	public void afterLoginType() {
+		if (_log.isInfoEnabled()) {
+			_log.info("Authorization method: " + loginType.getValue());
+		}
+
 		refreshLayout(getForm(Form.MAIN));
 		refreshLayout(getForm(FORM_WIZARD));
 	}
@@ -214,33 +225,15 @@ public class LiferayConnectionProperties
 
 		// Wizard form
 
-		Form wizardForm = Form.create(this, FORM_WIZARD);
+		Form wizardForm = _createForm(this, FORM_WIZARD);
 
-		Widget loginWizardWidget = Widget.widget(loginType);
+		_addAuthorizationProps(wizardForm);
 
-		loginWizardWidget.setWidgetType(Widget.ENUMERATION_WIDGET_TYPE);
-		loginWizardWidget.setDeemphasize(true);
+		Widget testConnectionWidget = _createWidget(
+			testConnection, true, Widget.BUTTON_WIDGET_TYPE);
 
-		wizardForm.addRow(loginWizardWidget);
-
-		wizardForm.addRow(name);
-
-		wizardForm.addRow(apiSpecURL);
-
-		wizardForm.addRow(anonymousLogin);
-
-		wizardForm.addRow(userId);
-
-		wizardForm.addRow(password);
-
-		Widget testConnectionWidget = Widget.widget(testConnection);
-
-		testConnectionWidget.setLongRunning(true);
-		testConnectionWidget.setWidgetType(Widget.BUTTON_WIDGET_TYPE);
-
-		Widget advancedFormWizardWidget = Widget.widget(advanced);
-
-		advancedFormWizardWidget.setWidgetType(Widget.BUTTON_WIDGET_TYPE);
+		Widget advancedFormWizardWidget = _createWidget(
+			advanced, Widget.BUTTON_WIDGET_TYPE);
 
 		wizardForm.addRow(advancedFormWizardWidget);
 
@@ -248,94 +241,29 @@ public class LiferayConnectionProperties
 
 		// Main form
 
-		Form mainForm = Form.create(this, Form.MAIN);
+		Form mainForm = _createForm(this, Form.MAIN);
 
-		Widget loginMainWidget = Widget.widget(loginType);
+		_addAuthorizationProps(mainForm);
 
-		loginMainWidget.setWidgetType(Widget.ENUMERATION_WIDGET_TYPE);
-
-		mainForm.addRow(loginMainWidget);
-
-		mainForm.addRow(apiSpecURL);
-
-		mainForm.addRow(anonymousLogin);
-
-		mainForm.addRow(userId);
-
-		mainForm.addColumn(password);
-
-		Widget siteIdWidget = Widget.widget(siteId);
-
-		siteIdWidget.setCallAfter(true);
-		siteIdWidget.setLongRunning(true);
-		siteIdWidget.setWidgetType(Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
-
-		mainForm.addRow(siteIdWidget);
-
-		Widget siteNameWidget = Widget.widget(siteName);
-
-		siteNameWidget.setReadonly(true);
-
-		mainForm.addColumn(siteNameWidget);
+		_addSiteWidget(mainForm);
 
 		// A form for a reference to a connection, used in a tLiferayInput
 		// for example
 
-		Form referenceForm = Form.create(this, Form.REFERENCE);
+		Form referenceForm = _createForm(this, Form.REFERENCE);
 
-		Widget referencedComponentWidget = Widget.widget(referencedComponent);
+		_addAuthorizationProps(referenceForm);
 
-		referencedComponentWidget.setWidgetType(
-			Widget.COMPONENT_REFERENCE_WIDGET_TYPE);
-
-		referenceForm.addRow(referencedComponentWidget);
-
-		Widget loginReferenceWidget = Widget.widget(loginType);
-
-		loginReferenceWidget.setWidgetType(Widget.ENUMERATION_WIDGET_TYPE);
-
-		referenceForm.addRow(loginReferenceWidget);
-
-		referenceForm.addRow(apiSpecURL);
-
-		referenceForm.addRow(anonymousLogin);
-
-		referenceForm.addRow(userId);
-
-		referenceForm.addColumn(password);
-
-		Widget siteIdReferenceWidget = Widget.widget(siteId);
-
-		siteIdReferenceWidget.setCallAfter(true);
-		siteIdReferenceWidget.setLongRunning(true);
-		siteIdReferenceWidget.setWidgetType(
-			Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
-
-		referenceForm.addRow(siteIdReferenceWidget);
-
-		Widget siteNameReferenceWidget = Widget.widget(siteName);
-
-		siteNameReferenceWidget.setReadonly(true);
-
-		referenceForm.addColumn(siteNameReferenceWidget);
+		_addSiteWidget(referenceForm);
 
 		refreshLayout(referenceForm);
 
 		// Advanced form
 
-		Form advancedForm = new Form(this, Form.ADVANCED);
-
-		advancedForm.addRow(connectTimeout);
-
-		advancedForm.addRow(readTimeout);
-
-		advancedForm.addRow(itemsPerPage);
-
-		advancedForm.addRow(followRedirects);
-
-		advancedForm.addRow(forceHttps);
-
-		advanced.setFormtoShow(advancedForm);
+		advanced.setFormtoShow(
+			_createAdvancedForm(
+				this, connectTimeout, readTimeout, itemsPerPage,
+				followRedirects, forceHttps));
 	}
 
 	@Override
@@ -432,6 +360,87 @@ public class LiferayConnectionProperties
 
 		i18nMessages = i18nMessageProvider.getI18nMessages(
 			LiferayConnectionProperties.class);
+	}
+
+	private void _addAuthorizationProps(Form form) {
+		Widget loginWidget = _createWidget(
+			loginType, Widget.ENUMERATION_WIDGET_TYPE);
+
+		if (Objects.equals(form.getName(), FORM_WIZARD)) {
+			loginWidget.setDeemphasize(true);
+		}
+
+		form.addRow(loginWidget);
+
+		form.addRow(apiSpecURL);
+		form.addRow(anonymousLogin);
+		form.addRow(userId);
+
+		form.addColumn(password);
+	}
+
+	private void _addSiteWidget(Form form) {
+		Widget siteIdReferenceWidget = _createWidget(
+			siteId, true, Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
+
+		siteIdReferenceWidget.setCallAfter(true);
+
+		form.addRow(siteIdReferenceWidget);
+
+		Widget siteNameReferenceWidget = Widget.widget(siteName);
+
+		siteNameReferenceWidget.setReadonly(true);
+
+		form.addColumn(siteNameReferenceWidget);
+	}
+
+	private Form _createAdvancedForm(Properties properties, Property... props) {
+		Form advancedForm = new Form(properties, Form.ADVANCED);
+
+		if ((props == null) || (props.length == 0)) {
+			return advancedForm;
+		}
+
+		for (Property property : props) {
+			advancedForm.addRow(property);
+		}
+
+		return advancedForm;
+	}
+
+	private Form _createForm(Properties properties, String formName) {
+		Form form = new Form(properties, formName);
+
+		if (Objects.equals(formName, FORM_WIZARD)) {
+			form.addRow(name);
+		}
+
+		if (Objects.equals(formName, Form.REFERENCE)) {
+			Widget referencedComponentWidget = Widget.widget(
+				referencedComponent);
+
+			referencedComponentWidget.setWidgetType(
+				Widget.COMPONENT_REFERENCE_WIDGET_TYPE);
+
+			form.addRow(referencedComponentWidget);
+		}
+
+		return form;
+	}
+
+	private Widget _createWidget(
+		NamedThing namedThing, boolean longRunning, String widgetType) {
+
+		Widget widget = Widget.widget(namedThing);
+
+		widget.setLongRunning(longRunning);
+		widget.setWidgetType(widgetType);
+
+		return widget;
+	}
+
+	private Widget _createWidget(NamedThing namedThing, String widgetType) {
+		return _createWidget(namedThing, false, widgetType);
 	}
 
 	private static final String _COMMERCE_CATALOG_OAS_URL =

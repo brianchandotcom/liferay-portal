@@ -29,8 +29,7 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 		// UpgradeProcess_7_0_1
 
 		if (hasColumnType(
-				UserNotificationEventTable.class, "type_",
-				"VARCHAR(200) null")) {
+				"UserNotificationEvent", "type_", "VARCHAR(200) null")) {
 
 			return;
 		}

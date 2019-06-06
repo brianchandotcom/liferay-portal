@@ -31,8 +31,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.portal.workflow.exception.IncompleteWorkflowInstancesException;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoDefinitionVersionLocalServiceBaseImpl;
 import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionIdComparator;
@@ -103,10 +103,12 @@ public class KaleoDefinitionVersionLocalServiceImpl
 
 		// Kaleo definition version
 
-		if (kaleoDefinitionVersion.hasIncompleteKaleoInstances()) {
-			throw new WorkflowException(
-				"Cannot delete incomplete workflow definition version" +
-					kaleoDefinitionVersion.getKaleoDefinitionVersionId());
+		int kaleoInstancesCount =
+			kaleoInstanceLocalService.getKaleoInstancesCount(
+				kaleoDefinitionVersion.getKaleoDefinitionVersionId(), false);
+
+		if (kaleoInstancesCount > 0) {
+			throw new IncompleteWorkflowInstancesException(kaleoInstancesCount);
 		}
 
 		kaleoDefinitionVersionPersistence.remove(kaleoDefinitionVersion);

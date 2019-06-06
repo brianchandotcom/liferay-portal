@@ -17,6 +17,7 @@ dependencies {
 	compileOnly group: "org.springframework", name: "spring-context", version: "4.1.9.RELEASE"
 	compileOnly project(":apps:portal-search:portal-search-api")
 	compileOnly project(":apps:portal-search:portal-search-spi")
+	compileOnly project(":apps:portal-workflow:portal-workflow-api")
 	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-api")
 	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-definition-api")
 	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-runtime-api")

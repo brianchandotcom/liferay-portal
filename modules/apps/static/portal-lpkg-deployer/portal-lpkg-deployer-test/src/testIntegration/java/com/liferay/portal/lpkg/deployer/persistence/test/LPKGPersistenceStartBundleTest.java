@@ -32,7 +32,7 @@ import org.osgi.framework.FrameworkUtil;
 public class LPKGPersistenceStartBundleTest {
 
 	@Test
-	public void testStopBundle() throws BundleException {
+	public void testStartBundle() throws BundleException {
 		Bundle bundle = FrameworkUtil.getBundle(
 			LPKGPersistenceStartBundleTest.class);
 

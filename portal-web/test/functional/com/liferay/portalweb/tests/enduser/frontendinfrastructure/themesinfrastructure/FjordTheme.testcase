@@ -33,7 +33,7 @@ definition {
 
 		Site.addSiteTemplateCP(
 			siteName = "Fjord Theme Site",
-			siteTemplateName = "Fjord Theme");
+			siteTemplateName = "Fjord");
 
 		ProductMenu.gotoSite(site = "Fjord Theme Site");
 
@@ -44,7 +44,7 @@ definition {
 
 		AssertTextEquals(
 			key_title = "Dynamic and Customizable for a Healthier You",
-			locator1 = "Header#H2_TITLE",
+			locator1 = "Header#H1_TITLE",
 			value1 = "Dynamic and Customizable for a Healthier You");
 	}
 

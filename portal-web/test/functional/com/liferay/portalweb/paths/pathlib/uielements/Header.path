@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>H1_TITLE</td>
+	<td>//h1[contains(.,'${key_title}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>H2_TITLE</td>
 	<td>//h2[contains(.,'${key_title}')]</td>
 	<td></td>

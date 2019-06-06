@@ -33,28 +33,19 @@ definition {
 
 		Site.addSiteTemplateCP(
 			siteName = "Westeros Bank Theme Site",
-			siteTemplateName = "Westeros Bank Theme");
+			siteTemplateName = "Westeros Bank");
 
 		ProductMenu.gotoSite(site = "Westeros Bank Theme Site");
 
 		AssertClick(
 			key_pageName = "For You",
 			locator1 = "Home#PAGE",
-			value1 = "FOR YOU");
-
-		MouseOver(
-			key_pageName = "Checking and Credit Cards",
-			locator1 = "Home#PAGE");
-
-		AssertClick(
-			key_childPageName = "All credit cards",
-			locator1 = "Home#PAGE_CHILD_PAGE",
-			value1 = "All credit cards");
+			value1 = "For You");
 
 		AssertTextEquals(
-			key_title = "We help you to achieve your goals",
+			key_title = "Always thinking of you",
 			locator1 = "Header#H2_TITLE",
-			value1 = "We help you to achieve your goals");
+			value1 = "Always thinking of you");
 	}
 
 }

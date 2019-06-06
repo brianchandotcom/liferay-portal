@@ -33,19 +33,19 @@ definition {
 
 		Site.addSiteTemplateCP(
 			siteName = "Porygon Theme Site",
-			siteTemplateName = "Porygon Theme");
+			siteTemplateName = "Porygon");
 
 		ProductMenu.gotoSite(site = "Porygon Theme Site");
 
 		AssertClick(
-			key_pageName = "home",
+			key_pageName = "Home",
 			locator1 = "Home#PAGE",
 			value1 = "HOME");
 
 		AssertTextEquals(
-			key_title = "The Earth is all we have in common",
+			key_title = "Astronomy compels the soul to look upward",
 			locator1 = "Header#H2_TITLE",
-			value1 = "The Earth is all we have in common");
+			value1 = "Astronomy compels the soul to look upward");
 	}
 
 }

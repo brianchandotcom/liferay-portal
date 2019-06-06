@@ -23,6 +23,20 @@ Set<Project> projectTemplateProjects = project.parent.subprojects.findAll {
 
 ProjectConfigurer projectConfigurer = gradle.services.get(ProjectConfigurer)
 
+File dir = rootProject.projectDir
+File tmpMavenRepositoryDir = null
+
+while (dir != null) {
+	tmpMavenRepositoryDir = new File(dir, ".m2-tmp")
+
+	if (tmpMavenRepositoryDir.exists()) {
+		break;
+	}
+
+	dir = dir.getParentFile();
+
+}
+
 bundle {
 	includeTransitiveDependencies = true
 }
@@ -59,13 +73,9 @@ configurations {
 }
 
 repositories {
-    File m2Dir = new File("System.properties['maven.repo.local']")
-
-    File tmpMavenRepositoryDir = new File(m2Dir, "-tmp")
-
-    maven {
-        url tmpMavenRepositoryDir
-    }
+	maven {
+		url tmpMavenRepositoryDir
+	}
 }
 
 dependencies {

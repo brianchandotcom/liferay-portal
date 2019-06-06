@@ -52,12 +52,11 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 
 <div class="container-fluid-1280 workflow-definition-container">
 	<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
+		<liferay-ui:message arguments="<%= workflowDefinitionDisplayContext.getMessageArguments((RequiredWorkflowDefinitionException)errorException) %>" key="<%= workflowDefinitionDisplayContext.getMessageKey((RequiredWorkflowDefinitionException)errorException) %>" translateArguments="<%= false %>" />
+	</liferay-ui:error>
 
-		<%
-		RequiredWorkflowDefinitionException requiredWorkflowDefinitionException = (RequiredWorkflowDefinitionException)errorException;
-		%>
-
-		<liferay-ui:message arguments="<%= workflowDefinitionDisplayContext.getMessageArguments(requiredWorkflowDefinitionException.getWorkflowDefinitionLinks()) %>" key="<%= workflowDefinitionDisplayContext.getMessageKey(requiredWorkflowDefinitionException.getWorkflowDefinitionLinks()) %>" translateArguments="<%= false %>" />
+	<liferay-ui:error exception="<%= IncompleteWorkflowInstancesException.class %>">
+		<liferay-ui:message arguments="<%= workflowDefinitionDisplayContext.getMessageArguments((IncompleteWorkflowInstancesException)errorException) %>" key="<%= workflowDefinitionDisplayContext.getMessageKey((IncompleteWorkflowInstancesException)errorException) %>" translateArguments="<%= false %>" />
 	</liferay-ui:error>
 
 	<liferay-ui:search-container

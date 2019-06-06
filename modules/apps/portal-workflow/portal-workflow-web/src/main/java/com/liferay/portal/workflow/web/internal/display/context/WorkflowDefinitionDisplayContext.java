@@ -39,9 +39,11 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
+import com.liferay.portal.workflow.exception.IncompleteWorkflowInstancesException;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.web.internal.display.context.util.WorkflowDefinitionRequestHelper;
@@ -257,9 +259,31 @@ public class WorkflowDefinitionDisplayContext {
 		};
 	}
 
+	public String getManageSubmissionsLink() {
+		return _buildErrorLink(
+			"configure-submissions", getWorkflowInstancesPortletURL());
+	}
+
 	public Object[] getMessageArguments(
-			List<WorkflowDefinitionLink> workflowDefinitionLinks)
+			IncompleteWorkflowInstancesException
+				incompleteWorkflowInstancesException)
 		throws PortletException {
+
+		return new Object[] {
+			String.valueOf(
+				incompleteWorkflowInstancesException.
+					getWorkflowInstancesCount()),
+			getManageSubmissionsLink()
+		};
+	}
+
+	public Object[] getMessageArguments(
+			RequiredWorkflowDefinitionException
+				requiredWorkflowDefinitionException)
+		throws PortletException {
+
+		List<WorkflowDefinitionLink> workflowDefinitionLinks =
+			requiredWorkflowDefinitionException.getWorkflowDefinitionLinks();
 
 		if (workflowDefinitionLinks.isEmpty()) {
 			return new Object[0];
@@ -302,7 +326,24 @@ public class WorkflowDefinitionDisplayContext {
 	}
 
 	public String getMessageKey(
-		List<WorkflowDefinitionLink> workflowDefinitionLinks) {
+		IncompleteWorkflowInstancesException
+			incompleteWorkflowInstancesException) {
+
+		if (incompleteWorkflowInstancesException.getWorkflowInstancesCount() ==
+				1) {
+
+			return "there-is-x-unresolved-workflow-submission-x";
+		}
+
+		return "there-are-x-unresolved-workflow-submissions-x";
+	}
+
+	public String getMessageKey(
+		RequiredWorkflowDefinitionException
+			requiredWorkflowDefinitionException) {
+
+		List<WorkflowDefinitionLink> workflowDefinitionLinks =
+			requiredWorkflowDefinitionException.getWorkflowDefinitionLinks();
 
 		if (workflowDefinitionLinks.isEmpty()) {
 			return StringPool.BLANK;
@@ -538,17 +579,9 @@ public class WorkflowDefinitionDisplayContext {
 			workflowDefinition -> predicate.test(workflowDefinition));
 	}
 
-	protected String getConfigureAssignementLink() throws PortletException {
-		PortletURL portletURL = getWorkflowDefinitionLinkPortletURL();
-
-		ResourceBundle resourceBundle = getResourceBundle();
-
-		return StringUtil.replace(
-			_HTML, new String[] {"[$RENDER_URL$]", "[$MESSAGE$]"},
-			new String[] {
-				portletURL.toString(),
-				LanguageUtil.get(resourceBundle, "configure-assignments")
-			});
+	protected String getConfigureAssignementLink() {
+		return _buildErrorLink(
+			"configure-assignments", getWorkflowDefinitionLinkPortletURL());
 	}
 
 	protected String getLocalizedAssetName(String className) {
@@ -591,6 +624,28 @@ public class WorkflowDefinitionDisplayContext {
 			getWorkflowDefitionOrderByComparator(
 				orderByCol, orderByType,
 				_workflowDefinitionRequestHelper.getLocale());
+	}
+
+	protected PortletURL getWorkflowInstancesPortletURL() {
+		LiferayPortletResponse response =
+			_workflowDefinitionRequestHelper.getLiferayPortletResponse();
+
+		PortletURL portletURL = response.createLiferayPortletURL(
+			WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW_INSTANCE,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcPath", "/view.jsp");
+
+		return portletURL;
+	}
+
+	private String _buildErrorLink(String messageKey, PortletURL portletURL) {
+		return StringUtil.replace(
+			_HTML, new String[] {"[$RENDER_URL$]", "[$MESSAGE$]"},
+			new String[] {
+				portletURL.toString(),
+				LanguageUtil.get(getResourceBundle(), messageKey)
+			});
 	}
 
 	private String _getCurrentNavigation(

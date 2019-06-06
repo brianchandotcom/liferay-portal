@@ -202,12 +202,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 				<div class="card-horizontal main-content-card">
 					<div class="card-row-padded">
 						<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
-
-							<%
-							RequiredWorkflowDefinitionException rwde = (RequiredWorkflowDefinitionException)errorException;
-							%>
-
-							<liferay-ui:message arguments="<%= workflowDefinitionDisplayContext.getMessageArguments(rwde.getWorkflowDefinitionLinks()) %>" key="<%= workflowDefinitionDisplayContext.getMessageKey(rwde.getWorkflowDefinitionLinks()) %>" translateArguments="<%= false %>" />
+							<liferay-ui:message arguments="<%= workflowDefinitionDisplayContext.getMessageArguments((RequiredWorkflowDefinitionException)errorException) %>" key="<%= workflowDefinitionDisplayContext.getMessageKey((RequiredWorkflowDefinitionException)errorException) %>" translateArguments="<%= false %>" />
 						</liferay-ui:error>
 
 						<liferay-ui:error exception="<%= WorkflowDefinitionFileException.class %>">

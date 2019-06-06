@@ -30,6 +30,7 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.ext.Provider;
 
+import com.liferay.portal.kernel.util.ListUtil;
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.interceptor.InterceptorChain;
 import org.apache.cxf.jaxrs.lifecycle.ResourceProvider;
@@ -118,7 +119,7 @@ public class BeanValidationInterceptor
 		Message message, Object resourceInstance, Method method,
 		List<Object> arguments) {
 
-		if (arguments.isEmpty()) {
+		if (ListUtil.isEmpty(arguments)) {
 			return;
 		}
 

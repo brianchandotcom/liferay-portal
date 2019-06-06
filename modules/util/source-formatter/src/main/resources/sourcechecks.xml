@@ -31,7 +31,7 @@
 		</check>
 		<check name="BNDWhitespaceCheck" />
 
-		<!-- Module checks -->
+		<!-- Module Source Checks -->
 
 		<check name="BNDBundleActivatorCheck">
 			<property name="enabled" value="false" />
@@ -222,7 +222,7 @@
 		<check name="UnparameterizedClassCheck" />
 		<check name="ValidatorEqualsCheck" />
 
-		<!-- Module checks -->
+		<!-- Module Source Checks -->
 
 		<check name="JavaModuleComponentCheck" />
 		<check name="JavaModuleExtendedObjectClassDefinitionCheck" />
@@ -248,11 +248,11 @@
 			<property name="serviceReferenceUtilClassNames" value="com.liferay.portal.kernel.util.PortalUtil" />
 		</check>
 
-		<!-- Plugins checks -->
+		<!-- Plugin Source Checks -->
 
 		<check name="CompatClassImportsCheck" />
 
-		<!-- Portal checks -->
+		<!-- Portal Source Checks -->
 
 		<check name="JavaAnonymousInnerClassCheck">
 			<property name="enabled" value="false" />
@@ -366,18 +366,18 @@
 		<check name="UnparameterizedClassCheck" />
 		<check name="ValidatorEqualsCheck" />
 
-		<!-- Module checks -->
+		<!-- Module Source Checks -->
 
 		<check name="JSPModuleIllegalImportsCheck" />
 		<check name="JSPServiceUtilCheck">
 			<property name="enabled" value="false" />
 		</check>
 
-		<!-- Plugins checks -->
+		<!-- Plugin Source Checks -->
 
 		<check name="CompatClassImportsCheck" />
 
-		<!-- Portal checks -->
+		<!-- Portal Source Checks -->
 
 		<check name="JSPLanguageKeysCheck" />
 		<check name="JSPLogParametersCheck">
@@ -400,7 +400,7 @@
 			<property name="enabled" value="false" />
 		</check>
 
-		<!-- Portal checks -->
+		<!-- Portal Source Checks -->
 
 		<check name="LanguageKeysCheck" />
 	</source-processor>
@@ -465,7 +465,7 @@
 			<property name="allowLeadingSpaces" value="true" />
 		</check>
 
-		<!-- Portal checks -->
+		<!-- Portal Source Checks -->
 
 		<check name="PropertiesServiceKeysCheck" />
 	</source-processor>
@@ -518,7 +518,7 @@
 		<check name="XMLToggleFileCheck" />
 		<check name="XMLWhitespaceCheck" />
 
-		<!-- Portal checks -->
+		<!-- Portal Source Checks -->
 
 		<check name="XMLEmptyLinesCheck" />
 		<check name="XMLIvyFileCheck" />

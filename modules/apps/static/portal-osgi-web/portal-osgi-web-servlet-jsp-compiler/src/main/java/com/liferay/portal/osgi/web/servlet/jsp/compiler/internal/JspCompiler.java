@@ -161,6 +161,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		JspCompilationContext jspCompilationContext,
 		ErrorDispatcher errorDispatcher, boolean suppressLogging) {
 
+		options.add("-XDuseUnsharedTable");
+
 		Options options = jspCompilationContext.getOptions();
 
 		_classPath.add(options.getScratchDir());

@@ -121,7 +121,7 @@ public class CacheManager {
      * System property to enable creation of a shutdown hook for CacheManager.
      */
     public static final String ENABLE_SHUTDOWN_HOOK_PROPERTY = "net.sf.ehcache.enableShutdownHook";
-
+    
 
     private static final Logger LOG = LoggerFactory.getLogger(CacheManager.class);
 
@@ -160,7 +160,7 @@ public class CacheManager {
     private static final Map<String, CacheManager> INITIALIZING_CACHE_MANAGERS_MAP = new ConcurrentHashMap<String, CacheManager>();
 
     private static final long LOCAL_TX_RECOVERY_THREAD_JOIN_TIMEOUT = 1000L;
-
+    
     static final String LOCAL_CACHE_NAME_PREFIX = "local_shadow_cache_for_";
 
     /**
@@ -215,15 +215,11 @@ public class CacheManager {
 
     private MBeanRegistrationProvider mbeanRegistrationProvider;
 
-    private FailSafeTimer cacheManagerTimer;
-
     private volatile TerracottaClient terracottaClient;
 
     private volatile TransactionManagerLookup transactionManagerLookup;
 
     private volatile TransactionController transactionController;
-
-    private volatile Thread localTransactionsRecoveryThread;
 
     private final ConcurrentMap<String, SoftLockManager> softLockManagers = new ConcurrentHashMap<String, SoftLockManager>();
 
@@ -413,12 +409,7 @@ public class CacheManager {
                 diskStorePathManager.releaseLock();
             }
 
-            if (cacheManagerTimer != null) {
-                cacheManagerTimer.cancel();
-                cacheManagerTimer.purge();
-            }
-
-            synchronized (CacheManager.class) {
+			synchronized (CacheManager.class) {
                 final String name = CACHE_MANAGERS_REVERSE_MAP.remove(this);
                 CACHE_MANAGERS_MAP.remove(name);
             }
@@ -485,10 +476,8 @@ public class CacheManager {
         cacheManagerEventListenerRegistry.init();
         addShutdownHookIfRequired();
 
-        cacheManagerTimer = new FailSafeTimer(getName());
-
         mbeanRegistrationProvider = MBEAN_REGISTRATION_PROVIDER_FACTORY.createMBeanRegistrationProvider(configuration);
-
+        
         //Wait for the Orchestrator if required. This should be done before creating the caches
         if (configuration.getTerracottaConfiguration() != null) {
             if (configuration.getTerracottaConfiguration().isWanEnabledTSA()) {
@@ -524,24 +513,6 @@ public class CacheManager {
 
         // init XA recovery
         transactionManagerLookup.init();
-
-        // start local tx recovery
-        localTransactionsRecoveryThread = new Thread() {
-            @Override
-            public void run() {
-                TransactionController ctrl = transactionController;
-                if (ctrl != null) {
-                    try {
-                        ctrl.getRecoveryManager().recover();
-                    } catch (Exception e) {
-                        LOG.warn("local transactions recovery thread failed", e);
-                    }
-                }
-            }
-        };
-        localTransactionsRecoveryThread.setName("ehcache local transactions recovery");
-        localTransactionsRecoveryThread.setDaemon(true);
-        localTransactionsRecoveryThread.start();
     }
 
 
@@ -1511,16 +1482,6 @@ public class CacheManager {
      */
     public void shutdown() {
         synchronized (this) {
-            if (localTransactionsRecoveryThread != null && localTransactionsRecoveryThread.isAlive()) {
-                localTransactionsRecoveryThread.interrupt();
-                try {
-                    localTransactionsRecoveryThread.join(LOCAL_TX_RECOVERY_THREAD_JOIN_TIMEOUT);
-                } catch (InterruptedException ie) {
-                    Thread.currentThread().interrupt();
-                }
-            }
-            localTransactionsRecoveryThread = null;
-
             if (status.equals(Status.STATUS_SHUTDOWN)) {
                 LOG.debug("CacheManager already shutdown");
                 return;
@@ -1536,13 +1497,7 @@ public class CacheManager {
                     cacheManagerPeerProvider.dispose();
                 }
             }
-
-            // cancel the cacheManager timer and all tasks
-            if (cacheManagerTimer != null) {
-                cacheManagerTimer.cancel();
-                cacheManagerTimer.purge();
-            }
-
+	
             cacheManagerEventListenerRegistry.dispose();
 
             ALL_CACHE_MANAGERS.remove(this);
@@ -1822,7 +1777,7 @@ public class CacheManager {
      * @since 1.7
      */
     public FailSafeTimer getTimer() {
-        return cacheManagerTimer;
+        return null;
     }
 
     /**
@@ -2118,7 +2073,7 @@ public class CacheManager {
      */
     static CacheManager getInitializingCacheManager(String name) {
         return INITIALIZING_CACHE_MANAGERS_MAP.get(name);
-    }
+    }    
 
     /**
      * Send a management event to the cluster
@@ -2137,3 +2092,4 @@ public class CacheManager {
     }
 
 }
+/* @generated */

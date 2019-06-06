@@ -3,17 +3,21 @@ components:
         Collection:
             properties:
                 additionCount:
+                    format: int64
                     type: integer
                 collectionId:
+                    format: int64
                     type: integer
                 companyId:
                     format: int64
                     type: integer
                 deletionCount:
+                    format: int64
                     type: integer
                 description:
                     type: string
                 modificationCount:
+                    format: int64
                     type: integer
                 name:
                     type: string

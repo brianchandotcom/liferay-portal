@@ -398,6 +398,10 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		return new MessageBoardThread();
 	}
 
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
+		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}

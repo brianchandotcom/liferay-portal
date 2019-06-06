@@ -19,7 +19,10 @@ import com.liferay.headless.admin.taxonomy.internal.graphql.query.v1_0.Query;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.KeywordResource;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
+
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -68,6 +71,14 @@ public class ServletDataImpl implements ServletData {
 	@Override
 	public Query getQuery() {
 		return new Query();
+	}
+
+	@Override
+	public void setAcceptLanguageFunction(
+		Function<Object, AcceptLanguage> acceptLanguageFunction) {
+
+		Query.setAcceptLanguageFunction(acceptLanguageFunction);
+		Mutation.setAcceptLanguageFunction(acceptLanguageFunction);
 	}
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)

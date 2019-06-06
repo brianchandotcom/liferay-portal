@@ -25,7 +25,10 @@ import com.liferay.headless.admin.user.resource.v1_0.SegmentResource;
 import com.liferay.headless.admin.user.resource.v1_0.SegmentUserResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.user.resource.v1_0.WebUrlResource;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
+
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -79,6 +82,13 @@ public class ServletDataImpl implements ServletData {
 	@Override
 	public Query getQuery() {
 		return new Query();
+	}
+
+	@Override
+	public void setAcceptLanguageFunction(
+		Function<Object, AcceptLanguage> acceptLanguageFunction) {
+
+		Query.setAcceptLanguageFunction(acceptLanguageFunction);
 	}
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)

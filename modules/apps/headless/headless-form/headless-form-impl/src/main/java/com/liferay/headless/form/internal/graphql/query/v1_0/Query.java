@@ -26,6 +26,7 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -33,7 +34,10 @@ import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import graphql.schema.DataFetchingEnvironment;
+
 import java.util.Collection;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -80,16 +84,22 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Form getForm(@GraphQLName("formId") Long formId) throws Exception {
+	public Form getForm(
+			DataFetchingEnvironment dataFetchingEnvironment,
+			@GraphQLName("formId") Long formId)
+		throws Exception {
+
 		return _applyComponentServiceObjects(
 			_formResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			formResource -> _populateResourceContext(
+				dataFetchingEnvironment, formResource),
 			formResource -> formResource.getForm(formId));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Form> getSiteFormsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -97,7 +107,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_formResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			formResource -> _populateResourceContext(
+				dataFetchingEnvironment, formResource),
 			formResource -> {
 				Page paginationPage = formResource.getSiteFormsPage(
 					siteId, Pagination.of(pageSize, page));
@@ -109,12 +120,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public FormDocument getFormDocument(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("formDocumentId") Long formDocumentId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_formDocumentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			formDocumentResource -> _populateResourceContext(
+				dataFetchingEnvironment, formDocumentResource),
 			formDocumentResource -> formDocumentResource.getFormDocument(
 				formDocumentId));
 	}
@@ -122,12 +135,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public FormRecord getFormRecord(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("formRecordId") Long formRecordId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_formRecordResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			formRecordResource -> _populateResourceContext(
+				dataFetchingEnvironment, formRecordResource),
 			formRecordResource -> formRecordResource.getFormRecord(
 				formRecordId));
 	}
@@ -135,6 +150,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<FormRecord> getFormFormRecordsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("formId") Long formId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -142,7 +158,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_formRecordResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			formRecordResource -> _populateResourceContext(
+				dataFetchingEnvironment, formRecordResource),
 			formRecordResource -> {
 				Page paginationPage = formRecordResource.getFormFormRecordsPage(
 					formId, Pagination.of(pageSize, page));
@@ -154,12 +171,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public FormRecord getFormFormRecordByLatestDraft(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("formId") Long formId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_formRecordResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			formRecordResource -> _populateResourceContext(
+				dataFetchingEnvironment, formRecordResource),
 			formRecordResource ->
 				formRecordResource.getFormFormRecordByLatestDraft(formId));
 	}
@@ -167,12 +186,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public FormStructure getFormStructure(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("formStructureId") Long formStructureId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_formStructureResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			formStructureResource -> _populateResourceContext(
+				dataFetchingEnvironment, formStructureResource),
 			formStructureResource -> formStructureResource.getFormStructure(
 				formStructureId));
 	}
@@ -180,6 +201,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<FormStructure> getSiteFormStructuresPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -187,7 +209,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_formStructureResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			formStructureResource -> _populateResourceContext(
+				dataFetchingEnvironment, formStructureResource),
 			formStructureResource -> {
 				Page paginationPage =
 					formStructureResource.getSiteFormStructuresPage(
@@ -216,8 +239,14 @@ public class Query {
 		}
 	}
 
-	private void _populateResourceContext(FormResource formResource)
+	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
+			FormResource formResource)
 		throws Exception {
+
+		formResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		formResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -225,16 +254,27 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			FormDocumentResource formDocumentResource)
 		throws Exception {
+
+		formDocumentResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		formDocumentResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
 
-	private void _populateResourceContext(FormRecordResource formRecordResource)
+	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
+			FormRecordResource formRecordResource)
 		throws Exception {
+
+		formRecordResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		formRecordResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -242,14 +282,26 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			FormStructureResource formStructureResource)
 		throws Exception {
+
+		formStructureResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		formStructureResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	public static void setAcceptLanguageFunction(
+		Function<Object, AcceptLanguage> acceptLanguageFunction) {
+
+		_acceptLanguageFunction = acceptLanguageFunction;
+	}
+
+	private static Function<Object, AcceptLanguage> _acceptLanguageFunction;
 	private static ComponentServiceObjects<FormResource>
 		_formResourceComponentServiceObjects;
 	private static ComponentServiceObjects<FormDocumentResource>

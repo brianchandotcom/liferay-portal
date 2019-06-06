@@ -16,6 +16,9 @@ package com.liferay.headless.admin.user.internal.graphql.mutation.v1_0;
 
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -65,5 +68,13 @@ public class Mutation {
 			componentServiceObjects.ungetService(resource);
 		}
 	}
+
+	public static void setAcceptLanguageFunction(
+		Function<Object, AcceptLanguage> acceptLanguageFunction) {
+
+		_acceptLanguageFunction = acceptLanguageFunction;
+	}
+
+	private static Function<Object, AcceptLanguage> _acceptLanguageFunction;
 
 }

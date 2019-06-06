@@ -47,11 +47,16 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
 import graphql.annotations.annotationTypes.GraphQLName;
+
+import graphql.schema.DataFetchingEnvironment;
+
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -180,50 +185,58 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public void deleteBlogPosting(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("blogPostingId") Long blogPostingId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_blogPostingResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			blogPostingResource -> _populateResourceContext(
+				dataFetchingEnvironment, blogPostingResource),
 			blogPostingResource -> blogPostingResource.deleteBlogPosting(
 				blogPostingId));
 	}
 
 	@GraphQLInvokeDetached
 	public BlogPosting patchBlogPosting(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("blogPosting") BlogPosting blogPosting)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_blogPostingResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			blogPostingResource -> _populateResourceContext(
+				dataFetchingEnvironment, blogPostingResource),
 			blogPostingResource -> blogPostingResource.patchBlogPosting(
 				blogPostingId, blogPosting));
 	}
 
 	@GraphQLInvokeDetached
 	public BlogPosting putBlogPosting(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("blogPosting") BlogPosting blogPosting)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_blogPostingResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			blogPostingResource -> _populateResourceContext(
+				dataFetchingEnvironment, blogPostingResource),
 			blogPostingResource -> blogPostingResource.putBlogPosting(
 				blogPostingId, blogPosting));
 	}
 
 	@GraphQLInvokeDetached
 	public void deleteBlogPostingMyRating(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("blogPostingId") Long blogPostingId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_blogPostingResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			blogPostingResource -> _populateResourceContext(
+				dataFetchingEnvironment, blogPostingResource),
 			blogPostingResource ->
 				blogPostingResource.deleteBlogPostingMyRating(blogPostingId));
 	}
@@ -231,26 +244,30 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Rating postBlogPostingMyRating(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("rating") Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_blogPostingResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			blogPostingResource -> _populateResourceContext(
+				dataFetchingEnvironment, blogPostingResource),
 			blogPostingResource -> blogPostingResource.postBlogPostingMyRating(
 				blogPostingId, rating));
 	}
 
 	@GraphQLInvokeDetached
 	public Rating putBlogPostingMyRating(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("rating") Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_blogPostingResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			blogPostingResource -> _populateResourceContext(
+				dataFetchingEnvironment, blogPostingResource),
 			blogPostingResource -> blogPostingResource.putBlogPostingMyRating(
 				blogPostingId, rating));
 	}
@@ -258,25 +275,29 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public BlogPosting postSiteBlogPosting(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("blogPosting") BlogPosting blogPosting)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_blogPostingResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			blogPostingResource -> _populateResourceContext(
+				dataFetchingEnvironment, blogPostingResource),
 			blogPostingResource -> blogPostingResource.postSiteBlogPosting(
 				siteId, blogPosting));
 	}
 
 	@GraphQLInvokeDetached
 	public void deleteBlogPostingImage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("blogPostingImageId") Long blogPostingImageId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_blogPostingImageResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			blogPostingImageResource -> _populateResourceContext(
+				dataFetchingEnvironment, blogPostingImageResource),
 			blogPostingImageResource ->
 				blogPostingImageResource.deleteBlogPostingImage(
 					blogPostingImageId));
@@ -286,13 +307,15 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	@GraphQLName("postSiteBlogPostingImageSiteIdMultipartBody")
 	public BlogPostingImage postSiteBlogPostingImage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_blogPostingImageResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			blogPostingImageResource -> _populateResourceContext(
+				dataFetchingEnvironment, blogPostingImageResource),
 			blogPostingImageResource ->
 				blogPostingImageResource.postSiteBlogPostingImage(
 					siteId, multipartBody));
@@ -301,49 +324,58 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Comment postBlogPostingComment(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("comment") Comment comment)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_commentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			commentResource -> _populateResourceContext(
+				dataFetchingEnvironment, commentResource),
 			commentResource -> commentResource.postBlogPostingComment(
 				blogPostingId, comment));
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteComment(@GraphQLName("commentId") Long commentId)
+	public void deleteComment(
+			DataFetchingEnvironment dataFetchingEnvironment,
+			@GraphQLName("commentId") Long commentId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_commentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			commentResource -> _populateResourceContext(
+				dataFetchingEnvironment, commentResource),
 			commentResource -> commentResource.deleteComment(commentId));
 	}
 
 	@GraphQLInvokeDetached
 	public Comment putComment(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("commentId") Long commentId,
 			@GraphQLName("comment") Comment comment)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_commentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			commentResource -> _populateResourceContext(
+				dataFetchingEnvironment, commentResource),
 			commentResource -> commentResource.putComment(commentId, comment));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Comment postCommentComment(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("parentCommentId") Long parentCommentId,
 			@GraphQLName("comment") Comment comment)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_commentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			commentResource -> _populateResourceContext(
+				dataFetchingEnvironment, commentResource),
 			commentResource -> commentResource.postCommentComment(
 				parentCommentId, comment));
 	}
@@ -351,13 +383,15 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Comment postDocumentComment(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("documentId") Long documentId,
 			@GraphQLName("comment") Comment comment)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_commentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			commentResource -> _populateResourceContext(
+				dataFetchingEnvironment, commentResource),
 			commentResource -> commentResource.postDocumentComment(
 				documentId, comment));
 	}
@@ -365,13 +399,15 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Comment postStructuredContentComment(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("comment") Comment comment)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_commentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			commentResource -> _populateResourceContext(
+				dataFetchingEnvironment, commentResource),
 			commentResource -> commentResource.postStructuredContentComment(
 				structuredContentId, comment));
 	}
@@ -380,37 +416,44 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	@GraphQLName("postDocumentFolderDocumentDocumentFolderIdMultipartBody")
 	public Document postDocumentFolderDocument(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("documentFolderId") Long documentFolderId,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			documentResource -> _populateResourceContext(
+				dataFetchingEnvironment, documentResource),
 			documentResource -> documentResource.postDocumentFolderDocument(
 				documentFolderId, multipartBody));
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteDocument(@GraphQLName("documentId") Long documentId)
+	public void deleteDocument(
+			DataFetchingEnvironment dataFetchingEnvironment,
+			@GraphQLName("documentId") Long documentId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			documentResource -> _populateResourceContext(
+				dataFetchingEnvironment, documentResource),
 			documentResource -> documentResource.deleteDocument(documentId));
 	}
 
 	@GraphQLInvokeDetached
 	@GraphQLName("patchDocumentDocumentIdMultipartBody")
 	public Document patchDocument(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("documentId") Long documentId,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			documentResource -> _populateResourceContext(
+				dataFetchingEnvironment, documentResource),
 			documentResource -> documentResource.patchDocument(
 				documentId, multipartBody));
 	}
@@ -418,25 +461,29 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	@GraphQLName("putDocumentDocumentIdMultipartBody")
 	public Document putDocument(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("documentId") Long documentId,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			documentResource -> _populateResourceContext(
+				dataFetchingEnvironment, documentResource),
 			documentResource -> documentResource.putDocument(
 				documentId, multipartBody));
 	}
 
 	@GraphQLInvokeDetached
 	public void deleteDocumentMyRating(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("documentId") Long documentId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			documentResource -> _populateResourceContext(
+				dataFetchingEnvironment, documentResource),
 			documentResource -> documentResource.deleteDocumentMyRating(
 				documentId));
 	}
@@ -444,26 +491,30 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Rating postDocumentMyRating(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("documentId") Long documentId,
 			@GraphQLName("rating") Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			documentResource -> _populateResourceContext(
+				dataFetchingEnvironment, documentResource),
 			documentResource -> documentResource.postDocumentMyRating(
 				documentId, rating));
 	}
 
 	@GraphQLInvokeDetached
 	public Rating putDocumentMyRating(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("documentId") Long documentId,
 			@GraphQLName("rating") Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			documentResource -> _populateResourceContext(
+				dataFetchingEnvironment, documentResource),
 			documentResource -> documentResource.putDocumentMyRating(
 				documentId, rating));
 	}
@@ -472,38 +523,44 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	@GraphQLName("postSiteDocumentSiteIdMultipartBody")
 	public Document postSiteDocument(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			documentResource -> _populateResourceContext(
+				dataFetchingEnvironment, documentResource),
 			documentResource -> documentResource.postSiteDocument(
 				siteId, multipartBody));
 	}
 
 	@GraphQLInvokeDetached
 	public void deleteDocumentFolder(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("documentFolderId") Long documentFolderId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_documentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			documentFolderResource -> _populateResourceContext(
+				dataFetchingEnvironment, documentFolderResource),
 			documentFolderResource ->
 				documentFolderResource.deleteDocumentFolder(documentFolderId));
 	}
 
 	@GraphQLInvokeDetached
 	public DocumentFolder patchDocumentFolder(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("documentFolderId") Long documentFolderId,
 			@GraphQLName("documentFolder") DocumentFolder documentFolder)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_documentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			documentFolderResource -> _populateResourceContext(
+				dataFetchingEnvironment, documentFolderResource),
 			documentFolderResource ->
 				documentFolderResource.patchDocumentFolder(
 					documentFolderId, documentFolder));
@@ -511,13 +568,15 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public DocumentFolder putDocumentFolder(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("documentFolderId") Long documentFolderId,
 			@GraphQLName("documentFolder") DocumentFolder documentFolder)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_documentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			documentFolderResource -> _populateResourceContext(
+				dataFetchingEnvironment, documentFolderResource),
 			documentFolderResource -> documentFolderResource.putDocumentFolder(
 				documentFolderId, documentFolder));
 	}
@@ -525,13 +584,15 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public DocumentFolder postDocumentFolderDocumentFolder(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("parentDocumentFolderId") Long parentDocumentFolderId,
 			@GraphQLName("documentFolder") DocumentFolder documentFolder)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_documentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			documentFolderResource -> _populateResourceContext(
+				dataFetchingEnvironment, documentFolderResource),
 			documentFolderResource ->
 				documentFolderResource.postDocumentFolderDocumentFolder(
 					parentDocumentFolderId, documentFolder));
@@ -540,13 +601,15 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public DocumentFolder postSiteDocumentFolder(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("documentFolder") DocumentFolder documentFolder)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_documentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			documentFolderResource -> _populateResourceContext(
+				dataFetchingEnvironment, documentFolderResource),
 			documentFolderResource ->
 				documentFolderResource.postSiteDocumentFolder(
 					siteId, documentFolder));
@@ -554,12 +617,14 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public void deleteKnowledgeBaseArticle(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseArticleResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseArticleResource),
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.deleteKnowledgeBaseArticle(
 					knowledgeBaseArticleId));
@@ -567,6 +632,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public KnowledgeBaseArticle patchKnowledgeBaseArticle(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
 			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
 				knowledgeBaseArticle)
@@ -574,7 +640,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseArticleResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseArticleResource),
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.patchKnowledgeBaseArticle(
 					knowledgeBaseArticleId, knowledgeBaseArticle));
@@ -582,6 +649,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public KnowledgeBaseArticle putKnowledgeBaseArticle(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
 			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
 				knowledgeBaseArticle)
@@ -589,7 +657,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseArticleResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseArticleResource),
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.putKnowledgeBaseArticle(
 					knowledgeBaseArticleId, knowledgeBaseArticle));
@@ -597,12 +666,14 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public void deleteKnowledgeBaseArticleMyRating(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseArticleResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseArticleResource),
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.deleteKnowledgeBaseArticleMyRating(
 					knowledgeBaseArticleId));
@@ -611,13 +682,15 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Rating postKnowledgeBaseArticleMyRating(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
 			@GraphQLName("rating") Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseArticleResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseArticleResource),
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.postKnowledgeBaseArticleMyRating(
 					knowledgeBaseArticleId, rating));
@@ -625,13 +698,15 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public Rating putKnowledgeBaseArticleMyRating(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
 			@GraphQLName("rating") Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseArticleResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseArticleResource),
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.putKnowledgeBaseArticleMyRating(
 					knowledgeBaseArticleId, rating));
@@ -640,6 +715,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("parentKnowledgeBaseArticleId") Long
 				parentKnowledgeBaseArticleId,
 			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
@@ -648,7 +724,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseArticleResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseArticleResource),
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.
 					postKnowledgeBaseArticleKnowledgeBaseArticle(
@@ -658,6 +735,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public KnowledgeBaseArticle postKnowledgeBaseFolderKnowledgeBaseArticle(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
 			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
 				knowledgeBaseArticle)
@@ -665,7 +743,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseArticleResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseArticleResource),
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.
 					postKnowledgeBaseFolderKnowledgeBaseArticle(
@@ -675,6 +754,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public KnowledgeBaseArticle postSiteKnowledgeBaseArticle(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
 				knowledgeBaseArticle)
@@ -682,7 +762,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_knowledgeBaseArticleResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseArticleResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseArticleResource),
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
 					siteId, knowledgeBaseArticle));
@@ -695,6 +776,7 @@ public class Mutation {
 	)
 	public KnowledgeBaseAttachment
 			postKnowledgeBaseArticleKnowledgeBaseAttachment(
+				DataFetchingEnvironment dataFetchingEnvironment,
 				@GraphQLName("knowledgeBaseArticleId") Long
 					knowledgeBaseArticleId,
 				@GraphQLName("multipartBody") MultipartBody multipartBody)
@@ -702,7 +784,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_knowledgeBaseAttachmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseAttachmentResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseAttachmentResource),
 			knowledgeBaseAttachmentResource ->
 				knowledgeBaseAttachmentResource.
 					postKnowledgeBaseArticleKnowledgeBaseAttachment(
@@ -711,13 +794,15 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public void deleteKnowledgeBaseAttachment(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("knowledgeBaseAttachmentId") Long
 				knowledgeBaseAttachmentId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_knowledgeBaseAttachmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseAttachmentResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseAttachmentResource),
 			knowledgeBaseAttachmentResource ->
 				knowledgeBaseAttachmentResource.deleteKnowledgeBaseAttachment(
 					knowledgeBaseAttachmentId));
@@ -725,12 +810,14 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public void deleteKnowledgeBaseFolder(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_knowledgeBaseFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseFolderResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseFolderResource),
 			knowledgeBaseFolderResource ->
 				knowledgeBaseFolderResource.deleteKnowledgeBaseFolder(
 					knowledgeBaseFolderId));
@@ -738,6 +825,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public KnowledgeBaseFolder patchKnowledgeBaseFolder(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
 			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
 				knowledgeBaseFolder)
@@ -745,7 +833,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_knowledgeBaseFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseFolderResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseFolderResource),
 			knowledgeBaseFolderResource ->
 				knowledgeBaseFolderResource.patchKnowledgeBaseFolder(
 					knowledgeBaseFolderId, knowledgeBaseFolder));
@@ -753,6 +842,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public KnowledgeBaseFolder putKnowledgeBaseFolder(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
 			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
 				knowledgeBaseFolder)
@@ -760,7 +850,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_knowledgeBaseFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseFolderResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseFolderResource),
 			knowledgeBaseFolderResource ->
 				knowledgeBaseFolderResource.putKnowledgeBaseFolder(
 					knowledgeBaseFolderId, knowledgeBaseFolder));
@@ -769,6 +860,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolder(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("parentKnowledgeBaseFolderId") Long
 				parentKnowledgeBaseFolderId,
 			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
@@ -777,7 +869,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_knowledgeBaseFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseFolderResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseFolderResource),
 			knowledgeBaseFolderResource ->
 				knowledgeBaseFolderResource.
 					postKnowledgeBaseFolderKnowledgeBaseFolder(
@@ -787,6 +880,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public KnowledgeBaseFolder postSiteKnowledgeBaseFolder(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
 				knowledgeBaseFolder)
@@ -794,7 +888,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_knowledgeBaseFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			knowledgeBaseFolderResource -> _populateResourceContext(
+				dataFetchingEnvironment, knowledgeBaseFolderResource),
 			knowledgeBaseFolderResource ->
 				knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
 					siteId, knowledgeBaseFolder));
@@ -802,13 +897,15 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public void deleteMessageBoardAttachment(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardAttachmentId") Long
 				messageBoardAttachmentId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_messageBoardAttachmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardAttachmentResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardAttachmentResource),
 			messageBoardAttachmentResource ->
 				messageBoardAttachmentResource.deleteMessageBoardAttachment(
 					messageBoardAttachmentId));
@@ -820,13 +917,15 @@ public class Mutation {
 		"postMessageBoardMessageMessageBoardAttachmentMessageBoardMessageIdMultipartBody"
 	)
 	public MessageBoardAttachment postMessageBoardMessageMessageBoardAttachment(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_messageBoardAttachmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardAttachmentResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardAttachmentResource),
 			messageBoardAttachmentResource ->
 				messageBoardAttachmentResource.
 					postMessageBoardMessageMessageBoardAttachment(
@@ -839,13 +938,15 @@ public class Mutation {
 		"postMessageBoardThreadMessageBoardAttachmentMessageBoardThreadIdMultipartBody"
 	)
 	public MessageBoardAttachment postMessageBoardThreadMessageBoardAttachment(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_messageBoardAttachmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardAttachmentResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardAttachmentResource),
 			messageBoardAttachmentResource ->
 				messageBoardAttachmentResource.
 					postMessageBoardThreadMessageBoardAttachment(
@@ -854,12 +955,14 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public void deleteMessageBoardMessage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardMessageResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardMessageResource),
 			messageBoardMessageResource ->
 				messageBoardMessageResource.deleteMessageBoardMessage(
 					messageBoardMessageId));
@@ -867,6 +970,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public MessageBoardMessage patchMessageBoardMessage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
 			@GraphQLName("messageBoardMessage") MessageBoardMessage
 				messageBoardMessage)
@@ -874,7 +978,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardMessageResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardMessageResource),
 			messageBoardMessageResource ->
 				messageBoardMessageResource.patchMessageBoardMessage(
 					messageBoardMessageId, messageBoardMessage));
@@ -882,6 +987,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public MessageBoardMessage putMessageBoardMessage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
 			@GraphQLName("messageBoardMessage") MessageBoardMessage
 				messageBoardMessage)
@@ -889,7 +995,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardMessageResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardMessageResource),
 			messageBoardMessageResource ->
 				messageBoardMessageResource.putMessageBoardMessage(
 					messageBoardMessageId, messageBoardMessage));
@@ -897,12 +1004,14 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public void deleteMessageBoardMessageMyRating(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardMessageResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardMessageResource),
 			messageBoardMessageResource ->
 				messageBoardMessageResource.deleteMessageBoardMessageMyRating(
 					messageBoardMessageId));
@@ -911,13 +1020,15 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Rating postMessageBoardMessageMyRating(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
 			@GraphQLName("rating") Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardMessageResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardMessageResource),
 			messageBoardMessageResource ->
 				messageBoardMessageResource.postMessageBoardMessageMyRating(
 					messageBoardMessageId, rating));
@@ -925,13 +1036,15 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public Rating putMessageBoardMessageMyRating(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
 			@GraphQLName("rating") Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardMessageResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardMessageResource),
 			messageBoardMessageResource ->
 				messageBoardMessageResource.putMessageBoardMessageMyRating(
 					messageBoardMessageId, rating));
@@ -940,6 +1053,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("parentMessageBoardMessageId") Long
 				parentMessageBoardMessageId,
 			@GraphQLName("messageBoardMessage") MessageBoardMessage
@@ -948,7 +1062,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardMessageResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardMessageResource),
 			messageBoardMessageResource ->
 				messageBoardMessageResource.
 					postMessageBoardMessageMessageBoardMessage(
@@ -958,6 +1073,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public MessageBoardMessage postMessageBoardThreadMessageBoardMessage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
 			@GraphQLName("messageBoardMessage") MessageBoardMessage
 				messageBoardMessage)
@@ -965,7 +1081,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_messageBoardMessageResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardMessageResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardMessageResource),
 			messageBoardMessageResource ->
 				messageBoardMessageResource.
 					postMessageBoardThreadMessageBoardMessage(
@@ -974,12 +1091,14 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public void deleteMessageBoardSection(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_messageBoardSectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardSectionResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardSectionResource),
 			messageBoardSectionResource ->
 				messageBoardSectionResource.deleteMessageBoardSection(
 					messageBoardSectionId));
@@ -987,6 +1106,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public MessageBoardSection patchMessageBoardSection(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
 			@GraphQLName("messageBoardSection") MessageBoardSection
 				messageBoardSection)
@@ -994,7 +1114,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_messageBoardSectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardSectionResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardSectionResource),
 			messageBoardSectionResource ->
 				messageBoardSectionResource.patchMessageBoardSection(
 					messageBoardSectionId, messageBoardSection));
@@ -1002,6 +1123,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public MessageBoardSection putMessageBoardSection(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
 			@GraphQLName("messageBoardSection") MessageBoardSection
 				messageBoardSection)
@@ -1009,7 +1131,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_messageBoardSectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardSectionResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardSectionResource),
 			messageBoardSectionResource ->
 				messageBoardSectionResource.putMessageBoardSection(
 					messageBoardSectionId, messageBoardSection));
@@ -1018,6 +1141,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public MessageBoardSection postMessageBoardSectionMessageBoardSection(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("parentMessageBoardSectionId") Long
 				parentMessageBoardSectionId,
 			@GraphQLName("messageBoardSection") MessageBoardSection
@@ -1026,7 +1150,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_messageBoardSectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardSectionResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardSectionResource),
 			messageBoardSectionResource ->
 				messageBoardSectionResource.
 					postMessageBoardSectionMessageBoardSection(
@@ -1036,6 +1161,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public MessageBoardSection postSiteMessageBoardSection(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("messageBoardSection") MessageBoardSection
 				messageBoardSection)
@@ -1043,7 +1169,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_messageBoardSectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardSectionResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardSectionResource),
 			messageBoardSectionResource ->
 				messageBoardSectionResource.postSiteMessageBoardSection(
 					siteId, messageBoardSection));
@@ -1052,6 +1179,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public MessageBoardThread postMessageBoardSectionMessageBoardThread(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
 			@GraphQLName("messageBoardThread") MessageBoardThread
 				messageBoardThread)
@@ -1059,7 +1187,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_messageBoardThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardThreadResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardThreadResource),
 			messageBoardThreadResource ->
 				messageBoardThreadResource.
 					postMessageBoardSectionMessageBoardThread(
@@ -1068,12 +1197,14 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public void deleteMessageBoardThread(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_messageBoardThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardThreadResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardThreadResource),
 			messageBoardThreadResource ->
 				messageBoardThreadResource.deleteMessageBoardThread(
 					messageBoardThreadId));
@@ -1081,6 +1212,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public MessageBoardThread patchMessageBoardThread(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
 			@GraphQLName("messageBoardThread") MessageBoardThread
 				messageBoardThread)
@@ -1088,7 +1220,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_messageBoardThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardThreadResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardThreadResource),
 			messageBoardThreadResource ->
 				messageBoardThreadResource.patchMessageBoardThread(
 					messageBoardThreadId, messageBoardThread));
@@ -1096,6 +1229,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public MessageBoardThread putMessageBoardThread(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
 			@GraphQLName("messageBoardThread") MessageBoardThread
 				messageBoardThread)
@@ -1103,7 +1237,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_messageBoardThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardThreadResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardThreadResource),
 			messageBoardThreadResource ->
 				messageBoardThreadResource.putMessageBoardThread(
 					messageBoardThreadId, messageBoardThread));
@@ -1111,12 +1246,14 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public void deleteMessageBoardThreadMyRating(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_messageBoardThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardThreadResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardThreadResource),
 			messageBoardThreadResource ->
 				messageBoardThreadResource.deleteMessageBoardThreadMyRating(
 					messageBoardThreadId));
@@ -1125,13 +1262,15 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Rating postMessageBoardThreadMyRating(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
 			@GraphQLName("rating") Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_messageBoardThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardThreadResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardThreadResource),
 			messageBoardThreadResource ->
 				messageBoardThreadResource.postMessageBoardThreadMyRating(
 					messageBoardThreadId, rating));
@@ -1139,13 +1278,15 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public Rating putMessageBoardThreadMyRating(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
 			@GraphQLName("rating") Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_messageBoardThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardThreadResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardThreadResource),
 			messageBoardThreadResource ->
 				messageBoardThreadResource.putMessageBoardThreadMyRating(
 					messageBoardThreadId, rating));
@@ -1154,6 +1295,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public MessageBoardThread postSiteMessageBoardThread(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("messageBoardThread") MessageBoardThread
 				messageBoardThread)
@@ -1161,7 +1303,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_messageBoardThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			messageBoardThreadResource -> _populateResourceContext(
+				dataFetchingEnvironment, messageBoardThreadResource),
 			messageBoardThreadResource ->
 				messageBoardThreadResource.postSiteMessageBoardThread(
 					siteId, messageBoardThread));
@@ -1170,6 +1313,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public StructuredContent postSiteStructuredContent(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("structuredContent") StructuredContent
 				structuredContent)
@@ -1177,7 +1321,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			structuredContentResource -> _populateResourceContext(
+				dataFetchingEnvironment, structuredContentResource),
 			structuredContentResource ->
 				structuredContentResource.postSiteStructuredContent(
 					siteId, structuredContent));
@@ -1186,6 +1331,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public StructuredContent postStructuredContentFolderStructuredContent(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("structuredContentFolderId") Long
 				structuredContentFolderId,
 			@GraphQLName("structuredContent") StructuredContent
@@ -1194,7 +1340,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			structuredContentResource -> _populateResourceContext(
+				dataFetchingEnvironment, structuredContentResource),
 			structuredContentResource ->
 				structuredContentResource.
 					postStructuredContentFolderStructuredContent(
@@ -1203,12 +1350,14 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public void deleteStructuredContent(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("structuredContentId") Long structuredContentId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			structuredContentResource -> _populateResourceContext(
+				dataFetchingEnvironment, structuredContentResource),
 			structuredContentResource ->
 				structuredContentResource.deleteStructuredContent(
 					structuredContentId));
@@ -1216,6 +1365,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public StructuredContent patchStructuredContent(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("structuredContent") StructuredContent
 				structuredContent)
@@ -1223,7 +1373,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			structuredContentResource -> _populateResourceContext(
+				dataFetchingEnvironment, structuredContentResource),
 			structuredContentResource ->
 				structuredContentResource.patchStructuredContent(
 					structuredContentId, structuredContent));
@@ -1231,6 +1382,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public StructuredContent putStructuredContent(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("structuredContent") StructuredContent
 				structuredContent)
@@ -1238,7 +1390,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			structuredContentResource -> _populateResourceContext(
+				dataFetchingEnvironment, structuredContentResource),
 			structuredContentResource ->
 				structuredContentResource.putStructuredContent(
 					structuredContentId, structuredContent));
@@ -1246,12 +1399,14 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public void deleteStructuredContentMyRating(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("structuredContentId") Long structuredContentId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			structuredContentResource -> _populateResourceContext(
+				dataFetchingEnvironment, structuredContentResource),
 			structuredContentResource ->
 				structuredContentResource.deleteStructuredContentMyRating(
 					structuredContentId));
@@ -1260,13 +1415,15 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Rating postStructuredContentMyRating(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("rating") Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			structuredContentResource -> _populateResourceContext(
+				dataFetchingEnvironment, structuredContentResource),
 			structuredContentResource ->
 				structuredContentResource.postStructuredContentMyRating(
 					structuredContentId, rating));
@@ -1274,13 +1431,15 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public Rating putStructuredContentMyRating(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("rating") Rating rating)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			structuredContentResource -> _populateResourceContext(
+				dataFetchingEnvironment, structuredContentResource),
 			structuredContentResource ->
 				structuredContentResource.putStructuredContentMyRating(
 					structuredContentId, rating));
@@ -1289,6 +1448,7 @@ public class Mutation {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public StructuredContentFolder postSiteStructuredContentFolder(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("structuredContentFolder") StructuredContentFolder
 				structuredContentFolder)
@@ -1296,7 +1456,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			structuredContentFolderResource -> _populateResourceContext(
+				dataFetchingEnvironment, structuredContentFolderResource),
 			structuredContentFolderResource ->
 				structuredContentFolderResource.postSiteStructuredContentFolder(
 					siteId, structuredContentFolder));
@@ -1306,6 +1467,7 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public StructuredContentFolder
 			postStructuredContentFolderStructuredContentFolder(
+				DataFetchingEnvironment dataFetchingEnvironment,
 				@GraphQLName("parentStructuredContentFolderId") Long
 					parentStructuredContentFolderId,
 				@GraphQLName("structuredContentFolder") StructuredContentFolder
@@ -1314,7 +1476,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			structuredContentFolderResource -> _populateResourceContext(
+				dataFetchingEnvironment, structuredContentFolderResource),
 			structuredContentFolderResource ->
 				structuredContentFolderResource.
 					postStructuredContentFolderStructuredContentFolder(
@@ -1324,13 +1487,15 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public void deleteStructuredContentFolder(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("structuredContentFolderId") Long
 				structuredContentFolderId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			structuredContentFolderResource -> _populateResourceContext(
+				dataFetchingEnvironment, structuredContentFolderResource),
 			structuredContentFolderResource ->
 				structuredContentFolderResource.deleteStructuredContentFolder(
 					structuredContentFolderId));
@@ -1338,6 +1503,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public StructuredContentFolder patchStructuredContentFolder(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("structuredContentFolderId") Long
 				structuredContentFolderId,
 			@GraphQLName("structuredContentFolder") StructuredContentFolder
@@ -1346,7 +1512,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			structuredContentFolderResource -> _populateResourceContext(
+				dataFetchingEnvironment, structuredContentFolderResource),
 			structuredContentFolderResource ->
 				structuredContentFolderResource.patchStructuredContentFolder(
 					structuredContentFolderId, structuredContentFolder));
@@ -1354,6 +1521,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public StructuredContentFolder putStructuredContentFolder(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("structuredContentFolderId") Long
 				structuredContentFolderId,
 			@GraphQLName("structuredContentFolder") StructuredContentFolder
@@ -1362,7 +1530,8 @@ public class Mutation {
 
 		return _applyComponentServiceObjects(
 			_structuredContentFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			structuredContentFolderResource -> _populateResourceContext(
+				dataFetchingEnvironment, structuredContentFolderResource),
 			structuredContentFolderResource ->
 				structuredContentFolderResource.putStructuredContentFolder(
 					structuredContentFolderId, structuredContentFolder));
@@ -1407,8 +1576,13 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			BlogPostingResource blogPostingResource)
 		throws Exception {
+
+		blogPostingResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		blogPostingResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -1416,24 +1590,41 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			BlogPostingImageResource blogPostingImageResource)
 		throws Exception {
+
+		blogPostingImageResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		blogPostingImageResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
 
-	private void _populateResourceContext(CommentResource commentResource)
+	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
+			CommentResource commentResource)
 		throws Exception {
+
+		commentResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		commentResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
 
-	private void _populateResourceContext(DocumentResource documentResource)
+	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
+			DocumentResource documentResource)
 		throws Exception {
+
+		documentResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		documentResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -1441,8 +1632,13 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			DocumentFolderResource documentFolderResource)
 		throws Exception {
+
+		documentFolderResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		documentFolderResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -1450,8 +1646,13 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			KnowledgeBaseArticleResource knowledgeBaseArticleResource)
 		throws Exception {
+
+		knowledgeBaseArticleResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		knowledgeBaseArticleResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -1459,8 +1660,13 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			KnowledgeBaseAttachmentResource knowledgeBaseAttachmentResource)
 		throws Exception {
+
+		knowledgeBaseAttachmentResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		knowledgeBaseAttachmentResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -1468,8 +1674,13 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			KnowledgeBaseFolderResource knowledgeBaseFolderResource)
 		throws Exception {
+
+		knowledgeBaseFolderResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		knowledgeBaseFolderResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -1477,8 +1688,13 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			MessageBoardAttachmentResource messageBoardAttachmentResource)
 		throws Exception {
+
+		messageBoardAttachmentResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		messageBoardAttachmentResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -1486,8 +1702,13 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			MessageBoardMessageResource messageBoardMessageResource)
 		throws Exception {
+
+		messageBoardMessageResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		messageBoardMessageResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -1495,8 +1716,13 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			MessageBoardSectionResource messageBoardSectionResource)
 		throws Exception {
+
+		messageBoardSectionResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		messageBoardSectionResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -1504,8 +1730,13 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			MessageBoardThreadResource messageBoardThreadResource)
 		throws Exception {
+
+		messageBoardThreadResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		messageBoardThreadResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -1513,8 +1744,13 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			StructuredContentResource structuredContentResource)
 		throws Exception {
+
+		structuredContentResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		structuredContentResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -1522,14 +1758,26 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			StructuredContentFolderResource structuredContentFolderResource)
 		throws Exception {
+
+		structuredContentFolderResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		structuredContentFolderResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	public static void setAcceptLanguageFunction(
+		Function<Object, AcceptLanguage> acceptLanguageFunction) {
+
+		_acceptLanguageFunction = acceptLanguageFunction;
+	}
+
+	private static Function<Object, AcceptLanguage> _acceptLanguageFunction;
 	private static ComponentServiceObjects<BlogPostingResource>
 		_blogPostingResourceComponentServiceObjects;
 	private static ComponentServiceObjects<BlogPostingImageResource>

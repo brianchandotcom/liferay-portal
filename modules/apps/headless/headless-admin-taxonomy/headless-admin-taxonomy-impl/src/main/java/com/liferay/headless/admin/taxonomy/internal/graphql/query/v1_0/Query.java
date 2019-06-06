@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -33,7 +34,10 @@ import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import graphql.schema.DataFetchingEnvironment;
+
 import java.util.Collection;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -72,18 +76,22 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Keyword getKeyword(@GraphQLName("keywordId") Long keywordId)
+	public Keyword getKeyword(
+			DataFetchingEnvironment dataFetchingEnvironment,
+			@GraphQLName("keywordId") Long keywordId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_keywordResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			keywordResource -> _populateResourceContext(
+				dataFetchingEnvironment, keywordResource),
 			keywordResource -> keywordResource.getKeyword(keywordId));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Keyword> getSiteKeywordsPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -93,7 +101,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_keywordResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			keywordResource -> _populateResourceContext(
+				dataFetchingEnvironment, keywordResource),
 			keywordResource -> {
 				Page paginationPage = keywordResource.getSiteKeywordsPage(
 					siteId, search, filter, Pagination.of(pageSize, page),
@@ -107,6 +116,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<TaxonomyCategory>
 			getTaxonomyCategoryTaxonomyCategoriesPage(
+				DataFetchingEnvironment dataFetchingEnvironment,
 				@GraphQLName("parentTaxonomyCategoryId") Long
 					parentTaxonomyCategoryId,
 				@GraphQLName("search") String search,
@@ -118,7 +128,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_taxonomyCategoryResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			taxonomyCategoryResource -> _populateResourceContext(
+				dataFetchingEnvironment, taxonomyCategoryResource),
 			taxonomyCategoryResource -> {
 				Page paginationPage =
 					taxonomyCategoryResource.
@@ -133,12 +144,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public TaxonomyCategory getTaxonomyCategory(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_taxonomyCategoryResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			taxonomyCategoryResource -> _populateResourceContext(
+				dataFetchingEnvironment, taxonomyCategoryResource),
 			taxonomyCategoryResource ->
 				taxonomyCategoryResource.getTaxonomyCategory(
 					taxonomyCategoryId));
@@ -148,6 +161,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<TaxonomyCategory>
 			getTaxonomyVocabularyTaxonomyCategoriesPage(
+				DataFetchingEnvironment dataFetchingEnvironment,
 				@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") Filter filter,
@@ -158,7 +172,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_taxonomyCategoryResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			taxonomyCategoryResource -> _populateResourceContext(
+				dataFetchingEnvironment, taxonomyCategoryResource),
 			taxonomyCategoryResource -> {
 				Page paginationPage =
 					taxonomyCategoryResource.
@@ -173,6 +188,7 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<TaxonomyVocabulary> getSiteTaxonomyVocabulariesPage(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -182,7 +198,8 @@ public class Query {
 
 		return _applyComponentServiceObjects(
 			_taxonomyVocabularyResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			taxonomyVocabularyResource -> _populateResourceContext(
+				dataFetchingEnvironment, taxonomyVocabularyResource),
 			taxonomyVocabularyResource -> {
 				Page paginationPage =
 					taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
@@ -196,12 +213,14 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public TaxonomyVocabulary getTaxonomyVocabulary(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_taxonomyVocabularyResourceComponentServiceObjects,
-			this::_populateResourceContext,
+			taxonomyVocabularyResource -> _populateResourceContext(
+				dataFetchingEnvironment, taxonomyVocabularyResource),
 			taxonomyVocabularyResource ->
 				taxonomyVocabularyResource.getTaxonomyVocabulary(
 					taxonomyVocabularyId));
@@ -226,8 +245,14 @@ public class Query {
 		}
 	}
 
-	private void _populateResourceContext(KeywordResource keywordResource)
+	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
+			KeywordResource keywordResource)
 		throws Exception {
+
+		keywordResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		keywordResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -235,8 +260,13 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			TaxonomyCategoryResource taxonomyCategoryResource)
 		throws Exception {
+
+		taxonomyCategoryResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		taxonomyCategoryResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
@@ -244,14 +274,26 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
 			TaxonomyVocabularyResource taxonomyVocabularyResource)
 		throws Exception {
+
+		taxonomyVocabularyResource.setContextAcceptLanguage(
+			_acceptLanguageFunction.apply(
+				dataFetchingEnvironment.getContext()));
 
 		taxonomyVocabularyResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	public static void setAcceptLanguageFunction(
+		Function<Object, AcceptLanguage> acceptLanguageFunction) {
+
+		_acceptLanguageFunction = acceptLanguageFunction;
+	}
+
+	private static Function<Object, AcceptLanguage> _acceptLanguageFunction;
 	private static ComponentServiceObjects<KeywordResource>
 		_keywordResourceComponentServiceObjects;
 	private static ComponentServiceObjects<TaxonomyCategoryResource>

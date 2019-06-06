@@ -1287,10 +1287,6 @@ public class PortletTracker
 		Configuration configuration, String servletContextName,
 		ClassLoader classLoader) {
 
-		if (configuration == null) {
-			return;
-		}
-
 		Properties properties = configuration.getProperties();
 
 		try {
@@ -1445,16 +1441,15 @@ public class PortletTracker
 		}
 
 		protected synchronized void doConfiguration(ClassLoader classLoader) {
-			try {
-				_configuration = ConfigurationFactoryUtil.getConfiguration(
-					classLoader, "portlet");
-			}
-			catch (Exception e) {
-			}
+			if (classLoader.getResource("portlet.properties") != null) {
+				Configuration configuration =
+					ConfigurationFactoryUtil.getConfiguration(
+						classLoader, "portlet");
 
-			readResourceActions(
-				_configuration, _bundlePortletApp.getServletContextName(),
-				classLoader);
+				readResourceActions(
+					configuration, _bundlePortletApp.getServletContextName(),
+					classLoader);
+			}
 		}
 
 		protected synchronized BundlePortletApp getBundlePortletApp() {
@@ -1467,7 +1462,6 @@ public class PortletTracker
 
 		private final Bundle _bundle;
 		private BundlePortletApp _bundlePortletApp;
-		private Configuration _configuration;
 		private final List<ServiceReference<Portlet>> _serviceReferences =
 			new ArrayList<>();
 

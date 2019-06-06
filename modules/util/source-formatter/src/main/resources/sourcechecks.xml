@@ -18,18 +18,21 @@
 		<check name="BNDCapabilityCheck" />
 		<check name="BNDDefinitionKeysCheck" />
 		<check name="BNDDeprecatedAppBNDsCheck" />
-		<check name="BNDImportsCheck">
-			<property name="enabled" value="false" />
-		</check>
 		<check name="BNDLineBreaksCheck" />
 		<check name="BNDMultipleAppBNDsCheck" />
 		<check name="BNDRangeCheck" />
 		<check name="BNDSchemaVersionCheck" />
 		<check name="BNDStylingCheck" />
+		<check name="BNDWhitespaceCheck" />
+
+		<!-- Liferay Source Checks -->
+
+		<check name="BNDImportsCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="BNDSuiteCheck">
 			<property name="enabled" value="false" />
 		</check>
-		<check name="BNDWhitespaceCheck" />
 
 		<!-- Module Source Checks -->
 
@@ -149,19 +152,10 @@
 		<check name="JavaBooleanStatementCheck" />
 		<check name="JavaBooleanUsageCheck" />
 		<check name="JavaCollatorUtilCheck" />
-		<check name="JavaComponentAnnotationsCheck">
-			<property name="checkConfigurationPolicyAttribute" value="false" />
-			<property name="checkMismatchedServiceAttribute" value="false" />
-			<property name="checkSelfRegistration" value="false" />
-			<property name="enabled" value="false" />
-		</check>
 		<check name="JavaConfigurationAdminCheck" />
 		<check name="JavaConfigurationCategoryCheck" />
 		<check name="JavaConstructorParametersCheck" />
 		<check name="JavaConstructorSuperCallCheck" />
-		<check name="JavaDeprecatedJavadocCheck">
-			<property name="enabled" value="false" />
-		</check>
 		<check name="JavaDiamondOperatorCheck" />
 		<check name="JavaDeserializationSecurityCheck" />
 		<check name="JavaElseStatementCheck">
@@ -172,10 +166,6 @@
 		<check name="JavaExceptionCheck" />
 		<check name="JavaForLoopCheck" />
 		<check name="JavaHibernateSQLCheck" />
-		<check name="JavaIllegalImportsCheck">
-			<property name="enabled" value="false" />
-			<property name="enforceJavaUtilFunctionImports" value="false" />
-		</check>
 		<check name="JavaImportsCheck" />
 		<check name="JavaIndexableCheck" />
 		<check name="JavaInnerClassImportsCheck">
@@ -184,9 +174,6 @@
 		</check>
 		<check name="JavaInterfaceCheck" />
 		<check name="JavaIOExceptionCheck" />
-		<check name="JavaJSPDynamicIncludeCheck">
-			<property name="enabled" value="false" />
-		</check>
 		<check name="JavaLocalSensitiveComparisonCheck" />
 		<check name="JavaLongLinesCheck" />
 		<check name="JavaMetaAnnotationsCheck" />
@@ -205,9 +192,6 @@
 			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaStopWatchCheck" />
-		<check name="JavaStringBundlerConcatCheck">
-			<property name="enabled" value="false" />
-		</check>
 		<check name="JavaStylingCheck" />
 		<check name="JavaSystemExceptionCheck" />
 		<check name="JavaTermDividersCheck" />
@@ -236,7 +220,16 @@
 		</check>
 		<check name="JavaCleanUpMethodSuperCleanUpCheck" />
 		<check name="JavaCleanUpMethodVariablesCheck" />
+		<check name="JavaComponentAnnotationsCheck">
+			<property name="checkConfigurationPolicyAttribute" value="false" />
+			<property name="checkMismatchedServiceAttribute" value="false" />
+			<property name="checkSelfRegistration" value="false" />
+			<property name="enabled" value="false" />
+		</check>
 		<check name="JavaDataAccessConnectionCheck">
+			<property name="enabled" value="false" />
+		</check>
+		<check name="JavaDeprecatedJavadocCheck">
 			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaDeprecatedKernelClassesCheck">
@@ -244,7 +237,14 @@
 		</check>
 		<check name="JavaFinderCacheCheck" />
 		<check name="JavaFinderImplCustomSQLCheck" />
+		<check name="JavaIllegalImportsCheck">
+			<property name="enabled" value="false" />
+			<property name="enforceJavaUtilFunctionImports" value="false" />
+		</check>
 		<check name="JavaInternalPackageCheck">
+			<property name="enabled" value="false" />
+		</check>
+		<check name="JavaJSPDynamicIncludeCheck">
 			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaLogClassNameCheck" />
@@ -260,6 +260,9 @@
 			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaServiceUtilCheck" />
+		<check name="JavaStringBundlerConcatCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="JavaStringBundlerInitialCapacityCheck" />
 		<check name="JavaSwitchCheck" />
 		<check name="JavaSystemEventAnnotationCheck" />
@@ -315,20 +318,23 @@
 		<check name="CompatClassImportsCheck" />
 	</source-processor>
 	<source-processor name="JSONSourceProcessor">
-		<check name="JSONDeprecatedPackagesCheck">
-			<property name="enabled" value="false" />
-		</check>
 		<check name="JSONIndentationCheck" />
 		<check name="JSONLineBreakCheck">
-			<property name="enabled" value="false" />
-		</check>
-		<check name="JSONPackageJSONCheck">
 			<property name="enabled" value="false" />
 		</check>
 		<check name="JSONPropertyOrderCheck" />
 		<check name="JSONValidationCheck" />
 		<check name="JSONWhitespaceCheck">
 			<property name="allowLeadingSpaces" value="true" />
+		</check>
+
+		<!-- Liferay Source Checks -->
+
+		<check name="JSONDeprecatedPackagesCheck">
+			<property name="enabled" value="false" />
+		</check>
+		<check name="JSONPackageJSONCheck">
+			<property name="enabled" value="false" />
 		</check>
 	</source-processor>
 	<source-processor name="JSPSourceProcessor">
@@ -441,17 +447,11 @@
 		<check name="PoshiWhitespaceCheck" />
 	</source-processor>
 	<source-processor name="PropertiesSourceProcessor">
-		<check name="PropertiesBuildIncludeDirsCheck">
-			<property name="enabled" value="false" />
-		</check>
 		<check name="PropertiesCommentsCheck" />
 		<check name="PropertiesDefinitionKeysCheck" />
 		<check name="PropertiesDependenciesFileCheck" />
 		<check name="PropertiesEmptyLinesCheck" />
 		<check name="PropertiesImportedFilesContentCheck" />
-		<check name="PropertiesLanguageKeysCheck">
-			<property name="enabled" value="false" />
-		</check>
 		<check name="PropertiesLanguageKeysOrderCheck" />
 		<check name="PropertiesLiferayPluginPackageFileCheck" />
 		<check name="PropertiesLiferayPluginPackageLiferayVersionsCheck" />
@@ -467,6 +467,12 @@
 
 		<!-- Liferay Source Checks -->
 
+		<check name="PropertiesBuildIncludeDirsCheck">
+			<property name="enabled" value="false" />
+		</check>
+		<check name="PropertiesLanguageKeysCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="PropertiesServiceKeysCheck" />
 	</source-processor>
 	<source-processor name="SoySourceProcessor">
@@ -509,9 +515,6 @@
 		<check name="XMLResourceActionsFileCheck" />
 		<check name="XMLServiceEntityNameCheck" />
 		<check name="XMLServiceFileCheck" />
-		<check name="XMLServiceReferenceCheck">
-			<property name="enabled" value="false" />
-		</check>
 		<check name="XMLSolrSchemaFileCheck" />
 		<check name="XMLSuppressionsFileCheck" />
 		<check name="XMLTagAttributesCheck" />
@@ -522,6 +525,9 @@
 
 		<check name="XMLEmptyLinesCheck" />
 		<check name="XMLIvyFileCheck" />
+		<check name="XMLServiceReferenceCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="XMLSpringFileCheck" />
 		<check name="XMLStrutsConfigFileCheck" />
 		<check name="XMLTestIgnorableErrorLinesFileCheck" />

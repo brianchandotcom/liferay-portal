@@ -68,7 +68,7 @@ if (comment instanceof WorkflowableComment) {
 		<aui:input name="ajax" type="hidden" value="<%= false %>" />
 
 		<liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />
-		<liferay-ui:error exception="<%= CaptchaException.class %>" message="user-verification-failed" />
+		<liferay-ui:error exception="<%= CaptchaException.class %>" message="captcha-verification-failed" />
 		<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
 		<liferay-ui:error exception="<%= DiscussionMaxCommentsException.class %>" message="maximum-number-of-comments-has-been-reached" />
 		<liferay-ui:error exception="<%= MessageBodyException.class %>" message="please-enter-a-valid-message" />

@@ -79,7 +79,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 						<aui:input name="languageId" type="hidden" value="<%= languageId %>" />
 						<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
-						<liferay-ui:error exception="<%= CaptchaException.class %>" message="user-verification-failed" />
+						<liferay-ui:error exception="<%= CaptchaException.class %>" message="captcha-verification-failed" />
 						<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
 						<liferay-ui:error exception="<%= DDMFormRenderingException.class %>" message="unable-to-render-the-selected-form" />
 						<liferay-ui:error exception="<%= DDMFormValuesValidationException.class %>" message="field-validation-failed" />

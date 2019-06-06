@@ -96,8 +96,6 @@ definition {
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
-		Navigator.openURL();
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -141,7 +139,14 @@ definition {
 
 	@priority = "5"
 	test RestoreMessageboardsThread {
-		JSONMBMessage.addMessage(
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Message Boards");
+
+		MessageboardsThread.addCP(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
@@ -253,7 +258,9 @@ definition {
 
 		Portlet.addPG(portletName = "Message Boards");
 
-		JSONMBMessage.addMessage(
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
@@ -315,7 +322,9 @@ definition {
 
 		Portlet.addPG(portletName = "Message Boards");
 
-		JSONMBMessage.addMessage(
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
@@ -491,11 +500,9 @@ definition {
 
 		Portlet.addPG(portletName = "Message Boards");
 
-		JSONMBMessage.addCategory(
-			categoryDescription = "MB Category Description",
-			categoryName = "MB Category Name");
+		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		Refresh();
+		MessageboardsCategory.addPG(categoryName = "MB Category Name");
 
 		User.logoutPG();
 
@@ -622,7 +629,9 @@ definition {
 				roleTitle = "User");
 		}
 
-		JSONMBMessage.addMessage(
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
@@ -771,7 +780,9 @@ definition {
 
 		Portlet.addPG(portletName = "Message Boards");
 
-		JSONMBMessage.addMessage(
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.addPG(
 			threadBody = "MB Thread1 Message Body",
 			threadSubject = "MB Thread1 Message Subject");
 
@@ -1112,7 +1123,7 @@ definition {
 
 		MessageboardsThread.viewMarkAsQuestionCheckedCP(threadSubject = "Thread Subject");
 
-		JSONMBMessage.addMessage(
+		MessageboardsThread.addPG(
 			threadBody = "Thread Body",
 			threadSubject = "Thread Subject");
 

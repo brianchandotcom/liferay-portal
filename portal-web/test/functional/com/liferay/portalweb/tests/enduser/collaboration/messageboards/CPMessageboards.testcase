@@ -28,8 +28,6 @@ definition {
 
 	@priority = "5"
 	test AddMBCategory {
-		Navigator.openURL();
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -45,18 +43,14 @@ definition {
 
 	@priority = "4"
 	test AddMBCategorySubcategory {
-		Navigator.openURL();
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Message Boards");
-
-		JSONMBMessage.addCategory(
-			categoryDescription = "MB Category Description",
-			categoryName = "MB Category Name");
-
-		Refresh();
 
 		MessageboardsCategory.gotoCP(categoryName = "MB Category Name");
 
@@ -139,12 +133,15 @@ definition {
 		Navigator.openURL();
 
 		for (var categoryName : list "MB Category1 Name,MB Category2 Name,MB Category3 Name") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "MB Category Description",
-				categoryName = "${categoryName}");
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				panel = "Site Administration",
+				portlet = "Message Boards");
+
+			MessageboardsCategory.addCP(categoryName = "${categoryName}");
 		}
 
-		Refresh();
+		Navigator.openURL();
 
 		MessageboardsCategory.tearDownCP(assetType = "3 items");
 
@@ -206,9 +203,16 @@ definition {
 
 	@priority = "5"
 	test EditMBThreadBody {
-		JSONMBMessage.addMessage(
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Message Boards");
+
+		MessageboardsThread.addCP(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
+
+		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -234,7 +238,12 @@ definition {
 
 	@priority = "5"
 	test EditMBThreadSubject {
-		JSONMBMessage.addMessage(
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Message Boards");
+
+		MessageboardsThread.addCP(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
@@ -268,8 +277,6 @@ definition {
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
-		Navigator.openURL();
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -296,7 +303,14 @@ definition {
 
 	@priority = "5"
 	test MoveToRecycleBinMBThread {
-		JSONMBMessage.addMessage(
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Message Boards");
+
+		MessageboardsThread.addCP(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 

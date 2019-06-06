@@ -162,7 +162,10 @@ public class SelectAssetDisplayPageDisplayContext {
 			return _displayPageType;
 		}
 
-		if (_classPK == 0) {
+		LayoutPageTemplateEntry defaultAssetDisplayPage =
+			_getDefaultAssetDisplayPage();
+
+		if ((_classPK == 0) && (defaultAssetDisplayPage != null)) {
 			_displayPageType = AssetDisplayPageConstants.TYPE_DEFAULT;
 
 			return _displayPageType;
@@ -183,9 +186,7 @@ public class SelectAssetDisplayPageDisplayContext {
 
 	public String getDefaultAssetDisplayPageName() {
 		LayoutPageTemplateEntry defaultAssetDisplayPage =
-			LayoutPageTemplateEntryServiceUtil.
-				fetchDefaultLayoutPageTemplateEntry(
-					_groupId, _classNameId, _classTypeId);
+			_getDefaultAssetDisplayPage();
 
 		if (defaultAssetDisplayPage != null) {
 			return defaultAssetDisplayPage.getName();
@@ -387,6 +388,19 @@ public class SelectAssetDisplayPageDisplayContext {
 		return layoutPageTemplateEntry.getName();
 	}
 
+	private LayoutPageTemplateEntry _getDefaultAssetDisplayPage() {
+		if (_defaultAssetDisplayPage != null) {
+			return _defaultAssetDisplayPage;
+		}
+
+		_defaultAssetDisplayPage =
+			LayoutPageTemplateEntryServiceUtil.
+				fetchDefaultLayoutPageTemplateEntry(
+					_groupId, _classNameId, _classTypeId);
+
+		return _defaultAssetDisplayPage;
+	}
+
 	private String _getLayoutBreadcrumb(Layout layout) throws Exception {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -428,6 +442,7 @@ public class SelectAssetDisplayPageDisplayContext {
 	private final Long _classNameId;
 	private Long _classPK;
 	private final Long _classTypeId;
+	private LayoutPageTemplateEntry _defaultAssetDisplayPage;
 	private Integer _displayPageType;
 	private final String _eventName;
 	private final long _groupId;

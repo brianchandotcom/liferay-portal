@@ -7,7 +7,10 @@ package ${configYAML.apiPackagePath}.internal.graphql.servlet.${escapedVersion};
 import ${configYAML.apiPackagePath}.internal.graphql.mutation.${escapedVersion}.Mutation;
 import ${configYAML.apiPackagePath}.internal.graphql.query.${escapedVersion}.Query;
 
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
+
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -55,6 +58,17 @@ public class ServletDataImpl implements ServletData {
 	@Override
 	public Query getQuery() {
 		return new Query();
+	}
+
+	@Override
+	public void setAcceptLanguageFunction(
+		Function<Object, AcceptLanguage> acceptLanguageFunction) {
+		<#if querySchemaNames?has_content>
+			Query.setAcceptLanguageFunction(acceptLanguageFunction);
+		</#if>
+		<#if mutationSchemaNames?has_content>
+			Mutation.setAcceptLanguageFunction(acceptLanguageFunction);
+		</#if>
 	}
 
 	<#assign schemaNames = mutationSchemaNames />

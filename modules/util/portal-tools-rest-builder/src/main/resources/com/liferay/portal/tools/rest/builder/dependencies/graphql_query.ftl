@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -19,8 +20,11 @@ import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import graphql.schema.DataFetchingEnvironment;
+
 import java.util.Collection;
 import java.util.Date;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -48,21 +52,35 @@ public class Query {
 	</#list>
 
 	<#list javaMethodSignatures as javaMethodSignature>
+
+		<#assign
+			parameters = freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)
+		/>
+
 		${freeMarkerTool.getGraphQLMethodAnnotations(javaMethodSignature)}
-		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)}) throws Exception {
-			<#assign arguments = freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters) />
+		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(
+			DataFetchingEnvironment dataFetchingEnvironment
+			<#if parameters?has_content>
+				, ${parameters}
+			</#if>
+			) throws Exception {
+
+			<#assign
+				arguments = freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters)
+				schemaVarName = freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)
+			/>
 
 			<#if javaMethodSignature.returnType?contains("Collection<")>
 				return _applyComponentServiceObjects(
-					_${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}ResourceComponentServiceObjects,
-					this::_populateResourceContext,
-					${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource -> {
-						Page paginationPage = ${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource.${javaMethodSignature.methodName}(${arguments?replace("pageSize,page", "Pagination.of(pageSize, page)")});
+					_${schemaVarName}ResourceComponentServiceObjects,
+					${schemaVarName}Resource -> _populateResourceContext(dataFetchingEnvironment, ${schemaVarName}Resource),
+					${schemaVarName}Resource -> {
+						Page paginationPage = ${schemaVarName}Resource.${javaMethodSignature.methodName}(${arguments?replace("pageSize,page", "Pagination.of(pageSize, page)")});
 
 						return paginationPage.getItems();
 					});
 			<#else>
-				return _applyComponentServiceObjects(_${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}ResourceComponentServiceObjects, this::_populateResourceContext, ${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource -> ${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource.${javaMethodSignature.methodName}(${arguments?replace("pageSize,page", "Pagination.of(pageSize, page)")}));
+				return _applyComponentServiceObjects(_${schemaVarName}ResourceComponentServiceObjects, ${schemaVarName}Resource -> _populateResourceContext(dataFetchingEnvironment, ${schemaVarName}Resource), ${schemaVarName}Resource -> ${schemaVarName}Resource.${javaMethodSignature.methodName}(${arguments?replace("pageSize,page", "Pagination.of(pageSize, page)")}));
 			</#if>
 		}
 	</#list>
@@ -81,10 +99,20 @@ public class Query {
 	}
 
 	<#list schemaNames as schemaName>
-		private void _populateResourceContext(${schemaName}Resource ${freeMarkerTool.getSchemaVarName(schemaName)}Resource) throws Exception {
+		private void _populateResourceContext(DataFetchingEnvironment dataFetchingEnvironment, ${schemaName}Resource ${freeMarkerTool.getSchemaVarName(schemaName)}Resource) throws Exception {
+
+			${freeMarkerTool.getSchemaVarName(schemaName)}Resource.setContextAcceptLanguage(_acceptLanguageFunction.apply(dataFetchingEnvironment.getContext()));
+
 			${freeMarkerTool.getSchemaVarName(schemaName)}Resource.setContextCompany(CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 		}
 	</#list>
+
+	public static void setAcceptLanguageFunction(
+		Function<Object, AcceptLanguage> acceptLanguageFunction) {
+		_acceptLanguageFunction = acceptLanguageFunction;
+	}
+
+	private static Function<Object, AcceptLanguage> _acceptLanguageFunction;
 
 	<#list schemaNames as schemaName>
 		private static ComponentServiceObjects<${schemaName}Resource> _${freeMarkerTool.getSchemaVarName(schemaName)}ResourceComponentServiceObjects;

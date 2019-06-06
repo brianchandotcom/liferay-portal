@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -19,8 +20,11 @@ import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import graphql.schema.DataFetchingEnvironment;
+
 import java.util.Collection;
 import java.util.Date;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -48,22 +52,38 @@ public class Mutation {
 	</#list>
 
 	<#list javaMethodSignatures as javaMethodSignature>
+
+		<#assign
+			parameters = freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)
+		/>
+
 		${freeMarkerTool.getGraphQLMethodAnnotations(javaMethodSignature)}
-		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)}) throws Exception {
+		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(
+			DataFetchingEnvironment dataFetchingEnvironment
+			<#if parameters?has_content>
+				, ${parameters}
+			</#if>
+		) throws Exception {
+
+			<#assign
+				schemaVarName = freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)
+			/>
+
 			<#if javaMethodSignature.returnType?contains("Collection<")>
 				return _applyComponentServiceObjects(
-					_${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}ResourceComponentServiceObjects, this::_populateResourceContext,
-					${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource -> {
+					_${schemaVarName}ResourceComponentServiceObjects,
+					${schemaVarName}Resource -> _populateResourceContext(dataFetchingEnvironment, ${schemaVarName}Resource),
+					${schemaVarName}Resource -> {
 						<#assign arguments = freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters) />
 
-						Page paginationPage = ${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource.${javaMethodSignature.methodName}(${arguments?replace("pageSize,page", "Pagination.of(pageSize, page)")});
+						Page paginationPage = ${schemaVarName}Resource.${javaMethodSignature.methodName}(${arguments?replace("pageSize,page", "Pagination.of(pageSize, page)")});
 
 						return paginationPage.getItems();
 					});
 			<#elseif javaMethodSignature.returnType?contains("void")>
-				_applyVoidComponentServiceObjects(_${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}ResourceComponentServiceObjects, this::_populateResourceContext,${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource -> ${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource.${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters)}));
+				_applyVoidComponentServiceObjects(_${schemaVarName}ResourceComponentServiceObjects, ${schemaVarName}Resource -> _populateResourceContext(dataFetchingEnvironment, ${schemaVarName}Resource), ${schemaVarName}Resource -> ${schemaVarName}Resource.${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters)}));
 			<#else>
-				return _applyComponentServiceObjects(_${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}ResourceComponentServiceObjects, this::_populateResourceContext,${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource -> ${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource.${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters)}));
+				return _applyComponentServiceObjects(_${schemaVarName}ResourceComponentServiceObjects, ${schemaVarName}Resource -> _populateResourceContext(dataFetchingEnvironment, ${schemaVarName}Resource), ${schemaVarName}Resource -> ${schemaVarName}Resource.${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters)}));
 			</#if>
 		}
 	</#list>
@@ -95,11 +115,20 @@ public class Mutation {
 	}
 
 	<#list schemaNames as schemaName>
-		private void _populateResourceContext(${schemaName}Resource ${freeMarkerTool.getSchemaVarName(schemaName)}Resource) throws Exception {
-			${freeMarkerTool.getSchemaVarName(schemaName)}Resource.setContextAcceptLanguage(LocaleThreadLocal.getDefaultLocale());
+		private void _populateResourceContext(DataFetchingEnvironment dataFetchingEnvironment, ${schemaName}Resource ${freeMarkerTool.getSchemaVarName(schemaName)}Resource) throws Exception {
+
+			${freeMarkerTool.getSchemaVarName(schemaName)}Resource.setContextAcceptLanguage(_acceptLanguageFunction.apply(dataFetchingEnvironment.getContext()));
+
 			${freeMarkerTool.getSchemaVarName(schemaName)}Resource.setContextCompany(CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 		}
 	</#list>
+
+	public static void setAcceptLanguageFunction(
+		Function<Object, AcceptLanguage> acceptLanguageFunction) {
+		_acceptLanguageFunction = acceptLanguageFunction;
+	}
+
+	private static Function<Object, AcceptLanguage> _acceptLanguageFunction;
 
 	<#list schemaNames as schemaName>
 		private static ComponentServiceObjects<${schemaName}Resource> _${freeMarkerTool.getSchemaVarName(schemaName)}ResourceComponentServiceObjects;

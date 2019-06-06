@@ -31,7 +31,7 @@
 </tr>
 <tr>
 	<td>TEMPLATE_TABLE_NAME</td>
-	<td>//div[contains(@id,'ddmTemplatesSearchContainer')]//td[3]/a[contains(.,'${key_ddlTemplateName}')]</td>
+	<td>//div[contains(@id,'ddmTemplatesSearchContainer')]//td[3]/a[contains(.,'${key_ddlTemplateName}')] | //div[contains(@id,'ddmTemplatesSearchContainer')]//tr/td[contains(.,'${key_ddlTemplateName}')]</td>
 	<td></td>
 </tr>
 <tr>

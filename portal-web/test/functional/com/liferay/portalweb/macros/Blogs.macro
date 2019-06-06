@@ -544,7 +544,7 @@ definition {
 
 	macro viewEntryTitle
 	{
-		LexiconList.viewListEntryTitle(listEntry = "${entryTitle}");
+		LexiconList.viewListEntryTitleLink(listEntry = "${entryTitle}");
 	}
 
 	macro viewNoEntryCP {

@@ -55,4 +55,11 @@ definition {
 			value1 = "${listEntry}");
 	}
 
+	macro viewListEntryTitleLink {
+		AssertTextEquals(
+			key_listEntry = "${listEntry}",
+			locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK",
+			value1 = "${listEntry}");
+	}
+
 }

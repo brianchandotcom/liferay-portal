@@ -5,6 +5,10 @@ AUI.add(
 		var AObject = A.Object;
 		var Renderer = Liferay.DDM.Renderer;
 
+		var FieldSettings = ['autosaveEnabled', 'emailFromAddress', 'emailFromName',
+							 'emailSubject', 'emailToAddress', 'published', 'redirectURL',
+							 'requireAuthentication', 'requireCaptcha', 'sendEmailNotification',
+							 'storageType', 'workflowDefinition'];
 		var FieldTypes = Renderer.FieldTypes;
 		var Util = Renderer.Util;
 
@@ -240,20 +244,23 @@ AUI.add(
 				});
 
 				columnFieldContexts.forEach(function(columnFieldContext) {
-					var foundFieldContext = AArray.find(
-						repeatedContext,
-						function(repeatedContext) {
-							return (
-								columnFieldContext.fieldName ===
+					if (FieldSettings.indexOf(columnFieldContext.fieldName) ===
+						-1) {
+						var foundFieldContext = AArray.find(
+							repeatedContext,
+							function(repeatedContext) {
+								return (
+									columnFieldContext.fieldName ===
 									repeatedContext.fieldName &&
-								columnFieldContext.instanceId ===
+									columnFieldContext.instanceId ===
 									repeatedContext.instanceId
-							);
-						}
-					);
+								);
+							}
+						);
 
-					if (!foundFieldContext) {
-						removeContext.push(columnFieldContext);
+						if (!foundFieldContext) {
+							removeContext.push(columnFieldContext);
+						}
 					}
 				});
 

@@ -31,9 +31,9 @@ public interface SourceCheck {
 
 	public boolean isEnabled(String absolutePath);
 
-	public boolean isModuleSourceCheck();
-
 	public boolean isLiferaySourceCheck();
+
+	public boolean isModuleSourceCheck();
 
 	public void setAllFileNames(List<String> allFileNames);
 

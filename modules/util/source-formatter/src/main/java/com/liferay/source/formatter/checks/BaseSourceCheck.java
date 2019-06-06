@@ -78,12 +78,12 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
-	public boolean isModuleSourceCheck() {
+	public boolean isLiferaySourceCheck() {
 		return false;
 	}
 
 	@Override
-	public boolean isLiferaySourceCheck() {
+	public boolean isModuleSourceCheck() {
 		return false;
 	}
 

@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
+import java.sql.Types;
+
 /**
  * @author Alexander Chow
  * @author Bruno Farache
@@ -104,6 +106,11 @@ public class SybaseDB extends BaseDB {
 	}
 
 	@Override
+	protected int[] getSQLTypes() {
+		return _SQL_TYPES;
+	}
+
+	@Override
 	protected String[] getTemplate() {
 		return _SYBASE;
 	}
@@ -168,6 +175,12 @@ public class SybaseDB extends BaseDB {
 	}
 
 	protected static final String DROP_COLUMN = "drop column";
+
+	private static final int[] _SQL_TYPES = {
+		Types.LONGVARBINARY, Types.LONGVARBINARY, Types.INTEGER,
+		Types.TIMESTAMP, Types.DOUBLE, Types.INTEGER, Types.DECIMAL,
+		Types.VARCHAR, Types.LONGVARCHAR, Types.VARCHAR
+	};
 
 	private static final boolean _SUPPORTS_INLINE_DISTINCT = false;
 

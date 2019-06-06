@@ -30,6 +30,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -159,6 +160,11 @@ public class SQLServerDB extends BaseDB {
 	}
 
 	@Override
+	protected int[] getSQLTypes() {
+		return _SQL_TYPES;
+	}
+
+	@Override
 	protected String[] getTemplate() {
 		return _SQL_SERVER;
 	}
@@ -225,6 +231,12 @@ public class SQLServerDB extends BaseDB {
 	};
 
 	private static final int _SQL_SERVER_2000 = 8;
+
+	private static final int[] _SQL_TYPES = {
+		Types.LONGVARBINARY, Types.LONGVARBINARY, Types.BIT, Types.TIMESTAMP,
+		Types.DOUBLE, Types.INTEGER, Types.BIGINT, Types.LONGVARCHAR,
+		Types.LONGVARCHAR, Types.VARCHAR
+	};
 
 	private static final boolean _SUPPORTS_ALTER_COLUMN_TYPE = false;
 

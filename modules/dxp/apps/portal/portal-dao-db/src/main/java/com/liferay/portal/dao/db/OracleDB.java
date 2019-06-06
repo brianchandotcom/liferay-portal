@@ -31,6 +31,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -203,6 +204,11 @@ public class OracleDB extends BaseDB {
 	}
 
 	@Override
+	protected int[] getSQLTypes() {
+		return _SQL_TYPES;
+	}
+
+	@Override
 	protected String[] getTemplate() {
 		return _ORACLE;
 	}
@@ -318,6 +324,11 @@ public class OracleDB extends BaseDB {
 		" blob", " blob", " number(1, 0)", " timestamp", " number(30,20)",
 		" number(30,0)", " number(30,0)", " varchar2(4000 char)", " clob",
 		" varchar2", "", "commit"
+	};
+
+	private static final int[] _SQL_TYPES = {
+		Types.BLOB, Types.BLOB, Types.NUMERIC, Types.TIMESTAMP, Types.NUMERIC,
+		Types.NUMERIC, Types.NUMERIC, Types.VARCHAR, Types.CLOB, Types.VARCHAR
 	};
 
 	private static final boolean _SUPPORTS_INLINE_DISTINCT = false;

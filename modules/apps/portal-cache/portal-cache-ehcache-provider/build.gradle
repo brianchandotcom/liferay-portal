@@ -1,3 +1,3 @@
 dependencies {
-	compileOnly group: "net.sf.ehcache", name: "ehcache", version: "2.10.6"
+	compileOnly group: "com.liferay", name: "net.sf.ehcache", version: "2.10.6.LIFERAY-PATCHED-1"
 }

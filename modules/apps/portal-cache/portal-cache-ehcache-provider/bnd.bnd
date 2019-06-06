@@ -46,7 +46,7 @@ Import-Package:\
 	\
 	*
 -includeresource:\
-	@ehcache-[0-9]*.jar!/META-INF/*,\
-	@ehcache-[0-9]*.jar!/com/*,\
-	@ehcache-[0-9]*.jar!/net/*,\
-	@ehcache-[0-9]*.jar!/org/*
+	@net.sf.ehcache-[0-9]*.jar!/META-INF/*,\
+	@net.sf.ehcache-[0-9]*.jar!/com/*,\
+	@net.sf.ehcache-[0-9]*.jar!/net/*,\
+	@net.sf.ehcache-[0-9]*.jar!/org/*

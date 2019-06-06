@@ -74,9 +74,9 @@ public class JournalDefaultTemplateProviderImpl
 			String code =
 				templateVariableDefinition.generateCode(getLanguage())[0];
 
-			sb.append("<dt>");
+			sb.append("<dt class=\"text-capitalize\">");
 			sb.append(templateVariableDefinition.getLabel());
-			sb.append(":</dt><dd>");
+			sb.append("</dt><dd>");
 			sb.append(code);
 			sb.append("</dd>");
 		}

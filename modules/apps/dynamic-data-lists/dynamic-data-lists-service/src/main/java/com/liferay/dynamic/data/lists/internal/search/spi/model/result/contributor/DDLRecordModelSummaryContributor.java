@@ -53,7 +53,11 @@ public class DDLRecordModelSummaryContributor
 			getTitle(GetterUtil.getLong(document.get("recordSetId")), locale),
 			document.get(
 				locale,
-				Field.SNIPPET + StringPool.UNDERLINE + Field.DESCRIPTION,
+				Field.SNIPPET.concat(
+					StringPool.UNDERLINE
+				).concat(
+					Field.DESCRIPTION
+				),
 				Field.DESCRIPTION));
 
 		summary.setMaxContentLength(200);

@@ -321,63 +321,46 @@ function _provideDefaultValueToFragments(state, incomingExperienceId) {
 		const [fragmentEntryLinkId, fragmentEntryLink] = entry;
 		let newAcc = acc;
 
-		if (
-			getFragmentRowIndex(
-				nextState.layoutData.structure,
-				fragmentEntryLinkId
-			) !== -1
-		) {
-			const newEditableValues = Object.assign(
-				{},
-				fragmentEntryLink.editableValues,
-				{
-					[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: Object.entries(
-						fragmentEntryLink.editableValues[
-							EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-						]
-					).reduce((editableAcc, editableEntry) => {
-						const [editableKey, editableValue] = editableEntry;
-						let newEditableValue = editableValue;
+		const newEditableValues = Object.assign(
+			{},
+			fragmentEntryLink.editableValues,
+			{
+				[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: Object.entries(
+					fragmentEntryLink.editableValues[
+						EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+					]
+				).reduce((editableAcc, editableEntry) => {
+					const [editableKey, editableValue] = editableEntry;
+					let newEditableValue = editableValue;
 
-						if (editableValue[defaultSegmentsExperienceKey]) {
-							newEditableValue = Object.assign(
-								{},
-								editableValue,
-								{
-									[prefixSegmentsExperienceId]: deepClone(
-										editableValue[
-											defaultSegmentsExperienceKey
-										]
-									)
-								}
-							);
-						} else {
-							newEditableValue = Object.assign(
-								{},
-								editableValue,
-								{
-									[incomingExperienceKey]: {
-										defaultValue: editableValue.defaultValue
-									}
-								}
-							);
-						}
-
-						return Object.assign({}, editableAcc, {
-							[editableKey]: newEditableValue
+					if (editableValue[defaultSegmentsExperienceKey]) {
+						newEditableValue = Object.assign({}, editableValue, {
+							[incomingExperienceKey]: deepClone(
+								editableValue[defaultSegmentsExperienceKey]
+							)
 						});
-					}, {})
-				}
-			);
+					} else {
+						newEditableValue = Object.assign({}, editableValue, {
+							[incomingExperienceKey]: {
+								defaultValue: editableValue.defaultValue
+							}
+						});
+					}
 
-			const newFragmentEntryLink = Object.assign({}, fragmentEntryLink, {
-				editableValues: newEditableValues
-			});
+					return Object.assign({}, editableAcc, {
+						[editableKey]: newEditableValue
+					});
+				}, {})
+			}
+		);
 
-			newAcc = Object.assign({}, acc, {
-				[fragmentEntryLinkId]: newFragmentEntryLink
-			});
-		}
+		const newFragmentEntryLink = Object.assign({}, fragmentEntryLink, {
+			editableValues: newEditableValues
+		});
+
+		newAcc = Object.assign({}, acc, {
+			[fragmentEntryLinkId]: newFragmentEntryLink
+		});
 
 		return newAcc;
 	}, {});

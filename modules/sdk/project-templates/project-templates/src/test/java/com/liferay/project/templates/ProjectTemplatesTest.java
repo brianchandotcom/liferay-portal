@@ -2661,11 +2661,11 @@ public class ProjectTemplatesTest {
 		File workspaceProjectDir = _buildTemplateWithGradle(
 			WorkspaceUtil.WORKSPACE, "workspace");
 
-		File gradleProperties = new File(
+		File gradlePropertiesFile = new File(
 			workspaceProjectDir, "gradle.properties");
 
 		Files.write(
-			gradleProperties.toPath(),
+			gradlePropertiesFile.toPath(),
 			"\nliferay.workspace.target.platform.version=7.0.6".getBytes(),
 			StandardOpenOption.APPEND);
 
@@ -2691,11 +2691,11 @@ public class ProjectTemplatesTest {
 		File workspaceProjectDir = _buildTemplateWithGradle(
 			WorkspaceUtil.WORKSPACE, "workspace");
 
-		File gradleProperties = new File(
+		File gradlePropertiesFile = new File(
 			workspaceProjectDir, "gradle.properties");
 
 		Files.write(
-			gradleProperties.toPath(),
+			gradlePropertiesFile.toPath(),
 			"\nliferay.workspace.target.platform.version=7.1.0".getBytes(),
 			StandardOpenOption.APPEND);
 
@@ -2721,11 +2721,11 @@ public class ProjectTemplatesTest {
 		File workspaceProjectDir = _buildTemplateWithGradle(
 			WorkspaceUtil.WORKSPACE, "workspace");
 
-		File gradleProperties = new File(
+		File gradlePropertiesFile = new File(
 			workspaceProjectDir, "gradle.properties");
 
 		Files.write(
-			gradleProperties.toPath(),
+			gradlePropertiesFile.toPath(),
 			"\nliferay.workspace.target.platform.version=7.2.0".getBytes(),
 			StandardOpenOption.APPEND);
 

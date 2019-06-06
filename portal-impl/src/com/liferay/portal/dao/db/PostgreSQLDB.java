@@ -29,6 +29,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -190,6 +191,11 @@ public class PostgreSQLDB extends BaseDB {
 	}
 
 	@Override
+	protected int[] getSQLTypes() {
+		return _SQL_TYPES;
+	}
+
+	@Override
 	protected String[] getTemplate() {
 		return _POSTGRESQL;
 	}
@@ -272,6 +278,11 @@ public class PostgreSQLDB extends BaseDB {
 		"--", "true", "false", "'01/01/1970'", "current_timestamp", " oid",
 		" bytea", " bool", " timestamp", " double precision", " integer",
 		" bigint", " text", " text", " varchar", "", "commit"
+	};
+
+	private static final int[] _SQL_TYPES = {
+		Types.BIGINT, Types.BINARY, Types.BIT, Types.TIMESTAMP, Types.DOUBLE,
+		Types.INTEGER, Types.BIGINT, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR
 	};
 
 	private static final boolean _SUPPORTS_QUERYING_AFTER_EXCEPTION = false;

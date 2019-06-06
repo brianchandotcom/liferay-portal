@@ -29,6 +29,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,6 +149,11 @@ public class MySQLDB extends BaseDB {
 	}
 
 	@Override
+	protected int[] getSQLTypes() {
+		return _SQL_TYPES;
+	}
+
+	@Override
 	protected String[] getTemplate() {
 		return _MYSQL;
 	}
@@ -212,6 +218,12 @@ public class MySQLDB extends BaseDB {
 		"##", "1", "0", "'1970-01-01'", "now()", " longblob", " longblob",
 		" tinyint", " datetime(6)", " double", " integer", " bigint",
 		" longtext", " longtext", " varchar", "  auto_increment", "commit"
+	};
+
+	private static final int[] _SQL_TYPES = {
+		Types.LONGVARBINARY, Types.LONGVARBINARY, Types.TINYINT,
+		Types.TIMESTAMP, Types.DOUBLE, Types.INTEGER, Types.BIGINT,
+		Types.LONGVARCHAR, Types.LONGVARCHAR, Types.VARCHAR
 	};
 
 	private static final boolean _SUPPORTS_NEW_UUID_FUNCTION = true;

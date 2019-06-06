@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
+import java.sql.Types;
+
 /**
  * @author Alexander Chow
  * @author Sandeep Soni
@@ -54,6 +56,11 @@ public class HypersonicDB extends BaseDB {
 	@Override
 	protected String getServerName() {
 		return "hypersonic";
+	}
+
+	@Override
+	protected int[] getSQLTypes() {
+		return _SQL_TYPES;
 	}
 
 	@Override
@@ -118,6 +125,11 @@ public class HypersonicDB extends BaseDB {
 		"//", "true", "false", "'1970-01-01 00:00:00'", "now()", " blob",
 		" blob", " bit", " timestamp", " double", " int", " bigint",
 		" longvarchar", " longvarchar", " varchar", "", "commit"
+	};
+
+	private static final int[] _SQL_TYPES = {
+		Types.BLOB, Types.BLOB, Types.BIT, Types.TIMESTAMP, Types.DOUBLE,
+		Types.INTEGER, Types.BIGINT, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR
 	};
 
 }

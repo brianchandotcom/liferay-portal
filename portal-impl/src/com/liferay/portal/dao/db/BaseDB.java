@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -231,6 +232,10 @@ public abstract class BaseDB implements DB {
 	@Override
 	public int getMinorVersion() {
 		return _minorVersion;
+	}
+
+	public Integer getSQLType(String templateType) {
+		return _sqlTypes.get(templateType);
 	}
 
 	@Override
@@ -615,6 +620,12 @@ public abstract class BaseDB implements DB {
 		for (int i = 0; i < TEMPLATE.length; i++) {
 			_templateMap.put(TEMPLATE[i], actual[i]);
 		}
+
+		String[] templateTypes = ArrayUtil.clone(TEMPLATE, 5, 14);
+
+		for (int i = 0; i < templateTypes.length; i++) {
+			_sqlTypes.put(templateTypes[i], getSQLTypes()[i]);
+		}
 	}
 
 	protected String applyMaxStringIndexLengthLimitation(String template) {
@@ -977,6 +988,8 @@ public abstract class BaseDB implements DB {
 
 	protected abstract String getServerName();
 
+	protected abstract int[] getSQLTypes();
+
 	protected String getSuffix(int type) {
 		if (type == BARE) {
 			return "-bare";
@@ -1280,6 +1293,7 @@ public abstract class BaseDB implements DB {
 	private final int _majorVersion;
 	private final int _minorVersion;
 	private boolean _supportsStringCaseSensitiveQuery = true;
+	private final Map<String, Integer> _sqlTypes = new HashMap<>();
 	private final Map<String, String> _templateMap = new HashMap<>();
 
 }

@@ -608,21 +608,10 @@ definition {
 			pageName = "Web Content Page",
 			siteName = "Test Site Name");
 
-		Content.addNewPG(assetType = "Basic Web Content");
-
-		WebContent.addCP(
+		WebContent.addPGViaWCD(
+			templateName = "Second Basic Template",
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
-
-		WebContent.selectTemplateCP(
-			structureName = "Basic Web Content",
-			templateName = "Second Basic Template");
-
-		WebContent.publishViaWCD();
-
-		Navigator.gotoSitePage(
-			pageName = "Web Content Page",
-			siteName = "Test Site Name");
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content WC WebContent Content WC WebContent Content");
 

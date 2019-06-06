@@ -14,8 +14,11 @@
 
 package com.liferay.portal.vulcan.internal.graphql.servlet;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
+import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 
 import graphql.annotations.processor.ProcessingElementsContainer;
 import graphql.annotations.processor.graphQLProcessors.GraphQLInputProcessor;
@@ -32,13 +35,16 @@ import graphql.annotations.processor.typeFunctions.DefaultTypeFunction;
 
 import graphql.schema.GraphQLSchema;
 
+import graphql.servlet.GraphQLContext;
 import graphql.servlet.SimpleGraphQLHttpServlet;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Dictionary;
+import java.util.Optional;
 
 import javax.servlet.Servlet;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -163,6 +169,18 @@ public class GraphQLServletExtender {
 			Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 			Class<? extends ServletData> clazz = servletData.getClass();
+
+			servletData.setAcceptLanguageFunction(
+				object -> {
+					GraphQLContext graphQLContext = (GraphQLContext)object;
+
+					Optional<HttpServletRequest> httpServletRequestOptional =
+						graphQLContext.getHttpServletRequest();
+
+					return new AcceptLanguageImpl(
+						httpServletRequestOptional.orElse(null),
+						LanguageUtil.getLanguage(), PortalUtil.getPortal());
+				});
 
 			String path = servletData.getPath();
 

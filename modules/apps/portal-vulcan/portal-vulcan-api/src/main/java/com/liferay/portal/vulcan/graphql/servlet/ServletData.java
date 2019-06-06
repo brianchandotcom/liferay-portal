@@ -14,6 +14,10 @@
 
 package com.liferay.portal.vulcan.graphql.servlet;
 
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+
+import java.util.function.Function;
+
 /**
  * @author Preston Crary
  */
@@ -24,5 +28,9 @@ public interface ServletData {
 	public String getPath();
 
 	public Object getQuery();
+
+	public default void setAcceptLanguageFunction(
+		Function<Object, AcceptLanguage> acceptLanguageFunction) {
+	}
 
 }

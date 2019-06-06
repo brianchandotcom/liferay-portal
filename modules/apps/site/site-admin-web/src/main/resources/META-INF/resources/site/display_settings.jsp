@@ -126,6 +126,8 @@ if ((publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLay
 
 	<div id="<portlet:namespace />languageWarning"></div>
 
+	<div id="<portlet:namespace />defaultLanguageSiteNameWarning"></div>
+
 	<aui:fieldset cssClass="available-languages">
 		<h4 class="text-default"><liferay-ui:message key="available-languages" /></h4>
 
@@ -202,6 +204,10 @@ if ((publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLay
 		languageSelectInput.on(
 			'change',
 			function() {
+				const defaultLanguage = languageSelectInput.val();
+
+				const defaultLanguageSiteName = nameInput.getValue(defaultLanguage);
+
 				new A.Alert(
 					{
 						bodyContent: '<liferay-ui:message key="this-change-will-only-affect-the-newly-created-localized-content" />',
@@ -212,6 +218,18 @@ if ((publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLay
 						render: true
 					}
 				);
+
+				if (!defaultLanguageSiteName) {
+					new A.Alert(
+						{
+							bodyContent: '<liferay-ui:message key="site-name-will-display-a-generic-text-until-a-translation-is-added" />',
+							boundingBox: '#<portlet:namespace />defaultLanguageSiteNameWarning',
+							closeable: true,
+							cssClass: 'alert-warning',
+							destroyOnHide: false,
+							render: true
+						}
+					);
 			}
 		);
 	}

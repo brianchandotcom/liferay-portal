@@ -50,6 +50,7 @@ import org.talend.daikon.properties.property.StringProperty;
 
 /**
  * @author Zoltán Takács
+ * @author Igor Beslic
  */
 public class LiferayConnectionProperties
 	extends ComponentPropertiesImpl
@@ -320,6 +321,10 @@ public class LiferayConnectionProperties
 	public Property<String> name = PropertyFactory.newString(
 		"name"
 	).setRequired();
+	public Property<String> oauthClientId = PropertyFactory.newString(
+		"oauthClientId");
+	public Property<String> oauthClientSecret = PropertyFactory.newString(
+		"oauthClientSecret");
 	public Property<String> password = PropertyFactory.newString(
 		"password"
 	).setFlags(

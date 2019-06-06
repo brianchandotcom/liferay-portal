@@ -144,6 +144,22 @@ definition {
 				value1 = "${booleanField}");
 		}
 
+		if (isSet(webcontentField)) {
+			AssertClick(
+				key_fieldName = "WebContent",
+				locator1 = "Button#SELECT_CONTENT",
+				value1 = "Select");
+
+			SelectFrame(locator1 = "IFrame#DIALOG");
+
+			AssertClick(
+				key_webContentTitle = "${webcontentField}",
+				locator1 = "Link#WEB_CONTENT_ARTICLE",
+				value1 = "${webcontentField}");
+
+			SelectFrame(value1 = "relative=top");
+		}
+
 		AssertClick(
 			locator1 = "Button#PUBLISH",
 			value1 = "Publish");

@@ -148,6 +148,134 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for OAUTH2-259."
+	@priority = "5"
+	test AssertClientCredentialsGrantFlowForSpecifiedUser {
+		JSONWebcontent.addWebContent(
+			content = "wc content",
+			groupName = "Guest",
+			title = "test-wc");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Service Access Policy");
+
+		ServiceAccessPolicy.addServiceAccessPolicy(
+			SAPEnabled = "true",
+			SAPMethodName = "deleteArticle",
+			SAPName = "OAuth2_delete.journalarticles",
+			SAPServiceClass = "com.liferay.journal.service.JournalArticleService",
+			SAPTitle = "Delete journal articles");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "OAuth 2 Administration");
+
+		OAuth2.addApplication(
+			applicationName = "OAuth Application",
+			checkboxUncheckList = "Authorization Code");
+
+		OAuth2.inputApplicationValues(
+			clientCredentialsUser = "usersn",
+			clientId = "abc123",
+			clientSecret = "abc123");
+
+		Navigator.gotoBack();
+
+		OAuth2.editScopes(
+			applicationName = "OAuth Application",
+			resourceCheckList = "liferay-json-web-services.delete.journalarticles",
+			resourcePanels = "Portal Services");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "OAuth 2 Administration");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "OAuth Application");
+
+		Pause(locator1 = "3000");
+
+		var generatedClientId = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_ID");
+		var generatedClientSecret = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET");
+		var portalURL = PropsUtil.get("portal.url");
+
+		var curl = '''
+			${portalURL}/o/oauth2/token \
+				--data grant_type=client_credentials&client_id=${generatedClientId}&client_secret=${generatedClientSecret} -H 'Content-Type: application/x-www-form-urlencoded'
+		''';
+
+		var reponse = JSONCurlUtil.post("${curl}");
+
+		var partialReponse = StringUtil.extractFirst("${reponse}", "&quot;token_type&quot;");
+		var partialReponse1 = StringUtil.extractLast("${partialReponse}", "&quot;access_token&quot;:&quot;");
+		var accessToken = StringUtil.extractFirst("${partialReponse1}", "&quot;");
+		echo("## * Access Token: ${accessToken}");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoEntryMenuItem(
+			entry = "test-wc",
+			menuItem = "View History");
+
+		Pause(locator1 = "3000");
+
+		var articleId = selenium.getText("WCEditWebContent#ARTICLE_ID");
+
+		echo("## * Article ID: ${articleId}");
+
+		var liferaySiteId = JSONGroup._getSiteIdByGroupName(groupName = "Guest");
+
+		var curl2 = '''
+			-H 'Authorization: Bearer ${accessToken}' ${portalURL}/api/jsonws/journal.journalarticle/delete-article \
+				-d groupId=${liferaySiteId} \
+				-d articleId=${articleId} \
+				-d articleURL='test-wc'
+		''';
+
+		var output2 = JSONCurlUtil.post("${curl2}");
+
+		if (contains("${output2}", "must have DELETE permission for com.liferay.journal.model.JournalArticle")) {
+			echo("The user must have DELETE permission for com.liferay.journal.model.JournalArticle");
+		}
+		else {
+			fail("FAIL! Cannot find the user permission message.");
+		}
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "DELETE",
+			resourceName = "com.liferay.journal.model.JournalArticle",
+			roleTitle = "Guest");
+
+		var output3 = JSONCurlUtil.post("${curl2}");
+
+		if (contains("${output3}", "must have DELETE permission for com.liferay.journal.model.JournalArticle")) {
+			fail("The user has delete permission");
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		AssertTextNotPresent(value1 = "test-wc");
+	}
+
 	test AuthorizeExternalApplication {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 

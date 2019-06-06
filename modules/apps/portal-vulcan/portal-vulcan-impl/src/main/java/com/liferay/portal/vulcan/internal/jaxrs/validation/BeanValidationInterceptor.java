@@ -14,6 +14,8 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.validation;
 
+import com.liferay.portal.kernel.util.ListUtil;
+
 import java.io.IOException;
 
 import java.lang.reflect.Method;
@@ -30,7 +32,6 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.ext.Provider;
 
-import com.liferay.portal.kernel.util.ListUtil;
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.interceptor.InterceptorChain;
 import org.apache.cxf.jaxrs.lifecycle.ResourceProvider;

@@ -38,7 +38,7 @@ import java.util.regex.Pattern;
 public class BNDExportsCheck extends BaseFileCheck {
 
 	@Override
-	public boolean isModulesCheck() {
+	public boolean isModuleSourceCheck() {
 		return true;
 	}
 

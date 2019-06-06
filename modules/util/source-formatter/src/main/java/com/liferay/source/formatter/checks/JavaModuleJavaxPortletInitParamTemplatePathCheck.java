@@ -44,7 +44,7 @@ public class JavaModuleJavaxPortletInitParamTemplatePathCheck
 	extends BaseJavaTermCheck {
 
 	@Override
-	public boolean isModulesCheck() {
+	public boolean isModuleSourceCheck() {
 		return true;
 	}
 

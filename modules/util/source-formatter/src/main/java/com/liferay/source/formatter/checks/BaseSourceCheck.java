@@ -78,7 +78,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
-	public boolean isModulesCheck() {
+	public boolean isModuleSourceCheck() {
 		return false;
 	}
 

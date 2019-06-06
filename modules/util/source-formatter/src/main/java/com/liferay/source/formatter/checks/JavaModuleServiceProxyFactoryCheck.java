@@ -22,7 +22,7 @@ import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 public class JavaModuleServiceProxyFactoryCheck extends BaseFileCheck {
 
 	@Override
-	public boolean isModulesCheck() {
+	public boolean isModuleSourceCheck() {
 		return true;
 	}
 

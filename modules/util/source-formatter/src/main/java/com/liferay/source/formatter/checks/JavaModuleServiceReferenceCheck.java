@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 public class JavaModuleServiceReferenceCheck extends BaseFileCheck {
 
 	@Override
-	public boolean isModulesCheck() {
+	public boolean isModuleSourceCheck() {
 		return true;
 	}
 

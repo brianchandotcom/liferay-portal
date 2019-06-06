@@ -96,7 +96,7 @@ public class SourceChecksUtil {
 
 		for (SourceCheck sourceCheck : sourceChecks) {
 			if (!sourceCheck.isEnabled(absolutePath) ||
-				(sourceCheck.isModulesCheck() && !modulesFile)) {
+				(sourceCheck.isModuleSourceCheck() && !modulesFile)) {
 
 				continue;
 			}
@@ -275,7 +275,7 @@ public class SourceChecksUtil {
 
 			if ((!portalSource && !subrepository &&
 				 sourceCheck.isLiferaySourceCheck()) ||
-				(!includeModuleChecks && sourceCheck.isModulesCheck())) {
+				(!includeModuleChecks && sourceCheck.isModuleSourceCheck())) {
 
 				continue;
 			}

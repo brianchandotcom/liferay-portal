@@ -26,7 +26,7 @@ import java.io.IOException;
 public class PackageinfoBNDExportPackageCheck extends BaseFileCheck {
 
 	@Override
-	public boolean isModulesCheck() {
+	public boolean isModuleSourceCheck() {
 		return true;
 	}
 

@@ -20,7 +20,7 @@ package com.liferay.source.formatter.checks;
 public class JSPModuleIllegalImportsCheck extends BaseFileCheck {
 
 	@Override
-	public boolean isModulesCheck() {
+	public boolean isModuleSourceCheck() {
 		return true;
 	}
 

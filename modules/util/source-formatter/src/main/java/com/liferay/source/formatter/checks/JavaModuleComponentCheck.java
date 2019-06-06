@@ -26,7 +26,7 @@ import java.util.List;
 public class JavaModuleComponentCheck extends BaseJavaTermCheck {
 
 	@Override
-	public boolean isModulesCheck() {
+	public boolean isModuleSourceCheck() {
 		return true;
 	}
 

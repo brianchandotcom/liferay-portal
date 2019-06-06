@@ -24,7 +24,7 @@ import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 public class BNDDirectoryNameCheck extends BaseFileCheck {
 
 	@Override
-	public boolean isModulesCheck() {
+	public boolean isModuleSourceCheck() {
 		return true;
 	}
 

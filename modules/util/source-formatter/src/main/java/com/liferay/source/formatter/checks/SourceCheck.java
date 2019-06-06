@@ -31,7 +31,7 @@ public interface SourceCheck {
 
 	public boolean isEnabled(String absolutePath);
 
-	public boolean isModulesCheck();
+	public boolean isModuleSourceCheck();
 
 	public boolean isLiferaySourceCheck();
 

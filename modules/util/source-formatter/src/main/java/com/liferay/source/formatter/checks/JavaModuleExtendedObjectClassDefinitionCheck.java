@@ -23,7 +23,7 @@ public class JavaModuleExtendedObjectClassDefinitionCheck
 	extends BaseFileCheck {
 
 	@Override
-	public boolean isModulesCheck() {
+	public boolean isModuleSourceCheck() {
 		return true;
 	}
 

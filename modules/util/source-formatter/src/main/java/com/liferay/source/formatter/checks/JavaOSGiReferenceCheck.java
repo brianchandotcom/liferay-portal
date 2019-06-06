@@ -47,7 +47,7 @@ import java.util.regex.Pattern;
 public class JavaOSGiReferenceCheck extends BaseFileCheck {
 
 	@Override
-	public boolean isModulesCheck() {
+	public boolean isModuleSourceCheck() {
 		return true;
 	}
 

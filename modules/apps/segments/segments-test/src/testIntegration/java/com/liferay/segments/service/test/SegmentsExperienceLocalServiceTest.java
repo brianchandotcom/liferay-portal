@@ -145,9 +145,14 @@ public class SegmentsExperienceLocalServiceTest {
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId());
 
+		SegmentsExperience segmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), _classNameId, _classPK);
+
 		_segmentsExperienceLocalService.addSegmentsExperience(
 			segmentsEntry.getSegmentsEntryId(), _classNameId, _classPK,
-			RandomTestUtil.randomLocaleStringMap(), 0, true,
+			RandomTestUtil.randomLocaleStringMap(),
+			segmentsExperience.getPriority(), true,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 

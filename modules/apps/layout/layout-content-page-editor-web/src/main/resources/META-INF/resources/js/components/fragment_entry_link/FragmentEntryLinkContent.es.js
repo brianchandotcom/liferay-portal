@@ -248,17 +248,18 @@ class FragmentEntryLinkContent extends Component {
 				const contentNode = A.one(this.refs.content);
 				contentNode.plug(A.Plugin.ParseContent);
 				contentNode.setContent(content);
+				if (this.editableValues) {
+					this._createEditables();
 
-				this._createEditables();
-
-				this._update({
-					defaultLanguageId: this.defaultLanguageId,
-					defaultSegmentsExperienceId: this
-						.defaultSegmentsExperienceId,
-					languageId: this.languageId,
-					segmentsExperienceId: this.segmentsExperienceId,
-					updateFunctions: []
-				});
+					this._update({
+						defaultLanguageId: this.defaultLanguageId,
+						defaultSegmentsExperienceId: this
+							.defaultSegmentsExperienceId,
+						languageId: this.languageId,
+						segmentsExperienceId: this.segmentsExperienceId,
+						updateFunctions: []
+					});
+				}
 			});
 		}
 	}

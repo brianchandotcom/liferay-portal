@@ -24,7 +24,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Tina Tian
  */
-@Component(immediate = true, service = PortalCacheBootstrapLoaderFactory.class)
+@Component(
+	enabled = false, immediate = true,
+	service = PortalCacheBootstrapLoaderFactory.class
+)
 public class ClusterLinkPortalCacheBootstrapLoaderFactory
 	implements PortalCacheBootstrapLoaderFactory {
 

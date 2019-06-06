@@ -28,7 +28,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tina Tian
  */
-@Component(immediate = true, service = PortalCacheReplicatorFactory.class)
+@Component(
+	enabled = false, immediate = true,
+	service = PortalCacheReplicatorFactory.class
+)
 public class ClusterLinkPortalCacheReplicatorFactory
 	implements PortalCacheReplicatorFactory {
 

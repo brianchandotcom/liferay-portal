@@ -100,8 +100,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#INFO",
-			value1 = "This portlet has been undeployed. Please redeploy it or remove it from the page."
-		);
+			value1 = "This portlet has been undeployed. Please redeploy it or remove it from the page.");
 	}
 
 	@priority = "3"

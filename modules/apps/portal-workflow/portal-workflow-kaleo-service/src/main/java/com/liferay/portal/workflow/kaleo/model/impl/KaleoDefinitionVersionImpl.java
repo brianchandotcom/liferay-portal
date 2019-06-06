@@ -60,12 +60,12 @@ public class KaleoDefinitionVersionImpl extends KaleoDefinitionVersionBaseImpl {
 		return KaleoNodeLocalServiceUtil.getKaleoNode(getStartKaleoNodeId());
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean hasIncompleteKaleoInstances() {
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(getCompanyId());
-
 		int count = KaleoInstanceLocalServiceUtil.getKaleoInstancesCount(
 			getKaleoDefinitionVersionId(), false);
 

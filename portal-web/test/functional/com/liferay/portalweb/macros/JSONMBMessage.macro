@@ -1,5 +1,6 @@
 definition {
 
+	@summary = "This calls the JSON WS API to add a MB category"
 	macro addCategory {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -29,6 +30,7 @@ definition {
 		var messageId = JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "This calls the JSON WS API to add a MB thread"
 	macro addMessage {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -63,6 +65,7 @@ definition {
 		var messageId = JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "This calls the JSON WS API to add a MB reply"
 	macro addMessageReply {
 		var messageId = JSONMBMessage.getmessageId();
 
@@ -93,6 +96,7 @@ definition {
 		var messageId = JSONCurlUtil.post("${curl}", "$['messageId']");
 	}
 
+	@summary = "This calls the JSON WS API to get the ID of a MB category through the URL"
 	macro getCategoryId {
 		var messageBoardsCategoryURL = selenium.getLocation();
 		var portalURL = PropsUtil.get("portal.url");
@@ -101,6 +105,7 @@ definition {
 		return "${messageId}";
 	}
 
+	@summary = "This calls the JSON WS API to get the ID of a MB thread through the URL"
 	macro getmessageId {
 		var messageBoardsThreadURL = selenium.getLocation();
 		var portalURL = PropsUtil.get("portal.url");

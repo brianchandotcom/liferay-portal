@@ -21,7 +21,7 @@ CLASSPATH=""
 DEBUG="false"
 DEBUG_OPTS="-agentlib:jdwp=transport=dt_socket,address=9009,server=y,suspend=n"
 JAVA_BIN="$(which java)"
-JAVA_OPTS="-Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=512m -XX:MetaspaceSize=512m -XX:NewSize=1536m -XX:SurvivorRatio=7"
+JAVA_OPTS="-Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=768m -XX:MetaspaceSize=768m -XX:NewSize=1536m -XX:SurvivorRatio=7"
 STD_IN=0
 
 key=""

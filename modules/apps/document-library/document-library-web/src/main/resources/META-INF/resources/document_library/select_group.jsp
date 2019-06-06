@@ -18,25 +18,25 @@
 
 <%
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectGroup");
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("mvcPath", "/document_library/select_group.jsp");
 %>
 
+
+
 <div class="container-fluid-1280">
+	<clay:management-toolbar
+		clearResultsURL="<%= portletURL.toString() %>"
+		searchActionURL="<%= portletURL.toString() %>"
+		selectable="<%= false %>"
+	/>
+
 	<aui:form method="post" name="selectGroupFm">
-
-		<%
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/document_library/select_group.jsp");
-		%>
-
 		<liferay-ui:search-container
 			searchContainer="<%= new GroupSearch(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse)) %>"
 		>
-			<clay:management-toolbar
-				clearResultsURL="<%= portletURL.toString() %>"
-				searchActionURL="<%= portletURL.toString() %>"
-				selectable="<%= false %>"
-			/>
 
 			<%
 			GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();

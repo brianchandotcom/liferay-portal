@@ -6,45 +6,38 @@ definition {
 
 		var groupName = JSONGroup._getGroupName(groupId = "${groupId}");
 
-		var curl = '''
-			${portalURL}/api/jsonws/assetcategory/add-category \
-				-u test@liferay.com:test \
-				-d groupId=${groupId} \
-				-d title=${title} \
-				-d vocabularyId=${vocabularyId}
-		''';
+		if (!(isSet(parentCategoryId))) {
+			var parentCategoryId = "0";
+		}
 
-		echo("## Assign a 'Category' with the following info using JSONWS:");
+		if (isSet(titleMap)) {
+			var titleMap = JSONUtil2._convertLocalizedListToMap(listMap = "${titleMap}");
+		}
+		else {
+			var titleMap = '''{"en_US":"${title}"}''';
+		}
 
-		echo("## * Group Name: ${groupName}");
-
-		echo("## * Vocabulary Id: ${vocabularyId}");
-
-		echo("## * Title: ${title}");
-
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
-	}
-
-	@summary = "Directly calls the JSON WS API to add a subcategory"
-	macro _addSubcategory {
-		var portalURL = JSONCompany.getPortalURL();
-
-		var groupName = JSONGroup._getGroupName(groupId = "${groupId}");
-
-		var subcategoryMap = '''{"en_US":"${subcategoryName}"}''';
+		if (isSet(descriptionMap)) {
+			var descriptionMap = JSONUtil2._convertLocalizedListToMap(listMap = "${descriptionMap}");
+		}
+		else if (isSet(description)) {
+			var descriptionMap = '''{"en_US":"${description}"}''';
+		} else {
+			var descriptionMap = "{}";
+		}
 
 		var curl = '''
 			${portalURL}/api/jsonws/assetcategory/add-category \
 			-u test@liferay.com:test \
 				-d groupId=${groupId} \
-				-d parentCategoryId=${categoryId} \
-				-d titleMap=${subcategoryMap} \
-				-d descriptionMap={} \
+				-d parentCategoryId=${parentCategoryId} \
+				-d titleMap=${titleMap} \
+				-d descriptionMap=${descriptionMap} \
 				-d vocabularyId=${vocabularyId} \
 				-d categoryProperties=
-			''';
+		''';
 
-		echo("## Assign a 'Sub-Category' with the following info using JSONWS:");
+		echo("## Assign a 'Category' with the following info using JSONWS:");
 
 		echo("## * Group Name: ${groupName}");
 
@@ -52,7 +45,9 @@ definition {
 
 		echo("## * Vocabulary Id: ${vocabularyId}");
 
-		echo("## * Title Map: ${subcategoryMap}");
+		echo("## * Title Map: ${titleMap}");
+
+		echo("## * Description Map: ${descriptionMap}");
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
@@ -63,18 +58,39 @@ definition {
 
 		var groupName = JSONGroup._getGroupName(groupId = "${groupId}");
 
+		if (isSet(titleMap)) {
+			var titleMap = JSONUtil2._convertLocalizedListToMap(listMap = "${titleMap}");
+		}
+		else {
+			var titleMap = '''{"en_US":"${title}"}''';
+		}
+
+		if (isSet(descriptionMap)) {
+			var descriptionMap = JSONUtil2._convertLocalizedListToMap(listMap = "${descriptionMap}");
+		}
+		else if (isSet(description)) {
+			var descriptionMap = '''{"en_US":"${description}"}''';
+		} else {
+			var descriptionMap = "{}";
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/assetvocabulary/add-vocabulary \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
-				-d title=${title}
+				-d title= \
+				-d titleMap=${titleMap} \
+				-d descriptionMap=${descriptionMap} \
+				-d Settings=
 		''';
 
 		echo("## Assign a 'Vocabulary' with the following info using JSONWS:");
 
 		echo("## * Group Name: ${groupName}");
 
-		echo("## * Title: ${title}");
+		echo("## * Title Map: ${titleMap}");
+
+		echo("## * Description Map: ${descriptionMap}");
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
@@ -172,9 +188,10 @@ definition {
 			fail("Please set 'groupName'.");
 		}
 
-		if (!(isSet(title))) {
-			fail("Please set 'title'.");
-		}
+		JSONUtil2._exclusiveOrCheck(
+			A = "${title}",
+			B = "${titleMap}",
+			failMessage = "Please only set 'title' or only 'titleMap' but not both or none.");
 
 		if (!(isSet(vocabularyName))) {
 			fail("Please set 'vocabularyName'.");
@@ -188,28 +205,32 @@ definition {
 		);
 
 		JSONCategory._addCategory(
+			description = "${description}",
+			descriptionMap = "${descriptionMap}",
 			groupId = "${groupId}",
 			title = "${title}",
+			titleMap = "${titleMap}",
 			vocabularyId = "${vocabularyId}");
 	}
 
 	@summary = "Add a basic subcategory"
 	macro addSubcategory {
-		if (!(isSet(categoryName))) {
-			fail("Please set 'categoryName'.");
-		}
-
 		if (!(isSet(groupName))) {
 			fail("Please set 'groupName'.");
 		}
 
-		if (!(isSet(subcategoryName))) {
-			fail("Please set 'subcategoryName'.");
+		if (!(isSet(parentCategoryName))) {
+			fail("Please set 'parentCategoryName'.");
 		}
 
 		if (!(isSet(vocabularyName))) {
 			fail("Please set 'vocabularyName'.");
 		}
+
+		JSONUtil2._exclusiveOrCheck(
+			A = "${title}",
+			B = "${titleMap}",
+			failMessage = "Please only set 'title' or only 'titleMap' but not both or none.");
 
 		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
 
@@ -218,16 +239,17 @@ definition {
 			vocabularyName = "${vocabularyName}"
 		);
 
-		var categoryId = JSONCategory._getCategoryIdByName(
-			categoryName = "${categoryName}",
+		var parentCategoryId = JSONCategory._getCategoryIdByName(
+			categoryName = "${parentCategoryName}",
 			groupId = "${groupId}",
 			vocabularyId = "${vocabularyId}"
 		);
 
-		JSONCategory._addSubcategory(
-			categoryId = "${categoryId}",
+		JSONCategory._addCategory(
 			groupId = "${groupId}",
-			subcategoryName = "${subcategoryName}",
+			parentCategoryId = "${parentCategoryId}",
+			title = "${title}",
+			titleMap = "${titleMap}",
 			vocabularyId = "${vocabularyId}");
 	}
 
@@ -237,15 +259,19 @@ definition {
 			fail("Please set 'groupName'.");
 		}
 
-		if (!(isSet(title))) {
-			fail("Please set 'title'.");
-		}
+		JSONUtil2._exclusiveOrCheck(
+			A = "${title}",
+			B = "${titleMap}",
+			failMessage = "Please only set 'title' or only 'titleMap' but not both or none.");
 
 		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
 
 		JSONCategory._addVocabulary(
+			description = "${description}",
+			descriptionMap = "${descriptionMap}",
 			groupId = "${groupId}",
-			title = "${title}");
+			title = "${title}",
+			titleMap = "${titleMap}");
 	}
 
 	@summary = "Get the categoryId from any category by using categoryName, groupId, and vocabularyId"

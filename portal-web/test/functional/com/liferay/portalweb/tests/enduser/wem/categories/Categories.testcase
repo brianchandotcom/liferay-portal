@@ -216,21 +216,21 @@ definition {
 			vocabularyName = "Vocabulary Name");
 
 		JSONCategory.addSubcategory(
-			categoryName = "Category Name 1",
 			groupName = "Test Site Name",
-			subcategoryName = "Subcategory Name 1",
+			parentCategoryName = "Category Name 1",
+			title = "Subcategory Name 1",
 			vocabularyName = "Vocabulary Name");
 
 		JSONCategory.addSubcategory(
-			categoryName = "Category Name 2",
 			groupName = "Test Site Name",
-			subcategoryName = "Subcategory Name 2",
+			parentCategoryName = "Category Name 2",
+			title = "Subcategory Name 2",
 			vocabularyName = "Vocabulary Name");
 
 		JSONCategory.addSubcategory(
-			categoryName = "Category Name 3",
 			groupName = "Test Site Name",
-			subcategoryName = "Subcategory Name 3",
+			parentCategoryName = "Category Name 3",
+			title = "Subcategory Name 3",
 			vocabularyName = "Vocabulary Name");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -569,9 +569,9 @@ definition {
 			vocabularyName = "Vocabulary Name");
 
 		JSONCategory.addSubcategory(
-			categoryName = "Category Name 1",
 			groupName = "Test Site Name",
-			subcategoryName = "Subcategory Name 1",
+			parentCategoryName = "Category Name 1",
+			title = "Subcategory Name 1",
 			vocabularyName = "Vocabulary Name");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -590,9 +590,9 @@ definition {
 			vocabularyName = "Vocabulary Name");
 
 		JSONCategory.addSubcategory(
-			categoryName = "Category Name 1",
 			groupName = "Test Site Name",
-			subcategoryName = "Subcategory Name 1",
+			parentCategoryName = "Category Name 1",
+			title = "Subcategory Name 1",
 			vocabularyName = "Vocabulary Name");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -695,9 +695,9 @@ definition {
 			vocabularyName = "Vocabulary Name");
 
 		JSONCategory.addSubcategory(
-			categoryName = "Category Name 1",
 			groupName = "Test Site Name",
-			subcategoryName = "Subcategory Name 1",
+			parentCategoryName = "Category Name 1",
+			titleName = "Subcategory Name 1",
 			vocabularyName = "Vocabulary Name");
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");

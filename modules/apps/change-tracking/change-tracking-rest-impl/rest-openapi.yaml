@@ -168,8 +168,6 @@ paths:
                       type: integer
             responses:
                 204:
-                    content:
-                        application/json: {}
                     description: ""
                 400:
                     content:
@@ -178,8 +176,6 @@ paths:
                                 type: string
                     description: ""
                 404:
-                    content:
-                        application/json: {}
                     description: ""
             tags: ["Collection"]
         get:

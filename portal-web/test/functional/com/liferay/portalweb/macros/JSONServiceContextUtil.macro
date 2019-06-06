@@ -34,6 +34,23 @@ definition {
 		return "${JSON}";
 	}
 
+	macro _addGuestPermissions {
+		if ((!(isSet(JSON))) || (!(isSet(addGuestPermissions)))) {
+			fail("Error, 'JSON' and 'addGuestPermissions' must all be set.");
+		}
+
+		if (!(("${addGuestPermissions}" == "true") || ("${addGuestPermissions}" == "false"))) {
+			fail("Invalid addGuestPermissions: '${addGuestPermissions}' specified. Allowed values are 'true' or 'false'.");
+		}
+
+		var JSON = JSONUtil2._addJSONObject(
+			JSON = "${JSON}",
+			key = "addGuestPermissions",
+			value = "${addGuestPermissions}");
+
+		return "${JSON}";
+	}
+
 	@summary = "See WorkflowConstants.java for available actions"
 	macro _addWorkflowAction {
 		if ((!(isSet(JSON))) || (!(isSet(workflowAction)))) {
@@ -68,6 +85,12 @@ definition {
 		if (isSet(assetTagNames)) {
 			var serviceContext = JSONServiceContextUtil._addAssetTagNames(
 				assetTagNames = "${assetTagNames}",
+				JSON = "${serviceContext}");
+		}
+
+		if (isSet(addGuestPermissions)) {
+			var serviceContext = JSONServiceContextUtil._addGuestPermissions(
+				addGuestPermissions = "${addGuestPermissions}",
 				JSON = "${serviceContext}");
 		}
 

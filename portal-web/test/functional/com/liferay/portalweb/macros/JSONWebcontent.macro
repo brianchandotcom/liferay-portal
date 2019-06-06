@@ -155,6 +155,7 @@ definition {
 
 		if (!(isSet(serviceContext))) {
 			var serviceContext = JSONServiceContextUtil.setServiceContext(
+				addGuestPermissions = "true",
 				assetCategoryIds = "${assetCategoryIds}",
 				assetTagNames = "${assetTagNames}",
 				workflowAction = "${workflowAction}");
@@ -209,6 +210,7 @@ definition {
 
 		if (!(isSet(serviceContext))) {
 			var serviceContext = JSONServiceContextUtil.setServiceContext(
+				addGuestPermissions = "true",
 				assetCategoryIds = "${assetCategoryIds}",
 				assetTagNames = "${assetTagNames}",
 				workflowAction = "${workflowAction}");

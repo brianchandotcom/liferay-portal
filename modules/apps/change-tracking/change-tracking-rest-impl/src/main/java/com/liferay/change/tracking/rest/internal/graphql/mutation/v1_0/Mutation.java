@@ -31,6 +31,8 @@ import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
 
+import javax.ws.rs.core.Response;
+
 import org.osgi.service.component.ComponentServiceObjects;
 
 /**
@@ -72,10 +74,11 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public void deleteCollection(@GraphQLName("collectionId") Long collectionId)
+	public Response deleteCollection(
+			@GraphQLName("collectionId") Long collectionId)
 		throws Exception {
 
-		_applyVoidComponentServiceObjects(
+		return _applyComponentServiceObjects(
 			_collectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			collectionResource -> collectionResource.deleteCollection(

@@ -23,6 +23,8 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import javax.annotation.Generated;
 
+import javax.ws.rs.core.Response;
+
 /**
  * To access this resource, run:
  *
@@ -43,7 +45,7 @@ public interface CollectionResource {
 			Long companyId, Long userId, CollectionUpdate collectionUpdate)
 		throws Exception;
 
-	public void deleteCollection(Long collectionId) throws Exception;
+	public Response deleteCollection(Long collectionId) throws Exception;
 
 	public Collection getCollection(Long collectionId) throws Exception;
 

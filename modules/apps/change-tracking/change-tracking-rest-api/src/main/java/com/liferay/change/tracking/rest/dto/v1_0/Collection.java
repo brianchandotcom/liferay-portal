@@ -50,17 +50,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Collection {
 
 	@Schema
-	public Integer getAdditionCount() {
+	public Long getAdditionCount() {
 		return additionCount;
 	}
 
-	public void setAdditionCount(Integer additionCount) {
+	public void setAdditionCount(Long additionCount) {
 		this.additionCount = additionCount;
 	}
 
 	@JsonIgnore
 	public void setAdditionCount(
-		UnsafeSupplier<Integer, Exception> additionCountUnsafeSupplier) {
+		UnsafeSupplier<Long, Exception> additionCountUnsafeSupplier) {
 
 		try {
 			additionCount = additionCountUnsafeSupplier.get();
@@ -75,20 +75,20 @@ public class Collection {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer additionCount;
+	protected Long additionCount;
 
 	@Schema
-	public Integer getCollectionId() {
+	public Long getCollectionId() {
 		return collectionId;
 	}
 
-	public void setCollectionId(Integer collectionId) {
+	public void setCollectionId(Long collectionId) {
 		this.collectionId = collectionId;
 	}
 
 	@JsonIgnore
 	public void setCollectionId(
-		UnsafeSupplier<Integer, Exception> collectionIdUnsafeSupplier) {
+		UnsafeSupplier<Long, Exception> collectionIdUnsafeSupplier) {
 
 		try {
 			collectionId = collectionIdUnsafeSupplier.get();
@@ -103,7 +103,7 @@ public class Collection {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer collectionId;
+	protected Long collectionId;
 
 	@Schema
 	public Long getCompanyId() {
@@ -134,17 +134,17 @@ public class Collection {
 	protected Long companyId;
 
 	@Schema
-	public Integer getDeletionCount() {
+	public Long getDeletionCount() {
 		return deletionCount;
 	}
 
-	public void setDeletionCount(Integer deletionCount) {
+	public void setDeletionCount(Long deletionCount) {
 		this.deletionCount = deletionCount;
 	}
 
 	@JsonIgnore
 	public void setDeletionCount(
-		UnsafeSupplier<Integer, Exception> deletionCountUnsafeSupplier) {
+		UnsafeSupplier<Long, Exception> deletionCountUnsafeSupplier) {
 
 		try {
 			deletionCount = deletionCountUnsafeSupplier.get();
@@ -159,7 +159,7 @@ public class Collection {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer deletionCount;
+	protected Long deletionCount;
 
 	@Schema
 	public String getDescription() {
@@ -190,17 +190,17 @@ public class Collection {
 	protected String description;
 
 	@Schema
-	public Integer getModificationCount() {
+	public Long getModificationCount() {
 		return modificationCount;
 	}
 
-	public void setModificationCount(Integer modificationCount) {
+	public void setModificationCount(Long modificationCount) {
 		this.modificationCount = modificationCount;
 	}
 
 	@JsonIgnore
 	public void setModificationCount(
-		UnsafeSupplier<Integer, Exception> modificationCountUnsafeSupplier) {
+		UnsafeSupplier<Long, Exception> modificationCountUnsafeSupplier) {
 
 		try {
 			modificationCount = modificationCountUnsafeSupplier.get();
@@ -215,7 +215,7 @@ public class Collection {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer modificationCount;
+	protected Long modificationCount;
 
 	@Schema
 	public String getName() {

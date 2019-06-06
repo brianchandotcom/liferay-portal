@@ -29,16 +29,16 @@ import javax.annotation.Generated;
 @Generated("")
 public class Collection {
 
-	public Integer getAdditionCount() {
+	public Long getAdditionCount() {
 		return additionCount;
 	}
 
-	public void setAdditionCount(Integer additionCount) {
+	public void setAdditionCount(Long additionCount) {
 		this.additionCount = additionCount;
 	}
 
 	public void setAdditionCount(
-		UnsafeSupplier<Integer, Exception> additionCountUnsafeSupplier) {
+		UnsafeSupplier<Long, Exception> additionCountUnsafeSupplier) {
 
 		try {
 			additionCount = additionCountUnsafeSupplier.get();
@@ -48,18 +48,18 @@ public class Collection {
 		}
 	}
 
-	protected Integer additionCount;
+	protected Long additionCount;
 
-	public Integer getCollectionId() {
+	public Long getCollectionId() {
 		return collectionId;
 	}
 
-	public void setCollectionId(Integer collectionId) {
+	public void setCollectionId(Long collectionId) {
 		this.collectionId = collectionId;
 	}
 
 	public void setCollectionId(
-		UnsafeSupplier<Integer, Exception> collectionIdUnsafeSupplier) {
+		UnsafeSupplier<Long, Exception> collectionIdUnsafeSupplier) {
 
 		try {
 			collectionId = collectionIdUnsafeSupplier.get();
@@ -69,7 +69,7 @@ public class Collection {
 		}
 	}
 
-	protected Integer collectionId;
+	protected Long collectionId;
 
 	public Long getCompanyId() {
 		return companyId;
@@ -92,16 +92,16 @@ public class Collection {
 
 	protected Long companyId;
 
-	public Integer getDeletionCount() {
+	public Long getDeletionCount() {
 		return deletionCount;
 	}
 
-	public void setDeletionCount(Integer deletionCount) {
+	public void setDeletionCount(Long deletionCount) {
 		this.deletionCount = deletionCount;
 	}
 
 	public void setDeletionCount(
-		UnsafeSupplier<Integer, Exception> deletionCountUnsafeSupplier) {
+		UnsafeSupplier<Long, Exception> deletionCountUnsafeSupplier) {
 
 		try {
 			deletionCount = deletionCountUnsafeSupplier.get();
@@ -111,7 +111,7 @@ public class Collection {
 		}
 	}
 
-	protected Integer deletionCount;
+	protected Long deletionCount;
 
 	public String getDescription() {
 		return description;
@@ -134,16 +134,16 @@ public class Collection {
 
 	protected String description;
 
-	public Integer getModificationCount() {
+	public Long getModificationCount() {
 		return modificationCount;
 	}
 
-	public void setModificationCount(Integer modificationCount) {
+	public void setModificationCount(Long modificationCount) {
 		this.modificationCount = modificationCount;
 	}
 
 	public void setModificationCount(
-		UnsafeSupplier<Integer, Exception> modificationCountUnsafeSupplier) {
+		UnsafeSupplier<Long, Exception> modificationCountUnsafeSupplier) {
 
 		try {
 			modificationCount = modificationCountUnsafeSupplier.get();
@@ -153,7 +153,7 @@ public class Collection {
 		}
 	}
 
-	protected Integer modificationCount;
+	protected Long modificationCount;
 
 	public String getName() {
 		return name;

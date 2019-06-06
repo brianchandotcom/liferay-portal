@@ -786,8 +786,12 @@ public abstract class BaseCollectionResourceTestCase {
 	protected Collection randomCollection() throws Exception {
 		return new Collection() {
 			{
+				additionCount = RandomTestUtil.randomLong();
+				collectionId = RandomTestUtil.randomLong();
 				companyId = RandomTestUtil.randomLong();
+				deletionCount = RandomTestUtil.randomLong();
 				description = RandomTestUtil.randomString();
+				modificationCount = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
 				statusByUserName = RandomTestUtil.randomString();
 				statusDate = RandomTestUtil.nextDate();

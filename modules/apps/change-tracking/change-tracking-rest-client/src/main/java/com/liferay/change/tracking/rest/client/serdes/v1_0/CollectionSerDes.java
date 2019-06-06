@@ -315,13 +315,13 @@ public class CollectionSerDes {
 			if (Objects.equals(jsonParserFieldName, "additionCount")) {
 				if (jsonParserFieldValue != null) {
 					collection.setAdditionCount(
-						Integer.valueOf((String)jsonParserFieldValue));
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "collectionId")) {
 				if (jsonParserFieldValue != null) {
 					collection.setCollectionId(
-						Integer.valueOf((String)jsonParserFieldValue));
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "companyId")) {
@@ -333,7 +333,7 @@ public class CollectionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "deletionCount")) {
 				if (jsonParserFieldValue != null) {
 					collection.setDeletionCount(
-						Integer.valueOf((String)jsonParserFieldValue));
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {
@@ -344,7 +344,7 @@ public class CollectionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "modificationCount")) {
 				if (jsonParserFieldValue != null) {
 					collection.setModificationCount(
-						Integer.valueOf((String)jsonParserFieldValue));
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

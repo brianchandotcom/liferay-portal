@@ -33,6 +33,7 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -345,6 +346,16 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 					extensions.add(extension);
 				}
 			}
+		}
+
+		if (extensions.isEmpty()) {
+			return;
+		}
+
+		if (extensions.size() == 1) {
+			Iterator<String> iterator = extensions.iterator();
+
+			extensions = Collections.singleton(iterator.next());
 		}
 
 		for (String mimeType : mimeTypes) {

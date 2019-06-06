@@ -32,6 +32,11 @@ import java.util.Properties;
 public class PropertiesLanguageKeysCheck extends BaseFileCheck {
 
 	@Override
+	public boolean isLiferaySourceCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
 		throws IOException {

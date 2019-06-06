@@ -41,6 +41,11 @@ import org.dom4j.Element;
 public class XMLServiceReferenceCheck extends BaseFileCheck {
 
 	@Override
+	public boolean isLiferaySourceCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
 		throws DocumentException, IOException {

@@ -22,6 +22,11 @@ import com.liferay.source.formatter.checks.util.SourceUtil;
 public class JSONDeprecatedPackagesCheck extends BaseFileCheck {
 
 	@Override
+	public boolean isLiferaySourceCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 

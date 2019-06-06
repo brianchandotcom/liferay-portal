@@ -40,6 +40,11 @@ import java.util.regex.Pattern;
 public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 	@Override
+	public boolean isLiferaySourceCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, JavaTerm javaTerm,
 			String fileContent)

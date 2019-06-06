@@ -1,5 +1,31 @@
 definition {
 
+	macro configureSearchResults {
+		Portlet.gotoPortletOptions(
+			portletName = "Search Results",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		if (isSet(federatedSearchKey)) {
+			Type(
+				key_fieldLabel = "Federated Search Key",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${federatedSearchKey}");
+		}
+
+		if (isSet(fieldsToDisplay)) {
+			Type(
+				key_fieldLabel = "Fields to Display",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${fieldsToDisplay}");
+		}
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
 	macro paginateAndViewSearchResults {
 		var key_searchAssetTitle = "${searchAssetTitle}";
 		var key_searchAssetType = "${searchAssetType}";

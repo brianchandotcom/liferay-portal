@@ -42,6 +42,46 @@ definition {
 			sortOption = "${sortOption}");
 	}
 
+	macro configureCustomFilter {
+		Portlet.gotoPortletOptions(
+			portletName = "Custom Filter",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		if (isSet(customParameterName)) {
+			Type(
+				key_fieldLabel = "Custom Parameter Name",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${customParameterName}");
+		}
+
+		if (isSet(federatedSearchKey)) {
+			Type(
+				key_fieldLabel = "Federated Search Key",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${federatedSearchKey}");
+		}
+
+		if (isSet(filterField)) {
+			Type(
+				key_fieldLabel = "Filter Field",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${filterField}");
+		}
+
+		if (isSet(filterQueryType)) {
+			Select(
+				key_fieldLabel = "Filter Query Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${filterQueryType}");
+		}
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
 	macro configureDestination {
 		SearchPortlets.gotoEmbeddedOptions(portletOption = "Configuration");
 
@@ -76,6 +116,32 @@ definition {
 		}
 		else {
 			fail("Invalid search scope. Must be (Everything|Let the User Choose|This Site).");
+		}
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
+	macro configureLowLevelSearchOptions {
+		Portlet.gotoPortletOptions(
+			portletName = "Low Level Search Options",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		if (isSet(federatedSearchKey)) {
+			Type(
+				key_fieldLabel = "Federated Search Key",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${federatedSearchKey}");
+		}
+
+		if (isSet(indexes)) {
+			Type(
+				key_fieldLabel = "Indexes",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${indexes}");
 		}
 
 		PortletEntry.save();

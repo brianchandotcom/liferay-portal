@@ -208,6 +208,11 @@ definition {
 		DDLDataDefinition.save(changeListEnabled = "${changeListEnabled}");
 	}
 
+	@summary = "Open Web Content Templates admin page for the site '${siteURLKey}'"
+	macro openWebContentTemplatesAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fview_ddm_templates.jsp");
+	}
+
 	@summary = "Teardown templates in the guest site"
 	macro tearDownCP {
 		Navigator.openURL();

@@ -581,23 +581,7 @@ definition {
 	test ChangeTemplate {
 		property testray.component.names = "Web Content Display";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Web Content Page");
-
-		Navigator.gotoSitePage(
-			pageName = "Web Content Page",
-			siteName = "Test Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		NavItem.gotoTemplates();
+		WebContentTemplates.openWebContentTemplatesAdmin(siteURLKey = "test-site-name");
 
 		WebContentTemplates.addCP(
 			structureName = "Basic Web Content",
@@ -605,7 +589,7 @@ definition {
 			templateName = "Second Basic Template");
 
 		Navigator.gotoSitePage(
-			pageName = "Web Content Page",
+			pageName = "Web Content Display Page",
 			siteName = "Test Site Name");
 
 		WebContent.addPGViaWCD(
@@ -626,7 +610,7 @@ definition {
 		WebContent.publishViaWCD();
 
 		Navigator.gotoSitePage(
-			pageName = "Web Content Page",
+			pageName = "Web Content Display Page",
 			siteName = "Test Site Name");
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");

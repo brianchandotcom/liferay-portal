@@ -38,19 +38,24 @@ public class LPKGPersistenceStartBundleTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
+		Bundle lpkgPersistenceTestBundle = null;
+
 		for (Bundle testBundle : bundleContext.getBundles()) {
 			String symbolicName = testBundle.getSymbolicName();
 
-			if (!symbolicName.equals("lpkg.persistence.test")) {
-				continue;
+			if (symbolicName.equals("lpkg.persistence.test")) {
+				lpkgPersistenceTestBundle = testBundle;
+
+				break;
 			}
-
-			testBundle.start();
-
-			Assert.assertEquals(Bundle.ACTIVE, testBundle.getState());
-
-			break;
 		}
+
+		Assert.assertNotNull(lpkgPersistenceTestBundle);
+
+		lpkgPersistenceTestBundle.start();
+
+		Assert.assertEquals(
+			Bundle.ACTIVE, lpkgPersistenceTestBundle.getState());
 	}
 
 }

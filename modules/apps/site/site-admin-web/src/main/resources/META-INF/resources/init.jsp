@@ -40,6 +40,7 @@ page import="com.liferay.portal.kernel.exception.DuplicateGroupException" %><%@
 page import="com.liferay.portal.kernel.exception.GroupFriendlyURLException" %><%@
 page import="com.liferay.portal.kernel.exception.GroupInheritContentException" %><%@
 page import="com.liferay.portal.kernel.exception.GroupKeyException" %><%@
+page import="com.liferay.portal.kernel.exception.GroupNameException" %><%@
 page import="com.liferay.portal.kernel.exception.GroupParentException" %><%@
 page import="com.liferay.portal.kernel.exception.LayoutSetVirtualHostException" %><%@
 page import="com.liferay.portal.kernel.exception.LocaleException" %><%@

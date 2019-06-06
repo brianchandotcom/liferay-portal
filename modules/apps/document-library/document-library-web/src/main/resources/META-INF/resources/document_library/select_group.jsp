@@ -30,9 +30,10 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 		%>
 
 		<liferay-ui:search-container
-			searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
+			searchContainer="<%= new GroupSearch(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse)) %>"
 		>
 			<clay:management-toolbar
+				clearResultsURL="<%= portletURL.toString() %>"
 				searchActionURL="<%= portletURL.toString() %>"
 				selectable="<%= false %>"
 			/>

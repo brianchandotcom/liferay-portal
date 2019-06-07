@@ -680,6 +680,23 @@ public class GroupServiceWrapper
 			inheritContent, active, serviceContext);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Group updateGroup(
+			long groupId, long parentGroupId,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.Map<java.util.Locale, String> descriptionMap, int type,
+			java.util.Locale locale, boolean manualMembership,
+			int membershipRestriction, String friendlyURL,
+			boolean inheritContent, boolean active,
+			ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _groupService.updateGroup(
+			groupId, parentGroupId, nameMap, descriptionMap, type, locale,
+			manualMembership, membershipRestriction, friendlyURL,
+			inheritContent, active, serviceContext);
+	}
+
 	/**
 	 * Updates the group's type settings.
 	 *

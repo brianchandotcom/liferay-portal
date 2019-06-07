@@ -1443,78 +1443,17 @@ public class GroupServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.kernel.model.Group updateGroup(
-			HttpPrincipal httpPrincipal, long groupId, String typeSettings)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				GroupServiceUtil.class, "updateGroup",
-				_updateGroupParameterTypes36);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, typeSettings);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
-			}
-
-			return (com.liferay.portal.kernel.model.Group)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static void updateStagedPortlets(
-			HttpPrincipal httpPrincipal, long groupId,
-			java.util.Map<String, String> stagedPortletIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				GroupServiceUtil.class, "updateStagedPortlets",
-				_updateStagedPortletsParameterTypes37);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, stagedPortletIds);
-
-			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
-			}
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
+	private static final Class<?>[] _updateGroupParameterTypes36 = new Class[] {
+		long.class, long.class, java.util.Map.class, java.util.Map.class,
+		int.class, java.util.Locale.class, boolean.class, int.class,
+		String.class, boolean.class, boolean.class,
+		com.liferay.portal.kernel.service.ServiceContext.class
+	};
+	private static final Class<?>[] _updateGroupParameterTypes37 = new Class[] {
+		long.class, String.class
+	};
+	private static final Class<?>[] _updateStagedPortletsParameterTypes38 =
+		new Class[] {long.class, java.util.Map.class};
 
 	private static Log _log = LogFactoryUtil.getLog(GroupServiceHttp.class);
 
@@ -1619,10 +1558,124 @@ public class GroupServiceHttp {
 		int.class, boolean.class, int.class, String.class, boolean.class,
 		boolean.class, com.liferay.portal.kernel.service.ServiceContext.class
 	};
-	private static final Class<?>[] _updateGroupParameterTypes36 = new Class[] {
-		long.class, String.class
-	};
-	private static final Class<?>[] _updateStagedPortletsParameterTypes37 =
-		new Class[] {long.class, java.util.Map.class};
+
+	public static com.liferay.portal.kernel.model.Group updateGroup(
+			HttpPrincipal httpPrincipal, long groupId, long parentGroupId,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.Map<java.util.Locale, String> descriptionMap, int type,
+			java.util.Locale locale, boolean manualMembership,
+			int membershipRestriction, String friendlyURL,
+			boolean inheritContent, boolean active,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				GroupServiceUtil.class, "updateGroup",
+				_updateGroupParameterTypes36);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, parentGroupId, nameMap, descriptionMap,
+				type, locale, manualMembership, membershipRestriction,
+				friendlyURL, inheritContent, active, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.portal.kernel.model.Group)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.portal.kernel.model.Group updateGroup(
+			HttpPrincipal httpPrincipal, long groupId, String typeSettings)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				GroupServiceUtil.class, "updateGroup",
+				_updateGroupParameterTypes37);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, typeSettings);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.portal.kernel.model.Group)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static void updateStagedPortlets(
+			HttpPrincipal httpPrincipal, long groupId,
+			java.util.Map<String, String> stagedPortletIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				GroupServiceUtil.class, "updateStagedPortlets",
+				_updateStagedPortletsParameterTypes38);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, stagedPortletIds);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
 
 }

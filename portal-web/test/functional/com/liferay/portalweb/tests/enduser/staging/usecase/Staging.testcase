@@ -1748,7 +1748,9 @@ definition {
 	@description = "This is a use case for LPS-81950."
 	@priority = "5"
 	test StagingRemoteLiveWebContentViaPortletPG {
+		property app.server.bundles.size = "2";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property databases.size = "2";
 		property test.name.skip.portal.instance = "Staging#StagingRemoteLiveWebContentViaPortletPG";
 
 		Staging.remoteStagingSetUp(siteName = "Site Name");

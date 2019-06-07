@@ -38,6 +38,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -260,39 +261,37 @@ public class LiferaySourceOrSink
 
 		JsonNode pathsJsonNode = apiSpecJsonNode.path(OpenAPIConstants.PATHS);
 
-		Iterator<Map.Entry<String, JsonNode>> fields = pathsJsonNode.fields();
+		Iterator<Map.Entry<String, JsonNode>> pathFields =
+			pathsJsonNode.fields();
 
-		while (fields.hasNext()) {
-			Map.Entry<String, JsonNode> endpoint = fields.next();
+		while (pathFields.hasNext()) {
+			Map.Entry<String, JsonNode> pathEntry = pathFields.next();
 
-			JsonNode endpointJsonNode = endpoint.getValue();
+			JsonNode pathJsonNode = pathEntry.getValue();
 
-			boolean checkForSchemaReference = HttpMethod.GET.equals(operation);
+			Iterator<String> operationNameIterator = pathJsonNode.fieldNames();
 
-			if (endpointJsonNode.has(operation.toLowerCase(Locale.US))) {
-				boolean hasSchemaReference = endpointJsonNode.path(
-					operation.toLowerCase(Locale.US)
-				).path(
-					OpenAPIConstants.RESPONSES
-				).path(
-					OpenAPIConstants.DEFAULT
-				).path(
-					OpenAPIConstants.CONTENT
-				).path(
-					OpenAPIConstants.APPLICATION_JSON
-				).path(
-					OpenAPIConstants.SCHEMA
-				).has(
-					OpenAPIConstants.REF
-				);
+			while (operationNameIterator.hasNext()) {
+				String operationName = operationNameIterator.next();
 
-				if (checkForSchemaReference) {
-					if (hasSchemaReference) {
-						endpoints.add(endpoint.getKey());
-					}
+				if (!Objects.equals(operation, _toUpperCase(operationName))) {
+					continue;
 				}
-				else {
-					endpoints.add(endpoint.getKey());
+
+				if (!Objects.equals(operation, HttpMethod.GET)) {
+					endpoints.add(pathEntry.getKey());
+
+					continue;
+				}
+
+				if (_hasPath(
+						OpenAPIConstants.PATH_RESPONSE_SCHEMA_REFERENCE,
+						pathJsonNode.get(operationName)) ||
+					_hasPath(
+						OpenAPIConstants.PATH_RESPONSE_SCHEMA_ITEMS_REFERENCE,
+						pathJsonNode.get(operationName))) {
+
+					endpoints.add(pathEntry.getKey());
 				}
 			}
 		}
@@ -555,6 +554,27 @@ public class LiferaySourceOrSink
 		liferayConnectionPropertiesProvider;
 	protected final ObjectMapper objectMapper = new ObjectMapper();
 	protected RESTClient restClient;
+
+	private boolean _hasPath(String path, JsonNode jsonNode) {
+		if (!path.contains(">")) {
+			return jsonNode.has(path);
+		}
+
+		int subpathEndIdx = path.indexOf(">");
+
+		String subpath = path.substring(0, subpathEndIdx);
+
+		if (jsonNode.has(subpath)) {
+			return _hasPath(
+				path.substring(subpathEndIdx + 1), jsonNode.path(subpath));
+		}
+
+		return false;
+	}
+
+	private String _toUpperCase(String value) {
+		return value.toUpperCase(Locale.getDefault());
+	}
 
 	private void _validateCredentials(
 		String userId, String password,

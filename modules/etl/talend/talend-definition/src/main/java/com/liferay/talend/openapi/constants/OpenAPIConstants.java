@@ -33,6 +33,12 @@ public class OpenAPIConstants {
 
 	public static final String ITEMS = "items";
 
+	public static final String PATH_RESPONSE_SCHEMA_ITEMS_REFERENCE =
+		"responses>default>content>application/json>schema>items>$ref";
+
+	public static final String PATH_RESPONSE_SCHEMA_REFERENCE =
+		"responses>default>content>application/json>schema>$ref";
+
 	public static final String PATH_SCHEMA_REFERENCE = "#/components/schemas/";
 
 	public static final String PATHS = "paths";

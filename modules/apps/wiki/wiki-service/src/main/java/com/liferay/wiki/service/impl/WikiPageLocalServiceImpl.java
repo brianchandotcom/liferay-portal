@@ -298,7 +298,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		if (ListUtil.isNull(wikiAttachmentMimeTypes) ||
 			(!wikiAttachmentMimeTypes.contains(StringPool.STAR) &&
-			!wikiAttachmentMimeTypes.contains(mimeType))) {
+			 !wikiAttachmentMimeTypes.contains(mimeType))) {
 
 			throw new WikiAttachmentMimeTypeException();
 		}

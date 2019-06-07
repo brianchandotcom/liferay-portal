@@ -96,11 +96,11 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 
 		node1.setId(3L);
 
-		node1 = _addNode(_process.getId(), node1, "2.0");
+		node1 = _addNode(node1, _process.getId(), "2.0");
 
 		node2.setId(4L);
 
-		node2 = _addNode(_process.getId(), node2, "2.0");
+		node2 = _addNode(node2, _process.getId(), "2.0");
 
 		Page<Node> page = NodeResource.getProcessNodesPage(_process.getId());
 
@@ -117,7 +117,7 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 	protected Node testGetProcessNodesPage_addNode(Long processId, Node node)
 		throws Exception {
 
-		return _addNode(processId, node, "1.0");
+		return _addNode(node, processId, "1.0");
 	}
 
 	@Override
@@ -125,7 +125,7 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 		return _process.getId();
 	}
 
-	private Node _addNode(Long processId, Node node, String version)
+	private Node _addNode(Node node, Long processId, String version)
 		throws Exception {
 
 		node = _workflowMetricsRESTTestHelper.addNode(

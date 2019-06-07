@@ -18,11 +18,10 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Web Content Display Page");
 
-		Navigator.gotoSitePage(
-			pageName = "Web Content Display Page",
-			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Web Content Display Page",
+			widgetName = "Web Content Display");
 	}
 
 	tearDown {
@@ -109,6 +108,10 @@ definition {
 	@priority = "4"
 	test AddDraftNotApproved {
 		property testray.component.names = "Web Content Display";
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name");
 
 		WebContent.addDraftPGViaWCD(
 			webContentContent = "WC WebContent Content",

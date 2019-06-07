@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
 import graphql.annotations.GraphQLFieldDefinitionWrapper;
+import graphql.annotations.annotationTypes.GraphQLName;
 import graphql.annotations.processor.ProcessingElementsContainer;
 import graphql.annotations.processor.graphQLProcessors.GraphQLInputProcessor;
 import graphql.annotations.processor.graphQLProcessors.GraphQLOutputProcessor;
@@ -30,15 +31,16 @@ import graphql.annotations.processor.retrievers.GraphQLTypeRetriever;
 import graphql.annotations.processor.retrievers.fieldBuilders.ArgumentBuilder;
 import graphql.annotations.processor.retrievers.fieldBuilders.DeprecateBuilder;
 import graphql.annotations.processor.retrievers.fieldBuilders.DescriptionBuilder;
-import graphql.annotations.processor.retrievers.fieldBuilders.method.MethodDataFetcherBuilder;
 import graphql.annotations.processor.retrievers.fieldBuilders.method.MethodNameBuilder;
 import graphql.annotations.processor.retrievers.fieldBuilders.method.MethodTypeBuilder;
 import graphql.annotations.processor.searchAlgorithms.BreadthFirstSearch;
 import graphql.annotations.processor.searchAlgorithms.ParentalSearch;
 import graphql.annotations.processor.typeFunctions.DefaultTypeFunction;
 import graphql.annotations.processor.typeFunctions.TypeFunction;
-import graphql.annotations.processor.util.DataFetcherConstructor;
+import graphql.annotations.processor.util.NamingKit;
 
+import graphql.schema.DataFetcher;
+import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.GraphQLArgument;
 import graphql.schema.GraphQLFieldDefinition;
 import graphql.schema.GraphQLOutputType;
@@ -47,11 +49,13 @@ import graphql.schema.GraphQLSchema;
 import graphql.servlet.SimpleGraphQLHttpServlet;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Dictionary;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.Servlet;
 
@@ -181,17 +185,64 @@ public class GraphQLServletExtender {
 
 			DeprecateBuilder deprecateBuilder = new DeprecateBuilder(method);
 
-			MethodDataFetcherBuilder methodDataFetcherBuilder =
-				new MethodDataFetcherBuilder(
-					method, graphQLOutputType, typeFunction, container, null,
-					arguments, new DataFetcherConstructor(), false);
-
 			builder.description(descriptionBuilder.build());
 			builder.deprecate(deprecateBuilder.build());
-			builder.dataFetcher(methodDataFetcherBuilder.build());
+			builder.dataFetcher(new LiferayMethodDataFetcher(method));
 
 			return new GraphQLFieldDefinitionWrapper(builder.build());
 		}
+
+	}
+
+	private static class LiferayMethodDataFetcher
+		implements DataFetcher<Object> {
+
+		@Override
+		public Object get(DataFetchingEnvironment dataFetchingEnvironment) {
+			try {
+				Class<?> clazz = _method.getDeclaringClass();
+
+				Object instance = clazz.newInstance();
+
+				Parameter[] parameters = _method.getParameters();
+
+				Map<String, Object> arguments =
+					dataFetchingEnvironment.getArguments();
+
+				Object[] args = new Object[arguments.size()];
+
+				for (int i = 0; i < args.length; i++) {
+					Parameter parameter = parameters[i];
+
+					String parameterName = null;
+
+					GraphQLName graphQLName = parameter.getAnnotation(
+						GraphQLName.class);
+
+					if (graphQLName == null) {
+						parameterName = NamingKit.toGraphqlName(
+							parameter.getName());
+					}
+					else {
+						parameterName = NamingKit.toGraphqlName(
+							graphQLName.value());
+					}
+
+					args[i] = arguments.get(parameterName);
+				}
+
+				return _method.invoke(instance, args);
+			}
+			catch (ReflectiveOperationException roe) {
+				throw new RuntimeException(roe);
+			}
+		}
+
+		private LiferayMethodDataFetcher(Method method) {
+			_method = method;
+		}
+
+		private final Method _method;
 
 	}
 

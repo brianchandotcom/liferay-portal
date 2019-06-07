@@ -93,7 +93,7 @@ public abstract class BaseCollectionResourceImpl implements CollectionResource {
 		}
 	)
 	@Path("/collections")
-	@Produces({"application/json", "application/xml"})
+	@Produces({"application/json", "application/xml", "text/plain"})
 	@Tags(value = {@Tag(name = "Collection")})
 	public Collection postCollection(
 			@NotNull @Parameter(hidden = true) @QueryParam("companyId") Long

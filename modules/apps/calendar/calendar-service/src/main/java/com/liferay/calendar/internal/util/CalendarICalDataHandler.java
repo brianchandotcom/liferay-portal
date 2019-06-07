@@ -29,6 +29,7 @@ import com.liferay.calendar.service.CalendarLocalServiceUtil;
 import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
@@ -55,6 +56,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TimeZone;
 
 import net.fortuna.ical4j.data.CalendarBuilder;
@@ -473,17 +475,7 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 	protected boolean isICalDateOnly(DateProperty dateProperty) {
 		Parameter valueParameter = dateProperty.getParameter(Parameter.VALUE);
 
-		if (valueParameter == null) {
-			return false;
-		}
-
-		String value = valueParameter.getValue();
-
-		if (value.equals("DATE")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(valueParameter.getValue(), "DATE");
 	}
 
 	protected VAlarm toICalAlarm(
@@ -713,16 +705,16 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 		String recurrence = calendarBooking.getRecurrence();
 
 		if (Validator.isNotNull(recurrence)) {
-			int index = recurrence.indexOf(StringPool.NEW_LINE);
+			int index = recurrence.indexOf(CharPool.NEW_LINE);
 
 			if (index > 0) {
 				recurrence = recurrence.substring(0, index);
 			}
 
-			String value = StringUtil.replace(
+			recurrence = StringUtil.replace(
 				recurrence, _RRULE, StringPool.BLANK);
 
-			RRule rRule = new RRule(value);
+			RRule rRule = new RRule(recurrence);
 
 			_addHourMinuteToUntilDate(rRule.getRecur());
 
@@ -801,7 +793,12 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 
 		DateList dateList = new DateList();
 
-		dateList.setUtc(true);
+		if (timeZone == null) {
+			dateList.setUtc(true);
+		}
+		else {
+			dateList.setTimeZone(_toICalTimeZone(timeZone));
+		}
 
 		for (java.util.Calendar exceptionJCalendar : exceptionJCalendars) {
 			DateTime dateTime = toICalDateTime(

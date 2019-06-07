@@ -47,6 +47,11 @@ public class TestDB extends BaseDB {
 	}
 
 	@Override
+	protected int[] getSQLTypes() {
+		return new int[0];
+	}
+
+	@Override
 	protected String[] getTemplate() {
 		return new String[] {
 			"##", "TRUE", "FALSE", "'01/01/1970'", "CURRENT_TIMESTAMP", " BLOB",

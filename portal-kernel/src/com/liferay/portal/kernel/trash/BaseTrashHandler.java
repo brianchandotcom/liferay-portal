@@ -291,22 +291,19 @@ public abstract class BaseTrashHandler implements TrashHandler {
 			String trashActionId)
 		throws PortalException {
 
+		if (trashActionId.equals(TrashActionKeys.MOVE)) {
+			return false;
+		}
+
 		String actionId = trashActionId;
 
-		if (trashActionId.equals(ActionKeys.DELETE)) {
+		if (trashActionId.equals(TrashActionKeys.OVERWRITE) ||
+			trashActionId.equals(TrashActionKeys.RESTORE)) {
+
 			actionId = ActionKeys.DELETE;
-		}
-		else if (trashActionId.equals(TrashActionKeys.OVERWRITE)) {
-			actionId = ActionKeys.DELETE;
-		}
-		else if (trashActionId.equals(TrashActionKeys.MOVE)) {
-			return false;
 		}
 		else if (trashActionId.equals(TrashActionKeys.RENAME)) {
 			actionId = ActionKeys.UPDATE;
-		}
-		else if (trashActionId.equals(TrashActionKeys.RESTORE)) {
-			actionId = ActionKeys.DELETE;
 		}
 
 		return hasPermission(permissionChecker, classPK, actionId);

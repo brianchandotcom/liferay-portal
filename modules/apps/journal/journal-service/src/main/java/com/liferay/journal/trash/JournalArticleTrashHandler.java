@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashRenderer;
@@ -218,6 +219,16 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 		if ((article.getFolderId() > 0) &&
 			(_journalFolderLocalService.fetchFolder(article.getFolderId()) ==
 				null)) {
+
+			return false;
+		}
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (!hasTrashPermission(
+				permissionChecker, article.getGroupId(), classPK,
+				TrashActionKeys.RESTORE)) {
 
 			return false;
 		}

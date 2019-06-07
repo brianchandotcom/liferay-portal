@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.repository.capabilities.UnsupportedCapabilityEx
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -217,6 +218,16 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 			((dlFolder.getParentFolderId() > 0) &&
 			 (_dlFolderLocalService.fetchFolder(dlFolder.getParentFolderId()) ==
 				 null))) {
+
+			return false;
+		}
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (!hasTrashPermission(
+				permissionChecker, dlFolder.getGroupId(), classPK,
+				TrashActionKeys.RESTORE)) {
 
 			return false;
 		}

@@ -22,9 +22,11 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
+import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -96,6 +98,23 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 		BlogsEntry entry = _blogsEntryLocalService.getEntry(classPK);
 
 		return entry.isInTrash();
+	}
+
+	@Override
+	public boolean isRestorable(long classPK) throws PortalException {
+		BlogsEntry entry = _blogsEntryLocalService.getEntry(classPK);
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (!hasTrashPermission(
+				permissionChecker, entry.getGroupId(), classPK,
+				TrashActionKeys.RESTORE)) {
+
+			return false;
+		}
+
+		return !entry.isInTrashContainer();
 	}
 
 	@Override

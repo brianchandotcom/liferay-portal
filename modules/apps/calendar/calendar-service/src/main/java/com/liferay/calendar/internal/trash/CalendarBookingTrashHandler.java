@@ -20,8 +20,10 @@ import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
+import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
 
 import org.osgi.service.component.annotations.Component;
@@ -55,6 +57,16 @@ public class CalendarBookingTrashHandler extends BaseTrashHandler {
 	public boolean isRestorable(long classPK) throws PortalException {
 		CalendarBooking calendarBooking =
 			_calendarBookingLocalService.getCalendarBooking(classPK);
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (!hasTrashPermission(
+				permissionChecker, calendarBooking.getGroupId(), classPK,
+				TrashActionKeys.RESTORE)) {
+
+			return false;
+		}
 
 		if (calendarBooking.isMasterBooking()) {
 			return true;

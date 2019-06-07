@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -200,6 +201,16 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 		if ((thread.getCategoryId() > 0) &&
 			(_mbCategoryLocalService.fetchMBCategory(thread.getCategoryId()) ==
 				null)) {
+
+			return false;
+		}
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (!hasTrashPermission(
+				permissionChecker, thread.getGroupId(), classPK,
+				TrashActionKeys.RESTORE)) {
 
 			return false;
 		}

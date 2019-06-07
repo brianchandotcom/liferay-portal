@@ -14,7 +14,11 @@
 
 package com.liferay.portal.vulcan.internal.graphql.servlet;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -155,6 +159,9 @@ public class GraphQLServletExtender {
 		_serviceTracker.close();
 	}
 
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
 	private DefaultTypeFunction _defaultTypeFunction;
 	private GraphQLObjectHandler _graphQLObjectHandler;
 
@@ -243,6 +250,14 @@ public class GraphQLServletExtender {
 								httpServletRequestOptional.orElse(null),
 								_language, _portal));
 					}
+					else if (fieldType.isAssignableFrom(Company.class)) {
+						field.setAccessible(true);
+
+						field.set(
+							instance,
+							_companyLocalService.getCompany(
+								CompanyThreadLocal.getCompanyId()));
+					}
 				}
 
 				Parameter[] parameters = _method.getParameters();
@@ -274,8 +289,8 @@ public class GraphQLServletExtender {
 
 				return _method.invoke(instance, args);
 			}
-			catch (ReflectiveOperationException roe) {
-				throw new RuntimeException(roe);
+			catch (PortalException | ReflectiveOperationException e) {
+				throw new RuntimeException(e);
 			}
 		}
 

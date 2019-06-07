@@ -302,7 +302,8 @@ public class BlogEntriesDisplayContext {
 			}
 
 			if (Objects.equals(orderByCol, "display-date")) {
-				sort = new Sort(Field.DISPLAY_DATE, Sort.LONG_TYPE, !orderByAsc);
+				sort = new Sort(
+					Field.DISPLAY_DATE, Sort.LONG_TYPE, !orderByAsc);
 			}
 			else {
 				sort = new Sort(orderByCol, !orderByAsc);

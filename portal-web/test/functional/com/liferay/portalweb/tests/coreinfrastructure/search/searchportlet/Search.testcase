@@ -193,29 +193,11 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Profile");
 
-		if (IsNotVisible(locator1 = "ControlMenuAddPanel#CLOSE_ADD_PANEL")) {
-			Click.clickAt(locator1 = "ControlMenu#ADD");
-		}
+		Portlet.viewCannotAddPG(portletName = "Low Level Search Options");
 
-		Pause(locator1 = "5000");
+		Refresh();
 
-		Panel.expandSidebarApplicationsPanel();
-
-		Type.sendKeysApplicationSearch(
-			locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
-			value1 = "Low Level Search Options");
-
-		AssertElementNotPresent(
-			locator1 = "ControlMenuAddPanel#ADD_PORTLET_DRAG_LINK",
-			portletName = "Low Level Search Options");
-
-		Type(
-			locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
-			value1 = "Search Insights");
-
-		AssertElementNotPresent(
-			locator1 = "ControlMenuAddPanel#ADD_PORTLET_DRAG_LINK",
-			portletName = "Search Insights");
+		Portlet.viewCannotAddPG(portletName = "Search Insights");
 	}
 
 	@priority = "4"

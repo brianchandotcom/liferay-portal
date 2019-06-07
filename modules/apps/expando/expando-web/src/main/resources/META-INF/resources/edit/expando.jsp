@@ -78,8 +78,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "custom-
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-attributes"), portletURL.toString());
 
-String displayType = LanguageUtil.get(request, propertyDisplayType);
-
 if (expandoColumn != null) {
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.format(request, "edit-x", new Object[] {expandoColumn.getName()}, false), null);
 }
@@ -92,7 +90,7 @@ else {
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "new-custom-field"), newCustomFieldURL.toString());
 
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.format(request, "new-x", new Object[] {displayType}, false), null);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.format(request, "new-x", new Object[] {propertyDisplayType}), null);
 }
 %>
 
@@ -136,12 +134,7 @@ else {
 
 	<liferay-frontend:edit-form-body>
 		<h2 class="sheet-title">
-
-			<%
-			String displayTypeLabel = LanguageUtil.get(request, propertyDisplayType);
-			%>
-
-			<%= LanguageUtil.format(request, expandoColumn != null ? "edit-x" : "new-x", new Object[] {displayTypeLabel}, false) %>
+			<%= LanguageUtil.format(request, expandoColumn != null ? "edit-x" : "new-x", new Object[] {propertyDisplayType}) %>
 		</h2>
 
 		<liferay-frontend:fieldset-group>

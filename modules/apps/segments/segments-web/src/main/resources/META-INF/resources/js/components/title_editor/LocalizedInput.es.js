@@ -108,7 +108,7 @@ export default class LocalizedInput extends React.Component {
 
 		const {availableLanguages, currentValue, hasError} = this.state;
 
-		const inputGroupItemClasses = getCN('input-group-item ml-3', {
+		const inputGroupItemClasses = getCN('input-group-item ml-2', {
 			'has-error': hasError
 		});
 

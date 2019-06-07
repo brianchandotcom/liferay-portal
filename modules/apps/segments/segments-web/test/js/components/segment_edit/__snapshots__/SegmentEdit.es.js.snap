@@ -73,7 +73,7 @@ exports[`SegmentEdit should render 1`] = `
               </button>
             </div>
             <div
-              class="input-group-item ml-3"
+              class="input-group-item ml-2"
             >
               <input
                 class="rounded form-control language-value field form-control-inline form-control"
@@ -173,7 +173,7 @@ exports[`SegmentEdit should render with edit buttons if the user has update perm
               </button>
             </div>
             <div
-              class="input-group-item ml-3"
+              class="input-group-item ml-2"
             >
               <input
                 class="rounded form-control language-value field form-control-inline form-control"
@@ -355,7 +355,7 @@ exports[`SegmentEdit should render with given values 1`] = `
               </button>
             </div>
             <div
-              class="input-group-item ml-3"
+              class="input-group-item ml-2"
             >
               <input
                 class="rounded form-control language-value field form-control-inline form-control"
@@ -624,7 +624,7 @@ exports[`SegmentEdit should render with given values 1`] = `
                           >
                             conditions-match
                             <b
-                              class="ml-2"
+                              class="ml-2 text-dark"
                             >
                               x-members
                             </b>
@@ -857,7 +857,7 @@ exports[`SegmentEdit should render without edit buttons if the user does not hav
               </button>
             </div>
             <div
-              class="input-group-item ml-3"
+              class="input-group-item ml-2"
             >
               <input
                 class="rounded form-control language-value field form-control-inline form-control"

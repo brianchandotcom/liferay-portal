@@ -111,7 +111,7 @@ exports[`LocalizedInput should render with pre-existing value should have dropdo
       </ul>
     </div>
     <div
-      class="input-group-item ml-3"
+      class="input-group-item ml-2"
     >
       <input
         class="rounded form-control language-value field form-control-inline form-control"
@@ -163,7 +163,7 @@ exports[`LocalizedInput should render with pre-existing value should render 1`] 
       </button>
     </div>
     <div
-      class="input-group-item ml-3"
+      class="input-group-item ml-2"
     >
       <input
         class="rounded form-control language-value field form-control-inline form-control"
@@ -215,7 +215,7 @@ exports[`LocalizedInput with minimal configuration should render 1`] = `
       </button>
     </div>
     <div
-      class="input-group-item ml-3"
+      class="input-group-item ml-2"
     >
       <input
         class="rounded form-control language-value field form-control-inline form-control"

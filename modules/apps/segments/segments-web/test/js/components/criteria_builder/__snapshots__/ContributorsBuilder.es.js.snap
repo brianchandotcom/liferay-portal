@@ -808,7 +808,7 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                       >
                         conditions-match
                         <b
-                          class="ml-2"
+                          class="ml-2 text-dark"
                         >
                           x-members
                         </b>
@@ -1640,7 +1640,7 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                       >
                         conditions-match
                         <b
-                          class="ml-2"
+                          class="ml-2 text-dark"
                         >
                           x-members
                         </b>

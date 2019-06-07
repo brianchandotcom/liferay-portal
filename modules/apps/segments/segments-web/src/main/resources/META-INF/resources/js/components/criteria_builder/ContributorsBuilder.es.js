@@ -131,7 +131,7 @@ class ContributorBuilder extends React.Component {
 															{Liferay.Language.get(
 																'conditions-match'
 															)}
-															<b className='ml-2'>
+															<b className='ml-2 text-dark'>
 																{getPluralMessage(
 																	Liferay.Language.get(
 																		'x-member'

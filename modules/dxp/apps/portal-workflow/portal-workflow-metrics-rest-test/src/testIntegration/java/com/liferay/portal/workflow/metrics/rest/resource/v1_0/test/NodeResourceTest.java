@@ -96,27 +96,16 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 
 		node1.setId(3L);
 
-		node1 = addNode(_process.getId(), node1, "2.0");
+		node1 = _addNode(_process.getId(), node1, "2.0");
 
 		node2.setId(4L);
 
-		node2 = addNode(_process.getId(), node2, "2.0");
+		node2 = _addNode(_process.getId(), node2, "2.0");
 
 		Page<Node> page = NodeResource.getProcessNodesPage(_process.getId());
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(node1, node2), (List<Node>)page.getItems());
-	}
-
-	protected Node addNode(Long processId, Node node, String version)
-		throws Exception {
-
-		node = _workflowMetricsRESTTestHelper.addNode(
-			testGroup.getCompanyId(), node, processId, version);
-
-		_nodes.add(node);
-
-		return node;
 	}
 
 	@Override
@@ -128,12 +117,23 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 	protected Node testGetProcessNodesPage_addNode(Long processId, Node node)
 		throws Exception {
 
-		return addNode(processId, node, "1.0");
+		return _addNode(processId, node, "1.0");
 	}
 
 	@Override
 	protected Long testGetProcessNodesPage_getProcessId() throws Exception {
 		return _process.getId();
+	}
+
+	private Node _addNode(Long processId, Node node, String version)
+		throws Exception {
+
+		node = _workflowMetricsRESTTestHelper.addNode(
+			testGroup.getCompanyId(), node, processId, version);
+
+		_nodes.add(node);
+
+		return node;
 	}
 
 	private void _deleteNodes() throws Exception {

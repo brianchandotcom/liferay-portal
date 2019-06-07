@@ -621,10 +621,10 @@ public abstract class BaseDB implements DB {
 			_templates.put(TEMPLATE[i], actual[i]);
 		}
 
-		String[] templateTypes = ArrayUtil.clone(TEMPLATE, 5, 14);
+		String[] templateTypes = ArrayUtil.clone(TEMPLATE, 5, 15);
 
 		for (int i = 0; i < templateTypes.length; i++) {
-			_sqlTypes.put(templateTypes[i], getSQLTypes()[i]);
+			_sqlTypes.put(StringUtil.trim(templateTypes[i]), getSQLTypes()[i]);
 		}
 	}
 

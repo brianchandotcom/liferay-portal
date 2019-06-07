@@ -74,20 +74,9 @@ portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(modelResourceName + ": " + ((expandoColumn == null) ? LanguageUtil.get(request, "new-custom-field") : expandoColumn.getName()));
 
-PortletURL customFieldURL = renderResponse.createRenderURL();
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "custom-field"), String.valueOf(renderResponse.createRenderURL()));
 
-customFieldURL.setParameter("mvcPath", "/view.jsp");
-customFieldURL.setParameter("redirect", redirect);
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "custom-field"), customFieldURL.toString());
-
-PortletURL viewAttributesURL = renderResponse.createRenderURL();
-
-viewAttributesURL.setParameter("mvcPath", "/view_attributes.jsp");
-viewAttributesURL.setParameter("redirect", redirect);
-viewAttributesURL.setParameter("modelResource", modelResource);
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-attributes"), viewAttributesURL.toString());
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-attributes"), portletURL.toString());
 
 String displayType = LanguageUtil.get(request, propertyDisplayType);
 

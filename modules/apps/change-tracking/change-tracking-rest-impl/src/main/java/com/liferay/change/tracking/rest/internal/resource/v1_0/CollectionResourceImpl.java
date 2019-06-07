@@ -16,14 +16,27 @@ package com.liferay.change.tracking.rest.internal.resource.v1_0;
 
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.engine.CTEngineManager;
+import com.liferay.change.tracking.engine.exception.CTCollectionDescriptionCTEngineException;
+import com.liferay.change.tracking.engine.exception.CTCollectionNameCTEngineException;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.rest.dto.v1_0.Collection;
+import com.liferay.change.tracking.rest.dto.v1_0.CollectionUpdate;
+import com.liferay.change.tracking.rest.internal.jaxrs.exception.CannotCreateCollectionException;
 import com.liferay.change.tracking.rest.internal.jaxrs.exception.CannotDeleteCollectionException;
+import com.liferay.change.tracking.rest.internal.jaxrs.exception.ChangeTrackingNotEnabledException;
 import com.liferay.change.tracking.rest.resource.v1_0.CollectionResource;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 import javax.ws.rs.core.Response;
 
@@ -78,6 +91,65 @@ public class CollectionResourceImpl extends BaseCollectionResourceImpl {
 		return _getCollection(ctCollection);
 	}
 
+	@Override
+	public Collection postCollection(
+			Long companyId, Long userId, CollectionUpdate collectionUpdate)
+		throws Exception {
+
+		_companyLocalService.getCompany(companyId);
+
+		User user = _userLocalService.getUser(userId);
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", user.getLocale(), getClass());
+
+		if (!_ctEngineManager.isChangeTrackingEnabled(companyId)) {
+			throw new ChangeTrackingNotEnabledException(
+				"Unable to create change tracking collection, change " +
+					"tracking is disabled in the company with id " + companyId);
+		}
+
+		try {
+			Optional<CTCollection> ctCollectionOptional =
+				_ctEngineManager.createCTCollection(
+					user.getUserId(), collectionUpdate.getName(),
+					collectionUpdate.getDescription());
+
+			return ctCollectionOptional.map(
+				this::_getCollection
+			).orElseThrow(
+				() -> new CannotCreateCollectionException(
+					LanguageUtil.get(
+						resourceBundle, "unable-to-create-change-list"))
+			);
+		}
+		catch (PortalException pe) {
+			if (pe instanceof CTCollectionDescriptionCTEngineException) {
+				throw new CannotCreateCollectionException(
+					LanguageUtil.get(
+						resourceBundle,
+						"the-change-list-description-is-too-long"));
+			}
+			else if (pe instanceof CTCollectionNameCTEngineException) {
+				if (Validator.isNull(pe.getMessage())) {
+					throw new CannotCreateCollectionException(
+						LanguageUtil.get(
+							resourceBundle,
+							"the-change-list-name-is-too-short"));
+				}
+
+				throw new CannotCreateCollectionException(
+					LanguageUtil.get(
+						resourceBundle, "the-change-list-name-is-too-long"));
+			}
+			else {
+				throw new CannotCreateCollectionException(
+					LanguageUtil.get(
+						resourceBundle, "unable-to-create-change-list"));
+			}
+		}
+	}
+
 	private Collection _getCollection(CTCollection ctCollection) {
 		Map<Integer, Long> ctEntriesChangeTypes =
 			_ctEngineManager.getCTCollectionChangeTypeCounts(
@@ -111,6 +183,12 @@ public class CollectionResourceImpl extends BaseCollectionResourceImpl {
 	}
 
 	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private CTEngineManager _ctEngineManager;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

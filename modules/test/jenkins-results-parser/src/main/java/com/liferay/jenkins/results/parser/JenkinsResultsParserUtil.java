@@ -2613,43 +2613,32 @@ public class JenkinsResultsParserUtil {
 			httpAuthorization);
 	}
 
-	public static void updateBuildData(
-		String buildDescription, int buildNumber, String buildResult,
-		String jobName, String masterHostname) {
-
-		if ((buildDescription == null) && (buildResult == null)) {
-			return;
-		}
-
-		String jenkinsScript = combine(
-			"def job = Jenkins.instance.getItemByFullName(\"", jobName, "\"); ",
-			"def build = job.getBuildByNumber(", String.valueOf(buildNumber),
-			");");
-
-		if (buildDescription != null) {
-			buildDescription = buildDescription.replaceAll("\"", "\\\\\"");
-			buildDescription = buildDescription.replaceAll("\'", "\\\\\'");
-
-			jenkinsScript = combine(
-				jenkinsScript, " build.description = \"", buildDescription,
-				"\";");
-		}
-
-		if (buildResult != null) {
-			jenkinsScript = combine(
-				jenkinsScript, " build.@result = hudson.model.Result.",
-				buildResult, ";");
-		}
-
-		executeJenkinsScript(masterHostname, "script=" + jenkinsScript);
-	}
-
 	public static void updateBuildDescription(
 		String buildDescription, int buildNumber, String jobName,
 		String masterHostname) {
 
-		updateBuildData(
-			buildDescription, buildNumber, null, jobName, masterHostname);
+		buildDescription = buildDescription.replaceAll("\"", "\\\\\"");
+		buildDescription = buildDescription.replaceAll("\'", "\\\\\'");
+
+		String jenkinsScript = combine(
+			"def job = Jenkins.instance.getItemByFullName(\"", jobName,
+			"\"); def build = job.getBuildByNumber(",
+			String.valueOf(buildNumber), "); build.description = \"",
+			buildDescription, "\";");
+
+		executeJenkinsScript(masterHostname, "script=" + jenkinsScript);
+	}
+
+	public static void updateBuildResult(
+		int buildNumber, String buildResult, String jobName,
+		String masterHostname) {
+
+		String jenkinsScript = combine(
+			"def job = Jenkins.instance.getItemByFullName(\"", jobName, "\"); ",
+			"def build = job.getBuildByNumber(", String.valueOf(buildNumber),
+			"); build.@result = hudson.model.Result.", buildResult, ";");
+
+		executeJenkinsScript(masterHostname, "script=" + jenkinsScript);
 	}
 
 	public static void write(File file, String content) throws IOException {

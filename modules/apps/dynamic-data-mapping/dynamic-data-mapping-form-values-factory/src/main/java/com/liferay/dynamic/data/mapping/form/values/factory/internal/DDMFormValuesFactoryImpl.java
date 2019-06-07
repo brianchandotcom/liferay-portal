@@ -30,6 +30,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -379,6 +381,18 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 		sb.append(
 			DDMFormRendererConstants.DDM_FORM_FIELD_LANGUAGE_ID_SEPARATOR);
 		sb.append(LocaleUtil.toLanguageId(locale));
+
+		if (Validator.isNull(
+				ParamUtil.getString(httpServletRequest, sb.toString()))) {
+
+			sb.setIndex(sb.index() - 1);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			sb.append(LocaleUtil.toLanguageId(themeDisplay.getLocale()));
+		}
 
 		DDMFormFieldValueRequestParameterRetriever
 			ddmFormFieldValueRequestParameterRetriever =

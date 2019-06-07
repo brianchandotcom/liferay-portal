@@ -127,12 +127,11 @@ definition {
 
 		MessageboardsCategory.addPG(categoryName = "MB Category Name");
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
+		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
 
-		MessageboardsCategory.addSubcategoryPG(
-			categoryName = "MB Category Name",
-			subCategoryDescription = "MB Subcategory Description",
-			subCategoryName = "MB Subcategory Name");
+		MessageboardsCategory.addPG(
+			categoryDescription = "MB Subcategory Description",
+			categoryName = "MB Subcategory Name");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -893,25 +892,26 @@ definition {
 
 		MessageboardsCategory.addPG(categoryName = "MB Category Name");
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.addSubcategoryPG(
-			categoryName = "MB Category Name",
-			subCategoryDescription = "MB Subcategory Description",
-			subCategoryName = "MB Subcategory Name");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
 		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
 
-		MessageboardsCategory.addSubcategoryPG(
-			categoryName = "MB Subcategory Name",
-			subCategoryDescription = "MB Subcategory Description",
-			subCategoryName = "MB Subcategory Name 2");
+		MessageboardsCategory.addPG(
+			categoryDescription = "MB Subcategory Description",
+			categoryName = "MB Subcategory Name");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		MessageboardsCategory.viewSubcategoryPG(
+		MessageboardsCategory.gotoPG(
+			categoryName = "MB Category Name",
+			subCategoryEnabled = "true",
+			subCategoryName = "MB Subcategory Name");
+
+		MessageboardsCategory.addPG(
+			categoryDescription = "MB Subcategory 2 Description",
+			categoryName = "MB Subcategory Name 2");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.viewPG(
 			categoryName = "MB Category Name",
 			subCategoryDescription = "MB Subcategory Description",
 			subCategoryName = "MB Subcategory Name",
@@ -921,7 +921,7 @@ definition {
 
 		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
 
-		MessageboardsCategory.viewSubcategoryPG(
+		MessageboardsCategory.viewPG(
 			categoryName = "MB Subcategory Name",
 			subCategoryDescription = "MB Subcategory Description",
 			subCategoryName = "MB Subcategory Name 2",

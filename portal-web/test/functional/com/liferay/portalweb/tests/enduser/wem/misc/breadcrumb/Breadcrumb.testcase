@@ -125,20 +125,23 @@ definition {
 
 		MessageboardsCategory.addPG(categoryName = "MB Category Name");
 
-		MessageboardsCategory.addSubcategoryPG(
-			categoryName = "MB Category Name",
-			subCategoryDescription = "MB Subcategory Description",
-			subCategoryName = "MB Subcategory Name");
+		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
+
+		MessageboardsCategory.addPG(
+			categoryDescription = "MB Subcategory Description",
+			categoryName = "MB Subcategory Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Page Name",
 			siteName = "Site Name");
 
-		MessageboardsCategory.addSubcategoryToSubcategoryPG(
-			categoryName = "MB Category Name",
-			subCategoryDescription = "MB Subcategory Subcategory Description",
-			subCategoryName = "MB Subcategory Name",
-			subCategorySubCategoryName = "MB Subcategory Subcategory Name");
+		MessageboardsCategory.gotoPG(categoryName = "MB Category Name",
+			subCategoryEnabled = "true",
+			subCategoryName = "MB Subcategory Name");
+
+		MessageboardsCategory.addPG(
+			categoryDescription = "MB Subcategory Subcategory Description",
+			categoryName = "MB Subcategory Subcategory Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Page Name",
@@ -150,16 +153,17 @@ definition {
 			pageName = "Page Name",
 			siteName = "Site Name");
 
-		MessageboardsCategory.viewSubcategoryPG(
-			categoryName = "MB Category Name",
-			subCategoryDescription = "MB Subcategory Description",
-			subCategoryName = "MB Subcategory Name",
+		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
+
+		MessageboardsCategory.viewPG(
+			categoryDescription = "MB Subcategory Description",
+			categoryName = "MB Subcategory Name",
 			threadCount = "0");
 
-		MessageboardsCategory.viewSubcategoryFromSubcategoryPG(
-			categoryName = "MB Subcategory Name",
-			subCategoryDescription = "MB Subcategory Subcategory Description",
-			subCategoryName = "MB Subcategory Subcategory Name");
+		MessageboardsCategory.viewPG(
+			categoryDescription = "MB Subcategory Subcategory Description",
+			categoryName = "MB Subcategory Subcategory Name",
+			threadCount = "0");
 
 		Breadcrumb.viewPG(
 			breadcrumbListVisible = "Site Name,Page Name,MB Category Name,MB Subcategory Name,MB Subcategory Subcategory Name",
@@ -181,16 +185,17 @@ definition {
 			pageName = "Page Name",
 			siteName = "Site Name");
 
-		MessageboardsCategory.viewSubcategoryPG(
-			categoryName = "MB Category Name",
-			subCategoryDescription = "MB Subcategory Description",
-			subCategoryName = "MB Subcategory Name",
+		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
+
+		MessageboardsCategory.viewPG(
+			categoryDescription = "MB Subcategory Description",
+			categoryName = "MB Subcategory Name",
 			threadCount = "0");
 
-		MessageboardsCategory.viewSubcategoryFromSubcategoryPG(
-			categoryName = "MB Subcategory Name",
-			subCategoryDescription = "MB Subcategory Subcategory Description",
-			subCategoryName = "MB Subcategory Subcategory Name");
+		MessageboardsCategory.viewPG(
+			categoryDescription = "MB Subcategory Subcategory Description",
+			categoryName = "MB Subcategory Subcategory Name",
+			threadCount = "0");
 
 		Breadcrumb.viewSpecificPG(
 			breadcrumbListNotVisible = "MB Category Name,MB Subcategory Name,MB Subcategory Subcategory Name",
@@ -209,16 +214,18 @@ definition {
 			pageName = "Page Name",
 			siteName = "Site Name");
 
-		MessageboardsCategory.viewSubcategoryPG(
-			categoryName = "MB Category Name",
-			subCategoryDescription = "MB Subcategory Description",
-			subCategoryName = "MB Subcategory Name",
+		MessageboardsCategory.gotoPG(
+			categoryName = "MB Category Name");
+
+		MessageboardsCategory.viewPG(
+			categoryDescription = "MB Subcategory Description",
+			categoryName = "MB Subcategory Name",
 			threadCount = "0");
 
-		MessageboardsCategory.viewSubcategoryFromSubcategoryPG(
-			categoryName = "MB Subcategory Name",
-			subCategoryDescription = "MB Subcategory Subcategory Description",
-			subCategoryName = "MB Subcategory Subcategory Name");
+		MessageboardsCategory.viewPG(
+			categoryDescription = "MB Subcategory Subcategory Description",
+			categoryName = "MB Subcategory Subcategory Name",
+			threadCount = "0");
 
 		Breadcrumb.viewPG(
 			breadcrumbListVisible = "Site Name,Page Name,MB Category Name,MB Subcategory Name,MB Subcategory Subcategory Name",

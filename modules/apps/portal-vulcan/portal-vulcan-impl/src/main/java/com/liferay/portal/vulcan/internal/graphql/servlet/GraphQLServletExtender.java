@@ -17,6 +17,7 @@ package com.liferay.portal.vulcan.internal.graphql.servlet;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
+import graphql.annotations.GraphQLFieldDefinitionWrapper;
 import graphql.annotations.processor.ProcessingElementsContainer;
 import graphql.annotations.processor.graphQLProcessors.GraphQLInputProcessor;
 import graphql.annotations.processor.graphQLProcessors.GraphQLOutputProcessor;
@@ -26,17 +27,31 @@ import graphql.annotations.processor.retrievers.GraphQLInterfaceRetriever;
 import graphql.annotations.processor.retrievers.GraphQLObjectHandler;
 import graphql.annotations.processor.retrievers.GraphQLObjectInfoRetriever;
 import graphql.annotations.processor.retrievers.GraphQLTypeRetriever;
+import graphql.annotations.processor.retrievers.fieldBuilders.ArgumentBuilder;
+import graphql.annotations.processor.retrievers.fieldBuilders.DeprecateBuilder;
+import graphql.annotations.processor.retrievers.fieldBuilders.DescriptionBuilder;
+import graphql.annotations.processor.retrievers.fieldBuilders.method.MethodDataFetcherBuilder;
+import graphql.annotations.processor.retrievers.fieldBuilders.method.MethodNameBuilder;
+import graphql.annotations.processor.retrievers.fieldBuilders.method.MethodTypeBuilder;
 import graphql.annotations.processor.searchAlgorithms.BreadthFirstSearch;
 import graphql.annotations.processor.searchAlgorithms.ParentalSearch;
 import graphql.annotations.processor.typeFunctions.DefaultTypeFunction;
+import graphql.annotations.processor.typeFunctions.TypeFunction;
+import graphql.annotations.processor.util.DataFetcherConstructor;
 
+import graphql.schema.GraphQLArgument;
+import graphql.schema.GraphQLFieldDefinition;
+import graphql.schema.GraphQLOutputType;
 import graphql.schema.GraphQLSchema;
 
 import graphql.servlet.SimpleGraphQLHttpServlet;
 
+import java.lang.reflect.Method;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Dictionary;
+import java.util.List;
 
 import javax.servlet.Servlet;
 
@@ -60,7 +75,7 @@ public class GraphQLServletExtender {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		GraphQLFieldRetriever graphQLFieldRetriever =
-			new GraphQLFieldRetriever();
+			new LiferayGraphQLFieldRetriever();
 		GraphQLInterfaceRetriever graphQLInterfaceRetriever =
 			new GraphQLInterfaceRetriever();
 
@@ -129,6 +144,56 @@ public class GraphQLServletExtender {
 	private DefaultTypeFunction _defaultTypeFunction;
 	private GraphQLObjectHandler _graphQLObjectHandler;
 	private ServiceTracker<?, ?> _serviceTracker;
+
+	private static class LiferayGraphQLFieldRetriever
+		extends GraphQLFieldRetriever {
+
+		@Override
+		public GraphQLFieldDefinition getField(
+			Method method, ProcessingElementsContainer container) {
+
+			GraphQLFieldDefinition.Builder builder =
+				GraphQLFieldDefinition.newFieldDefinition();
+
+			TypeFunction typeFunction = container.getDefaultTypeFunction();
+
+			MethodNameBuilder methodNameBuilder = new MethodNameBuilder(method);
+
+			builder.name(methodNameBuilder.build());
+
+			MethodTypeBuilder methodTypeBuilder = new MethodTypeBuilder(
+				method, typeFunction, container, false);
+
+			GraphQLOutputType graphQLOutputType =
+				(GraphQLOutputType)methodTypeBuilder.build();
+
+			builder.type(graphQLOutputType);
+
+			ArgumentBuilder argumentBuilder = new ArgumentBuilder(
+				method, typeFunction, builder, container, graphQLOutputType);
+
+			List<GraphQLArgument> arguments = argumentBuilder.build();
+
+			builder.argument(arguments);
+
+			DescriptionBuilder descriptionBuilder = new DescriptionBuilder(
+				method);
+
+			DeprecateBuilder deprecateBuilder = new DeprecateBuilder(method);
+
+			MethodDataFetcherBuilder methodDataFetcherBuilder =
+				new MethodDataFetcherBuilder(
+					method, graphQLOutputType, typeFunction, container, null,
+					arguments, new DataFetcherConstructor(), false);
+
+			builder.description(descriptionBuilder.build());
+			builder.deprecate(deprecateBuilder.build());
+			builder.dataFetcher(methodDataFetcherBuilder.build());
+
+			return new GraphQLFieldDefinitionWrapper(builder.build());
+		}
+
+	}
 
 	private class ServletDataServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

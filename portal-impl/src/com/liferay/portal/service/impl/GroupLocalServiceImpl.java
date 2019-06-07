@@ -3694,8 +3694,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			throw new GroupKeyException();
 		}
 
-		if ((nameMap != null) &&
-			Validator.isNotNull(
+		if (Validator.isNotNull(
 				nameMap.get(
 					LocaleUtil.fromLanguageId(group.getDefaultLanguageId())))) {
 

@@ -9,19 +9,10 @@
  * @param spritemap
  * @param? id_
  * @param showLoadingIndicator_
- * @param tooltipPosition
  */
 {template .render}
 	<div id="{$id_}">
-		{call liferay.frontend.Tooltip.render}
-			{param elementClasses: 'fade' /}
-			{param position: $tooltipPosition /}
-			{param selector: '#' + $id_ + ' .progress-container' /}
-			{param title: $progressBarTooltip_ /}
-			{param visible: false /}
-		{/call}
-
-		<div class="progress-container {$disabled ? 'disabled' : ''}">
+		<div class="progress-container {$disabled ? 'disabled' : ''}" data-title="{$progressBarTooltip_}">
 			{call ClayProgressBar.render}
 				{param spritemap: $spritemap /}
 				{param value: $percentage_ /}

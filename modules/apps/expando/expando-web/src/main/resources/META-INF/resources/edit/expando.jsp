@@ -89,25 +89,21 @@ viewAttributesURL.setParameter("modelResource", modelResource);
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-attributes"), viewAttributesURL.toString());
 
-PortletURL newCustomFieldURL = renderResponse.createRenderURL();
-
-newCustomFieldURL.setParameter("mvcPath", "/edit/select_field_type.jsp");
-newCustomFieldURL.setParameter("redirect", redirect);
-newCustomFieldURL.setParameter("modelResource", modelResource);
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "new-custom-field"), newCustomFieldURL.toString());
-
 String displayType = LanguageUtil.get(request, propertyDisplayType);
 
 if (expandoColumn != null) {
-	String editAttributeBreadcrumb = LanguageUtil.format(request, "edit-x", new Object[] {expandoColumn.getName()}, false);
-
-	PortalUtil.addPortletBreadcrumbEntry(request, editAttributeBreadcrumb, null);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.format(request, "edit-x", new Object[] {expandoColumn.getName()}, false), null);
 }
 else {
-	String newAttributeBreadcrumb = LanguageUtil.format(request, "new-x", new Object[] {displayType}, false);
+	PortletURL newCustomFieldURL = renderResponse.createRenderURL();
 
-	PortalUtil.addPortletBreadcrumbEntry(request, newAttributeBreadcrumb, null);
+	newCustomFieldURL.setParameter("mvcPath", "/edit/select_field_type.jsp");
+	newCustomFieldURL.setParameter("redirect", redirect);
+	newCustomFieldURL.setParameter("modelResource", modelResource);
+
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "new-custom-field"), newCustomFieldURL.toString());
+
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.format(request, "new-x", new Object[] {displayType}, false), null);
 }
 %>
 

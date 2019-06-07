@@ -22,6 +22,8 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLo
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
@@ -35,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -187,6 +190,16 @@ public class ContentPageLayoutEditorDisplayContext
 		return availableSegmentsExperiencesSoyContext;
 	}
 
+	private String _getEditSegmentsEntryURL() throws PortalException {
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			request, SegmentsEntry.class.getName(),
+			PortletProvider.Action.EDIT);
+
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+
+		return portletURL.toString();
+	}
+
 	private List<SoyContext> _getLayoutDataListSoyContext()
 		throws PortalException {
 
@@ -262,6 +275,8 @@ public class ContentPageLayoutEditorDisplayContext
 			"deleteSegmentsExperienceURL",
 			getFragmentEntryActionURL(
 				"/content_layout/delete_segments_experience")
+		).put(
+			"editSegmentsEntryURL", _getEditSegmentsEntryURL()
 		).put(
 			"layoutDataList", _getLayoutDataListSoyContext()
 		);

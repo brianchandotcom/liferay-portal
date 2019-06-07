@@ -37,6 +37,8 @@ definition {
 
 		ProductMenu.gotoSite(site = "Westeros Bank Theme Site");
 
+		AssertVisible(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
 		AssertClick(
 			key_pageName = "For You",
 			locator1 = "Home#PAGE",

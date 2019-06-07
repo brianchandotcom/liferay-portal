@@ -282,24 +282,6 @@
 							</li>
 						{/foreach}
 					</ul>
-				{else}
-					{if $availableSegmentsEntries and length($availableSegmentsEntries) < 1}
-						{let $experiencesEmptyInfo kind="text"}
-							{msg desc=""}experiences-requirements-info{/msg}
-						{/let}
-
-						{let $info kind="text"}
-							{msg desc=""}info{/msg}:
-						{/let}
-						{call ClayAlert.render}
-							{param elementClasses: 'mx-0 mt-4' /}
-							{param closeable: false /}
-							{param message: $experiencesEmptyInfo /}
-							{param spritemap: $spritemap /}
-							{param style: 'info' /}
-							{param title: $info /}
-						{/call}
-					{/if}
 				{/if}
 			</div>
 		</div>

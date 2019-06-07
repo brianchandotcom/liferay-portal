@@ -97,14 +97,22 @@
 							{$experienceForm.segmentSelector.label}
 						</label>
 
+						{let $selectAttributes kind="attributes"}
+
+							{if $experienceForm.segmentSelector.segments and length($experienceForm.segmentSelector.segments) == 0    }
+								disabled
+							{/if}
+						{/let}
+
 						<div class="d-flex">
-							{if $experienceForm.segmentSelector.segments and length($experienceForm.segmentSelector.segments) > 0}
-								<select
-									class="form-control"
-									id="{$porletPrefix}{$experienceForm.experienceName.inputId}"
-									name="experienceSegmentId"
-									ref="experienceSegmentId"
-								>
+							<select
+								class="form-control"
+								id="{$porletPrefix}{$experienceForm.experienceName.inputId}"
+								name="experienceSegmentId"
+								ref="experienceSegmentId"
+								{$selectAttributes}
+							>
+								{if $experienceForm.segmentSelector.segments and length($experienceForm.segmentSelector.segments) > 0}
 									{foreach $segment in $experienceForm.segmentSelector.segments}
 										{let $optionAttributes kind="attributes"}
 											value="{$segment.segmentsEntryId}"
@@ -118,8 +126,14 @@
 											{$segment.name}
 										</option>
 									{/foreach}
-								</select>
-							{/if}
+								{else}
+									<option>
+										{msg desc=""}
+											no-segments
+										{/msg}
+									</option>
+								{/if}
+							</select>
 
 							<button type="button" class="btn btn-secondary flex-shrink-0 ml-2" data-onclick="{$_handleNewSegmentClick}">
 								{msg desc=""}

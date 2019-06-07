@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -71,8 +70,7 @@ public class EditServerMVCActionCommandTest {
 			_portletPreferencesLocalService.addPortletPreferences(
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), 0,
 				layoutRevision.getLayoutRevisionId(),
-				RandomTestUtil.randomString(), new PortletImpl(),
-				StringPool.BLANK);
+				RandomTestUtil.randomString(), null, StringPool.BLANK);
 
 		Assert.assertNotNull(portletPreferences);
 

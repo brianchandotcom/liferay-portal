@@ -25,12 +25,36 @@ import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
 public abstract class BaseJob implements Job {
+
+	@Override
+	public List<Build> getBuildHistory(JenkinsMaster jenkinsMaster) {
+		JSONObject jobJSONObject = getJobJSONObject(
+			jenkinsMaster, "builds[number]");
+
+		JSONArray buildsJSONArray = jobJSONObject.getJSONArray("builds");
+
+		List<Build> builds = new ArrayList<>(buildsJSONArray.length());
+
+		for (int i = 0; i < buildsJSONArray.length(); i++) {
+			JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
+
+			builds.add(
+				BuildFactory.newBuild(
+					JenkinsResultsParserUtil.combine(
+						jenkinsMaster.getURL(), "/job/", getJobName(), "/",
+						String.valueOf(buildJSONObject.getInt("number"))),
+					null));
+		}
+
+		return builds;
+	}
 
 	@Override
 	public String getJobName() {

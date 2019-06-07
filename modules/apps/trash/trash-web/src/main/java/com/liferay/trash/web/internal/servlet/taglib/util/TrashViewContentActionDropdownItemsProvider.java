@@ -58,7 +58,7 @@ public class TrashViewContentActionDropdownItemsProvider {
 					add(_getMoveActionDropdownItem());
 				}
 
-				if (_trashHandler.isDeletable()) {
+				if (_trashHandler.isDeletable(_classPK)) {
 					add(_getDeleteActionDropdownItem());
 				}
 			}

@@ -67,7 +67,9 @@ public class TrashEntryActionDropdownItemsProvider {
 					add(_getMoveActionDropdownItem());
 				}
 
-				add(_getDeleteActionDropdownItem());
+				if (_trashHandler.isDeletable(_trashEntry.getClassPK())) {
+					add(_getDeleteActionDropdownItem());
+				}
 			}
 		};
 	}

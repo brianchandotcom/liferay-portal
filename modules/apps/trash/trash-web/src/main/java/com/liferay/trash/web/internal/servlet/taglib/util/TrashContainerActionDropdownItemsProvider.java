@@ -72,7 +72,9 @@ public class TrashContainerActionDropdownItemsProvider {
 						add(_getMoveTrashEntryActionDropdownItem());
 					}
 
-					if (_trashHandler.isDeletable()) {
+					if (_trashHandler.isDeletable(
+							_trashRenderer.getClassPK())) {
+
 						add(_getDeleteTrashEntryActionDropdownItem());
 					}
 				}
@@ -80,7 +82,9 @@ public class TrashContainerActionDropdownItemsProvider {
 					if (_trashHandler.isMovable()) {
 						add(_getMoveActionDropdownItem());
 					}
-					else if (_trashHandler.isDeletable()) {
+					else if (_trashHandler.isDeletable(
+								_trashRenderer.getClassPK())) {
+
 						add(_getDeleteActionDropdownItem());
 					}
 				}

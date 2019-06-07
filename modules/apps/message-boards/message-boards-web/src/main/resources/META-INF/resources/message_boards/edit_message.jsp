@@ -112,7 +112,7 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %> id='<%= renderResponse.getNamespace() + "mbEditPageContainer" %>'>
+<div class="container-fluid-1280" id='<%= renderResponse.getNamespace() + "mbEditPageContainer" %>'>
 	<c:if test="<%= !portletTitleBasedNavigation %>">
 		<h3><%= headerTitle %></h3>
 	</c:if>

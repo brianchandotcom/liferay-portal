@@ -10,12 +10,14 @@ export default class LocalizedInput extends React.Component {
 		initialOpen: PropTypes.bool,
 		initialValues: PropTypes.object,
 		onChange: PropTypes.func,
+		placeholder: PropTypes.string,
 		readOnly: PropTypes.bool
 	};
 	static defaultProps = {
 		initialOpen: false,
 		initialValues: {},
 		onChange: () => {},
+		placeholder: '',
 		readOnly: false
 	};
 
@@ -100,6 +102,7 @@ export default class LocalizedInput extends React.Component {
 			defaultLang,
 			initialLanguageId,
 			initialOpen,
+			placeholder,
 			readOnly
 		} = this.props;
 
@@ -123,6 +126,7 @@ export default class LocalizedInput extends React.Component {
 						className='rounded form-control language-value field form-control-inline form-control'
 						data-testid='localized-main-input'
 						onChange={this._handleInputChange}
+						placeholder={placeholder}
 						readOnly={readOnly}
 						type='text'
 						value={currentValue}

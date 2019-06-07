@@ -116,6 +116,7 @@ exports[`LocalizedInput should render with pre-existing value should have dropdo
       <input
         class="rounded form-control language-value field form-control-inline form-control"
         data-testid="localized-main-input"
+        placeholder=""
         type="text"
         value="Testing default value"
       />
@@ -167,6 +168,7 @@ exports[`LocalizedInput should render with pre-existing value should render 1`] 
       <input
         class="rounded form-control language-value field form-control-inline form-control"
         data-testid="localized-main-input"
+        placeholder=""
         type="text"
         value="Testing default value"
       />
@@ -218,6 +220,7 @@ exports[`LocalizedInput with minimal configuration should render 1`] = `
       <input
         class="rounded form-control language-value field form-control-inline form-control"
         data-testid="localized-main-input"
+        placeholder=""
         type="text"
         value=""
       />

@@ -1376,6 +1376,12 @@ public class ModulesStructureTest {
 			return;
 		}
 
+		Path relengIgnorePath = dirPath.resolve(".lfrbuild-releng-ignore");
+
+		if (Files.exists(relengIgnorePath)) {
+			return;
+		}
+
 		Path appBndPath = dirPath.resolve("app.bnd");
 
 		if (!Files.exists(appBndPath)) {

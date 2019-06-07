@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
+
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -56,6 +59,37 @@ public abstract class BaseJob implements Job {
 
 	protected BaseJob(String jobName) {
 		_jobName = jobName;
+	}
+
+	protected JSONObject getJobJSONObject(
+		JenkinsMaster jenkinsMaster, String tree) {
+
+		if (getJobURL(jenkinsMaster) == null) {
+			return null;
+		}
+
+		StringBuffer sb = new StringBuffer();
+
+		sb.append(
+			JenkinsResultsParserUtil.getLocalURL(getJobURL(jenkinsMaster)));
+		sb.append("/api/json?pretty");
+
+		if (tree != null) {
+			sb.append("&tree=");
+			sb.append(tree);
+		}
+
+		try {
+			return JenkinsResultsParserUtil.toJSONObject(sb.toString(), false);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get job JSON", ioe);
+		}
+	}
+
+	protected String getJobURL(JenkinsMaster jenkinsMaster) {
+		return JenkinsResultsParserUtil.combine(
+			jenkinsMaster.getURL(), "/job/", _jobName);
 	}
 
 	protected Set<String> getSetFromString(String string) {

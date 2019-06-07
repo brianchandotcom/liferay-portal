@@ -3,15 +3,63 @@
 <beans
 	xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
 >
 	<context:annotation-config />
+#if (${viewType.equals("jsp")})
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="viewResolver">
 		<property name="contentType" value="text/html;charset=UTF-8" />
-		<property name="prefix" value="/WEB-INF/jsp/" />
-		<property name="suffix" value=".jsp" />
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jspx" />
+#if (${framework.equals("portletmvc4spring")})
+		<property name="viewClass" value="com.liferay.portletmvc4spring.PortletJstlView" />
+#elseif (${framework.equals("springportletmvc")})
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+#end
 	</bean>
+#end
+#if (${viewType.equals("thymeleaf")})
+#if (${framework.equals("springportletmvc")})
+	<bean class="${package}.spring4.ServletContextFactory" id="servletContext"/>
+#end
+	<bean class="org.thymeleaf.templateresolver.ServletContextTemplateResolver" id="templateResolver">
+#if (${framework.equals("springportletmvc")})
+		<constructor-arg ref="servletContext"/>
+#end
+		<property name="prefix" value="/WEB-INF/views/"/>
+		<property name="suffix" value=".html"/>
+		<property name="templateMode" value="HTML"/>
+	</bean>
+#if (${framework.equals("portletmvc4spring")})
+	<bean class="org.thymeleaf.spring5.SpringTemplateEngine" id="templateEngine">
+#elseif (${framework.equals("springportletmvc")})
+	<bean class="org.thymeleaf.spring4.SpringTemplateEngine" id="templateEngine">
+#end
+		<property name="templateResolver" ref="templateResolver"/>
+		<property name="enableSpringELCompiler" value="true"/>
+	</bean>
+#if (${framework.equals("portletmvc4spring")})
+	<bean class="org.thymeleaf.spring5.view.ThymeleafViewResolver" id="viewResolver">
+#elseif (${framework.equals("springportletmvc")})
+	<bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver" id="viewResolver">
+#end
+		<property name="templateEngine" ref="templateEngine"/>
+		<property name="order" value="1"/>
+	</bean>
+#end
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>content.Language</value>
+			</list>
+		</property>
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+#if (${framework.equals("portletmvc4spring")})
+	<bean id="springSecurityPortletConfigurer" class="com.liferay.portletmvc4spring.security.SpringSecurityPortletConfigurer" />
+	<bean id="delegatingFilterProxy" class="org.springframework.web.filter.DelegatingFilterProxy">
+		<property name="targetBeanName" value="springSecurityFilterChain" />
+	</bean>
+#end
 </beans>

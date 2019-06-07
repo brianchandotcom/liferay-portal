@@ -5,15 +5,16 @@
 <!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 7.1.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_7_1_0.dtd">
 #elseif (${liferayVersion.startsWith("7.2")})
 <!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 7.2.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_7_2_0.dtd">
+#elseif (${liferayVersion.startsWith("7.3")})
+<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 7.3.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_7_3_0.dtd">
 #end
 
 <liferay-portlet-app>
 	<portlet>
-		<portlet-name>${artifactId}</portlet-name>
+		<portlet-name>${className.toLowerCase()}</portlet-name>
 		<icon>/icon.png</icon>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 		<header-portlet-css>/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-spring-mvc</css-class-wrapper>
 	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>

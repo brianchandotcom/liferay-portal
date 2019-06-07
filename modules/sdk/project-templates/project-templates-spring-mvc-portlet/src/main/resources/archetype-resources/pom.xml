@@ -12,12 +12,59 @@
 	<packaging>war</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+#if (${liferayVersion.startsWith("7.0")})
+		<portal.kernel.version>2.6.0</portal.kernel.version>
+		<portlet.api.version>2.0</portlet.api.version>
+		<servlet.api.version>3.0.1</servlet.api.version>
+#elseif (${liferayVersion.startsWith("7.1")})
+		<portal.kernel.version>3.0.0</portal.kernel.version>
+#if (${framework.equals("springportletmvc")})
+		<portlet.api.version>2.0</portlet.api.version>
+#else
+		<portlet.api.version>3.0.0</portlet.api.version>
+#end
+		<servlet.api.version>3.1.0</servlet.api.version>
+#elseif (${liferayVersion.startsWith("7.2")})
+		<portal.kernel.version>4.4.0</portal.kernel.version>
+#if (${framework.equals("springportletmvc")})
+		<portlet.api.version>2.0</portlet.api.version>
+#else
+		<portlet.api.version>3.0.0</portlet.api.version>
+#end
+		<servlet.api.version>3.1.0</servlet.api.version>
+#elseif (${liferayVersion.startsWith("7.3")})
+		<portal.kernel.version>4.4.0</portal.kernel.version>
+#if (${framework.equals("springportletmvc")})
+		<portlet.api.version>2.0</portlet.api.version>
+#else
+		<portlet.api.version>3.0.0</portlet.api.version>
+#end
+		<servlet.api.version>3.1.0</servlet.api.version>
+#end
+#if (${frameworkDependencies.equals("embedded")})
+		<spring.scope>compile</spring.scope>
+#else
+		<spring.scope>provided</spring.scope>
+#end
+#if (${framework.equals("portletmvc4spring")})
+		<spring.security.version>5.1.4</spring.security.version>
+		<spring.version>5.1.5</spring.version>
+#elseif (${framework.equals("springportletmvc")})
+		<spring.version>4.1.9</spring.version>
+#end
 	</properties>
 	<dependencies>
 		<dependency>
+			<groupId>com.liferay.portal</groupId>
+			<artifactId>com.liferay.portal.kernel</artifactId>
+			<version>${portal.kernel.version}</version>
+			<scope>provided</scope>
+		</dependency>
+#if (${frameworkDependencies.equals("provided")})
+		<dependency>
 			<groupId>com.liferay.portletmvc4spring</groupId>
 			<artifactId>com.liferay.portletmvc4spring.thin</artifactId>
-			<version>4.1.9</version>
+			<version>${spring.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>*</groupId>
@@ -25,47 +72,52 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-#if (${liferayVersion.startsWith("7.0")})
-		<dependency>
-			<groupId>com.liferay.portal</groupId>
-			<artifactId>com.liferay.portal.kernel</artifactId>
-			<version>2.6.0</version>
-			<scope>provided</scope>
-		</dependency>
+#end
 		<dependency>
 			<groupId>javax.portlet</groupId>
 			<artifactId>portlet-api</artifactId>
-			<version>2.0</version>
+			<version>${portlet.api.version}</version>
 			<scope>provided</scope>
 		</dependency>
-#elseif (${liferayVersion.startsWith("7.1")})
-		<dependency>
-			<groupId>com.liferay.portal</groupId>
-			<artifactId>com.liferay.portal.kernel</artifactId>
-			<version>3.0.0</version>
-			<scope>provided</scope>
-		</dependency>
-#elseif (${liferayVersion.startsWith("7.2")})
-		<dependency>
-			<groupId>com.liferay.portal</groupId>
-			<artifactId>com.liferay.portal.kernel</artifactId>
-			<version>4.4.0</version>
-			<scope>provided</scope>
-		</dependency>
-#end
-#if (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})
-		<dependency>
-			<groupId>javax.portlet</groupId>
-			<artifactId>portlet-api</artifactId>
-			<version>3.0.0</version>
-			<scope>provided</scope>
-		</dependency>
-#end
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>3.0.1</version>
+			<version>${servlet.api.version}</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>2.0.1.Final</version>
+#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
+			<scope>provided</scope>
+#end
+		</dependency>
+#if (${framework.equals("portletmvc4spring")})
+		<dependency>
+			<groupId>com.liferay.portletmvc4spring</groupId>
+			<artifactId>com.liferay.portletmvc4spring.framework</artifactId>
+			<version>5.1.0</version>
+			<scope>${spring.scope}</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.liferay.portletmvc4spring</groupId>
+			<artifactId>com.liferay.portletmvc4spring.security</artifactId>
+			<version>5.1.0</version>
+		</dependency>
+#end
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>6.0.14.Final</version>
+#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
+			<exclusions>
+				<exclusion>
+					<groupId>javax.validation</groupId>
+					<artifactId>validation-api</artifactId>
+				</exclusion>
+			</exclusions>
+#end
 		</dependency>
 		<dependency>
 			<groupId>org.osgi</groupId>
@@ -74,11 +126,117 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc-portlet</artifactId>
-			<version>4.1.9.RELEASE</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.25</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${spring.version}.RELEASE</version>
+			<scope>${spring.scope}</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring.version}.RELEASE</version>
+			<scope>${spring.scope}</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}.RELEASE</version>
+			<scope>${spring.scope}</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}.RELEASE</version>
+			<scope>${spring.scope}</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-expression</artifactId>
+			<version>${spring.version}.RELEASE</version>
+			<scope>${spring.scope}</scope>
+		</dependency>
+#if (${framework.equals("portletmvc4spring")})
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jcl</artifactId>
+			<version>${spring.version}.RELEASE</version>
+			<scope>${spring.scope}</scope>
+		</dependency>
+#end
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}.RELEASE</version>
+			<scope>${spring.scope}</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}.RELEASE</version>
+			<scope>${spring.scope}</scope>
+		</dependency>
+#if (${framework.equals("springportletmvc")})
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc-portlet</artifactId>
+			<version>${spring.version}.RELEASE</version>
+			<scope>${spring.scope}</scope>
+		</dependency>
+#elseif (${framework.equals("portletmvc4spring")})
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.security.version}.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.security.version}.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.security.version}.RELEASE</version>
+		</dependency>
+#end
+#if (${viewType.equals("thymeleaf")})
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf</artifactId>
+			<version>3.0.11.RELEASE</version>
+			<exclusions>
+				<exclusion>
+					<groupId>ognl</groupId>
+					<artifactId>ognl</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+#if (${framework.equals("portletmvc4spring")})
+			<artifactId>thymeleaf-spring5</artifactId>
+#elseif (${framework.equals("springportletmvc")})
+			<artifactId>thymeleaf-spring4</artifactId>
+#end
+			<version>3.0.11.RELEASE</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+#end
 	</dependencies>
 	<build>
 		<plugins>

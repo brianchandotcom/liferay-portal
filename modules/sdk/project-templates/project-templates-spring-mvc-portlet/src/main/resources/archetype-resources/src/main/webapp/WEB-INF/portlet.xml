@@ -1,28 +1,33 @@
 <?xml version="1.0"?>
 
+#if (${framework.equals("portletmvc4spring")})
 <portlet-app xmlns="http://xmlns.jcp.org/xml/ns/portlet" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/portlet http://xmlns.jcp.org/xml/ns/portlet/portlet-app_3_0.xsd" version="3.0">
+#elseif (${framework.equals("springportletmvc")})
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" version="2.0">
+#end
 	<portlet>
 		<portlet-name>${className.toLowerCase()}</portlet-name>
 		<display-name>${className}</display-name>
+#if (${framework.equals("portletmvc4spring")})
+		<portlet-class>com.liferay.portletmvc4spring.DispatcherPortlet</portlet-class>
+#elseif (${framework.equals("springportletmvc")})
 		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+#end
+#if (${frameworkDependencies.equals("provided")})
 		<init-param>
 			<name>contextClass</name>
 			<value>com.liferay.portletmvc4spring.thin.OSGiPortletApplicationContext</value>
 		</init-param>
+#end
 		<init-param>
 			<name>contextConfigLocation</name>
-			<value>/WEB-INF/spring-context/portlet/${artifactId}.xml</value>
+			<value>/WEB-INF/spring-context/portlet/${className}.xml</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>
 		</supports>
 		<resource-bundle>content.Language</resource-bundle>
-		<portlet-info>
-			<title>${className}</title>
-			<short-title>${className}</short-title>
-			<keywords>${className}</keywords>
-		</portlet-info>
 		<security-role-ref>
 			<role-name>administrator</role-name>
 		</security-role-ref>
@@ -36,4 +41,17 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 	</portlet>
+#if (${framework.equals("portletmvc4spring")})
+	<filter>
+		<filter-name>SpringSecurityPortletFilter</filter-name>
+		<filter-class>com.liferay.portletmvc4spring.security.SpringSecurityPortletFilter</filter-class>
+		<lifecycle>ACTION_PHASE</lifecycle>
+		<lifecycle>RENDER_PHASE</lifecycle>
+		<lifecycle>RESOURCE_PHASE</lifecycle>
+	</filter>
+	<filter-mapping>
+		<filter-name>SpringSecurityPortletFilter</filter-name>
+		<portlet-name>${className.toLowerCase()}</portlet-name>
+	</filter-mapping>
+#end
 </portlet-app>

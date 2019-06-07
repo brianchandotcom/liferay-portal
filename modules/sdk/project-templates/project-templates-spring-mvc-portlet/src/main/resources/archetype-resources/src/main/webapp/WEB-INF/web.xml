@@ -1,19 +1,39 @@
 <?xml version="1.0"?>
 
+#if (${liferayVersion.startsWith("7.0")})
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+#elseif (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+#end
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/spring-context/portlet-application-context.xml</param-value>
 	</context-param>
 	<servlet>
 		<servlet-name>ViewRendererServlet</servlet-name>
+#if (${framework.equals("portletmvc4spring")})
+		<servlet-class>com.liferay.portletmvc4spring.ViewRendererServlet</servlet-class>
+#elseif (${framework.equals("springportletmvc")})
 		<servlet-class>org.springframework.web.servlet.ViewRendererServlet</servlet-class>
+#end
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ViewRendererServlet</servlet-name>
 		<url-pattern>/WEB-INF/servlet/view</url-pattern>
 	</servlet-mapping>
+#if (${framework.equals("portletmvc4spring")})
+	<filter>
+		<filter-name>delegatingFilterProxy</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>delegatingFilterProxy</filter-name>
+		<url-pattern>/WEB-INF/servlet/view</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+#end
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>

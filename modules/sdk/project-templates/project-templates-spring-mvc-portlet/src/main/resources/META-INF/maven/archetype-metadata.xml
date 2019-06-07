@@ -16,17 +16,16 @@
 		</fileSet>
 		<fileSet filtered="true">
 			<directory>src/main/webapp</directory>
-			<includes>
-				<include>**/*</include>
-			</includes>
 			<excludes>
-				<exclude>**/*.png</exclude>
+				<exclude>*.png</exclude>
+				<exclude>**/*.html</exclude>
 			</excludes>
 		</fileSet>
 		<fileSet filtered="false">
 			<directory>src/main/webapp</directory>
 			<includes>
-				<include>**/*.png</include>
+				<include>*.png</include>
+				<include>**/*.html</include>
 			</includes>
 		</fileSet>
 		<fileSet filtered="true">
@@ -45,10 +44,19 @@
 		<requiredProperty key="dependencyManagementEnabled">
 			<defaultValue>false</defaultValue>
 		</requiredProperty>
+		<requiredProperty key="framework">
+			<validationRegex>(springportletmvc)|(portletmvc4spring)</validationRegex>
+		</requiredProperty>
+		<requiredProperty key="frameworkDependencies">
+			<validationRegex>(embedded)|(provided)</validationRegex>
+		</requiredProperty>
 		<requiredProperty key="liferayVersion">
 		</requiredProperty>
 		<requiredProperty key="projectType">
 			<defaultValue>standalone</defaultValue>
+		</requiredProperty>
+		<requiredProperty key="viewType">
+			<validationRegex>(jsp)|(thymeleaf)</validationRegex>
 		</requiredProperty>
 	</requiredProperties>
 </archetype-descriptor>

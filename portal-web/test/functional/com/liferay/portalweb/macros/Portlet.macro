@@ -341,18 +341,18 @@ definition {
 			value1 = "${portletBody}");
 	}
 
-	@description = "View Cannot Add ${portletName} portlet."
 	macro viewCannotAddPG {
-		if ("${portletName}" == "Map") {
-			var portletName = "Where are the Liferay members?";
-		}
-		else if ("${portletName}" == "Requests") {
-			var portletTypeKey = "PORTLET_BORDERLESS";
+		if (IsNotVisible(locator1 = "ControlMenuAddPanel#CLOSE_ADD_PANEL")) {
+			Click.clickAt(locator1 = "ControlMenu#ADD");
 		}
 
-		Click.clickAtSidebarClickAtWaitForScript(
-			locator1 = "ControlMenu#ADD",
-			value1 = "Add");
+		AssertElementPresent(locator1 = "ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE");
+
+		AssertVisible(
+			locator1 = "ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE",
+			value1 = "Widgets");
+
+		Pause(locator1 = "5000");
 
 		Panel.expandSidebarApplicationsPanel();
 
@@ -360,9 +360,9 @@ definition {
 			locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
 			value1 = "${portletName}");
 
-		var portletLocator = "//span[@data-title=&quot;${portletName}&quot; and contains(@class,&apos;add-content-item&apos;)]";
-
-		AssertElementNotPresent(locator1 = "${portletLocator}");
+		AssertElementNotPresent(
+			locator1 = "ControlMenuAddPanel#ADD_PORTLET_DRAG_LINK",
+			portletName = "${portletName}");
 	}
 
 	macro viewCannotEdit {

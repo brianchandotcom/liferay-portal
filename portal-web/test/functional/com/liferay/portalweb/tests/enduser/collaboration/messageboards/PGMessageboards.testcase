@@ -97,24 +97,26 @@ definition {
 	}
 
 	@priority = "4"
-	test AddMBCategorySubcategoryNullName {
+	test AddMBCategoryNullName {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		MessageboardsCategory.addPG(categoryName = "MB Category Name");
+		AssertClick(
+			locator1 = "Button#ADD_CATEGORY",
+			value1 = "Add Category");
+
+		PortletEntry.inputName(name = " ");
+
+		PortletEntry.inputDescription(description = "MB Category Description");
+
+		Button.clickSave();
+
+		Alert.viewRequiredField();
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		MessageboardsCategory.addSubcategoryNullPG(
-			categoryName = "MB Category Name",
-			subCategoryDescription = "MB Subcategory Description",
-			subCategoryNullName = " ");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.viewCategoryDefaultPG(
-			categoryCount = "0 Categories",
-			categoryName = "MB Category Name",
-			threadCount = "0");
+		AssertTextEquals.assertText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no threads or categories.");
 	}
 
 	@priority = "5"

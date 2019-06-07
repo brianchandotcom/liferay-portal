@@ -85,6 +85,11 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
+	public boolean isDeletable(long classPK) throws PortalException {
+		return false;
+	}
+
+	@Override
 	public void restoreRelatedTrashEntry(String className, long classPK)
 		throws PortalException {
 

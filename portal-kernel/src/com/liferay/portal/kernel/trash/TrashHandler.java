@@ -526,8 +526,20 @@ public interface TrashHandler {
 	 *
 	 * @return <code>true</code> if the entity can be deleted from the Recycle
 	 *         Bin.
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #isDeletable(long)}
 	 */
+	@Deprecated
 	public boolean isDeletable();
+
+	/**
+	 * Returns <code>true</code> if the entity can be deleted from the Recycle
+	 * Bin.
+	 *
+	 * @return <code>true</code> if the entity can be deleted from the Recycle
+	 *         Bin.
+	 */
+	public boolean isDeletable(long classPK) throws PortalException;
 
 	/**
 	 * Returns <code>true</code> if the model entity with the primary key is in

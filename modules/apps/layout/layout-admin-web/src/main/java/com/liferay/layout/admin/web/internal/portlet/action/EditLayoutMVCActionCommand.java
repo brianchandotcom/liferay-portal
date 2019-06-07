@@ -48,6 +48,7 @@ import com.liferay.portal.util.PropsValues;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -234,7 +235,10 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-		if (Validator.isNull(redirect) || redirect.contains(oldFriendlyURL)) {
+		if (Validator.isNull(redirect) ||
+			(redirect.contains(oldFriendlyURL) &&
+			 !Objects.equals(layout.getFriendlyURL(), oldFriendlyURL))) {
+
 			redirect = _portal.getLayoutFullURL(layout, themeDisplay);
 		}
 

@@ -20,21 +20,16 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 
 import graphql.annotations.GraphQLFieldDefinitionWrapper;
 import graphql.annotations.annotationTypes.GraphQLName;
 import graphql.annotations.processor.ProcessingElementsContainer;
-import graphql.annotations.processor.graphQLProcessors.GraphQLInputProcessor;
-import graphql.annotations.processor.graphQLProcessors.GraphQLOutputProcessor;
 import graphql.annotations.processor.retrievers.GraphQLExtensionsHandler;
 import graphql.annotations.processor.retrievers.GraphQLFieldRetriever;
 import graphql.annotations.processor.retrievers.GraphQLInterfaceRetriever;
-import graphql.annotations.processor.retrievers.GraphQLObjectHandler;
 import graphql.annotations.processor.retrievers.GraphQLObjectInfoRetriever;
 import graphql.annotations.processor.retrievers.GraphQLTypeRetriever;
 import graphql.annotations.processor.retrievers.fieldBuilders.ArgumentBuilder;
@@ -44,43 +39,30 @@ import graphql.annotations.processor.retrievers.fieldBuilders.method.MethodNameB
 import graphql.annotations.processor.retrievers.fieldBuilders.method.MethodTypeBuilder;
 import graphql.annotations.processor.searchAlgorithms.BreadthFirstSearch;
 import graphql.annotations.processor.searchAlgorithms.ParentalSearch;
-import graphql.annotations.processor.typeFunctions.DefaultTypeFunction;
 import graphql.annotations.processor.util.NamingKit;
 
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.GraphQLFieldDefinition;
 import graphql.schema.GraphQLOutputType;
-import graphql.schema.GraphQLSchema;
 
 import graphql.servlet.GraphQLContext;
-import graphql.servlet.SimpleGraphQLHttpServlet;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Dictionary;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.servlet.Servlet;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.http.context.ServletContextHelper;
-import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
-import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Preston Crary
@@ -141,34 +123,10 @@ public class GraphQLServletExtender {
 		// GraphQLTypeRetriever
 
 		graphQLInterfaceRetriever.setGraphQLTypeRetriever(graphQLTypeRetriever);
-
-		_defaultTypeFunction = new DefaultTypeFunction(
-			new GraphQLInputProcessor() {
-				{
-					setGraphQLTypeRetriever(graphQLTypeRetriever);
-				}
-			},
-			new GraphQLOutputProcessor() {
-				{
-					setGraphQLTypeRetriever(graphQLTypeRetriever);
-				}
-			});
-		_graphQLObjectHandler = new GraphQLObjectHandler() {
-			{
-				setTypeRetriever(graphQLTypeRetriever);
-			}
-		};
-
-		_serviceTracker = new ServiceTracker<>(
-			bundleContext, ServletData.class,
-			new ServletDataServiceTrackerCustomizer(bundleContext));
-
-		_serviceTracker.open();
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTracker.close();
 	}
 
 	private Object _get(
@@ -242,16 +200,11 @@ public class GraphQLServletExtender {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private DefaultTypeFunction _defaultTypeFunction;
-	private GraphQLObjectHandler _graphQLObjectHandler;
-
 	@Reference
 	private Language _language;
 
 	@Reference
 	private Portal _portal;
-
-	private ServiceTracker<?, ?> _serviceTracker;
 
 	private class LiferayGraphQLFieldRetriever extends GraphQLFieldRetriever {
 
@@ -315,121 +268,6 @@ public class GraphQLServletExtender {
 		}
 
 		private final Method _method;
-
-	}
-
-	private class ServletDataServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<ServletData, Collection<ServiceRegistration<?>>> {
-
-		@Override
-		public Collection<ServiceRegistration<?>> addingService(
-			ServiceReference<ServletData> serviceReference) {
-
-			// Schema
-
-			GraphQLSchema.Builder schemaBuilder = GraphQLSchema.newSchema();
-
-			ServletData servletData = _bundleContext.getService(
-				serviceReference);
-
-			Object mutation = servletData.getMutation();
-
-			ProcessingElementsContainer processingElementsContainer =
-				new ProcessingElementsContainer(_defaultTypeFunction);
-
-			schemaBuilder.mutation(
-				_graphQLObjectHandler.getObject(
-					mutation.getClass(), processingElementsContainer));
-
-			Object query = servletData.getQuery();
-
-			schemaBuilder.query(
-				_graphQLObjectHandler.getObject(
-					query.getClass(), processingElementsContainer));
-
-			Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-			Class<? extends ServletData> clazz = servletData.getClass();
-
-			String path = servletData.getPath();
-
-			String servletContextName = path.split("/")[1];
-
-			properties.put(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
-				clazz.getName());
-
-			properties.put(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN, "/*");
-
-			properties.put(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-				servletContextName);
-
-			Dictionary<String, Object> helperProperties =
-				new HashMapDictionary<>();
-
-			helperProperties.put(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
-				servletContextName);
-			helperProperties.put(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH, path);
-			helperProperties.put(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET,
-				clazz.getName());
-
-			Collection<ServiceRegistration<?>> serviceRegistrations =
-				new ArrayList<>();
-
-			serviceRegistrations.add(
-				_bundleContext.registerService(
-					ServletContextHelper.class,
-					new ServletContextHelper(_bundleContext.getBundle()) {
-					},
-					helperProperties));
-
-			// Servlet
-
-			SimpleGraphQLHttpServlet.Builder servletBuilder =
-				SimpleGraphQLHttpServlet.newBuilder(schemaBuilder.build());
-
-			Servlet servlet = servletBuilder.build();
-
-			serviceRegistrations.add(
-				_bundleContext.registerService(
-					Servlet.class, servlet, properties));
-
-			return serviceRegistrations;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<ServletData> serviceReference,
-			Collection<ServiceRegistration<?>> serviceRegistrations) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<ServletData> serviceReference,
-			Collection<ServiceRegistration<?>> serviceRegistrations) {
-
-			for (ServiceRegistration<?> serviceRegistration :
-					serviceRegistrations) {
-
-				serviceRegistration.unregister();
-			}
-
-			_bundleContext.ungetService(serviceReference);
-		}
-
-		private ServletDataServiceTrackerCustomizer(
-			BundleContext bundleContext) {
-
-			_bundleContext = bundleContext;
-		}
-
-		private final BundleContext _bundleContext;
 
 	}
 

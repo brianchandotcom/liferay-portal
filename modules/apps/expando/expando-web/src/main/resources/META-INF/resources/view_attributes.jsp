@@ -141,7 +141,3 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-at
 		}
 	}
 </aui:script>
-
-<%
-PortalUtil.addPortletBreadcrumbEntry(request, modelResourceName, portletURL.toString());
-%>

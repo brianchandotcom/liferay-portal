@@ -185,13 +185,3 @@ else {
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
-
-<%
-PortalUtil.addPortletBreadcrumbEntry(request, modelResourceName, portletURL.toString());
-
-if (expandoColumn != null) {
-	PortalUtil.addPortletBreadcrumbEntry(request, expandoColumn.getName(), null);
-}
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, ((expandoColumn == null) ? "add-attribute" : "edit")), currentURL);
-%>

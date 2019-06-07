@@ -203,7 +203,7 @@ if (portletTitleBasedNavigation) {
 						<aui:input name="title" type="hidden" />
 
 						<div class="entry-subtitle">
-							<h4><liferay-ui:input-editor contents="<%= HtmlUtil.escape(subtitle) %>" editorName="alloyeditor" name="subtitleEditor" placeholder="subtitle" showSource="<%= false %>" /> </h4>
+							<liferay-ui:input-editor contents="<%= HtmlUtil.escape(subtitle) %>" editorName="alloyeditor" name="subtitleEditor" placeholder="subtitle" showSource="<%= false %>" />
 						</div>
 
 						<aui:input name="subtitle" type="hidden" />

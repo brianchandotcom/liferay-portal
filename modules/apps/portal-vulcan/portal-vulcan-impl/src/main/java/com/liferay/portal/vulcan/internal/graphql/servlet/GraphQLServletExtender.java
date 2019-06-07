@@ -14,13 +14,7 @@
 
 package com.liferay.portal.vulcan.internal.graphql.servlet;
 
-import static graphql.annotations.processor.util.NamingKit.toGraphqlName;
-
-import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.vulcan.graphql.servlet.ServletData;
-
 import graphql.annotations.annotationTypes.GraphQLName;
-import graphql.annotations.processor.ProcessingElementsContainer;
 import graphql.annotations.processor.graphQLProcessors.GraphQLInputProcessor;
 import graphql.annotations.processor.graphQLProcessors.GraphQLOutputProcessor;
 import graphql.annotations.processor.retrievers.GraphQLExtensionsHandler;
@@ -32,27 +26,12 @@ import graphql.annotations.processor.retrievers.GraphQLTypeRetriever;
 import graphql.annotations.processor.searchAlgorithms.BreadthFirstSearch;
 import graphql.annotations.processor.searchAlgorithms.ParentalSearch;
 import graphql.annotations.processor.typeFunctions.DefaultTypeFunction;
-
-import graphql.schema.GraphQLSchema;
-
-import graphql.servlet.SimpleGraphQLHttpServlet;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Dictionary;
-
-import javax.servlet.Servlet;
-
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.http.context.ServletContextHelper;
-import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
-import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
+
+import static graphql.annotations.processor.util.NamingKit.toGraphqlName;
 
 /**
  * @author Preston Crary
@@ -131,135 +110,14 @@ public class GraphQLServletExtender {
 			}
 		};
 
-		_serviceTracker = new ServiceTracker<>(
-			bundleContext, ServletData.class,
-			new ServletDataServiceTrackerCustomizer(bundleContext));
 
-		_serviceTracker.open();
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTracker.close();
 	}
 
 	private DefaultTypeFunction _defaultTypeFunction;
 	private GraphQLObjectHandler _graphQLObjectHandler;
-	private ServiceTracker<?, ?> _serviceTracker;
-
-	private class ServletDataServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<ServletData, Collection<ServiceRegistration<?>>> {
-
-		@Override
-		public Collection<ServiceRegistration<?>> addingService(
-			ServiceReference<ServletData> serviceReference) {
-
-			// Schema
-
-			GraphQLSchema.Builder schemaBuilder = GraphQLSchema.newSchema();
-
-			ServletData servletData = _bundleContext.getService(
-				serviceReference);
-
-			Object mutation = servletData.getMutation();
-
-			ProcessingElementsContainer processingElementsContainer =
-				new ProcessingElementsContainer(_defaultTypeFunction);
-
-			schemaBuilder.mutation(
-				_graphQLObjectHandler.getObject(
-					mutation.getClass(), processingElementsContainer));
-
-			Object query = servletData.getQuery();
-
-			schemaBuilder.query(
-				_graphQLObjectHandler.getObject(
-					query.getClass(), processingElementsContainer));
-
-			Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-			Class<? extends ServletData> clazz = servletData.getClass();
-
-			String path = servletData.getPath();
-
-			String servletContextName = path.split("/")[1];
-
-			properties.put(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
-				clazz.getName());
-
-			properties.put(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN, "/*");
-
-			properties.put(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-				servletContextName);
-
-			Dictionary<String, Object> helperProperties =
-				new HashMapDictionary<>();
-
-			helperProperties.put(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
-				servletContextName);
-			helperProperties.put(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH, path);
-			helperProperties.put(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET,
-				clazz.getName());
-
-			Collection<ServiceRegistration<?>> serviceRegistrations =
-				new ArrayList<>();
-
-			serviceRegistrations.add(
-				_bundleContext.registerService(
-					ServletContextHelper.class,
-					new ServletContextHelper(_bundleContext.getBundle()) {
-					},
-					helperProperties));
-
-			// Servlet
-
-			SimpleGraphQLHttpServlet.Builder servletBuilder =
-				SimpleGraphQLHttpServlet.newBuilder(schemaBuilder.build());
-
-			Servlet servlet = servletBuilder.build();
-
-			serviceRegistrations.add(
-				_bundleContext.registerService(
-					Servlet.class, servlet, properties));
-
-			return serviceRegistrations;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<ServletData> serviceReference,
-			Collection<ServiceRegistration<?>> serviceRegistrations) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<ServletData> serviceReference,
-			Collection<ServiceRegistration<?>> serviceRegistrations) {
-
-			for (ServiceRegistration<?> serviceRegistration :
-					serviceRegistrations) {
-
-				serviceRegistration.unregister();
-			}
-
-			_bundleContext.ungetService(serviceReference);
-		}
-
-		private ServletDataServiceTrackerCustomizer(
-			BundleContext bundleContext) {
-
-			_bundleContext = bundleContext;
-		}
-
-		private final BundleContext _bundleContext;
-
-	}
 
 }

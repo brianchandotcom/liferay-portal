@@ -16,7 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.document.library.kernel.util.DLValidatorUtil" %>
+<%@ page import="com.liferay.blogs.configuration.BlogsFileUploadsConfiguration" %><%@
+page import="com.liferay.document.library.kernel.util.DLValidatorUtil" %>
 
 <%
 String portletResource = ParamUtil.getString(request, "portletResource");

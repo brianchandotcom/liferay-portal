@@ -141,7 +141,7 @@ if (portletTitleBasedNavigation) {
 
 			<%
 			BlogsItemSelectorHelper blogsItemSelectorHelper = (BlogsItemSelectorHelper)request.getAttribute(BlogsWebKeys.BLOGS_ITEM_SELECTOR_HELPER);
-			String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
+			BlogsFileUploadsConfiguration blogsFileUploadsConfiguration = ConfigurationProviderUtil.getSystemConfiguration(BlogsFileUploadsConfiguration.class);
 			RequestBackedPortletURLFactory requestBackedPortletURLFactory = RequestBackedPortletURLFactoryUtil.create(liferayPortletRequest);
 			%>
 
@@ -160,10 +160,10 @@ if (portletTitleBasedNavigation) {
 							fileEntryId="<%= coverImageFileEntryId %>"
 							itemSelectorEventName="<%= coverImageSelectedItemEventName %>"
 							itemSelectorURL="<%= blogsItemSelectorHelper.getItemSelectorURL(requestBackedPortletURLFactory, themeDisplay, coverImageSelectedItemEventName) %>"
-							maxFileSize="<%= PropsValues.BLOGS_IMAGE_MAX_SIZE %>"
+							maxFileSize="<%= blogsFileUploadsConfiguration.blogsImageMaxSize() %>"
 							paramName="coverImageFileEntry"
 							uploadURL="<%= uploadCoverImageURL %>"
-							validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>'
+							validExtensions="<%= StringUtil.merge(blogsFileUploadsConfiguration.blogsImageExtensions()) %>"
 						/>
 					</div>
 
@@ -286,7 +286,8 @@ if (portletTitleBasedNavigation) {
 						<label><liferay-ui:message key="abstract" /> <liferay-ui:icon-help message="an-abstract-is-a-brief-summary-of-a-blog-entry" /></label>
 
 						<liferay-ui:error exception="<%= EntrySmallImageNameException.class %>">
-							<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, ", ") %>.
+							<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(
+							blogsFileUploadsConfiguration.blogsImageExtensions()) %>.
 						</liferay-ui:error>
 
 						<liferay-ui:error exception="<%= EntrySmallImageScaleException.class %>">
@@ -321,10 +322,10 @@ if (portletTitleBasedNavigation) {
 								fileEntryId="<%= smallImageFileEntryId %>"
 								itemSelectorEventName="<%= smallImageSelectedItemEventName %>"
 								itemSelectorURL="<%= blogsItemSelectorHelper.getItemSelectorURL(requestBackedPortletURLFactory, themeDisplay, smallImageSelectedItemEventName) %>"
-								maxFileSize="<%= PropsValues.BLOGS_IMAGE_MAX_SIZE %>"
+								maxFileSize="<%= blogsFileUploadsConfiguration.blogsImageMaxSize() %>"
 								paramName="smallImageFileEntry"
 								uploadURL="<%= uploadSmallImageURL %>"
-								validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>'
+								validExtensions="<%= StringUtil.merge(blogsFileUploadsConfiguration.blogsImageExtensions()) %>"
 							/>
 						</div>
 					</div>

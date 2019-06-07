@@ -81,10 +81,10 @@ if (folder != null) {
 
 <liferay-item-selector:repository-entry-browser
 	emptyResultsMessage='<%= LanguageUtil.get(resourceBundle, "there-are-no-blog-attachments") %>'
-	extensions="<%= ListUtil.toList(PropsUtil.getArray(PropsKeys.BLOGS_IMAGE_EXTENSIONS)) %>"
+	extensions="<%= ListUtil.toList(blogsItemSelectorViewDisplayContext.getBlogsImageExtensions()) %>"
 	itemSelectedEventName="<%= blogsItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	itemSelectorReturnTypeResolver="<%= blogsItemSelectorViewDisplayContext.getItemSelectorReturnTypeResolver() %>"
-	maxFileSize="<%= PropsValues.BLOGS_IMAGE_MAX_SIZE %>"
+	maxFileSize="<%= blogsItemSelectorViewDisplayContext.getBlogsImageMaxSize() %>"
 	portletURL="<%= blogsItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
 	repositoryEntries="<%= portletFileEntries %>"
 	repositoryEntriesCount="<%= portletFileEntriesCount %>"

@@ -14,12 +14,14 @@
 
 package com.liferay.blogs.web.internal.upload;
 
+import com.liferay.blogs.configuration.BlogsFileUploadsConfiguration;
 import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.exception.EntryImageNameException;
 import com.liferay.blogs.exception.EntryImageSizeException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -29,22 +31,27 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.upload.UploadFileEntryHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * @author Roberto Díaz
  * @author Alejandro Tardín
  */
-@Component(service = ImageBlogsUploadFileEntryHandler.class)
+@Component(
+	configurationPid = "com.liferay.blogs.configuration.BlogsFileUploadsConfiguration",
+	service = ImageBlogsUploadFileEntryHandler.class
+)
 public class ImageBlogsUploadFileEntryHandler
 	implements UploadFileEntryHandler {
 
@@ -76,6 +83,13 @@ public class ImageBlogsUploadFileEntryHandler
 		}
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_blogsFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
+			BlogsFileUploadsConfiguration.class, properties);
+	}
+
 	protected FileEntry addFileEntry(
 			String fileName, String contentType, InputStream inputStream,
 			ThemeDisplay themeDisplay)
@@ -103,18 +117,18 @@ public class ImageBlogsUploadFileEntryHandler
 	private void _validateFile(String fileName, long size)
 		throws PortalException {
 
-		if ((PropsValues.BLOGS_IMAGE_MAX_SIZE > 0) &&
-			(size > PropsValues.BLOGS_IMAGE_MAX_SIZE)) {
+		long blogsImageMaxSize =
+			_blogsFileUploadsConfiguration.blogsImageMaxSize();
 
+		if ((blogsImageMaxSize > 0) && (size > blogsImageMaxSize)) {
 			throw new EntryImageSizeException();
 		}
 
 		String extension = FileUtil.getExtension(fileName);
 
-		String[] imageExtensions = PrefsPropsUtil.getStringArray(
-			PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
+		for (String imageExtension :
+				_blogsFileUploadsConfiguration.blogsImageExtensions()) {
 
-		for (String imageExtension : imageExtensions) {
 			if (StringPool.STAR.equals(imageExtension) ||
 				imageExtension.equals(StringPool.PERIOD + extension)) {
 
@@ -127,5 +141,7 @@ public class ImageBlogsUploadFileEntryHandler
 	}
 
 	private static final String _PARAMETER_NAME = "imageSelectorFileName";
+
+	private BlogsFileUploadsConfiguration _blogsFileUploadsConfiguration;
 
 }

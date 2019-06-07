@@ -544,6 +544,16 @@ public class VerifyProperties extends VerifyProcess {
 		},
 
 		{
+			"blogs.image.max.size", "blogs.image.max.size",
+			"com.liferay.blogs.api"
+		},
+
+		{
+			"blogs.image.extensions", "blogs.image.extensions",
+			"com.liferay.blogs.api"
+		},
+
+		{
 			"blogs.linkback.job.interval", "linkback.job.interval",
 			"com.liferay.blogs.web"
 		},

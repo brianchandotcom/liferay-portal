@@ -14,6 +14,7 @@
 
 package com.liferay.blogs.web.internal;
 
+import com.liferay.blogs.configuration.BlogsFileUploadsConfiguration;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelector;
@@ -21,17 +22,19 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.util.PropsUtil;
-import com.liferay.portal.util.PropsValues;
+
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -40,7 +43,10 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Roberto Díaz
  */
-@Component(service = BlogsItemSelectorHelper.class)
+@Component(
+	configurationPid = "com.liferay.blogs.configuration.BlogsFileUploadsConfiguration",
+	service = BlogsItemSelectorHelper.class
+)
 public class BlogsItemSelectorHelper {
 
 	public String getItemSelectorURL(
@@ -69,14 +75,12 @@ public class BlogsItemSelectorHelper {
 		uploadURL.setParameter(
 			ActionRequest.ACTION_NAME, "/blogs/upload_cover_image");
 
-		String[] extensions = PropsUtil.getArray(
-			PropsKeys.BLOGS_IMAGE_EXTENSIONS);
-
 		ItemSelectorCriterion uploadItemSelectorCriterion =
 			new UploadItemSelectorCriterion(
 				BlogsPortletKeys.BLOGS, uploadURL.toString(),
 				LanguageUtil.get(themeDisplay.getLocale(), "blog-images"),
-				PropsValues.BLOGS_IMAGE_MAX_SIZE, extensions);
+				_blogsFileUploadsConfiguration.blogsImageMaxSize(),
+				_blogsFileUploadsConfiguration.blogsImageExtensions());
 
 		uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new FileEntryItemSelectorReturnType());
@@ -88,6 +92,15 @@ public class BlogsItemSelectorHelper {
 
 		return itemSelectorURL.toString();
 	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_blogsFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
+			BlogsFileUploadsConfiguration.class, properties);
+	}
+
+	private BlogsFileUploadsConfiguration _blogsFileUploadsConfiguration;
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,

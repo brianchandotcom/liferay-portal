@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -47,8 +46,10 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
+import com.liferay.portal.workflow.exception.IncompleteWorkflowInstancesException;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDefinitionVersionConstants;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerActionKeys;
@@ -306,50 +307,91 @@ public class KaleoDesignerDisplayContext {
 		return kaleoDefinitionVersionSearch;
 	}
 
+	public String getManageSubmissionsLink() {
+		return _buildErrorLink(
+			"configure-submissions", getWorkflowInstancesPortletURL());
+	}
+
 	public Object[] getMessageArguments(
-			List<WorkflowDefinitionLink> workflowDefinitionLinks,
-			HttpServletRequest httpServletRequest)
+			IncompleteWorkflowInstancesException
+				incompleteWorkflowInstancesException)
 		throws PortletException {
+
+		return new Object[] {
+			String.valueOf(
+				incompleteWorkflowInstancesException.
+					getWorkflowInstancesCount()),
+			getManageSubmissionsLink()
+		};
+	}
+
+	public Object[] getMessageArguments(
+			RequiredWorkflowDefinitionException
+				requiredWorkflowDefinitionException)
+		throws PortletException {
+
+		List<WorkflowDefinitionLink> workflowDefinitionLinks =
+			requiredWorkflowDefinitionException.getWorkflowDefinitionLinks();
 
 		if (workflowDefinitionLinks.isEmpty()) {
 			return new Object[0];
 		}
+		else if (workflowDefinitionLinks.size() == 1) {
+			WorkflowDefinitionLink workflowDefinitionLink =
+				workflowDefinitionLinks.get(0);
 
-		WorkflowDefinitionLink firstWorkflowDefinitionLink =
-			workflowDefinitionLinks.get(0);
-
-		if (workflowDefinitionLinks.size() == 1) {
 			return new Object[] {
-				getLocalizedAssetName(
-					firstWorkflowDefinitionLink.getClassName()),
-				getConfigureAssignementLink(httpServletRequest)
+				getLocalizedAssetName(workflowDefinitionLink.getClassName()),
+				getConfigureAssignementLink()
 			};
 		}
+		else if (workflowDefinitionLinks.size() == 2) {
+			WorkflowDefinitionLink workflowDefinitionLink1 =
+				workflowDefinitionLinks.get(0);
+			WorkflowDefinitionLink workflowDefinitionLink2 =
+				workflowDefinitionLinks.get(1);
 
-		WorkflowDefinitionLink secondWorkflowDefinitionLink =
-			workflowDefinitionLinks.get(1);
-
-		if (workflowDefinitionLinks.size() == 2) {
 			return new Object[] {
-				getLocalizedAssetName(
-					firstWorkflowDefinitionLink.getClassName()),
-				getLocalizedAssetName(
-					secondWorkflowDefinitionLink.getClassName()),
-				getConfigureAssignementLink(httpServletRequest)
+				getLocalizedAssetName(workflowDefinitionLink1.getClassName()),
+				getLocalizedAssetName(workflowDefinitionLink2.getClassName()),
+				getConfigureAssignementLink()
 			};
 		}
+		else {
+			int moreAssets = workflowDefinitionLinks.size() - 2;
 
-		int moreAssetsCount = workflowDefinitionLinks.size() - 2;
+			WorkflowDefinitionLink workflowDefinitionLink1 =
+				workflowDefinitionLinks.get(0);
+			WorkflowDefinitionLink workflowDefinitionLink2 =
+				workflowDefinitionLinks.get(1);
 
-		return new Object[] {
-			getLocalizedAssetName(firstWorkflowDefinitionLink.getClassName()),
-			getLocalizedAssetName(secondWorkflowDefinitionLink.getClassName()),
-			moreAssetsCount, getConfigureAssignementLink(httpServletRequest)
-		};
+			return new Object[] {
+				getLocalizedAssetName(workflowDefinitionLink1.getClassName()),
+				getLocalizedAssetName(workflowDefinitionLink2.getClassName()),
+				moreAssets, getConfigureAssignementLink()
+			};
+		}
 	}
 
 	public String getMessageKey(
-		List<WorkflowDefinitionLink> workflowDefinitionLinks) {
+		IncompleteWorkflowInstancesException
+			incompleteWorkflowInstancesException) {
+
+		if (incompleteWorkflowInstancesException.getWorkflowInstancesCount() ==
+				1) {
+
+			return "there-is-x-unresolved-workflow-submission-x";
+		}
+
+		return "there-are-x-unresolved-workflow-submissions-x";
+	}
+
+	public String getMessageKey(
+		RequiredWorkflowDefinitionException
+			requiredWorkflowDefinitionException) {
+
+		List<WorkflowDefinitionLink> workflowDefinitionLinks =
+			requiredWorkflowDefinitionException.getWorkflowDefinitionLinks();
 
 		if (workflowDefinitionLinks.isEmpty()) {
 			return StringPool.BLANK;
@@ -628,23 +670,9 @@ public class KaleoDesignerDisplayContext {
 			renderRequest);
 	}
 
-	protected String getConfigureAssignementLink(
-			HttpServletRequest httpServletRequest)
-		throws PortletException {
-
-		PortletURL portletURL = getWorkflowDefinitionLinkPortletURL(
-			httpServletRequest);
-
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(
-				_kaleoDesignerRequestHelper.getLocale());
-
-		return StringUtil.replace(
-			_HTML, new String[] {"[$RENDER_URL$]", "[$MESSAGE$]"},
-			new String[] {
-				portletURL.toString(),
-				LanguageUtil.get(resourceBundle, "configure-assignments")
-			});
+	protected String getConfigureAssignementLink() {
+		return _buildErrorLink(
+			"configure-assignments", getWorkflowDefinitionLinkPortletURL());
 	}
 
 	protected String getDefinitionsNavigation() {
@@ -717,16 +745,30 @@ public class KaleoDesignerDisplayContext {
 			_kaleoDesignerRequestHelper.getLocale());
 	}
 
-	protected PortletURL getWorkflowDefinitionLinkPortletURL(
-		HttpServletRequest httpServletRequest) {
+	protected PortletURL getWorkflowDefinitionLinkPortletURL() {
+		LiferayPortletResponse response =
+			_kaleoDesignerRequestHelper.getLiferayPortletResponse();
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			httpServletRequest, KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW,
+		PortletURL portletURL = response.createLiferayPortletURL(
+			KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/view.jsp");
 		portletURL.setParameter(
 			"tab", WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK);
+
+		return portletURL;
+	}
+
+	protected PortletURL getWorkflowInstancesPortletURL() {
+		LiferayPortletResponse response =
+			_kaleoDesignerRequestHelper.getLiferayPortletResponse();
+
+		PortletURL portletURL = response.createLiferayPortletURL(
+			KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW_INSTANCE,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcPath", "/view.jsp");
 
 		return portletURL;
 	}
@@ -790,6 +832,15 @@ public class KaleoDesignerDisplayContext {
 		}
 
 		searchContainer.setResults(kaleoDefinitionVersions);
+	}
+
+	private String _buildErrorLink(String messageKey, PortletURL portletURL) {
+		return StringUtil.replace(
+			_HTML, new String[] {"[$RENDER_URL$]", "[$MESSAGE$]"},
+			new String[] {
+				portletURL.toString(),
+				LanguageUtil.get(getResourceBundle(), messageKey)
+			});
 	}
 
 	private static final String _HTML =

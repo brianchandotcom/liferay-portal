@@ -26,12 +26,11 @@ KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = kaleoDesignerDisplay
 
 <div class="container-fluid-1280 main-content-body">
 	<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
+		<liferay-ui:message arguments="<%= kaleoDesignerDisplayContext.getMessageArguments((RequiredWorkflowDefinitionException)errorException) %>" key="<%= kaleoDesignerDisplayContext.getMessageKey((RequiredWorkflowDefinitionException)errorException) %>" translateArguments="<%= false %>" />
+	</liferay-ui:error>
 
-		<%
-		RequiredWorkflowDefinitionException rwde = (RequiredWorkflowDefinitionException)errorException;
-		%>
-
-		<liferay-ui:message arguments="<%= kaleoDesignerDisplayContext.getMessageArguments(rwde.getWorkflowDefinitionLinks(), request) %>" key="<%= kaleoDesignerDisplayContext.getMessageKey(rwde.getWorkflowDefinitionLinks()) %>" translateArguments="<%= false %>" />
+	<liferay-ui:error exception="<%= IncompleteWorkflowInstancesException.class %>">
+		<liferay-ui:message arguments="<%= kaleoDesignerDisplayContext.getMessageArguments((IncompleteWorkflowInstancesException)errorException) %>" key="<%= kaleoDesignerDisplayContext.getMessageKey((IncompleteWorkflowInstancesException)errorException) %>" translateArguments="<%= false %>" />
 	</liferay-ui:error>
 
 	<liferay-ui:search-container

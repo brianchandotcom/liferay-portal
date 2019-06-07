@@ -64,26 +64,6 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro addSubcategoryNullPG {
-		var key_categoryName = "${categoryName}";
-
-		AssertClick(
-			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${categoryName}");
-
-		AssertClick(
-			locator1 = "Button#ADD_CATEGORY",
-			value1 = "Add Category");
-
-		PortletEntry.inputName(name = "${subCategoryNullName}");
-
-		PortletEntry.inputDescription(description = "${subCategoryDescription}");
-
-		Button.clickSave();
-
-		Alert.viewRequiredField();
-	}
-
 	macro addSubcategoryPG {
 		var key_categoryName = "${categoryName}";
 

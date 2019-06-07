@@ -988,6 +988,21 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return updateGroup(
+			groupId, parentGroupId, nameMap, descriptionMap, type, null,
+			manualMembership, membershipRestriction, friendlyURL,
+			inheritContent, active, serviceContext);
+	}
+
+	@Override
+	public Group updateGroup(
+			long groupId, long parentGroupId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, int type, Locale locale,
+			boolean manualMembership, int membershipRestriction,
+			String friendlyURL, boolean inheritContent, boolean active,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		Group group = groupPersistence.findByPrimaryKey(groupId);
 
 		GroupPermissionUtil.check(
@@ -1021,7 +1036,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 				oldExpandoBridge.getAttributes();
 
 			group = groupLocalService.updateGroup(
-				groupId, parentGroupId, nameMap, descriptionMap, type,
+				groupId, parentGroupId, nameMap, descriptionMap, type, locale,
 				manualMembership, membershipRestriction, friendlyURL,
 				inheritContent, active, serviceContext);
 

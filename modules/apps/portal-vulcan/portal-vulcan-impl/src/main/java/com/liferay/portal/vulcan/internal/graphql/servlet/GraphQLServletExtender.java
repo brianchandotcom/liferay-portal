@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
@@ -53,16 +54,20 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 
+import java.util.Dictionary;
 import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.http.context.ServletContextHelper;
+import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 
 /**
  * @author Preston Crary
@@ -123,6 +128,22 @@ public class GraphQLServletExtender {
 		// GraphQLTypeRetriever
 
 		graphQLInterfaceRetriever.setGraphQLTypeRetriever(graphQLTypeRetriever);
+
+		Dictionary<String, Object> helperProperties = new HashMapDictionary<>();
+
+		helperProperties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME, "GraphQL");
+		helperProperties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH, "/graphql");
+		helperProperties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET, "GraphQL");
+
+		_servletContextHelperServiceRegistration =
+			bundleContext.registerService(
+				ServletContextHelper.class,
+				new ServletContextHelper(bundleContext.getBundle()) {
+				},
+				helperProperties);
 	}
 
 	@Deactivate
@@ -271,4 +292,6 @@ public class GraphQLServletExtender {
 
 	}
 
+	private ServiceRegistration<ServletContextHelper>
+		_servletContextHelperServiceRegistration;
 }

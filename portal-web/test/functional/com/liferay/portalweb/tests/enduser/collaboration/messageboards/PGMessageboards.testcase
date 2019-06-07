@@ -97,28 +97,6 @@ definition {
 	}
 
 	@priority = "4"
-	test AddMBCategorySubcategory {
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.addPG(categoryName = "MB Category Name");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.addSubcategoryPG(
-			categoryName = "MB Category Name",
-			subCategoryDescription = "MB Subcategory Description",
-			subCategoryName = "MB Subcategory Name");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.viewSubcategoryPG(
-			categoryName = "MB Category Name",
-			subCategoryDescription = "MB Subcategory Description",
-			subCategoryName = "MB Subcategory Name",
-			threadCount = "0");
-	}
-
-	@priority = "4"
 	test AddMBCategorySubcategoryNullName {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 

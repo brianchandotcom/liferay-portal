@@ -14,6 +14,8 @@
 
 package com.liferay.portal.vulcan.internal.graphql.servlet;
 
+import static graphql.annotations.processor.util.NamingKit.toGraphqlName;
+
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -94,7 +96,21 @@ public class GraphQLServletExtender {
 			new GraphQLInterfaceRetriever();
 
 		GraphQLObjectInfoRetriever graphQLObjectInfoRetriever =
-			new GraphQLObjectInfoRetriever();
+			new GraphQLObjectInfoRetriever() {
+
+				@Override
+				public String getTypeName(Class<?> objectClass) {
+					GraphQLName name = objectClass.getAnnotation(
+						GraphQLName.class);
+
+					if (name == null) {
+						return toGraphqlName(objectClass.getName());
+					}
+
+					return toGraphqlName(name.value());
+				}
+
+			};
 
 		BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch(
 			graphQLObjectInfoRetriever);

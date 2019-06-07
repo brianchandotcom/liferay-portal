@@ -418,14 +418,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		runtime.gc();
 	}
 
-	protected String getFileExtensions(
-		ActionRequest actionRequest, String name) {
-
-		String value = ParamUtil.getString(actionRequest, name);
-
-		return value.replace(", .", ",.");
-	}
-
 	protected void installXuggler(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

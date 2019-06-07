@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.exception.DuplicateGroupException;
 import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
 import com.liferay.portal.kernel.exception.GroupInheritContentException;
 import com.liferay.portal.kernel.exception.GroupKeyException;
+import com.liferay.portal.kernel.exception.GroupNameException;
 import com.liferay.portal.kernel.exception.GroupParentException;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
@@ -3664,6 +3665,21 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return updateGroup(
+			groupId, parentGroupId, nameMap, descriptionMap, type, null,
+			manualMembership, membershipRestriction, friendlyURL,
+			inheritContent, active, serviceContext);
+	}
+
+	@Override
+	public Group updateGroup(
+			long groupId, long parentGroupId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, int type, Locale defaultLocale,
+			boolean manualMembership, int membershipRestriction,
+			String friendlyURL, boolean inheritContent, boolean active,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		final Group group = groupPersistence.findByPrimaryKey(groupId);
 
 		String className = group.getClassName();
@@ -3685,6 +3701,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			groupKey = nameMap.get(
 				LocaleUtil.fromLanguageId(group.getDefaultLanguageId()));
+		}
+
+		if (defaultLocale != null) {
+			if (Validator.isNull(nameMap.get(defaultLocale))) {
+				throw new GroupNameException();
+			}
 		}
 
 		friendlyURL = getFriendlyURL(

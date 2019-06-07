@@ -682,7 +682,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "//div[@data-analytics-asset-title='WC WebContent Title']//dt",
-				value1 = "Text:");
+				value1 = "Text");
 
 			AssertTextEquals(
 				locator1 = "//div[@data-analytics-asset-title='WC WebContent Title']//dd",

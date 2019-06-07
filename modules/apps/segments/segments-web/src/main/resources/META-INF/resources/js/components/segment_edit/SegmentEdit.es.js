@@ -344,6 +344,8 @@ class SegmentEdit extends Component {
 
 		const disabledSaveButton = disabledSave || !validTitle;
 
+		const placeholder = Liferay.Language.get('untitled-segment');
+
 		return (
 			<div className='segment-edit-page-root'>
 				<input
@@ -367,6 +369,7 @@ class SegmentEdit extends Component {
 								initialOpen={false}
 								initialValues={values.name}
 								onChange={this._handleLocalizedInputChange}
+								placeholder={placeholder}
 								portletNamespace={portletNamespace}
 								readOnly={!editing}
 							/>

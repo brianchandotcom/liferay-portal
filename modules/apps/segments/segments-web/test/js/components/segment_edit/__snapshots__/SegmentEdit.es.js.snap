@@ -78,7 +78,7 @@ exports[`SegmentEdit should render 1`] = `
               <input
                 class="rounded form-control language-value field form-control-inline form-control"
                 data-testid="localized-main-input"
-                placeholder=""
+                placeholder="untitled-segment"
                 readonly=""
                 type="text"
                 value="Segment title"
@@ -178,7 +178,7 @@ exports[`SegmentEdit should render with edit buttons if the user has update perm
               <input
                 class="rounded form-control language-value field form-control-inline form-control"
                 data-testid="localized-main-input"
-                placeholder=""
+                placeholder="untitled-segment"
                 readonly=""
                 type="text"
                 value="Segment title"
@@ -360,7 +360,7 @@ exports[`SegmentEdit should render with given values 1`] = `
               <input
                 class="rounded form-control language-value field form-control-inline form-control"
                 data-testid="localized-main-input"
-                placeholder=""
+                placeholder="untitled-segment"
                 type="text"
                 value="Segment title"
               />
@@ -862,7 +862,7 @@ exports[`SegmentEdit should render without edit buttons if the user does not hav
               <input
                 class="rounded form-control language-value field form-control-inline form-control"
                 data-testid="localized-main-input"
-                placeholder=""
+                placeholder="untitled-segment"
                 readonly=""
                 type="text"
                 value="Segment title"

@@ -14,8 +14,12 @@
 
 package com.liferay.portal.vulcan.internal.graphql.servlet;
 
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
+import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 
 import graphql.annotations.GraphQLFieldDefinitionWrapper;
 import graphql.annotations.annotationTypes.GraphQLName;
@@ -46,9 +50,12 @@ import graphql.schema.GraphQLFieldDefinition;
 import graphql.schema.GraphQLOutputType;
 import graphql.schema.GraphQLSchema;
 
+import graphql.servlet.GraphQLContext;
 import graphql.servlet.SimpleGraphQLHttpServlet;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 
 import java.util.ArrayList;
@@ -56,8 +63,10 @@ import java.util.Collection;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.Servlet;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -65,6 +74,7 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 import org.osgi.util.tracker.ServiceTracker;
@@ -147,10 +157,16 @@ public class GraphQLServletExtender {
 
 	private DefaultTypeFunction _defaultTypeFunction;
 	private GraphQLObjectHandler _graphQLObjectHandler;
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private Portal _portal;
+
 	private ServiceTracker<?, ?> _serviceTracker;
 
-	private static class LiferayGraphQLFieldRetriever
-		extends GraphQLFieldRetriever {
+	private class LiferayGraphQLFieldRetriever extends GraphQLFieldRetriever {
 
 		@Override
 		public GraphQLFieldDefinition getField(
@@ -194,8 +210,7 @@ public class GraphQLServletExtender {
 
 	}
 
-	private static class LiferayMethodDataFetcher
-		implements DataFetcher<Object> {
+	private class LiferayMethodDataFetcher implements DataFetcher<Object> {
 
 		@Override
 		public Object get(DataFetchingEnvironment dataFetchingEnvironment) {
@@ -203,6 +218,32 @@ public class GraphQLServletExtender {
 				Class<?> clazz = _method.getDeclaringClass();
 
 				Object instance = clazz.newInstance();
+
+				GraphQLContext graphQLContext =
+					dataFetchingEnvironment.getContext();
+
+				Optional<HttpServletRequest> httpServletRequestOptional =
+					graphQLContext.getHttpServletRequest();
+
+				for (Field field : clazz.getDeclaredFields()) {
+					if (Modifier.isStatic(field.getModifiers()) ||
+						Modifier.isFinal(field.getModifiers())) {
+
+						continue;
+					}
+
+					Class<?> fieldType = field.getType();
+
+					if (fieldType.isAssignableFrom(AcceptLanguage.class)) {
+						field.setAccessible(true);
+
+						field.set(
+							instance,
+							new AcceptLanguageImpl(
+								httpServletRequestOptional.orElse(null),
+								_language, _portal));
+					}
+				}
 
 				Parameter[] parameters = _method.getParameters();
 

@@ -107,10 +107,10 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 		</c:when>
 		<c:otherwise>
 			<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.DELETE) %>">
-				<liferay-portlet:actionURL name="deleteKaleoDefinitionVersion" portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="deleteURL">
+				<liferay-portlet:actionURL name="deleteWorkflowDefinition" portletName="<%= KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW %>" var="deleteURL">
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
-					<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
+					<portlet:param name="version" value="<%= kaleoDefinitionVersion.getVersion() %>" />
 				</liferay-portlet:actionURL>
 
 				<liferay-ui:icon

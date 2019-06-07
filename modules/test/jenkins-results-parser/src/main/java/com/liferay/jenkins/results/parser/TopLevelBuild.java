@@ -250,35 +250,27 @@ public class TopLevelBuild extends BaseBuild {
 
 	@Override
 	public String getResult() {
-		String result = super.getResult();
+		for (Build downstreamBuild : downstreamBuilds) {
+			String downstreamBuildResult = downstreamBuild.getResult();
 
-		if (!downstreamBuilds.isEmpty() && (result == null)) {
-			boolean hasFailure = false;
+			if (downstreamBuildResult == null) {
+				setResult(null);
 
-			for (Build downstreamBuild : downstreamBuilds) {
-				String downstreamBuildResult = downstreamBuild.getResult();
-
-				if (downstreamBuildResult == null) {
-					setResult(null);
-
-					return null;
-				}
-
-				if (!downstreamBuildResult.equals("SUCCESS")) {
-					hasFailure = true;
-				}
+				return null;
 			}
 
-			if (result == null) {
-				if (hasFailure) {
-					return "FAILURE";
-				}
-
-				return "SUCCESS";
+			if (!downstreamBuildResult.equals("SUCCESS")) {
+				return "FAILURE";
 			}
 		}
 
-		return super.getResult();
+		String result = super.getResult();
+
+		if (result != null) {
+			return result;
+		}
+
+		return "SUCCESS";
 	}
 
 	@Override

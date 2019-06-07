@@ -76,6 +76,63 @@ definition {
 		return "${layoutId}";
 	}
 
+	@summary = = "Get the typeSettings from a layout by using groupId and layoutName"
+	macro _getTypeSettingsByName {
+		if (!(isSet(groupId))) {
+			fail("Please set 'groupId'.");
+		}
+
+		if (!(isSet(layoutName))) {
+			fail("Please set 'layoutName'.");
+		}
+
+		if (!("${privateLayout}" == "true")) {
+			var privateLayout = "false";
+		}
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout/get-layouts \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d privateLayout=${privateLayout}
+		''';
+		var typeSettings = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${layoutName}')]['typeSettings']");
+		var typeSettings = StringUtil.replace("${typeSettings}", "[&quot;", "");
+		var typeSettings = StringUtil.replace("${typeSettings}", "&quot;]", "");
+
+		if ("${typeSettings}" == "[]") {
+			fail("FAIL. Cannot find layout.");
+		}
+		else {
+			echo("FOUND. Returning typeSettings: ${typeSettings}");
+		}
+
+		return "${typeSettings}";
+	}
+
+	@summary = "Directly calls the JavaScript API to update typeSettings"
+	macro _updateTypeSettings {
+		var javaScript =
+		'''Liferay.Service(
+	'/layout/update-layout',
+	{
+		groupId: ${groupId},
+		privateLayout: ${privateLayout},
+		layoutId: ${layoutId},
+		typeSettings: '${typeSettings}'
+	},
+		function(obj) {
+			console.log(obj);
+		}
+);''';
+
+		var JSON = selenium.getEval("${javaScript}");
+
+		return "${JSON}";
+	}
+
 	@summary = "Add a private site page or private child site page to an existing site or child site via groupKey"
 	macro addPrivateLayout {
 		if (!(isSet(groupName))) {
@@ -170,6 +227,90 @@ definition {
 			parentLayoutName = "${parentLayoutName}",
 			privateLayout = "false",
 			type = "${type}");
+	}
+
+	@summary = "Add a widget to a private layout via widgetName"
+	macro addWidgetToPrivateLayout {
+		if (!(isSet(column))) {
+			var column = "1";
+		}
+
+		if (!(isSet(groupName))) {
+			fail("Please set 'groupName'.");
+		}
+
+		if (!(isSet(layoutName))) {
+			fail("Please set 'layoutName'.");
+		}
+
+		if (!(isSet(widgetName))) {
+			fail("Please set 'widgetName'.");
+		}
+
+		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
+
+		var layoutId = JSONLayout._getLayoutIdByName(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			privateLayout = "true");
+
+		var typeSettings = JSONLayout._getTypeSettingsByName(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			privateLayout = "true");
+
+		var typeSettings = JSONWidgetUtil._addWidgetToTypeSettings(
+			column = "${column}",
+			widgetName = "${widgetName}",
+			typeSettings = "${typeSettings}");
+
+		JSONLayout._updateTypeSettings(
+			groupId = "${groupId}",
+			layoutId = "${layoutId}",
+			privateLayout = "true",
+			typeSettings = "${typeSettings}");
+	}
+
+	@summary = "Add a widget to a public layout via widgetName"
+	macro addWidgetToPublicLayout {
+		if (!(isSet(column))) {
+			var column = "1";
+		}
+
+		if (!(isSet(groupName))) {
+			fail("Please set 'groupName'.");
+		}
+
+		if (!(isSet(layoutName))) {
+			fail("Please set 'layoutName'.");
+		}
+
+		if (!(isSet(widgetName))) {
+			fail("Please set 'widgetName'.");
+		}
+
+		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
+
+		var layoutId = JSONLayout._getLayoutIdByName(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			privateLayout = "false");
+
+		var typeSettings = JSONLayout._getTypeSettingsByName(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			privateLayout = "false");
+
+		var typeSettings = JSONWidgetUtil._addWidgetToTypeSettings(
+			column = "${column}",
+			widgetName = "${widgetName}",
+			typeSettings = "${typeSettings}");
+
+		JSONLayout._updateTypeSettings(
+			groupId = "${groupId}",
+			layoutId = "${layoutId}",
+			privateLayout = "false",
+			typeSettings = "${typeSettings}");
 	}
 
 }

@@ -1,0 +1,56 @@
+definition {
+
+	macro _addWidgetToTypeSettings {
+		//get column # we want to set to (can only be 1-3), default is 1
+		if (!(isSet(column))) {
+			var column = "1";
+		}
+
+		if (!(isSet(typeSettings))) {
+			fail("Please set 'typeSettings'");
+		}
+
+		var widget = JSONWidgetUtil._generateWidget(
+			widgetName = "${widgetName}");
+
+		if (contains("${typeSettings}","column-${column}=")) {
+			var typeSettings = StringUtil.regexReplaceFirst("${typeSettings}","(column-${column}=[^\\]*)","$1,${widget}");
+		} else {
+			var typeSettings = '''${typeSettings}column-${column}''';
+			var typeSettings = '''${typeSettings}=${widget}''';
+		}
+
+		return "${typeSettings}";
+	}
+
+	@summary = "Generates a Widget to be used in typeSettings"
+	macro _generateWidget {
+		if (!(isSet(widgetName))) {
+			fail("Please set 'widgetName'.");
+		}
+
+		if ("${widgetName}" == "Asset Publisher") {
+			var portletId = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet";
+		} else if ("${widgetName}" == "Web Content Display") {
+			var portletId = "com_liferay_journal_content_web_portlet_JournalContentPortlet";
+		} else {
+			fail("'widgetName' is either invalid or its 'portletId' is not yet set.");
+		}
+
+		var instanceId = StringUtil.randomString("12");
+
+		var widget = "${portletId}_INSTANCE_${instanceId}";
+
+		return "${widget}";
+	}
+
+	@summary = "Uses regex to get the layout-template-id from a typeSettings String."
+	macro _getLayoutTemplateId {
+		if (!(isSet(typeSettings))) {
+			fail("Please set 'typeSettings'.");
+		}
+
+		var layoutTemplateId = RegexUtil.replace("${typeSettings}","","");
+	}
+
+}

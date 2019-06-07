@@ -3457,6 +3457,7 @@
 		<exception>GroupFriendlyURL</exception>
 		<exception>GroupInheritContent</exception>
 		<exception>GroupKey</exception>
+		<exception>GroupName</exception>
 		<exception>GroupParent</exception>
 		<exception>ImageResolution</exception>
 		<exception>ImageType</exception>

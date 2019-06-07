@@ -17,6 +17,7 @@ package com.liferay.portal.service.http;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import java.rmi.RemoteException;
@@ -988,6 +989,39 @@ public class GroupServiceSoap {
 					groupId, parentGroupId, nameMap, descriptionMap, type,
 					manualMembership, membershipRestriction, friendlyURL,
 					inheritContent, active, serviceContext);
+
+			return com.liferay.portal.kernel.model.GroupSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.kernel.model.GroupSoap updateGroup(
+			long groupId, long parentGroupId, String[] nameMapLanguageIds,
+			String[] nameMapValues, String[] descriptionMapLanguageIds,
+			String[] descriptionMapValues, int type, String locale,
+			boolean manualMembership, int membershipRestriction,
+			String friendlyURL, boolean inheritContent, boolean active,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+				nameMapLanguageIds, nameMapValues);
+			Map<Locale, String> descriptionMap =
+				LocalizationUtil.getLocalizationMap(
+					descriptionMapLanguageIds, descriptionMapValues);
+
+			com.liferay.portal.kernel.model.Group returnValue =
+				GroupServiceUtil.updateGroup(
+					groupId, parentGroupId, nameMap, descriptionMap, type,
+					LocaleUtil.fromLanguageId(locale), manualMembership,
+					membershipRestriction, friendlyURL, inheritContent, active,
+					serviceContext);
 
 			return com.liferay.portal.kernel.model.GroupSoap.toSoapModel(
 				returnValue);

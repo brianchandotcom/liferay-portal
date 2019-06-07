@@ -539,6 +539,14 @@ public interface GroupService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public Group updateGroup(
+			long groupId, long parentGroupId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, int type, Locale locale,
+			boolean manualMembership, int membershipRestriction,
+			String friendlyURL, boolean inheritContent, boolean active,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Updates the group's type settings.
 	 *

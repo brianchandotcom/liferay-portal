@@ -110,6 +110,21 @@ public class GraphQLServletExtender {
 			}
 		};
 
+		Dictionary<String, Object> helperProperties = new HashMapDictionary<>();
+
+		helperProperties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME, "GraphQL");
+		helperProperties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH, "/graphql");
+		helperProperties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET, "GraphQL");
+
+		_servletContextHelperServiceRegistration =
+			bundleContext.registerService(
+				ServletContextHelper.class,
+				new ServletContextHelper(bundleContext.getBundle()) {
+				},
+				helperProperties);
 
 	}
 
@@ -120,4 +135,6 @@ public class GraphQLServletExtender {
 	private DefaultTypeFunction _defaultTypeFunction;
 	private GraphQLObjectHandler _graphQLObjectHandler;
 
+	private ServiceRegistration<ServletContextHelper>
+		_servletContextHelperServiceRegistration;
 }

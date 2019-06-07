@@ -710,14 +710,6 @@ definition {
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 	}
 
-	@priority = "5"
-	test RemoveWCDPortletSite {
-		property portal.acceptance = "true";
-		property testray.component.names = "Web Content Display,Training";
-
-		Portlet.deletePG(portletName = "Web Content Display");
-	}
-
 	@priority = "4"
 	test SearchWebContent {
 		property testray.component.names = "Web Content Display";

@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -73,8 +76,11 @@ public class GroupSelectorTag extends IncludeTag {
 
 		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
 
+		List<Long> excludedGroupIds = _getExcludedGroupIds(httpServletRequest);
+
 		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
+		groupParams.put("excludedGroupIds", excludedGroupIds);
 		groupParams.put("site", Boolean.TRUE);
 
 		int cur = ParamUtil.getInteger(
@@ -103,8 +109,11 @@ public class GroupSelectorTag extends IncludeTag {
 
 		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
 
+		List<Long> excludedGroupIds = _getExcludedGroupIds(httpServletRequest);
+
 		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
+		groupParams.put("excludedGroupIds", excludedGroupIds);
 		groupParams.put("site", Boolean.TRUE);
 
 		return GroupLocalServiceUtil.searchCount(
@@ -128,6 +137,56 @@ public class GroupSelectorTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-item-selector:group-selector:itemSelector",
 			ItemSelectorUtil.getItemSelector());
+	}
+
+	private List<Long> _getExcludedGroupIds(
+		HttpServletRequest httpServletRequest) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		List<Integer> types = new ArrayList<>();
+
+		int privateSiteType = GroupConstants.TYPE_SITE_PRIVATE;
+
+		types.add(privateSiteType);
+
+		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
+
+		groupParams.put("site", Boolean.TRUE);
+		groupParams.put("types", types);
+
+		int cur = ParamUtil.getInteger(
+			httpServletRequest, SearchContainer.DEFAULT_CUR_PARAM,
+			SearchContainer.DEFAULT_CUR);
+		int delta = ParamUtil.getInteger(
+			httpServletRequest, SearchContainer.DEFAULT_DELTA_PARAM,
+			SearchContainer.DEFAULT_DELTA);
+
+		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
+			cur, delta);
+
+		List<Group> privateSites = GroupLocalServiceUtil.search(
+			themeDisplay.getCompanyId(), _CLASS_NAME_IDS, keywords, groupParams,
+			startAndEnd[0], startAndEnd[1], null);
+
+		List<Long> excludedGroupIds = new ArrayList<>();
+
+		for (Group privateSite : privateSites) {
+			long groupId = privateSite.getGroupId();
+
+			if (!permissionChecker.isGroupMember(groupId)) {
+				excludedGroupIds.add(groupId);
+			}
+		}
+
+		return excludedGroupIds;
 	}
 
 	private static final long[] _CLASS_NAME_IDS = {

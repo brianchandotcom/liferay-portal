@@ -200,6 +200,13 @@ definition {
 		property test.name.skip.portal.instance = "WebContent#EditBasicWebContentStructureAndTemplate";
 		property testray.component.names = "Web Content Administration";
 
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
 		WebContent.openWebContentAdmin(siteURLKey = "global");
 
 		NavItem.gotoStructures();

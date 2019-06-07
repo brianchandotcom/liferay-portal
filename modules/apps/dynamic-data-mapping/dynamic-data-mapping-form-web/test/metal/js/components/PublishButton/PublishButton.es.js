@@ -9,14 +9,13 @@ const props = {
 	formInstanceId,
 	namespace,
 	published: true,
-	resolvePublishURL: () => new Promise(
-		resolve => resolve(
-			{
+	resolvePublishURL: () =>
+		new Promise(resolve =>
+			resolve({
 				formInstanceId,
 				publishURL: 'published/form'
-			}
-		)
-	),
+			})
+		),
 	spritemap,
 	submitForm: () => false,
 	url
@@ -24,154 +23,109 @@ const props = {
 
 const mockEvent = {preventDefault: () => false};
 
-describe(
-	'PublishButton',
-	() => {
-		let component;
+describe('PublishButton', () => {
+	let component;
 
-		afterEach(
-			() => {
-				if (component) {
-					component.dispose();
-				}
-			}
-		);
+	afterEach(() => {
+		if (component) {
+			component.dispose();
+		}
+	});
 
-		beforeEach(
-			() => {
-				jest.useFakeTimers();
-				fetch.resetMocks();
-			}
-		);
+	beforeEach(() => {
+		jest.useFakeTimers();
+		fetch.resetMocks();
+	});
 
-		it(
-			'should render published',
-			() => {
-				component = new PublishButton(props);
+	it('should render published', () => {
+		component = new PublishButton(props);
 
-				expect(component).toMatchSnapshot();
-			}
-		);
+		expect(component).toMatchSnapshot();
+	});
 
-		it(
-			'should render unpublished',
-			() => {
-				component = new PublishButton(
-					{
-						...props,
-						published: false
-					}
-				);
+	it('should render unpublished', () => {
+		component = new PublishButton({
+			...props,
+			published: false
+		});
 
-				expect(component).toMatchSnapshot();
-			}
-		);
+		expect(component).toMatchSnapshot();
+	});
 
-		describe(
-			'publish()',
-			() => {
-				it(
-					'should call submitForm()',
-					() => {
-						const submitForm = jest.fn();
+	describe('publish()', () => {
+		it('should call submitForm()', () => {
+			const submitForm = jest.fn();
 
-						component = new PublishButton(
-							{
-								...props,
-								submitForm
-							}
-						);
+			component = new PublishButton({
+				...props,
+				submitForm
+			});
 
-						return component.publish(mockEvent).then(
-							() => expect(submitForm).toHaveBeenCalled()
-						);
-					}
-				);
-			}
-		);
+			return component
+				.publish(mockEvent)
+				.then(() => expect(submitForm).toHaveBeenCalled());
+		});
+	});
 
-		describe(
-			'unpublish()',
-			() => {
-				it(
-					'should call submitForm()',
-					() => {
-						const submitForm = jest.fn();
+	describe('unpublish()', () => {
+		it('should call submitForm()', () => {
+			const submitForm = jest.fn();
 
-						component = new PublishButton(
-							{
-								...props,
-								submitForm
-							}
-						);
+			component = new PublishButton({
+				...props,
+				submitForm
+			});
 
-						return component.publish(mockEvent).then(
-							() => expect(submitForm).toHaveBeenCalled()
-						);
-					}
-				);
-			}
-		);
+			return component
+				.publish(mockEvent)
+				.then(() => expect(submitForm).toHaveBeenCalled());
+		});
+	});
 
-		describe(
-			'toggle()',
-			() => {
-				it(
-					'should call publish() when props.published=false',
-					() => {
-						component = new PublishButton(
-							{
-								...props,
-								published: false
-							}
-						);
+	describe('toggle()', () => {
+		it('should call publish() when props.published=false', () => {
+			component = new PublishButton({
+				...props,
+				published: false
+			});
 
-						const publishSpy = jest.spyOn(component, 'publish');
+			const publishSpy = jest.spyOn(component, 'publish');
 
-						publishSpy.mockImplementation(() => Promise.resolve());
+			publishSpy.mockImplementation(() => Promise.resolve());
 
-						return component.toggle(mockEvent).then(() => expect(publishSpy).toHaveBeenCalled());
-					}
-				);
+			return component
+				.toggle(mockEvent)
+				.then(() => expect(publishSpy).toHaveBeenCalled());
+		});
 
-				it(
-					'should call unpublish() when props.published=true',
-					() => {
-						component = new PublishButton(
-							{
-								...props,
-								published: true
-							}
-						);
+		it('should call unpublish() when props.published=true', () => {
+			component = new PublishButton({
+				...props,
+				published: true
+			});
 
-						const unpublishSpy = jest.spyOn(component, 'unpublish');
+			const unpublishSpy = jest.spyOn(component, 'unpublish');
 
-						unpublishSpy.mockImplementation(() => Promise.resolve());
+			unpublishSpy.mockImplementation(() => Promise.resolve());
 
-						return component.toggle(mockEvent).then(() => expect(unpublishSpy).toHaveBeenCalled());
-					}
-				);
+			return component
+				.toggle(mockEvent)
+				.then(() => expect(unpublishSpy).toHaveBeenCalled());
+		});
 
-				it(
-					'should be called when button is clicked',
-					() => {
-						component = new PublishButton(
-							{
-								...props,
-								published: true
-							}
-						);
+		it('should be called when button is clicked', () => {
+			component = new PublishButton({
+				...props,
+				published: true
+			});
 
-						const toggleSpy = jest.spyOn(component, 'toggle');
+			const toggleSpy = jest.spyOn(component, 'toggle');
 
-						component.refs.button.emit('click');
+			component.refs.button.emit('click');
 
-						jest.runAllTimers();
+			jest.runAllTimers();
 
-						expect(toggleSpy).toHaveBeenCalled();
-					}
-				);
-			}
-		);
-	}
-);
+			expect(toggleSpy).toHaveBeenCalled();
+		});
+	});
+});

@@ -184,7 +184,7 @@ public class ModulesStructureTest {
 						if (Files.exists(dirPath.resolve("app.bnd"))) {
 							_testEquals(buildGradlePath, _APP_BUILD_GRADLE);
 
-							_testRelengAppProprties(dirPath);
+							_testRelengAppProperties(dirPath);
 						}
 						else {
 							Assert.assertFalse(
@@ -1365,14 +1365,14 @@ public class ModulesStructureTest {
 		}
 	}
 
-	private void _testRelengAppProprties(Path dirPath) throws IOException {
+	private void _testRelengAppProperties(Path dirPath) throws IOException {
 		if (_branchName.contains("master")) {
 			return;
 		}
 
 		String dirName = String.valueOf(dirPath.getFileName());
 
-		if (_excludedRelengAppProprtiesDirNames.contains(dirName)) {
+		if (_excludedRelengAppPropertiesDirNames.contains(dirName)) {
 			return;
 		}
 
@@ -1506,7 +1506,7 @@ public class ModulesStructureTest {
 	private static final Set<String> _excludedDirNames = SetUtil.fromList(
 		Arrays.asList(
 			"bin", "build", "classes", "node_modules", "test-classes", "tmp"));
-	private static final Set<String> _excludedRelengAppProprtiesDirNames =
+	private static final Set<String> _excludedRelengAppPropertiesDirNames =
 		SetUtil.fromList(Arrays.asList("bean-portlet", "portal-odata"));
 	private static final Pattern _gitRepoGradleProjectGroupPattern =
 		Pattern.compile("com\\.liferay(?:\\.[a-z]+)+");

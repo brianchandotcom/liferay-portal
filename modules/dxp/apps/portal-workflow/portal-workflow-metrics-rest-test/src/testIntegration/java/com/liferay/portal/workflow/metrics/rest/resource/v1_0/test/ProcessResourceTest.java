@@ -151,9 +151,11 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 		int instanceCount = RandomTestUtil.randomInt(0, 20);
 
 		process.setInstanceCount((long)instanceCount);
+
 		int onTimeInstanceCount = RandomTestUtil.randomInt(0, instanceCount);
 
 		process.setOnTimeInstanceCount((long)onTimeInstanceCount);
+
 		int overdueInstanceCount = RandomTestUtil.randomInt(
 			0, instanceCount - onTimeInstanceCount);
 

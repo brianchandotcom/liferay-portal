@@ -496,7 +496,11 @@ AUI.add(
 					}
 
 					if (errorMessage) {
-						instance.one('input[type="file"]').val('');
+						var inputTypeFile = instance.one('input[type="file"]');
+
+						if (inputTypeFile) {
+							inputTypeFile.val('');
+						}
 
 						instance._showError(errorMessage);
 					}

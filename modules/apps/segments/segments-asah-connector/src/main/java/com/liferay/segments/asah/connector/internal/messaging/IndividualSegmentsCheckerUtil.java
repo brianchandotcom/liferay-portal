@@ -58,7 +58,6 @@ import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -82,7 +81,9 @@ public class IndividualSegmentsCheckerUtil {
 		_checkIndividualSegmentsMemberships();
 	}
 
-	public void checkIndividualSegments(String individualPK) {
+	public void checkIndividualSegments(String individualPK)
+		throws PortalException {
+
 		if (_segmentsAsahCache.getSegmentsEntryIds(individualPK) != null) {
 			return;
 		}
@@ -116,10 +117,12 @@ public class IndividualSegmentsCheckerUtil {
 			return;
 		}
 
+		ServiceContext serviceContext = _getServiceContext();
+
 		long[] segmentsEntryIds = individualSegmentIds.stream(
 		).map(
 			segmentsEntryKey -> _segmentsEntryLocalService.fetchSegmentsEntry(
-				_serviceContext.getScopeGroupId(), segmentsEntryKey, true)
+				serviceContext.getScopeGroupId(), segmentsEntryKey, true)
 		).filter(
 			Objects::nonNull
 		).mapToLong(
@@ -129,26 +132,21 @@ public class IndividualSegmentsCheckerUtil {
 		_segmentsAsahCache.putSegmentsEntryIds(individualPK, segmentsEntryIds);
 	}
 
-	@Activate
-	protected void activate() throws PortalException {
-		_serviceContext = _getServiceContext();
-	}
-
-	private void _addSegmentsEntry(
-		IndividualSegment individualSegment, ServiceContext serviceContext) {
-
+	private void _addSegmentsEntry(IndividualSegment individualSegment) {
 		Map<Locale, String> nameMap = new HashMap<Locale, String>() {
 			{
 				put(LocaleUtil.getDefault(), individualSegment.getName());
 			}
 		};
 
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(
-				serviceContext.getScopeGroupId(), individualSegment.getId(),
-				true);
-
 		try {
+			ServiceContext serviceContext = _getServiceContext();
+
+			SegmentsEntry segmentsEntry =
+				_segmentsEntryLocalService.fetchSegmentsEntry(
+					serviceContext.getScopeGroupId(), individualSegment.getId(),
+					true);
+
 			if (segmentsEntry == null) {
 				_segmentsEntryLocalService.addSegmentsEntry(
 					individualSegment.getId(), nameMap, Collections.emptyMap(),
@@ -171,8 +169,7 @@ public class IndividualSegmentsCheckerUtil {
 	}
 
 	private void _addSegmentsEntryRel(
-		SegmentsEntry segmentsEntry, Individual individual,
-		ServiceContext serviceContext) {
+		SegmentsEntry segmentsEntry, Individual individual) {
 
 		Optional<Long> userIdOptional = _getUserIdOptional(individual);
 
@@ -192,7 +189,7 @@ public class IndividualSegmentsCheckerUtil {
 
 			_segmentsEntryRelLocalService.addSegmentsEntryRel(
 				segmentsEntry.getSegmentsEntryId(), userClassNameId,
-				userIdOptional.get(), serviceContext);
+				userIdOptional.get(), _getServiceContext());
 		}
 		catch (PortalException pe) {
 			_log.error(
@@ -235,7 +232,7 @@ public class IndividualSegmentsCheckerUtil {
 
 				individuals.forEach(
 					individual -> _addSegmentsEntryRel(
-						segmentsEntry, individual, _serviceContext));
+						segmentsEntry, individual));
 
 				curPage++;
 
@@ -287,8 +284,7 @@ public class IndividualSegmentsCheckerUtil {
 			individualSegmentResults.getItems();
 
 		individualSegments.forEach(
-			individualSegment -> _addSegmentsEntry(
-				individualSegment, _serviceContext));
+			individualSegment -> _addSegmentsEntry(individualSegment));
 	}
 
 	private void _checkIndividualSegmentsMemberships() {
@@ -337,6 +333,10 @@ public class IndividualSegmentsCheckerUtil {
 	}
 
 	private ServiceContext _getServiceContext() throws PortalException {
+		if (_serviceContext != null) {
+			return _serviceContext;
+		}
+
 		ServiceContext serviceContext = new ServiceContext();
 
 		Company company = _companyLocalService.getCompany(
@@ -348,7 +348,9 @@ public class IndividualSegmentsCheckerUtil {
 
 		serviceContext.setUserId(user.getUserId());
 
-		return serviceContext;
+		_serviceContext = serviceContext;
+
+		return _serviceContext;
 	}
 
 	private Optional<Long> _getUserIdOptional(Individual individual) {

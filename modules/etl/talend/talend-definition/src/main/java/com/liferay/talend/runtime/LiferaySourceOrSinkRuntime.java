@@ -15,6 +15,7 @@
 package com.liferay.talend.runtime;
 
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
+import com.liferay.talend.openapi.Parameter;
 
 import java.io.IOException;
 
@@ -39,6 +40,8 @@ public interface LiferaySourceOrSinkRuntime extends SourceOrSink {
 
 	public Schema getEndpointSchema(String endpoint, String operation)
 		throws IOException;
+
+	public List<Parameter> getParameters(String endpoint, String operation);
 
 	public Set<String> getSupportedOperations(String endpoint);
 

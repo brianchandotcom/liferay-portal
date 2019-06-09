@@ -27,10 +27,8 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
-import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.struts.AuthPublicPathRegistry;
@@ -172,26 +170,6 @@ public class GlobalStartupAction extends SimpleAction {
 
 		JavadocManagerUtil.load(
 			StringPool.BLANK, currentThread.getContextClassLoader());
-
-		// JNDI
-
-		try {
-			InfrastructureUtil.getDataSource();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		try {
-			if (!ServerDetector.isJOnAS()) {
-				InfrastructureUtil.getMailSession();
-			}
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e.getMessage());
-			}
-		}
 
 		// JSON web service
 

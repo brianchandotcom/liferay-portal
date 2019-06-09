@@ -16,12 +16,14 @@ package com.liferay.talend.runtime;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import com.liferay.talend.avro.EndpointSchemaInferrer;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
 import com.liferay.talend.exception.ExceptionUtils;
 import com.liferay.talend.exception.MalformedURLException;
+import com.liferay.talend.openapi.Parameter;
 import com.liferay.talend.openapi.constants.OpenAPIConstants;
 import com.liferay.talend.runtime.client.RESTClient;
 import com.liferay.talend.utils.URIUtils;
@@ -325,6 +327,29 @@ public class LiferaySourceOrSink
 			endpoint, operation, apiSpecJsonNode);
 	}
 
+	@Override
+	public List<Parameter> getParameters(String endpoint, String operation) {
+		List<Parameter> parameters = new ArrayList<>();
+
+		LiferayConnectionProperties liferayConnectionProperties =
+			getEffectiveConnection(null);
+
+		String apiSpecURLHref =
+			liferayConnectionProperties.apiSpecURL.getValue();
+
+		JsonNode apiSpecJsonNode = doGetRequest(apiSpecURLHref);
+
+		ArrayNode parametersArrayNode = (ArrayNode)_getChildNode(
+			apiSpecJsonNode, OpenAPIConstants.PATHS, endpoint,
+			_toLowerCase(operation), OpenAPIConstants.PARAMETRERS);
+
+		for (int i = 0; i < parametersArrayNode.size(); i++) {
+			parameters.add(_toParameter(parametersArrayNode.get(i)));
+		}
+
+		return parameters;
+	}
+
 	public RESTClient getRestClient(RuntimeContainer runtimeContainer) {
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveConnection(runtimeContainer);
@@ -555,6 +580,14 @@ public class LiferaySourceOrSink
 	protected final ObjectMapper objectMapper = new ObjectMapper();
 	protected RESTClient restClient;
 
+	private JsonNode _getChildNode(JsonNode jsonNode, String... paths) {
+		for (String path : paths) {
+			jsonNode = jsonNode.path(path);
+		}
+
+		return jsonNode;
+	}
+
 	private boolean _hasPath(String path, JsonNode jsonNode) {
 		if (!path.contains(">")) {
 			return jsonNode.has(path);
@@ -570,6 +603,32 @@ public class LiferaySourceOrSink
 		}
 
 		return false;
+	}
+
+	private String _toLowerCase(String value) {
+		return value.toLowerCase(Locale.US);
+	}
+
+	private Parameter _toParameter(JsonNode jsonNode) {
+		Parameter parameter = new Parameter();
+
+		JsonNode inJsonNode = jsonNode.get("in");
+
+		String inString = inJsonNode.asText();
+
+		parameter.setType(Parameter.Type.valueOf(_toUpperCase(inString)));
+
+		JsonNode nameJsonNode = jsonNode.get("name");
+
+		parameter.setName(nameJsonNode.asText());
+
+		JsonNode requiredJsonNode = jsonNode.get("required");
+
+		if (requiredJsonNode != null) {
+			parameter.setRequired(requiredJsonNode.asBoolean());
+		}
+
+		return parameter;
 	}
 
 	private String _toUpperCase(String value) {

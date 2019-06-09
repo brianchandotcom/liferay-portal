@@ -15,9 +15,17 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.dao.jdbc.aop.DynamicDataSourceTargetSource;
+import com.liferay.portal.kernel.jndi.JNDIUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 
+import java.util.Properties;
+
 import javax.mail.Session;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
 
 import javax.sql.DataSource;
 
@@ -39,6 +47,10 @@ public class InfrastructureUtil {
 	}
 
 	public static Session getMailSession() {
+		if (_mailSession == null) {
+			_mailSession = _createMailSession();
+		}
+
 		return _mailSession;
 	}
 
@@ -56,13 +68,41 @@ public class InfrastructureUtil {
 		_dynamicDataSourceTargetSource = dynamicDataSourceTargetSource;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setMailSession(Session mailSession) {
-		_mailSession = mailSession;
 	}
 
 	public void setTransactionManager(Object transactionManager) {
 		_transactionManager = transactionManager;
 	}
+
+	private static Session _createMailSession() {
+		Properties properties = PropsUtil.getProperties("mail.session.", true);
+
+		String jndiName = properties.getProperty("jndi.name");
+
+		if (Validator.isNotNull(jndiName)) {
+			try {
+				Properties jndiEnvironmentProperties = PropsUtil.getProperties(
+					PropsKeys.JNDI_ENVIRONMENT, true);
+
+				Context context = new InitialContext(jndiEnvironmentProperties);
+
+				return (Session)JNDIUtil.lookup(context, jndiName);
+			}
+			catch (Exception e) {
+				_log.error("Unable to lookup " + jndiName, e);
+			}
+		}
+
+		return Session.getInstance(properties);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		InfrastructureUtil.class);
 
 	private static DataSource _dataSource;
 	private static DynamicDataSourceTargetSource _dynamicDataSourceTargetSource;

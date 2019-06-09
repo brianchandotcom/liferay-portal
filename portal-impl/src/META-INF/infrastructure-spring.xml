@@ -7,9 +7,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
-	<bean class="com.liferay.mail.util.MailSessionFactoryBean" id="mailSession">
-		<property name="propertyPrefix" value="mail.session." />
-	</bean>
 	<bean class="com.liferay.portal.dao.jdbc.spring.DataSourceFactoryBean" id="liferayDataSourceImpl">
 		<property name="propertyPrefix" value="jdbc.default." />
 	</bean>
@@ -19,7 +16,6 @@
 	</bean>
 	<bean class="com.liferay.portal.kernel.util.InfrastructureUtil" id="com.liferay.portal.kernel.util.InfrastructureUtil">
 		<property name="dataSource" ref="liferayDataSource" />
-		<property name="mailSession" ref="mailSession" />
 		<property name="transactionManager" ref="liferayTransactionManager" />
 	</bean>
 	<bean class="com.liferay.portal.spring.aop.AopConfigurableApplicationContextConfigurator" id="configurableApplicationContextConfigurator" />

@@ -182,11 +182,41 @@ public class LiferayResourceProperties
 
 		UriBuilder uriBuilder = UriBuilder.fromPath(endpointHref);
 
-		LiferayConnectionProperties liferayConnectionProperties =
-			getEffectiveLiferayConnectionProperties();
+		List<String> parameterNames = parametersTable.columnName.getValue();
+		List<String> parameterTypes = parametersTable.typeColumnName.getValue();
+		List<String> parameterValues =
+			parametersTable.valueColumnName.getValue();
 
-		uriBuilder.resolveTemplate(
-			_SITE_ID, liferayConnectionProperties.siteId.getValue());
+		Stream<String> parameterNamesStream = parameterNames.stream();
+
+		parameterNames = parameterNamesStream.map(
+			name -> name.replace("*", "")
+		).collect(
+			Collectors.toList()
+		);
+
+		for (int i = 0; i < parameterNames.size(); i++) {
+			uriBuilder.resolveTemplate(
+				parameterNames.get(i), parameterValues.get(i));
+		}
+
+		for (int i = 0; i < parameterNames.size(); i++) {
+			String typeString = parameterTypes.get(i);
+
+			if (Parameter.Type.PATH == Parameter.Type.valueOf(
+					typeString.toUpperCase())) {
+
+				continue;
+			}
+
+			String parameterValue = parameterValues.get(i);
+
+			if ((parameterValue != null) &&
+				!Objects.equals(parameterValue, "")) {
+
+				uriBuilder.queryParam(parameterNames.get(i), parameterValue);
+			}
+		}
 
 		return uriBuilder.build();
 	}
@@ -397,8 +427,6 @@ public class LiferayResourceProperties
 
 		refreshLayout(referenceForm);
 	}
-
-	private static final String _SITE_ID = "siteId";
 
 	private static final Logger _log = LoggerFactory.getLogger(
 		LiferayResourceProperties.class);

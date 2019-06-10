@@ -76,6 +76,14 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 			for (Path dirPath : directoryStream) {
 				Path packageJsonPath = dirPath.resolve("package.json");
 
+				if (Files.notExists(packageJsonPath) &&
+					Files.exists(dirPath.resolve("cli"))) {
+
+					dirPath = dirPath.resolve("cli");
+
+					packageJsonPath = dirPath.resolve("package.json");
+				}
+
 				if (Files.notExists(packageJsonPath)) {
 					continue;
 				}

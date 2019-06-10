@@ -687,10 +687,7 @@ definition {
 	test SearchWebContent {
 		property testray.component.names = "Web Content Display";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 

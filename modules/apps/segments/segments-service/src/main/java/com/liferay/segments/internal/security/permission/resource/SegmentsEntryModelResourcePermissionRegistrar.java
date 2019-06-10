@@ -87,8 +87,7 @@ public class SegmentsEntryModelResourcePermissionRegistrar {
 				SegmentsEntry segmentsEntry, String actionId)
 			throws PortalException {
 
-			if ((actionId.equals(ActionKeys.DELETE) ||
-				 actionId.equals(ActionKeys.UPDATE)) &&
+			if (actionId.equals(ActionKeys.UPDATE) &&
 				!SegmentsConstants.SOURCE_DEFAULT.equals(
 					segmentsEntry.getSource())) {
 

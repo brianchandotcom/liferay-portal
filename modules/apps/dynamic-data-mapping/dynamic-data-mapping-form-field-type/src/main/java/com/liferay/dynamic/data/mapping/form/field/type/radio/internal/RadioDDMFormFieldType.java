@@ -47,7 +47,7 @@ public class RadioDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getModuleName() {
-		return "dynamic-data-mapping-form-field-type/metal/Radio/Radio.es";
+		return "dynamic-data-mapping-form-field-type/Radio/Radio.es";
 	}
 
 	@Override

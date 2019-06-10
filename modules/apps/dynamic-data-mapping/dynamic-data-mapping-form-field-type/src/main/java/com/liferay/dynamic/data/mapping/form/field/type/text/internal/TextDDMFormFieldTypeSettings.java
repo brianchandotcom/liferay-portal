@@ -44,7 +44,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 				"setVisible('dataSourceType', getValue('autocomplete'))",
 				"setVisible('ddmDataProviderInstanceId', equals(getValue('dataSourceType'), \"data-provider\") and getValue('autocomplete'))",
 				"setVisible('ddmDataProviderInstanceOutput', equals(getValue('dataSourceType'), \"data-provider\") and getValue('autocomplete'))",
-				"setVisible('options', equals(getValue('dataSourceType'), \"manual\") and getValue('autocomplete'))"
+				"setVisible('options', contains(getValue('dataSourceType'), \"manual\") and getValue('autocomplete'))"
 			},
 			condition = "TRUE"
 		)
@@ -99,8 +99,9 @@ public interface TextDDMFormFieldTypeSettings
 	@DDMFormField(
 		label = "%create-list",
 		optionLabels = {"%manually", "%from-data-provider"},
-		optionValues = {"manual", "data-provider"}, predefinedValue = "manual",
-		properties = "showLabel=false", type = "radio"
+		optionValues = {"manual", "data-provider"},
+		predefinedValue = "[\"manual\"]", properties = "showLabel=false",
+		type = "radio"
 	)
 	public String dataSourceType();
 

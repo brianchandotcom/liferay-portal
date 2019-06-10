@@ -42,7 +42,7 @@ public class EditorDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getModuleName() {
-		return "dynamic-data-mapping-form-field-type/metal/Editor/Editor.es";
+		return "dynamic-data-mapping-form-field-type/Editor/Editor.es";
 	}
 
 	@Override

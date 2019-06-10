@@ -46,7 +46,7 @@ public class DocumentLibraryDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getModuleName() {
-		return "dynamic-data-mapping-form-field-type/metal/DocumentLibrary" +
+		return "dynamic-data-mapping-form-field-type/DocumentLibrary" +
 			"/DocumentLibrary.es";
 	}
 

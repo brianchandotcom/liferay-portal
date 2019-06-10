@@ -45,7 +45,7 @@ public class TextDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getModuleName() {
-		return "dynamic-data-mapping-form-field-type/metal/Text/Text.es";
+		return "dynamic-data-mapping-form-field-type/Text/Text.es";
 	}
 
 	@Override

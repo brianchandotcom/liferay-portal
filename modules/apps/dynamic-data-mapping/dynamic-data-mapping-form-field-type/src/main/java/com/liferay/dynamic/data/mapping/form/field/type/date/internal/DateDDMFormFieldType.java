@@ -46,8 +46,7 @@ public class DateDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getModuleName() {
-		return "dynamic-data-mapping-form-field-type/metal/DatePicker" +
-			"/DatePicker.es";
+		return "dynamic-data-mapping-form-field-type/DatePicker/DatePicker.es";
 	}
 
 	@Override

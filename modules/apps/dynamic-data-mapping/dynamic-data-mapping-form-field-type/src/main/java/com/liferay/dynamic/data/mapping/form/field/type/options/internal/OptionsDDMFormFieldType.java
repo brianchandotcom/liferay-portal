@@ -34,7 +34,7 @@ public class OptionsDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getModuleName() {
-		return "dynamic-data-mapping-form-field-type/metal/Options/Options.es";
+		return "dynamic-data-mapping-form-field-type/Options/Options.es";
 	}
 
 	@Override

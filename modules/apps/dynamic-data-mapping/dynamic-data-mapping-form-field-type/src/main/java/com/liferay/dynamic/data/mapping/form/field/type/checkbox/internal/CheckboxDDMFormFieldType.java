@@ -47,8 +47,7 @@ public class CheckboxDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getModuleName() {
-		return "dynamic-data-mapping-form-field-type/metal/Checkbox" +
-			"/Checkbox.es";
+		return "dynamic-data-mapping-form-field-type/Checkbox/Checkbox.es";
 	}
 
 	@Override

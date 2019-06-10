@@ -2,7 +2,10 @@
 	"config": {
 		"imports": {
 			"dynamic-data-mapping-form-field-type": {
-				"/": ">=4.0.0"
+				"/": ">=5.0.0"
+			},
+			"dynamic-data-mapping-form-renderer": {
+				"/": ">=5.0.0"
 			}
 		}
 	}

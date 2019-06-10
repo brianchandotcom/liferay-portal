@@ -1,10 +1,43 @@
 {
+	"csfConfig": {
+		"path:**/*.js": {
+			"js": {
+				"lint": {
+					"env": {
+						"browser": true,
+						"jest": true
+					},
+					"extends": "liferay",
+					"globals": {
+						"AlloyEditor": true
+					},
+					"parser": "babel-eslint",
+					"parserOptions": {
+						"ecmaVersion": 7
+					},
+					"rules": {
+						"no-unknown-property": [
+							2,
+							{
+								"ignore": [
+									"class",
+									"xlink:href"
+								]
+							}
+						]
+					}
+				}
+			}
+		}
+	},
 	"dependencies": {
 		"incremental-dom-string": "0.0.2",
 		"metal-component": "2.16.8",
 		"metal-soy": "2.16.8"
 	},
+	"main": "./",
 	"name": "dynamic-data-mapping-form-renderer",
+	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",

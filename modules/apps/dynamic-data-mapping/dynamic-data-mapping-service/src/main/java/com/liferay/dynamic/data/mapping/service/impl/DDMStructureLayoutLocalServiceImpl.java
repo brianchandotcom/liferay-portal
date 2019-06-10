@@ -143,10 +143,8 @@ public class DDMStructureLayoutLocalServiceImpl
 	public DDMStructureLayout fetchStructureLayout(
 		long groupId, long classNameId, String structureLayoutKey) {
 
-		structureLayoutKey = getStructureLayoutKey(structureLayoutKey);
-
 		return ddmStructureLayoutPersistence.fetchByG_C_S(
-			groupId, classNameId, structureLayoutKey);
+			groupId, classNameId, getStructureLayoutKey(structureLayoutKey));
 	}
 
 	@Override
@@ -162,10 +160,8 @@ public class DDMStructureLayoutLocalServiceImpl
 			long groupId, long classNameId, String structureLayoutKey)
 		throws PortalException {
 
-		structureLayoutKey = getStructureLayoutKey(structureLayoutKey);
-
 		return ddmStructureLayoutPersistence.findByG_C_S(
-			groupId, classNameId, structureLayoutKey);
+			groupId, classNameId, getStructureLayoutKey(structureLayoutKey));
 	}
 
 	@Override

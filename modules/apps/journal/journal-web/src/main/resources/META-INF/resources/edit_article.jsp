@@ -70,6 +70,18 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 					<div class="journal-article-button-row tbar-section text-right">
 						<aui:button cssClass="btn-outline-borderless btn-outline-secondary btn-sm mr-3" href="<%= journalEditArticleDisplayContext.getRedirect() %>" type="cancel" />
 
+						<c:if test="<%= journalEditArticleDisplayContext.getClassNameId() > JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
+							<portlet:actionURL name="/journal/reset_values_ddm_structure" var="resetValuesDDMStructureURL">
+								<portlet:param name="mvcPath" value="/edit_ddm_structure.jsp" />
+								<portlet:param name="redirect" value="<%= currentURL %>" />
+								<portlet:param name="groupId" value="<%= String.valueOf(journalEditArticleDisplayContext.getGroupId()) %>" />
+								<portlet:param name="articleId" value="<%= journalEditArticleDisplayContext.getArticleId() %>" />
+								<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
+							</portlet:actionURL>
+
+							<aui:button cssClass="btn-secondary btn-sm mr-3" data-url="<%= resetValuesDDMStructureURL %>" name="resetValuesButton" value="reset-values" />
+						</c:if>
+
 						<c:if test="<%= journalEditArticleDisplayContext.hasSavePermission() %>">
 							<c:if test="<%= journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
 								<aui:button cssClass="btn-sm mr-3" data-actionname='<%= ((article == null) || Validator.isNull(article.getArticleId())) ? "/journal/add_article" : "/journal/update_article" %>' name="saveButton" primary="<%= false %>" type="submit" value="<%= journalEditArticleDisplayContext.getSaveButtonLabel() %>" />

@@ -51,6 +51,20 @@ class JournalPortlet extends PortletBase {
 			on(form, 'submit', this._onFormSubmit.bind(this))
 		);
 
+		const resetValuesButton = this._getInputByName(
+			this.ns('resetValuesButton')
+		);
+
+		if (resetValuesButton) {
+			this._eventHandler.add(
+				on(
+					resetValuesButton,
+					'click',
+					this._resetValuesDDMStructure.bind(this)
+				)
+			);
+		}
+
 		this._localeChangedHandler = Liferay.after(
 			'inputLocalized:localeChanged',
 			this._onLocaleChange.bind(this)
@@ -117,6 +131,23 @@ class JournalPortlet extends PortletBase {
 				defaultLanguageId,
 				selectedLanguageId
 			);
+		}
+	}
+
+	/**
+	 * @private
+	 */
+	_resetValuesDDMStructure(event) {
+		if (
+			confirm(
+				Liferay.Language.get(
+					'are-you-sure-you-want-to-reset-the-default-values'
+				)
+			)
+		) {
+			const button = event.currentTarget;
+
+			submitForm(document.hrefFm, button.dataset.url);
 		}
 	}
 

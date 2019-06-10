@@ -15,12 +15,10 @@
 package com.liferay.talend.wizard;
 
 import com.liferay.talend.connection.LiferayConnectionProperties;
-import com.liferay.talend.connection.LiferaySiteSelectorProperties;
 
 import org.talend.components.api.properties.ComponentProperties;
 import org.talend.components.api.wizard.ComponentWizard;
 import org.talend.components.api.wizard.ComponentWizardDefinition;
-import org.talend.daikon.properties.presentation.Form;
 
 /**
  * @author Zoltán Takács
@@ -38,15 +36,6 @@ public class LiferayConnectionWizard extends ComponentWizard {
 		connection.init();
 
 		addForm(connection.getForm(LiferayConnectionProperties.FORM_WIZARD));
-
-		siteSelector = new LiferaySiteSelectorProperties("siteSelector");
-
-		siteSelector.setConnection(connection);
-		siteSelector.setRepositoryLocation(getRepositoryLocation());
-
-		siteSelector.init();
-
-		addForm(siteSelector.getForm(Form.MAIN));
 	}
 
 	public void setupProperties(
@@ -55,8 +44,6 @@ public class LiferayConnectionWizard extends ComponentWizard {
 		this.connection.setupProperties();
 
 		this.connection.copyValuesFrom(liferayConnectionProperties);
-
-		this.siteSelector.setConnection(liferayConnectionProperties);
 	}
 
 	public boolean supportsProperties(ComponentProperties componentProperties) {
@@ -68,6 +55,5 @@ public class LiferayConnectionWizard extends ComponentWizard {
 	}
 
 	public LiferayConnectionProperties connection;
-	public LiferaySiteSelectorProperties siteSelector;
 
 }

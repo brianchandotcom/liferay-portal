@@ -11,9 +11,6 @@ import com.liferay.gradle.util.StringUtil
 import groovy.io.FileType
 import groovy.io.FileVisitResult
 
-import groovy.json.JsonOutput
-import groovy.json.JsonSlurper
-
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 
@@ -76,24 +73,6 @@ appendHotfixQualifier {
 					logger.lifecycle "Appended {}:{}", project.relativePath(bndBndFile), qualifier
 				}
 			}
-
-			for (String jsonFileName in ["package.json", "package-lock.json"]) {
-				File jsonFile = new File(new File(projectDir, dirName), jsonFileName)
-
-				if (jsonFile.exists()) {
-					JsonSlurper jsonSlurper = new JsonSlurper()
-
-					Map<String, Object> map = jsonSlurper.parse(jsonFile, "UTF-8")
-
-					if ((map["version"] != null) && (map["version"].indexOf(qualifier) == -1)) {
-						map.put("version", map["version"] + qualifier)
-
-						jsonFile.text = JsonOutput.prettyPrint(JsonOutput.toJson(map))
-
-						logger.lifecycle "Appended {}:{}", project.relativePath(jsonFile), qualifier
-					}
-				}
-			}
 		}
 	}
 }
@@ -144,24 +123,6 @@ removeHotfixQualifier {
 					bndBndFile.text = bndBndFile.text.replace(version, version.minus(qualifier))
 
 					logger.lifecycle "Removed {}:{}", project.relativePath(bndBndFile), qualifier
-				}
-			}
-
-			for (String jsonFileName in ["package.json", "package-lock.json"]) {
-				File jsonFile = new File(new File(projectDir, dirName), jsonFileName)
-
-				if (jsonFile.exists()) {
-					JsonSlurper jsonSlurper = new JsonSlurper()
-
-					Map<String, Object> map = jsonSlurper.parse(jsonFile, "UTF-8")
-
-					if ((map["version"] != null) && (map["version"].indexOf(qualifier) != -1)) {
-						map.put("version", map["version"].minus(qualifier))
-
-						jsonFile.text = JsonOutput.prettyPrint(JsonOutput.toJson(map))
-
-						logger.lifecycle "Removed {}:{}", project.relativePath(jsonFile), qualifier
-					}
 				}
 			}
 		}

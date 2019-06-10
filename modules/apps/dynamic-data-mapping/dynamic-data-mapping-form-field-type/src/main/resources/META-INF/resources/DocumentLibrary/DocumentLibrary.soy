@@ -1,0 +1,189 @@
+{namespace DocumentLibrary}
+
+{template .render}
+	{@param name: string}
+	{@param spritemap: string}
+	{@param? _handleClearButtonClicked: any}
+	{@param? _handleSelectButtonClicked: any}
+	{@param? displayErrors: bool}
+	{@param? errorMessage: string}
+	{@param? fileEntryTitle: string}
+	{@param? fileEntryURL: string}
+	{@param? id: string}
+	{@param? label: string}
+	{@param? placeholder: string}
+	{@param? readOnly: bool}
+	{@param? repeatable: bool}
+	{@param? required: bool}
+	{@param? showLabel: bool}
+	{@param? tip: string}
+	{@param? tooltip: string}
+	{@param? valid: bool}
+	{@param? value: ?}
+	{@param? visible: bool}
+
+	{call FieldBase.render}
+		{param contentRenderer kind="html"}
+			{call .content}
+				{param _handleClearButtonClicked: $_handleClearButtonClicked /}
+				{param _handleSelectButtonClicked: $_handleSelectButtonClicked /}
+				{param fileEntryTitle: $fileEntryTitle /}
+				{param fileEntryURL: $fileEntryURL /}
+				{param id: $id /}
+				{param name: $name /}
+				{param placeholder: $placeholder /}
+				{param readOnly: $readOnly /}
+				{param spritemap: $spritemap /}
+				{param value: $value /}
+			{/call}
+		{/param}
+		{param displayErrors: $displayErrors /}
+		{param errorMessage: $errorMessage /}
+		{param id: $id /}
+		{param label: $label /}
+		{param name: $name /}
+		{param repeatable: $repeatable /}
+		{param required: $required /}
+		{param showLabel: $showLabel /}
+		{param spritemap: $spritemap /}
+		{param tip: $tip /}
+		{param tooltip: $tooltip /}
+		{param valid: $valid /}
+		{param visible: $visible /}
+	{/call}
+{/template}
+
+{template .content}
+	{@param name: string}
+	{@param spritemap: string}
+	{@param? _handleClearButtonClicked: any}
+	{@param? _handleSelectButtonClicked: any}
+	{@param? fileEntryTitle: string}
+	{@param? fileEntryURL: string}
+	{@param? id: string}
+	{@param? placeholder: string}
+	{@param? readOnly: bool}
+	{@param? value: ?}
+
+	{let $attributes kind="attributes"}
+		{if $id}
+			id="{$id}"
+		{/if}
+
+		name="{$name}"
+
+		type="hidden"
+
+		{if $placeholder}
+			placeholder="{$placeholder}"
+		{/if}
+
+		{if $value}
+			value="{$value}"
+		{else}
+			value=""
+		{/if}
+	{/let}
+
+	<div class="liferay-ddm-form-field-document-library">
+		{if $fileEntryURL and $readOnly}
+			{call .card_item}
+				{param fileEntryTitle: $fileEntryTitle /}
+				{param fileEntryURL: $fileEntryURL /}
+				{param spritemap: $spritemap /}
+			{/call}
+		{else}
+			<div class="input-group">
+				<div class="input-group-item input-group-prepend">
+					<input
+						class="field form-control"
+						disabled
+						id="{$name}inputFile"
+						type="text"
+
+						{if $fileEntryTitle}
+							value="{$fileEntryTitle}"
+						{else}
+							value=""
+						{/if}
+					/>
+				</div>
+
+				{call .button_group}
+					{param _handleClearButtonClicked: $_handleClearButtonClicked /}
+					{param _handleSelectButtonClicked: $_handleSelectButtonClicked /}
+					{param fileEntryURL: $fileEntryURL /}
+					{param readOnly: $readOnly /}
+					{param spritemap: $spritemap /}
+				{/call}
+			</div>
+		{/if}
+
+		<input {$attributes} />
+	</div>
+{/template}
+
+/**
+ * Prints the button group to manipulate files.
+ */
+{template .button_group}
+	{@param? _handleClearButtonClicked: any}
+	{@param? _handleSelectButtonClicked: any}
+	{@param? readOnly: bool}
+	{@param? fileEntryURL: string}
+	{@param spritemap: string}
+
+	<div class="input-group-append input-group-item input-group-item-shrink">
+		<button
+			class="btn btn-secondary select-button"
+			data-onclick="{$_handleSelectButtonClicked}"
+
+			{if $readOnly}
+				disabled
+			{/if}
+
+			type="button"
+		>
+			<span class="lfr-btn-label">{msg desc=""}select{/msg}</span>
+		</button>
+	</div>
+
+	{if $fileEntryURL}
+		<div class="input-group-append input-group-item input-group-item-shrink">
+			<button
+				class="btn btn-secondary clear-button"
+				data-onclick="{$_handleClearButtonClicked}"
+				type="button"
+			>
+				<svg class="lexicon-icon">
+					<use xlink:href="{$spritemap}#times" />
+				</svg>
+			</button>
+		</div>
+	{/if}
+{/template}
+
+/**
+ * Prints the card to allow file to be downloaded.
+ */
+{template .card_item}
+	{@param spritemap: string}
+	{@param? fileEntryTitle: string}
+	{@param? fileEntryURL: string}
+
+	<div class="card card-horizontal">
+		<div class="card-row card-row-padded">
+			<div class="card-col-content card-col-gutters">
+				<h4 class="truncate-text" title="{$fileEntryTitle}">{$fileEntryTitle}</h4>
+			</div>
+
+			<div class="card-col-field">
+				<a download="{$fileEntryTitle}" href="{$fileEntryURL}">
+					<svg class="lexicon-icon">
+						<use xlink:href="{$spritemap}#download" />
+					</svg>
+				</a>
+			</div>
+		</div>
+	</div>
+{/template}

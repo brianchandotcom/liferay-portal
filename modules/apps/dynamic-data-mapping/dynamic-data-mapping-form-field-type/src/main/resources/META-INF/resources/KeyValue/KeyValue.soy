@@ -1,0 +1,110 @@
+{namespace KeyValue}
+
+{template .render}
+	{@param name: string}
+	{@param? _handleKeywordInputBlurred: any}
+	{@param? _handleKeywordInputChanged: any}
+	{@param? _handleValueInputBlurred: any}
+	{@param? _handleValueInputEdited: any}
+	{@param? _handleValueInputFocused: any}
+	{@param? _keyword: string}
+	{@param? _value: string}
+	{@param? displayErrors: bool}
+	{@param? errorMessage: string}
+	{@param? id: string}
+	{@param? keywordReadOnly: bool}
+	{@param? label: string}
+	{@param? placeholder: string}
+	{@param? readOnly: bool}
+	{@param? repeatable: bool}
+	{@param? required: bool}
+	{@param? showLabel: bool}
+	{@param? spritemap: string}
+	{@param? tip: string}
+	{@param? valid: bool}
+	{@param? visible: bool}
+
+	{call FieldBase.render}
+		{param contentRenderer kind="html"}
+			{call .content}
+				{param _handleKeywordInputBlurred: $_handleKeywordInputBlurred /}
+				{param _handleKeywordInputChanged: $_handleKeywordInputChanged /}
+				{param _handleValueInputBlurred: $_handleValueInputBlurred /}
+				{param _handleValueInputEdited: $_handleValueInputEdited /}
+				{param _handleValueInputFocused: $_handleValueInputFocused /}
+				{param id: $id /}
+				{param keyword: $_keyword /}
+				{param keywordReadOnly: $keywordReadOnly /}
+				{param name: $name /}
+				{param placeholder: $placeholder /}
+				{param readOnly: $readOnly /}
+				{param required: $required /}
+				{param showLabel: $showLabel /}
+				{param spritemap: $spritemap /}
+				{param value: $_value /}
+			{/call}
+		{/param}
+		{param displayErrors: $displayErrors /}
+		{param errorMessage: $errorMessage /}
+		{param id: $id /}
+		{param label: $label /}
+		{param name: $name /}
+		{param repeatable: $repeatable /}
+		{param required: $required /}
+		{param showLabel: $showLabel /}
+		{param spritemap: $spritemap /}
+		{param tip: $tip /}
+		{param valid: $valid /}
+		{param visible: $visible /}
+	{/call}
+{/template}
+
+{template .content}
+	{@param name: string}
+	{@param? _handleKeywordInputBlurred: any}
+	{@param? _handleKeywordInputChanged: any}
+	{@param? _handleValueInputBlurred: any}
+	{@param? _handleValueInputEdited: any}
+	{@param? _handleValueInputFocused: any}
+	{@param? keyword: string}
+	{@param? keywordReadOnly: bool}
+	{@param? placeholder: string}
+	{@param? readOnly: bool}
+	{@param? required: bool}
+	{@param? showLabel: bool}
+	{@param? spritemap: string}
+	{@param? value: ?}
+
+	{call Text.render}
+		{param events: [
+			'fieldBlurred': $_handleValueInputBlurred,
+			'fieldEdited': $_handleValueInputEdited,
+			'fieldFocused' : $_handleValueInputFocused
+		] /}
+		{param name: 'keyValueLabel' + $name /}
+		{param placeholder: $placeholder /}
+		{param readOnly: $readOnly /}
+		{param ref: 'keyValueLabel' + $name /}
+		{param required: $required /}
+		{param showLabel: $showLabel /}
+		{param spritemap: $spritemap /}
+		{param value: $value /}
+	{/call}
+
+	<div class="active form-text key-value-editor">
+		<label class="control-label key-value-label">{msg desc=""}field-name{/msg}:</label>
+
+		<input
+			class="key-value-input"
+			data-onblur="{$_handleKeywordInputBlurred}"
+			data-oninput="{$_handleKeywordInputChanged}"
+
+			{if $keywordReadOnly}
+				readOnly
+			{/if}
+
+			type="text"
+			value="{$keyword}"
+		/>
+	</div>
+{/template}

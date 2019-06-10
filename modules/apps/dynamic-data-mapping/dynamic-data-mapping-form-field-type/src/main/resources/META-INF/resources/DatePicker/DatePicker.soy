@@ -1,0 +1,347 @@
+{namespace DatePicker}
+
+/**
+ * This renders the component's whole content.
+ */
+{template .render}
+	{@param name: string}
+	{@param spritemap: string}
+	{@param years: list<?>}
+	{@param? _daySelected: any}
+	{@param? _handleDayClicked: any}
+	{@param? _handleDotClicked: any}
+	{@param? _handleInput: any}
+	{@param? _handleInputBlurred: any}
+	{@param? _handleInputFocused: any}
+	{@param? _handleNavigateChange: any}
+	{@param? _handleNextMonth: any}
+	{@param? _handlePreviousMonth: any}
+	{@param? _handleToggle: any}
+	{@param? _month: int}
+	{@param? _weeks: list<?>}
+	{@param? _year: int}
+	{@param? ariaLabel: string}
+	{@param? displayErrors: bool}
+	{@param? displayStyle: string}
+	{@param? elementClasses: string}
+	{@param? errorMessage: string}
+	{@param? expanded: bool}
+	{@param? firstDayOfWeek: int}
+	{@param? formattedValue: string}
+	{@param? id: string}
+	{@param? label: string}
+	{@param? months: list<?>}
+	{@param? placeholder: string}
+	{@param? predefinedValue: string}
+	{@param? readOnly: bool}
+	{@param? repeatable: bool}
+	{@param? required: bool}
+	{@param? showLabel: bool}
+	{@param? tip: string}
+	{@param? tooltip: string}
+	{@param? valid: bool}
+	{@param? value: ?}
+	{@param? visible: bool}
+	{@param? weekdaysShort: list<string>}
+
+	{call FieldBase.render}
+		{param contentRenderer kind="html"}
+			{call .content}
+				{param _daySelected: $_daySelected /}
+				{param _handleDayClicked: $_handleDayClicked /}
+				{param _handleDotClicked: $_handleDotClicked /}
+				{param _handleInput: $_handleInput /}
+				{param _handleInputBlurred: $_handleInputBlurred /}
+				{param _handleInputFocused: $_handleInputFocused /}
+				{param _handleNavigateChange: $_handleNavigateChange /}
+				{param _handleNextMonth: $_handleNextMonth /}
+				{param _handlePreviousMonth: $_handlePreviousMonth /}
+				{param _handleToggle: $_handleToggle /}
+				{param _month: $_month /}
+				{param _weeks: $_weeks /}
+				{param _year: $_year /}
+				{param ariaLabel: $ariaLabel /}
+				{param displayStyle: $displayStyle /}
+				{param elementClasses: $elementClasses /}
+				{param expanded: $expanded /}
+				{param firstDayOfWeek: $firstDayOfWeek /}
+				{param formattedValue: $formattedValue /}
+				{param id: $id /}
+				{param label: $label /}
+				{param months: $months /}
+				{param name: $name /}
+				{param placeholder: $placeholder /}
+				{param predefinedValue: $predefinedValue /}
+				{param readOnly: $readOnly /}
+				{param spritemap: $spritemap /}
+				{param value: $value /}
+				{param weekdaysShort: $weekdaysShort /}
+				{param years: $years /}
+			{/call}
+		{/param}
+		{param displayErrors: $displayErrors /}
+		{param errorMessage: $errorMessage /}
+		{param id: $id /}
+		{param label: $label /}
+		{param name: $name /}
+		{param ref: 'base' /}
+		{param repeatable: $repeatable /}
+		{param required: $required /}
+		{param showLabel: $showLabel /}
+		{param spritemap: $spritemap /}
+		{param tip: $tip /}
+		{param tooltip: $tooltip /}
+		{param valid: $valid /}
+		{param visible: $visible /}
+	{/call}
+{/template}
+
+{template .content}
+	{@param name: string}
+	{@param spritemap: string}
+	{@param years: list<?>}
+	{@param? _daySelected: any}
+	{@param? _handleDayClicked: any}
+	{@param? _handleDotClicked: any}
+	{@param? _handleInput: any}
+	{@param? _handleInputBlurred: any}
+	{@param? _handleInputFocused: any}
+	{@param? _handleNavigateChange: any}
+	{@param? _handleNextMonth: any}
+	{@param? _handlePreviousMonth: any}
+	{@param? _handleToggle: any}
+	{@param? _month: int}
+	{@param? _weeks: list<?>}
+	{@param? _year: int}
+	{@param? ariaLabel: string}
+	{@param? elementClasses: string}
+	{@param? expanded: bool}
+	{@param? firstDayOfWeek: int}
+	{@param? formattedValue: string}
+	{@param? id: string}
+	{@param? months: list<?>}
+	{@param? placeholder: string}
+	{@param? predefinedValue: string}
+	{@param? readOnly: bool}
+	{@param? value: ?}
+	{@param? weekdaysShort: list<string>}
+
+	{let $attributes kind="attributes"}
+		class="input-group
+			{if $elementClasses}
+				{sp}{$elementClasses}
+			{/if}
+		"
+
+		{if $id}
+			id="{$id}"
+		{/if}
+	{/let}
+
+	<div {$attributes}>
+		<div class="input-group-item">
+			{let $visibleInputAttributes kind="attributes"}
+				{if $ariaLabel}
+					aria-label="{$ariaLabel}"
+				{/if}
+
+				class="form-control input-group-inset input-group-inset-after"
+				data-onblur="{$_handleInputBlurred}"
+				data-onclick="{$_handleInputFocused}"
+				data-oninput="{$_handleInput}"
+
+				{if $readOnly}
+					disabled="disabled"
+				{/if}
+
+				{if $placeholder}
+					placeholder="{$placeholder}"
+				{/if}
+
+				ref="inputElement"
+				type="text"
+
+				{if $formattedValue}
+					value="{$formattedValue}"
+				{elseif $predefinedValue}
+					value="{$predefinedValue}"
+				{else}
+					value=""
+				{/if}
+			{/let}
+
+			<input {$visibleInputAttributes} />
+
+			{let $hiddenInputAttributes kind="attributes"}
+				name="{$name}"
+				type="hidden"
+
+				{if $value}
+					value="{$value}"
+				{else}
+					value=""
+				{/if}
+			{/let}
+
+			<input {$hiddenInputAttributes} />
+
+			<div class="input-group-inset-item input-group-inset-item-after">
+				{call ClayButton.render}
+					{param disabled: $readOnly /}
+					{param elementClasses: 'd-none d-md-inline-block' /}
+					{param events: ['click': $_handleToggle] /}
+					{param icon: 'calendar' /}
+					{param spritemap: $spritemap /}
+					{param style: 'unstyled' /}
+					{param type: 'button' /}
+				{/call}
+			</div>
+		</div>
+
+		{let $classes kind="text"}
+			dropdown-menu
+			{if $expanded}
+				{sp}show
+			{/if}
+		{/let}
+
+		<div class="{$classes}">
+			<div class="datepicker">
+				{if $months and isNonnull($_month) and isNonnull($_year)}
+					{call .header}
+						{param _handleDotClicked: $_handleDotClicked /}
+						{param _handleNavigateChange: $_handleNavigateChange /}
+						{param _handleNextMonth: $_handleNextMonth /}
+						{param _handlePreviousMonth: $_handlePreviousMonth /}
+						{param _month: $_month /}
+						{param _year: $_year /}
+						{param months: $months /}
+						{param spritemap: $spritemap /}
+						{param years: $years /}
+					{/call}
+				{/if}
+
+				{let $firstDay: $firstDayOfWeek ?: 0 /}
+
+				{if $weekdaysShort}
+					<div class="weekdays">
+						{for $index in range(7)}
+							{let $weekday: ($index + $firstDay) % 7 /}
+
+							<div class="week">
+								{$weekdaysShort[$weekday]}
+							</div>
+						{/for}
+					</div>
+				{/if}
+
+				{if $_weeks}
+					{call .body}
+						{param _daySelected: $_daySelected /}
+						{param _handleDayClicked: $_handleDayClicked /}
+						{param _weeks: $_weeks /}
+					{/call}
+				{/if}
+			</div>
+		</div>
+	</div>
+{/template}
+
+/**
+ */
+{template .header}
+	{@param _month: int}
+	{@param _year: int}
+	{@param months: list<?>}
+	{@param spritemap: string}
+	{@param years: list<?>}
+	{@param? _handleDotClicked: any}
+	{@param? _handleNavigateChange: any}
+	{@param? _handleNextMonth: any}
+	{@param? _handlePreviousMonth: any}
+
+	<div class="header">
+		<form class="form-caption">
+			<select class="form-control form-control-sm" name="month" onChange="{$_handleNavigateChange}" value="{$_month}">
+				{foreach $month in $months}
+					<option {if $month == $months[$_month]} selected {/if} value="{index($month)}">{$month}</option>
+				{/foreach}
+			</select>
+
+			<select class="form-control form-control-sm" name="year" onChange="{$_handleNavigateChange}" value="{$_year}">
+				{foreach $year in $years}
+					<option key="{$year}{index($year)}{$year == $_year ? 'selected' : 'unselected'}" {if $year == $_year} selected {/if} value="{$year}">{$year}</option>
+				{/foreach}
+			</select>
+		</form>
+
+		<div class="navigation">
+			{call ClayButton.render}
+				{param events: ['click': $_handlePreviousMonth] /}
+				{param icon: 'angle-left' /}
+				{param monospaced: true /}
+				{param size: 'sm' /}
+				{param spritemap: $spritemap /}
+				{param style: 'unstyled' /}
+				{param type: 'button' /}
+			{/call}
+			{call ClayButton.render}
+				{param events: ['click': $_handleDotClicked] /}
+				{param icon: 'live' /}
+				{param monospaced: true /}
+				{param size: 'sm' /}
+				{param spritemap: $spritemap /}
+				{param style: 'unstyled' /}
+				{param type: 'button' /}
+			{/call}
+			{call ClayButton.render}
+				{param events: ['click': $_handleNextMonth] /}
+				{param icon: 'angle-right' /}
+				{param monospaced: true /}
+				{param size: 'sm' /}
+				{param spritemap: $spritemap /}
+				{param style: 'unstyled' /}
+				{param type: 'button' /}
+			{/call}
+		</div>
+	</div>
+{/template}
+
+/**
+ */
+{template .body}
+	{@param _daySelected: any}
+	{@param _weeks: list<?>}
+	{@param? _handleDayClicked: any}
+
+	<div class="grid">
+		{foreach $week in $_weeks}
+			<div class="rowgroup">
+				{foreach $day in $week}
+					{let $attributes kind="attributes"}
+						ariaLabel="{$day.dateString}"
+
+						class="
+							day
+							{if $day.outside}
+								{sp}outside
+							{/if}
+
+							{if $day.dateString == $_daySelected}
+								{sp}active
+							{/if}
+						"
+
+						tabindex="0"
+
+						onClick="{$_handleDayClicked}"
+					{/let}
+
+					<div {$attributes}>
+						{$day.number}
+					</div>
+				{/foreach}
+			</div>
+		{/foreach}
+	</div>
+{/template}

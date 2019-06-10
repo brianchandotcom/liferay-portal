@@ -230,16 +230,16 @@ definition {
 				groupId = "${groupId}");
 		}
 
-		if (!(isSet(title))) {
-			fail("Please set 'title.'");
-		}
-
 		if (!(isSet(serviceContext))) {
 			var serviceContext = JSONServiceContextUtil.setServiceContext(
 				addGuestPermissions = "true",
 				assetCategoryIds = "${assetCategoryIds}",
 				assetTagNames = "${assetTagNames}",
 				workflowAction = "${workflowAction}");
+		}
+
+		if (!(isSet(title))) {
+			fail("Please set 'title.'");
 		}
 
 		JSONWebcontent._addWebContent(

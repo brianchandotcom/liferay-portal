@@ -316,6 +316,8 @@ public class JournalEditArticleDisplayContext {
 
 			if (!ddmTemplates.isEmpty()) {
 				_ddmTemplate = ddmTemplates.get(0);
+
+				return _ddmTemplate;
 			}
 		}
 

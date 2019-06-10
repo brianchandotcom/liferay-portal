@@ -186,6 +186,8 @@ class StateSyncronizer extends Component {
 					...field,
 					settingsContext: {
 						...field.settingsContext,
+						availableLanguageIds: this.getAvailableLanguageIds(),
+						defaultLanguageId: this.getDefaultLanguageId(),
 						pages: this._getSerializedSettingsContextPages(
 							field.settingsContext.pages
 						)

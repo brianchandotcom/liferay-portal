@@ -259,27 +259,12 @@ public class RESTClient {
 
 		boolean followRedirects =
 			_liferayConnectionProperties.followRedirects.getValue();
-		Response response;
 
-		if (entity == null) {
-			if (followRedirects) {
-				response = _follow3Redirects(builder.method(httpMethod));
-			}
-			else {
-				response = builder.method(httpMethod);
-			}
-		}
-		else {
-			if (followRedirects) {
-				response = _follow3Redirects(
-					builder.method(httpMethod, entity));
-			}
-			else {
-				response = builder.method(httpMethod, entity);
-			}
+		if (followRedirects) {
+			return _follow3Redirects(builder.method(httpMethod, entity));
 		}
 
-		return response;
+		return builder.method(httpMethod, entity);
 	}
 
 	private Response _invokeBuilder(

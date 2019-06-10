@@ -290,6 +290,12 @@ public class WikiPagesManagementToolbarDisplayContext {
 		return true;
 	}
 
+	public boolean isShowInfoButton() {
+		String keywords = _getKeywords();
+
+		return Validator.isNull(keywords);
+	}
+
 	public boolean isShowSearch() {
 		return true;
 	}
@@ -335,6 +341,10 @@ public class WikiPagesManagementToolbarDisplayContext {
 				}
 			}
 		};
+	}
+
+	private String _getKeywords() {
+		return ParamUtil.getString(_httpServletRequest, "keywords");
 	}
 
 	private String _getNavigation() {

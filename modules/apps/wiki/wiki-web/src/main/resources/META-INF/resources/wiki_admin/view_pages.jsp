@@ -95,7 +95,7 @@ WikiPagesManagementToolbarDisplayContext wikiPagesManagementToolbarDisplayContex
 	searchActionURL="<%= String.valueOf(wikiPagesManagementToolbarDisplayContext.getSearchActionURL()) %>"
 	searchContainerId="wikiPages"
 	selectable="<%= wikiPagesManagementToolbarDisplayContext.isSelectable() %>"
-	showInfoButton="<%= true %>"
+	showInfoButton="<%= wikiPagesManagementToolbarDisplayContext.isShowInfoButton() %>"
 	showSearch="<%= wikiPagesManagementToolbarDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= wikiPagesManagementToolbarDisplayContext.getSortingOrder() %>"
 	sortingURL="<%= String.valueOf(wikiPagesManagementToolbarDisplayContext.getSortingURL()) %>"

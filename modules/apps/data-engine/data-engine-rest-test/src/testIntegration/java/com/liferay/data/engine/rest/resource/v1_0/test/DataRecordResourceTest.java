@@ -16,7 +16,6 @@ package com.liferay.data.engine.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.rest.client.dto.v1_0.DataRecord;
-import com.liferay.data.engine.rest.client.resource.v1_0.DataRecordResource;
 import com.liferay.data.engine.rest.resource.v1_0.test.util.DataDefinitionTestUtil;
 import com.liferay.data.engine.rest.resource.v1_0.test.util.DataRecordCollectionTestUtil;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -51,19 +50,17 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 
 	@Test
 	public void testGetDataRecordWithInvalidId() throws Exception {
-		assertHttpResponseStatusCode(
-			404,
-			DataRecordResource.getDataRecordHttpResponse(
-				RandomTestUtil.randomLong()));
+		assertResponseCode(
+			404, invokeGetDataRecordResponse(RandomTestUtil.randomLong()));
 	}
 
 	@Test
 	public void testPostDataRecordWithInvalidDataRecordCollection()
 		throws Exception {
 
-		assertHttpResponseStatusCode(
+		assertResponseCode(
 			404,
-			DataRecordResource.postDataRecordCollectionDataRecordHttpResponse(
+			invokePostDataRecordCollectionDataRecordResponse(
 				RandomTestUtil.randomLong(), randomDataRecord()));
 	}
 
@@ -73,9 +70,9 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 
 		DataRecord dataRecord = _createDataRecord("Wrong Field");
 
-		assertHttpResponseStatusCode(
+		assertResponseCode(
 			400,
-			DataRecordResource.postDataRecordCollectionDataRecordHttpResponse(
+			invokePostDataRecordCollectionDataRecordResponse(
 				dataRecord.getDataRecordCollectionId(), dataRecord));
 	}
 
@@ -101,13 +98,13 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 
 	@Override
 	protected DataRecord testDeleteDataRecord_addDataRecord() throws Exception {
-		return DataRecordResource.postDataRecordCollectionDataRecord(
+		return invokePostDataRecordCollectionDataRecord(
 			_ddlRecordSet.getRecordSetId(), randomDataRecord());
 	}
 
 	@Override
 	protected DataRecord testGetDataRecord_addDataRecord() throws Exception {
-		return DataRecordResource.postDataRecordCollectionDataRecord(
+		return invokePostDataRecordCollectionDataRecord(
 			_ddlRecordSet.getRecordSetId(), randomDataRecord());
 	}
 
@@ -123,7 +120,7 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 			dataRecordCollectionId = _irrelevantDDLRecordSet.getRecordSetId();
 		}
 
-		return DataRecordResource.postDataRecordCollectionDataRecord(
+		return invokePostDataRecordCollectionDataRecord(
 			dataRecordCollectionId, randomDataRecord());
 	}
 
@@ -140,13 +137,13 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 			DataRecord dataRecord)
 		throws Exception {
 
-		return DataRecordResource.postDataRecordCollectionDataRecord(
+		return invokePostDataRecordCollectionDataRecord(
 			dataRecord.getDataRecordCollectionId(), dataRecord);
 	}
 
 	@Override
 	protected DataRecord testPutDataRecord_addDataRecord() throws Exception {
-		return DataRecordResource.postDataRecordCollectionDataRecord(
+		return invokePostDataRecordCollectionDataRecord(
 			_ddlRecordSet.getRecordSetId(), randomDataRecord());
 	}
 

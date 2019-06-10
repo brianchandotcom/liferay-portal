@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.rest.client.dto.v1_0.DataDefinition;
 import com.liferay.data.engine.rest.client.dto.v1_0.DataDefinitionField;
 import com.liferay.data.engine.rest.client.dto.v1_0.DataDefinitionPermission;
-import com.liferay.data.engine.rest.client.resource.v1_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.resource.v1_0.test.util.DataDefinitionTestUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.model.Role;
@@ -51,7 +50,7 @@ public class DataDefinitionResourceTest
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		DataDefinitionResource.postDataDefinitionDataDefinitionPermission(
+		invokePostDataDefinitionDataDefinitionPermission(
 			ddmStructure.getStructureId(), _OPERATION_SAVE_PERMISSION,
 			new DataDefinitionPermission() {
 				{
@@ -67,7 +66,7 @@ public class DataDefinitionResourceTest
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		DataDefinitionResource.postSiteDataDefinitionPermission(
+		invokePostSiteDataDefinitionPermission(
 			testGroup.getGroupId(), _OPERATION_SAVE_PERMISSION,
 			new DataDefinitionPermission() {
 				{

@@ -16,7 +16,6 @@ package com.liferay.data.engine.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.rest.client.dto.v1_0.DataLayout;
-import com.liferay.data.engine.rest.client.resource.v1_0.DataLayoutResource;
 import com.liferay.data.engine.rest.resource.v1_0.test.util.DataDefinitionTestUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -76,7 +75,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 
 	@Override
 	protected DataLayout testDeleteDataLayout_addDataLayout() throws Exception {
-		return DataLayoutResource.postDataDefinitionDataLayout(
+		return invokePostDataDefinitionDataLayout(
 			_ddmStructure.getStructureId(), randomDataLayout());
 	}
 
@@ -89,7 +88,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 
 	@Override
 	protected DataLayout testGetDataLayout_addDataLayout() throws Exception {
-		return DataLayoutResource.postDataDefinitionDataLayout(
+		return invokePostDataDefinitionDataLayout(
 			_ddmStructure.getStructureId(), randomDataLayout());
 	}
 
@@ -98,13 +97,13 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 			Long siteId, DataLayout dataLayout)
 		throws Exception {
 
-		return DataLayoutResource.postDataDefinitionDataLayout(
+		return invokePostDataDefinitionDataLayout(
 			dataLayout.getDataDefinitionId(), dataLayout);
 	}
 
 	@Override
 	protected DataLayout testPutDataLayout_addDataLayout() throws Exception {
-		return DataLayoutResource.postDataDefinitionDataLayout(
+		return invokePostDataDefinitionDataLayout(
 			_ddmStructure.getStructureId(), randomDataLayout());
 	}
 

@@ -148,7 +148,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<baseDir>src/main/resources</baseDir>
+					<baseDir>src/main/resources/META-INF/resources</baseDir>
 				</configuration>
 			</plugin>
 		</plugins>

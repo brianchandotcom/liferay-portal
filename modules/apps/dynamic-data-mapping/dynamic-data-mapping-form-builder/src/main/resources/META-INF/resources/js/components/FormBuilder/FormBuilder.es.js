@@ -110,7 +110,10 @@ class FormBuilderBase extends Component {
 				};
 			}
 
-			return field;
+			return {
+				...field,
+				readOnly: true
+			};
 		});
 	}
 

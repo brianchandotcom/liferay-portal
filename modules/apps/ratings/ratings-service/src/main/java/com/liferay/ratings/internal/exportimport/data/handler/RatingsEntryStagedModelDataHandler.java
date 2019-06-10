@@ -181,22 +181,13 @@ public class RatingsEntryStagedModelDataHandler
 		portletDataContext.importClassedModel(entry, importedEntry);
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRatingsEntryLocalService(
-		RatingsEntryLocalService ratingsEntryLocalService) {
-
-		_ratingsEntryLocalService = ratingsEntryLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		RatingsEntryStagedModelDataHandler.class);
 
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private RatingsEntryLocalService _ratingsEntryLocalService;
 
 }

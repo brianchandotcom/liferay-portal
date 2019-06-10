@@ -90,7 +90,7 @@ public class SharingEntryServiceTest {
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		if (_serviceRegistration != null) {
 			_serviceRegistration.unregister();
 		}
@@ -117,8 +117,8 @@ public class SharingEntryServiceTest {
 		SharingEntry sharingEntry =
 			_sharingEntryService.addOrUpdateSharingEntry(
 				_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
-				true, Arrays.asList(SharingEntryAction.VIEW), expirationDate,
-				serviceContext);
+				true, Collections.singletonList(SharingEntryAction.VIEW),
+				expirationDate, serviceContext);
 
 		Assert.assertEquals(_group.getCompanyId(), sharingEntry.getCompanyId());
 		Assert.assertEquals(_group.getGroupId(), sharingEntry.getGroupId());
@@ -150,8 +150,8 @@ public class SharingEntryServiceTest {
 
 		SharingEntry addSharingEntry = _sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
-			true, Arrays.asList(SharingEntryAction.VIEW), expirationDate,
-			serviceContext);
+			true, Collections.singletonList(SharingEntryAction.VIEW),
+			expirationDate, serviceContext);
 
 		Assert.assertTrue(addSharingEntry.isShareable());
 		Assert.assertEquals(1, addSharingEntry.getActionIds());
@@ -217,8 +217,8 @@ public class SharingEntryServiceTest {
 
 		_sharingEntryService.addOrUpdateSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
-			true, Arrays.asList(SharingEntryAction.VIEW), expirationDate,
-			serviceContext);
+			true, Collections.singletonList(SharingEntryAction.VIEW),
+			expirationDate, serviceContext);
 	}
 
 	@Test(expected = PrincipalException.class)
@@ -367,8 +367,9 @@ public class SharingEntryServiceTest {
 
 		_sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _fromUser.getUserId(), classNameId, classPK,
-			_group.getGroupId(), true, Arrays.asList(SharingEntryAction.VIEW),
-			null, serviceContext);
+			_group.getGroupId(), true,
+			Collections.singletonList(SharingEntryAction.VIEW), null,
+			serviceContext);
 
 		_sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
@@ -412,7 +413,7 @@ public class SharingEntryServiceTest {
 
 		_sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
-			true, Arrays.asList(SharingEntryAction.UPDATE), null,
+			true, Collections.singletonList(SharingEntryAction.UPDATE), null,
 			serviceContext);
 	}
 
@@ -429,7 +430,8 @@ public class SharingEntryServiceTest {
 
 		SharingEntry sharingEntry = _sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
-			true, Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
+			true, Collections.singletonList(SharingEntryAction.VIEW), null,
+			serviceContext);
 
 		Assert.assertEquals(_group.getCompanyId(), sharingEntry.getCompanyId());
 		Assert.assertEquals(_group.getGroupId(), sharingEntry.getGroupId());
@@ -461,7 +463,8 @@ public class SharingEntryServiceTest {
 
 		_sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
-			true, Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
+			true, Collections.singletonList(SharingEntryAction.VIEW), null,
+			serviceContext);
 	}
 
 	@Test
@@ -479,12 +482,14 @@ public class SharingEntryServiceTest {
 
 		_sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _fromUser.getUserId(), classNameId, classPK,
-			_group.getGroupId(), true, Arrays.asList(SharingEntryAction.VIEW),
-			null, serviceContext);
+			_group.getGroupId(), true,
+			Collections.singletonList(SharingEntryAction.VIEW), null,
+			serviceContext);
 
 		_sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
-			true, Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
+			true, Collections.singletonList(SharingEntryAction.VIEW), null,
+			serviceContext);
 	}
 
 	@Test
@@ -502,12 +507,14 @@ public class SharingEntryServiceTest {
 
 		_sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _fromUser.getUserId(), classNameId, classPK,
-			_group.getGroupId(), false, Arrays.asList(SharingEntryAction.VIEW),
-			null, serviceContext);
+			_group.getGroupId(), false,
+			Collections.singletonList(SharingEntryAction.VIEW), null,
+			serviceContext);
 
 		_sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
-			true, Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
+			true, Collections.singletonList(SharingEntryAction.VIEW), null,
+			serviceContext);
 	}
 
 	@Test(expected = NoSuchEntryException.class)
@@ -536,8 +543,9 @@ public class SharingEntryServiceTest {
 
 		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
 			_fromUser.getUserId(), _toUser.getUserId(), classNameId, classPK,
-			_group.getGroupId(), false, Arrays.asList(SharingEntryAction.VIEW),
-			null, serviceContext);
+			_group.getGroupId(), false,
+			Collections.singletonList(SharingEntryAction.VIEW), null,
+			serviceContext);
 
 		_sharingEntryService.deleteSharingEntry(
 			sharingEntry.getSharingEntryId(), serviceContext);
@@ -562,8 +570,9 @@ public class SharingEntryServiceTest {
 
 		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
 			_fromUser.getUserId(), _toUser.getUserId(), classNameId, classPK,
-			_group.getGroupId(), false, Arrays.asList(SharingEntryAction.VIEW),
-			null, serviceContext);
+			_group.getGroupId(), false,
+			Collections.singletonList(SharingEntryAction.VIEW), null,
+			serviceContext);
 
 		ServiceTestUtil.setUser(_toUser);
 
@@ -589,16 +598,17 @@ public class SharingEntryServiceTest {
 
 		SharingEntry sharingEntry = _sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
-			true, Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
+			true, Collections.singletonList(SharingEntryAction.VIEW), null,
+			serviceContext);
 
 		Assert.assertTrue(sharingEntry.isShareable());
 
 		sharingEntry = _sharingEntryService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(),
-			Arrays.asList(SharingEntryAction.VIEW), false, null,
+			Collections.singletonList(SharingEntryAction.VIEW), false, null,
 			serviceContext);
 
-		Assert.assertEquals(false, sharingEntry.isShareable());
+		Assert.assertFalse(sharingEntry.isShareable());
 	}
 
 	@Test
@@ -617,7 +627,8 @@ public class SharingEntryServiceTest {
 
 		SharingEntry sharingEntry = _sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
-			true, Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
+			true, Collections.singletonList(SharingEntryAction.VIEW), null,
+			serviceContext);
 
 		Assert.assertNull(sharingEntry.getExpirationDate());
 
@@ -627,8 +638,8 @@ public class SharingEntryServiceTest {
 
 		sharingEntry = _sharingEntryService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(),
-			Arrays.asList(SharingEntryAction.VIEW), true, expirationDate,
-			serviceContext);
+			Collections.singletonList(SharingEntryAction.VIEW), true,
+			expirationDate, serviceContext);
 
 		Assert.assertEquals(expirationDate, sharingEntry.getExpirationDate());
 	}
@@ -649,7 +660,8 @@ public class SharingEntryServiceTest {
 
 		SharingEntry sharingEntry = _sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
-			true, Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
+			true, Collections.singletonList(SharingEntryAction.VIEW), null,
+			serviceContext);
 
 		Instant instant = Instant.now();
 
@@ -657,8 +669,8 @@ public class SharingEntryServiceTest {
 
 		_sharingEntryService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(),
-			Arrays.asList(SharingEntryAction.VIEW), true, expirationDate,
-			serviceContext);
+			Collections.singletonList(SharingEntryAction.VIEW), true,
+			expirationDate, serviceContext);
 	}
 
 	@Test
@@ -677,7 +689,8 @@ public class SharingEntryServiceTest {
 
 		SharingEntry sharingEntry = _sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
-			true, Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
+			true, Collections.singletonList(SharingEntryAction.VIEW), null,
+			serviceContext);
 
 		sharingEntry = _sharingEntryService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(),
@@ -709,7 +722,8 @@ public class SharingEntryServiceTest {
 
 		SharingEntry sharingEntry = _sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
-			true, Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
+			true, Collections.singletonList(SharingEntryAction.VIEW), null,
+			serviceContext);
 
 		ServiceTestUtil.setUser(_toUser);
 
@@ -734,7 +748,8 @@ public class SharingEntryServiceTest {
 
 		SharingEntry sharingEntry = _sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
-			true, Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
+			true, Collections.singletonList(SharingEntryAction.VIEW), null,
+			serviceContext);
 
 		ServiceTestUtil.setUser(_toUser);
 

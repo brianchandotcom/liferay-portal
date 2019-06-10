@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_CONDITION_FIELD</td>
-	<td>//li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@id,'condition-first') and contains(@class,'select-field-trigger')] | //li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@class,'condition-if')]//div[contains(@class,'select-field-trigger')]</td>
+	<td>//li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@id,'condition-first') and contains(@class,'select-field-trigger')] | //li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@class,'condition-if')]//ul[contains(@class,'select-field-trigger')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,7 +46,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_CONDITION_OPERATOR_FIELD</td>
-	<td>//li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@id,'condition-operator') and contains(@class,'select-field-trigger')] | //li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@class,'condition-operator')]//div[contains(@class,'select-field-trigger')]</td>
+	<td>//li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@id,'condition-operator') and contains(@class,'select-field-trigger')] | //li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@class,'condition-operator')]//ul[contains(@class,'select-field-trigger')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -56,7 +56,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_CONDITION_VALUE_TYPE_FIELD</td>
-	<td>//li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@class,'condition-type')]//div[contains(@class,'select-field-trigger')]</td>
+	<td>//li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@class,'condition-type')]//ul[contains(@class,'select-field-trigger')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -66,7 +66,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_CONDITION_VALUE_FIELD</td>
-	<td>//li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@data-fieldname,'condition-second-operand-options')]//div[contains(@id,'condition-second-oper') and contains(@class,'select-field-trigger')] | //li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@class,'condition-type-value')]//div[contains(@class,'option-selected')]</td>
+	<td>//li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@data-field-name,'condition-second-operand-options')]//div[contains(@id,'condition-second-oper') and contains(@class,'select-field-trigger')] | //li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@class,'condition-type-value')]//div[contains(@class,'option-selected')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -86,7 +86,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_ACTION_FIELD</td>
-	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@id,'target') and contains(@class,'select-field-trigger')] | //li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@class,'select-field-trigger')]</td>
+	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@id,'target') and contains(@class,'select-field-trigger')] | //li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//ul[contains(@class,'select-field-trigger')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -96,7 +96,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_ACTION_TARGET_FIELD</td>
-	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@id,'action') and contains(@class,'select-field-trigger')]/div | //li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@class,'target-action')]//div[contains(@class,'select-field-trigger')]/div</td>
+	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@id,'action') and contains(@class,'select-field-trigger')]/div | //li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@class,'target-action')]//ul[contains(@class,'select-field-trigger')]/div</td>
 	<td></td>
 </tr>
 <tr>
@@ -106,7 +106,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_JUMP_TO_PAGE_ACTION_TARGET</td>
-	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@class,'target-action')]//div[contains(@class,'select-field-trigger')]/div</td>
+	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@class,'target-action')]//ul[contains(@class,'select-field-trigger')]/div</td>
 	<td></td>
 </tr>
 <tr>
@@ -127,7 +127,7 @@
 <!--RULE_BUILDER_AUTOFILL-->
 <tr>
 	<td>RULE_BUILDER_AUTOFILL_OUTPUT_FIELD</td>
-	<td>//div[contains(@class,'action-rule-data-provider')]//div[contains(@class,'parameter-output')]//div[contains(@class,'field-trigger')]</td>
+	<td>//div[contains(@class,'action-rule-data-provider')]//div[contains(@class,'parameter-output')]//ul[contains(@class,'field-trigger')]</td>
 	<td></td>
 </tr>
 <tr>

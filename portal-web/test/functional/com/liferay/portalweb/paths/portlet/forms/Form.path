@@ -191,12 +191,12 @@
 </tr>
 <tr>
 	<td>SETTINGS_TAB_WORKFLOW_CONFIGURATION_FIELD</td>
-	<td>//div[contains(@data-fieldname,'workflowDefinition')]//div[contains(@id,'workflowDefinition')]</td>
+	<td>//div[contains(@data-field-name,'workflowDefinition')]//div[contains(@id,'workflowDefinition')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_TAB_WORKFLOW_CONFIGURATION</td>
-	<td>//div[contains(@data-fieldname,'workflowDefinition')]//div[contains(@id,'workflowDefinition')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_workflowDefinition}')]</td>
+	<td>//div[contains(@data-field-name,'workflowDefinition')]//div[contains(@id,'workflowDefinition')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_workflowDefinition}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -207,12 +207,12 @@
 <!--FIELD-->
 <tr>
 	<td>FIELD_BODY</td>
-	<td>//div[contains(@class,'form-group')]//label[contains(text(),'${key_fieldName}')] | //div[contains(@data-fieldname,'${key_fieldName}')] | //div[contains(@class,'form-group')]//input[contains(@name,'${key_fieldName}')]/parent::div/parent::div</td>
+	<td>//div[contains(@class,'form-group')]//label[contains(text(),'${key_fieldName}')] | //div[contains(@data-field-name,'${key_fieldName}')] | //div[contains(@class,'form-group')]//input[contains(@name,'${key_fieldName}')]/parent::div/parent::div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FIELD_LABEL</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label | //div[contains(@class,'ddm-field-container')]//label[contains(text(),'${key_fieldName}')]</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//label | //div[contains(@class,'ddm-field-container')]//label[contains(text(),'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -274,47 +274,47 @@
 <!--DATA_PROVIDER_OUTPUT_PARAMETER-->
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_PATH_FIELD</td>
-	<td>//div[contains(@data-fieldname,'outputParameters')]//input[@type='text' and contains(@id,'outputParameters') and contains(@placeholder,'path')]</td>
+	<td>//div[contains(@data-field-name,'outputParameters')]//input[@type='text' and contains(@name,'outputParameters') and contains(@placeholder,'path')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_PATH_FIELD_2</td>
-	<td>//div[contains(@data-fieldname,'outputParameters')]/../following-sibling::div/div//input[@type='text' and contains(@id,'outputParameters') and contains(@placeholder,'path')]</td>
+	<td>//div[contains(@data-field-name,'outputParameters')]/../following-sibling::div/div//input[@type='text' and contains(@name,'outputParameters') and contains(@placeholder,'path')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_LABEL_FIELD</td>
-	<td>//div[contains(@data-fieldname,'outputParameters')]//input[@type='text' and contains(@id,'outputParameters') and contains(@placeholder,'label')]</td>
+	<td>//div[contains(@data-field-name,'outputParameters')]//input[@type='text' and contains(@name,'outputParameters') and contains(@placeholder,'label')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_LABEL_FIELD_2</td>
-	<td>//div[contains(@data-fieldname,'outputParameters')]/../following-sibling::div/div//input[@type='text' and contains(@id,'outputParameters') and contains(@placeholder,'label')]</td>
+	<td>//div[contains(@data-field-name,'outputParameters')]/../following-sibling::div/div//input[@type='text' and contains(@name,'outputParameters') and contains(@placeholder,'label')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD</td>
-	<td>//div[contains(@data-fieldname,'outputParameters')]//div[contains(@class,'select-field')]//div[contains(@id,'outputParameterType')]</td>
+	<td>//div[contains(@data-field-name,'outputParameters')]//div[contains(@data-field-name,'outputParameterType')]//button</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_2</td>
-	<td>//div[contains(@data-fieldname,'outputParameters')]/../following-sibling::div//div[contains(@class,'select-field')]//div[contains(@id,'outputParameterType')]</td>
+	<td>//div[contains(@data-field-name,'outputParameters')]/../following-sibling::div//div[contains(@class,'select-field')]//div[contains(@id,'outputParameterType')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_OPTIONS_LIST</td>
-	<td>//div[contains(@data-fieldname,'outputParameters')]//div[contains(@class,'select-field')]//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_outputParameterType}')]</td>
+	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//li[contains(.,'${key_outputParameterType}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_OPTIONS_LIST_2</td>
-	<td>//div[contains(@data-fieldname,'outputParameters')]/../following-sibling::div//div[contains(@class,'select-field')]//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_outputParameterType}')]</td>
+	<td>//div[contains(@data-field-name,'outputParameters')]/../following-sibling::div//div[contains(@class,'select-field')]//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_outputParameterType}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_REPEAT_ICON</td>
-	<td>//div[contains(@data-fieldname,'outputParameters')]/following-sibling::div[contains(@class,'field-repeatable')]//a[contains(@class,'add-button')]</td>
+	<td>//div[contains(@data-field-name,'outputParameters')]/following-sibling::div[contains(@class,'field-repeatable')]//a[contains(@class,'add-button')]</td>
 	<td></td>
 </tr>
 <tr>

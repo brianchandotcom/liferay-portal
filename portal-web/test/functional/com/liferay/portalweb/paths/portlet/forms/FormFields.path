@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>FIELD_ADD_SPECIFIC</td>
-	<td>//div[contains(@class,'form-field-container')][${key_repeatableFieldNumber}]//div[contains(@data-fieldname,'${key_fieldName}')]/../div[contains(@class,'form-field-repeatable-toolbar')]//a[contains(@class,'add-button')]</td>
+	<td>//div[contains(@class,'form-field-container')][${key_repeatableFieldNumber}]//div[contains(@data-field-name,'${key_fieldName}')]/../div[contains(@class,'form-field-repeatable-toolbar')]//a[contains(@class,'add-button')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -41,7 +41,7 @@
 </tr>
 <tr>
 	<td>CHECKBOX_LABEL</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label | //li[contains(.,'${key_fieldName}')]//label | //label[.//input[@type='checkbox' and contains(@id,'${key_fieldName}') or contains(@name,'${key_fieldName}')]]</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//label | //li[contains(.,'${key_fieldName}')]//label | //label[.//input[@type='checkbox' and contains(@id,'${key_fieldName}') or contains(@name,'${key_fieldName}')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -57,12 +57,12 @@
 <!--DATE-->
 <tr>
 	<td>DATE_FIELD</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//input[@type='text']</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REPEATABLE_HELP_TEXT</td>
-	<td>//div[contains(@class,'form-field-container')][${key_repeatableFieldNumber}]//div[contains(@data-fieldname,'${key_fieldName}')]//p[@class='liferay-ddm-form-field-tip'] | //div[contains(@class,'form-field-container')][${key_repeatableFieldNumber}]//div[contains(@data-fieldname,'${key_fieldName}')]/span</td>
+	<td>//div[contains(@class,'form-field-container')][${key_repeatableFieldNumber}]//div[contains(@data-field-name,'${key_fieldName}')]//p[@class='liferay-ddm-form-field-tip'] | //div[contains(@class,'form-field-container')][${key_repeatableFieldNumber}]//div[contains(@data-field-name,'${key_fieldName}')]/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -73,7 +73,7 @@
 <!--HELP TEXT-->
 <tr>
 	<td>HELP_TEXT</td>
-	<td>//div[contains(@class,'form-group')]//span[contains(@class,'form-text') and contains(text(),'${value1}')] | //div[contains(@data-fieldname,'${key_fieldName}')]//p[@class='liferay-ddm-form-field-tip'] | //div[contains(@data-fieldname,'${key_fieldName}')]//span[contains(@class, 'form-text')]</td>
+	<td>//div[contains(@class,'form-group')]//span[contains(@class,'form-text') and contains(text(),'${value1}')] | //div[contains(@data-field-name,'${key_fieldName}')]//p[@class='liferay-ddm-form-field-tip'] | //div[contains(@data-field-name,'${key_fieldName}')]//span[contains(@class, 'form-text')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -125,17 +125,17 @@
 <!--GRID-->
 <tr>
 	<td>GRID_OPTIONS_OPTION_DELETE_ROW_BUTTON</td>
-	<td>//div[contains(@class,'form-group')]//label[contains(text(),'${key_gridField}')]/..//div[@class='ddm-field-options'][${key_rowNumber}]//button[contains(@class,'close')] | //div[contains(@data-fieldname,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//button[contains(@class,'close-modal')]</td>
+	<td>//div[contains(@class,'form-group')]//label[contains(text(),'${key_gridField}')]/..//div[@class='ddm-field-options'][${key_rowNumber}]//button[contains(@class,'close')] | //div[contains(@data-field-name,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//button[contains(@class,'close-modal')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>GRID_OPTIONS_OPTION_VALUE_FIELD</td>
-	<td>//div[contains(@class,'form-group')]//label[contains(text(),'${key_gridField}')]/..//div[@class='ddm-field-options'][${key_rowNumber}]//input[contains(@class,'ddm-field-text')] | //div[contains(@data-fieldname,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//input</td>
+	<td>//div[contains(@class,'form-group')]//label[contains(text(),'${key_gridField}')]/..//div[@class='ddm-field-options'][${key_rowNumber}]//input[contains(@class,'ddm-field-text')] | //div[contains(@data-field-name,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>GRID_OPTIONS_OPTION_NAME_FIELD</td>
-	<td>//div[contains(@class,'form-group')]//label[contains(text(),'${key_gridField}')]/..//div[@class='ddm-field-options'][${key_rowNumber}]//input[contains(@class,'key-value-input')] | //div[contains(@data-fieldname,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//div[contains(@class, 'key-value-editor')]</td>
+	<td>//div[contains(@class,'form-group')]//label[contains(text(),'${key_gridField}')]/..//div[@class='ddm-field-options'][${key_rowNumber}]//input[contains(@class,'key-value-input')] | //div[contains(@data-field-name,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//div[contains(@class, 'key-value-editor')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -145,12 +145,12 @@
 </tr>
 <tr>
 	<td>GRID_OPTIONS_DRAG_ICON_1</td>
-	<td>//div[contains(@data-fieldname,'${key_gridField}sOption')]/../../div[${key_rowNumber1}]//div[contains(@class,'drag-handle')]</td>
+	<td>//div[contains(@data-field-name,'${key_gridField}sOption')]/../../div[${key_rowNumber1}]//div[contains(@class,'drag-handle')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>GRID_OPTIONS_DRAG_ICON_2</td>
-	<td>//div[contains(@data-fieldname,'${key_gridField}sOption')]/../../div[${key_rowNumber2}]//div[contains(@class,'drag-handle')]</td>
+	<td>//div[contains(@data-field-name,'${key_gridField}sOption')]/../../div[${key_rowNumber2}]//div[contains(@class,'drag-handle')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -182,7 +182,7 @@
 </tr>
 <tr>
 	<td>REPEATABLE_TEXT_MULTILINE_LABEL</td>
-	<td>//div[contains(@class,'form-field-container')][${key_repeatableFieldNumber}]//div[contains(@data-fieldname,'${key_fieldName}')]//label[contains(.,'${key_fieldLabel}')]</td>
+	<td>//div[contains(@class,'form-field-container')][${key_repeatableFieldNumber}]//div[contains(@data-field-name,'${key_fieldName}')]//label[contains(.,'${key_fieldLabel}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -218,7 +218,7 @@
 <!--PARAGRAPH-->
 <tr>
 	<td>PARAGRAPH_BODY_TEXT_CONTENT</td>
-	<td>//div[contains(@class,'paragraph') and contains(@data-fieldname,'${key_fieldName}')]//div</td>
+	<td>//div[contains(@class,'paragraph') and contains(@data-field-name,'${key_fieldName}')]//div</td>
 	<td></td>
 </tr>
 <tr>
@@ -228,7 +228,7 @@
 </tr>
 <tr>
 	<td>PARAGRAPH_TITLE</td>
-	<td>//div[contains(@class,'paragraph') and contains(@data-fieldname,'${key_fieldName}')]/label</td>
+	<td>//div[contains(@class,'paragraph') and contains(@data-field-name,'${key_fieldName}')]/label</td>
 	<td></td>
 </tr>
 <tr>
@@ -250,27 +250,27 @@
 <!--SELECT-->
 <tr>
 	<td>SELECT_FIELD</td>
-	<td>//label[contains(text(),'${key_fieldName}') or contains(@for,'${key_fieldName}')]/following-sibling::div[contains(@class,'ddm-select-dropdown') or contains(@class,'input-group-container')]//div[contains(@class,'select-field-trigger')]</td>
+	<td>//label[contains(text(),'${key_fieldName}') or contains(@for,'${key_fieldName}')]/following-sibling::div[contains(@class,'ddm-select-dropdown') or contains(@class,'input-group-container')]//button</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_FIELD_DATA_PROVIDER_LIST</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//div[contains(@class,'form-builder-select-field')]//li[contains(.,'${key_selectOption}')] | //div[contains(@class,'dropdown-menu')]//li[contains(.,'${key_selectOption}')]</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//div[contains(@class,'form-builder-select-field')]//li[contains(.,'${key_selectOption}')] | //div[contains(@class,'dropdown-menu')]//li[contains(.,'${key_selectOption}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_FIELD_OPTIONS_LIST</td>
-	<td>//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_selectOption}')]</td>
+	<td>//div[contains(@class, 'dropdown-menu') and contains(@class, 'show')]//li[contains(.,'${key_selectOption}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_FIELD_MULTIPLE_OPTION</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//span[contains(.,'${key_selectOption}')]</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//span[contains(.,'${key_selectOption}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_FIELD_MULTIPLE_OPTION_REMOVE</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//span[contains(.,'${key_selectOption}')]//button[contains(@class,'trigger-label-item-close')]</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//span[contains(.,'${key_selectOption}')]//button[contains(@class,'trigger-label-item-close')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -286,12 +286,12 @@
 <!--SWITCHER-->
 <tr>
 	<td>SWITCHER</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//span[@class='toggle-switch-bar'] | //span[contains(text(),'${key_fieldName}')]/preceding-sibling::span[@class='toggle-switch-handle'] | //span[contains(text(),'${key_fieldName}')]</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//span[@class='toggle-switch-bar'] | //span[contains(text(),'${key_fieldName}')]/preceding-sibling::span[@class='toggle-switch-handle'] | //span[contains(text(),'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SWITCHER_OPTION</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label[contains(@class,'${key_switcherOption}')]//span[@class='toggle-switch-bar']</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//label[contains(@class,'${key_switcherOption}')]//span[@class='toggle-switch-bar']</td>
 	<td></td>
 </tr>
 <tr>
@@ -302,12 +302,12 @@
 <!--VALIDATION-->
 <tr>
 	<td>VALIDATION_ARGUMENT</td>
-	<td>//div[contains(@data-fieldname,'validation')]//div[contains(@class,'select-field-trigger')] | //div[contains(@class,'validation')]//div[contains(@class,'select-field-trigger')]</td>
+	<td>//div[contains(@data-field-name,'validation')]//div[contains(@class,'select-field-trigger')] | //div[contains(@class,'validation')]//div[contains(@class,'select-field-trigger')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VALIDATION_ARGUMENT_OPTION</td>
-	<td>//div[contains(@data-fieldname,'validation')]//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_validationArgument}')] | //div[contains(@class,'dropdown-menu') and contains(@class,'show')]//ul[contains(@class,'list-unstyled')]//button[contains(text(),'${key_validationArgument}')]</td>
+	<td>//div[contains(@data-field-name,'validation')]//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_validationArgument}')] | //div[contains(@class,'dropdown-menu') and contains(@class,'show')]//ul[contains(@class,'list-unstyled')]//button[contains(text(),'${key_validationArgument}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -365,17 +365,17 @@
 <!--UPLOAD-->
 <tr>
 	<td>UPLOAD_FIELD</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//input[@id='inputFile']</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[@id='inputFile']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>UPLOAD_FILE_NAME</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//h4[contains(.,'${key_uploadFileName}')]</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//h4[contains(.,'${key_uploadFileName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>UPLOAD_DOWNLOAD_ICON</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//a[@download='${key_uploadFileName}']</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//a[@download='${key_uploadFileName}']</td>
 	<td></td>
 </tr>
 <tr>

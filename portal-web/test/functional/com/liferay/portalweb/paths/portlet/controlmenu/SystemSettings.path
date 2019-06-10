@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>SECURITY_CREDENTIAL_FIELD</td>
-	<td>//div[contains(@data-fieldname,'securityCredential')]//input[@type='password' and @value='TEMP_OBFUSCATION_VALUE']</td>
+	<td>//div[contains(@data-field-name,'securityCredential')]//input[@type='password' and @value='TEMP_OBFUSCATION_VALUE']</td>
 	<td></td>
 </tr>
 <tr>
@@ -51,7 +51,7 @@
 <!--ASSETS-->
 <tr>
 	<td>ASSETS_DYNAMIC_EXPORT_LIMIT</td>
-	<td>//div[contains(@data-fieldname,'dynamicExportLimit')]//input[@type='text']</td>
+	<td>//div[contains(@data-field-name,'dynamicExportLimit')]//input[@type='text']</td>
 	<td></td>
 </tr>
 </tbody>

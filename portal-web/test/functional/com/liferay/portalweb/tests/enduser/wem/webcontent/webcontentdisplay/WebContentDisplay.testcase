@@ -885,6 +885,10 @@ definition {
 		property test.name.skip.portal.instance = "WebContentDisplay#ViewAllSettingsEnabledWCDConfiguration";
 		property testray.component.names = "Web Content Display";
 
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name");
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",

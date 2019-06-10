@@ -1,31 +1,43 @@
+import '../FieldBase/FieldBase.es';
+import './CaptchaRegister.soy.js';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-
-import templates from './captcha.soy';
+import templates from './Captcha.soy.js';
+import {Config} from 'metal-state';
 
 /**
- * Captcha Component
+ * Captcha.
+ * @extends Component
  */
 
 class Captcha extends Component {}
 
+Soy.register(Captcha, templates);
+
 Captcha.STATE = {
-	html: {
-		isHtml: true,
-		value: ''
-	}
+	/**
+	 * @default false
+	 * @memberof FieldBase
+	 * @type {?bool}
+	 */
+
+	evaluable: Config.bool().value(false),
+
+	/**
+	 * @default undefined
+	 * @memberof Captcha
+	 * @type {?(string|undefined)}
+	 */
+
+	spritemap: Config.string(),
+
+	/**
+	 * @default 'captcha'
+	 * @memberof Text
+	 * @type {?(string|undefined)}
+	 */
+
+	type: Config.string().value('captcha')
 };
-
-// Register component
-
-Soy.register(Captcha, templates, 'render');
-
-Captcha.Soy = Soy;
-
-if (!window.DDMCaptcha) {
-	window.DDMCaptcha = {};
-}
-
-window.DDMCaptcha.render = Captcha;
 
 export default Captcha;

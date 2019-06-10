@@ -1,22 +1,28 @@
-{namespace DDMCaptcha}
+{namespace Captcha}
 
-/**
- * Defines the delegated template for the captcha field.
- */
-{deltemplate ddm.field variant="'captcha'"}
-	{call .render data="all" /}
-{/deltemplate}
-
-/**
- * Prints the DDM form captcha field.
- */
 {template .render}
-	{@param html: html}
 	{@param name: string}
-	{@param visible: bool}
+	{@param html: html}
+	{@param? spritemap: string}
 
-	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-captcha" data-fieldname="{$name}">
-		{$html}
-		<input id="{$name}" type="hidden"/>
-	</div>
+	{call FieldBase.render}
+		{param contentRenderer kind="html"}
+			{call .content}
+				{param html: $html /}
+				{param name: $name /}
+			{/call}
+		{/param}
+		{param name: $name /}
+		{param spritemap: $spritemap /}
+		{param visible: true /}
+	{/call}
+{/template}
+
+{template .content}
+	{@param? name: string}
+	{@param html: html}
+
+	{$html}
+
+	<input id="{$name}" type="hidden" />
 {/template}

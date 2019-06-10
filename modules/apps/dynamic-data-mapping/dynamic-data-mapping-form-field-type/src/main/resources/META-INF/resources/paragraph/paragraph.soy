@@ -1,26 +1,41 @@
-{namespace DDMParagraph}
+{namespace Paragraph}
 
-/**
- * Defines the delegated template for the paragraph field.
- */
-{deltemplate ddm.field variant="'paragraph'"}
-	{call .render data="all" /}
-{/deltemplate}
-
-/**
- * Prints the DDM form paragraph field.
- */
 {template .render}
-	{@param label: string}
 	{@param name: string}
-	{@param text: html}
-	{@param visible: bool}
+	{@param? id: string}
+	{@param? label: string}
+	{@param? text: html}
+	{@param? repeatable: bool}
+	{@param? required: bool}
+	{@param? showLabel: bool}
+	{@param? spritemap: string}
+	{@param? tooltip: string}
+	{@param? visible: bool}
 
-	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-paragraph" data-fieldname="{$name}">
-		{if $label}
-			<label for="{$name}">{$label}</label>
-		{/if}
+	{call FieldBase.render}
+		{param contentRenderer kind="html"}
+			{call .content}
+				{param name: $name /}
+				{param text: $text /}
+			{/call}
+		{/param}
+		{param id: $id /}
+		{param label: $label /}
+		{param name: $name /}
+		{param repeatable: $repeatable /}
+		{param required: $required /}
+		{param showLabel: $showLabel /}
+		{param spritemap: $spritemap /}
+		{param tooltip: $tooltip /}
+		{param visible: $visible /}
+	{/call}
+{/template}
 
+{template .content}
+	{@param? name: string}
+	{@param? text: html}
+
+	<div class="form-group liferay-ddm-form-field-paragraph" data-fieldname="{$name}">
 		<div class="liferay-ddm-form-field-paragraph-text">{$text}</div>
 	</div>
 {/template}

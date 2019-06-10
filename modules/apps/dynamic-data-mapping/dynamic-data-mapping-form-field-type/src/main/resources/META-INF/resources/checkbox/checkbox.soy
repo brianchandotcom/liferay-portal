@@ -1,118 +1,82 @@
-{namespace DDMCheckbox}
+{namespace Checkbox}
 
-/**
- * Defines the delegated template for the checkbox field.
- */
-{deltemplate ddm.field variant="'checkbox'"}
-	{call .render data="all" /}
-{/deltemplate}
-
-/**
- * Prints the DDM form checkbox field.
- */
 {template .render}
-	{@param label: string}
 	{@param name: string}
-	{@param pathThemeImages: string}
-	{@param readOnly: bool}
-	{@param showAsSwitcher: bool}
-	{@param showLabel: bool}
-	{@param value: ?}
-	{@param visible: bool}
+	{@param? displayErrors: bool}
+	{@param? errorMessage: string}
+	{@param? handleInputChangeEvent: any}
+	{@param? id: string}
+	{@param? label: string}
+	{@param? readOnly: bool}
+	{@param? repeatable: bool}
 	{@param? required: bool}
+	{@param? showAsSwitcher: bool}
+	{@param? showLabel: bool}
+	{@param? spritemap: string}
 	{@param? tip: string}
+	{@param? value: ?}
+	{@param? visible: bool}
+	{@param? valid: bool}
 
-	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-checkbox" data-fieldname="{$name}">
-		{if $showAsSwitcher}
-			<label aria-checked="{$value ? 'true' : 'false'}" for="{$name}" role="checkbox">
-				<input class="toggle-switch"
-					{if $value}checked{/if}
-					{if $readOnly}disabled{/if}
-					id="{$name}"
-					name="{$name}"
-					type="checkbox"
-					value="true"
-				/>
-
-				<span aria-hidden="true" class="toggle-switch-bar">
-					<span class="toggle-switch-handle"></span>
-				</span>
-
-				{if $showLabel or $required}
-					<span class="toggle-switch-text toggle-switch-text-right">
-						{if $showLabel}
-							{$label}{sp}
-						{/if}
-
-						{if $required}
-							<svg aria-hidden="true"
-								class="lexicon-icon lexicon-icon-asterisk reference-mark">
-							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk"/>
-						</svg>
-						{/if}
-					</span>
-				{/if}
-			</label>
-
-			{if $tip}
-				<span class="form-text">{$tip}</span>
-			{/if}
-		{else}
-			<div class="custom-checkbox custom-control">
-				{if $showLabel or $required}
-					<label for="{$name}">
-				{/if}
-
-				<input {if $value}checked{/if}
-					{if $readOnly}disabled{/if}
-					class="custom-control-input"
-					id="{$name}"
-					name="{$name}"
-					type="checkbox"
-					value="true"
-				/>
-
-				{if $showLabel}
-					<span class="custom-control-label">
-						<span class="custom-control-label-text">
-							{$label}{sp}
-						</span>
-					</span>
-				{/if}
-
-				{if $showLabel or $required}
-						{if $required}
-							<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
-								<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk" />
-							</svg>
-						{/if}
-					</label>
-				{/if}
-			</div>
-
-			{if $tip}
-				<span class="form-text">{$tip}</span>
-			{/if}
-		{/if}
-
-		{if not $value}
-			{call .hidden_input}
-				{param name: $name /}
-				{param value: $value /}
+	{call FieldBase.render}
+		{param contentRenderer kind="html"}
+			{call .content}
+				{param handleInputChangeEvent: $handleInputChangeEvent /}
+				{param checked: $value /}
+				{param disabled: $readOnly /}
+				{param label: $label /}
+				{param showAsSwitcher: $showAsSwitcher /}
+				{param showLabel: $showLabel /}
 			{/call}
-		{/if}
-	</div>
-
+		{/param}
+		{param displayErrors: $displayErrors /}
+		{param errorMessage: $errorMessage /}
+		{param id: $id /}
+		{param label: $label /}
+		{param name: $name /}
+		{param repeatable: $repeatable /}
+		{param required: $required /}
+		{param showLabel: not $showAsSwitcher and $showLabel /}
+		{param spritemap: $spritemap /}
+		{param tip: $tip /}
+		{param valid: $valid /}
+		{param visible: $visible /}
+	{/call}
 {/template}
 
-/**
- * Prints hidden input.
- */
-{template .hidden_input}
-	{@param name: string}
+{template .content}
+	{@param? checked: bool}
+	{@param? disabled: bool}
+	{@param? handleInputChangeEvent: any}
+	{@param? label: string}
+	{@param? showAsSwitcher: bool}
 
-	<input name="{$name}"
-		type="hidden"
-		value="false"
-	/>
+	{if $showAsSwitcher}
+		<label class="ddm-toggle-switch toggle-switch">
+			<input
+				{if $checked}
+					checked
+				{/if}
+
+				class="toggle-switch-check"
+				data-onchange="{$handleInputChangeEvent}"
+
+				{if $disabled}
+					disabled
+				{/if}
+
+				type="checkbox"
+			/>
+
+			<span aria-hidden="true" class="toggle-switch-bar">
+				<span class="toggle-switch-handle"></span>
+				<span class="toggle-switch-text toggle-switch-text-right">{$label}</span>
+			</span>
+		</label>
+	{else}
+		{call ClayCheckbox.render}
+			{param disabled: $disabled /}
+			{param checked: $checked /}
+		{/call}
+	{/if}
 {/template}

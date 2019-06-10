@@ -1,88 +1,111 @@
-{namespace DDMText}
+{namespace Text}
 
-/**
- * Defines the delegated template for the text field.
- */
-{deltemplate ddm.field variant="'text'"}
-	{call .render data="all" /}
-{/deltemplate}
-
-/**
- * Prints the DDM form text field.
- */
 {template .render}
 	{@param name: string}
-	{@param pathThemeImages: string}
-	{@param placeholder: string}
-	{@param value: ?}
-	{@param visible: bool}
-	{@param? dir: string}
+	{@param? _handleFieldBlurred: any}
+	{@param? _handleFieldChanged: any}
+	{@param? _handleFieldFocused: any}
+	{@param? _value: string}
+	{@param? displayErrors: bool}
 	{@param? displayStyle: string}
+	{@param? errorMessage: string}
+	{@param? id: string}
 	{@param? label: string}
+	{@param? placeholder: string}
 	{@param? predefinedValue: string}
 	{@param? readOnly: bool}
+	{@param? repeatable: bool}
 	{@param? required: bool}
 	{@param? showLabel: bool}
+	{@param? spritemap: string}
 	{@param? tip: string}
 	{@param? tooltip: string}
+	{@param? valid: bool}
+	{@param? visible: bool}
 
-	{let $displayValue: $value ? $value : $predefinedValue ? $predefinedValue : '' /}
+	{call FieldBase.render}
+		{param contentRenderer kind="html"}
+			{call .content}
+				{param _handleFieldBlurred: $_handleFieldBlurred /}
+				{param _handleFieldChanged: $_handleFieldChanged /}
+				{param _handleFieldFocused: $_handleFieldFocused /}
+				{param displayStyle: $displayStyle /}
+				{param id: $id /}
+				{param name: $name /}
+				{param placeholder: $placeholder /}
+				{param predefinedValue: $predefinedValue /}
+				{param readOnly: $readOnly /}
+				{param value: $_value /}
+			{/call}
+		{/param}
+		{param displayErrors: $displayErrors /}
+		{param errorMessage: $errorMessage /}
+		{param id: $id /}
+		{param label: $label /}
+		{param name: $name /}
+		{param readOnly: $readOnly /}
+		{param repeatable: $repeatable /}
+		{param required: $required /}
+		{param showLabel: $showLabel /}
+		{param spritemap: $spritemap /}
+		{param tip: $tip /}
+		{param tooltip: $tooltip /}
+		{param valid: $valid /}
+		{param visible: $visible /}
+	{/call}
+{/template}
 
-	<div class="form-group {$visible ? '' : 'hide'} liferay-ddm-form-field-text"
-		data-fieldname="{$name}">
-		{if $showLabel or $required}
-			<label for="{$name}">
-				{if $showLabel}
-					{$label}{sp}
-				{/if}
-				{if $required}
-					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
-						<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk" />
-					</svg>
-				{/if}
-			</label>
+{template .content}
+	{@param name: string}
+	{@param? _handleFieldBlurred: any}
+	{@param? _handleFieldChanged: any}
+	{@param? _handleFieldFocused: any}
+	{@param? displayStyle: string}
+	{@param? id: string}
+	{@param? placeholder: string}
+	{@param? predefinedValue: string}
+	{@param? readOnly: bool}
+	{@param? value: string}
+
+	{let $attributes kind="attributes"}
+		class="ddm-field-text form-control"
+
+		name="{$name}"
+
+		type="text"
+
+		data-oninput="{$_handleFieldChanged}"
+
+		data-onfocus="{$_handleFieldFocused}"
+
+		{if $id}
+			id="{$id}"
 		{/if}
 
-		{if $tooltip}
-			<button
-				class="btn btn-monospaced btn-unstyled trigger-tooltip"
-				data-original-title="{$tooltip}"
-				data-toggle="popover"
-				title="{$tooltip}"
-				type="button"
-			>
-				<svg class="lexicon-icon lexicon-icon-question-circle-full">
-					<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#question-circle-full"></use>
-				</svg>
-			</button>
+		{if $placeholder}
+			placeholder="{$placeholder}"
 		{/if}
 
-		<div class="input-group">
-			{if $displayStyle == 'multiline'}
-				<textarea class="field form-control"
-					{if $dir}dir="{$dir}"{/if} id="{$name}"
-					{if $readOnly}disabled{/if}
-					name="{$name}"
-					placeholder="{$placeholder}">
+		type="text"
 
-					{$displayValue}
-				</textarea>
-			{else}
-				<div class="input-group-item">
-					<input class="field form-control"
-						{if $dir}dir="{$dir}"{/if}
-						{if $readOnly}disabled{/if}
-						id="{$name}"
-						name="{$name}"
-						placeholder="{$placeholder}"
-						type="text"
-						value="{$displayValue}">
-				</div>
-			{/if}
-		</div>
+		data-onblur="{$_handleFieldBlurred}"
 
-		{if $tip}
-			<span class="form-text">{$tip}</span>
+		data-oninput="{$_handleFieldChanged}"
+
+		{if $readOnly}
+			disabled="disabled"
 		{/if}
-	</div>
+
+		{if $value}
+			value="{$value}"
+		{else}
+			value="{$predefinedValue}"
+		{/if}
+	{/let}
+
+	{if $displayStyle == 'singleline'}
+		<input {$attributes}>
+	{else}
+		<textarea {$attributes}></textarea>
+	{/if}
 {/template}

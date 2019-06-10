@@ -1,93 +1,124 @@
-{namespace DDMGrid}
+{namespace Grid}
 
-/**
- * Defines the delegated template for the grid field.
- */
-{deltemplate ddm.field variant="'grid'"}
-	{call .render data="all" /}
-{/deltemplate}
-
-/**
- * Prints the DDM form grid field.
- */
 {template .render}
 	{@param columns: list<[label: string, value: ?]>}
-	{@param label: string}
 	{@param name: string}
-	{@param pathThemeImages: string}
-	{@param readOnly: bool}
 	{@param rows: list<[label: string, value: ?]>}
-	{@param showLabel: bool}
 	{@param value: ?}
-	{@param visible: bool}
-	{@param? dir: string}
-	{@param? focusTarget: [row: int, index: int]}
+	{@param? _handleFieldChanged: any}
+	{@param? _handleFieldFocused: any}
+	{@param? displayErrors: bool}
+	{@param? errorMessage: string}
+	{@param? id: string}
+	{@param? label: string}
+	{@param? placeholder: string}
+	{@param? readOnly: bool}
+	{@param? repeatable: bool}
 	{@param? required: bool}
+	{@param? showLabel: bool}
+	{@param? spritemap: string}
 	{@param? tip: string}
+	{@param? valid: bool}
+	{@param? visible: bool}
 
-	<div class="form-group{$visible ? '' : ' hide'}" data-fieldname="{$name}">
-		{if $showLabel or $required}
-			<label>
-				{if $showLabel}
-					{$label}{sp}
-				{/if}
+	{call FieldBase.render}
+		{param contentRenderer kind="html"}
+			{call .content}
+				{param _handleFieldChanged: $_handleFieldChanged /}
+				{param _handleFieldFocused: $_handleFieldFocused /}
+				{param columns: $columns /}
+				{param disabled: $readOnly /}
+				{param id: $id /}
+				{param name: $name /}
+				{param placeholder: $placeholder /}
+				{param rows: $rows /}
+				{param value: $value /}
+			{/call}
+		{/param}
+		{param displayErrors: $displayErrors /}
+		{param errorMessage: $errorMessage /}
+		{param id: $id /}
+		{param label: $label /}
+		{param name: $name /}
+		{param repeatable: $repeatable /}
+		{param required: $required /}
+		{param showLabel: $showLabel /}
+		{param spritemap: $spritemap /}
+		{param tip: $tip /}
+		{param valid: $valid /}
+		{param visible: $visible /}
+	{/call}
+{/template}
 
-				{if $required}
-					<svg aria-hidden="true"
-						class="lexicon-icon lexicon-icon-asterisk reference-mark">
-						<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk"/>
-					</svg>
-				{/if}
-			</label>
+{template .content}
+	{@param columns: list<[label: string, value: ?]>}
+	{@param name: string}
+	{@param rows: list<[label: string, value: ?]>}
+	{@param value: ?}
+	{@param? _handleFieldChanged: any}
+	{@param? _handleFieldFocused: any}
+	{@param? disabled: bool}
+	{@param? readOnly: bool}
+
+	<div class="liferay-ddm-form-field-grid table-responsive">
+		{if not $readOnly}
+			{call .hidden_grid data="all"}
+				{param name: $name /}
+				{param rows: $rows /}
+				{param value: $value /}
+			{/call}
 		{/if}
 
-		<div class="liferay-ddm-form-field-grid table-responsive">
-			{if not $readOnly}
-				{call .hidden_grid data="all"}
-					{param dir: $dir /}
-					{param name: $name /}
-					{param rows: $rows /}
-					{param value: $value /}
-				{/call}
-			{/if}
+		<table class="table table-autofit table-list table-striped">
+			<thead>
+				<tr>
+					<th></th>
 
-			<table class="table table-autofit table-list table-striped">
-				<thead>
-					<tr>
-						<th></th>
-						{foreach $column in $columns}
+					{foreach $column in $columns}
+						{if $column.value}
 							<th>{$column.label}</th>
-						{/foreach}
-					</tr>
-				</thead>
+						{/if}
+					{/foreach}
+				</tr>
+			</thead>
 
-				<tbody>
-					{foreach $row in $rows}
-						<tr name="{$name}_{$row.value}">
+			<tbody>
+				{foreach $row in $rows}
+					{if $row.value}
+						<tr name="{$row.value}">
 							<td>{$row.label}</td>
+
 							{foreach $column in $columns}
-								<td>
-									<input {if $focusTarget and ($focusTarget.row == $name+'_'+$row.value and $focusTarget.index == index($column))}autoFocus{/if}
-										{if $column.value == $value[$row.value]}checked{/if}
-										class="form-builder-grid-field"
-										data-row="{$row.value}"
-										data-row-index="{index($column)}"
-										{if $readOnly}disabled{/if}
-										name="{$name}_{$row.value}"
-										type="radio"
-										value="{$column.value}"
-									/>
-								</td>
+								{if $column.value}
+									<td>
+										{let $inputAttributes kind="attributes"}
+											{if $column.value == $value[$row.value]}
+												checked
+											{/if}
+
+											class="form-builder-grid-field"
+											data-onchange="{$_handleFieldChanged}"
+											data-onfocus="{$_handleFieldFocused}"
+											data-row-index="{index($column)}"
+
+											{if $disabled}
+												disabled
+											{/if}
+
+											name="{$row.value}"
+											type="radio"
+											value="{$column.value}"
+										{/let}
+
+										<input {$inputAttributes} />
+									</td>
+								{/if}
 							{/foreach}
 						</tr>
-					{/foreach}
-				</tbody>
-			</table>
-		</div>
-
-		{if $tip}
-			<span class="form-text">{$tip}</span>
-		{/if}
+					{/if}
+				{/foreach}
+			</tbody>
+		</table>
 	</div>
 {/template}
 
@@ -98,17 +129,18 @@
 	{@param name: string}
 	{@param rows: list<[label: string, value: ?]>}
 	{@param value: ?}
-	{@param? dir: string}
 
 	{foreach $row in $rows}
 		{let $inputValue: $value[$row.value] ? $row.value + ';' + $value[$row.value] : '' /}
 
 		<input
 			class="form-control"
-			{if $dir}dir="{$dir}"{/if}
 			name="{$name}"
 			type="hidden"
-			{if $inputValue}value="{$inputValue}"{/if}
+
+			{if $inputValue}
+				value="{$inputValue}"
+			{/if}
 		/>
 	{/foreach}
 {/template}

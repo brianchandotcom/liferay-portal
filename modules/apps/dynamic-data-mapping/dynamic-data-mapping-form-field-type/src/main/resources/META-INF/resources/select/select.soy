@@ -1,231 +1,189 @@
-{namespace DDMSelect}
+{namespace Select}
 
-/**
- * Defines the delegated template for the select field.
- */
-{deltemplate ddm.field variant="'select'"}
-	{call .render data="all" /}
-{/deltemplate}
-
-/**
- * Prints the DDM form select field.
- */
 {template .render}
 	{@param name: string}
-	{@param options: list<[label: string, value: string]>}
-	{@param pathThemeImages: string}
-	{@param predefinedValue: list<string>}
-	{@param strings: [chooseAnOption: string, chooseOptions: string, search: string, emptyList: string]}
-	{@param value: list<string>}
-	{@param visible: bool}
-	{@param? dir: string}
-	{@param? fixedOptions: list<[label: string, value: string]>}
+	{@param spritemap: string}
+	{@param value: ?}
+	{@param? _handleExpandedChanged: any}
+	{@param? _handleItemClicked: any}
+	{@param? _handleLabelClosed: any}
+	{@param? dataSourceType: string}
+	{@param? displayErrors: bool}
+	{@param? errorMessage: string}
+	{@param? expanded: bool}
+	{@param? id: string}
 	{@param? label: string}
-	{@param? labelCloseIcon: html}
 	{@param? multiple: bool}
-	{@param? open: bool}
+	{@param? options: list<?>}
+	{@param? predefinedValue: ?}
 	{@param? readOnly: bool}
+	{@param? repeatable: bool}
 	{@param? required: bool}
-	{@param? selectCaretDoubleIcon: html}
-	{@param? selectSearchIcon: html}
-	{@param? showSearch: bool}
-	{@param? showPlaceholderOption: bool}
 	{@param? showLabel: bool}
 	{@param? tip: string}
-	{let $displayValues: length($value) > 0 ? $value : length($predefinedValue) > 0 ? $predefinedValue : null /}
+	{@param? valid: bool}
+	{@param? visible: bool}
 
-	<div class="form-group{$visible ? '' : ' hide'}" data-fieldname="{$name}">
-		<div class="input-select-wrapper">
-			{call .select_label data="all" /}
+	{let $displayValues: length($value) > 0 ? $value : $predefinedValue and length($predefinedValue) > 0 ? $predefinedValue : [] /}
 
-			<div class="form-builder-select-field input-group-container">
-				{if not $readOnly and $displayValues}
-					{call .hidden_select}
-						{param dir: $dir /}
-						{param displayValues: $displayValues /}
-						{param multiple: $multiple /}
-						{param name: $name /}
-						{param options: $options /}
-						{param strings: $strings /}
-					{/call}
-				{/if}
-				{if ($fixedOptions) and (length($fixedOptions) > 0)}
-					{if not $readOnly and $displayValues}
-						{call .hidden_select}
-							{param dir: $dir /}
-							{param displayValues: $displayValues /}
-							{param multiple: $multiple /}
-							{param name: $name /}
-							{param options: $fixedOptions /}
-							{param strings: $strings /}
-						{/call}
-					{/if}
-				{/if}
-
-				<div class="form-control select-field-trigger" {if $dir}dir="{$dir}"{/if} id="{$name}" name="{$name}" {if $readOnly} disabled{/if}>
-					{if $multiple}
-						{if $displayValues}
-							<ul class="multiple-label-list">
-								{foreach $option in $options}
-									{call .label_item}
-										{param labelCloseIcon: $labelCloseIcon /}
-										{param option: $option /}
-										{param readOnly: $readOnly /}
-										{param value: $displayValues /}
-									{/call}
-								{/foreach}
-								{if $fixedOptions}
-									{foreach $fixedOption in $fixedOptions}
-										{call .label_item}
-											{param labelCloseIcon: $labelCloseIcon /}
-											{param option: $fixedOption /}
-											{param readOnly: $readOnly /}
-											{param value: $displayValues /}
-										{/call}
-									{/foreach}
-								{/if}
-							</ul>
-						{else}
-							<div class="option-selected option-selected-placeholder">{$strings.chooseOptions}</div>
-						{/if}
-					{else}
-						{if $displayValues}
-							{foreach $displayValue in $displayValues}
-								{foreach $option in $options}
-									{if $option.value == $displayValue and index($displayValue) == 0}
-										<div class="option-selected" title="{$option.label}">{$option.label}</div>
-									{/if}
-								{/foreach}
-								{if $fixedOptions}
-									{foreach $fixedOption in $fixedOptions}
-										{if $fixedOption.value == $displayValue}
-											<div class="option-selected" title="{$fixedOption.label}">{$fixedOption.label}</div>
-										{/if}
-									{/foreach}
-								{/if}
-							{/foreach}
-						{else}
-							<div class="option-selected option-selected-placeholder">{$strings.chooseAnOption}</div>
-						{/if}
-					{/if}
-
-					<a class="select-arrow-down-container" {if not $readOnly} href="javascript:;"{/if}>
-						{if $selectCaretDoubleIcon}
-							{$selectCaretDoubleIcon}
-						{/if}
-					</a>
-				</div>
-
-				{if not $readOnly}
-					<div class="drop-chosen {$open ? '' : 'hide'}">
-						<div aria-labelledby="theDropdownToggleId" class="dropdown-menu">
-							{if $showSearch}
-								<div class="dropdown-section">
-									<div class="input-group input-group-sm">
-										<div class="input-group-item">
-											<input autocomplete="off" class="drop-chosen-search form-control input-group-inset input-group-inset-after" placeholder="{$strings.search}" type="text">
-											<span class="input-group-inset-item input-group-inset-item-after">
-												<button class="btn btn-unstyled" type="button">
-													{if $selectSearchIcon}
-														{$selectSearchIcon}
-													{/if}
-												</button>
-											</span>
-										</div>
-									</div>
-								</div>
-							{/if}
-							{call .select_options data="all" /}
-						</div>
-					</div>
-				{/if}
-			</div>
-
-			{if $tip}
-				<span class="form-text">{$tip}</span>
-			{/if}
-		</div>
-	</div>
+	{call FieldBase.render}
+		{param contentRenderer kind="html"}
+			{call .content}
+				{param _handleExpandedChanged: $_handleExpandedChanged /}
+				{param _handleItemClicked: $_handleItemClicked /}
+				{param _handleLabelClosed: $_handleLabelClosed /}
+				{param dataSourceType: $dataSourceType /}
+				{param displayValues: $displayValues /}
+				{param expanded: $expanded /}
+				{param id: $id /}
+				{param multiple: $multiple /}
+				{param name: $name /}
+				{param options: $options /}
+				{param readOnly: $readOnly /}
+				{param spritemap: $spritemap /}
+				{param value: $value /}
+			{/call}
+		{/param}
+		{param displayErrors: $displayErrors /}
+		{param errorMessage: $errorMessage /}
+		{param label: $label /}
+		{param name: $name /}
+		{param readOnly: $readOnly /}
+		{param ref: 'base' /}
+		{param repeatable: $repeatable /}
+		{param required: $required /}
+		{param showLabel: $showLabel /}
+		{param spritemap: $spritemap /}
+		{param tip: $tip /}
+		{param valid: $valid /}
+		{param visible: $visible /}
+	{/call}
 {/template}
 
-/**
- * Prints the label item.
- */
-{template .label_item}
-	{@param option: [label: string, value: string]}
+{template .content}
+	{@param displayValues: ?}
+	{@param name: string}
+	{@param spritemap: string}
 	{@param value: list<string>}
-	{@param? labelCloseIcon: html}
+	{@param? _handleExpandedChanged: any}
+	{@param? _handleItemClicked: any}
+	{@param? _handleLabelClosed: any}
+	{@param? expanded: bool}
+	{@param? id: string}
+	{@param? multiple: bool}
+	{@param? options: list<?>}
 	{@param? readOnly: bool}
 
-	{if $value}
-		{foreach $currentValue in $value}
-			{if $option.value == $currentValue}
-				<li>
-					<span class="label label-lg label-secondary multiple-label" data-original-title="{$option.label}" title="{$option.label}">
-						<span class="text-truncate-inline">
-							<span class="text-truncate">{$option.label}</span>
-							{if not $readOnly}
-								<span class="label-item label-item-after">
-									<button aria-label="Close" class="btn btn-unstyled close trigger-label-item-close" data-label-value="{$option.value}" type="button">
-										{$labelCloseIcon}
-									</button>
-								</span>
+	{if $options}
+		{let $trigger kind="html"}
+			{if not $readOnly}
+				{call .hidden_select}
+					{param displayValues: $displayValues /}
+					{param multiple: $multiple /}
+					{param name: $name /}
+					{param options: $options /}
+				{/call}
+			{/if}
+
+			<div class="form-builder-select-field input-group-container">
+				{let $classes kind="text"}
+					form-control results-chosen select-field-trigger
+
+					{if $multiple}
+						{sp}multiple-label-list
+					{/if}
+				{/let}
+
+				{let $attributes kind="attributes"}
+					class="{$classes}"
+
+					{if $id}
+						id="{$id}"
+					{/if}
+
+					{if $readOnly}
+						disabled
+					{/if}
+				{/let}
+
+				<ul {$attributes}>
+					{foreach $currentValue in $value}
+						{foreach $option in $options}
+							{if $currentValue == $option.value}
+								{if $multiple}
+									<li>
+										{call ClayLabel.render}
+											{param closeable: true /}
+											{param elementClasses: 'ddm-select-option-label' /}
+											{param data: [
+												'value': $option.value
+											] /}
+											{param events: [
+												'close': $_handleLabelClosed
+											]/}
+											{param label: $option.label /}
+											{param spritemap: $spritemap /}
+										{/call}
+									</li>
+								{else}
+									<div class="option-selected">{$option.label}</div>
+								{/if}
 							{/if}
-						</span>
-					</span>
-				</li>
-			{/if}
-		{/foreach}
+						{/foreach}
+
+						{ifempty}
+							<div class="option-selected option-selected-placeholder">
+								{if $multiple}
+									{msg desc=""}choose-options{/msg}
+								{else}
+									{msg desc=""}choose-an-option{/msg}
+								{/if}
+							</div>
+					{/foreach}
+
+					<a class="select-arrow-down-container" href="javascript:;">
+						{if $spritemap}
+							{call ClayIcon.render}
+								{param spritemap: $spritemap /}
+								{param symbol: 'caret-double' /}
+							{/call}
+						{/if}
+					</a>
+				</ul>
+			</div>
+		{/let}
+
+		{call ClayDropdownBase.render}
+			{param disabled: $readOnly /}
+			{param events: [
+				'expandedChanged': $_handleExpandedChanged,
+				'itemClicked': $_handleItemClicked
+			]/}
+			{param elementClasses: 'ddm-btn-full ddm-select-dropdown' /}
+			{param expanded: $expanded /}
+			{param items: $options /}
+			{param ref: 'dropdown' /}
+			{param searchable: length($options) > 6 ? true : false /}
+			{param spritemap: $spritemap /}
+			{param label: $trigger /}
+		{/call}
 	{/if}
-
-{/template}
-
-/**
- * Prints the select label.
- */
-{template .select_label}
-	{@param name: string}
-	{@param pathThemeImages: string}
-	{@param? label: string}
-	{@param? required: bool}
-	{@param? showLabel: bool}
-
-	{if $showLabel or $required}
-		<label for="{$name}">
-			{if $showLabel}
-				{$label}{sp}
-			{/if}
-
-			{if $required}
-				<svg aria-hidden="true"
-					class="lexicon-icon lexicon-icon-asterisk reference-mark">
-					<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk"/>
-				</svg>
-			{/if}
-		</label>
-	{/if}
-
 {/template}
 
 /**
  * Prints hidden select tag.
  */
 {template .hidden_select}
-	{@param displayValues: list<string>}
+	{@param displayValues: ?}
 	{@param name: string}
-	{@param options: list<[label: string, value: string]>}
-	{@param strings: [chooseAnOption: string, chooseOptions: string, search: string, emptyList: string]}
-	{@param? dir: string}
+	{@param options: list<?>}
 	{@param? multiple: bool}
 
-	<select class="form-control hide" {if $dir}dir="{$dir}"{/if} id="{$name}" name="{$name}" {if $multiple}multiple size="{length($options)}"{/if}>
-		<option {if $dir}dir="{$dir}"{/if} disabled {if length($displayValues) == 0}selected{/if} value="">
-			{$strings.chooseAnOption}
-		</option>
+	<select class="form-control hide" id="{$name}" name="{$name}" {if $multiple}multiple size="{length($options)}"{/if}>
+		<option disabled {if length($displayValues) == 0}selected{/if} value=""></option>
 
 		{foreach $option in $options}
 			{call .select_hidden_options}
-				{param dir: $dir /}
 				{param option: $option /}
 				{param values: $displayValues /}
 			{/call}
@@ -238,8 +196,7 @@
  */
 {template .select_hidden_options}
 	{@param option: [label: string, value: string]}
-	{@param values: list<string>}
-	{@param? dir: string}
+	{@param values: ?}
 
 	{let $selected kind="attributes"}
 		{foreach $currentValue in $values}
@@ -249,203 +206,5 @@
 		{/foreach}
 	{/let}
 
-	<option {if $dir}dir="{$dir}"{/if} {$selected} value="{$option.value}">{$option.label}</option>
-{/template}
-
-{template .select_option_placeholder}
-	{@param strings: [chooseAnOption: string, chooseOptions: string, search: string, emptyList: string]}
-	{@param value: list<string>}
-
-	<li class="select-option-item">
-		{let $itemAttributes kind="attributes"}
-			class="
-			{if length($value) == 0} active{sp} {/if}
-			dropdown-item{sp}
-			placeholder-dropdown-item
-			"
-
-			title="{$strings.chooseAnOption}"
-		{/let}
-		<a {$itemAttributes}>
-			{$strings.chooseAnOption}
-		</a>
-	</li>
-{/template}
-
-/**
- * Prints the DDM form select field UI itens.
- */
-{template .select_options}
-	{@param options: list<[label: string, value: string]>}
-	{@param strings: [chooseAnOption: string, chooseOptions: string, search: string, emptyList: string]}
-	{@param value: list<string>}
-	{@param? fixedOptions: list<[label: string, value: string]>}
-	{@param? multiple: bool}
-	{@param? showPlaceholderOption: bool}
-
-	<ul class="dropdown-visible list-unstyled results-chosen">
-		<div class="inline-scroller">
-			{if $showPlaceholderOption}
-				{call .select_option_placeholder data="all" /}
-			{/if}
-			{call .plot_dropdown_rows}
-				{param fixed: false /}
-				{param multiple: $multiple /}
-				{param options: $options /}
-				{param value: $value /}
-			{/call}
-		</div>
-		{if $fixedOptions}
-			{if length($options) > 0 and length($fixedOptions) > 0}
-				<div class="dropdown-divider"></div>
-			{/if}
-			{call .plot_dropdown_rows}
-				{param fixed: true /}
-				{param multiple: $multiple /}
-				{param options: $fixedOptions /}
-				{param value: $value /}
-			{/call}
-		{/if}
-		{if $fixedOptions and length($fixedOptions) == 0 and length($options) == 0}
-			<li class="no-results-list">
-				<span>
-					{$strings.emptyList}
-				</span>
-			</li>
-		{/if}
-	</ul>
-{/template}
-
-/**
- * Prints the DDM dropdown itens.
- */
-{template .plot_dropdown_rows}
-	{@param options: list<[label: string, value: string]>}
-	{@param value: list<string>}
-	{@param? fixed: bool}
-	{@param? multiple: bool}
-
-	{foreach $option in $options}
-		{let $selected kind="text"}
-			{if $value}
-				{foreach $currentValue in $value}
-					{if $multiple}
-						{if $currentValue == $option.value}
-							selected
-						{/if}
-					{else}
-						{if $currentValue == $option.value and index($currentValue) == 0}
-							selected
-						{/if}
-					{/if}
-				{/foreach}
-			{/if}
-		{/let}
-		{if $multiple}
-			{call .multiple_selection}
-				{param fixed: $fixed /}
-				{param indexOption: index($option) /}
-				{param option: $option /}
-				{param selected: $selected /}
-			{/call}
-		{else}
-			{call .simple_selection}
-				{param fixed: $fixed /}
-				{param indexOption: index($option) /}
-				{param option: $option /}
-				{param selected: $selected /}
-			{/call}
-		{/if}
-	{/foreach}
-
-{/template}
-
-/**
- * Prints the DDM multiple dropdown itens.
- */
-{template .multiple_selection}
-	{@param indexOption: int}
-	{@param option: [label: string, value: string]}
-	{@param selected: string}
-	{@param? fixed: bool}
-	{let $attributesMultipleSelection kind="attributes"}
-		class="
-		{if $selected} active {/if}
-		dropdown-item
-
-		{if $fixed}
-			{sp}fixed
-		{else}
-			{sp}unfixed
-		{/if}
-		"
-
-		data-option-index="{$indexOption}"
-
-		data-option-value="{$option.value}"
-
-		data-option-selected="
-				{if $selected}
-					true
-				{/if}"
-	{/let}
-	<li {$attributesMultipleSelection}>
-		<div class="custom-checkbox custom-control">
-			<label>
-				<input {if $selected}checked{/if} class="custom-control-input" type="checkbox" value="">
-				<span class="custom-control-label ">
-					<span class="custom-control-label-text">{$option.label}</span>
-				</span>
-			</label>
-		</div>
-	</li>
-{/template}
-
-/**
- * Prints the DDM normal dropdown itens.
- */
-{template .simple_selection}
-	{@param indexOption: int}
-	{@param option: [label: string, value: string]}
-	{@param selected: string}
-	{@param? fixed: bool}
-
-	{let $attributesNormalSelection kind="attributes"}
-		class="
-
-			{sp}select-option-item
-
-			{if $fixed}
-				{sp}fixed
-			{else}
-				{sp}unfixed
-			{/if}
-		"
-		data-option-index="{$indexOption}"
-
-		data-option-value="{$option.value}"
-	{/let}
-	<li {$attributesNormalSelection}>
-		{let $itemAttributes kind="attributes"}
-			class="
-				dropdown-item
-
-				{if $selected}
-					{sp}active
-				{/if}
-			"
-			data-option-selected="
-				{if $selected}
-					true
-				{/if}"
-
-			href="javascript:;"
-
-			title="{$option.label}"
-		{/let}
-		<a {$itemAttributes}>
-			{$option.label}
-		</a>
-	</li>
-
+	<option {$selected} value="{$option.value}">{$option.label}</option>
 {/template}

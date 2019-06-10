@@ -1,72 +1,82 @@
-{namespace DDMRadio}
+{namespace Radio}
 
-/**
- * Defines the delegated template for the radio field.
- */
-{deltemplate ddm.field variant="'radio'"}
-	{call .render data="all" /}
-{/deltemplate}
-
-/**
- * Prints the DDM form radio field.
- */
 {template .render}
-	{@param inline: bool}
-	{@param label: string}
 	{@param name: string}
-	{@param options: list<[label: string, value: ?]>}
-	{@param pathThemeImages: string}
-	{@param readOnly: bool}
-	{@param showLabel: bool}
-	{@param value: ?}
-	{@param visible: bool}
-	{@param? dir: string}
+	{@param? _handleValueChanged: any}
+	{@param? displayErrors: bool}
+	{@param? errorMessage: string}
+	{@param? id: string}
+	{@param? inline: bool}
+	{@param? label: string}
+	{@param? options: list<[
+		label: string,
+		value: string
+	]>}
 	{@param? predefinedValue: string}
+	{@param? readOnly: bool}
+	{@param? repeatable: bool}
 	{@param? required: bool}
+	{@param? showLabel: bool}
+	{@param? spritemap: string}
 	{@param? tip: string}
+	{@param? valid: bool}
+	{@param? value: ?}
+	{@param? visible: bool}
 
-	{let $displayValue: $value ? $value : $predefinedValue /}
+	{call FieldBase.render}
+		{param contentRenderer kind="html"}
+			{call .content}
+				{param _handleValueChanged: $_handleValueChanged /}
+				{param disabled: $readOnly /}
+				{param inline: $inline /}
+				{param name: $name /}
+				{param options: $options /}
+				{param predefinedValue: $predefinedValue /}
+				{param value: $value /}
+			{/call}
+		{/param}
+		{param displayErrors: $displayErrors /}
+		{param errorMessage: $errorMessage /}
+		{param id: $id /}
+		{param label: $label /}
+		{param name: $name /}
+		{param repeatable: $repeatable /}
+		{param required: $required /}
+		{param showLabel: $showLabel /}
+		{param spritemap: $spritemap /}
+		{param tip: $tip /}
+		{param valid: $valid /}
+		{param visible: $visible /}
+	{/call}
+{/template}
 
-	<div class="form-group liferay-ddm-form-field-radio {$visible ? '' : 'hide'}"
-		data-fieldname="{$name}">
-		<div class="liferay-ddm-form-field-radio-label">
-			{if $showLabel or $required}
-				<label for="{$name}">
-					{if $showLabel}
-						{$label}{sp}
-					{/if}
+{template .content}
+	{@param name: string}
+	{@param? _handleValueChanged: any}
+	{@param? disabled: bool}
+	{@param? inline: bool}
+	{@param? options: list<[
+		label: string,
+		value: string
+	]>}
+	{@param? predefinedValue: string}
+	{@param? value: string}
 
-					{if $required}
-						<svg aria-hidden="true"
-							class="lexicon-icon lexicon-icon-asterisk reference-mark">
-							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk"/>
-						</svg>
-					{/if}
-				</label>
-			{/if}
+	{if $options}
+		<div class="ddm-radio">
+			{let $radioValue: $value ?: $predefinedValue ?: '' /}
+
+			{foreach $radio in $options}
+				{call ClayRadio.render data="$radio"}
+					{param checked: $radioValue == $radio.value ? true : false  /}
+					{param disabled: $disabled /}
+					{param events: [
+						'change': $_handleValueChanged
+					] /}
+					{param inline: $inline /}
+					{param name: $name /}
+				{/call}
+			{/foreach}
 		</div>
-
-		{foreach $option in $options}
-
-			<div class="custom-control {$inline ? 'custom-control-inline' : ''} custom-radio">
-				<label for="{$name}_{$option.value}">
-						<input {if $option.value == $displayValue}checked{/if}
-						{if $dir}dir="{$dir}"{/if}
-						{if $readOnly}disabled{/if}
-						class="custom-control-input"
-						id="{$name}_{$option.value}"
-						name="{$name}"
-						type="radio"
-						value="{$option.value}" />
-					<span class="custom-control-label">
-						<span class="custom-control-label-text">{$option.label}</span>
-					</span>
-				</label>
-			</div>
-		{/foreach}
-
-		{if $tip}
-			<span class="form-text">{$tip}</span>
-		{/if}
-	</div>
+	{/if}
 {/template}

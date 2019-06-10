@@ -1,22 +1,10 @@
-import Component from 'metal-component';
+import './PasswordRegister.soy.js';
 import Soy from 'metal-soy';
+import templates from './Password.soy.js';
+import Text from '../Text/Text.es';
 
-import templates from './password.soy';
+class Password extends Text {}
 
-/**
- * Password Component
- */
-
-class Password extends Component {}
-
-// Register component
-
-Soy.register(Password, templates, 'render');
-
-if (!window.DDMPassword) {
-	window.DDMPassword = {};
-}
-
-window.DDMPassword.render = Password;
+Soy.register(Password, templates);
 
 export default Password;

@@ -1,74 +1,106 @@
-{namespace DDMFieldset}
+{namespace Fieldset}
 
 /**
- * Defines the delegated template for the fieldset field.
+ * Renders the field.
  */
-{deltemplate ddm.field variant="'fieldset'"}
-	{call .render data="all" /}
-{/deltemplate}
-
-/**
- * Prints a column.
- */
-{template .fieldset_column}
+{template .render}
 	{@param columnSize: int}
-	{@param field: ?}
-	<div class="col-md-{$columnSize} form-group-item">
-		<div class="clearfix {if not $field.visible}hide{/if} lfr-ddm-form-field-container">
-			{let $variant: $field.type /}
+	{@param name: string}
+	{@param nestedFields: list<?>}
+	{@param? _handleFieldEdited: ?}
+	{@param? displayErrors: bool}
+	{@param? errorMessage: string}
+	{@param? label: string}
+	{@param? readOnly: bool}
+	{@param? repeatable: bool}
+	{@param? required: bool}
+	{@param? showBorderTop: bool}
+	{@param? showLabel: bool}
+	{@param? spritemap: string}
+	{@param? tip: string}
+	{@param? tooltip: string}
+	{@param? valid: bool}
+	{@param? visible: bool}
 
-			{delcall ddm.field variant="$variant" data="$field" /}
-		</div>
+	<div class="liferay-ddm-form-field-fieldset">
+		{call FieldBase.render}
+			{param contentRenderer kind="html"}
+				{call .content}
+					{param columnSize: $columnSize /}
+					{param _handleFieldEdited: $_handleFieldEdited /}
+					{param nestedFields: $nestedFields /}
+					{param label: $label /}
+					{param showBorderTop: $showBorderTop /}
+					{param showLabel: $showLabel /}
+					{param spritemap: $spritemap /}
+				{/call}
+			{/param}
+			{param displayErrors: $displayErrors /}
+			{param errorMessage: $errorMessage /}
+			{param label: $label /}
+			{param name: $name /}
+			{param readOnly: $readOnly /}
+			{param repeatable: $repeatable /}
+			{param required: $required /}
+			{param showLabel: false /}
+			{param spritemap: $spritemap /}
+			{param tip: $tip /}
+			{param tooltip: $tooltip /}
+			{param valid: $valid /}
+			{param visible: $visible /}
+		{/call}
 	</div>
 {/template}
 
 /**
  * Prints all columns.
  */
-{template .fieldset_columns}
+{template .columns}
 	{@param columnSize: int}
 	{@param fields: list<?>}
+	{@param? _handleFieldEdited: ?}
+	{@param? spritemap: string}
 
 	{foreach $field in $fields}
+		<div class="col-md-{$columnSize} form-group-item">
+			<div class="clearfix {if $field.visible == false}hide{/if} lfr-ddm-form-field-container">
+				{let $variant: $field.type /}
 
-		{call .fieldset_column data="all"}
-			{param columnSize: $columnSize /}
-			{param field: $field /}
-		{/call}
+				{delcall PageRenderer.RegisterFieldType data="$field" variant="$variant"}
+					{param events: [
+						'fieldEdited': $_handleFieldEdited
+					] /}
+					{param ref: 'fieldset_field' + index($field) + $field.fieldName /}
+					{param spritemap: $spritemap /}
+				{/delcall}
+			</div>
+		</div>
 	{/foreach}
 {/template}
 
 /**
- * Prints the DDM form fieldset field.
+ * Prints the field content.
  */
-{template .render}
+{template .content}
 	{@param columnSize: int}
-	{@param name: string}
 	{@param nestedFields: list<?>}
-	{@param visible: bool}
+	{@param? _handleFieldEdited: ?}
 	{@param? label: string}
-	{@param? showBorderBottom: bool}
-	{@param? showBorderTop: bool}
 	{@param? showLabel: bool}
-	{@param? tip: string}
+	{@param? spritemap: string}
 
-	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-fieldset
-		{$showBorderBottom ? ' border-bottom' : ''}" data-fieldname="{$name}">
-
-		{if $tip}
-			<p class="liferay-ddm-form-field-tip">{$tip}</p>
+	<fieldset class="border-bottom border-top">
+		{if $showLabel and $label}
+			<legend>{$label}</legend>
 		{/if}
 
-		<fieldset class="{$showBorderTop ? ' border-top' : ''}">
-			{if $showLabel}
-				<legend>{$label}</legend>
-			{/if}
-			<div class="form-group-autofit">
-				{call .fieldset_columns data="all"}
-					{param columnSize: $columnSize /}
-					{param fields: $nestedFields /}
-				{/call}
-			</div>
-		</fieldset>
-	</div>
+		<div class="form-group-autofit">
+			{call .columns}
+				{param columnSize: $columnSize /}
+				{param _handleFieldEdited: $_handleFieldEdited /}
+				{param fields: $nestedFields /}
+				{param spritemap: $spritemap /}
+			{/call}
+		</div>
+	</fieldset>
 {/template}

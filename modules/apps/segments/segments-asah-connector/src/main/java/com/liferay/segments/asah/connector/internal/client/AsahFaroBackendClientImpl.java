@@ -78,7 +78,7 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		MultivaluedHashMap<String, Object> uriVariables =
 			new MultivaluedHashMap<>();
 
-		uriVariables.putSingle("includeAnonymousUser", true);
+		uriVariables.putSingle("includeAnonymousUsers", true);
 
 		try {
 			String response = _jsonWebServiceClient.doGet(

@@ -1512,32 +1512,6 @@ public class WebServerServlet extends HttpServlet {
 		}
 	}
 
-	private String _getPortletId(
-			FileEntry fileEntry, HttpServletRequest request)
-		throws PortalException {
-
-		if (fileEntry.isInTrash()) {
-			int status = ParamUtil.getInteger(
-				request, "status", WorkflowConstants.STATUS_APPROVED);
-
-			if (status != WorkflowConstants.STATUS_IN_TRASH) {
-				throw new NoSuchFileEntryException();
-			}
-
-			return PortletProviderUtil.getPortletId(
-				TrashEntry.class.getName(), PortletProvider.Action.VIEW);
-		}
-
-		Group group = GroupLocalServiceUtil.getGroup(fileEntry.getGroupId());
-
-		if (!group.isStagingGroup()) {
-			return null;
-		}
-
-		return PortletProviderUtil.getPortletId(
-			FileEntry.class.getName(), PortletProvider.Action.VIEW);
-	}
-
 	private Callable<Void> _createFileServingCallable(
 		final HttpServletRequest httpServletRequest,
 		final HttpServletResponse httpServletResponse, final User user) {
@@ -1613,6 +1587,32 @@ public class WebServerServlet extends HttpServlet {
 		}
 
 		return PermissionCheckerFactoryUtil.create(user);
+	}
+
+	private String _getPortletId(
+			FileEntry fileEntry, HttpServletRequest request)
+		throws PortalException {
+
+		if (fileEntry.isInTrash()) {
+			int status = ParamUtil.getInteger(
+				request, "status", WorkflowConstants.STATUS_APPROVED);
+
+			if (status != WorkflowConstants.STATUS_IN_TRASH) {
+				throw new NoSuchFileEntryException();
+			}
+
+			return PortletProviderUtil.getPortletId(
+				TrashEntry.class.getName(), PortletProvider.Action.VIEW);
+		}
+
+		Group group = GroupLocalServiceUtil.getGroup(fileEntry.getGroupId());
+
+		if (!group.isStagingGroup()) {
+			return null;
+		}
+
+		return PortletProviderUtil.getPortletId(
+			FileEntry.class.getName(), PortletProvider.Action.VIEW);
 	}
 
 	private boolean _processCompanyInactiveRequest(

@@ -140,13 +140,13 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 	private WikiFileUploadConfiguration _getWikiFileUploadsConfiguration()
 		throws ConfigurationException {
 
-		if (_wikiFileUploadsConfiguration == null) {
-			_wikiFileUploadsConfiguration =
+		if (_wikiFileUploadConfiguration == null) {
+			_wikiFileUploadConfiguration =
 				ConfigurationProviderUtil.getSystemConfiguration(
 					WikiFileUploadConfiguration.class);
 		}
 
-		return _wikiFileUploadsConfiguration;
+		return _wikiFileUploadConfiguration;
 	}
 
 	private final String _itemSelectedEventName;
@@ -158,6 +158,6 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 		_wikiAttachmentItemSelectorCriterion;
 	private final WikiAttachmentItemSelectorView
 		_wikiAttachmentItemSelectorView;
-	private WikiFileUploadConfiguration _wikiFileUploadsConfiguration;
+	private WikiFileUploadConfiguration _wikiFileUploadConfiguration;
 
 }

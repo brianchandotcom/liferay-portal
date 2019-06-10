@@ -30,8 +30,10 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -161,9 +163,10 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		return sb.toString();
 	}
 
-	public static void removeBinDirLinks(
-			final Logger logger, File nodeModulesDir)
+	private static Set<File> _getNodeModulesBinDirs(File nodeModulesDir)
 		throws IOException {
+
+		final Set<File> nodeModulesBinDirs = new HashSet<>();
 
 		Files.walkFileTree(
 			nodeModulesDir.toPath(),
@@ -177,13 +180,7 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 					String dirName = String.valueOf(dirPath.getFileName());
 
 					if (dirName.equals(_NODE_MODULES_BIN_DIR_NAME)) {
-						if (logger.isInfoEnabled()) {
-							logger.info(
-								"Removing binary symbolic links from {}",
-								dirPath);
-						}
-
-						FileUtil.deleteSymbolicLinks(dirPath);
+						nodeModulesBinDirs.add(dirPath.toFile());
 
 						return FileVisitResult.SKIP_SUBTREE;
 					}
@@ -192,6 +189,22 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 				}
 
 			});
+
+		return nodeModulesBinDirs;
+	}
+
+	public static void removeBinDirLinks(Logger logger, File nodeModulesDir)
+		throws IOException {
+
+		for (File nodeModulesBinDir : _getNodeModulesBinDirs(nodeModulesDir)) {
+			if (logger.isInfoEnabled()) {
+				String message = "Removing binary symbolic links from {}";
+
+				logger.info(message, nodeModulesBinDir.toPath());
+			}
+
+			FileUtil.deleteSymbolicLinks(nodeModulesBinDir.toPath());
+		}
 	}
 
 	public static void syncDir(

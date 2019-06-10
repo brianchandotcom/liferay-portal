@@ -139,7 +139,6 @@ public class TLiferayOutputProperties
 		}
 
 		refreshLayout(getForm(Form.MAIN));
-		refreshLayout(getForm(Form.REFERENCE));
 
 		return validationResultMutable;
 	}
@@ -152,7 +151,6 @@ public class TLiferayOutputProperties
 		}
 
 		refreshLayout(getForm(Form.MAIN));
-		refreshLayout(getForm(Form.REFERENCE));
 	}
 
 	@Override
@@ -324,7 +322,6 @@ public class TLiferayOutputProperties
 			populateParametersTable(liferaySourceOrSinkRuntime);
 
 			refreshLayout(getForm(Form.MAIN));
-			refreshLayout(getForm(Form.REFERENCE));
 
 			return validationResultMutable;
 		}

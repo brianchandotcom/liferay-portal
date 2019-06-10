@@ -17,9 +17,6 @@ package com.liferay.dynamic.data.mapping.form.renderer.internal.servlet.taglib.h
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.internal.servlet.taglib.DDMFormFieldTypesDynamicInclude;
-import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerSerializeRequest;
-import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerTracker;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
@@ -32,7 +29,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -159,41 +155,22 @@ public abstract class BaseDDMFormFieldTypesDynamicInclude
 
 		ScriptData scriptData = new ScriptData();
 
-		DDMFormFieldTypesSerializer ddmFormFieldTypesSerializer =
-			ddmFormFieldTypesSerializerTracker.getDDMFormFieldTypesSerializer(
-				"json");
-
 		List<DDMFormFieldType> ddmFormFieldTypes =
 			ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes();
 
-		DDMFormFieldTypesSerializerSerializeRequest.Builder builder =
-			DDMFormFieldTypesSerializerSerializeRequest.Builder.newBuilder(
-				ddmFormFieldTypes);
-
-		DDMFormFieldTypesSerializerSerializeResponse
-			ddmFormFieldTypesSerializerSerializeResponse =
-				ddmFormFieldTypesSerializer.serialize(builder.build());
-
 		Map<String, String> values = new HashMap<>();
-
-		values.put(
-			"fieldTypes",
-			ddmFormFieldTypesSerializerSerializeResponse.getContent());
-
-		values.put("formRendererModuleName", getFormRendererModuleName());
 
 		Set<String> fieldTypesModules = getFieldTypesModules(ddmFormFieldTypes);
 
-		values.put(
-			"javaScriptTemplateDependencies",
-			jsonFactory.looseSerialize(
-				ListUtil.fromCollection(fieldTypesModules)));
+		Stream<String> stream = fieldTypesModules.stream();
+
+		String modules = stream.collect(Collectors.joining(StringPool.COMMA));
 
 		scriptData.append(
 			null,
 			StringUtil.replaceToStringBundler(
 				_TMPL_CONTENT, StringPool.POUND, StringPool.POUND, values),
-			_MODULES, ScriptData.ModulesType.AUI);
+			modules, ScriptData.ModulesType.ES6);
 
 		scriptData.writeTo(httpServletResponse.getWriter());
 	}
@@ -217,9 +194,6 @@ public abstract class BaseDDMFormFieldTypesDynamicInclude
 
 	@Reference
 	protected NPMResolver npmResolver;
-
-	private static final String _MODULES =
-		"liferay-ddm-form-renderer-types,liferay-ddm-soy-template-util";
 
 	private static final String _TMPL_CONTENT = StringUtil.read(
 		DDMFormFieldTypesDynamicInclude.class,

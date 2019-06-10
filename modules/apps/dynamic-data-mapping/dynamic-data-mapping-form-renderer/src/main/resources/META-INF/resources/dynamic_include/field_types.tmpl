@@ -1,10 +1,3 @@
-Liferay.DDM.SoyTemplateUtil.loadModules(
-	#javaScriptTemplateDependencies#.concat(['#formRendererModuleName#/form.es']),
-	function() {
-		Liferay.DDM.Renderer.FieldTypes.register(#fieldTypes#);
+Liferay.DMMFieldTypesReady = true;
 
-		Liferay.DMMFieldTypesReady = true;
-
-		Liferay.fire('DMMFieldTypesReady');
-	}
-);
+Liferay.fire('DMMFieldTypesReady');

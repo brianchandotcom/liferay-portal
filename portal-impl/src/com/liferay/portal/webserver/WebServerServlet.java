@@ -1516,30 +1516,26 @@ public class WebServerServlet extends HttpServlet {
 			FileEntry fileEntry, HttpServletRequest request)
 		throws PortalException {
 
-		String portletId = null;
-
-		Group group = GroupLocalServiceUtil.getGroup(
-			fileEntry.getGroupId());
-
-		if (group.isStagingGroup()) {
-			portletId = PortletProviderUtil.getPortletId(
-				FileEntry.class.getName(), PortletProvider.Action.VIEW);
-		}
-
 		if (fileEntry.isInTrash()) {
 			int status = ParamUtil.getInteger(
-				request, "status",
-				WorkflowConstants.STATUS_APPROVED);
+				request, "status", WorkflowConstants.STATUS_APPROVED);
 
 			if (status != WorkflowConstants.STATUS_IN_TRASH) {
 				throw new NoSuchFileEntryException();
 			}
 
-			portletId = PortletProviderUtil.getPortletId(
+			return PortletProviderUtil.getPortletId(
 				TrashEntry.class.getName(), PortletProvider.Action.VIEW);
 		}
 
-		return portletId;
+		Group group = GroupLocalServiceUtil.getGroup(fileEntry.getGroupId());
+
+		if (!group.isStagingGroup()) {
+			return null;
+		}
+
+		return PortletProviderUtil.getPortletId(
+			FileEntry.class.getName(), PortletProvider.Action.VIEW);
 	}
 
 	private Callable<Void> _createFileServingCallable(

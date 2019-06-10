@@ -811,7 +811,16 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 			dateList.add(dateTime);
 		}
 
-		return new ExDate(dateList);
+		ExDate exDate = new ExDate(dateList);
+
+		if (timeZone == null) {
+			exDate.setUtc(true);
+		}
+		else {
+			exDate.setTimeZone(_toICalTimeZone(timeZone));
+		}
+
+		return exDate;
 	}
 
 	protected String toString(net.fortuna.ical4j.model.Calendar iCalCalendar)

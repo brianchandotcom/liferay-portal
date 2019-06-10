@@ -1487,14 +1487,6 @@ definition {
 
 	@summary = "Log into Liferay Portal as '${userEmailAddress}' using the password '${password}'; if not logged in as '${userEmailAddress}', then log out first"
 	macro firstLoginPG {
-		echo("Checking to see if TCat is enabled...");
-
-		var tcatEnabled = selenium.isTCatEnabled();
-
-		if ("${tcatEnabled}" == "true") {
-			TCat.deployLiferayPortalWar();
-		}
-
 		if (isSet(virtualHostsURL)) {
 			Navigator.openSpecificURL(url = "${virtualHostsURL}");
 		}

@@ -1,0 +1,36 @@
+definition {
+
+	@summary = "This calls the JSON WS API to add a Document entry"
+	macro addFile {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(repositoryId))) {
+			var repositoryId = "20123";
+		}
+
+		if (!(isSet(folderId))) {
+			var folderId = "0";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/dlapp/add-file-entry \
+			-u test@liferay.com:test \
+			-d repositoryId=${repositoryId} \
+			-d folderId=${folderId} \
+			-d sourceFileName='' \
+			-d mimeType='' \
+			-d title=${dmDocumentTitle} \
+		 	-d description=${dmDocumentDescription} \
+			-d changeLog='' \
+			-d file=@path_to_file
+		''';
+
+		echo("## Adding a 'File' with the following info using JSONWS:");
+
+		echo("## * Title: ${dmDocumentTitle}");
+
+		echo("## * Description: ${dmDocumentDescription}");
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
+}

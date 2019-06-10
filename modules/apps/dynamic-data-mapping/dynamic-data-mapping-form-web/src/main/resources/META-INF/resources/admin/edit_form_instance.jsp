@@ -213,6 +213,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 					);
 				},
 				function(error) {
+					throw error;
 				}
 			);
 		}

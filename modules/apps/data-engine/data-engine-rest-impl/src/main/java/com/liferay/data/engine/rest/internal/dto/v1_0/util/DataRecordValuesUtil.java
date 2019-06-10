@@ -16,18 +16,15 @@ package com.liferay.data.engine.rest.internal.dto.v1_0.util;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 /**
  * @author Jeyvison Nascimento
@@ -79,17 +76,7 @@ public class DataRecordValuesUtil {
 
 			DataDefinitionField dataDefinitionField = entry.getValue();
 
-			if (dataDefinitionField.getLocalizable() &&
-				(dataRecordValues.get(dataDefinitionField.getName()) instanceof
-					Map)) {
-
-				jsonObject.put(
-					entry.getKey(),
-					_toJSONObject(
-						(Map<String, Object>)dataRecordValues.get(
-							dataDefinitionField.getName())));
-			}
-			else if (dataDefinitionField.getRepeatable()) {
+			if (dataDefinitionField.getRepeatable()) {
 				jsonObject.put(
 					entry.getKey(),
 					JSONFactoryUtil.createJSONArray(
@@ -107,46 +94,12 @@ public class DataRecordValuesUtil {
 	private static Object _toDataRecordValue(
 		DataDefinitionField dataDefinitionField, JSONObject jsonObject) {
 
-		if (dataDefinitionField.getLocalizable() &&
-			(jsonObject.getJSONObject(dataDefinitionField.getName()) != null)) {
-
-			Map<String, Object> localizedValues = new HashMap<>();
-
-			JSONObject dataRecordValueJSONObject = jsonObject.getJSONObject(
-				dataDefinitionField.getName());
-
-			Iterable<String> iterable = dataRecordValueJSONObject::keys;
-
-			StreamSupport.stream(
-				iterable.spliterator(), false
-			).forEach(
-				key -> localizedValues.put(
-					key, dataRecordValueJSONObject.get(key))
-			);
-
-			return localizedValues;
-		}
-
 		if (dataDefinitionField.getRepeatable()) {
 			return JSONUtil.toObjectArray(
 				jsonObject.getJSONArray(dataDefinitionField.getName()));
 		}
 
 		return jsonObject.get(dataDefinitionField.getName());
-	}
-
-	private static JSONObject _toJSONObject(
-		Map<String, Object> localizedValues) {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		for (Map.Entry<String, Object> entry : localizedValues.entrySet()) {
-			jsonObject.put(
-				entry.getKey(),
-				GetterUtil.get(entry.getValue(), StringPool.BLANK));
-		}
-
-		return jsonObject;
 	}
 
 }

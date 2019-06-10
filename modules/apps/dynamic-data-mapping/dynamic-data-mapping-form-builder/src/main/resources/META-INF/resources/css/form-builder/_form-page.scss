@@ -3,27 +3,3 @@ $c: '.ddm-form-page';
 #{$c} {
 	padding: 0 1.5rem;
 }
-
-.lfr-ddm-form-page-description,
-.lfr-ddm-form-page-title {
-	padding-left: 0;
-
-	&.editor {
-		background-color: transparent;
-		border-width: 0;
-		cursor: text;
-		outline: none;
-		overflow: hidden;
-		position: absolute;
-	}
-}
-
-.description-placeholder,
-.title-placeholder {
-	#{$c} {
-		.lfr-ddm-form-page-description,
-		.lfr-ddm-form-page-title {
-			color: #b0b4bb;
-		}
-	}
-}

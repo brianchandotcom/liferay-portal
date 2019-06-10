@@ -248,43 +248,38 @@ textarea[class^='form-builder-page-header'] {
 	flex-flow: wrap;
 	list-style: none;
 	margin: 0;
-	padding: 0;
 	padding-right: 20px;
 	width: auto;
-}
 
-.form-builder-select-field .multiple-label-list li {
-	overflow: hidden;
-}
+	li {
+		overflow: hidden;
+	}
 
-.form-builder-select-field .multiple-label-list span.label-secondary {
-	max-width: 200px;
-}
+	span.label-secondary {
+		max-width: 200px;
+	}
 
-.form-builder-select-field .multiple-label-list .multiple-label {
-	margin-bottom: 4px;
-	margin-right: 6px;
-	margin-top: 0;
-	overflow: hidden;
-	padding-right: 20px;
-	position: relative;
-}
+	.multiple-label {
+		margin-bottom: 4px;
+		margin-right: 6px;
+		margin-top: 0;
+		overflow: hidden;
+		padding-right: 20px;
+		position: relative;
 
-.form-builder-select-field .multiple-label-list .multiple-label a {
-	font-size: 6px;
-	position: absolute;
-	right: 5px;
-	top: 1px;
-}
+		a {
+			font-size: 6px;
+			position: absolute;
+			right: 5px;
+			top: 1px;
 
-.form-builder-select-field
-	.multiple-label-list
-	.multiple-label
-	a
-	.icon-monospaced.lexicon-icon {
-	margin-bottom: 1px;
-	margin-left: 5px;
-	padding: 0;
+			.icon-monospaced.lexicon-icon {
+				margin-bottom: 1px;
+				margin-left: 5px;
+				padding: 0;
+			}
+		}
+	}
 }
 
 .ddm-form-builder {

@@ -22,6 +22,10 @@ $c: '.ddm-form-builder';
 		cursor: inherit;
 	}
 
+	.lfr-ddm-form-pagination-controls {
+		display: none;
+	}
+
 	.ddm-parent-dragging {
 		border: none;
 
@@ -35,6 +39,10 @@ $c: '.ddm-form-builder';
 		&:active {
 			border-color: #cdced9;
 		}
+	}
+
+	.form-builder-layout {
+		padding: 1em;
 	}
 }
 

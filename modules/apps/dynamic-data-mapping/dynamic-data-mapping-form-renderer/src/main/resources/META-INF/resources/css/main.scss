@@ -1,6 +1,7 @@
 @import 'bourbon';
 @import 'utilities';
 
+@import 'date-picker';
 @import 'field-type-checkbox-switch';
 
 %flex-space-between {
@@ -226,7 +227,7 @@ body .ddm-user-view-content {
 
 .liferay-ddm-form-field-tip {
 	font-size: 11px;
-	font-weight: 400;
+	font-weight: normal;
 }
 
 .liferay-ddm-form-field-grid {
@@ -333,6 +334,10 @@ body .ddm-user-view-content {
 		border-bottom: 2px solid #65b6f0;
 	}
 
+	.form-control {
+		margin-bottom: 0;
+	}
+
 	.form-control[disabled] > a.select-arrow-down-container {
 		cursor: not-allowed;
 		opacity: 0.5;
@@ -381,11 +386,10 @@ body .ddm-user-view-content {
 
 	.multiple-label-list {
 		display: flex;
-		flex-direction: row;
+		flex-flow: row;
 		flex-wrap: wrap;
 		list-style: none;
 		margin: 0;
-		padding: 0;
 		padding-right: 20px;
 		width: auto;
 
@@ -433,20 +437,24 @@ body .ddm-user-view-content {
 	padding-bottom: 30px;
 }
 
+.lfr-ddm-form-field-repeatable-toolbar {
+	.ddm-form-field-repeatable-add-button,
+	.ddm-form-field-repeatable-delete-button {
+		position: absolute;
+		top: 4px;
+	}
+
+	.ddm-form-field-repeatable-delete-button {
+		right: 26px;
+	}
+
+	.ddm-form-field-repeatable-add-button {
+		right: 8px;
+	}
+}
+
 .liferay-ddm-form-field-fieldset {
 	margin-bottom: 0 !important;
-
-	& + .lfr-ddm-form-field-repeatable-toolbar {
-		.icon-minus-sign {
-			right: 26px;
-			top: 16px;
-		}
-
-		.icon-plus-sign {
-			right: 8px;
-			top: 16px;
-		}
-	}
 
 	.lfr-ddm-form-field-container .liferay-ddm-form-field-checkbox {
 		margin-top: 21px;
@@ -456,7 +464,7 @@ body .ddm-user-view-content {
 		margin-bottom: 50px !important;
 	}
 
-	& > fieldset {
+	fieldset {
 		border: 1px solid rgba(134, 156, 173, 0.4);
 		border-bottom-width: 0;
 		border-top-width: 0;

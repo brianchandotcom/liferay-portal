@@ -16,6 +16,10 @@ $c: '.sidebar-container';
 
 	.sidebar-body {
 		overflow: visible;
+
+		.ddm-form-tabs {
+			display: none;
+		}
 	}
 
 	.list-group-item:hover {

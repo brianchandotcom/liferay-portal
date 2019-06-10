@@ -42,6 +42,7 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 		super.setUp();
 
 		_ddmStructure = DataDefinitionTestUtil.addDDMStructure(testGroup);
+
 		_ddlRecordSet = DataRecordCollectionTestUtil.addRecordSet(
 			_ddmStructure, testGroup, _resourceLocalService);
 		_irrelevantDDLRecordSet = DataRecordCollectionTestUtil.addRecordSet(

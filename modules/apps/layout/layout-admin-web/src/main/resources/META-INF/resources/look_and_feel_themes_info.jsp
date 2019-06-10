@@ -113,9 +113,10 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 			LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
 			for (String name : configurableSettings.keySet()) {
+				String value = selLayoutSet.getThemeSetting(name, "regular");
 			%>
 
-				<p class="text-default"><liferay-ui:message key="<%= HtmlUtil.escape(name) %>" />: <%= HtmlUtil.escape(selLayoutSet.getThemeSetting(name, "regular")) %></p>
+				<p class="text-default"><liferay-ui:message key="<%= HtmlUtil.escape(name) %>" />: <%= HtmlUtil.escape(LanguageUtil.get(request, value)) %></p>
 
 			<%
 			}

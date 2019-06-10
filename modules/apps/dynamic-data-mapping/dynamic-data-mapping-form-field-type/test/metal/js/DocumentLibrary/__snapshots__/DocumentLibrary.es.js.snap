@@ -7,7 +7,7 @@ exports[`Field DocumentLibrary should have a helptext 1`] = `
       <div class="input-group-item input-group-prepend"><input class="field form-control" disabled="" id="textFieldinputFile" type="text"></div>
       <div class="input-group-append input-group-item input-group-item-shrink"><button class="btn btn-secondary select-button" type="button"><span class="lfr-btn-label">select</span></button></div>
     </div><input name="textField" type="hidden" value="">
-  </div><span class="form-text">Type something</span><span class="form-text">Type something</span>
+  </div><span class="form-text">Type something</span>
 </div>
 `;
 

@@ -21,17 +21,22 @@ import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.wiki.configuration.WikiFileUploadConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -125,6 +130,31 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 		String itemSelectedEventName, long wikiPageResourcePrimKey,
 		ThemeDisplay themeDisplay);
 
+	protected String[] getMimeTypes() {
+		String[] dlFileEntryPreviewImageMimeTypes =
+			PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES;
+
+		WikiFileUploadConfiguration wikiFileUploadConfiguration =
+			getWikiFileUploadConfiguration();
+
+		List<String> wikiAttachmentMimeTypes = ListUtil.toList(
+			wikiFileUploadConfiguration.attachmentMimeTypes());
+
+		if (wikiAttachmentMimeTypes.contains(StringPool.STAR)) {
+			return dlFileEntryPreviewImageMimeTypes;
+		}
+
+		ArrayList<String> mimeTypes = new ArrayList<>();
+
+		for (String mimeType : dlFileEntryPreviewImageMimeTypes) {
+			if (wikiAttachmentMimeTypes.contains(mimeType)) {
+				mimeTypes.add(mimeType);
+			}
+		}
+
+		return mimeTypes.toArray(new String[0]);
+	}
+
 	protected ItemSelectorCriterion getUploadItemSelectorCriterion(
 		long wikiPageResourcePrimKey, ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
@@ -134,8 +164,7 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 
 		uploadURL.setParameter(
 			ActionRequest.ACTION_NAME, "/wiki/upload_page_attachment");
-		uploadURL.setParameter(
-			"mimeTypes", PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES);
+		uploadURL.setParameter("mimeTypes", getMimeTypes());
 		uploadURL.setParameter(
 			"resourcePrimKey", String.valueOf(wikiPageResourcePrimKey));
 
@@ -166,13 +195,15 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 
 		ItemSelectorCriterion itemSelectorCriterion =
 			new WikiAttachmentItemSelectorCriterion(
-				wikiPageResourcePrimKey,
-				PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES);
+				wikiPageResourcePrimKey, getMimeTypes());
 
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
 
 		return itemSelectorCriterion;
 	}
+
+	protected abstract WikiFileUploadConfiguration
+		getWikiFileUploadConfiguration();
 
 }

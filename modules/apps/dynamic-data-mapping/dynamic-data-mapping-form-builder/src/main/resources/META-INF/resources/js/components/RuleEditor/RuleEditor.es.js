@@ -594,7 +594,11 @@ class RuleEditor extends Component {
 			}
 		}
 
-		return {dataType, repeatable, type};
+		return {
+			dataType,
+			repeatable,
+			type
+		};
 	}
 
 	_getIndex(fieldInstance, fieldClass) {

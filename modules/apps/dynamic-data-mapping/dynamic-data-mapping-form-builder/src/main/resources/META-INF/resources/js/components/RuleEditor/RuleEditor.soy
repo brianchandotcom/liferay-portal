@@ -100,12 +100,7 @@
 				value: string
 			]>,
 			operator: string,
-			operators: list<[
-				name: string,
-				parameterTypes: list<string>,
-				returnType: string,
-				value: string
-			]>
+			operators: ?
 		]>
 	}
 	{@param conditionsFieldOptions: list<[
@@ -480,6 +475,7 @@
 							{param events: [
 								'fieldEdited': $_handleActionSelection
 							] /}
+							{param name: 'action' + $index /}
 							{param options: $actionTypes /}
 							{param placeholder kind="text"}
 								{msg desc=""}choose-an-option{/msg}
@@ -591,6 +587,7 @@
 			{param events: [
 				'fieldEdited': $_handleTargetSelection
 			] /}
+			{param name: $ref /}
 			{param options: $options /}
 			{param placeholder: $placeholder /}
 			{param ref: $ref /}
@@ -629,12 +626,7 @@
 	{@param? firstOperandValueSelected: string}
 	{@param? fixedOptions: any}
 	{@param? logicalOperator: string}
-	{@param? operators:  list<[
-		name: string,
-		parameterTypes: list<string>,
-		returnType: string,
-		value: string
-	]>}
+	{@param? operators: ?}
 	{@param? roles: list<[
 		label: string,
 		value: string
@@ -663,6 +655,7 @@
 								'fieldEdited': $_handleFirstOperandFieldEdited
 							] /}
 							{param fixedOptions: $fixedOptions /}
+							{param name: 'firstOperand' + $index /}
 							{param options: $fieldOptions /}
 							{param placeholder kind="text"}
 								{msg desc=""}choose-an-option{/msg}
@@ -720,6 +713,7 @@
 											{param events: [
 												'fieldEdited': $_handleSecondOperandValueEdited
 											] /}
+											{param name: 'secondOperand' + $index /}
 											{param options: $fieldOptions /}
 											{param placeholder kind="text"}
 												{msg desc=""}choose-an-option{/msg}
@@ -796,13 +790,7 @@
 	{@param spritemap: string}
 	{@param? _handleOperatorEdited: any}
 	{@param? firstOperandType: string}
-	{@param? operators:  list<[
-			value: string,
-			name: string,
-			parameterTypes: list<string>,
-			returnType: string
-		]>
-	}
+	{@param? operators: ?}
 	{@param? selectedOperator: string}
 
 	{let $readOnly: $firstOperandType ? false : true /}
@@ -812,6 +800,7 @@
 			{param events: [
 				'fieldEdited': $_handleOperatorEdited
 			] /}
+			{param name: 'conditionOperator' + $index /}
 			{param options: $operators /}
 			{param placeholder kind="text"}
 				{msg desc=""}choose-an-option{/msg}
@@ -859,6 +848,7 @@
 				{param events: [
 					'fieldEdited': $_handleSecondOperandTypeEdited
 				] /}
+				{param name: 'secondOperandTypeSelector' + $index /}
 				{param options: $options /}
 				{param placeholder kind="text"}
 					{msg desc=""}choose-an-option{/msg}
@@ -891,6 +881,7 @@
 			{param events: [
 				'fieldEdited': $_handleSecondOperandFieldEdited
 			] /}
+			{param name: 'roleSelector' + $index /}
 			{param options: $roles /}
 			{param placeholder kind="text"}
 				{msg desc=""}choose-an-option{/msg}
@@ -1088,6 +1079,7 @@
 								{param events: [
 									'fieldEdited': $_handleDataProviderInputEdited
 								] /}
+								{param name: 'action' + $actionIndex + 'dataProviderInput' + $index /}
 								{param options: $input.fieldOptions /}
 								{param placeholder kind="text"}
 									{msg desc=""}choose-an-option{/msg}
@@ -1120,6 +1112,7 @@
 								{param events: [
 									'fieldEdited': $_handleDataProviderOutputEdited
 								] /}
+								{param name: 'action' + $actionIndex + 'dataProviderOutput' + $index /}
 								{param options: $output.fieldOptions /}
 								{param placeholder kind="text"}
 									{msg desc=""}choose-an-option{/msg}

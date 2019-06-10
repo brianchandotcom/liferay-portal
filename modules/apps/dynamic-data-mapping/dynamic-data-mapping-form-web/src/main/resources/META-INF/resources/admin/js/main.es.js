@@ -239,15 +239,21 @@ class Form extends Component {
 		const {ComposedFormBuilder} = this;
 		const {
 			context,
+			dataProviderInstanceParameterSettingsURL,
+			dataProviderInstancesURL,
 			defaultLanguageId,
 			editingLanguageId,
 			fieldSetDefinitionURL,
 			fieldSets,
 			fieldTypes,
+			functionsMetadata,
+			functionsURL,
 			groupId,
 			namespace,
 			published,
 			redirectURL,
+			rolesURL,
+			rules,
 			spritemap,
 			view
 		} = this.props;
@@ -276,18 +282,17 @@ class Form extends Component {
 					{this.isFormBuilderView() && (
 						<RuleBuilder
 							dataProviderInstanceParameterSettingsURL={
-								this.props
-									.dataProviderInstanceParameterSettingsURL
+								dataProviderInstanceParameterSettingsURL
 							}
-							dataProviderInstancesURL={
-								this.props.dataProviderInstancesURL
-							}
+							dataProviderInstancesURL={dataProviderInstancesURL}
 							fieldTypes={fieldTypes}
-							functionsMetadata={this.props.functionsMetadata}
-							functionsURL={this.props.functionsURL}
-							pages={context.pages}
-							rolesURL={this.props.rolesURL}
-							rules={this.props.rules}
+							functionsMetadata={functionsMetadata}
+							functionsURL={functionsURL}
+							groupId={groupId}
+							portletNamespace={namespace}
+							ref='ruleBuilder'
+							rolesURL={rolesURL}
+							rules={rules}
 							spritemap={spritemap}
 							visible={this.isShowRuleBuilder()}
 						/>
@@ -298,9 +303,9 @@ class Form extends Component {
 						fieldSets={fieldSets}
 						fieldTypes={fieldTypes}
 						groupId={groupId}
-						namespace={this.props.namespace}
-						ref='builder'
-						rules={this.props.rules}
+						portletNamespace={namespace}
+						ref='formBuilder'
+						rules={rules}
 						spritemap={spritemap}
 						view={view}
 						visible={!this.isShowRuleBuilder()}
@@ -631,16 +636,6 @@ class Form extends Component {
 		});
 
 		this.submitForm();
-	}
-
-	_openSidebar() {
-		const {builder} = this.refs;
-
-		if (builder) {
-			const {sidebar} = builder.refs;
-
-			sidebar.open();
-		}
 	}
 
 	_pagesValueFn() {

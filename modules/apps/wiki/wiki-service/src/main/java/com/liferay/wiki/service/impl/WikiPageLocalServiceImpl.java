@@ -2319,6 +2319,30 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		_portalCache.removeAll();
 	}
 
+	@ServiceReference(type = ConfigurationProvider.class)
+	protected ConfigurationProvider configurationProvider;
+
+	@ServiceReference(type = MultiVMPool.class)
+	protected MultiVMPool multiVMPool;
+
+	@ServiceReference(type = SubscriptionLocalService.class)
+	protected SubscriptionLocalService subscriptionLocalService;
+
+	@ServiceReference(type = TrashEntryLocalService.class)
+	protected TrashEntryLocalService trashEntryLocalService;
+
+	@ServiceReference(type = TrashHelper.class)
+	protected TrashHelper trashHelper;
+
+	@ServiceReference(type = TrashVersionLocalService.class)
+	protected TrashVersionLocalService trashVersionLocalService;
+
+	@ServiceReference(type = WikiEngineRenderer.class)
+	protected WikiEngineRenderer wikiEngineRenderer;
+
+	@ServiceReference(type = WikiPageTitleValidator.class)
+	protected WikiPageTitleValidator wikiPageTitleValidator;
+
 	private void _deletePageAttachment(long fileEntryId)
 		throws PortalException {
 
@@ -2426,6 +2450,27 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		return page;
 	}
 
+	private String _encodeKey(long nodeId, String title, String postfix) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(StringUtil.toHexString(nodeId));
+		sb.append(StringPool.POUND);
+		sb.append(title);
+
+		if (postfix != null) {
+			sb.append(StringPool.POUND);
+			sb.append(postfix);
+		}
+
+		return sb.toString();
+	}
+
+	private String _formatContent(String content) {
+		return StringUtil.replace(
+			content, new String[] {"</p>", "</br>", "</div>"},
+			new String[] {"</p>\n", "</br>\n", "</div>\n"});
+	}
+
 	private String _getDiffsURL(
 			WikiPage page, WikiPage previousVersionPage,
 			ServiceContext serviceContext)
@@ -2467,6 +2512,32 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		portletURL.setParameter("type", "html");
 
 		return portletURL.toString();
+	}
+
+	private Map<String, Boolean> _getOutgoingLinks(WikiPage page)
+		throws PageContentException {
+
+		String key = _encodeKey(
+			page.getNodeId(), page.getTitle(), _OUTGOING_LINKS);
+
+		Map<String, Boolean> links = (Map<String, Boolean>)_portalCache.get(
+			key);
+
+		if (links == null) {
+			WikiEngine wikiEngine = wikiEngineRenderer.fetchWikiEngine(
+				page.getFormat());
+
+			if (wikiEngine != null) {
+				links = wikiEngine.getOutgoingLinks(page);
+			}
+			else {
+				links = Collections.emptyMap();
+			}
+
+			_portalCache.put(key, (Serializable)links);
+		}
+
+		return links;
 	}
 
 	private String _getPageURL(WikiPage page, ServiceContext serviceContext)
@@ -3352,77 +3423,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		wikiPageTitleValidator.validate(title);
 
 		_validate(nodeId, content, format);
-	}
-
-	@ServiceReference(type = ConfigurationProvider.class)
-	protected ConfigurationProvider configurationProvider;
-
-	@ServiceReference(type = MultiVMPool.class)
-	protected MultiVMPool multiVMPool;
-
-	@ServiceReference(type = SubscriptionLocalService.class)
-	protected SubscriptionLocalService subscriptionLocalService;
-
-	@ServiceReference(type = TrashEntryLocalService.class)
-	protected TrashEntryLocalService trashEntryLocalService;
-
-	@ServiceReference(type = TrashHelper.class)
-	protected TrashHelper trashHelper;
-
-	@ServiceReference(type = TrashVersionLocalService.class)
-	protected TrashVersionLocalService trashVersionLocalService;
-
-	@ServiceReference(type = WikiEngineRenderer.class)
-	protected WikiEngineRenderer wikiEngineRenderer;
-
-	@ServiceReference(type = WikiPageTitleValidator.class)
-	protected WikiPageTitleValidator wikiPageTitleValidator;
-
-	private String _encodeKey(long nodeId, String title, String postfix) {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(StringUtil.toHexString(nodeId));
-		sb.append(StringPool.POUND);
-		sb.append(title);
-
-		if (postfix != null) {
-			sb.append(StringPool.POUND);
-			sb.append(postfix);
-		}
-
-		return sb.toString();
-	}
-
-	private String _formatContent(String content) {
-		return StringUtil.replace(
-			content, new String[] {"</p>", "</br>", "</div>"},
-			new String[] {"</p>\n", "</br>\n", "</div>\n"});
-	}
-
-	private Map<String, Boolean> _getOutgoingLinks(WikiPage page)
-		throws PageContentException {
-
-		String key = _encodeKey(
-			page.getNodeId(), page.getTitle(), _OUTGOING_LINKS);
-
-		Map<String, Boolean> links = (Map<String, Boolean>)_portalCache.get(
-			key);
-
-		if (links == null) {
-			WikiEngine wikiEngine = wikiEngineRenderer.fetchWikiEngine(
-				page.getFormat());
-
-			if (wikiEngine != null) {
-				links = wikiEngine.getOutgoingLinks(page);
-			}
-			else {
-				links = Collections.emptyMap();
-			}
-
-			_portalCache.put(key, (Serializable)links);
-		}
-
-		return links;
 	}
 
 	private static final String _OUTGOING_LINKS = "OUTGOING_LINKS";

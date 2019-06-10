@@ -77,8 +77,7 @@ public class WikiAttachmentImageHTMLEditorConfigContributor
 
 		ItemSelectorCriterion attachmentItemSelectorCriterion =
 			getWikiAttachmentItemSelectorCriterion(
-				wikiPageResourcePrimKey,
-				new FileEntryItemSelectorReturnType());
+				wikiPageResourcePrimKey, new FileEntryItemSelectorReturnType());
 
 		ItemSelectorCriterion uploadItemSelectorCriterion =
 			getUploadItemSelectorCriterion(

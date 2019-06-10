@@ -50,9 +50,11 @@ public class DataRecordCollectionTestUtil {
 			ResourceLocalService resourceLocalService, int scope)
 		throws Exception {
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(LocaleUtil.US, RandomTestUtil.randomString());
+		Map<Locale, String> nameMap = new HashMap<Locale, String>() {
+			{
+				put(LocaleUtil.US, RandomTestUtil.randomString());
+			}
+		};
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());

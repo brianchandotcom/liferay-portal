@@ -80,8 +80,7 @@ public class AssetDisplayPageHelperTest {
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			AssetDisplayPageConstants.TYPE_DEFAULT, serviceContext);
 
-		Assert.assertEquals(
-			true,
+		Assert.assertTrue(
 			AssetDisplayPageHelper.hasAssetDisplayPage(
 				_group.getGroupId(), classNameId, classPK, 0));
 	}
@@ -103,8 +102,7 @@ public class AssetDisplayPageHelperTest {
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			AssetDisplayPageConstants.TYPE_NONE, serviceContext);
 
-		Assert.assertEquals(
-			false,
+		Assert.assertFalse(
 			AssetDisplayPageHelper.hasAssetDisplayPage(
 				_group.getGroupId(), classNameId, classPK, 0));
 	}
@@ -126,8 +124,7 @@ public class AssetDisplayPageHelperTest {
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			AssetDisplayPageConstants.TYPE_SPECIFIC, serviceContext);
 
-		Assert.assertEquals(
-			true,
+		Assert.assertTrue(
 			AssetDisplayPageHelper.hasAssetDisplayPage(
 				_group.getGroupId(), classNameId, classPK, 0));
 	}

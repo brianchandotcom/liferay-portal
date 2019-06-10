@@ -721,20 +721,6 @@ message.
 		</if>
 
 		<if>
-			<equals arg1="${app.server.type}" arg2="jetty" />
-			<then>
-				<copy
-					todir="${app.server.lib.global.dir}"
-				>
-					<fileset
-						dir="lib/development"
-						includes="activation.jar,jta.jar,mail.jar,persistence.jar"
-					/>
-				</copy>
-			</then>
-		</if>
-
-		<if>
 			<equals arg1="${app.server.type}" arg2="jonas" />
 			<then>
 				<delete>
@@ -1337,23 +1323,6 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 						<copy
 							file="tools/servers/jboss/modules/module.xml"
 							tofile="${app.server.lib.global.dir}/module.xml"
-						/>
-					</then>
-				</if>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${app.server.type}" arg2="jetty" />
-			<then>
-				<if>
-					<not>
-						<available file="${app.server.dir}/contexts/root.xml" />
-					</not>
-					<then>
-						<copy
-							file="tools/servers/jetty/contexts/root.xml"
-							tofile="${app.server.dir}/contexts/root.xml"
 						/>
 					</then>
 				</if>

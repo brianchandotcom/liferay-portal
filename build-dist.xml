@@ -162,30 +162,6 @@
 		</antcall>
 	</target>
 
-	<target name="build-dist-jetty">
-		<app-server-properties-update>
-			app.server.type=jetty
-		</app-server-properties-update>
-
-		<antcall inheritAll="false" target="update-sdk-properties" />
-
-		<antcall target="unzip-jetty" />
-
-		<delete dir="${project.dir}/portal-web/classes" />
-
-		<ant inheritAll="false" target="deploy" />
-
-		<antcall inheritAll="false" target="resolve-dynamic-jars" />
-
-		<app-server-properties-reset />
-
-		<antcall target="deploy-plugins">
-			<param name="deployer.dest.dir" value="${app.server.jetty.deploy.dir}" />
-			<param name="deployer.app.server.type" value="jetty" />
-			<param name="deployer.app.server.lib.portal.dir" value="${app.server.jetty.lib.portal.dir}" />
-		</antcall>
-	</target>
-
 	<target name="build-dist-jonas">
 		<antcall target="unzip-jonas" />
 
@@ -958,7 +934,6 @@
 
 		<antcall target="build-dist-glassfish" />
 		<antcall target="build-dist-jboss" />
-		<antcall target="build-dist-jetty" />
 		<antcall target="build-dist-jonas" />
 		<antcall target="build-dist-resin" />
 		<antcall target="build-dist-tcat" />
@@ -967,7 +942,6 @@
 
 		<antcall target="zip-glassfish" />
 		<antcall target="zip-jboss" />
-		<antcall target="zip-jetty" />
 		<antcall target="zip-jonas" />
 		<antcall target="zip-patching-tool" />
 		<antcall target="zip-portal-client" />
@@ -1453,111 +1427,6 @@ this task.
 		>
 			<fileset
 				dir="${app.server.jboss.bin.dir}"
-			>
-				<include name="*.sh" />
-			</fileset>
-		</chmod>
-	</target>
-
-	<target name="unzip-jetty">
-		<delete dir="${app.server.jetty.dir}" />
-
-		<if>
-			<not>
-				<available file="${app.server.parent.dir}/${app.server.jetty.zip.name}" />
-			</not>
-			<then>
-				<mkdir dir="${app.server.parent.dir}" />
-
-				<mirrors-get
-					dest="${app.server.parent.dir}/${app.server.jetty.zip.name}"
-					src="${app.server.jetty.zip.url}"
-					verbose="true"
-				/>
-			</then>
-		</if>
-
-		<unzip
-			dest="${app.server.parent.dir}"
-			src="${app.server.parent.dir}/${app.server.jetty.zip.name}"
-		>
-			<patternset
-				excludes="
-					jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/bin/**,
-					jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/contexts/**,
-					jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/contexts-available/**,
-					jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/javadoc/**,
-					jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/overlays/**,
-					jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/webapps/**"
-			/>
-			<mapper
-				from="jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/*"
-				to="jetty-${app.server.jetty.version}/*"
-				type="glob"
-			/>
-		</unzip>
-
-		<mkdir dir="${app.server.jetty.dir}/bin" />
-		<mkdir dir="${app.server.jetty.dir}/contexts" />
-		<mkdir dir="${app.server.jetty.dir}/temp" />
-		<mkdir dir="${app.server.jetty.dir}/webapps" />
-
-		<copy
-			file="tools/servers/jetty/bin/run.bat"
-			tofile="${app.server.jetty.bin.dir}/run.bat"
-		/>
-
-		<replace
-			file="${app.server.jetty.bin.dir}/run.bat"
-		>
-			<replacetoken>set "JAVA_OPTS=-D</replacetoken>
-			<replacevalue>set "JAVA_OPTS=-Dapp.server.jetty.version=${app.server.jetty.version} -Dapp.server.jetty.version.date=${app.server.jetty.version.date} -Djava.io.tmpdir=${app.server.jetty.dir}/temp -D</replacevalue>
-		</replace>
-
-		<loadfile
-			property="run.bat.content"
-			srcfile="${app.server.jetty.bin.dir}/run.bat"
-		>
-			<filterchain>
-				<expandproperties />
-			</filterchain>
-		</loadfile>
-
-		<echo file="${app.server.jetty.bin.dir}/run.bat">${run.bat.content}</echo>
-
-		<copy
-			file="tools/servers/jetty/bin/run.sh"
-			tofile="${app.server.jetty.bin.dir}/run.sh"
-		/>
-
-		<replace
-			file="${app.server.jetty.bin.dir}/run.sh"
-		>
-			<replacetoken>export JAVA_OPTS="-D</replacetoken>
-			<replacevalue>export JAVA_OPTS="-Dapp.server.jetty.version=${app.server.jetty.version} -Dapp.server.jetty.version.date=${app.server.jetty.version.date} -D</replacevalue>
-		</replace>
-
-		<loadfile
-			property="run.sh.content"
-			srcfile="${app.server.jetty.bin.dir}/run.sh"
-		>
-			<filterchain>
-				<expandproperties />
-			</filterchain>
-		</loadfile>
-
-		<echo file="${app.server.jetty.bin.dir}/run.sh">${run.sh.content}</echo>
-
-		<copy
-			file="tools/servers/jetty/bin/start.ini"
-			tofile="${app.server.jetty.bin.dir}/start.ini"
-		/>
-
-		<chmod
-			perm="a+x"
-		>
-			<fileset
-				dir="${app.server.jetty.bin.dir}"
 			>
 				<include name="*.sh" />
 			</fileset>
@@ -3732,13 +3601,6 @@ plugins.includes=</echo>
 		<antcall target="zip-executable">
 			<param name="zip.executable.file" value="liferay-portal-jboss" />
 			<param name="zip.executable.dir" value="${app.server.jboss.dir}" />
-		</antcall>
-	</target>
-
-	<target name="zip-jetty">
-		<antcall target="zip-executable">
-			<param name="zip.executable.file" value="liferay-portal-jetty" />
-			<param name="zip.executable.dir" value="${app.server.jetty.dir}" />
 		</antcall>
 	</target>
 

@@ -94,9 +94,12 @@ public class WikiAttachmentImageCreoleEditorConfigContributor
 		return _wikiFileUploadConfiguration;
 	}
 
-	@Reference
-	private ItemSelector _itemSelector;
+	@Reference(unbind = "-")
+	protected void setItemSelector(ItemSelector itemSelector) {
+		_itemSelector = itemSelector;
+	}
 
+	private ItemSelector _itemSelector;
 	private WikiFileUploadConfiguration _wikiFileUploadConfiguration;
 
 }

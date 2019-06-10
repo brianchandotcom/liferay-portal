@@ -61,12 +61,10 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 	public void testPostDataRecordWithInvalidDataRecordCollection()
 		throws Exception {
 
-		DataRecord randomDataRecord = randomDataRecord();
-
 		assertHttpResponseStatusCode(
 			404,
 			DataRecordResource.postDataRecordCollectionDataRecordHttpResponse(
-				RandomTestUtil.randomLong(), randomDataRecord));
+				RandomTestUtil.randomLong(), randomDataRecord()));
 	}
 
 	@Test

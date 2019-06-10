@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -84,7 +83,7 @@ public class SegmentsEntryLocalServiceImpl
 		}
 
 		validateKey(0, groupId, segmentsEntryKey);
-		validateName(nameMap);
+		validateName(groupId, nameMap);
 
 		long segmentsEntryId = counterLocalService.increment();
 
@@ -331,7 +330,7 @@ public class SegmentsEntryLocalServiceImpl
 		validateKey(
 			segmentsEntryId, segmentsEntry.getGroupId(), segmentsEntryKey);
 
-		validateName(nameMap);
+		validateName(segmentsEntry.getGroupId(), nameMap);
 
 		segmentsEntry.setSegmentsEntryKey(segmentsEntryKey);
 
@@ -437,12 +436,12 @@ public class SegmentsEntryLocalServiceImpl
 		}
 	}
 
-	protected void validateName(Map<Locale, String> nameMap)
+	protected void validateName(long groupId, Map<Locale, String> nameMap)
 		throws PortalException {
 
-		Locale locale = LocaleUtil.getDefault();
+		Locale defaultLocale = PortalUtil.getSiteDefaultLocale(groupId);
 
-		if (nameMap.isEmpty() || Validator.isNull(nameMap.get(locale))) {
+		if (nameMap.isEmpty() || Validator.isNull(nameMap.get(defaultLocale))) {
 			throw new SegmentsEntryNameException();
 		}
 	}

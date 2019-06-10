@@ -14,6 +14,8 @@
 
 package com.liferay.journal.web.internal.servlet.taglib.ui;
 
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
 import javax.servlet.ServletContext;
@@ -34,6 +36,15 @@ public class JournalFriendlyURLFormNavigatorEntry
 	@Override
 	public String getKey() {
 		return "friendly-url";
+	}
+
+	@Override
+	public boolean isVisible(User user, JournalArticle article) {
+		if (isEditDefaultValues(article)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

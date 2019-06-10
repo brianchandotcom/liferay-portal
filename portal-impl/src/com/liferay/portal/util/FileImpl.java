@@ -436,28 +436,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			}
 			else {
 				if (!_isEmptyTikaInputStream(tikaInputStream)) {
-					UniversalEncodingDetector universalEncodingDetector =
-						new UniversalEncodingDetector();
-
-					Metadata metadata = new Metadata();
-
-					Charset charset = universalEncodingDetector.detect(
-						tikaInputStream, metadata);
-
-					String contentEncoding = StringPool.BLANK;
-
-					if (charset != null) {
-						contentEncoding = charset.name();
-					}
-
-					if (!contentEncoding.equals(StringPool.BLANK)) {
-						metadata.set("Content-Encoding", contentEncoding);
-						metadata.set(
-							"Content-Type",
-							"text/plain; charset=" + contentEncoding);
-					}
-
-					text = tika.parseToString(tikaInputStream, metadata);
+					text = _parseToString(tika, tikaInputStream);
 				}
 			}
 		}
@@ -1119,6 +1098,33 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		}
 	}
 
+	private static String _parseToString(
+			Tika tika, TikaInputStream tikaInputStream)
+		throws IOException, TikaException {
+
+		UniversalEncodingDetector universalEncodingDetector =
+			new UniversalEncodingDetector();
+
+		Metadata metadata = new Metadata();
+
+		Charset charset = universalEncodingDetector.detect(
+			tikaInputStream, metadata);
+
+		String contentEncoding = StringPool.BLANK;
+
+		if (charset != null) {
+			contentEncoding = charset.name();
+		}
+
+		if (!contentEncoding.equals(StringPool.BLANK)) {
+			metadata.set("Content-Encoding", contentEncoding);
+			metadata.set(
+				"Content-Type", "text/plain; charset=" + contentEncoding);
+		}
+
+		return tika.parseToString(tikaInputStream, metadata);
+	}
+
 	private boolean _isEmptyTikaInputStream(TikaInputStream tikaInputStream)
 		throws IOException {
 
@@ -1178,8 +1184,11 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			Tika tika = new Tika(TikaConfigHolder._tikaConfig);
 
 			try {
-				return tika.parseToString(
-					new UnsyncByteArrayInputStream(_data));
+				InputStream is = new UnsyncByteArrayInputStream(_data);
+
+				TikaInputStream tikaInputStream = TikaInputStream.get(is);
+
+				return _parseToString(tika, tikaInputStream);
 			}
 			catch (Exception e) {
 				throw new ProcessException(e);

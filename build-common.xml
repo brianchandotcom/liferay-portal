@@ -173,10 +173,6 @@
 
 	<delete file="${app.server.tmp.properties}" />
 
-	<condition property="app.server.portal.war.name" value="${app.server.glassfish.portal.war.name}">
-		<equals arg1="${app.server.type}" arg2="glassfish" />
-	</condition>
-
 	<condition property="app.server.portal.war.name" value="${app.server.websphere.portal.war.name}">
 		<equals arg1="${app.server.type}" arg2="websphere" />
 	</condition>
@@ -488,31 +484,15 @@ information.
 		<attribute default="${app.server.classes.portal.dir}" name="deploy.properties.dest" />
 
 		<sequential>
-			<if>
-				<and>
-					<equals arg1="${app.server.bundled}" arg2="true" />
-					<equals arg1="${app.server.type}" arg2="glassfish" />
-				</and>
-				<then>
-					<war
-						destfile="${app.server.glassfish.portal.war.name}"
-						update="true"
-					>
-						<classes dir="${project.dir}/portal-impl/src" includes="portal-*.properties,system-*.properties" />
-					</war>
-				</then>
-				<else>
-					<copy
-						overwrite="true"
-						todir="@{deploy.properties.dest}"
-					>
-						<fileset
-							dir="${project.dir}/portal-impl/src"
-							includes="portal-*.properties,system-*.properties"
-						/>
-					</copy>
-				</else>
-			</if>
+			<copy
+				overwrite="true"
+				todir="@{deploy.properties.dest}"
+			>
+				<fileset
+					dir="${project.dir}/portal-impl/src"
+					includes="portal-*.properties,system-*.properties"
+				/>
+			</copy>
 		</sequential>
 	</macrodef>
 
@@ -1967,7 +1947,7 @@ rerun your task.
 					<propertyref prefix="sonatype." />
 					<propertyref prefix="source.formatter." />
 					<propertyref regex=".+\.ignore\.local$" />
-					<propertyref regex="^\s*app\.server\.(?:glassfish|jboss|resin|tcat|tcserver|tomcat|weblogic|websphere|wildfly).*" />
+					<propertyref regex="^\s*app\.server\.(?:jboss|resin|tcat|tcserver|tomcat|weblogic|websphere|wildfly).*" />
 				</propertyset>
 			</echoproperties>
 
@@ -2054,7 +2034,7 @@ rerun your task.
 					<propertyref prefix="ivy.pom." />
 					<propertyref prefix="microsoft.translator." />
 					<propertyref prefix="sonatype." />
-					<propertyref regex="^\s*app\.server\.(?:glassfish|jboss|resin|tcat|tcserver|tomcat|weblogic|websphere|wildfly).*\.dir" />
+					<propertyref regex="^\s*app\.server\.(?:jboss|resin|tcat|tcserver|tomcat|weblogic|websphere|wildfly).*\.dir" />
 				</propertyset>
 			</echoproperties>
 

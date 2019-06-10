@@ -45,7 +45,6 @@
 			<else>
 				<if>
 					<or>
-						<equals arg1="${app.server.type}" arg2="glassfish" />
 						<equals arg1="${app.server.type}" arg2="jboss" />
 						<equals arg1="${app.server.type}" arg2="wildfly" />
 					</or>
@@ -132,33 +131,6 @@
 			</or>
 			<then>
 				<echo file="${war.file.dest}.dodeploy" />
-			</then>
-		</if>
-
-		<if>
-			<and>
-				<equals arg1="${app.server.type}" arg2="glassfish" />
-				<available file="${war.file.dest}" type="dir" />
-				<not>
-					<equals arg1="${war.file}" arg2="portal-web" />
-				</not>
-			</and>
-			<then>
-				<tstamp>
-					<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
-				</tstamp>
-
-				<jar
-					basedir="${war.file.dest}"
-					jarfile="${tstamp.value}"
-				/>
-
-				<delete dir="${war.file.dest}" />
-
-				<move
-					file="${tstamp.value}"
-					tofile="${war.file.dest}"
-				/>
 			</then>
 		</if>
 

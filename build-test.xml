@@ -51,12 +51,6 @@
 					<property name="test.build.liferay.portal.zip.file.name" value="${app.server.portal.dir}" />
 				</then>
 				<elseif>
-					<equals arg1="${app.server.type}" arg2="glassfish" />
-					<then>
-						<property name="test.build.liferay.portal.zip.file.name" value="${app.server.glassfish.portal.war.name}" />
-					</then>
-				</elseif>
-				<elseif>
 					<equals arg1="${tcat.enabled}" arg2="true" />
 					<then>
 						<property name="test.build.liferay.portal.zip.file.name" value="${app.server.tcat.admin.dir}/tcat_init/webapps/${lp.version.dtd}/ROOT.war" />
@@ -129,7 +123,6 @@ module.framework.properties.osgi.console=11312</echo>
 			<if>
 				<not>
 					<or>
-						<equals arg1="${app.server.type}" arg2="glassfish" />
 						<equals arg1="${app.server.type}" arg2="jboss" />
 						<equals arg1="${app.server.type}" arg2="resin" />
 						<equals arg1="${app.server.type}" arg2="tcserver" />
@@ -140,7 +133,7 @@ module.framework.properties.osgi.console=11312</echo>
 					</or>
 				</not>
 				<then>
-					<fail>Please set "app.server.type" to one of the following:${line.separator}, glassfish, jboss, resin, tcserver, tomcat, weblogic, websphere, or wildfly.</fail>
+					<fail>Please set "app.server.type" to one of the following:${line.separator}, jboss, resin, tcserver, tomcat, weblogic, websphere, or wildfly.</fail>
 				</then>
 			</if>
 
@@ -2269,23 +2262,6 @@ tell application "Safari" to quit
 	<macrodef name="prepare-test-bundles">
 		<attribute name="unit" />
 		<sequential>
-			<if>
-				<matches pattern="https?://" string="${test.build.bundle.glassfish.zip.url}" />
-				<then>
-					<antcall inheritAll="false" target="prepare-test-bundle">
-						<param name="app.server.type" value="glassfish" />
-						<param name="test.app.server.bin.dir" value="${app.server.glassfish.bin.dir}" />
-						<param name="test.build.bundle.zip.url" value="${test.build.bundle.glassfish.zip.url}" />
-					</antcall>
-				</then>
-				<elseif>
-					<equals arg1="${test.build.bundle.glassfish}" arg2="true" />
-					<then>
-						<ant antfile="build-dist.xml" inheritAll="false" target="build-dist-glassfish" />
-					</then>
-				</elseif>
-			</if>
-
 			<if>
 				<equals arg1="${test.build.bundle.jbosseap6.0}" arg2="true" />
 				<then>
@@ -10774,15 +10750,6 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</not>
 			<then>
 				<antcall target="clean-app-server-deploy-dir" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${app.server.type}" arg2="glassfish" />
-			<then>
-				<start-app-server />
-
-				<stop-app-server />
 			</then>
 		</if>
 

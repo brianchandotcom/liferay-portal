@@ -114,28 +114,6 @@
 		</sequential>
 	</macrodef>
 
-	<target name="build-dist-glassfish">
-		<app-server-properties-update>
-			app.server.type=glassfish
-		</app-server-properties-update>
-
-		<antcall inheritAll="false" target="update-sdk-properties" />
-
-		<antcall target="unzip-glassfish" />
-
-		<ant inheritAll="false" target="deploy" />
-
-		<antcall inheritAll="false" target="resolve-dynamic-jars" />
-
-		<app-server-properties-reset />
-
-		<antcall target="deploy-plugins">
-			<param name="deployer.dest.dir" value="${app.server.glassfish.deploy.dir}" />
-			<param name="deployer.app.server.type" value="glassfish" />
-			<param name="deployer.app.server.lib.portal.dir" value="lib/portal" />
-		</antcall>
-	</target>
-
 	<target name="build-dist-jboss">
 		<app-server-properties-update>
 			app.server.type=jboss
@@ -150,8 +128,6 @@
 		<delete dir="${project.dir}/portal-web/classes" />
 
 		<ant inheritAll="false" target="deploy" />
-
-		<antcall inheritAll="false" target="resolve-dynamic-jars" />
 
 		<app-server-properties-reset />
 
@@ -266,8 +242,6 @@
 		<delete dir="${project.dir}/portal-web/classes" />
 
 		<ant inheritAll="false" target="deploy" />
-
-		<antcall inheritAll="false" target="resolve-dynamic-jars" />
 
 		<app-server-properties-reset />
 
@@ -559,8 +533,6 @@
 
 		<antcall inheritAll="false" target="all" />
 
-		<antcall inheritAll="false" target="resolve-dynamic-jars" />
-
 		<app-server-properties-reset />
 
 		<antcall target="deploy-plugins">
@@ -583,8 +555,6 @@
 				<app-server-properties-reset />
 			</then>
 		</if>
-
-		<antcall inheritAll="false" target="resolve-dynamic-jars" />
 
 		<antcall target="deploy-plugins">
 			<param name="deployer.dest.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/webapps" />
@@ -618,8 +588,6 @@
 
 		<ant inheritAll="false" target="deploy" />
 
-		<antcall inheritAll="false" target="resolve-dynamic-jars" />
-
 		<app-server-properties-reset />
 
 		<antcall target="deploy-plugins">
@@ -642,8 +610,6 @@
 
 		<ant inheritAll="false" target="deploy" />
 
-		<antcall inheritAll="false" target="resolve-dynamic-jars" />
-
 		<app-server-properties-reset />
 
 		<antcall target="deploy-plugins">
@@ -665,8 +631,6 @@
 		<delete dir="${project.dir}/portal-web/classes" />
 
 		<ant inheritAll="false" target="deploy" />
-
-		<antcall inheritAll="false" target="resolve-dynamic-jars" />
 
 		<app-server-properties-reset />
 
@@ -910,17 +874,13 @@
 
 		<antcall target="build-dist-plugins" />
 
-		<antcall target="build-dist-glassfish" />
 		<antcall target="build-dist-jboss" />
-		<antcall target="build-dist-jonas" />
 		<antcall target="build-dist-resin" />
 		<antcall target="build-dist-tcat" />
 		<antcall target="build-dist-tomcat" />
 		<antcall target="build-dist-wildfly" />
 
-		<antcall target="zip-glassfish" />
 		<antcall target="zip-jboss" />
-		<antcall target="zip-jonas" />
 		<antcall target="zip-patching-tool" />
 		<antcall target="zip-portal-client" />
 		<antcall target="zip-portal-dependencies" />
@@ -1083,105 +1043,6 @@ release was successful.</echo>
 		<delete file="prepare-generated-files.txt" />
 
 		<echo file="prepare-generated-files.tstamp">${prepare-generated-files.tstamp}</echo>
-	</target>
-
-	<target name="resolve-dynamic-jars">
-		<sequential>
-			<if>
-				<equals arg1="${app.server.type}" arg2="glassfish" />
-				<then>
-					<tstamp>
-						<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
-					</tstamp>
-
-					<unzip
-						dest="${app.server.glassfish.deploy.dir}/${tstamp.value}"
-						src="${app.server.glassfish.deploy.dir}/liferay-portal.war"
-					/>
-
-					<zip
-						basedir="${app.server.glassfish.deploy.dir}/${tstamp.value}"
-						destfile="${app.server.glassfish.deploy.dir}/liferay-portal.war"
-					/>
-
-					<delete dir="${app.server.glassfish.deploy.dir}/${tstamp.value}" />
-				</then>
-			</if>
-		</sequential>
-	</target>
-
-	<target name="unzip-glassfish">
-		<delete dir="${app.server.glassfish.dir}" />
-
-		<if>
-			<not>
-				<available file="${app.server.parent.dir}/${app.server.glassfish.zip.name}" />
-			</not>
-			<then>
-				<mkdir dir="${app.server.parent.dir}" />
-
-				<mirrors-get
-					dest="${app.server.parent.dir}/${app.server.glassfish.zip.name}"
-					src="${app.server.glassfish.zip.url}"
-					verbose="true"
-				/>
-			</then>
-		</if>
-
-		<unzip
-			dest="${app.server.parent.dir}"
-			src="${app.server.parent.dir}/${app.server.glassfish.zip.name}"
-		>
-			<patternset
-				includes="glassfish3/glassfish/**,glassfishv3/glassfish/**"
-			/>
-			<mapper
-				from="glassfishv?3/glassfish/(.*)"
-				to="${app.server.glassfish.dir}/\1"
-				type="regexp"
-			/>
-		</unzip>
-
-		<if>
-			<equals arg1="${app.server.glassfish.version}" arg2="3.1.2.2" />
-			<then>
-
-				<!-- GLASSFISH-19008 -->
-
-				<zip
-					basedir="tools/servers/glassfish/patches/GLASSFISH-19008/classes"
-					destfile="${app.server.glassfish.dir}/modules/web-core.jar"
-					update="yes"
-				/>
-			</then>
-		</if>
-
-		<replace
-			file="${app.server.glassfish.instance.dir}/config/domain.xml"
-		>
-			<replacetoken><![CDATA[<jvm-options>-Xmx512m</jvm-options>]]></replacetoken>
-			<replacevalue>
-				<![CDATA[
-					<jvm-options>-Dfile.encoding=UTF8</jvm-options>
-					<jvm-options>-Djava.locale.providers=JRE,COMPAT,CLDR</jvm-options>
-					<jvm-options>-Djava.net.preferIPv4Stack=true</jvm-options>
-					<jvm-options>-Dorg.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES=false</jvm-options>
-					<jvm-options>-Duser.timezone=GMT</jvm-options>
-					<jvm-options>-Xms2560m</jvm-options>
-					<jvm-options>-Xmx2560m</jvm-options>
-				]]>
-			</replacevalue>
-		</replace>
-
-		<chmod
-			perm="a+x"
-		>
-			<fileset
-				dir="${app.server.glassfish.bin.dir}"
-			>
-				<exclude name="*.bat" />
-			</fileset>
-		</chmod>
 	</target>
 
 	<target name="unzip-jboss">
@@ -3219,23 +3080,10 @@ plugins.includes=</echo>
 							src="${patching.tool.zip}"
 						/>
 
-						<if>
-							<contains string="${zip.executable.dir}" substring="glassfish" />
-							<then>
-								<echo file="${zip.executable.dir}/../patching-tool/default.properties">
-									global.lib.path=${zip.executable.dir}/domains/domain1/autodeploy/liferay-portal.war/WEB-INF/lib/ext/
-									jdk.version=jdk6
-									patching.mode=binary
-									war.path=${zip.executable.dir}/domains/domain1/autodeploy/liferay-portal.war/
-								</echo>
-							</then>
-							<else>
-								<antcall target="exec-patching-tool">
-									<param name="patching.tool.arg.line" value="auto-discovery" />
-									<param name="patching.tool.dir" value="${zip.executable.dir}/../patching-tool" />
-								</antcall>
-							</else>
-						</if>
+						<antcall target="exec-patching-tool">
+							<param name="patching.tool.arg.line" value="auto-discovery" />
+							<param name="patching.tool.dir" value="${zip.executable.dir}/../patching-tool" />
+						</antcall>
 
 						<delete>
 							<fileset
@@ -3378,13 +3226,6 @@ plugins.includes=</echo>
 				</zip>
 			</else>
 		</if>
-	</target>
-
-	<target name="zip-glassfish">
-		<antcall target="zip-executable">
-			<param name="zip.executable.file" value="liferay-portal-glassfish" />
-			<param name="zip.executable.dir" value="${app.server.glassfish.dir}" />
-		</antcall>
 	</target>
 
 	<target name="zip-jboss">

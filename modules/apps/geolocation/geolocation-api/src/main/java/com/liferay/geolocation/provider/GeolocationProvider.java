@@ -14,6 +14,7 @@
 
 package com.liferay.geolocation.provider;
 
+import com.liferay.geolocation.exception.GeolocationException;
 import com.liferay.geolocation.model.GeolocationAddress;
 import com.liferay.geolocation.model.GeolocationPosition;
 
@@ -32,9 +33,12 @@ public interface GeolocationProvider {
 	 *
 	 * @param  geolocationPosition the geographic coordinates
 	 * @return the human-readable address
+	 * @throws GeolocationException if a geolocation error occurs
+	 * @review
 	 */
 	public GeolocationAddress getGeolocationAddress(
-		GeolocationPosition geolocationPosition);
+			GeolocationPosition geolocationPosition)
+		throws GeolocationException;
 
 	/**
 	 * Performs a reverse IP geocoding process, converting the IP address into a
@@ -42,8 +46,11 @@ public interface GeolocationProvider {
 	 *
 	 * @param  ipAddress the IP address
 	 * @return the human-readable address
+	 * @throws GeolocationException if a geolocation error occurs
+	 * @review
 	 */
-	public GeolocationAddress getGeolocationAddress(String ipAddress);
+	public GeolocationAddress getGeolocationAddress(String ipAddress)
+		throws GeolocationException;
 
 	/**
 	 * Performs a geocoding process, converting the human-readable {@code
@@ -52,9 +59,12 @@ public interface GeolocationProvider {
 	 *
 	 * @param  geolocationAddress the human-readable address
 	 * @return the geographic coordinates
+	 * @throws GeolocationException if a geolocation error occurs
+	 * @review
 	 */
 	public GeolocationPosition getGeolocationPosition(
-		GeolocationAddress geolocationAddress);
+			GeolocationAddress geolocationAddress)
+		throws GeolocationException;
 
 	/**
 	 * Performs a IP geocoding process, converting the the IP address into a
@@ -62,7 +72,10 @@ public interface GeolocationProvider {
 	 *
 	 * @param  ipAddress the IP address
 	 * @return the geographic coordinates
+	 * @throws GeolocationException if a geolocation error occurs
+	 * @review
 	 */
-	public GeolocationPosition getGeolocationPosition(String ipAddress);
+	public GeolocationPosition getGeolocationPosition(String ipAddress)
+		throws GeolocationException;
 
 }

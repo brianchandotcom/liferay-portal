@@ -14,10 +14,13 @@
 
 package com.liferay.talend.resource;
 
+import static org.talend.daikon.properties.presentation.Widget.widget;
+
 import com.liferay.talend.LiferayBaseComponentDefinition;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
 import com.liferay.talend.exception.ExceptionUtils;
+import com.liferay.talend.openapi.Parameter;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
 import com.liferay.talend.utils.URIUtils;
@@ -27,8 +30,12 @@ import java.io.IOException;
 import java.net.URI;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.UriBuilder;
@@ -109,10 +116,18 @@ public class LiferayResourceProperties
 			endpoint.setValue(null);
 		}
 
-		refreshLayout(getForm(Form.MAIN));
+		populateParametersTable(liferaySourceOrSinkRuntime);
+
 		refreshLayout(getForm(Form.REFERENCE));
 
 		return validationResultMutable;
+	}
+
+	public void afterParametersTable() {
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Parameters: " + parametersTable.valueColumnName.getValue());
+		}
 	}
 
 	public ValidationResult beforeEndpoint() throws Exception {
@@ -195,7 +210,6 @@ public class LiferayResourceProperties
 
 		// Forms
 
-		_setupMainForm();
 		_setupReferenceForm();
 	}
 
@@ -244,6 +258,8 @@ public class LiferayResourceProperties
 
 	};
 
+	public ParametersTable parametersTable = new ParametersTable(
+		"parametersTable");
 	public ISchemaListener schemaListener;
 	public transient PresentationItem validateCondition = new PresentationItem(
 		"validateCondition");
@@ -288,6 +304,57 @@ public class LiferayResourceProperties
 		return liferayConnectionProperties;
 	}
 
+	protected void populateParametersTable(
+			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime)
+		throws IOException {
+
+		List<String> parameterNames = new ArrayList<>();
+		List<String> parameterValues = new ArrayList<>();
+		List<String> parameterTypes = new ArrayList<>();
+
+		List<Parameter> parameters = liferaySourceOrSinkRuntime.getParameters(
+			endpoint.getValue(), HttpMethod.GET);
+
+		if (parameters.isEmpty()) {
+			parametersTable.columnName.setValue(Collections.emptyList());
+			parametersTable.valueColumnName.setValue(Collections.emptyList());
+			parametersTable.typeColumnName.setValue(Collections.emptyList());
+		}
+		else {
+			for (Parameter parameter : parameters) {
+				String name = parameter.getName();
+
+				if (Objects.equals(name, "page") ||
+					Objects.equals(name, "pageSize")) {
+
+					continue;
+				}
+
+				if (parameter.isRequired() ||
+					(Parameter.Type.PATH == parameter.getType())) {
+
+					name = name + "*";
+				}
+
+				parameterNames.add(name);
+
+				Parameter.Type type = parameter.getType();
+
+				String typeString = type.toString();
+
+				typeString = typeString.toLowerCase();
+
+				parameterTypes.add(typeString);
+
+				parameterValues.add("");
+			}
+
+			parametersTable.columnName.setValue(parameterNames);
+			parametersTable.typeColumnName.setValue(parameterTypes);
+			parametersTable.valueColumnName.setValue(parameterValues);
+		}
+	}
+
 	protected static final I18nMessages i18nMessages;
 
 	static {
@@ -296,29 +363,6 @@ public class LiferayResourceProperties
 
 		i18nMessages = i18nMessageProvider.getI18nMessages(
 			LiferayResourceProperties.class);
-	}
-
-	private void _setupMainForm() {
-		Form endpointSelectionForm = Form.create(this, Form.MAIN);
-
-		Widget endpointPropertyWidget = Widget.widget(endpoint);
-
-		endpointPropertyWidget.setCallAfter(true);
-		endpointPropertyWidget.setWidgetType(
-			Widget.NAME_SELECTION_AREA_WIDGET_TYPE);
-
-		endpointSelectionForm.addRow(endpointPropertyWidget);
-
-		endpointSelectionForm.addRow(condition);
-
-		Widget validateConditionWidget = Widget.widget(validateCondition);
-
-		validateConditionWidget.setLongRunning(true);
-		validateConditionWidget.setWidgetType(Widget.BUTTON_WIDGET_TYPE);
-
-		endpointSelectionForm.addColumn(validateConditionWidget);
-
-		refreshLayout(endpointSelectionForm);
 	}
 
 	private void _setupReferenceForm() {
@@ -345,6 +389,11 @@ public class LiferayResourceProperties
 		referenceForm.addColumn(validateConditionReferenceWidget);
 
 		referenceForm.addRow(main.getForm(Form.REFERENCE));
+
+		Widget parametersTableWidget = widget(parametersTable);
+
+		referenceForm.addRow(
+			parametersTableWidget.setWidgetType(Widget.TABLE_WIDGET_TYPE));
 
 		refreshLayout(referenceForm);
 	}

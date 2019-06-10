@@ -167,7 +167,7 @@ public class DDMFormRenderingContext {
 	private final Map<String, Object> _properties = new HashMap<>();
 	private boolean _readOnly;
 	private boolean _showRequiredFieldsWarning = true;
-	private boolean _showSubmitButton;
+	private boolean _showSubmitButton = true;
 	private String _submitLabel;
 
 }

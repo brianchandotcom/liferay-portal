@@ -1492,10 +1492,6 @@ public class WebServerServlet extends HttpServlet {
 
 			FileEntry fileEntry = getFileEntry(pathArray);
 
-			if (fileEntry == null) {
-				throw new NoSuchFileEntryException();
-			}
-
 			String portletId = null;
 
 			Group group = GroupLocalServiceUtil.getGroup(

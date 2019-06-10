@@ -1,8 +1,5 @@
 {
     "ignore": [
-        "**/config.js",
-        "**/__tests__/*.js",
-        "**/*_field.js",
-        "**/*_support.js"
+        "**/__tests__/*.js"
     ]
 }

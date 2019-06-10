@@ -1492,43 +1492,54 @@ public class WebServerServlet extends HttpServlet {
 
 			FileEntry fileEntry = getFileEntry(pathArray);
 
-			String portletId = null;
+			String portletId = _getPortletId(fileEntry, httpServletRequest);
 
-			Group group = GroupLocalServiceUtil.getGroup(
-				fileEntry.getGroupId());
-
-			if (group.isStagingGroup()) {
-				portletId = PortletProviderUtil.getPortletId(
-					FileEntry.class.getName(), PortletProvider.Action.VIEW);
+			if (portletId == null) {
+				return;
 			}
 
-			if (fileEntry.isInTrash()) {
-				int status = ParamUtil.getInteger(
-					httpServletRequest, "status",
-					WorkflowConstants.STATUS_APPROVED);
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
 
-				if (status != WorkflowConstants.STATUS_IN_TRASH) {
-					throw new NoSuchFileEntryException();
-				}
+			if (!PortletPermissionUtil.hasControlPanelAccessPermission(
+					permissionChecker, fileEntry.getGroupId(), portletId)) {
 
-				portletId = PortletProviderUtil.getPortletId(
-					TrashEntry.class.getName(), PortletProvider.Action.VIEW);
-			}
-
-			if (portletId != null) {
-				PermissionChecker permissionChecker =
-					PermissionThreadLocal.getPermissionChecker();
-
-				if (!PortletPermissionUtil.hasControlPanelAccessPermission(
-						permissionChecker, fileEntry.getGroupId(), portletId)) {
-
-					throw new PrincipalException.MustHavePermission(
-						permissionChecker, FileEntry.class.getName(),
-						fileEntry.getFileEntryId(),
-						ActionKeys.ACCESS_IN_CONTROL_PANEL);
-				}
+				throw new PrincipalException.MustHavePermission(
+					permissionChecker, FileEntry.class.getName(),
+					fileEntry.getFileEntryId(),
+					ActionKeys.ACCESS_IN_CONTROL_PANEL);
 			}
 		}
+	}
+
+	private String _getPortletId(
+			FileEntry fileEntry, HttpServletRequest request)
+		throws PortalException {
+
+		String portletId = null;
+
+		Group group = GroupLocalServiceUtil.getGroup(
+			fileEntry.getGroupId());
+
+		if (group.isStagingGroup()) {
+			portletId = PortletProviderUtil.getPortletId(
+				FileEntry.class.getName(), PortletProvider.Action.VIEW);
+		}
+
+		if (fileEntry.isInTrash()) {
+			int status = ParamUtil.getInteger(
+				request, "status",
+				WorkflowConstants.STATUS_APPROVED);
+
+			if (status != WorkflowConstants.STATUS_IN_TRASH) {
+				throw new NoSuchFileEntryException();
+			}
+
+			portletId = PortletProviderUtil.getPortletId(
+				TrashEntry.class.getName(), PortletProvider.Action.VIEW);
+		}
+
+		return portletId;
 	}
 
 	private Callable<Void> _createFileServingCallable(

@@ -1,6 +1,6 @@
 import Token from '../../../expressions/Token.es';
 import Tokenizer from '../../../expressions/Tokenizer.es';
-import {RulesVisitor} from '../../../util/visitors.es';
+import {RulesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 
 export const renameFieldInsideExpression = (
 	expression,

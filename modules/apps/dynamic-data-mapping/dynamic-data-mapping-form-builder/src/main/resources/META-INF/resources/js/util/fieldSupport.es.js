@@ -1,4 +1,4 @@
-import {PagesVisitor} from './visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 
 export const formatFieldName = (instanceId, languageId, value) => {
 	return `ddm$$${value}$${instanceId}$0$$${languageId}`;

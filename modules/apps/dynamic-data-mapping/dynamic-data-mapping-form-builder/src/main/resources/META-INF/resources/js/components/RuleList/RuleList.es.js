@@ -9,7 +9,7 @@ import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
 import {getFieldProperty} from '../LayoutProvider/util/fields.es';
 import {maxPageIndex, pageOptions} from '../../util/pageSupport.es';
-import {PagesVisitor} from '../../util/visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 
 /**
  * RuleList.

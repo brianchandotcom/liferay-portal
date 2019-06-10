@@ -1,7 +1,7 @@
 import AutoSave from './util/AutoSave.es';
 import ClayModal from 'clay-modal';
 import Component from 'metal-jsx';
-import compose from 'dynamic-data-mapping-form-builder/js/util/compose.es';
+import compose from 'dynamic-data-mapping-form-renderer/js/util/compose.es';
 import core from 'metal';
 import dom from 'metal-dom';
 import LayoutProvider from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/LayoutProvider.es';
@@ -24,7 +24,7 @@ import {
 	isModifyingKey
 } from 'dynamic-data-mapping-form-builder/js/util/dom.es';
 import {pageStructure} from 'dynamic-data-mapping-form-builder/js/util/config.es';
-import {PagesVisitor} from 'dynamic-data-mapping-form-builder/js/util/visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
 
 /**

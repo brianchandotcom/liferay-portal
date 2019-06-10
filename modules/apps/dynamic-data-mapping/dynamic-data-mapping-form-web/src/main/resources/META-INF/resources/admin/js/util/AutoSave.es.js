@@ -6,7 +6,7 @@ import {Config} from 'metal-state';
 import {
 	convertToSearchParams,
 	makeFetch
-} from 'dynamic-data-mapping-form-builder/js/util/fetch.es';
+} from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
 
 class AutoSave extends Component {
 	created() {

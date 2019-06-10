@@ -1,9 +1,5 @@
-import {
-	generateFieldName,
-	normalizeFieldName,
-	updateFieldValidationProperty
-} from './fields.es';
-import {getField} from '../util/fields.es';
+import {generateFieldName, updateFieldValidationProperty} from './fields.es';
+import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer/js/util/fields.es';
 import {updateSettingsContextProperty} from './settings.es';
 
 const shouldAutoGenerateName = (

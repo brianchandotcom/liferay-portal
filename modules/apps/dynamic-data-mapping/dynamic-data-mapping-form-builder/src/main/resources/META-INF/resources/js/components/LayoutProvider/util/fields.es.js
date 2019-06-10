@@ -1,5 +1,6 @@
-import {findFieldByName} from '../../Form/FormSupport.es';
-import {PagesVisitor} from '../../../util/visitors.es';
+import {findFieldByName} from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
+import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer/js/util/fields.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 
 export const generateFieldName = (pages, desiredName, currentName = null) => {
 	let counter = 0;

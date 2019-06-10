@@ -1,4 +1,4 @@
-import {PagesVisitor} from '../../../util/visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 
 const deleteLanguageId = (languageId, pages) => {
 	const visitor = new PagesVisitor(pages);

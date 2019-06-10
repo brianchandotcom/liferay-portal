@@ -1,6 +1,6 @@
-import * as FormSupport from '../../Form/FormSupport.es';
+import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
 import RulesSupport from '../../RuleBuilder/RulesSupport.es';
-import {PagesVisitor} from '../../../util/visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 
 const formatRules = (state, pages) => {
 	const visitor = new PagesVisitor(pages);

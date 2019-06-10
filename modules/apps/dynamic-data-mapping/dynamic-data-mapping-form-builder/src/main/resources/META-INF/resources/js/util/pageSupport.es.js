@@ -1,4 +1,4 @@
-import {PagesVisitor} from './visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import {sub} from './strings.es.js';
 
 export function pageOptions(pages, maxPageIndex = 0) {

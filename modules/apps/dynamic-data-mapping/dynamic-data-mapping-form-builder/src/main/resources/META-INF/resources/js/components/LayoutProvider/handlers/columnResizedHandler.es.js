@@ -1,4 +1,4 @@
-import * as FormSupport from '../../Form/FormSupport.es';
+import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
 
 export const handleResizeRight = (
 	state,

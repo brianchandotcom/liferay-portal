@@ -4,7 +4,7 @@ import RuleEditor from '../../components/RuleEditor/RuleEditor.es';
 import RuleList from '../../components/RuleList/RuleList.es';
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
-import {makeFetch} from '../../util/fetch.es';
+import {makeFetch} from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
 
 /**
  * Builder.

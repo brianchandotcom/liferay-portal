@@ -18,7 +18,7 @@
 		"moduleNameMapper": {
 			"(.*)\\.soy$": "$1.soy.js",
 			"dynamic-data-mapping-form-builder/(.*)": "<rootDir>/../dynamic-data-mapping-form-builder/src/main/resources/META-INF/resources/$1",
-			"source/(.*)": "<rootDir>/src/main/resources/META-INF/resources/metal/$1.js"
+			"source/(.*)": "<rootDir>/src/main/resources/META-INF/resources/$1.js"
 		},
 		"modulePathIgnorePatterns": [
 			"/__fixtures__/",

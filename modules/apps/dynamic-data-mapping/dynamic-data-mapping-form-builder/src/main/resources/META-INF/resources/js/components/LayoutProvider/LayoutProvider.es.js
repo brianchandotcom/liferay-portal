@@ -1,9 +1,12 @@
-import * as FormSupport from '../Form/FormSupport.es';
+import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 import {getFieldProperties} from '../../util/fieldSupport.es';
 import {pageStructure, ruleStructure} from '../../util/config.es';
-import {PagesVisitor, RulesVisitor} from '../../util/visitors.es';
+import {
+	PagesVisitor,
+	RulesVisitor
+} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import {setLocalizedValue} from '../../util/i18n.es';
 
 import handleColumnResized from './handlers/columnResizedHandler.es';
@@ -15,6 +18,9 @@ import handleFieldDuplicated from './handlers/fieldDuplicatedHandler.es';
 import handleFieldEdited from './handlers/fieldEditedHandler.es';
 import handleFieldSetAdded from './handlers/fieldSetAddedHandler.es';
 import handleLanguageIdDeleted from './handlers/languageIdDeletedHandler.es';
+import handlePaginationItemClicked from 'dynamic-data-mapping-form-renderer/js/store/actions/handlePaginationItemClicked.es';
+import handlePaginationNextClicked from 'dynamic-data-mapping-form-renderer/js/store/actions/handlePaginationNextClicked.es';
+import handlePaginationPreviousClicked from 'dynamic-data-mapping-form-renderer/js/store/actions/handlePaginationPreviousClicked.es';
 
 /**
  * LayoutProvider listens to your children's events to

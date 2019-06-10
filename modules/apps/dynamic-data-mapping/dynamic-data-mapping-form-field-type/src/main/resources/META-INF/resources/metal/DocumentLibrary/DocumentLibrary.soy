@@ -22,7 +22,6 @@
 				{param placeholder: $placeholder /}
 				{param readOnly: $readOnly /}
 				{param spritemap: $spritemap /}
-				{param tip: $tip /}
 				{param value: $value /}
 			{/call}
 		{/param}
@@ -42,8 +41,6 @@
 	{@param? id: string}
 	{@param? placeholder: string}
 	{@param? readOnly: bool}
-	{@param? showLabel: bool}
-	{@param? tip: string}
 	{@param? value: ?}
 
 	{let $attributes kind="attributes"}
@@ -84,12 +81,6 @@
 
 		<input {$attributes} />
 	</div>
-
-	{if $showLabel}
-		{if $tip}
-			<span class="form-text">{$tip}</span>
-		{/if}
-	{/if}
 {/template}
 
 /**

@@ -52,8 +52,8 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 	@Test
 	public void testGetDataRecordWithInvalidId() throws Exception {
 		assertHttpResponseStatusCode(
-			204,
-			DataRecordResource.deleteDataRecordHttpResponse(
+			404,
+			DataRecordResource.getDataRecordHttpResponse(
 				RandomTestUtil.randomLong()));
 	}
 

@@ -56,15 +56,22 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 	public static void createBinDirLinks(Logger logger, File nodeModulesDir)
 		throws IOException {
 
+		for (File nodeModulesBinDir : _getNodeModulesBinDirs(nodeModulesDir)) {
+			_createBinDirLinks(logger, nodeModulesBinDir);
+		}
+	}
+
+	private static void _createBinDirLinks(
+			Logger logger, File nodeModulesBinDir)
+		throws IOException {
+
 		JsonSlurper jsonSlurper = new JsonSlurper();
 
-		Path nodeModulesDirPath = nodeModulesDir.toPath();
-
-		Path nodeModulesBinDirPath = nodeModulesDirPath.resolve(
-			_NODE_MODULES_BIN_DIR_NAME);
+		Path nodeModulesBinDirPath = nodeModulesBinDir.toPath();
+		File nodeModulesDir = nodeModulesBinDir.getParentFile();
 
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
-				nodeModulesDirPath, _directoryStreamFilter)) {
+				nodeModulesDir.toPath(), _directoryStreamFilter)) {
 
 			for (Path dirPath : directoryStream) {
 				Path packageJsonPath = dirPath.resolve("package.json");

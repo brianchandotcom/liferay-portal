@@ -721,18 +721,6 @@ message.
 		</if>
 
 		<if>
-			<equals arg1="${app.server.type}" arg2="jonas" />
-			<then>
-				<delete>
-					<fileset
-						dir="${app.server.lib.portal.dir}"
-						includes="equinox.jar,osgi.core.jar,xalan.jar,xercesImpl.jar,xml-apis.jar"
-					/>
-				</delete>
-			</then>
-		</if>
-
-		<if>
 			<equals arg1="${app.server.type}" arg2="resin" />
 			<then>
 				<ant dir="support-resin" inheritAll="false" target="deploy" />

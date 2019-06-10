@@ -1967,7 +1967,7 @@ rerun your task.
 					<propertyref prefix="sonatype." />
 					<propertyref prefix="source.formatter." />
 					<propertyref regex=".+\.ignore\.local$" />
-					<propertyref regex="^\s*app\.server\.(?:glassfish|jboss|jonas|resin|tcat|tcserver|tomcat|weblogic|websphere|wildfly).*" />
+					<propertyref regex="^\s*app\.server\.(?:glassfish|jboss|resin|tcat|tcserver|tomcat|weblogic|websphere|wildfly).*" />
 				</propertyset>
 			</echoproperties>
 
@@ -2054,7 +2054,7 @@ rerun your task.
 					<propertyref prefix="ivy.pom." />
 					<propertyref prefix="microsoft.translator." />
 					<propertyref prefix="sonatype." />
-					<propertyref regex="^\s*app\.server\.(?:glassfish|jboss|jonas|resin|tcat|tcserver|tomcat|weblogic|websphere|wildfly).*\.dir" />
+					<propertyref regex="^\s*app\.server\.(?:glassfish|jboss|resin|tcat|tcserver|tomcat|weblogic|websphere|wildfly).*\.dir" />
 				</propertyset>
 			</echoproperties>
 

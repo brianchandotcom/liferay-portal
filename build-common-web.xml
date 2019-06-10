@@ -47,7 +47,6 @@
 					<or>
 						<equals arg1="${app.server.type}" arg2="glassfish" />
 						<equals arg1="${app.server.type}" arg2="jboss" />
-						<equals arg1="${app.server.type}" arg2="jonas" />
 						<equals arg1="${app.server.type}" arg2="wildfly" />
 					</or>
 					<then>
@@ -160,13 +159,6 @@
 					file="${tstamp.value}"
 					tofile="${war.file.dest}"
 				/>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${app.server.type}" arg2="jonas" />
-			<then>
-				<delete file="${war.file.dest}/META-INF/context.xml" />
 			</then>
 		</if>
 

@@ -200,21 +200,6 @@ ${oversize.files.jsp}</fail>
 		</java>
 	</target>
 
-	<target name="compile-jonas">
-		<property name="jspc.classes.dir" value="classes/${app.server.type}" />
-
-		<path id="jspc.classpath">
-			<pathelement location="${env.JAVA_HOME}/jre/lib/rt.jar" />
-			<path refid="jspc.common.classpath" />
-			<pathelement location="${app.server.dir}/repositories/maven2-internal/org/ow2/jonas/jonas-web-container-tomcat-6.0/${app.server.jonas.version}/jonas-web-container-tomcat-6.0-${app.server.jonas.version}-ipojo.jar" />
-			<pathelement location="${app.server.dir}/repositories/maven2-internal/org/ow2/jonas/osgi/javaee-api/${app.server.jonas.version}/javaee-api-${app.server.jonas.version}.jar" />
-		</path>
-
-		<antcall inheritrefs="true" target="compile-common-jsp">
-			<param name="arg.line" value="-d ${jspc.classes.dir} -webapp ${jsp.precompile.dir}" />
-		</antcall>
-	</target>
-
 	<target name="compile-resin">
 		<property name="jspc.classes.dir" value="classes/${app.server.type}" />
 
@@ -314,13 +299,13 @@ ${oversize.files.jsp}</fail>
 			<equals arg1="${jsp.precompile}" arg2="on" />
 			<then>
 				<if>
-					<equals arg1="${app.server.type}" arg2="jonas" />
+					<equals arg1="${app.server.type}" arg2="resin" />
 					<then>
-						<antcall target="compile-jonas" />
+						<antcall target="compile-resin" />
 
 						<copy
 							preservelastmodified="true"
-							todir="${app.server.dir}/work/jonas/localhost/_"
+							todir="${app.server.portal.dir}/WEB-INF/work"
 						>
 							<fileset
 								dir="classes/${app.server.type}"
@@ -330,24 +315,6 @@ ${oversize.files.jsp}</fail>
 							</fileset>
 						</copy>
 					</then>
-					<elseif>
-						<equals arg1="${app.server.type}" arg2="resin" />
-						<then>
-							<antcall target="compile-resin" />
-
-							<copy
-								preservelastmodified="true"
-								todir="${app.server.portal.dir}/WEB-INF/work"
-							>
-								<fileset
-									dir="classes/${app.server.type}"
-								>
-									<exclude name="**/*.jspc_error" />
-									<exclude name="**/*.java" />
-								</fileset>
-							</copy>
-						</then>
-					</elseif>
 					<elseif>
 						<equals arg1="${app.server.type}" arg2="tomcat" />
 						<then>

@@ -1002,6 +1002,283 @@ definition {
 		FormsAdmin.viewNoFormEntries();
 	}
 
+	macro viewAndEditUser {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.viewCP(
+			userBirthday = "09/09/1999",
+			userEmailAddress = "user@liferay.com",
+			userFirstName = "userfn",
+			userJobTitle = "PhD",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		AssertTextEquals(
+			key_tagName = "tag1",
+			locator1 = "AssetCategorization#TAG",
+			value1 = "tag1");
+
+		AssertTextEquals(
+			locator1 = "TextArea#COMMENTS",
+			value1 = "This is a pre-upgrade comment!");
+
+		UserNavigator.gotoContact();
+
+		User.viewAddress(
+			addressType = "Business",
+			city = "Walnut",
+			country = "United States",
+			postalCode = "91789",
+			region = "California",
+			street1 = "1220 Brea Canyon Rd");
+
+		Navigator.gotoNavNested(navNested = "Contact Information");
+
+		User.viewContactInformation(
+			number = "555-555-5555",
+			numberType = "Business",
+			searchContainerType = "phonesSearchContainer");
+
+		User.viewContactInformation(
+			addressCount = "10",
+			addressPrefix = "test",
+			searchContainerType = "emailAddressesSearchContainer");
+
+		User.viewContactInformation(
+			searchContainerType = "websitesSearchContainer",
+			url = "https://www.google.com/",
+			websiteType = "Other");
+
+		User.viewContactInformation(skype = "orgusersnskype");
+
+		UserNavigator.gotoPreferences();
+
+		for (var announcementType : list "General,News,Test") {
+			var key_announcementType = "${announcementType}";
+			var key_notificationType = "Email";
+
+			AssertChecked(locator1 = "UsersAndOrganizationsEditUser#ALERTS_AND_ANNOUNCEMENTS_DELIVERY_CHECKBOX");
+		}
+
+		Navigator.gotoNavNested(navNested = "Display Settings");
+
+		if (IsTextNotEqual(locator1 = "Select#LOS_ANGELES_TIME_ZONE", value1 = "(UTC -07:00) Pacific Daylight Time")) {
+			AssertSelectedLabel(
+				locator1 = "Select#TIME_ZONE",
+				value1 = "(UTC -08:00) Pacific Standard Time");
+		}
+		else {
+			AssertSelectedLabel(
+				locator1 = "Select#TIME_ZONE",
+				value1 = "(UTC -07:00) Pacific Daylight Time");
+		}
+
+		AssertTextEquals(
+			locator1 = "UsersAndOrganizationsEditUser#DISPLAY_SETTINGS_GREETING_FIELD",
+			value1 = "Welcome Organization Usersn! This is a pre-upgrade edit!");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.gotoEditCP(userScreenName = "usersn");
+
+		UserNavigator.gotoOrganizations();
+
+		AssertTextEquals(
+			key_orgName = "Organization1",
+			locator1 = "ContentRow#ORGANIZATION_TABLE_NAME",
+			value1 = "Organization1");
+
+		User.viewUserInfomationSitesCP(siteName = "Test Site Name");
+
+		User.viewUserInfomationRolesCP(roleTitle = "Administrator");
+
+		AssertTextEquals(
+			key_roleTitle = "Organization Administrator",
+			locator1 = "Permissions#CONTENT_PERMISSIONS_ROLE_NAME",
+			value1 = "Organization Administrator");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			requirePasswordReset = "true",
+			userEmailAddress = "user@liferay.com",
+			userScreenName = "usersn");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "user@liferay.com");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Profile");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Usersn Blog Entry Content",
+			entryTitle = "Usersn Blog Entry Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
+
+		AssertClick(
+			key_pageName = "Documents and Media",
+			locator1 = "Home#PAGE",
+			value1 = "Documents and Media");
+
+		DMDocument.viewPG(dmDocumentTitle = "Document txt Title");
+
+		Navigator.gotoBack();
+
+		DMDocument.viewPG(dmDocumentTitle = "Document doc Title");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.gotoEditCP(userScreenName = "usersn");
+
+		User.deleteProfileImage();
+
+		User.editDetailsViaMyAccount(
+			userFirstNameEdit = "userfn1",
+			userLastNameEdit = "userln1",
+			userScreenNameEdit = "usersn1");
+
+		Type(
+			locator1 = "TextArea#COMMENTS",
+			value1 = "This is a post-upgrade comment!");
+
+		PortletEntry.save();
+
+		User.editAddressCP(
+			addressType = "Personal",
+			city = "Diamond Bar",
+			postalCode = "91765",
+			street1 = "1400 Montefino Ave");
+
+		UserNavigator.gotoDisplaySettings();
+
+		User.editUserDisplaySettingsTimeZonePacific(displaySettingsGreeting = "Welcome Organization Usersn! This is a post-upgrade edit!");
+
+		PortletEntry.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.viewCP(
+			userEmailAddress = "user@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1");
+
+		AssertTextEquals(
+			locator1 = "TextArea#COMMENTS",
+			value1 = "This is a post-upgrade comment!");
+
+		UserNavigator.gotoContact();
+
+		User.viewAddress(
+			addressType = "Personal",
+			city = "Diamond Bar",
+			country = "United States",
+			postalCode = "91765",
+			region = "California",
+			street1 = "1400 Montefino Ave");
+
+		UserNavigator.gotoDisplaySettings();
+
+		AssertTextEquals(
+			locator1 = "UsersAndOrganizationsEditUser#DISPLAY_SETTINGS_GREETING_FIELD",
+			value1 = "Welcome Organization Usersn! This is a post-upgrade edit!");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.gotoEditCP(userScreenName = "usersn1");
+
+		AssetCategorization.removeTag(tagName = "tag1");
+
+		PortletEntry.save();
+
+		UserNavigator.gotoOrganizations();
+
+		Click(locator1 = "Icon#DELETE");
+
+		PortletEntry.save();
+
+		UserNavigator.gotoMemberships();
+
+		Click(locator1 = "Icon#DELETE");
+
+		PortletEntry.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.UnassignRegularRoleCP(
+			regularRoleName = "Administrator",
+			userScreenName = "usersn1");
+
+		UserNavigator.gotoContact();
+
+		User.removeContactInformation(rowEntry = "1400 Montefino Ave");
+
+		Navigator.gotoNavNested(navNested = "Contact Information");
+
+		User.removeContactInformation(rowEntry = "555-555-5555");
+
+		User.removeContactInformation(rowEntry = "test1@liferay.com");
+
+		User.removeContactInformation(rowEntry = "https://www.google.com/");
+
+		PortletEntry.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.deactivateCP(userFirstName = "userfn1");
+
+		User.deleteCP();
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.searchCP(searchTerm = "usersn");
+
+		User.viewNoUsersFoundCP();
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.deleteCP(orgName = "Organization1");
+	}
+
 	macro viewAssetPublisher {
 		Navigator.gotoPage(pageName = "Asset Publisher");
 

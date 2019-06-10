@@ -95,11 +95,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_ADDRESS_TABLE_ADDRESS_TYPE</td>
+	<td>//tr[contains(.,'${key_primaryValue}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_ADDRESS_PRIMARY_TABLE</td>
 	<td>//tr[contains(.,'${key_primaryValue}')]//span/span[contains(.,'PRIMARY')]</td>
 	<td></td>
 </tr>
 <!--USER_CONTACT_INFORMATION_TABLE-->
+<tr>
+	<td>USER_CONTACT_INFORMATION_CONTAINER_TABLE</td>
+	<td>//table[contains(@data-searchcontainerid,'${key_searchContainerType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_CONTACT_INFORMATION_TYPE_TABLE</td>
+	<td>//table[contains(@data-searchcontainerid,'${key_searchContainerType}')]//tr[1]/td[2]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>USER_CONTACT_INFORMATION_PHONE_NUMBER_TABLE</td>
 	<td>//table[contains(@data-searchcontainerid,'${key_searchContainerType}')]//tr[1]/td[1]</td>

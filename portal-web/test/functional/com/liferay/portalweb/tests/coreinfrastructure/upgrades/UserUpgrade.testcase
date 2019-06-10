@@ -69,4 +69,112 @@ definition {
 		Upgrade.resetTestUserPassword();
 	}
 
+	@priority = "5"
+	test ViewAndEditUserAfterUpgrade625 {
+		property data.archive.type = "data-archive-user";
+		property database.types = "mysql";
+		property portal.version = "6.2.5";
+
+		SignIn.signIn();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		Upgrade.viewAndEditUser();
+	}
+
+	@priority = "5"
+	test ViewAndEditUserAfterUpgrade704 {
+		property data.archive.type = "data-archive-user";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.0.4";
+
+		SignIn.signIn();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		Upgrade.viewAndEditUser();
+	}
+
+	@priority = "5"
+	test ViewAndEditUserAfterUpgrade7110 {
+		property data.archive.type = "data-archive-user";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.1.10";
+
+		SignIn.signIn();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		Upgrade.viewAndEditUser();
+	}
+
+	@priority = "5"
+	test ViewAndEditUserAfterUpgrade70106 {
+		property data.archive.type = "data-archive-user";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.0.10.6";
+
+		SignIn.signIn();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		Upgrade.viewAndEditUser();
+	}
+
+	@priority = "5"
+	test ViewAndEditUserAfterUpgrade621015 {
+		property data.archive.type = "data-archive-user";
+		property database.types = "db2,mysql,oracle";
+		property portal.version = "6.2.10.15";
+
+		SignIn.signIn();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		Upgrade.viewAndEditUser();
+	}
+
+	@priority = "5"
+	test ViewAndEditUserAfterUpgrade621021 {
+		property data.archive.type = "data-archive-user";
+		property database.types = "db2,mysql,oracle,postgresql";
+		property portal.version = "6.2.10.21";
+
+		SignIn.signIn();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		Upgrade.viewAndEditUser();
+	}
+
 }

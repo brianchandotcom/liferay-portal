@@ -224,6 +224,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--ALERTS_AND_ANNOUNCEMENTS_DELIVERY-->
+<tr>
+	<td>ALERTS_AND_ANNOUNCEMENTS_DELIVERY_CHECKBOX</td>
+	<td>//input[contains(@title,'${key_announcementType}') and contains(@id,'${key_notificationType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--CATEGORIZATION-->
 <tr>
 	<td>CATEGORIZATION_LABEL</td>

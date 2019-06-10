@@ -120,6 +120,10 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 	</aui:form>
 </div>
 
+<div class="hide">
+	<%= ddmFormAdminDisplayContext.serializeSettingsForm() %>
+</div>
+
 <aui:script>
 	Liferay.namespace('DDM').FormSettings = {
 		portletNamespace: '<portlet:namespace />',

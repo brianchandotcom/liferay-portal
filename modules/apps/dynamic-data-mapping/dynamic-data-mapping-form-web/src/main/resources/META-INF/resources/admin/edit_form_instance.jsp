@@ -242,7 +242,17 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 
 	Liferay.on('destroyPortlet', clearPortletHandlers);
 
-	Liferay.Forms.App.start();
+	if (Liferay.DMMFieldTypesReady) {
+		Liferay.Forms.App.start();
+	}
+	else {
+		Liferay.onceAfter(
+			'DMMFieldTypesReady',
+			function() {
+				Liferay.Forms.App.start();
+			}
+		);
+	}
 </aui:script>
 
 <aui:script use="aui-base">

@@ -820,6 +820,8 @@ public class MBThreadFinderImpl
 			String sql = _customSQL.get(getClass(), FIND_BY_G_U_LPD);
 
 			if (userId <= 0) {
+				sql = StringUtil.replace(sql, "DISTINCT ", StringPool.BLANK);
+
 				sql = StringUtil.replace(
 					sql, _INNER_JOIN_SQL, StringPool.BLANK);
 

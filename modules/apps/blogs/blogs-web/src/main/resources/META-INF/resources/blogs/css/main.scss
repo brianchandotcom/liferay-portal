@@ -156,7 +156,7 @@
 			width: 100%;
 		}
 
-		.entry-title h1 p {
+		.entry-title p {
 			line-height: 80px;
 		}
 
@@ -222,12 +222,6 @@
 	.entry-title {
 		display: block;
 		position: relative;
-
-		h1 {
-			font-size: 60px;
-			line-height: 80px;
-			margin-bottom: 25px;
-		}
 
 		h2 {
 			margin-right: 30px;
@@ -337,6 +331,12 @@
 	.edit-entry {
 		.cover-image-caption .alloy-editor {
 			color: #a7a9bc;
+		}
+
+		.entry-title {
+			font-size: 60px;
+			line-height: 80px;
+			margin-bottom: 25px;
 		}
 
 		.entry-title,

@@ -185,19 +185,17 @@ if (portletTitleBasedNavigation) {
 
 					<div class="col-md-8 col-md-offset-2">
 						<div class="entry-title form-group">
-							<h1>
-								<liferay-ui:input-editor
-									contents="<%= HtmlUtil.escape(title) %>"
-									editorName="alloyeditor"
-									name="titleEditor"
-									onChangeMethod="OnChangeTitle"
-									placeholder="title"
-									required="<%= true %>"
-									showSource="<%= false %>"
-								>
-									<aui:validator name="required" />
-								</liferay-ui:input-editor>
-							</h1>
+							<liferay-ui:input-editor
+								contents="<%= HtmlUtil.escape(title) %>"
+								editorName="alloyeditor"
+								name="titleEditor"
+								onChangeMethod="OnChangeTitle"
+								placeholder="title"
+								required="<%= true %>"
+								showSource="<%= false %>"
+							>
+								<aui:validator name="required" />
+							</liferay-ui:input-editor>
 						</div>
 
 						<aui:input name="title" type="hidden" />

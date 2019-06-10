@@ -101,6 +101,32 @@ definition {
 		return "${contentXML}";
 	}
 
+	@summary = "Helper function to get the 'folderId' for the folder '${folderName}'"
+	macro _getFolderIdByFolderName {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/journal.journalfolder/get-folders \
+				-u test@liferay.com:test \
+				-d groupId=${groupId}
+		''';
+
+		var folderId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${folderName}')]['folderId']");
+		var folderId = StringUtil.replace("${folderId}", "[&quot;", "");
+		var folderId = StringUtil.replace("${folderId}", "&quot;]", "");
+
+		echo("## Searching for 'folderId' for the folder '${folderName}' using JSONWS:");
+
+		echo("## * folderId: ${folderId}");
+
+		if ("${folderId}" == "[]") {
+			fail("FAIL. Cannot find folder.");
+		}
+		else {
+			return "${folderId}";
+		}
+	}
+
 	@summary = "Helper function to help input localized content html info"
 	macro _localizedConvertToXML {
 		// Get list of localizations used
@@ -202,6 +228,12 @@ definition {
 			echo("Using ThemeDisplay to retrieve groupId since groupName is not set");
 
 			var groupId = JSONUtil2._getScopeGroupId();
+		}
+
+		if (isSet(folderName)) {
+			var folderId = JSONWebcontent._getFolderIdByFolderName(
+				folderName = "${folderName}",
+				groupId = "${groupId}");
 		}
 
 		if (!(isSet(title))) {

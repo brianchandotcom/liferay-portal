@@ -130,7 +130,7 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 		String itemSelectedEventName, long wikiPageResourcePrimKey,
 		ThemeDisplay themeDisplay);
 
-	protected String[] getMimeTypes() {
+	private String[] _getMimeTypes() {
 		String[] dlFileEntryPreviewImageMimeTypes =
 			PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES;
 
@@ -164,7 +164,7 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 
 		uploadURL.setParameter(
 			ActionRequest.ACTION_NAME, "/wiki/upload_page_attachment");
-		uploadURL.setParameter("mimeTypes", getMimeTypes());
+		uploadURL.setParameter("mimeTypes", _getMimeTypes());
 		uploadURL.setParameter(
 			"resourcePrimKey", String.valueOf(wikiPageResourcePrimKey));
 
@@ -195,7 +195,7 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 
 		ItemSelectorCriterion itemSelectorCriterion =
 			new WikiAttachmentItemSelectorCriterion(
-				wikiPageResourcePrimKey, getMimeTypes());
+				wikiPageResourcePrimKey, _getMimeTypes());
 
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);

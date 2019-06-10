@@ -321,6 +321,8 @@ public class TLiferayOutputProperties
 
 			operations.setValue(null);
 
+			populateParametersTable(liferaySourceOrSinkRuntime);
+
 			refreshLayout(getForm(Form.MAIN));
 			refreshLayout(getForm(Form.REFERENCE));
 

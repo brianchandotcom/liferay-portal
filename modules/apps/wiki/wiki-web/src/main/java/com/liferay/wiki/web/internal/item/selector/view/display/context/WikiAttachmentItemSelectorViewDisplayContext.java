@@ -78,7 +78,10 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 			return mimeTypes;
 		}
 
-		return _getWikiFileUploadsConfiguration().attachmentMimeTypes();
+		WikiFileUploadConfiguration wikiFileUploadConfiguration =
+			_getWikiFileUploadsConfiguration();
+
+		return wikiFileUploadConfiguration.attachmentMimeTypes();
 	}
 
 	public PortletURL getPortletURL(
@@ -125,7 +128,10 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 	}
 
 	public long getWikiAttachmentMaxSize() throws ConfigurationException {
-		return _getWikiFileUploadsConfiguration().attachmentMaxSize();
+		WikiFileUploadConfiguration wikiFileUploadConfiguration =
+			_getWikiFileUploadsConfiguration();
+
+		return wikiFileUploadConfiguration.attachmentMaxSize();
 	}
 
 	public WikiPage getWikiPage() throws PortalException {

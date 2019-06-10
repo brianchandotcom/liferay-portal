@@ -844,87 +844,84 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	public WikiPage fetchLatestPage(
 		long resourcePrimKey, int status, boolean preferApproved) {
 
-		WikiPage page = null;
-
 		OrderByComparator<WikiPage> orderByComparator =
 			new PageVersionComparator();
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			if (preferApproved) {
-				page = wikiPagePersistence.fetchByR_S_First(
-					resourcePrimKey, WorkflowConstants.STATUS_APPROVED,
-					orderByComparator);
-			}
-
-			if (page == null) {
-				page = wikiPagePersistence.fetchByResourcePrimKey_First(
-					resourcePrimKey, orderByComparator);
-			}
-		}
-		else {
-			page = wikiPagePersistence.fetchByR_S_First(
+		if (status != WorkflowConstants.STATUS_ANY) {
+			return wikiPagePersistence.fetchByR_S_First(
 				resourcePrimKey, status, orderByComparator);
 		}
 
-		return page;
+		WikiPage page = null;
+
+		if (preferApproved) {
+			page = wikiPagePersistence.fetchByR_S_First(
+				resourcePrimKey, WorkflowConstants.STATUS_APPROVED,
+				orderByComparator);
+		}
+
+		if (page != null) {
+			return page;
+		}
+
+		return wikiPagePersistence.fetchByResourcePrimKey_First(
+			resourcePrimKey, orderByComparator);
 	}
 
 	@Override
 	public WikiPage fetchLatestPage(
 		long resourcePrimKey, long nodeId, int status, boolean preferApproved) {
 
-		WikiPage page = null;
-
 		OrderByComparator<WikiPage> orderByComparator =
 			new PageVersionComparator();
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			if (preferApproved) {
-				page = wikiPagePersistence.fetchByR_N_S_First(
-					resourcePrimKey, nodeId, WorkflowConstants.STATUS_APPROVED,
-					orderByComparator);
-			}
-
-			if (page == null) {
-				page = wikiPagePersistence.fetchByR_N_First(
-					resourcePrimKey, nodeId, orderByComparator);
-			}
-		}
-		else {
-			page = wikiPagePersistence.fetchByR_N_S_First(
+		if (status != WorkflowConstants.STATUS_ANY) {
+			return wikiPagePersistence.fetchByR_N_S_First(
 				resourcePrimKey, nodeId, status, orderByComparator);
 		}
 
-		return page;
+		WikiPage page = null;
+
+		if (preferApproved) {
+			page = wikiPagePersistence.fetchByR_N_S_First(
+				resourcePrimKey, nodeId, WorkflowConstants.STATUS_APPROVED,
+				orderByComparator);
+		}
+
+		if (page != null) {
+			return page;
+		}
+
+		return wikiPagePersistence.fetchByR_N_First(
+			resourcePrimKey, nodeId, orderByComparator);
 	}
 
 	@Override
 	public WikiPage fetchLatestPage(
 		long nodeId, String title, int status, boolean preferApproved) {
 
-		WikiPage page = null;
-
 		OrderByComparator<WikiPage> orderByComparator =
 			new PageVersionComparator();
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			if (preferApproved) {
-				page = wikiPagePersistence.fetchByN_T_S_First(
-					nodeId, title, WorkflowConstants.STATUS_APPROVED,
-					orderByComparator);
-			}
-
-			if (page == null) {
-				page = wikiPagePersistence.fetchByN_T_First(
-					nodeId, title, orderByComparator);
-			}
-		}
-		else {
-			page = wikiPagePersistence.fetchByN_T_S_First(
+		if (status != WorkflowConstants.STATUS_ANY) {
+			return wikiPagePersistence.fetchByN_T_S_First(
 				nodeId, title, status, orderByComparator);
 		}
 
-		return page;
+		WikiPage page = null;
+
+		if (preferApproved) {
+			page = wikiPagePersistence.fetchByN_T_S_First(
+				nodeId, title, WorkflowConstants.STATUS_APPROVED,
+				orderByComparator);
+		}
+
+		if (page != null) {
+			return page;
+		}
+
+		return wikiPagePersistence.fetchByN_T_First(
+			nodeId, title, orderByComparator);
 	}
 
 	@Override
@@ -947,16 +944,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Override
 	public WikiPage fetchPage(long nodeId, String title, double version) {
-		WikiPage page = null;
-
 		if (version == 0) {
-			page = fetchPage(nodeId, title);
-		}
-		else {
-			page = wikiPagePersistence.fetchByN_T_V(nodeId, title, version);
+			return fetchPage(nodeId, title);
 		}
 
-		return page;
+		return wikiPagePersistence.fetchByN_T_V(nodeId, title, version);
 	}
 
 	@Override
@@ -1011,16 +1003,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	public List<WikiPage> getDependentPages(
 		long nodeId, boolean head, String title, int status) {
 
-		List<WikiPage> dependentPages = new ArrayList<>();
+		List<WikiPage> dependentPages = new ArrayList<>(
+			getChildren(nodeId, head, title, status));
 
-		List<WikiPage> childPages = getChildren(nodeId, head, title, status);
-
-		dependentPages.addAll(childPages);
-
-		List<WikiPage> redirectorPages = getRedirectorPages(
-			nodeId, head, title, status);
-
-		dependentPages.addAll(redirectorPages);
+		dependentPages.addAll(getRedirectorPages(nodeId, head, title, status));
 
 		return dependentPages;
 	}
@@ -1098,7 +1084,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			}
 		}
 
-		return ListUtil.sort(new ArrayList<WikiPage>(links));
+		return ListUtil.sort(new ArrayList<>(links));
 	}
 
 	@Override
@@ -1109,19 +1095,19 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		WikiPage page = fetchLatestPage(
 			resourcePrimKey, status, preferApproved);
 
-		if (page == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("{resourcePrimKey=");
-			sb.append(resourcePrimKey);
-			sb.append(", status=");
-			sb.append(status);
-			sb.append("}");
-
-			throw new NoSuchPageException(sb.toString());
+		if (page != null) {
+			return page;
 		}
 
-		return page;
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("{resourcePrimKey=");
+		sb.append(resourcePrimKey);
+		sb.append(", status=");
+		sb.append(status);
+		sb.append("}");
+
+		throw new NoSuchPageException(sb.toString());
 	}
 
 	@Override
@@ -1133,21 +1119,21 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		WikiPage page = fetchLatestPage(
 			resourcePrimKey, nodeId, status, preferApproved);
 
-		if (page == null) {
-			StringBundler sb = new StringBundler(7);
-
-			sb.append("{resourcePrimKey=");
-			sb.append(resourcePrimKey);
-			sb.append(", nodeId=");
-			sb.append(nodeId);
-			sb.append(", status=");
-			sb.append(status);
-			sb.append("}");
-
-			throw new NoSuchPageException(sb.toString());
+		if (page != null) {
+			return page;
 		}
 
-		return page;
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("{resourcePrimKey=");
+		sb.append(resourcePrimKey);
+		sb.append(", nodeId=");
+		sb.append(nodeId);
+		sb.append(", status=");
+		sb.append(status);
+		sb.append("}");
+
+		throw new NoSuchPageException(sb.toString());
 	}
 
 	@Override
@@ -1157,21 +1143,21 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WikiPage page = fetchLatestPage(nodeId, title, status, preferApproved);
 
-		if (page == null) {
-			StringBundler sb = new StringBundler(7);
-
-			sb.append("{nodeId=");
-			sb.append(nodeId);
-			sb.append(", title=");
-			sb.append(title);
-			sb.append(", status=");
-			sb.append(status);
-			sb.append("}");
-
-			throw new NoSuchPageException(sb.toString());
+		if (page != null) {
+			return page;
 		}
 
-		return page;
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("{nodeId=");
+		sb.append(nodeId);
+		sb.append(", title=");
+		sb.append(title);
+		sb.append(", status=");
+		sb.append(status);
+		sb.append("}");
+
+		throw new NoSuchPageException(sb.toString());
 	}
 
 	/**
@@ -1217,9 +1203,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			}
 		}
 
-		orphans = ListUtil.sort(orphans);
-
-		return orphans;
+		return ListUtil.sort(orphans);
 	}
 
 	@Override
@@ -1302,16 +1286,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	public WikiPage getPage(long nodeId, String title, double version)
 		throws PortalException {
 
-		WikiPage page = null;
-
 		if (version == 0) {
-			page = getPage(nodeId, title);
-		}
-		else {
-			page = wikiPagePersistence.findByN_T_V(nodeId, title, version);
+			return getPage(nodeId, title);
 		}
 
-		return page;
+		return wikiPagePersistence.findByN_T_V(nodeId, title, version);
 	}
 
 	@Override
@@ -1752,7 +1731,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		page = updateStatus(
 			userId, page, WorkflowConstants.STATUS_IN_TRASH,
-			new ServiceContext(), new HashMap<String, Serializable>());
+			new ServiceContext(), new HashMap<>());
 
 		// Trash
 
@@ -2084,12 +2063,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		// Page
-
-		WikiPage oldPage = null;
-
 		try {
-			oldPage = wikiPagePersistence.findByN_T_First(nodeId, title, null);
+			WikiPage oldPage = wikiPagePersistence.findByN_T_First(
+				nodeId, title, null);
 
 			if ((version > 0) && (version != oldPage.getVersion())) {
 				throw new PageVersionException();
@@ -2121,8 +2097,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			new PageVersionComparator());
 
 		return updateStatus(
-			userId, page, status, serviceContext,
-			new HashMap<String, Serializable>());
+			userId, page, status, serviceContext, new HashMap<>());
 	}
 
 	/**
@@ -2137,8 +2112,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		throws PortalException {
 
 		return updateStatus(
-			userId, page, status, serviceContext,
-			new HashMap<String, Serializable>());
+			userId, page, status, serviceContext, new HashMap<>());
 	}
 
 	@Override
@@ -2978,7 +2952,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		updateStatus(
 			userId, page, trashEntry.getStatus(), new ServiceContext(),
-			new HashMap<String, Serializable>());
+			new HashMap<>());
 
 		// Attachments
 

@@ -67,32 +67,28 @@ public class WikiAttachmentImageHTMLEditorConfigContributor
 			getImageItemSelectorCriterion(
 				new FileEntryItemSelectorReturnType());
 
-		ItemSelectorCriterion urlItemSelectorCriterion =
-			getURLItemSelectorCriterion();
-
-		PortletURL itemSelectorURL = null;
-
 		if (wikiPageResourcePrimKey == 0) {
-			itemSelectorURL = _itemSelector.getItemSelectorURL(
+			PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory, itemSelectedEventName,
-				imageItemSelectorCriterion, urlItemSelectorCriterion);
-		}
-		else {
-			ItemSelectorCriterion attachmentItemSelectorCriterion =
-				getWikiAttachmentItemSelectorCriterion(
-					wikiPageResourcePrimKey,
-					new FileEntryItemSelectorReturnType());
+				imageItemSelectorCriterion, getURLItemSelectorCriterion());
 
-			ItemSelectorCriterion uploadItemSelectorCriterion =
-				getUploadItemSelectorCriterion(
-					wikiPageResourcePrimKey, themeDisplay,
-					requestBackedPortletURLFactory);
-
-			itemSelectorURL = _itemSelector.getItemSelectorURL(
-				requestBackedPortletURLFactory, itemSelectedEventName,
-				attachmentItemSelectorCriterion, imageItemSelectorCriterion,
-				urlItemSelectorCriterion, uploadItemSelectorCriterion);
+			return itemSelectorURL.toString();
 		}
+
+		ItemSelectorCriterion attachmentItemSelectorCriterion =
+			getWikiAttachmentItemSelectorCriterion(
+				wikiPageResourcePrimKey,
+				new FileEntryItemSelectorReturnType());
+
+		ItemSelectorCriterion uploadItemSelectorCriterion =
+			getUploadItemSelectorCriterion(
+				wikiPageResourcePrimKey, themeDisplay,
+				requestBackedPortletURLFactory);
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			requestBackedPortletURLFactory, itemSelectedEventName,
+			attachmentItemSelectorCriterion, imageItemSelectorCriterion,
+			getURLItemSelectorCriterion(), uploadItemSelectorCriterion);
 
 		return itemSelectorURL.toString();
 	}
@@ -102,12 +98,9 @@ public class WikiAttachmentImageHTMLEditorConfigContributor
 		return _wikiFileUploadConfiguration;
 	}
 
-	@Reference(unbind = "-")
-	protected void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
-	}
-
+	@Reference
 	private ItemSelector _itemSelector;
+
 	private WikiFileUploadConfiguration _wikiFileUploadConfiguration;
 
 }

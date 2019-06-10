@@ -16,7 +16,7 @@
 
 <%@ include file="/dynamic_section/init.jsp" %>
 
-<div class="autofit-row widget-metadata">
+<div class="autofit-row widget-metadata sidebar-panel">
 	<div class="autofit-col inline-item-before">
 
 		<%

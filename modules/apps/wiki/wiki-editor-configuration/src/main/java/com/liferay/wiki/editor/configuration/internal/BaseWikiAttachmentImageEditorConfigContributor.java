@@ -130,31 +130,6 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 		String itemSelectedEventName, long wikiPageResourcePrimKey,
 		ThemeDisplay themeDisplay);
 
-	private String[] _getMimeTypes() {
-		String[] dlFileEntryPreviewImageMimeTypes =
-			PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES;
-
-		WikiFileUploadConfiguration wikiFileUploadConfiguration =
-			getWikiFileUploadConfiguration();
-
-		List<String> wikiAttachmentMimeTypes = ListUtil.toList(
-			wikiFileUploadConfiguration.attachmentMimeTypes());
-
-		if (wikiAttachmentMimeTypes.contains(StringPool.STAR)) {
-			return dlFileEntryPreviewImageMimeTypes;
-		}
-
-		ArrayList<String> mimeTypes = new ArrayList<>();
-
-		for (String mimeType : dlFileEntryPreviewImageMimeTypes) {
-			if (wikiAttachmentMimeTypes.contains(mimeType)) {
-				mimeTypes.add(mimeType);
-			}
-		}
-
-		return mimeTypes.toArray(new String[0]);
-	}
-
 	protected ItemSelectorCriterion getUploadItemSelectorCriterion(
 		long wikiPageResourcePrimKey, ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
@@ -205,5 +180,30 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 
 	protected abstract WikiFileUploadConfiguration
 		getWikiFileUploadConfiguration();
+
+	private String[] _getMimeTypes() {
+		String[] dlFileEntryPreviewImageMimeTypes =
+			PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES;
+
+		WikiFileUploadConfiguration wikiFileUploadConfiguration =
+			getWikiFileUploadConfiguration();
+
+		List<String> wikiAttachmentMimeTypes = ListUtil.toList(
+			wikiFileUploadConfiguration.attachmentMimeTypes());
+
+		if (wikiAttachmentMimeTypes.contains(StringPool.STAR)) {
+			return dlFileEntryPreviewImageMimeTypes;
+		}
+
+		ArrayList<String> mimeTypes = new ArrayList<>();
+
+		for (String mimeType : dlFileEntryPreviewImageMimeTypes) {
+			if (wikiAttachmentMimeTypes.contains(mimeType)) {
+				mimeTypes.add(mimeType);
+			}
+		}
+
+		return mimeTypes.toArray(new String[0]);
+	}
 
 }

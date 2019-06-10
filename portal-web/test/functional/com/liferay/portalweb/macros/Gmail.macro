@@ -186,7 +186,7 @@ definition {
 
 		var key_gmailAssetType = "${gmailAssetType}";
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_TITLE",
 			value1 = "${gmailMessageTitle}");
 

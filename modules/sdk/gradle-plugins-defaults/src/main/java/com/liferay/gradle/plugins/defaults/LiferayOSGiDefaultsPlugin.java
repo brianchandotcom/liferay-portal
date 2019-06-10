@@ -83,8 +83,6 @@ import com.liferay.gradle.util.copy.ReplaceLeadingPathAction;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 import com.liferay.portal.tools.wsdd.builder.WSDDBuilderArgs;
 
-import groovy.json.JsonSlurper;
-
 import groovy.lang.Closure;
 
 import groovy.time.Duration;
@@ -553,8 +551,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					_checkVersion(project);
-
 					_configureArtifacts(
 						project, jarJSDocTask, jarJSPsTask, jarJavadocTask,
 						jarSourcesTask, jarSourcesCommercialTask,
@@ -1933,37 +1929,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				}
 
 			});
-	}
-
-	@SuppressWarnings("unchecked")
-	private void _checkJsonVersion(Project project, String fileName) {
-		File file = project.file(fileName);
-
-		if (!file.exists()) {
-			return;
-		}
-
-		JsonSlurper jsonSlurper = new JsonSlurper();
-
-		Map<String, Object> map = (Map<String, Object>)jsonSlurper.parse(file);
-
-		String jsonVersion = (String)map.get("version");
-
-		if (Validator.isNotNull(jsonVersion) &&
-			!jsonVersion.equals(String.valueOf(project.getVersion()))) {
-
-			throw new GradleException(
-				"Version in " + fileName + " must match project version");
-		}
-	}
-
-	private void _checkVersion(Project project) {
-		for (String fileName :
-				GradlePluginsDefaultsUtil.JSON_VERSION_FILE_NAMES) {
-
-			_checkJsonVersion(project, fileName);
-			_checkJsonVersion(project, fileName);
-		}
 	}
 
 	@SuppressWarnings("serial")

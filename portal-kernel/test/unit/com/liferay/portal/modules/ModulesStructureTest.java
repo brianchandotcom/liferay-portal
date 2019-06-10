@@ -241,6 +241,8 @@ public class ModulesStructureTest {
 							"Forbidden " + ivyXmlPath,
 							Files.deleteIfExists(ivyXmlPath));
 
+						_testJSONVersion(dirPath);
+
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
@@ -1365,6 +1367,43 @@ public class ModulesStructureTest {
 		}
 	}
 
+	private void _testJSONVersion(Path dirPath) throws IOException {
+		String projectVersion = null;
+
+		try (InputStream inputStream = Files.newInputStream(
+				dirPath.resolve("bnd.bnd"))) {
+
+			Properties properties = new Properties();
+
+			properties.load(inputStream);
+
+			projectVersion = properties.getProperty("Bundle-Version");
+		}
+
+		for (String jsonFileName : _JSON_VERSION_FILE_NAMES) {
+			Path jsonPath = dirPath.resolve(jsonFileName);
+
+			if (Files.exists(jsonPath)) {
+				Matcher matcher = _jsonVersionPattern.matcher(
+					ModulesStructureTestUtil.read(jsonPath));
+
+				if (matcher.find()) {
+					StringBundler sb = new StringBundler(4);
+
+					sb.append("Version must match the project version (");
+					sb.append(projectVersion);
+					sb.append(") ");
+					sb.append(jsonPath);
+
+					String jsonVersion = matcher.group(2);
+
+					Assert.assertTrue(
+						sb.toString(), jsonVersion.equals(projectVersion));
+				}
+			}
+		}
+	}
+
 	private void _testRelengAppProperties(Path dirPath) throws IOException {
 		if (_branchName.contains("master")) {
 			return;
@@ -1488,6 +1527,10 @@ public class ModulesStructureTest {
 	private static final String _GIT_REPO_GRADLE_REPOSITORY_PRIVATE_USERNAME =
 		"systemProp.repository.private.username";
 
+	private static final String[] _JSON_VERSION_FILE_NAMES = {
+		"npm-shrinkwrap.json", "package-lock.json", "package.json"
+	};
+
 	private static final String _REPOSITORY_URL =
 		"https://repository-cdn.liferay.com/nexus/content/groups/public";
 
@@ -1511,6 +1554,8 @@ public class ModulesStructureTest {
 	private static final List<String> _gradleConfigurations = Arrays.asList(
 		"compileOnly", "provided", "compile", "runtime", "testCompile",
 		"testRuntime", "testIntegrationCompile", "testIntegrationRuntime");
+	private static final Pattern _jsonVersionPattern = Pattern.compile(
+		"\\n(\\t|  )\"version\": \"(.+)\"");
 	private static boolean _masterBranch;
 	private static Path _modulesDirPath;
 

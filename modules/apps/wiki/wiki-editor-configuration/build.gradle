@@ -18,6 +18,5 @@ dependencies {
 	testCompile group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.2"
 	testCompile project(":core:petra:petra-lang")
-	testCompile project(":core:petra:petra-string")
 	testCompile project(":core:registry-api")
 }

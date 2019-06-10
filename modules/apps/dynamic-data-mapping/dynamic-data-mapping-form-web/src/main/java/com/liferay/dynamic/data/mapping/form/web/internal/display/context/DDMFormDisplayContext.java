@@ -232,6 +232,8 @@ public class DDMFormDisplayContext {
 			ddmFormRenderingContext.setReadOnly(true);
 		}
 
+		ddmFormRenderingContext.setShowSubmitButton(isShowSubmitButton());
+
 		return _ddmFormRenderer.render(
 			ddmForm, ddmFormLayout, ddmFormRenderingContext);
 	}

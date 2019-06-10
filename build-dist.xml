@@ -230,28 +230,6 @@
 		<ant dir="${lp.plugins.dir}" inheritAll="false" target="all" />
 	</target>
 
-	<target name="build-dist-resin">
-		<app-server-properties-update>
-			app.server.type=resin
-		</app-server-properties-update>
-
-		<antcall inheritAll="false" target="update-sdk-properties" />
-
-		<antcall target="unzip-resin" />
-
-		<delete dir="${project.dir}/portal-web/classes" />
-
-		<ant inheritAll="false" target="deploy" />
-
-		<app-server-properties-reset />
-
-		<antcall target="deploy-plugins">
-			<param name="deployer.dest.dir" value="${app.server.resin.deploy.dir}" />
-			<param name="deployer.app.server.type" value="resin" />
-			<param name="deployer.app.server.lib.portal.dir" value="${app.server.resin.lib.portal.dir}" />
-		</antcall>
-	</target>
-
 	<target name="build-dist-sql-oracle">
 		<ant dir="sql" inheritAll="false" target="rebuild-oracle" />
 		<ant dir="sql" inheritAll="false" target="export-oracle" />
@@ -875,7 +853,6 @@
 		<antcall target="build-dist-plugins" />
 
 		<antcall target="build-dist-jboss" />
-		<antcall target="build-dist-resin" />
 		<antcall target="build-dist-tcat" />
 		<antcall target="build-dist-tomcat" />
 		<antcall target="build-dist-wildfly" />
@@ -884,7 +861,6 @@
 		<antcall target="zip-patching-tool" />
 		<antcall target="zip-portal-client" />
 		<antcall target="zip-portal-dependencies" />
-		<antcall target="zip-resin" />
 		<antcall target="zip-sql" />
 		<antcall target="zip-src" />
 		<antcall target="zip-tcat" />
@@ -1266,80 +1242,6 @@ this task.
 		>
 			<fileset
 				dir="${app.server.jboss.bin.dir}"
-			>
-				<include name="*.sh" />
-			</fileset>
-		</chmod>
-	</target>
-
-	<target name="unzip-resin">
-		<delete dir="${app.server.resin.dir}" />
-
-		<if>
-			<not>
-				<available file="${app.server.parent.dir}/${app.server.resin.zip.name}" />
-			</not>
-			<then>
-				<mkdir dir="${app.server.parent.dir}" />
-
-				<mirrors-get
-					dest="${app.server.parent.dir}/${app.server.resin.zip.name}"
-					src="${app.server.resin.zip.url}"
-					verbose="true"
-				/>
-			</then>
-		</if>
-
-		<unzip
-			dest="${app.server.parent.dir}"
-			src="${app.server.parent.dir}/${app.server.resin.zip.name}"
-		>
-			<patternset
-				excludes="resin-${app.server.resin.version}/php/**,resin-${app.server.resin.version}/webapps/**"
-			/>
-		</unzip>
-
-		<mkdir dir="${app.server.resin.dir}/webapps" />
-
-		<replace
-			file="${app.server.resin.dir}/conf/resin.properties"
-		>
-			<replacetoken><![CDATA[# jvm_args  : -Xmx2048m -XX:MaxPermSize=256m]]></replacetoken>
-			<replacevalue><![CDATA[jvm_args  : -Dfile.encoding=UTF-8 -Dcaucho.environment.class.loader=com.liferay.support.resin.EnvironmentClassLoader -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=768m -XX:MetaspaceSize=768m -XX:NewSize=1536m -XX:SurvivorRatio=7]]></replacevalue>
-		</replace>
-
-		<replace
-			file="${app.server.resin.dir}/conf/resin.xml"
-		>
-			<replacetoken><![CDATA[xmlns:resin="urn:java:com.caucho.resin">]]></replacetoken>
-			<replacevalue>
-				<![CDATA[
-					xmlns:resin="urn:java:com.caucho.resin">
-
-					<class-loader>
-						<tree-loader path="${resin.root}/ext-lib" />
-						<tree-loader path="${resin.root}/resin-inf" />
-						<tree-loader path="cloud:/resin-inf" />
-					</class-loader>
-				 ]]>
-			</replacevalue>
-		</replace>
-
-		<copy
-			file="tools/servers/resin/bin/run.bat"
-			tofile="${app.server.resin.bin.dir}/run.bat"
-		/>
-
-		<copy
-			file="tools/servers/resin/bin/run.sh"
-			tofile="${app.server.resin.bin.dir}/run.sh"
-		/>
-
-		<chmod
-			perm="a+x"
-		>
-			<fileset
-				dir="${app.server.resin.bin.dir}"
 			>
 				<include name="*.sh" />
 			</fileset>
@@ -3504,13 +3406,6 @@ plugins.includes=</echo>
 		/>
 
 		<delete dir="${tstamp.value}" />
-	</target>
-
-	<target name="zip-resin">
-		<antcall target="zip-executable">
-			<param name="zip.executable.file" value="liferay-portal-resin" />
-			<param name="zip.executable.dir" value="${app.server.resin.dir}" />
-		</antcall>
 	</target>
 
 	<target name="zip-sql">

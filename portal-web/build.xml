@@ -200,60 +200,6 @@ ${oversize.files.jsp}</fail>
 		</java>
 	</target>
 
-	<target name="compile-resin">
-		<property name="jspc.classes.dir" value="classes/${app.server.type}" />
-
-		<path id="jspc.classpath">
-			<pathelement location="${env.JAVA_HOME}/jre/lib/rt.jar" />
-			<path refid="jspc.common.classpath" />
-			<pathelement location="${app.server.dir}/lib/resin.jar" />
-			<pathelement location="${project.dir}/lib/portal/abdera.jar" />
-			<pathelement location="${project.dir}/lib/portal/axis.jar" />
-			<pathelement location="${project.dir}/lib/portal/commons-beanutils.jar" />
-			<pathelement location="${project.dir}/lib/portal/commons-configuration.jar" />
-			<pathelement location="${project.dir}/lib/portal/commons-digester.jar" />
-			<pathelement location="${project.dir}/lib/portal/commons-httpclient.jar" />
-			<pathelement location="${project.dir}/lib/portal/commons-io.jar" />
-			<pathelement location="${project.dir}/lib/portal/portletbridge-core.jar" />
-			<pathelement location="${project.dir}/lib/portal/portletbridge-portlet.jar" />
-			<pathelement location="${project.dir}/lib/portal/spring-beans.jar" />
-			<pathelement location="${project.dir}/lib/portal/spring-context.jar" />
-			<pathelement location="${project.dir}/lib/portal/spring-core.jar" />
-			<pathelement location="${project.dir}/lib/portal/spring-expression.jar" />
-			<pathelement location="${project.dir}/lib/portal/spring-web.jar" />
-			<pathelement location="${project.dir}/lib/portal/spring-webmvc.jar" />
-			<pathelement location="${project.dir}/lib/portal/tika-core.jar" />
-		</path>
-
-		<delete dir="${jspc.classes.dir}" quiet="true" />
-
-		<delete file="jspc_error" />
-
-		<java
-			classname="com.liferay.portal.tools.jspc.resin.BatchJspCompiler"
-			classpathref="jspc.classpath"
-			fork="true"
-			maxmemory="512m"
-			newenvironment="true"
-		>
-			<arg line="docroot ${jspc.classes.dir}" />
-		</java>
-
-		<if>
-			<available file="jspc_error" />
-			<then>
-				<loadfile
-					property="jspc_error.content"
-					srcfile="jspc_error"
-				/>
-
-				<fail>${jspc_error.content}</fail>
-			</then>
-		</if>
-
-		<delete dir="resin-data" quiet="true" />
-	</target>
-
 	<target name="compile-tomcat">
 		<property name="jspc.classes.dir" value="classes/${app.server.type}" />
 
@@ -296,43 +242,23 @@ ${oversize.files.jsp}</fail>
 		<antcall target="build-common-web.deploy" />
 
 		<if>
-			<equals arg1="${jsp.precompile}" arg2="on" />
+			<and>
+				<equals arg1="${jsp.precompile}" arg2="on" />
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+			</and>
 			<then>
-				<if>
-					<equals arg1="${app.server.type}" arg2="resin" />
-					<then>
-						<antcall target="compile-resin" />
+				<antcall target="compile-tomcat" />
 
-						<copy
-							preservelastmodified="true"
-							todir="${app.server.portal.dir}/WEB-INF/work"
-						>
-							<fileset
-								dir="classes/${app.server.type}"
-							>
-								<exclude name="**/*.jspc_error" />
-								<exclude name="**/*.java" />
-							</fileset>
-						</copy>
-					</then>
-					<elseif>
-						<equals arg1="${app.server.type}" arg2="tomcat" />
-						<then>
-							<antcall target="compile-tomcat" />
-
-							<copy
-								preservelastmodified="true"
-								todir="${app.server.dir}/work/Catalina/localhost/ROOT"
-							>
-								<fileset
-									dir="classes/${app.server.type}"
-								>
-									<exclude name="**/*.jspc_error" />
-								</fileset>
-							</copy>
-						</then>
-					</elseif>
-				</if>
+				<copy
+					preservelastmodified="true"
+					todir="${app.server.dir}/work/Catalina/localhost/ROOT"
+				>
+					<fileset
+						dir="classes/${app.server.type}"
+					>
+						<exclude name="**/*.jspc_error" />
+					</fileset>
+				</copy>
 			</then>
 		</if>
 	</target>

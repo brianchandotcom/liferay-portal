@@ -498,7 +498,7 @@ definition {
 	@description = "Add a web content article with a custom DDM structure and template and display it in the web content display widget."
 	@priority = "5"
 	test AddWithStructure {
-		property app.server.types = "jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly";
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";

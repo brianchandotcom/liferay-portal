@@ -146,10 +146,6 @@
 /sql/sql.*.properties
 /sql/update-*
 /sql/velocity.log*
-/support-resin/*.ipr
-/support-resin/*.iws
-/support-resin/classes
-/support-resin/support-resin*.jar
 /support-tomcat/*.ipr
 /support-tomcat/*.iws
 /support-tomcat/classes

@@ -124,7 +124,6 @@ module.framework.properties.osgi.console=11312</echo>
 				<not>
 					<or>
 						<equals arg1="${app.server.type}" arg2="jboss" />
-						<equals arg1="${app.server.type}" arg2="resin" />
 						<equals arg1="${app.server.type}" arg2="tcserver" />
 						<equals arg1="${app.server.type}" arg2="tomcat" />
 						<equals arg1="${app.server.type}" arg2="weblogic" />
@@ -133,7 +132,7 @@ module.framework.properties.osgi.console=11312</echo>
 					</or>
 				</not>
 				<then>
-					<fail>Please set "app.server.type" to one of the following:${line.separator}, jboss, resin, tcserver, tomcat, weblogic, websphere, or wildfly.</fail>
+					<fail>Please set "app.server.type" to one of the following:${line.separator}, jboss, tcserver, tomcat, weblogic, websphere, or wildfly.</fail>
 				</then>
 			</if>
 
@@ -2310,23 +2309,6 @@ tell application "Safari" to quit
 						<property name="app.server.jboss.version" value="6.4.0" />
 					</ant>
 				</then>
-			</if>
-
-			<if>
-				<matches pattern="https?://" string="${test.build.bundle.resin.zip.url}" />
-				<then>
-					<antcall inheritAll="false" target="prepare-test-bundle">
-						<param name="app.server.type" value="resin" />
-						<param name="test.app.server.bin.dir" value="${app.server.resin.bin.dir}" />
-						<param name="test.build.bundle.zip.url" value="${test.build.bundle.resin.zip.url}" />
-					</antcall>
-				</then>
-				<elseif>
-					<equals arg1="${test.build.bundle.resin}" arg2="true" />
-					<then>
-						<ant antfile="build-dist.xml" inheritAll="false" target="build-dist-resin" />
-					</then>
-				</elseif>
 			</if>
 
 			<if>

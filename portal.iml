@@ -17,7 +17,6 @@
 			<excludeFolder url="file://$MODULE_DIR$/portal-test" />
 			<excludeFolder url="file://$MODULE_DIR$/portal-test-integration" />
 			<excludeFolder url="file://$MODULE_DIR$/portal-web" />
-			<excludeFolder url="file://$MODULE_DIR$/support-resin" />
 			<excludeFolder url="file://$MODULE_DIR$/support-tomcat" />
 			<excludeFolder url="file://$MODULE_DIR$/support-websphere" />
 			<excludeFolder url="file://$MODULE_DIR$/util-bridges" />

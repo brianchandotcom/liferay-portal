@@ -104,4 +104,6 @@ Main-Class: com.liferay.source.formatter.SourceFormatter
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/UnicodeFormatter.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/Validator.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/xml/XMLSchema.class,\
+	@com.liferay.portal.tools.java.parser-[0-9]*.jar!/com/liferay/portal/tools/java/parser/*.class,\
+	@com.liferay.portal.tools.java.parser-[0-9]*.jar!/com/liferay/portal/tools/java/parser/util/JavaParserUtil.class,\
 	@xercesImpl-[0-9]*.jar!/org/apache/xerces/xni/XNIException.class

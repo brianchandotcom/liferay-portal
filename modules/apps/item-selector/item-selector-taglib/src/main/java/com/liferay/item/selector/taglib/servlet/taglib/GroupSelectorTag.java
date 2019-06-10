@@ -16,21 +16,24 @@ package com.liferay.item.selector.taglib.servlet.taglib;
 
 import com.liferay.item.selector.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.item.selector.taglib.internal.servlet.item.selector.ItemSelectorUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -66,59 +69,19 @@ public class GroupSelectorTag extends IncludeTag {
 	}
 
 	protected List<Group> getGroups(HttpServletRequest httpServletRequest) {
-		if (_groups != null) {
-			return _groups;
+		if (_groups == null) {
+			_search(httpServletRequest);
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
-
-		List<Long> excludedGroupIds = _getExcludedGroupIds(httpServletRequest);
-
-		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
-
-		groupParams.put("excludedGroupIds", excludedGroupIds);
-		groupParams.put("site", Boolean.TRUE);
-
-		int cur = ParamUtil.getInteger(
-			httpServletRequest, SearchContainer.DEFAULT_CUR_PARAM,
-			SearchContainer.DEFAULT_CUR);
-		int delta = ParamUtil.getInteger(
-			httpServletRequest, SearchContainer.DEFAULT_DELTA_PARAM,
-			SearchContainer.DEFAULT_DELTA);
-
-		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
-			cur, delta);
-
-		return GroupLocalServiceUtil.search(
-			themeDisplay.getCompanyId(), _CLASS_NAME_IDS, keywords, groupParams,
-			startAndEnd[0], startAndEnd[1], null);
+		return _groups;
 	}
 
 	protected int getGroupsCount(HttpServletRequest httpServletRequest) {
-		if ((_groups != null) || (_groupsCount > 0)) {
-			return _groupsCount;
+		if (_groups == null) {
+			_search(httpServletRequest);
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
-
-		List<Long> excludedGroupIds = _getExcludedGroupIds(httpServletRequest);
-
-		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
-
-		groupParams.put("excludedGroupIds", excludedGroupIds);
-		groupParams.put("site", Boolean.TRUE);
-
-		return GroupLocalServiceUtil.searchCount(
-			themeDisplay.getCompanyId(), _CLASS_NAME_IDS, keywords,
-			groupParams);
+		return _groupsCount;
 	}
 
 	@Override
@@ -139,54 +102,43 @@ public class GroupSelectorTag extends IncludeTag {
 			ItemSelectorUtil.getItemSelector());
 	}
 
-	private List<Long> _getExcludedGroupIds(
-		HttpServletRequest httpServletRequest) {
+	private void _search(HttpServletRequest httpServletRequest) {
+		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			String keywords = ParamUtil.getString(
+				httpServletRequest, "keywords");
 
-		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
+			LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
+			groupParams.put("site", Boolean.TRUE);
 
-		List<Integer> types = new ArrayList<>();
+			List<Group> groups = GroupServiceUtil.search(
+				themeDisplay.getCompanyId(), _CLASS_NAME_IDS, keywords,
+				groupParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		int privateSiteType = GroupConstants.TYPE_SITE_PRIVATE;
+			int cur = ParamUtil.getInteger(
+				httpServletRequest, SearchContainer.DEFAULT_CUR_PARAM,
+				SearchContainer.DEFAULT_CUR);
+			int delta = ParamUtil.getInteger(
+				httpServletRequest, SearchContainer.DEFAULT_DELTA_PARAM,
+				SearchContainer.DEFAULT_DELTA);
 
-		types.add(privateSiteType);
+			int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
+				cur, delta);
 
-		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
+			_groups = ListUtil.subList(groups, startAndEnd[0], startAndEnd[1]);
 
-		groupParams.put("site", Boolean.TRUE);
-		groupParams.put("types", types);
-
-		int cur = ParamUtil.getInteger(
-			httpServletRequest, SearchContainer.DEFAULT_CUR_PARAM,
-			SearchContainer.DEFAULT_CUR);
-		int delta = ParamUtil.getInteger(
-			httpServletRequest, SearchContainer.DEFAULT_DELTA_PARAM,
-			SearchContainer.DEFAULT_DELTA);
-
-		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
-			cur, delta);
-
-		List<Group> privateSites = GroupLocalServiceUtil.search(
-			themeDisplay.getCompanyId(), _CLASS_NAME_IDS, keywords, groupParams,
-			startAndEnd[0], startAndEnd[1], null);
-
-		List<Long> excludedGroupIds = new ArrayList<>();
-
-		for (Group privateSite : privateSites) {
-			long groupId = privateSite.getGroupId();
-
-			if (!permissionChecker.isGroupMember(groupId)) {
-				excludedGroupIds.add(groupId);
-			}
+			_groupsCount = groups.size();
 		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
 
-		return excludedGroupIds;
+			_groups = Collections.emptyList();
+			_groupsCount = 0;
+		}
 	}
 
 	private static final long[] _CLASS_NAME_IDS = {
@@ -194,6 +146,9 @@ public class GroupSelectorTag extends IncludeTag {
 		ClassNameLocalServiceUtil.getClassNameId(Group.class),
 		ClassNameLocalServiceUtil.getClassNameId(Organization.class)
 	};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		GroupSelectorTag.class);
 
 	private List<Group> _groups;
 	private int _groupsCount;

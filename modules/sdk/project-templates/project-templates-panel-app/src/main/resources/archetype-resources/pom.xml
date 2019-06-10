@@ -80,22 +80,6 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>com.liferay</groupId>
-				<artifactId>com.liferay.css.builder</artifactId>
-				<version>@com.liferay.css.builder.version@</version>
-				<executions>
-					<execution>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>build</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<baseDir>src/main/resources</baseDir>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
@@ -112,6 +96,9 @@
 					<archive>
 						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
 					</archive>
+					<excludes>
+						<exclude>**/META-INF/resources/**/.sass-cache/</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -137,6 +124,22 @@
 						<version>@com.liferay.ant.bnd.version@</version>
 					</dependency>
 				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>com.liferay</groupId>
+				<artifactId>com.liferay.css.builder</artifactId>
+				<version>@com.liferay.css.builder.version@</version>
+				<executions>
+					<execution>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>build</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<baseDir>src/main/resources/META-INF/resources</baseDir>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

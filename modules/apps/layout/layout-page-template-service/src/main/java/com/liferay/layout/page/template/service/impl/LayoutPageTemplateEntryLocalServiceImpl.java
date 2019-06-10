@@ -785,23 +785,25 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			LocaleUtil.getSiteDefault(), name);
 
 		String layoutType = LayoutConstants.TYPE_ASSET_DISPLAY;
+		boolean privateLayout = false;
 
 		if (type == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
 			layoutType = LayoutConstants.TYPE_CONTENT;
+			privateLayout = true;
 		}
 
 		serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);
 
 		Layout layout = layoutLocalService.addLayout(
-			userId, groupId, true, 0, titleMap, titleMap, null, null, null,
-			layoutType, StringPool.BLANK, true, true, new HashMap<>(),
+			userId, groupId, privateLayout, 0, titleMap, titleMap, null, null,
+			null, layoutType, StringPool.BLANK, true, true, new HashMap<>(),
 			serviceContext);
 
 		serviceContext.setModifiedDate(layout.getModifiedDate());
 
 		layoutLocalService.addLayout(
-			userId, groupId, true, layout.getParentLayoutId(),
+			userId, groupId, privateLayout, layout.getParentLayoutId(),
 			classNameLocalService.getClassNameId(Layout.class),
 			layout.getPlid(), layout.getNameMap(), titleMap,
 			layout.getDescriptionMap(), layout.getKeywordsMap(),

@@ -473,6 +473,11 @@ public class DDMFormTemplateContextProcessor {
 
 			DDMFormLayoutPage ddmFormLayoutPage = new DDMFormLayoutPage();
 
+			ddmFormLayoutPage.setDescription(
+				getLocalizedValue(jsonObject.getString("description")));
+			ddmFormLayoutPage.setTitle(
+				getLocalizedValue(jsonObject.getString("title")));
+
 			traverseRows(jsonObject.getJSONArray("rows"), ddmFormLayoutPage);
 
 			_ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage);

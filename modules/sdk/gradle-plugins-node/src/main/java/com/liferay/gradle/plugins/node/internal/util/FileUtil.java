@@ -61,6 +61,131 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		}
 	}
 
+	public static void deleteSymbolicLinks(Path dirPath) throws IOException {
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				dirPath)) {
+
+			for (Path path : directoryStream) {
+				if (Files.isSymbolicLink(path)) {
+					Files.delete(path);
+				}
+			}
+		}
+	}
+
+	public static String getDigest(Iterable<File> files) {
+		StringBuilder sb = new StringBuilder();
+
+		SortedSet<File> sortedFiles = null;
+
+		try {
+			sortedFiles = _flattenAndSort(files);
+		}
+		catch (IOException ioe) {
+			throw new GradleException("Unable to flatten files", ioe);
+		}
+
+		for (File file : sortedFiles) {
+			if (!file.exists()) {
+				continue;
+			}
+
+			try {
+				List<String> lines = Files.readAllLines(
+					file.toPath(), StandardCharsets.UTF_8);
+
+				sb.append(Integer.toHexString(lines.hashCode()));
+			}
+			catch (IOException ioe) {
+				HashValue hashValue = HashUtil.sha1(file);
+
+				sb.append(hashValue.asHexString());
+			}
+
+			sb.append('-');
+		}
+
+		if (sb.length() > 0) {
+			sb.setLength(sb.length() - 1);
+		}
+
+		return sb.toString();
+	}
+
+	public static void removeBinDirLinks(Logger logger, File nodeModulesDir)
+		throws IOException {
+
+		for (File nodeModulesBinDir : _getNodeModulesBinDirs(nodeModulesDir)) {
+			if (logger.isInfoEnabled()) {
+				String message = "Removing binary symbolic links from {}";
+
+				logger.info(message, nodeModulesBinDir.toPath());
+			}
+
+			deleteSymbolicLinks(nodeModulesBinDir.toPath());
+		}
+	}
+
+	public static void syncDir(
+		Project project, final File sourceDir, final File targetDir,
+		boolean nativeSync) {
+
+		ExecResult execResult = null;
+
+		if (nativeSync) {
+			execResult = project.exec(
+				new Action<ExecSpec>() {
+
+					@Override
+					public void execute(ExecSpec execSpec) {
+						if (OSDetector.isWindows()) {
+							execSpec.args(
+								"/MIR", "/NDL", "/NFL", "/NJH", "/NJS", "/NP",
+								sourceDir.getAbsolutePath(),
+								targetDir.getAbsolutePath());
+
+							execSpec.setExecutable("robocopy");
+						}
+						else {
+							execSpec.args(
+								"--archive", "--delete",
+								sourceDir.getAbsolutePath() + File.separator,
+								targetDir.getAbsolutePath());
+
+							execSpec.setExecutable("rsync");
+						}
+
+						execSpec.setIgnoreExitValue(true);
+					}
+
+				});
+		}
+
+		if ((execResult != null) && (execResult.getExitValue() == 0)) {
+			return;
+		}
+
+		project.delete(targetDir);
+
+		try {
+			project.copy(
+				new Action<CopySpec>() {
+
+					@Override
+					public void execute(CopySpec copySpec) {
+						copySpec.from(sourceDir);
+						copySpec.into(targetDir);
+					}
+
+				});
+		}
+		catch (RuntimeException re) {
+			project.delete(targetDir);
+
+			throw re;
+		}
+	}
+
 	private static void _createBinDirLinks(
 			Logger logger, File nodeModulesBinDir)
 		throws IOException {
@@ -127,161 +252,6 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		}
 	}
 
-	public static void deleteSymbolicLinks(Path dirPath) throws IOException {
-		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
-				dirPath)) {
-
-			for (Path path : directoryStream) {
-				if (Files.isSymbolicLink(path)) {
-					Files.delete(path);
-				}
-			}
-		}
-	}
-
-	public static String getDigest(Iterable<File> files) {
-		StringBuilder sb = new StringBuilder();
-
-		SortedSet<File> sortedFiles = null;
-
-		try {
-			sortedFiles = _flattenAndSort(files);
-		}
-		catch (IOException ioe) {
-			throw new GradleException("Unable to flatten files", ioe);
-		}
-
-		for (File file : sortedFiles) {
-			if (!file.exists()) {
-				continue;
-			}
-
-			try {
-				List<String> lines = Files.readAllLines(
-					file.toPath(), StandardCharsets.UTF_8);
-
-				sb.append(Integer.toHexString(lines.hashCode()));
-			}
-			catch (IOException ioe) {
-				HashValue hashValue = HashUtil.sha1(file);
-
-				sb.append(hashValue.asHexString());
-			}
-
-			sb.append('-');
-		}
-
-		if (sb.length() > 0) {
-			sb.setLength(sb.length() - 1);
-		}
-
-		return sb.toString();
-	}
-
-	private static Set<File> _getNodeModulesBinDirs(File nodeModulesDir)
-		throws IOException {
-
-		final Set<File> nodeModulesBinDirs = new HashSet<>();
-
-		Files.walkFileTree(
-			nodeModulesDir.toPath(),
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult preVisitDirectory(
-						Path dirPath, BasicFileAttributes basicFileAttributes)
-					throws IOException {
-
-					String dirName = String.valueOf(dirPath.getFileName());
-
-					if (dirName.equals(_NODE_MODULES_BIN_DIR_NAME)) {
-						nodeModulesBinDirs.add(dirPath.toFile());
-
-						return FileVisitResult.SKIP_SUBTREE;
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
-
-		return nodeModulesBinDirs;
-	}
-
-	public static void removeBinDirLinks(Logger logger, File nodeModulesDir)
-		throws IOException {
-
-		for (File nodeModulesBinDir : _getNodeModulesBinDirs(nodeModulesDir)) {
-			if (logger.isInfoEnabled()) {
-				String message = "Removing binary symbolic links from {}";
-
-				logger.info(message, nodeModulesBinDir.toPath());
-			}
-
-			FileUtil.deleteSymbolicLinks(nodeModulesBinDir.toPath());
-		}
-	}
-
-	public static void syncDir(
-		Project project, final File sourceDir, final File targetDir,
-		boolean nativeSync) {
-
-		ExecResult execResult = null;
-
-		if (nativeSync) {
-			execResult = project.exec(
-				new Action<ExecSpec>() {
-
-					@Override
-					public void execute(ExecSpec execSpec) {
-						if (OSDetector.isWindows()) {
-							execSpec.args(
-								"/MIR", "/NDL", "/NFL", "/NJH", "/NJS", "/NP",
-								sourceDir.getAbsolutePath(),
-								targetDir.getAbsolutePath());
-
-							execSpec.setExecutable("robocopy");
-						}
-						else {
-							execSpec.args(
-								"--archive", "--delete",
-								sourceDir.getAbsolutePath() + File.separator,
-								targetDir.getAbsolutePath());
-
-							execSpec.setExecutable("rsync");
-						}
-
-						execSpec.setIgnoreExitValue(true);
-					}
-
-				});
-		}
-
-		if ((execResult != null) && (execResult.getExitValue() == 0)) {
-			return;
-		}
-
-		project.delete(targetDir);
-
-		try {
-			project.copy(
-				new Action<CopySpec>() {
-
-					@Override
-					public void execute(CopySpec copySpec) {
-						copySpec.from(sourceDir);
-						copySpec.into(targetDir);
-					}
-
-				});
-		}
-		catch (RuntimeException re) {
-			project.delete(targetDir);
-
-			throw re;
-		}
-	}
-
 	private static SortedSet<File> _flattenAndSort(Iterable<File> files)
 		throws IOException {
 
@@ -316,6 +286,36 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		}
 
 		return sortedFiles;
+	}
+
+	private static Set<File> _getNodeModulesBinDirs(File nodeModulesDir)
+		throws IOException {
+
+		final Set<File> nodeModulesBinDirs = new HashSet<>();
+
+		Files.walkFileTree(
+			nodeModulesDir.toPath(),
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path dirPath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					String dirName = String.valueOf(dirPath.getFileName());
+
+					if (dirName.equals(_NODE_MODULES_BIN_DIR_NAME)) {
+						nodeModulesBinDirs.add(dirPath.toFile());
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		return nodeModulesBinDirs;
 	}
 
 	private static final String _NODE_MODULES_BIN_DIR_NAME = ".bin";

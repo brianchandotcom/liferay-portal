@@ -50,12 +50,6 @@
 				<then>
 					<property name="test.build.liferay.portal.zip.file.name" value="${app.server.portal.dir}" />
 				</then>
-				<elseif>
-					<equals arg1="${tcat.enabled}" arg2="true" />
-					<then>
-						<property name="test.build.liferay.portal.zip.file.name" value="${app.server.tcat.admin.dir}/tcat_init/webapps/${lp.version.dtd}/ROOT.war" />
-					</then>
-				</elseif>
 			</if>
 
 			<if>
@@ -2383,8 +2377,6 @@ tell application "Safari" to quit
 
 			<setup-testable-tomcat />
 
-			<antcall inheritAll="false" target="prepare-test-build-tomcat-dependents" />
-
 			<if>
 				<and>
 					<equals arg1="${test.build.bundle.weblogic}" arg2="true" />
@@ -3672,34 +3664,12 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<attribute default="" name="testable.portal.started.marker.file" />
 
 		<sequential>
-			<if>
-				<equals arg1="${tcat.enabled}" arg2="true" />
-				<then>
-					<start-app-server-cmd
-						app.server.bin.dir="${app.server.tcat.admin.bin.dir}"
-						app.server.bundle.index="@{app.server.bundle.index}"
-						delete.liferay.home="@{delete.liferay.home}"
-						test.docker.environment="${test.docker.environment}"
-						testable.portal.started.marker.file="@{testable.portal.started.marker.file}"
-					/>
-
-					<start-app-server-cmd
-						app.server.bin.dir="${app.server.tcat.agent.bin.dir}"
-						app.server.bundle.index="@{app.server.bundle.index}"
-						delete.liferay.home="@{delete.liferay.home}"
-						test.docker.environment="${test.docker.environment}"
-						testable.portal.started.marker.file="@{testable.portal.started.marker.file}"
-					/>
-				</then>
-				<else>
-					<start-app-server-cmd
-						app.server.bundle.index="@{app.server.bundle.index}"
-						delete.liferay.home="@{delete.liferay.home}"
-						test.docker.environment="${test.docker.environment}"
-						testable.portal.started.marker.file="@{testable.portal.started.marker.file}"
-					/>
-				</else>
-			</if>
+			<start-app-server-cmd
+				app.server.bundle.index="@{app.server.bundle.index}"
+				delete.liferay.home="@{delete.liferay.home}"
+				test.docker.environment="${test.docker.environment}"
+				testable.portal.started.marker.file="@{testable.portal.started.marker.file}"
+			/>
 		</sequential>
 	</macrodef>
 
@@ -3719,27 +3689,9 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 			<local name="portal.not.started" />
 
-			<if>
-				<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />
-				<then>
-					<waitfor maxwait="1" maxwaitunit="second" timeoutproperty="portal.not.started">
-						<socket port="${test.app.server.leading.port.number}180" server="localhost" />
-					</waitfor>
-				</then>
-				<elseif>
-					<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.agent.bin.dir}" />
-					<then>
-						<waitfor maxwait="1" maxwaitunit="second" timeoutproperty="portal.not.started">
-							<socket port="${test.app.server.leading.port.number}080" server="localhost" />
-						</waitfor>
-					</then>
-				</elseif>
-				<else>
-					<waitfor maxwait="1" maxwaitunit="second" timeoutproperty="portal.not.started">
-						<socket port="${test.app.server.leading.port.number}080" server="localhost" />
-					</waitfor>
-				</else>
-			</if>
+			<waitfor maxwait="1" maxwaitunit="second" timeoutproperty="portal.not.started">
+				<socket port="${test.app.server.leading.port.number}080" server="localhost" />
+			</waitfor>
 
 			<if>
 				<isset property="portal.not.started" />
@@ -3981,29 +3933,13 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 		<sequential>
 			<if>
-				<equals arg1="${tcat.enabled}" arg2="true" />
+				<istrue value="${test.docker.environment}" />
 				<then>
-					<stop-app-server-cmd
-						app.server.bin.dir="${app.server.tcat.admin.bin.dir}"
-						app.server.bundle.index="@{app.server.bundle.index}"
-						app.server.explicit.stop.count="@{app.server.explicit.stop.count}"
-					/>
-
-					<stop-app-server-cmd
-						app.server.bin.dir="${app.server.tcat.agent.bin.dir}"
+					<stop-app-server-docker-cmd
 						app.server.bundle.index="@{app.server.bundle.index}"
 						app.server.explicit.stop.count="@{app.server.explicit.stop.count}"
 					/>
 				</then>
-				<elseif>
-					<istrue value="${test.docker.environment}" />
-					<then>
-						<stop-app-server-docker-cmd
-							app.server.bundle.index="@{app.server.bundle.index}"
-							app.server.explicit.stop.count="@{app.server.explicit.stop.count}"
-						/>
-					</then>
-				</elseif>
 				<else>
 					<stop-app-server-cmd
 						app.server.bundle.index="@{app.server.bundle.index}"
@@ -4051,92 +3987,60 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				</daemons>
 				<sequential>
 					<if>
-						<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />
+						<isset property="env.HOSTNAME" />
 						<then>
-							<waitfor maxwait="5" maxwaitunit="minute" timeoutproperty="app.server.stopping.timeout">
-								<and>
-									<not>
-										<http url="http://localhost:${test.app.server.leading.port.number}180/console" />
-									</not>
-									<not>
-										<http url="http://localhost:${test.app.server.leading.port.number}099" />
-									</not>
-								</and>
-							</waitfor>
+							<property name="server.host" value="${env.HOSTNAME}" />
 						</then>
-						<elseif>
-							<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.agent.bin.dir}" />
-							<then>
-								<waitfor maxwait="5" maxwaitunit="minute" timeoutproperty="app.server.stopping.timeout">
-									<and>
-										<not>
-											<http url="http://localhost:${test.app.server.leading.port.number}080" />
-										</not>
-										<not>
-											<http url="http://localhost:${test.app.server.leading.port.number}099" />
-										</not>
-									</and>
-								</waitfor>
-							</then>
-						</elseif>
 						<else>
-							<if>
-								<isset property="env.HOSTNAME" />
-								<then>
-									<property name="server.host" value="${env.HOSTNAME}" />
-								</then>
-								<else>
-									<property name="server.host" value="localhost" />
-								</else>
-							</if>
-
-							<waitfor maxwait="5" maxwaitunit="minute" timeoutproperty="app.server.stopping.timeout">
-								<and>
-									<not>
-										<socket port="${test.app.server.leading.port.number}080" server="localhost" />
-									</not>
-									<not>
-										<socket port="${test.app.server.leading.port.number}099" server="${server.host}" />
-									</not>
-								</and>
-							</waitfor>
-
-							<if>
-								<equals arg1="${app.server.type}" arg2="wildfly" />
-								<then>
-									<retry retrycount="10">
-										<sequential>
-											<execute>
-												<![CDATA[
-													jps > jps_output
-												]]>
-											</execute>
-
-											<trycatch property="shutdown.error">
-												<try>
-													<if>
-														<resourcecontains
-															resource="jps_output"
-															substring="jboss-modules.jar"
-														/>
-														<then>
-															<fail />
-														</then>
-													</if>
-												</try>
-												<catch>
-													<sleep seconds="5" />
-
-													<fail message="Server failed to fully shut down." />
-												</catch>
-											</trycatch>
-										</sequential>
-									</retry>
-
-									<delete file="jps_output" />
-								</then>
-							</if>
+							<property name="server.host" value="localhost" />
 						</else>
+					</if>
+
+					<waitfor maxwait="5" maxwaitunit="minute" timeoutproperty="app.server.stopping.timeout">
+						<and>
+							<not>
+								<socket port="${test.app.server.leading.port.number}080" server="localhost" />
+							</not>
+							<not>
+								<socket port="${test.app.server.leading.port.number}099" server="${server.host}" />
+							</not>
+						</and>
+					</waitfor>
+
+					<if>
+						<equals arg1="${app.server.type}" arg2="wildfly" />
+						<then>
+							<retry retrycount="10">
+								<sequential>
+									<execute>
+										<![CDATA[
+											jps > jps_output
+										]]>
+									</execute>
+
+									<trycatch property="shutdown.error">
+										<try>
+											<if>
+												<resourcecontains
+													resource="jps_output"
+													substring="jboss-modules.jar"
+												/>
+												<then>
+													<fail />
+												</then>
+											</if>
+										</try>
+										<catch>
+											<sleep seconds="5" />
+
+											<fail message="Server failed to fully shut down." />
+										</catch>
+									</trycatch>
+								</sequential>
+							</retry>
+
+							<delete file="jps_output" />
+						</then>
 					</if>
 
 					<if>
@@ -4526,29 +4430,15 @@ war.path=${app.server.portal.dir}/</echo>
 
 			<local name="app.server.waiting.url" />
 
-			<if>
-				<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />
-				<then>
-					<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}180/console" />
-				</then>
-				<elseif>
-					<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.agent.bin.dir}" />
-					<then>
-						<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080" />
-					</then>
-				</elseif>
-				<else>
-					<get-testcase-property property.name="portal.context" />
+			<get-testcase-property property.name="portal.context" />
 
-					<if>
-						<isset property="portal.context" />
-						<then>
-							<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/${portal.context}/web/guest" />
-						</then>
-						<else>
-							<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
-						</else>
-					</if>
+			<if>
+				<isset property="portal.context" />
+				<then>
+					<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/${portal.context}/web/guest" />
+				</then>
+				<else>
+					<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
 				</else>
 			</if>
 
@@ -7928,16 +7818,6 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
-			<equals arg1="${tcat.enabled}" arg2="true" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					tcat.admin.repository=${app.server.tcat.admin.dir}/tcat_init/webapps/${lp.version.dtd}
-					tcat.enabled=true
-				</echo>
-			</then>
-		</if>
-
-		<if>
 			<equals arg1="${tear.down.before.test}" arg2="true" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
@@ -8972,40 +8852,6 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 		<ant inheritAll="false" target="deploy" />
 
 		<app-server-properties-reset />
-	</target>
-
-	<target name="prepare-test-build-tomcat-dependents">
-		<if>
-			<equals arg1="${test.build.bundle.tcat}" arg2="true" />
-			<then>
-				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.39
-
-liferay.home=${liferay.home}
-
-plugins.includes=marketplace-portlet</echo>
-
-				<if>
-					<matches pattern="https?://" string="${test.build.portal.war.url}" />
-					<then>
-						<mkdir dir="dist" />
-
-						<mirrors-get
-							dest="dist/liferay-portal-${lp.version}.war"
-							src="${test.build.portal.war.url}"
-						/>
-					</then>
-					<else>
-						<ant antfile="build-dist.xml" inheritAll="false" target="zip-portal-war" />
-					</else>
-				</if>
-
-				<ant antfile="build-dist.xml" inheritAll="false" target="build-dist-tcat" />
-
-				<delete dir="dist" />
-
-				<delete file="${lp.plugins.dir}/build.${user.name}.properties" />
-			</then>
-		</if>
 	</target>
 
 	<target name="prepare-test-build-unit">
@@ -11007,18 +10853,11 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 					</then>
 				</if>
 
-				<if>
-					<not>
-						<equals arg1="${tcat.enabled}" arg2="true" />
-					</not>
-					<then>
-						<waitfor maxwait="150" maxwaitunit="second">
-							<available file="${liferay.home}/logs" type="dir" />
-						</waitfor>
+				<waitfor maxwait="150" maxwaitunit="second">
+					<available file="${liferay.home}/logs" type="dir" />
+				</waitfor>
 
-						<antcall target="wait-for-plugins-deployment" />
-					</then>
-				</if>
+				<antcall target="wait-for-plugins-deployment" />
 
 				<if>
 					<available file="${liferay.home}/tmp/${theme.file.name}" />

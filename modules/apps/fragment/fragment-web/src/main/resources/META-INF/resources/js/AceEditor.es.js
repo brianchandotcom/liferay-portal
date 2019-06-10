@@ -20,9 +20,12 @@ class AceEditor extends Component {
 	 */
 	attached() {
 		this._editorDocument = null;
+		this._editorSession = null;
+
 		this._getAutocompleteSuggestion = this._getAutocompleteSuggestion.bind(
 			this
 		);
+
 		this._handleDocumentChanged = this._handleDocumentChanged.bind(this);
 
 		AUI().use(
@@ -31,33 +34,44 @@ class AceEditor extends Component {
 			'aui-ace-autocomplete-templateprocessor',
 
 			A => {
-				const editor = new A.AceEditor({
+				this._editor = new A.AceEditor({
 					boundingBox: this.refs.wrapper,
 					highlightActiveLine: false,
 					mode: this.syntax,
 					tabSize: 2
 				});
 
-				this._overrideSetAnnotations(editor.getSession());
-				this._editorSession = editor.getSession();
-				this._editorDocument = editor.getSession().getDocument();
+				this._editorDocument = this._editor.getSession().getDocument();
+				this._editorSession = this._editor.getSession();
+
+				this._overrideSetAnnotations(this._editorSession);
 
 				this.refs.wrapper.style.height = '';
 				this.refs.wrapper.style.width = '';
 
 				this._editorDocument.on('change', this._handleDocumentChanged);
 
-				editor
-					.getSession()
-					.on('changeAnnotation', this._handleDocumentChanged);
+				this._editorSession.on(
+					'changeAnnotation',
+					this._handleDocumentChanged
+				);
 
 				if (this.initialContent) {
 					this._editorDocument.setValue(this.initialContent);
 				}
 
-				this._initAutocomplete(A, editor);
+				this._initAutocomplete(A, this._editor);
 			}
 		);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	disposed() {
+		if (this._editor) {
+			this._editor.destroy();
+		}
 	}
 
 	/**
@@ -203,6 +217,39 @@ AceEditor.SYNTAX = {
  * @type {!Object}
  */
 AceEditor.STATE = {
+	/**
+	 * Ace editor plugin instance
+	 * @default null
+	 * @instance
+	 * @memberof AceEditor
+	 * @type object
+	 */
+	_editor: Config.object()
+		.internal()
+		.value(null),
+
+	/**
+	 * Ace editor plugin document instance
+	 * @default null
+	 * @instance
+	 * @memberof AceEditor
+	 * @type object
+	 */
+	_editorDocument: Config.object()
+		.internal()
+		.value(null),
+
+	/**
+	 * Ace editor plugin session instance
+	 * @default null
+	 * @instance
+	 * @memberof AceEditor
+	 * @type object
+	 */
+	_editorSession: Config.object()
+		.internal()
+		.value(null),
+
 	/**
 	 * List of tags for custom autocompletion in the HTML editor.
 	 *

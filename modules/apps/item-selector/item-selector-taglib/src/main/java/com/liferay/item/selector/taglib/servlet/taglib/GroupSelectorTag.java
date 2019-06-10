@@ -65,7 +65,7 @@ public class GroupSelectorTag extends IncludeTag {
 		super.cleanUp();
 
 		_groups = null;
-		_groupsCount = 0;
+		_groupsCount = -1;
 	}
 
 	protected List<Group> getGroups(HttpServletRequest httpServletRequest) {
@@ -77,7 +77,7 @@ public class GroupSelectorTag extends IncludeTag {
 	}
 
 	protected int getGroupsCount(HttpServletRequest httpServletRequest) {
-		if (_groups == null) {
+		if (_groupsCount < 0) {
 			_search(httpServletRequest);
 		}
 
@@ -151,6 +151,6 @@ public class GroupSelectorTag extends IncludeTag {
 		GroupSelectorTag.class);
 
 	private List<Group> _groups;
-	private int _groupsCount;
+	private int _groupsCount = -1;
 
 }

@@ -70,14 +70,14 @@ public class AssetDisplayPageHelperTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		LayoutPageTemplateEntry defaultAssetDisplayPage =
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_addLayoutPageTemplateEntry(classNameId, true, serviceContext);
 
 		long classPK = RandomTestUtil.randomLong();
 
 		_addAssetDisplayPageEntry(
 			classNameId, classPK,
-			defaultAssetDisplayPage.getLayoutPageTemplateEntryId(),
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			AssetDisplayPageConstants.TYPE_DEFAULT, serviceContext);
 
 		Assert.assertEquals(
@@ -93,14 +93,14 @@ public class AssetDisplayPageHelperTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		LayoutPageTemplateEntry assetDisplayPage = _addLayoutPageTemplateEntry(
-			classNameId, false, serviceContext);
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_addLayoutPageTemplateEntry(classNameId, false, serviceContext);
 
 		long classPK = RandomTestUtil.randomLong();
 
 		_addAssetDisplayPageEntry(
 			classNameId, classPK,
-			assetDisplayPage.getLayoutPageTemplateEntryId(),
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			AssetDisplayPageConstants.TYPE_NONE, serviceContext);
 
 		Assert.assertEquals(
@@ -116,14 +116,14 @@ public class AssetDisplayPageHelperTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		LayoutPageTemplateEntry assetDisplayPage = _addLayoutPageTemplateEntry(
-			classNameId, false, serviceContext);
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_addLayoutPageTemplateEntry(classNameId, false, serviceContext);
 
 		long classPK = RandomTestUtil.randomLong();
 
 		_addAssetDisplayPageEntry(
 			classNameId, classPK,
-			assetDisplayPage.getLayoutPageTemplateEntryId(),
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			AssetDisplayPageConstants.TYPE_SPECIFIC, serviceContext);
 
 		Assert.assertEquals(
@@ -139,14 +139,14 @@ public class AssetDisplayPageHelperTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		LayoutPageTemplateEntry defaultAssetDisplayPage =
+		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
 			_addLayoutPageTemplateEntry(classNameId, true, serviceContext);
 
 		long classPK = RandomTestUtil.randomLong();
 
 		_addAssetDisplayPageEntry(
 			classNameId, classPK,
-			defaultAssetDisplayPage.getLayoutPageTemplateEntryId(),
+			defaultLayoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			AssetDisplayPageConstants.TYPE_DEFAULT, serviceContext);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -156,7 +156,7 @@ public class AssetDisplayPageHelperTest {
 		Assert.assertNotNull(layoutPageTemplateEntry);
 
 		Assert.assertEquals(
-			defaultAssetDisplayPage.getLayoutPageTemplateEntryId(),
+			defaultLayoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 	}
 
@@ -167,25 +167,25 @@ public class AssetDisplayPageHelperTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		LayoutPageTemplateEntry assetDisplayPage = _addLayoutPageTemplateEntry(
-			classNameId, false, serviceContext);
+		LayoutPageTemplateEntry addLayoutPageTemplateEntry =
+			_addLayoutPageTemplateEntry(classNameId, false, serviceContext);
 
 		long classPK = RandomTestUtil.randomLong();
 
 		_addAssetDisplayPageEntry(
 			classNameId, classPK,
-			assetDisplayPage.getLayoutPageTemplateEntryId(),
+			addLayoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			AssetDisplayPageConstants.TYPE_SPECIFIC, serviceContext);
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
+		LayoutPageTemplateEntry getLayoutPageTemplateEntry =
 			AssetDisplayPageHelper.getAssetDisplayPageLayoutPageTemplateEntry(
 				_group.getGroupId(), classNameId, classPK, 0);
 
-		Assert.assertNotNull(layoutPageTemplateEntry);
+		Assert.assertNotNull(getLayoutPageTemplateEntry);
 
 		Assert.assertEquals(
-			assetDisplayPage.getLayoutPageTemplateEntryId(),
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+			addLayoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+			getLayoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 	}
 
 	@Test

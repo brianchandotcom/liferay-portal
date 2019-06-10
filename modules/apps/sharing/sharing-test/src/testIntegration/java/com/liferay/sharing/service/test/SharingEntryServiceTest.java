@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -602,7 +601,7 @@ public class SharingEntryServiceTest {
 			_group.getGroupId(), false, Arrays.asList(SharingEntryAction.VIEW),
 			null, serviceContext);
 
-		PrincipalThreadLocal.setName(_toUser.getUserId());
+		ServiceTestUtil.setUser(_toUser);
 
 		_sharingEntryService.deleteSharingEntry(
 			sharingEntry.getSharingEntryId(), serviceContext);
@@ -758,6 +757,8 @@ public class SharingEntryServiceTest {
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
 			true, Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
 
+		ServiceTestUtil.setUser(_toUser);
+
 		_sharingEntryService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(),
 			Arrays.asList(SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
@@ -782,6 +783,8 @@ public class SharingEntryServiceTest {
 		SharingEntry sharingEntry = _sharingEntryService.addSharingEntry(
 			_toUser.getUserId(), classNameId, classPK, _group.getGroupId(),
 			true, Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
+
+		ServiceTestUtil.setUser(_toUser);
 
 		_sharingEntryService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(),

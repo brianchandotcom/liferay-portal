@@ -123,6 +123,7 @@ public class DDMFormFieldTemplateContextFactory {
 			ddmFormFieldTemplateContext, "label", ddmFormField.getLabel());
 		setDDMFormFieldTemplateContextName(
 			ddmFormFieldTemplateContext, ddmFormFieldParameterName);
+		ddmFormFieldTemplateContext.put("type", ddmFormField.getType());
 
 		return ddmFormFieldTemplateContext;
 	}

@@ -68,15 +68,16 @@ public class DDMStructureLayoutLocalServiceWrapper
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructureLayout
 			addStructureLayout(
-				long userId, long groupId, long structureVersionId,
-				long classNameId, java.util.Map<java.util.Locale, String> name,
+				long userId, long groupId, long classNameId,
+				long structureVersionId,
+				java.util.Map<java.util.Locale, String> name,
 				java.util.Map<java.util.Locale, String> description,
 				String definition, String structureLayoutKey,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmStructureLayoutLocalService.addStructureLayout(
-			userId, groupId, structureVersionId, classNameId, name, description,
+			userId, groupId, classNameId, structureVersionId, name, description,
 			definition, structureLayoutKey, serviceContext);
 	}
 

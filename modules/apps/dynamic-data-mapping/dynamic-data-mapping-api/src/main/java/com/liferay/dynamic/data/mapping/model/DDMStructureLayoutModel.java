@@ -469,7 +469,6 @@ public interface DDMStructureLayoutModel
 	 *
 	 * @return the structure layout key of this ddm structure layout
 	 */
-	@AutoEscape
 	public String getStructureLayoutKey();
 
 	/**

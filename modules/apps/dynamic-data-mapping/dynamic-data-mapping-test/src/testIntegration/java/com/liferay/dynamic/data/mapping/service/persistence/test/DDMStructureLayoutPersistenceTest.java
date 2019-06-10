@@ -232,15 +232,6 @@ public class DDMStructureLayoutPersistenceTest {
 	}
 
 	@Test
-	public void testCountByStructureLayoutKey() throws Exception {
-		_persistence.countByStructureLayoutKey("");
-
-		_persistence.countByStructureLayoutKey("null");
-
-		_persistence.countByStructureLayoutKey((String)null);
-	}
-
-	@Test
 	public void testCountByGroupId() throws Exception {
 		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
@@ -252,6 +243,15 @@ public class DDMStructureLayoutPersistenceTest {
 		_persistence.countByStructureVersionId(RandomTestUtil.nextLong());
 
 		_persistence.countByStructureVersionId(0L);
+	}
+
+	@Test
+	public void testCountByStructureLayoutKey() throws Exception {
+		_persistence.countByStructureLayoutKey("");
+
+		_persistence.countByStructureLayoutKey("null");
+
+		_persistence.countByStructureLayoutKey((String)null);
 	}
 
 	@Test

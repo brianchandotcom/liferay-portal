@@ -86,8 +86,8 @@ public interface DDMStructureLayoutLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMStructureLayout addStructureLayout(
-			long userId, long groupId, long structureVersionId,
-			long classNameId, Map<Locale, String> name,
+			long userId, long groupId, long classNameId,
+			long structureVersionId, Map<Locale, String> name,
 			Map<Locale, String> description, String definition,
 			String structureLayoutKey, ServiceContext serviceContext)
 		throws PortalException;

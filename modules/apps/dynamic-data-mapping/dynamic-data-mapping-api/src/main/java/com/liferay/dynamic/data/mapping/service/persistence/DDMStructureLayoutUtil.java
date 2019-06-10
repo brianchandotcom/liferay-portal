@@ -551,186 +551,6 @@ public class DDMStructureLayoutUtil {
 	}
 
 	/**
-	 * Returns all the ddm structure layouts where structureLayoutKey = &#63;.
-	 *
-	 * @param structureLayoutKey the structure layout key
-	 * @return the matching ddm structure layouts
-	 */
-	public static List<DDMStructureLayout> findByStructureLayoutKey(
-		String structureLayoutKey) {
-
-		return getPersistence().findByStructureLayoutKey(structureLayoutKey);
-	}
-
-	/**
-	 * Returns a range of all the ddm structure layouts where structureLayoutKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureLayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param structureLayoutKey the structure layout key
-	 * @param start the lower bound of the range of ddm structure layouts
-	 * @param end the upper bound of the range of ddm structure layouts (not inclusive)
-	 * @return the range of matching ddm structure layouts
-	 */
-	public static List<DDMStructureLayout> findByStructureLayoutKey(
-		String structureLayoutKey, int start, int end) {
-
-		return getPersistence().findByStructureLayoutKey(
-			structureLayoutKey, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm structure layouts where structureLayoutKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureLayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param structureLayoutKey the structure layout key
-	 * @param start the lower bound of the range of ddm structure layouts
-	 * @param end the upper bound of the range of ddm structure layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm structure layouts
-	 */
-	public static List<DDMStructureLayout> findByStructureLayoutKey(
-		String structureLayoutKey, int start, int end,
-		OrderByComparator<DDMStructureLayout> orderByComparator) {
-
-		return getPersistence().findByStructureLayoutKey(
-			structureLayoutKey, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm structure layouts where structureLayoutKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureLayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param structureLayoutKey the structure layout key
-	 * @param start the lower bound of the range of ddm structure layouts
-	 * @param end the upper bound of the range of ddm structure layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching ddm structure layouts
-	 */
-	public static List<DDMStructureLayout> findByStructureLayoutKey(
-		String structureLayoutKey, int start, int end,
-		OrderByComparator<DDMStructureLayout> orderByComparator,
-		boolean retrieveFromCache) {
-
-		return getPersistence().findByStructureLayoutKey(
-			structureLayoutKey, start, end, orderByComparator,
-			retrieveFromCache);
-	}
-
-	/**
-	 * Returns the first ddm structure layout in the ordered set where structureLayoutKey = &#63;.
-	 *
-	 * @param structureLayoutKey the structure layout key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching ddm structure layout
-	 * @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
-	 */
-	public static DDMStructureLayout findByStructureLayoutKey_First(
-			String structureLayoutKey,
-			OrderByComparator<DDMStructureLayout> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStructureLayoutException {
-
-		return getPersistence().findByStructureLayoutKey_First(
-			structureLayoutKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the first ddm structure layout in the ordered set where structureLayoutKey = &#63;.
-	 *
-	 * @param structureLayoutKey the structure layout key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
-	 */
-	public static DDMStructureLayout fetchByStructureLayoutKey_First(
-		String structureLayoutKey,
-		OrderByComparator<DDMStructureLayout> orderByComparator) {
-
-		return getPersistence().fetchByStructureLayoutKey_First(
-			structureLayoutKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm structure layout in the ordered set where structureLayoutKey = &#63;.
-	 *
-	 * @param structureLayoutKey the structure layout key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure layout
-	 * @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
-	 */
-	public static DDMStructureLayout findByStructureLayoutKey_Last(
-			String structureLayoutKey,
-			OrderByComparator<DDMStructureLayout> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStructureLayoutException {
-
-		return getPersistence().findByStructureLayoutKey_Last(
-			structureLayoutKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm structure layout in the ordered set where structureLayoutKey = &#63;.
-	 *
-	 * @param structureLayoutKey the structure layout key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
-	 */
-	public static DDMStructureLayout fetchByStructureLayoutKey_Last(
-		String structureLayoutKey,
-		OrderByComparator<DDMStructureLayout> orderByComparator) {
-
-		return getPersistence().fetchByStructureLayoutKey_Last(
-			structureLayoutKey, orderByComparator);
-	}
-
-	/**
-	 * Returns the ddm structure layouts before and after the current ddm structure layout in the ordered set where structureLayoutKey = &#63;.
-	 *
-	 * @param structureLayoutId the primary key of the current ddm structure layout
-	 * @param structureLayoutKey the structure layout key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm structure layout
-	 * @throws NoSuchStructureLayoutException if a ddm structure layout with the primary key could not be found
-	 */
-	public static DDMStructureLayout[] findByStructureLayoutKey_PrevAndNext(
-			long structureLayoutId, String structureLayoutKey,
-			OrderByComparator<DDMStructureLayout> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStructureLayoutException {
-
-		return getPersistence().findByStructureLayoutKey_PrevAndNext(
-			structureLayoutId, structureLayoutKey, orderByComparator);
-	}
-
-	/**
-	 * Removes all the ddm structure layouts where structureLayoutKey = &#63; from the database.
-	 *
-	 * @param structureLayoutKey the structure layout key
-	 */
-	public static void removeByStructureLayoutKey(String structureLayoutKey) {
-		getPersistence().removeByStructureLayoutKey(structureLayoutKey);
-	}
-
-	/**
-	 * Returns the number of ddm structure layouts where structureLayoutKey = &#63;.
-	 *
-	 * @param structureLayoutKey the structure layout key
-	 * @return the number of matching ddm structure layouts
-	 */
-	public static int countByStructureLayoutKey(String structureLayoutKey) {
-		return getPersistence().countByStructureLayoutKey(structureLayoutKey);
-	}
-
-	/**
 	 * Returns all the ddm structure layouts where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -964,6 +784,186 @@ public class DDMStructureLayoutUtil {
 	 */
 	public static int countByStructureVersionId(long structureVersionId) {
 		return getPersistence().countByStructureVersionId(structureVersionId);
+	}
+
+	/**
+	 * Returns all the ddm structure layouts where structureLayoutKey = &#63;.
+	 *
+	 * @param structureLayoutKey the structure layout key
+	 * @return the matching ddm structure layouts
+	 */
+	public static List<DDMStructureLayout> findByStructureLayoutKey(
+		String structureLayoutKey) {
+
+		return getPersistence().findByStructureLayoutKey(structureLayoutKey);
+	}
+
+	/**
+	 * Returns a range of all the ddm structure layouts where structureLayoutKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureLayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param structureLayoutKey the structure layout key
+	 * @param start the lower bound of the range of ddm structure layouts
+	 * @param end the upper bound of the range of ddm structure layouts (not inclusive)
+	 * @return the range of matching ddm structure layouts
+	 */
+	public static List<DDMStructureLayout> findByStructureLayoutKey(
+		String structureLayoutKey, int start, int end) {
+
+		return getPersistence().findByStructureLayoutKey(
+			structureLayoutKey, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm structure layouts where structureLayoutKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureLayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param structureLayoutKey the structure layout key
+	 * @param start the lower bound of the range of ddm structure layouts
+	 * @param end the upper bound of the range of ddm structure layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm structure layouts
+	 */
+	public static List<DDMStructureLayout> findByStructureLayoutKey(
+		String structureLayoutKey, int start, int end,
+		OrderByComparator<DDMStructureLayout> orderByComparator) {
+
+		return getPersistence().findByStructureLayoutKey(
+			structureLayoutKey, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm structure layouts where structureLayoutKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureLayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param structureLayoutKey the structure layout key
+	 * @param start the lower bound of the range of ddm structure layouts
+	 * @param end the upper bound of the range of ddm structure layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching ddm structure layouts
+	 */
+	public static List<DDMStructureLayout> findByStructureLayoutKey(
+		String structureLayoutKey, int start, int end,
+		OrderByComparator<DDMStructureLayout> orderByComparator,
+		boolean retrieveFromCache) {
+
+		return getPersistence().findByStructureLayoutKey(
+			structureLayoutKey, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	 * Returns the first ddm structure layout in the ordered set where structureLayoutKey = &#63;.
+	 *
+	 * @param structureLayoutKey the structure layout key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ddm structure layout
+	 * @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
+	 */
+	public static DDMStructureLayout findByStructureLayoutKey_First(
+			String structureLayoutKey,
+			OrderByComparator<DDMStructureLayout> orderByComparator)
+		throws com.liferay.dynamic.data.mapping.exception.
+			NoSuchStructureLayoutException {
+
+		return getPersistence().findByStructureLayoutKey_First(
+			structureLayoutKey, orderByComparator);
+	}
+
+	/**
+	 * Returns the first ddm structure layout in the ordered set where structureLayoutKey = &#63;.
+	 *
+	 * @param structureLayoutKey the structure layout key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
+	 */
+	public static DDMStructureLayout fetchByStructureLayoutKey_First(
+		String structureLayoutKey,
+		OrderByComparator<DDMStructureLayout> orderByComparator) {
+
+		return getPersistence().fetchByStructureLayoutKey_First(
+			structureLayoutKey, orderByComparator);
+	}
+
+	/**
+	 * Returns the last ddm structure layout in the ordered set where structureLayoutKey = &#63;.
+	 *
+	 * @param structureLayoutKey the structure layout key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ddm structure layout
+	 * @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
+	 */
+	public static DDMStructureLayout findByStructureLayoutKey_Last(
+			String structureLayoutKey,
+			OrderByComparator<DDMStructureLayout> orderByComparator)
+		throws com.liferay.dynamic.data.mapping.exception.
+			NoSuchStructureLayoutException {
+
+		return getPersistence().findByStructureLayoutKey_Last(
+			structureLayoutKey, orderByComparator);
+	}
+
+	/**
+	 * Returns the last ddm structure layout in the ordered set where structureLayoutKey = &#63;.
+	 *
+	 * @param structureLayoutKey the structure layout key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
+	 */
+	public static DDMStructureLayout fetchByStructureLayoutKey_Last(
+		String structureLayoutKey,
+		OrderByComparator<DDMStructureLayout> orderByComparator) {
+
+		return getPersistence().fetchByStructureLayoutKey_Last(
+			structureLayoutKey, orderByComparator);
+	}
+
+	/**
+	 * Returns the ddm structure layouts before and after the current ddm structure layout in the ordered set where structureLayoutKey = &#63;.
+	 *
+	 * @param structureLayoutId the primary key of the current ddm structure layout
+	 * @param structureLayoutKey the structure layout key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next ddm structure layout
+	 * @throws NoSuchStructureLayoutException if a ddm structure layout with the primary key could not be found
+	 */
+	public static DDMStructureLayout[] findByStructureLayoutKey_PrevAndNext(
+			long structureLayoutId, String structureLayoutKey,
+			OrderByComparator<DDMStructureLayout> orderByComparator)
+		throws com.liferay.dynamic.data.mapping.exception.
+			NoSuchStructureLayoutException {
+
+		return getPersistence().findByStructureLayoutKey_PrevAndNext(
+			structureLayoutId, structureLayoutKey, orderByComparator);
+	}
+
+	/**
+	 * Removes all the ddm structure layouts where structureLayoutKey = &#63; from the database.
+	 *
+	 * @param structureLayoutKey the structure layout key
+	 */
+	public static void removeByStructureLayoutKey(String structureLayoutKey) {
+		getPersistence().removeByStructureLayoutKey(structureLayoutKey);
+	}
+
+	/**
+	 * Returns the number of ddm structure layouts where structureLayoutKey = &#63;.
+	 *
+	 * @param structureLayoutKey the structure layout key
+	 * @return the number of matching ddm structure layouts
+	 */
+	public static int countByStructureLayoutKey(String structureLayoutKey) {
+		return getPersistence().countByStructureLayoutKey(structureLayoutKey);
 	}
 
 	/**

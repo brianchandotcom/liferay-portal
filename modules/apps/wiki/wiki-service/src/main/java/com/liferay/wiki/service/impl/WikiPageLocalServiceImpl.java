@@ -92,6 +92,7 @@ import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.model.TrashVersion;
 import com.liferay.trash.service.TrashEntryLocalService;
 import com.liferay.trash.service.TrashVersionLocalService;
+import com.liferay.wiki.configuration.WikiFileUploadConfiguration;
 import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -103,6 +104,7 @@ import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.exception.PageTitleException;
 import com.liferay.wiki.exception.PageVersionException;
+import com.liferay.wiki.exception.WikiAttachmentMimeTypeException;
 import com.liferay.wiki.internal.util.WikiCacheThreadLocal;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
@@ -286,6 +288,20 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			long userId, long nodeId, String title, String fileName, File file,
 			String mimeType)
 		throws PortalException {
+
+		WikiFileUploadConfiguration wikiFileUploadConfiguration =
+			configurationProvider.getSystemConfiguration(
+				WikiFileUploadConfiguration.class);
+
+		List<String> wikiAttachmentMimeTypes = ListUtil.toList(
+			wikiFileUploadConfiguration.attachmentMimeTypes());
+
+		if (ListUtil.isNull(wikiAttachmentMimeTypes) ||
+			(!wikiAttachmentMimeTypes.contains(StringPool.STAR) &&
+			!wikiAttachmentMimeTypes.contains(mimeType))) {
+
+			throw new WikiAttachmentMimeTypeException();
+		}
 
 		WikiPage page = getPage(nodeId, title);
 

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.upload.UploadResponseHandler;
 import com.liferay.wiki.exception.WikiAttachmentMimeTypeException;
+import com.liferay.wiki.exception.WikiAttachmentSizeException;
 
 import javax.portlet.PortletRequest;
 
@@ -44,13 +45,19 @@ public class PageAttachmentWikiUploadResponseHandler
 		JSONObject jsonObject = _itemSelectorUploadResponseHandler.onFailure(
 			portletRequest, pe);
 
+		JSONObject errorJSONObject = null;
+
 		if (pe instanceof WikiAttachmentMimeTypeException) {
-			JSONObject errorJSONObject = JSONUtil.put(
+			errorJSONObject = JSONUtil.put(
 				"errorType",
 				ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION);
-
-			jsonObject.put("error", errorJSONObject);
 		}
+		else if (pe instanceof WikiAttachmentSizeException) {
+			errorJSONObject = JSONUtil.put(
+				"errorType", ServletResponseConstants.SC_FILE_SIZE_EXCEPTION);
+		}
+
+		jsonObject.put("error", errorJSONObject);
 
 		return jsonObject;
 	}

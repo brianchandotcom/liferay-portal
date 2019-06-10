@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
-import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -68,6 +67,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -469,6 +469,40 @@ public class UpgradeContentTargetingTest {
 	}
 
 	@Test
+	public void testUpgradeContentTargetingUserSegmentsWithSiteLocale()
+		throws Exception {
+
+		_group = GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(), null, LocaleUtil.SPAIN);
+
+		long contentTargetingUserSegmentId = -1L;
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(
+			PortalUtil.getSiteDefaultLocale(_group),
+			RandomTestUtil.randomString());
+
+		Map<Locale, String> descriptionMap =
+			RandomTestUtil.randomLocaleStringMap();
+
+		insertContentTargetingUserSegment(
+			contentTargetingUserSegmentId, nameMap, descriptionMap);
+
+		_upgradeContentTargeting.upgrade();
+
+		SegmentsEntry segmentsEntry =
+			_segmentsEntryLocalService.fetchSegmentsEntry(
+				_group.getGroupId(), "CT_" + contentTargetingUserSegmentId,
+				false);
+
+		Assert.assertNotNull(segmentsEntry);
+
+		Assert.assertEquals(nameMap, segmentsEntry.getNameMap());
+		Assert.assertEquals(descriptionMap, segmentsEntry.getDescriptionMap());
+	}
+
+	@Test
 	public void testUpgradeContentTargetingUserSegmentsWithSiteMemberRule()
 		throws Exception {
 
@@ -684,18 +718,20 @@ public class UpgradeContentTargetingTest {
 
 			ps.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
 			ps.setTimestamp(7, new Timestamp(System.currentTimeMillis()));
+
+			Locale defaultLocale = PortalUtil.getSiteDefaultLocale(_group);
+
+			String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
 			ps.setString(
 				8,
 				LocalizationUtil.updateLocalization(
-					nameMap, StringPool.BLANK, "Name",
-					UpgradeProcessUtil.getDefaultLanguageId(
-						_group.getCompanyId())));
+					nameMap, StringPool.BLANK, "Name", defaultLanguageId));
 			ps.setString(
 				9,
 				LocalizationUtil.updateLocalization(
 					descriptionMap, StringPool.BLANK, "Description",
-					UpgradeProcessUtil.getDefaultLanguageId(
-						_group.getCompanyId())));
+					defaultLanguageId));
 
 			ps.executeUpdate();
 		}

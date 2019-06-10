@@ -133,20 +133,6 @@ public class SegmentsEntryServiceTest {
 		}
 	}
 
-	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testDeleteSegmentsEntryFromExternalSource() throws Exception {
-		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			SegmentsConstants.SOURCE_ASAH_FARO_BACKEND,
-			RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(
-				_group, _companyAdminUser.getUserId()));
-
-		_segmentsEntryService.deleteSegmentsEntry(
-			segmentsEntry.getSegmentsEntryId());
-	}
-
 	@Test
 	public void testDeleteSegmentsEntryWithDeletePermission() throws Exception {
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(

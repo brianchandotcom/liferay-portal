@@ -77,7 +77,7 @@
 	"main": "js/index.js",
 	"name": "portal-workflow-metrics-web",
 	"scripts": {
-		"build": "./node_modules/@babel/cli/bin/babel.js --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler",
+		"build": "babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler",
 		"csf": "csf src/main/resources/META-INF/resources/css/**/*.scss",
 		"doc:code": "./node_modules/.bin/jsdoc -c ./jsdoc.json",
 		"format": "prettier-eslint --write 'src/main/resources/META-INF/resources/js/**/*.js'",

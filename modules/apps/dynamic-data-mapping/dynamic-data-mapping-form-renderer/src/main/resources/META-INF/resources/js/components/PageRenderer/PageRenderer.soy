@@ -1,6 +1,47 @@
-{namespace WizardPageRenderer}
+{namespace PageRenderer}
 
-{deltemplate PageRenderer.container variant="'wizard'"}
+{template .render}
+	{@param pages: ?}
+	{@param paginationMode: string}
+	{@param showSubmitButton: bool}
+	{@param spritemap: string}
+	{@param total: number}
+	{@param? _handleFieldBlurred: any}
+	{@param? _handleFieldClicked: any}
+	{@param? _handleFieldEdited: any}
+	{@param? _handleFieldFocused: any}
+	{@param? activePage: number}
+	{@param? editable: bool}
+	{@param? empty: bool}
+	{@param? page: ?}
+	{@param? pageIndex: number}
+	{@param? readOnly: bool}
+
+	{let $paginationModeVariant: $paginationMode == 'single-page' ? 'single_page' : $paginationMode /}
+
+	{let $contentRenderer: $page.contentRenderer ?: $paginationModeVariant /}
+
+	{delcall PageRenderer.container variant="$contentRenderer"}
+		{param _handleFieldBlurred: $_handleFieldBlurred /}
+		{param _handleFieldClicked: $_handleFieldClicked /}
+		{param _handleFieldEdited: $_handleFieldEdited /}
+		{param _handleFieldFocused: $_handleFieldFocused /}
+		{param activePage: $activePage ?: 0 /}
+		{param contentRenderer: $contentRenderer /}
+		{param editable: $editable /}
+		{param empty: $empty /}
+		{param page: $page /}
+		{param pageIndex: $pageIndex ?: 0 /}
+		{param pages: $pages /}
+		{param paginationMode: $paginationMode /}
+		{param readOnly: $readOnly /}
+		{param showSubmitButton: $showSubmitButton /}
+		{param spritemap: $spritemap /}
+		{param total: $total /}
+	{/delcall}
+{/template}
+
+{template .page}
 	{@param activePage: number}
 	{@param pageIndex: number}
 	{@param paginationMode: string}
@@ -9,53 +50,24 @@
 	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldClicked: any}
 	{@param? _handleFieldEdited: any}
+	{@param? _handleFieldFocused: any}
 	{@param? editable: bool}
 	{@param? empty: bool}
 	{@param? page: ?}
 
-	<div class="ddm-layout-builder ddm-page-container-layout">
+	<div class="active ddm-form-page lfr-ddm-form-page">
+		{let $headerRenderer: $page.headerRenderer ?: '' /}
+
 		{if $activePage == $pageIndex}
-			<div class="ddm-form-page pl-4 pr-4">
-				{let $headerRenderer: $page.headerRenderer ?: 'editable' /}
-
-				{delcall PageRenderer.PageHeader data="$page" variant="$headerRenderer"}
-					{param description: $page.description ?: '' /}
-					{param pageIndex: $pageIndex /}
-					{param title: $page.title ?: '' /}
-					{param total: $total /}
-				{/delcall}
-
-				<div class="form-builder-layout">
-					{delcall PageRenderer.page variant="$paginationMode"}
-						{param _handleFieldBlurred: $_handleFieldBlurred /}
-						{param _handleFieldClicked: $_handleFieldClicked /}
-						{param _handleFieldEdited: $_handleFieldEdited /}
-						{param editable: $editable /}
-						{param empty: $empty /}
-						{param page: $page /}
-						{param pageIndex: $pageIndex /}
-						{param paginationMode: $paginationMode /}
-						{param spritemap: $spritemap /}
-					{/delcall}
-				</div>
-			</div>
+			{delcall PageRenderer.PageHeader data="$page" variant="$headerRenderer"}
+				{param description: $page.description ?: '' /}
+				{param pageIndex: $pageIndex /}
+				{param title: $page.title ?: '' /}
+				{param total: $total /}
+			{/delcall}
 		{/if}
-	</div>
-{/deltemplate}
 
-{deltemplate PageRenderer.page variant="'wizard'"}
-	{@param paginationMode: string}
-	{@param spritemap: string}
-	{@param? _handleFieldBlurred: any}
-	{@param? _handleFieldClicked: any}
-	{@param? _handleFieldEdited: any}
-	{@param? editable: bool}
-	{@param? empty: bool}
-	{@param? page: ?}
-	{@param? pageIndex: number}
-
-	<div class="layout-page">
-		{if $empty}
+		{if $empty and $editable and $activePage == $pageIndex}
 			{let $attributes kind="attributes"}
 				class="col col-empty col-md-12 last-col lfr-initial-col mt-5 mb-4"
 				data-ddm-field-column="0"
@@ -70,8 +82,8 @@
 			</div>
 		{else}
 			{foreach $row in $page.rows}
-				{if isFirst($row) and $editable}
-					{call PageRenderer.fieldEmpty}
+				{if isFirst($row) and $editable and $activePage == $pageIndex}
+					{call .fieldEmpty}
 						{param isRow: true /}
 						{param pageIndex: $pageIndex /}
 						{param rowIndex: 0 /}
@@ -79,20 +91,22 @@
 					{/call}
 				{/if}
 
-				{delcall PageRenderer.row variant="$paginationMode"}
+				{call .row}
 					{param _handleFieldBlurred: $_handleFieldBlurred /}
 					{param _handleFieldClicked: $_handleFieldClicked /}
 					{param _handleFieldEdited: $_handleFieldEdited /}
+					{param _handleFieldFocused: $_handleFieldFocused /}
+					{param activePage: $activePage /}
 					{param editable: $editable /}
 					{param pageIndex: $pageIndex /}
 					{param paginationMode: $paginationMode /}
 					{param row: $row /}
 					{param rowIndex: index($row) /}
 					{param spritemap: $spritemap /}
-				{/delcall}
+				{/call}
 
-				{if $editable}
-					{call PageRenderer.fieldEmpty}
+				{if $editable and $activePage == $pageIndex}
+					{call .fieldEmpty}
 						{param isRow: true /}
 						{param pageIndex: $pageIndex /}
 						{param rowIndex: index($row) + 1 /}
@@ -102,14 +116,15 @@
 			{/foreach}
 		{/if}
 	</div>
-{/deltemplate}
+{/template}
 
-{deltemplate PageRenderer.row variant="'wizard'"}
-	{@param paginationMode: string}
+{template .row}
+	{@param activePage: number}
 	{@param spritemap: string}
 	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldClicked: any}
 	{@param? _handleFieldEdited: any}
+	{@param? _handleFieldFocused: any}
 	{@param? editable: bool}
 	{@param? pageIndex: number}
 	{@param? row: ?}
@@ -117,26 +132,30 @@
 
 	<div class="position-relative row">
 		{foreach $column in $row.columns}
-			{delcall PageRenderer.column variant="'wizard'"}
+			{call .column}
 				{param _handleFieldBlurred: $_handleFieldBlurred /}
 				{param _handleFieldClicked: $_handleFieldClicked /}
 				{param _handleFieldEdited: $_handleFieldEdited /}
+				{param _handleFieldFocused: $_handleFieldFocused /}
+				{param activePage: $activePage /}
 				{param column: $column /}
 				{param columnIndex: index($column) /}
 				{param editable: $editable /}
 				{param pageIndex: $pageIndex /}
 				{param rowIndex: $rowIndex /}
 				{param spritemap: $spritemap /}
-			{/delcall}
+			{/call}
 		{/foreach}
 	</div>
-{/deltemplate}
+{/template}
 
-{deltemplate PageRenderer.column variant="'wizard'"}
+{template .column}
+	{@param activePage: number}
 	{@param spritemap: string}
 	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldClicked: any}
 	{@param? _handleFieldEdited: any}
+	{@param? _handleFieldFocused: any}
 	{@param? column: ?}
 	{@param? columnIndex: number}
 	{@param? editable: bool}
@@ -145,17 +164,9 @@
 
 	{if length($column.fields) != 0}
 		{let $indexes kind="attributes"}
-			{if $rowIndex != 'undefined'}
-				data-ddm-field-row="{$rowIndex}"
-			{/if}
-
-			{if $pageIndex != 'undefined'}
-				data-ddm-field-page="{$pageIndex}"
-			{/if}
-
-			{if $columnIndex != 'undefined'}
-				data-ddm-field-column="{$columnIndex}"
-			{/if}
+			data-ddm-field-row="{$rowIndex}"
+			data-ddm-field-page="{$pageIndex}"
+			data-ddm-field-column="{$columnIndex}"
 		{/let}
 
 		{let $attributes kind="attributes"}
@@ -170,10 +181,10 @@
 					{let $fieldType: $field.type /}
 
 					{delcall PageRenderer.RegisterFieldType variant="$fieldType" data="$field" allowemptydefault="true"}
-						{param readOnly: true  /}
 						{param events: [
 							'fieldBlurred': $_handleFieldBlurred,
-							'fieldEdited': $_handleFieldEdited
+							'fieldEdited': $_handleFieldEdited,
+							'fieldFocused': $_handleFieldFocused
 						] /}
 						{param ref: $field.type + $field.fieldName + $field.name + $field.label + $rowIndex + $columnIndex + $pageIndex /}
 						{param spritemap: $spritemap /}
@@ -201,12 +212,80 @@
 				{$content}
 			{/if}
 		</div>
-	{elseif $editable}
-		{call PageRenderer.fieldEmpty}
+	{elseif $editable and $activePage == $pageIndex}
+		{call .fieldEmpty}
 			{param columnIndex: $columnIndex /}
 			{param pageIndex: $pageIndex /}
 			{param rowIndex: $rowIndex /}
 			{param size: $column.size /}
 		{/call}
 	{/if}
+{/template}
+
+{template .fieldEmpty}
+	{@param size: number}
+	{@param? columnIndex: number}
+	{@param? isRow: bool}
+	{@param? pageIndex: number}
+	{@param? rowIndex: number}
+
+	{let $attributes kind="attributes"}
+		class="col col-empty col-md-{$size}"
+
+		{if $rowIndex != 'undefined'}
+			data-ddm-field-row="{$rowIndex}"
+		{/if}
+
+		{if $pageIndex != 'undefined'}
+			data-ddm-field-page="{$pageIndex}"
+		{/if}
+
+		{if $columnIndex != 'undefined'}
+			data-ddm-field-column="{$columnIndex}"
+		{/if}
+	{/let}
+
+	{let $content kind="html"}
+		<div {$attributes}>
+			<div class="ddm-target"></div>
+		</div>
+	{/let}
+
+	{if $isRow}
+		<div class="row">
+			{$content}
+		</div>
+	{else}
+		{$content}
+	{/if}
+{/template}
+
+{deltemplate PageRenderer.RegisterFieldType}
+	{@param? editable: bool}
+	{@param? field: ?}
+
+	{if $editable}
+		<div class="ddm-field-not-found">
+			Field doesn't exist.
+		</div>
+	{/if}
+{/deltemplate}
+
+{deltemplate PageRenderer.PageHeader}
+	{@param description: string}
+	{@param pageIndex: number}
+	{@param title: string}
+	{@param total: number}
+
+	{let $pageTitleAttributes kind="attributes"}
+		class="lfr-ddm-form-page-title"
+	{/let}
+
+	<h3 {$pageTitleAttributes}>{$title}</h3>
+
+	{let $pageDescriptionAttributes kind="attributes"}
+		class="lfr-ddm-form-page-description"
+	{/let}
+
+	<h4 {$pageDescriptionAttributes}>{$description}</h4>
 {/deltemplate}

@@ -1,0 +1,52 @@
+{namespace FormRenderer}
+
+{template .render}
+	{@param pages: ?}
+	{@param spritemap: string}
+	{@param? _handleFieldBlurred: any}
+	{@param? _handleFieldClicked: any}
+	{@param? _handleFieldEdited: any}
+	{@param? _handleFieldFocused: any}
+	{@param? activePage: number}
+	{@param? editable: bool}
+	{@param? paginationMode: string}
+	{@param? readOnly: bool}
+	{@param? showSubmitButton: bool}
+
+	{let $currentPaginationMode: $paginationMode ?: 'wizard' /}
+	{let $currentPage: $activePage ?: 0 /}
+	{let $total: length($pages) /}
+
+	{let $classes kind="text"}
+		lfr-ddm-form-container position-relative
+
+		{if not $editable}
+			{sp}ddm-user-view-content
+		{/if}
+	{/let}
+
+	<div class="{$classes}">
+		{foreach $page in $pages}
+			{call PageRenderer.render}
+				{param activePage: $activePage /}
+				{param editable: $editable /}
+				{param events: [
+					'fieldBlurred': $_handleFieldBlurred,
+					'fieldClicked': $_handleFieldClicked,
+					'fieldEdited': $_handleFieldEdited,
+					'fieldFocused': $_handleFieldFocused
+				] /}
+				{param page: $page /}
+				{param pageIndex: index($page) /}
+				{param pages: $pages /}
+				{param paginationMode: $currentPaginationMode /}
+				{param ref: 'pageRenderer' + index($page) /}
+				{param key: index($page) /}
+				{param readOnly: $readOnly /}
+				{param showSubmitButton: $showSubmitButton != false /}
+				{param spritemap: $spritemap /}
+				{param total: $total /}
+			{/call}
+		{/foreach}
+	</div>
+{/template}

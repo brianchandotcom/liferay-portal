@@ -1,0 +1,95 @@
+{namespace DDM.Form.Pagination}
+
+{template .render}
+	{@param activePage: number}
+	{@param pages: ?}
+	{@param? _handleItemClicked: any}
+	{@param? _handleNextClicked: any}
+	{@param? _handlePreviousClicked: any}
+
+	<ul class="ddm-pagination justify-content-center pagination">
+		{if $activePage > 0}
+			{let $classes kind="text"}
+				page-item
+
+				{if $activePage == 0}
+					{sp}visibility-hidden
+				{/if}
+			{/let}
+
+			<li class="{$classes}" data-onclick="{$_handlePreviousClicked}" key="previous">
+				<a class="page-link" href="javascript:;" role="button">
+					«
+					<span class="sr-only">{msg desc=""}previous{/msg}</span>
+				</a>
+			</li>
+		{/if}
+
+		{foreach $page in $pages}
+			{let $itemRenderer: $page.paginationItemRenderer ?: 'pagination' /}
+
+			{delcall DDM.Form.Pagination.item variant="$itemRenderer"}
+				{param _handleItemClicked: $_handleItemClicked /}
+				{param activePage: $activePage /}
+				{param page: $page /}
+				{param pageIndex: index($page) /}
+				{param total: length($pages) /}
+			{/delcall}
+		{/foreach}
+
+		{if $activePage < length($pages) - 1}
+			{let $classes kind="text"}
+				page-item
+
+				{if ($activePage == (length($pages) - 1)) or ($activePage == -1)}
+					{sp}visibility-hidden
+				{/if}
+			{/let}
+
+			<li class="{$classes}" data-onclick="{$_handleNextClicked}" key="next">
+				<a class="page-link" href="javascript:;" role="button">
+					»
+					<span class="sr-only">{msg desc=""}next{/msg}</span>
+				</a>
+			</li>
+		{/if}
+	</ul>
+{/template}
+
+{deltemplate DDM.Form.Pagination.item variant="'pagination'"}
+	{@param activePage: number}
+	{@param page: ?}
+	{@param pageIndex: number}
+	{@param total: number}
+	{@param? _handleItemClicked: any}
+
+	{let $step: $pageIndex + 1 /}
+
+	{let $classes kind="text"}
+		page-item
+
+		{if $pageIndex == $activePage}
+			{sp}active
+		{/if}
+
+		{if not $page.enabled}
+			{sp}disabled
+		{/if}
+	{/let}
+
+	{let $itemAttributes kind="attributes"}
+		class="{$classes}"
+
+		{if $page.enabled}
+			data-onclick="{$_handleItemClicked}"
+		{/if}
+
+		data-page-index="{$pageIndex}"
+
+		key="page{$step}"
+	{/let}
+
+	<li {$itemAttributes}>
+		<a class="page-link" href="javascript:;">{$step}</a>
+	</li>
+{/deltemplate}

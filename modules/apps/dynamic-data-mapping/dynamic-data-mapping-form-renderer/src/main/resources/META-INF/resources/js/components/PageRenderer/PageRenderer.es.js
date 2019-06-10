@@ -5,13 +5,12 @@ import './WizardPageRenderer.soy.js';
 import 'clay-button';
 import 'clay-dropdown';
 import 'clay-modal';
-import * as FormSupport from '../Form/FormSupport.es';
+import * as FormSupport from '../FormRenderer/FormSupport.es';
 import Component from 'metal-component';
 import core from 'metal';
 import Soy from 'metal-soy';
 import templates from './PageRenderer.soy.js';
 import {Config} from 'metal-state';
-import {pageStructure} from '../../util/config.es';
 
 class PageRenderer extends Component {
 	getPage(page) {
@@ -50,6 +49,7 @@ class PageRenderer extends Component {
 				return hasFields;
 			});
 		}
+
 		return empty;
 	}
 
@@ -77,6 +77,10 @@ class PageRenderer extends Component {
 	_handleFieldEdited(event) {
 		this.emit('fieldEdited', event);
 	}
+
+	_handleFieldFocused(event) {
+		this.emit('fieldFocused', event);
+	}
 }
 
 PageRenderer.STATE = {
@@ -102,7 +106,7 @@ PageRenderer.STATE = {
 	 * @type {?array<object>}
 	 */
 
-	page: pageStructure,
+	page: Config.object(),
 
 	/**
 	 * @default 1

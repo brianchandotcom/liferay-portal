@@ -1,0 +1,78 @@
+{namespace DDM.Form.Wizard}
+
+{template .render}
+	{@param activePage: number}
+	{@param pages: ?}
+	{@param? _handleItemClicked: any}
+	{@param? editable: bool}
+
+	<div class="ddm-form-pagination position-relative wizard-mode">
+		<ol class="dmm-wizard multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
+			{foreach $page in $pages}
+				{let $itemRenderer: $page.paginationItemRenderer ?: 'wizard' /}
+
+				{delcall DDM.Form.Pagination.item variant="$itemRenderer"}
+					{param _handleItemClicked: $_handleItemClicked /}
+					{param activePage: $activePage /}
+					{param editable: $editable /}
+					{param page: $page /}
+					{param pageIndex: index($page) /}
+					{param total: length($pages) /}
+				{/delcall}
+			{/foreach}
+		</ol>
+	</div>
+{/template}
+
+{deltemplate DDM.Form.Pagination.item variant="'wizard'"}
+	{@param activePage: number}
+	{@param page: ?}
+	{@param pageIndex: number}
+	{@param total: number}
+	{@param? _handleItemClicked: any}
+	{@param? editable: bool}
+
+	{let $step: $pageIndex + 1 /}
+
+	{let $classes kind="text"}
+		multi-step-item
+
+		{if $step != $total}
+			{sp}multi-step-item-expand
+		{/if}
+
+		{if $pageIndex == $activePage}
+			{sp}active
+		{/if}
+	{/let}
+
+	{let $itemAttributes kind="attributes"}
+		class="{$classes}"
+
+		{if $editable}
+			data-onclick="{$_handleItemClicked}"
+		{/if}
+
+		data-page-index="{$pageIndex}"
+	{/let}
+
+	<li {$itemAttributes}>
+		<div class="multi-step-divider"></div>
+
+		<div class="multi-step-indicator">
+			{let $defaultPageTitle kind="text"}
+				{msg desc=""}untitled-page{/msg}
+			{/let}
+
+			{let $title: $page.title ? $page.title : $defaultPageTitle /}
+
+			<div class="multi-step-indicator-label">{$title}</div>
+
+			{if $editable}
+				<a class="multi-step-icon" data-multi-step-icon="{$step}" href="javascript:;"></a>
+			{else}
+				<span class="multi-step-icon" data-multi-step-icon="{$step}"></span>
+			{/if}
+		</div>
+	</li>
+{/deltemplate}

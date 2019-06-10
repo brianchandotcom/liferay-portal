@@ -1,0 +1,72 @@
+{namespace WizardPageRenderer}
+
+{deltemplate PageRenderer.container variant="'wizard'"}
+	{@param activePage: number}
+	{@param pageIndex: number}
+	{@param pages: ?}
+	{@param showSubmitButton: bool}
+	{@param spritemap: string}
+	{@param total: number}
+	{@param? _handleFieldBlurred: any}
+	{@param? _handleFieldClicked: any}
+	{@param? _handleFieldEdited: any}
+	{@param? _handleFieldFocused: any}
+	{@param? editable: bool}
+	{@param? empty: bool}
+	{@param? page: ?}
+	{@param? readOnly: bool}
+
+	<div class="ddm-form-page-container wizard">
+		{if length($pages) > 1 and $pageIndex == $activePage}
+			{call DDM.Form.Wizard.render}
+				{param activePage: $activePage /}
+				{param editable: $editable /}
+				{param pages: $pages /}
+				{param spritemap: $spritemap /}
+				{param total: $total /}
+			{/call}
+		{/if}
+
+		{let $layoutClasses kind="text"}
+			ddm-layout-builder ddm-page-container-layout
+
+			{if $activePage != $pageIndex}
+				{sp}hide
+			{/if}
+		{/let}
+
+		<div class="{$layoutClasses}">
+			<div class="form-builder-layout">
+				{call PageRenderer.page}
+					{param _handleFieldBlurred: $_handleFieldBlurred /}
+					{param _handleFieldClicked: $_handleFieldClicked /}
+					{param _handleFieldEdited: $_handleFieldEdited /}
+					{param _handleFieldFocused: $_handleFieldFocused /}
+					{param activePage: $activePage /}
+					{param editable: $editable /}
+					{param empty: $empty /}
+					{param page: $page /}
+					{param pageIndex: $pageIndex /}
+					{param paginationMode: 'wizard' /}
+					{param total: $total /}
+					{param spritemap: $spritemap /}
+				{/call}
+			</div>
+		</div>
+
+		{if $pageIndex == $activePage}
+			{if length($pages) > 0}
+				{call DDM.Form.PaginationControls.render}
+					{param activePage: $activePage /}
+					{param readOnly: $readOnly /}
+					{param showSubmitButton: $showSubmitButton /}
+					{param total: $total /}
+				{/call}
+			{elseif $showSubmitButton}
+				<button class="btn btn-primary lfr-ddm-form-submit pull-right" type="submit">
+					{msg desc=""}submit{/msg}
+				</button>
+			{/if}
+		{/if}
+	</div>
+{/deltemplate}

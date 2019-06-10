@@ -1,0 +1,38 @@
+{namespace DDM.Form.PaginationControls}
+
+{template .render}
+	{@param activePage: number}
+	{@param showSubmitButton: bool}
+	{@param total: number}
+	{@param? _handleNextClicked: any}
+	{@param? _handlePreviousClicked: any}
+	{@param? readOnly: bool}
+
+	<div class="lfr-ddm-form-pagination-controls">
+		{if $activePage > 0}
+			<button
+				class="btn btn-primary lfr-ddm-form-pagination-prev"
+				data-onclick="{$_handlePreviousClicked}"
+				type="button"
+			>
+				<i class="icon-angle-left"></i> {msg desc=""}previous{/msg}
+			</button>
+		{/if}
+
+		{if $activePage < $total - 1}
+			<button
+				class="btn btn-primary lfr-ddm-form-pagination-next pull-right"
+				data-onclick="{$_handleNextClicked}"
+				type="button"
+			>
+				{msg desc=""}next{/msg} <i class="icon-angle-right"></i>
+			</button>
+		{/if}
+
+		{if $activePage == $total - 1 and not $readOnly and $showSubmitButton}
+			<button class="btn btn-primary lfr-ddm-form-submit pull-right" type="submit">
+				{msg desc=""}submit{/msg}
+			</button>
+		{/if}
+	</div>
+{/template}

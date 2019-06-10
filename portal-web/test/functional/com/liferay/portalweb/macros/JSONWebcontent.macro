@@ -127,6 +127,18 @@ definition {
 		}
 	}
 
+	macro _getGroupId {
+		if (isSet(groupName)) {
+			var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
+		} else {
+			echo("Using ThemeDisplay to retrieve groupId since groupName is not set");
+
+			var groupId = JSONUtil2._getScopeGroupId();
+		}
+
+		return "${groupId}";
+	}
+
 	@summary = "Helper function to help input localized content html info"
 	macro _localizedConvertToXML {
 		// Get list of localizations used
@@ -160,6 +172,8 @@ definition {
 
 	@summary = "Add a localized WC Article via JSON using the Basic Web Content Structure with Title: '${title}' or '${titleMap}', Content: '${content}' or '${contentMap}', and Site Name: ${groupName}. The mapped inputs should be inputted in a format the same as 'en_US:Title,es_ES:Titulo'"
 	macro addBasicWebContentLocalized {
+		var groupId = JSONWebcontent._getGroupId(groupName = "${groupName}");
+
 		JSONUtil2._exclusiveOrCheck(
 			A = "${title}",
 			B = "${titleMap}",
@@ -169,15 +183,6 @@ definition {
 			A = "${content}",
 			B = "${contentMap}",
 			failMessage = "Please only set &apos;content&apos; or only &apos;contentMap&apos; but not both or none.");
-
-		if (isSet(groupName)) {
-			var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
-		}
-		else {
-			echo("Using ThemeDisplay to retrieve groupId since groupName is not set");
-
-			var groupId = JSONUtil2._getScopeGroupId();
-		}
 
 		if (!(isSet(serviceContext))) {
 			var serviceContext = JSONServiceContextUtil.setServiceContext(
@@ -200,12 +205,7 @@ definition {
 
 	@summary = "Add a WC Folder with Folder Name '${folderName}' to the Site '${groupName}'"
 	macro addFolder {
-		if (isSet(groupName)) {
-			var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
-		}
-		else {
-			fail("Please set 'groupName' to get groupId.");
-		}
+		var groupId = JSONWebcontent._getGroupId(groupName = "${groupName}");
 
 		if (!(isSet(folderName))) {
 			fail("Please set 'folderName'.");
@@ -218,16 +218,10 @@ definition {
 
 	@summary = "Add a WC Article with Title '${title}' and Content '${content}' to the Site '${groupName}' via JSON"
 	macro addWebContent {
+		var groupId = JSONWebcontent._getGroupId(groupName = "${groupName}");
+
 		if (!(isSet(content))) {
 			fail("Please set 'content.'");
-		}
-
-		if (isSet(groupName)) {
-			var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
-		} else {
-			echo("Using ThemeDisplay to retrieve groupId since groupName is not set");
-
-			var groupId = JSONUtil2._getScopeGroupId();
 		}
 
 		if (isSet(folderName)) {

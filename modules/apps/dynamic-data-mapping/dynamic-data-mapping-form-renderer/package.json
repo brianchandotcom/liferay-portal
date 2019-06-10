@@ -35,13 +35,38 @@
 		"metal-component": "2.16.8",
 		"metal-soy": "2.16.8"
 	},
+	"jest": {
+		"moduleNameMapper": {
+			"(.*)\\.soy$": "$1.soy.js",
+			"mock/(.*)": "<rootDir>/test/js/__mock__/$1.js",
+			"source/(.*)": "<rootDir>/src/main/resources/META-INF/resources/js/$1.js"
+		},
+		"modulePathIgnorePatterns": [
+			"/__fixtures__/",
+			"/__mock__/",
+			"/classes/"
+		],
+		"setupFiles": [
+			"<rootDir>/jest-setup.config.js"
+		],
+		"snapshotSerializers": [
+			"metal-jest-serializer"
+		],
+		"testPathIgnorePatterns": [
+			"FormRenderer"
+		],
+		"transform": {
+			".+": "./jest-workspaces-transform.js"
+		}
+	},
 	"main": "./",
 	"name": "dynamic-data-mapping-form-renderer",
 	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix"
+		"format": "liferay-npm-scripts fix",
+		"test": "liferay-npm-scripts test"
 	},
 	"version": "5.0.0"
 }

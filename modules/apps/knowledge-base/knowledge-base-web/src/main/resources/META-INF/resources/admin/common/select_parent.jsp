@@ -225,13 +225,13 @@ else {
 
 						<liferay-ui:search-container-column-text
 							href="<%= rowURL %>"
-							name="num-of-kb-folders"
+							name="folders"
 							value="-"
 						/>
 
 						<liferay-ui:search-container-column-text
 							href="<%= rowURL %>"
-							name="num-of-kb-articles"
+							name="articles"
 							value="<%= String.valueOf(kbArticlesCount) %>"
 						/>
 

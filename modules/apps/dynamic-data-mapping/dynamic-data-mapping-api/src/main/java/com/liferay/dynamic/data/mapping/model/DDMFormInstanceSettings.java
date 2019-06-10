@@ -42,7 +42,8 @@ import org.osgi.annotation.versioning.ProviderType;
 	}
 )
 @DDMFormLayout(
-	{
+	paginationMode = com.liferay.dynamic.data.mapping.model.DDMFormLayout.TABBED_MODE,
+	value = {
 		@DDMFormLayoutPage(
 			title = "%form-options",
 			value = {

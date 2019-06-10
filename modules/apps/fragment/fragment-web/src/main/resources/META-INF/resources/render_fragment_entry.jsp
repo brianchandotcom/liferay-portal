@@ -35,21 +35,6 @@ fragmentEntryLink.setFragmentEntryId(fragmentEntryId);
 DefaultFragmentRendererContext defaultFragmentRendererContext = new DefaultFragmentRendererContext(fragmentEntryLink);
 
 defaultFragmentRendererContext.setMode(FragmentEntryLinkConstants.VIEW);
-
-try {
 %>
 
-	<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
-
-<%
-}
-catch (IOException ioe) {
-%>
-
-	<div class="alert alert-danger">
-		<liferay-ui:message key="<%= ioe.getMessage() %>" />
-	</div>
-
-<%
-}
-%>
+<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>

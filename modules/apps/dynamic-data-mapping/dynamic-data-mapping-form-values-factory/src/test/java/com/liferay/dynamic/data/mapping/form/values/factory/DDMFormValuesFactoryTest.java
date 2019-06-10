@@ -36,9 +36,11 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsImpl;
 
 import java.lang.reflect.Field;
@@ -129,8 +131,14 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 
 		expectedDDMFormValues.addDDMFormFieldValue(nameDDMFormFieldValue);
 
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, mockThemeDisplay());
+
 		DDMFormValues actualDDMFormValues = _ddmFormValuesFactory.create(
-			new MockHttpServletRequest(), ddmForm);
+			mockHttpServletRequest, ddmForm);
 
 		List<DDMFormFieldValue> actualDDMFormFieldValues =
 			actualDDMFormValues.getDDMFormFieldValues();
@@ -606,6 +614,9 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, mockThemeDisplay());
+
 		mockHttpServletRequest.addParameter(
 			"languageId", LocaleUtil.toLanguageId(LocaleUtil.US));
 
@@ -763,6 +774,9 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, mockThemeDisplay());
+
 		mockHttpServletRequest.addParameter(
 			"languageId", LocaleUtil.toLanguageId(LocaleUtil.US));
 
@@ -843,6 +857,9 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, mockThemeDisplay());
 
 		mockHttpServletRequest.addParameter(
 			"languageId", LocaleUtil.toLanguageId(LocaleUtil.US));
@@ -960,6 +977,18 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 		}
 
 		return avaiablesLocaleArray;
+	}
+
+	protected ThemeDisplay mockThemeDisplay() {
+		ThemeDisplay themeDisplay = mock(ThemeDisplay.class);
+
+		when(
+			themeDisplay.getLocale()
+		).thenReturn(
+			LocaleUtil.US
+		);
+
+		return themeDisplay;
 	}
 
 	protected String serialize(DDMFormValues ddmFormValues) {

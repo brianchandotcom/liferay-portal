@@ -1,11 +1,11 @@
 {namespace SuccessPageWizardItem}
 
-{deltemplate FormRenderer.WizardItem variant="'success'"}
-	{@param? _handlePaginationItemClicked: any}
-	{@param? activePage: number}
+{deltemplate DDM.Form.Pagination.item variant="'wizard_success'"}
+	{@param activePage: number}
 	{@param page: ?}
 	{@param pageIndex: number}
 	{@param total: number}
+	{@param? _handleItemClicked: any}
 
 	{let $classes kind="text"}
 		multi-step-item complete
@@ -15,7 +15,7 @@
 		{/if}
 	{/let}
 
-	<li class="{$classes}" data-onclick="{$_handlePaginationItemClicked}" data-page-index="{$pageIndex}">
+	<li class="{$classes}" data-onclick="{$_handleItemClicked}" data-page-index="{$pageIndex}">
 		<div class="multi-step-divider"></div>
 		<div class="multi-step-indicator">
 			<div class="multi-step-indicator-label">{msg desc=""}success-page{/msg}</div>

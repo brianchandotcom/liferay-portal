@@ -1,20 +1,21 @@
 {namespace SuccessPagePaginationItem}
 
-{deltemplate FormRenderer.PaginationItem variant="'success'"}
-	{@param? _handlePaginationItemClicked: any}
+{deltemplate DDM.Form.Pagination.item variant="'paginated_success'"}
 	{@param activePage: number}
 	{@param page: ?}
 	{@param pageIndex: number}
+	{@param total: number}
+	{@param? _handleItemClicked: any}
 
 	{let $classes kind="text"}
 		page-item
 
-		{if $activePage == -1}
+		{if $activePage == $pageIndex}
 			{sp}active
 		{/if}
 	{/let}
 
-	<li class="{$classes}" data-onclick="{$_handlePaginationItemClicked}" data-page-index="{$pageIndex}">
+	<li class="{$classes}" data-onclick="{$_handleItemClicked}" data-page-index="{$pageIndex}">
 		<a class="page-link" href="javascript:;">{msg desc=""}success-page{/msg}</a>
 	</li>
 {/deltemplate}

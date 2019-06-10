@@ -356,10 +356,22 @@ public class NpmInstallTask extends ExecuteNpmTask {
 			FileUtil.syncDir(
 				project, nodeModulesCacheDir, nodeModulesDir, nativeSync);
 
+			if (logger.isLifecycleEnabled()) {
+				logger.lifecycle(
+					"Removing binary symbolic links of {} from {}", project,
+					nodeModulesDir);
+			}
+
 			FileUtil.removeBinDirLinks(logger, nodeModulesDir);
 		}
 		else {
 			npmInstallTask._npmInstall(reset);
+
+			if (logger.isLifecycleEnabled()) {
+				logger.lifecycle(
+					"Removing binary symbolic links of {} from {}", project,
+					nodeModulesDir);
+			}
 
 			FileUtil.removeBinDirLinks(logger, nodeModulesDir);
 
@@ -374,6 +386,12 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		}
 
 		if (!OSDetector.isWindows()) {
+			if (logger.isLifecycleEnabled()) {
+				logger.lifecycle(
+					"Restoring binary symbolic links of {} from {}", project,
+					nodeModulesDir);
+			}
+
 			FileUtil.createBinDirLinks(logger, nodeModulesDir);
 		}
 	}

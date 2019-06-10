@@ -16,7 +16,7 @@ package com.liferay.portlet.rolesadmin.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.roles.admin.kernel.util.RolesAdmin;
 
 /**

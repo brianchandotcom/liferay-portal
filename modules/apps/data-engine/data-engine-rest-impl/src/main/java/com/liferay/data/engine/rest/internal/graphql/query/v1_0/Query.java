@@ -33,6 +33,8 @@ import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import java.util.Collection;
+
 import javax.annotation.Generated;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -91,7 +93,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public java.util.Collection<DataDefinition> getSiteDataDefinitionsPage(
+	public Collection<DataDefinition> getSiteDataDefinitionsPage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("keywords") String keywords,
 			@GraphQLName("pageSize") int pageSize,
@@ -112,7 +114,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public java.util.Collection<DataLayout> getDataDefinitionDataLayoutsPage(
+	public Collection<DataLayout> getDataDefinitionDataLayoutsPage(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
 			@GraphQLName("keywords") String keywords,
 			@GraphQLName("pageSize") int pageSize,
@@ -147,7 +149,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public java.util.Collection<DataLayout> getSiteDataLayoutPage(
+	public Collection<DataLayout> getSiteDataLayoutPage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("keywords") String keywords,
 			@GraphQLName("pageSize") int pageSize,
@@ -167,12 +169,10 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public java.util.Collection<DataRecord>
-			getDataRecordCollectionDataRecordsPage(
-				@GraphQLName("dataRecordCollectionId") Long
-					dataRecordCollectionId,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
+	public Collection<DataRecord> getDataRecordCollectionDataRecordsPage(
+			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -200,7 +200,7 @@ public class Query {
 			this::_populateResourceContext,
 			dataRecordResource ->
 				dataRecordResource.getDataRecordCollectionDataRecordExport(
-					dataRecordCollectionId, Pagination.of(pageSize, page)));
+					dataRecordCollectionId, Pagination.of(page, pageSize)));
 	}
 
 	@GraphQLField
@@ -218,7 +218,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public java.util.Collection<DataRecordCollection>
+	public Collection<DataRecordCollection>
 			getDataDefinitionDataRecordCollectionsPage(
 				@GraphQLName("dataDefinitionId") Long dataDefinitionId,
 				@GraphQLName("keywords") String keywords,
@@ -256,12 +256,11 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public java.util.Collection<DataRecordCollection>
-			getSiteDataRecordCollectionsPage(
-				@GraphQLName("siteId") Long siteId,
-				@GraphQLName("keywords") String keywords,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
+	public Collection<DataRecordCollection> getSiteDataRecordCollectionsPage(
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("keywords") String keywords,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

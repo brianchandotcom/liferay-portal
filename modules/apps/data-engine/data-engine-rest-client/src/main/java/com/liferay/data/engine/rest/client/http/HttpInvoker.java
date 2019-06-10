@@ -63,12 +63,6 @@ public class HttpInvoker {
 		return this;
 	}
 
-	public HttpInvoker header(String name, String value) {
-		_headers.put(name, value);
-
-		return this;
-	}
-
 	public HttpInvoker httpMethod(HttpMethod httpMethod) {
 		_httpMethod = httpMethod;
 
@@ -82,7 +76,7 @@ public class HttpInvoker {
 
 		httpResponse.setContent(_readResponse(httpURLConnection));
 		httpResponse.setMessage(httpURLConnection.getResponseMessage());
-		httpResponse.setStatusCode(httpURLConnection.getResponseCode());
+		httpResponse.setStatus(httpURLConnection.getResponseCode());
 
 		httpURLConnection.disconnect();
 
@@ -98,24 +92,7 @@ public class HttpInvoker {
 	}
 
 	public HttpInvoker parameter(String name, String value) {
-		return parameter(name, new String[] {value});
-	}
-
-	public HttpInvoker parameter(String name, String[] values) {
-		String[] oldValues = _parameters.get(name);
-
-		if (oldValues != null) {
-			String[] newValues = new String[oldValues.length + values.length];
-
-			System.arraycopy(oldValues, 0, newValues, 0, oldValues.length);
-			System.arraycopy(
-				values, 0, newValues, oldValues.length, values.length);
-
-			_parameters.put(name, newValues);
-		}
-		else {
-			_parameters.put(name, values);
-		}
+		_parameters.put(name, value);
 
 		return this;
 	}
@@ -169,8 +146,8 @@ public class HttpInvoker {
 			return _message;
 		}
 
-		public int getStatusCode() {
-			return _statusCode;
+		public int getStatus() {
+			return _status;
 		}
 
 		public void setContent(String content) {
@@ -181,13 +158,13 @@ public class HttpInvoker {
 			_message = message;
 		}
 
-		public void setStatusCode(int statusCode) {
-			_statusCode = statusCode;
+		public void setStatus(int status) {
+			_status = status;
 		}
 
 		private String _content;
 		private String _message;
-		private int _statusCode;
+		private int _status;
 
 	}
 
@@ -198,18 +175,18 @@ public class HttpInvoker {
 
 			methodsField.setAccessible(true);
 
-			Field modifiersField = Field.class.getDeclaredField("modifiers");
-
-			modifiersField.setAccessible(true);
-			modifiersField.setInt(
-				methodsField, methodsField.getModifiers() & ~Modifier.FINAL);
-
 			Set<String> methodsFieldValue = new LinkedHashSet<>(
 				Arrays.asList((String[])methodsField.get(null)));
 
 			if (methodsFieldValue.contains("PATCH")) {
 				return;
 			}
+
+			Field modifiersField = Field.class.getDeclaredField("modifiers");
+
+			modifiersField.setAccessible(true);
+			modifiersField.setInt(
+				methodsField, methodsField.getModifiers() & ~Modifier.FINAL);
 
 			methodsFieldValue.add("PATCH");
 
@@ -269,30 +246,22 @@ public class HttpInvoker {
 	private String _getQueryString() throws IOException {
 		StringBuilder sb = new StringBuilder();
 
-		Set<Map.Entry<String, String[]>> set = _parameters.entrySet();
+		Set<Map.Entry<String, String>> set = _parameters.entrySet();
 
-		Iterator<Map.Entry<String, String[]>> iterator = set.iterator();
+		Iterator<Map.Entry<String, String>> iterator = set.iterator();
 
 		while (iterator.hasNext()) {
-			Map.Entry<String, String[]> entry = iterator.next();
+			Map.Entry<String, String> entry = iterator.next();
 
-			String[] values = entry.getValue();
+			String name = URLEncoder.encode(entry.getKey(), "UTF-8");
 
-			for (int i = 0; i < values.length; i++) {
-				String name = URLEncoder.encode(entry.getKey(), "UTF-8");
+			sb.append(name);
 
-				sb.append(name);
+			sb.append("=");
 
-				sb.append("=");
+			String value = URLEncoder.encode(entry.getValue(), "UTF-8");
 
-				String value = URLEncoder.encode(values[i], "UTF-8");
-
-				sb.append(value);
-
-				if ((i + 1) < values.length) {
-					sb.append("&");
-				}
-			}
+			sb.append(value);
 
 			if (iterator.hasNext()) {
 				sb.append("&");
@@ -329,11 +298,6 @@ public class HttpInvoker {
 
 		if (_contentType != null) {
 			httpURLConnection.setRequestProperty("Content-Type", _contentType);
-		}
-
-		for (Map.Entry<String, String> header : _headers.entrySet()) {
-			httpURLConnection.setRequestProperty(
-				header.getKey(), header.getValue());
 		}
 
 		_writeBody(httpURLConnection);
@@ -430,10 +394,9 @@ public class HttpInvoker {
 	private String _contentType;
 	private String _encodedUserNameAndPassword;
 	private Map<String, File> _files = new LinkedHashMap<>();
-	private Map<String, String> _headers = new LinkedHashMap<>();
 	private HttpMethod _httpMethod = HttpMethod.GET;
 	private String _multipartBoundary;
-	private Map<String, String[]> _parameters = new LinkedHashMap<>();
+	private Map<String, String> _parameters = new LinkedHashMap<>();
 	private Map<String, String> _parts = new LinkedHashMap<>();
 	private String _path;
 

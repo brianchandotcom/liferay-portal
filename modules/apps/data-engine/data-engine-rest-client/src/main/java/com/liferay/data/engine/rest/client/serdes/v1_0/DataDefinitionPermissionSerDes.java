@@ -212,9 +212,7 @@ public class DataDefinitionPermissionSerDes {
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
-		string = string.replace("\\", "\\\\");
-
-		return string.replace("\"", "\\\"");
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static String _toJSON(Map<String, ?> map) {

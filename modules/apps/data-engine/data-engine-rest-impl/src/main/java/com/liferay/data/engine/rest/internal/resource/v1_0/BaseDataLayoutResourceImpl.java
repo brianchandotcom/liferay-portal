@@ -30,6 +30,7 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -218,7 +219,7 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 	}
 
 	protected <T, R> List<R> transform(
-		java.util.Collection<T> collection,
+		Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {
 
 		return TransformUtil.transform(collection, unsafeFunction);
@@ -232,7 +233,7 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 	}
 
 	protected <T, R> R[] transformToArray(
-		java.util.Collection<T> collection,
+		Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction, Class<?> clazz) {
 
 		return TransformUtil.transformToArray(

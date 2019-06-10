@@ -548,11 +548,8 @@ definition {
 
 	@priority = "4"
 	test CancelCheckout {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.addPG(
+		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "DM Document Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -617,12 +614,11 @@ definition {
 
 	@priority = "4"
 	test DeleteDocumentWithSlashesInTitle {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.addPG(
+		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "/D/M/Document Title");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
@@ -777,12 +773,11 @@ definition {
 
 	@priority = "5"
 	test EditDocument {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.addPG(
+		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "DM Document Title");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.editPG(
 			dmDocumentTitle = "DM Document Title",
@@ -953,11 +948,8 @@ definition {
 
 	@priority = "4"
 	test MoveDocumentWithSlashesInTitle {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.addPG(
+		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "/D/M/Document Title");
 
 		DMFolder.addPG(
@@ -1177,12 +1169,11 @@ definition {
 
 	@priority = "4"
 	test SearchDocument {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.addPG(
+		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "DM Document Title");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		SearchPortlets.searchEmbedded(searchTerm = "DM Document Title");
 
@@ -1473,11 +1464,8 @@ definition {
 
 	@priority = "4"
 	test ViewOlderVersion {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.addPG(
+		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "DM Document Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");

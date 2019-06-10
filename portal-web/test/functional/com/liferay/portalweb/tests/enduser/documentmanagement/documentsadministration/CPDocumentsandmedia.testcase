@@ -123,16 +123,16 @@ definition {
 	@description = "This test ensures that a user can check in a document as a major version."
 	@priority = "5"
 	test CheckInDocumentAsMajorVersion {
+		JSONDocument.addFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Check in as major version");
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMDocument.addCP(
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Check in as major version");
 
 		DMDocument.checkoutCP(dmDocumentTitle = "Check in as major version");
 
@@ -161,16 +161,16 @@ definition {
 	@description = "This test ensures that a user can check in a document as a minor version."
 	@priority = "5"
 	test CheckInDocumentAsMinorVersion {
+		JSONDocument.addFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Check in as minor version");
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMDocument.addCP(
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Check in as minor version");
 
 		DMDocument.checkoutCP(dmDocumentTitle = "Check in as minor version");
 
@@ -378,13 +378,8 @@ definition {
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
-
-		DMDocument.addCP(
-			dmDocumentFile = "Document_1.doc",
+		JSONDocument.addFile(
+			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Edit this document two times");
 
 		ProductMenu.gotoPortlet(
@@ -657,16 +652,8 @@ definition {
 
 	@priority = "4"
 	test SearchForDocumentInHomeFolder {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
-
-		DMDocument.addCP(
+		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.txt",
 			dmDocumentTitle = "DM Document Title");
 
 		Navigator.openURL();
@@ -684,14 +671,18 @@ definition {
 	@description = "This test makes sure that all files are deleted when user selects all"
 	@priority = "4"
 	test SelectAllAndDelete {
+		for (var dmDocumentTitle : list "One,Two,Three,Four,Five,Six,Seven,Eight,Nine,Ten") {
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "${dmDocumentTitle}");
+		}
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media");
-
-		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt,Document_1.txt,Document_2.xls,Document_3.jpg,Document_4.jpg,Document_1.xls,Document_2.doc");
 
 		Pagination.changePagination(itemsPerPage = "5");
 

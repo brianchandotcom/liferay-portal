@@ -531,22 +531,19 @@ definition {
 			pageName = "Documents and Media Page",
 			portletName = "Documents and Media");
 
+		JSONDocument.addFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title");
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.addPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Document_1.doc");
 
 		DMDocument.enableActionsMenuOnPortlet();
 
 		Refresh();
 
-		DMDocument.checkoutPG(dmDocumentTitle = "Document_1.doc");
+		DMDocument.checkoutPG(dmDocumentTitle = "DM Document Title");
 
 		User.logoutUserPG();
 
@@ -558,7 +555,7 @@ definition {
 
 		DMDocument.editCmdPG(
 			checkedOut = "true",
-			dmDocumentTitle = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title",
 			userName = "Test Test");
 	}
 
@@ -1100,9 +1097,8 @@ definition {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		for (var entryCount : list "1,2,3") {
-			DMDocument.addPG(
+			JSONDocument.addFile(
 				dmDocumentDescription = "DM Document Description",
-				dmDocumentFile = "Document_${entryCount}.doc",
 				dmDocumentTitle = "Document_${entryCount}.doc");
 		}
 
@@ -1807,30 +1803,12 @@ definition {
 
 	@priority = "4"
 	test ViewSingleDocumentSelectionDoesNotCheckAllFileSelectionCP {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMDocument.addCP(
+		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document1 Description",
-			dmDocumentFile = "Document_1.jpg",
 			dmDocumentTitle = "DM Document1 Title");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
-
-		DMDocument.addCP(
+		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document2 Description",
-			dmDocumentFile = "Document_1.jpg",
 			dmDocumentTitle = "DM Document2 Title");
 
 		Navigator.openURL();
@@ -1839,6 +1817,8 @@ definition {
 			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "DM Document1 Title");
 

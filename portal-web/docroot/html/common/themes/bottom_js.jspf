@@ -96,6 +96,7 @@
 					'.management-bar [title]:not(.lfr-portal-tooltip)',
 					'.preview-toolbar-container [data-title]:not(.lfr-portal-tooltip)',
 					'.preview-toolbar-container [title]:not(.lfr-portal-tooltip)',
+					'.progress-container[data-title]',
 					'.taglib-discussion [data-title]:not(.lfr-portal-tooltip)',
 					'.taglib-discussion [title]:not(.lfr-portal-tooltip):not([title=""])',
 					'.upper-tbar [data-title]:not(.lfr-portal-tooltip)',

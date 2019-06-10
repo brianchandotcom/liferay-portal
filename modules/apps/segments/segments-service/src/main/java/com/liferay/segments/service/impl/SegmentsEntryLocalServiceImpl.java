@@ -442,7 +442,8 @@ public class SegmentsEntryLocalServiceImpl
 		Locale defaultLocale = PortalUtil.getSiteDefaultLocale(groupId);
 
 		if (nameMap.isEmpty() || Validator.isNull(nameMap.get(defaultLocale))) {
-			throw new SegmentsEntryNameException();
+			throw new SegmentsEntryNameException(
+				"Name is null for locale " + defaultLocale.getDisplayName());
 		}
 	}
 

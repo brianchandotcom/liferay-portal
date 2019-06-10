@@ -1478,7 +1478,7 @@ public class WebServerServlet extends HttpServlet {
 
 		if (pathArray.length == 0) {
 
-			// check for sendGroups
+			// Check for sendGroups
 
 			if (!PropsValues.WEB_SERVER_SERVLET_DIRECTORY_INDEXING_ENABLED) {
 				httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
@@ -1488,7 +1488,7 @@ public class WebServerServlet extends HttpServlet {
 		}
 		else if (Validator.isNumber(pathArray[0])) {
 
-			// check for sendFile
+			// Check for sendFile
 
 			FileEntry fileEntry = getFileEntry(pathArray);
 
@@ -1531,30 +1531,6 @@ public class WebServerServlet extends HttpServlet {
 						fileEntry.getFileEntryId(),
 						ActionKeys.ACCESS_IN_CONTROL_PANEL);
 				}
-			}
-		}
-		else if (PATH_PORTLET_FILE_ENTRY.equals(pathArray[0])) {
-
-			// check for sendPortletFileEntry
-
-		}
-		else if (PropsValues.WEB_SERVER_SERVLET_CHECK_IMAGE_GALLERY) {
-
-			// check legacyGalleryIamgeId
-
-		}
-		else {
-			Image image = getImage(httpServletRequest, true);
-
-			if (image != null) {
-
-				// check for writeImage
-
-			}
-			else {
-
-				// check for sendDocumentLibrary
-
 			}
 		}
 	}

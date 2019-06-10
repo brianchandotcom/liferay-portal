@@ -45,9 +45,13 @@ class LayoutProvider extends Component {
 		return page;
 	}
 
+	dispatch(event, payload) {
+		this.emit(event, payload);
+	}
+
 	getChildContext() {
 		return {
-			dispatch: this.emit.bind(this),
+			dispatch: this.dispatch.bind(this),
 			store: this
 		};
 	}
@@ -71,7 +75,12 @@ class LayoutProvider extends Component {
 			pageDeleted: this._handlePageDeleted.bind(this),
 			pageReset: this._handlePageReset.bind(this),
 			pagesUpdated: this._handlePagesUpdated.bind(this),
+			paginationItemClicked: this._handlePaginationItemClicked.bind(this),
 			paginationModeUpdated: this._handlePaginationModeUpdated.bind(this),
+			paginationNextClicked: this._handlePaginationNextClicked.bind(this),
+			paginationPreviousClicked: this._handlePaginationPreviousClicked.bind(
+				this
+			),
 			ruleAdded: this._handleRuleAdded.bind(this),
 			ruleDeleted: this._handleRuleDeleted.bind(this),
 			ruleSaved: this._handleRuleSaved.bind(this),
@@ -93,6 +102,22 @@ class LayoutProvider extends Component {
 					)
 				}
 			};
+
+			if (focusedField.originalContext) {
+				focusedField = {
+					...focusedField,
+					originalContext: {
+						...focusedField.originalContext,
+						settingsContext: {
+							...focusedField.originalContext.settingsContext,
+							pages: this.getLocalizedPages(
+								focusedField.originalContext.settingsContext
+									.pages
+							)
+						}
+					}
+				};
+			}
 		}
 
 		return focusedField;
@@ -112,7 +137,9 @@ class LayoutProvider extends Component {
 					localizedValue = field.localizedValue[defaultLanguageId];
 				}
 
-				value = localizedValue;
+				if (localizedValue !== undefined) {
+					value = localizedValue;
+				}
 			}
 
 			if (value && value.JSONArray) {
@@ -145,6 +172,8 @@ class LayoutProvider extends Component {
 				options,
 				settingsContext: {
 					...settingsContext,
+					availableLanguageIds: [editingLanguageId],
+					defaultLanguageId,
 					pages: this.getLocalizedPages(settingsContext.pages)
 				}
 			};
@@ -271,11 +300,13 @@ class LayoutProvider extends Component {
 		const {
 			focusedField: {originalContext}
 		} = this.state;
+		const {settingsContext} = originalContext;
+		const visitor = new PagesVisitor(settingsContext.pages);
 
-		Object.keys(originalContext).forEach(propertyName => {
+		visitor.mapFields(field => {
 			this._handleFieldEdited({
-				propertyName,
-				propertyValue: originalContext[propertyName]
+				propertyName: field.fieldName,
+				propertyValue: field.value
 			});
 		});
 	}
@@ -422,6 +453,10 @@ class LayoutProvider extends Component {
 		});
 	}
 
+	_handlePaginationItemClicked({pageIndex}) {
+		handlePaginationItemClicked({pageIndex}, this.dispatch.bind(this));
+	}
+
 	_handlePaginationModeUpdated() {
 		const {paginationMode} = this.state;
 		let newMode = 'paginated';
@@ -433,6 +468,24 @@ class LayoutProvider extends Component {
 		this.setState({
 			paginationMode: newMode
 		});
+	}
+
+	_handlePaginationNextClicked() {
+		const {activePage, pages} = this.state;
+
+		handlePaginationNextClicked(
+			{
+				activePage,
+				pages
+			},
+			this.dispatch.bind(this)
+		);
+	}
+
+	_handlePaginationPreviousClicked() {
+		const {activePage} = this.state;
+
+		handlePaginationPreviousClicked({activePage}, this.dispatch.bind(this));
 	}
 
 	_handleRuleAdded(rule) {

@@ -67,11 +67,15 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 				</li>
 			</ul>
 
-			<h4 class="sidebar-title"><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %></h4>
+			<div class="sidebar-title">
+				<label><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %></label>
+			</div>
 
-			<h5 class="sidebar-subtitle">
-				<liferay-ui:message key="folder" />
-			</h5>
+			<div class="sidebar-subtitle">
+				<label>
+					<liferay-ui:message key="folder" />
+				</label>
+			</div>
 		</div>
 
 		<div class="sidebar-body">
@@ -146,11 +150,13 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 				</li>
 			</ul>
 
-			<h4 class="sidebar-title"><%= HtmlUtil.escape(fileShortcut.getToTitle()) %></h4>
+			<div class="sidebar-title">
+				<label><%= HtmlUtil.escape(fileShortcut.getToTitle()) %></label>
+			</div>
 
-			<h5>
+			<label>
 				<liferay-ui:message key="shortcut" />
-			</h5>
+			</label>
 		</div>
 
 		<div class="sidebar-body">
@@ -253,7 +259,9 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">
-			<h4 class="sidebar-title"><liferay-ui:message arguments="<%= folders.size() + fileEntries.size() + fileShortcuts.size() %>" key="x-items-are-selected" /></h4>
+			<div class="sidebar-title">
+				<label ><liferay-ui:message arguments="<%= folders.size() + fileEntries.size() + fileShortcuts.size() %>" key="x-items-are-selected" /></label>
+			</div>
 		</div>
 
 		<div class="sidebar-body">
@@ -263,9 +271,9 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 				refresh="<%= false %>"
 			>
 				<liferay-ui:section>
-					<h5>
+					<label>
 						<liferay-ui:message arguments="<%= folders.size() + fileEntries.size() + fileShortcuts.size() %>" key="x-items-are-selected" />
-					</h5>
+					</label>
 				</liferay-ui:section>
 			</liferay-ui:tabs>
 		</div>

@@ -1538,12 +1538,12 @@ definition {
 		if ("${userPostNumber}" == "1") {
 			AssertTextEquals(
 				locator1 = "MessageBoardsStatistics#TOP_POSTERS_AUTHOR_POSTS",
-				value1 = "Post:${userPostNumber}");
+				value1 = "Post: ${userPostNumber}");
 		}
 		else {
 			AssertTextEquals(
 				locator1 = "MessageBoardsStatistics#TOP_POSTERS_AUTHOR_POSTS",
-				value1 = "Posts:${userPostNumber}");
+				value1 = "Posts: ${userPostNumber}");
 		}
 
 		AssertElementPresent(locator1 = "MessageBoardsStatistics#TOP_POSTERS_AUTHOR_JOIN_DATE");

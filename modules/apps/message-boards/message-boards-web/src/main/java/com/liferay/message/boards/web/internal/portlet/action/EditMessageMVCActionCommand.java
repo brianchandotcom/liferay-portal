@@ -459,13 +459,19 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 					_formatHandlerProvider.provide(message.getFormat());
 
 				if (formatHandler != null) {
-					body = _addBodyAttachmentTempFiles(
-						themeDisplay, message.getBody(), message,
-						formatHandler);
+					List<FileEntry> tempMBAttachmentFileEntries =
+						MBAttachmentFileEntryUtil.
+							getTempMBAttachmentFileEntries(message.getBody());
 
-					message.setBody(body);
+					if (!tempMBAttachmentFileEntries.isEmpty()) {
+						body = _addBodyAttachmentTempFiles(
+							tempMBAttachmentFileEntries, themeDisplay,
+							message.getBody(), message, formatHandler);
 
-					_mbMessageLocalService.updateMBMessage(message);
+						message.setBody(body);
+
+						_mbMessageLocalService.updateMBMessage(message);
+					}
 				}
 			}
 			else {
@@ -475,8 +481,15 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 					_formatHandlerProvider.provide(message.getFormat());
 
 				if (formatHandler != null) {
-					body = _addBodyAttachmentTempFiles(
-						themeDisplay, body, message, formatHandler);
+					List<FileEntry> tempMBAttachmentFileEntries =
+						MBAttachmentFileEntryUtil.
+							getTempMBAttachmentFileEntries(body);
+
+					if (!tempMBAttachmentFileEntries.isEmpty()) {
+						body = _addBodyAttachmentTempFiles(
+							tempMBAttachmentFileEntries, themeDisplay, body,
+							message, formatHandler);
+					}
 				}
 
 				// Update message
@@ -527,16 +540,10 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private String _addBodyAttachmentTempFiles(
+			List<FileEntry> tempMBAttachmentFileEntries,
 			ThemeDisplay themeDisplay, String body, MBMessage message,
 			MBMessageFormatUploadHandler formatHandler)
 		throws PortalException {
-
-		List<FileEntry> tempMBAttachmentFileEntries =
-			MBAttachmentFileEntryUtil.getTempMBAttachmentFileEntries(body);
-
-		if (tempMBAttachmentFileEntries.isEmpty()) {
-			return body;
-		}
 
 		Folder folder = message.addAttachmentsFolder();
 

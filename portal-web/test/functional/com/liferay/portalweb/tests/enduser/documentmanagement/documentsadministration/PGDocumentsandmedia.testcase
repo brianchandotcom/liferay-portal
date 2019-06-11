@@ -472,11 +472,11 @@ definition {
 
 	@priority = "4"
 	test AddSubFolderNameDocumentNameDuplicate {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMFolder.addPG(
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
@@ -1007,15 +1007,15 @@ definition {
 
 	@priority = "4"
 	test MoveFolderDocumentToFolder {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMFolder.addPG(
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder1 Description",
 			dmFolderName = "DM Folder1 Name");
 
-		DMFolder.addPG(
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder2 Description",
 			dmFolderName = "DM Folder2 Name");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder1 Name");
 
@@ -1074,11 +1074,11 @@ definition {
 
 		PortletEntry.publish();
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMFolder.addPG(
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.moveToFolderPG(
 			dmDocumentTitle = "taco.jpg",
@@ -1357,6 +1357,8 @@ definition {
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name");
 
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
@@ -1423,11 +1425,11 @@ definition {
 
 	@priority = "4"
 	test UnlockDocumentInFolder {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMFolder.addPG(
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 

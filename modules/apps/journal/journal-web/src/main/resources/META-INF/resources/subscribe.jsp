@@ -71,7 +71,7 @@ String unsubscribeActionName = StringPool.BLANK;
 			}
 
 			subscribeActionName = "subscribeFolder";
-			unsubscribeActionName = "unsubscribeFolder";
+			unsubscribeActionName = "/journal/unsubscribe_folder";
 		}
 		%>
 

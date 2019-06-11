@@ -1660,7 +1660,8 @@ public class ProjectTemplatesTest {
 			"panel-app", "gradle.test", "--class-name", "Foo",
 			"--liferayVersion", "7.0");
 
-		_testExists(gradleProjectDir,
+		_testExists(
+			gradleProjectDir,
 			"src/main/resources/META-INF/resources/css/main.scss");
 
 		_testContains(
@@ -1676,11 +1677,11 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/gradle/test/constants/FooPortletKeys.java",
-			"public class FooPortletKeys");
+			"public class FooPortletKeys", "public static final String FOO");
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/gradle/test/portlet/FooPortlet.java",
-			"javax.portlet.name=\" + FooPortletKeys.Foo",
+			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class FooPortlet extends MVCPortlet");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
@@ -1696,7 +1697,8 @@ public class ProjectTemplatesTest {
 			"panel-app", "gradle.test", "--class-name", "Foo",
 			"--liferayVersion", "7.1");
 
-		_testExists(gradleProjectDir,
+		_testExists(
+			gradleProjectDir,
 			"src/main/resources/META-INF/resources/css/main.scss");
 
 		_testContains(
@@ -1719,7 +1721,8 @@ public class ProjectTemplatesTest {
 			"panel-app", "gradle.test", "--class-name", "Foo",
 			"--liferayVersion", "7.2");
 
-		_testExists(gradleProjectDir,
+		_testExists(
+			gradleProjectDir,
 			"src/main/resources/META-INF/resources/css/main.scss");
 
 		_testContains(
@@ -1958,9 +1961,9 @@ public class ProjectTemplatesTest {
 			"portlet-provider", "provider.test", "--liferayVersion", "7.0");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
-		_testExists(gradleProjectDir,
+		_testExists(
+			gradleProjectDir,
 			"src/main/resources/META-INF/resources/css/main.scss");
-
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -1971,7 +1974,8 @@ public class ProjectTemplatesTest {
 				"/ProviderTestPortletKeys.java",
 			"package provider.test.constants;",
 			"public class ProviderTestPortletKeys",
-			"public static final String ProviderTest = \"providertest\";");
+			"public static final String PROVIDERTEST",
+			"\"provider.test_ProviderTestPortlet\";");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"portlet-provider", "provider.test", "com.test",
@@ -1986,7 +1990,8 @@ public class ProjectTemplatesTest {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet-provider", "provider.test", "--liferayVersion", "7.1");
 
-		_testExists(gradleProjectDir,
+		_testExists(
+			gradleProjectDir,
 			"src/main/resources/META-INF/resources/css/main.scss");
 
 		_testContains(
@@ -2009,7 +2014,8 @@ public class ProjectTemplatesTest {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet-provider", "provider.test", "--liferayVersion", "7.2");
 
-		_testExists(gradleProjectDir,
+		_testExists(
+			gradleProjectDir,
 			"src/main/resources/META-INF/resources/css/main.scss");
 
 		_testContains(
@@ -5585,7 +5591,8 @@ public class ProjectTemplatesTest {
 				gradleProjectDir, "src/main/resources/" + resourceFileName);
 		}
 
-		_testExists(gradleProjectDir,
+		_testExists(
+			gradleProjectDir,
 			"src/main/resources/META-INF/resources/css/main.scss");
 
 		_testContains(
@@ -5596,10 +5603,10 @@ public class ProjectTemplatesTest {
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/constants/FooPortletKeys.java",
-			"public class FooPortletKeys");
+			"public class FooPortletKeys", "public static final String FOO");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/portlet/FooPortlet.java",
-			"javax.portlet.name=\" + FooPortletKeys.Foo",
+			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class FooPortlet extends " + portletClassName + " {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
@@ -5624,7 +5631,8 @@ public class ProjectTemplatesTest {
 				gradleProjectDir, "src/main/resources/" + resourceFileName);
 		}
 
-		_testExists(gradleProjectDir,
+		_testExists(
+			gradleProjectDir,
 			"src/main/resources/META-INF/resources/css/main.scss");
 
 		_testContains(
@@ -5635,10 +5643,10 @@ public class ProjectTemplatesTest {
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/constants/FooPortletKeys.java",
-			"public class FooPortletKeys");
+			"public class FooPortletKeys", "public static final String FOO");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/portlet/FooPortlet.java",
-			"javax.portlet.name=\" + FooPortletKeys.Foo",
+			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class FooPortlet extends " + portletClassName + " {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
@@ -5666,7 +5674,8 @@ public class ProjectTemplatesTest {
 				gradleProjectDir, "src/main/resources/" + resourceFileName);
 		}
 
-		_testExists(gradleProjectDir,
+		_testExists(
+			gradleProjectDir,
 			"src/main/resources/META-INF/resources/css/main.scss");
 
 		_testContains(
@@ -5677,10 +5686,10 @@ public class ProjectTemplatesTest {
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/constants/FooPortletKeys.java",
-			"public class FooPortletKeys");
+			"public class FooPortletKeys", "public static final String FOO");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/portlet/FooPortlet.java",
-			"javax.portlet.name=\" + FooPortletKeys.Foo",
+			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class FooPortlet extends " + portletClassName + " {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
@@ -5704,7 +5713,8 @@ public class ProjectTemplatesTest {
 			template, "foo", "--package-name", "com.liferay.test");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
-		_testExists(gradleProjectDir,
+		_testExists(
+			gradleProjectDir,
 			"src/main/resources/META-INF/resources/css/main.scss");
 
 		for (String resourceFileName : resourceFileNames) {
@@ -5718,6 +5728,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/com/liferay/test/portlet/FooPortlet.java",
+			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class FooPortlet extends " + portletClassName + " {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
@@ -5739,7 +5750,8 @@ public class ProjectTemplatesTest {
 			"--liferayVersion", "7.1");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
-		_testExists(gradleProjectDir,
+		_testExists(
+			gradleProjectDir,
 			"src/main/resources/META-INF/resources/css/main.scss");
 
 		for (String resourceFileName : resourceFileNames) {
@@ -5754,6 +5766,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/com/liferay/test/portlet/FooPortlet.java",
+			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class FooPortlet extends " + portletClassName + " {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
@@ -5778,7 +5791,8 @@ public class ProjectTemplatesTest {
 			"--liferayVersion", "7.2");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
-		_testExists(gradleProjectDir,
+		_testExists(
+			gradleProjectDir,
 			"src/main/resources/META-INF/resources/css/main.scss");
 
 		for (String resourceFileName : resourceFileNames) {
@@ -5793,6 +5807,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/com/liferay/test/portlet/FooPortlet.java",
+			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class FooPortlet extends " + portletClassName + " {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
@@ -5816,7 +5831,8 @@ public class ProjectTemplatesTest {
 			template, "portlet", "--liferayVersion", "7.0");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
-		_testExists(gradleProjectDir,
+		_testExists(
+			gradleProjectDir,
 			"src/main/resources/META-INF/resources/css/main.scss");
 
 		for (String resourceFileName : resourceFileNames) {
@@ -5831,6 +5847,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/portlet/portlet/PortletPortlet.java",
+			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class PortletPortlet extends " + portletClassName + " {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
@@ -5851,7 +5868,8 @@ public class ProjectTemplatesTest {
 			template, "portlet", "--liferayVersion", "7.1");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
-		_testExists(gradleProjectDir,
+		_testExists(
+			gradleProjectDir,
 			"src/main/resources/META-INF/resources/css/main.scss");
 
 		for (String resourceFileName : resourceFileNames) {
@@ -5866,6 +5884,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/portlet/portlet/PortletPortlet.java",
+			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class PortletPortlet extends " + portletClassName + " {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
@@ -5889,7 +5908,8 @@ public class ProjectTemplatesTest {
 			template, "portlet", "--liferayVersion", "7.2");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
-		_testExists(gradleProjectDir,
+		_testExists(
+			gradleProjectDir,
 			"src/main/resources/META-INF/resources/css/main.scss");
 
 		for (String resourceFileName : resourceFileNames) {
@@ -5904,6 +5924,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/portlet/portlet/PortletPortlet.java",
+			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class PortletPortlet extends " + portletClassName + " {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
@@ -5927,7 +5948,8 @@ public class ProjectTemplatesTest {
 			template, "portlet-portlet", "--liferayVersion", "7.0");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
-		_testExists(gradleProjectDir,
+		_testExists(
+			gradleProjectDir,
 			"src/main/resources/META-INF/resources/css/main.scss");
 
 		for (String resourceFileName : resourceFileNames) {
@@ -5942,6 +5964,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/portlet/portlet/portlet/PortletPortlet.java",
+			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class PortletPortlet extends " + portletClassName + " {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
@@ -5962,7 +5985,8 @@ public class ProjectTemplatesTest {
 			template, "portlet-portlet", "--liferayVersion", "7.1");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
-		_testExists(gradleProjectDir,
+		_testExists(
+			gradleProjectDir,
 			"src/main/resources/META-INF/resources/css/main.scss");
 
 		for (String resourceFileName : resourceFileNames) {
@@ -5977,6 +6001,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/portlet/portlet/portlet/PortletPortlet.java",
+			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class PortletPortlet extends " + portletClassName + " {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
@@ -6000,7 +6025,8 @@ public class ProjectTemplatesTest {
 			template, "portlet-portlet", "--liferayVersion", "7.2");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
-		_testExists(gradleProjectDir,
+		_testExists(
+			gradleProjectDir,
 			"src/main/resources/META-INF/resources/css/main.scss");
 
 		for (String resourceFileName : resourceFileNames) {
@@ -6015,6 +6041,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/portlet/portlet/portlet/PortletPortlet.java",
+			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class PortletPortlet extends " + portletClassName + " {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(

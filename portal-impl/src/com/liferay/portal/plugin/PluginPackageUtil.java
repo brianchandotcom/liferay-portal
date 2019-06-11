@@ -14,6 +14,7 @@
 
 package com.liferay.portal.plugin;
 
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -956,15 +957,16 @@ public class PluginPackageUtil {
 
 		PluginPackage pluginPackage = null;
 
-		String xml = HttpUtil.URLtoString(
-			servletContext.getResource("/WEB-INF/liferay-plugin-package.xml"));
+		String xml = StreamUtil.toString(
+			servletContext.getResourceAsStream(
+				"/WEB-INF/liferay-plugin-package.xml"));
 
 		if (xml != null) {
 			pluginPackage = _readPluginPackageXml(xml);
 		}
 		else {
-			String propertiesString = HttpUtil.URLtoString(
-				servletContext.getResource(
+			String propertiesString = StreamUtil.toString(
+				servletContext.getResourceAsStream(
 					"/WEB-INF/liferay-plugin-package.properties"));
 
 			if (propertiesString != null) {

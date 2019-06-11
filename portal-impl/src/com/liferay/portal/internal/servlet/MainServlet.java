@@ -14,6 +14,7 @@
 
 package com.liferay.portal.internal.servlet;
 
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
@@ -343,10 +344,11 @@ public class MainServlet extends HttpServlet {
 
 		try {
 			String[] xmls = {
-				HttpUtil.URLtoString(
-					servletContext.getResource("/WEB-INF/liferay-social.xml")),
-				HttpUtil.URLtoString(
-					servletContext.getResource(
+				StreamUtil.toString(
+					servletContext.getResourceAsStream(
+						"/WEB-INF/liferay-social.xml")),
+				StreamUtil.toString(
+					servletContext.getResourceAsStream(
 						"/WEB-INF/liferay-social-ext.xml"))
 			};
 
@@ -363,11 +365,11 @@ public class MainServlet extends HttpServlet {
 
 		try {
 			String[] xmls = {
-				HttpUtil.URLtoString(
-					servletContext.getResource(
+				StreamUtil.toString(
+					servletContext.getResourceAsStream(
 						"/WEB-INF/liferay-look-and-feel.xml")),
-				HttpUtil.URLtoString(
-					servletContext.getResource(
+				StreamUtil.toString(
+					servletContext.getResourceAsStream(
 						"/WEB-INF/liferay-look-and-feel-ext.xml"))
 			};
 
@@ -385,8 +387,8 @@ public class MainServlet extends HttpServlet {
 		}
 
 		try {
-			String xml = HttpUtil.URLtoString(
-				servletContext.getResource("/WEB-INF/web.xml"));
+			String xml = StreamUtil.toString(
+				servletContext.getResourceAsStream("/WEB-INF/web.xml"));
 
 			_checkWebSettings(xml);
 		}
@@ -811,11 +813,11 @@ public class MainServlet extends HttpServlet {
 						ServletContext servletContext = getServletContext();
 
 						String[] xmls = {
-							HttpUtil.URLtoString(
-								servletContext.getResource(
+							StreamUtil.toString(
+								servletContext.getResourceAsStream(
 									"/WEB-INF/liferay-layout-templates.xml")),
-							HttpUtil.URLtoString(
-								servletContext.getResource(
+							StreamUtil.toString(
+								servletContext.getResourceAsStream(
 									"/WEB-INF" +
 										"/liferay-layout-templates-ext.xml"))
 						};
@@ -958,8 +960,9 @@ public class MainServlet extends HttpServlet {
 		String[] xmls = new String[PropsValues.PORTLET_CONFIGS.length];
 
 		for (int i = 0; i < PropsValues.PORTLET_CONFIGS.length; i++) {
-			xmls[i] = HttpUtil.URLtoString(
-				servletContext.getResource(PropsValues.PORTLET_CONFIGS[i]));
+			xmls[i] = StreamUtil.toString(
+				servletContext.getResourceAsStream(
+					PropsValues.PORTLET_CONFIGS[i]));
 		}
 
 		PortletLocalServiceUtil.initEAR(servletContext, xmls, pluginPackage);

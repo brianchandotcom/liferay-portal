@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -292,8 +292,9 @@ public class PortalInstances {
 			}
 
 			try {
-				String xml = HttpUtil.URLtoString(
-					servletContext.getResource("/WEB-INF/liferay-display.xml"));
+				String xml = StreamUtil.toString(
+					servletContext.getResourceAsStream(
+						"/WEB-INF/liferay-display.xml"));
 
 				PortletCategory portletCategory =
 					(PortletCategory)WebAppPool.get(

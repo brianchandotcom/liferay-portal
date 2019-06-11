@@ -66,6 +66,10 @@ public class UnusedMethodCheck extends BaseCheck {
 			if (!modifiersDetailAST.branchContains(
 					TokenTypes.LITERAL_PRIVATE) ||
 				AnnotationUtil.containsAnnotation(
+					methodDefinitionDetailAST, "PostConstruct") ||
+				AnnotationUtil.containsAnnotation(
+					methodDefinitionDetailAST, "PreDestroy") ||
+				AnnotationUtil.containsAnnotation(
 					methodDefinitionDetailAST, "Reference") ||
 				_hasSuppressUnusedWarningsAnnotation(
 					methodDefinitionDetailAST)) {

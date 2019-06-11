@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardAttachment;
+import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.test.util.MBTestUtil;
@@ -29,6 +30,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 
@@ -62,8 +64,11 @@ public class MessageBoardAttachmentResourceTest
 			Map<String, File> multipartFiles)
 		throws Exception {
 
-		// TODO
-
+		Assert.assertEquals(
+			new String(FileUtil.getBytes(multipartFiles.get("file"))),
+			_read(
+				"http://localhost:8080" +
+					messageBoardAttachment.getContentUrl()));
 	}
 
 	@Override
@@ -111,6 +116,18 @@ public class MessageBoardAttachmentResourceTest
 		testGetMessageBoardThreadMessageBoardAttachmentsPage_getMessageBoardThreadId() {
 
 		return _mbThread.getThreadId();
+	}
+
+	private String _read(String url) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+		httpInvoker.path(url);
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		return httpResponse.getContent();
 	}
 
 	private MBThread _mbThread;

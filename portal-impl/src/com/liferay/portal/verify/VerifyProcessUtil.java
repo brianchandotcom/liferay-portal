@@ -34,7 +34,7 @@ import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
 public class VerifyProcessUtil {
 
 	public static boolean verifyProcess(
-			boolean ranUpgradeProcess, boolean newBuildNumber, boolean verified)
+			boolean ranUpgradeProcess, boolean verified)
 		throws VerifyException {
 
 		int verifyFrequency = GetterUtil.getInteger(
@@ -42,7 +42,7 @@ public class VerifyProcessUtil {
 
 		if ((verifyFrequency == VerifyProcess.ALWAYS) ||
 			((verifyFrequency == VerifyProcess.ONCE) && !verified) ||
-			ranUpgradeProcess || newBuildNumber) {
+			ranUpgradeProcess) {
 
 			return _verifyProcess(ranUpgradeProcess);
 		}

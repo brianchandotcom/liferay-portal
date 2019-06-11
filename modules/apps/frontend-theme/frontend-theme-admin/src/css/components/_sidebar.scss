@@ -1,5 +1,16 @@
 .sidebar-default {
 	.sidebar-header {
+		.sidebar-title {
+			font-size: 1rem;
+			font-weight: 600;
+			padding-top: 0.5rem;
+		}
+
+		.sidebar-subtitle {
+			font-size: 0.875rem;
+			font-weight: 600;
+		}
+
 		h4 {
 			padding-top: 8px;
 		}

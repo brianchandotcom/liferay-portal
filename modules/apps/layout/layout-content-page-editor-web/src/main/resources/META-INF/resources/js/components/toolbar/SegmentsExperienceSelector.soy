@@ -12,6 +12,7 @@
 		segmentsEntryName: string,
 		segmentsEntryId: string
 	]>}
+	{@param? hasEditSegmentsEntryPermissions: bool }
 	{@param? defaultSegmentsExperienceId: string }
 	{@param? _closeEditModal: any }
 	{@param? _closeCreateModal: any }
@@ -52,7 +53,17 @@
 	]}
 	{@param spritemap: string}
 
-	{if $availableSegmentsExperiences and length($availableSegmentsExperiences) > 0}
+	{let $canCreateExperiences: (
+			($hasEditSegmentsEntryPermissions == true or
+			($availableSegmentsEntries and length($availableSegmentsEntries) > 0))
+		)
+	/}
+
+	{if
+		$availableSegmentsExperiences and
+		length($availableSegmentsExperiences) > 0 and
+		$canCreateExperiences
+	}
 		<div
 			class="segments-experience-selector position-relative"
 			tabindex="0"
@@ -79,24 +90,24 @@
 			>
 				<div class="align-items-end d-flex justify-content-between mb-4">
 					<h3 class="mb-0">{msg desc=""}select-experience{/msg}</h3>
-					{let $disabledExperienceButton: false /}
 
-					{let $newExperience kind="text"}
-						{msg desc=""}new-experience{/msg}
-					{/let}
+					{if $canCreateExperiences == true}
+						{let $newExperience kind="text"}
+							{msg desc=""}new-experience{/msg}
+						{/let}
 
-					{call ClayButton.render}
-						{param ariaLabel: $newExperience /}
-						{param label: $newExperience /}
-						{param disabled: $disabledExperienceButton /}
-						{param events: [
-							'click': $_openCreateModal,
-						] /}
-						{param ref: 'newExperienceBtn' /}
-						{param size: 'sm' /}
-						{param spritemap: $spritemap /}
-						{param style: 'secondary' /}
-					{/call}
+						{call ClayButton.render}
+							{param ariaLabel: $newExperience /}
+							{param label: $newExperience /}
+							{param events: [
+								'click': $_openCreateModal,
+							] /}
+							{param ref: 'newExperienceBtn' /}
+							{param size: 'sm' /}
+							{param spritemap: $spritemap /}
+							{param style: 'secondary' /}
+						{/call}
+					{/if}
 				</div>
 
 				{if $_segmentsExperienceErrors and $_segmentsExperienceErrors.deletion }
@@ -337,6 +348,7 @@
 			{param onClose: $_toggleCreateModal /}
 			{param spritemap: $spritemap /}
 			{param onDismiss: $_closeCreateModal /}
+			{param hasSegmentsEntryPermissions: $hasEditSegmentsEntryPermissions /}
 			{param onNewSegmentClick: $_handleNewSegmentButtonClick /}
 			{param type: 'creation' /}
 		{/call}
@@ -381,6 +393,7 @@
 			{param onClose: $_toggleEditModal /}
 			{param spritemap: $spritemap /}
 			{param onDismiss: $_closeEditModal /}
+			{param hasSegmentsEntryPermissions: $hasEditSegmentsEntryPermissions /}
 			{param onNewSegmentClick: $_handleNewSegmentButtonClick /}
 			{param type: 'edition' /}
 		{/call}

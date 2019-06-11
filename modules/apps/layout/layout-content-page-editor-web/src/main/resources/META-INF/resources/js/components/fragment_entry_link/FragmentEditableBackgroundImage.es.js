@@ -171,11 +171,10 @@ class FragmentEditableBackgroundImage extends Component {
 	 * @review
 	 */
 	_shouldShowTooltip(target) {
-		const isNotEditable = target.tagName !== 'lfr-editable';
-
 		const hasEditableParent = target.closest('lfr-editable');
+		const isEditable = target.tagName === 'lfr-editable';
 
-		return isNotEditable && !hasEditableParent;
+		return !hasEditableParent && !isEditable;
 	}
 
 	/**

@@ -117,6 +117,37 @@ public class AssetDisplayPageEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testFetchAssetDisplayPageEntry() throws PortalException {
+		long classPK = RandomTestUtil.randomLong();
+
+		long layoutPageTemplateEntryId = RandomTestUtil.randomLong();
+
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			AssetDisplayPageEntryTestUtil.addDefaultAssetDisplayPageEntry(
+				_group.getGroupId(), _classNameId, classPK,
+				layoutPageTemplateEntryId);
+
+		AssetDisplayPageEntry persistedAssetDisplayPageEntry =
+			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
+				_group.getGroupId(), _classNameId, classPK);
+
+		Assert.assertEquals(
+			_classNameId, persistedAssetDisplayPageEntry.getClassNameId());
+
+		Assert.assertEquals(
+			assetDisplayPageEntry.getClassPK(),
+			persistedAssetDisplayPageEntry.getClassPK());
+
+		Assert.assertEquals(
+			layoutPageTemplateEntryId,
+			persistedAssetDisplayPageEntry.getLayoutPageTemplateEntryId());
+
+		Assert.assertEquals(
+			assetDisplayPageEntry.getType(),
+			persistedAssetDisplayPageEntry.getType());
+	}
+
+	@Test
 	public void testGetAssetDisplayPageEntriesByLayoutPageTemplateEntryId()
 		throws PortalException {
 

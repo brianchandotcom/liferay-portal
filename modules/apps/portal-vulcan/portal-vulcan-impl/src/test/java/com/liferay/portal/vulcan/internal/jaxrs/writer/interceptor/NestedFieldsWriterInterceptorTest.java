@@ -193,13 +193,13 @@ public class NestedFieldsWriterInterceptorTest {
 
 		_nestedFieldsWriterInterceptor.aroundWriteTo(_context);
 
-		Collection<ProductOption> productOptions = _product.getProductOptions();
+		List<ProductOption> productOptions =
+			(List<ProductOption>)_product.getProductOptions();
 
 		Assert.assertEquals(
 			productOptions.toString(), 1, productOptions.size());
 
-		ProductOption productOption = ((List<ProductOption>)productOptions).get(
-			0);
+		ProductOption productOption = productOptions.get(0);
 
 		Assert.assertEquals("test2", productOption.getName());
 	}

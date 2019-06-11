@@ -41,13 +41,13 @@ public class NestedFieldsContainerRequestFilterTest {
 		NestedFieldsContainerRequestFilter nestedFieldsContainerRequestFilter =
 			new NestedFieldsContainerRequestFilter();
 
-		ContainerRequestContext context = Mockito.mock(
+		ContainerRequestContext containerRequestContext = Mockito.mock(
 			ContainerRequestContext.class);
 
 		UriInfo uriInfo = Mockito.mock(UriInfo.class);
 
 		Mockito.when(
-			context.getUriInfo()
+			containerRequestContext.getUriInfo()
 		).thenReturn(
 			uriInfo
 		);
@@ -61,7 +61,7 @@ public class NestedFieldsContainerRequestFilterTest {
 			queryParameters
 		);
 
-		nestedFieldsContainerRequestFilter.filter(context);
+		nestedFieldsContainerRequestFilter.filter(containerRequestContext);
 
 		NestedFieldsContext nestedFieldsContext =
 			NestedFieldsContextThreadLocal.getNestedFieldsContext();
@@ -70,7 +70,7 @@ public class NestedFieldsContainerRequestFilterTest {
 
 		queryParameters.putSingle("nestedFields", "skus,productOptions");
 
-		nestedFieldsContainerRequestFilter.filter(context);
+		nestedFieldsContainerRequestFilter.filter(containerRequestContext);
 
 		nestedFieldsContext =
 			NestedFieldsContextThreadLocal.getNestedFieldsContext();

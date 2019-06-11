@@ -6,7 +6,7 @@
 {template .render}
 	{@param? availableSegmentsEntries: ?}
 	{@param? editSegmentsEntryURL: string}
-	{@param? hasEditSegmentsEntryPermissions: bool }
+	{@param? hasEditSegmentsEntryPermission: bool }
 	{@param? _handleDiscardDraft: any}
 	{@param? _handleToggleContextualSidebarButtonClick: any}
 	{@param? classPK: ?}
@@ -41,7 +41,7 @@
 				{if $defaultSegmentsExperienceId }
 					<li class="nav-item">
 						{call com.liferay.layout.content.page.editor.web.SegmentsExperienceSelector.render}
-							{param hasEditSegmentsEntryPermissions: $hasEditSegmentsEntryPermissions /}
+							{param hasEditSegmentsEntryPermission: $hasEditSegmentsEntryPermission /}
 							{param editSegmentsEntryURL: $editSegmentsEntryURL /}
 							{param availableSegmentsEntries: $availableSegmentsEntries /}
 							{param defaultSegmentsExperienceId: $defaultSegmentsExperienceId /}

@@ -301,7 +301,7 @@ public class ContentPageLayoutEditorDisplayContext
 		).put(
 			"editSegmentsEntryURL", _getEditSegmentsEntryURL()
 		).put(
-			"hasEditSegmentsEntryPermissions", _hasEditSegmentsEntryPermission()
+			"hasEditSegmentsEntryPermission", _hasEditSegmentsEntryPermission()
 		).put(
 			"layoutDataList", _getLayoutDataListSoyContext()
 		);

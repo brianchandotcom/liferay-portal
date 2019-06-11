@@ -10,6 +10,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
 	}
 
 	tearDown {
@@ -19,35 +21,18 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			WebContent.tearDownCP();
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 
 	@priority = "4"
 	test DeleteWebcontent {
-		Navigator.openURL();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",
@@ -56,96 +41,42 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			panel = "Site Administration",
-			portlet = "Recycle Bin");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
 
 		RecycleBin.deleteCP(
 			assetName = "WC WebContent Title",
 			assetType = "Web Content Article");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			panel = "Site Administration",
-			portlet = "Recycle Bin");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
 
 		RecycleBin.viewDefaultCP(assetName = "WC WebContent Title");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewDefaultCP(webContentTitle = "WC WebContent Title");
 	}
 
 	@priority = "3"
 	test MoveFolderWithWebContentToRecycleBin {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		ProductMenu.gotoSite(site = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentFolder.addCP(
-			folderDescription = "WC Folder Description",
-			folderName = "WC Folder Name");
-
-		ProductMenu.gotoSite(site = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentFolder.gotoCP(
+		JSONWebcontent.addFolder(
 			folderName = "WC Folder Name",
-			webContentTitle = "WC Folder Name");
+			groupName = "Test Site Name");
 
-		WebContentNavigator.gotoAddCP();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			folderName = "WC Folder Name",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
 
-		WebContent.addCP(
-			webContentContent = "WC Web Content Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
-
-		ProductMenu.gotoSite(site = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentFolder.moveToRecycleBinCP(
 			assetType = "Web Content Folder",
 			folderName = "WC Folder Name");
 
-		ProductMenu.gotoSite(site = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
 		WebContent.viewDefaultCP(webContentTitle = "WC Folder Name");
 
-		ProductMenu.gotoSite(site = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			panel = "Site Administration",
-			portlet = "Recycle Bin");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
 
 		RecycleBin.viewCP(
 			assetName = "WC Folder Name",
@@ -155,49 +86,20 @@ definition {
 
 	@priority = "3"
 	test RecycleWebContentViaDeleteIcon {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
 
-		ProductMenu.gotoSite(site = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC Web Content Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
-
-		ProductMenu.gotoSite(site = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.moveToRecycleBinViaDeleteIconCP();
 
-		ProductMenu.gotoSite(site = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewDefaultCP(webContentTitle = "WC WebContent Title");
 
-		ProductMenu.gotoSite(site = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			panel = "Site Administration",
-			portlet = "Recycle Bin");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
 
 		RecycleBin.viewCP(
 			assetName = "WC WebContent Title",
@@ -207,62 +109,30 @@ definition {
 
 	@priority = "5"
 	test RestoreWebcontent {
-		Navigator.openURL();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			panel = "Site Administration",
-			portlet = "Recycle Bin");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
 
 		RecycleBin.restoreCP(
 			assetName = "WC WebContent Title",
 			assetRestoreLocation = "Home",
 			assetType = "Web Content Article");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			panel = "Site Administration",
-			portlet = "Recycle Bin");
-
 		RecycleBin.viewDefaultCP(assetName = "WC WebContent Title");
 
-		Navigator.openURL();
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
@@ -273,29 +143,12 @@ definition {
 
 	@priority = "3"
 	test UndoMoveToRecycleBin {
-		Navigator.openURL();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC Web Content Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",
@@ -303,198 +156,89 @@ definition {
 
 		RecycleBin.undoMoveToRecycleBin();
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			panel = "Site Administration",
-			portlet = "Recycle Bin");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
 
 		RecycleBin.viewDefaultCP(assetName = "WC WebContent Title");
 	}
 
 	@priority = "3"
 	test ViewDuplicateAssetNamesInRecycleBin {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
 
-		ProductMenu.gotoSite(site = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC Web Content Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
-
-		ProductMenu.gotoSite(site = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.moveToRecycleBinViaDeleteIconCP();
 
-		ProductMenu.gotoSite(site = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			panel = "Site Administration",
-			portlet = "Recycle Bin");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
 
 		RecycleBin.viewCP(
 			assetName = "WC WebContent Title",
 			assetType = "Web Content Article",
 			deleteUser = "Test Test");
 
-		ProductMenu.gotoSite(site = "${siteName}");
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC Web Content Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
-
-		ProductMenu.gotoSite(site = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.moveToRecycleBinViaDeleteIconCP();
 
-		ProductMenu.gotoSite(site = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			panel = "Site Administration",
-			portlet = "Recycle Bin");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
 
 		RecycleBin.viewDuplicateNames(assetName = "WC WebContent Title");
 	}
 
 	@priority = "4"
 	test ViewDuplicateFolderNamesInRecycleBin {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		JSONWebcontent.addFolder(
+			folderName = "WC Folder Name",
+			groupName = "Test Site Name");
 
-		ProductMenu.gotoSite(site = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentFolder.addCP(
-			folderDescription = "WC Folder Description",
-			folderName = "WC Folder Name");
-
-		ProductMenu.gotoSite(site = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentFolder.moveToRecycleBinCP(
 			assetType = "Web Content Folder",
 			folderName = "WC Folder Name");
 
-		ProductMenu.gotoSite(site = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			panel = "Site Administration",
-			portlet = "Recycle Bin");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
 
 		RecycleBin.viewCP(
 			assetName = "WC Folder Name",
 			assetType = "Web Content Folder",
 			deleteUser = "Test Test");
 
-		ProductMenu.gotoSite(site = "${siteName}");
+		JSONWebcontent.addFolder(
+			folderName = "WC Folder Name",
+			groupName = "Test Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentFolder.addCP(
-			folderDescription = "WC Folder Description",
-			folderName = "WC Folder Name");
-
-		ProductMenu.gotoSite(site = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentFolder.moveToRecycleBinCP(
 			assetType = "Web Content Folder",
 			folderName = "WC Folder Name");
 
-		ProductMenu.gotoSite(site = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			panel = "Site Administration",
-			portlet = "Recycle Bin");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
 
 		RecycleBin.viewDuplicateNames(assetName = "WC Folder Name");
 	}
 
 	@priority = "3"
 	test ViewRecycleBinEntryViaSuccessMessageLink {
-		Navigator.openURL();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC Web Content Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",

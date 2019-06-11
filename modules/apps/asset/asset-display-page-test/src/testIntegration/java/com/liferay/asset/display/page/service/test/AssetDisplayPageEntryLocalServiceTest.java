@@ -61,6 +61,21 @@ public class AssetDisplayPageEntryLocalServiceTest {
 	public void testAddAssetDisplayPageEntry() throws PortalException {
 		long classPK = RandomTestUtil.randomLong();
 
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			AssetDisplayPageEntryTestUtil.addDefaultAssetDisplayPageEntry(
+				_group.getGroupId(), _classNameId, classPK, 0);
+
+		Assert.assertNotNull(assetDisplayPageEntry);
+
+		Assert.assertEquals(
+			AssetDisplayPageConstants.TYPE_DEFAULT,
+			assetDisplayPageEntry.getType());
+	}
+
+	@Test
+	public void testAddAssetDisplayPageEntryWithType() throws PortalException {
+		long classPK = RandomTestUtil.randomLong();
+
 		long layoutPageTemplateEntryId = RandomTestUtil.randomLong();
 
 		AssetDisplayPageEntry assetDisplayPageEntry =
@@ -82,21 +97,6 @@ public class AssetDisplayPageEntryLocalServiceTest {
 
 		Assert.assertEquals(
 			AssetDisplayPageConstants.TYPE_SPECIFIC,
-			assetDisplayPageEntry.getType());
-	}
-
-	@Test
-	public void testAddDefaultAssetDisplayPageEntry() throws PortalException {
-		long classPK = RandomTestUtil.randomLong();
-
-		AssetDisplayPageEntry assetDisplayPageEntry =
-			AssetDisplayPageEntryTestUtil.addDefaultAssetDisplayPageEntry(
-				_group.getGroupId(), _classNameId, classPK, 0);
-
-		Assert.assertNotNull(assetDisplayPageEntry);
-
-		Assert.assertEquals(
-			AssetDisplayPageConstants.TYPE_DEFAULT,
 			assetDisplayPageEntry.getType());
 	}
 

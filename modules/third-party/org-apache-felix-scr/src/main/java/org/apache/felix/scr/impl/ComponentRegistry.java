@@ -713,48 +713,6 @@ public class ComponentRegistry
 
     public void updateChangeCount()
     {
-        if ( registration != null )
-        {
-            synchronized ( changeCountLock )
-            {
-                this.changeCount++;
-                final long count = this.changeCount;
-                if ( this.timer == null )
-                {
-                    this.timer = new Timer();
-                }
-                try
-                {
-                    timer.schedule(new TimerTask()
-                        {
-
-                            @Override
-                            public void run() {
-                                synchronized ( changeCountLock )
-                                {
-                                    if ( changeCount == count )
-                                    {
-                                        try
-                                        {
-                                            registration.setProperties(getServiceRegistrationProperties());
-                                        }
-                                        catch ( final IllegalStateException ise)
-                                        {
-                                            // we ignore this as this might happen on shutdown
-                                        }
-                                        timer.cancel();
-                                        timer = null;
-                                    }
-                                }
-                            }
-                        }, m_configuration.serviceChangecountTimeout());
-                }
-                catch (Exception e) {
-                    m_logger.log(LogService.LOG_WARNING,
-                        "Service changecount Timer for {0} had a problem", e,
-                        registration.getReference());
-                }
-            }
-        }
     }
 }
+/* @generated */

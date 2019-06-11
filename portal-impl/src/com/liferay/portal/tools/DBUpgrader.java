@@ -239,15 +239,8 @@ public class DBUpgrader {
 			TransactionsUtil.disableTransactions();
 		}
 
-		boolean newBuildNumber = false;
-
-		if (ReleaseInfo.getBuildNumber() > release.getBuildNumber()) {
-			newBuildNumber = true;
-		}
-
 		try {
-			StartupHelperUtil.verifyProcess(
-				newBuildNumber, release.isVerified());
+			StartupHelperUtil.verifyProcess(release.isVerified());
 		}
 		catch (Exception e) {
 			_updateReleaseState(ReleaseConstants.STATE_VERIFY_FAILURE);

@@ -157,11 +157,8 @@ public class StartupHelper {
 		}
 	}
 
-	public void verifyProcess(boolean newBuildNumber, boolean verified)
-		throws VerifyException {
-
-		_verified = VerifyProcessUtil.verifyProcess(
-			_upgraded, newBuildNumber, verified);
+	public void verifyProcess(boolean verified) throws VerifyException {
+		_verified = VerifyProcessUtil.verifyProcess(_upgraded, verified);
 	}
 
 	public void verifyRequiredSchemaVersion() throws Exception {

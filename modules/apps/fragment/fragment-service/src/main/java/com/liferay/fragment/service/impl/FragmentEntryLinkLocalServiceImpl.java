@@ -326,6 +326,11 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
+	public List<FragmentEntryLink> getFragmentEntryLinks(String rendererKey) {
+		return fragmentEntryLinkPersistence.findByRendererKey(rendererKey);
+	}
+
+	@Override
 	public int getFragmentEntryLinksCount(long groupId, long fragmentEntryId) {
 		return fragmentEntryLinkFinder.countByG_F(groupId, fragmentEntryId);
 	}

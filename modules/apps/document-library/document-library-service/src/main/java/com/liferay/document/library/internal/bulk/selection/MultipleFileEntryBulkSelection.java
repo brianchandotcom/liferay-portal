@@ -23,11 +23,9 @@ import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.Map;
 
@@ -39,11 +37,10 @@ public class MultipleFileEntryBulkSelection
 
 	public MultipleFileEntryBulkSelection(
 		long[] fileEntryIds, Map<String, String[]> parameterMap,
-		ResourceBundleLoader resourceBundleLoader, Language language,
 		DLAppService dlAppService,
 		AssetEntryLocalService assetEntryLocalService) {
 
-		super(fileEntryIds, parameterMap, resourceBundleLoader, language);
+		super(fileEntryIds, parameterMap);
 
 		_dlAppService = dlAppService;
 		_assetEntryLocalService = assetEntryLocalService;

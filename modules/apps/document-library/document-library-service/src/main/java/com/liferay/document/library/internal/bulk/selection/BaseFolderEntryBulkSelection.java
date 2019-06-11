@@ -17,13 +17,11 @@ package com.liferay.document.library.internal.bulk.selection;
 import com.liferay.bulk.selection.BaseContainerEntryBulkSelection;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.model.RepositoryModel;
 import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.Map;
 
@@ -35,10 +33,9 @@ public abstract class BaseFolderEntryBulkSelection<T extends RepositoryModel<T>>
 
 	public BaseFolderEntryBulkSelection(
 		long repositoryId, long folderId, Map<String, String[]> parameterMap,
-		ResourceBundleLoader resourceBundleLoader, Language language,
 		RepositoryProvider repositoryProvider) {
 
-		super(folderId, parameterMap, resourceBundleLoader, language);
+		super(folderId, parameterMap);
 
 		_repositoryId = repositoryId;
 		_folderId = folderId;

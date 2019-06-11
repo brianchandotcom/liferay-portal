@@ -18,11 +18,9 @@ import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.document.library.internal.bulk.selection.util.BulkSelectionFactoryUtil;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
@@ -49,8 +47,8 @@ public class FolderBulkSelectionFactory
 			long folderId = BulkSelectionFactoryUtil.getFolderId(parameterMap);
 
 			return new FolderFolderBulkSelection(
-				repositoryId, folderId, parameterMap, _resourceBundleLoader,
-				_language, _repositoryProvider, _dlAppService);
+				repositoryId, folderId, parameterMap, _repositoryProvider,
+				_dlAppService);
 		}
 
 		if (!parameterMap.containsKey("rowIdsFolder")) {
@@ -73,27 +71,17 @@ public class FolderBulkSelectionFactory
 
 		if (folderIds.length == 1) {
 			return new SingleFolderBulkSelection(
-				folderIds[0], parameterMap, _resourceBundleLoader, _language,
-				_dlAppService);
+				folderIds[0], parameterMap, _dlAppService);
 		}
 
 		return new MultipleFolderBulkSelection(
-			folderIds, parameterMap, _resourceBundleLoader, _language,
-			_dlAppService);
+			folderIds, parameterMap, _dlAppService);
 	}
 
 	@Reference
 	private DLAppService _dlAppService;
 
 	@Reference
-	private Language _language;
-
-	@Reference
 	private RepositoryProvider _repositoryProvider;
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.document.library.service)"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

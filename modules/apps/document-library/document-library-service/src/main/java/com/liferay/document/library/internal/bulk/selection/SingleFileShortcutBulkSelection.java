@@ -20,9 +20,7 @@ import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.Map;
 
@@ -34,10 +32,9 @@ public class SingleFileShortcutBulkSelection
 
 	public SingleFileShortcutBulkSelection(
 		long fileShortcutId, Map<String, String[]> parameterMap,
-		ResourceBundleLoader resourceBundleLoader, Language language,
 		DLAppService dlAppService) {
 
-		super(fileShortcutId, parameterMap, resourceBundleLoader, language);
+		super(fileShortcutId, parameterMap);
 
 		_fileShortcutId = fileShortcutId;
 		_dlAppService = dlAppService;

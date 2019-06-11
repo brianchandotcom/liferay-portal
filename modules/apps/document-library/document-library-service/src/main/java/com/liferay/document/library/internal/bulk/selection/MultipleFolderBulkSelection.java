@@ -22,11 +22,9 @@ import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.Map;
 
@@ -38,10 +36,9 @@ public class MultipleFolderBulkSelection
 
 	public MultipleFolderBulkSelection(
 		long[] folderIds, Map<String, String[]> parameterMap,
-		ResourceBundleLoader resourceBundleLoader, Language language,
 		DLAppService dlAppService) {
 
-		super(folderIds, parameterMap, resourceBundleLoader, language);
+		super(folderIds, parameterMap);
 
 		_dlAppService = dlAppService;
 	}

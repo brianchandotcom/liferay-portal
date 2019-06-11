@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.delivery.client.dto.v1_0.KnowledgeBaseAttachment;
+import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
@@ -30,6 +31,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 
@@ -63,8 +65,11 @@ public class KnowledgeBaseAttachmentResourceTest
 			Map<String, File> multipartFiles)
 		throws Exception {
 
-		// TODO
-
+		Assert.assertEquals(
+			new String(FileUtil.getBytes(multipartFiles.get("file"))),
+			_read(
+				"http://localhost:8080" +
+					knowledgeBaseAttachment.getContentUrl()));
 	}
 
 	@Override
@@ -105,6 +110,18 @@ public class KnowledgeBaseAttachmentResourceTest
 			postKnowledgeBaseArticleKnowledgeBaseAttachment(
 				_kbArticle.getResourcePrimKey(),
 				randomKnowledgeBaseAttachment(), getMultipartFiles());
+	}
+
+	private String _read(String url) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+		httpInvoker.path(url);
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		return httpResponse.getContent();
 	}
 
 	private KBArticle _kbArticle;

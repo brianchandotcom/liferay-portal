@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.headless.delivery.client.dto.v1_0.BlogPostingImage;
+import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -72,8 +73,9 @@ public class BlogPostingImageResourceTest
 			BlogPostingImage blogPostingImage, Map<String, File> multipartFiles)
 		throws Exception {
 
-		// TODO
-
+		Assert.assertEquals(
+			new String(FileUtil.getBytes(multipartFiles.get("file"))),
+			_read("http://localhost:8080" + blogPostingImage.getContentUrl()));
 	}
 
 	@Override
@@ -90,6 +92,18 @@ public class BlogPostingImageResourceTest
 		files.put("file", FileUtil.createTempFile(randomString.getBytes()));
 
 		return files;
+	}
+
+	private String _read(String url) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+		httpInvoker.path(url);
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		return httpResponse.getContent();
 	}
 
 }

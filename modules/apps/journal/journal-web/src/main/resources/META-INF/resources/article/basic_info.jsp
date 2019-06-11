@@ -50,7 +50,7 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 </c:if>
 
 <c:choose>
-	<c:when test="<%= !journalWebConfiguration.journalArticleForceAutogenerateId() %>">
+	<c:when test="<%= !journalWebConfiguration.journalArticleForceAutogenerateId() && (journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
 		<div class="article-id">
 			<label for="<portlet:namespace />newArticleId"><liferay-ui:message key="id" /></label>
 

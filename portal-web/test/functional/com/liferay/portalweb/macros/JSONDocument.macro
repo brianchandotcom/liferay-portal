@@ -33,4 +33,35 @@ definition {
 
 		var messageId = JSONCurlUtil.post("${curl}");
 	}
+
+	@summary = "This calls the JSON WS API to add a DL Folder"
+	macro addFolder {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(repositoryId))) {
+			var repositoryId = "20123";
+		}
+
+		if (!(isSet(parentFolderId))) {
+			var parentFolderId = "0";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/dlapp/add-folder \
+			-u test@liferay.com:test \
+			-d repositoryId=${repositoryId} \
+			-d parentFolderId=${parentFolderId} \
+			-d name=${dmFolderName} \
+		 	-d description=${dmFolderDescription} \
+		''';
+
+		echo("## Adding a 'Folder' with the following info using JSONWS:");
+
+		echo("## * Name: ${dmFolderName}");
+
+		echo("## * Description: ${dmFolderDescription}");
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
 }

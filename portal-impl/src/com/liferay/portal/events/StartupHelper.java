@@ -181,6 +181,15 @@ public class StartupHelper {
 
 			throw new RuntimeException(msg);
 		}
+
+		if (!PortalUpgradeProcess.isInLatestSchemaVersion(
+			DataAccess.getConnection())) {
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Execute the upgrade tool first if you need to " +
+					"upgrade the latest portal core schema version");
+			}
+		}
 	}
 
 	protected String[] getUpgradeProcessClassNames(String key) {

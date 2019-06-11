@@ -77,7 +77,6 @@ import com.liferay.journal.web.asset.model.JournalArticleAssetRenderer;
 import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.journal.web.internal.util.JournalDDMTemplateUtil;
-import com.liferay.journal.web.util.JournalPortletUtil;
 import com.liferay.journal.web.util.JournalUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -93,7 +92,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -109,7 +107,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -402,27 +399,6 @@ public class JournalPortlet extends MVCPortlet {
 		throws Exception {
 
 		deleteArticles(actionRequest, actionResponse, true);
-	}
-
-	public void removeAddMenuFavItem(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String ddmStructureKey = ParamUtil.getString(
-			actionRequest, "ddmStructureKey");
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(actionRequest);
-
-		String key = JournalPortletUtil.getAddMenuFavItemKey(
-			actionRequest, actionResponse);
-
-		String[] addMenuFavItems = portalPreferences.getValues(
-			JournalPortletKeys.JOURNAL, key);
-
-		portalPreferences.setValues(
-			JournalPortletKeys.JOURNAL, key,
-			ArrayUtil.remove(addMenuFavItems, ddmStructureKey));
 	}
 
 	@Override

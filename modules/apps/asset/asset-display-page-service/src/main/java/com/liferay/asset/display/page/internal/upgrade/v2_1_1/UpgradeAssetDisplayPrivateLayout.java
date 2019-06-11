@@ -14,8 +14,11 @@
 
 package com.liferay.asset.display.page.internal.upgrade.v2_1_1;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
@@ -27,14 +30,24 @@ import java.sql.ResultSet;
 public class UpgradeAssetDisplayPrivateLayout extends UpgradeProcess {
 
 	public UpgradeAssetDisplayPrivateLayout(
-		LayoutLocalService layoutLocalService) {
+		LayoutLocalService layoutLocalService,
+		ResourceLocalService resourceLocalService) {
 
 		_layoutLocalService = layoutLocalService;
+		_resourceLocalService = resourceLocalService;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
 		_upgradeAssetDisplayLayouts();
+	}
+
+	private void _addResources(long groupId, long plid) throws PortalException {
+		Layout layout = _layoutLocalService.fetchLayout(plid);
+
+		_resourceLocalService.addResources(
+			layout.getCompanyId(), groupId, layout.getUserId(),
+			Layout.class.getName(), layout.getPlid(), false, true, true);
 	}
 
 	private void _upgradeAssetDisplayLayouts() throws Exception {
@@ -53,6 +66,8 @@ public class UpgradeAssetDisplayPrivateLayout extends UpgradeProcess {
 					long groupId = rs.getLong("groupId");
 					long plid = rs.getLong("plid");
 
+					_addResources(groupId, plid);
+
 					ps2.setLong(
 						1, _layoutLocalService.getNextLayoutId(groupId, false));
 					ps2.setBoolean(2, false);
@@ -67,5 +82,6 @@ public class UpgradeAssetDisplayPrivateLayout extends UpgradeProcess {
 	}
 
 	private final LayoutLocalService _layoutLocalService;
+	private final ResourceLocalService _resourceLocalService;
 
 }

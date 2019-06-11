@@ -147,20 +147,18 @@ public class SlimRuntimeServlet extends HttpServlet {
 					"longer supports older versions of MySQL.");
 		}
 
-		// Check required build number
+		// Check required schema version
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Check required build number");
+			_log.debug("Check required portal core schema version");
 		}
-
-		DBUpgrader.checkRequiredBuildNumber(ReleaseInfo.getParentBuildNumber());
 
 		if (!PortalUpgradeProcess.isInRequiredSchemaVersion(
 				DataAccess.getConnection())) {
 
 			String msg =
-				"You must first upgrade the portal to the required schema " +
-					"version " +
+				"You must first upgrade the portal core to the required " +
+					"schema version " +
 						PortalUpgradeProcess.getRequiredSchemaVersion();
 
 			System.out.println(msg);

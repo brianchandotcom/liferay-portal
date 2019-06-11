@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.analytics.client.osgi.internal.configuration.AnalyticsClientConfiguration",
-	immediate = true, service = AnalyticsClient.class
+	service = AnalyticsClient.class
 )
 public class AnalyticsClientImpl implements AnalyticsClient {
 

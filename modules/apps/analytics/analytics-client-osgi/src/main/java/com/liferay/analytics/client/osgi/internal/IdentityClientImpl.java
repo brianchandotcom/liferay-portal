@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.analytics.client.osgi.internal.configuration.IdentifyClientConfiguration",
-	immediate = true, service = IdentityClient.class
+	service = IdentityClient.class
 )
 public class IdentityClientImpl implements IdentityClient {
 

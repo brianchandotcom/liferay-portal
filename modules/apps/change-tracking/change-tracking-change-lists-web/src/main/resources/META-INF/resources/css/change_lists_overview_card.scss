@@ -48,18 +48,17 @@
 	}
 
 	.line-clamp {
+		max-width: 100%;
 		overflow: hidden;
+		position: relative;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		max-width: 100%;
-		position: relative;
 
 		.lfr-portal-tooltip {
 			display: inline;
 		}
-	  }
+	}
 
-	
 	@supports (-webkit-line-clamp: 2) {
 		.line-clamp {
 			display: -webkit-box;

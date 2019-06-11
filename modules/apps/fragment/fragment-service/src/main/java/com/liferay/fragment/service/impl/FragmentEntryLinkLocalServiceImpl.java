@@ -19,8 +19,6 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
-import com.liferay.fragment.service.FragmentCollectionLocalService;
-import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.service.base.FragmentEntryLinkLocalServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -474,7 +472,7 @@ public class FragmentEntryLinkLocalServiceImpl
 
 		for (long fragmentId : fragmentEntryIds) {
 			FragmentEntry fragmentEntry =
-				_fragmentEntryLocalService.fetchFragmentEntry(fragmentId);
+				fragmentEntryPersistence.fetchByPrimaryKey(fragmentId);
 
 			addFragmentEntryLink(
 				userId, groupId, 0, fragmentEntry.getFragmentEntryId(),
@@ -520,14 +518,14 @@ public class FragmentEntryLinkLocalServiceImpl
 		throws PortalException {
 
 		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.fetchFragmentEntry(fragmentEntryId);
+			fragmentEntryPersistence.fetchByPrimaryKey(fragmentEntryId);
 
 		if (fragmentEntry == null) {
 			return html;
 		}
 
 		FragmentCollection fragmentCollection =
-			_fragmentCollectionLocalService.fetchFragmentCollection(
+			fragmentCollectionPersistence.fetchByPrimaryKey(
 				fragmentEntry.getFragmentCollectionId());
 
 		Matcher matcher = _pattern.matcher(html);
@@ -558,12 +556,6 @@ public class FragmentEntryLinkLocalServiceImpl
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
-
-	@Reference
-	private FragmentCollectionLocalService _fragmentCollectionLocalService;
-
-	@Reference
-	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;

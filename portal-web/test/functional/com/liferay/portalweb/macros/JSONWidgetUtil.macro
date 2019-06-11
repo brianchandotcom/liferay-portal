@@ -31,6 +31,10 @@ definition {
 
 		if ("${widgetName}" == "Asset Publisher") {
 			var portletId = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet";
+		} else if ("${widgetName}" == "Search Results") {
+			var portletId = "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet";
+		} else if ("${widgetName}" == "Type Facet") {
+			var portletId = "com_liferay_portal_search_web_type_facet_portlet_TypeFacetPortlet";
 		} else if ("${widgetName}" == "Web Content Display") {
 			var portletId = "com_liferay_journal_content_web_portlet_JournalContentPortlet";
 		} else {

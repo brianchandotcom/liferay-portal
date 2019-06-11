@@ -523,6 +523,110 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-96438. Guests should be able to view web content articles through display page templates."
+	@priority = "5"
+	test ViewDisplayPageAsGuest {
+		task ("Add a couple pages to the site so the navigation menu will appear in the display page template header") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page 1");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page 2");
+		}
+
+		task ("Add a destination page for the Search Bar widget so it will appear to a guest user") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Search");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Search",
+				widgetName = "Search Results");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Search",
+				widgetName = "Type Facet");
+		}
+
+		task ("Mark the display page as default") {
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Add a web content article") {
+			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "Webcontent Content",
+				webContentTitle = "Webcontent Title");
+		}
+
+		task ("Assert the display page is selected by default") {
+			Panel.expandPanel(panel = "Display Page Template");
+
+			AssertSelectedLabel(
+				locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
+				value1 = "Default Display Page Template");
+
+			AssertTextEquals(
+				locator1 = "WCEditWebContent#DISPLAY_PAGE_DEFAULT_SELECTION",
+				value1 = "Display Page Name");
+		}
+
+		task ("Publish the web content article") {
+			PortletEntry.publish();
+		}
+
+		task ("Logout of portal") {
+			User.logoutPG();
+		}
+
+		task ("View the web content article through its friendly URL") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
+		}
+
+		task ("Assert the page header which contains the site logo, search bar, and navigation menu appears") {
+			AssertVisible(locator1 = "Home#DEFAULT_LOGO");
+
+			AssertVisible(locator1 = "TextInput#SEARCH");
+
+			AssertVisible(
+				key_pageName = "Test Page 1",
+				locator1 = "Home#PAGE");
+
+			AssertVisible(
+				key_pageName = "Test Page 2",
+				locator1 = "Home#PAGE");
+
+			AssertVisible(
+				key_pageName = "Search",
+				locator1 = "Home#PAGE");
+		}
+
+		task ("Assert the web content article content appears") {
+			AssertVisible(
+				key_content = "Webcontent Title",
+				key_fragmentClass = "header",
+				key_position = "1",
+				locator1 = "Fragment#FRAGMENT");
+
+			AssertVisible(
+				key_content = "Webcontent Content",
+				key_fragmentClass = "rich-text",
+				key_position = "2",
+				locator1 = "Fragment#FRAGMENT");
+		}
+
+		task ("Assert the page footer appears") {
+			AssertVisible(locator1 = "Home#FOOTER");
+		}
+	}
+
 	@description = "When a display page is marked as default, associated assets will be displayed through the display page by default without need for additional configuration."
 	@priority = "5"
 	test ViewDisplayPageMarkedAsDefault {

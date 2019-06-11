@@ -219,9 +219,11 @@ definition {
 			webContentTitle = "${webContentTitle}");
 
 		if (isSet(templateName)) {
-			WebContent.selectTemplateCP(
-				structureName = "Basic Web Content",
-				templateName = "${templateName}");
+			if (IsTextNotEqual(locator1 = "WCEditWebContent#SELECTED_TEMPLATE", value1 = "${templateName}")) {
+				WebContent.selectTemplateCP(
+					structureName = "${structureName}",
+					templateName = "${templateName}");
+			}
 		}
 
 		Button.clickPublish();
@@ -255,9 +257,11 @@ definition {
 		}
 
 		if (isSet(templateName)) {
-			WebContent.selectTemplateCP(
-				structureName = "${structureName}",
-				templateName = "${templateName}");
+			if (IsTextNotEqual(locator1 = "WCEditWebContent#SELECTED_TEMPLATE", value1 = "${templateName}")) {
+				WebContent.selectTemplateCP(
+					structureName = "${structureName}",
+					templateName = "${templateName}");
+			}
 		}
 
 		Click(locator1 = "Button#PUBLISH");
@@ -376,9 +380,11 @@ definition {
 			value1 = "${webContentContent}");
 
 		if (isSet(templateName)) {
-			WebContent.selectTemplateCP(
-				structureName = "${structureName}",
-				templateName = "${templateName}");
+			if (IsTextNotEqual(locator1 = "WCEditWebContent#SELECTED_TEMPLATE", value1 = "${templateName}")) {
+				WebContent.selectTemplateCP(
+					structureName = "${structureName}",
+					templateName = "${templateName}");
+			}
 		}
 
 		Click(locator1 = "Button#PUBLISH");
@@ -598,9 +604,11 @@ definition {
 		}
 
 		if (isSet(templateName)) {
-			WebContent.selectTemplateCP(
-				structureName = "${structureName}",
-				templateName = "${templateName}");
+			if (IsTextNotEqual(locator1 = "WCEditWebContent#SELECTED_TEMPLATE", value1 = "${templateName}")) {
+				WebContent.selectTemplateCP(
+					structureName = "${structureName}",
+					templateName = "${templateName}");
+			}
 		}
 
 		if ("${saveAsDraft}" == "true") {

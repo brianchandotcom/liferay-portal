@@ -42,7 +42,7 @@ else {
 		</ul>
 	</c:if>
 
-	<label><%= HtmlUtil.escape(fileVersion.getTitle()) %></label>
+	<h1 class="sidebar-title"><%= HtmlUtil.escape(fileVersion.getTitle()) %></h1>
 
 	<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
 		<clay:label

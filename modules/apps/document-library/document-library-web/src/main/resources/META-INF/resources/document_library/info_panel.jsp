@@ -67,15 +67,11 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 				</li>
 			</ul>
 
-			<div class="sidebar-title">
-				<label><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %></label>
-			</div>
+			<h1 class="sidebar-title"><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %></h1>
 
-			<div class="sidebar-subtitle">
-				<label>
-					<liferay-ui:message key="folder" />
-				</label>
-			</div>
+			<h2 class="sidebar-subtitle">
+				<liferay-ui:message key="folder" />
+			</h2>
 		</div>
 
 		<div class="sidebar-body">
@@ -150,13 +146,13 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 				</li>
 			</ul>
 
-			<div class="sidebar-title">
-				<label><%= HtmlUtil.escape(fileShortcut.getToTitle()) %></label>
-			</div>
+			<h1 class="sidebar-title">
+				<%= HtmlUtil.escape(fileShortcut.getToTitle()) %>
+			</h1>
 
-			<label>
+			<h2 class="sidebar-subtitle">
 				<liferay-ui:message key="shortcut" />
-			</label>
+			</h2>
 		</div>
 
 		<div class="sidebar-body">
@@ -259,9 +255,9 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">
-			<div class="sidebar-title">
-				<label ><liferay-ui:message arguments="<%= folders.size() + fileEntries.size() + fileShortcuts.size() %>" key="x-items-are-selected" /></label>
-			</div>
+			<h1 class="sidebar-title">
+				<liferay-ui:message arguments="<%= folders.size() + fileEntries.size() + fileShortcuts.size() %>" key="x-items-are-selected" />
+			</h1>
 		</div>
 
 		<div class="sidebar-body">
@@ -271,9 +267,9 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 				refresh="<%= false %>"
 			>
 				<liferay-ui:section>
-					<label>
+					<strong>
 						<liferay-ui:message arguments="<%= folders.size() + fileEntries.size() + fileShortcuts.size() %>" key="x-items-are-selected" />
-					</label>
+					</strong>
 				</liferay-ui:section>
 			</liferay-ui:tabs>
 		</div>

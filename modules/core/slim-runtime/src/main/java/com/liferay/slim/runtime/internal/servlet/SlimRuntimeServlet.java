@@ -16,6 +16,7 @@ package com.liferay.slim.runtime.internal.servlet;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ShutdownHook;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -149,22 +150,7 @@ public class SlimRuntimeServlet extends HttpServlet {
 
 		// Check required schema version
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Check required portal core schema version");
-		}
-
-		if (!PortalUpgradeProcess.isInRequiredSchemaVersion(
-				DataAccess.getConnection())) {
-
-			String msg =
-				"You must first upgrade the portal core to the required " +
-					"schema version " +
-						PortalUpgradeProcess.getRequiredSchemaVersion();
-
-			System.out.println(msg);
-
-			throw new RuntimeException(msg);
-		}
+		StartupHelperUtil.verifyRequiredSchemaVersion();
 
 		Registry registry = RegistryUtil.getRegistry();
 

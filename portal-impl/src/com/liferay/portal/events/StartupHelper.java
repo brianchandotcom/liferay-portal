@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcessUtil;
@@ -161,6 +162,25 @@ public class StartupHelper {
 
 		_verified = VerifyProcessUtil.verifyProcess(
 			_upgraded, newBuildNumber, verified);
+	}
+
+	public void verifyRequiredSchemaVersion() throws Exception {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Check required portal core schema version");
+		}
+
+		if (!PortalUpgradeProcess.isInRequiredSchemaVersion(
+			DataAccess.getConnection())) {
+
+			String msg =
+				"You must first upgrade the portal core to the required " +
+				"schema version " +
+				PortalUpgradeProcess.getRequiredSchemaVersion();
+
+			System.out.println(msg);
+
+			throw new RuntimeException(msg);
+		}
 	}
 
 	protected String[] getUpgradeProcessClassNames(String key) {

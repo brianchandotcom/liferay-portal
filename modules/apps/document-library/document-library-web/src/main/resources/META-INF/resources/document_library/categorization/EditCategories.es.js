@@ -3,7 +3,7 @@ import 'clay-radio';
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
-import 'frontend-js-web/liferay/compat/modal/Modal.es';
+import {Modal} from 'frontend-js-web';
 import 'asset-taglib/asset_categories_selector/AssetCategoriesSelector.es';
 import templates from './EditCategories.soy';
 

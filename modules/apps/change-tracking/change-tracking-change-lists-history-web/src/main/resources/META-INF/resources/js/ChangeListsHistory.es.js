@@ -1,8 +1,7 @@
 import 'clay-label';
 import 'clay-progress-bar';
 import 'clay-sticker';
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
-import {openToast} from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
+import {PortletBase, openToast} from 'frontend-js-web';
 
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';

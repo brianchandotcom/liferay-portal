@@ -1,9 +1,8 @@
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+import {PortletBase, openToast} from 'frontend-js-web';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 import {dom} from 'metal-dom';
 import {EventHandler} from 'metal-events';
-import {openToast} from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
 
 import templates from './ChangeListsIndicator.soy';
 

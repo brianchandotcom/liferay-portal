@@ -5,7 +5,7 @@ import {ClayStripe} from 'clay-alert';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 import templates from './ManageCollaborators.soy';
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+import {PortletBase} from 'frontend-js-web';
 
 /**
  * Handles actions to delete or change permissions of the

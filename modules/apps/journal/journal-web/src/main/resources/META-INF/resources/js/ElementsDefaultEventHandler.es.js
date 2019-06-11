@@ -1,4 +1,4 @@
-import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es';
+import {DefaultEventHandler} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 class ElementsDefaultEventHandler extends DefaultEventHandler {

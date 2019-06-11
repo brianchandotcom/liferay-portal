@@ -4,7 +4,7 @@ import Soy from 'metal-soy';
 import dom from 'metal-dom';
 import {CancellablePromise} from 'metal-promise';
 import {async, core} from 'metal';
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+import {PortletBase} from 'frontend-js-web';
 
 import ImageEditorHistoryEntry from './ImageEditorHistoryEntry.es';
 import ImageEditorLoading from './ImageEditorLoading.es';

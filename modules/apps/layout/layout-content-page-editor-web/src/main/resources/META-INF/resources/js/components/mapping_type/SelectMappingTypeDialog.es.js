@@ -2,7 +2,7 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 
 import './SelectMappingTypeForm.es';
-import 'frontend-js-web/liferay/compat/modal/Modal.es';
+import {Modal} from 'frontend-js-web';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {HIDE_MAPPING_TYPE_DIALOG} from '../../actions/actions.es';
 import templates from './SelectMappingTypeDialog.soy';

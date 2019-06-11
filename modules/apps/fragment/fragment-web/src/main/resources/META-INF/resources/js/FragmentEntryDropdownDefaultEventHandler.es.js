@@ -1,5 +1,4 @@
-import OpenSimpleInputModal from 'frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es';
-import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es';
+import {DefaultEventHandler, openSimpleInputModal} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
@@ -53,7 +52,7 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	renameFragmentEntry(itemData) {
-		OpenSimpleInputModal({
+		openSimpleInputModal({
 			dialogTitle: Liferay.Language.get('rename-fragment'),
 			formSubmitURL: itemData.updateFragmentEntryURL,
 			idFieldName: 'id',

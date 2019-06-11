@@ -4,7 +4,7 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 import 'asset-taglib/asset_tags_selector/AssetTagsSelector.es';
-import 'frontend-js-web/liferay/compat/modal/Modal.es';
+import {Modal} from 'frontend-js-web';
 import templates from './EditTags.soy';
 
 /**

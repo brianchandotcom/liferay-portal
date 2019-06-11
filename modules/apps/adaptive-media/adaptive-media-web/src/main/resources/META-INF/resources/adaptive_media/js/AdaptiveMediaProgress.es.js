@@ -1,6 +1,6 @@
 import 'clay-progress-bar';
 import Ajax from 'metal-ajax';
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+import {PortletBase} from 'frontend-js-web';
 import Soy from 'metal-soy';
 import core from 'metal';
 

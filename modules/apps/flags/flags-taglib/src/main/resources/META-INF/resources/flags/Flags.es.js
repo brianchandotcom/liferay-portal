@@ -1,5 +1,4 @@
-import 'frontend-js-web/liferay/compat/modal/Modal.es';
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+import {Modal, PortletBase} from 'frontend-js-web';
 import Soy from 'metal-soy';
 import templates from './Flags.soy';
 import {Config} from 'metal-state';

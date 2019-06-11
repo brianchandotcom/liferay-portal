@@ -1,6 +1,6 @@
 import {App} from 'senna';
 import {CancellablePromise} from 'metal-promise';
-import {openToast} from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
+import {openToast} from 'frontend-js-web';
 import core from 'metal';
 import dom from 'metal-dom';
 import Uri from 'metal-uri';

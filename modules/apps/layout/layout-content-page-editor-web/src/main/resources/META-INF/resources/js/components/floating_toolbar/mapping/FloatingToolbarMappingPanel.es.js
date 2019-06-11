@@ -1,5 +1,5 @@
 import 'clay-dropdown';
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+import {PortletBase} from 'frontend-js-web';
 import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarMappingPanelDelegateTemplate.soy';

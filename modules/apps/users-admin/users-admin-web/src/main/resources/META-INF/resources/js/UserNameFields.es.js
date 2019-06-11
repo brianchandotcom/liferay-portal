@@ -2,7 +2,7 @@ import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import {Config} from 'metal-state';
 
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+import {PortletBase} from 'frontend-js-web';
 
 /**
  * Handles actions to display user name field for a given locale.

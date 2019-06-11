@@ -3,8 +3,7 @@ import 'clay-checkbox';
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
-import 'frontend-js-web/liferay/compat/modal/Modal.es';
-import {openToast} from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
+import {Modal, openToast} from 'frontend-js-web';
 import templates from './PublishChangeList.soy';
 
 /**

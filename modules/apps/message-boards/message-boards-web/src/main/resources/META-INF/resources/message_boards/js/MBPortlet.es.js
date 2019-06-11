@@ -1,6 +1,6 @@
 import core from 'metal';
 import {EventHandler} from 'metal-events';
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+import {PortletBase} from 'frontend-js-web';
 
 /**
  * MBPortlet handles the actions of replying or editing a

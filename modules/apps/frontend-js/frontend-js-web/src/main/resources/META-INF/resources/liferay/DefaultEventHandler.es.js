@@ -1,4 +1,4 @@
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+import PortletBase from './PortletBase.es';
 
 class DefaultEventHandler extends PortletBase {
 	callAction(event) {

@@ -1,8 +1,7 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
-import {openToast} from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
 import Soy from 'metal-soy';
-import 'frontend-js-web/liferay/compat/modal/Modal.es';
+import {Modal, openToast} from 'frontend-js-web';
 import templates from './ContentsAffected.soy';
 
 /**

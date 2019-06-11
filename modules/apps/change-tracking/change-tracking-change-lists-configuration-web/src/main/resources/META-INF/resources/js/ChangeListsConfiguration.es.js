@@ -1,8 +1,7 @@
 import ClayNavigationBar from 'clay-navigation-bar';
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+import {PortletBase, openToast} from 'frontend-js-web';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
-import {openToast} from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
 
 import templates from './ChangeListsConfiguration.soy';
 

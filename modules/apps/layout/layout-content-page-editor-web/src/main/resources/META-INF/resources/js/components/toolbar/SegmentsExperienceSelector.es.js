@@ -10,7 +10,7 @@ import {
 	SELECT_SEGMENTS_EXPERIENCE,
 	UPDATE_SEGMENTS_EXPERIENCE_PRIORITY
 } from '../../actions/actions.es';
-import 'frontend-js-web/liferay/compat/modal/Modal.es';
+import {Modal} from 'frontend-js-web';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 
 const DISMISS_ALERT_ANIMATION_WAIT = 500;

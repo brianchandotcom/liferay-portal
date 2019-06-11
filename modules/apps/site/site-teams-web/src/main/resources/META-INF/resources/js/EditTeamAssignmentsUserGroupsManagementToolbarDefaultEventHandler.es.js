@@ -1,5 +1,5 @@
 import dom from 'metal-dom';
-import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es';
+import {DefaultEventHandler} from 'frontend-js-web';
 
 class EditTeamAssignmentsUserGroupsManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	selectUserGroup(itemData) {

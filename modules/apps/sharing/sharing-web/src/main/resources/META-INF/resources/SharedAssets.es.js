@@ -1,4 +1,4 @@
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+import {PortletBase} from 'frontend-js-web';
 
 class SharedAssets extends PortletBase {
 	constructor(config, ...args) {

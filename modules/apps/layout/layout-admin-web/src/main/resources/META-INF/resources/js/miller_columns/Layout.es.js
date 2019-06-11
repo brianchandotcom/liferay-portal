@@ -1,6 +1,6 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
-import navigate from 'frontend-js-web/liferay/util/navigate.es';
+import {navigate} from 'frontend-js-web';
 import Soy from 'metal-soy';
 
 import './LayoutBreadcrumbs.es';

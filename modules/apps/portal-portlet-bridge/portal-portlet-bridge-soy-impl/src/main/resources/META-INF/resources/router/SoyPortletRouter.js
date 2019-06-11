@@ -1,5 +1,5 @@
 import {CancellablePromise} from 'metal-promise';
-import {openToast} from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
+import {openToast} from 'frontend-js-web';
 import {RequestScreen, utils} from 'senna';
 import {toRegex} from 'metal-path-parser';
 import Component from 'metal-component';

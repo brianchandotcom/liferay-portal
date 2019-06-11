@@ -3,7 +3,7 @@ import 'metal';
 import 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+import {PortletBase} from 'frontend-js-web';
 
 import templates from './FieldMappings.soy';
 

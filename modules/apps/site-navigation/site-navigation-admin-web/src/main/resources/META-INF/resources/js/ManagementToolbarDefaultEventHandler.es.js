@@ -1,10 +1,9 @@
-import OpenSimpleInputModal from 'frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es';
-import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es';
+import {DefaultEventHandler, openSimpleInputModal} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	addSiteNavigationMenu(itemData) {
-		OpenSimpleInputModal({
+		openSimpleInputModal({
 			dialogTitle: Liferay.Language.get('add-menu'),
 			formSubmitURL: itemData.addSiteNavigationMenuURL,
 			mainFieldLabel: Liferay.Language.get('name'),

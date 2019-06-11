@@ -2,7 +2,7 @@ import core from 'metal';
 import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
 
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+import {PortletBase} from 'frontend-js-web';
 
 /**
  * Enables/disables the actions of the configuration entry's while

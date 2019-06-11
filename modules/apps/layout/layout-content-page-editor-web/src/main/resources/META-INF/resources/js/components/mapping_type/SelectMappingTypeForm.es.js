@@ -1,5 +1,5 @@
 import {Config} from 'metal-state';
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+import {PortletBase} from 'frontend-js-web';
 import Soy from 'metal-soy';
 
 import getConnectedComponent from '../../store/ConnectedComponent.es';

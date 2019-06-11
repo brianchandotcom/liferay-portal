@@ -1,10 +1,9 @@
-import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es';
-import OpenSimpleInputModal from 'frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es';
+import {DefaultEventHandler, openSimpleInputModal} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 class EmptyResultMessageDefaultEventHandler extends DefaultEventHandler {
 	addAssetListEntry(itemData) {
-		OpenSimpleInputModal({
+		openSimpleInputModal({
 			dialogTitle: itemData.title,
 			formSubmitURL: itemData.addAssetListEntryURL,
 			mainFieldLabel: Liferay.Language.get('title'),

@@ -1,4 +1,4 @@
-import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es';
+import {DefaultEventHandler} from 'frontend-js-web';
 
 class LayoutPrototypeDropdownDefaultEventHandler extends DefaultEventHandler {
 	deleteLayoutPrototype(itemData) {

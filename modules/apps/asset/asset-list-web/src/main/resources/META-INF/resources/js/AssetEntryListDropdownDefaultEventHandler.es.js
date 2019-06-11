@@ -1,5 +1,4 @@
-import OpenSimpleInputModal from 'frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es';
-import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es';
+import {DefaultEventHandler, openSimpleInputModal} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 class AssetEntryListDropdownDefaultEventHandler extends DefaultEventHandler {
@@ -21,7 +20,7 @@ class AssetEntryListDropdownDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	renameAssetListEntry(itemData) {
-		OpenSimpleInputModal({
+		openSimpleInputModal({
 			dialogTitle: Liferay.Language.get('rename-content-set'),
 			formSubmitURL: itemData.renameAssetListEntryURL,
 			idFieldName: 'id',

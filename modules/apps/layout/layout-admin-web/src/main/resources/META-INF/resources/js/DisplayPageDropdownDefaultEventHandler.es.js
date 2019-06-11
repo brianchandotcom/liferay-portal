@@ -1,5 +1,4 @@
-import OpenSimpleInputModal from 'frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es';
-import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es';
+import {DefaultEventHandler, openSimpleInputModal} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 class DisplayPageDropdownDefaultEventHandler extends DefaultEventHandler {
@@ -38,7 +37,7 @@ class DisplayPageDropdownDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	renameDisplayPage(itemData) {
-		OpenSimpleInputModal({
+		openSimpleInputModal({
 			dialogTitle: Liferay.Language.get('rename-display-page-template'),
 			formSubmitURL: itemData.updateDisplayPageURL,
 			idFieldName: 'layoutPageTemplateEntryId',

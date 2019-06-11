@@ -1,8 +1,7 @@
 import {Config} from 'metal-state';
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+import {Modal, PortletBase} from 'frontend-js-web';
 import Soy from 'metal-soy';
 
-import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import {COMPATIBLE_TYPES} from '../../utils/constants';
 import {HIDE_MAPPING_DIALOG} from '../../actions/actions.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';

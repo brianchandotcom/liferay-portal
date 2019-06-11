@@ -8292,6 +8292,19 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 				</if>
 
 				<if>
+					<isset property="database.@{database.type}.schema" />
+					<then>
+						<local name="database.schema" />
+
+						<propertycopy from="database.@{database.type}.schema" name="database.schema" />
+
+						<echo append="true" file="${test.ext.properties.file}">
+							database.@{database.type}.schema=${database.schema}
+						</echo>
+					</then>
+				</if>
+
+				<if>
 					<isset property="database.@{database.type}.url" />
 					<then>
 						<local name="database.url" />

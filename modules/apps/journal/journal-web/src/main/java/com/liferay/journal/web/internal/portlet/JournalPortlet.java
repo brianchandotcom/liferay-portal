@@ -204,35 +204,6 @@ public class JournalPortlet extends MVCPortlet {
 
 	public static final String VERSION_SEPARATOR = "_version_";
 
-	public void addAddMenuFavItem(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String ddmStructureKey = ParamUtil.getString(
-			actionRequest, "ddmStructureKey");
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(actionRequest);
-
-		String key = JournalPortletUtil.getAddMenuFavItemKey(
-			actionRequest, actionResponse);
-
-		String[] addMenuFavItems = portalPreferences.getValues(
-			JournalPortletKeys.JOURNAL, key, new String[0]);
-
-		if (addMenuFavItems.length >=
-				_journalWebConfiguration.maxAddMenuItems()) {
-
-			hideDefaultErrorMessage(actionRequest);
-
-			throw new MaxAddMenuFavItemsException();
-		}
-
-		portalPreferences.setValues(
-			JournalPortletKeys.JOURNAL, key,
-			ArrayUtil.append(addMenuFavItems, ddmStructureKey));
-	}
-
 	public void addArticle(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

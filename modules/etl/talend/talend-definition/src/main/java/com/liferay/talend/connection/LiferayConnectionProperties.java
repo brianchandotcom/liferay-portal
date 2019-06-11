@@ -69,6 +69,19 @@ public class LiferayConnectionProperties
 
 		refreshLayout(getForm(Form.MAIN));
 		refreshLayout(getForm(FORM_WIZARD));
+
+		if (loginType.getValue() == LoginType.BASIC) {
+			_setHiddenBasicAuthorizationFields(getForm(Form.MAIN), false);
+			_setHiddenBasicAuthorizationFields(getForm(FORM_WIZARD), false);
+			_setHiddenOAuthAuthorizationFields(getForm(Form.MAIN), true);
+			_setHiddenOAuthAuthorizationFields(getForm(FORM_WIZARD), true);
+		}
+		else {
+			_setHiddenBasicAuthorizationFields(getForm(Form.MAIN), true);
+			_setHiddenBasicAuthorizationFields(getForm(FORM_WIZARD), true);
+			_setHiddenOAuthAuthorizationFields(getForm(Form.MAIN), false);
+			_setHiddenOAuthAuthorizationFields(getForm(FORM_WIZARD), false);
+		}
 	}
 
 	public void afterReferencedComponent() {
@@ -126,6 +139,22 @@ public class LiferayConnectionProperties
 		return URIUtils.extractServerURL(apiSpecURL);
 	}
 
+	public boolean isBasicAuthorization() {
+		if (loginType.getValue() == LoginType.BASIC) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isOAuth2Authorization() {
+		if (loginType.getValue() == LoginType.OAUTH2) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Override
 	public void refreshLayout(Form form) {
 		super.refreshLayout(form);
@@ -141,16 +170,17 @@ public class LiferayConnectionProperties
 			useOtherConnection = true;
 		}
 
-		PropertiesUtils.setHidden(form, anonymousLogin, useOtherConnection);
 		PropertiesUtils.setHidden(form, apiSpecURL, useOtherConnection);
 		PropertiesUtils.setHidden(form, loginType, useOtherConnection);
-		PropertiesUtils.setHidden(form, password, useOtherConnection);
-		PropertiesUtils.setHidden(form, userId, useOtherConnection);
+
+		_setHiddenBasicAuthorizationFields(form, useOtherConnection);
 
 		if (!useOtherConnection && anonymousLogin.getValue()) {
 			PropertiesUtils.setHidden(form, userId, true);
 			PropertiesUtils.setHidden(form, password, true);
 		}
+
+		_setHiddenOAuthAuthorizationFields(form, useOtherConnection);
 	}
 
 	@Override
@@ -268,7 +298,7 @@ public class LiferayConnectionProperties
 
 	public enum LoginType {
 
-		BASIC("Basic Authentication");
+		BASIC("Basic Authentication"), OAUTH2("OAuth2 Authorization");
 
 		public String getDescription() {
 			return _description;
@@ -307,6 +337,14 @@ public class LiferayConnectionProperties
 		form.addRow(userId);
 
 		form.addColumn(password);
+
+		form.addRow(oauthClientId);
+		form.addRow(oauthClientSecret);
+
+		if ((loginType != null) && (loginType.getValue() == LoginType.BASIC)) {
+			PropertiesUtils.setHidden(form, oauthClientId, true);
+			PropertiesUtils.setHidden(form, oauthClientSecret, true);
+		}
 	}
 
 	private Form _createAdvancedForm(Properties properties, Property... props) {
@@ -356,6 +394,22 @@ public class LiferayConnectionProperties
 
 	private Widget _createWidget(NamedThing namedThing, String widgetType) {
 		return _createWidget(namedThing, false, widgetType);
+	}
+
+	private void _setHiddenBasicAuthorizationFields(Form form, boolean hidden) {
+		PropertiesUtils.setHidden(form, anonymousLogin, hidden);
+		PropertiesUtils.setHidden(form, password, hidden);
+		PropertiesUtils.setHidden(form, userId, hidden);
+
+		if (anonymousLogin.getValue()) {
+			PropertiesUtils.setHidden(form, userId, true);
+			PropertiesUtils.setHidden(form, password, true);
+		}
+	}
+
+	private void _setHiddenOAuthAuthorizationFields(Form form, boolean hidden) {
+		PropertiesUtils.setHidden(form, oauthClientId, hidden);
+		PropertiesUtils.setHidden(form, oauthClientSecret, hidden);
 	}
 
 	private static final String _COMMERCE_CATALOG_OAS_URL =

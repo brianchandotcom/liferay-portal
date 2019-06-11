@@ -106,14 +106,14 @@ public class GraphQLServletExtender {
 
 				@Override
 				public String getTypeName(Class<?> objectClass) {
-					GraphQLName name = objectClass.getAnnotation(
+					GraphQLName graphQLName = objectClass.getAnnotation(
 						GraphQLName.class);
 
-					if (name == null) {
+					if (graphQLName == null) {
 						return toGraphqlName(objectClass.getName());
 					}
 
-					return toGraphqlName(name.value());
+					return toGraphqlName(graphQLName.value());
 				}
 
 			};
@@ -160,13 +160,13 @@ public class GraphQLServletExtender {
 				}
 			});
 
-		Dictionary<String, Object> helperProperties = new HashMapDictionary<>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		helperProperties.put(
+		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME, "GraphQL");
-		helperProperties.put(
+		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH, "/graphql");
-		helperProperties.put(
+		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET, "GraphQL");
 
 		_servletContextHelperServiceRegistration =
@@ -174,7 +174,7 @@ public class GraphQLServletExtender {
 				ServletContextHelper.class,
 				new ServletContextHelper(bundleContext.getBundle()) {
 				},
-				helperProperties);
+				properties);
 
 		_activated = true;
 

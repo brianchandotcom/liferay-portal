@@ -333,6 +333,9 @@ public interface FragmentEntryLinkLocalService
 		long groupId, long fragmentEntryId, long classNameId, int start,
 		int end, OrderByComparator<FragmentEntryLink> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentEntryLink> getFragmentEntryLinks(String rendererKey);
+
 	/**
 	 * Returns all the fragment entry links matching the UUID and company.
 	 *

@@ -146,9 +146,11 @@ public class FragmentEntryLinkModelImpl
 
 	public static final long GROUPID_COLUMN_BITMASK = 16L;
 
-	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long RENDERERKEY_COLUMN_BITMASK = 32L;
 
-	public static final long POSITION_COLUMN_BITMASK = 64L;
+	public static final long UUID_COLUMN_BITMASK = 64L;
+
+	public static final long POSITION_COLUMN_BITMASK = 128L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -830,7 +832,17 @@ public class FragmentEntryLinkModelImpl
 
 	@Override
 	public void setRendererKey(String rendererKey) {
+		_columnBitmask |= RENDERERKEY_COLUMN_BITMASK;
+
+		if (_originalRendererKey == null) {
+			_originalRendererKey = _rendererKey;
+		}
+
 		_rendererKey = rendererKey;
+	}
+
+	public String getOriginalRendererKey() {
+		return GetterUtil.getString(_originalRendererKey);
 	}
 
 	@JSON
@@ -1041,6 +1053,9 @@ public class FragmentEntryLinkModelImpl
 			fragmentEntryLinkModelImpl._classPK;
 
 		fragmentEntryLinkModelImpl._setOriginalClassPK = false;
+
+		fragmentEntryLinkModelImpl._originalRendererKey =
+			fragmentEntryLinkModelImpl._rendererKey;
 
 		fragmentEntryLinkModelImpl._columnBitmask = 0;
 	}
@@ -1274,6 +1289,7 @@ public class FragmentEntryLinkModelImpl
 	private String _namespace;
 	private int _position;
 	private String _rendererKey;
+	private String _originalRendererKey;
 	private Date _lastPropagationDate;
 	private Date _lastPublishDate;
 	private long _columnBitmask;

@@ -466,6 +466,14 @@ public class FragmentEntryLinkLocalServiceWrapper
 			orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentEntryLink>
+		getFragmentEntryLinks(String rendererKey) {
+
+		return _fragmentEntryLinkLocalService.getFragmentEntryLinks(
+			rendererKey);
+	}
+
 	/**
 	 * Returns all the fragment entry links matching the UUID and company.
 	 *

@@ -5,6 +5,7 @@ package ${package}.constants;
  */
 public class ${className}PortletKeys {
 
-	public static final String ${className} = "${className.toLowerCase()}";
+	public static final String ${className.toUpperCase()} =
+		"${package.replaceAll("\\.", "_")}_${className}Portlet";
 
 }

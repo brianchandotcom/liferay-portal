@@ -57,7 +57,7 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 	</div>
 </div>
 
-<aui:script require="metal-dom/src/all/dom as dom">
+<aui:script require="metal-dom/src/all/dom as domAll">
 	Liferay.provide(
 		window,
 		'<portlet:namespace />addReplyToMessage',
@@ -97,7 +97,7 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 
 						addQuickReplyContainer.innerHTML = response;
 
-						dom.globalEval.runScriptsInElement(addQuickReplyContainer);
+						domAll.globalEval.runScriptsInElement(addQuickReplyContainer);
 
 						addQuickReplyContainer.classList.remove('hide');
 

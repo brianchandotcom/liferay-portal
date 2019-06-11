@@ -1780,7 +1780,7 @@ public class ProjectTemplatesTest {
 			"src/main/java/foo/test/constants/FooPortletKeys.java",
 			"public class FooPortletKeys",
 			"public static final String FOO",
-			"\"foo.test_FooPortlet\";");
+			"\"foo_test_FooPortlet\";");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/test/portlet/FooPortlet.java",
 			"package foo.test.portlet;",
@@ -1812,7 +1812,7 @@ public class ProjectTemplatesTest {
 			"src/main/java/foo/test/constants/FooPortletKeys.java",
 			"public class FooPortletKeys",
 			"public static final String FOO",
-			"\"foo.test_FooPortlet\";");
+			"\"foo_test_FooPortlet\";");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/test/portlet/FooPortlet.java",
 			"package foo.test.portlet;",
@@ -1844,7 +1844,7 @@ public class ProjectTemplatesTest {
 			"src/main/java/foo/test/constants/FooPortletKeys.java",
 			"public class FooPortletKeys",
 			"public static final String FOO",
-			"\"foo.test_FooPortlet\";");
+			"\"foo_test_FooPortlet\";");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/test/portlet/FooPortlet.java",
 			"package foo.test.portlet;",
@@ -1982,7 +1982,7 @@ public class ProjectTemplatesTest {
 			"package provider.test.constants;",
 			"public class ProviderTestPortletKeys",
 			"public static final String PROVIDERTEST",
-			"\"provider.test_ProviderTestPortlet\";");
+			"\"provider_test_ProviderTestPortlet\";");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"portlet-provider", "provider.test", "com.test",
@@ -5992,7 +5992,7 @@ public class ProjectTemplatesTest {
 			"src/main/java/portlet/portlet/constants/PortletPortletKeys.java",
 			"public class PortletPortletKeys",
 			"public static final String PORTLET",
-			"\"portlet.portlet_PortletPortlet\";");
+			"\"portlet_portlet_PortletPortlet\";");
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/portlet/portlet/portlet/PortletPortlet.java",
@@ -6035,7 +6035,7 @@ public class ProjectTemplatesTest {
 			"src/main/java/portlet/portlet/constants/PortletPortletKeys.java",
 			"public class PortletPortletKeys",
 			"public static final String PORTLET",
-			"\"portlet.portlet_PortletPortlet\";");
+			"\"portlet_portlet_PortletPortlet\";");
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/portlet/portlet/portlet/PortletPortlet.java",
@@ -6081,7 +6081,7 @@ public class ProjectTemplatesTest {
 			"src/main/java/portlet/portlet/constants/PortletPortletKeys.java",
 			"public class PortletPortletKeys",
 			"public static final String PORTLET",
-			"\"portlet.portlet_PortletPortlet\";");
+			"\"portlet_portlet_PortletPortlet\";");
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/portlet/portlet/portlet/PortletPortlet.java",

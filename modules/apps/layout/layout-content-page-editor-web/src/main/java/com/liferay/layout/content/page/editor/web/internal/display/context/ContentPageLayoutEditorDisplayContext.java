@@ -19,12 +19,14 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 import com.liferay.segments.constants.SegmentsConstants;
@@ -191,13 +193,24 @@ public class ContentPageLayoutEditorDisplayContext
 	}
 
 	private String _getEditSegmentsEntryURL() throws PortalException {
+		if (_editSegmentsEntryURL != null) {
+			return _editSegmentsEntryURL;
+		}
+
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
 			request, SegmentsEntry.class.getName(),
 			PortletProvider.Action.EDIT);
 
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		if (portletURL == null) {
+			_editSegmentsEntryURL = StringPool.BLANK;
+		}
+		else {
+			portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
-		return portletURL.toString();
+			_editSegmentsEntryURL = portletURL.toString();
+		}
+
+		return _editSegmentsEntryURL;
 	}
 
 	private List<SoyContext> _getLayoutDataListSoyContext()
@@ -240,6 +253,16 @@ public class ContentPageLayoutEditorDisplayContext
 		return soyContexts;
 	}
 
+	private boolean _hasEditSegmentsEntryPermission() throws PortalException {
+		String editSegmentsEntryURL = _getEditSegmentsEntryURL();
+
+		if (Validator.isNull(editSegmentsEntryURL)) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private boolean _isShowSegmentsExperiences() throws PortalException {
 		if (_showSegmentsExperiences != null) {
 			return _showSegmentsExperiences;
@@ -278,11 +301,14 @@ public class ContentPageLayoutEditorDisplayContext
 		).put(
 			"editSegmentsEntryURL", _getEditSegmentsEntryURL()
 		).put(
+			"hasEditSegmentsEntryPermissions", _hasEditSegmentsEntryPermission()
+		).put(
 			"layoutDataList", _getLayoutDataListSoyContext()
 		);
 	}
 
 	private SoyContext _editorSoyContext;
+	private String _editSegmentsEntryURL;
 	private SoyContext _fragmentsEditorToolbarSoyContext;
 	private Boolean _showSegmentsExperiences;
 

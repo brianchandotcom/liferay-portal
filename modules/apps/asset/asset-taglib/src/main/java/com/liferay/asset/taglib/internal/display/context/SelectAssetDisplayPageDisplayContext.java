@@ -184,7 +184,7 @@ public class SelectAssetDisplayPageDisplayContext {
 		return _displayPageType;
 	}
 
-	public String getDefaultAssetDisplayPageName() {
+	public String getDefaultLayoutPageTemplateEntryName() {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getDefaultLayoutPageTemplateEntry();
 

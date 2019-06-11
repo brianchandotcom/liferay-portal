@@ -23,8 +23,6 @@ import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -193,24 +191,18 @@ public abstract class BaseFragmentCollectionContributor
 	private void _updateFragmentEntryLinks(FragmentEntry fragmentEntry)
 		throws PortalException {
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			fragmentEntryLinkLocalService.getActionableDynamicQuery();
+		List<FragmentEntryLink> fragmentEntryLinks =
+			fragmentEntryLinkLocalService.getFragmentEntryLinks(
+				fragmentEntry.getFragmentEntryKey());
 
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> dynamicQuery.add(
-				RestrictionsFactoryUtil.eq(
-					"rendererKey", fragmentEntry.getFragmentEntryKey())));
-		actionableDynamicQuery.setPerformActionMethod(
-			(FragmentEntryLink fragmentEntryLink) -> {
-				fragmentEntryLink.setCss(fragmentEntry.getCss());
-				fragmentEntryLink.setHtml(fragmentEntry.getHtml());
-				fragmentEntryLink.setJs(fragmentEntry.getJs());
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			fragmentEntryLink.setCss(fragmentEntry.getCss());
+			fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+			fragmentEntryLink.setJs(fragmentEntry.getJs());
 
-				fragmentEntryLinkLocalService.updateFragmentEntryLink(
-					fragmentEntryLink);
-			});
-
-		actionableDynamicQuery.performActions();
+			fragmentEntryLinkLocalService.updateFragmentEntryLink(
+				fragmentEntryLink);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

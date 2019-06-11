@@ -206,7 +206,7 @@ definition {
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "The Recycle Bin is empty.");
 
-		AssertTextNotPresent(value1 = "${assetName}");
+		LexiconTable.viewTableEntryNotPresent(tableEntry = "${assetName}");
 	}
 
 	macro viewDuplicateNames {

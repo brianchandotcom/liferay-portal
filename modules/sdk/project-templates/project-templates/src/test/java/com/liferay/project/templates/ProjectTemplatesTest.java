@@ -1660,6 +1660,9 @@ public class ProjectTemplatesTest {
 			"panel-app", "gradle.test", "--class-name", "Foo",
 			"--liferayVersion", "7.0");
 
+		_testExists(gradleProjectDir,
+			"src/main/resources/META-INF/resources/css/main.scss");
+
 		_testContains(
 			gradleProjectDir, "bnd.bnd",
 			"Export-Package: gradle.test.constants");
@@ -1693,6 +1696,9 @@ public class ProjectTemplatesTest {
 			"panel-app", "gradle.test", "--class-name", "Foo",
 			"--liferayVersion", "7.1");
 
+		_testExists(gradleProjectDir,
+			"src/main/resources/META-INF/resources/css/main.scss");
+
 		_testContains(
 			gradleProjectDir, "build.gradle",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
@@ -1712,6 +1718,9 @@ public class ProjectTemplatesTest {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"panel-app", "gradle.test", "--class-name", "Foo",
 			"--liferayVersion", "7.2");
+
+		_testExists(gradleProjectDir,
+			"src/main/resources/META-INF/resources/css/main.scss");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -1949,6 +1958,9 @@ public class ProjectTemplatesTest {
 			"portlet-provider", "provider.test", "--liferayVersion", "7.0");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
+		_testExists(gradleProjectDir,
+			"src/main/resources/META-INF/resources/css/main.scss");
+
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -1974,6 +1986,9 @@ public class ProjectTemplatesTest {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet-provider", "provider.test", "--liferayVersion", "7.1");
 
+		_testExists(gradleProjectDir,
+			"src/main/resources/META-INF/resources/css/main.scss");
+
 		_testContains(
 			gradleProjectDir, "build.gradle",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
@@ -1993,6 +2008,9 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplatePortletProvider72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet-provider", "provider.test", "--liferayVersion", "7.2");
+
+		_testExists(gradleProjectDir,
+			"src/main/resources/META-INF/resources/css/main.scss");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -5567,6 +5585,9 @@ public class ProjectTemplatesTest {
 				gradleProjectDir, "src/main/resources/" + resourceFileName);
 		}
 
+		_testExists(gradleProjectDir,
+			"src/main/resources/META-INF/resources/css/main.scss");
+
 		_testContains(
 			gradleProjectDir, "bnd.bnd", "Export-Package: foo.constants");
 		_testContains(
@@ -5602,6 +5623,9 @@ public class ProjectTemplatesTest {
 			_testExists(
 				gradleProjectDir, "src/main/resources/" + resourceFileName);
 		}
+
+		_testExists(gradleProjectDir,
+			"src/main/resources/META-INF/resources/css/main.scss");
 
 		_testContains(
 			gradleProjectDir, "bnd.bnd", "Export-Package: foo.constants");
@@ -5642,6 +5666,9 @@ public class ProjectTemplatesTest {
 				gradleProjectDir, "src/main/resources/" + resourceFileName);
 		}
 
+		_testExists(gradleProjectDir,
+			"src/main/resources/META-INF/resources/css/main.scss");
+
 		_testContains(
 			gradleProjectDir, "bnd.bnd", "Export-Package: foo.constants");
 		_testContains(
@@ -5677,6 +5704,8 @@ public class ProjectTemplatesTest {
 			template, "foo", "--package-name", "com.liferay.test");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
+		_testExists(gradleProjectDir,
+			"src/main/resources/META-INF/resources/css/main.scss");
 
 		for (String resourceFileName : resourceFileNames) {
 			_testExists(
@@ -5710,6 +5739,8 @@ public class ProjectTemplatesTest {
 			"--liferayVersion", "7.1");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
+		_testExists(gradleProjectDir,
+			"src/main/resources/META-INF/resources/css/main.scss");
 
 		for (String resourceFileName : resourceFileNames) {
 			_testExists(
@@ -5747,6 +5778,8 @@ public class ProjectTemplatesTest {
 			"--liferayVersion", "7.2");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
+		_testExists(gradleProjectDir,
+			"src/main/resources/META-INF/resources/css/main.scss");
 
 		for (String resourceFileName : resourceFileNames) {
 			_testExists(
@@ -5783,6 +5816,8 @@ public class ProjectTemplatesTest {
 			template, "portlet", "--liferayVersion", "7.0");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
+		_testExists(gradleProjectDir,
+			"src/main/resources/META-INF/resources/css/main.scss");
 
 		for (String resourceFileName : resourceFileNames) {
 			_testExists(
@@ -5816,6 +5851,8 @@ public class ProjectTemplatesTest {
 			template, "portlet", "--liferayVersion", "7.1");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
+		_testExists(gradleProjectDir,
+			"src/main/resources/META-INF/resources/css/main.scss");
 
 		for (String resourceFileName : resourceFileNames) {
 			_testExists(
@@ -5852,6 +5889,8 @@ public class ProjectTemplatesTest {
 			template, "portlet", "--liferayVersion", "7.2");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
+		_testExists(gradleProjectDir,
+			"src/main/resources/META-INF/resources/css/main.scss");
 
 		for (String resourceFileName : resourceFileNames) {
 			_testExists(
@@ -5888,6 +5927,8 @@ public class ProjectTemplatesTest {
 			template, "portlet-portlet", "--liferayVersion", "7.0");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
+		_testExists(gradleProjectDir,
+			"src/main/resources/META-INF/resources/css/main.scss");
 
 		for (String resourceFileName : resourceFileNames) {
 			_testExists(
@@ -5921,6 +5962,8 @@ public class ProjectTemplatesTest {
 			template, "portlet-portlet", "--liferayVersion", "7.1");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
+		_testExists(gradleProjectDir,
+			"src/main/resources/META-INF/resources/css/main.scss");
 
 		for (String resourceFileName : resourceFileNames) {
 			_testExists(
@@ -5957,6 +6000,8 @@ public class ProjectTemplatesTest {
 			template, "portlet-portlet", "--liferayVersion", "7.2");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
+		_testExists(gradleProjectDir,
+			"src/main/resources/META-INF/resources/css/main.scss");
 
 		for (String resourceFileName : resourceFileNames) {
 			_testExists(

@@ -212,6 +212,7 @@ definition {
 		PageTemplatesAdminGlobalSite.viewDefaultCP();
 	}
 
+	@description = "This is a use case for LPS-54099."
 	@priority = "5"
 	test EditPageTemplate {
 		property portal.acceptance = "true";
@@ -226,6 +227,27 @@ definition {
 		PageTemplatesAdminGlobalSite.addCP(
 			pageTemplateActive = "Active",
 			pageTemplateName = "Page Template Name");
+
+		PageTemplatesAdminGlobalSite.gotoPageTemplateViaEdit(pageTemplateName = "Page Template Name");
+
+		Portlet.addPG(portletName = "Calendar");
+
+		Refresh();
+
+		CalendarNavigator.gotoConfiguration();
+
+		CalendarConfiguration.selectWeekStartsOn(weekStartDay = "Saturday");
+
+		CalendarConfiguration.save();
+
+		Navigator.openSiteURL(siteName = "guest");
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
 
 		PageTemplatesAdminGlobalSite.editCP(
 			pageTemplateActive = "Not Active",

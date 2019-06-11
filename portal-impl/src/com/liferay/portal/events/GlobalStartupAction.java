@@ -16,7 +16,6 @@ package com.liferay.portal.events;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.deploy.DeployUtil;
-import com.liferay.portal.deploy.RequiredPluginsUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployDir;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployUtil;
@@ -28,11 +27,8 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
-import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.kernel.util.PortalLifecycle;
-import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
@@ -203,23 +199,6 @@ public class GlobalStartupAction extends SimpleAction {
 			PortalContextLoaderListener.getPortalServletContextName());
 
 		JSONWebServiceActionsManagerUtil.registerServletContext(servletContext);
-
-		// Plugins
-
-		PortalLifecycleUtil.register(
-			new BasePortalLifecycle() {
-
-				@Override
-				protected void doPortalDestroy() {
-				}
-
-				@Override
-				protected void doPortalInit() {
-					RequiredPluginsUtil.startCheckingRequiredPlugins();
-				}
-
-			},
-			PortalLifecycle.METHOD_INIT);
 
 		// Launch browser
 

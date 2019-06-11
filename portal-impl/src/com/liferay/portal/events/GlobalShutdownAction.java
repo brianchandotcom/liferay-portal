@@ -18,7 +18,6 @@ import com.liferay.document.library.kernel.document.conversion.DocumentConversio
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.deploy.RequiredPluginsUtil;
 import com.liferay.portal.fabric.server.FabricServerUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -107,10 +106,6 @@ public class GlobalShutdownAction extends SimpleAction {
 		// OpenOffice
 
 		DocumentConversionUtil.disconnect();
-
-		// Plugins
-
-		RequiredPluginsUtil.stopCheckingRequiredPlugins();
 	}
 
 	protected void shutdownLevel2() {

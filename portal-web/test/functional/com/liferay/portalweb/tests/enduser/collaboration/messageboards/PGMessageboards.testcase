@@ -63,15 +63,6 @@ definition {
 		}
 	}
 
-	@priority = "5"
-	test AddMBCategory {
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.addPG(categoryName = "MB Category Name");
-
-		MessageboardsCategory.viewPG(categoryName = "MB Category Name");
-	}
-
 	@priority = "4"
 	test AddMBCategoryDescription {
 		Navigator.gotoPage(pageName = "Message Boards Page");
@@ -494,52 +485,6 @@ definition {
 			categoryNameEdit = "MB Category Name Edit");
 
 		MessageboardsCategory.viewPG(categoryName = "MB Category Name Edit");
-	}
-
-	@priority = "5"
-	test EditMBThreadBody {
-		MessageboardsThread.addPG(
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.gotoPG(
-			lastPostUserName = "Test Test",
-			replyCount = "0",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		MessageboardsThread.editPG(
-			threadBodyEdit = "MB Thread Message Body Edit",
-			threadSubject = "MB Thread Message Subject");
-
-		MessageboardsThread.viewPG(
-			threadBody = "MB Thread Message Body Edit",
-			threadSubject = "MB Thread Message Subject");
-	}
-
-	@priority = "5"
-	test EditMBThreadSubject {
-		JSONMBMessage.addMessage(
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.gotoPG(
-			lastPostUserName = "Test Test",
-			replyCount = "0",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		MessageboardsThread.editPG(
-			threadSubject = "MB Thread Message Subject",
-			threadSubjectEdit = "MB Thread Message Subject Edit");
-
-		MessageboardsThread.viewPG(
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject Edit");
 	}
 
 	@priority = "5"

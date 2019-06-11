@@ -67,11 +67,6 @@ public class MessageBoardAttachmentResourceTest
 	}
 
 	@Override
-	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"contentUrl", "encodingFormat", "title"};
-	}
-
-	@Override
 	protected Map<String, File> getMultipartFiles() throws Exception {
 		Map<String, File> files = new HashMap<>();
 

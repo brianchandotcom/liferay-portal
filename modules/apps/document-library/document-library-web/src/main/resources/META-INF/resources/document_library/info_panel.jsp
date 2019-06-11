@@ -67,7 +67,9 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 				</li>
 			</ul>
 
-			<h1 class="sidebar-title"><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %></h1>
+			<h1 class="sidebar-title">
+				<%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %>
+			</h1>
 
 			<h2 class="sidebar-subtitle">
 				<liferay-ui:message key="folder" />

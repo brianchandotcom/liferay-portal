@@ -46,6 +46,7 @@
 			"<rootDir>.*(node_modules)(?!.*metal.*).*$"
 		]
 	},
+	"main": "index.es.js",
 	"name": "frontend-js-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

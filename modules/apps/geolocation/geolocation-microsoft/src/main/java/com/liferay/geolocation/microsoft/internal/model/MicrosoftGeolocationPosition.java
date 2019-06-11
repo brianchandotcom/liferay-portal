@@ -21,14 +21,22 @@ import com.liferay.geolocation.model.GeolocationPosition;
  */
 public class MicrosoftGeolocationPosition implements GeolocationPosition {
 
+	public MicrosoftGeolocationPosition(double latitude, double longitude) {
+		_latitude = latitude;
+		_longitude = longitude;
+	}
+
 	@Override
 	public double getLatitude() {
-		return 0;
+		return _latitude;
 	}
 
 	@Override
 	public double getLongitude() {
-		return 0;
+		return _longitude;
 	}
+
+	private final double _latitude;
+	private final double _longitude;
 
 }

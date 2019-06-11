@@ -21,29 +21,46 @@ import com.liferay.geolocation.model.GeolocationAddress;
  */
 public class MicrosoftGeolocationAddress implements GeolocationAddress {
 
+	public MicrosoftGeolocationAddress(
+		String countryCode, String regionCode, String city, String street,
+		String zip) {
+
+		_countryCode = countryCode;
+		_regionCode = regionCode;
+		_city = city;
+		_street = street;
+		_zip = zip;
+	}
+
 	@Override
 	public String getCity() {
-		return null;
+		return _city;
 	}
 
 	@Override
 	public String getCountryCode() {
-		return null;
+		return _countryCode;
 	}
 
 	@Override
 	public String getRegionCode() {
-		return null;
+		return _regionCode;
 	}
 
 	@Override
 	public String getStreet() {
-		return null;
+		return _street;
 	}
 
 	@Override
 	public String getZip() {
-		return null;
+		return _zip;
 	}
+
+	private final String _city;
+	private final String _countryCode;
+	private final String _regionCode;
+	private final String _street;
+	private final String _zip;
 
 }

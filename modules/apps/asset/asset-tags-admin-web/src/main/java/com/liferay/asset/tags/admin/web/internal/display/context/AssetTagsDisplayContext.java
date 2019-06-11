@@ -98,9 +98,8 @@ public class AssetTagsDisplayContext {
 
 		Hits hits = AssetEntryLocalServiceUtil.search(
 			tag.getCompanyId(), new long[] {themeDisplay.getScopeGroupId()},
-			themeDisplay.getUserId(), "", 0L, "", "", "", "", tag.getName(),
-			true, statuses, false, _tagsSearchContainer.getStart(),
-			_tagsSearchContainer.getEnd());
+			themeDisplay.getUserId(), null, 0, null, null, null, null,
+			tag.getName(), true, statuses, false, 0, 1);
 
 		return hits.getLength();
 	}

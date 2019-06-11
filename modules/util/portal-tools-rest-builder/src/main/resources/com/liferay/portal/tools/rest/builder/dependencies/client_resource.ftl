@@ -108,7 +108,7 @@ public interface ${schemaName}Resource {
 							throw e;
 						}
 					</#if>
-                </#if>
+				</#if>
 			}
 
 			public HttpInvoker.HttpResponse ${javaMethodSignature.methodName}HttpResponse(${parameters}) throws Exception {

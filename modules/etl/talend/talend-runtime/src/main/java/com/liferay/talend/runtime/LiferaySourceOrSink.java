@@ -69,6 +69,7 @@ import org.talend.daikon.properties.ValidationResultMutable;
 
 /**
  * @author Zoltán Takács
+ * @author Igor Beslic
  */
 public class LiferaySourceOrSink
 	extends TranslatableImpl
@@ -351,54 +352,29 @@ public class LiferaySourceOrSink
 	}
 
 	public RESTClient getRestClient(RuntimeContainer runtimeContainer) {
-		LiferayConnectionProperties liferayConnectionProperties =
-			getEffectiveConnection(runtimeContainer);
-
-		if (restClient == null) {
-			restClient = new RESTClient(liferayConnectionProperties);
-		}
-		else {
-			String target = restClient.getTarget();
-
-			if (!target.equals(
-					liferayConnectionProperties.apiSpecURL.getValue())) {
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Target URI has been changed, initialize a new " +
-							"RESTClient");
-				}
-
-				restClient = new RESTClient(liferayConnectionProperties);
-
-				return restClient;
-			}
-		}
-
-		return restClient;
+		return getRestClient(runtimeContainer, null);
 	}
 
 	public RESTClient getRestClient(
 		RuntimeContainer runtimeContainer, String resourceURL) {
 
 		if ((resourceURL == null) || resourceURL.isEmpty()) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Resource URL was null or empty value, fall back to the " +
-						"connection property");
+			if (restClient != null) {
+				return restClient;
 			}
 
-			return getRestClient(runtimeContainer);
+			restClient = new RESTClient(
+				getEffectiveConnection(runtimeContainer));
+
+			return restClient;
 		}
 
-		LiferayConnectionProperties liferayConnectionProperties =
-			getEffectiveConnection(runtimeContainer);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("New REST Client with \"{}\" endpoint", resourceURL);
+		if ((restClient != null) && restClient.matches(resourceURL)) {
+			return restClient;
 		}
 
-		return new RESTClient(resourceURL, liferayConnectionProperties);
+		return new RESTClient(
+			getEffectiveConnection(runtimeContainer), resourceURL);
 	}
 
 	/**

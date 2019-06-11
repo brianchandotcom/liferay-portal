@@ -80,18 +80,16 @@ public class RESTClient {
 		String targetURL = target;
 
 		if ((targetURL == null) || targetURL.isEmpty()) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Resource URL is undefined, fall back to the connection " +
-						"property");
-			}
-
 			targetURL = _getValue(liferayConnectionProperties.apiSpecURL);
 		}
 
 		_target = targetURL;
 
 		_client = ClientBuilder.newClient(_getClientConfig());
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Created new REST Client for endpoint {}", target);
+		}
 	}
 
 	public Response executeDeleteRequest() {

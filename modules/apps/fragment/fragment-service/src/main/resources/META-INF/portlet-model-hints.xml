@@ -42,6 +42,9 @@
 		<field name="js" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="configuration" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="previewFileEntryId" type="long" />
 		<field name="type" type="int" />
 		<field name="lastPublishDate" type="Date" />

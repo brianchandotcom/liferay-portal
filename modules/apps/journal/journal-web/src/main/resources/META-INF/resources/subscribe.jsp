@@ -58,7 +58,7 @@ String unsubscribeActionName = StringPool.BLANK;
 		else if (Validator.isNull(ddmStructureKey) && (article != null)) {
 			subscribed = JournalUtil.isSubscribedToArticle(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), article.getResourcePrimKey());
 
-			subscribeActionName = "subscribeArticle";
+			subscribeActionName = "/journal/subscribe_article";
 			unsubscribeActionName = "/journal/unsubscribe_article";
 		}
 		else {

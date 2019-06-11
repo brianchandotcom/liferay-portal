@@ -647,7 +647,7 @@ public class JournalArticleActionDropdownItemsProvider {
 			_liferayPortletResponse.createActionURL();
 
 		subscribeArticleURL.setParameter(
-			ActionRequest.ACTION_NAME, "subscribeArticle");
+			ActionRequest.ACTION_NAME, "/journal/subscribe_article");
 
 		subscribeArticleURL.setParameter("redirect", _getRedirect());
 		subscribeArticleURL.setParameter(

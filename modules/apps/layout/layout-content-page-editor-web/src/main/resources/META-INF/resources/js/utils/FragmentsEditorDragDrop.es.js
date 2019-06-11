@@ -1,4 +1,4 @@
-import {AOP} from 'metal-aop';
+import {AOP} from 'frontend-js-web';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import {FRAGMENTS_EDITOR_DRAGGING_CLASS} from './constants';
 import {Position} from 'metal-position';

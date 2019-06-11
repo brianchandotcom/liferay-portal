@@ -1,4 +1,4 @@
-import {AOP} from 'metal-aop';
+import {AOP} from 'frontend-js-web';
 import {delegate, on} from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';

@@ -542,8 +542,7 @@ definition {
 		LexiconCard.viewCardPresent(card = "${entryTitle}");
 	}
 
-	macro viewEntryTitle
-	{
+	macro viewEntryTitle {
 		LexiconList.viewListEntryTitleLink(listEntry = "${entryTitle}");
 	}
 

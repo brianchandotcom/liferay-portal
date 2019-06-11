@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Blogs Asset Auto Tagger Google Cloud Natural Language
+Bundle-SymbolicName: com.liferay.blogs.asset.auto.tagger.google.cloud.natural.language
+Bundle-Version: 2.0.0
+Web-ContextPath: /blogs-asset-auto-tagger-google-cloud-natural-language

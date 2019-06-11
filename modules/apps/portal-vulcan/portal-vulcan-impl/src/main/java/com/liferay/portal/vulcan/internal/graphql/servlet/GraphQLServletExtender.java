@@ -27,6 +27,7 @@ import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 
 import graphql.annotations.GraphQLFieldDefinitionWrapper;
+import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 import graphql.annotations.processor.ProcessingElementsContainer;
 import graphql.annotations.processor.graphQLProcessors.GraphQLInputProcessor;
@@ -34,7 +35,6 @@ import graphql.annotations.processor.graphQLProcessors.GraphQLOutputProcessor;
 import graphql.annotations.processor.retrievers.GraphQLExtensionsHandler;
 import graphql.annotations.processor.retrievers.GraphQLFieldRetriever;
 import graphql.annotations.processor.retrievers.GraphQLInterfaceRetriever;
-import graphql.annotations.processor.retrievers.GraphQLObjectHandler;
 import graphql.annotations.processor.retrievers.GraphQLObjectInfoRetriever;
 import graphql.annotations.processor.retrievers.GraphQLTypeRetriever;
 import graphql.annotations.processor.retrievers.fieldBuilders.ArgumentBuilder;
@@ -53,7 +53,6 @@ import graphql.schema.GraphQLFieldDefinition;
 import graphql.schema.GraphQLObjectType;
 import graphql.schema.GraphQLOutputType;
 import graphql.schema.GraphQLSchema;
-import graphql.schema.StaticDataFetcher;
 
 import graphql.servlet.GraphQLContext;
 import graphql.servlet.SimpleGraphQLHttpServlet;
@@ -64,10 +63,13 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.servlet.Servlet;
 import javax.servlet.http.HttpServletRequest;
@@ -157,11 +159,6 @@ public class GraphQLServletExtender {
 					setGraphQLTypeRetriever(graphQLTypeRetriever);
 				}
 			});
-		_graphQLObjectHandler = new GraphQLObjectHandler() {
-			{
-				setTypeRetriever(graphQLTypeRetriever);
-			}
-		};
 
 		Dictionary<String, Object> helperProperties = new HashMapDictionary<>();
 
@@ -259,6 +256,9 @@ public class GraphQLServletExtender {
 		ProcessingElementsContainer processingElementsContainer =
 			new ProcessingElementsContainer(_defaultTypeFunction);
 
+		GraphQLFieldRetriever graphQLFieldRetriever =
+			new LiferayGraphQLFieldRetriever();
+
 		GraphQLSchema.Builder schemaBuilder = GraphQLSchema.newSchema();
 
 		GraphQLObjectType.Builder mutationBuilder =
@@ -266,47 +266,24 @@ public class GraphQLServletExtender {
 
 		mutationBuilder = mutationBuilder.name("mutation");
 
+		mutationBuilder.fields(
+			_getGraphQLFieldDefinitions(
+				processingElementsContainer, graphQLFieldRetriever,
+				ServletData::getMutation)
+		).build();
+
+		schemaBuilder.mutation(mutationBuilder.build());
+
 		GraphQLObjectType.Builder queryBuilder = GraphQLObjectType.newObject();
 
 		queryBuilder = queryBuilder.name("query");
 
-		for (ServletData servletData : _servletDataList) {
-			Object mutation = servletData.getMutation();
+		queryBuilder.fields(
+			_getGraphQLFieldDefinitions(
+				processingElementsContainer, graphQLFieldRetriever,
+				ServletData::getQuery)
+		).build();
 
-			GraphQLObjectType mutationGraphQLObjectType =
-				_graphQLObjectHandler.getObject(
-					mutation.getClass(), processingElementsContainer);
-
-			mutationBuilder.field(
-				GraphQLFieldDefinition.newFieldDefinition(
-				).name(
-					servletData.getPath()
-				).type(
-					mutationGraphQLObjectType
-				).dataFetcherFactory(
-					StaticDataFetcher::new
-				)
-			).build();
-
-			Object query = servletData.getQuery();
-
-			GraphQLObjectType queryGraphQLObjectType =
-				_graphQLObjectHandler.getObject(
-					query.getClass(), processingElementsContainer);
-
-			queryBuilder.field(
-				GraphQLFieldDefinition.newFieldDefinition(
-				).name(
-					servletData.getPath()
-				).type(
-					queryGraphQLObjectType
-				).dataFetcherFactory(
-					StaticDataFetcher::new
-				)
-			).build();
-		}
-
-		schemaBuilder.mutation(mutationBuilder.build());
 		schemaBuilder.query(queryBuilder.build());
 
 		registerServlet(schemaBuilder);
@@ -380,6 +357,30 @@ public class GraphQLServletExtender {
 		return method.invoke(instance, args);
 	}
 
+	private List<GraphQLFieldDefinition> _getGraphQLFieldDefinitions(
+		ProcessingElementsContainer processingElementsContainer,
+		GraphQLFieldRetriever graphQLFieldRetriever,
+		Function<ServletData, Object> objectClassFunction) {
+
+		return _servletDataList.stream(
+		).map(
+			objectClassFunction
+		).map(
+			Object::getClass
+		).map(
+			Class::getMethods
+		).flatMap(
+			Arrays::stream
+		).filter(
+			method -> method.isAnnotationPresent(GraphQLField.class)
+		).map(
+			method -> graphQLFieldRetriever.getField(
+				method, processingElementsContainer)
+		).collect(
+			Collectors.toList()
+		);
+	}
+
 	private volatile boolean _activated;
 	private BundleContext _bundleContext;
 
@@ -387,7 +388,6 @@ public class GraphQLServletExtender {
 	private CompanyLocalService _companyLocalService;
 
 	private DefaultTypeFunction _defaultTypeFunction;
-	private GraphQLObjectHandler _graphQLObjectHandler;
 
 	@Reference
 	private Language _language;

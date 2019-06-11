@@ -170,12 +170,12 @@ public class StartupHelper {
 		}
 
 		if (!PortalUpgradeProcess.isInRequiredSchemaVersion(
-			DataAccess.getConnection())) {
+				DataAccess.getConnection())) {
 
 			String msg =
 				"You must first upgrade the portal core to the required " +
-				"schema version " +
-				PortalUpgradeProcess.getRequiredSchemaVersion();
+					"schema version " +
+						PortalUpgradeProcess.getRequiredSchemaVersion();
 
 			System.out.println(msg);
 
@@ -183,11 +183,12 @@ public class StartupHelper {
 		}
 
 		if (!PortalUpgradeProcess.isInLatestSchemaVersion(
-			DataAccess.getConnection())) {
+				DataAccess.getConnection())) {
 
 			if (_log.isInfoEnabled()) {
-				_log.info("Execute the upgrade tool first if you need to " +
-					"upgrade the latest portal core schema version");
+				_log.info(
+					"Execute the upgrade tool first if you need to upgrade" +
+						"the portal core to the latest schema version");
 			}
 		}
 	}

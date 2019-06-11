@@ -212,23 +212,19 @@ public class GraphQLServletExtender {
 	}
 
 	protected void registerServlet(GraphQLSchema.Builder schemaBuilder) {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME, "GraphQL");
-
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN, "/*");
-
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT, "GraphQL");
-
-		// Servlet
-
 		SimpleGraphQLHttpServlet.Builder servletBuilder =
 			SimpleGraphQLHttpServlet.newBuilder(schemaBuilder.build());
 
 		Servlet servlet = servletBuilder.build();
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT, "GraphQL");
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME, "GraphQL");
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN, "/*");
 
 		if (_servletServiceRegistration != null) {
 			try {

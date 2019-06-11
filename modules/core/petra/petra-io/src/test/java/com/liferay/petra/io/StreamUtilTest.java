@@ -16,6 +16,7 @@ package com.liferay.petra.io;
 
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
@@ -83,6 +84,76 @@ public class StreamUtilTest {
 	@Test
 	public void testConstructor() {
 		new StreamUtil();
+	}
+
+	@Test
+	public void testToByteArray() throws IOException {
+
+		// Null InputStream
+
+		Assert.assertNull(StreamUtil.toByteArray(null));
+
+		// Return unsafe byte array
+
+		byte[] bytes = new byte[StreamUtil.BUFFER_SIZE + 1];
+
+		Random random = new Random();
+
+		random.nextBytes(bytes);
+
+		UnsyncByteArrayInputStream unsyncByteArrayInputStream =
+			new UnsyncByteArrayInputStream(bytes);
+
+		Assert.assertArrayEquals(
+			bytes, StreamUtil.toByteArray(unsyncByteArrayInputStream));
+
+		// Return safe byte array
+
+		unsyncByteArrayInputStream = new UnsyncByteArrayInputStream(bytes) {
+
+			@Override
+			public int available() {
+				return 0;
+			}
+
+		};
+
+		Assert.assertArrayEquals(
+			bytes, StreamUtil.toByteArray(unsyncByteArrayInputStream));
+	}
+
+	@Test
+	public void testToString() throws IOException {
+
+		// Null InputStream
+
+		Assert.assertNull(StreamUtil.toString(null));
+
+		// UTF8 encoding
+
+		String s = "Hello World";
+
+		byte[] uft8EncodedBytes = s.getBytes(StringPool.UTF8);
+
+		Assert.assertEquals(
+			s,
+			StreamUtil.toString(
+				new UnsyncByteArrayInputStream(uft8EncodedBytes)));
+
+		// GB2313 encoding
+
+		s = "测试";
+
+		byte[] gb2312EncodedBytes = s.getBytes("GB2312");
+
+		Assert.assertEquals(
+			s,
+			StreamUtil.toString(
+				new UnsyncByteArrayInputStream(gb2312EncodedBytes), "GB2312"));
+		Assert.assertNotEquals(
+			s,
+			StreamUtil.toString(
+				new UnsyncByteArrayInputStream(gb2312EncodedBytes)));
 	}
 
 	@Test

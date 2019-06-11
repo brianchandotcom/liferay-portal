@@ -141,10 +141,10 @@ class FragmentEditableBackgroundImage extends Component {
 	 * @private
 	 * @review
 	 */
-	_handleClick() {
+	_handleClick(event) {
 		if (this._tooltip) {
 			this._disposeTooltip();
-		} else {
+		} else if (this._shouldShowTooltip(event.target)) {
 			this._tooltip = new FragmentEditableFieldTooltip({
 				alignElement: this.element,
 				buttons: FragmentEditableBackgroundImage.getButtons(
@@ -160,6 +160,22 @@ class FragmentEditableBackgroundImage extends Component {
 				this._handleOutsideTooltipClick
 			);
 		}
+	}
+
+	/**
+	 * Decide wether the tooltip should be shown or not.
+	 * The tooltip will be shown when user clicks in an element
+	 * that is not an editable.
+	 * @param {HTMLElement} target The element clicked
+	 * @private
+	 * @review
+	 */
+	_shouldShowTooltip(target) {
+		const isNotEditable = target.tagName !== 'lfr-editable';
+
+		const hasEditableParent = target.closest('lfr-editable');
+
+		return isNotEditable && !hasEditableParent;
 	}
 
 	/**

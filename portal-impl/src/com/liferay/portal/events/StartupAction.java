@@ -117,16 +117,6 @@ public class StartupAction extends SimpleAction {
 				MessageBus.class, PortalExecutorManager.class);
 		}
 
-		// Shutdown hook
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Add shutdown hook");
-		}
-
-		Runtime runtime = Runtime.getRuntime();
-
-		runtime.addShutdownHook(new Thread(new ShutdownHook()));
-
 		// MySQL version
 
 		DB db = DBManagerUtil.getDB();

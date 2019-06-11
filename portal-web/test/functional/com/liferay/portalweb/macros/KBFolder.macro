@@ -90,8 +90,8 @@ definition {
 		}
 		else {
 			Click(
-				locator1 = "KnowledgeBaseSelectParent#CHOOSE_BUTTON",
-				value1 = "Choose");
+				locator1 = "KnowledgeBaseSelectParent#SELECT_BUTTON",
+				value1 = "Select");
 		}
 
 		SelectFrame(value1 = "relative=top");

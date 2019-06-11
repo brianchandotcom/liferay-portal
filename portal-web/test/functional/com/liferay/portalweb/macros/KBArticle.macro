@@ -410,7 +410,7 @@ definition {
 
 		Click(
 			key_kbArticleTitle = "${kbArticleTitle}",
-			locator1 = "KnowledgeBaseSelectParent#CHOOSE_BUTTON");
+			locator1 = "KnowledgeBaseSelectParent#SELECT_BUTTON");
 
 		SelectFrame(value1 = "relative=top");
 
@@ -475,8 +475,8 @@ definition {
 
 		AssertClick(
 			key_kbFolderName = "${kbFolderName}",
-			locator1 = "KnowledgeBaseSelectParent#CHOOSE_FOLDER_BUTTON",
-			value1 = "Choose");
+			locator1 = "KnowledgeBaseSelectParent#SELECT_FOLDER_BUTTON",
+			value1 = "Select");
 
 		SelectFrame(value1 = "relative=top");
 
@@ -928,8 +928,8 @@ definition {
 
 		Click(
 			key_kbArticleTitle = "${kbArticleTitle}",
-			locator1 = "KnowledgeBaseSelectParent#CHOOSE_BUTTON",
-			value1 = "Choose");
+			locator1 = "KnowledgeBaseSelectParent#SELECT_BUTTON",
+			value1 = "Select");
 
 		SelectFrame(value1 = "relative=top");
 
@@ -947,8 +947,8 @@ definition {
 
 		Click(
 			key_kbArticleTitle = "${kbArticleTitle}",
-			locator1 = "KnowledgeBaseSelectParent#CHOOSE_BUTTON",
-			value1 = "Choose");
+			locator1 = "KnowledgeBaseSelectParent#SELECT_BUTTON",
+			value1 = "Select");
 
 		SelectFrame(value1 = "relative=top");
 
@@ -980,8 +980,8 @@ definition {
 
 		AssertClick(
 			key_kbArticleTitle = "${kbArticleTitle}",
-			locator1 = "KnowledgeBaseSelectParent#CHOOSE_BUTTON",
-			value1 = "Choose");
+			locator1 = "KnowledgeBaseSelectParent#SELECT_BUTTON",
+			value1 = "Select");
 
 		SelectFrame(value1 = "relative=top");
 

@@ -243,31 +243,6 @@ public class JournalPortlet extends MVCPortlet {
 		deleteEntries(actionRequest, actionResponse, false);
 	}
 
-	public void deleteFeeds(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long[] deleteFeedIds = null;
-
-		long deleteFeedId = ParamUtil.getLong(actionRequest, "deleteFeedId");
-
-		if (deleteFeedId > 0) {
-			deleteFeedIds = new long[] {deleteFeedId};
-		}
-		else {
-			deleteFeedIds = ParamUtil.getLongValues(actionRequest, "rowIds");
-		}
-
-		for (long curDeleteFeedId : deleteFeedIds) {
-			_journalFeedService.deleteFeed(
-				themeDisplay.getScopeGroupId(),
-				String.valueOf(curDeleteFeedId));
-		}
-	}
-
 	public void deleteFolder(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

@@ -61,7 +61,7 @@ JournalFeed feed = (JournalFeed)row.getObject();
 	</c:if>
 
 	<c:if test="<%= JournalFeedPermission.contains(permissionChecker, feed, ActionKeys.DELETE) %>">
-		<portlet:actionURL name="deleteFeeds" var="deleteFeedURL">
+		<portlet:actionURL name="/journal/delete_feeds" var="deleteFeedURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(feed.getGroupId()) %>" />
 			<portlet:param name="deleteFeedId" value="<%= feed.getFeedId() %>" />

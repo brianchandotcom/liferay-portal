@@ -36,7 +36,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 	displayContext="<%= journalFeedsManagementToolbarDisplayContext %>"
 />
 
-<portlet:actionURL name="deleteFeeds" var="deleteFeedsURL">
+<portlet:actionURL name="/journal/delete_feeds" var="deleteFeedsURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 

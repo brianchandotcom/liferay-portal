@@ -15,6 +15,7 @@ import org.gradle.plugins.ide.eclipse.model.Classpath
 import org.gradle.plugins.ide.eclipse.model.ClasspathEntry
 import org.gradle.plugins.ide.eclipse.model.EclipseClasspath
 import org.gradle.plugins.ide.eclipse.model.EclipseModel
+import org.gradle.util.GUtil
 
 buildscript {
 	apply from: rootProject.file("build-buildscript.gradle"), to: buildscript
@@ -301,6 +302,42 @@ gradle.beforeProject {
 
 				startTestableTomcat {
 					deleteLiferayHome = false
+				}
+			}
+		}
+
+		pluginManager.withPlugin("com.liferay.patcher") {
+			if (project.path.startsWith(":third-party:")) {
+				Properties properties = GUtil.loadProperties(project.file("bnd.bnd"))
+
+				if ((properties.size() == 2) && properties.containsKey("Bundle-SymbolicName") && properties.containsKey("Bundle-Version")) {
+					task jarThirdPartyPatched
+
+					jar {
+						setActions([])
+
+						finalizedBy jarThirdPartyPatched
+					}
+
+					jarThirdPartyPatched {
+						doLast {
+							File manifestMFFile = project.file("classes/META-INF/MANIFEST.MF")
+
+							String oldLine = manifestMFFile.filterLine {
+								it =~ "^Bundle-SymbolicName:.*"
+							}
+
+							manifestMFFile.text = manifestMFFile.text.replace(oldLine.trim(), "Bundle-SymbolicName: " + properties.getProperty("Bundle-SymbolicName"))
+
+							oldLine = manifestMFFile.filterLine {
+								it =~ "^Bundle-Version:.*"
+							}
+
+							manifestMFFile.text = manifestMFFile.text.replace(oldLine.trim(), "Bundle-Version: " + properties.getProperty("Bundle-Version"))
+
+							ant.jar(basedir: project.file("classes"), destfile: jar.archivePath, manifest: manifestMFFile)
+						}
+					}
 				}
 			}
 		}

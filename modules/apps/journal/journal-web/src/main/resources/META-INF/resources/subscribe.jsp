@@ -59,7 +59,7 @@ String unsubscribeActionName = StringPool.BLANK;
 			subscribed = JournalUtil.isSubscribedToArticle(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), article.getResourcePrimKey());
 
 			subscribeActionName = "subscribeArticle";
-			unsubscribeActionName = "unsubscribeArticle";
+			unsubscribeActionName = "/journal/unsubscribe_article";
 		}
 		else {
 			subscribed = JournalUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folderId);

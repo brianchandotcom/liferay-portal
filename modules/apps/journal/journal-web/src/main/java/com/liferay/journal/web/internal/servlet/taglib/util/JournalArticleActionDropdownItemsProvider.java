@@ -628,7 +628,7 @@ public class JournalArticleActionDropdownItemsProvider {
 				_liferayPortletResponse.createActionURL();
 
 			unsubscribeArticleURL.setParameter(
-				ActionRequest.ACTION_NAME, "unsubscribeArticle");
+				ActionRequest.ACTION_NAME, "/journal/unsubscribe_article");
 
 			unsubscribeArticleURL.setParameter("redirect", _getRedirect());
 			unsubscribeArticleURL.setParameter(

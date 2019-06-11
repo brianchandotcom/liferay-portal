@@ -554,19 +554,6 @@ public class JournalPortlet extends MVCPortlet {
 		sendEditArticleRedirect(actionRequest, actionResponse);
 	}
 
-	public void unsubscribeArticle(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long articleId = ParamUtil.getLong(actionRequest, "articleId");
-
-		_journalArticleService.unsubscribe(
-			themeDisplay.getScopeGroupId(), articleId);
-	}
-
 	public void unsubscribeFolder(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

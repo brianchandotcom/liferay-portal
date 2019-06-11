@@ -445,7 +445,7 @@ public class DDMFormEmailNotificationSender {
 
 		params.put(
 			portletNamespace.concat("mvcPath"),
-			new String[] {"/admin/view_form_instance_record.jsp"});
+			new String[] {"/admin/view_form_instance_records.jsp"});
 		params.put(
 			portletNamespace.concat("formInstanceId"),
 			new String[] {String.valueOf(ddmFormInstance.getFormInstanceId())});

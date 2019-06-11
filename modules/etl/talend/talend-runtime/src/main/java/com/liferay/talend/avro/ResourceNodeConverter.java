@@ -119,12 +119,12 @@ public class ResourceNodeConverter
 	}
 
 	private JsonNode _getFieldJsonNode(JsonNode resourceJsonNode, String name) {
-		if (name.contains("_")) {
-			String[] nameParts = name.split("_");
+		int index = name.indexOf("_");
 
-			resourceJsonNode = resourceJsonNode.path(nameParts[0]);
+		if (index != -1) {
+			resourceJsonNode = resourceJsonNode.path(name.substring(0, index));
 
-			name = nameParts[1];
+			name = name.substring(index + 1);
 		}
 
 		return resourceJsonNode.path(name);

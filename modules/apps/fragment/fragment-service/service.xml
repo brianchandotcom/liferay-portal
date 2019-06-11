@@ -80,6 +80,7 @@
 		<column name="css" type="String" />
 		<column name="html" type="String" />
 		<column name="js" type="String" />
+		<column name="configuration" type="String" />
 		<column name="previewFileEntryId" type="long" />
 		<column name="type" type="int" />
 		<column name="lastPublishDate" type="Date" />

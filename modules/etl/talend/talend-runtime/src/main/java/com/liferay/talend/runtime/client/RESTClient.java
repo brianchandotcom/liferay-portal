@@ -35,7 +35,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -93,98 +92,32 @@ public class RESTClient {
 	}
 
 	public Response executeDeleteRequest() {
-		WebTarget webTarget = _client.target(_getTargetURI());
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Target: {}", _getTarget());
-		}
-
-		Invocation.Builder builder = webTarget.request(
-			MediaType.APPLICATION_JSON_TYPE);
-
-		builder.header(
-			"Authorization",
-			_getAuthorizationHeader(_liferayConnectionProperties));
-
-		return _invokeBuilder(HttpMethod.DELETE, builder);
+		return _execute(HttpMethod.DELETE, _createBuilder(_getTargetURI()));
 	}
 
-	@Deprecated
 	public Response executeGetRequest() {
 		URI decoratedURI = URIUtils.updateWithQueryParameters(
 			_getTargetURI(), _getQueryParametersMap());
 
-		WebTarget webTarget = _client.target(decoratedURI);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Target: {}", decoratedURI.toASCIIString());
-		}
-
-		Invocation.Builder builder = webTarget.request(
-			MediaType.APPLICATION_JSON_TYPE);
-
-		builder.header(
-			"Authorization",
-			_getAuthorizationHeader(_liferayConnectionProperties));
-
-		return _invokeBuilder(HttpMethod.GET, builder);
+		return _execute(HttpMethod.GET, _createBuilder(decoratedURI));
 	}
 
 	public Response executePatchRequest(JsonNode jsonNode) {
-		WebTarget webTarget = _client.target(_getTargetURI());
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Target: {}", _getTarget());
-		}
-
-		Invocation.Builder builder = webTarget.request(
-			MediaType.APPLICATION_JSON_TYPE);
-
-		builder.header(
-			"Authorization",
-			_getAuthorizationHeader(_liferayConnectionProperties));
-
-		Entity<String> entity = Entity.json(_jsonNodeToPrettyString(jsonNode));
-
-		return _invokeBuilder(HttpMethod.PATCH, builder, entity);
+		return _execute(
+			HttpMethod.PATCH, _createBuilder(_getTargetURI()),
+			Entity.json(_jsonNodeToPrettyString(jsonNode)));
 	}
 
 	public Response executePostRequest(JsonNode jsonNode) {
-		WebTarget webTarget = _client.target(_getTargetURI());
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Target: {}", _getTarget());
-		}
-
-		Invocation.Builder builder = webTarget.request(
-			MediaType.APPLICATION_JSON_TYPE);
-
-		builder.header(
-			"Authorization",
-			_getAuthorizationHeader(_liferayConnectionProperties));
-
-		Entity<String> entity = Entity.json(_jsonNodeToPrettyString(jsonNode));
-
-		return _invokeBuilder(HttpMethod.POST, builder, entity);
+		return _execute(
+			HttpMethod.POST, _createBuilder(_getTargetURI()),
+			Entity.json(_jsonNodeToPrettyString(jsonNode)));
 	}
 
 	public Response executePutRequest(JsonNode jsonNode) {
-		WebTarget webTarget = _client.target(_getTargetURI());
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Target: {}", _getTarget());
-		}
-
-		Invocation.Builder builder = webTarget.request(
-			MediaType.APPLICATION_JSON_TYPE);
-
-		builder.header(
-			"Authorization",
-			_getAuthorizationHeader(_liferayConnectionProperties));
-
-		Entity<String> entity = Entity.json(_jsonNodeToPrettyString(jsonNode));
-
-		return _invokeBuilder(HttpMethod.PUT, builder, entity);
+		return _execute(
+			HttpMethod.PUT, _createBuilder(_getTargetURI()),
+			Entity.json(_jsonNodeToPrettyString(jsonNode)));
 	}
 
 	public boolean matches(String target) {
@@ -200,21 +133,58 @@ public class RESTClient {
 		return String.format("REST API Client [%s].", _getTarget());
 	}
 
-	protected static final String HTTP = "http://";
-
-	protected static final String HTTPS = "https://";
-
-	protected final ObjectMapper objectMapper = new ObjectMapper();
-
 	private JsonNode _asJsonNode(Response response) {
 		try {
 			String entity = response.readEntity(String.class);
 
-			return objectMapper.readTree(entity);
+			return _objectMapper.readTree(entity);
 		}
 		catch (Throwable t) {
 			throw TalendRuntimeException.createUnexpectedException(t);
 		}
+	}
+
+	private Invocation.Builder _createBuilder(URI targetURI) {
+		WebTarget webTarget = _client.target(targetURI);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Target: {}", targetURI);
+		}
+
+		Invocation.Builder builder = webTarget.request(
+			MediaType.APPLICATION_JSON_TYPE);
+
+		builder.header(
+			"Authorization",
+			_getAuthorizationHeader(_liferayConnectionProperties));
+
+		return builder;
+	}
+
+	private Response _execute(String httpMethod, Invocation.Builder builder) {
+		return _execute(httpMethod, builder, null);
+	}
+
+	private Response _execute(
+		String httpMethod, Invocation.Builder builder, Entity<?> entity) {
+
+		Response response = _processRedirects(
+			builder.method(httpMethod, entity));
+
+		if (_isSuccess(response)) {
+			return response;
+		}
+
+		String responseBody = "No response body available";
+
+		if (response.hasEntity()) {
+			responseBody = response.readEntity(String.class);
+		}
+
+		throw TalendRuntimeException.createUnexpectedException(
+			String.format(
+				"Request failed with HTTP status %d and response %s",
+				response.getStatus(), responseBody));
 	}
 
 	private Response _executeAccessTokenPostRequest(
@@ -238,7 +208,7 @@ public class RESTClient {
 				_getValue(liferayConnectionProperties.oauthClientSecret),
 				"grant_type", "client_credentials", "response_type", "code"));
 
-		return _invokeBuilder(HttpMethod.POST, builder, entity);
+		return _execute(HttpMethod.POST, builder, entity);
 	}
 
 	private String _extractServerInstanceURL(String openAPISpecRef) {
@@ -252,43 +222,6 @@ public class RESTClient {
 		}
 
 		return serverURLMatcher.group(1);
-	}
-
-	private Response _follow3Redirects(Response currentResponse) {
-		Response.StatusType statusType = currentResponse.getStatusInfo();
-
-		if (statusType.getFamily() != Response.Status.Family.REDIRECTION) {
-			return currentResponse;
-		}
-
-		AtomicInteger counter = new AtomicInteger();
-		Response response = currentResponse;
-
-		while ((statusType.getFamily() == Response.Status.Family.REDIRECTION) &&
-			   (counter.incrementAndGet() <= 3)) {
-
-			String location = response.getHeaderString(HttpHeaders.LOCATION);
-
-			if (StringUtils.isEmpty(location)) {
-				return response;
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Redirect location {}#: {}", counter.get(), location);
-			}
-
-			response.close();
-
-			WebTarget webTarget = _client.target(location);
-
-			Invocation.Builder builder = webTarget.request(
-				MediaType.APPLICATION_JSON_TYPE);
-
-			response = builder.get();
-		}
-
-		return response;
 	}
 
 	private String _getAuthorizationHeader(
@@ -380,11 +313,15 @@ public class RESTClient {
 		return parameters;
 	}
 
-	private String _getTarget() {
-		boolean forceHttps = _getValue(_liferayConnectionProperties.forceHttps);
+	private Response.Status.Family _getResponseStatusFamily(Response response) {
+		Response.StatusType statusType = response.getStatusInfo();
 
-		if (forceHttps) {
-			return _replaceHttpSchemeWithHttps(_target);
+		return statusType.getFamily();
+	}
+
+	private String _getTarget() {
+		if (_getValue(_liferayConnectionProperties.forceHttps)) {
+			return _toHttps(_target);
 		}
 
 		return _target;
@@ -405,54 +342,30 @@ public class RESTClient {
 		return property.getValue();
 	}
 
-	private Response _handleResponse(
-		String httpMethod, Invocation.Builder builder, Entity<?> entity) {
-
-		boolean followRedirects =
-			_liferayConnectionProperties.followRedirects.getValue();
-
-		if (followRedirects) {
-			return _follow3Redirects(builder.method(httpMethod, entity));
-		}
-
-		return builder.method(httpMethod, entity);
-	}
-
-	private Response _invokeBuilder(
-		String httpMethod, Invocation.Builder builder) {
-
-		return _invokeBuilder(httpMethod, builder, null);
-	}
-
-	private Response _invokeBuilder(
-		String httpMethod, Invocation.Builder builder, Entity<?> entity) {
-
-		Response response = _handleResponse(httpMethod, builder, entity);
-
-		Response.StatusType statusType = response.getStatusInfo();
-
-		if (statusType.getFamily() == Response.Status.Family.SUCCESSFUL) {
-			return response;
-		}
-
-		String messageEntity = response.readEntity(String.class);
-		int statusCode = response.getStatus();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"{} request failed: {}. \n{}", httpMethod, statusCode,
-				messageEntity);
-		}
-
-		throw TalendRuntimeException.createUnexpectedException(
-			"HTTP Code: " + statusCode + "\nRequest failed: \n" +
-				messageEntity);
-	}
-
 	private boolean _isApplicationJsonContentType(Response response) {
 		List<String> strings = _getContentType(response);
 
 		if (strings.contains("application/json")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isRedirect(Response response) {
+		if (_getResponseStatusFamily(response) ==
+				Response.Status.Family.REDIRECTION) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isSuccess(Response response) {
+		if (_getResponseStatusFamily(response) ==
+				Response.Status.Family.SUCCESSFUL) {
+
 			return true;
 		}
 
@@ -464,7 +377,7 @@ public class RESTClient {
 
 		try {
 			ObjectWriter objectWriter =
-				objectMapper.writerWithDefaultPrettyPrinter();
+				_objectMapper.writerWithDefaultPrettyPrinter();
 
 			json = objectWriter.writeValueAsString(jsonNode);
 		}
@@ -480,14 +393,39 @@ public class RESTClient {
 		return json;
 	}
 
-	private String _replaceHttpSchemeWithHttps(String url) {
-		String lowerCasedUrl = StringUtils.lowerCase(url);
-
-		if (lowerCasedUrl.startsWith(HTTP)) {
-			return HTTPS.concat(url.substring(HTTP.length()));
+	private Response _processRedirects(Response response) {
+		if (!_getValue(_liferayConnectionProperties.followRedirects)) {
+			return response;
 		}
 
-		return url;
+		int count = 0;
+		Response currentResponse = response;
+
+		while (_isRedirect(currentResponse) && (count < 3)) {
+			String location = currentResponse.getHeaderString(
+				HttpHeaders.LOCATION);
+
+			if (StringUtils.isEmpty(location)) {
+				return currentResponse;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Redirect {}# to {}", count, location);
+			}
+
+			currentResponse.close();
+
+			try {
+				Invocation.Builder builder = _createBuilder(new URI(location));
+
+				currentResponse = builder.get();
+			}
+			catch (URISyntaxException urise) {
+				throw TalendRuntimeException.createUnexpectedException(urise);
+			}
+		}
+
+		return currentResponse;
 	}
 
 	private JsonNode _requestAuthorizationJsonNode(
@@ -523,6 +461,20 @@ public class RESTClient {
 		return _asJsonNode(response);
 	}
 
+	private String _toHttps(String url) {
+		String lowerCasedUrl = StringUtils.lowerCase(url);
+
+		if (lowerCasedUrl.startsWith(_HTTPS)) {
+			return url;
+		}
+
+		return _HTTPS.concat(url.substring(_HTTP.length()));
+	}
+
+	private static final String _HTTP = "http://";
+
+	private static final String _HTTPS = "https://";
+
 	private static final String _LIFERAY_OAUTH2_ACCESS_TOKEN_ENDPOINT =
 		"/o/oauth2/token";
 
@@ -534,6 +486,7 @@ public class RESTClient {
 
 	private final Client _client;
 	private final LiferayConnectionProperties _liferayConnectionProperties;
+	private final ObjectMapper _objectMapper = new ObjectMapper();
 	private final String _target;
 
 }

@@ -14,24 +14,31 @@
 
 package com.liferay.fragment.service.impl;
 
+import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.exception.DuplicateFragmentEntryKeyException;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.exception.FragmentEntryNameException;
 import com.liferay.fragment.exception.RequiredFragmentEntryException;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.base.FragmentEntryLocalServiceBaseImpl;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -582,6 +589,15 @@ public class FragmentEntryLocalServiceImpl
 
 		fragmentEntryPersistence.update(fragmentEntry);
 
+		FragmentServiceConfiguration fragmentServiceConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				FragmentServiceConfiguration.class,
+				fragmentEntry.getCompanyId());
+
+		if (fragmentServiceConfiguration.propagateChanges()) {
+			_propagateChanges(fragmentEntryId);
+		}
+
 		return fragmentEntry;
 	}
 
@@ -666,6 +682,34 @@ public class FragmentEntryLocalServiceImpl
 
 		return bodyHtml;
 	}
+
+	private void _propagateChanges(long fragmentEntryId)
+		throws PortalException {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			_fragmentEntryLinkLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property fragmentEntryIdProperty = PropertyFactoryUtil.forName(
+					"fragmentEntryId");
+
+				dynamicQuery.add(fragmentEntryIdProperty.eq(fragmentEntryId));
+			});
+
+		actionableDynamicQuery.setPerformActionMethod(
+			(FragmentEntryLink fragmentEntryLink) ->
+				_fragmentEntryLinkLocalService.updateLatestChanges(
+					fragmentEntryLink.getFragmentEntryLinkId()));
+
+		actionableDynamicQuery.performActions();
+	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;

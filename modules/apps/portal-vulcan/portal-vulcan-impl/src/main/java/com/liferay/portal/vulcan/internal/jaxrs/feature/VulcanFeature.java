@@ -54,8 +54,8 @@ import com.liferay.portal.vulcan.internal.jaxrs.message.body.MultipartBodyMessag
 import com.liferay.portal.vulcan.internal.jaxrs.message.body.XMLMessageBodyReader;
 import com.liferay.portal.vulcan.internal.jaxrs.message.body.XMLMessageBodyWriter;
 import com.liferay.portal.vulcan.internal.jaxrs.validation.BeanValidationInterceptor;
-import com.liferay.portal.vulcan.internal.param.converter.provider.DateParamConverterProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor.NestedFieldsWriterInterceptor;
+import com.liferay.portal.vulcan.internal.param.converter.provider.DateParamConverterProvider;
 
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;

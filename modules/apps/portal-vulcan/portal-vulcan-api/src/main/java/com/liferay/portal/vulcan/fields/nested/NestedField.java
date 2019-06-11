@@ -26,6 +26,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface NestedField {
 
-	String value();
+	public String value();
 
 }

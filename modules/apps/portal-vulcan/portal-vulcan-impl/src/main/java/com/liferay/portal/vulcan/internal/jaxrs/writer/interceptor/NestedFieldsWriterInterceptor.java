@@ -409,11 +409,13 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 	}
 
 	private void _resetNestedAwareMessage(Message message) {
-		NestedFieldsHttpServletRequestWrapper requestWrapper =
-			(NestedFieldsHttpServletRequestWrapper)
-				message.getContextualProperty("HTTP.REQUEST");
+		NestedFieldsHttpServletRequestWrapper
+			nestedFieldsHttpServletRequestWrapper =
+				(NestedFieldsHttpServletRequestWrapper)
+					message.getContextualProperty("HTTP.REQUEST");
 
-		message.put("HTTP.REQUEST", requestWrapper.getRequest());
+		message.put(
+			"HTTP.REQUEST", nestedFieldsHttpServletRequestWrapper.getRequest());
 	}
 
 	private void _setFieldValue(

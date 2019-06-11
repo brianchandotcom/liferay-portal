@@ -15,10 +15,10 @@
 package com.liferay.blogs.asset.auto.tagger.opennlp.internal;
 
 import com.liferay.blogs.asset.auto.tagger.opennlp.internal.configuration.OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 
-import com.liferay.blogs.model.BlogsEntry;
 import java.util.Collections;
 
 import org.junit.Assert;
@@ -65,9 +65,9 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 	}
 
 	@Mock
-	private ConfigurationProvider _configurationProvider;
+	private BlogsEntry _blogsEntry;
 
 	@Mock
-	private BlogsEntry _blogsEntry;
+	private ConfigurationProvider _configurationProvider;
 
 }

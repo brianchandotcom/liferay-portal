@@ -22,8 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Alicia García
  */
 @ExtendedObjectClassDefinition(
-	category = "blogs",
-	scope = ExtendedObjectClassDefinition.Scope.COMPANY
+	category = "blogs", scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	description = "opennlp-auto-tag-provider-configuration-description",

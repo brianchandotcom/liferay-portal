@@ -66,9 +66,9 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProviderTest {
 	}
 
 	@Mock
-	private ConfigurationProvider _configurationProvider;
+	private BlogsEntry _blogsEntry;
 
 	@Mock
-	private BlogsEntry  _blogsEntry;
+	private ConfigurationProvider _configurationProvider;
 
 }

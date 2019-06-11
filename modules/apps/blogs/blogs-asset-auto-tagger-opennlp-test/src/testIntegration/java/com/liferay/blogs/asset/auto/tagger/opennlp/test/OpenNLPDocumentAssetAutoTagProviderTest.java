@@ -59,17 +59,18 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 		_group = GroupTestUtil.addGroup();
 
 		_userId = getUserId();
-		_serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _userId);
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId(), _userId);
 	}
 
 	@Test
 	public void testGetTagNamesWithTextFile() throws Exception {
 		String fileName = _FILE_NAME + ".txt";
 
-		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(_userId,_FILE_NAME, new String(
-			FileUtil.getBytes(getClass(), "dependencies/" + fileName)),
+		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
+			_userId, _FILE_NAME,
+			new String(
+				FileUtil.getBytes(getClass(), "dependencies/" + fileName)),
 			_serviceContext);
 
 		_testWithOpenNLPAutoTagProviderEnabled(
@@ -83,13 +84,14 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 					"Salt Lake City", "THERE", "United States", "White Rabbit",
 					"William", "YOUR");
 
-
 				Collection<String> actualTagNames =
 					_assetAutoTagProvider.getTagNames(blogsEntry);
 
-				Assert.assertEquals( "Different number of tags", expectedTagNames.size(),
+				Assert.assertEquals(
+					"Different number of tags", expectedTagNames.size(),
 					actualTagNames.size());
-				Assert.assertTrue(actualTagNames.toString(),
+				Assert.assertTrue(
+					actualTagNames.toString(),
 					actualTagNames.containsAll(expectedTagNames));
 			});
 	}
@@ -100,7 +102,9 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 
 		String fileName = _FILE_NAME + ".txt";
 
-		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(_userId,_FILE_NAME, new String(
+		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
+			_userId, _FILE_NAME,
+			new String(
 				FileUtil.getBytes(getClass(), "dependencies/" + fileName)),
 			_serviceContext);
 
@@ -117,11 +121,11 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 	public void testGetTagNamesWithTextInNoEnglishLanguage() throws Exception {
 		String fileName = _FILE_NAME_NO_ENGLISH + ".txt";
 
-		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(_userId,
-			_FILE_NAME, new String(
+		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
+			_userId, _FILE_NAME,
+			new String(
 				FileUtil.getBytes(getClass(), "dependencies/" + fileName)),
 			_serviceContext);
-
 
 		_testWithOpenNLPAutoTagProviderEnabled(
 			() -> {
@@ -130,6 +134,10 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 
 				Assert.assertEquals(tagNames.toString(), 0, tagNames.size());
 			});
+	}
+
+	protected long getUserId() throws Exception {
+		return TestPropsValues.getUserId();
 	}
 
 	private void _testWithOpenNLPAutoTagProviderDisabled(
@@ -191,7 +199,9 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 		}
 	}
 
-	private static final String _FILE_NAME = "Alice's Adventures in Wonderland, by Lewis Carroll";
+	private static final String _FILE_NAME =
+		"Alice's Adventures in Wonderland, by Lewis Carroll";
+
 	private static final String _FILE_NAME_NO_ENGLISH = "25328-0";
 
 	private static final String
@@ -215,11 +225,7 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	private ServiceContext _serviceContext;
 	private long _userId;
 
-	private ServiceContext _serviceContext;
-
-	protected long getUserId() throws Exception {
-		return TestPropsValues.getUserId();
-	}
 }

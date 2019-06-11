@@ -15,14 +15,14 @@
 package com.liferay.blogs.asset.auto.tagger.google.cloud.natural.language.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
+
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Alicia García
  */
 @ExtendedObjectClassDefinition(
-	category = "blogs",
-	scope = ExtendedObjectClassDefinition.Scope.COMPANY
+	category = "blogs", scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	description = "google-cloud-natural-language-asset-auto-tag-provider-description",

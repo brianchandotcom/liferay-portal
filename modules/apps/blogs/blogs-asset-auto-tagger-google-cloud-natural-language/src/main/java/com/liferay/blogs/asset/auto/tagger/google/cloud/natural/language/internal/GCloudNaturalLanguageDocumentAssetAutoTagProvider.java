@@ -14,10 +14,6 @@
 
 package com.liferay.blogs.asset.auto.tagger.google.cloud.natural.language.internal;
 
-
-import java.util.Collection;
-import java.util.Collections;
-
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.asset.auto.tagger.google.cloud.natural.language.api.GCloudNaturalLanguageDocumentAssetAutoTagger;
 import com.liferay.blogs.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration;
@@ -26,6 +22,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.ContentTypes;
+
+import java.util.Collection;
+import java.util.Collections;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -55,8 +55,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 			}
 
 			return _gCloudNaturalLanguageDocumentAssetAutoTagger.getTagNames(
-				blogsEntry.getCompanyId(),
-				blogsEntry.getContent(),
+				blogsEntry.getCompanyId(), blogsEntry.getContent(),
 				ContentTypes.TEXT_HTML);
 		}
 		catch (Exception e) {
@@ -72,10 +71,8 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
-
 	@Reference
 	private GCloudNaturalLanguageDocumentAssetAutoTagger
 		_gCloudNaturalLanguageDocumentAssetAutoTagger;
-
 
 }

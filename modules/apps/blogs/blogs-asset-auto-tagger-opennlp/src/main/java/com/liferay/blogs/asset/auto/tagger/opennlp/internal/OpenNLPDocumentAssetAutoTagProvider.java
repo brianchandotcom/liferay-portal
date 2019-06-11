@@ -57,8 +57,10 @@ public class OpenNLPDocumentAssetAutoTagProvider
 
 		OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration
 			openNLPDocumentAssetAutoTagProviderCompanyConfiguration =
-				_configurationProvider.getCompanyConfiguration(OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration.
-						class, blogsEntry.getCompanyId());
+				_configurationProvider.getCompanyConfiguration(
+					OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration.
+						class,
+					blogsEntry.getCompanyId());
 
 		if (!openNLPDocumentAssetAutoTagProviderCompanyConfiguration.
 				enabled()) {
@@ -67,9 +69,8 @@ public class OpenNLPDocumentAssetAutoTagProvider
 		}
 
 		return _openNLPDocumentAssetAutoTagger.getTagNames(
-			blogsEntry.getCompanyId(),
-			blogsEntry.getContent(),
-			ContentTypes.TEXT_HTML_UTF8);
+			blogsEntry.getCompanyId(), blogsEntry.getContent(),
+			ContentTypes.TEXT_HTML);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -80,6 +81,5 @@ public class OpenNLPDocumentAssetAutoTagProvider
 
 	@Reference
 	private OpenNLPDocumentAssetAutoTagger _openNLPDocumentAssetAutoTagger;
-
 
 }

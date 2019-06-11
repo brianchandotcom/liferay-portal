@@ -24,7 +24,6 @@ long threadId = message.getThreadId();
 long parentMessageId = message.getMessageId();
 String subject = ParamUtil.getString(request, "subject");
 double priority = message.getPriority();
-long replyToMessageId = message.getMessageId();
 
 if (threadId > 0) {
 	try {
@@ -124,10 +123,10 @@ boolean showPermanentLink = GetterUtil.getBoolean(request.getAttribute("edit-mes
 <div class="divider"></div>
 
 <div class="panel-body">
-	<div class="card-row card-row-padded message-content" id="<%= liferayPortletResponse.getNamespace() + "addQuickReply" + replyToMessageId %>">
+	<div class="card-row card-row-padded message-content" id="<%= liferayPortletResponse.getNamespace() + "addQuickReply" + parentMessageId %>">
 		<portlet:actionURL name="/message_boards/edit_message" var="editMessageURL" />
 
-		<aui:form action="<%= editMessageURL %>" method="post" name='<%= "addQuickReplyFm" + replyToMessageId %>' onSubmit='<%= "event.preventDefault(); " %>'>
+		<aui:form action="<%= editMessageURL %>" method="post" name='<%= "addQuickReplyFm" + parentMessageId %>' onSubmit='<%= "event.preventDefault(); " %>'>
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 			<aui:input name="messageId" type="hidden" value="<%= 0 %>" />
@@ -148,8 +147,8 @@ boolean showPermanentLink = GetterUtil.getBoolean(request.getAttribute("edit-mes
 				contents="<%= quoteText %>"
 				cssClass='<%= editorName.startsWith("alloyeditor") ? "form-control" : StringPool.BLANK %>'
 				editorName="<%= editorName %>"
-				name='<%= "replyMessageBody" + replyToMessageId %>'
-				onChangeMethod='<%= "replyMessageOnChange" + replyToMessageId %>'
+				name='<%= "replyMessageBody" + parentMessageId %>'
+				onChangeMethod='<%= "replyMessageOnChange" + parentMessageId %>'
 				placeholder='<%= LanguageUtil.get(request, "type-your-reply") %>'
 				showSource="<%= false %>"
 				skipEditorLoading="<%= true %>"
@@ -192,10 +191,10 @@ boolean showPermanentLink = GetterUtil.getBoolean(request.getAttribute("edit-mes
 				}
 				%>
 
-				<aui:button name='<%= "replyMessageButton" + replyToMessageId %>' type="submit" value="<%= publishButtonLabel %>" />
+				<aui:button name='<%= "replyMessageButton" + parentMessageId %>' type="submit" value="<%= publishButtonLabel %>" />
 
 				<%
-				String taglibCancelReply = "javascript:" + liferayPortletResponse.getNamespace() + "hideReplyMessage('" + replyToMessageId + "');";
+				String taglibCancelReply = "javascript:" + liferayPortletResponse.getNamespace() + "hideReplyMessage('" + parentMessageId + "');";
 				%>
 
 				<aui:button onClick="<%= taglibCancelReply %>" type="cancel" />
@@ -211,7 +210,7 @@ boolean showPermanentLink = GetterUtil.getBoolean(request.getAttribute("edit-mes
 			<portlet:param name="priority" value="<%= String.valueOf(message.getPriority()) %>" />
 		</portlet:renderURL>
 
-		<aui:form action="<%= advancedReplyURL %>" cssClass="hide" method="post" name='<%= "advancedReplyFm" + replyToMessageId %>'>
+		<aui:form action="<%= advancedReplyURL %>" cssClass="hide" method="post" name='<%= "advancedReplyFm" + parentMessageId %>'>
 			<aui:input name="body" type="hidden" />
 		</aui:form>
 	</div>
@@ -226,14 +225,14 @@ boolean showPermanentLink = GetterUtil.getBoolean(request.getAttribute("edit-mes
 			},
 			currentAction: '<%= Constants.ADD %>',
 			namespace: '<portlet:namespace />',
-			replyToMessageId: '<%= replyToMessageId %>',
-			rootNode: '#<portlet:namespace />addQuickReply<%= replyToMessageId %>'
+			replyToMessageId: '<%= parentMessageId %>',
+			rootNode: '#<portlet:namespace />addQuickReply<%= parentMessageId %>'
 		}
 	);
 </aui:script>
 
 <aui:script>
-	window['<portlet:namespace />replyMessageOnChange' + <%= replyToMessageId %>] = function(html) {
-		Liferay.Util.toggleDisabled('#<portlet:namespace />replyMessageButton<%= replyToMessageId %>', html === '');
+	window['<portlet:namespace />replyMessageOnChange' + <%= parentMessageId %>] = function(html) {
+		Liferay.Util.toggleDisabled('#<portlet:namespace />replyMessageButton<%= parentMessageId %>', html === '');
 	};
 </aui:script>

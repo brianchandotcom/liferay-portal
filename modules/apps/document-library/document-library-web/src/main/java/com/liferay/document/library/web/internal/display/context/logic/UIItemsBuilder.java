@@ -486,7 +486,6 @@ public class UIItemsBuilder {
 		urlMenuItem.setData(data);
 
 		urlMenuItem.setMethod("get");
-		urlMenuItem.setTarget("_blank");
 	}
 
 	public void addDownloadToolbarItem(List<ToolbarItem> toolbarItems)

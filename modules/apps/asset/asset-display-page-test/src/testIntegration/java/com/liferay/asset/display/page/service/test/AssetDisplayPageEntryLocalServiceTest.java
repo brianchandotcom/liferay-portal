@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.asset.display.page.service.persistence.AssetDisplayPageEntryPersistence;
 import com.liferay.asset.display.page.test.util.AssetDisplayPageEntryTestUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,9 +27,11 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.util.List;
 
@@ -48,7 +51,11 @@ public class AssetDisplayPageEntryLocalServiceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			new TransactionalTestRule(
+				Propagation.REQUIRED,
+				"com.liferay.asset.display.page.service"));
 
 	@Before
 	public void setUp() throws Exception {
@@ -84,20 +91,23 @@ public class AssetDisplayPageEntryLocalServiceTest {
 				layoutPageTemplateEntryId,
 				AssetDisplayPageConstants.TYPE_SPECIFIC);
 
-		Assert.assertNotNull(assetDisplayPageEntry);
+		AssetDisplayPageEntry persistedAssetDisplayPageEntry =
+			_assetDisplayPageEntryPersistence.findByPrimaryKey(
+				assetDisplayPageEntry.getAssetDisplayPageEntryId());
 
 		Assert.assertEquals(
-			_classNameId, assetDisplayPageEntry.getClassNameId());
+			_classNameId, persistedAssetDisplayPageEntry.getClassNameId());
 
-		Assert.assertEquals(classPK, assetDisplayPageEntry.getClassPK());
+		Assert.assertEquals(
+			classPK, persistedAssetDisplayPageEntry.getClassPK());
 
 		Assert.assertEquals(
 			layoutPageTemplateEntryId,
-			assetDisplayPageEntry.getLayoutPageTemplateEntryId());
+			persistedAssetDisplayPageEntry.getLayoutPageTemplateEntryId());
 
 		Assert.assertEquals(
 			AssetDisplayPageConstants.TYPE_SPECIFIC,
-			assetDisplayPageEntry.getType());
+			persistedAssetDisplayPageEntry.getType());
 	}
 
 	@Test
@@ -112,7 +122,7 @@ public class AssetDisplayPageEntryLocalServiceTest {
 			assetDisplayPageEntry.getAssetDisplayPageEntryId());
 
 		Assert.assertNull(
-			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
+			_assetDisplayPageEntryPersistence.fetchByPrimaryKey(
 				assetDisplayPageEntry.getAssetDisplayPageEntryId()));
 	}
 
@@ -225,7 +235,7 @@ public class AssetDisplayPageEntryLocalServiceTest {
 			layoutPageTemplateEntryId, AssetDisplayPageConstants.TYPE_SPECIFIC);
 
 		AssetDisplayPageEntry persistedAssetDisplayPageEntry =
-			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
+			_assetDisplayPageEntryPersistence.findByPrimaryKey(
 				assetDisplayPageEntry.getAssetDisplayPageEntryId());
 
 		Assert.assertEquals(
@@ -240,6 +250,9 @@ public class AssetDisplayPageEntryLocalServiceTest {
 	@Inject
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
+
+	@Inject
+	private AssetDisplayPageEntryPersistence _assetDisplayPageEntryPersistence;
 
 	private long _classNameId;
 

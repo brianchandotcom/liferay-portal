@@ -48,7 +48,7 @@ public class TestDB extends BaseDB {
 
 	@Override
 	protected int[] getSQLTypes() {
-		return new int[0];
+		return new int[10];
 	}
 
 	@Override

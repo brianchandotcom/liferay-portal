@@ -12,6 +12,7 @@
 	{@param initialHTML: string}
 	{@param initialJS: string}
 	{@param portletNamespace: string}
+	{@param propagationEnabled: bool}
 	{@param spritemap: string}
 	{@param status: string}
 	{@param urls: [
@@ -47,6 +48,17 @@
 					</div>
 
 					<div class="btn-group btn-group-nowrap mt-1 pull-right">
+						{if $propagationEnabled}
+							<span class="lfr-portal-tooltip pr-3 pt-1 text-info" data-title="{msg desc=""}automatic-propagation-enabled-help{/msg}">
+								{call ClayIcon.render}
+									{param spritemap: $spritemap /}
+									{param symbol: 'exclamation-circle' /}
+								{/call}
+								{sp}
+								<span>{msg desc=""}automatic-propagation-enabled{/msg}</span>
+							</span>
+						{/if}
+
 						{if $status == $allowedStatus.draft}
 							{let $draftButtonAttributes kind="attributes"}
 								class="btn btn-default btn-sm"

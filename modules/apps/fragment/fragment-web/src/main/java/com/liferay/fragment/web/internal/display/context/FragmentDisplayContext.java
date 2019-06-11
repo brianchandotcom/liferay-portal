@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.web.internal.display.context;
 
+import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
@@ -34,6 +35,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -213,6 +215,11 @@ public class FragmentDisplayContext {
 			"draft", String.valueOf(WorkflowConstants.STATUS_DRAFT)
 		);
 
+		FragmentServiceConfiguration fragmentServiceConfiguration =
+			ConfigurationProviderUtil.getCompanyConfiguration(
+				FragmentServiceConfiguration.class,
+				_themeDisplay.getCompanyId());
+
 		soyContext.put(
 			"allowedStatus", allowedStatusSoyContext
 		).put(
@@ -232,6 +239,9 @@ public class FragmentDisplayContext {
 			"name", getName()
 		).put(
 			"portletNamespace", _renderResponse.getNamespace()
+		).put(
+			"propagationEnabled",
+			fragmentServiceConfiguration.propagateChanges()
 		).put(
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"

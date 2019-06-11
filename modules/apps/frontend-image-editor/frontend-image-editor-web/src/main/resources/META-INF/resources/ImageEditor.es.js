@@ -2,7 +2,6 @@ import 'clay-dropdown';
 
 import Soy from 'metal-soy';
 import dom from 'metal-dom';
-import {CancellablePromise} from 'metal-promise';
 import {async, core} from 'metal';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 
@@ -124,7 +123,7 @@ class ImageEditor extends PortletBase {
 			data: imageData
 		});
 
-		return CancellablePromise.resolve();
+		return Promise.resolve();
 	}
 
 	/**
@@ -151,10 +150,10 @@ class ImageEditor extends PortletBase {
 	/**
 	 * Retrieves the blob representation of the current image.
 	 *
-	 * @return {CancellablePromise} A promise that resolves with the image blob.
+	 * @return {Promise} A promise that resolves with the image blob.
 	 */
 	getImageEditorImageBlob() {
-		return new CancellablePromise((resolve, reject) => {
+		return new Promise((resolve, reject) => {
 			this.getImageEditorImageData().then(imageData => {
 				let canvas = document.createElement('canvas');
 				canvas.width = imageData.width;
@@ -184,7 +183,7 @@ class ImageEditor extends PortletBase {
 	/**
 	 * Retrieves the image data representation of the current image.
 	 *
-	 * @return {CancellablePromise} A promise that resolves with the image data.
+	 * @return {Promise} A promise that resolves with the image data.
 	 */
 	getImageEditorImageData() {
 		return this.history_[this.historyIndex_].getImageData();
@@ -370,14 +369,14 @@ class ImageEditor extends PortletBase {
 	 * Sends a given image blob to the server for processing and storing.
 	 * @param  {Blob} imageBlob The image blob to send to the server.
 	 * @protected
-	 * @return {CancellablePromise} A promise that follows the XHR submission
+	 * @return {Promise} A promise that follows the XHR submission
 	 * process.
 	 */
 	submitBlob_(imageBlob) {
 		let saveFileName = this.saveFileName;
 		let saveParamName = this.saveParamName;
 
-		let promise = new CancellablePromise((resolve, reject) => {
+		let promise = new Promise((resolve, reject) => {
 			let formData = new FormData();
 
 			formData.append(saveParamName, imageBlob, saveFileName);
@@ -398,7 +397,7 @@ class ImageEditor extends PortletBase {
 	 * @protected
 	 */
 	syncHistory_() {
-		return new CancellablePromise((resolve, reject) => {
+		return new Promise((resolve, reject) => {
 			this.history_[this.historyIndex_].getImageData().then(imageData => {
 				this.syncImageData_(imageData);
 

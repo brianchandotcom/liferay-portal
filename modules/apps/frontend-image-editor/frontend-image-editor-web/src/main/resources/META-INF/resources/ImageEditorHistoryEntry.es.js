@@ -1,5 +1,3 @@
-import {CancellablePromise} from 'metal-promise';
-
 /**
  * Image Editor History Entry
  *
@@ -14,7 +12,7 @@ class ImageEditorHistoryEntry {
 	 * @review
 	 */
 	constructor(image) {
-		this.dataPromise_ = new CancellablePromise((resolve, reject) => {
+		this.dataPromise_ = new Promise((resolve, reject) => {
 			// Preemtively fetch the imageData when all we have is the image url
 
 			if (image.url && !image.data) {
@@ -32,7 +30,7 @@ class ImageEditorHistoryEntry {
 	 * @review
 	 */
 	loadData_(imageURL) {
-		return new CancellablePromise((resolve, reject) => {
+		return new Promise((resolve, reject) => {
 			let bufferImage = new Image();
 
 			bufferImage.onload = () => {
@@ -56,7 +54,7 @@ class ImageEditorHistoryEntry {
 
 	/**
 	 * Fetches the stored ImageData of this history entry
-	 * @return {CancellablePromise} A promise that will resolve with the stored ImageData value
+	 * @return {Promise} A promise that will resolve with the stored ImageData value
 	 * @review
 	 */
 	getImageData() {

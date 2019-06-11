@@ -1,4 +1,3 @@
-import {CancellablePromise} from 'metal-promise';
 import {openToast} from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
 import {RequestScreen, utils} from 'senna';
 import {toRegex} from 'metal-path-parser';
@@ -126,14 +125,14 @@ class SoyPortletRouter extends State {
 			 * only when the controller for the path and all its dependencies
 			 * have been successfully loaded. If the load fails , then it falls
 			 * back to an ordinary full page navigation.
-			 * @return {CancellablePromise} A promise to be resolved once the path
+			 * @return {Promise} A promise to be resolved once the path
 			 * and its needed controllers have been successully loaded or rejected
 			 * otherwise
 			 */
 			flip() {
 				const loadedState = super.maybeParseLastLoadedStateAsJson();
 
-				const deferred = new CancellablePromise((resolve, reject) => {
+				const deferred = new Promise((resolve, reject) => {
 					Liferay.Loader.require(
 						loadedState.javaScriptLoaderModule,
 						module => {

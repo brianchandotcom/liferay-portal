@@ -2,7 +2,6 @@ import Component from 'metal-component';
 import Slider from 'frontend-js-web/liferay/compat/slider/Slider.es';
 import Soy from 'metal-soy';
 import debounce from 'metal-debounce';
-import {CancellablePromise} from 'metal-promise';
 import {core} from 'metal';
 
 import componentTemplates from './ContrastComponent.soy';
@@ -35,7 +34,7 @@ class ContrastComponent extends Component {
 	 * Applies a contrast filter to the image.
 	 *
 	 * @param  {ImageData} imageData The image data representation of the image.
-	 * @return {CancellablePromise} A promise that resolves when the webworker
+	 * @return {Promise} A promise that resolves when the webworker
 	 * finishes processing the image.
 	 */
 	preview(imageData) {
@@ -46,7 +45,7 @@ class ContrastComponent extends Component {
 	 * Applies a contrast filter to the image.
 	 *
 	 * @param  {ImageData} imageData The image data representation of the image.
-	 * @return {CancellablePromise} A promise that resolves when the webworker
+	 * @return {Promise} A promise that resolves when the webworker
 	 * finishes processing the image.
 	 */
 	process(imageData) {
@@ -77,11 +76,11 @@ class ContrastComponent extends Component {
 	 * Spawns a webworker to process the image in a different thread.
 	 *
 	 * @param  {Object} message The image and contrast value.
-	 * @return {CancellablePromise} A promise that resolves when the webworker
+	 * @return {Promise} A promise that resolves when the webworker
 	 * finishes processing the image.
 	 */
 	spawnWorker_(message) {
-		return new CancellablePromise((resolve, reject) => {
+		return new Promise((resolve, reject) => {
 			let workerURI = this.modulePath + '/ContrastWorker.js';
 			let processWorker = new Worker(workerURI);
 

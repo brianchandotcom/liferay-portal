@@ -1,5 +1,3 @@
-import Promise from 'metal-promise';
-
 import PortletInit from './PortletInit.es';
 import {validateArguments, validatePortletId} from './portlet_util.es';
 

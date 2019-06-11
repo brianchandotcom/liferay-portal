@@ -1,6 +1,5 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import {CancellablePromise} from 'metal-promise';
 import {core} from 'metal';
 
 import componentTemplates from './ResizeComponent.soy';
@@ -35,11 +34,11 @@ class ResizeComponent extends Component {
 	 * Executes the resize operation to get the final version of the image.
 	 *
 	 * @param  {ImageData} imageData The image data representation of the image.
-	 * @return {CancellablePromise} A promise that resolves with the resized
+	 * @return {Promise} A promise that resolves with the resized
 	 * image data representation.
 	 */
 	process(imageData) {
-		return CancellablePromise.resolve(this.resizeImageData_(imageData));
+		return Promise.resolve(this.resizeImageData_(imageData));
 	}
 
 	/**

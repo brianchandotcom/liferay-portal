@@ -1,6 +1,5 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import {CancellablePromise} from 'metal-promise';
 import {async, core} from 'metal';
 
 import componentTemplates from './EffectsComponent.soy';
@@ -19,7 +18,7 @@ class EffectsComponent extends Component {
 		async.nextTick(() => {
 			this.getImageEditorImageData()
 				.then(imageData =>
-					CancellablePromise.resolve(
+					Promise.resolve(
 						this.generateThumbnailImageData_(imageData)
 					)
 				)
@@ -59,7 +58,7 @@ class EffectsComponent extends Component {
 	 *
 	 * @param  {String} effect The effect to generate the thumbnail for.
 	 * @param  {ImageData} imageData The image data to which the effect is applied.
-	 * @return {CancellablePromise} A promise that resolves when the thumbnail
+	 * @return {Promise} A promise that resolves when the thumbnail
 	 * is generated.
 	 */
 	generateThumbnail_(effect, imageData) {
@@ -82,11 +81,11 @@ class EffectsComponent extends Component {
 	 * Generates the complete set of thumbnails for the component effects.
 	 *
 	 * @param  {ImageData} imageData The thumbnail image data (small version).
-	 * @return {CancellablePromise} A promise that resolves when the thumbnails
+	 * @return {Promise} A promise that resolves when the thumbnails
 	 * are generated.
 	 */
 	generateThumbnails_(imageData) {
-		return CancellablePromise.all(
+		return Promise.all(
 			this.effects.map(effect =>
 				this.generateThumbnail_(effect, imageData)
 			)
@@ -135,11 +134,11 @@ class EffectsComponent extends Component {
 	/**
 	 * Prefetches all the effect results.
 	 *
-	 * @return {CancellablePromise} A promise that resolves when all the effects
+	 * @return {Promise} A promise that resolves when all the effects
 	 * are prefetched.
 	 */
 	prefetchEffects_() {
-		return new CancellablePromise((resolve, reject) => {
+		return new Promise((resolve, reject) => {
 			if (!this.isDisposed()) {
 				let missingEffects = this.effects.filter(
 					effect => !this.cache_[effect]
@@ -162,7 +161,7 @@ class EffectsComponent extends Component {
 	 * Applies the selected effect to the image.
 	 *
 	 * @param  {ImageData} imageData The image data representation of the image.
-	 * @return {CancellablePromise} A promise that resolves when the webworker
+	 * @return {Promise} A promise that resolves when the webworker
 	 * finishes processing the image.
 	 */
 	preview(imageData) {
@@ -185,7 +184,7 @@ class EffectsComponent extends Component {
 	 *
 	 * @param  {ImageData} imageData The image data representation of the image.
 	 * @param {String} effectName The effect to apply to the image.
-	 * @return {CancellablePromise} A promise that resolves when the webworker
+	 * @return {Promise} A promise that resolves when the webworker
 	 * finishes processing the image.
 	 */
 	process(imageData, effectName) {
@@ -241,11 +240,11 @@ class EffectsComponent extends Component {
 	 *
 	 * @param  {String} workerURI The URI of the worker to spawn.
 	 * @param  {Object} message The image and effect preset.
-	 * @return {CancellablePromise} A promise that resolves when the webworker
+	 * @return {Promise} A promise that resolves when the webworker
 	 * finishes processing the image.
 	 */
 	spawnWorker_(message) {
-		return new CancellablePromise((resolve, reject) => {
+		return new Promise((resolve, reject) => {
 			let processWorker = new Worker(
 				this.modulePath + '/EffectsWorker.js'
 			);

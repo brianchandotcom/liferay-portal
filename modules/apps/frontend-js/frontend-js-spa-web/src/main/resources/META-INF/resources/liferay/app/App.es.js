@@ -1,5 +1,4 @@
 import {App} from 'senna';
-import {CancellablePromise} from 'metal-promise';
 import {openToast} from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
 import core from 'metal';
 import dom from 'metal-dom';
@@ -386,12 +385,12 @@ class LiferayApp extends App {
 	/**
 	 * Creates a user notification
 	 * @param  {!Object} configuration object that's passed to `Liferay.Notification`
-	 * @return {!CancellablePromise} A promise that renders a notification when
+	 * @return {!Promise} A promise that renders a notification when
 	 * resolved
 	 */
 
 	_createNotification(config) {
-		return new CancellablePromise(resolve => {
+		return new Promise(resolve => {
 			resolve(
 				openToast(
 					Object.assign(

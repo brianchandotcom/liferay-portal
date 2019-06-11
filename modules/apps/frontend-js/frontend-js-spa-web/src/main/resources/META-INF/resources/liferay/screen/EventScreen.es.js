@@ -1,4 +1,3 @@
-import {CancellablePromise} from 'metal-promise';
 import globals from 'senna/lib/globals/globals';
 import {HtmlScreen} from 'senna';
 
@@ -153,7 +152,7 @@ class EventScreen extends HtmlScreen {
 	flip(surfaces) {
 		this.copyBodyAttributes();
 
-		return CancellablePromise.resolve(this.beforeScreenFlip())
+		return Promise.resolve(this.beforeScreenFlip())
 			.then(super.flip(surfaces))
 			.then(() => {
 				this.runBodyOnLoad();
@@ -286,7 +285,7 @@ class EventScreen extends HtmlScreen {
 	 * this ensures that it works fine in IE 11.
 	 * @param {!Array<Element>} elements
 	 * @private
-	 * @return {CancellablePromise}
+	 * @return {Promise}
 	 */
 
 	runFaviconInElement_(elements) {

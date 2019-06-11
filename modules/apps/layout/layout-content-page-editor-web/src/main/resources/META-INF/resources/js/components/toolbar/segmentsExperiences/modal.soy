@@ -3,7 +3,7 @@
 {template .render}
 	{@param? _handleFormSubmit: any}
 	{@param? _requiredNameError: bool | null}
-	{@param? porletPrefix: string }
+	{@param? portletPrefix: string }
 	{@param? _handleNewSegmentClick: any }
 	{@param visible: bool }
 	{@param error: [
@@ -42,7 +42,7 @@
 					autocomplete="off"
 					class="mb-3"
 					data-onsubmit="{$_handleFormSubmit}"
-					id="{$porletPrefix}{$experienceForm.formId}"
+					id="{$portletPrefix}{$experienceForm.formId}"
 					novalidate
 				>
 					{if $error and $error.visible }
@@ -58,7 +58,7 @@
 						{/call}
 					{/if}
 					<div class="form-group {$_requiredNameError ? 'has-error ' : ''}my-2">
-						<label for="{$porletPrefix}{$experienceForm.experienceName.inputId}">
+						<label for="{$portletPrefix}{$experienceForm.experienceName.inputId}">
 							{$experienceForm.experienceName.label}
 							<svg class="lexicon-icon lexicon-icon-asterisk reference-mark" focusable="false" role="presentation">
 								<use href="{$spritemap ?: ''}#asterisk" />
@@ -68,7 +68,7 @@
 						<input
 							autofocus
 							class="form-control"
-							id="{$porletPrefix}{$experienceForm.experienceName.inputId}"
+							id="{$portletPrefix}{$experienceForm.experienceName.inputId}"
 							name="experienceName"
 							value="{$experienceForm.experienceName.value}"
 							placeholder="{$experienceForm.experienceName.placeholder}"
@@ -93,7 +93,7 @@
 					</div>
 
 					<div class="form-group my-2">
-						<label for="{$porletPrefix}{$experienceForm.segmentSelector.inputId}">
+						<label for="{$portletPrefix}{$experienceForm.segmentSelector.inputId}">
 							{$experienceForm.segmentSelector.label}
 						</label>
 
@@ -107,7 +107,7 @@
 						<div class="d-flex">
 							<select
 								class="form-control"
-								id="{$porletPrefix}{$experienceForm.experienceName.inputId}"
+								id="{$portletPrefix}{$experienceForm.experienceName.inputId}"
 								name="experienceSegmentId"
 								ref="experienceSegmentId"
 								{$selectAttributes}
@@ -160,7 +160,7 @@
 						<button
 							class="btn btn-primary ml-3"
 							data-onclick="{$_handleFormSubmit}"
-							form="{$porletPrefix}{$experienceForm.formId}"
+							form="{$portletPrefix}{$experienceForm.formId}"
 							type="button"
 						>
 							{msg desc=""}save{/msg}

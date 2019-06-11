@@ -119,7 +119,7 @@ public abstract class BaseFragmentCollectionContributor
 	private String _getContributedCollectionName() throws Exception {
 		Class<?> clazz = getClass();
 
-		String json = StringUtil.read(
+		String json = StreamUtil.toString(
 			clazz.getResourceAsStream(
 				"dependencies/" +
 					FragmentExportImportConstants.FILE_NAME_COLLECTION_CONFIG));

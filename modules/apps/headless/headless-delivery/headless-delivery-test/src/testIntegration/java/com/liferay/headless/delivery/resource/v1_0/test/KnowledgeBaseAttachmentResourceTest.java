@@ -49,6 +49,7 @@ public class KnowledgeBaseAttachmentResourceTest
 
 		ServiceContext serviceContext = new ServiceContext();
 
+		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(testGroup.getGroupId());
 
 		_kbArticle = KBArticleLocalServiceUtil.addKBArticle(

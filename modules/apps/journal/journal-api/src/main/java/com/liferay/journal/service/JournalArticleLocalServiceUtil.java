@@ -340,6 +340,23 @@ public class JournalArticleLocalServiceUtil {
 			ddmStructureKey, ddmTemplateKey, serviceContext);
 	}
 
+	public static com.liferay.journal.model.JournalArticle
+			addArticleDefaultValues(
+				long userId, long groupId, long classNameId, long classPK,
+				java.util.Map<java.util.Locale, String> titleMap,
+				java.util.Map<java.util.Locale, String> descriptionMap,
+				String content, String ddmStructureKey, String ddmTemplateKey,
+				String layoutUuid, boolean indexable, boolean smallImage,
+				String smallImageURL, java.io.File smallImageFile,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addArticleDefaultValues(
+			userId, groupId, classNameId, classPK, titleMap, descriptionMap,
+			content, ddmStructureKey, ddmTemplateKey, layoutUuid, indexable,
+			smallImage, smallImageURL, smallImageFile, serviceContext);
+	}
+
 	/**
 	 * Adds the resources to the web content article.
 	 *
@@ -4233,6 +4250,23 @@ public class JournalArticleLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateArticle(id, urlTitle);
+	}
+
+	public static com.liferay.journal.model.JournalArticle
+			updateArticleDefaultValues(
+				long userId, long groupId, String articleId,
+				java.util.Map<java.util.Locale, String> titleMap,
+				java.util.Map<java.util.Locale, String> descriptionMap,
+				String content, String ddmStructureKey, String ddmTemplateKey,
+				String layoutUuid, boolean indexable, boolean smallImage,
+				String smallImageURL, java.io.File smallImageFile,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateArticleDefaultValues(
+			userId, groupId, articleId, titleMap, descriptionMap, content,
+			ddmStructureKey, ddmTemplateKey, layoutUuid, indexable, smallImage,
+			smallImageURL, smallImageFile, serviceContext);
 	}
 
 	/**

@@ -396,6 +396,23 @@ public class JournalArticleServiceWrapper
 			ddmStructureKey, ddmTemplateKey, serviceContext);
 	}
 
+	@Override
+	public com.liferay.journal.model.JournalArticle addArticleDefaultValues(
+			long groupId, long classNameId, long classPK,
+			java.util.Map<java.util.Locale, String> titleMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			String content, String ddmStructureKey, String ddmTemplateKey,
+			String layoutUuid, boolean indexable, boolean smallImage,
+			String smallImageURL, java.io.File smallImageFile,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _journalArticleService.addArticleDefaultValues(
+			groupId, classNameId, classPK, titleMap, descriptionMap, content,
+			ddmStructureKey, ddmTemplateKey, layoutUuid, indexable, smallImage,
+			smallImageURL, smallImageFile, serviceContext);
+	}
+
 	/**
 	 * Copies the web content article matching the group, article ID, and
 	 * version. This method creates a new article, extracting all the values
@@ -464,6 +481,15 @@ public class JournalArticleServiceWrapper
 
 		_journalArticleService.deleteArticle(
 			groupId, articleId, articleURL, serviceContext);
+	}
+
+	@Override
+	public void deleteArticleDefaultValues(
+			long groupId, String articleId, String ddmStructureKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_journalArticleService.deleteArticleDefaultValues(
+			groupId, articleId, ddmStructureKey);
 	}
 
 	/**
@@ -2526,6 +2552,23 @@ public class JournalArticleServiceWrapper
 
 		return _journalArticleService.updateArticle(
 			groupId, folderId, articleId, version, content, serviceContext);
+	}
+
+	@Override
+	public com.liferay.journal.model.JournalArticle updateArticleDefaultValues(
+			long groupId, String articleId,
+			java.util.Map<java.util.Locale, String> titleMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			String content, String ddmStructureKey, String ddmTemplateKey,
+			String layoutUuid, boolean indexable, boolean smallImage,
+			String smallImageURL, java.io.File smallImageFile,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _journalArticleService.updateArticleDefaultValues(
+			groupId, articleId, titleMap, descriptionMap, content,
+			ddmStructureKey, ddmTemplateKey, layoutUuid, indexable, smallImage,
+			smallImageURL, smallImageFile, serviceContext);
 	}
 
 	/**

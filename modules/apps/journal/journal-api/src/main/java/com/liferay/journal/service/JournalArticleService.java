@@ -373,6 +373,15 @@ public interface JournalArticleService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public JournalArticle addArticleDefaultValues(
+			long groupId, long classNameId, long classPK,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			String content, String ddmStructureKey, String ddmTemplateKey,
+			String layoutUuid, boolean indexable, boolean smallImage,
+			String smallImageURL, File smallImageFile,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Copies the web content article matching the group, article ID, and
 	 * version. This method creates a new article, extracting all the values
@@ -426,6 +435,10 @@ public interface JournalArticleService extends BaseService {
 	public void deleteArticle(
 			long groupId, String articleId, String articleURL,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	public void deleteArticleDefaultValues(
+			long groupId, String articleId, String ddmStructureKey)
 		throws PortalException;
 
 	/**
@@ -2117,6 +2130,14 @@ public interface JournalArticleService extends BaseService {
 	public JournalArticle updateArticle(
 			long groupId, long folderId, String articleId, double version,
 			String content, ServiceContext serviceContext)
+		throws PortalException;
+
+	public JournalArticle updateArticleDefaultValues(
+			long groupId, String articleId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String content,
+			String ddmStructureKey, String ddmTemplateKey, String layoutUuid,
+			boolean indexable, boolean smallImage, String smallImageURL,
+			File smallImageFile, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

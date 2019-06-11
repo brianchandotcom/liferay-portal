@@ -524,19 +524,6 @@ public class JournalPortlet extends MVCPortlet {
 			themeDisplay.getScopeGroupId(), articleId);
 	}
 
-	public void subscribeFolder(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long folderId = ParamUtil.getLong(actionRequest, "folderId");
-
-		_journalFolderService.subscribe(
-			themeDisplay.getScopeGroupId(), folderId);
-	}
-
 	public void subscribeStructure(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

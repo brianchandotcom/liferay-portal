@@ -70,7 +70,7 @@ String unsubscribeActionName = StringPool.BLANK;
 				}
 			}
 
-			subscribeActionName = "subscribeFolder";
+			subscribeActionName = "/journal/subscribe_folder";
 			unsubscribeActionName = "/journal/unsubscribe_folder";
 		}
 		%>

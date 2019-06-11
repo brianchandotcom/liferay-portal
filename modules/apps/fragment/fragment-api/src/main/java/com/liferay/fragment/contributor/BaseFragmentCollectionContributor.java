@@ -97,13 +97,10 @@ public abstract class BaseFragmentCollectionContributor
 				_updateFragmentEntryLinks(fragmentEntry);
 
 				List<FragmentEntry> fragmentEntryList =
-					_fragmentEntries.getOrDefault(
-						fragmentEntry.getType(), new ArrayList<>());
+					_fragmentEntries.computeIfAbsent(
+						fragmentEntry.getType(), type -> new ArrayList<>());
 
 				fragmentEntryList.add(fragmentEntry);
-
-				_fragmentEntries.put(
-					fragmentEntry.getType(), fragmentEntryList);
 			}
 		}
 		catch (Exception e) {

@@ -1051,7 +1051,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		delete.dependsOn(closure);
 	}
 
-	private void _configureTaskJar(Project project) {
+	private void _configureTaskJar(final Project project) {
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
 
 		jar.doFirst(

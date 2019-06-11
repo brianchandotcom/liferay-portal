@@ -77,10 +77,14 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 	protected Long testGetDocumentFolderDocumentsPage_getDocumentFolderId()
 		throws Exception {
 
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGuestPermissions(true);
+
 		Folder folder = DLAppLocalServiceUtil.addFolder(
 			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
 			testGroup.getGroupId(), 0, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new ServiceContext());
+			RandomTestUtil.randomString(), serviceContext);
 
 		return folder.getFolderId();
 	}

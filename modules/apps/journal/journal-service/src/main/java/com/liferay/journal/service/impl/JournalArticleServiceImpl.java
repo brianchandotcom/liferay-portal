@@ -14,6 +14,8 @@
 
 package com.liferay.journal.service.impl;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
@@ -443,6 +445,30 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			ddmStructureKey, ddmTemplateKey, serviceContext);
 	}
 
+	@Override
+	public JournalArticle addArticleDefaultValues(
+			long groupId, long classNameId, long classPK,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			String content, String ddmStructureKey, String ddmTemplateKey,
+			String layoutUuid, boolean indexable, boolean smallImage,
+			String smallImageURL, File smallImageFile,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMStructure ddmStructure = _ddmStructureService.getStructure(
+			groupId, classNameLocalService.getClassNameId(JournalArticle.class),
+			ddmStructureKey, true);
+
+		_ddmStructureModelResourcePermission.contains(
+			getPermissionChecker(), ddmStructure, ActionKeys.UPDATE);
+
+		return journalArticleLocalService.addArticleDefaultValues(
+			getUserId(), groupId, classNameId, classPK, titleMap,
+			descriptionMap, content, ddmStructureKey, ddmTemplateKey,
+			layoutUuid, indexable, smallImage, smallImageURL, smallImageFile,
+			serviceContext);
+	}
+
 	/**
 	 * Copies the web content article matching the group, article ID, and
 	 * version. This method creates a new article, extracting all the values
@@ -530,6 +556,21 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 		journalArticleLocalService.deleteArticle(
 			groupId, articleId, serviceContext);
+	}
+
+	@Override
+	public void deleteArticleDefaultValues(
+			long groupId, String articleId, String ddmStructureKey)
+		throws PortalException {
+
+		DDMStructure ddmStructure = _ddmStructureService.getStructure(
+			groupId, classNameLocalService.getClassNameId(JournalArticle.class),
+			ddmStructureKey, true);
+
+		_ddmStructureModelResourcePermission.contains(
+			getPermissionChecker(), ddmStructure, ActionKeys.UPDATE);
+
+		journalArticleLocalService.deleteArticle(groupId, articleId, null);
 	}
 
 	/**
@@ -2788,6 +2829,28 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			serviceContext);
 	}
 
+	@Override
+	public JournalArticle updateArticleDefaultValues(
+			long groupId, String articleId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String content,
+			String ddmStructureKey, String ddmTemplateKey, String layoutUuid,
+			boolean indexable, boolean smallImage, String smallImageURL,
+			File smallImageFile, ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMStructure ddmStructure = _ddmStructureService.getStructure(
+			groupId, classNameLocalService.getClassNameId(JournalArticle.class),
+			ddmStructureKey, true);
+
+		_ddmStructureModelResourcePermission.contains(
+			getPermissionChecker(), ddmStructure, ActionKeys.UPDATE);
+
+		return journalArticleLocalService.updateArticleDefaultValues(
+			getUserId(), groupId, articleId, titleMap, descriptionMap, content,
+			ddmStructureKey, ddmTemplateKey, layoutUuid, indexable, smallImage,
+			smallImageURL, smallImageFile, serviceContext);
+	}
+
 	/**
 	 * Updates the translation of the web content article.
 	 *
@@ -2886,6 +2949,15 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			getUserId(), article, status, articleURL, serviceContext,
 			new HashMap<String, Serializable>());
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure)"
+	)
+	private ModelResourcePermission<DDMStructure>
+		_ddmStructureModelResourcePermission;
+
+	@Reference
+	private DDMStructureService _ddmStructureService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"

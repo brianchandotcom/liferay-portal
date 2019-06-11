@@ -300,6 +300,10 @@ public abstract class BaseMessageBoardSectionResourceImpl
 		return new MessageBoardSection();
 	}
 
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
+		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}

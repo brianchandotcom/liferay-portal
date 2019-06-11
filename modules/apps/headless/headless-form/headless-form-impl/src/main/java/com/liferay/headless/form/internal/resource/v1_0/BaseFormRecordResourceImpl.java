@@ -136,6 +136,10 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 		return new FormRecord();
 	}
 
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
+		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}

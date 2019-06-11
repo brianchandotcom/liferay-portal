@@ -45,8 +45,8 @@ import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResour
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 
 import graphql.annotations.annotationTypes.GraphQLField;
@@ -1410,124 +1410,113 @@ public class Mutation {
 			BlogPostingResource blogPostingResource)
 		throws Exception {
 
-		blogPostingResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		blogPostingResource.setContextAcceptLanguage(_acceptLanguage);
+		blogPostingResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
 			BlogPostingImageResource blogPostingImageResource)
 		throws Exception {
 
-		blogPostingImageResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		blogPostingImageResource.setContextAcceptLanguage(_acceptLanguage);
+		blogPostingImageResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(CommentResource commentResource)
 		throws Exception {
 
-		commentResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		commentResource.setContextAcceptLanguage(_acceptLanguage);
+		commentResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(DocumentResource documentResource)
 		throws Exception {
 
-		documentResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		documentResource.setContextAcceptLanguage(_acceptLanguage);
+		documentResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
 			DocumentFolderResource documentFolderResource)
 		throws Exception {
 
-		documentFolderResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		documentFolderResource.setContextAcceptLanguage(_acceptLanguage);
+		documentFolderResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
 			KnowledgeBaseArticleResource knowledgeBaseArticleResource)
 		throws Exception {
 
-		knowledgeBaseArticleResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		knowledgeBaseArticleResource.setContextAcceptLanguage(_acceptLanguage);
+		knowledgeBaseArticleResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
 			KnowledgeBaseAttachmentResource knowledgeBaseAttachmentResource)
 		throws Exception {
 
-		knowledgeBaseAttachmentResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		knowledgeBaseAttachmentResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		knowledgeBaseAttachmentResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
 			KnowledgeBaseFolderResource knowledgeBaseFolderResource)
 		throws Exception {
 
-		knowledgeBaseFolderResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		knowledgeBaseFolderResource.setContextAcceptLanguage(_acceptLanguage);
+		knowledgeBaseFolderResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
 			MessageBoardAttachmentResource messageBoardAttachmentResource)
 		throws Exception {
 
-		messageBoardAttachmentResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		messageBoardAttachmentResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		messageBoardAttachmentResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
 			MessageBoardMessageResource messageBoardMessageResource)
 		throws Exception {
 
-		messageBoardMessageResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		messageBoardMessageResource.setContextAcceptLanguage(_acceptLanguage);
+		messageBoardMessageResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
 			MessageBoardSectionResource messageBoardSectionResource)
 		throws Exception {
 
-		messageBoardSectionResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		messageBoardSectionResource.setContextAcceptLanguage(_acceptLanguage);
+		messageBoardSectionResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
 			MessageBoardThreadResource messageBoardThreadResource)
 		throws Exception {
 
-		messageBoardThreadResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		messageBoardThreadResource.setContextAcceptLanguage(_acceptLanguage);
+		messageBoardThreadResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
 			StructuredContentResource structuredContentResource)
 		throws Exception {
 
-		structuredContentResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		structuredContentResource.setContextAcceptLanguage(_acceptLanguage);
+		structuredContentResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
 			StructuredContentFolderResource structuredContentFolderResource)
 		throws Exception {
 
-		structuredContentFolderResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		structuredContentFolderResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		structuredContentFolderResource.setContextCompany(_company);
 	}
 
 	private static ComponentServiceObjects<BlogPostingResource>
@@ -1558,5 +1547,8 @@ public class Mutation {
 		_structuredContentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<StructuredContentFolderResource>
 		_structuredContentFolderResourceComponentServiceObjects;
+
+	private AcceptLanguage _acceptLanguage;
+	private Company _company;
 
 }

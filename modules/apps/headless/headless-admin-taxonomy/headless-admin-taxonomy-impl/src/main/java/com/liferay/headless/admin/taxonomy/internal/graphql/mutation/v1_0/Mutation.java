@@ -22,8 +22,8 @@ import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResourc
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
@@ -272,27 +272,24 @@ public class Mutation {
 	private void _populateResourceContext(KeywordResource keywordResource)
 		throws Exception {
 
-		keywordResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		keywordResource.setContextAcceptLanguage(_acceptLanguage);
+		keywordResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
 			TaxonomyCategoryResource taxonomyCategoryResource)
 		throws Exception {
 
-		taxonomyCategoryResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		taxonomyCategoryResource.setContextAcceptLanguage(_acceptLanguage);
+		taxonomyCategoryResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
 			TaxonomyVocabularyResource taxonomyVocabularyResource)
 		throws Exception {
 
-		taxonomyVocabularyResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		taxonomyVocabularyResource.setContextAcceptLanguage(_acceptLanguage);
+		taxonomyVocabularyResource.setContextCompany(_company);
 	}
 
 	private static ComponentServiceObjects<KeywordResource>
@@ -301,5 +298,8 @@ public class Mutation {
 		_taxonomyCategoryResourceComponentServiceObjects;
 	private static ComponentServiceObjects<TaxonomyVocabularyResource>
 		_taxonomyVocabularyResourceComponentServiceObjects;
+
+	private AcceptLanguage _acceptLanguage;
+	private Company _company;
 
 }

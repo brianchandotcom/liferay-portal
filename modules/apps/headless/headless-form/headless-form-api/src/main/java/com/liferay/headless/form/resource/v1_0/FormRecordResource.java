@@ -16,6 +16,7 @@ package com.liferay.headless.form.resource.v1_0;
 
 import com.liferay.headless.form.dto.v1_0.FormRecord;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -46,6 +47,10 @@ public interface FormRecordResource {
 
 	public FormRecord getFormFormRecordByLatestDraft(Long formId)
 		throws Exception;
+
+	public default void setContextAcceptLanguage(
+		AcceptLanguage contextAcceptLanguage) {
+	}
 
 	public void setContextCompany(Company contextCompany);
 

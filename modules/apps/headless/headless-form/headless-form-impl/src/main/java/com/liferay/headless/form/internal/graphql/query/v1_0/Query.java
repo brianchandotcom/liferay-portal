@@ -24,8 +24,8 @@ import com.liferay.headless.form.resource.v1_0.FormResource;
 import com.liferay.headless.form.resource.v1_0.FormStructureResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -217,35 +217,31 @@ public class Query {
 	private void _populateResourceContext(FormResource formResource)
 		throws Exception {
 
-		formResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		formResource.setContextAcceptLanguage(_acceptLanguage);
+		formResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
 			FormDocumentResource formDocumentResource)
 		throws Exception {
 
-		formDocumentResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		formDocumentResource.setContextAcceptLanguage(_acceptLanguage);
+		formDocumentResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(FormRecordResource formRecordResource)
 		throws Exception {
 
-		formRecordResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		formRecordResource.setContextAcceptLanguage(_acceptLanguage);
+		formRecordResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
 			FormStructureResource formStructureResource)
 		throws Exception {
 
-		formStructureResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		formStructureResource.setContextAcceptLanguage(_acceptLanguage);
+		formStructureResource.setContextCompany(_company);
 	}
 
 	private static ComponentServiceObjects<FormResource>
@@ -256,5 +252,8 @@ public class Query {
 		_formRecordResourceComponentServiceObjects;
 	private static ComponentServiceObjects<FormStructureResource>
 		_formStructureResourceComponentServiceObjects;
+
+	private AcceptLanguage _acceptLanguage;
+	private Company _company;
 
 }

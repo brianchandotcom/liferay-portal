@@ -16,6 +16,7 @@ package com.liferay.headless.admin.user.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import javax.annotation.Generated;
@@ -41,6 +42,10 @@ public interface PostalAddressResource {
 	public Page<PostalAddress> getUserAccountPostalAddressesPage(
 			Long userAccountId)
 		throws Exception;
+
+	public default void setContextAcceptLanguage(
+		AcceptLanguage contextAcceptLanguage) {
+	}
 
 	public void setContextCompany(Company contextCompany);
 

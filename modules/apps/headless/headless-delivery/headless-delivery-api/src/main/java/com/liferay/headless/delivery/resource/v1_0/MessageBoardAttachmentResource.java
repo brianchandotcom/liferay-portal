@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardAttachment;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -56,6 +57,10 @@ public interface MessageBoardAttachmentResource {
 	public MessageBoardAttachment postMessageBoardThreadMessageBoardAttachment(
 			Long messageBoardThreadId, MultipartBody multipartBody)
 		throws Exception;
+
+	public default void setContextAcceptLanguage(
+		AcceptLanguage contextAcceptLanguage) {
+	}
 
 	public void setContextCompany(Company contextCompany);
 

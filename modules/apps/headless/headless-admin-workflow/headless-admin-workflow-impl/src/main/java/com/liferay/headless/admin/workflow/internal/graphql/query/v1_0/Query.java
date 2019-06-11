@@ -20,8 +20,8 @@ import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowLogResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowTaskResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -184,23 +184,24 @@ public class Query {
 			WorkflowLogResource workflowLogResource)
 		throws Exception {
 
-		workflowLogResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		workflowLogResource.setContextAcceptLanguage(_acceptLanguage);
+		workflowLogResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
 			WorkflowTaskResource workflowTaskResource)
 		throws Exception {
 
-		workflowTaskResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		workflowTaskResource.setContextAcceptLanguage(_acceptLanguage);
+		workflowTaskResource.setContextCompany(_company);
 	}
 
 	private static ComponentServiceObjects<WorkflowLogResource>
 		_workflowLogResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WorkflowTaskResource>
 		_workflowTaskResourceComponentServiceObjects;
+
+	private AcceptLanguage _acceptLanguage;
+	private Company _company;
 
 }

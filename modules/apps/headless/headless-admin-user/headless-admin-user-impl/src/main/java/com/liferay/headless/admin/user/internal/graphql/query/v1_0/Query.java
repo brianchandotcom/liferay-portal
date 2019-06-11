@@ -34,10 +34,10 @@ import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.user.resource.v1_0.WebUrlResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -570,77 +570,68 @@ public class Query {
 			EmailAddressResource emailAddressResource)
 		throws Exception {
 
-		emailAddressResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		emailAddressResource.setContextAcceptLanguage(_acceptLanguage);
+		emailAddressResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
 			OrganizationResource organizationResource)
 		throws Exception {
 
-		organizationResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		organizationResource.setContextAcceptLanguage(_acceptLanguage);
+		organizationResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(PhoneResource phoneResource)
 		throws Exception {
 
-		phoneResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		phoneResource.setContextAcceptLanguage(_acceptLanguage);
+		phoneResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
 			PostalAddressResource postalAddressResource)
 		throws Exception {
 
-		postalAddressResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		postalAddressResource.setContextAcceptLanguage(_acceptLanguage);
+		postalAddressResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(RoleResource roleResource)
 		throws Exception {
 
-		roleResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		roleResource.setContextAcceptLanguage(_acceptLanguage);
+		roleResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(SegmentResource segmentResource)
 		throws Exception {
 
-		segmentResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		segmentResource.setContextAcceptLanguage(_acceptLanguage);
+		segmentResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
 			SegmentUserResource segmentUserResource)
 		throws Exception {
 
-		segmentUserResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		segmentUserResource.setContextAcceptLanguage(_acceptLanguage);
+		segmentUserResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
 			UserAccountResource userAccountResource)
 		throws Exception {
 
-		userAccountResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		userAccountResource.setContextAcceptLanguage(_acceptLanguage);
+		userAccountResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(WebUrlResource webUrlResource)
 		throws Exception {
 
-		webUrlResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		webUrlResource.setContextAcceptLanguage(_acceptLanguage);
+		webUrlResource.setContextCompany(_company);
 	}
 
 	private static ComponentServiceObjects<EmailAddressResource>
@@ -661,5 +652,8 @@ public class Query {
 		_userAccountResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WebUrlResource>
 		_webUrlResourceComponentServiceObjects;
+
+	private AcceptLanguage _acceptLanguage;
+	private Company _company;
 
 }

@@ -20,6 +20,7 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -91,8 +92,7 @@ public abstract class BaseFragmentCollectionContributor
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
 
-				FragmentEntry fragmentEntry = _getFragmentEntry(
-					FileUtil.getPath(url.getPath()));
+				FragmentEntry fragmentEntry = _getFragmentEntry(url);
 
 				_updateFragmentEntryLinks(fragmentEntry);
 
@@ -146,16 +146,21 @@ public abstract class BaseFragmentCollectionContributor
 		return StringUtil.read(clazz.getResourceAsStream(sb.toString()));
 	}
 
-	private FragmentEntry _getFragmentEntry(String path) throws Exception {
-		JSONObject jsonObject = _getStructure(path + "/fragment.json");
+	private FragmentEntry _getFragmentEntry(URL url) throws Exception {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			StreamUtil.toString(url.openStream()));
 
 		String name = jsonObject.getString("name");
 		String fragmentEntryKey = StringBundler.concat(
 			getFragmentCollectionKey(), StringPool.DASH,
 			jsonObject.getString("fragmentEntryKey"));
+
+		String path = FileUtil.getPath(url.getPath());
+
 		String css = _getFileContent(path, jsonObject.getString("cssPath"));
 		String html = _getFileContent(path, jsonObject.getString("htmlPath"));
 		String js = _getFileContent(path, jsonObject.getString("jsPath"));
+
 		String thumbnailURL = _getImagePreviewURL(
 			jsonObject.getString("thumbnail"));
 		int type = FragmentConstants.getTypeFromLabel(
@@ -186,14 +191,6 @@ public abstract class BaseFragmentCollectionContributor
 		ServletContext servletContext = getServletContext();
 
 		return servletContext.getContextPath() + "/thumbnails/" + fileName;
-	}
-
-	private JSONObject _getStructure(String path) throws Exception {
-		Class<?> clazz = getClass();
-
-		String json = StringUtil.read(clazz.getResourceAsStream(path));
-
-		return JSONFactoryUtil.createJSONObject(json);
 	}
 
 	private void _updateFragmentEntryLinks(FragmentEntry fragmentEntry)

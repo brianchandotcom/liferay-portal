@@ -1062,6 +1062,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					Map<String, Object> instructions =
 						BndBuilderUtil.getInstructions(project);
 
+					instructions.forEach(
+						(k, v) -> instructions.put(k, GradleUtil.toString(v)));
+
 					Map<String, ?> projectProperties = project.getProperties();
 
 					for (Map.Entry<String, ?> entry :

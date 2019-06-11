@@ -31,19 +31,55 @@ definition {
 
 		if ("${widgetName}" == "Asset Publisher") {
 			var portletId = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet";
-		} else if ("${widgetName}" == "Search Results") {
+		} else if ("${widgetName}" == "Blogs") {
+			var portletId = "com_liferay_blogs_web_portlet_BlogsPortlet";
+		} else if ("${widgetName}" == "Bookmarks") {
+			var portletId = "com_liferay_bookmarks_web_portlet_BookmarksPortlet";
+		} else if ("${widgetName}" == "Breadcrumb") {
+			var portletId = "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet";
+		} else if ("${widgetName}" == "Categories Navigation") {
+			var portletId = "com_liferay_asset_categories_navigation_web_portlet_AssetCategoriesNavigationPortlet";
+		} else if ("${widgetName}" == "Documents and Media") {
+			var portletId = "com_liferay_document_library_web_portlet_DLPortlet";
+		} else if ("${widgetName}" == "Language Selector") {
+			var portletId = "com_liferay_site_navigation_language_web_portlet_SiteNavigationLanguagePortlet";
+		} else if ("${widgetName}" == "Media Gallery") {
+			var portletId = "com_liferay_document_library_web_portlet_IGDisplayPortlet";
+		} else if ("${widgetName}" == "Message Boards") {
+			var portletId = "com_liferay_message_boards_web_portlet_MBPortlet";
+		} else if ("${widgetName}" == "My Sites") {
+			var portletId = "com_liferay_site_my_sites_web_portlet_MySitesPortlet";
+		} else if ("${widgetName}" == "Navigation Menu") {
+			var portletId = "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet";
+		} else if ("${widgetName}" == "Related Assets") {
+			var portletId = "com_liferay_asset_publisher_web_portlet_RelatedAssetsPortlet_INSTANCE";
+		}else if ("${widgetName}" == "Search Results") {
 			var portletId = "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet";
+		} else if ("${widgetName}" == "Site Map") {
+			var portletId = "com_liferay_site_navigation_site_map_web_portlet_SiteNavigationSiteMapPortlet";
+		} else if ("${widgetName}" == "Sites Directory") {
+			var portletId = "com_liferay_site_navigation_directory_web_portlet_SitesDirectoryPortlet";
+		} else if ("${widgetName}" == "Tags Navigation") {
+			var portletId = "com_liferay_asset_tags_navigation_web_portlet_AssetTagsNavigationPortlet";
 		} else if ("${widgetName}" == "Type Facet") {
 			var portletId = "com_liferay_portal_search_web_type_facet_portlet_TypeFacetPortlet";
 		} else if ("${widgetName}" == "Web Content Display") {
 			var portletId = "com_liferay_journal_content_web_portlet_JournalContentPortlet";
+		} else if ("${widgetName}" == "Wiki") {
+			var portletId = "com_liferay_wiki_web_portlet_WikiPortlet";
 		} else {
 			fail("'widgetName' is either invalid or its 'portletId' is not yet set.");
 		}
 
 		var instanceId = StringUtil.randomString("12");
 
-		var widget = "${portletId}_INSTANCE_${instanceId}";
+		var nonRepeatableWidgets = "Blogs,Bookmarks,Language Selector,Message Boards,My Sites,Wiki";
+
+		if (contains("${nonRepeatableWidgets}", "${widgetName}")) {
+			var widget = "${portletId}";
+		} else {
+			var widget = "${portletId}_INSTANCE_${instanceId}";
+		}
 
 		return "${widget}";
 	}

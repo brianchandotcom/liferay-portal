@@ -68,9 +68,19 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-86191. A user can configure the page settings for each individual display page. This test will test 'Show Header' and 'Show Footer'."
+	@description = "This is a test for LPS-86191. A user can configure the page settings for each individual display page. This test will test 'Show Header' and 'Show Footer'. This test has been extended to also cover LPS-96438."
 	@priority = "4"
 	test ConfigureDisplayPageShowHeaderAndFooter {
+		task ("Add a couple pages to the site so the navigation menu will appear in the display page template header") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page 1");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page 2");
+		}
+
 		task ("Add a web content that uses the display page") {
 			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -91,9 +101,23 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
 		}
 
-		task ("Assert the page header and footer appear") {
+		task ("Assert the page header which contains the site logo, search bar, and navigation menu appears") {
 			AssertVisible(locator1 = "Home#DEFAULT_LOGO");
 
+			AssertVisible(
+				key_infoMessage = "This search bar is not visible to users yet.",
+				locator1 = "Message#INFO_SPECIFIC");
+
+			AssertVisible(
+				key_pageName = "Test Page 1",
+				locator1 = "Home#PAGE");
+
+			AssertVisible(
+				key_pageName = "Test Page 2",
+				locator1 = "Home#PAGE");
+		}
+
+		task ("Assert the web content article content appears") {
 			AssertVisible(
 				key_content = "Webcontent Title",
 				key_fragmentClass = "header",
@@ -105,7 +129,9 @@ definition {
 				key_fragmentClass = "rich-text",
 				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
+		}
 
+		task ("Assert the page footer appears") {
 			AssertVisible(locator1 = "Home#FOOTER");
 		}
 
@@ -135,9 +161,23 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
 		}
 
-		task ("Assert the page header and footer do not appear") {
+		task ("Assert the page header which contains the site logo, search bar, and navigation menu does not appear") {
 			AssertElementNotPresent(locator1 = "Home#DEFAULT_LOGO");
 
+			AssertElementNotPresent(
+				key_infoMessage = "This search bar is not visible to users yet.",
+				locator1 = "Message#INFO_SPECIFIC");
+
+			AssertElementNotPresent(
+				key_pageName = "Test Page 1",
+				locator1 = "Home#PAGE");
+
+			AssertElementNotPresent(
+				key_pageName = "Test Page 2",
+				locator1 = "Home#PAGE");
+		}
+
+		task ("Assert the web content article content still appears") {
 			AssertVisible(
 				key_content = "Webcontent Title",
 				key_fragmentClass = "header",
@@ -149,7 +189,9 @@ definition {
 				key_fragmentClass = "rich-text",
 				key_position = "2",
 				locator1 = "Fragment#FRAGMENT");
+		}
 
+		task ("Assert the page footer does not appear") {
 			AssertElementNotPresent(locator1 = "Home#FOOTER");
 		}
 	}

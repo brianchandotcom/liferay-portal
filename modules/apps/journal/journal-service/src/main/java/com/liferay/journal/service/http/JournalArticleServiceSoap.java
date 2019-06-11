@@ -244,6 +244,21 @@ public class JournalArticleServiceSoap {
 		}
 	}
 
+	public static void deleteArticleDefaultValues(
+			long groupId, String articleId, String ddmStructureKey)
+		throws RemoteException {
+
+		try {
+			JournalArticleServiceUtil.deleteArticleDefaultValues(
+				groupId, articleId, ddmStructureKey);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	 * Copies the web content article matching the group, article ID, and
 	 * version. This method creates a new article, extracting all the values

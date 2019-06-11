@@ -1689,6 +1689,13 @@ public class ProjectTemplatesTest {
 			"-Dpackage=gradle.test", "-DliferayVersion=7.0");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
+
+		if (_isBuildProjects()) {
+			File gradleOutputFile = new File(
+				gradleProjectDir, "build/libs/gradle.test-1.0.0.jar");
+
+			_testCssOutput(gradleOutputFile);
+		}
 	}
 
 	@Test
@@ -1713,6 +1720,13 @@ public class ProjectTemplatesTest {
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
+
+		if (_isBuildProjects()) {
+			File gradleOutputFile = new File(
+				gradleProjectDir, "build/libs/gradle.test-1.0.0.jar");
+
+			_testCssOutput(gradleOutputFile);
+		}
 	}
 
 	@Test
@@ -1737,6 +1751,13 @@ public class ProjectTemplatesTest {
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
+
+		if (_isBuildProjects()) {
+			File gradleOutputFile = new File(
+				gradleProjectDir, "build/libs/gradle.test-1.0.0.jar");
+
+			_testCssOutput(gradleOutputFile);
+		}
 	}
 
 	@Test
@@ -1778,8 +1799,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/foo/test/constants/FooPortletKeys.java",
-			"public class FooPortletKeys",
-			"public static final String FOO",
+			"public class FooPortletKeys", "public static final String FOO",
 			"\"foo_test_FooPortlet\";");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/test/portlet/FooPortlet.java",
@@ -1810,8 +1830,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/foo/test/constants/FooPortletKeys.java",
-			"public class FooPortletKeys",
-			"public static final String FOO",
+			"public class FooPortletKeys", "public static final String FOO",
 			"\"foo_test_FooPortlet\";");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/test/portlet/FooPortlet.java",
@@ -1842,8 +1861,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/foo/test/constants/FooPortletKeys.java",
-			"public class FooPortletKeys",
-			"public static final String FOO",
+			"public class FooPortletKeys", "public static final String FOO",
 			"\"foo_test_FooPortlet\";");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/test/portlet/FooPortlet.java",
@@ -1990,6 +2008,13 @@ public class ProjectTemplatesTest {
 			"-DliferayVersion=7.0");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
+
+		if (_isBuildProjects()) {
+			File gradleOutputFile = new File(
+				gradleProjectDir, "build/libs/provider.test-1.0.0.jar");
+
+			_testCssOutput(gradleOutputFile);
+		}
 	}
 
 	@Test
@@ -2014,6 +2039,13 @@ public class ProjectTemplatesTest {
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
+
+		if (_isBuildProjects()) {
+			File gradleOutputFile = new File(
+				gradleProjectDir, "build/libs/provider.test-1.0.0.jar");
+
+			_testCssOutput(gradleOutputFile);
+		}
 	}
 
 	@Test
@@ -2038,6 +2070,13 @@ public class ProjectTemplatesTest {
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
+
+		if (_isBuildProjects()) {
+			File gradleOutputFile = new File(
+				gradleProjectDir, "build/libs/provider.test-1.0.0.jar");
+
+			_testCssOutput(gradleOutputFile);
+		}
 	}
 
 	@Test
@@ -5623,6 +5662,13 @@ public class ProjectTemplatesTest {
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 
+		if (_isBuildProjects()) {
+			File gradleOutputFile = new File(
+				gradleProjectDir, "build/libs/foo-1.0.0.jar");
+
+			_testCssOutput(gradleOutputFile);
+		}
+
 		return gradleProjectDir;
 	}
 
@@ -5665,6 +5711,13 @@ public class ProjectTemplatesTest {
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
+
+		if (_isBuildProjects()) {
+			File gradleOutputFile = new File(
+				gradleProjectDir, "build/libs/foo-1.0.0.jar");
+
+			_testCssOutput(gradleOutputFile);
+		}
 
 		return gradleProjectDir;
 	}
@@ -5709,6 +5762,13 @@ public class ProjectTemplatesTest {
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 
+		if (_isBuildProjects()) {
+			File gradleOutputFile = new File(
+				gradleProjectDir, "build/libs/foo-1.0.0.jar");
+
+			_testCssOutput(gradleOutputFile);
+		}
+
 		return gradleProjectDir;
 	}
 
@@ -5744,6 +5804,13 @@ public class ProjectTemplatesTest {
 			"-Dpackage=com.liferay.test");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
+
+		if (_isBuildProjects()) {
+			File gradleOutputFile = new File(
+				gradleProjectDir, "build/libs/com.liferay.test-1.0.0.jar");
+
+			_testCssOutput(gradleOutputFile);
+		}
 
 		return gradleProjectDir;
 	}
@@ -5786,6 +5853,13 @@ public class ProjectTemplatesTest {
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 
+		if (_isBuildProjects()) {
+			File gradleOutputFile = new File(
+				gradleProjectDir, "build/libs/com.liferay.test-1.0.0.jar");
+
+			_testCssOutput(gradleOutputFile);
+		}
+
 		return gradleProjectDir;
 	}
 
@@ -5826,6 +5900,13 @@ public class ProjectTemplatesTest {
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
+
+		if (_isBuildProjects()) {
+			File gradleOutputFile = new File(
+				gradleProjectDir, "build/libs/com.liferay.test-1.0.0.jar");
+
+			_testCssOutput(gradleOutputFile);
+		}
 
 		return gradleProjectDir;
 	}
@@ -5869,6 +5950,13 @@ public class ProjectTemplatesTest {
 			"-Dpackage=portlet", "-DliferayVersion=7.0");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
+
+		if (_isBuildProjects()) {
+			File gradleOutputFile = new File(
+				gradleProjectDir, "build/libs/portlet-1.0.0.jar");
+
+			_testCssOutput(gradleOutputFile);
+		}
 
 		return gradleProjectDir;
 	}
@@ -5916,6 +6004,13 @@ public class ProjectTemplatesTest {
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 
+		if (_isBuildProjects()) {
+			File gradleOutputFile = new File(
+				gradleProjectDir, "build/libs/portlet-1.0.0.jar");
+
+			_testCssOutput(gradleOutputFile);
+		}
+
 		return gradleProjectDir;
 	}
 
@@ -5962,6 +6057,13 @@ public class ProjectTemplatesTest {
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 
+		if (_isBuildProjects()) {
+			File gradleOutputFile = new File(
+				gradleProjectDir, "build/libs/portlet-1.0.0.jar");
+
+			_testCssOutput(gradleOutputFile);
+		}
+
 		return gradleProjectDir;
 	}
 
@@ -6004,6 +6106,13 @@ public class ProjectTemplatesTest {
 			"-Dpackage=portlet.portlet", "-DliferayVersion=7.0");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
+
+		if (_isBuildProjects()) {
+			File gradleOutputFile = new File(
+				gradleProjectDir, "build/libs/portlet.portlet-1.0.0.jar");
+
+			_testCssOutput(gradleOutputFile);
+		}
 
 		return gradleProjectDir;
 	}
@@ -6051,6 +6160,13 @@ public class ProjectTemplatesTest {
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 
+		if (_isBuildProjects()) {
+			File gradleOutputFile = new File(
+				gradleProjectDir, "build/libs/portlet.portlet-1.0.0.jar");
+
+			_testCssOutput(gradleOutputFile);
+		}
+
 		return gradleProjectDir;
 	}
 
@@ -6096,6 +6212,13 @@ public class ProjectTemplatesTest {
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
+
+		if (_isBuildProjects()) {
+			File gradleOutputFile = new File(
+				gradleProjectDir, "build/libs/portlet.portlet-1.0.0.jar");
+
+			_testCssOutput(gradleOutputFile);
+		}
 
 		return gradleProjectDir;
 	}
@@ -6275,6 +6398,20 @@ public class ProjectTemplatesTest {
 		}
 
 		return workspaceProjectDir;
+	}
+
+	private void _testCssOutput(File outputFile) throws IOException {
+		ZipFile zipFile = null;
+
+		try {
+			zipFile = new ZipFile(outputFile);
+
+			_testExists(zipFile, "META-INF/resources/css/main.css");
+			_testExists(zipFile, "META-INF/resources/css/main_rtl.css");
+		}
+		finally {
+			ZipFile.closeQuietly(zipFile);
+		}
 	}
 
 	private static final String _BUILD_PROJECTS = System.getProperty(

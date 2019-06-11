@@ -29,13 +29,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CHOOSE_BUTTON</td>
-	<td>//button[@data-title='${key_kbArticleTitle}' and contains(.,'Choose')]</td>
+	<td>SELECT_BUTTON</td>
+	<td>//button[@data-title='${key_kbArticleTitle}' and contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CHOOSE_FOLDER_BUTTON</td>
-	<td>//button[@data-title='${key_kbFolderName}' and contains(.,'Choose')]</td>
+	<td>SELECT_FOLDER_BUTTON</td>
+	<td>//button[@data-title='${key_kbFolderName}' and contains(.,'Select')]</td>
 	<td></td>
 </tr>
 </tbody>

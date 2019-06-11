@@ -288,6 +288,33 @@ public class FragmentEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return addFragmentEntry(
+			userId, groupId, fragmentCollectionId, fragmentEntryKey, name, css,
+			html, js, null, previewFileEntryId, type, status, serviceContext);
+	}
+
+	@Override
+	public FragmentEntry addFragmentEntry(
+			long userId, long groupId, long fragmentCollectionId,
+			String fragmentEntryKey, String name, String css, String html,
+			String js, long previewFileEntryId, int status,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFragmentEntry(
+			userId, groupId, fragmentCollectionId, fragmentEntryKey, name, css,
+			html, js, previewFileEntryId, FragmentConstants.TYPE_SECTION,
+			status, serviceContext);
+	}
+
+	@Override
+	public FragmentEntry addFragmentEntry(
+			long userId, long groupId, long fragmentCollectionId,
+			String fragmentEntryKey, String name, String css, String html,
+			String js, String configuration, long previewFileEntryId, int type,
+			int status, ServiceContext serviceContext)
+		throws PortalException {
+
 		// Fragment entry
 
 		User user = userLocalService.getUser(userId);
@@ -324,6 +351,7 @@ public class FragmentEntryLocalServiceImpl
 		fragmentEntry.setCss(css);
 		fragmentEntry.setHtml(html);
 		fragmentEntry.setJs(js);
+		fragmentEntry.setConfiguration(configuration);
 		fragmentEntry.setPreviewFileEntryId(previewFileEntryId);
 		fragmentEntry.setType(type);
 		fragmentEntry.setStatus(status);
@@ -338,20 +366,6 @@ public class FragmentEntryLocalServiceImpl
 		resourceLocalService.addModelResources(fragmentEntry, serviceContext);
 
 		return fragmentEntry;
-	}
-
-	@Override
-	public FragmentEntry addFragmentEntry(
-			long userId, long groupId, long fragmentCollectionId,
-			String fragmentEntryKey, String name, String css, String html,
-			String js, long previewFileEntryId, int status,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addFragmentEntry(
-			userId, groupId, fragmentCollectionId, fragmentEntryKey, name, css,
-			html, js, previewFileEntryId, FragmentConstants.TYPE_SECTION,
-			status, serviceContext);
 	}
 
 	@Override
@@ -563,6 +577,18 @@ public class FragmentEntryLocalServiceImpl
 			String html, String js, long previewFileEntryId, int status)
 		throws PortalException {
 
+		return updateFragmentEntry(
+			userId, fragmentEntryId, name, css, html, js, null,
+			previewFileEntryId, status);
+	}
+
+	@Override
+	public FragmentEntry updateFragmentEntry(
+			long userId, long fragmentEntryId, String name, String css,
+			String html, String js, String configuration,
+			long previewFileEntryId, int status)
+		throws PortalException {
+
 		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
 			fragmentEntryId);
 
@@ -581,6 +607,7 @@ public class FragmentEntryLocalServiceImpl
 		fragmentEntry.setCss(css);
 		fragmentEntry.setHtml(html);
 		fragmentEntry.setJs(js);
+		fragmentEntry.setConfiguration(configuration);
 		fragmentEntry.setPreviewFileEntryId(previewFileEntryId);
 		fragmentEntry.setStatus(status);
 		fragmentEntry.setStatusByUserId(userId);

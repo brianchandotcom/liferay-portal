@@ -38,6 +38,52 @@ function getInstance(element) {
 	return instance;
 }
 
+/**
+ * A list of attributes that can contribute to the "identity" of an element, for
+ * the purposes of delegated event handling.
+ */
+const IDENTITY_ATTRIBUTES = [/^aria-/, /^data-/, /^type$/];
+
+/**
+ * Returns a unique selector for the supplied element. Ideally we'd just use
+ * the "id" attribute (assigning one if necessary), but the use of Metal
+ * components means that any "id" we assign will be blown away on the next state
+ * change.
+ */
+function getUniqueSelector(element) {
+	element = getElement(element);
+
+	if (element.id) {
+		return `#${element.id}`;
+	}
+
+	let ancestorWithId = element.parentElement;
+
+	while (ancestorWithId) {
+		if (ancestorWithId.id) {
+			break;
+		}
+
+		ancestorWithId = ancestorWithId.parentElement;
+	}
+
+	const attributes = Array.from(element.attributes)
+		.map(({name, value}) => {
+			const isIdentifying = IDENTITY_ATTRIBUTES.some(regExp => {
+				return regExp.test(name);
+			});
+			return isIdentifying ? `[${name}=${JSON.stringify(value)}]` : null;
+		})
+		.filter(Boolean)
+		.sort();
+
+	return [
+		ancestorWithId ? `#${ancestorWithId.id} ` : '',
+		element.tagName.toLowerCase(),
+		...attributes
+	].join('');
+}
+
 function addClass(element, className) {
 	setClasses(element, {
 		[className]: true
@@ -118,13 +164,61 @@ function offsetLeft(element) {
 	return elementLeft + documentOffset;
 }
 
+/**
+ * Keys are event names (eg. "click").
+ * Values are objects mapping selectors to EventEmitters.
+ */
+const eventNamesToSelectors = {};
+
+function handleEvent(eventName, event) {
+	Object.keys(eventNamesToSelectors[eventName]).forEach(selector => {
+		let matches = false;
+		let target = event.target;
+
+		while (target) {
+			matches = target.matches(selector);
+
+			if (matches) {
+				break;
+			}
+
+			target = target.parentElement;
+		}
+
+		if (matches) {
+			const emitter = eventNamesToSelectors[eventName][selector];
+			emitter.emit('click', event);
+		}
+	});
+}
+
+/**
+ * Creates a delegated event listener for `eventName` events on `element`.
+ */
 function subscribe(element, eventName, handler) {
 	if (element) {
-		element.addEventListener(eventName, handler);
+		// Add only one listener per `eventName`.
+		if (!eventNamesToSelectors[eventName]) {
+			eventNamesToSelectors[eventName] = {};
+
+			document.body.addEventListener(eventName, event =>
+				handleEvent(eventName, event)
+			);
+		}
+
+		const emitters = eventNamesToSelectors[eventName];
+		const selector = getUniqueSelector(element);
+
+		if (!emitters[selector]) {
+			emitters[selector] = new EventEmitter();
+		}
+
+		const emitter = emitters[selector];
+		const subscription = emitter.on(eventName, handler);
 
 		return {
 			dispose() {
-				element.removeEventListener(eventName, handler);
+				subscription.dispose();
 			}
 		};
 	}

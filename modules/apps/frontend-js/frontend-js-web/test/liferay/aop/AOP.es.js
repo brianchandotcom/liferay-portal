@@ -1,6 +1,5 @@
 import AOP from '../../../src/main/resources/META-INF/resources/liferay/aop/AOP.es';
 
-//const addSpy = sinon.spy();
 let callOrder = [];
 
 const addSpy = jest.fn().mockImplementation(() => callOrder.push('addSpy'));

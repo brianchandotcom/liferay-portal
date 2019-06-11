@@ -433,13 +433,6 @@ public class JournalPortlet extends MVCPortlet {
 		deleteArticles(actionRequest, actionResponse, true);
 	}
 
-	public void previewArticle(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		updateArticle(actionRequest, actionResponse);
-	}
-
 	public void removeAddMenuFavItem(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -921,9 +914,7 @@ public class JournalPortlet extends MVCPortlet {
 
 			String tempOldUrlTitle = article.getUrlTitle();
 
-			if (actionName.equals("previewArticle") ||
-				actionName.equals("updateArticle")) {
-
+			if (actionName.equals("updateArticle")) {
 				article = _journalArticleService.updateArticle(
 					groupId, folderId, articleId, version, titleMap,
 					descriptionMap, friendlyURLMap, content, ddmStructureKey,
@@ -1487,12 +1478,6 @@ public class JournalPortlet extends MVCPortlet {
 
 			redirect = getSaveAndContinueRedirect(
 				actionRequest, article, redirect);
-
-			if (actionName.equals("previewArticle")) {
-				SessionMessages.add(actionRequest, "previewRequested");
-
-				hideDefaultSuccessMessage(actionRequest);
-			}
 		}
 		else {
 			redirect = _portal.escapeRedirect(redirect);

@@ -51,15 +51,6 @@
 		<suppress checks="SubnameCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/PackagingUtil\.java" />
 		<suppress checks="SubnameCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/ListUtilTest\.java" />
 		<suppress checks="VariableDeclarationAsUsedCheck" files="portal-impl/src/com/liferay/portal/action/UpdateLayoutAction\.java" />
-
-		<!-- Temporary suppressions for private repos and subrepos -->
-
-		<suppress checks="ReferenceAnnotationCheck" files="modules/private/.*" />
-		<suppress checks="UnprocessedExceptionCheck" files="modules/apps/commerce/.*" />
-		<suppress checks="UnprocessedExceptionCheck" files="modules/private/apps/commerce/.*" />
-		<suppress checks="UnprocessedExceptionCheck" files="modules/private/apps/lcs/.*" />
-		<suppress checks="UnprocessedExceptionCheck" files="modules/test/poshi-runner/.*" />
-		<suppress checks="VariableNameCheck" files="modules/private/.*" />
 	</checkstyle>
 	<source-check>
 		<suppress checks="CDNCheck" files="test\.properties" />
@@ -119,33 +110,6 @@
 
 		<suppress checks="GradleDependencyVersionCheck" files="modules/sdk/.*" />
 		<suppress checks="GradleDependencyVersionCheck" files="modules/util/.*" />
-
-		<!-- Temporary suppressions for private repos and subrepos -->
-
-		<suppress checks="BNDBundleCheck" files="modules/private/.*" />
-		<suppress checks="BNDSuiteCheck" files="modules/private/apps/lcs/.*" />
-		<suppress checks="GradleTestDependencyVersionCheck" files="modules/apps/commerce/.*" />
-		<suppress checks="GradleTestDependencyVersionCheck" files="modules/private/apps/commerce/.*" />
-		<suppress checks="GradleTestDependencyVersionCheck" files="modules/private/apps/lcs/.*" />
-		<suppress checks="JavaAPISignatureCheck" files="modules/private/apps/commerce/.*" />
-		<suppress checks="JavaConfigurationCategoryCheck" files="modules/apps/commerce/.*" />
-		<suppress checks="JavaConfigurationCategoryCheck" files="modules/private/.*" />
-		<suppress checks="JavaDeprecatedKernelClassesCheck" files="modules/private/.*" />
-		<suppress checks="JavaElseStatementCheck" files="modules/apps/commerce/.*" />
-		<suppress checks="JavaElseStatementCheck" files="modules/private/apps/commerce/.*" />
-		<suppress checks="JavaElseStatementCheck" files="modules/private/apps/lcs/.*" />
-		<suppress checks="JavaElseStatementCheck" files="modules/test/poshi-runner/.*" />
-		<suppress checks="JavaInnerClassImportsCheck" files="modules/apps/commerce/.*" />
-		<suppress checks="JavaInnerClassImportsCheck" files="modules/private/.*" />
-		<suppress checks="JavaInnerClassImportsCheck" files="modules/test/poshi-runner/.*" />
-		<suppress checks="JSONDeprecatedPackagesCheck" files="modules/private/.*" />
-		<suppress checks="JSONLineBreakCheck" files="modules/apps/commerce/.*" />
-		<suppress checks="JSONLineBreakCheck" files="modules/private/apps/commerce/.*" />
-		<suppress checks="JSONLineBreakCheck" files="modules/private/apps/lcs/.*" />
-		<suppress checks="JSONLineBreakCheck" files="modules/test/poshi-runner/.*" />
-		<suppress checks="PropertiesLiferayPluginPackageLiferayVersionsCheck" files="modules/private/commerce/.*" />
-		<suppress checks="XMLLookAndFeelCompatibilityVersionCheck" files="modules/private/commerce/.*" />
-		<suppress checks="XMLServiceReferenceCheck" files="modules/private/.*" />
 
 		<!-- Temporary suppressions for project-templates (Chema) -->
 

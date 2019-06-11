@@ -1,7 +1,0 @@
-dependencies {
-	compileInclude group: "org.python", name: "jython-standalone", version: "2.5.3"
-
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
-	compileOnly project(":apps:portal-scripting:portal-scripting-api")
-}

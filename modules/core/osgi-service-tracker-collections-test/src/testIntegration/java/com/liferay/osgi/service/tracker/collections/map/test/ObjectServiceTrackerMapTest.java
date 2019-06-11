@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Dictionary;
@@ -405,6 +406,19 @@ public class ObjectServiceTrackerMapTest {
 			registerService(new TrackedOne(), "anotherTarget"));
 
 		Assert.assertNull(serviceTrackerMap.getService("aTarget"));
+	}
+
+	@Test
+	public void testGetServiceWithListProperty() {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			_bundleContext, null, "target");
+
+		_serviceRegistrations.add(
+			registerService(
+				new TrackedOne(), Arrays.asList("target1", "target2")));
+
+		Assert.assertNotNull(_serviceTrackerMap.getService("target1"));
+		Assert.assertNotNull(_serviceTrackerMap.getService("target2"));
 	}
 
 	@Test
@@ -866,6 +880,17 @@ public class ObjectServiceTrackerMapTest {
 
 		return _bundleContext.registerService(
 			TrackedOne.class, trackedOne, properties);
+	}
+
+	protected ServiceRegistration<TrackedOne> registerService(
+		TrackedOne service, List<String> targets) {
+
+		Dictionary<String, Object> properties = new Hashtable<>();
+
+		properties.put("target", targets);
+
+		return _bundleContext.registerService(
+			TrackedOne.class, service, properties);
 	}
 
 	protected ServiceRegistration<TrackedOne> registerService(

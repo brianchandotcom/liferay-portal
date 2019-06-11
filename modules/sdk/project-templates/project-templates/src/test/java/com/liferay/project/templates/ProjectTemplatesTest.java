@@ -1772,24 +1772,27 @@ public class ProjectTemplatesTest {
 			"7.0");
 
 		_testContains(
-			gradleProjectDir, "bnd.bnd", "Export-Package: foo.test.constants");
-		_testContains(
 			gradleProjectDir, "build.gradle",
 			"apply plugin: \"com.liferay.plugin\"",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0");
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/foo/test/constants/FooPortletKeys.java",
-			"public class FooPortletKeys");
+			"public class FooPortletKeys",
+			"public static final String FOO",
+			"\"foo.test_FooPortlet\";");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/test/portlet/FooPortlet.java",
 			"package foo.test.portlet;",
-			"javax.portlet.name=\" + FooPortletKeys.Foo",
+			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class FooPortlet extends MVCPortlet {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"portlet", "foo.test", "com.test", "-DclassName=Foo",
 			"-Dpackage=foo.test", "-DliferayVersion=7.0");
+
+		_testNotContains(
+			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
@@ -1807,11 +1810,13 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/foo/test/constants/FooPortletKeys.java",
-			"public class FooPortletKeys");
+			"public class FooPortletKeys",
+			"public static final String FOO",
+			"\"foo.test_FooPortlet\";");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/test/portlet/FooPortlet.java",
 			"package foo.test.portlet;",
-			"javax.portlet.name=\" + FooPortletKeys.Foo",
+			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class FooPortlet extends MVCPortlet {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
@@ -1837,11 +1842,13 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/foo/test/constants/FooPortletKeys.java",
-			"public class FooPortletKeys");
+			"public class FooPortletKeys",
+			"public static final String FOO",
+			"\"foo.test_FooPortlet\";");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/test/portlet/FooPortlet.java",
 			"package foo.test.portlet;",
-			"javax.portlet.name=\" + FooPortletKeys.Foo",
+			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class FooPortlet extends MVCPortlet {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
@@ -5603,7 +5610,8 @@ public class ProjectTemplatesTest {
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/constants/FooPortletKeys.java",
-			"public class FooPortletKeys", "public static final String FOO");
+			"public class FooPortletKeys", "public static final String FOO",
+			"\"foo_FooPortlet\";");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/portlet/FooPortlet.java",
 			"javax.portlet.name=\" + FooPortletKeys.FOO",
@@ -5846,8 +5854,14 @@ public class ProjectTemplatesTest {
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0");
 		_testContains(
 			gradleProjectDir,
+			"src/main/java/portlet/constants/PortletPortletKeys.java",
+			"public class PortletPortletKeys",
+			"public static final String PORTLET",
+			"\"portlet_PortletPortlet\";");
+		_testContains(
+			gradleProjectDir,
 			"src/main/java/portlet/portlet/PortletPortlet.java",
-			"javax.portlet.name=\" + FooPortletKeys.FOO",
+			"javax.portlet.name=\" + PortletPortletKeys.PORTLET",
 			"public class PortletPortlet extends " + portletClassName + " {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
@@ -5883,8 +5897,14 @@ public class ProjectTemplatesTest {
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
 		_testContains(
 			gradleProjectDir,
+			"src/main/java/portlet/constants/PortletPortletKeys.java",
+			"public class PortletPortletKeys",
+			"public static final String PORTLET",
+			"\"portlet_PortletPortlet\";");
+		_testContains(
+			gradleProjectDir,
 			"src/main/java/portlet/portlet/PortletPortlet.java",
-			"javax.portlet.name=\" + FooPortletKeys.FOO",
+			"javax.portlet.name=\" + PortletPortletKeys.PORTLET",
 			"public class PortletPortlet extends " + portletClassName + " {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
@@ -5923,8 +5943,14 @@ public class ProjectTemplatesTest {
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0");
 		_testContains(
 			gradleProjectDir,
+			"src/main/java/portlet/constants/PortletPortletKeys.java",
+			"public class PortletPortletKeys",
+			"public static final String PORTLET",
+			"\"portlet_PortletPortlet\";");
+		_testContains(
+			gradleProjectDir,
 			"src/main/java/portlet/portlet/PortletPortlet.java",
-			"javax.portlet.name=\" + FooPortletKeys.FOO",
+			"javax.portlet.name=\" + PortletPortletKeys.PORTLET",
 			"public class PortletPortlet extends " + portletClassName + " {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
@@ -5963,8 +5989,14 @@ public class ProjectTemplatesTest {
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0");
 		_testContains(
 			gradleProjectDir,
+			"src/main/java/portlet/portlet/constants/PortletPortletKeys.java",
+			"public class PortletPortletKeys",
+			"public static final String PORTLET",
+			"\"portlet.portlet_PortletPortlet\";");
+		_testContains(
+			gradleProjectDir,
 			"src/main/java/portlet/portlet/portlet/PortletPortlet.java",
-			"javax.portlet.name=\" + FooPortletKeys.FOO",
+			"javax.portlet.name=\" + PortletPortletKeys.PORTLET",
 			"public class PortletPortlet extends " + portletClassName + " {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
@@ -6000,8 +6032,14 @@ public class ProjectTemplatesTest {
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
 		_testContains(
 			gradleProjectDir,
+			"src/main/java/portlet/portlet/constants/PortletPortletKeys.java",
+			"public class PortletPortletKeys",
+			"public static final String PORTLET",
+			"\"portlet.portlet_PortletPortlet\";");
+		_testContains(
+			gradleProjectDir,
 			"src/main/java/portlet/portlet/portlet/PortletPortlet.java",
-			"javax.portlet.name=\" + FooPortletKeys.FOO",
+			"javax.portlet.name=\" + PortletPortletKeys.PORTLET",
 			"public class PortletPortlet extends " + portletClassName + " {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
@@ -6040,8 +6078,14 @@ public class ProjectTemplatesTest {
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0");
 		_testContains(
 			gradleProjectDir,
+			"src/main/java/portlet/portlet/constants/PortletPortletKeys.java",
+			"public class PortletPortletKeys",
+			"public static final String PORTLET",
+			"\"portlet.portlet_PortletPortlet\";");
+		_testContains(
+			gradleProjectDir,
 			"src/main/java/portlet/portlet/portlet/PortletPortlet.java",
-			"javax.portlet.name=\" + FooPortletKeys.FOO",
+			"javax.portlet.name=\" + PortletPortletKeys.PORTLET",
 			"public class PortletPortlet extends " + portletClassName + " {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(

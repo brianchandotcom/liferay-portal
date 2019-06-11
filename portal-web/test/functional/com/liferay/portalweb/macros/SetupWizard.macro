@@ -22,7 +22,9 @@ definition {
 		}
 
 		if (isSet(databaseName)) {
-			var jdbcURL = StringUtil.replace("${jdbcURL}", "lportal", "${databaseName}");
+			var originalDatabaseName = PropsUtil.get("database.mysql.schema");
+
+			var jdbcURL = StringUtil.replace("${jdbcURL}", "${originalDatabaseName}", "${databaseName}");
 		}
 
 		Select(

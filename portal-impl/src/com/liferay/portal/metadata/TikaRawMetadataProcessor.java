@@ -18,7 +18,6 @@ import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessChannel;
 import com.liferay.petra.process.ProcessException;
 import com.liferay.petra.process.ProcessExecutor;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.fabric.InputResource;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.DummyWriter;
@@ -26,10 +25,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -136,20 +134,10 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 				new ExtractMetadataProcessCallable(file, metadata, _parser);
 
 			try {
-				Registry registry = RegistryUtil.getRegistry();
-
-				ProcessChannel<Metadata> processChannel = registry.callService(
-					ProcessExecutor.class,
-					processExecutor -> {
-						try {
-							return processExecutor.execute(
-								PortalClassPathUtil.getPortalProcessConfig(),
-								extractMetadataProcessCallable);
-						}
-						catch (Exception e) {
-							return ReflectionUtil.throwException(e);
-						}
-					});
+				ProcessChannel<Metadata> processChannel =
+					_processExecutor.execute(
+						PortalClassPathUtil.getPortalProcessConfig(),
+						extractMetadataProcessCallable);
 
 				Future<Metadata> future =
 					processChannel.getProcessNoticeableFuture();
@@ -190,6 +178,11 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TikaRawMetadataProcessor.class);
+
+	private static volatile ProcessExecutor _processExecutor =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			ProcessExecutor.class, TikaRawMetadataProcessor.class,
+			"_processExecutor", true);
 
 	private Parser _parser;
 

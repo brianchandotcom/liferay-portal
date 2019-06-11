@@ -25,12 +25,12 @@ public class ${className}PanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return ${className}PortletKeys.${className};
+		return ${className}PortletKeys.${className.toUpperCase()};
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + ${className}PortletKeys.${className} + ")",
+		target = "(javax.portlet.name=" + ${className}PortletKeys.${className.toUpperCase()} + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

@@ -26,7 +26,7 @@ public class ${className}AddPortletProvider
 
 	@Override
 	public String getPortletName() {
-		return ${className}PortletKeys.${className};
+		return ${className}PortletKeys.${className.toUpperCase()};
 	}
 
 	@Override

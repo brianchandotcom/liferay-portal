@@ -121,7 +121,12 @@ public class DDMStructureLayoutLocalServiceImpl
 		return ddmStructureLayoutPersistence.update(structureLayout);
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addStructureLayout(long, long, long, long, Map, Map, String,
+	 *             String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public DDMStructureLayout addStructureLayout(
 			long userId, long groupId, long structureVersionId,

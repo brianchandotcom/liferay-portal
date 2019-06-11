@@ -89,8 +89,9 @@ public class DDMStructureLayoutModelImpl
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"structureVersionId", Types.BIGINT}, {"name", Types.CLOB},
-		{"description", Types.CLOB}, {"definition", Types.CLOB}
+		{"classNameId", Types.BIGINT}, {"structureVersionId", Types.BIGINT},
+		{"name", Types.CLOB}, {"description", Types.CLOB},
+		{"definition", Types.CLOB}, {"structureLayoutKey", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -105,14 +106,16 @@ public class DDMStructureLayoutModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("structureVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("definition", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("structureLayoutKey", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMStructureLayout (uuid_ VARCHAR(75) null,structureLayoutId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,structureVersionId LONG,name TEXT null,description TEXT null,definition TEXT null)";
+		"create table DDMStructureLayout (uuid_ VARCHAR(75) null,structureLayoutId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,structureVersionId LONG,name TEXT null,description TEXT null,definition TEXT null,structureLayoutKey VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMStructureLayout";
 
@@ -143,15 +146,19 @@ public class DDMStructureLayoutModelImpl
 			"value.object.column.bitmask.enabled.com.liferay.dynamic.data.mapping.model.DDMStructureLayout"),
 		true);
 
-	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
-	public static final long STRUCTUREVERSIONID_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
 
-	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long STRUCTURELAYOUTKEY_COLUMN_BITMASK = 8L;
 
-	public static final long STRUCTURELAYOUTID_COLUMN_BITMASK = 16L;
+	public static final long STRUCTUREVERSIONID_COLUMN_BITMASK = 16L;
+
+	public static final long UUID_COLUMN_BITMASK = 32L;
+
+	public static final long STRUCTURELAYOUTID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -174,10 +181,12 @@ public class DDMStructureLayoutModelImpl
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setClassNameId(soapModel.getClassNameId());
 		model.setStructureVersionId(soapModel.getStructureVersionId());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setDefinition(soapModel.getDefinition());
+		model.setStructureLayoutKey(soapModel.getStructureLayoutKey());
 
 		return model;
 	}
@@ -383,6 +392,12 @@ public class DDMStructureLayoutModelImpl
 			(BiConsumer<DDMStructureLayout, Date>)
 				DDMStructureLayout::setModifiedDate);
 		attributeGetterFunctions.put(
+			"classNameId", DDMStructureLayout::getClassNameId);
+		attributeSetterBiConsumers.put(
+			"classNameId",
+			(BiConsumer<DDMStructureLayout, Long>)
+				DDMStructureLayout::setClassNameId);
+		attributeGetterFunctions.put(
 			"structureVersionId", DDMStructureLayout::getStructureVersionId);
 		attributeSetterBiConsumers.put(
 			"structureVersionId",
@@ -405,6 +420,12 @@ public class DDMStructureLayoutModelImpl
 			"definition",
 			(BiConsumer<DDMStructureLayout, String>)
 				DDMStructureLayout::setDefinition);
+		attributeGetterFunctions.put(
+			"structureLayoutKey", DDMStructureLayout::getStructureLayoutKey);
+		attributeSetterBiConsumers.put(
+			"structureLayoutKey",
+			(BiConsumer<DDMStructureLayout, String>)
+				DDMStructureLayout::setStructureLayoutKey);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -564,6 +585,49 @@ public class DDMStructureLayoutModelImpl
 		_setModifiedDate = true;
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@Override
+	public String getClassName() {
+		if (getClassNameId() <= 0) {
+			return "";
+		}
+
+		return PortalUtil.getClassName(getClassNameId());
+	}
+
+	@Override
+	public void setClassName(String className) {
+		long classNameId = 0;
+
+		if (Validator.isNotNull(className)) {
+			classNameId = PortalUtil.getClassNameId(className);
+		}
+
+		setClassNameId(classNameId);
+	}
+
+	@JSON
+	@Override
+	public long getClassNameId() {
+		return _classNameId;
+	}
+
+	@Override
+	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
+		if (!_setOriginalClassNameId) {
+			_setOriginalClassNameId = true;
+
+			_originalClassNameId = _classNameId;
+		}
+
+		_classNameId = classNameId;
+	}
+
+	public long getOriginalClassNameId() {
+		return _originalClassNameId;
 	}
 
 	@JSON
@@ -816,6 +880,32 @@ public class DDMStructureLayoutModelImpl
 		_definition = definition;
 	}
 
+	@JSON
+	@Override
+	public String getStructureLayoutKey() {
+		if (_structureLayoutKey == null) {
+			return "";
+		}
+		else {
+			return _structureLayoutKey;
+		}
+	}
+
+	@Override
+	public void setStructureLayoutKey(String structureLayoutKey) {
+		_columnBitmask |= STRUCTURELAYOUTKEY_COLUMN_BITMASK;
+
+		if (_originalStructureLayoutKey == null) {
+			_originalStructureLayoutKey = _structureLayoutKey;
+		}
+
+		_structureLayoutKey = structureLayoutKey;
+	}
+
+	public String getOriginalStructureLayoutKey() {
+		return GetterUtil.getString(_originalStructureLayoutKey);
+	}
+
 	public com.liferay.dynamic.data.mapping.model.DDMFormLayout
 		getDDMFormLayout() {
 
@@ -829,7 +919,8 @@ public class DDMStructureLayoutModelImpl
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
-			PortalUtil.getClassNameId(DDMStructureLayout.class.getName()));
+			PortalUtil.getClassNameId(DDMStructureLayout.class.getName()),
+			getClassNameId());
 	}
 
 	public long getColumnBitmask() {
@@ -961,10 +1052,12 @@ public class DDMStructureLayoutModelImpl
 		ddmStructureLayoutImpl.setUserName(getUserName());
 		ddmStructureLayoutImpl.setCreateDate(getCreateDate());
 		ddmStructureLayoutImpl.setModifiedDate(getModifiedDate());
+		ddmStructureLayoutImpl.setClassNameId(getClassNameId());
 		ddmStructureLayoutImpl.setStructureVersionId(getStructureVersionId());
 		ddmStructureLayoutImpl.setName(getName());
 		ddmStructureLayoutImpl.setDescription(getDescription());
 		ddmStructureLayoutImpl.setDefinition(getDefinition());
+		ddmStructureLayoutImpl.setStructureLayoutKey(getStructureLayoutKey());
 
 		ddmStructureLayoutImpl.resetOriginalValues();
 
@@ -1042,10 +1135,18 @@ public class DDMStructureLayoutModelImpl
 
 		ddmStructureLayoutModelImpl._setModifiedDate = false;
 
+		ddmStructureLayoutModelImpl._originalClassNameId =
+			ddmStructureLayoutModelImpl._classNameId;
+
+		ddmStructureLayoutModelImpl._setOriginalClassNameId = false;
+
 		ddmStructureLayoutModelImpl._originalStructureVersionId =
 			ddmStructureLayoutModelImpl._structureVersionId;
 
 		ddmStructureLayoutModelImpl._setOriginalStructureVersionId = false;
+
+		ddmStructureLayoutModelImpl._originalStructureLayoutKey =
+			ddmStructureLayoutModelImpl._structureLayoutKey;
 
 		setDDMFormLayout(null);
 
@@ -1099,6 +1200,8 @@ public class DDMStructureLayoutModelImpl
 			ddmStructureLayoutCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		ddmStructureLayoutCacheModel.classNameId = getClassNameId();
+
 		ddmStructureLayoutCacheModel.structureVersionId =
 			getStructureVersionId();
 
@@ -1124,6 +1227,18 @@ public class DDMStructureLayoutModelImpl
 
 		if ((definition != null) && (definition.length() == 0)) {
 			ddmStructureLayoutCacheModel.definition = null;
+		}
+
+		ddmStructureLayoutCacheModel.structureLayoutKey =
+			getStructureLayoutKey();
+
+		String structureLayoutKey =
+			ddmStructureLayoutCacheModel.structureLayoutKey;
+
+		if ((structureLayoutKey != null) &&
+			(structureLayoutKey.length() == 0)) {
+
+			ddmStructureLayoutCacheModel.structureLayoutKey = null;
 		}
 
 		ddmStructureLayoutCacheModel._ddmFormLayout = getDDMFormLayout();
@@ -1211,6 +1326,9 @@ public class DDMStructureLayoutModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _classNameId;
+	private long _originalClassNameId;
+	private boolean _setOriginalClassNameId;
 	private long _structureVersionId;
 	private long _originalStructureVersionId;
 	private boolean _setOriginalStructureVersionId;
@@ -1219,6 +1337,8 @@ public class DDMStructureLayoutModelImpl
 	private String _description;
 	private String _descriptionCurrentLanguageId;
 	private String _definition;
+	private String _structureLayoutKey;
+	private String _originalStructureLayoutKey;
 	private long _columnBitmask;
 	private DDMStructureLayout _escapedModel;
 

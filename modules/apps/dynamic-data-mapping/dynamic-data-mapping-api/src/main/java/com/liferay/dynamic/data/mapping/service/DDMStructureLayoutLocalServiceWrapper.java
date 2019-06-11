@@ -68,6 +68,28 @@ public class DDMStructureLayoutLocalServiceWrapper
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructureLayout
 			addStructureLayout(
+				long userId, long groupId, long classNameId,
+				long structureVersionId,
+				java.util.Map<java.util.Locale, String> name,
+				java.util.Map<java.util.Locale, String> description,
+				String definition, String structureLayoutKey,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ddmStructureLayoutLocalService.addStructureLayout(
+			userId, groupId, classNameId, structureVersionId, name, description,
+			definition, structureLayoutKey, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addStructureLayout(long, long, long, long, Map, Map, String,
+	 String, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMStructureLayout
+			addStructureLayout(
 				long userId, long groupId, long structureVersionId,
 				java.util.Map<java.util.Locale, String> name,
 				java.util.Map<java.util.Locale, String> description,
@@ -269,6 +291,15 @@ public class DDMStructureLayoutLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMStructureLayout
+		fetchStructureLayout(
+			long groupId, long classNameId, String structureLayoutKey) {
+
+		return _ddmStructureLayoutLocalService.fetchStructureLayout(
+			groupId, classNameId, structureLayoutKey);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -422,6 +453,16 @@ public class DDMStructureLayoutLocalServiceWrapper
 
 		return _ddmStructureLayoutLocalService.getStructureLayout(
 			structureLayoutId);
+	}
+
+	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMStructureLayout
+			getStructureLayout(
+				long groupId, long classNameId, String structureLayoutKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ddmStructureLayoutLocalService.getStructureLayout(
+			groupId, classNameId, structureLayoutKey);
 	}
 
 	@Override

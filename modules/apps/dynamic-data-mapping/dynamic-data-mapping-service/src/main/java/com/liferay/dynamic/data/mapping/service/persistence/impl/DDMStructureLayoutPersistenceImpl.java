@@ -2209,6 +2209,861 @@ public class DDMStructureLayoutPersistenceImpl
 		_FINDER_COLUMN_STRUCTUREVERSIONID_STRUCTUREVERSIONID_2 =
 			"ddmStructureLayout.structureVersionId = ?";
 
+	private FinderPath _finderPathWithPaginationFindByStructureLayoutKey;
+	private FinderPath _finderPathWithoutPaginationFindByStructureLayoutKey;
+	private FinderPath _finderPathCountByStructureLayoutKey;
+
+	/**
+	 * Returns all the ddm structure layouts where structureLayoutKey = &#63;.
+	 *
+	 * @param structureLayoutKey the structure layout key
+	 * @return the matching ddm structure layouts
+	 */
+	@Override
+	public List<DDMStructureLayout> findByStructureLayoutKey(
+		String structureLayoutKey) {
+
+		return findByStructureLayoutKey(
+			structureLayoutKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the ddm structure layouts where structureLayoutKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureLayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param structureLayoutKey the structure layout key
+	 * @param start the lower bound of the range of ddm structure layouts
+	 * @param end the upper bound of the range of ddm structure layouts (not inclusive)
+	 * @return the range of matching ddm structure layouts
+	 */
+	@Override
+	public List<DDMStructureLayout> findByStructureLayoutKey(
+		String structureLayoutKey, int start, int end) {
+
+		return findByStructureLayoutKey(structureLayoutKey, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm structure layouts where structureLayoutKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureLayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param structureLayoutKey the structure layout key
+	 * @param start the lower bound of the range of ddm structure layouts
+	 * @param end the upper bound of the range of ddm structure layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm structure layouts
+	 */
+	@Override
+	public List<DDMStructureLayout> findByStructureLayoutKey(
+		String structureLayoutKey, int start, int end,
+		OrderByComparator<DDMStructureLayout> orderByComparator) {
+
+		return findByStructureLayoutKey(
+			structureLayoutKey, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm structure layouts where structureLayoutKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureLayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param structureLayoutKey the structure layout key
+	 * @param start the lower bound of the range of ddm structure layouts
+	 * @param end the upper bound of the range of ddm structure layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching ddm structure layouts
+	 */
+	@Override
+	public List<DDMStructureLayout> findByStructureLayoutKey(
+		String structureLayoutKey, int start, int end,
+		OrderByComparator<DDMStructureLayout> orderByComparator,
+		boolean retrieveFromCache) {
+
+		structureLayoutKey = Objects.toString(structureLayoutKey, "");
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByStructureLayoutKey;
+			finderArgs = new Object[] {structureLayoutKey};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByStructureLayoutKey;
+			finderArgs = new Object[] {
+				structureLayoutKey, start, end, orderByComparator
+			};
+		}
+
+		List<DDMStructureLayout> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<DDMStructureLayout>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (DDMStructureLayout ddmStructureLayout : list) {
+					if (!structureLayoutKey.equals(
+							ddmStructureLayout.getStructureLayoutKey())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_DDMSTRUCTURELAYOUT_WHERE);
+
+			boolean bindStructureLayoutKey = false;
+
+			if (structureLayoutKey.isEmpty()) {
+				query.append(
+					_FINDER_COLUMN_STRUCTURELAYOUTKEY_STRUCTURELAYOUTKEY_3);
+			}
+			else {
+				bindStructureLayoutKey = true;
+
+				query.append(
+					_FINDER_COLUMN_STRUCTURELAYOUTKEY_STRUCTURELAYOUTKEY_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(DDMStructureLayoutModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindStructureLayoutKey) {
+					qPos.add(structureLayoutKey);
+				}
+
+				if (!pagination) {
+					list = (List<DDMStructureLayout>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DDMStructureLayout>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first ddm structure layout in the ordered set where structureLayoutKey = &#63;.
+	 *
+	 * @param structureLayoutKey the structure layout key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ddm structure layout
+	 * @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
+	 */
+	@Override
+	public DDMStructureLayout findByStructureLayoutKey_First(
+			String structureLayoutKey,
+			OrderByComparator<DDMStructureLayout> orderByComparator)
+		throws NoSuchStructureLayoutException {
+
+		DDMStructureLayout ddmStructureLayout = fetchByStructureLayoutKey_First(
+			structureLayoutKey, orderByComparator);
+
+		if (ddmStructureLayout != null) {
+			return ddmStructureLayout;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("structureLayoutKey=");
+		msg.append(structureLayoutKey);
+
+		msg.append("}");
+
+		throw new NoSuchStructureLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the first ddm structure layout in the ordered set where structureLayoutKey = &#63;.
+	 *
+	 * @param structureLayoutKey the structure layout key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
+	 */
+	@Override
+	public DDMStructureLayout fetchByStructureLayoutKey_First(
+		String structureLayoutKey,
+		OrderByComparator<DDMStructureLayout> orderByComparator) {
+
+		List<DDMStructureLayout> list = findByStructureLayoutKey(
+			structureLayoutKey, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last ddm structure layout in the ordered set where structureLayoutKey = &#63;.
+	 *
+	 * @param structureLayoutKey the structure layout key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ddm structure layout
+	 * @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
+	 */
+	@Override
+	public DDMStructureLayout findByStructureLayoutKey_Last(
+			String structureLayoutKey,
+			OrderByComparator<DDMStructureLayout> orderByComparator)
+		throws NoSuchStructureLayoutException {
+
+		DDMStructureLayout ddmStructureLayout = fetchByStructureLayoutKey_Last(
+			structureLayoutKey, orderByComparator);
+
+		if (ddmStructureLayout != null) {
+			return ddmStructureLayout;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("structureLayoutKey=");
+		msg.append(structureLayoutKey);
+
+		msg.append("}");
+
+		throw new NoSuchStructureLayoutException(msg.toString());
+	}
+
+	/**
+	 * Returns the last ddm structure layout in the ordered set where structureLayoutKey = &#63;.
+	 *
+	 * @param structureLayoutKey the structure layout key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
+	 */
+	@Override
+	public DDMStructureLayout fetchByStructureLayoutKey_Last(
+		String structureLayoutKey,
+		OrderByComparator<DDMStructureLayout> orderByComparator) {
+
+		int count = countByStructureLayoutKey(structureLayoutKey);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<DDMStructureLayout> list = findByStructureLayoutKey(
+			structureLayoutKey, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the ddm structure layouts before and after the current ddm structure layout in the ordered set where structureLayoutKey = &#63;.
+	 *
+	 * @param structureLayoutId the primary key of the current ddm structure layout
+	 * @param structureLayoutKey the structure layout key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next ddm structure layout
+	 * @throws NoSuchStructureLayoutException if a ddm structure layout with the primary key could not be found
+	 */
+	@Override
+	public DDMStructureLayout[] findByStructureLayoutKey_PrevAndNext(
+			long structureLayoutId, String structureLayoutKey,
+			OrderByComparator<DDMStructureLayout> orderByComparator)
+		throws NoSuchStructureLayoutException {
+
+		structureLayoutKey = Objects.toString(structureLayoutKey, "");
+
+		DDMStructureLayout ddmStructureLayout = findByPrimaryKey(
+			structureLayoutId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DDMStructureLayout[] array = new DDMStructureLayoutImpl[3];
+
+			array[0] = getByStructureLayoutKey_PrevAndNext(
+				session, ddmStructureLayout, structureLayoutKey,
+				orderByComparator, true);
+
+			array[1] = ddmStructureLayout;
+
+			array[2] = getByStructureLayoutKey_PrevAndNext(
+				session, ddmStructureLayout, structureLayoutKey,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected DDMStructureLayout getByStructureLayoutKey_PrevAndNext(
+		Session session, DDMStructureLayout ddmStructureLayout,
+		String structureLayoutKey,
+		OrderByComparator<DDMStructureLayout> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_DDMSTRUCTURELAYOUT_WHERE);
+
+		boolean bindStructureLayoutKey = false;
+
+		if (structureLayoutKey.isEmpty()) {
+			query.append(
+				_FINDER_COLUMN_STRUCTURELAYOUTKEY_STRUCTURELAYOUTKEY_3);
+		}
+		else {
+			bindStructureLayoutKey = true;
+
+			query.append(
+				_FINDER_COLUMN_STRUCTURELAYOUTKEY_STRUCTURELAYOUTKEY_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(DDMStructureLayoutModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindStructureLayoutKey) {
+			qPos.add(structureLayoutKey);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						ddmStructureLayout)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<DDMStructureLayout> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the ddm structure layouts where structureLayoutKey = &#63; from the database.
+	 *
+	 * @param structureLayoutKey the structure layout key
+	 */
+	@Override
+	public void removeByStructureLayoutKey(String structureLayoutKey) {
+		for (DDMStructureLayout ddmStructureLayout :
+				findByStructureLayoutKey(
+					structureLayoutKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(ddmStructureLayout);
+		}
+	}
+
+	/**
+	 * Returns the number of ddm structure layouts where structureLayoutKey = &#63;.
+	 *
+	 * @param structureLayoutKey the structure layout key
+	 * @return the number of matching ddm structure layouts
+	 */
+	@Override
+	public int countByStructureLayoutKey(String structureLayoutKey) {
+		structureLayoutKey = Objects.toString(structureLayoutKey, "");
+
+		FinderPath finderPath = _finderPathCountByStructureLayoutKey;
+
+		Object[] finderArgs = new Object[] {structureLayoutKey};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_DDMSTRUCTURELAYOUT_WHERE);
+
+			boolean bindStructureLayoutKey = false;
+
+			if (structureLayoutKey.isEmpty()) {
+				query.append(
+					_FINDER_COLUMN_STRUCTURELAYOUTKEY_STRUCTURELAYOUTKEY_3);
+			}
+			else {
+				bindStructureLayoutKey = true;
+
+				query.append(
+					_FINDER_COLUMN_STRUCTURELAYOUTKEY_STRUCTURELAYOUTKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindStructureLayoutKey) {
+					qPos.add(structureLayoutKey);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_STRUCTURELAYOUTKEY_STRUCTURELAYOUTKEY_2 =
+			"ddmStructureLayout.structureLayoutKey = ?";
+
+	private static final String
+		_FINDER_COLUMN_STRUCTURELAYOUTKEY_STRUCTURELAYOUTKEY_3 =
+			"(ddmStructureLayout.structureLayoutKey IS NULL OR ddmStructureLayout.structureLayoutKey = '')";
+
+	private FinderPath _finderPathFetchByG_C_S;
+	private FinderPath _finderPathCountByG_C_S;
+
+	/**
+	 * Returns the ddm structure layout where groupId = &#63; and classNameId = &#63; and structureLayoutKey = &#63; or throws a <code>NoSuchStructureLayoutException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param structureLayoutKey the structure layout key
+	 * @return the matching ddm structure layout
+	 * @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
+	 */
+	@Override
+	public DDMStructureLayout findByG_C_S(
+			long groupId, long classNameId, String structureLayoutKey)
+		throws NoSuchStructureLayoutException {
+
+		DDMStructureLayout ddmStructureLayout = fetchByG_C_S(
+			groupId, classNameId, structureLayoutKey);
+
+		if (ddmStructureLayout == null) {
+			StringBundler msg = new StringBundler(8);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append(", classNameId=");
+			msg.append(classNameId);
+
+			msg.append(", structureLayoutKey=");
+			msg.append(structureLayoutKey);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchStructureLayoutException(msg.toString());
+		}
+
+		return ddmStructureLayout;
+	}
+
+	/**
+	 * Returns the ddm structure layout where groupId = &#63; and classNameId = &#63; and structureLayoutKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param structureLayoutKey the structure layout key
+	 * @return the matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
+	 */
+	@Override
+	public DDMStructureLayout fetchByG_C_S(
+		long groupId, long classNameId, String structureLayoutKey) {
+
+		return fetchByG_C_S(groupId, classNameId, structureLayoutKey, true);
+	}
+
+	/**
+	 * Returns the ddm structure layout where groupId = &#63; and classNameId = &#63; and structureLayoutKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param structureLayoutKey the structure layout key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
+	 */
+	@Override
+	public DDMStructureLayout fetchByG_C_S(
+		long groupId, long classNameId, String structureLayoutKey,
+		boolean retrieveFromCache) {
+
+		structureLayoutKey = Objects.toString(structureLayoutKey, "");
+
+		Object[] finderArgs = new Object[] {
+			groupId, classNameId, structureLayoutKey
+		};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByG_C_S, finderArgs, this);
+		}
+
+		if (result instanceof DDMStructureLayout) {
+			DDMStructureLayout ddmStructureLayout = (DDMStructureLayout)result;
+
+			if ((groupId != ddmStructureLayout.getGroupId()) ||
+				(classNameId != ddmStructureLayout.getClassNameId()) ||
+				!Objects.equals(
+					structureLayoutKey,
+					ddmStructureLayout.getStructureLayoutKey())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_SELECT_DDMSTRUCTURELAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_S_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_S_CLASSNAMEID_2);
+
+			boolean bindStructureLayoutKey = false;
+
+			if (structureLayoutKey.isEmpty()) {
+				query.append(_FINDER_COLUMN_G_C_S_STRUCTURELAYOUTKEY_3);
+			}
+			else {
+				bindStructureLayoutKey = true;
+
+				query.append(_FINDER_COLUMN_G_C_S_STRUCTURELAYOUTKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(classNameId);
+
+				if (bindStructureLayoutKey) {
+					qPos.add(structureLayoutKey);
+				}
+
+				List<DDMStructureLayout> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(
+						_finderPathFetchByG_C_S, finderArgs, list);
+				}
+				else {
+					DDMStructureLayout ddmStructureLayout = list.get(0);
+
+					result = ddmStructureLayout;
+
+					cacheResult(ddmStructureLayout);
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(_finderPathFetchByG_C_S, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (DDMStructureLayout)result;
+		}
+	}
+
+	/**
+	 * Removes the ddm structure layout where groupId = &#63; and classNameId = &#63; and structureLayoutKey = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param structureLayoutKey the structure layout key
+	 * @return the ddm structure layout that was removed
+	 */
+	@Override
+	public DDMStructureLayout removeByG_C_S(
+			long groupId, long classNameId, String structureLayoutKey)
+		throws NoSuchStructureLayoutException {
+
+		DDMStructureLayout ddmStructureLayout = findByG_C_S(
+			groupId, classNameId, structureLayoutKey);
+
+		return remove(ddmStructureLayout);
+	}
+
+	/**
+	 * Returns the number of ddm structure layouts where groupId = &#63; and classNameId = &#63; and structureLayoutKey = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param structureLayoutKey the structure layout key
+	 * @return the number of matching ddm structure layouts
+	 */
+	@Override
+	public int countByG_C_S(
+		long groupId, long classNameId, String structureLayoutKey) {
+
+		structureLayoutKey = Objects.toString(structureLayoutKey, "");
+
+		FinderPath finderPath = _finderPathCountByG_C_S;
+
+		Object[] finderArgs = new Object[] {
+			groupId, classNameId, structureLayoutKey
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_DDMSTRUCTURELAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_S_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_S_CLASSNAMEID_2);
+
+			boolean bindStructureLayoutKey = false;
+
+			if (structureLayoutKey.isEmpty()) {
+				query.append(_FINDER_COLUMN_G_C_S_STRUCTURELAYOUTKEY_3);
+			}
+			else {
+				bindStructureLayoutKey = true;
+
+				query.append(_FINDER_COLUMN_G_C_S_STRUCTURELAYOUTKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(classNameId);
+
+				if (bindStructureLayoutKey) {
+					qPos.add(structureLayoutKey);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_C_S_GROUPID_2 =
+		"ddmStructureLayout.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_S_CLASSNAMEID_2 =
+		"ddmStructureLayout.classNameId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_S_STRUCTURELAYOUTKEY_2 =
+		"ddmStructureLayout.structureLayoutKey = ?";
+
+	private static final String _FINDER_COLUMN_G_C_S_STRUCTURELAYOUTKEY_3 =
+		"(ddmStructureLayout.structureLayoutKey IS NULL OR ddmStructureLayout.structureLayoutKey = '')";
+
 	public DDMStructureLayoutPersistenceImpl() {
 		setModelClass(DDMStructureLayout.class);
 
@@ -2245,6 +3100,15 @@ public class DDMStructureLayoutPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByStructureVersionId,
 			new Object[] {ddmStructureLayout.getStructureVersionId()},
+			ddmStructureLayout);
+
+		finderCache.putResult(
+			_finderPathFetchByG_C_S,
+			new Object[] {
+				ddmStructureLayout.getGroupId(),
+				ddmStructureLayout.getClassNameId(),
+				ddmStructureLayout.getStructureLayoutKey()
+			},
 			ddmStructureLayout);
 
 		ddmStructureLayout.resetOriginalValues();
@@ -2345,6 +3209,17 @@ public class DDMStructureLayoutPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByStructureVersionId, args,
 			ddmStructureLayoutModelImpl, false);
+
+		args = new Object[] {
+			ddmStructureLayoutModelImpl.getGroupId(),
+			ddmStructureLayoutModelImpl.getClassNameId(),
+			ddmStructureLayoutModelImpl.getStructureLayoutKey()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByG_C_S, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByG_C_S, args, ddmStructureLayoutModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -2395,6 +3270,30 @@ public class DDMStructureLayoutPersistenceImpl
 				_finderPathCountByStructureVersionId, args);
 			finderCache.removeResult(
 				_finderPathFetchByStructureVersionId, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+				ddmStructureLayoutModelImpl.getGroupId(),
+				ddmStructureLayoutModelImpl.getClassNameId(),
+				ddmStructureLayoutModelImpl.getStructureLayoutKey()
+			};
+
+			finderCache.removeResult(_finderPathCountByG_C_S, args);
+			finderCache.removeResult(_finderPathFetchByG_C_S, args);
+		}
+
+		if ((ddmStructureLayoutModelImpl.getColumnBitmask() &
+			 _finderPathFetchByG_C_S.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				ddmStructureLayoutModelImpl.getOriginalGroupId(),
+				ddmStructureLayoutModelImpl.getOriginalClassNameId(),
+				ddmStructureLayoutModelImpl.getOriginalStructureLayoutKey()
+			};
+
+			finderCache.removeResult(_finderPathCountByG_C_S, args);
+			finderCache.removeResult(_finderPathFetchByG_C_S, args);
 		}
 	}
 
@@ -2617,6 +3516,15 @@ public class DDMStructureLayoutPersistenceImpl
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindByGroupId, args);
 
+			args = new Object[] {
+				ddmStructureLayoutModelImpl.getStructureLayoutKey()
+			};
+
+			finderCache.removeResult(
+				_finderPathCountByStructureLayoutKey, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByStructureLayoutKey, args);
+
 			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
@@ -2681,6 +3589,29 @@ public class DDMStructureLayoutPersistenceImpl
 				finderCache.removeResult(_finderPathCountByGroupId, args);
 				finderCache.removeResult(
 					_finderPathWithoutPaginationFindByGroupId, args);
+			}
+
+			if ((ddmStructureLayoutModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByStructureLayoutKey.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					ddmStructureLayoutModelImpl.getOriginalStructureLayoutKey()
+				};
+
+				finderCache.removeResult(
+					_finderPathCountByStructureLayoutKey, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByStructureLayoutKey, args);
+
+				args = new Object[] {
+					ddmStructureLayoutModelImpl.getStructureLayoutKey()
+				};
+
+				finderCache.removeResult(
+					_finderPathCountByStructureLayoutKey, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByStructureLayoutKey, args);
 			}
 		}
 
@@ -3092,6 +4023,52 @@ public class DDMStructureLayoutPersistenceImpl
 			DDMStructureLayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByStructureVersionId", new String[] {Long.class.getName()});
+
+		_finderPathWithPaginationFindByStructureLayoutKey = new FinderPath(
+			DDMStructureLayoutModelImpl.ENTITY_CACHE_ENABLED,
+			DDMStructureLayoutModelImpl.FINDER_CACHE_ENABLED,
+			DDMStructureLayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStructureLayoutKey",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByStructureLayoutKey = new FinderPath(
+			DDMStructureLayoutModelImpl.ENTITY_CACHE_ENABLED,
+			DDMStructureLayoutModelImpl.FINDER_CACHE_ENABLED,
+			DDMStructureLayoutImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByStructureLayoutKey", new String[] {String.class.getName()},
+			DDMStructureLayoutModelImpl.STRUCTURELAYOUTKEY_COLUMN_BITMASK);
+
+		_finderPathCountByStructureLayoutKey = new FinderPath(
+			DDMStructureLayoutModelImpl.ENTITY_CACHE_ENABLED,
+			DDMStructureLayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByStructureLayoutKey", new String[] {String.class.getName()});
+
+		_finderPathFetchByG_C_S = new FinderPath(
+			DDMStructureLayoutModelImpl.ENTITY_CACHE_ENABLED,
+			DDMStructureLayoutModelImpl.FINDER_CACHE_ENABLED,
+			DDMStructureLayoutImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByG_C_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName()
+			},
+			DDMStructureLayoutModelImpl.GROUPID_COLUMN_BITMASK |
+			DDMStructureLayoutModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			DDMStructureLayoutModelImpl.STRUCTURELAYOUTKEY_COLUMN_BITMASK);
+
+		_finderPathCountByG_C_S = new FinderPath(
+			DDMStructureLayoutModelImpl.ENTITY_CACHE_ENABLED,
+			DDMStructureLayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName()
+			});
 	}
 
 	public void destroy() {

@@ -62,7 +62,6 @@ class SegmentsExperienceSelectorModal extends Component {
 		if (nameInput) {
 			const name = nameInput.value;
 			this.onNewSegmentClick(this.type, name);
-			window.location.assign(this.editSegmentsEntryURL);
 		}
 	}
 }
@@ -102,17 +101,7 @@ SegmentsExperienceSelectorModal.STATE = {
 	 * @review
 	 * @type {'edition'|'creation'}
 	 */
-	type: Config.string().required(),
-
-	/**
-	 * Where the user should be directed to when clicking
-	 * New Segment button
-	 *
-	 * @memberOf SegmentsExperienceSelectorModal
-	 * @review
-	 * @type {string}
-	 */
-	editSegmentsEntryURL: Config.string().required()
+	type: Config.string().required()
 };
 
 Soy.register(SegmentsExperienceSelectorModal, templates);

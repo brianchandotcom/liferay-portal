@@ -498,6 +498,8 @@ class SegmentsExperienceSelector extends Component {
 			},
 			selectedSegmentsExperienceId: this.segmentsExperienceId
 		});
+
+		Liferay.Util.navigate(this.editSegmentsEntryURL);
 	}
 
 	/**
@@ -756,7 +758,12 @@ SegmentsExperienceSelector.STATE = {
 	 */
 	openDropdown: Config.bool()
 		.internal()
-		.value(false)
+		.value(false),
+
+	/**
+	 * Url to redirect the user when clicking new experience
+	 */
+	editSegmentsEntryURL: Config.string()
 };
 
 const ConnectedSegmentsExperienceSelector = getConnectedComponent(

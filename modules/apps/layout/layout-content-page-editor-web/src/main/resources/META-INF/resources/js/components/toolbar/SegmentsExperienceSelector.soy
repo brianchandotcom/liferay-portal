@@ -13,7 +13,6 @@
 		segmentsEntryId: string
 	]>}
 	{@param? defaultSegmentsExperienceId: string }
-	{@param? editSegmentsEntryURL: string }
 	{@param? _closeEditModal: any }
 	{@param? _closeCreateModal: any }
 	{@param? _dismissCreationError: any }
@@ -316,7 +315,6 @@
 				'message': $errorCreatingMessage,
 				'onDismiss': $_dismissCreationError
 			] /}
-			{param editSegmentsEntryURL:  $editSegmentsEntryURL /}
 			{param title: $creationModalTitle /}
 			{param portletPrefix: $portletNamespace /}
 			{param experienceForm: [
@@ -363,7 +361,6 @@
 			] /}
 			{param title: $editionModalTitle /}
 			{param portletPrefix: $portletNamespace /}
-			{param editSegmentsEntryURL:  $editSegmentsEntryURL /}
 			{param experienceForm: [
 				'onExperienceSubmit': $_handleEditFormSubmit,
 				'formId': 'EditForm',

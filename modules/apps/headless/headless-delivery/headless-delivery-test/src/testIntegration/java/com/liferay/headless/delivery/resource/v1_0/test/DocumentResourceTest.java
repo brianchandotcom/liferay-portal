@@ -43,13 +43,9 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 			Document document, Map<String, File> multipartFiles)
 		throws Exception {
 
-		// TODO
-
-		if (false) {
-			Assert.assertEquals(
-				new String(FileUtil.getBytes(multipartFiles.get("file"))),
-				_read("http://localhost:8080" + document.getContentUrl()));
-		}
+		Assert.assertEquals(
+			new String(FileUtil.getBytes(multipartFiles.get("file"))),
+			_read("http://localhost:8080" + document.getContentUrl()));
 	}
 
 	@Override

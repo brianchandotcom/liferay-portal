@@ -170,4 +170,8 @@ definition {
 			value1 = "${wikiPageTitle}");
 	}
 
+	macro openWikiAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_wiki_web_portlet_WikiAdminPortlet");
+	}
+
 }

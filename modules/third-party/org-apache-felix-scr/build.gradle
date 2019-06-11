@@ -1,0 +1,26 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+dependencies {
+	compileOnly group: "org.apache.felix", name: "org.apache.felix.configadmin", transitive: false, version: "1.9.8"
+	compileOnly group: "org.apache.felix", name: "org.apache.felix.scr", transitive: false, version: "2.1.14"
+	compileOnly group: "org.osgi", name: "org.osgi.service.log", version: "1.4.0"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/static")
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/apache/felix/scr/impl/ComponentRegistry.java"
+
+	originalLibModuleName = "org.apache.felix.scr"
+}

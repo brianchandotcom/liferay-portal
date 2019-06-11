@@ -30,13 +30,22 @@ public abstract class BaseSingleEntryBulkSelection<T>
 	implements BulkSelection<T> {
 
 	public BaseSingleEntryBulkSelection(
-		long entryId, Map<String, String[]> parameterMap,
-		ResourceBundleLoader resourceBundleLoader, Language language) {
+		long entryId, Map<String, String[]> parameterMap) {
 
 		_entryId = entryId;
 		_parameterMap = parameterMap;
-		_resourceBundleLoader = resourceBundleLoader;
-		_language = language;
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #BaseSingleEntryBulkSelection(long, Map)}
+	 */
+	@Deprecated
+	public BaseSingleEntryBulkSelection(
+		long entryId, Map<String, String[]> parameterMap,
+		ResourceBundleLoader resourceBundleLoader, Language language) {
+
+		this(entryId, parameterMap);
 	}
 
 	@Override
@@ -67,8 +76,6 @@ public abstract class BaseSingleEntryBulkSelection<T>
 	protected abstract String getEntryName() throws PortalException;
 
 	private final long _entryId;
-	private final Language _language;
 	private final Map<String, String[]> _parameterMap;
-	private final ResourceBundleLoader _resourceBundleLoader;
 
 }

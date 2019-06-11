@@ -32,13 +32,22 @@ public abstract class BaseMultipleEntryBulkSelection<T>
 	implements BulkSelection<T> {
 
 	public BaseMultipleEntryBulkSelection(
-		long[] entryIds, Map<String, String[]> parameterMap,
-		ResourceBundleLoader resourceBundleLoader, Language language) {
+		long[] entryIds, Map<String, String[]> parameterMap) {
 
 		_entryIds = entryIds;
 		_parameterMap = parameterMap;
-		_resourceBundleLoader = resourceBundleLoader;
-		_language = language;
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #BaseMultipleEntryBulkSelection(long[], Map)}
+	 */
+	@Deprecated
+	public BaseMultipleEntryBulkSelection(
+		long[] entryIds, Map<String, String[]> parameterMap,
+		ResourceBundleLoader resourceBundleLoader, Language language) {
+
+		this(entryIds, parameterMap);
 	}
 
 	@Override
@@ -69,8 +78,6 @@ public abstract class BaseMultipleEntryBulkSelection<T>
 	protected abstract T fetchEntry(long entryId);
 
 	private final long[] _entryIds;
-	private final Language _language;
 	private final Map<String, String[]> _parameterMap;
-	private final ResourceBundleLoader _resourceBundleLoader;
 
 }

@@ -28,13 +28,22 @@ public abstract class BaseContainerEntryBulkSelection<T>
 	implements BulkSelection<T> {
 
 	public BaseContainerEntryBulkSelection(
-		long containerId, Map<String, String[]> parameterMap,
-		ResourceBundleLoader resourceBundleLoader, Language language) {
+		long containerId, Map<String, String[]> parameterMap) {
 
 		_containerId = containerId;
 		_parameterMap = parameterMap;
-		_resourceBundleLoader = resourceBundleLoader;
-		_language = language;
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #BaseContainerEntryBulkSelection(long, Map)}
+	 */
+	@Deprecated
+	public BaseContainerEntryBulkSelection(
+		long containerId, Map<String, String[]> parameterMap,
+		ResourceBundleLoader resourceBundleLoader, Language language) {
+
+		this(containerId, parameterMap);
 	}
 
 	@Override
@@ -48,8 +57,6 @@ public abstract class BaseContainerEntryBulkSelection<T>
 	}
 
 	private final long _containerId;
-	private final Language _language;
 	private final Map<String, String[]> _parameterMap;
-	private final ResourceBundleLoader _resourceBundleLoader;
 
 }

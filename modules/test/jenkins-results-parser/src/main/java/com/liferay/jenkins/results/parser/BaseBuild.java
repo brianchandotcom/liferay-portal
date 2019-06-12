@@ -298,6 +298,24 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public String getBuildDescription() {
+		if ((_buildDescription == null) && (getBuildURL() != null)) {
+			JSONObject descriptionJSONObject = getBuildJSONObject(
+				"description");
+
+			String description = descriptionJSONObject.optString("description");
+
+			if (description.equals("")) {
+				description = null;
+			}
+
+			_buildDescription = description;
+		}
+
+		return _buildDescription;
+	}
+
+	@Override
 	public JSONObject getBuildJSONObject() {
 		try {
 			return JenkinsResultsParserUtil.toJSONObject(
@@ -3357,6 +3375,7 @@ public abstract class BaseBuild implements Build {
 			"jenkins.report.time.zone");
 	}
 
+	private String _buildDescription;
 	private int _buildNumber = -1;
 	private JenkinsMaster _jenkinsMaster;
 	private JenkinsSlave _jenkinsSlave;

@@ -46,6 +46,8 @@ public interface Build {
 
 	public String getBrowser();
 
+	public String getBuildDescription();
+
 	public JSONObject getBuildJSONObject();
 
 	public int getBuildNumber();

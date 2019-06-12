@@ -40,7 +40,6 @@ class Text extends Component {
 	}
 
 	_handleAutocompleteFieldFocused(event) {
-		console.log('focus ', event);
 		this.emit('fieldFocused', {
 			fieldInstance: this,
 			originalEvent: event,
@@ -51,7 +50,6 @@ class Text extends Component {
 	_handleAutocompleteFilteredItemsChanged(filteredItemsReceived) {
 		const {filteredItems} = this;
 		if (filteredItemsReceived.newVal.length != filteredItems.length) {
-			console.log(filteredItemsReceived);
 			this.setState({
 				filteredItems: filteredItemsReceived.newVal
 			});
@@ -61,7 +59,8 @@ class Text extends Component {
 	_handleAutocompleteSelected(event) {
 		this.setState(
 			{
-				value: event.data.item.value
+				value: event.data.item.value,
+				filteredItems: []
 			},
 			() => {
 				this.emit('fieldEdited', {
@@ -97,7 +96,6 @@ class Text extends Component {
 	}
 
 	_handleFieldFocused(event) {
-		console.log('focus ', event);
 		this.emit('fieldFocused', {
 			fieldInstance: this,
 			originalEvent: event,

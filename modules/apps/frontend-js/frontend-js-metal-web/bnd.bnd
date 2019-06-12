@@ -34,8 +34,7 @@ Liferay-JS-Submodules-Bridge:\
 	metal-structs,\
 	metal-throttle,\
 	metal-toggler,\
-	metal-uri,\
-	metal-useragent
+	metal-uri
 Provide-Capability:\
 	soy;\
 		type="metal";\

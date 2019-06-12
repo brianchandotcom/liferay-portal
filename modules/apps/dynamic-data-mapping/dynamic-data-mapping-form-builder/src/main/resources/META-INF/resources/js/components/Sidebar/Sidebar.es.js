@@ -5,7 +5,6 @@ import Component, {Fragment} from 'metal-jsx';
 import dom from 'metal-dom';
 import FieldTypeBox from '../FieldTypeBox/FieldTypeBox.es.js';
 import FormRenderer from '../Form/FormRenderer.es';
-import UA from 'metal-useragent';
 import WithEvaluator from '../Form/Evaluator.es';
 import {ClayActionsDropdown, ClayDropdownBase} from 'clay-dropdown';
 import {ClayIcon} from 'clay-icon';
@@ -195,7 +194,7 @@ class Sidebar extends Component {
 
 	refreshDragAndDrop() {
 		this._dragAndDrop.setState({
-			targets: UA.isIE
+			targets: AUI().UA.ie
 				? this._dragAndDrop.setterTargetsFn_('.ddm-target')
 				: '.ddm-target'
 		});

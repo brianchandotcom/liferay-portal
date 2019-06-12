@@ -10,8 +10,7 @@
 				"metal-path-parser": ">=1.0.3",
 				"metal-promise": ">=2.0.1",
 				"metal-structs": ">=1.0.1",
-				"metal-uri": ">=2.4.0",
-				"metal-useragent": ">=3.0.0"
+				"metal-uri": ">=2.4.0"
 			},
 			"frontend-js-web": {
 				"/": ">=2.0.6"

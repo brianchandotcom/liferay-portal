@@ -794,26 +794,57 @@ public class GitWorkingDirectory {
 	}
 
 	public void gc() {
-		GitUtil.ExecutionResult executionResult = null;
+		int retries = 0;
 
-		boolean exceptionThrown = false;
+		while (true) {
+			GitUtil.ExecutionResult executionResult = null;
 
-		try {
-			executionResult = executeBashCommands(
-				GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
-				60 * 60 * 1000, "git gc");
-		}
-		catch (RuntimeException re) {
-			exceptionThrown = true;
-		}
+			boolean exceptionThrown = false;
 
-		System.out.println(executionResult.getStandardOut());
+			try {
+				executionResult = executeBashCommands(
+					GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
+					60 * 60 * 1000, "git gc");
+			}
+			catch (RuntimeException re) {
+				exceptionThrown = true;
+			}
 
-		if (exceptionThrown || (executionResult.getExitValue() != 0)) {
-			throw new RuntimeException(
+			System.out.println(executionResult.getStandardOut());
+
+			if (exceptionThrown || (executionResult.getExitValue() != 0)) {
+				String standardError = executionResult.getStandardError();
+
+				Pattern pattern = Pattern.compile(
+					"fatal: bad object (?<ref>.+/HEAD)");
+
+				Matcher matcher = pattern.matcher(standardError);
+
+				if (matcher.find()) {
+					File ref = new File(
+						getWorkingDirectory(), ".git/" + matcher.group("ref"));
+
+					ref.delete();
+				}
+
+				if (retries > 1) {
+					throw new RuntimeException(
+						JenkinsResultsParserUtil.combine(
+							"Unable to garbage collect Git\n", standardError));
+				}
+			}
+			else {
+				return;
+			}
+
+			retries++;
+
+			JenkinsResultsParserUtil.sleep(GitUtil.MILLIS_RETRY_DELAY);
+
+			System.out.println(
 				JenkinsResultsParserUtil.combine(
-					"Unable to garbage collect Git\n",
-					executionResult.getStandardError()));
+					"Retry garbage collect Git in ",
+					String.valueOf(GitUtil.MILLIS_RETRY_DELAY), "ms"));
 		}
 	}
 

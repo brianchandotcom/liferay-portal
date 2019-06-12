@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -92,7 +93,8 @@ public class AssetAutoTaggerOSGiCommands {
 		}
 
 		if (ArrayUtil.isEmpty(classNames)) {
-			Set<String> classNamesSet = _assetAutoTaggerImpl.getClassNameSet();
+			Set<String> classNamesSet = new HashSet<>(
+				_assetAutoTaggerImpl.getClassNameSet());
 
 			classNamesSet.remove("*");
 

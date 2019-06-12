@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -67,7 +66,7 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 		ServiceTrackerMap<String, List<AssetAutoTagProvider<?>>>
 			serviceTrackerMap = _getServiceTrackerMap();
 
-		return new HashSet<>(serviceTrackerMap.keySet());
+		return serviceTrackerMap.keySet();
 	}
 
 	public boolean isAutoTaggable(AssetEntry assetEntry) {

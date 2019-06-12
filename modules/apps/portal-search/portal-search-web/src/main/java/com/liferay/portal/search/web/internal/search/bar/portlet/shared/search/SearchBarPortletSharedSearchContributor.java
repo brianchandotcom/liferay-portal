@@ -14,10 +14,13 @@
 
 package com.liferay.portal.search.web.internal.search.bar.portlet.shared.search;
 
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.web.internal.display.context.Keywords;
@@ -32,6 +35,7 @@ import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -91,9 +95,8 @@ public class SearchBarPortletSharedSearchContributor
 		}
 
 		searchRequestBuilder.withSearchContext(
-			searchContext -> searchContext.setAttribute(
-				"groupId",
-				String.valueOf(getScopeGroupId(portletSharedSearchSettings))));
+			searchContext -> searchContext.setGroupIds(
+				new long[] {getScopeGroupId(portletSharedSearchSettings)}));
 	}
 
 	protected Optional<Portlet> findTopSearchBarPortletOptional(
@@ -114,6 +117,30 @@ public class SearchBarPortletSharedSearchContributor
 			searchBarPortletPreferences.getSearchScopePreference();
 
 		return searchScopePreference.getSearchScope();
+	}
+
+	protected long[] addScopeGroup(long groupId) {
+		try {
+			List<Long> groupIds = new ArrayList<>();
+
+			groupIds.add(groupId);
+
+			Group group = groupLocalService.getGroup(groupId);
+
+			List<Group> groups = groupLocalService.getGroups(
+				group.getCompanyId(), Layout.class.getName(),
+				group.getGroupId());
+
+			for (Group scopeGroup : groups) {
+				groupIds.add(scopeGroup.getGroupId());
+			}
+
+			return ArrayUtil.toLongArray(groupIds);
+		}
+		catch (Exception e) {
+		}
+
+		return new long[] {groupId};
 	}
 
 	protected Stream<Portlet> getPortletsStream(ThemeDisplay themeDisplay) {
@@ -288,6 +315,9 @@ public class SearchBarPortletSharedSearchContributor
 
 		return true;
 	}
+
+	@Reference
+	protected GroupLocalService groupLocalService;
 
 	@Reference
 	protected PortletPreferencesLookup portletPreferencesLookup;

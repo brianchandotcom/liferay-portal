@@ -607,7 +607,12 @@ public class SegmentsEntryRelModelImpl
 	@Override
 	public SegmentsEntryRel toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, SegmentsEntryRel>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -826,8 +831,12 @@ public class SegmentsEntryRelModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, SegmentsEntryRel>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, SegmentsEntryRel>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private long _segmentsEntryRelId;
 	private long _groupId;

@@ -521,7 +521,12 @@ public class AnnouncementsDeliveryModelImpl
 	@Override
 	public AnnouncementsDelivery toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, AnnouncementsDelivery>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -707,8 +712,12 @@ public class AnnouncementsDeliveryModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, AnnouncementsDelivery>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, AnnouncementsDelivery>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private long _deliveryId;
 	private long _companyId;

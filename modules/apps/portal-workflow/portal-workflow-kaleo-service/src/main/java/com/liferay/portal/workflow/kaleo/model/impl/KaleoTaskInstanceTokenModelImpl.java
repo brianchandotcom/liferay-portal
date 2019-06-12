@@ -778,7 +778,12 @@ public class KaleoTaskInstanceTokenModelImpl
 	@Override
 	public KaleoTaskInstanceToken toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, KaleoTaskInstanceToken>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1092,8 +1097,12 @@ public class KaleoTaskInstanceTokenModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, KaleoTaskInstanceToken>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, KaleoTaskInstanceToken>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private long _mvccVersion;
 	private long _kaleoTaskInstanceTokenId;

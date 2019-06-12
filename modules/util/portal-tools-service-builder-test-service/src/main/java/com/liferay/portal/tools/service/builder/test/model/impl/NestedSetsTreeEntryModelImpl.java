@@ -472,7 +472,12 @@ public class NestedSetsTreeEntryModelImpl
 	@Override
 	public NestedSetsTreeEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, NestedSetsTreeEntry>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -647,8 +652,12 @@ public class NestedSetsTreeEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, NestedSetsTreeEntry>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, NestedSetsTreeEntry>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private long _nestedSetsTreeEntryId;
 	private long _groupId;

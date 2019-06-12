@@ -726,7 +726,12 @@ public class KaleoTaskFormInstanceModelImpl
 	@Override
 	public KaleoTaskFormInstance toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, KaleoTaskFormInstance>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1028,8 +1033,12 @@ public class KaleoTaskFormInstanceModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, KaleoTaskFormInstance>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, KaleoTaskFormInstance>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private long _mvccVersion;
 	private long _kaleoTaskFormInstanceId;

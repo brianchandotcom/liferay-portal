@@ -384,7 +384,12 @@ public class UserTrackerPathModelImpl
 	@Override
 	public UserTrackerPath toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, UserTrackerPath>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -567,8 +572,12 @@ public class UserTrackerPathModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, UserTrackerPath>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, UserTrackerPath>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private long _mvccVersion;
 	private long _userTrackerPathId;

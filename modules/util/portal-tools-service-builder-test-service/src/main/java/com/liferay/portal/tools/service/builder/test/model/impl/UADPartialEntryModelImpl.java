@@ -476,7 +476,12 @@ public class UADPartialEntryModelImpl
 	@Override
 	public UADPartialEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, UADPartialEntry>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -644,8 +649,12 @@ public class UADPartialEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, UADPartialEntry>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, UADPartialEntry>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private long _uadPartialEntryId;
 	private long _userId;

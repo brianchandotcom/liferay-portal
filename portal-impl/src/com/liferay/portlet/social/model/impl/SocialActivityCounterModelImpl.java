@@ -627,7 +627,12 @@ public class SocialActivityCounterModelImpl
 	@Override
 	public SocialActivityCounter toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, SocialActivityCounter>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -857,8 +862,12 @@ public class SocialActivityCounterModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, SocialActivityCounter>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, SocialActivityCounter>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private long _activityCounterId;
 	private long _groupId;

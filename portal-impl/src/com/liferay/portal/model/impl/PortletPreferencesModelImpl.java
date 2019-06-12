@@ -546,7 +546,12 @@ public class PortletPreferencesModelImpl
 	@Override
 	public PortletPreferences toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, PortletPreferences>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -755,8 +760,12 @@ public class PortletPreferencesModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, PortletPreferences>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, PortletPreferences>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private long _mvccVersion;
 	private long _portletPreferencesId;

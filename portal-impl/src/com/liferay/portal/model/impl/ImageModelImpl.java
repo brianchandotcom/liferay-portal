@@ -451,7 +451,12 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	@Override
 	public Image toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, Image>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -642,8 +647,12 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, Image>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, Image>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private long _mvccVersion;
 	private long _imageId;

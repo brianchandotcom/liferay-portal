@@ -538,7 +538,12 @@ public class PowwowServerModelImpl
 	@Override
 	public PowwowServer toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, PowwowServer>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -778,8 +783,12 @@ public class PowwowServerModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, PowwowServer>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, PowwowServer>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private long _powwowServerId;
 	private long _companyId;

@@ -527,7 +527,12 @@ public class FriendlyURLEntryLocalizationModelImpl
 	@Override
 	public FriendlyURLEntryLocalization toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, FriendlyURLEntryLocalization>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -749,9 +754,15 @@ public class FriendlyURLEntryLocalizationModelImpl
 		return sb.toString();
 	}
 
-	private static final Function
-		<InvocationHandler, FriendlyURLEntryLocalization>
-			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, FriendlyURLEntryLocalization>
+				_escapedModelProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
+
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

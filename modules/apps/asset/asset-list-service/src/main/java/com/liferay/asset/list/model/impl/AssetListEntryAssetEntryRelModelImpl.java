@@ -622,7 +622,12 @@ public class AssetListEntryAssetEntryRelModelImpl
 	@Override
 	public AssetListEntryAssetEntryRel toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, AssetListEntryAssetEntryRel>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -900,9 +905,15 @@ public class AssetListEntryAssetEntryRelModelImpl
 		return sb.toString();
 	}
 
-	private static final Function
-		<InvocationHandler, AssetListEntryAssetEntryRel>
-			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, AssetListEntryAssetEntryRel>
+				_escapedModelProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
+
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

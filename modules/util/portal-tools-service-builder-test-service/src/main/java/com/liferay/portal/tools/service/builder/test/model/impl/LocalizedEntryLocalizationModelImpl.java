@@ -546,7 +546,12 @@ public class LocalizedEntryLocalizationModelImpl
 	@Override
 	public LocalizedEntryLocalization toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, LocalizedEntryLocalization>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -752,8 +757,14 @@ public class LocalizedEntryLocalizationModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, LocalizedEntryLocalization>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, LocalizedEntryLocalization>
+				_escapedModelProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	private long _mvccVersion;
 	private long _localizedEntryLocalizationId;

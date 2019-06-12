@@ -541,7 +541,12 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	@Override
 	public Lock toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, Lock>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -777,8 +782,12 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, Lock>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, Lock>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private long _mvccVersion;
 	private String _uuid;

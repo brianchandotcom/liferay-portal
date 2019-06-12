@@ -1093,7 +1093,12 @@ public class DDMFormInstanceVersionModelImpl
 	@Override
 	public DDMFormInstanceVersion toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, DDMFormInstanceVersion>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1361,8 +1366,12 @@ public class DDMFormInstanceVersionModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, DDMFormInstanceVersion>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, DDMFormInstanceVersion>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private long _formInstanceVersionId;
 	private long _groupId;

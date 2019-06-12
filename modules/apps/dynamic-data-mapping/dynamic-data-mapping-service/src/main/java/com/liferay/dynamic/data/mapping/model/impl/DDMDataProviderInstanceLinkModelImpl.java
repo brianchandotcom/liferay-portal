@@ -376,7 +376,12 @@ public class DDMDataProviderInstanceLinkModelImpl
 	@Override
 	public DDMDataProviderInstanceLink toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, DDMDataProviderInstanceLink>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -560,9 +565,14 @@ public class DDMDataProviderInstanceLinkModelImpl
 		return sb.toString();
 	}
 
-	private static final Function
-		<InvocationHandler, DDMDataProviderInstanceLink>
-			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, DDMDataProviderInstanceLink>
+				_escapedModelProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	private long _dataProviderInstanceLinkId;
 	private long _companyId;

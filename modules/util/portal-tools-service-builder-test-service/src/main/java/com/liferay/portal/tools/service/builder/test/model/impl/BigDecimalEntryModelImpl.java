@@ -405,7 +405,12 @@ public class BigDecimalEntryModelImpl
 	@Override
 	public BigDecimalEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, BigDecimalEntry>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -563,8 +568,12 @@ public class BigDecimalEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, BigDecimalEntry>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, BigDecimalEntry>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private long _bigDecimalEntryId;
 	private long _companyId;

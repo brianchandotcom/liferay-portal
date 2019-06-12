@@ -434,7 +434,12 @@ public class MBStatsUserModelImpl
 	@Override
 	public MBStatsUser toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, MBStatsUser>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -627,8 +632,12 @@ public class MBStatsUserModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, MBStatsUser>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, MBStatsUser>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private long _statsUserId;
 	private long _groupId;

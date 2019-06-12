@@ -756,7 +756,12 @@ public class SiteNavigationMenuItemModelImpl
 	@Override
 	public SiteNavigationMenuItem toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, SiteNavigationMenuItem>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1042,8 +1047,12 @@ public class SiteNavigationMenuItemModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, SiteNavigationMenuItem>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, SiteNavigationMenuItem>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private String _uuid;
 	private String _originalUuid;

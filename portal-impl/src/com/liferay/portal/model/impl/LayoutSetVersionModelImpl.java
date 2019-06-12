@@ -703,7 +703,12 @@ public class LayoutSetVersionModelImpl
 	@Override
 	public LayoutSetVersion toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, LayoutSetVersion>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -987,8 +992,12 @@ public class LayoutSetVersionModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, LayoutSetVersion>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, LayoutSetVersion>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private long _layoutSetVersionId;
 	private int _version;

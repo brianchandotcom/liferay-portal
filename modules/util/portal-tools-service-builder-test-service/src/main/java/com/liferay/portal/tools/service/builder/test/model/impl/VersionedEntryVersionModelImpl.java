@@ -491,7 +491,12 @@ public class VersionedEntryVersionModelImpl
 	@Override
 	public VersionedEntryVersion toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, VersionedEntryVersion>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -680,8 +685,12 @@ public class VersionedEntryVersionModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, VersionedEntryVersion>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, VersionedEntryVersion>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private long _versionedEntryVersionId;
 	private int _version;

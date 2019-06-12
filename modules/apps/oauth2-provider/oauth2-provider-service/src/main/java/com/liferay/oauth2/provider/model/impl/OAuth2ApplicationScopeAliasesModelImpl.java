@@ -427,7 +427,12 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 	@Override
 	public OAuth2ApplicationScopeAliases toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, OAuth2ApplicationScopeAliases>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -632,9 +637,15 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 		return sb.toString();
 	}
 
-	private static final Function
-		<InvocationHandler, OAuth2ApplicationScopeAliases>
-			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, OAuth2ApplicationScopeAliases>
+				_escapedModelProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
+
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 

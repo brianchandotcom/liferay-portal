@@ -537,7 +537,12 @@ public class ExpandoValueModelImpl
 	@Override
 	public ExpandoValue toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, ExpandoValue>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -772,8 +777,12 @@ public class ExpandoValueModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, ExpandoValue>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, ExpandoValue>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private long _valueId;
 	private long _companyId;

@@ -654,7 +654,12 @@ public class AuditEventModelImpl
 	@Override
 	public AuditEvent toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, AuditEvent>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -916,8 +921,12 @@ public class AuditEventModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, AuditEvent>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, AuditEvent>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private long _auditEventId;
 	private long _companyId;

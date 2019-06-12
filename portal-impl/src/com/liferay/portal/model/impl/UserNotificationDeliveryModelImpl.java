@@ -552,7 +552,12 @@ public class UserNotificationDeliveryModelImpl
 	@Override
 	public UserNotificationDelivery toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, UserNotificationDelivery>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -763,8 +768,14 @@ public class UserNotificationDeliveryModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, UserNotificationDelivery>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, UserNotificationDelivery>
+				_escapedModelProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	private long _mvccVersion;
 	private long _userNotificationDeliveryId;

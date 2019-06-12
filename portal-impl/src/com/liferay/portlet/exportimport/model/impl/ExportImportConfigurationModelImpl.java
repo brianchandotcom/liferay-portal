@@ -994,7 +994,12 @@ public class ExportImportConfigurationModelImpl
 	@Override
 	public ExportImportConfiguration toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, ExportImportConfiguration>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1276,8 +1281,14 @@ public class ExportImportConfigurationModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, ExportImportConfiguration>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, ExportImportConfiguration>
+				_escapedModelProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	private long _mvccVersion;
 	private long _exportImportConfigurationId;

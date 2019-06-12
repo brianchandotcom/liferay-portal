@@ -695,7 +695,12 @@ public class PowwowMeetingModelImpl
 	@Override
 	public PowwowMeeting toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, PowwowMeeting>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -962,8 +967,12 @@ public class PowwowMeetingModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, PowwowMeeting>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, PowwowMeeting>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private long _powwowMeetingId;
 	private long _groupId;

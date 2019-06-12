@@ -471,7 +471,12 @@ public class RecentLayoutSetBranchModelImpl
 	@Override
 	public RecentLayoutSetBranch toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, RecentLayoutSetBranch>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -666,8 +671,12 @@ public class RecentLayoutSetBranchModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, RecentLayoutSetBranch>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, RecentLayoutSetBranch>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private long _mvccVersion;
 	private long _recentLayoutSetBranchId;

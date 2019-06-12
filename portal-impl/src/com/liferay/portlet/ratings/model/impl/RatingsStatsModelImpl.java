@@ -426,7 +426,12 @@ public class RatingsStatsModelImpl
 	@Override
 	public RatingsStats toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, RatingsStats>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -603,8 +608,12 @@ public class RatingsStatsModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, RatingsStats>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, RatingsStats>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private long _statsId;
 	private long _companyId;

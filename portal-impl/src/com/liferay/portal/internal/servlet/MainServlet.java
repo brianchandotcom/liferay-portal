@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletFilter;
 import com.liferay.portal.kernel.model.PortletURLListener;
-import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.patcher.PatchInconsistencyException;
@@ -54,7 +53,6 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
-import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.InactiveRequestHandler;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
@@ -361,25 +359,6 @@ public class MainServlet extends HttpServlet {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize themes");
-		}
-
-		try {
-			String[] xmls = {
-				StreamUtil.toString(
-					servletContext.getResourceAsStream(
-						"/WEB-INF/liferay-look-and-feel.xml")),
-				StreamUtil.toString(
-					servletContext.getResourceAsStream(
-						"/WEB-INF/liferay-look-and-feel-ext.xml"))
-			};
-
-			List<Theme> themes = ThemeLocalServiceUtil.init(
-				servletContext, null, true, xmls, pluginPackage);
-
-			servletContext.setAttribute(WebKeys.PLUGIN_THEMES, themes);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
 		}
 
 		if (_log.isDebugEnabled()) {

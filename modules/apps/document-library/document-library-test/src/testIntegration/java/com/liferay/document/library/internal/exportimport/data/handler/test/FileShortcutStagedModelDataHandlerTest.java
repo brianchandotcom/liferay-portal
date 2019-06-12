@@ -24,11 +24,13 @@ import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -46,6 +48,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -59,6 +62,37 @@ public class FileShortcutStagedModelDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testFileEntryCheckedOut() throws Exception {
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			addDependentStagedModelsMap(stagingGroup);
+
+		List<StagedModel> fileEntries = dependentStagedModelsMap.get(
+			DLFileEntry.class.getSimpleName());
+
+		FileEntry fileEntry = (FileEntry)fileEntries.get(0);
+
+		DLAppServiceUtil.checkOutFileEntry(
+			fileEntry.getFileEntryId(),
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId()));
+
+		FileShortcut fileShortcut = (FileShortcut)addStagedModel(
+			stagingGroup, dependentStagedModelsMap);
+
+		initExport();
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, fileShortcut);
+
+		initImport();
+
+		FileShortcut exportedFileShortcut =
+			(FileShortcut)readExportedStagedModel(fileShortcut);
+
+		Assert.assertNull(exportedFileShortcut);
+	}
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(

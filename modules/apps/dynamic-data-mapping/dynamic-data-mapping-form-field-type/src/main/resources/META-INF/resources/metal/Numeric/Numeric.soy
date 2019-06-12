@@ -51,6 +51,12 @@
 	{let $attributes kind="attributes"}
 		class="form-control"
 
+		data-oninput="{$_handleFieldChanged}"
+
+		{if $readOnly}
+			disabled="disabled"
+		{/if}
+
 		{if $id}
 			id="{$id}"
 		{/if}
@@ -62,12 +68,6 @@
 		{/if}
 
 		type="text"
-
-		data-oninput="{$_handleFieldChanged}"
-
-		{if $readOnly}
-			disabled="disabled"
-		{/if}
 
 		{if $value}
 			value="{$value}"

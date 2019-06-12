@@ -2,12 +2,12 @@
 
 {template .render}
 	{@param name: string}
-	{@param? _updateValue: any}
-	{@param? id: string}
 	{@param spritemap: string}
+	{@param? _updateValue: any}
 	{@param? dataType: string}
 	{@param? enableValidation: bool}
 	{@param? errorMessage: string}
+	{@param? id: string}
 	{@param? label: string}
 	{@param? parameterMessage: string}
 	{@param? readOnly: bool}
@@ -42,6 +42,7 @@
 
 {template .content}
 	{@param name: string}
+	{@param spritemap: string}
 	{@param? _updateValue: any}
 	{@param? dataType: string}
 	{@param? enableValidation: bool}
@@ -50,7 +51,6 @@
 	{@param? parameterMessage: string}
 	{@param? readOnly: bool}
 	{@param? selectedValidation: [parameterMessage: string, value: string]}
-	{@param spritemap: string}
 	{@param? validations: list<[
 		checked: bool,
 		disabled: bool,

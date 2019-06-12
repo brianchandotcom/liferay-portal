@@ -68,11 +68,11 @@
 					'fieldClicked': $_handleFieldClicked,
 					'fieldEdited': $_handleFieldEdited
 				] /}
+				{param key: index($page) /}
 				{param page: $page /}
 				{param pageIndex: index($page) /}
 				{param paginationMode: $paginationMode /}
 				{param ref: 'pageRenderer' + index($page) /}
-				{param key: index($page) /}
 				{param spritemap: $spritemap /}
 				{param total: length($pages) /}
 			{/call}
@@ -162,11 +162,11 @@
 {/deltemplate}
 
 {deltemplate FormRenderer.WizardItem}
-	{@param? _handlePaginationItemClicked: any}
-	{@param? activePage: number}
 	{@param page: ?}
 	{@param pageIndex: number}
 	{@param total: number}
+	{@param? _handlePaginationItemClicked: any}
+	{@param? activePage: number}
 
 	{let $step: $pageIndex + 1 /}
 

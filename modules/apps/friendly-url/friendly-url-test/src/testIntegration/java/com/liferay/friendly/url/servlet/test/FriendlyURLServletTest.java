@@ -59,12 +59,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.After;
@@ -77,8 +73,6 @@ import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.mock.web.MockServletConfig;
-import org.springframework.mock.web.MockServletContext;
 
 /**
  * @author László Csontos
@@ -232,33 +226,6 @@ public class FriendlyURLServletTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		AtomicReference<String> forwardPathReference = new AtomicReference<>();
-
-		MockServletContext mockServletContext = new MockServletContext() {
-
-			@Override
-			public RequestDispatcher getRequestDispatcher(final String path) {
-				return new RequestDispatcher() {
-
-					@Override
-					public void forward(
-						ServletRequest servletRequest,
-						ServletResponse servletResponse) {
-
-						forwardPathReference.set(path);
-					}
-
-					@Override
-					public void include(
-						ServletRequest servletRequest,
-						ServletResponse servletResponse) {
-					}
-
-				};
-			}
-
-		};
-
 		long groupId = _group.getGroupId();
 
 		Map<Locale, String> nameMap = new HashMap<>();
@@ -294,10 +261,6 @@ public class FriendlyURLServletTest {
 			RandomTestUtil.randomLocaleStringMap(), LayoutConstants.TYPE_URL,
 			typeSettings, false, friendlyURLMap, serviceContext);
 
-		mockServletContext.setContextPath("/");
-
-		_servlet.init(new MockServletConfig(mockServletContext));
-
 		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
 
 		String requestURI =
@@ -311,9 +274,10 @@ public class FriendlyURLServletTest {
 
 		_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
 
-		Assert.assertEquals(null, forwardPathReference.get());
-
+		Assert.assertEquals(
+			"/careers", mockHttpServletResponse.getHeader("Location"));
 		Assert.assertEquals(302, mockHttpServletResponse.getStatus());
+		Assert.assertTrue(mockHttpServletResponse.isCommitted());
 	}
 
 	@Test

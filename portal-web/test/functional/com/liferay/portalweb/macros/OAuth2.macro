@@ -155,6 +155,16 @@ definition {
 		AssertElementPresent(locator1 = "OAuth2#ADMIN_RESOURCE_PANEL_EXPANDED");
 	}
 
+	macro getAccessToken {
+		var reponse = JSONCurlUtil.post("${curl}");
+
+		var partialReponse = StringUtil.extractFirst("${reponse}", "&quot;,&quot;token_type");
+		var accessToken = StringUtil.extractLast("${partialReponse}", "access_token&quot;:&quot;");
+		echo("## * Access Token: ${accessToken}");
+
+		return "${accessToken}";
+	}
+
 	macro getAuthorizationCode {
 		var generatedClientId = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_ID");
 		var portalURL = PropsUtil.get("portal.url");

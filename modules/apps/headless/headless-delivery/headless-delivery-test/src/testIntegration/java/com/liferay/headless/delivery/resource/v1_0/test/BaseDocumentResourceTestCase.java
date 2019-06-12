@@ -601,17 +601,17 @@ public abstract class BaseDocumentResourceTestCase {
 
 	@Test
 	public void testGetDocumentMyRating() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testPostDocumentMyRating() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testPutDocumentMyRating() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test

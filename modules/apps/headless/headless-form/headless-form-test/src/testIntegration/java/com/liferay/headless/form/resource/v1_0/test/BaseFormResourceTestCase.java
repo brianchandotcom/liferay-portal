@@ -203,12 +203,12 @@ public abstract class BaseFormResourceTestCase {
 
 	@Test
 	public void testPostFormEvaluateContext() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testPostFormFormDocument() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test

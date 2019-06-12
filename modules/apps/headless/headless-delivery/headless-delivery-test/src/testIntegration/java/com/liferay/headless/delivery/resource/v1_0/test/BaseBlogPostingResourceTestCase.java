@@ -318,17 +318,17 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 	@Test
 	public void testGetBlogPostingMyRating() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testPostBlogPostingMyRating() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testPutBlogPostingMyRating() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test

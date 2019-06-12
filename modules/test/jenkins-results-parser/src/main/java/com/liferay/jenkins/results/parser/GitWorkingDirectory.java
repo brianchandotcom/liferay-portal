@@ -815,16 +815,14 @@ public class GitWorkingDirectory {
 			if (exceptionThrown || (executionResult.getExitValue() != 0)) {
 				String standardError = executionResult.getStandardError();
 
-				Pattern pattern = Pattern.compile(
-					"fatal: bad object (?<ref>.+/HEAD)");
-
-				Matcher matcher = pattern.matcher(standardError);
+				Matcher matcher = _badRefPattern.matcher(standardError);
 
 				if (matcher.find()) {
-					File ref = new File(
-						getWorkingDirectory(), ".git/" + matcher.group("ref"));
+					File badRefFile = new File(
+						getWorkingDirectory(),
+						".git/" + matcher.group("badRef"));
 
-					ref.delete();
+					badRefFile.delete();
 				}
 
 				if (retries > 1) {
@@ -2426,6 +2424,8 @@ public class GitWorkingDirectory {
 
 	private static final int _BRANCHES_DELETE_BATCH_SIZE = 5;
 
+	private static final Pattern _badRefPattern = Pattern.compile(
+		"fatal: bad object (?<badRef>.+/HEAD)");
 	private static final Pattern _gitDirectoryPathPattern = Pattern.compile(
 		"gitdir\\: (.*)\\s*");
 	private static final Pattern _gitLogEntityPattern = Pattern.compile(

@@ -323,6 +323,8 @@ public class ZipReaderImplTest {
 
 		Assert.assertTrue(is instanceof FileInputStream);
 
+		is.close();
+
 		zipReader.close();
 	}
 

@@ -37,6 +37,13 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 		),
 		@DDMFormRule(
 			actions = {
+				"setVisible('autocomplete', FALSE)",
+				"setValue('autocomplete', FALSE)"
+			},
+			condition = "not(equals(getValue('displayStyle'), 'singleline'))"
+		),
+		@DDMFormRule(
+			actions = {
 				"setRequired('ddmDataProviderInstanceId', equals(getValue('dataSourceType'), \"data-provider\"))",
 				"setRequired('ddmDataProviderInstanceOutput', equals(getValue('dataSourceType'), \"data-provider\"))",
 				"setValidationDataType('validation', getValue('dataType'))",

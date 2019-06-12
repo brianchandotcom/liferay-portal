@@ -41,7 +41,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "create-account"));
 	<portlet:param name="mvcRenderCommandName" value="/login/create_account" />
 </portlet:actionURL>
 
-<aui:form action="<%= createAccountURL %>" method="post" name="fm">
+<aui:form action="<%= createAccountURL %>" method="post" name="fm" validateOnBlur="<%= false %>">
 	<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Adolfo Pérez
  */
 @ExtendedObjectClassDefinition(
-	category = "collaboration", factoryInstanceLabelAttribute = "name"
+	category = "documents-and-media", factoryInstanceLabelAttribute = "name"
 )
 @Meta.OCD(
 	factory = true,

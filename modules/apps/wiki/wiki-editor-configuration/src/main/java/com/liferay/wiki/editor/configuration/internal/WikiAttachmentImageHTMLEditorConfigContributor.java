@@ -102,6 +102,12 @@ public class WikiAttachmentImageHTMLEditorConfigContributor
 		_itemSelector = itemSelector;
 	}
 
+	protected void setWikiFileUploadConfiguration(
+		WikiFileUploadConfiguration wikiFileUploadConfiguration) {
+
+		_wikiFileUploadConfiguration = wikiFileUploadConfiguration;
+	}
+
 	private ItemSelector _itemSelector;
 	private WikiFileUploadConfiguration _wikiFileUploadConfiguration;
 

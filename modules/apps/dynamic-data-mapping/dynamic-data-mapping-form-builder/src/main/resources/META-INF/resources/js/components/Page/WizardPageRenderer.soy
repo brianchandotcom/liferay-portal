@@ -16,7 +16,9 @@
 	<div class="ddm-layout-builder ddm-page-container-layout">
 		{if $activePage == $pageIndex}
 			<div class="ddm-form-page pl-4 pr-4">
-				{delcall PageRenderer.PageHeader data="$page" variant="$page.headerRenderer"}
+				{let $headerRenderer: $page.headerRenderer ?: 'editable' /}
+
+				{delcall PageRenderer.PageHeader data="$page" variant="$headerRenderer"}
 					{param description: $page.description ?: '' /}
 					{param pageIndex: $pageIndex /}
 					{param title: $page.title ?: '' /}

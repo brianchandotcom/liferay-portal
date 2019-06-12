@@ -3,7 +3,7 @@
 {template .render}
 	{@param name: string}
 	{@param? _handleFieldChanged: any}
-	{@param? _value: any}
+	{@param? _value: ?}
 	{@param? id: string}
 	{@param? label: string}
 	{@param? placeholder: string}
@@ -46,7 +46,7 @@
 	{@param? placeholder: string}
 	{@param? predefinedValue: any}
 	{@param? readOnly: bool}
-	{@param? value: any}
+	{@param? value: ?}
 
 	{let $attributes kind="attributes"}
 		class="form-control"

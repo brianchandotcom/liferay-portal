@@ -11,13 +11,22 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 		) {
 			const form = this.one('#fm');
 
+			const searchContainer = Liferay.SearchContainer.get(
+				this.ns('blogEntries')
+			);
+
+			const bulkSelection =
+				searchContainer.select &&
+				searchContainer.select.get('bulkSelection');
+
 			Liferay.Util.postForm(form, {
 				data: {
 					cmd: this.deleteEntriesCmd,
 					deleteEntryIds: Liferay.Util.listCheckedExcept(
 						form,
 						this.ns('allRowIds')
-					)
+					),
+					selectAll: bulkSelection
 				},
 				url: this.deleteEntriesURL
 			});

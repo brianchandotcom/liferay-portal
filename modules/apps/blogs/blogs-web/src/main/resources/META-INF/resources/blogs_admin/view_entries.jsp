@@ -30,6 +30,7 @@ BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayCo
 <clay:management-toolbar
 	displayContext="<%= blogEntriesManagementToolbarDisplayContext %>"
 	searchContainerId="blogEntries"
+	supportsBulkActions="<%= true %>"
 />
 
 <portlet:actionURL name="/blogs/edit_entry" var="restoreTrashEntriesURL">
@@ -44,6 +45,7 @@ BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayCo
 	<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+		<aui:input name="selectAll" type="hidden" value="<%= false %>" />
 		<aui:input name="deleteEntryIds" type="hidden" />
 
 		<liferay-asset:categorization-filter

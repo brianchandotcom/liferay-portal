@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -61,6 +62,10 @@ import org.osgi.service.component.annotations.Reference;
 	service = {AssetAutoTagger.class, AssetAutoTaggerImpl.class}
 )
 public class AssetAutoTaggerImpl implements AssetAutoTagger {
+
+	public Set<String> getClassNameSet() {
+		return new HashSet<>(_serviceTrackerMap.keySet());
+	}
 
 	public boolean isAutoTaggable(AssetEntry assetEntry) {
 		try {

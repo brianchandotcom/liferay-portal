@@ -96,7 +96,7 @@ public class SearchBarPortletSharedSearchContributor
 
 		searchRequestBuilder.withSearchContext(
 			searchContext -> searchContext.setGroupIds(
-				new long[] {getScopeGroupId(portletSharedSearchSettings)}));
+				getGroupIds(portletSharedSearchSettings)));
 	}
 
 	protected Optional<Portlet> findTopSearchBarPortletOptional(
@@ -119,17 +119,20 @@ public class SearchBarPortletSharedSearchContributor
 		return searchScopePreference.getSearchScope();
 	}
 
-	protected long[] addScopeGroup(long groupId) {
+	protected long[] getGroupIds(
+		PortletSharedSearchSettings portletSharedSearchSettings) {
+
+		ThemeDisplay themeDisplay =
+			portletSharedSearchSettings.getThemeDisplay();
+
 		try {
 			List<Long> groupIds = new ArrayList<>();
 
-			groupIds.add(groupId);
-
-			Group group = groupLocalService.getGroup(groupId);
+			groupIds.add(themeDisplay.getScopeGroupId());
 
 			List<Group> groups = groupLocalService.getGroups(
-				group.getCompanyId(), Layout.class.getName(),
-				group.getGroupId());
+				themeDisplay.getCompanyId(), Layout.class.getName(),
+				themeDisplay.getScopeGroupId());
 
 			for (Group scopeGroup : groups) {
 				groupIds.add(scopeGroup.getGroupId());
@@ -140,7 +143,7 @@ public class SearchBarPortletSharedSearchContributor
 		catch (Exception e) {
 		}
 
-		return new long[] {groupId};
+		return new long[] {themeDisplay.getScopeGroupId()};
 	}
 
 	protected Stream<Portlet> getPortletsStream(ThemeDisplay themeDisplay) {
@@ -152,15 +155,6 @@ public class SearchBarPortletSharedSearchContributor
 		List<Portlet> portlets = layoutTypePortlet.getAllPortlets(false);
 
 		return portlets.stream();
-	}
-
-	protected long getScopeGroupId(
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		ThemeDisplay themeDisplay =
-			portletSharedSearchSettings.getThemeDisplay();
-
-		return themeDisplay.getScopeGroupId();
 	}
 
 	protected SearchBarPortletPreferences getSearchBarPortletPreferences(

@@ -3,7 +3,7 @@
 {template .render}
 	{@param? _handleFormSubmit: any}
 	{@param? _requiredNameError: bool | null}
-	{@param? hasSegmentsEntryPermissions: bool}
+	{@param? hasSegmentsEntryPermission: bool}
 	{@param? portletPrefix: string }
 	{@param? _handleNewSegmentClick: any }
 	{@param visible: bool }
@@ -135,7 +135,7 @@
 									</option>
 								{/if}
 							</select>
-							{if $hasSegmentsEntryPermissions == true}
+							{if $hasSegmentsEntryPermission == true}
 								<button type="button" class="btn btn-secondary flex-shrink-0 ml-2" data-onclick="{$_handleNewSegmentClick}">
 									{msg desc=""}
 										new-segment

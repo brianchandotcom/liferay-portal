@@ -144,8 +144,8 @@
 	}
 	{@param readOnly: bool}
 	{@param spritemap: string}
-	{@param? _handleActionSelection: any}
 	{@param? _handleActionAdded: any}
+	{@param? _handleActionSelection: any}
 	{@param? _handleCancelRule: any}
 	{@param? _handleConditionAdded: any}
 	{@param? _handleDataProviderInputEdited: any}
@@ -155,13 +155,13 @@
 	{@param? _handleEditExpression: any}
 	{@param? _handleFirstOperandFieldEdited: any}
 	{@param? _handleLogicalOperationChange: any}
+	{@param? _handleModalButtonClicked: any}
 	{@param? _handleOperatorEdited: any}
 	{@param? _handleRuleAdded: any}
 	{@param? _handleSecondOperandFieldEdited: any}
 	{@param? _handleSecondOperandTypeEdited: any}
 	{@param? _handleSecondOperandValueEdited: any}
 	{@param? _handleTargetSelection: any}
-	{@param? _handleModalButtonClicked: any}
 	{@param? roles: list<[
 		label: string,
 		value: string
@@ -200,8 +200,8 @@
 					{param _handleSecondOperandValueEdited: $_handleSecondOperandValueEdited /}
 					{param binaryOperator: $condition.binaryOperator /}
 					{param fieldOptions: $conditionsFieldOptions /}
-					{param firstOperandType: $condition.operands[0].type /}
 					{param firstOperandOptions: $condition.firstOperandOptions /}
+					{param firstOperandType: $condition.operands[0].type /}
 					{param firstOperandValueSelected: $condition.operands[0].value /}
 					{param fixedOptions: $fixedOptions /}
 					{param index: index($condition) /}
@@ -240,13 +240,13 @@
 					{param _handleDeleteAction: $_handleDeleteAction /}
 					{param _handleEditExpression: $_handleEditExpression /}
 					{param _handleTargetSelection: $_handleTargetSelection /}
+					{param actionExpression: $action.expression /}
 					{param actionInputs: $action.inputs /}
 					{param actionOutputs: $action.outputs /}
 					{param actionSelected: $action.action /}
-					{param actionExpression: $action.expression /}
 					{param actionTypes: $actionTypes /}
-					{param calculatorFunctions: $calculatorFunctions /}
 					{param calculatorFields: $action.calculatorFields /}
+					{param calculatorFunctions: $calculatorFunctions /}
 					{param calculatorResultOptions: $calculatorResultOptions /}
 					{param dataProvider: $dataProvider /}
 					{param fieldOptions: $actionsFieldOptions /}
@@ -320,9 +320,9 @@
 
 {template .renderModal}
 	{@param question: string}
+	{@param spritemap: string}
 	{@param title: string}
 	{@param type: string}
-	{@param spritemap: string}
 	{@param? _handleModalButtonClicked: any}
 
 	{let $deleteLabel kind="text"}
@@ -460,8 +460,8 @@
 			name: string
 		]>
 	}
-	{@param? targetSelected: string}
 	{@param? hasRequiredInputs: bool}
+	{@param? targetSelected: string}
 
 	<li action-index="{$index}" class="action form-builder-rule-action-container-{$index} timeline-item">
 		<div class="panel panel-default">
@@ -622,11 +622,11 @@
 	{@param? _handleSecondOperandTypeEdited: any}
 	{@param? _handleSecondOperandValueEdited: any}
 	{@param? firstOperandType: string}
-	{@param? firstOperandValueSelected: string}
 	{@param? firstOperandOptions: list<[
 		label: string,
 		value: string
 	]>}
+	{@param? firstOperandValueSelected: string}
 	{@param? fixedOptions: any}
 	{@param? logicalOperator: string}
 	{@param? operators:  list<[
@@ -972,8 +972,8 @@
  * Prints the add condition button.
  */
 {template .renderAddItemButton}
-	{@param? _handleItemAdded: any}
 	{@param spritemap: string}
+	{@param? _handleItemAdded: any}
 	{@param? type: string}
 
 	<div class="addbutton-timeline-item">

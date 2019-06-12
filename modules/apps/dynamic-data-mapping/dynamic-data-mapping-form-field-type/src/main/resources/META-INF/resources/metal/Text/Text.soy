@@ -61,32 +61,25 @@
 
 	{let $attributes kind="attributes"}
 		class="ddm-field-text form-control"
-
-		name="{$name}"
-
-		type="text"
-
+		data-onblur="{$_handleFieldBlurred}"
+		data-onfocus="{$_handleFieldFocused}"
 		data-oninput="{$_handleFieldChanged}"
 
-		data-onfocus="{$_handleFieldFocused}"
+		{if $readOnly}
+			disabled="disabled"
+		{/if}
 
 		{if $id}
 			id="{$id}"
 		{/if}
+
+		name="{$name}"
 
 		{if $placeholder}
 			placeholder="{$placeholder}"
 		{/if}
 
 		type="text"
-
-		data-onblur="{$_handleFieldBlurred}"
-
-		data-oninput="{$_handleFieldChanged}"
-
-		{if $readOnly}
-			disabled="disabled"
-		{/if}
 
 		{if $value}
 			value="{$value}"

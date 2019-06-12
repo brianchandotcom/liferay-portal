@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerTracker;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterTracker;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
@@ -296,19 +297,20 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 			new AddDefaultSharedFormLayoutPortalInstanceLifecycleListener(),
 			mock(DDMFormBuilderContextFactory.class),
 			mock(DDMFormBuilderSettingsRetriever.class),
-			mock(DDMFormWebConfiguration.class),
+			mock(DDMFormFieldTypeServicesTracker.class),
+			mock(DDMFormFieldTypesSerializerTracker.class),
+			mock(DDMFormInstanceLocalService.class),
 			mock(DDMFormInstanceRecordLocalService.class),
 			mock(DDMFormInstanceRecordWriterTracker.class),
 			mockDDMFormInstanceService(),
 			mock(DDMFormInstanceVersionLocalService.class),
-			mock(DDMFormFieldTypeServicesTracker.class),
-			mock(DDMFormFieldTypesSerializerTracker.class),
 			mock(DDMFormRenderer.class),
 			mock(DDMFormTemplateContextFactory.class),
 			mock(DDMFormValuesFactory.class), mock(DDMFormValuesMerger.class),
+			mock(DDMFormWebConfiguration.class),
 			mock(DDMStructureLocalService.class),
 			mock(DDMStructureService.class), mock(JSONFactory.class),
-			mock(NPMResolver.class));
+			mock(NPMResolver.class), mock(Portal.class));
 	}
 
 	protected void setUpLanguageUtil() {

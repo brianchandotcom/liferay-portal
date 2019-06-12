@@ -237,7 +237,6 @@ ${oversize.files.jsp}</fail>
 			<pathelement location="${project.dir}/lib/portal/spring-expression.jar" />
 			<pathelement location="${project.dir}/lib/portal/spring-web.jar" />
 			<pathelement location="${project.dir}/lib/portal/spring-webmvc.jar" />
-			<pathelement location="${project.dir}/lib/portal/struts-el.jar" />
 			<pathelement location="${project.dir}/lib/portal/tika-core.jar" />
 		</path>
 

@@ -5,12 +5,20 @@
 	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldChanged: any}
 	{@param? _handleFieldFocused: any}
+	{@param? _handleAutocompleteSelected: any}
+	{@param? _handleAutocompleteFieldFocused: any}
+	{@param? _handleAutocompleteFieldBlurred: any}
+	{@param? _handleAutocompleteFieldChanged: any}
+	{@param? _handleAutocompleteFilteredItemsChanged: any}
 	{@param? _value: string}
+	{@param? autocompleteEnabled: bool}
 	{@param? displayErrors: bool}
 	{@param? displayStyle: string}
 	{@param? errorMessage: string}
+	{@param? filteredItems: list<?>}
 	{@param? id: string}
 	{@param? label: string}
+	{@param? options: list<?>}
 	{@param? placeholder: string}
 	{@param? predefinedValue: string}
 	{@param? readOnly: bool}
@@ -29,9 +37,17 @@
 				{param _handleFieldBlurred: $_handleFieldBlurred /}
 				{param _handleFieldChanged: $_handleFieldChanged /}
 				{param _handleFieldFocused: $_handleFieldFocused /}
+				{param _handleAutocompleteSelected: $_handleAutocompleteSelected /}
+				{param _handleAutocompleteFieldFocused: $_handleAutocompleteFieldFocused /}
+				{param _handleAutocompleteFieldBlurred: $_handleAutocompleteFieldBlurred /}
+				{param _handleAutocompleteFieldChanged: $_handleAutocompleteFieldChanged /}
+				{param _handleAutocompleteFilteredItemsChanged: $_handleAutocompleteFilteredItemsChanged /}
+				{param autocompleteEnabled: $autocompleteEnabled /}
 				{param displayStyle: $displayStyle /}
+				{param filteredItems: $filteredItems /}
 				{param id: $id /}
 				{param name: $name /}
+				{param options: $options/}
 				{param placeholder: $placeholder /}
 				{param predefinedValue: $predefinedValue /}
 				{param readOnly: $readOnly /}
@@ -60,8 +76,16 @@
 	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldChanged: any}
 	{@param? _handleFieldFocused: any}
+	{@param? _handleAutocompleteSelected: any}
+	{@param? _handleAutocompleteFieldFocused: any}
+	{@param? _handleAutocompleteFieldBlurred: any}
+	{@param? _handleAutocompleteFieldChanged: any}
+	{@param? _handleAutocompleteFilteredItemsChanged: any}
+	{@param? autocompleteEnabled: bool}
 	{@param? displayStyle: string}
+	{@param? filteredItems: list<?>}
 	{@param? id: string}
+	{@param? options: list<?>}
 	{@param? placeholder: string}
 	{@param? predefinedValue: string}
 	{@param? readOnly: bool}
@@ -90,8 +114,6 @@
 
 		data-onblur="{$_handleFieldBlurred}"
 
-		data-oninput="{$_handleFieldChanged}"
-
 		{if $readOnly}
 			disabled="disabled"
 		{/if}
@@ -103,9 +125,25 @@
 		{/if}
 	{/let}
 
-	{if $displayStyle == 'singleline'}
-		<input {$attributes}>
-	{else}
+	{if $displayStyle == 'multiline' and $readOnly}
 		<textarea {$attributes}></textarea>
+	{elseif ($displayStyle == 'singleline' and $readOnly) or not($autocompleteEnabled)}
+		<input {$attributes}>
+	{elseif $autocompleteEnabled and isNonnull($options) and length($options) > 0}
+		{call ClayAutocomplete.render}
+			{param dataSource: $options /}
+			{param events: [
+				'itemSelected': $_handleAutocompleteSelected,
+				'inputOnFocus': $_handleAutocompleteFieldFocused,
+				'inputOnBlur': $_handleAutocompleteFieldBlurred,
+				'inputChange': $_handleAutocompleteFieldChanged,
+				'filteredItemsChanged': $_handleAutocompleteFilteredItemsChanged
+			] /}
+			{param filteredItems: $filteredItems /}
+			{param ref: 'autocomplete'/}
+			{param inputValue: $value /}
+			{param inputName: $name /}
+		{/call}
 	{/if}
+
 {/template}

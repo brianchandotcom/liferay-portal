@@ -26,7 +26,7 @@ if (Validator.isNotNull(title)) {
 }
 %>
 
-<portlet:actionURL name="restoreTrashEntries" var="restoreTrashEntriesURL" />
+<portlet:actionURL name="/journal/restore_trash_entries" var="restoreTrashEntriesURL" />
 
 <liferay-trash:undo
 	portletURL="<%= restoreTrashEntriesURL %>"

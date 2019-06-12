@@ -122,7 +122,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.rss.util.RSSUtil;
 import com.liferay.trash.TrashHelper;
-import com.liferay.trash.kernel.service.TrashEntryService;
 import com.liferay.trash.util.TrashWebKeys;
 
 import java.io.File;
@@ -416,18 +415,6 @@ public class JournalPortlet extends MVCPortlet {
 			JournalWebKeys.JOURNAL_CONVERTER, _journalConverter);
 
 		super.render(renderRequest, renderResponse);
-	}
-
-	public void restoreTrashEntries(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long[] restoreTrashEntryIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
-
-		for (long restoreTrashEntryId : restoreTrashEntryIds) {
-			_trashEntryService.restoreEntry(restoreTrashEntryId);
-		}
 	}
 
 	@Override
@@ -1468,9 +1455,6 @@ public class JournalPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private TrashEntryService _trashEntryService;
 
 	@Reference
 	private TrashHelper _trashHelper;

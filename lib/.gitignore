@@ -166,6 +166,7 @@
 /portal/jaxws-api.jar
 /portal/jaxws-rt.jar
 /portal/jazzy.jar
+/portal/jbig2-imageio.jar
 /portal/jcifs.jar
 /portal/jcl-over-slf4j.jar
 /portal/jcommon.jar

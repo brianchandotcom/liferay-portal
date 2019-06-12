@@ -125,7 +125,7 @@
 		{/if}
 	{/let}
 
-	{if $displayStyle == 'multiline' and $readOnly}
+	{if $displayStyle == 'multiline'}
 		<textarea {$attributes}></textarea>
 	{elseif ($displayStyle == 'singleline' and $readOnly) or not($autocompleteEnabled)}
 		<input {$attributes}>

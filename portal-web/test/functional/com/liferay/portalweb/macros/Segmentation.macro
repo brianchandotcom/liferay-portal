@@ -15,7 +15,7 @@ definition {
 
 		Click(locator1 = "Segmentation#PROPERTIES_SEARCH");
 
-		DragAndDrop(
+		DragAndDrop.javaScriptDragAndDropToObject(
 			locator1 = "Segmentation#ADD_FIELD_TYPE",
 			locator2 = "Segmentation#ADD_FIELD_POSITION",
 			value1 = "${propertyOption}");

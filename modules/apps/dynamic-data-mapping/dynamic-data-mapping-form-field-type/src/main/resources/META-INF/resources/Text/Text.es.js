@@ -1,5 +1,6 @@
 import '../FieldBase/FieldBase.es';
 import './TextRegister.soy.js';
+import 'clay-autocomplete';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './Text.soy.js';
@@ -12,6 +13,64 @@ class Text extends Component {
 				_value: changes.value.newVal
 			});
 		}
+	}
+
+	prepareStateForRender(state) {
+		const {options} = this;
+
+		return {
+			...state,
+			options: this._fillAutocompleteOptions(options)
+		};
+	}
+
+	_handleAutocompleteFieldChanged(event) {
+		this.setState(
+			{
+				value: event.data.value
+			},
+			() => {
+				this.emit('fieldEdited', {
+					fieldInstance: this,
+					originalEvent: event,
+					value: event.data.value
+				});
+			}
+		);
+	}
+
+	_handleAutocompleteFieldFocused(event) {
+		console.log('focus ', event);
+		this.emit('fieldFocused', {
+			fieldInstance: this,
+			originalEvent: event,
+			value: event.target.inputValue
+		});
+	}
+
+	_handleAutocompleteFilteredItemsChanged(filteredItemsReceived) {
+		const {filteredItems} = this;
+		if (filteredItemsReceived.newVal.length != filteredItems.length) {
+			console.log(filteredItemsReceived);
+			this.setState({
+				filteredItems: filteredItemsReceived.newVal
+			});
+		}
+	}
+
+	_handleAutocompleteSelected(event) {
+		this.setState(
+			{
+				value: event.data.item.value
+			},
+			() => {
+				this.emit('fieldEdited', {
+					fieldInstance: this,
+					originalEvent: event,
+					value: event.data.item.value
+				});
+			}
+		);
 	}
 
 	_handleFieldBlurred(event) {
@@ -38,6 +97,7 @@ class Text extends Component {
 	}
 
 	_handleFieldFocused(event) {
+		console.log('focus ', event);
 		this.emit('fieldFocused', {
 			fieldInstance: this,
 			originalEvent: event,
@@ -49,6 +109,16 @@ class Text extends Component {
 		const {value} = this;
 
 		return value;
+	}
+
+	_fillAutocompleteOptions() {
+		const {options} = this;
+
+		let autocompleteList = options ? options : [];
+
+		return autocompleteList.map(option => {
+			return option.label;
+		});
 	}
 }
 
@@ -63,6 +133,15 @@ Text.STATE = {
 	_value: Config.string()
 		.internal()
 		.valueFn('_internalValueFn'),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Text
+	 * @type {?(string|undefined)}
+	 */
+
+	autocompleteEnabled: Config.bool(),
 
 	/**
 	 * @default 'string'
@@ -116,6 +195,17 @@ Text.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
+	filteredItems: Config.array()
+		.value([])
+		.internal(),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Text
+	 * @type {?(string|undefined)}
+	 */
+
 	label: Config.string(),
 
 	/**
@@ -126,6 +216,26 @@ Text.STATE = {
 	 */
 
 	name: Config.string().required(),
+
+	/**
+	 * @default []
+	 * @memberof Text
+	 * @type {?array<object>}
+	.setter('_loadOptionsFn').
+	 */
+
+	options: Config.arrayOf(
+		Config.shapeOf({
+			active: Config.bool().value(false),
+			disabled: Config.bool().value(false),
+			id: Config.string(),
+			inline: Config.bool().value(false),
+			label: Config.string(),
+			name: Config.string(),
+			showLabel: Config.bool().value(true),
+			value: Config.string()
+		})
+	).value([]),
 
 	/**
 	 * @default undefined

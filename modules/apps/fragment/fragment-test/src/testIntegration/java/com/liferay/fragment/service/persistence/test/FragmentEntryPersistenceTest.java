@@ -150,6 +150,8 @@ public class FragmentEntryPersistenceTest {
 
 		newFragmentEntry.setJs(RandomTestUtil.randomString());
 
+		newFragmentEntry.setConfiguration(RandomTestUtil.randomString());
+
 		newFragmentEntry.setPreviewFileEntryId(RandomTestUtil.nextLong());
 
 		newFragmentEntry.setType(RandomTestUtil.nextInt());
@@ -204,6 +206,9 @@ public class FragmentEntryPersistenceTest {
 			existingFragmentEntry.getHtml(), newFragmentEntry.getHtml());
 		Assert.assertEquals(
 			existingFragmentEntry.getJs(), newFragmentEntry.getJs());
+		Assert.assertEquals(
+			existingFragmentEntry.getConfiguration(),
+			newFragmentEntry.getConfiguration());
 		Assert.assertEquals(
 			existingFragmentEntry.getPreviewFileEntryId(),
 			newFragmentEntry.getPreviewFileEntryId());
@@ -646,6 +651,8 @@ public class FragmentEntryPersistenceTest {
 		fragmentEntry.setHtml(RandomTestUtil.randomString());
 
 		fragmentEntry.setJs(RandomTestUtil.randomString());
+
+		fragmentEntry.setConfiguration(RandomTestUtil.randomString());
 
 		fragmentEntry.setPreviewFileEntryId(RandomTestUtil.nextLong());
 

@@ -24,7 +24,7 @@ import {
 	isModifyingKey
 } from 'dynamic-data-mapping-form-builder/js/util/dom.es';
 import {pageStructure} from 'dynamic-data-mapping-form-builder/js/util/config.es';
-import {PagesVisitor} from 'dynamic-data-mapping-form-builder/metal/js/util/visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-builder/js/util/visitors.es';
 import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
 
 /**

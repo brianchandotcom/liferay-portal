@@ -36,7 +36,7 @@
 	{@param? showLabel: bool}
 	{@param? tip: string}
 	{@param? tooltip: string}
-	{@param? value: string}
+	{@param? value: ?}
 	{@param? weekdaysShort: list<string>}
 
 	{call FieldBase.render}
@@ -111,7 +111,7 @@
 	{@param? readOnly: bool}
 	{@param? weekdaysShort: list<string>}
 	{@param? predefinedValue: string}
-	{@param? value: string}
+	{@param? value: ?}
 
 	{let $attributes kind="attributes"}
 		class="input-group

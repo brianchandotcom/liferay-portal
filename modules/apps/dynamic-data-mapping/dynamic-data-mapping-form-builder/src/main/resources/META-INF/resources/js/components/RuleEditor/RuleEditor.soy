@@ -55,8 +55,8 @@
 		]>
 	}
 	{@param actionTypes: list<[
-			value: string,
-			name: string
+			label: string,
+			value: string
 		]>
 	}
 	{@param actionsFieldOptions: list<[
@@ -363,8 +363,8 @@
 
 {template .renderAction}
 	{@param actionTypes: list<[
-			value: string,
-			name: string
+			label: string,
+			value: string
 		]>
 	}
 	{@param calculatorFields: list<[
@@ -579,10 +579,10 @@
 
 {template .renderActionTarget}
 	{@param index: int}
-	{@param options: any}
 	{@param ref: string}
 	{@param spritemap: string}
 	{@param? _handleTargetSelection: any}
+	{@param? options: list<?>}
 	{@param? placeholder: string}
 	{@param? value: string}
 

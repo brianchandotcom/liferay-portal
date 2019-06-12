@@ -148,8 +148,9 @@
 	<ol class="dmm-wizard multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
 		{foreach $page in $pages}
 			{let $pageIndex: index($page) /}
+			{let $paginationItemRenderer: $page.paginationItemRenderer ?: 'default' /}
 
-			{delcall FormRenderer.WizardItem variant="$page.paginationItemRenderer"}
+			{delcall FormRenderer.WizardItem variant="$paginationItemRenderer"}
 				{param _handlePaginationItemClicked: $_handlePaginationItemClicked /}
 				{param activePage: $activePage /}
 				{param page: $page /}
@@ -221,8 +222,9 @@
 
 		{foreach $page in $pages}
 			{let $pageIndex: index($page) /}
+			{let $paginationItemRenderer: $page.paginationItemRenderer ?: 'default' /}
 
-			{delcall FormRenderer.PaginationItem variant="$page.paginationItemRenderer"}
+			{delcall FormRenderer.PaginationItem variant="$paginationItemRenderer"}
 				{param _handlePaginationItemClicked: $_handlePaginationItemClicked /}
 				{param activePage: $activePage /}
 				{param page: $page /}

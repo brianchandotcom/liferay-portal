@@ -149,8 +149,7 @@ public class DDMFormAdminFieldSetDisplayContext
 		return new CreationMenu() {
 			{
 				HttpServletRequest httpServletRequest =
-					PortalUtil.getHttpServletRequest(getRenderRequest());
-				RenderResponse renderResponse = getRenderResponse();
+					PortalUtil.getHttpServletRequest(renderRequest);
 
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)httpServletRequest.getAttribute(
@@ -180,7 +179,7 @@ public class DDMFormAdminFieldSetDisplayContext
 			return _structure;
 		}
 
-		long structureId = ParamUtil.getLong(getRenderRequest(), "structureId");
+		long structureId = ParamUtil.getLong(renderRequest, "structureId");
 
 		if (structureId > 0) {
 			try {
@@ -214,8 +213,6 @@ public class DDMFormAdminFieldSetDisplayContext
 	public String getFormLocalizedDescription() {
 		DDMStructure structure = getDDMStructure();
 
-		JSONFactory jsonFactory = getJSONFactory();
-
 		JSONObject jsonObject = jsonFactory.createJSONObject();
 
 		if (structure == null) {
@@ -236,8 +233,6 @@ public class DDMFormAdminFieldSetDisplayContext
 	@Override
 	public String getFormLocalizedName() {
 		DDMStructure structure = getDDMStructure();
-
-		JSONFactory jsonFactory = getJSONFactory();
 
 		JSONObject jsonObject = jsonFactory.createJSONObject();
 
@@ -275,15 +270,13 @@ public class DDMFormAdminFieldSetDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() {
-		RenderResponse renderResponse = getRenderResponse();
-
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/admin/view.jsp");
 		portletURL.setParameter("groupId", String.valueOf(getScopeGroupId()));
 		portletURL.setParameter("currentTab", "element-set");
 
-		String delta = ParamUtil.getString(getRenderRequest(), "delta");
+		String delta = ParamUtil.getString(renderRequest, "delta");
 
 		if (Validator.isNotNull(delta)) {
 			portletURL.setParameter("delta", delta);
@@ -323,7 +316,7 @@ public class DDMFormAdminFieldSetDisplayContext
 		portletURL.setParameter("displayStyle", getDisplayStyle());
 
 		FieldSetSearch fieldSetSearch = new FieldSetSearch(
-			getRenderRequest(), portletURL);
+			renderRequest, portletURL);
 
 		String orderByCol = getOrderByCol();
 		String orderByType = getOrderByType();
@@ -342,8 +335,7 @@ public class DDMFormAdminFieldSetDisplayContext
 			fieldSetSearch.setEmptyResultsMessage("there-are-no-element-sets");
 		}
 
-		fieldSetSearch.setRowChecker(
-			new FieldSetRowChecker(getRenderResponse()));
+		fieldSetSearch.setRowChecker(new FieldSetRowChecker(renderResponse));
 
 		setFieldSetsSearchResults(fieldSetSearch);
 		setFieldSetsSearchTotal(fieldSetSearch);
@@ -353,8 +345,6 @@ public class DDMFormAdminFieldSetDisplayContext
 
 	@Override
 	public String getSearchActionURL() {
-		RenderResponse renderResponse = getRenderResponse();
-
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/admin/view.jsp");
@@ -371,9 +361,6 @@ public class DDMFormAdminFieldSetDisplayContext
 
 	@Override
 	public String serializeSettingsForm() throws PortalException {
-		RenderRequest renderRequest = getRenderRequest();
-		RenderResponse renderResponse = getRenderResponse();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

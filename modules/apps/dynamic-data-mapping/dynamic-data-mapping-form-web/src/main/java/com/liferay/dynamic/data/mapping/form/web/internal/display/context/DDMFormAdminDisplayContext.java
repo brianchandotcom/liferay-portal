@@ -144,8 +144,8 @@ public class DDMFormAdminDisplayContext {
 		DDMStructureService ddmStructureService, JSONFactory jsonFactory,
 		NPMResolver npmResolver, Portal portal) {
 
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
+		this.renderRequest = renderRequest;
+		this.renderResponse = renderResponse;
 		_addDefaultSharedFormLayoutPortalInstanceLifecycleListener =
 			addDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 		_ddmFormBuilderContextFactory = ddmFormBuilderContextFactory;
@@ -219,7 +219,7 @@ public class DDMFormAdminDisplayContext {
 
 	public String getClearResultsURL() throws PortletException {
 		PortletURL clearResultsURL = PortletURLUtil.clone(
-			getPortletURL(), _renderResponse);
+			getPortletURL(), renderResponse);
 
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
@@ -247,7 +247,7 @@ public class DDMFormAdminDisplayContext {
 				addPrimaryDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref(
-							_renderResponse.createRenderURL(),
+							renderResponse.createRenderURL(),
 							"mvcRenderCommandName", "/admin/edit_form_instance",
 							"redirect",
 							PortalUtil.getCurrentURL(httpServletRequest),
@@ -295,7 +295,7 @@ public class DDMFormAdminDisplayContext {
 			formAdminRequestHelper.getRequest();
 
 		HttpServletResponse httpServletResponse =
-			PortalUtil.getHttpServletResponse(_renderResponse);
+			PortalUtil.getHttpServletResponse(renderResponse);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			DDMFormFieldType ddmFormFieldType = formFieldTypes.get(i);
@@ -319,7 +319,7 @@ public class DDMFormAdminDisplayContext {
 			ddmFormRenderingContext.setLocale(
 				LocaleUtil.fromLanguageId(getDefaultLanguageId()));
 			ddmFormRenderingContext.setPortletNamespace(
-				_renderResponse.getNamespace());
+				renderResponse.getNamespace());
 			ddmFormRenderingContext.setViewMode(true);
 
 			try {
@@ -352,7 +352,7 @@ public class DDMFormAdminDisplayContext {
 		}
 
 		long formInstanceId = ParamUtil.getLong(
-			_renderRequest, "formInstanceId");
+			renderRequest, "formInstanceId");
 
 		if (formInstanceId > 0) {
 			_ddmFormInstance = _ddmFormInstanceService.fetchFormInstance(
@@ -424,7 +424,7 @@ public class DDMFormAdminDisplayContext {
 	public String getDisplayStyle() {
 		if (_displayStyle == null) {
 			_displayStyle = getDisplayStyle(
-				_renderRequest, _ddmFormWebConfiguration, getDisplayViews());
+				renderRequest, _ddmFormWebConfiguration, getDisplayViews());
 		}
 
 		return _displayStyle;
@@ -607,7 +607,7 @@ public class DDMFormAdminDisplayContext {
 
 		return new DDMFormViewFormInstanceRecordDisplayContext(
 			formAdminRequestHelper.getRequest(),
-			PortalUtil.getHttpServletResponse(_renderResponse),
+			PortalUtil.getHttpServletResponse(renderResponse),
 			_ddmFormInstanceRecordLocalService,
 			_ddmFormInstanceVersionLocalService, ddmFormRenderer,
 			_ddmFormValuesFactory, _ddmFormValuesMerger);
@@ -618,7 +618,7 @@ public class DDMFormAdminDisplayContext {
 		throws PortalException {
 
 		return new DDMFormViewFormInstanceRecordsDisplayContext(
-			_renderRequest, _renderResponse, getDDMFormInstance(),
+			renderRequest, renderResponse, getDDMFormInstance(),
 			_ddmFormInstanceRecordLocalService,
 			_ddmFormFieldTypeServicesTracker);
 	}
@@ -635,10 +635,6 @@ public class DDMFormAdminDisplayContext {
 			getDDMFormBuilderSettingsResponse();
 
 		return ddmFormBuilderSettingsResponse.getFunctionsURL();
-	}
-
-	public JSONFactory getJSONFactory() {
-		return jsonFactory;
 	}
 
 	public DDMStructureVersion getLatestDDMStructureVersion()
@@ -693,7 +689,7 @@ public class DDMFormAdminDisplayContext {
 					navigationItem -> {
 						navigationItem.setActive(currentTab.equals("forms"));
 						navigationItem.setHref(
-							_renderResponse.createRenderURL(), "currentTab",
+							renderResponse.createRenderURL(), "currentTab",
 							"forms");
 						navigationItem.setLabel(
 							LanguageUtil.get(httpServletRequest, "forms"));
@@ -704,7 +700,7 @@ public class DDMFormAdminDisplayContext {
 						navigationItem.setActive(
 							currentTab.equals("element-set"));
 						navigationItem.setHref(
-							_renderResponse.createRenderURL(), "currentTab",
+							renderResponse.createRenderURL(), "currentTab",
 							"element-set");
 						navigationItem.setLabel(
 							LanguageUtil.get(
@@ -720,11 +716,11 @@ public class DDMFormAdminDisplayContext {
 
 	public String getOrderByCol() {
 		return ParamUtil.getString(
-			_renderRequest, "orderByCol", "modified-date");
+			renderRequest, "orderByCol", "modified-date");
 	}
 
 	public String getOrderByType() {
-		return ParamUtil.getString(_renderRequest, "orderByType", "desc");
+		return ParamUtil.getString(renderRequest, "orderByType", "desc");
 	}
 
 	public PermissionChecker getPermissionChecker() {
@@ -736,20 +732,20 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
+		PortletURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/admin/view.jsp");
 		portletURL.setParameter("currentTab", "forms");
 		portletURL.setParameter("groupId", String.valueOf(getScopeGroupId()));
 
-		String delta = ParamUtil.getString(_renderRequest, "delta");
+		String delta = ParamUtil.getString(renderRequest, "delta");
 
 		if (Validator.isNotNull(delta)) {
 			portletURL.setParameter("delta", delta);
 		}
 
 		String displayStyle = ParamUtil.getString(
-			_renderRequest, "displayStyle");
+			renderRequest, "displayStyle");
 
 		if (Validator.isNotNull(displayStyle)) {
 			portletURL.setParameter("displayStyle", getDisplayStyle());
@@ -792,14 +788,6 @@ public class DDMFormAdminDisplayContext {
 		return formURL.concat(String.valueOf(formInstance.getFormInstanceId()));
 	}
 
-	public RenderRequest getRenderRequest() {
-		return _renderRequest;
-	}
-
-	public RenderResponse getRenderResponse() {
-		return _renderResponse;
-	}
-
 	public String getRestrictedFormURL() {
 		return _addDefaultSharedFormLayoutPortalInstanceLifecycleListener.
 			getFormLayoutURL(formAdminRequestHelper.getThemeDisplay(), true);
@@ -824,7 +812,7 @@ public class DDMFormAdminDisplayContext {
 		portletURL.setParameter("displayStyle", displayStyle);
 
 		FormInstanceSearch formInstanceSearch = new FormInstanceSearch(
-			_renderRequest, portletURL);
+			renderRequest, portletURL);
 
 		String orderByCol = getOrderByCol();
 		String orderByType = getOrderByType();
@@ -844,7 +832,7 @@ public class DDMFormAdminDisplayContext {
 		}
 
 		formInstanceSearch.setRowChecker(
-			new FormInstanceRowChecker(getRenderResponse()));
+			new FormInstanceRowChecker(renderResponse));
 
 		setDDMFormInstanceSearchResults(formInstanceSearch);
 		setDDMFormInstanceSearchTotal(formInstanceSearch);
@@ -853,7 +841,7 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public String getSearchActionURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
+		PortletURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/admin/view.jsp");
 		portletURL.setParameter("currentTab", "forms");
@@ -875,7 +863,7 @@ public class DDMFormAdminDisplayContext {
 
 	public String getSerializedFormBuilderContext() throws PortalException {
 		String serializedFormBuilderContext = ParamUtil.getString(
-			_renderRequest, "serializedFormBuilderContext");
+			renderRequest, "serializedFormBuilderContext");
 
 		if (Validator.isNotNull(serializedFormBuilderContext)) {
 			return serializedFormBuilderContext;
@@ -908,9 +896,9 @@ public class DDMFormAdminDisplayContext {
 
 	public String getSortingURL() throws Exception {
 		PortletURL sortingURL = PortletURLUtil.clone(
-			getPortletURL(), _renderResponse);
+			getPortletURL(), renderResponse);
 
-		String orderByType = ParamUtil.getString(_renderRequest, "orderByType");
+		String orderByType = ParamUtil.getString(renderRequest, "orderByType");
 
 		sortingURL.setParameter(
 			"orderByType", orderByType.equals("asc") ? "desc" : "asc");
@@ -930,7 +918,7 @@ public class DDMFormAdminDisplayContext {
 
 	public List<ViewTypeItem> getViewTypesItems() throws Exception {
 		PortletURL portletURL = PortletURLUtil.clone(
-			getPortletURL(), _renderResponse);
+			getPortletURL(), renderResponse);
 
 		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
 			{
@@ -978,13 +966,10 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public boolean isShowPublishAlert() {
-		return ParamUtil.getBoolean(_renderRequest, "showPublishAlert");
+		return ParamUtil.getBoolean(renderRequest, "showPublishAlert");
 	}
 
 	public String serializeSettingsForm() throws PortalException {
-		RenderRequest renderRequest = getRenderRequest();
-		RenderResponse renderResponse = getRenderResponse();
-
 		long formInstanceId = ParamUtil.getLong(
 			renderRequest, "formInstanceId");
 
@@ -1113,7 +1098,7 @@ public class DDMFormAdminDisplayContext {
 
 	protected DDMFormInstanceRecord getDDMFormInstanceRecord() {
 		long formInstanceRecordId = ParamUtil.getLong(
-			_renderRequest, "formInstanceRecordId");
+			renderRequest, "formInstanceRecordId");
 
 		if (formInstanceRecordId > 0) {
 			return _ddmFormInstanceRecordLocalService.fetchFormInstanceRecord(
@@ -1194,7 +1179,7 @@ public class DDMFormAdminDisplayContext {
 
 	protected Locale[] getFormBuilderContextAvailableLocales() {
 		String serializedFormBuilderContext = ParamUtil.getString(
-			_renderRequest, "serializedFormBuilderContext");
+			renderRequest, "serializedFormBuilderContext");
 
 		if (Validator.isNull(serializedFormBuilderContext)) {
 			return null;
@@ -1224,7 +1209,7 @@ public class DDMFormAdminDisplayContext {
 
 	protected String getFormBuilderContextDefaultLanguageId() {
 		String serializedFormBuilderContext = ParamUtil.getString(
-			_renderRequest, "serializedFormBuilderContext");
+			renderRequest, "serializedFormBuilderContext");
 
 		if (Validator.isNull(serializedFormBuilderContext)) {
 			return null;
@@ -1298,7 +1283,7 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	protected String getKeywords() {
-		return ParamUtil.getString(_renderRequest, "keywords");
+		return ParamUtil.getString(renderRequest, "keywords");
 	}
 
 	protected UnsafeConsumer<DropdownItem, Exception> getOrderByDropdownItem(
@@ -1403,6 +1388,8 @@ public class DDMFormAdminDisplayContext {
 	protected final DDMFormTemplateContextFactory ddmFormTemplateContextFactory;
 	protected final DDMFormAdminRequestHelper formAdminRequestHelper;
 	protected final JSONFactory jsonFactory;
+	protected final RenderRequest renderRequest;
+	protected final RenderResponse renderResponse;
 
 	private void _populateDDMDataProviderNavigationItem(
 		NavigationItem navigationItem) {
@@ -1471,7 +1458,5 @@ public class DDMFormAdminDisplayContext {
 		_formInstancePermissionCheckerHelper;
 	private final NPMResolver _npmResolver;
 	private final Portal _portal;
-	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
 
 }

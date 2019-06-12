@@ -240,6 +240,8 @@ definition {
 	macro addStructuredPGViaWCD {
 		WebContentNavigator.gotoAddPGViaWCD(structureName = "${structureName}");
 
+		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+
 		PortletEntry.inputTitle(title = "${webContentTitle}");
 
 		if (isSet(webContentText)) {
@@ -293,7 +295,7 @@ definition {
 	}
 
 	macro addViaCKEditor {
-		Pause(locator1 = "3000");
+		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
 		PortletEntry.inputTitle(title = "${webContentTitle}");
 

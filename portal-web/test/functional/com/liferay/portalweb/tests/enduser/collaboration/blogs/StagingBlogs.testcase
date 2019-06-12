@@ -403,7 +403,7 @@ definition {
 	}
 
 	@priority = "3"
-	test StagingBlogs {
+	test StagingBlogsPG {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",

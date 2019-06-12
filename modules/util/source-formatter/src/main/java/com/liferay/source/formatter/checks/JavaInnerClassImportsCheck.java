@@ -94,7 +94,7 @@ public class JavaInnerClassImportsCheck extends BaseFileCheck {
 
 			if (_isRedundantImport(
 					content, innerClassName, outerClassName,
-					outerClassFullyQualifiedName, imports)) {
+					outerClassFullyQualifiedName, packageName, imports)) {
 
 				return _formatInnerClassImport(
 					content, innerClassName, innerClassFullyQualifiedName,
@@ -171,7 +171,8 @@ public class JavaInnerClassImportsCheck extends BaseFileCheck {
 
 	private boolean _isRedundantImport(
 		String content, String innerClassName, String outerClassName,
-		String outerClassFullyQualifiedName, List<String> imports) {
+		String outerClassFullyQualifiedName, String packageName,
+		List<String> imports) {
 
 		if (content.matches(
 				"(?s).*\\.\\s*new\\s+" + innerClassName + "\\(.*")) {
@@ -182,9 +183,20 @@ public class JavaInnerClassImportsCheck extends BaseFileCheck {
 		String fullyQualifiedName = _getFullyQualifiedName(
 			outerClassName, null, imports);
 
-		if ((fullyQualifiedName != null) &&
-			!fullyQualifiedName.equals(outerClassFullyQualifiedName)) {
+		if (fullyQualifiedName == null) {
+			if (outerClassFullyQualifiedName.equals(
+					"java.lang." + outerClassName) ||
+				outerClassFullyQualifiedName.equals(
+					packageName + "." + outerClassName) ||
+				!content.matches("(?s).*[^.\\w]" + outerClassName + "\\W.*")) {
 
+				return true;
+			}
+
+			return false;
+		}
+
+		if (!fullyQualifiedName.equals(outerClassFullyQualifiedName)) {
 			return false;
 		}
 

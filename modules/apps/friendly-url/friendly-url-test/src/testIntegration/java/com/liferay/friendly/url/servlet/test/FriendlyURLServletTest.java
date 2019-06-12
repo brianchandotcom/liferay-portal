@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -284,7 +285,7 @@ public class FriendlyURLServletTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
-		Layout redirectLayout = LayoutLocalServiceUtil.addLayout(
+		Layout redirectLayout = _layoutLocalService.addLayout(
 			serviceContext.getUserId(), groupId, false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, nameMap,
 			RandomTestUtil.randomLocaleStringMap(),
@@ -331,7 +332,7 @@ public class FriendlyURLServletTest {
 
 		_redirectLayout.setTypeSettingsProperties(typeSettingsProperties);
 
-		LayoutLocalServiceUtil.updateLayout(_redirectLayout);
+		_layoutLocalService.updateLayout(_redirectLayout);
 
 		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
 
@@ -452,6 +453,9 @@ public class FriendlyURLServletTest {
 			throw ite.getCause();
 		}
 	}
+
+	@Inject
+	private static LayoutLocalService _layoutLocalService;
 
 	private Method _getRedirectMethod;
 

@@ -123,11 +123,9 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 			DDMStructure ddmStructure = article.getDDMStructure();
 			%>
 
-			<c:if test="<%= ddmStructure != null %>">
-				<p class="h6 text-default">
-					<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>
-				</p>
-			</c:if>
+			<p class="h6 text-default">
+				<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>
+			</p>
 		</div>
 
 		<clay:navigation-bar

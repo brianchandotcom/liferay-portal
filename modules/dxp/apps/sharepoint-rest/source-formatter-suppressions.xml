@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<source-check>
-		<suppress checks="JavaConfigurationCategoryCheck" files="modules/private/apps/sharepoint-rest/sharepoint-rest-repository/src/main/java/com/liferay/sharepoint/rest/repository/internal/configuration/SharepointRepositoryConfiguration\.java" />
-		<suppress checks="JavaConfigurationCategoryCheck" files="modules/private/apps/sharepoint-rest/sharepoint-rest-repository/src/main/java/com/liferay/sharepoint/rest/repository/internal/configuration/SharepointSearchConfiguration\.java" />
-	</source-check>
-</suppressions>

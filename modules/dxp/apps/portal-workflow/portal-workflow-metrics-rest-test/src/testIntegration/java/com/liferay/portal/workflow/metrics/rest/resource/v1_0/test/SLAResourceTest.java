@@ -76,12 +76,12 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 
 		if (_node != null) {
 			_workflowMetricsRESTTestHelper.deleteNode(
-				testGroup.getCompanyId(), _process.getId(), _node.getName());
+				testGroup.getCompanyId(), _node, _process.getId());
 		}
 
 		if (_process != null) {
 			_workflowMetricsRESTTestHelper.deleteProcess(
-				testGroup.getCompanyId(), _process.getId());
+				testGroup.getCompanyId(), _process);
 		}
 
 		_deleteSLAs();

@@ -64,7 +64,7 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 
 		if (_process != null) {
 			_workflowMetricsRESTTestHelper.deleteProcess(
-				testGroup.getCompanyId(), _process.getId());
+				testGroup.getCompanyId(), _process);
 		}
 
 		_deleteNodes();
@@ -139,7 +139,7 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 	private void _deleteNodes() throws Exception {
 		for (Node node : _nodes) {
 			_workflowMetricsRESTTestHelper.deleteNode(
-				testGroup.getCompanyId(), _process.getId(), node.getName());
+				testGroup.getCompanyId(), node, _process.getId());
 		}
 	}
 

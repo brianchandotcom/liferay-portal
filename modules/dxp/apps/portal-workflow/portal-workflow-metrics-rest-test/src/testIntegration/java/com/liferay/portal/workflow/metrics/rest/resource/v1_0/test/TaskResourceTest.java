@@ -63,12 +63,12 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 		if (_process != null) {
 			_workflowMetricsRESTTestHelper.deleteProcess(
-				testGroup.getCompanyId(), _process.getId());
+				testGroup.getCompanyId(), _process);
 		}
 
 		for (Task task : _tasks) {
 			_workflowMetricsRESTTestHelper.deleteTask(
-				testGroup.getCompanyId(), _process.getId(), task.getKey());
+				testGroup.getCompanyId(), _process.getId(), task);
 		}
 	}
 

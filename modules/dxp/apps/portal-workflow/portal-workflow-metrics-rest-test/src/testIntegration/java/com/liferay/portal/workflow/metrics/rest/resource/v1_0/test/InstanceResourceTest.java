@@ -69,7 +69,7 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 		if (_process != null) {
 			_workflowMetricsRESTTestHelper.deleteProcess(
-				testGroup.getCompanyId(), _process.getId());
+				testGroup.getCompanyId(), _process);
 		}
 
 		_deleteInstances();
@@ -142,7 +142,7 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 	private void _deleteInstances() throws Exception {
 		for (Instance instance : _instances) {
 			_workflowMetricsRESTTestHelper.deleteInstance(
-				testGroup.getCompanyId(), instance.getId(), _process.getId());
+				testGroup.getCompanyId(), instance);
 		}
 	}
 

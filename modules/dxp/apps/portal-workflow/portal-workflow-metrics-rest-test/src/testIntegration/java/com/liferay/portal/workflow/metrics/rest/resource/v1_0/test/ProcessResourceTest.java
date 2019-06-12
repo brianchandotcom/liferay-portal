@@ -186,7 +186,7 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 	private void _deleteProcesses() throws Exception {
 		for (Process process : _processes) {
 			_workflowMetricsRESTTestHelper.deleteProcess(
-				testGroup.getCompanyId(), process.getId());
+				testGroup.getCompanyId(), process);
 		}
 	}
 

@@ -134,6 +134,13 @@ public class FileShortcutStagedModelDataHandler
 			PortletDataContext portletDataContext, FileShortcut fileShortcut)
 		throws Exception {
 
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+			fileShortcut.getToFileEntryId());
+
+		if (fileEntry.hasLock() || fileEntry.isCheckedOut()) {
+			return;
+		}
+
 		if (fileShortcut.getFolderId() !=
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
@@ -141,9 +148,6 @@ public class FileShortcutStagedModelDataHandler
 				portletDataContext, fileShortcut, fileShortcut.getFolder(),
 				PortletDataContext.REFERENCE_TYPE_PARENT);
 		}
-
-		FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-			fileShortcut.getToFileEntryId());
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, fileShortcut, fileEntry,

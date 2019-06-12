@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
@@ -38,7 +39,6 @@ import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionL
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -71,8 +71,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 				addWorkflowMetricsSLADefinition(
 					"Abc", StringPool.BLANK, 1, "",
 					_kaleoDefinition.getPrimaryKey(), new String[0],
-					new String[] {_getInitialNodeId()},
-					new String[] {_getTerminalNodeId()},
+					new String[] {_getInitialNodeKey()},
+					new String[] {_getTerminalNodeKey()},
 					ServiceContextTestUtil.getServiceContext()));
 	}
 
@@ -83,8 +83,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 				addWorkflowMetricsSLADefinition(
 					"Abc", StringPool.BLANK, 1, "",
 					_kaleoDefinition.getPrimaryKey(), new String[0],
-					new String[] {_getInitialNodeId() + ":enter"},
-					new String[] {_getTerminalNodeId() + ":leave"},
+					new String[] {_getInitialNodeKey() + ":enter"},
+					new String[] {_getTerminalNodeKey() + ":leave"},
 					ServiceContextTestUtil.getServiceContext()));
 	}
 
@@ -95,8 +95,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 				addWorkflowMetricsSLADefinition(
 					"Abc", StringPool.BLANK, 1, "",
 					_kaleoDefinition.getPrimaryKey(), new String[0],
-					new String[] {_getInitialNodeId()},
-					new String[] {_getTerminalNodeId()},
+					new String[] {_getInitialNodeKey()},
+					new String[] {_getTerminalNodeKey()},
 					ServiceContextTestUtil.getServiceContext()));
 
 		_workflowMetricsSLADefinition.add(
@@ -104,8 +104,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 				addWorkflowMetricsSLADefinition(
 					"Abc", StringPool.BLANK, 1, "",
 					_kaleoDefinition.getPrimaryKey(), new String[0],
-					new String[] {_getInitialNodeId()},
-					new String[] {_getTerminalNodeId()},
+					new String[] {_getInitialNodeKey()},
+					new String[] {_getTerminalNodeKey()},
 					ServiceContextTestUtil.getServiceContext()));
 	}
 
@@ -116,8 +116,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 				addWorkflowMetricsSLADefinition(
 					"Abc", StringPool.BLANK, 0, "",
 					_kaleoDefinition.getPrimaryKey(), new String[0],
-					new String[] {_getInitialNodeId()},
-					new String[] {_getTerminalNodeId()},
+					new String[] {_getInitialNodeKey()},
+					new String[] {_getTerminalNodeKey()},
 					ServiceContextTestUtil.getServiceContext()));
 	}
 
@@ -128,8 +128,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 				addWorkflowMetricsSLADefinition(
 					"Abc", StringPool.BLANK, -1, "",
 					_kaleoDefinition.getPrimaryKey(), new String[0],
-					new String[] {_getInitialNodeId()},
-					new String[] {_getTerminalNodeId()},
+					new String[] {_getInitialNodeKey()},
+					new String[] {_getTerminalNodeKey()},
 					ServiceContextTestUtil.getServiceContext()));
 	}
 
@@ -140,8 +140,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 				addWorkflowMetricsSLADefinition(
 					"Abc", StringPool.BLANK, -1, "",
 					_kaleoDefinition.getPrimaryKey(), new String[0],
-					new String[] {_getInitialNodeId() + ":enter"},
-					new String[] {_getTerminalNodeId() + ":leave"},
+					new String[] {_getInitialNodeKey() + ":enter"},
+					new String[] {_getTerminalNodeKey() + ":leave"},
 					ServiceContextTestUtil.getServiceContext()));
 	}
 
@@ -152,8 +152,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 				addWorkflowMetricsSLADefinition(
 					"Abc", StringPool.BLANK, 1, "",
 					_kaleoDefinition.getPrimaryKey(), new String[] {"0"},
-					new String[] {_getInitialNodeId()},
-					new String[] {_getTerminalNodeId()},
+					new String[] {_getInitialNodeKey()},
+					new String[] {_getTerminalNodeKey()},
 					ServiceContextTestUtil.getServiceContext()));
 	}
 
@@ -164,7 +164,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 				addWorkflowMetricsSLADefinition(
 					"Abc", StringPool.BLANK, 1, "",
 					_kaleoDefinition.getPrimaryKey(), new String[0],
-					new String[] {"0"}, new String[] {_getTerminalNodeId()},
+					new String[] {"0"}, new String[] {_getTerminalNodeKey()},
 					ServiceContextTestUtil.getServiceContext()));
 	}
 
@@ -175,7 +175,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 				addWorkflowMetricsSLADefinition(
 					"Abc", StringPool.BLANK, 1, "",
 					_kaleoDefinition.getPrimaryKey(), new String[0],
-					new String[0], new String[] {_getTerminalNodeId()},
+					new String[0], new String[] {_getTerminalNodeKey()},
 					ServiceContextTestUtil.getServiceContext()));
 	}
 
@@ -186,7 +186,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 				addWorkflowMetricsSLADefinition(
 					"Abc", StringPool.BLANK, 1, "",
 					_kaleoDefinition.getPrimaryKey(), new String[0],
-					new String[] {_getInitialNodeId()}, new String[] {"0"},
+					new String[] {_getInitialNodeKey()}, new String[] {"0"},
 					ServiceContextTestUtil.getServiceContext()));
 	}
 
@@ -197,7 +197,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 				addWorkflowMetricsSLADefinition(
 					"Abc", StringPool.BLANK, 1, "",
 					_kaleoDefinition.getPrimaryKey(), new String[0],
-					new String[] {_getInitialNodeId()}, new String[0],
+					new String[] {_getInitialNodeKey()}, new String[0],
 					ServiceContextTestUtil.getServiceContext()));
 	}
 
@@ -208,8 +208,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 				addWorkflowMetricsSLADefinition(
 					StringPool.BLANK, StringPool.BLANK, 1, "",
 					_kaleoDefinition.getPrimaryKey(), new String[0],
-					new String[] {_getInitialNodeId()},
-					new String[] {_getTerminalNodeId()},
+					new String[] {_getInitialNodeKey()},
+					new String[] {_getTerminalNodeKey()},
 					ServiceContextTestUtil.getServiceContext()));
 	}
 
@@ -220,8 +220,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 				addWorkflowMetricsSLADefinition(
 					"Abc", StringPool.BLANK, 1, "",
 					_kaleoDefinition.getPrimaryKey(), new String[0],
-					new String[] {_getInitialNodeId()},
-					new String[] {_getTerminalNodeId()},
+					new String[] {_getInitialNodeKey()},
+					new String[] {_getTerminalNodeKey()},
 					ServiceContextTestUtil.getServiceContext());
 
 		_workflowMetricsSLADefinition.add(workflowMetricsSLADefinition);
@@ -233,8 +233,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 				updateWorkflowMetricsSLADefinition(
 					workflowMetricsSLADefinition.getPrimaryKey(), "Abc",
 					StringPool.BLANK, 1, "", new String[0],
-					new String[] {_getInitialNodeId()},
-					new String[] {_getTerminalNodeId()},
+					new String[] {_getInitialNodeKey()},
+					new String[] {_getTerminalNodeKey()},
 					WorkflowConstants.STATUS_APPROVED,
 					ServiceContextTestUtil.getServiceContext());
 
@@ -248,8 +248,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 				addWorkflowMetricsSLADefinition(
 					"Abc", StringPool.BLANK, 1, "",
 					_kaleoDefinition.getPrimaryKey(), new String[0],
-					new String[] {_getInitialNodeId()},
-					new String[] {_getTerminalNodeId()},
+					new String[] {_getInitialNodeKey()},
+					new String[] {_getTerminalNodeKey()},
 					ServiceContextTestUtil.getServiceContext());
 
 		_workflowMetricsSLADefinition.add(workflowMetricsSLADefinition);
@@ -259,8 +259,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 				addWorkflowMetricsSLADefinition(
 					"Def", StringPool.BLANK, 1, "",
 					_kaleoDefinition.getPrimaryKey(), new String[0],
-					new String[] {_getInitialNodeId()},
-					new String[] {_getTerminalNodeId()},
+					new String[] {_getInitialNodeKey()},
+					new String[] {_getTerminalNodeKey()},
 					ServiceContextTestUtil.getServiceContext()));
 
 		WorkflowMetricsSLADefinitionLocalServiceUtil.
@@ -271,8 +271,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 				ServiceContextTestUtil.getServiceContext());
 	}
 
-	private String _getInitialNodeId() throws Exception {
-		if (_initialKaleoNode == null) {
+	private String _getInitialNodeKey() throws Exception {
+		if (Validator.isNull(_initialNodeKey)) {
 			KaleoDefinitionVersion latestKaleoDefinitionVersion =
 				KaleoDefinitionVersionLocalServiceUtil.
 					getLatestKaleoDefinitionVersion(
@@ -283,19 +283,24 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 				KaleoNodeLocalServiceUtil.getKaleoDefinitionVersionKaleoNodes(
 					latestKaleoDefinitionVersion.getKaleoDefinitionVersionId());
 
-			Optional<KaleoNode> optional = kaleoNodes.stream(
+			_initialNodeKey = kaleoNodes.stream(
 			).filter(
 				KaleoNode::isInitial
-			).findFirst();
-
-			_initialKaleoNode = optional.get();
+			).findFirst(
+			).map(
+				KaleoNode::getKaleoNodeId
+			).map(
+				String::valueOf
+			).orElseGet(
+				() -> StringPool.BLANK
+			);
 		}
 
-		return String.valueOf(_initialKaleoNode.getKaleoNodeId());
+		return _initialNodeKey;
 	}
 
-	private String _getTerminalNodeId() throws Exception {
-		if (_terminalKaleoNode == null) {
+	private String _getTerminalNodeKey() throws Exception {
+		if (Validator.isNull(_terminalNodeKey)) {
 			KaleoDefinitionVersion latestKaleoDefinitionVersion =
 				KaleoDefinitionVersionLocalServiceUtil.
 					getLatestKaleoDefinitionVersion(
@@ -306,21 +311,26 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 				KaleoNodeLocalServiceUtil.getKaleoDefinitionVersionKaleoNodes(
 					latestKaleoDefinitionVersion.getKaleoDefinitionVersionId());
 
-			Optional<KaleoNode> optional = kaleoNodes.stream(
+			_terminalNodeKey = kaleoNodes.stream(
 			).filter(
 				KaleoNode::isTerminal
-			).findFirst();
-
-			_terminalKaleoNode = optional.get();
+			).findFirst(
+			).map(
+				KaleoNode::getKaleoNodeId
+			).map(
+				String::valueOf
+			).orElseGet(
+				() -> StringPool.BLANK
+			);
 		}
 
-		return String.valueOf(_terminalKaleoNode.getKaleoNodeId());
+		return _terminalNodeKey;
 	}
 
 	private static KaleoDefinition _kaleoDefinition;
 
-	private KaleoNode _initialKaleoNode;
-	private KaleoNode _terminalKaleoNode;
+	private String _initialNodeKey;
+	private String _terminalNodeKey;
 
 	@DeleteAfterTestRun
 	private final List<WorkflowMetricsSLADefinition>

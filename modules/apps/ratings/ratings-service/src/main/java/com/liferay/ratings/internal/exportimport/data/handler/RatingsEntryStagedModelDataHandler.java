@@ -142,7 +142,10 @@ public class RatingsEntryStagedModelDataHandler
 				}
 				catch (NoSuchModelException nsme) {
 					if (Objects.equals(
-							entry.getClassName(), Discussion.class.getName())) {
+							entry.getClassName(), Discussion.class.getName()) ||
+						Objects.equals(
+							entry.getClassName(),
+							"com.liferay.message.boards.model.MBDiscussion")) {
 
 						PersistedModelLocalService
 							mbMessagePersistedModelLocalService =

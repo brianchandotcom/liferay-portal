@@ -980,7 +980,7 @@ public class DDMFormAdminDisplayContext {
 			createDDMFormRenderingContext(renderRequest, renderResponse);
 
 		setDDMFormRenderingContextDDMFormValues(
-			ddmFormRenderingContext, ddmForm, formInstanceId);
+			ddmFormRenderingContext, formInstanceId);
 
 		DDMFormLayout ddmFormLayout = DDMFormLayoutFactory.create(
 			DDMFormInstanceSettings.class);
@@ -1366,7 +1366,7 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	protected void setDDMFormRenderingContextDDMFormValues(
-			DDMFormRenderingContext ddmFormRenderingContext, DDMForm ddmForm,
+			DDMFormRenderingContext ddmFormRenderingContext,
 			long formInstanceId)
 		throws PortalException {
 

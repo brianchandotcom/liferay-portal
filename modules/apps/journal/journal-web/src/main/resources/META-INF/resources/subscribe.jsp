@@ -53,7 +53,7 @@ String unsubscribeActionName = StringPool.BLANK;
 			subscribed = JournalUtil.isSubscribedToStructure(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), ddmStructureId);
 
 			subscribeActionName = "subscribeStructure";
-			unsubscribeActionName = "unsubscribeStructure";
+			unsubscribeActionName = "/journal/unsubscribe_ddm_structure";
 		}
 		else if (Validator.isNull(ddmStructureKey) && (article != null)) {
 			subscribed = JournalUtil.isSubscribedToArticle(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), article.getResourcePrimKey());

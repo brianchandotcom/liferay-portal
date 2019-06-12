@@ -5,7 +5,5 @@ dependencies {
 	compileOnly project(":apps:asset:asset-auto-tagger-api")
 	compileOnly project(":apps:asset:asset-auto-tagger-opennlp-api")
 	compileOnly project(":apps:blogs:blogs-api")
-	compileOnly project(":apps:portal-settings:portal-settings-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
-	compileOnly project(":core:petra:petra-string")
 }

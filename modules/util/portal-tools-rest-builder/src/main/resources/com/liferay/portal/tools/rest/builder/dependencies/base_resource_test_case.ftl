@@ -236,7 +236,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.get${javaMethodSignature.methodName?remove_beginning("delete")}HttpResponse(0L));
 					</#if>
 				<#else>
-					Assert.assertTrue(true);
+					Assert.assertTrue(false);
 				</#if>
 			}
 
@@ -263,7 +263,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			<#if (javaMethodSignature.javaMethodParameters?size == 0) || stringUtil.equals(javaMethodSignature.javaMethodParameters[0].parameterName, "filter") || stringUtil.equals(javaMethodSignature.javaMethodParameters[0].parameterName, "pagination") || stringUtil.equals(javaMethodSignature.javaMethodParameters[0].parameterName, "sorts")>
 				@Test
 				public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
-					Assert.assertTrue(true);
+					Assert.assertTrue(false);
 				}
 			<#else>
 				@Test
@@ -798,7 +798,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					assertEquals(post${schemaName}, get${schemaName});
 					assertValid(get${schemaName});
 				<#else>
-					Assert.assertTrue(true);
+					Assert.assertTrue(false);
 				</#if>
 			}
 
@@ -825,7 +825,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			@Test
 			public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
 				<#if !properties?keys?seq_contains("id")>
-					Assert.assertTrue(true);
+					Assert.assertTrue(false);
 				<#else>
 					${schemaName} post${schemaName} = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
@@ -936,7 +936,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			@Test
 			public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
 				<#if !properties?keys?seq_contains("id")>
-					Assert.assertTrue(true);
+					Assert.assertTrue(false);
 				<#else>
 					${schemaName} post${schemaName} = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
@@ -990,7 +990,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		<#elseif !freeMarkerTool.isReturnTypeSubentity(javaMethodSignature, subentities)>
 			@Test
 			public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
-				Assert.assertTrue(true);
+				Assert.assertTrue(false);
 			}
 		</#if>
 	</#list>

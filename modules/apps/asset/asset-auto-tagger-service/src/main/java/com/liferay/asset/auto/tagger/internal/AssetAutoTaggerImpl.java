@@ -64,7 +64,10 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
 	public Set<String> getClassNameSet() {
-		return new HashSet<>(_serviceTrackerMap.keySet());
+		ServiceTrackerMap<String, List<AssetAutoTagProvider>>
+			serviceTrackerMap = _serviceTrackerMapHolder.getServiceTrackerMap();
+
+		return new HashSet<>(serviceTrackerMap.keySet());
 	}
 
 	public boolean isAutoTaggable(AssetEntry assetEntry) {
@@ -203,13 +206,12 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, AssetAutoTagProvider.class, "model.class.name");
+		_serviceTrackerMapHolder = new ServiceTrackerMapHolder(bundleContext);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerMap.close();
+		_serviceTrackerMapHolder.destroy();
 	}
 
 	private AssetAutoTaggerConfiguration _getAssetAutoTaggerConfiguration(
@@ -226,8 +228,11 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
 		List<AssetAutoTagProvider> assetAutoTagProviders = new ArrayList<>();
 
+		ServiceTrackerMap<String, List<AssetAutoTagProvider>>
+			serviceTrackerMap = _serviceTrackerMapHolder.getServiceTrackerMap();
+
 		List<AssetAutoTagProvider> generalAssetAutoTagProviders =
-			_serviceTrackerMap.getService("*");
+			serviceTrackerMap.getService("*");
 
 		if (!ListUtil.isEmpty(generalAssetAutoTagProviders)) {
 			assetAutoTagProviders.addAll(generalAssetAutoTagProviders);
@@ -235,7 +240,7 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
 		if (Validator.isNotNull(className)) {
 			List<AssetAutoTagProvider> classNameAssetAutoTagProviders =
-				_serviceTrackerMap.getService(className);
+				serviceTrackerMap.getService(className);
 
 			if (!ListUtil.isEmpty(classNameAssetAutoTagProviders)) {
 				assetAutoTagProviders.addAll(classNameAssetAutoTagProviders);
@@ -305,10 +310,52 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 	@Reference
 	private IndexerRegistry _indexerRegistry;
 
-	private ServiceTrackerMap<String, List<AssetAutoTagProvider>>
-		_serviceTrackerMap;
+	private ServiceTrackerMapHolder _serviceTrackerMapHolder;
 	private final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+	private static class ServiceTrackerMapHolder {
+
+		public void destroy() {
+			ServiceTrackerMap<String, List<AssetAutoTagProvider>>
+				serviceTrackerMap = _serviceTrackerMap;
+
+			if (serviceTrackerMap != null) {
+				serviceTrackerMap.close();
+			}
+		}
+
+		public ServiceTrackerMap<String, List<AssetAutoTagProvider>>
+			getServiceTrackerMap() {
+
+			ServiceTrackerMap<String, List<AssetAutoTagProvider>>
+				serviceTrackerMap = _serviceTrackerMap;
+
+			if (serviceTrackerMap != null) {
+				return serviceTrackerMap;
+			}
+
+			synchronized (this) {
+				if (_serviceTrackerMap == null) {
+					_serviceTrackerMap =
+						ServiceTrackerMapFactory.openMultiValueMap(
+							_bundleContext, AssetAutoTagProvider.class,
+							"model.class.name");
+				}
+
+				return _serviceTrackerMap;
+			}
+		}
+
+		private ServiceTrackerMapHolder(BundleContext bundleContext) {
+			_bundleContext = bundleContext;
+		}
+
+		private final BundleContext _bundleContext;
+		private volatile ServiceTrackerMap<String, List<AssetAutoTagProvider>>
+			_serviceTrackerMap;
+
+	}
 
 }

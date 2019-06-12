@@ -161,13 +161,18 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), article.getDDMTemplateKey(), true);
 			%>
 
-			<c:if test="<%= ddmTemplate != null %>">
-				<p class="h5"><liferay-ui:message key="template" /></p>
+			<p class="h5"><liferay-ui:message key="template" /></p>
 
-				<p>
-					<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>
-				</p>
-			</c:if>
+			<p>
+				<c:choose>
+					<c:when test="<%= ddmTemplate != null %>">
+						<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message key="no-template" />
+					</c:otherwise>
+				</c:choose>
+			</p>
 
 			<div class="lfr-asset-tags">
 				<liferay-asset:asset-tags-summary

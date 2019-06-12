@@ -1,4 +1,4 @@
-import Ajax from 'metal-ajax';
+import {fetch} from 'frontend-js-web';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
@@ -107,17 +107,15 @@ class DiffVersionComparator extends Component {
 	loadDiffHtmlResults_(targetVersion) {
 		const {portletNamespace} = this;
 
-		const params = new MultiMap();
+		const url = new URL(this.resourceURL);
 
-		params.add(
-			`${portletNamespace}filterSourceVersion`,
-			this.sourceVersion
-		);
-		params.add(`${portletNamespace}filterTargetVersion`, targetVersion);
+		url.searchParams.append(`${portletNamespace}filterSourceVersion`, `${this.sourceVersion}`);
+		url.searchParams.append(`${portletNamespace}filterTargetVersion`, `${targetVersion}`);
 
-		Ajax.request(this.resourceURL, 'get', null, null, params)
-			.then(xhrResponse => {
-				this.diffHtmlResults = xhrResponse.response;
+		fetch(url)
+			.then(res => res.text())
+			.then(text => {
+				this.diffHtmlResults = text;
 			})
 			.catch(() => {
 				this.diffHtmlResults = Liferay.Language.get(

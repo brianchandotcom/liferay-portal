@@ -1,5 +1,5 @@
 import 'clay-progress-bar';
-import Ajax from 'metal-ajax';
+import {fetch} from 'frontend-js-web';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy from 'metal-soy';
 import core from 'metal';
@@ -29,7 +29,7 @@ class AdaptiveMediaProgress extends PortletBase {
 
 	/**
 	 * It starts checking the percentage of adapted images by
-	 * doing ajax request continously.
+	 * doing request continously.
 	 *
 	 * @param  {String} backgroundTaskUrl The background task
 	 * that has to be invoked.
@@ -44,7 +44,7 @@ class AdaptiveMediaProgress extends PortletBase {
 		}
 
 		if (backgroundTaskUrl) {
-			Ajax.request(backgroundTaskUrl);
+			fetch(backgroundTaskUrl);
 		}
 
 		this.clearInterval_();
@@ -60,7 +60,7 @@ class AdaptiveMediaProgress extends PortletBase {
 	}
 
 	/**
-	 * Clears the interval to stop sending ajax requests.
+	 * Clears the interval to stop sending requests.
 	 *
 	 * @protected
 	 */
@@ -71,29 +71,28 @@ class AdaptiveMediaProgress extends PortletBase {
 	}
 
 	/**
-	 * Sends an ajax request to obtain the percentage of
+	 * Sends an request to obtain the percentage of
 	 * adapted images and updates the progressbar.
 	 *
 	 * @protected
 	 */
 	getAdaptedImagesPercentage_() {
-		Ajax.request(this.percentageUrl).then(xhr => {
-			try {
-				const json = JSON.parse(xhr.response);
-
+		fetch(this.percentageUrl)
+			.then(res => res.json())
+			.then(json => {
 				this.updateProgressBar_(json.adaptedImages, json.totalImages);
 
 				if (this.percentage_ >= 100) {
 					this.onProgressBarComplete_();
 				}
-			} catch (e) {
+			})
+			.catch(() => {
 				clearInterval(this.intervalId_);
-			}
-		});
+			});
 	}
 
 	/**
-	 * Stops sending ajax request and hides the loading icon.
+	 * Stops sending request and hides the loading icon.
 	 *
 	 * @protected
 	 */

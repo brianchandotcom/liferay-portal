@@ -96,6 +96,13 @@ public interface FragmentEntryService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public FragmentEntry addFragmentEntry(
+			long groupId, long fragmentCollectionId, String fragmentEntryKey,
+			String name, String css, String html, String js,
+			String configuration, long previewFileEntryId, int type, int status,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public FragmentEntry copyFragmentEntry(
 			long groupId, long fragmentEntryId, long fragmentCollectionId,
 			ServiceContext serviceContext)
@@ -201,6 +208,12 @@ public interface FragmentEntryService extends BaseService {
 	public FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, String name, String css, String html,
 			String js, long previewFileEntryId, int status)
+		throws PortalException;
+
+	public FragmentEntry updateFragmentEntry(
+			long fragmentEntryId, String name, String css, String html,
+			String js, String configuration, long previewFileEntryId,
+			int status)
 		throws PortalException;
 
 }

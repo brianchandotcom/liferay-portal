@@ -294,6 +294,21 @@ public interface FragmentEntryModel
 	public void setJs(String js);
 
 	/**
+	 * Returns the configuration of this fragment entry.
+	 *
+	 * @return the configuration of this fragment entry
+	 */
+	@AutoEscape
+	public String getConfiguration();
+
+	/**
+	 * Sets the configuration of this fragment entry.
+	 *
+	 * @param configuration the configuration of this fragment entry
+	 */
+	public void setConfiguration(String configuration);
+
+	/**
 	 * Returns the preview file entry ID of this fragment entry.
 	 *
 	 * @return the preview file entry ID of this fragment entry

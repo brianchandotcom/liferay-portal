@@ -85,10 +85,10 @@ public class FragmentEntryModelImpl
 		{"fragmentCollectionId", Types.BIGINT},
 		{"fragmentEntryKey", Types.VARCHAR}, {"name", Types.VARCHAR},
 		{"css", Types.CLOB}, {"html", Types.CLOB}, {"js", Types.CLOB},
-		{"previewFileEntryId", Types.BIGINT}, {"type_", Types.INTEGER},
-		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
-		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
-		{"statusDate", Types.TIMESTAMP}
+		{"configuration", Types.CLOB}, {"previewFileEntryId", Types.BIGINT},
+		{"type_", Types.INTEGER}, {"lastPublishDate", Types.TIMESTAMP},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
+		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -109,6 +109,7 @@ public class FragmentEntryModelImpl
 		TABLE_COLUMNS_MAP.put("css", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("html", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("js", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("configuration", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("previewFileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
@@ -119,7 +120,7 @@ public class FragmentEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FragmentEntry (uuid_ VARCHAR(75) null,fragmentEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,fragmentEntryKey VARCHAR(75) null,name VARCHAR(75) null,css TEXT null,html TEXT null,js TEXT null,previewFileEntryId LONG,type_ INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table FragmentEntry (uuid_ VARCHAR(75) null,fragmentEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,fragmentEntryKey VARCHAR(75) null,name VARCHAR(75) null,css TEXT null,html TEXT null,js TEXT null,configuration TEXT null,previewFileEntryId LONG,type_ INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table FragmentEntry";
 
@@ -186,6 +187,7 @@ public class FragmentEntryModelImpl
 		model.setCss(soapModel.getCss());
 		model.setHtml(soapModel.getHtml());
 		model.setJs(soapModel.getJs());
+		model.setConfiguration(soapModel.getConfiguration());
 		model.setPreviewFileEntryId(soapModel.getPreviewFileEntryId());
 		model.setType(soapModel.getType());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
@@ -401,6 +403,11 @@ public class FragmentEntryModelImpl
 		attributeGetterFunctions.put("js", FragmentEntry::getJs);
 		attributeSetterBiConsumers.put(
 			"js", (BiConsumer<FragmentEntry, String>)FragmentEntry::setJs);
+		attributeGetterFunctions.put(
+			"configuration", FragmentEntry::getConfiguration);
+		attributeSetterBiConsumers.put(
+			"configuration",
+			(BiConsumer<FragmentEntry, String>)FragmentEntry::setConfiguration);
 		attributeGetterFunctions.put(
 			"previewFileEntryId", FragmentEntry::getPreviewFileEntryId);
 		attributeSetterBiConsumers.put(
@@ -721,6 +728,22 @@ public class FragmentEntryModelImpl
 
 	@JSON
 	@Override
+	public String getConfiguration() {
+		if (_configuration == null) {
+			return "";
+		}
+		else {
+			return _configuration;
+		}
+	}
+
+	@Override
+	public void setConfiguration(String configuration) {
+		_configuration = configuration;
+	}
+
+	@JSON
+	@Override
 	public long getPreviewFileEntryId() {
 		return _previewFileEntryId;
 	}
@@ -977,6 +1000,7 @@ public class FragmentEntryModelImpl
 		fragmentEntryImpl.setCss(getCss());
 		fragmentEntryImpl.setHtml(getHtml());
 		fragmentEntryImpl.setJs(getJs());
+		fragmentEntryImpl.setConfiguration(getConfiguration());
 		fragmentEntryImpl.setPreviewFileEntryId(getPreviewFileEntryId());
 		fragmentEntryImpl.setType(getType());
 		fragmentEntryImpl.setLastPublishDate(getLastPublishDate());
@@ -1169,6 +1193,14 @@ public class FragmentEntryModelImpl
 			fragmentEntryCacheModel.js = null;
 		}
 
+		fragmentEntryCacheModel.configuration = getConfiguration();
+
+		String configuration = fragmentEntryCacheModel.configuration;
+
+		if ((configuration != null) && (configuration.length() == 0)) {
+			fragmentEntryCacheModel.configuration = null;
+		}
+
 		fragmentEntryCacheModel.previewFileEntryId = getPreviewFileEntryId();
 
 		fragmentEntryCacheModel.type = getType();
@@ -1303,6 +1335,7 @@ public class FragmentEntryModelImpl
 	private String _css;
 	private String _html;
 	private String _js;
+	private String _configuration;
 	private long _previewFileEntryId;
 	private int _type;
 	private int _originalType;

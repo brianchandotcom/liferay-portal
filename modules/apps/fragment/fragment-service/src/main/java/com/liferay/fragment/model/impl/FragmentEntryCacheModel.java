@@ -65,7 +65,7 @@ public class FragmentEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -95,6 +95,8 @@ public class FragmentEntryCacheModel
 		sb.append(html);
 		sb.append(", js=");
 		sb.append(js);
+		sb.append(", configuration=");
+		sb.append(configuration);
 		sb.append(", previewFileEntryId=");
 		sb.append(previewFileEntryId);
 		sb.append(", type=");
@@ -188,6 +190,13 @@ public class FragmentEntryCacheModel
 			fragmentEntryImpl.setJs(js);
 		}
 
+		if (configuration == null) {
+			fragmentEntryImpl.setConfiguration("");
+		}
+		else {
+			fragmentEntryImpl.setConfiguration(configuration);
+		}
+
 		fragmentEntryImpl.setPreviewFileEntryId(previewFileEntryId);
 		fragmentEntryImpl.setType(type);
 
@@ -241,6 +250,7 @@ public class FragmentEntryCacheModel
 		css = objectInput.readUTF();
 		html = objectInput.readUTF();
 		js = objectInput.readUTF();
+		configuration = objectInput.readUTF();
 
 		previewFileEntryId = objectInput.readLong();
 
@@ -318,6 +328,13 @@ public class FragmentEntryCacheModel
 			objectOutput.writeUTF(js);
 		}
 
+		if (configuration == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(configuration);
+		}
+
 		objectOutput.writeLong(previewFileEntryId);
 
 		objectOutput.writeInt(type);
@@ -351,6 +368,7 @@ public class FragmentEntryCacheModel
 	public String css;
 	public String html;
 	public String js;
+	public String configuration;
 	public long previewFileEntryId;
 	public int type;
 	public long lastPublishDate;

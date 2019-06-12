@@ -321,24 +321,24 @@ public class FriendlyURLServletTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		_redirectLayout = LayoutTestUtil.addLayout(_group);
+		Layout redirectLayout = LayoutTestUtil.addLayout(_group);
 
-		_redirectLayout.setType(LayoutConstants.TYPE_URL);
+		redirectLayout.setType(LayoutConstants.TYPE_URL);
 
 		UnicodeProperties typeSettingsProperties =
 			_group.getTypeSettingsProperties();
 
 		typeSettingsProperties.put("url", _layout.getFriendlyURL());
 
-		_redirectLayout.setTypeSettingsProperties(typeSettingsProperties);
+		redirectLayout.setTypeSettingsProperties(typeSettingsProperties);
 
-		_layoutLocalService.updateLayout(_redirectLayout);
+		_layoutLocalService.updateLayout(redirectLayout);
 
 		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
 
 		String requestURI =
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
-				getPath(_group, _redirectLayout);
+				getPath(_group, redirectLayout);
 
 		mockHttpServletRequest.setRequestURI(requestURI);
 
@@ -465,7 +465,6 @@ public class FriendlyURLServletTest {
 	private Layout _layout;
 	private Constructor<?> _redirectConstructor1;
 	private Constructor<?> _redirectConstructor2;
-	private Layout _redirectLayout;
 	private ServiceTracker<Servlet, Servlet> _serviceTracker;
 	private Servlet _servlet;
 

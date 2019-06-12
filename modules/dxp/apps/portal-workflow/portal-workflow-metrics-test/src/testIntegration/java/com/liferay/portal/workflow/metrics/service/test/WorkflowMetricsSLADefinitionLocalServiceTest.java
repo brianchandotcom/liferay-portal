@@ -60,11 +60,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		List<KaleoDefinition> kaleoDefinitions =
-			KaleoDefinitionLocalServiceUtil.getKaleoDefinitions(
-				true, 0, 1, null, ServiceContextTestUtil.getServiceContext());
-
-		_kaleoDefinition = kaleoDefinitions.get(0);
+		_kaleoDefinition = KaleoDefinitionLocalServiceUtil.getKaleoDefinition(
+			"Single Approver", ServiceContextTestUtil.getServiceContext());
 	}
 
 	@Test

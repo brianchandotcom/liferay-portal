@@ -35,6 +35,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.compress.archivers.zip.UnsupportedZipFeatureException;
 import org.apache.commons.lang.exception.ExceptionUtils;
@@ -147,6 +149,15 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 
 		@Override
 		public Metadata call() throws ProcessException {
+			Logger logger = Logger.getLogger(
+				"org.apache.tika.parser.SQLite3Parser");
+
+			logger.setLevel(Level.SEVERE);
+
+			logger = Logger.getLogger("org.apache.tika.parsers.PDFParser");
+
+			logger.setLevel(Level.SEVERE);
+
 			try {
 				return extractMetadata(_file, _metadata, _parser);
 			}

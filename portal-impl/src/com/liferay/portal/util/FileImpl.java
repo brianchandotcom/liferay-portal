@@ -63,6 +63,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.compress.archivers.zip.UnsupportedZipFeatureException;
 import org.apache.commons.io.FileUtils;
@@ -1163,6 +1165,15 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			if (ArrayUtil.isEmpty(_data)) {
 				return StringPool.BLANK;
 			}
+
+			Logger logger = Logger.getLogger(
+				"org.apache.tika.parser.SQLite3Parser");
+
+			logger.setLevel(Level.SEVERE);
+
+			logger = Logger.getLogger("org.apache.tika.parsers.PDFParser");
+
+			logger.setLevel(Level.SEVERE);
 
 			Tika tika = new Tika(TikaConfigHolder._tikaConfig);
 

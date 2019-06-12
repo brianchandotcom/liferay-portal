@@ -14,6 +14,9 @@
 
 package com.liferay.jenkins.results.parser.docker;
 
+import com.liferay.jenkins.results.parser.GitUtil;
+import com.liferay.jenkins.results.parser.GitWorkingDirectory;
+import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TGZUtil;
 
@@ -71,6 +74,32 @@ public class LiferayCiInitK8sPodUtil {
 			if (!gitRepositoryClusterArtifact.exists()) {
 				throw new RuntimeException(
 					"Could not find " + gitRepositoryClusterArtifact);
+			}
+
+			File gitRepositoryLocalDir = new File(
+				gitArtifactsLocalDir, gitRepositoryName);
+
+			if (gitRepositoryLocalDir.exists()) {
+				if (gitRepositoryLocalDir.isDirectory()) {
+					try {
+						GitWorkingDirectory gitWorkingDirectory =
+							GitWorkingDirectoryFactory.newGitWorkingDirectory(
+								GitUtil.getDefaultBranchName(
+									gitRepositoryLocalDir),
+								gitRepositoryLocalDir, gitRepositoryName);
+
+						gitWorkingDirectory.reset("--hard");
+
+						gitWorkingDirectory.status();
+
+						return;
+					}
+					catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+
+				gitRepositoryLocalDir.delete();
 			}
 
 			try {

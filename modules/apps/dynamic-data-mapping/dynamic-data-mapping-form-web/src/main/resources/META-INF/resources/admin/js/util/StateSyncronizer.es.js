@@ -146,11 +146,11 @@ class StateSyncronizer extends Component {
 		});
 
 		if (settingsDDMForm) {
-			document.querySelector(`#${namespace}serializedSettingsContext`).value = JSON.stringify(
-				{
-					'pages': settingsDDMForm.pages
-				}
-			);
+			document.querySelector(
+				`#${namespace}serializedSettingsContext`
+			).value = JSON.stringify({
+				pages: settingsDDMForm.pages
+			});
 		}
 
 		document.querySelector(`#${namespace}name`).value = JSON.stringify(

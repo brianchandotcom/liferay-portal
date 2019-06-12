@@ -317,11 +317,11 @@ public class DDMFormDisplayContext {
 	public String getSubmitLabel() throws PortalException {
 		DDMForm ddmForm = getDDMForm();
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			_renderRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(_renderRequest);
 
 		ResourceBundle resourceBundle = getResourceBundle(
-			getLocale(request, ddmForm));
+			getLocale(httpServletRequest, ddmForm));
 
 		DDMFormInstance ddmFormInstance = getFormInstance();
 

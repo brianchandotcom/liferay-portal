@@ -497,13 +497,11 @@ class Form extends Component {
 		if (settingsDDMForm) {
 			const settingsPageVisitor = new PagesVisitor(settingsDDMForm.pages);
 
-			settingsPageVisitor.mapFields(
-				field => {
-					if (field.fieldName === 'requireAuthentication') {
-						requireAuthentication = field.value;
-					}
+			settingsPageVisitor.mapFields(field => {
+				if (field.fieldName === 'requireAuthentication') {
+					requireAuthentication = field.value;
 				}
-			);
+			});
 		}
 
 		if (requireAuthentication) {

@@ -251,14 +251,8 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 	</c:otherwise>
 </c:choose>
 
-<%
-Map<String, Object> context = new HashMap<>();
-
-context.put("trashEnabled", trashHelper.isTrashEnabled(scopeGroupId));
-%>
-
 <liferay-frontend:component
 	componentId="<%= JournalWebConstants.JOURNAL_INFO_PANEL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-	context="<%= context %>"
+	context="<%= journalDisplayContext.getComponentContext() %>"
 	module="js/ElementsDefaultEventHandler.es"
 />

@@ -428,7 +428,8 @@ public class JournalArticleActionDropdownItemsProvider {
 
 		PortletURL expireURL = _liferayPortletResponse.createActionURL();
 
-		expireURL.setParameter(ActionRequest.ACTION_NAME, "expireArticles");
+		expireURL.setParameter(
+			ActionRequest.ACTION_NAME, "/journal/expire_articles");
 		expireURL.setParameter("redirect", _getRedirect());
 		expireURL.setParameter(
 			"groupId", String.valueOf(_article.getGroupId()));

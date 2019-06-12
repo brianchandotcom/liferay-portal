@@ -103,7 +103,8 @@ public class JournalHistoryManagementToolbarDisplayContext
 							liferayPortletResponse.createActionURL();
 
 						expireArticlesURL.setParameter(
-							ActionRequest.ACTION_NAME, "expireArticles");
+							ActionRequest.ACTION_NAME,
+							"/journal/expire_articles");
 						expireArticlesURL.setParameter(
 							"redirect", themeDisplay.getURLCurrent());
 

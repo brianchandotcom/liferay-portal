@@ -249,28 +249,6 @@ public class JournalPortlet extends MVCPortlet {
 		deleteFolder(actionRequest, actionResponse, false);
 	}
 
-	public void expireArticles(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String articleId = ParamUtil.getString(actionRequest, "articleId");
-
-		if (Validator.isNotNull(articleId)) {
-			ActionUtil.expireArticle(actionRequest, articleId);
-		}
-		else {
-			String[] expireArticleIds = ParamUtil.getParameterValues(
-				actionRequest, "rowIds");
-
-			for (String expireArticleId : expireArticleIds) {
-				ActionUtil.expireArticle(
-					actionRequest, HtmlUtil.unescape(expireArticleId));
-			}
-		}
-
-		sendEditArticleRedirect(actionRequest, actionResponse);
-	}
-
 	public void expireEntries(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

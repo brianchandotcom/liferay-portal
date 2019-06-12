@@ -143,11 +143,12 @@ public class LiferayCiInitK8sClusterUtil {
 			return true;
 		}
 		catch (IOException ioe) {
-			gitRepositoryLocalArtifactFile.delete();
-
 			ioe.printStackTrace();
 
 			return false;
+		}
+		finally {
+			gitRepositoryLocalArtifactFile.delete();
 		}
 	}
 
@@ -178,11 +179,12 @@ public class LiferayCiInitK8sClusterUtil {
 			return true;
 		}
 		catch (IOException ioe) {
-			gitRepositoryLocalArtifactFile.delete();
-
 			ioe.printStackTrace();
 
 			return false;
+		}
+		finally {
+			gitRepositoryLocalArtifactFile.delete();
 		}
 	}
 

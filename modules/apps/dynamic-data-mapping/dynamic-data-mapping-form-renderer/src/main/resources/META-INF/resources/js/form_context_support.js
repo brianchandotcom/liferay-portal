@@ -5,16 +5,28 @@ AUI.add(
 		var AObject = A.Object;
 		var FieldSettings = [
 			'autosaveEnabled',
+			'cacheable',
 			'emailFromAddress',
 			'emailFromName',
 			'emailSubject',
 			'emailToAddress',
+			'filterable',
+			'filterParameterName',
+			'inputParameters',
+			'outputParameters',
+			'pagination',
+			'paginationStartParameterName',
+			'paginationEndParameterName',
+			'password',
 			'published',
 			'redirectURL',
 			'requireAuthentication',
 			'requireCaptcha',
 			'sendEmailNotification',
 			'storageType',
+			'timeout',
+			'url',
+			'username',
 			'workflowDefinition'
 		];
 		var Renderer = Liferay.DDM.Renderer;

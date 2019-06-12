@@ -1419,7 +1419,9 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	@Override
 	public ${entity.name} toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(new AutoEscapeBeanHandler(this));
+			Function<InvocationHandler, ${entity.name}> escapedModelProxyProviderFunction = EscapedModelProxyProviderFunctionHolder._escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -1762,7 +1764,11 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		}
 	</#if>
 
-	private static final Function<InvocationHandler, ${entity.name}> _escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, ${entity.name}> _escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	<#if dependencyInjectorDS>
 		private static boolean _entityCacheEnabled;

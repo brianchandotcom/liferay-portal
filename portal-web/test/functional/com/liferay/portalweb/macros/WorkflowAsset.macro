@@ -2,6 +2,7 @@ definition {
 
 	macro createNewUserAccount {
 		User.createAccount(
+			newPassword = "${newPassword}",
 			userEmailAddress = "${userEmailAddress}",
 			userFirstName = "${userFirstName}",
 			userLastName = "${userLastName}",

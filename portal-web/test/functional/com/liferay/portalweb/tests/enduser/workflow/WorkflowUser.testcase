@@ -45,6 +45,7 @@ definition {
 		User.logoutPG();
 
 		WorkflowAsset.createNewUserAccount(
+			newPassword = "test",
 			userEmailAddress = "user@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -112,6 +113,7 @@ definition {
 		User.logoutPG();
 
 		WorkflowAsset.createNewUserAccount(
+			newPassword = "password",
 			userEmailAddress = "user@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",

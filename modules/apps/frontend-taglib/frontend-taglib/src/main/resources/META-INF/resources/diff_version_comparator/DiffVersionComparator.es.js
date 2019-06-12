@@ -2,7 +2,6 @@ import Ajax from 'metal-ajax';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
-import {MultiMap} from 'metal-structs';
 import {isObject} from 'metal';
 
 import templates from './DiffVersionComparator.soy';
@@ -107,13 +106,10 @@ class DiffVersionComparator extends Component {
 	loadDiffHtmlResults_(targetVersion) {
 		const {portletNamespace} = this;
 
-		const params = new MultiMap();
-
-		params.add(
-			`${portletNamespace}filterSourceVersion`,
-			this.sourceVersion
-		);
-		params.add(`${portletNamespace}filterTargetVersion`, targetVersion);
+		const params = {
+			[`${portletNamespace}filterSourceVersion`]: this.sourceVersion,
+			[`${portletNamespace}filterTargetVersion`]: targetVersion
+		};
 
 		Ajax.request(this.resourceURL, 'get', null, null, params)
 			.then(xhrResponse => {

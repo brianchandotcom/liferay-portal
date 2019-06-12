@@ -160,7 +160,7 @@ public class DDMFormAdminDisplayContext {
 		_ddmFormInstanceVersionLocalService =
 			ddmFormInstanceVersionLocalService;
 		this.ddmFormRenderer = ddmFormRenderer;
-		this.ddmFormTemplateContextFactory = ddmFormTemplateContextFactory;
+		_ddmFormTemplateContextFactory = ddmFormTemplateContextFactory;
 		_ddmFormValuesFactory = ddmFormValuesFactory;
 		_ddmFormValuesMerger = ddmFormValuesMerger;
 		_ddmFormWebConfiguration = ddmFormWebConfiguration;
@@ -324,7 +324,7 @@ public class DDMFormAdminDisplayContext {
 
 			try {
 				Map<String, Object> settingsContext =
-					ddmFormTemplateContextFactory.create(
+					_ddmFormTemplateContextFactory.create(
 						ddmForm, ddmFormLayout, ddmFormRenderingContext);
 
 				jsonObject.put("settingsContext", settingsContext);
@@ -1385,7 +1385,6 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	protected final DDMFormRenderer ddmFormRenderer;
-	protected final DDMFormTemplateContextFactory ddmFormTemplateContextFactory;
 	protected final DDMFormAdminRequestHelper formAdminRequestHelper;
 	protected final JSONFactory jsonFactory;
 	protected final RenderRequest renderRequest;
@@ -1447,6 +1446,7 @@ public class DDMFormAdminDisplayContext {
 	private final DDMFormInstanceService _ddmFormInstanceService;
 	private final DDMFormInstanceVersionLocalService
 		_ddmFormInstanceVersionLocalService;
+	private final DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
 	private final DDMFormValuesFactory _ddmFormValuesFactory;
 	private final DDMFormValuesMerger _ddmFormValuesMerger;
 	private final DDMFormWebConfiguration _ddmFormWebConfiguration;

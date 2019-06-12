@@ -14,9 +14,7 @@ function getElement(element) {
 	if (element && element.jquery) {
 		if (element.length > 1) {
 			throw new Error(
-				`getElement(): Expected at most one element, got ${
-					element.length
-				}`
+				`getElement(): Expected at most one element, got ${element.length}`
 			);
 		}
 		element = element.get(0);

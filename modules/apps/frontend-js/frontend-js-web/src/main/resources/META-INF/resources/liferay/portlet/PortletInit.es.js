@@ -298,9 +298,7 @@ class PortletInit {
 
 		if (!this._hasListener(this._portletId)) {
 			throw {
-				message: `No onStateChange listener registered for portlet: ${
-					this._portletId
-				}`,
+				message: `No onStateChange listener registered for portlet: ${this._portletId}`,
 				name: 'NotInitializedException'
 			};
 		}
@@ -456,9 +454,7 @@ class PortletInit {
 			};
 		} else if (!this._hasListener(this._portletId)) {
 			throw {
-				message: `No onStateChange listener registered for portlet: ${
-					this._portletId
-				}`,
+				message: `No onStateChange listener registered for portlet: ${this._portletId}`,
 				name: 'NotInitializedException'
 			};
 		}
@@ -912,9 +908,7 @@ class PortletInit {
 			};
 		} else if (!this._hasListener(this._portletId)) {
 			throw {
-				message: `No onStateChange listener registered for portlet: ${
-					this._portletId
-				}`,
+				message: `No onStateChange listener registered for portlet: ${this._portletId}`,
 				name: 'NotInitializedException'
 			};
 		}

@@ -56,8 +56,9 @@ describe('segments experiences reducers', () => {
 					active,
 					nameCurrentValue: JSON.parse(nameMap).en_US,
 					segmentsEntryId,
-					segmentsExperienceId: (experiencesCount++,
-					SEGMENTS_EXPERIENCES_LIST[experiencesCount])
+					segmentsExperienceId:
+						(experiencesCount++,
+						SEGMENTS_EXPERIENCES_LIST[experiencesCount])
 				});
 			}
 		};

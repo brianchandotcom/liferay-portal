@@ -101,9 +101,7 @@ const _onStartNavigate = function(event) {
 					let cacheable = false;
 
 					if (componentConfig) {
-						const namespacedParam = `_${
-							componentConfig.portletId
-						}_${param}`;
+						const namespacedParam = `_${componentConfig.portletId}_${param}`;
 
 						cacheable =
 							uri.getParameterValue(namespacedParam) ===

@@ -18,8 +18,8 @@
 	"repository": "liferay/liferay-portal",
 	"scripts": {
 		"build": "liferay-npm-scripts theme build",
-		"checkFormat": "liferay-npm-scripts lint",
-		"format": "liferay-npm-scripts format"
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
 	},
 	"version": "4.0.0"
 }

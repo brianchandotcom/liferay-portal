@@ -12,13 +12,16 @@ CKEDITOR.on('dialogDefinition', function(event) {
 			if (window.top != window.self) {
 				var editorElement = this.getParentEditor().container;
 
-				var documentPosition = editorElement.getLast().getDocumentPosition();
+				var documentPosition = editorElement
+					.getLast()
+					.getDocumentPosition();
 
 				var dialogSize = this.getSize();
 
 				var x =
 					documentPosition.x +
-					((editorElement.getLast().getSize('width', true) - dialogSize.width) /
+					((editorElement.getLast().getSize('width', true) -
+						dialogSize.width) /
 						2 -
 						window.scrollX);
 				var y =

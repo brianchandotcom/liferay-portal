@@ -45,8 +45,8 @@
 	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",
-		"csf": "liferay-npm-scripts format",
-		"format": "liferay-npm-scripts format",
+		"csf": "liferay-npm-scripts fix",
+		"format": "liferay-npm-scripts fix",
 		"test": "env TZ=utc liferay-npm-scripts test",
 		"test:watch": "env TZ=utc liferay-npm-scripts test --watch",
 		"watch": "liferay-npm-scripts webpack --watch"

@@ -455,24 +455,25 @@
 												elementOuterHtml +
 												emptySelectionMarkup;
 
-											editor.insertHtml(emptySelectionMarkup);
+											editor.insertHtml(
+												emptySelectionMarkup
+											);
 										}
 
-										var element = new CKEDITOR.dom.element('br');
+										var element = new CKEDITOR.dom.element(
+											'br'
+										);
 
 										editor.insertElement(element);
 										editor.getSelection();
 
-										editor.fire(
-											'editorInteraction',
-											{
-												nativeEvent: {},
-												selectionData: {
-													element: element,
-													region: element.getClientRect()
-												}
+										editor.fire('editorInteraction', {
+											nativeEvent: {},
+											selectionData: {
+												element: element,
+												region: element.getClientRect()
 											}
-										);
+										});
 									} else {
 										editor.execCommand('enter');
 									}

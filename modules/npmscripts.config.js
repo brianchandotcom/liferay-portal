@@ -1,15 +1,12 @@
-const PRETTIER_GLOBS = [
+const CHECK_AND_FIX_GLOBS = [
 	'*.js',
 	'.*.js',
-	'apps/**/{src,test}/**/*.{js,scss}',
-	'!yarn-*.js',
-	'!**/classes/**/*.{js,scss}',
-	'!**/css/clay/**/*.scss',
-	'!modules/tests/poshi-runner'
+	'apps/**/{src,test}/**/*.js',
+	'apps/**/{src,test}/**/*.scss'
 ];
 
 module.exports = {
-	format: PRETTIER_GLOBS,
-	preset: 'liferay-npm-scripts/src/presets/standard',
-	lint: PRETTIER_GLOBS
+	check: CHECK_AND_FIX_GLOBS,
+	fix: CHECK_AND_FIX_GLOBS,
+	preset: 'liferay-npm-scripts/src/presets/standard'
 };

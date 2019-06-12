@@ -173,16 +173,13 @@
 					editor.insertElement(element);
 					editor.getSelection();
 
-					editor.fire(
-						'editorInteraction',
-						{
-							nativeEvent: {},
-							selectionData: {
-								element: element,
-								region: element.getClientRect()
-							}
+					editor.fire('editorInteraction', {
+						nativeEvent: {},
+						selectionData: {
+							element: element,
+							region: element.getClientRect()
 						}
-					);
+					});
 				} else {
 					editor.execCommand('enter');
 				}

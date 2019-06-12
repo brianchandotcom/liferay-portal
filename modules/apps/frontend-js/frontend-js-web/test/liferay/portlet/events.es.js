@@ -643,9 +643,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it(`its RenderState has windowState=${
-			pageState[portletA].state.windowState
-		}`, done => {
+		it(`its RenderState has windowState=${pageState[portletA].state.windowState}`, done => {
 			expect.assertions(4);
 
 			const handle = hubA.addEventListener(eventType, onStateChange);
@@ -671,9 +669,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it(`its RenderState has portletMode=${
-			pageState[portletA].state.portletMode
-		}`, done => {
+		it(`its RenderState has portletMode=${pageState[portletA].state.portletMode}`, done => {
 			expect.assertions(4);
 
 			const handle = hubA.addEventListener(eventType, onStateChange);

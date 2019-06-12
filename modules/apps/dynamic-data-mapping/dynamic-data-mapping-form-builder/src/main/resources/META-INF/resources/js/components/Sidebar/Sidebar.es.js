@@ -671,14 +671,10 @@ class Sidebar extends Component {
 										<span class='inline-item'>
 											<svg
 												aria-hidden='true'
-												class={`lexicon-icon lexicon-icon-${
-													fieldSets[key].icon
-												}`}
+												class={`lexicon-icon lexicon-icon-${fieldSets[key].icon}`}
 											>
 												<use
-													xlink:href={`${spritemap}#${
-														fieldSets[key].icon
-													}`}
+													xlink:href={`${spritemap}#${fieldSets[key].icon}`}
 												/>
 											</svg>
 										</span>

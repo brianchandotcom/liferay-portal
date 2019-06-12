@@ -82,9 +82,9 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 
 		_checkScript(
 			fileName, scriptsJSONObject, "checkFormat",
-			"liferay-npm-scripts lint", true);
+			"liferay-npm-scripts check", true);
 		_checkScript(
-			fileName, scriptsJSONObject, "format", "liferay-npm-scripts format",
+			fileName, scriptsJSONObject, "format", "liferay-npm-scripts fix",
 			true);
 
 		return content;

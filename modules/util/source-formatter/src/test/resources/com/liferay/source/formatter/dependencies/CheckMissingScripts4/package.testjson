@@ -8,7 +8,7 @@
 	"name": "adaptive-media-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build --soy --bundler",
-		"csf": "liferay-npm-scripts lint"
+		"csf": "liferay-npm-scripts check"
 	},
 	"version": "3.0.0"
 }

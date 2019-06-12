@@ -79,9 +79,7 @@ function init(
 	wrapper.dataset.lfrEditableId = editableElement.id;
 	wrapper.innerHTML = editableContent;
 
-	const editorName = `${portletNamespace}FragmentEntryLinkEditable_${
-		editableElement.id
-	}`;
+	const editorName = `${portletNamespace}FragmentEntryLinkEditable_${editableElement.id}`;
 
 	wrapper.setAttribute('id', editorName);
 	wrapper.setAttribute('name', editorName);

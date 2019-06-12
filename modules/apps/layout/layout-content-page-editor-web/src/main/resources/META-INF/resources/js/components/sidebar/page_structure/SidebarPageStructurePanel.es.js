@@ -87,21 +87,15 @@ class SidebarPageStructurePanel extends Component {
 				]
 			).map(editableValueKey =>
 				SidebarPageStructurePanel._getTreeNode(state, {
-					elementId: `${
-						fragmentEntryLink.fragmentEntryLinkId
-					}-${editableValueKey}`,
+					elementId: `${fragmentEntryLink.fragmentEntryLinkId}-${editableValueKey}`,
 					elementType: FRAGMENTS_EDITOR_ITEM_TYPES.editable,
-					key: `${FRAGMENTS_EDITOR_ITEM_TYPES.editable}-${
-						fragmentEntryLink.fragmentEntryLinkId
-					}-${editableValueKey}`,
+					key: `${FRAGMENTS_EDITOR_ITEM_TYPES.editable}-${fragmentEntryLink.fragmentEntryLinkId}-${editableValueKey}`,
 					label: editableValueKey
 				})
 			),
 			elementId: fragmentEntryLink.fragmentEntryLinkId,
 			elementType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
-			key: `${FRAGMENTS_EDITOR_ITEM_TYPES.fragment}-${
-				fragmentEntryLink.fragmentEntryLinkId
-			}`,
+			key: `${FRAGMENTS_EDITOR_ITEM_TYPES.fragment}-${fragmentEntryLink.fragmentEntryLinkId}`,
 			label: fragmentEntryLink.name,
 			removable: true
 		});

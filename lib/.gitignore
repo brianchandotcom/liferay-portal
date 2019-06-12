@@ -148,8 +148,6 @@
 /portal/im4java.jar
 /portal/isoparser.jar
 /portal/jabsorb.jar
-/portal/jai-imageio-core.jar
-/portal/jai-imageio-jpeg2000.jar
 /portal/jackson-annotations.jar
 /portal/jackson-core.jar
 /portal/jackson-databind.jar
@@ -168,7 +166,6 @@
 /portal/jaxws-api.jar
 /portal/jaxws-rt.jar
 /portal/jazzy.jar
-/portal/jbig2-imageio.jar
 /portal/jcifs.jar
 /portal/jcl-over-slf4j.jar
 /portal/jcommon.jar
@@ -248,7 +245,6 @@
 /portal/spring-web.jar
 /portal/spring-webmvc.jar
 /portal/spring-webmvc-portlet.jar
-/portal/sqlite-jdbc.jar
 /portal/stax-ex.jar
 /portal/stax.jar
 /portal/streambuffer.jar

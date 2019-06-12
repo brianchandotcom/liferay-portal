@@ -1787,30 +1787,6 @@
 				</comments>
 			</library>
 			<library>
-				<file-name>lib/portal/jai-imageio-core.jar</file-name>
-				<version>1.4.0</version>
-				<project-name>Java Advanced Imaging Image I/O Tools API Core (standalone)</project-name>
-				<project-url>https://github.com/jai-imageio/jai-imageio-core</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/jai-imageio-jpeg2000.jar</file-name>
-				<version>1.3.0</version>
-				<project-name>JPEG2000 support for Java Advanced Imaging Image I/O Tools API</project-name>
-				<project-url>https://github.com/jai-imageio/jai-imageio-jpeg2000</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/jai_codec.jar</file-name>
 				<version>1.1.3</version>
 				<project-name>Java Advanced Imaging</project-name>
@@ -1976,18 +1952,6 @@
 					<license>
 						<license-name>LGPL 2.1</license-name>
 						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/jbig2-imageio.jar</file-name>
-				<version>3.0.2</version>
-				<project-name>PDFBox JBIG2 ImageIO Plugin</project-name>
-				<project-url>http://pdfbox.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -3026,18 +2990,6 @@
 				<comments>
 					This does not include missing OSGi headers. See LPS-49575.
 				</comments>
-			</library>
-			<library>
-				<file-name>lib/portal/sqlite-jdbc.jar</file-name>
-				<version>3.27.2.1</version>
-				<project-name>SQLite JDBC</project-name>
-				<project-url>https://github.com/xerial/sqlite-jdbc</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
 			</library>
 			<library>
 				<file-name>lib/portal/stax.jar</file-name>

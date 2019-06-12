@@ -11,7 +11,6 @@ describe('document-library-preview-image', () => {
 
 	it('should render an image previewer', () => {
 		component = new ImagePreviewer({
-			element: document.body,
 			imageURL: 'image.jpg',
 			spritemap: 'icons.svg'
 		});

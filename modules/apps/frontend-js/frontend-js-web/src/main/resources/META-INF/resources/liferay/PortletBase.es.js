@@ -39,6 +39,7 @@ class PortletBase extends Component {
 
 	/**
 	 * Performs an HTTP POST request to the given url with the given body.
+	 * @deprecated since 7.3, use Liferay.Util.fetch
 	 * @param {!string} url Where to send the post request
 	 * @param {!Object|!FormData} body Request body
 	 * @return {Promise}

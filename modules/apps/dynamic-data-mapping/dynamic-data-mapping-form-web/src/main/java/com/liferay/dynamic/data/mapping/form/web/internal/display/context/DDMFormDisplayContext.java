@@ -315,22 +315,12 @@ public class DDMFormDisplayContext {
 	}
 
 	public String getSubmitLabel() throws PortalException {
-		DDMForm ddmForm = getDDMForm();
-
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(_renderRequest);
-
 		ResourceBundle resourceBundle = getResourceBundle(
-			getLocale(httpServletRequest, ddmForm));
+			getLocale(
+				PortalUtil.getHttpServletRequest(_renderRequest),
+				getDDMForm()));
 
-		DDMFormInstance ddmFormInstance = getFormInstance();
-
-		ThemeDisplay themeDisplay = getThemeDisplay();
-
-		boolean workflowEnabled = hasWorkflowEnabled(
-			ddmFormInstance, themeDisplay);
-
-		if (workflowEnabled) {
+		if (hasWorkflowEnabled(getFormInstance(), getThemeDisplay())) {
 			return LanguageUtil.get(resourceBundle, "submit-for-publication");
 		}
 
@@ -459,13 +449,7 @@ public class DDMFormDisplayContext {
 	}
 
 	public boolean isShowSubmitButton() {
-		boolean preview = ParamUtil.getBoolean(_renderRequest, "preview");
-
-		if (preview) {
-			return false;
-		}
-
-		return true;
+		return !ParamUtil.getBoolean(_renderRequest, "preview");
 	}
 
 	public boolean isShowSuccessPage() throws PortalException {

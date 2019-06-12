@@ -20,6 +20,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -49,7 +50,7 @@ public class TGZUtil {
 		throws IOException {
 
 		if (!sourceFile.exists()) {
-			throw new RuntimeException("Unable to find " + sourceFile);
+			throw new FileNotFoundException("Unable to find " + sourceFile);
 		}
 
 		File parentDir = archiveFile.getParentFile();
@@ -191,7 +192,7 @@ public class TGZUtil {
 			file, archiveEntryName);
 
 		if (!(archiveEntry instanceof TarArchiveEntry)) {
-			throw new RuntimeException("Invalid archive entry");
+			throw new IOException("Invalid archive entry");
 		}
 
 		TarArchiveEntry tarArchiveEntry = (TarArchiveEntry)archiveEntry;
@@ -283,8 +284,9 @@ public class TGZUtil {
 	}
 
 	private static void _unarchiveFile(
-		File destinationRootDir, TarArchiveEntry tarArchiveEntry,
-		TarArchiveInputStream tarArchiveInputStream) {
+			File destinationRootDir, TarArchiveEntry tarArchiveEntry,
+			TarArchiveInputStream tarArchiveInputStream)
+		throws IOException {
 
 		File file = new File(destinationRootDir, tarArchiveEntry.getName());
 
@@ -298,20 +300,12 @@ public class TGZUtil {
 			parentDir.mkdirs();
 		}
 
-		try {
-			try (FileOutputStream fileOutputStream = new FileOutputStream(
-					file)) {
-
-				IOUtils.copy(tarArchiveInputStream, fileOutputStream);
-			}
-
-			Files.setPosixFilePermissions(
-				file.toPath(),
-				_getPosixFilePermissions(tarArchiveEntry.getMode()));
+		try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+			IOUtils.copy(tarArchiveInputStream, fileOutputStream);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
+
+		Files.setPosixFilePermissions(
+			file.toPath(), _getPosixFilePermissions(tarArchiveEntry.getMode()));
 	}
 
 	private static final int _CHARS_BUFFER_SIZE = 8192;

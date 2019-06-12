@@ -120,6 +120,8 @@ public class LiferayCiInitK8sClusterUtil {
 			gitWorkingDirectory.addGitRemote(
 				true, remoteName, gitRemoteURL, true);
 		}
+
+		gitWorkingDirectory.addGitRemote(true, "upstream-temp", gitRemoteURL);
 	}
 
 	private static boolean _copyGitRepositoryFromClusterArtifactFile(
@@ -141,6 +143,8 @@ public class LiferayCiInitK8sClusterUtil {
 			return true;
 		}
 		catch (IOException ioe) {
+			gitRepositoryLocalArtifactFile.delete();
+
 			ioe.printStackTrace();
 
 			return false;
@@ -174,6 +178,8 @@ public class LiferayCiInitK8sClusterUtil {
 			return true;
 		}
 		catch (IOException ioe) {
+			gitRepositoryLocalArtifactFile.delete();
+
 			ioe.printStackTrace();
 
 			return false;
@@ -219,7 +225,7 @@ public class LiferayCiInitK8sClusterUtil {
 					gitArtifactsLocalDir, gitRepositoryClusterArtifact,
 					gitRepositoryLocalArtifact) ||
 				  _copyGitRepositoryFromMirrors(
-					  gitArtifactsLocalDir, gitRepositoryClusterArtifact,
+					  gitArtifactsLocalDir, gitRepositoryLocalArtifact,
 					  gitRepositoryName) ||
 				  _cloneGitRepositoryFromGitHubDev(gitRepositoryLocalDir) ||
 				  _cloneGitRepositoryFromGitHub(gitRepositoryLocalDir))) {

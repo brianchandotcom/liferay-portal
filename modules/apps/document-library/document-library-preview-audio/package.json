@@ -5,11 +5,34 @@
 		"metal-soy": "2.16.8",
 		"metal-state": "2.16.8"
 	},
+	"jest": {
+		"globals": {
+			"Liferay": {}
+		},
+		"moduleNameMapper": {
+			"(.*)\\.soy": "$1.soy.js"
+		},
+		"setupFilesAfterEnv": [
+			"<rootDir>/test/setup/index.js"
+		],
+		"snapshotSerializers": [
+			"metal-jest-serializer"
+		],
+		"testPathIgnorePatterns": [
+			"<rootDir>/test/setup/",
+			"<rootDir>/node_modules/"
+		],
+		"transformIgnorePatterns": [
+			"<rootDir>.*(node_modules)(?!.*metal.*).*$"
+		]
+	},
 	"name": "document-library-preview-audio",
+	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix"
+		"format": "liferay-npm-scripts fix",
+		"test": "liferay-npm-scripts test"
 	},
 	"version": "2.0.0"
 }

@@ -871,7 +871,7 @@ public class ObjectServiceTrackerMapTest {
 	}
 
 	protected ServiceRegistration<TrackedOne> registerService(
-		TrackedOne trackedOne, int ranking, String target) {
+		TrackedOne trackedOne, int ranking, Object target) {
 
 		Dictionary<String, Object> properties = new Hashtable<>();
 
@@ -883,18 +883,7 @@ public class ObjectServiceTrackerMapTest {
 	}
 
 	protected ServiceRegistration<TrackedOne> registerService(
-		TrackedOne service, List<String> targets) {
-
-		Dictionary<String, Object> properties = new Hashtable<>();
-
-		properties.put("target", targets);
-
-		return _bundleContext.registerService(
-			TrackedOne.class, service, properties);
-	}
-
-	protected ServiceRegistration<TrackedOne> registerService(
-		TrackedOne trackedOne, String target) {
+		TrackedOne trackedOne, Object target) {
 
 		Dictionary<String, Object> properties = new Hashtable<>();
 

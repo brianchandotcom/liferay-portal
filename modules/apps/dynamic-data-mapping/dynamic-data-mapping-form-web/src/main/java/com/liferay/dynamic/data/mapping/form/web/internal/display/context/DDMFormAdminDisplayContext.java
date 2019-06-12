@@ -976,8 +976,6 @@ public class DDMFormAdminDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		DDMForm ddmForm = createSettingsDDMForm(formInstanceId, themeDisplay);
-
 		DDMFormRenderingContext ddmFormRenderingContext =
 			createDDMFormRenderingContext(renderRequest, renderResponse);
 
@@ -988,6 +986,8 @@ public class DDMFormAdminDisplayContext {
 			DDMFormInstanceSettings.class);
 
 		ddmFormLayout.setPaginationMode(DDMFormLayout.TABBED_MODE);
+
+		DDMForm ddmForm = createSettingsDDMForm(formInstanceId, themeDisplay);
 
 		return ddmFormRenderer.render(
 			ddmForm, ddmFormLayout, ddmFormRenderingContext);
@@ -1022,8 +1022,6 @@ public class DDMFormAdminDisplayContext {
 
 		ddmForm.addAvailableLocale(themeDisplay.getLocale());
 		ddmForm.setDefaultLocale(themeDisplay.getLocale());
-
-		// Storage type
 
 		if (formInstanceId > 0) {
 			Map<String, DDMFormField> ddmFormFieldsMap =

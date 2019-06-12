@@ -39,6 +39,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.apache.commons.collections.CollectionUtils;
+
 /**
  * @author Peter Shin
  */
@@ -204,7 +206,10 @@ public class FreeMarkerTool {
 			List<JavaMethodParameter> javaMethodParameters =
 				javaMethodSignature.getJavaMethodParameters();
 
-			if (javaMethodParameters.size() != 2) {
+			if ((javaMethodParameters.size() != 2) ||
+				CollectionUtils.isEmpty(
+					javaMethodSignature.getRequestBodyMediaTypes())) {
+
 				continue;
 			}
 

@@ -99,7 +99,7 @@ public class LiferayCiInitK8sPodUtil {
 					}
 				}
 
-				gitRepositoryLocalDir.delete();
+				JenkinsResultsParserUtil.delete(gitRepositoryLocalDir);
 			}
 
 			try {

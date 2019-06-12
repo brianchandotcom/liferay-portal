@@ -163,15 +163,15 @@ public class StartupHelper {
 
 	public void verifyRequiredSchemaVersion() throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Check required portal core schema version");
+			_log.debug("Check the portal's required schema version");
 		}
 
 		if (!PortalUpgradeProcess.isInRequiredSchemaVersion(
 				DataAccess.getConnection())) {
 
 			String msg =
-				"You must first upgrade the portal core to the required " +
-					"schema version " +
+				"You must first upgrade the portal to the required schema " +
+					"version " +
 						PortalUpgradeProcess.getRequiredSchemaVersion();
 
 			System.out.println(msg);
@@ -184,8 +184,8 @@ public class StartupHelper {
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Execute the upgrade tool first if you need to upgrade" +
-						"the portal core to the latest schema version");
+					"Execute the upgrade tool first if you need to upgrade " +
+						"the portal to the latest schema version");
 			}
 		}
 	}

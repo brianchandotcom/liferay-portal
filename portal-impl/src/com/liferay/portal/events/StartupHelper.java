@@ -161,6 +161,17 @@ public class StartupHelper {
 		_verified = VerifyProcessUtil.verifyProcess(_upgraded, verified);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #verifyProcess(boolean)}
+	 */
+	@Deprecated
+	public void verifyProcess(boolean newBuildNumber, boolean verified)
+		throws VerifyException {
+
+		verifyProcess(verified);
+	}
+
 	public void verifyRequiredSchemaVersion() throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Check the portal's required schema version");

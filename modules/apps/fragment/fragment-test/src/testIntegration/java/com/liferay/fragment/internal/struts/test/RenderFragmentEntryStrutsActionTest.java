@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -35,10 +34,13 @@ import com.liferay.portal.sharepoint.methods.Method;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.net.URL;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -75,8 +77,6 @@ public class RenderFragmentEntryStrutsActionTest {
 
 		_guestUser = UserTestUtil.addGroupUser(_group, RoleConstants.GUEST);
 
-		_layout = LayoutTestUtil.addLayout(_group);
-
 		ServiceTestUtil.setUser(_groupUser);
 	}
 
@@ -93,9 +93,6 @@ public class RenderFragmentEntryStrutsActionTest {
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
-
-		_setUpEnvironment(
-			mockHttpServletRequest, mockHttpServletResponse, _groupUser);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -123,15 +120,21 @@ public class RenderFragmentEntryStrutsActionTest {
 		mockHttpServletRequest.setParameter(
 			"js", StringUtil.read(jsUrl.openStream()));
 
+		_setUpEnvironment(
+			mockHttpServletRequest, mockHttpServletResponse, _groupUser);
+
 		_renderFragmentEntryStrutsAction.execute(
 			mockHttpServletRequest, pipingServletResponse);
 
 		URL renderedUrl = _bundle.getEntry(
 			_RESOURCES_PATH + "render/simple.html");
 
-		Assert.assertEquals(
-			StringUtil.read(renderedUrl.openStream()),
-			unsyncStringWriter.toString());
+		String actualHTML = _getHTML(unsyncStringWriter.toString());
+
+		String expectedHTML = _getHTML(
+			StringUtil.read(renderedUrl.openStream()));
+
+		Assert.assertEquals(expectedHTML, actualHTML);
 	}
 
 	@Test(expected = PrincipalException.class)
@@ -151,6 +154,22 @@ public class RenderFragmentEntryStrutsActionTest {
 
 		_renderFragmentEntryStrutsAction.execute(
 			mockHttpServletRequest, mockHttpServletResponse);
+	}
+
+	private String _getHTML(String html) {
+		Document document = Jsoup.parseBodyFragment(html);
+
+		Document.OutputSettings outputSettings = new Document.OutputSettings();
+
+		outputSettings.prettyPrint(true);
+
+		document.outputSettings(outputSettings);
+
+		Elements elements = document.getElementsByTag("title");
+
+		elements.remove();
+
+		return document.html();
 	}
 
 	private void _setUpEnvironment(
@@ -178,8 +197,6 @@ public class RenderFragmentEntryStrutsActionTest {
 
 	@DeleteAfterTestRun
 	private User _guestUser;
-
-	private Layout _layout;
 
 	@Inject(filter = "component.name=*.RenderFragmentEntryStrutsAction")
 	private StrutsAction _renderFragmentEntryStrutsAction;

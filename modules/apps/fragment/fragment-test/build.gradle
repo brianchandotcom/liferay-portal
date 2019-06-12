@@ -1,8 +1,11 @@
 dependencies {
+	compileOnly group: "org.jsoup", name: "jsoup", version: "1.10.2"
+
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
 	testIntegrationCompile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	testIntegrationCompile group: "org.jsoup", name: "jsoup", version: "1.10.2"
 	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:fragment:fragment-api")

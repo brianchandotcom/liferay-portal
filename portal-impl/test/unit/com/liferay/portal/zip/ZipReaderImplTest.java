@@ -164,27 +164,10 @@ public class ZipReaderImplTest {
 
 	@Test
 	public void testGetEntryAsInputStream() throws Exception {
-		ZipReader zipReader = new ZipReaderImpl(
-			DependenciesTestUtil.getDependencyAsInputStream(
-				getClass(), _ZIP_FILE_PATH));
-
-		InputStream is = zipReader.getEntryAsInputStream(_FILE_PATH_0);
-
-		Assert.assertTrue(is instanceof FileInputStream);
-
-		is = zipReader.getEntryAsInputStream(_FILE_PATH_1);
-
-		Assert.assertTrue(is instanceof FileInputStream);
-
-		is = zipReader.getEntryAsInputStream(_FILE_PATH_2);
-
-		Assert.assertTrue(is instanceof FileInputStream);
-
-		is = zipReader.getEntryAsInputStream(_FILE_PATH_3);
-
-		Assert.assertTrue(is instanceof FileInputStream);
-
-		zipReader.close();
+		_testGetEntryAsInputStream(_FILE_PATH_0);
+		_testGetEntryAsInputStream(_FILE_PATH_1);
+		_testGetEntryAsInputStream(_FILE_PATH_2);
+		_testGetEntryAsInputStream(_FILE_PATH_3);
 	}
 
 	@Test
@@ -327,6 +310,18 @@ public class ZipReaderImplTest {
 
 		Assert.assertNotNull(entries);
 		Assert.assertTrue(entries.toString(), entries.isEmpty());
+
+		zipReader.close();
+	}
+
+	private void _testGetEntryAsInputStream(String filePath) throws Exception {
+		ZipReader zipReader = new ZipReaderImpl(
+			DependenciesTestUtil.getDependencyAsInputStream(
+				getClass(), _ZIP_FILE_PATH));
+
+		InputStream is = zipReader.getEntryAsInputStream(filePath);
+
+		Assert.assertTrue(is instanceof FileInputStream);
 
 		zipReader.close();
 	}

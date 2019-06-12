@@ -1,4 +1,14 @@
 {
+	"config": {
+		"imports": {
+			"dynamic-data-mapping-form-builder": {
+				"/": ">=2.0.0"
+			},
+			"dynamic-data-mapping-form-field-type": {
+				"/": ">=4.0.0"
+			}
+		}
+	},
     "ignore": [
 		"**/js/*.js"
 	]

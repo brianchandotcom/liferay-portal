@@ -485,7 +485,12 @@ public class SharepointOAuth2TokenEntryModelImpl
 	@Override
 	public SharepointOAuth2TokenEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, SharepointOAuth2TokenEntry>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -720,8 +725,14 @@ public class SharepointOAuth2TokenEntryModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, SharepointOAuth2TokenEntry>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, SharepointOAuth2TokenEntry>
+				_escapedModelProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	private long _sharepointOAuth2TokenEntryId;
 	private long _userId;

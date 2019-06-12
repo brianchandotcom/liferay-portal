@@ -367,7 +367,12 @@ public class KaleoProcessLinkModelImpl
 	@Override
 	public KaleoProcessLink toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, KaleoProcessLink>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -540,8 +545,12 @@ public class KaleoProcessLinkModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, KaleoProcessLink>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, KaleoProcessLink>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private long _kaleoProcessLinkId;
 	private long _kaleoProcessId;

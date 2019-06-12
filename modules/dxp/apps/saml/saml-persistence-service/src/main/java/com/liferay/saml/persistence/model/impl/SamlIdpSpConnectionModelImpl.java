@@ -717,7 +717,12 @@ public class SamlIdpSpConnectionModelImpl
 	@Override
 	public SamlIdpSpConnection toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = _escapedModelProxyProviderFunction.apply(
+			Function<InvocationHandler, SamlIdpSpConnection>
+				escapedModelProxyProviderFunction =
+					EscapedModelProxyProviderFunctionHolder.
+						_escapedModelProxyProviderFunction;
+
+			_escapedModel = escapedModelProxyProviderFunction.apply(
 				new AutoEscapeBeanHandler(this));
 		}
 
@@ -1008,8 +1013,12 @@ public class SamlIdpSpConnectionModelImpl
 		return sb.toString();
 	}
 
-	private static final Function<InvocationHandler, SamlIdpSpConnection>
-		_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+	private static class EscapedModelProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, SamlIdpSpConnection>
+			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private long _samlIdpSpConnectionId;
 	private long _companyId;

@@ -1,4 +1,5 @@
 import {Config} from 'metal-state';
+import fetch from './../../util/fetch.es';
 import {isString} from 'metal';
 import Soy from 'metal-soy';
 
@@ -44,7 +45,10 @@ class SimpleInputModal extends PortletBase {
 	 */
 
 	_defaultFormSubmit(event) {
-		this.fetch(this.formSubmitURL, event.form)
+		fetch(this.formSubmitURL, {
+			body: new FormData(event.form),
+			method: 'POST'
+		})
 			.then(response => response.json())
 			.then(responseContent => {
 				if (responseContent.error) {

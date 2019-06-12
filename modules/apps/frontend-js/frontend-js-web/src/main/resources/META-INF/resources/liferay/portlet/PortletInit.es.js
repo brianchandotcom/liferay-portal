@@ -1,3 +1,4 @@
+import fetch from './../util/fetch.es';
 import {isDefAndNotNull, isFunction, isObject, isString} from 'metal';
 
 import uuidv1 from 'uuid/v1';

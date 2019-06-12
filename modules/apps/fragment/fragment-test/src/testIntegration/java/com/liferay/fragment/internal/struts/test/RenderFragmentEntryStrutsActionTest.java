@@ -40,6 +40,7 @@ import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.net.URL;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -77,6 +78,11 @@ public class RenderFragmentEntryStrutsActionTest {
 		_layout = LayoutTestUtil.addLayout(_group);
 
 		ServiceTestUtil.setUser(_groupUser);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		GroupTestUtil.deleteGroup(_group);
 	}
 
 	@Test
@@ -167,17 +173,12 @@ public class RenderFragmentEntryStrutsActionTest {
 		"com/liferay/fragment/dependencies/fragments/";
 
 	private Bundle _bundle;
-
-	@DeleteAfterTestRun
 	private Group _group;
-
-	@DeleteAfterTestRun
 	private User _groupUser;
 
 	@DeleteAfterTestRun
 	private User _guestUser;
 
-	@DeleteAfterTestRun
 	private Layout _layout;
 
 	@Inject(filter = "component.name=*.RenderFragmentEntryStrutsAction")

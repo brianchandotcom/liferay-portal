@@ -44,6 +44,8 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 
 		<%
 		JournalFolder folder = folders.get(0);
+
+		request.setAttribute("info_panel.jsp-folder", folder);
 		%>
 
 		<div class="sidebar-header">
@@ -106,6 +108,8 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 		DDMStructure ddmStructure = article.getDDMStructure();
 
 		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), article.getDDMTemplateKey(), true);
+
+		request.setAttribute("info_panel.jsp-entry", article);
 		%>
 
 		<div class="sidebar-header">

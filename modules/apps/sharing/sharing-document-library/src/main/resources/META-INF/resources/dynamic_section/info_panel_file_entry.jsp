@@ -27,7 +27,6 @@
 
 		<div class="lfr-portal-tooltip" data-title="<%= LanguageUtil.format(resourceBundle, "x-is-the-owner", owner.getFullName()) %>">
 			<liferay-ui:user-portrait
-				size="lg"
 				user="<%= owner %>"
 			/>
 		</div>
@@ -45,7 +44,6 @@
 				<div class="autofit-col">
 					<div class="lfr-portal-tooltip" data-title="<%= sharingEntryToUser.getFullName() %>">
 						<liferay-ui:user-portrait
-							size="lg"
 							user="<%= sharingEntryToUser %>"
 						/>
 					</div>
@@ -69,7 +67,6 @@
 							elementClasses="user-icon-color-0"
 							icon="users"
 							shape="circle"
-							size="lg"
 						/>
 					</div>
 				</div>

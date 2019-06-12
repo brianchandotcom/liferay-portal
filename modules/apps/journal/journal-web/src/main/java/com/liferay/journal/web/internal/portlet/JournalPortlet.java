@@ -511,23 +511,6 @@ public class JournalPortlet extends MVCPortlet {
 		}
 	}
 
-	public void subscribeStructure(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long ddmStructureId = ParamUtil.getLong(
-			actionRequest, "ddmStructureId");
-
-		_journalArticleService.subscribeStructure(
-			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-			ddmStructureId);
-
-		sendEditArticleRedirect(actionRequest, actionResponse);
-	}
-
 	public void updateArticle(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

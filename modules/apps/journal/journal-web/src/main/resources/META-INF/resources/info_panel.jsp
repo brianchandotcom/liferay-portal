@@ -101,14 +101,6 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 		<%
 		JournalArticle article = articles.get(0);
 
-		long classPK = JournalArticleAssetRenderer.getClassPK(article);
-
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(JournalArticle.class.getName(), classPK);
-
-		DDMStructure ddmStructure = article.getDDMStructure();
-
-		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), article.getDDMTemplateKey(), true);
-
 		request.setAttribute("info_panel.jsp-entry", article);
 		%>
 
@@ -125,7 +117,11 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 				</li>
 			</ul>
 
-			<p class="h4 pt-2"><%= HtmlUtil.escape(assetEntry.getTitle(locale)) %></p>
+			<p class="h4 pt-2"><%= HtmlUtil.escape(article.getTitle(locale)) %></p>
+
+			<%
+			DDMStructure ddmStructure = article.getDDMStructure();
+			%>
 
 			<c:if test="<%= ddmStructure != null %>">
 				<p class="h6 text-default">
@@ -163,6 +159,10 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 				<%= HtmlUtil.escape(article.getTitle(locale)) %>
 			</p>
 
+			<%
+			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), article.getDDMTemplateKey(), true);
+			%>
+
 			<c:if test="<%= ddmTemplate != null %>">
 				<p class="h5"><liferay-ui:message key="template" /></p>
 
@@ -174,7 +174,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 			<div class="lfr-asset-tags">
 				<liferay-asset:asset-tags-summary
 					className="<%= JournalArticle.class.getName() %>"
-					classPK="<%= classPK %>"
+					classPK="<%= JournalArticleAssetRenderer.getClassPK(article) %>"
 					message="tags"
 				/>
 			</div>
@@ -187,15 +187,13 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 
 			<p class="h5"><liferay-ui:message key="priority" /></p>
 
+			<%
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(JournalArticle.class.getName(), JournalArticleAssetRenderer.getClassPK(article));
+			%>
+
 			<p>
 				<%= assetEntry.getPriority() %>
 			</p>
-
-			<%
-			Date expirationDate = article.getExpirationDate();
-
-			Date reviewDate = article.getReviewDate();
-			%>
 
 			<c:if test="<%= article.getDisplayDate() != null %>">
 				<p class="h5"><liferay-ui:message key="display-date" /></p>
@@ -206,6 +204,10 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 			</c:if>
 
 			<p class="h5"><liferay-ui:message key="expiration-date" /></p>
+
+			<%
+			Date expirationDate = article.getExpirationDate();
+			%>
 
 			<p>
 				<c:choose>
@@ -219,6 +221,10 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 			</p>
 
 			<p class="h5"><liferay-ui:message key="review-date" /></p>
+
+			<%
+			Date reviewDate = article.getReviewDate();
+			%>
 
 			<p>
 				<c:choose>

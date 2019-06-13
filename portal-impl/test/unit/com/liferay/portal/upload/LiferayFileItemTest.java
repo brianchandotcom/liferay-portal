@@ -16,10 +16,14 @@ package com.liferay.portal.upload;
 
 import com.liferay.portal.kernel.test.util.DependenciesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.util.FileImpl;
+import com.liferay.portal.util.MimeTypesImpl;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.nio.file.Files;
 
@@ -45,6 +49,10 @@ public class LiferayFileItemTest {
 
 		fileUtil.setFile(new FileImpl());
 
+		MimeTypesUtil mimeTypesUtil = new MimeTypesUtil();
+
+		mimeTypesUtil.setMimeTypes(new MimeTypesImpl());
+
 		_liferayFileItemFactory = new LiferayFileItemFactory(
 			temporaryFolder.getRoot());
 	}
@@ -62,29 +70,35 @@ public class LiferayFileItemTest {
 		Assert.assertEquals(false, liferayFileItem.isFormField());
 	}
 
-	@Test(expected = NullPointerException.class)
-	public void testGetContentTypeFromInvalidFile() {
+	@Test
+	public void testGetContentTypeFromInvalidFile() throws IOException {
 		FileItem fileItem = _liferayFileItemFactory.createItem(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
 			RandomTestUtil.randomString());
 
 		Assert.assertNotNull(fileItem);
 
-		fileItem.getContentType();
+		fileItem.getOutputStream();
+
+		Assert.assertEquals(
+			ContentTypes.APPLICATION_OCTET_STREAM, fileItem.getContentType());
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test
 	public void testGetContentTypeFromRealFile() throws Exception {
 		File file = DependenciesTestUtil.getDependencyAsFile(
 			getClass(), "LiferayFileItem.txt");
 
+		String contentType = Files.probeContentType(file.toPath());
+
 		FileItem fileItem = _liferayFileItemFactory.createItem(
-			RandomTestUtil.randomString(),
-			Files.probeContentType(file.toPath()), false, file.getName());
+			RandomTestUtil.randomString(), contentType, false, file.getName());
 
 		Assert.assertNotNull(fileItem);
 
-		fileItem.getContentType();
+		fileItem.getOutputStream();
+
+		Assert.assertEquals(contentType, fileItem.getContentType());
 	}
 
 	@Test

@@ -15,7 +15,7 @@
 package com.liferay.data.engine.rest.internal.field.type.v1_0;
 
 import com.liferay.captcha.taglib.servlet.taglib.CaptchaTag;
-import com.liferay.data.engine.spi.definition.SPIDataDefinitionField;
+import com.liferay.data.engine.spi.dto.SPIDataDefinitionField;
 import com.liferay.data.engine.spi.field.type.BaseFieldType;
 import com.liferay.data.engine.spi.field.type.FieldType;
 import com.liferay.petra.string.StringPool;

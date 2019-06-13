@@ -14,7 +14,7 @@
 
 package com.liferay.data.engine.spi.rule.function;
 
-import com.liferay.data.engine.spi.definition.SPIDataDefinitionField;
+import com.liferay.data.engine.spi.dto.SPIDataDefinitionField;
 
 import java.util.Map;
 

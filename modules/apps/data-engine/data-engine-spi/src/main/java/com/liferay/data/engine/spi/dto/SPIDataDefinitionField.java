@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.data.engine.spi.definition;
+package com.liferay.data.engine.spi.dto;
 
 import com.liferay.petra.lang.HashUtil;
 

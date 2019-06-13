@@ -17,12 +17,12 @@ package com.liferay.talend.connection;
 import com.liferay.talend.LiferayBaseComponentDefinition;
 import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
 import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
+import com.liferay.talend.ui.UIKeys;
 import com.liferay.talend.utils.PropertiesUtils;
 import com.liferay.talend.utils.URIUtils;
 
 import java.net.URL;
 
-import java.util.EnumSet;
 import java.util.Objects;
 
 import org.slf4j.Logger;
@@ -51,37 +51,13 @@ public class LiferayConnectionProperties
 	extends ComponentPropertiesImpl
 	implements LiferayConnectionPropertiesProvider {
 
-	public static final String FORM_WIZARD = "Wizard";
-
 	public LiferayConnectionProperties(String name) {
 		super(name);
 	}
 
-	public void afterAnonymousLogin() {
-		refreshLayout(getForm(Form.MAIN));
-		refreshLayout(getForm(FORM_WIZARD));
-	}
-
 	public void afterLoginType() {
-		if (_log.isInfoEnabled()) {
-			_log.info("Authorization method: " + loginType.getValue());
-		}
-
 		refreshLayout(getForm(Form.MAIN));
-		refreshLayout(getForm(FORM_WIZARD));
-
-		if (loginType.getValue() == LoginType.BASIC) {
-			_setHiddenBasicAuthorizationFields(getForm(Form.MAIN), false);
-			_setHiddenBasicAuthorizationFields(getForm(FORM_WIZARD), false);
-			_setHiddenOAuthAuthorizationFields(getForm(Form.MAIN), true);
-			_setHiddenOAuthAuthorizationFields(getForm(FORM_WIZARD), true);
-		}
-		else {
-			_setHiddenBasicAuthorizationFields(getForm(Form.MAIN), true);
-			_setHiddenBasicAuthorizationFields(getForm(FORM_WIZARD), true);
-			_setHiddenOAuthAuthorizationFields(getForm(Form.MAIN), false);
-			_setHiddenOAuthAuthorizationFields(getForm(FORM_WIZARD), false);
-		}
+		refreshLayout(getForm(UIKeys.FORM_WIZARD));
 	}
 
 	public void afterReferencedComponent() {
@@ -89,9 +65,14 @@ public class LiferayConnectionProperties
 		refreshLayout(getForm(Form.REFERENCE));
 	}
 
+	public String getApiSpecURL() {
+		return _getValue(apiSpecURL);
+	}
+
 	public String getApplicationBaseHref() {
-		URL openAPISpecURL = URIUtils.toURL(apiSpecURL.getValue());
-		URL serverURL = getServerURL();
+		URL openAPISpecURL = URIUtils.toURL(_getValue(apiSpecURL));
+
+		URL serverURL = URIUtils.extractServerURL(openAPISpecURL);
 		String jaxRSAppBase = URIUtils.extractJaxRSAppBasePathSegment(
 			openAPISpecURL);
 
@@ -103,6 +84,18 @@ public class LiferayConnectionProperties
 	@Override
 	public LiferayConnectionProperties getLiferayConnectionProperties() {
 		return this;
+	}
+
+	public String getOAuthClientId() {
+		return _getValue(oAuthAuthorizationProperties.oauthClientId);
+	}
+
+	public String getOAuthClientSecret() {
+		return _getValue(oAuthAuthorizationProperties.oauthClientSecret);
+	}
+
+	public String getPassword() {
+		return _getValue(basicAuthorizationProperties.password);
 	}
 
 	public String getReferencedComponentId() {
@@ -133,10 +126,12 @@ public class LiferayConnectionProperties
 		return getLiferayConnectionProperties();
 	}
 
-	public URL getServerURL() {
-		URL apiSpecURL = URIUtils.toURL(this.apiSpecURL.getValue());
+	public String getUserId() {
+		return _getValue(basicAuthorizationProperties.userId);
+	}
 
-		return URIUtils.extractServerURL(apiSpecURL);
+	public boolean isAnonymousLogin() {
+		return _getValue(basicAuthorizationProperties.anonymousLogin);
 	}
 
 	public boolean isBasicAuthorization() {
@@ -161,26 +156,41 @@ public class LiferayConnectionProperties
 
 		String referencedComponentId = getReferencedComponentId();
 
-		boolean useOtherConnection = false;
+		boolean hidden = false;
 
 		if ((referencedComponentId != null) &&
 			referencedComponentId.startsWith(
 				TLiferayConnectionDefinition.COMPONENT_NAME)) {
 
-			useOtherConnection = true;
+			hidden = true;
 		}
 
-		PropertiesUtils.setHidden(form, apiSpecURL, useOtherConnection);
-		PropertiesUtils.setHidden(form, loginType, useOtherConnection);
+		PropertiesUtils.setHidden(form, apiSpecURL, hidden);
 
-		_setHiddenBasicAuthorizationFields(form, useOtherConnection);
+		Form basicAuthorizationPropertiesForm =
+			basicAuthorizationProperties.getForm(
+				UIKeys.FORM_BASIC_AUTHORIZATION);
 
-		if (!useOtherConnection && anonymousLogin.getValue()) {
-			PropertiesUtils.setHidden(form, userId, true);
-			PropertiesUtils.setHidden(form, password, true);
+		basicAuthorizationPropertiesForm.setVisible(hidden);
+
+		Form oAuthAuthorizationPropertiesForm =
+			oAuthAuthorizationProperties.getForm(
+				UIKeys.FORM_OAUTH_AUTHORIZATION);
+
+		oAuthAuthorizationPropertiesForm.setVisible(hidden);
+
+		if (hidden) {
+			return;
 		}
 
-		_setHiddenOAuthAuthorizationFields(form, useOtherConnection);
+		if (!isBasicAuthorization()) {
+			basicAuthorizationPropertiesForm.setVisible(false);
+			oAuthAuthorizationPropertiesForm.setVisible(true);
+		}
+		else {
+			basicAuthorizationPropertiesForm.setVisible(true);
+			oAuthAuthorizationPropertiesForm.setVisible(false);
+		}
 	}
 
 	@Override
@@ -189,7 +199,7 @@ public class LiferayConnectionProperties
 
 		// Wizard form
 
-		Form wizardForm = _createForm(this, FORM_WIZARD);
+		Form wizardForm = _createForm(this, UIKeys.FORM_WIZARD);
 
 		_addAuthorizationProps(wizardForm);
 
@@ -206,6 +216,8 @@ public class LiferayConnectionProperties
 		// Main form
 
 		Form mainForm = _createForm(this, Form.MAIN);
+
+		mainForm.addRow(Widget.widget(new PresentationItem("horizontalSpace")));
 
 		_addAuthorizationProps(mainForm);
 
@@ -234,8 +246,6 @@ public class LiferayConnectionProperties
 		followRedirects.setValue(true);
 		forceHttps.setValue(false);
 		loginType.setValue(LoginType.BASIC);
-		password.setValue(_PASSWORD);
-		userId.setValue(_USER_ID);
 	}
 
 	public ValidationResult validateTestConnection() {
@@ -246,7 +256,7 @@ public class LiferayConnectionProperties
 		ValidationResultMutable validationResultMutable =
 			sandboxRuntime.getValidationResultMutable();
 
-		Form form = getForm(FORM_WIZARD);
+		Form form = getForm(UIKeys.FORM_WIZARD);
 
 		if (validationResultMutable.getStatus() == ValidationResult.Result.OK) {
 			form.setAllowFinish(true);
@@ -260,10 +270,10 @@ public class LiferayConnectionProperties
 	}
 
 	public PresentationItem advanced = new PresentationItem("advanced");
-	public Property<Boolean> anonymousLogin = PropertyFactory.newBoolean(
-		"anonymousLogin");
 	public Property<String> apiSpecURL = PropertyFactory.newString(
 		"apiSpecURL");
+	public BasicAuthorizationProperties basicAuthorizationProperties =
+		new BasicAuthorizationProperties("basicAuthorizationProperties");
 	public Property<Integer> connectTimeout = PropertyFactory.newInteger(
 		"connectTimeout", _CONNECT_TIMEOUT);
 	public Property<Boolean> followRedirects = PropertyFactory.newBoolean(
@@ -278,15 +288,8 @@ public class LiferayConnectionProperties
 	public Property<String> name = PropertyFactory.newString(
 		"name"
 	).setRequired();
-	public Property<String> oauthClientId = PropertyFactory.newString(
-		"oauthClientId");
-	public Property<String> oauthClientSecret = PropertyFactory.newString(
-		"oauthClientSecret");
-	public Property<String> password = PropertyFactory.newString(
-		"password"
-	).setFlags(
-		EnumSet.of(Property.Flags.ENCRYPT, Property.Flags.SUPPRESS_LOGGING)
-	);
+	public OAuthAuthorizationProperties oAuthAuthorizationProperties =
+		new OAuthAuthorizationProperties("oAuthAuthorizationProperties");
 	public Property<Integer> readTimeout = PropertyFactory.newInteger(
 		"readTimeout", _READ_TIMEOUT);
 	public ComponentReferenceProperties<LiferayConnectionProperties>
@@ -294,7 +297,6 @@ public class LiferayConnectionProperties
 			"referencedComponent", TLiferayConnectionDefinition.COMPONENT_NAME);
 	public PresentationItem testConnection = new PresentationItem(
 		"testConnection");
-	public Property<String> userId = PropertyFactory.newString("userId");
 
 	public enum LoginType {
 
@@ -326,25 +328,23 @@ public class LiferayConnectionProperties
 		Widget loginWidget = _createWidget(
 			loginType, Widget.ENUMERATION_WIDGET_TYPE);
 
-		if (Objects.equals(form.getName(), FORM_WIZARD)) {
+		if (Objects.equals(form.getName(), UIKeys.FORM_WIZARD)) {
 			loginWidget.setDeemphasize(true);
 		}
 
 		form.addRow(loginWidget);
 
-		form.addRow(apiSpecURL);
-		form.addRow(anonymousLogin);
-		form.addRow(userId);
+		Form basicAuthorizationPropertiesForm =
+			basicAuthorizationProperties.getForm(
+				UIKeys.FORM_BASIC_AUTHORIZATION);
 
-		form.addColumn(password);
+		form.addRow(basicAuthorizationPropertiesForm);
 
-		form.addRow(oauthClientId);
-		form.addRow(oauthClientSecret);
+		Form oAuthAuthorizationPropertiesForm =
+			oAuthAuthorizationProperties.getForm(
+				UIKeys.FORM_OAUTH_AUTHORIZATION);
 
-		if ((loginType != null) && (loginType.getValue() == LoginType.BASIC)) {
-			PropertiesUtils.setHidden(form, oauthClientId, true);
-			PropertiesUtils.setHidden(form, oauthClientSecret, true);
-		}
+		form.addRow(oAuthAuthorizationPropertiesForm);
 	}
 
 	private Form _createAdvancedForm(Properties properties, Property... props) {
@@ -364,7 +364,7 @@ public class LiferayConnectionProperties
 	private Form _createForm(Properties properties, String formName) {
 		Form form = new Form(properties, formName);
 
-		if (Objects.equals(formName, FORM_WIZARD)) {
+		if (Objects.equals(formName, UIKeys.FORM_WIZARD)) {
 			form.addRow(name);
 		}
 
@@ -396,20 +396,8 @@ public class LiferayConnectionProperties
 		return _createWidget(namedThing, false, widgetType);
 	}
 
-	private void _setHiddenBasicAuthorizationFields(Form form, boolean hidden) {
-		PropertiesUtils.setHidden(form, anonymousLogin, hidden);
-		PropertiesUtils.setHidden(form, password, hidden);
-		PropertiesUtils.setHidden(form, userId, hidden);
-
-		if (anonymousLogin.getValue()) {
-			PropertiesUtils.setHidden(form, userId, true);
-			PropertiesUtils.setHidden(form, password, true);
-		}
-	}
-
-	private void _setHiddenOAuthAuthorizationFields(Form form, boolean hidden) {
-		PropertiesUtils.setHidden(form, oauthClientId, hidden);
-		PropertiesUtils.setHidden(form, oauthClientSecret, hidden);
+	private <T> T _getValue(Property<T> property) {
+		return property.getValue();
 	}
 
 	private static final String _COMMERCE_CATALOG_OAS_URL =
@@ -420,11 +408,7 @@ public class LiferayConnectionProperties
 
 	private static final int _ITEMS_PER_PAGE = 100;
 
-	private static final String _PASSWORD = "test";
-
 	private static final int _READ_TIMEOUT = 60;
-
-	private static final String _USER_ID = "test@liferay.com";
 
 	private static final Logger _log = LoggerFactory.getLogger(
 		LiferayConnectionProperties.class);

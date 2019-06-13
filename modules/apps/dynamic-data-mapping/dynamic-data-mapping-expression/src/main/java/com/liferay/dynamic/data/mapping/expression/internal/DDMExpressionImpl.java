@@ -110,7 +110,22 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 			throw new IllegalArgumentException();
 		}
 
-		_expressionContext = createExpressionContext();
+		CharStream charStream = new ANTLRInputStream(_expressionString);
+
+		DDMExpressionLexer ddmExpressionLexer = new DDMExpressionLexer(
+			charStream);
+
+		DDMExpressionParser ddmExpressionParser = new DDMExpressionParser(
+			new CommonTokenStream(ddmExpressionLexer));
+
+		ddmExpressionParser.setErrorHandler(new BailErrorStrategy());
+
+		try {
+			_expressionContext = ddmExpressionParser.expression();
+		}
+		catch (Exception e) {
+			throw new DDMExpressionException.InvalidSyntax(e);
+		}
 
 		ParseTreeWalker parseTreeWalker = new ParseTreeWalker();
 
@@ -123,27 +138,6 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 
 		for (String variableName : ddmExpressionListener.getVariableNames()) {
 			_variables.put(variableName, null);
-		}
-	}
-
-	protected DDMExpressionParser.ExpressionContext createExpressionContext()
-		throws DDMExpressionException {
-
-		try {
-			CharStream charStream = new ANTLRInputStream(_expressionString);
-
-			DDMExpressionLexer ddmExpressionLexer = new DDMExpressionLexer(
-				charStream);
-
-			DDMExpressionParser ddmExpressionParser = new DDMExpressionParser(
-				new CommonTokenStream(ddmExpressionLexer));
-
-			ddmExpressionParser.setErrorHandler(new BailErrorStrategy());
-
-			return ddmExpressionParser.expression();
-		}
-		catch (Exception e) {
-			throw new DDMExpressionException.InvalidSyntax(e);
 		}
 	}
 

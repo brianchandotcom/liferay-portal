@@ -240,8 +240,7 @@ public class GraphQLServletExtender {
 		mutationBuilder.fields(
 			_getGraphQLFieldDefinitions(
 				processingElementsContainer, graphQLFieldRetriever,
-				ServletData::getMutation)
-		).build();
+				ServletData::getMutation));
 
 		schemaBuilder.mutation(mutationBuilder.build());
 
@@ -252,8 +251,7 @@ public class GraphQLServletExtender {
 		queryBuilder.fields(
 			_getGraphQLFieldDefinitions(
 				processingElementsContainer, graphQLFieldRetriever,
-				ServletData::getQuery)
-		).build();
+				ServletData::getQuery));
 
 		schemaBuilder.query(queryBuilder.build());
 

@@ -75,6 +75,15 @@ long[] groupIds = (long[])request.getAttribute(UADWebKeys.GROUP_IDS);
 			/>
 		</div>
 
+		<liferay-ui:error key="deleteUADEntityException">
+
+			<%
+			String message = (String)errorException;
+			%>
+
+			<liferay-ui:message key="<%= message %>" localizeKey="<%= false %>" />
+		</liferay-ui:error>
+
 		<c:if test="<%= !Objects.equals(viewUADEntitiesDisplay.getApplicationKey(), UADConstants.ALL_APPLICATIONS) %>">
 			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= true %>" id="/info_panel" var="entityTypeSidebarURL">
 				<liferay-portlet:param name="hierarchyView" value="<%= String.valueOf(viewUADEntitiesDisplay.isHierarchy()) %>" />

@@ -14,15 +14,22 @@
 
 package com.liferay.message.boards.uad.anonymizer;
 
+import com.liferay.message.boards.exception.RequiredMessageException;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.uad.constants.MBUADConstants;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the base implementation for the message-boards message UAD anonymizer.
@@ -75,6 +82,21 @@ public abstract class BaseMBMessageUADAnonymizer
 	@Override
 	protected String[] doGetUserIdFieldNames() {
 		return MBUADConstants.USER_ID_FIELD_NAMES_MB_MESSAGE;
+	}
+
+	@Override
+	public Map<Class, String> getExceptionMessageMap(Locale locale) {
+		Map<Class, String> exceptionMessageMap = new HashMap<>();
+
+		exceptionMessageMap.put(
+			RequiredMessageException.class,
+			LanguageUtil.get(
+				ResourceBundleUtil.getBundle(
+					locale, BaseMBMessageUADAnonymizer.class),
+				"root-messages-with-multiple-replies-cannot-be-deleted.-" +
+					"delete-the-thread-instead"));
+
+		return exceptionMessageMap;
 	}
 
 	@Reference

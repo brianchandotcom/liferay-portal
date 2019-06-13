@@ -27,10 +27,8 @@ import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.servlet.taglib.DynamicIncludeUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.soy.renderer.ComponentDescriptor;
@@ -176,13 +174,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	private DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
 
 	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
 	private NPMResolver _npmResolver;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private SoyComponentRenderer _soyComponentRenderer;

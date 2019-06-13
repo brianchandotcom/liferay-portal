@@ -49,11 +49,11 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 	public T evaluate() throws DDMExpressionException {
 		Map<String, DDMExpressionFunction> ddmExpressionFunctions =
 			_ddmExpressionFunctionTracker.getDDMExpressionFunctions(
-				getExpressionFunctionNames());
+				_ddmExpressionFunctionNames);
 
 		try {
 			Set<String> undefinedFunctionNames = new HashSet<>(
-				getExpressionFunctionNames());
+				_ddmExpressionFunctionNames);
 
 			undefinedFunctionNames.removeAll(ddmExpressionFunctions.keySet());
 
@@ -150,10 +150,6 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		for (String variableName : ddmExpressionListener.getVariableNames()) {
 			_variables.put(variableName, null);
 		}
-	}
-
-	protected Set<String> getExpressionFunctionNames() {
-		return _ddmExpressionFunctionNames;
 	}
 
 	protected Set<String> getExpressionVariableNames() {

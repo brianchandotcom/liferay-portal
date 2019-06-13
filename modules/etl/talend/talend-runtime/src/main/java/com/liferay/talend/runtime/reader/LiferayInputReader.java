@@ -15,6 +15,8 @@
 package com.liferay.talend.runtime.reader;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import com.liferay.talend.avro.ResourceNodeConverter;
 import com.liferay.talend.runtime.LiferaySource;
@@ -138,16 +140,23 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
 		_endpointJsonNode = _getEndpointJsonNode(endpointURI, 1, -1);
 
-		_inputRecordsJsonNode = _endpointJsonNode.path("items");
+		if (_endpointJsonNode.has("items")) {
+			_inputRecordsJsonNode = _endpointJsonNode.path("items");
 
-		boolean start = false;
+			boolean start = false;
 
-		if (_inputRecordsJsonNode.size() > 0) {
-			start = true;
+			if (_inputRecordsJsonNode.size() > 0) {
+				start = true;
+			}
+
+			if (!start) {
+				return false;
+			}
 		}
+		else {
+			ArrayNode arrayNode = _OBJECT_MAPPER.createArrayNode();
 
-		if (!start) {
-			return false;
+			_inputRecordsJsonNode = arrayNode.add(_endpointJsonNode);
 		}
 
 		dataCount++;
@@ -155,7 +164,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		_started = true;
 		_hasMore = true;
 
-		return start;
+		return true;
 	}
 
 	/**
@@ -210,6 +219,8 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
 		return liferaySource.doGetRequest(decoratedResourceURI.toString());
 	}
+
+	private static final ObjectMapper _OBJECT_MAPPER = new ObjectMapper();
 
 	private static final Logger _log = LoggerFactory.getLogger(
 		LiferayInputReader.class);

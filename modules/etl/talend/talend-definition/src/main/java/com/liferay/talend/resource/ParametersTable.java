@@ -48,7 +48,6 @@ public class ParametersTable extends BasedOnSchemaTable {
 		super.setupProperties();
 
 		typeColumnName.setTaggedValue(ADD_QUOTES, true);
-		valueColumnName.setTaggedValue(ADD_QUOTES, true);
 	}
 
 	public Property<List<String>> typeColumnName = newProperty(

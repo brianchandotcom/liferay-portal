@@ -78,10 +78,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -120,12 +117,7 @@ definition {
 
 		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Parent Article Content",
@@ -148,12 +140,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "KnowledgeBase#HIERARCHY_NAVIGATION_CHILD");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.gotoChildArticleDescriptiveDetails(kbArticleTitle = "Knowledge Base Parent Article Title");
 
@@ -187,23 +174,13 @@ definition {
 
 		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Article Content",
 			kbArticleTitle = "KB Article Outside Folder");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBFolder.addCP(
 			kbFolderDescription = "KB Folder Description",
@@ -219,12 +196,7 @@ definition {
 
 		KBArticle.configureKBFolderDisplay(kbFolderName = "KB Folder");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBFolder.deleteCP(kbFolderName = "KB Folder");
 
@@ -264,12 +236,7 @@ definition {
 
 		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.importCP(
 			applyNumericalPrefix = "true",
@@ -285,12 +252,7 @@ definition {
 
 		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 2");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.selectAllCP();
 
@@ -328,12 +290,7 @@ definition {
 
 		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCPWithTextFieldCustomField(
 			customFieldText = "KB Article Custom Field",
@@ -348,12 +305,7 @@ definition {
 			kbArticleContent = "KB Article Content",
 			kbArticleTitle = "KB Article Title");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.editCP(
 			customFieldTextEdit = "KB Article Custom Field Edited",
@@ -402,12 +354,7 @@ definition {
 
 		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBFolder.addCP(
 			customField = "01/01/2017",
@@ -425,12 +372,7 @@ definition {
 			kbArticleContent = "Knowledge Base 2017 Article Content",
 			kbArticleTitle = "Knowledge Base 2017 Article Title");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBFolder.gotoCP(kbFolderName = "KB Folder 2010 Name");
 
@@ -456,22 +398,12 @@ definition {
 			kbArticleContent = "Knowledge Base 2010 Article Content",
 			kbArticleTitle = "Knowledge Base 2010 Article Title");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		var entries = "2010,2017";
 
 		for (var kbEntry : list "${entries}") {
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
-				panel = "Site Administration",
-				portlet = "Knowledge Base");
+			KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
@@ -504,12 +436,7 @@ definition {
 
 		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Parent Article Content",
@@ -528,12 +455,7 @@ definition {
 			kbChildArticleContent = "Knowledge Base Child Article Content",
 			kbChildArticleTitle = "Knowledge Base Child Article Title");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.gotoChildArticleDescriptiveDetails(kbArticleTitle = "Knowledge Base Parent Article Title");
 
@@ -551,12 +473,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "KnowledgeBase#HIERARCHY_NAVIGATION_CHILD");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.gotoChildArticleDescriptiveDetails(kbArticleTitle = "Knowledge Base Parent Article Title");
 
@@ -568,12 +485,7 @@ definition {
 
 	@priority = "4"
 	test SearchChildArticleViaSearchPortletPG {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -630,12 +542,7 @@ definition {
 
 		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBFolder.addCP(
 			kbFolderDescription = "KB Folder Description",
@@ -669,12 +576,7 @@ definition {
 
 	@priority = "4"
 	test SearchKBArticleViaSearchPortlet {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -707,12 +609,7 @@ definition {
 
 	@priority = "3"
 	test SearchKBArticleWithSpecialCharactersViaSearchPortletPG {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article&apos;s Content",
@@ -767,12 +664,7 @@ definition {
 
 		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -818,12 +710,7 @@ definition {
 
 		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBFolder.addCP(
 			kbFolderDescription = "KB Folder Description",
@@ -877,12 +764,7 @@ definition {
 
 		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBFolder.addCP(
 			kbFolderDescription = "KB Folder Description",
@@ -918,12 +800,7 @@ definition {
 
 		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.importCP(
 			applyNumericalPrefix = "true",
@@ -975,12 +852,7 @@ definition {
 
 		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.importCP(
 			applyNumericalPrefix = "true",
@@ -1024,12 +896,7 @@ definition {
 
 		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.importCP(
 			applyNumericalPrefix = "true",
@@ -1045,21 +912,11 @@ definition {
 
 		KBArticle.viewImageViaContentCmd();
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		DMDocument.viewDefaultCP();
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.gotoChildArticleDescriptiveDetails(kbArticleTitle = "Knowledge Base Article Parent Title 2");
 
@@ -1103,12 +960,7 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.importCP(
 			applyNumericalPrefix = "true",
@@ -1156,12 +1008,7 @@ definition {
 
 		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "KB Article Content",
@@ -1207,12 +1054,7 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -1272,12 +1114,7 @@ definition {
 
 		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBFolder.addCP(
 			kbFolderDescription = "KB Folder 1 Description",
@@ -1333,12 +1170,7 @@ definition {
 
 		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBFolder.addCP(
 			kbFolderDescription = "KB Folder 1 Description",
@@ -1364,12 +1196,7 @@ definition {
 			kbChildArticleContent = "Knowledge Base Article Folder 1 Content 1 Grandchild",
 			kbChildArticleTitle = "Knowledge Base Article Folder 1 Title 1 Grandchild");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBFolder.addCP(
 			kbFolderDescription = "KB Folder 2 Description",
@@ -1488,12 +1315,7 @@ definition {
 			currentKBPageScope = "Liferay",
 			newKBPageScope = "Knowledge Base Display Page 2 (Create New)");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.setScopeCP(kbPageScope = "Knowledge Base Display Page 1");
 
@@ -1501,12 +1323,7 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title for Page 1");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.setScopeCP(kbPageScope = "Knowledge Base Display Page 2");
 
@@ -1548,12 +1365,7 @@ definition {
 
 		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBFolder.addCP(
 			kbFolderDescription = "KB Folder 1 Description",
@@ -1603,12 +1415,7 @@ definition {
 
 		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBFolder.addCP(
 			kbFolderDescription = "KB Folder 1 Description",
@@ -1624,12 +1431,7 @@ definition {
 			kbArticleContent = "Knowledge Base Article Folder 1 Content 2",
 			kbArticleTitle = "Knowledge Base Article Folder 1 Title 2");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBFolder.addCP(
 			kbFolderDescription = "KB Folder 2 Description",
@@ -1727,12 +1529,7 @@ definition {
 			roleTitle = "Administrator",
 			userScreenName = "usersn");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -1760,12 +1557,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.gotoSuggestionsNavigationCP();
 
@@ -1795,12 +1587,7 @@ definition {
 
 		KBArticleSuggestion.deleteCP(kbSuggestionBody = "Knowledge Base Article Suggestion");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.gotoSuggestionsNavigationCP();
 
@@ -1866,12 +1653,7 @@ definition {
 			siteRoleName = "Site Administrator",
 			userScreenName = "usersn");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.configureEmailCP(
 			emailFrom = "true",
@@ -1887,12 +1669,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.subscribeCP();
 
@@ -1902,12 +1679,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "KB Article Content",
@@ -1986,12 +1758,7 @@ definition {
 
 		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		for (var kbCount : list "1,2,3") {
 			KBArticle.addCP(
@@ -2103,12 +1870,7 @@ definition {
 
 		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBFolder.addCP(
 			kbFolderDescription = "KB Folder Description",
@@ -2130,12 +1892,7 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content 2",
 			kbArticleTitle = "Knowledge Base Article Title 2");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBFolder.gotoCP(kbFolderName = "KB Root Folder");
 
@@ -2280,12 +2037,7 @@ definition {
 			userEmailAddress = "user2@liferay.com",
 			userScreenName = "usersn2");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -2412,12 +2164,7 @@ definition {
 
 		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Parent Content 1",
@@ -2444,12 +2191,7 @@ definition {
 
 		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.gotoChildArticleDescriptiveDetails(kbArticleTitle = "Knowledge Base Article Parent Title 1");
 
@@ -2509,12 +2251,7 @@ definition {
 			privacy = "Public Pages",
 			sitePageType = "Widget Page");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",

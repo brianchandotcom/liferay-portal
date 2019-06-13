@@ -48,12 +48,7 @@ definition {
 
 	@priority = "3"
 	test DeleteKBArticleViaKBArticle {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -75,12 +70,7 @@ definition {
 			deleteViaKBArticle = "true",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Knowledge Base");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.viewDefaultCP();
 	}

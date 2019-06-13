@@ -314,11 +314,9 @@ public class ZipReaderImplTest {
 			DependenciesTestUtil.getDependencyAsInputStream(
 				getClass(), _ZIP_FILE_PATH));
 
-		InputStream is = zipReader.getEntryAsInputStream(filePath);
-
-		Assert.assertTrue(is instanceof FileInputStream);
-
-		is.close();
+		try (InputStream is = zipReader.getEntryAsInputStream(filePath)) {
+			Assert.assertTrue(is instanceof FileInputStream);
+		}
 
 		zipReader.close();
 	}

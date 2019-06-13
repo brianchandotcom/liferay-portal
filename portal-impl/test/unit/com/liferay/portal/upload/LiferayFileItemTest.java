@@ -130,7 +130,7 @@ public class LiferayFileItemTest {
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void testSetStringWithoutOutputStream() throws Exception {
+	public void testSetStringWithoutOutputStream() {
 		LiferayFileItem liferayFileItem = _liferayFileItemFactory.createItem(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
 			RandomTestUtil.randomString() + ".txt");

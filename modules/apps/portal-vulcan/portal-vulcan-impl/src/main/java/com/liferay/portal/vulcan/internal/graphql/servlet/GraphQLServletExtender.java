@@ -14,8 +14,6 @@
 
 package com.liferay.portal.vulcan.internal.graphql.servlet;
 
-import static graphql.annotations.processor.util.NamingKit.toGraphqlName;
-
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -108,10 +106,10 @@ public class GraphQLServletExtender {
 						GraphQLName.class);
 
 					if (graphQLName == null) {
-						return toGraphqlName(objectClass.getName());
+						return NamingKit.toGraphqlName(objectClass.getName());
 					}
 
-					return toGraphqlName(graphQLName.value());
+					return NamingKit.toGraphqlName(graphQLName.value());
 				}
 
 			};

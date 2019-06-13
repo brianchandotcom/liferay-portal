@@ -168,7 +168,7 @@ definition {
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 
 		Click(
-			locator1 = "Sharing#SHARED_ASSETS_DOCUMENT_OPTIONS",
+			locator1 = "Sharing#SHARED_CONTENT_DOCUMENT_OPTIONS",
 			value1 = "${dmDocumentTitle}");
 
 		MenuItem.click(menuItem = "Share");

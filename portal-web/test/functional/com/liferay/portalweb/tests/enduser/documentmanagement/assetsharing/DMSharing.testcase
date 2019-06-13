@@ -227,7 +227,7 @@ definition {
 		var key_dmDocumentTitle = "DM Document Title";
 
 		AssertTextEquals(
-			locator1 = "Sharing#SHARED_ASSETS_DOCUMENT_TITLE",
+			locator1 = "Sharing#SHARED_CONTENT_DOCUMENT_TITLE",
 			value1 = "DM Document Title");
 		AssertElementNotPresent(locator1 = "//tbody/tr[2]/td[contains(@class,'table-cell-content')]/a[contains(.,'DM Document Title')]");
 	}
@@ -353,7 +353,7 @@ definition {
 		var key_assetType = "Documents";
 
 		AssertClick(
-			locator1 = "Sharing#SHARED_ASSETS_ASSET_TYPE",
+			locator1 = "Sharing#SHARED_CONTENT_ASSET_TYPE",
 			value1 = "Documents");
 
 		SelectFrame(value1 = "relative=top");
@@ -804,7 +804,7 @@ definition {
 
 		var key_dmDocumentTitle = "DM Document Title";
 
-		Click(locator1 = "Sharing#SHARED_ASSETS_DOCUMENT_OPTIONS");
+		Click(locator1 = "Sharing#SHARED_CONTENT_DOCUMENT_OPTIONS");
 
 		MenuItem.viewNotPresent(menuItem = "Share");
 

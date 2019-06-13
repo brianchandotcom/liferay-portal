@@ -697,10 +697,10 @@ definition {
 		IFrame.selectModalFrame();
 
 		Type(
-			locator1 = "Sharing#INVITE_TO_COLLABORATE_INPUT",
+			locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_INPUT",
 			value1 = "userea2@liferay.com");
 
-		AssertElementPresent(locator1 = "Sharing#INVITE_TO_COLLABORATE_DROPDOWN");
+		AssertElementPresent(locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_DROPDOWN");
 
 		User.logoutPG();
 

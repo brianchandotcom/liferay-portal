@@ -202,12 +202,10 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 	}
 
 	protected void ungetDDMExpressionFunctions() {
-		if (_ddmExpressionFunctions.isEmpty()) {
-			return;
+		if (!_ddmExpressionFunctions.isEmpty()) {
+			_ddmExpressionFunctionTracker.ungetDDMExpressionFunctions(
+				_ddmExpressionFunctions);
 		}
-
-		_ddmExpressionFunctionTracker.ungetDDMExpressionFunctions(
-			_ddmExpressionFunctions);
 	}
 
 	private DDMExpressionActionHandler _ddmExpressionActionHandler;

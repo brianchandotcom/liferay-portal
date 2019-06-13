@@ -17,20 +17,19 @@ package com.liferay.dynamic.data.mapping.expression.internal;
 import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.ComponentFactory;
 import org.osgi.service.component.ComponentInstance;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Leonardo Barros
@@ -38,6 +37,28 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(immediate = true, service = DDMExpressionFunctionTracker.class)
 public class DDMExpressionFunctionTrackerImpl
 	implements DDMExpressionFunctionTracker {
+
+	@Activate
+	public void activate(BundleContext bundleContext) {
+		_componentFactoryMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ComponentFactory.class,
+			"(component.factory=" +
+				DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME + ")",
+			(serviceReference, emitter) -> {
+				ComponentFactory componentFactory = bundleContext.getService(
+					serviceReference);
+
+				ComponentInstance componentInstance =
+					componentFactory.newInstance(null);
+
+				DDMExpressionFunction ddmExpressionFunction =
+					(DDMExpressionFunction)componentInstance.getInstance();
+
+				bundleContext.ungetService(serviceReference);
+
+				emitter.emit(ddmExpressionFunction.getName());
+			});
+	}
 
 	@Override
 	public Map<String, DDMExpressionFunction> getDDMExpressionFunctions(
@@ -47,8 +68,8 @@ public class DDMExpressionFunctionTrackerImpl
 			new HashMap<>(functionNames.size());
 
 		for (String functionName : functionNames) {
-			ComponentFactory componentFactory =
-				_ddmExpressionFunctionComponentFactoryMap.get(functionName);
+			ComponentFactory componentFactory = _componentFactoryMap.getService(
+				functionName);
 
 			if (componentFactory != null) {
 				ddmExpressionFunctionsMap.put(
@@ -69,32 +90,9 @@ public class DDMExpressionFunctionTrackerImpl
 		Map<String, DDMExpressionFunction> ddmExpressionFunctionsMap) {
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(component.factory=" + DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME + ")",
-		unbind = "unsetComponentFactory"
-	)
-	protected void addComponentFactory(ComponentFactory componentFactory) {
-		DDMExpressionFunction ddmExpressionFunction =
-			_createDDMExpressionFunction(componentFactory);
-
-		_ddmExpressionFunctionComponentFactoryMap.put(
-			ddmExpressionFunction.getName(), componentFactory);
-	}
-
 	@Deactivate
 	protected void deactivate() {
-		_ddmExpressionFunctionComponentFactoryMap.clear();
-	}
-
-	protected void unsetComponentFactory(ComponentFactory componentFactory) {
-		DDMExpressionFunction ddmExpressionFunction =
-			_createDDMExpressionFunction(componentFactory);
-
-		_ddmExpressionFunctionComponentFactoryMap.remove(
-			ddmExpressionFunction.getName(), componentFactory);
+		_componentFactoryMap.close();
 	}
 
 	private DDMExpressionFunction _createDDMExpressionFunction(
@@ -111,7 +109,6 @@ public class DDMExpressionFunctionTrackerImpl
 		return ddmExpressionFunction;
 	}
 
-	private final Map<String, ComponentFactory>
-		_ddmExpressionFunctionComponentFactoryMap = new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, ComponentFactory> _componentFactoryMap;
 
 }

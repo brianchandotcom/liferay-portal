@@ -402,6 +402,10 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	public DB getDB() {
+		if (_db == null) {
+			_db = DBManagerUtil.getDB(_dialect, _dataSource);
+		}
+
 		return _db;
 	}
 
@@ -498,9 +502,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 		_dialect = _sessionFactory.getDialect();
 
-		_db = DBManagerUtil.getDB(_dialect, getDataSource());
-
-		DBType dbType = _db.getDBType();
+		DBType dbType = DBManagerUtil.getDBType(_dialect);
 
 		_databaseOrderByMaxColumns = GetterUtil.getInteger(
 			PropsUtil.get(

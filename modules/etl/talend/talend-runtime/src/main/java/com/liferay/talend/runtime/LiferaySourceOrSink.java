@@ -452,9 +452,6 @@ public class LiferaySourceOrSink
 		}
 
 		String target = liferayConnectionProperties.getApiSpecURL();
-		String password = liferayConnectionProperties.getPassword();
-
-		String userId = liferayConnectionProperties.getUserId();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -476,7 +473,10 @@ public class LiferaySourceOrSink
 		}
 
 		if (!liferayConnectionProperties.isAnonymousLogin()) {
-			_validateCredentials(userId, password, validationResultMutable);
+			_validateCredentials(
+				liferayConnectionProperties.getUserId(),
+				liferayConnectionProperties.getPassword(),
+				validationResultMutable);
 
 			if (validationResultMutable.getStatus() ==
 					ValidationResult.Result.ERROR) {

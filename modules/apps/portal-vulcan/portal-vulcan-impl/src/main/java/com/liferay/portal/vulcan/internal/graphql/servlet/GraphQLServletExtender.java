@@ -250,6 +250,21 @@ public class GraphQLServletExtender {
 		_servletContextHelperServiceRegistration.unregister();
 	}
 
+	private void _collectObjectFields(
+		ProcessingElementsContainer processingElementsContainer,
+		GraphQLObjectType.Builder builder, Object object) {
+
+		Class<?> clazz = object.getClass();
+
+		for (Method method : clazz.getMethods()) {
+			if (method.isAnnotationPresent(GraphQLField.class)) {
+				builder.field(
+					_graphQLFieldRetriever.getField(
+						method, processingElementsContainer));
+			}
+		}
+	}
+
 	private Object _get(
 			DataFetchingEnvironment dataFetchingEnvironment, Method method)
 		throws Exception {
@@ -346,29 +361,13 @@ public class GraphQLServletExtender {
 			queryBuilder.name("query");
 
 			for (ServletData servletData : _servletDataList) {
-				Object mutation = servletData.getMutation();
+				_collectObjectFields(
+					processingElementsContainer, mutationBuilder,
+					servletData.getMutation());
 
-				Class<?> mutationClass = mutation.getClass();
-
-				for (Method method : mutationClass.getMethods()) {
-					if (method.isAnnotationPresent(GraphQLField.class)) {
-						mutationBuilder.field(
-							_graphQLFieldRetriever.getField(
-								method, processingElementsContainer));
-					}
-				}
-
-				Object query = servletData.getQuery();
-
-				Class<?> queryClazz = query.getClass();
-
-				for (Method method : queryClazz.getMethods()) {
-					if (method.isAnnotationPresent(GraphQLField.class)) {
-						queryBuilder.field(
-							_graphQLFieldRetriever.getField(
-								method, processingElementsContainer));
-					}
-				}
+				_collectObjectFields(
+					processingElementsContainer, queryBuilder,
+					servletData.getQuery());
 			}
 
 			schemaBuilder.mutation(mutationBuilder.build());

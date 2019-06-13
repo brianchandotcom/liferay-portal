@@ -798,17 +798,20 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 				Portlet portletModel = entry.getValue();
 
-				String portletId = PortletProviderUtil.getPortletId(
-					PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
-					PortletProvider.Action.VIEW);
-
 				if (!Objects.equals(
 						portletModel.getPortletId(),
 						PortletKeys.SERVER_ADMIN) &&
-					!Objects.equals(portletModel.getPortletId(), portletId) &&
 					!portletModel.isInclude()) {
 
-					portletPoolsItr.remove();
+					String portletId = PortletProviderUtil.getPortletId(
+						PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
+						PortletProvider.Action.VIEW);
+
+					if (!Objects.equals(
+							portletModel.getPortletId(), portletId)) {
+
+						portletPoolsItr.remove();
+					}
 				}
 			}
 

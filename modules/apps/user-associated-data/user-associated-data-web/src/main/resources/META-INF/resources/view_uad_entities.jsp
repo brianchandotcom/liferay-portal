@@ -21,6 +21,8 @@ ViewUADEntitiesDisplay viewUADEntitiesDisplay = (ViewUADEntitiesDisplay)request.
 
 boolean topLevelView = true;
 
+String parentContainerClass = ParamUtil.getString(request, "parentContainerClass");
+
 long parentContainerId = ParamUtil.getLong(request, "parentContainerId");
 
 if (parentContainerId > 0) {
@@ -32,6 +34,8 @@ if (parentContainerId > 0) {
 }
 
 long[] groupIds = (long[])request.getAttribute(UADWebKeys.GROUP_IDS);
+
+String scope = ParamUtil.getString(request, "scope", UADConstants.SCOPE_PERSONAL_SITE);
 %>
 
 <clay:management-toolbar
@@ -42,6 +46,9 @@ long[] groupIds = (long[])request.getAttribute(UADWebKeys.GROUP_IDS);
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="p_u_i_d" type="hidden" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
 	<aui:input name="groupIds" type="hidden" value='<%= (groupIds != null) ? StringUtil.merge(groupIds) : "" %>' />
+	<aui:input name="parentContainerClass" type="hidden" value="<%= parentContainerClass %>" />
+	<aui:input name="parentContainerId" type="hidden" value="<%= String.valueOf(parentContainerId) %>" />
+	<aui:input name="scope" type="hidden" value="<%= scope %>" />
 
 	<c:choose>
 		<c:when test="<%= Objects.equals(viewUADEntitiesDisplay.getApplicationKey(), UADConstants.ALL_APPLICATIONS) %>">

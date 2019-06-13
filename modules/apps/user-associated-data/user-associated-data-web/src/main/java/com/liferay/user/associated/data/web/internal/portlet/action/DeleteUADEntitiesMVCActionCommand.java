@@ -17,6 +17,7 @@ package com.liferay.user.associated.data.web.internal.portlet.action;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -60,9 +61,23 @@ public class DeleteUADEntitiesMVCActionCommand extends BaseUADMVCActionCommand {
 
 		String applicationKey = ParamUtil.getString(
 			actionRequest, "applicationKey");
+		String parentContainerClass = ParamUtil.getString(
+			actionRequest, "parentContainerClass");
 
 		UADHierarchyDisplay uadHierarchyDisplay =
 			uadRegistry.getUADHierarchyDisplay(applicationKey);
+
+		String redirect = null;
+
+		if ((uadHierarchyDisplay != null) &&
+			Validator.isNotNull(parentContainerClass)) {
+
+			LiferayPortletResponse liferayPortletResponse =
+				_portal.getLiferayPortletResponse(actionResponse);
+
+			redirect = uadHierarchyDisplay.getParentContainerURL(
+				actionRequest, liferayPortletResponse);
+		}
 
 		for (String entityType : getEntityTypes(actionRequest)) {
 			String[] primaryKeys = getPrimaryKeys(actionRequest, entityType);
@@ -77,6 +92,27 @@ public class DeleteUADEntitiesMVCActionCommand extends BaseUADMVCActionCommand {
 					actionRequest, actionResponse, entityUADAnonymizer,
 					entityUADDisplay, primaryKey,
 					getSelectedUserId(actionRequest), uadHierarchyDisplay);
+			}
+		}
+
+		if ((uadHierarchyDisplay != null) && (redirect != null)) {
+			long parentContainerId = ParamUtil.getLong(
+				actionRequest, "parentContainerId");
+
+			UADDisplay<?> uadDisplay = uadRegistry.getUADDisplay(
+				parentContainerClass);
+
+			try {
+				uadDisplay.get(parentContainerId);
+			}
+			catch (Exception e) {
+				if (NoSuchModelException.class.isAssignableFrom(e.getClass())) {
+					sendRedirect(actionRequest, actionResponse, redirect);
+
+					return;
+				}
+
+				throw e;
 			}
 		}
 
@@ -171,6 +207,6 @@ public class DeleteUADEntitiesMVCActionCommand extends BaseUADMVCActionCommand {
 		DeleteUADEntitiesMVCActionCommand.class);
 
 	@Reference
-	Portal _portal;
+	private Portal _portal;
 
 }

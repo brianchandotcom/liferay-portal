@@ -59,16 +59,13 @@ public class DDMExpressionFunctionTrackerImpl
 		return ddmExpressionFunctionsMap;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void ungetDDMExpressionFunctions(
 		Map<String, DDMExpressionFunction> ddmExpressionFunctionsMap) {
-
-		for (Map.Entry<String, DDMExpressionFunction> entry :
-				ddmExpressionFunctionsMap.entrySet()) {
-
-			ddmExpressionFunctionTrackerHelper.ungetDDMExpressionFunction(
-				entry.getValue());
-		}
 	}
 
 	@Reference(

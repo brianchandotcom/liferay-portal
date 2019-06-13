@@ -96,10 +96,7 @@ definition {
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.moveToRecycleBinCP(
 			assetName = "MB Thread Message Subject",
@@ -107,87 +104,47 @@ definition {
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			panel = "Site Administration",
-			portlet = "Recycle Bin");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
 		RecycleBin.deleteCP(
 			assetName = "MB Thread Message Subject",
 			assetType = "Message Boards Thread");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			panel = "Site Administration",
-			portlet = "Recycle Bin");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
 		RecycleBin.viewDefaultCP(assetName = "MB Thread Message Subject");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.viewDefaultCP(threadSubject = "MB Thread Message Subject");
 	}
 
 	@priority = "5"
 	test RestoreMessageboardsThread {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.addCP(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.moveToRecycleBinCP(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			panel = "Site Administration",
-			portlet = "Recycle Bin");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
 		RecycleBin.restoreCP(
 			assetName = "MB Thread Message Subject",
 			assetRestoreLocation = "Home",
 			assetType = "Message Boards Thread");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			panel = "Site Administration",
-			portlet = "Recycle Bin");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
 		RecycleBin.viewDefaultCP(assetName = "MB Thread Message Subject");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",
@@ -1103,23 +1060,13 @@ definition {
 
 		Portlet.addPG(portletName = "Message Boards");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.viewMarkAsQuestionNotCheckedCP(threadSubject = "Thread Subject");
 
 		MessageboardsPortlet.configureGeneralCP(threadAsQuestionByDefaultEnabled = "true");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.viewMarkAsQuestionCheckedCP(threadSubject = "Thread Subject");
 

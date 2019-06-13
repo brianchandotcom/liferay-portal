@@ -28,10 +28,7 @@ definition {
 
 	@priority = "5"
 	test AddMBCategory {
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsCategory.addCP(categoryName = "MB Category Name");
 
@@ -47,10 +44,7 @@ definition {
 			categoryDescription = "MB Category Description",
 			categoryName = "MB Category Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsCategory.gotoCP(categoryName = "MB Category Name");
 
@@ -66,23 +60,13 @@ definition {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.addCP(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",
@@ -94,12 +78,7 @@ definition {
 	test CKEditorSmoke {
 		property custom.properties = "editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp=ckeditor${line.separator}editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.html.jsp=ckeditor";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		LexiconEntry.gotoAdd();
 
@@ -115,12 +94,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",
@@ -133,10 +107,7 @@ definition {
 		Navigator.openURL();
 
 		for (var categoryName : list "MB Category1 Name,MB Category2 Name,MB Category3 Name") {
-			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
-				panel = "Site Administration",
-				portlet = "Message Boards");
+			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 			MessageboardsCategory.addCP(categoryName = "${categoryName}");
 		}
@@ -145,10 +116,7 @@ definition {
 
 		MessageboardsCategory.tearDownCP(assetType = "3 items");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		AssertTextEquals.assertText(
 			locator1 = "Message#EMPTY_INFO",
@@ -161,24 +129,14 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		ProductMenu.gotoSite(site = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 
 		MessageboardsThread.addCPWithAttachment(
 			mbAttachmentFile = "Document_1.doc",
 			threadBody = "MB Body",
 			threadSubject = "MB Subject");
 
-		ProductMenu.gotoSite(site = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 
 		MessageboardsThread.moveToRecycleBinCP(threadSubject = "MB Subject");
 
@@ -188,10 +146,7 @@ definition {
 
 		AssertConsoleTextNotPresent(value1 = "com.liferay.portlet.documentlibrary.NoSuchFileEntryException");
 
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			panel = "Site Administration",
-			portlet = "Recycle Bin");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
@@ -204,10 +159,7 @@ definition {
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.gotoCP(threadSubject = "MB Thread Message Subject");
 
@@ -215,12 +167,7 @@ definition {
 			threadBodyEdit = "MB Thread Message Body Edit",
 			threadSubjectEdit = "MB Thread Message Subject Edit");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",
@@ -230,89 +177,49 @@ definition {
 
 	@priority = "5"
 	test MoveToRecycleBinMBThread {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.addCP(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.moveToRecycleBinCP(threadSubject = "MB Thread Message Subject");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.viewDefaultCP(threadSubject = "MB Thread Message Subject");
 	}
 
 	@priority = "3"
 	test ViewAnonymousPostingAllowedCheckboxConfiguration {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.viewAnonymousPostingCheckboxCP();
 
 		MessageboardsPortlet.configureAnonymousPostingCP(anonymousPostingEnabled = "false");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
 		MessageboardsPortlet.viewAnonymousPostingConfigurationCP(anonymousPostingEnabled = "false");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.viewNoAnonymousPostingCheckboxCP();
 	}
 
 	@priority = "4"
 	test ViewBBCodeNoXSS {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsPortlet.configureGeneralCP(
 			messageFormat = "BBCode",
 			messageFormatBBCodeEnabled = "true");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.addCP(
 			source = "true",
@@ -321,24 +228,14 @@ definition {
 
 		MessageboardsThread.assertAlertNotPresent();
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",
 			threadBody = "",
 			threadSubject = "New Thread Subject");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.addCP(
 			fontSize = "24",
@@ -346,12 +243,7 @@ definition {
 			threadBody = "[size=5]Thread Body[/size]",
 			threadSubject = "New Thread Subject 2");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.viewCP(
 			fontSize = "24",

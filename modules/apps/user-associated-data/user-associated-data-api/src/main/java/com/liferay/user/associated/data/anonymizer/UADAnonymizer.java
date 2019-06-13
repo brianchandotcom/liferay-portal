@@ -87,6 +87,11 @@ public interface UADAnonymizer<T> extends UADComponent<T> {
 	 */
 	public void deleteAll(long userId) throws PortalException;
 
+	/**
+	 * Returns a map of error messages corresponding to exceptions.
+	 *
+	 * @param locale the locale of the language
+	 */
 	public default Map<Class, String> getExceptionMessageMap(Locale locale) {
 		return new HashMap<>();
 	}

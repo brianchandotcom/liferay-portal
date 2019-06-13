@@ -79,7 +79,7 @@ public class RESTClient {
 		String targetURL = target;
 
 		if ((targetURL == null) || targetURL.isEmpty()) {
-			targetURL = _getValue(liferayConnectionProperties.apiSpecURL);
+			targetURL = liferayConnectionProperties.getApiSpecURL();
 		}
 
 		_target = targetURL;
@@ -202,10 +202,9 @@ public class RESTClient {
 
 		Entity<Form> entity = Entity.form(
 			xWWWFormURLEncoder.toForm(
-				"client_id",
-				_getValue(liferayConnectionProperties.oauthClientId),
+				"client_id", liferayConnectionProperties.getOAuthClientId(),
 				"client_secret",
-				_getValue(liferayConnectionProperties.oauthClientSecret),
+				liferayConnectionProperties.getOAuthClientSecret(),
 				"grant_type", "client_credentials", "response_type", "code"));
 
 		return _execute(HttpMethod.POST, builder, entity);
@@ -241,9 +240,9 @@ public class RESTClient {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(_getValue(liferayConnectionProperties.userId));
+		sb.append(liferayConnectionProperties.getUserId());
 		sb.append(":");
-		sb.append(_getValue(liferayConnectionProperties.password));
+		sb.append(liferayConnectionProperties.getPassword());
 
 		String base64Seed = sb.toString();
 

@@ -15,7 +15,6 @@
 package com.liferay.talend.runtime;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import com.liferay.talend.avro.EndpointSchemaInferrer;
@@ -161,7 +160,8 @@ public class LiferaySourceOrSink
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveConnection(null);
 
-		URL serverURL = liferayConnectionProperties.getServerURL();
+		URL serverURL = URIUtils.extractServerURL(
+			URIUtils.toURL(liferayConnectionProperties.getApiSpecURL()));
 
 		UriBuilder uriBuilder = UriBuilder.fromPath(serverURL.toExternalForm());
 
@@ -260,7 +260,7 @@ public class LiferaySourceOrSink
 			getEffectiveConnection(null);
 
 		JsonNode apiSpecJsonNode = doGetRequest(
-			liferayConnectionProperties.apiSpecURL.getValue());
+			liferayConnectionProperties.getApiSpecURL());
 
 		JsonNode pathsJsonNode = apiSpecJsonNode.path(OpenAPIConstants.PATHS);
 
@@ -322,7 +322,7 @@ public class LiferaySourceOrSink
 			getEffectiveConnection(null);
 
 		JsonNode apiSpecJsonNode = doGetRequest(
-			liferayConnectionProperties.apiSpecURL.getValue());
+			liferayConnectionProperties.getApiSpecURL());
 
 		return EndpointSchemaInferrer.inferSchema(
 			endpoint, operation, apiSpecJsonNode);
@@ -335,8 +335,7 @@ public class LiferaySourceOrSink
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveConnection(null);
 
-		String apiSpecURLHref =
-			liferayConnectionProperties.apiSpecURL.getValue();
+		String apiSpecURLHref = liferayConnectionProperties.getApiSpecURL();
 
 		JsonNode apiSpecJsonNode = doGetRequest(apiSpecURLHref);
 
@@ -393,7 +392,7 @@ public class LiferaySourceOrSink
 			getEffectiveConnection(null);
 
 		JsonNode apiSpecJsonNode = doGetRequest(
-			liferayConnectionProperties.apiSpecURL.getValue());
+			liferayConnectionProperties.getApiSpecURL());
 
 		JsonNode endpointJsonNode = apiSpecJsonNode.path(
 			OpenAPIConstants.PATHS
@@ -443,7 +442,7 @@ public class LiferaySourceOrSink
 
 		try {
 			URIUtils.validateOpenAPISpecURL(
-				liferayConnectionProperties.apiSpecURL.getValue());
+				liferayConnectionProperties.getApiSpecURL());
 		}
 		catch (MalformedURLException murle) {
 			validationResultMutable.setMessage(murle.getMessage());
@@ -452,20 +451,18 @@ public class LiferaySourceOrSink
 			return validationResultMutable;
 		}
 
-		boolean anonymousLogin =
-			liferayConnectionProperties.anonymousLogin.getValue();
-		String target = liferayConnectionProperties.apiSpecURL.getValue();
-		String password = liferayConnectionProperties.password.getValue();
+		String target = liferayConnectionProperties.getApiSpecURL();
+		String password = liferayConnectionProperties.getPassword();
 
-		String userId = liferayConnectionProperties.userId.getValue();
+		String userId = liferayConnectionProperties.getUserId();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"Validate API spec URL: {}",
-				liferayConnectionProperties.apiSpecURL.getValue());
+				liferayConnectionProperties.getApiSpecURL());
 			_log.debug(
 				"Validate user ID: {}",
-				liferayConnectionProperties.userId.getValue());
+				liferayConnectionProperties.getUserId());
 		}
 
 		if ((target == null) || target.isEmpty()) {
@@ -478,7 +475,7 @@ public class LiferaySourceOrSink
 			return validationResultMutable;
 		}
 
-		if (!anonymousLogin) {
+		if (!liferayConnectionProperties.isAnonymousLogin()) {
 			_validateCredentials(userId, password, validationResultMutable);
 
 			if (validationResultMutable.getStatus() ==
@@ -553,7 +550,6 @@ public class LiferaySourceOrSink
 
 	protected volatile LiferayConnectionPropertiesProvider
 		liferayConnectionPropertiesProvider;
-	protected final ObjectMapper objectMapper = new ObjectMapper();
 	protected RESTClient restClient;
 
 	private JsonNode _getChildNode(JsonNode jsonNode, String... paths) {

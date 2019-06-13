@@ -119,8 +119,7 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 
 		parseTreeWalker.walk(ddmExpressionListener, _expressionContext);
 
-		_ddmExpressionFunctionNames.addAll(
-			ddmExpressionListener.getFunctionNames());
+		_ddmExpressionFunctionNames = ddmExpressionListener.getFunctionNames();
 
 		for (String variableName : ddmExpressionListener.getVariableNames()) {
 			_variables.put(variableName, null);
@@ -184,7 +183,7 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 
 	private DDMExpressionActionHandler _ddmExpressionActionHandler;
 	private DDMExpressionFieldAccessor _ddmExpressionFieldAccessor;
-	private final Set<String> _ddmExpressionFunctionNames = new HashSet<>();
+	private final Set<String> _ddmExpressionFunctionNames;
 	private DDMExpressionFunctionTracker _ddmExpressionFunctionTracker;
 	private DDMExpressionObserver _ddmExpressionObserver;
 	private DDMExpressionParameterAccessor _ddmExpressionParameterAccessor;

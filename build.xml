@@ -203,6 +203,13 @@ message.
 					<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
 					<arg value="-Dbuild.profile=${build.profile}" />
 				</gradle-execute>
+
+				<if>
+					<available file="${project.dir}/modules/test/arquillian-extension-junit-bridge-test" type="dir" />
+					<then>
+						<gradle-execute dir="${project.dir}/modules" task=":test:arquillian-extension-junit-bridge-test:clean" />
+					</then>
+				</if>
 			</sequential>
 
 			<delete failonerror="false" includeemptydirs="true">

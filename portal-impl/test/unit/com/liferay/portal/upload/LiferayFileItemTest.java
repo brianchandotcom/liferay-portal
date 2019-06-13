@@ -17,8 +17,10 @@ package com.liferay.portal.upload;
 import com.liferay.portal.kernel.test.util.DependenciesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.MimeTypesImpl;
 
@@ -29,30 +31,31 @@ import java.nio.file.Files;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.junit.ClassRule;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 
 /**
  * @author Manuel de la Peña
  */
 public class LiferayFileItemTest {
 
-	@ClassRule
-	public static final TemporaryFolder temporaryFolder = new TemporaryFolder();
-
 	@BeforeClass
-	public static void setUpClass() {
+	public static void setUpClass() throws IOException {
 		FileUtil fileUtil = new FileUtil();
 
 		fileUtil.setFile(new FileImpl());
+
+		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
+			new FastDateFormatFactoryUtil();
+
+		fastDateFormatFactoryUtil.setFastDateFormatFactory(
+			new FastDateFormatFactoryImpl());
 
 		MimeTypesUtil mimeTypesUtil = new MimeTypesUtil();
 
 		mimeTypesUtil.setMimeTypes(new MimeTypesImpl());
 
 		_liferayFileItemFactory = new LiferayFileItemFactory(
-			temporaryFolder.getRoot());
+			FileUtil.createTempFolder());
 	}
 
 	@Test
@@ -160,7 +163,7 @@ public class LiferayFileItemTest {
 
 		liferayFileItem.getOutputStream();
 
-		liferayFileItem.write(temporaryFolder.newFile());
+		liferayFileItem.write(FileUtil.createTempFile());
 
 		liferayFileItem.setString("UTF-8");
 

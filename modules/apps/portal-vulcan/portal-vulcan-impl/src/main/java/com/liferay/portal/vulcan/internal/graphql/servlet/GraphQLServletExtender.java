@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
@@ -56,6 +57,7 @@ import graphql.servlet.GraphQLContext;
 import graphql.servlet.SimpleGraphQLHttpServlet;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
@@ -177,78 +179,7 @@ public class GraphQLServletExtender {
 
 		_servletDataServiceTracker.open();
 
-		_activated = true;
-
-		rewire();
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_activated = false;
-
-		_servletDataServiceTracker.close();
-
-		if (_servletServiceRegistration != null) {
-			_servletServiceRegistration.unregister();
-		}
-
-		_servletContextHelperServiceRegistration.unregister();
-	}
-
-	protected void rewire() {
-		if (!_activated) {
-			return;
-		}
-
-		ProcessingElementsContainer processingElementsContainer =
-			new ProcessingElementsContainer(_defaultTypeFunction);
-
-		GraphQLSchema.Builder schemaBuilder = GraphQLSchema.newSchema();
-
-		GraphQLObjectType.Builder mutationBuilder =
-			GraphQLObjectType.newObject();
-
-		mutationBuilder.name("mutation");
-
-		GraphQLObjectType.Builder queryBuilder = GraphQLObjectType.newObject();
-
-		queryBuilder.name("query");
-
-		for (ServletData servletData : _servletDataList) {
-			Object mutation = servletData.getMutation();
-
-			Class<?> mutationClass = mutation.getClass();
-
-			for (Method method : mutationClass.getMethods()) {
-				if (method.isAnnotationPresent(GraphQLField.class)) {
-					mutationBuilder.field(
-						_graphQLFieldRetriever.getField(
-							method, processingElementsContainer));
-				}
-			}
-
-			Object query = servletData.getQuery();
-
-			Class<?> queryClazz = query.getClass();
-
-			for (Method method : queryClazz.getMethods()) {
-				if (method.isAnnotationPresent(GraphQLField.class)) {
-					queryBuilder.field(
-						_graphQLFieldRetriever.getField(
-							method, processingElementsContainer));
-				}
-			}
-		}
-
-		schemaBuilder.mutation(mutationBuilder.build());
-		schemaBuilder.query(queryBuilder.build());
-
-		SimpleGraphQLHttpServlet.Builder servletBuilder =
-			SimpleGraphQLHttpServlet.newBuilder(schemaBuilder.build());
-
-		Servlet servlet = servletBuilder.build();
-
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
+		properties = new HashMapDictionary<>();
 
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT, "GraphQL");
@@ -257,12 +188,31 @@ public class GraphQLServletExtender {
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN, "/*");
 
-		if (_servletServiceRegistration != null) {
-			_servletServiceRegistration.unregister();
-		}
-
 		_servletServiceRegistration = _bundleContext.registerService(
-			Servlet.class, servlet, properties);
+			Servlet.class,
+			(Servlet)ProxyUtil.newProxyInstance(
+				GraphQLServletExtender.class.getClassLoader(),
+				new Class<?>[] {Servlet.class},
+				(proxy, method, args) -> {
+					Servlet servlet = _getServlet();
+
+					try {
+						return method.invoke(servlet, args);
+					}
+					catch (InvocationTargetException ite) {
+						throw ite.getCause();
+					}
+				}),
+			properties);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_servletDataServiceTracker.close();
+
+		_servletServiceRegistration.unregister();
+
+		_servletContextHelperServiceRegistration.unregister();
 	}
 
 	private Object _get(
@@ -333,7 +283,71 @@ public class GraphQLServletExtender {
 		return method.invoke(instance, args);
 	}
 
-	private boolean _activated;
+	private Servlet _getServlet() {
+		Servlet servlet = _servlet;
+
+		if (servlet != null) {
+			return servlet;
+		}
+
+		synchronized (_servletDataList) {
+			if (_servlet != null) {
+				return _servlet;
+			}
+
+			ProcessingElementsContainer processingElementsContainer =
+				new ProcessingElementsContainer(_defaultTypeFunction);
+
+			GraphQLSchema.Builder schemaBuilder = GraphQLSchema.newSchema();
+
+			GraphQLObjectType.Builder mutationBuilder =
+				GraphQLObjectType.newObject();
+
+			mutationBuilder.name("mutation");
+
+			GraphQLObjectType.Builder queryBuilder =
+				GraphQLObjectType.newObject();
+
+			queryBuilder.name("query");
+
+			for (ServletData servletData : _servletDataList) {
+				Object mutation = servletData.getMutation();
+
+				Class<?> mutationClass = mutation.getClass();
+
+				for (Method method : mutationClass.getMethods()) {
+					if (method.isAnnotationPresent(GraphQLField.class)) {
+						mutationBuilder.field(
+							_graphQLFieldRetriever.getField(
+								method, processingElementsContainer));
+					}
+				}
+
+				Object query = servletData.getQuery();
+
+				Class<?> queryClazz = query.getClass();
+
+				for (Method method : queryClazz.getMethods()) {
+					if (method.isAnnotationPresent(GraphQLField.class)) {
+						queryBuilder.field(
+							_graphQLFieldRetriever.getField(
+								method, processingElementsContainer));
+					}
+				}
+			}
+
+			schemaBuilder.mutation(mutationBuilder.build());
+			schemaBuilder.query(queryBuilder.build());
+
+			SimpleGraphQLHttpServlet.Builder servletBuilder =
+				SimpleGraphQLHttpServlet.newBuilder(schemaBuilder.build());
+
+			_servlet = servletBuilder.build();
+
+			return _servlet;
+		}
+	}
+
 	private BundleContext _bundleContext;
 
 	@Reference
@@ -348,6 +362,7 @@ public class GraphQLServletExtender {
 	@Reference
 	private Portal _portal;
 
+	private volatile Servlet _servlet;
 	private ServiceRegistration<ServletContextHelper>
 		_servletContextHelperServiceRegistration;
 	private final List<ServletData> _servletDataList = new ArrayList<>();
@@ -423,15 +438,17 @@ public class GraphQLServletExtender {
 		implements ServiceTrackerCustomizer<ServletData, ServletData> {
 
 		@Override
-		public synchronized ServletData addingService(
+		public ServletData addingService(
 			ServiceReference<ServletData> serviceReference) {
 
 			ServletData servletData = _bundleContext.getService(
 				serviceReference);
 
-			_servletDataList.add(servletData);
+			synchronized (_servletDataList) {
+				_servletDataList.add(servletData);
 
-			rewire();
+				_servlet = null;
+			}
 
 			return servletData;
 		}
@@ -443,13 +460,15 @@ public class GraphQLServletExtender {
 		}
 
 		@Override
-		public synchronized void removedService(
+		public void removedService(
 			ServiceReference<ServletData> serviceReference,
 			ServletData servletData) {
 
-			_servletDataList.remove(servletData);
+			synchronized (_servletDataList) {
+				_servletDataList.remove(servletData);
 
-			rewire();
+				_servlet = null;
+			}
 
 			_bundleContext.ungetService(serviceReference);
 		}

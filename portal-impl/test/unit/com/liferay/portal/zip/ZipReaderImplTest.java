@@ -270,27 +270,27 @@ public class ZipReaderImplTest {
 			DependenciesTestUtil.getDependencyAsInputStream(
 				getClass(), _ZIP_FILE_PATH));
 
-		List<String> entries = zipReader.getFolderEntries("");
+		List<String> entries1 = zipReader.getFolderEntries("");
 
-		Assert.assertNotNull(entries);
-		Assert.assertTrue(entries.toString(), entries.isEmpty());
+		Assert.assertNotNull(entries1);
+		Assert.assertTrue(entries1.toString(), entries1.isEmpty());
 
-		entries = zipReader.getFolderEntries("/");
+		List<String> entries2 = zipReader.getFolderEntries("/");
 
-		Assert.assertEquals(entries.toString(), 1, entries.size());
-		Assert.assertEquals(_FILE_PATH_0, entries.get(0));
+		Assert.assertEquals(entries2.toString(), 1, entries2.size());
+		Assert.assertEquals(_FILE_PATH_0, entries2.get(0));
 
-		entries = zipReader.getFolderEntries("1");
+		List<String> entries3 = zipReader.getFolderEntries("1");
 
-		Assert.assertEquals(entries.toString(), 2, entries.size());
-		Assert.assertEquals(_FILE_PATH_1, entries.get(0));
-		Assert.assertEquals(_FILE_PATH_4, entries.get(1));
+		Assert.assertEquals(entries3.toString(), 2, entries3.size());
+		Assert.assertEquals(_FILE_PATH_1, entries3.get(0));
+		Assert.assertEquals(_FILE_PATH_4, entries3.get(1));
 
-		entries = zipReader.getFolderEntries("1/2");
+		List<String> entries4 = zipReader.getFolderEntries("1/2");
 
-		Assert.assertEquals(entries.toString(), 2, entries.size());
-		Assert.assertEquals(_FILE_PATH_2, entries.get(0));
-		Assert.assertEquals(_FILE_PATH_3, entries.get(1));
+		Assert.assertEquals(entries4.toString(), 2, entries4.size());
+		Assert.assertEquals(_FILE_PATH_2, entries4.get(0));
+		Assert.assertEquals(_FILE_PATH_3, entries4.get(1));
 
 		zipReader.close();
 	}

@@ -15,6 +15,7 @@
 package com.liferay.talend.wizard;
 
 import com.liferay.talend.connection.LiferayConnectionProperties;
+import com.liferay.talend.ui.UIKeys;
 
 import org.talend.components.api.properties.ComponentProperties;
 import org.talend.components.api.wizard.ComponentWizard;
@@ -35,7 +36,7 @@ public class LiferayConnectionWizard extends ComponentWizard {
 
 		connection.init();
 
-		addForm(connection.getForm(LiferayConnectionProperties.FORM_WIZARD));
+		addForm(connection.getForm(UIKeys.FORM_WIZARD));
 	}
 
 	public void setupProperties(

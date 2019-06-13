@@ -67,8 +67,7 @@ public abstract class LiferayConnectionResourceBaseProperties
 							getValue());
 				_log.debug(
 					"User ID: " +
-						referencedLiferayConnectionProperties.userId.
-							getValue());
+						referencedLiferayConnectionProperties.getUserId());
 			}
 
 			return referencedLiferayConnectionProperties;
@@ -78,8 +77,7 @@ public abstract class LiferayConnectionResourceBaseProperties
 			_log.debug(
 				"API spec URL: " +
 					liferayConnectionProperties.apiSpecURL.getValue());
-			_log.debug(
-				"User ID: " + liferayConnectionProperties.userId.getValue());
+			_log.debug("User ID: " + liferayConnectionProperties.getUserId());
 		}
 
 		return liferayConnectionProperties;

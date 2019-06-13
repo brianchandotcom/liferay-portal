@@ -260,7 +260,7 @@ public class LiferayResourceProperties
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveLiferayConnectionProperties();
 
-		String endpointUrl = liferayConnectionProperties.apiSpecURL.getValue();
+		String endpointUrl = liferayConnectionProperties.getApiSpecURL();
 
 		try {
 			URIUtils.addQueryConditionToURL(endpointUrl, condition.getValue());
@@ -312,12 +312,10 @@ public class LiferayResourceProperties
 				_log.debug("Using a reference connection properties");
 				_log.debug(
 					"API spec URL: " +
-						referencedLiferayConnectionProperties.apiSpecURL.
-							getValue());
+						referencedLiferayConnectionProperties.getApiSpecURL());
 				_log.debug(
 					"User ID: " +
-						referencedLiferayConnectionProperties.userId.
-							getValue());
+						referencedLiferayConnectionProperties.getUserId());
 			}
 
 			return referencedLiferayConnectionProperties;
@@ -327,8 +325,7 @@ public class LiferayResourceProperties
 			_log.debug(
 				"API spec URL: " +
 					liferayConnectionProperties.apiSpecURL.getValue());
-			_log.debug(
-				"User ID: " + liferayConnectionProperties.userId.getValue());
+			_log.debug("User ID: " + liferayConnectionProperties.getUserId());
 		}
 
 		return liferayConnectionProperties;

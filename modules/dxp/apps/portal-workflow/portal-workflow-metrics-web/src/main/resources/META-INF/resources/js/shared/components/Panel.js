@@ -35,7 +35,7 @@ const Header = props => {
 	);
 };
 
-export default class Panel extends React.Component {
+class Panel extends React.Component {
 	render() {
 		const {children, elementClasses} = this.props;
 		const classes = getCN('panel', 'panel-secondary', elementClasses);
@@ -51,3 +51,5 @@ export default class Panel extends React.Component {
 Panel.Body = Body;
 Panel.Footer = Footer;
 Panel.Header = Header;
+
+export default Panel;

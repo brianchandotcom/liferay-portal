@@ -14,10 +14,10 @@
 
 package com.liferay.portal.upload;
 
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.DependenciesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.util.FileImpl;
 
 import java.io.File;
 
@@ -27,7 +27,7 @@ import org.apache.commons.fileupload.FileItem;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.ClassRule;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -37,10 +37,12 @@ import org.junit.rules.TemporaryFolder;
  */
 public class LiferayFileItemTest {
 
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+	@BeforeClass
+	public static void setUpClass() {
+		FileUtil fileUtil = new FileUtil();
+
+		fileUtil.setFile(new FileImpl());
+	}
 
 	@Before
 	public void setUp() {

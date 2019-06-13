@@ -136,19 +136,19 @@ definition {
 			value1 = "${contentBody}");
 	}
 
-	macro viewNewSharedAsset {
-		var key_assetSharingPermission = "${assetSharingPermission}";
-		var key_assetTitle = "${assetTitle}";
+	macro viewNewSharedContent {
+		var key_contentSharingPermission = "${contentSharingPermission}";
+		var key_contentTitle = "${contentTitle}";
 		var key_ownerName = "${ownerName}";
 
 		AssertTextEquals(
 			locator1 = "Sharing#NOTIFICATIONS_TITLE",
-			value1 = "${ownerName} has shared ${assetTitle} with you for ${assetSharingPermission}.");
+			value1 = "${ownerName} has shared ${contentTitle} with you for ${contentSharingPermission}.");
 
 		if (isSet(openNotification)) {
 			AssertClick(
 				locator1 = "Sharing#NOTIFICATIONS_TITLE",
-				value1 = "${ownerName} has shared ${assetTitle} with you for ${assetSharingPermission}.");
+				value1 = "${ownerName} has shared ${contentTitle} with you for ${contentSharingPermission}.");
 		}
 	}
 

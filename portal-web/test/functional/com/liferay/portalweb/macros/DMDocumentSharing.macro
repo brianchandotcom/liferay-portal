@@ -92,12 +92,12 @@ definition {
 		}
 	}
 
-	macro viewDocumentViaSharedAssets {
+	macro viewDocumentViaSharedContent {
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
 			value1 = "Shared Content");
 
-		if ("${assetSharingPermission}" == "View") {
+		if ("${contentSharingPermission}" == "View") {
 			AssertElementNotPresent(locator1 = "Comments#COMMENT_FIELD");
 		}
 

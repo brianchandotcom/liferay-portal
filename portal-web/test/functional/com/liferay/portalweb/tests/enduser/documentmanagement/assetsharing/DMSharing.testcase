@@ -118,23 +118,23 @@ definition {
 
 		Notifications.gotoNotifications();
 
-		Notifications.viewNewSharedAsset(
-			assetSharingPermission = "viewing",
-			assetTitle = "DM Document Title 1",
+		Notifications.viewNewSharedContent(
+			contentSharingPermission = "viewing",
+			contentTitle = "DM Document Title 1",
 			ownerName = "Test Test");
 
 		Notifications.gotoNotifications();
 
-		Notifications.viewNewSharedAsset(
-			assetSharingPermission = "updating",
-			assetTitle = "DM Document Title 2",
+		Notifications.viewNewSharedContent(
+			contentSharingPermission = "updating",
+			contentTitle = "DM Document Title 2",
 			ownerName = "Test Test");
 
 		Notifications.gotoNotifications();
 
-		Notifications.viewNewSharedAsset(
-			assetSharingPermission = "commenting",
-			assetTitle = "DM Document Title 3",
+		Notifications.viewNewSharedContent(
+			contentSharingPermission = "commenting",
+			contentTitle = "DM Document Title 3",
 			ownerName = "Test Test");
 	}
 
@@ -202,9 +202,9 @@ definition {
 
 		Notifications.gotoNotifications();
 
-		Notifications.viewNewSharedAsset(
-			assetSharingPermission = "viewing",
-			assetTitle = "DM Document Title",
+		Notifications.viewNewSharedContent(
+			contentSharingPermission = "viewing",
+			contentTitle = "DM Document Title",
 			openNotification = "true",
 			ownerName = "Test Test");
 
@@ -214,9 +214,9 @@ definition {
 
 		Notifications.gotoNotifications();
 
-		Notifications.viewNewSharedAsset(
-			assetSharingPermission = "viewing",
-			assetTitle = "DM Document Title",
+		Notifications.viewNewSharedContent(
+			contentSharingPermission = "viewing",
+			contentTitle = "DM Document Title",
 			openNotification = "true",
 			ownerName = "userfn userln");
 
@@ -224,10 +224,10 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
 
-		var key_assetTitle = "DM Document Title";
+		var key_contentTitle = "DM Document Title";
 
 		AssertTextEquals(
-			locator1 = "Sharing#SHARED_CONTENT_ASSET_TITLE",
+			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE",
 			value1 = "DM Document Title");
 		AssertElementNotPresent(locator1 = "//tbody/tr[2]/td[contains(@class,'table-cell-content')]/a[contains(.,'DM Document Title')]");
 	}
@@ -359,10 +359,10 @@ definition {
 
 	@description = "This test ensures that users receives an email when a document is shared with them. This email contains a link that navigates user to Shared Content app."
 	@priority = "4"
-	test GoToSharedAssetsViaEmail {
+	test GoToSharedContentViaEmail {
 		property custom.properties = "message.boards.message.formats.default=html${line.separator}pop.server.notifications.enabled=true${line.separator}pop.server.subdomain=${line.separator}mail.session.mail.smtp.auth=true${line.separator}mail.session.mail.store.protocol=pop3${line.separator}mail.session.mail.transport.protocol=smtp";
 		property dummy.socket.proxy.disabled = "true";
-		property test.name.skip.portal.instance = "DMSharing#GoToSharedAssetsViaEmail";
+		property test.name.skip.portal.instance = "DMSharing#GoToSharedContentViaEmail";
 		var portalURL = PropsUtil.get("portal.url");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -447,14 +447,14 @@ definition {
 
 		SelectWindow(locator1 = "title=- ${siteName}");
 
-		DMDocumentSharing.viewDocumentViaSharedAssets(
-			assetSharingPermission = "View",
+		DMDocumentSharing.viewDocumentViaSharedContent(
+			contentSharingPermission = "View",
 			dmDocumentTitle = "DM Document Title");
 	}
 
 	@description = "This test ensures that users receive a notification in portal when a document is shared to them, and that clicking on that notification navigates them to the Shared Content app."
 	@priority = "4"
-	test GoToSharedAssetsViaNotifications {
+	test GoToSharedContentViaNotifications {
 		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
@@ -476,14 +476,14 @@ definition {
 
 		Notifications.gotoNotifications();
 
-		Notifications.viewNewSharedAsset(
-			assetSharingPermission = "viewing",
-			assetTitle = "DM Document Title",
+		Notifications.viewNewSharedContent(
+			contentSharingPermission = "viewing",
+			contentTitle = "DM Document Title",
 			openNotification = "true",
 			ownerName = "Test Test");
 
-		DMDocumentSharing.viewDocumentViaSharedAssets(
-			assetSharingPermission = "View",
+		DMDocumentSharing.viewDocumentViaSharedContent(
+			contentSharingPermission = "View",
 			dmDocumentTitle = "DM Document Title");
 	}
 
@@ -617,7 +617,7 @@ definition {
 
 	@description = "This test asserts that users can share via Shared Content app."
 	@priority = "5"
-	test ShareViaSharedAssets {
+	test ShareViaSharedContent {
 		JSONUser.addUser(
 			userEmailAddress = "userea2@liferay.com",
 			userFirstName = "userfn2",
@@ -657,7 +657,7 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
 
-		DMNavigator.gotoShareViaSharedAssets(dmDocumentTitle = "DM Document Title");
+		DMNavigator.gotoShareViaSharedContent(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.shareWithNoSharingPermissionsUser(userEmailAddress = "userea2@liferay.com");
 
@@ -686,7 +686,7 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
 
-		DMNavigator.gotoShareViaSharedAssets(dmDocumentTitle = "DM Document Title");
+		DMNavigator.gotoShareViaSharedContent(dmDocumentTitle = "DM Document Title");
 
 		IFrame.selectModalFrame();
 
@@ -736,7 +736,7 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
 
-		DMNavigator.gotoShareViaSharedAssets(dmDocumentTitle = "DM Document Title");
+		DMNavigator.gotoShareViaSharedContent(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.sharePG(
 			shareable = "true",
@@ -757,7 +757,7 @@ definition {
 			dmDocumentUploader = "Test Test");
 	}
 
-	@description = "This test share an asset to a user and disable the sharing option. This test asserts that a collaborator without sharing permissions will not be able to share this asset."
+	@description = "This test share an content to a user and disable the sharing option. This test asserts that a collaborator without sharing permissions will not be able to share this content."
 	@priority = "5"
 	test ShareWithNoSharingPermissions {
 		JSONUser.addUser(
@@ -796,10 +796,10 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
 
-		var key_assetTitle = "DM Document Title";
+		var key_contentTitle = "DM Document Title";
 		var key_dmDocumentTitle = "DM Document Title";
 
-		Click(locator1 = "Sharing#SHARED_CONTENT_ASSET_OPTIONS");
+		Click(locator1 = "Sharing#SHARED_CONTENT_CONTENT_OPTIONS");
 
 		MenuItem.viewNotPresent(menuItem = "Share");
 

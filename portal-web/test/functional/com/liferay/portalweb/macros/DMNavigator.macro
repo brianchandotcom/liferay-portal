@@ -164,12 +164,12 @@ definition {
 			value1 = "Share");
 	}
 
-	macro gotoShareViaSharedAssets {
-		var key_assetTitle = "${dmDocumentTitle}";
+	macro gotoShareViaSharedContent {
+		var key_contentTitle = "${dmDocumentTitle}";
 
 		Click(
-			locator1 = "Sharing#SHARED_CONTENT_ASSET_OPTIONS",
-			value1 = "${assetTitle}");
+			locator1 = "Sharing#SHARED_CONTENT_CONTENT_OPTIONS",
+			value1 = "${contentTitle}");
 
 		MenuItem.click(menuItem = "Share");
 	}

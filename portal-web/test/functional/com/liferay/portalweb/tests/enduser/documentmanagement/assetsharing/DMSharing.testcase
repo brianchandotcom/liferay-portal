@@ -237,10 +237,7 @@ definition {
 	test DisableSharingAtInstanceScope {
 		property test.name.skip.portal.instance = "DMSharing#DisableSharingAtInstanceScope";
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
+		SystemSettings.openSystemSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Sharing",
@@ -280,10 +277,7 @@ definition {
 	test DisableSharingAtSystemScope {
 		property test.name.skip.portal.instance = "DMSharing#DisableSharingAtSystemScope";
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
+		SystemSettings.openSystemSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Sharing",

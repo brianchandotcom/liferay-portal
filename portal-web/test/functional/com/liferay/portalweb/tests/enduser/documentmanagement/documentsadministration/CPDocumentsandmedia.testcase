@@ -279,10 +279,7 @@ definition {
 	test LimitMaxFileVersion {
 		property test.name.skip.portal.instance = "CPDocumentsandmedia#LimitMaxFileVersion";
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
+		SystemSettings.openSystemSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Documents and Media",

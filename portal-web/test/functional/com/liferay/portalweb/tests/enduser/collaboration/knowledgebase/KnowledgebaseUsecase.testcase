@@ -946,10 +946,7 @@ definition {
 
 		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
+		SystemSettings.openSystemSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Knowledge Base",

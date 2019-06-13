@@ -71,15 +71,11 @@ public class ZipReaderImplTest {
 			DependenciesTestUtil.getDependencyAsInputStream(
 				getClass(), _ZIP_FILE_PATH));
 
-		Assert.assertNotNull(zipReader1);
-
 		zipReader1.close();
 
 		ZipReader zipReader2 = new ZipReaderImpl(
 			DependenciesTestUtil.getDependencyAsFile(
 				getClass(), _ZIP_FILE_PATH));
-
-		Assert.assertNotNull(zipReader2);
 
 		zipReader2.close();
 	}

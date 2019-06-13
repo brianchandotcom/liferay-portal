@@ -287,8 +287,6 @@ public class ZipWriterImplTest {
 	public void testConstructor() {
 		ZipWriter zipWriter1 = new ZipWriterImpl();
 
-		Assert.assertNotNull(zipWriter1);
-
 		File file1 = zipWriter1.getFile();
 
 		Assert.assertNotNull(file1);
@@ -298,8 +296,6 @@ public class ZipWriterImplTest {
 		File zipFile = new File(_tempZipFilePath);
 
 		ZipWriter zipWriter2 = new ZipWriterImpl(zipFile);
-
-		Assert.assertNotNull(zipWriter2);
 
 		File file2 = zipWriter2.getFile();
 

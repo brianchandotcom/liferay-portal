@@ -155,6 +155,8 @@ public class WhitespaceCheck extends BaseFileCheck {
 		linePart = formatIncorrectSyntax(linePart, "task(", "task (", true);
 		linePart = formatIncorrectSyntax(linePart, "while(", "while (", true);
 		linePart = formatIncorrectSyntax(linePart, "List <", "List<", false);
+		linePart = formatIncorrectSyntax(linePart, "}else", "}\nelse", true);
+		linePart = formatIncorrectSyntax(linePart, "} else", "}\nelse", true);
 
 		if (javaSource) {
 			linePart = formatIncorrectSyntax(linePart, " ...", "...", false);

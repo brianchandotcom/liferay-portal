@@ -31,6 +31,26 @@ definition {
 			Alert.viewRequestFailedToComplete();
 		}
 
+		if ("${check}" == "true") {
+			Alert.viewSuccessMessage1();
+		}
+		else if ("${check}" == "false") {
+			Alert.viewRequiredField1();
+		}
+		else {
+			Alert.viewRequestFailedToComplete1();
+		}
+
+		if ("${check}" == "true") {
+			Alert.viewSuccessMessage2();
+		}
+		else if ("${check}" == "false") {
+			Alert.viewRequiredField2();
+		}
+		else {
+			Alert.viewRequestFailedToComplete2();
+		}
+
 		// while statement
 		while (!("${i}" == "${propertyNumber}")) {
 			var i = MathUtil.sum("${i}", "1");
@@ -95,6 +115,22 @@ definition {
 		}
 		else
 		{
+			Alert.viewRequestFailedToComplete();
+		}
+
+		if ("${check}" == "true") {
+			Alert.viewSuccessMessage();
+		}else if ("${check}" == "false") {
+			Alert.viewRequiredField();
+		}else {
+			Alert.viewRequestFailedToComplete();
+		}
+
+		if ("${check}" == "true") {
+			Alert.viewSuccessMessage();
+		} else if ("${check}" == "false") {
+			Alert.viewRequiredField();
+		} else {
 			Alert.viewRequestFailedToComplete();
 		}
 
@@ -167,6 +203,22 @@ definition {
 		}
 		else
 		{
+			Alert.viewRequestFailedToComplete();
+		}
+
+		if ("${check}" == "true") {
+			Alert.viewSuccessMessage();
+		}else if ("${check}" == "false") {
+			Alert.viewRequiredField();
+		}else {
+			Alert.viewRequestFailedToComplete();
+		}
+
+		if ("${check}" == "true") {
+			Alert.viewSuccessMessage();
+		} else if ("${check}" == "false") {
+			Alert.viewRequiredField();
+		} else {
 			Alert.viewRequestFailedToComplete();
 		}
 

@@ -91,8 +91,8 @@ public class GraphQLServletExtender {
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		GraphQLFieldRetriever graphQLFieldRetriever =
-			new LiferayGraphQLFieldRetriever();
+		_graphQLFieldRetriever = new LiferayGraphQLFieldRetriever();
+
 		GraphQLInterfaceRetriever graphQLInterfaceRetriever =
 			new GraphQLInterfaceRetriever();
 
@@ -123,7 +123,7 @@ public class GraphQLServletExtender {
 				setExtensionsHandler(
 					new GraphQLExtensionsHandler() {
 						{
-							setFieldRetriever(graphQLFieldRetriever);
+							setFieldRetriever(_graphQLFieldRetriever);
 							setFieldSearchAlgorithm(parentalSearch);
 							setGraphQLObjectInfoRetriever(
 								graphQLObjectInfoRetriever);
@@ -131,7 +131,7 @@ public class GraphQLServletExtender {
 						}
 					});
 				setFieldSearchAlgorithm(parentalSearch);
-				setGraphQLFieldRetriever(graphQLFieldRetriever);
+				setGraphQLFieldRetriever(_graphQLFieldRetriever);
 				setGraphQLInterfaceRetriever(graphQLInterfaceRetriever);
 				setGraphQLObjectInfoRetriever(graphQLObjectInfoRetriever);
 				setMethodSearchAlgorithm(breadthFirstSearch);
@@ -226,9 +226,6 @@ public class GraphQLServletExtender {
 		ProcessingElementsContainer processingElementsContainer =
 			new ProcessingElementsContainer(_defaultTypeFunction);
 
-		GraphQLFieldRetriever graphQLFieldRetriever =
-			new LiferayGraphQLFieldRetriever();
-
 		GraphQLSchema.Builder schemaBuilder = GraphQLSchema.newSchema();
 
 		GraphQLObjectType.Builder mutationBuilder =
@@ -248,7 +245,7 @@ public class GraphQLServletExtender {
 			for (Method method : mutationClass.getMethods()) {
 				if (method.isAnnotationPresent(GraphQLField.class)) {
 					mutationBuilder.field(
-						graphQLFieldRetriever.getField(
+						_graphQLFieldRetriever.getField(
 							method, processingElementsContainer));
 				}
 			}
@@ -260,7 +257,7 @@ public class GraphQLServletExtender {
 			for (Method method : queryClazz.getMethods()) {
 				if (method.isAnnotationPresent(GraphQLField.class)) {
 					queryBuilder.field(
-						graphQLFieldRetriever.getField(
+						_graphQLFieldRetriever.getField(
 							method, processingElementsContainer));
 				}
 			}
@@ -347,6 +344,7 @@ public class GraphQLServletExtender {
 	private CompanyLocalService _companyLocalService;
 
 	private DefaultTypeFunction _defaultTypeFunction;
+	private GraphQLFieldRetriever _graphQLFieldRetriever;
 
 	@Reference
 	private Language _language;

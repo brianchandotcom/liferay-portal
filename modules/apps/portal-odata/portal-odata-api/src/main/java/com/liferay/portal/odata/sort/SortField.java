@@ -40,8 +40,22 @@ public class SortField implements Serializable {
 			throw new IllegalArgumentException("Entity field is null");
 		}
 
-		_asc = asc;
 		_entityField = entityField;
+		_asc = asc;
+		_fieldName = entityField.getName();
+	}
+
+	/**
+	 * Creates a new sort field not linked to a entityField
+	 *
+	 * @param  fieldName the entity field name
+	 * @param  asc whether the sort should be ascending
+	 * @review
+	 */
+	public SortField(String fieldName, boolean asc) {
+		_fieldName = fieldName;
+		_asc = asc;
+		_entityField = null;
 	}
 
 	/**
@@ -52,6 +66,10 @@ public class SortField implements Serializable {
 	 * @review
 	 */
 	public String getSortableFieldName(Locale locale) {
+		if (_entityField == null) {
+			return _fieldName;
+		}
+
 		return _entityField.getSortableName(locale);
 	}
 
@@ -68,5 +86,6 @@ public class SortField implements Serializable {
 
 	private final boolean _asc;
 	private final EntityField _entityField;
+	private final String _fieldName;
 
 }

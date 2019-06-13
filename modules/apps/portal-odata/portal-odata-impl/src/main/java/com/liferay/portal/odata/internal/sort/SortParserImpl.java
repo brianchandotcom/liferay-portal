@@ -146,6 +146,10 @@ public class SortParserImpl implements SortParser {
 			ascending = _ASC_DEFAULT;
 		}
 
+		if (_entityModel == null) {
+			return Optional.of(new SortField(fieldName, ascending));
+		}
+
 		Optional<EntityField> entityFieldOptional = getEntityFieldOptional(
 			_entityModel.getEntityFieldsMap(), fieldName);
 

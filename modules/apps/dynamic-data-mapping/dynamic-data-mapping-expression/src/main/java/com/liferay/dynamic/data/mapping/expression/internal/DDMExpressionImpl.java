@@ -48,13 +48,14 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 
 	@Override
 	public T evaluate() throws DDMExpressionException {
-		try {
-			_ddmExpressionFunctions = getDDMExpressionFunctions();
+		Map<String, DDMExpressionFunction> ddmExpressionFunctions =
+			getDDMExpressionFunctions();
 
+		try {
 			Set<String> undefinedFunctionNames = new HashSet<>(
 				getExpressionFunctionNames());
 
-			undefinedFunctionNames.removeAll(_ddmExpressionFunctions.keySet());
+			undefinedFunctionNames.removeAll(ddmExpressionFunctions.keySet());
 
 			if (!undefinedFunctionNames.isEmpty()) {
 				throw new DDMExpressionException.FunctionNotDefined(
@@ -63,7 +64,7 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 
 			DDMExpressionEvaluatorVisitor ddmExpressionEvaluatorVisitor =
 				new DDMExpressionEvaluatorVisitor(
-					_ddmExpressionFunctions, _variables,
+					ddmExpressionFunctions, _variables,
 					_ddmExpressionActionHandler, _ddmExpressionFieldAccessor,
 					_ddmExpressionObserver, _ddmExpressionParameterAccessor);
 
@@ -76,9 +77,9 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 			throw new DDMExpressionException(e);
 		}
 		finally {
-			if (!_ddmExpressionFunctions.isEmpty()) {
+			if (!ddmExpressionFunctions.isEmpty()) {
 				_ddmExpressionFunctionTracker.ungetDDMExpressionFunctions(
-					_ddmExpressionFunctions);
+					ddmExpressionFunctions);
 			}
 		}
 	}
@@ -201,8 +202,6 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 	private DDMExpressionActionHandler _ddmExpressionActionHandler;
 	private DDMExpressionFieldAccessor _ddmExpressionFieldAccessor;
 	private final Set<String> _ddmExpressionFunctionNames = new HashSet<>();
-	private Map<String, DDMExpressionFunction> _ddmExpressionFunctions =
-		new HashMap<>();
 	private DDMExpressionFunctionTracker _ddmExpressionFunctionTracker;
 	private DDMExpressionObserver _ddmExpressionObserver;
 	private DDMExpressionParameterAccessor _ddmExpressionParameterAccessor;

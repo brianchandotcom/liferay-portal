@@ -51,7 +51,10 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		try {
 			_ddmExpressionFunctions = getDDMExpressionFunctions();
 
-			Set<String> undefinedFunctionNames = getUndefinedFunctionNames();
+			Set<String> undefinedFunctionNames = new HashSet<>(
+				getExpressionFunctionNames());
+
+			undefinedFunctionNames.removeAll(_ddmExpressionFunctions.keySet());
 
 			if (!undefinedFunctionNames.isEmpty()) {
 				throw new DDMExpressionException.FunctionNotDefined(
@@ -163,15 +166,6 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 
 	protected Set<String> getExpressionVariableNames() {
 		return _variables.keySet();
-	}
-
-	protected Set<String> getUndefinedFunctionNames() {
-		Set<String> undefinedFunctionNames = new HashSet<>(
-			getExpressionFunctionNames());
-
-		undefinedFunctionNames.removeAll(_ddmExpressionFunctions.keySet());
-
-		return undefinedFunctionNames;
 	}
 
 	protected void setDDMExpressionActionHandler(

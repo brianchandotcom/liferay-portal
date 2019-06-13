@@ -183,12 +183,6 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		_ddmExpressionFieldAccessor = ddmExpressionFieldAccessor;
 	}
 
-	protected void setDDMExpressionFunctions(
-		Map<String, DDMExpressionFunction> ddmExpressionFunctions) {
-
-		_ddmExpressionFunctions = ddmExpressionFunctions;
-	}
-
 	protected void setDDMExpressionFunctionTracker(
 		DDMExpressionFunctionTracker ddmExpressionFunctionTracker) {
 

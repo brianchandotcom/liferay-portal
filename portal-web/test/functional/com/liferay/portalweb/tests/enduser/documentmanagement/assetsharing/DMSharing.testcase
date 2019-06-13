@@ -227,7 +227,7 @@ definition {
 		var key_dmDocumentTitle = "DM Document Title";
 
 		AssertTextEquals(
-			locator1 = "DocumentsAndMediaShare#SHARED_ASSETS_DOCUMENT_TITLE",
+			locator1 = "Sharing#SHARED_ASSETS_DOCUMENT_TITLE",
 			value1 = "DM Document Title");
 		AssertElementNotPresent(locator1 = "//tbody/tr[2]/td[contains(@class,'table-cell-content')]/a[contains(.,'DM Document Title')]");
 	}
@@ -353,7 +353,7 @@ definition {
 		var key_assetType = "Documents";
 
 		AssertClick(
-			locator1 = "DocumentsAndMediaShare#SHARED_ASSETS_ASSET_TYPE",
+			locator1 = "Sharing#SHARED_ASSETS_ASSET_TYPE",
 			value1 = "Documents");
 
 		SelectFrame(value1 = "relative=top");
@@ -448,7 +448,7 @@ definition {
 			gmailMessageTitle = "Test Test has shared DM Document Title with you for viewing.");
 
 		AssertClick(
-			locator1 = "DocumentsAndMediaShare#EMAIL_VIEW_DOCUMENT_BUTTON",
+			locator1 = "Sharing#EMAIL_VIEW_DOCUMENT_BUTTON",
 			value1 = "View Document");
 
 		SelectWindow(locator1 = "title=- ${siteName}");
@@ -697,10 +697,10 @@ definition {
 		IFrame.selectModalFrame();
 
 		Type(
-			locator1 = "DocumentsAndMediaShare#INVITE_TO_COLLABORATE_INPUT",
+			locator1 = "Sharing#INVITE_TO_COLLABORATE_INPUT",
 			value1 = "userea2@liferay.com");
 
-		AssertElementPresent(locator1 = "DocumentsAndMediaShare#INVITE_TO_COLLABORATE_DROPDOWN");
+		AssertElementPresent(locator1 = "Sharing#INVITE_TO_COLLABORATE_DROPDOWN");
 
 		User.logoutPG();
 
@@ -804,7 +804,7 @@ definition {
 
 		var key_dmDocumentTitle = "DM Document Title";
 
-		Click(locator1 = "DocumentsAndMediaShare#SHARED_ASSETS_DOCUMENT_OPTIONS");
+		Click(locator1 = "Sharing#SHARED_ASSETS_DOCUMENT_OPTIONS");
 
 		MenuItem.viewNotPresent(menuItem = "Share");
 
@@ -879,7 +879,7 @@ definition {
 		var key_text = "Manage Collaborators";
 
 		AssertVisible(
-			locator1 = "DocumentsAndMediaShare#COLLABORATOR_TOOLTIP",
+			locator1 = "Sharing#COLLABORATOR_TOOLTIP",
 			value1 = "userfn");
 
 		AssertElementNotPresent(

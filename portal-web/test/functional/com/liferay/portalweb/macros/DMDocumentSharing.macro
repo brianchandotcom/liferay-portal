@@ -40,15 +40,15 @@ definition {
 		var key_userName = "${userName}";
 
 		AssertTextEquals(
-			locator1 = "DocumentsAndMediaShare#MANAGE_COLLABORATORS_NAME",
+			locator1 = "Sharing#MANAGE_COLLABORATORS_NAME",
 			value1 = "${userName}");
 
 		Select(
-			locator1 = "DocumentsAndMediaShare#MANAGE_COLLABORATORS_ACCESS_DROPDOWN",
+			locator1 = "Sharing#MANAGE_COLLABORATORS_ACCESS_DROPDOWN",
 			value1 = "${selectPermission}");
 
 		AssertSelectedLabel(
-			locator1 = "DocumentsAndMediaShare#MANAGE_COLLABORATORS_ACCESS_DROPDOWN",
+			locator1 = "Sharing#MANAGE_COLLABORATORS_ACCESS_DROPDOWN",
 			value1 = "${selectPermission}");
 
 		Button.clickSave();
@@ -66,11 +66,11 @@ definition {
 		for (var collaborator : list "${collaboratorList}") {
 			var key_userName = "${collaborator}";
 
-			Click(locator1 = "DocumentsAndMediaShare#MANAGE_COLLABORATORS_REMOVE_BUTTON");
+			Click(locator1 = "Sharing#MANAGE_COLLABORATORS_REMOVE_BUTTON");
 		}
 
 		if (isSet(emptyStateMessage)) {
-			AssertElementPresent(locator1 = "DocumentsAndMediaShare#MANAGE_COLLABORATORS_EMPTY_STATE_MESSAGE");
+			AssertElementPresent(locator1 = "Sharing#MANAGE_COLLABORATORS_EMPTY_STATE_MESSAGE");
 		}
 
 		Button.clickSave();
@@ -87,7 +87,7 @@ definition {
 			var key_collaborator = "${collaborator}";
 
 			AssertElementPresent(
-				locator1 = "DocumentsAndMediaShare#COLLABORATOR_TOOLTIP",
+				locator1 = "Sharing#COLLABORATOR_TOOLTIP",
 				value1 = "${collaborator}");
 		}
 	}

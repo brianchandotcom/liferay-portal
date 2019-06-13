@@ -1168,14 +1168,14 @@ definition {
 		IFrame.selectModalFrame();
 
 		Type(
-			locator1 = "DocumentsAndMediaShare#INVITE_TO_COLLABORATE_INPUT",
+			locator1 = "Sharing#INVITE_TO_COLLABORATE_INPUT",
 			value1 = "${userEmailAddress}");
 
-		Click(locator1 = "DocumentsAndMediaShare#INVITE_TO_COLLABORATE_DROPDOWN");
+		Click(locator1 = "Sharing#INVITE_TO_COLLABORATE_DROPDOWN");
 
 		var key_userName = "${userName}";
 
-		AssertElementPresent(locator1 = "DocumentsAndMediaShare#INVITE_TO_COLLABORATE_TAG");
+		AssertElementPresent(locator1 = "Sharing#INVITE_TO_COLLABORATE_TAG");
 
 		if (isSet(shareable)) {
 			FormFields.enableCheckbox(fieldName = "shareable");
@@ -1211,10 +1211,10 @@ definition {
 		IFrame.selectModalFrame();
 
 		Type(
-			locator1 = "DocumentsAndMediaShare#INVITE_TO_COLLABORATE_INPUT",
+			locator1 = "Sharing#INVITE_TO_COLLABORATE_INPUT",
 			value1 = "${userEmailAddress}");
 
-		AssertElementNotPresent(locator1 = "DocumentsAndMediaShare#INVITE_TO_COLLABORATE_DROPDOWN");
+		AssertElementNotPresent(locator1 = "Sharing#INVITE_TO_COLLABORATE_DROPDOWN");
 	}
 
 	macro tearDownCP {

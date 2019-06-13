@@ -83,7 +83,13 @@ public class PortalTestSuiteUpstreamControllerBuildData
 			throw new RuntimeException("Invalid job name " + jobName);
 		}
 
-		return matcher.group("testSuiteName");
+		String testSuiteName = matcher.group("testSuiteName");
+
+		if (testSuiteName == null) {
+			testSuiteName = "default";
+		}
+
+		return testSuiteName;
 	}
 
 	protected PortalTestSuiteUpstreamControllerBuildData(
@@ -144,6 +150,7 @@ public class PortalTestSuiteUpstreamControllerBuildData
 	}
 
 	private static final Pattern _jobNamePattern = Pattern.compile(
-		"[^\\(]+\\((?<upstreamBranchName>[^_]+)_(?<testSuiteName>[^\\)]+)\\)");
+		"[^\\(]+\\((?<upstreamBranchName>[^_\\)]+)" +
+			"(_(?<testSuiteName>[^\\)]+))?\\)");
 
 }

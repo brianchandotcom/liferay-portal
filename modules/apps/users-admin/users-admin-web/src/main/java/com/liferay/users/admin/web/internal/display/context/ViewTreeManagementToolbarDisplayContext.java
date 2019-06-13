@@ -146,7 +146,7 @@ public class ViewTreeManagementToolbarDisplayContext {
 							StringBundler.concat(
 								"javascript:", _renderResponse.getNamespace(),
 								"removeOrganizationsAndUsers();"));
-						dropdownItem.setIcon("remove-role");
+						dropdownItem.setIcon("minus-circle");
 						dropdownItem.setLabel(
 							LanguageUtil.get(
 								_httpServletRequest, Constants.REMOVE));

@@ -6,6 +6,8 @@ const validateDuration = (days, hours) => {
 	if (!days && !hours) {
 		return Liferay.Language.get('a-duration-time-is-required');
 	}
+
+	return '';
 };
 
 const validateHours = hours => {
@@ -14,18 +16,24 @@ const validateHours = hours => {
 	if (hours && !hours.match(hoursRegex)) {
 		return Liferay.Language.get('value-must-be-an-hour-below');
 	}
+
+	return '';
 };
 
 const validateName = name => {
 	if (!name || !name.trim()) {
 		return Liferay.Language.get('a-name-is-required');
 	}
+
+	return '';
 };
 
 const validateNodeKeys = nodeKeys => {
 	if (!nodeKeys || !nodeKeys.length) {
 		return Liferay.Language.get('at-least-one-parameter-is-required');
 	}
+
+	return '';
 };
 
 export {

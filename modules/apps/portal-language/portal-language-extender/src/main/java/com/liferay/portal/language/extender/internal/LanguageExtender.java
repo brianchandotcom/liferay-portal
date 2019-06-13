@@ -85,8 +85,7 @@ public class LanguageExtender
 		_bundleContext = bundleContext;
 
 		_bundleTracker = new BundleTracker<>(
-			bundleContext, Bundle.ACTIVE | Bundle.RESOLVED | Bundle.STARTING,
-			this);
+			bundleContext, ~Bundle.INSTALLED & ~Bundle.UNINSTALLED, this);
 
 		_bundleTracker.open();
 	}

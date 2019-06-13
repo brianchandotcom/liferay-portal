@@ -67,21 +67,21 @@ public class ZipReaderImplTest {
 
 	@Test
 	public void testConstructor() throws Exception {
-		ZipReader zipReader = new ZipReaderImpl(
+		ZipReader zipReader1 = new ZipReaderImpl(
 			DependenciesTestUtil.getDependencyAsInputStream(
 				getClass(), _ZIP_FILE_PATH));
 
-		Assert.assertNotNull(zipReader);
+		Assert.assertNotNull(zipReader1);
 
-		zipReader.close();
+		zipReader1.close();
 
-		zipReader = new ZipReaderImpl(
+		ZipReader zipReader2 = new ZipReaderImpl(
 			DependenciesTestUtil.getDependencyAsFile(
 				getClass(), _ZIP_FILE_PATH));
 
-		Assert.assertNotNull(zipReader);
+		Assert.assertNotNull(zipReader2);
 
-		zipReader.close();
+		zipReader2.close();
 	}
 
 	@Test

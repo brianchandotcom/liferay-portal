@@ -285,29 +285,29 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testConstructor() {
-		ZipWriter zipWriter = new ZipWriterImpl();
+		ZipWriter zipWriter1 = new ZipWriterImpl();
 
-		Assert.assertNotNull(zipWriter);
+		Assert.assertNotNull(zipWriter1);
 
-		File file = zipWriter.getFile();
+		File file1 = zipWriter1.getFile();
 
-		Assert.assertNotNull(file);
+		Assert.assertNotNull(file1);
 
-		file.delete();
+		file1.delete();
 
 		File zipFile = new File(_tempZipFilePath);
 
-		zipWriter = new ZipWriterImpl(zipFile);
+		ZipWriter zipWriter2 = new ZipWriterImpl(zipFile);
 
-		Assert.assertNotNull(zipWriter);
+		Assert.assertNotNull(zipWriter2);
 
-		file = zipWriter.getFile();
+		File file2 = zipWriter2.getFile();
 
-		Assert.assertNotNull(file);
-		Assert.assertTrue(file.exists());
-		Assert.assertEquals(zipFile.getPath(), file.getPath());
+		Assert.assertNotNull(file2);
+		Assert.assertTrue(file2.exists());
+		Assert.assertEquals(zipFile.getPath(), file2.getPath());
 
-		file.delete();
+		file2.delete();
 	}
 
 	@Test

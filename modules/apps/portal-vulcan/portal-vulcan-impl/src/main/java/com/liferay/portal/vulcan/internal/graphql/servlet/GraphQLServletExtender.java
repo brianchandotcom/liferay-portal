@@ -63,13 +63,11 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import javax.servlet.Servlet;
 import javax.servlet.http.HttpServletRequest;
@@ -358,23 +356,24 @@ public class GraphQLServletExtender {
 		GraphQLFieldRetriever graphQLFieldRetriever,
 		Function<ServletData, Object> objectClassFunction) {
 
-		return _servletDataList.stream(
-		).map(
-			objectClassFunction
-		).map(
-			Object::getClass
-		).map(
-			Class::getMethods
-		).flatMap(
-			Arrays::stream
-		).filter(
-			method -> method.isAnnotationPresent(GraphQLField.class)
-		).map(
-			method -> graphQLFieldRetriever.getField(
-				method, processingElementsContainer)
-		).collect(
-			Collectors.toList()
-		);
+		List<GraphQLFieldDefinition> graphQLFieldDefinitions =
+			new ArrayList<>();
+
+		for (ServletData servletData : _servletDataList) {
+			Object object = objectClassFunction.apply(servletData);
+
+			Class<?> clazz = object.getClass();
+
+			for (Method method : clazz.getMethods()) {
+				if (method.isAnnotationPresent(GraphQLField.class)) {
+					graphQLFieldDefinitions.add(
+						graphQLFieldRetriever.getField(
+							method, processingElementsContainer));
+				}
+			}
+		}
+
+		return graphQLFieldDefinitions;
 	}
 
 	private volatile boolean _activated;

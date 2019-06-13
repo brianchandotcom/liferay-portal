@@ -15,18 +15,12 @@
 package com.liferay.dynamic.data.mapping.expression.internal.helper;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
-import com.liferay.dynamic.data.mapping.expression.internal.pool.DDMExpressionFunctionPooledFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.commons.pool2.impl.GenericObjectPool;
-
 import org.osgi.service.component.ComponentFactory;
+import org.osgi.service.component.ComponentInstance;
 
 /**
  * @author Rafael Praxedes
@@ -34,103 +28,51 @@ import org.osgi.service.component.ComponentFactory;
 public class DDMExpressionFunctionTrackerHelper {
 
 	public void addComponentFactory(ComponentFactory componentFactory) {
-		GenericObjectPool<DDMExpressionFunction> ddmExpressionFunctionPool =
-			new GenericObjectPool<>(
-				new DDMExpressionFunctionPooledFactory(componentFactory));
-
-		DDMExpressionFunction ddmExpressionFunction = _getDDMExpressionFunction(
-			ddmExpressionFunctionPool);
+		DDMExpressionFunction ddmExpressionFunction =
+			_createDDMExpressionFunction(componentFactory);
 
 		ddmExpressionFunctionComponentFactoryMap.put(
-			ddmExpressionFunction.getName(), ddmExpressionFunctionPool);
-
-		ungetDDMExpressionFunction(ddmExpressionFunction);
+			ddmExpressionFunction.getName(), componentFactory);
 	}
 
 	public void clear() {
-		Set<Map.Entry<String, GenericObjectPool<DDMExpressionFunction>>>
-			entrySet = ddmExpressionFunctionComponentFactoryMap.entrySet();
-
-		for (Map.Entry<String, GenericObjectPool<DDMExpressionFunction>> entry :
-				entrySet) {
-
-			GenericObjectPool<DDMExpressionFunction> ddmExpressionFunctionPool =
-				entry.getValue();
-
-			ddmExpressionFunctionPool.close();
-		}
-
 		ddmExpressionFunctionComponentFactoryMap.clear();
 	}
 
 	public DDMExpressionFunction getDDMExpressionFunction(String functionName) {
-		GenericObjectPool<DDMExpressionFunction> ddmExpressionFunctionPool =
+		ComponentFactory componentFactory =
 			ddmExpressionFunctionComponentFactoryMap.get(functionName);
 
-		if (ddmExpressionFunctionPool == null) {
+		if (componentFactory == null) {
 			return null;
 		}
 
-		return _getDDMExpressionFunction(ddmExpressionFunctionPool);
+		return _createDDMExpressionFunction(componentFactory);
 	}
 
 	public void removeComponentFactory(ComponentFactory componentFactory) {
-		Set<Map.Entry<String, GenericObjectPool<DDMExpressionFunction>>>
-			entrySet = ddmExpressionFunctionComponentFactoryMap.entrySet();
+		DDMExpressionFunction ddmExpressionFunction =
+			_createDDMExpressionFunction(componentFactory);
 
-		for (Map.Entry<String, GenericObjectPool<DDMExpressionFunction>> entry :
-				entrySet) {
-
-			GenericObjectPool<DDMExpressionFunction> ddmExpressionFunctionPool =
-				entry.getValue();
-
-			DDMExpressionFunctionPooledFactory
-				ddmExpressionFunctionPooledFactory =
-					(DDMExpressionFunctionPooledFactory)
-						ddmExpressionFunctionPool.getFactory();
-
-			if (Objects.equals(
-					componentFactory,
-					ddmExpressionFunctionPooledFactory.getComponentFactory())) {
-
-				ddmExpressionFunctionPool.close();
-
-				ddmExpressionFunctionComponentFactoryMap.remove(entry.getKey());
-
-				break;
-			}
-		}
+		ddmExpressionFunctionComponentFactoryMap.remove(
+			ddmExpressionFunction.getName(), componentFactory);
 	}
 
-	public void ungetDDMExpressionFunction(
-		DDMExpressionFunction ddmExpressionFunction) {
-
-		GenericObjectPool<DDMExpressionFunction> ddmExpressionFunctionPool =
-			ddmExpressionFunctionComponentFactoryMap.get(
-				ddmExpressionFunction.getName());
-
-		ddmExpressionFunctionPool.returnObject(ddmExpressionFunction);
-	}
-
-	protected Map<String, GenericObjectPool<DDMExpressionFunction>>
+	protected Map<String, ComponentFactory>
 		ddmExpressionFunctionComponentFactoryMap = new ConcurrentHashMap<>();
 
-	private DDMExpressionFunction _getDDMExpressionFunction(
-		GenericObjectPool<DDMExpressionFunction> ddmExpressionFunctionPool) {
+	private DDMExpressionFunction _createDDMExpressionFunction(
+		ComponentFactory componentFactory) {
 
-		try {
-			return ddmExpressionFunctionPool.borrowObject();
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-		}
+		ComponentInstance componentInstance = componentFactory.newInstance(
+			null);
 
-		return null;
+		DDMExpressionFunction ddmExpressionFunction =
+			(DDMExpressionFunction)componentInstance.getInstance();
+
+		componentInstance.dispose();
+
+		return ddmExpressionFunction;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDMExpressionFunctionTrackerHelper.class);
 
 }

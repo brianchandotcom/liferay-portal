@@ -1,17 +1,29 @@
+import {AppContext} from '../../AppContext';
+import {Errors} from '../store/ErrorsStore';
 import fetch from '../../../test/mock/fetch';
 import fetchFailure from '../../../test/mock/fetchFailure';
-import nodeStore from '../store/nodeStore';
 import {PAUSE_NODE_KEYS} from '../Constants';
 import React from 'react';
-import renderer from 'react-test-renderer';
 import {MockRouter as Router} from '../../../test/mock/MockRouter';
+import {SLA} from '../store/SLAStore';
 import SLAForm from '../SLAForm';
-import slaStore from '../store/slaStore';
+import {SLANodes} from '../store/SLANodeStore';
 
-jest.mock('../../AppContext');
+const errorState = {
+	errors: {},
+	setErrors(errors) {
+		errorState.errors = errors;
+	}
+};
+
+beforeEach(() => {
+	errorState.setErrors({});
+	jest.resetModules();
+});
+
 jest.useFakeTimers();
 
-const defaultSlaStore = {
+const defaultSlaStore = () => ({
 	pauseNodeKeys: {
 		nodeKeys: []
 	},
@@ -39,18 +51,39 @@ const defaultSlaStore = {
 			}
 		]
 	}
-};
+});
+
+const onReloadNodesHandler = () => () => {};
+
+const SLANodeState = () => ({
+	getPauseNodes: () => [],
+	getStartNodes: () => [],
+	getStopNodes: () => []
+});
+
+const SLAState = sla => ({
+	changeNodesKeys: () => () => {},
+	changePauseNodes: () => () => {},
+	changeValue: () => () => {},
+	filterNodeTagIds: () => () => [],
+	pauseNodeTagIds: () => () => [],
+	saveSLA: () => Promise.resolve(true),
+	sla: {
+		...defaultSlaStore(),
+		...sla
+	}
+});
 
 test('Should render component', () => {
-	const component = renderer.create(
-		<Router>
-			<SLAForm />
-		</Router>
+	const component = mount(
+		<AppContext.Provider value={{client: fetch({})}}>
+			<Router client={fetch({})}>
+				<SLAForm id={1234} />
+			</Router>
+		</AppContext.Provider>
 	);
 
-	const tree = component.toJSON();
-
-	expect(tree).toMatchSnapshot();
+	expect(component).toMatchSnapshot();
 });
 
 test('Should render component in edit mode', () => {
@@ -65,9 +98,11 @@ test('Should render component in edit mode', () => {
 	};
 
 	const component = mount(
-		<Router client={fetch(data)}>
-			<SLAForm id={1234} />
-		</Router>
+		<AppContext.Provider value={{client: fetch(data)}}>
+			<Router client={fetch(data)}>
+				<SLAForm id={1234} />
+			</Router>
+		</AppContext.Provider>
 	);
 
 	jest.runAllTimers();
@@ -84,214 +119,201 @@ test('Should submit a new SLA with valid values', () => {
 
 	const component = mount(
 		<Router client={fetch(data)}>
-			<SLAForm processId='123' />
+			<SLA.Provider
+				value={SLAState({
+					days: 3,
+					hours: '10:50',
+					name: 'New SLA'
+				})}
+			>
+				<Errors.Provider value={errorState}>
+					<SLAForm.Footer
+						id='123'
+						onReloadNodes={onReloadNodesHandler()}
+						processId='123'
+						query=''
+					/>
+				</Errors.Provider>
+			</SLA.Provider>
 		</Router>
 	);
 
-	const instance = component.find(SLAForm).instance();
+	const instance = component.find('.sheet-footer button.btn');
 
-	slaStore.setState({
-		days: 3,
-		hours: '10:50',
-		name: 'New SLA',
-		...defaultSlaStore
-	});
+	instance.simulate('click');
 
-	instance.handleSubmit().then(() => {
-		expect(component).toMatchSnapshot();
-	});
+	expect(component).toMatchSnapshot();
 });
 
 test('Should display errors when input blur with invalid values', () => {
 	const component = mount(
 		<Router>
-			<SLAForm />
+			<SLA.Provider
+				value={SLAState({
+					days: 0,
+					hours: '99:99'
+				})}
+			>
+				<Errors.Provider value={errorState}>
+					<SLANodes.Provider value={SLANodeState()}>
+						<SLAForm.Body id='123' processId='123' query='' />
+					</SLANodes.Provider>
+				</Errors.Provider>
+			</SLA.Provider>
 		</Router>
 	);
 
-	const instance = component.find(SLAForm).instance();
+	const instance = component.find('#sla_duration_hours').at(0);
 
-	slaStore.setState({
-		days: '0',
-		hours: '99:99'
-	});
+	instance
+		.simulate('focus')
+		.simulate('input', {target: {name: 'hours', value: ''}})
+		.simulate('blur');
 
-	instance.onHoursBlurred();
-
-	jest.runAllTimers();
-
-	const {errors} = instance.state;
-
-	expect(errors.hours).toBe('value-must-be-an-hour-below');
-	expect(component).toMatchSnapshot();
+	expect(errorState.errors.hours).toBe('value-must-be-an-hour-below');
 });
 
 test('Should display errors when duration was changed but keep empty', () => {
 	const component = mount(
 		<Router>
-			<SLAForm />
+			<SLA.Provider
+				value={SLAState({
+					days: '',
+					hours: ''
+				})}
+			>
+				<Errors.Provider value={errorState}>
+					<SLANodes.Provider value={SLANodeState()}>
+						<SLAForm.Body id='123' processId='123' query='' />
+					</SLANodes.Provider>
+				</Errors.Provider>
+			</SLA.Provider>
 		</Router>
 	);
 
-	const instance = component.find(SLAForm).instance();
+	const instance = component.find('#sla_duration_days').at(0);
 
-	instance.onDurationChanged();
+	instance
+		.simulate('focus')
+		.simulate('input', {target: {name: 'days', value: ''}})
+		.simulate('blur');
 
-	const {errors} = instance.state;
-
-	expect(errors.duration).toBe('a-duration-time-is-required');
-	expect(component).toMatchSnapshot();
+	expect(errorState.errors.duration).toBe('a-duration-time-is-required');
 });
 
 test('Should display errors when submitting the form with empty values', () => {
 	const component = mount(
 		<Router>
-			<SLAForm />
+			<SLA.Provider value={SLAState({})}>
+				<Errors.Provider value={errorState}>
+					<SLANodes.Provider value={SLANodeState()}>
+						<SLAForm.Body id='123' processId='123' query='' />
+					</SLANodes.Provider>
+				</Errors.Provider>
+			</SLA.Provider>
 		</Router>
 	);
 
-	const instance = component.find(SLAForm).instance();
+	const instance = component.find('.sheet-footer button');
 
-	instance.handleSubmit();
+	instance.simulate('click');
 
-	expect(component).toMatchSnapshot();
+	expect(errorState.errors.alertMessage).toBe(
+		'please-fill-in-the-required-fields'
+	);
 });
 
 test('Should display error when submitting the form with empty name', () => {
 	const component = mount(
 		<Router>
-			<SLAForm />
+			<SLA.Provider value={SLAState({})}>
+				<Errors.Provider value={errorState}>
+					<SLANodes.Provider value={SLANodeState()}>
+						<SLAForm.Body id='123' processId='123' query='' />
+					</SLANodes.Provider>
+				</Errors.Provider>
+			</SLA.Provider>
 		</Router>
 	);
 
-	const instance = component.find(SLAForm).instance();
+	const instance = component.find('#sla_name').at(0);
 
-	slaStore.setState({
-		days: 3,
-		hours: '10:50'
-	});
+	instance
+		.simulate('focus')
+		.simulate('input', {target: {name: 'name', value: ''}})
+		.simulate('blur');
 
-	instance.handleSubmit();
-
-	const {errors} = instance.state;
-
-	expect(errors.name).toBe('a-name-is-required');
-	expect(component).toMatchSnapshot();
+	expect(errorState.errors.name).toBe('a-name-is-required');
 });
 
 test('Should display error on alert when receive a server error after submit', () => {
 	const error = {
 		response: {
-			data: {
-				message: 'Error during SLA creation.'
-			}
+			data: [{message: 'Error during SLA creation.'}]
 		}
 	};
 	const component = mount(
 		<Router client={fetchFailure(error)}>
-			<SLAForm />
+			<SLA.Provider
+				value={{
+					...SLAState({
+						days: 1,
+						name: 'New SLA'
+					}),
+					saveSLA: () => fetchFailure(error).get()
+				}}
+			>
+				<Errors.Provider value={errorState}>
+					<SLANodes.Provider value={SLANodeState()}>
+						<SLAForm.Body id='123' processId='123' query='' />
+					</SLANodes.Provider>
+				</Errors.Provider>
+			</SLA.Provider>
 		</Router>
 	);
+	const instance = component.find('.sheet-footer button');
 
-	const instance = component.find(SLAForm).instance();
-
-	slaStore.setState({
-		days: 3,
-		hours: '10:50',
-		name: 'New SLA',
-		...defaultSlaStore
-	});
-
-	instance.handleSubmit().then(() => {
-		const {errors} = instance.state;
-
-		expect(errors['alertMessage']).toBe('Error during SLA creation.');
-		expect(component).toMatchSnapshot();
-	});
+	instance.simulate('click');
+	jest.runAllTimers();
+	expect(component).toMatchSnapshot();
 });
 
 test('Should display error on field when receive a server error after submit', () => {
 	const error = {
 		response: {
-			data: {
-				fieldName: 'name',
-				message: 'An SLA with the same name already exists.'
-			}
+			data: [
+				{
+					fieldName: 'name',
+					message: 'An SLA with the same name already exists.'
+				}
+			]
 		}
 	};
 
 	const component = mount(
 		<Router client={fetchFailure(error)}>
-			<SLAForm />
+			<SLA.Provider
+				value={{
+					...SLAState({
+						days: 1,
+						name: 'Test'
+					}),
+					saveSLA: () => fetchFailure(error).get()
+				}}
+			>
+				<Errors.Provider value={errorState}>
+					<SLANodes.Provider value={SLANodeState()}>
+						<SLAForm.Body id='123' processId='123' query='' />
+					</SLANodes.Provider>
+				</Errors.Provider>
+			</SLA.Provider>
 		</Router>
 	);
 
-	const instance = component.find(SLAForm).instance();
+	const instance = component.find('.sheet-footer button');
 
-	slaStore.setState({
-		days: 3,
-		name: 'SLA 1',
-		...defaultSlaStore
-	});
-
-	instance.handleSubmit();
-
-	instance.handleSubmit().then(() => {
-		const {errors} = instance.state;
-
-		expect(errors['name']).toBe(
-			'An SLA with the same name already exists.'
-		);
-		expect(component).toMatchSnapshot();
-	});
-});
-
-test('Should display error when submitting the form with invalid hours', () => {
-	const component = mount(
-		<Router>
-			<SLAForm />
-		</Router>
-	);
-
-	const instance = component.find(SLAForm).instance();
-
-	slaStore.setState({
-		days: 3,
-		hours: '12:10',
-		name: 'New SLA',
-		...defaultSlaStore
-	});
-
-	instance.handleSubmit().then(() => {
-		const {errors} = instance.state;
-
-		expect(errors.hours).toBe('Value must be an hour below 23:59.');
-		expect(component).toMatchSnapshot();
-	});
-});
-
-test('Should display error when the server returns a failure', () => {
-	const data = {
-		message: 'Internal server error'
-	};
-
-	const component = mount(
-		<Router client={fetchFailure(data)}>
-			<SLAForm />
-		</Router>
-	);
-
-	const instance = component.find(SLAForm).instance();
-
-	slaStore.setState({
-		days: 3,
-		hours: '12:10',
-		name: 'New SLA',
-		...defaultSlaStore
-	});
-
-	instance.handleSubmit();
-
+	instance.simulate('click');
+	jest.runAllTimers();
 	expect(component).toMatchSnapshot();
 });
 
@@ -307,34 +329,40 @@ test('Should edit the SLA with valid values', () => {
 		hours: '10:50',
 		id: 1234,
 		name: 'Total resolution time',
-		processId: '123',
-		...defaultSlaStore
+		processId: '123'
 	};
-
-	slaStore.client = fetch(dataUpdated);
 
 	const component = mount(
 		<Router client={fetch(data)}>
-			<SLAForm id={1234} processId='123' />
+			<SLA.Provider value={SLAState(dataUpdated)}>
+				<Errors.Provider value={errorState}>
+					<SLANodes.Provider value={SLANodeState()}>
+						<SLAForm.Body id='123' processId='123' query='' />
+					</SLANodes.Provider>
+				</Errors.Provider>
+			</SLA.Provider>
 		</Router>
 	);
 
-	const instance = component.find(SLAForm).instance();
+	const instance = component.find('.sheet-footer button');
 
-	slaStore.setState(dataUpdated);
-
-	instance.handleSubmit().then(() => {
-		expect(component).toMatchSnapshot();
-	});
+	instance.simulate('click');
+	jest.runAllTimers();
+	expect(component).toMatchSnapshot();
 });
 
 test('Should update state after input changes', () => {
 	const component = mount(
 		<Router>
-			<SLAForm />
+			<SLA.Provider value={SLAState({})}>
+				<Errors.Provider value={errorState}>
+					<SLANodes.Provider value={SLANodeState()}>
+						<SLAForm.Body id='123' processId='123' query='' />
+					</SLANodes.Provider>
+				</Errors.Provider>
+			</SLA.Provider>
 		</Router>
 	);
-	const instance = component.find(SLAForm).instance();
 
 	component
 		.find('#sla_name')
@@ -342,44 +370,42 @@ test('Should update state after input changes', () => {
 		.simulate('input', {target: {name: 'name', value: 'New SLA'}})
 		.simulate('blur');
 
-	const {name: filledName} = slaStore.getState();
-
-	expect(filledName).toBe('New SLA');
-
 	component
 		.find('#sla_name')
 		.simulate('focus')
 		.simulate('input', {target: {name: 'name'}})
 		.simulate('blur');
 
-	const {name: emptyName} = slaStore.getState();
-
-	instance.handlePauseNodesChange([]);
-	instance.handleStartNodes([]);
-	instance.handleStopNodesChange([]);
-	instance.hideDropLists();
-
-	expect(emptyName).toBe('');
 	expect(component).toMatchSnapshot();
 });
 
 test('Should redirect to SLA list', () => {
+	const dataUpdated = {
+		days: 4,
+		description: 'Total time to complete the request.',
+		hours: '10:50',
+		id: 1234,
+		name: 'Total resolution time',
+		processId: '123'
+	};
+
 	const component = mount(
 		<Router>
-			<SLAForm processId='123' />
+			<SLA.Provider value={SLAState(dataUpdated)}>
+				<Errors.Provider value={errorState}>
+					<SLANodes.Provider value={SLANodeState()}>
+						<SLAForm.Body id='123' processId='123' query='' />
+					</SLANodes.Provider>
+				</Errors.Provider>
+			</SLA.Provider>
 		</Router>
 	);
 
-	const instance = component.find(SLAForm).instance();
+	const instance = component.find('.sheet-footer button');
 
-	instance.setState(
-		{
-			redirectToSlaList: true
-		},
-		() => {
-			expect(component).toMatchSnapshot();
-		}
-	);
+	instance.simulate('click');
+	jest.runAllTimers();
+	expect(component).toMatchSnapshot();
 });
 
 test('Should redirect to SLA list with blocked nodes', () => {
@@ -408,100 +434,108 @@ test('Should redirect to SLA list with blocked nodes', () => {
 		name: 'Total resolution time'
 	};
 
-	nodeStore.client = fetch({data: {items: []}});
-	slaStore.client = fetch(slaData);
-	slaStore.setState(slaData);
-
 	const component = mount(
 		<Router client={fetch(slaFormData)}>
-			<SLAForm client={fetch(slaFormData)} id='123' processId='123' />
+			<SLA.Provider value={SLAState(slaData)}>
+				<Errors.Provider value={errorState}>
+					<SLANodes.Provider value={SLANodeState()}>
+						<SLAForm.Body id='123' processId='123' query='' />
+					</SLANodes.Provider>
+				</Errors.Provider>
+			</SLA.Provider>
 		</Router>
 	);
 
-	const instance = component.find(SLAForm).instance();
+	const instance = component.find('.sheet-footer button');
 
-	nodeStore.client = fetch({data: {items: []}});
-	slaStore.client = fetch(slaData);
-	slaStore.setState(slaData);
-
-	instance.loadData().then(() => {
-		instance.setState(
-			{
-				redirectToSlaList: true
-			},
-			() => {
-				expect(component).toMatchSnapshot();
-			}
-		);
-	});
+	instance.simulate('click');
+	jest.runAllTimers();
+	expect(component).toMatchSnapshot();
 });
 
 test('Should test handler erros', () => {
 	const component = mount(
 		<Router>
-			<SLAForm processId='123' />
+			<SLA.Provider value={SLAState()}>
+				<Errors.Provider value={errorState}>
+					<SLANodes.Provider value={SLANodeState()}>
+						<SLAForm.Body processId='123' query='' />
+					</SLANodes.Provider>
+				</Errors.Provider>
+			</SLA.Provider>
 		</Router>
 	);
 
-	const instance = component.find(SLAForm).instance();
+	const instance = component.find('.sheet-footer button');
 
-	instance.handleErrors([]);
-
+	instance.simulate('click');
+	jest.runAllTimers();
 	expect(component).toMatchSnapshot();
 });
 
 test('Should test handler erros at start node keys', () => {
+	errorState.errors = {
+		[PAUSE_NODE_KEYS]: 'test',
+		test: 'test'
+	};
+
 	const component = mount(
 		<Router>
-			<SLAForm processId='123' />
+			<SLA.Provider value={SLAState()}>
+				<Errors.Provider value={errorState}>
+					<SLANodes.Provider value={SLANodeState()}>
+						<SLAForm.Body processId='123' query='' />
+					</SLANodes.Provider>
+				</Errors.Provider>
+			</SLA.Provider>
 		</Router>
 	);
 
-	const instance = component.find(SLAForm).instance();
+	const instance = component.find('.sheet-footer button');
 
-	instance.handleErrors([
-		{
-			fieldName: 'test',
-			message: 'test'
-		},
-		{
-			message: 'test'
-		},
-		{
-			fieldName: PAUSE_NODE_KEYS,
-			message: 'test'
-		}
-	]);
-
+	instance.simulate('click');
+	jest.runAllTimers();
 	expect(component).toMatchSnapshot();
 });
 
 test('Should test handler no array erros', () => {
+	errorState.errors = {};
+
 	const component = mount(
 		<Router>
-			<SLAForm processId='123' />
+			<SLA.Provider value={SLAState()}>
+				<Errors.Provider value={errorState}>
+					<SLANodes.Provider value={SLANodeState()}>
+						<SLAForm.Body processId='123' query='' />
+					</SLANodes.Provider>
+				</Errors.Provider>
+			</SLA.Provider>
 		</Router>
 	);
 
-	const instance = component.find(SLAForm).instance();
+	const instance = component.find('.sheet-footer button');
 
-	instance.handleErrors(null);
-
+	instance.simulate('click');
+	jest.runAllTimers();
 	expect(component).toMatchSnapshot();
 });
 
 test('Should test load data callback', () => {
 	const component = mount(
 		<Router>
-			<SLAForm processId='123' />
+			<SLA.Provider value={SLAState()}>
+				<Errors.Provider value={errorState}>
+					<SLANodes.Provider value={SLANodeState()}>
+						<SLAForm.Body processId='123' query='' />
+					</SLANodes.Provider>
+				</Errors.Provider>
+			</SLA.Provider>
 		</Router>
 	);
 
-	const instance = component.find(SLAForm).instance();
+	const instance = component.find('.sheet-footer button');
 
-	instance.loadDataCallback('123');
-
-	instance.loadDataCallback();
-
+	instance.simulate('click');
+	jest.runAllTimers();
 	expect(component).toMatchSnapshot();
 });

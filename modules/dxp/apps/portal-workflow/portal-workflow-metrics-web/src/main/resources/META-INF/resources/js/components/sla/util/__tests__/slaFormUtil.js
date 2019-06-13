@@ -9,7 +9,7 @@ import {
 test('Should test duration', () => {
 	const invalidKey = 'a-duration-time-is-required';
 
-	expect(validateDuration('1', '2')).toBe(undefined);
+	expect(validateDuration('1', '2')).toBe('');
 	expect(validateDuration('', '')).toBe(invalidKey);
 	expect(validateDuration('', '')).toBe(invalidKey);
 	expect(validateDuration(null, '')).toBe(invalidKey);
@@ -24,14 +24,14 @@ test('Should test errors', () => {
 test('Should test hours', () => {
 	const invalidKey = 'value-must-be-an-hour-below';
 
-	expect(validateHours('12:45')).toBe(undefined);
+	expect(validateHours('12:45')).toBe('');
 	expect(validateHours('44:45')).toBe(invalidKey);
 });
 
 test('Should test name', () => {
 	const invalidKey = 'a-name-is-required';
 
-	expect(validateName('test')).toBe(undefined);
+	expect(validateName('test')).toBe('');
 	expect(validateName()).toBe(invalidKey);
 	expect(validateName(' ')).toBe(invalidKey);
 	expect(validateName('')).toBe(invalidKey);
@@ -42,5 +42,5 @@ test('Should test nodes', () => {
 
 	expect(validateNodeKeys([])).toBe(invalidKey);
 	expect(validateNodeKeys(null)).toBe(invalidKey);
-	expect(validateNodeKeys([1, 2])).toBe(undefined);
+	expect(validateNodeKeys([1, 2])).toBe('');
 });

@@ -195,29 +195,6 @@ public class GraphQLServletExtender {
 		_servletContextHelperServiceRegistration.unregister();
 	}
 
-	protected void registerServlet(GraphQLSchema.Builder schemaBuilder) {
-		SimpleGraphQLHttpServlet.Builder servletBuilder =
-			SimpleGraphQLHttpServlet.newBuilder(schemaBuilder.build());
-
-		Servlet servlet = servletBuilder.build();
-
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT, "GraphQL");
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME, "GraphQL");
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN, "/*");
-
-		if (_servletServiceRegistration != null) {
-			_servletServiceRegistration.unregister();
-		}
-
-		_servletServiceRegistration = _bundleContext.registerService(
-			Servlet.class, servlet, properties);
-	}
-
 	protected void rewire() {
 		if (!_activated) {
 			return;
@@ -266,7 +243,26 @@ public class GraphQLServletExtender {
 		schemaBuilder.mutation(mutationBuilder.build());
 		schemaBuilder.query(queryBuilder.build());
 
-		registerServlet(schemaBuilder);
+		SimpleGraphQLHttpServlet.Builder servletBuilder =
+			SimpleGraphQLHttpServlet.newBuilder(schemaBuilder.build());
+
+		Servlet servlet = servletBuilder.build();
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT, "GraphQL");
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME, "GraphQL");
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN, "/*");
+
+		if (_servletServiceRegistration != null) {
+			_servletServiceRegistration.unregister();
+		}
+
+		_servletServiceRegistration = _bundleContext.registerService(
+			Servlet.class, servlet, properties);
 	}
 
 	private Object _get(

@@ -119,10 +119,6 @@ public class DDMExpressionFunctionTrackerHelper {
 		GenericObjectPool<DDMExpressionFunction> ddmExpressionFunctionPool) {
 
 		try {
-			if (ddmExpressionFunctionPool == null) {
-				return null;
-			}
-
 			return ddmExpressionFunctionPool.borrowObject();
 		}
 		catch (Exception e) {

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.vulcan.internal.graphql.servlet;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -57,6 +58,7 @@ import graphql.servlet.GraphQLContext;
 import graphql.servlet.SimpleGraphQLHttpServlet;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -69,6 +71,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.Servlet;
+import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.BundleContext;
@@ -193,15 +196,47 @@ public class GraphQLServletExtender {
 			(Servlet)ProxyUtil.newProxyInstance(
 				GraphQLServletExtender.class.getClassLoader(),
 				new Class<?>[] {Servlet.class},
-				(proxy, method, args) -> {
-					Servlet servlet = _getServlet();
+				new InvocationHandler() {
 
-					try {
-						return method.invoke(servlet, args);
+					@Override
+					public Object invoke(
+							Object proxy, Method method, Object[] args)
+						throws Throwable {
+
+						String methodName = method.getName();
+
+						if (methodName.equals("destroy")) {
+							return null;
+						}
+
+						if (methodName.equals("getServletInfo")) {
+							return StringPool.BLANK;
+						}
+
+						if (methodName.equals("hashCode")) {
+							return hashCode();
+						}
+
+						if (methodName.equals("init") && (args.length > 0)) {
+							_servletConfig = (ServletConfig)args[0];
+
+							return null;
+						}
+
+						Servlet servlet = _getServlet();
+
+						servlet.init(_servletConfig);
+
+						try {
+							return method.invoke(servlet, args);
+						}
+						catch (InvocationTargetException ite) {
+							throw ite.getCause();
+						}
 					}
-					catch (InvocationTargetException ite) {
-						throw ite.getCause();
-					}
+
+					private ServletConfig _servletConfig;
+
 				}),
 			properties);
 	}

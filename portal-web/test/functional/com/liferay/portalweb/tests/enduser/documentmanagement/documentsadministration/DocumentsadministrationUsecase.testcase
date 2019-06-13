@@ -90,9 +90,21 @@ definition {
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Boolean",
+			dmDocumentTypeFieldNames = "Date",
 			dmDocumentTypeName = "DM Document Type Name",
 			metadataSetName = "Document Metadata Set Name");
+
+		DMDocumentType.edit(
+			dmDocumentTypeFieldRequiredEdit = "Date",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoAddDocumentType(dmDocumentTypeName = "DM Document Type Name");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "Date",
+			locator1 = "Icon#ASTERISK_DATE_FIELD");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

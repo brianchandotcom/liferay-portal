@@ -70,14 +70,13 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromBytes() throws Exception {
-		File tempZipFile = new File(_tempZipFilePath);
+		ZipWriter zipWriter = new ZipWriterImpl(new File(_tempZipFilePath));
 
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
-
-		File dependencyFile = DependenciesTestUtil.getDependencyAsFile(
-			getClass(), _ENTRY_FILE_PATH);
-
-		zipWriter.addEntry(_ENTRY_FILE_PATH, FileUtil.getBytes(dependencyFile));
+		zipWriter.addEntry(
+			_ENTRY_FILE_PATH,
+			FileUtil.getBytes(
+				DependenciesTestUtil.getDependencyAsFile(
+					getClass(), _ENTRY_FILE_PATH)));
 
 		File file = zipWriter.getFile();
 
@@ -96,9 +95,7 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromBytesThatAreEmpty() throws Exception {
-		File tempZipFile = new File(_tempZipFilePath);
-
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+		ZipWriter zipWriter = new ZipWriterImpl(new File(_tempZipFilePath));
 
 		zipWriter.addEntry("empty.txt", new byte[0]);
 
@@ -115,9 +112,7 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromInputStream() throws Exception {
-		File tempZipFile = new File(_tempZipFilePath);
-
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+		ZipWriter zipWriter = new ZipWriterImpl(new File(_tempZipFilePath));
 
 		zipWriter.addEntry(
 			_ENTRY_FILE_PATH,
@@ -139,13 +134,9 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromInputStreamThatIsNull() throws Exception {
-		File tempZipFile = new File(_tempZipFilePath);
+		ZipWriter zipWriter = new ZipWriterImpl(new File(_tempZipFilePath));
 
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
-
-		InputStream nullableInputStream = null;
-
-		zipWriter.addEntry("null.txt", nullableInputStream);
+		zipWriter.addEntry("null.txt", (InputStream)null);
 
 		File file = zipWriter.getFile();
 
@@ -162,9 +153,7 @@ public class ZipWriterImplTest {
 	public void testAddEntryFromInputStreamThatStartsWithSlash()
 		throws Exception {
 
-		File tempZipFile = new File(_tempZipFilePath);
-
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+		ZipWriter zipWriter = new ZipWriterImpl(new File(_tempZipFilePath));
 
 		zipWriter.addEntry(
 			"/" + _ENTRY_FILE_PATH,
@@ -186,9 +175,7 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromString() throws Exception {
-		File tempZipFile = new File(_tempZipFilePath);
-
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+		ZipWriter zipWriter = new ZipWriterImpl(new File(_tempZipFilePath));
 
 		zipWriter.addEntry("string.txt", "This is a string.");
 
@@ -206,9 +193,7 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromStringBuilder() throws Exception {
-		File tempZipFile = new File(_tempZipFilePath);
-
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+		ZipWriter zipWriter = new ZipWriterImpl(new File(_tempZipFilePath));
 
 		StringBuilder sb = new StringBuilder();
 
@@ -230,9 +215,7 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromStringBuilderThatIsEmpty() throws Exception {
-		File tempZipFile = new File(_tempZipFilePath);
-
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+		ZipWriter zipWriter = new ZipWriterImpl(new File(_tempZipFilePath));
 
 		StringBuilder sb = new StringBuilder();
 
@@ -251,13 +234,9 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromStringBuilderThatIsNull() throws Exception {
-		File tempZipFile = new File(_tempZipFilePath);
+		ZipWriter zipWriter = new ZipWriterImpl(new File(_tempZipFilePath));
 
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
-
-		StringBuilder sb = null;
-
-		zipWriter.addEntry("null.txt", sb);
+		zipWriter.addEntry("null.txt", (StringBuilder)null);
 
 		File file = zipWriter.getFile();
 
@@ -272,13 +251,9 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromStringThatIsEmpty() throws Exception {
-		File tempZipFile = new File(_tempZipFilePath);
+		ZipWriter zipWriter = new ZipWriterImpl(new File(_tempZipFilePath));
 
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
-
-		String string = "";
-
-		zipWriter.addEntry("empty.txt", string);
+		zipWriter.addEntry("empty.txt", "");
 
 		File file = zipWriter.getFile();
 
@@ -293,13 +268,9 @@ public class ZipWriterImplTest {
 
 	@Test
 	public void testAddEntryFromStringThatIsNull() throws Exception {
-		File tempZipFile = new File(_tempZipFilePath);
+		ZipWriter zipWriter = new ZipWriterImpl(new File(_tempZipFilePath));
 
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
-
-		String string = null;
-
-		zipWriter.addEntry("null.txt", string);
+		zipWriter.addEntry("null.txt", (String)null);
 
 		File file = zipWriter.getFile();
 
@@ -387,9 +358,7 @@ public class ZipWriterImplTest {
 	 */
 	@Test
 	public void testFinishIfZipFileIsSet() throws Exception {
-		File tempZipFile = new File(_tempZipFilePath);
-
-		ZipWriter zipWriter = new ZipWriterImpl(tempZipFile);
+		ZipWriter zipWriter = new ZipWriterImpl(new File(_tempZipFilePath));
 
 		zipWriter.finish();
 

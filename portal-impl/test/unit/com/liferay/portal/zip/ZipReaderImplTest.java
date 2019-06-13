@@ -108,21 +108,21 @@ public class ZipReaderImplTest {
 			DependenciesTestUtil.getDependencyAsInputStream(
 				getClass(), _ZIP_FILE_PATH));
 
-		byte[] bytes = zipReader.getEntryAsByteArray(_FILE_PATH_0);
+		Assert.assertArrayEquals(
+			_expectedContent0.getBytes(_UTF_8),
+			zipReader.getEntryAsByteArray(_FILE_PATH_0));
 
-		Assert.assertArrayEquals(_expectedContent0.getBytes(_UTF_8), bytes);
+		Assert.assertArrayEquals(
+			_expectedContent1.getBytes(_UTF_8),
+			zipReader.getEntryAsByteArray(_FILE_PATH_1));
 
-		bytes = zipReader.getEntryAsByteArray(_FILE_PATH_1);
+		Assert.assertArrayEquals(
+			_expectedContent2.getBytes(_UTF_8),
+			zipReader.getEntryAsByteArray(_FILE_PATH_2));
 
-		Assert.assertArrayEquals(_expectedContent1.getBytes(_UTF_8), bytes);
-
-		bytes = zipReader.getEntryAsByteArray(_FILE_PATH_2);
-
-		Assert.assertArrayEquals(_expectedContent2.getBytes(_UTF_8), bytes);
-
-		bytes = zipReader.getEntryAsByteArray(_FILE_PATH_3);
-
-		Assert.assertArrayEquals(_expectedContent3.getBytes(_UTF_8), bytes);
+		Assert.assertArrayEquals(
+			_expectedContent3.getBytes(_UTF_8),
+			zipReader.getEntryAsByteArray(_FILE_PATH_3));
 
 		zipReader.close();
 	}
@@ -211,25 +211,20 @@ public class ZipReaderImplTest {
 			DependenciesTestUtil.getDependencyAsFile(
 				getClass(), _ZIP_FILE_PATH));
 
-		String content = zipReader.getEntryAsString(_FILE_PATH_0);
+		Assert.assertEquals(
+			_expectedContent0, zipReader.getEntryAsString(_FILE_PATH_0));
 
-		Assert.assertEquals(_expectedContent0, content);
+		Assert.assertEquals(
+			_expectedContent0, zipReader.getEntryAsString("/" + _FILE_PATH_0));
 
-		content = zipReader.getEntryAsString("/" + _FILE_PATH_0);
+		Assert.assertEquals(
+			_expectedContent1, zipReader.getEntryAsString(_FILE_PATH_1));
 
-		Assert.assertEquals(_expectedContent0, content);
+		Assert.assertEquals(
+			_expectedContent2, zipReader.getEntryAsString(_FILE_PATH_2));
 
-		content = zipReader.getEntryAsString(_FILE_PATH_1);
-
-		Assert.assertEquals(_expectedContent1, content);
-
-		content = zipReader.getEntryAsString(_FILE_PATH_2);
-
-		Assert.assertEquals(_expectedContent2, content);
-
-		content = zipReader.getEntryAsString(_FILE_PATH_3);
-
-		Assert.assertEquals(_expectedContent3, content);
+		Assert.assertEquals(
+			_expectedContent3, zipReader.getEntryAsString(_FILE_PATH_3));
 
 		zipReader.close();
 	}

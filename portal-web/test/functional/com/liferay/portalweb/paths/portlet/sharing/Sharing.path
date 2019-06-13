@@ -69,7 +69,7 @@
 <!--NOTIFICATIONS-->
 <tr>
 	<td>NOTIFICATIONS_TITLE</td>
-	<td>//h4/a[contains(.,'${key_ownerName} has shared ${key_dmDocumentTitle} with you for ${key_assetSharingPermission}')]</td>
+	<td>//h4/a[contains(.,'${key_ownerName} has shared ${key_assetTitle} with you for ${key_assetSharingPermission}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -84,13 +84,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SHARED_CONTENT_DOCUMENT_OPTIONS</td>
-	<td>//tr/td[contains(.,'${key_dmDocumentTitle}')]/..//div//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td>SHARED_CONTENT_ASSET_OPTIONS</td>
+	<td>//tr/td[contains(.,'${key_assetTitle}')]/..//div//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SHARED_CONTENT_DOCUMENT_TITLE</td>
-	<td>//tbody/tr/td[contains(@class,'table-cell-content')]/a[contains(.,'${key_dmDocumentTitle}')]</td>
+	<td>SHARED_CONTENT_ASSET_TITLE</td>
+	<td>//tbody/tr/td[contains(@class,'table-cell-content')]/a[contains(.,'${key_assetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

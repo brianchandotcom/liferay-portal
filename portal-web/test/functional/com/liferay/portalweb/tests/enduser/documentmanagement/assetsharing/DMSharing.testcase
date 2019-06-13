@@ -118,23 +118,23 @@ definition {
 
 		Notifications.gotoNotifications();
 
-		Notifications.viewNewSharedDocument(
+		Notifications.viewNewSharedAsset(
 			assetSharingPermission = "viewing",
-			dmDocumentTitle = "DM Document Title 1",
+			assetTitle = "DM Document Title 1",
 			ownerName = "Test Test");
 
 		Notifications.gotoNotifications();
 
-		Notifications.viewNewSharedDocument(
+		Notifications.viewNewSharedAsset(
 			assetSharingPermission = "updating",
-			dmDocumentTitle = "DM Document Title 2",
+			assetTitle = "DM Document Title 2",
 			ownerName = "Test Test");
 
 		Notifications.gotoNotifications();
 
-		Notifications.viewNewSharedDocument(
+		Notifications.viewNewSharedAsset(
 			assetSharingPermission = "commenting",
-			dmDocumentTitle = "DM Document Title 3",
+			assetTitle = "DM Document Title 3",
 			ownerName = "Test Test");
 	}
 
@@ -202,9 +202,9 @@ definition {
 
 		Notifications.gotoNotifications();
 
-		Notifications.viewNewSharedDocument(
+		Notifications.viewNewSharedAsset(
 			assetSharingPermission = "viewing",
-			dmDocumentTitle = "DM Document Title",
+			assetTitle = "DM Document Title",
 			openNotification = "true",
 			ownerName = "Test Test");
 
@@ -214,9 +214,9 @@ definition {
 
 		Notifications.gotoNotifications();
 
-		Notifications.viewNewSharedDocument(
+		Notifications.viewNewSharedAsset(
 			assetSharingPermission = "viewing",
-			dmDocumentTitle = "DM Document Title",
+			assetTitle = "DM Document Title",
 			openNotification = "true",
 			ownerName = "userfn userln");
 
@@ -224,10 +224,10 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
 
-		var key_dmDocumentTitle = "DM Document Title";
+		var key_assetTitle = "DM Document Title";
 
 		AssertTextEquals(
-			locator1 = "Sharing#SHARED_CONTENT_DOCUMENT_TITLE",
+			locator1 = "Sharing#SHARED_CONTENT_ASSET_TITLE",
 			value1 = "DM Document Title");
 		AssertElementNotPresent(locator1 = "//tbody/tr[2]/td[contains(@class,'table-cell-content')]/a[contains(.,'DM Document Title')]");
 	}
@@ -482,9 +482,9 @@ definition {
 
 		Notifications.gotoNotifications();
 
-		Notifications.viewNewSharedDocument(
+		Notifications.viewNewSharedAsset(
 			assetSharingPermission = "viewing",
-			dmDocumentTitle = "DM Document Title",
+			assetTitle = "DM Document Title",
 			openNotification = "true",
 			ownerName = "Test Test");
 
@@ -802,9 +802,10 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
 
+		var key_assetTitle = "DM Document Title";
 		var key_dmDocumentTitle = "DM Document Title";
 
-		Click(locator1 = "Sharing#SHARED_CONTENT_DOCUMENT_OPTIONS");
+		Click(locator1 = "Sharing#SHARED_CONTENT_ASSET_OPTIONS");
 
 		MenuItem.viewNotPresent(menuItem = "Share");
 

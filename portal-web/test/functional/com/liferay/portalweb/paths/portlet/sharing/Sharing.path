@@ -8,16 +8,6 @@
 <tr><td rowspan="1" colspan="3">Sharing</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>COLLABORATOR_TOOLTIP</td>
-	<td>//div[contains(@class,'lfr-portal-tooltip') and contains(@data-title,'${key_collaborator}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--EMAIL-->
 <tr>
 	<td>EMAIL_VIEW_DOCUMENT_BUTTON</td>

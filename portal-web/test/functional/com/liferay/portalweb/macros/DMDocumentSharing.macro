@@ -87,7 +87,7 @@ definition {
 			var key_collaborator = "${collaborator}";
 
 			AssertElementPresent(
-				locator1 = "Sharing#COLLABORATOR_TOOLTIP",
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_COLLABORATOR_TOOLTIP",
 				value1 = "${collaborator}");
 		}
 	}

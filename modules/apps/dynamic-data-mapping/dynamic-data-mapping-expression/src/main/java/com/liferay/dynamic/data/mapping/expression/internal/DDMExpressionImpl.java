@@ -73,7 +73,10 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 			throw new DDMExpressionException(e);
 		}
 		finally {
-			ungetDDMExpressionFunctions();
+			if (!_ddmExpressionFunctions.isEmpty()) {
+				_ddmExpressionFunctionTracker.ungetDDMExpressionFunctions(
+					_ddmExpressionFunctions);
+			}
 		}
 	}
 
@@ -199,13 +202,6 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		DDMExpressionParameterAccessor ddmExpressionParameterAccessor) {
 
 		_ddmExpressionParameterAccessor = ddmExpressionParameterAccessor;
-	}
-
-	protected void ungetDDMExpressionFunctions() {
-		if (!_ddmExpressionFunctions.isEmpty()) {
-			_ddmExpressionFunctionTracker.ungetDDMExpressionFunctions(
-				_ddmExpressionFunctions);
-		}
 	}
 
 	private DDMExpressionActionHandler _ddmExpressionActionHandler;

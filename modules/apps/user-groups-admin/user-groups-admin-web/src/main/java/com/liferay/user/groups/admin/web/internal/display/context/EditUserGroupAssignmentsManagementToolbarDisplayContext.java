@@ -75,7 +75,7 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 					add(
 						dropdownItem -> {
 							dropdownItem.setHref("javascript:;");
-							dropdownItem.setIcon("trash");
+							dropdownItem.setIcon("minus-circle");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "remove"));

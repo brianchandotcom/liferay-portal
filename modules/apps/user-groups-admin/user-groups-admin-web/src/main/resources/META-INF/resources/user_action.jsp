@@ -31,9 +31,9 @@ User user2 = (User)row.getObject();
 </portlet:actionURL>
 
 <liferay-ui:icon
-	icon="times-circle"
+	icon="minus-circle"
 	linkCssClass="table-action-link"
 	markupView="lexicon"
-	message="delete"
+	message="remove"
 	url="<%= deleteUserGroupUsersURL %>"
 />

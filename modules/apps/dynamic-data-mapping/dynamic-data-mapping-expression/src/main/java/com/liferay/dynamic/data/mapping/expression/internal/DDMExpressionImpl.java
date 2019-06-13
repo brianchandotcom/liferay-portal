@@ -28,7 +28,6 @@ import com.liferay.dynamic.data.mapping.expression.model.Expression;
 
 import java.math.BigDecimal;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -153,10 +152,6 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 	}
 
 	protected Map<String, DDMExpressionFunction> getDDMExpressionFunctions() {
-		if (_ddmExpressionFunctionTracker == null) {
-			return Collections.emptyMap();
-		}
-
 		return _ddmExpressionFunctionTracker.getDDMExpressionFunctions(
 			getExpressionFunctionNames());
 	}

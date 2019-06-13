@@ -53,13 +53,10 @@ public class LiferayFileItemTest {
 	@Test
 	public void testCreateItem() {
 		String fieldName = RandomTestUtil.randomString();
-		String contentType = RandomTestUtil.randomString();
 		String fileName = RandomTestUtil.randomString();
 
-		FileItem fileItem = _liferayFileItemFactory.createItem(
-			fieldName, contentType, false, fileName);
-
-		LiferayFileItem liferayFileItem = (LiferayFileItem)fileItem;
+		LiferayFileItem liferayFileItem = _liferayFileItemFactory.createItem(
+			fieldName, RandomTestUtil.randomString(), false, fileName);
 
 		Assert.assertEquals(fieldName, liferayFileItem.getFieldName());
 		Assert.assertEquals(fileName, liferayFileItem.getFullFileName());
@@ -68,12 +65,9 @@ public class LiferayFileItemTest {
 
 	@Test(expected = NullPointerException.class)
 	public void testGetContentTypeFromInvalidFile() {
-		String fieldName = RandomTestUtil.randomString();
-		String contentType = RandomTestUtil.randomString();
-		String fileName = RandomTestUtil.randomString();
-
 		FileItem fileItem = _liferayFileItemFactory.createItem(
-			fieldName, contentType, false, fileName);
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			RandomTestUtil.randomString());
 
 		Assert.assertNotNull(fileItem);
 
@@ -85,12 +79,9 @@ public class LiferayFileItemTest {
 		File file = DependenciesTestUtil.getDependencyAsFile(
 			getClass(), "LiferayFileItem.txt");
 
-		String fieldName = RandomTestUtil.randomString();
-		String contentType = Files.probeContentType(file.toPath());
-		String fileName = file.getName();
-
 		FileItem fileItem = _liferayFileItemFactory.createItem(
-			fieldName, contentType, false, fileName);
+			RandomTestUtil.randomString(),
+			Files.probeContentType(file.toPath()), false, file.getName());
 
 		Assert.assertNotNull(fileItem);
 
@@ -99,14 +90,9 @@ public class LiferayFileItemTest {
 
 	@Test
 	public void testGetEncodedStringAfterCreateItem() {
-		String contentType = RandomTestUtil.randomString();
-		String fieldName = RandomTestUtil.randomString();
-		String fileName = RandomTestUtil.randomString();
-
-		FileItem fileItem = _liferayFileItemFactory.createItem(
-			fieldName, contentType, false, fileName);
-
-		LiferayFileItem liferayFileItem = (LiferayFileItem)fileItem;
+		LiferayFileItem liferayFileItem = _liferayFileItemFactory.createItem(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			RandomTestUtil.randomString());
 
 		Assert.assertNotNull(liferayFileItem);
 		Assert.assertNull(liferayFileItem.getEncodedString());
@@ -114,42 +100,27 @@ public class LiferayFileItemTest {
 
 	@Test
 	public void testGetFileNameExtension() {
-		String fieldName = RandomTestUtil.randomString();
-		String contentType = RandomTestUtil.randomString();
-		String fileName = RandomTestUtil.randomString() + ".txt";
-
-		FileItem fileItem = _liferayFileItemFactory.createItem(
-			fieldName, contentType, false, fileName);
-
-		LiferayFileItem liferayFileItem = (LiferayFileItem)fileItem;
+		LiferayFileItem liferayFileItem = _liferayFileItemFactory.createItem(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			RandomTestUtil.randomString() + ".txt");
 
 		Assert.assertEquals("txt", liferayFileItem.getFileNameExtension());
 	}
 
 	@Test
 	public void testGetFileNameExtensionWithNullValue() {
-		String fieldName = RandomTestUtil.randomString();
-		String contentType = RandomTestUtil.randomString();
-		String fileName = "theFile";
-
-		FileItem fileItem = _liferayFileItemFactory.createItem(
-			fieldName, contentType, false, fileName);
-
-		LiferayFileItem liferayFileItem = (LiferayFileItem)fileItem;
+		LiferayFileItem liferayFileItem = _liferayFileItemFactory.createItem(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			"theFile");
 
 		Assert.assertEquals("", liferayFileItem.getFileNameExtension());
 	}
 
 	@Test
 	public void testSetStringRequiresCharacterEncoding() throws Exception {
-		String contentType = RandomTestUtil.randomString();
-		String fieldName = RandomTestUtil.randomString();
-		String fileName = RandomTestUtil.randomString() + ".txt";
-
-		FileItem fileItem = _liferayFileItemFactory.createItem(
-			fieldName, contentType, false, fileName);
-
-		LiferayFileItem liferayFileItem = (LiferayFileItem)fileItem;
+		LiferayFileItem liferayFileItem = _liferayFileItemFactory.createItem(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			RandomTestUtil.randomString() + ".txt");
 
 		liferayFileItem.getOutputStream();
 
@@ -160,14 +131,9 @@ public class LiferayFileItemTest {
 
 	@Test(expected = NullPointerException.class)
 	public void testSetStringWithoutOutputStream() throws Exception {
-		String fieldName = RandomTestUtil.randomString();
-		String contentType = RandomTestUtil.randomString();
-		String fileName = RandomTestUtil.randomString() + ".txt";
-
-		FileItem fileItem = _liferayFileItemFactory.createItem(
-			fieldName, contentType, false, fileName);
-
-		LiferayFileItem liferayFileItem = (LiferayFileItem)fileItem;
+		LiferayFileItem liferayFileItem = _liferayFileItemFactory.createItem(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			RandomTestUtil.randomString() + ".txt");
 
 		Assert.assertNotNull(liferayFileItem);
 
@@ -176,14 +142,9 @@ public class LiferayFileItemTest {
 
 	@Test
 	public void testWriteRequiresCallingGetOutputStream() throws Exception {
-		String fieldName = RandomTestUtil.randomString();
-		String contentType = RandomTestUtil.randomString();
-		String fileName = RandomTestUtil.randomString() + ".txt";
-
-		FileItem fileItem = _liferayFileItemFactory.createItem(
-			fieldName, contentType, false, fileName);
-
-		LiferayFileItem liferayFileItem = (LiferayFileItem)fileItem;
+		LiferayFileItem liferayFileItem = _liferayFileItemFactory.createItem(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			RandomTestUtil.randomString() + ".txt");
 
 		liferayFileItem.getOutputStream();
 

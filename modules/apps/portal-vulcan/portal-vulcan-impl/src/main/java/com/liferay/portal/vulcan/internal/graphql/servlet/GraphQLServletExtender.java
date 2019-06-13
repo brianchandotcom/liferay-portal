@@ -195,18 +195,10 @@ public class GraphQLServletExtender {
 		_activated = false;
 
 		if (_servletServiceRegistration != null) {
-			try {
-				_servletServiceRegistration.unregister();
-			}
-			catch (Exception e) {
-			}
+			_servletServiceRegistration.unregister();
 		}
 
-		try {
-			_servletContextHelperServiceRegistration.unregister();
-		}
-		catch (Exception e) {
-		}
+		_servletContextHelperServiceRegistration.unregister();
 	}
 
 	protected void registerServlet(GraphQLSchema.Builder schemaBuilder) {
@@ -225,11 +217,7 @@ public class GraphQLServletExtender {
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN, "/*");
 
 		if (_servletServiceRegistration != null) {
-			try {
-				_servletServiceRegistration.unregister();
-			}
-			catch (Exception e) {
-			}
+			_servletServiceRegistration.unregister();
 		}
 
 		_servletServiceRegistration = _bundleContext.registerService(

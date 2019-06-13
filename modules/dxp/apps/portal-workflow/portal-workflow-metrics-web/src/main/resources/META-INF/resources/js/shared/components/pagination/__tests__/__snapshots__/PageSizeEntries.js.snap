@@ -181,35 +181,15 @@ exports[`Should render with default deltas 1`] = `
               key="0_5"
               pageSize={5}
             >
-              <Route>
-                <PageSizeItem
-                  history={
-                    Object {
-                      "action": "POP",
-                      "block": [Function],
-                      "canGo": [Function],
-                      "createHref": [Function],
-                      "entries": Array [
-                        Object {
-                          "hash": "",
-                          "match": Object {
-                            "params": Object {
-                              "page": 1,
-                              "search": undefined,
-                              "sort": undefined,
-                            },
-                          },
-                          "pathname": "/processes/1/10/title%3Aasc",
-                          "search": "?backPath=%2F",
-                        },
-                      ],
-                      "go": [Function],
-                      "goBack": [Function],
-                      "goForward": [Function],
-                      "index": 0,
-                      "length": 1,
-                      "listen": [Function],
-                      "location": Object {
+              <PageSizeItem
+                history={
+                  Object {
+                    "action": "POP",
+                    "block": [Function],
+                    "canGo": [Function],
+                    "createHref": [Function],
+                    "entries": Array [
+                      Object {
                         "hash": "",
                         "match": Object {
                           "params": Object {
@@ -221,12 +201,14 @@ exports[`Should render with default deltas 1`] = `
                         "pathname": "/processes/1/10/title%3Aasc",
                         "search": "?backPath=%2F",
                       },
-                      "push": [Function],
-                      "replace": [Function],
-                    }
-                  }
-                  location={
-                    Object {
+                    ],
+                    "go": [Function],
+                    "goBack": [Function],
+                    "goForward": [Function],
+                    "index": 0,
+                    "length": 1,
+                    "listen": [Function],
+                    "location": Object {
                       "hash": "",
                       "match": Object {
                         "params": Object {
@@ -237,72 +219,67 @@ exports[`Should render with default deltas 1`] = `
                       },
                       "pathname": "/processes/1/10/title%3Aasc",
                       "search": "?backPath=%2F",
-                    }
+                    },
+                    "push": [Function],
+                    "replace": [Function],
                   }
-                  match={
+                }
+                location={
+                  Object {
+                    "hash": "",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/processes/1/10/title%3Aasc",
+                    "search": "?backPath=%2F",
+                  }
+                }
+                match={
+                  Object {
+                    "isExact": false,
+                    "params": Object {},
+                    "path": "/",
+                    "url": "/",
+                  }
+                }
+                pageSize={5}
+              >
+                <Link
+                  className="dropdown-item"
+                  to={
                     Object {
-                      "isExact": false,
-                      "params": Object {},
-                      "path": "/",
-                      "url": "/",
+                      "pathname": "/",
+                      "search": "?backPath=%2F",
                     }
                   }
-                  pageSize={5}
                 >
-                  <Link
+                  <a
                     className="dropdown-item"
-                    replace={false}
-                    to={
-                      Object {
-                        "pathname": "/",
-                        "search": "?backPath=%2F",
-                      }
-                    }
+                    href="/?backPath=%2F"
+                    onClick={[Function]}
                   >
-                    <a
-                      className="dropdown-item"
-                      href="/?backPath=%2F"
-                      onClick={[Function]}
-                    >
-                      5
-                    </a>
-                  </Link>
-                </PageSizeItem>
-              </Route>
+                    5
+                  </a>
+                </Link>
+              </PageSizeItem>
             </withRouter(PageSizeItem)>
             <withRouter(PageSizeItem)
               key="1_10"
               pageSize={10}
             >
-              <Route>
-                <PageSizeItem
-                  history={
-                    Object {
-                      "action": "POP",
-                      "block": [Function],
-                      "canGo": [Function],
-                      "createHref": [Function],
-                      "entries": Array [
-                        Object {
-                          "hash": "",
-                          "match": Object {
-                            "params": Object {
-                              "page": 1,
-                              "search": undefined,
-                              "sort": undefined,
-                            },
-                          },
-                          "pathname": "/processes/1/10/title%3Aasc",
-                          "search": "?backPath=%2F",
-                        },
-                      ],
-                      "go": [Function],
-                      "goBack": [Function],
-                      "goForward": [Function],
-                      "index": 0,
-                      "length": 1,
-                      "listen": [Function],
-                      "location": Object {
+              <PageSizeItem
+                history={
+                  Object {
+                    "action": "POP",
+                    "block": [Function],
+                    "canGo": [Function],
+                    "createHref": [Function],
+                    "entries": Array [
+                      Object {
                         "hash": "",
                         "match": Object {
                           "params": Object {
@@ -314,12 +291,14 @@ exports[`Should render with default deltas 1`] = `
                         "pathname": "/processes/1/10/title%3Aasc",
                         "search": "?backPath=%2F",
                       },
-                      "push": [Function],
-                      "replace": [Function],
-                    }
-                  }
-                  location={
-                    Object {
+                    ],
+                    "go": [Function],
+                    "goBack": [Function],
+                    "goForward": [Function],
+                    "index": 0,
+                    "length": 1,
+                    "listen": [Function],
+                    "location": Object {
                       "hash": "",
                       "match": Object {
                         "params": Object {
@@ -330,72 +309,67 @@ exports[`Should render with default deltas 1`] = `
                       },
                       "pathname": "/processes/1/10/title%3Aasc",
                       "search": "?backPath=%2F",
-                    }
+                    },
+                    "push": [Function],
+                    "replace": [Function],
                   }
-                  match={
+                }
+                location={
+                  Object {
+                    "hash": "",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/processes/1/10/title%3Aasc",
+                    "search": "?backPath=%2F",
+                  }
+                }
+                match={
+                  Object {
+                    "isExact": false,
+                    "params": Object {},
+                    "path": "/",
+                    "url": "/",
+                  }
+                }
+                pageSize={10}
+              >
+                <Link
+                  className="dropdown-item"
+                  to={
                     Object {
-                      "isExact": false,
-                      "params": Object {},
-                      "path": "/",
-                      "url": "/",
+                      "pathname": "/",
+                      "search": "?backPath=%2F",
                     }
                   }
-                  pageSize={10}
                 >
-                  <Link
+                  <a
                     className="dropdown-item"
-                    replace={false}
-                    to={
-                      Object {
-                        "pathname": "/",
-                        "search": "?backPath=%2F",
-                      }
-                    }
+                    href="/?backPath=%2F"
+                    onClick={[Function]}
                   >
-                    <a
-                      className="dropdown-item"
-                      href="/?backPath=%2F"
-                      onClick={[Function]}
-                    >
-                      10
-                    </a>
-                  </Link>
-                </PageSizeItem>
-              </Route>
+                    10
+                  </a>
+                </Link>
+              </PageSizeItem>
             </withRouter(PageSizeItem)>
             <withRouter(PageSizeItem)
               key="2_20"
               pageSize={20}
             >
-              <Route>
-                <PageSizeItem
-                  history={
-                    Object {
-                      "action": "POP",
-                      "block": [Function],
-                      "canGo": [Function],
-                      "createHref": [Function],
-                      "entries": Array [
-                        Object {
-                          "hash": "",
-                          "match": Object {
-                            "params": Object {
-                              "page": 1,
-                              "search": undefined,
-                              "sort": undefined,
-                            },
-                          },
-                          "pathname": "/processes/1/10/title%3Aasc",
-                          "search": "?backPath=%2F",
-                        },
-                      ],
-                      "go": [Function],
-                      "goBack": [Function],
-                      "goForward": [Function],
-                      "index": 0,
-                      "length": 1,
-                      "listen": [Function],
-                      "location": Object {
+              <PageSizeItem
+                history={
+                  Object {
+                    "action": "POP",
+                    "block": [Function],
+                    "canGo": [Function],
+                    "createHref": [Function],
+                    "entries": Array [
+                      Object {
                         "hash": "",
                         "match": Object {
                           "params": Object {
@@ -407,12 +381,14 @@ exports[`Should render with default deltas 1`] = `
                         "pathname": "/processes/1/10/title%3Aasc",
                         "search": "?backPath=%2F",
                       },
-                      "push": [Function],
-                      "replace": [Function],
-                    }
-                  }
-                  location={
-                    Object {
+                    ],
+                    "go": [Function],
+                    "goBack": [Function],
+                    "goForward": [Function],
+                    "index": 0,
+                    "length": 1,
+                    "listen": [Function],
+                    "location": Object {
                       "hash": "",
                       "match": Object {
                         "params": Object {
@@ -423,72 +399,67 @@ exports[`Should render with default deltas 1`] = `
                       },
                       "pathname": "/processes/1/10/title%3Aasc",
                       "search": "?backPath=%2F",
-                    }
+                    },
+                    "push": [Function],
+                    "replace": [Function],
                   }
-                  match={
+                }
+                location={
+                  Object {
+                    "hash": "",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/processes/1/10/title%3Aasc",
+                    "search": "?backPath=%2F",
+                  }
+                }
+                match={
+                  Object {
+                    "isExact": false,
+                    "params": Object {},
+                    "path": "/",
+                    "url": "/",
+                  }
+                }
+                pageSize={20}
+              >
+                <Link
+                  className="dropdown-item"
+                  to={
                     Object {
-                      "isExact": false,
-                      "params": Object {},
-                      "path": "/",
-                      "url": "/",
+                      "pathname": "/",
+                      "search": "?backPath=%2F",
                     }
                   }
-                  pageSize={20}
                 >
-                  <Link
+                  <a
                     className="dropdown-item"
-                    replace={false}
-                    to={
-                      Object {
-                        "pathname": "/",
-                        "search": "?backPath=%2F",
-                      }
-                    }
+                    href="/?backPath=%2F"
+                    onClick={[Function]}
                   >
-                    <a
-                      className="dropdown-item"
-                      href="/?backPath=%2F"
-                      onClick={[Function]}
-                    >
-                      20
-                    </a>
-                  </Link>
-                </PageSizeItem>
-              </Route>
+                    20
+                  </a>
+                </Link>
+              </PageSizeItem>
             </withRouter(PageSizeItem)>
             <withRouter(PageSizeItem)
               key="3_30"
               pageSize={30}
             >
-              <Route>
-                <PageSizeItem
-                  history={
-                    Object {
-                      "action": "POP",
-                      "block": [Function],
-                      "canGo": [Function],
-                      "createHref": [Function],
-                      "entries": Array [
-                        Object {
-                          "hash": "",
-                          "match": Object {
-                            "params": Object {
-                              "page": 1,
-                              "search": undefined,
-                              "sort": undefined,
-                            },
-                          },
-                          "pathname": "/processes/1/10/title%3Aasc",
-                          "search": "?backPath=%2F",
-                        },
-                      ],
-                      "go": [Function],
-                      "goBack": [Function],
-                      "goForward": [Function],
-                      "index": 0,
-                      "length": 1,
-                      "listen": [Function],
-                      "location": Object {
+              <PageSizeItem
+                history={
+                  Object {
+                    "action": "POP",
+                    "block": [Function],
+                    "canGo": [Function],
+                    "createHref": [Function],
+                    "entries": Array [
+                      Object {
                         "hash": "",
                         "match": Object {
                           "params": Object {
@@ -500,12 +471,14 @@ exports[`Should render with default deltas 1`] = `
                         "pathname": "/processes/1/10/title%3Aasc",
                         "search": "?backPath=%2F",
                       },
-                      "push": [Function],
-                      "replace": [Function],
-                    }
-                  }
-                  location={
-                    Object {
+                    ],
+                    "go": [Function],
+                    "goBack": [Function],
+                    "goForward": [Function],
+                    "index": 0,
+                    "length": 1,
+                    "listen": [Function],
+                    "location": Object {
                       "hash": "",
                       "match": Object {
                         "params": Object {
@@ -516,72 +489,67 @@ exports[`Should render with default deltas 1`] = `
                       },
                       "pathname": "/processes/1/10/title%3Aasc",
                       "search": "?backPath=%2F",
-                    }
+                    },
+                    "push": [Function],
+                    "replace": [Function],
                   }
-                  match={
+                }
+                location={
+                  Object {
+                    "hash": "",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/processes/1/10/title%3Aasc",
+                    "search": "?backPath=%2F",
+                  }
+                }
+                match={
+                  Object {
+                    "isExact": false,
+                    "params": Object {},
+                    "path": "/",
+                    "url": "/",
+                  }
+                }
+                pageSize={30}
+              >
+                <Link
+                  className="dropdown-item"
+                  to={
                     Object {
-                      "isExact": false,
-                      "params": Object {},
-                      "path": "/",
-                      "url": "/",
+                      "pathname": "/",
+                      "search": "?backPath=%2F",
                     }
                   }
-                  pageSize={30}
                 >
-                  <Link
+                  <a
                     className="dropdown-item"
-                    replace={false}
-                    to={
-                      Object {
-                        "pathname": "/",
-                        "search": "?backPath=%2F",
-                      }
-                    }
+                    href="/?backPath=%2F"
+                    onClick={[Function]}
                   >
-                    <a
-                      className="dropdown-item"
-                      href="/?backPath=%2F"
-                      onClick={[Function]}
-                    >
-                      30
-                    </a>
-                  </Link>
-                </PageSizeItem>
-              </Route>
+                    30
+                  </a>
+                </Link>
+              </PageSizeItem>
             </withRouter(PageSizeItem)>
             <withRouter(PageSizeItem)
               key="4_50"
               pageSize={50}
             >
-              <Route>
-                <PageSizeItem
-                  history={
-                    Object {
-                      "action": "POP",
-                      "block": [Function],
-                      "canGo": [Function],
-                      "createHref": [Function],
-                      "entries": Array [
-                        Object {
-                          "hash": "",
-                          "match": Object {
-                            "params": Object {
-                              "page": 1,
-                              "search": undefined,
-                              "sort": undefined,
-                            },
-                          },
-                          "pathname": "/processes/1/10/title%3Aasc",
-                          "search": "?backPath=%2F",
-                        },
-                      ],
-                      "go": [Function],
-                      "goBack": [Function],
-                      "goForward": [Function],
-                      "index": 0,
-                      "length": 1,
-                      "listen": [Function],
-                      "location": Object {
+              <PageSizeItem
+                history={
+                  Object {
+                    "action": "POP",
+                    "block": [Function],
+                    "canGo": [Function],
+                    "createHref": [Function],
+                    "entries": Array [
+                      Object {
                         "hash": "",
                         "match": Object {
                           "params": Object {
@@ -593,12 +561,14 @@ exports[`Should render with default deltas 1`] = `
                         "pathname": "/processes/1/10/title%3Aasc",
                         "search": "?backPath=%2F",
                       },
-                      "push": [Function],
-                      "replace": [Function],
-                    }
-                  }
-                  location={
-                    Object {
+                    ],
+                    "go": [Function],
+                    "goBack": [Function],
+                    "goForward": [Function],
+                    "index": 0,
+                    "length": 1,
+                    "listen": [Function],
+                    "location": Object {
                       "hash": "",
                       "match": Object {
                         "params": Object {
@@ -609,72 +579,67 @@ exports[`Should render with default deltas 1`] = `
                       },
                       "pathname": "/processes/1/10/title%3Aasc",
                       "search": "?backPath=%2F",
-                    }
+                    },
+                    "push": [Function],
+                    "replace": [Function],
                   }
-                  match={
+                }
+                location={
+                  Object {
+                    "hash": "",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/processes/1/10/title%3Aasc",
+                    "search": "?backPath=%2F",
+                  }
+                }
+                match={
+                  Object {
+                    "isExact": false,
+                    "params": Object {},
+                    "path": "/",
+                    "url": "/",
+                  }
+                }
+                pageSize={50}
+              >
+                <Link
+                  className="dropdown-item"
+                  to={
                     Object {
-                      "isExact": false,
-                      "params": Object {},
-                      "path": "/",
-                      "url": "/",
+                      "pathname": "/",
+                      "search": "?backPath=%2F",
                     }
                   }
-                  pageSize={50}
                 >
-                  <Link
+                  <a
                     className="dropdown-item"
-                    replace={false}
-                    to={
-                      Object {
-                        "pathname": "/",
-                        "search": "?backPath=%2F",
-                      }
-                    }
+                    href="/?backPath=%2F"
+                    onClick={[Function]}
                   >
-                    <a
-                      className="dropdown-item"
-                      href="/?backPath=%2F"
-                      onClick={[Function]}
-                    >
-                      50
-                    </a>
-                  </Link>
-                </PageSizeItem>
-              </Route>
+                    50
+                  </a>
+                </Link>
+              </PageSizeItem>
             </withRouter(PageSizeItem)>
             <withRouter(PageSizeItem)
               key="5_75"
               pageSize={75}
             >
-              <Route>
-                <PageSizeItem
-                  history={
-                    Object {
-                      "action": "POP",
-                      "block": [Function],
-                      "canGo": [Function],
-                      "createHref": [Function],
-                      "entries": Array [
-                        Object {
-                          "hash": "",
-                          "match": Object {
-                            "params": Object {
-                              "page": 1,
-                              "search": undefined,
-                              "sort": undefined,
-                            },
-                          },
-                          "pathname": "/processes/1/10/title%3Aasc",
-                          "search": "?backPath=%2F",
-                        },
-                      ],
-                      "go": [Function],
-                      "goBack": [Function],
-                      "goForward": [Function],
-                      "index": 0,
-                      "length": 1,
-                      "listen": [Function],
-                      "location": Object {
+              <PageSizeItem
+                history={
+                  Object {
+                    "action": "POP",
+                    "block": [Function],
+                    "canGo": [Function],
+                    "createHref": [Function],
+                    "entries": Array [
+                      Object {
                         "hash": "",
                         "match": Object {
                           "params": Object {
@@ -686,12 +651,14 @@ exports[`Should render with default deltas 1`] = `
                         "pathname": "/processes/1/10/title%3Aasc",
                         "search": "?backPath=%2F",
                       },
-                      "push": [Function],
-                      "replace": [Function],
-                    }
-                  }
-                  location={
-                    Object {
+                    ],
+                    "go": [Function],
+                    "goBack": [Function],
+                    "goForward": [Function],
+                    "index": 0,
+                    "length": 1,
+                    "listen": [Function],
+                    "location": Object {
                       "hash": "",
                       "match": Object {
                         "params": Object {
@@ -702,38 +669,53 @@ exports[`Should render with default deltas 1`] = `
                       },
                       "pathname": "/processes/1/10/title%3Aasc",
                       "search": "?backPath=%2F",
-                    }
+                    },
+                    "push": [Function],
+                    "replace": [Function],
                   }
-                  match={
+                }
+                location={
+                  Object {
+                    "hash": "",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/processes/1/10/title%3Aasc",
+                    "search": "?backPath=%2F",
+                  }
+                }
+                match={
+                  Object {
+                    "isExact": false,
+                    "params": Object {},
+                    "path": "/",
+                    "url": "/",
+                  }
+                }
+                pageSize={75}
+              >
+                <Link
+                  className="dropdown-item"
+                  to={
                     Object {
-                      "isExact": false,
-                      "params": Object {},
-                      "path": "/",
-                      "url": "/",
+                      "pathname": "/",
+                      "search": "?backPath=%2F",
                     }
                   }
-                  pageSize={75}
                 >
-                  <Link
+                  <a
                     className="dropdown-item"
-                    replace={false}
-                    to={
-                      Object {
-                        "pathname": "/",
-                        "search": "?backPath=%2F",
-                      }
-                    }
+                    href="/?backPath=%2F"
+                    onClick={[Function]}
                   >
-                    <a
-                      className="dropdown-item"
-                      href="/?backPath=%2F"
-                      onClick={[Function]}
-                    >
-                      75
-                    </a>
-                  </Link>
-                </PageSizeItem>
-              </Route>
+                    75
+                  </a>
+                </Link>
+              </PageSizeItem>
             </withRouter(PageSizeItem)>
           </div>
         </div>

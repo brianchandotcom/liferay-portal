@@ -224,9 +224,78 @@ exports[`Should render component with completed tab activated 1`] = `
                             className="dropdown-item"
                             to="/slas/35315/20/1"
                           >
-                            <Route>
-                              <Component
+                            <Component
+                              className="dropdown-item"
+                              history={
+                                Object {
+                                  "action": "POP",
+                                  "block": [Function],
+                                  "canGo": [Function],
+                                  "createHref": [Function],
+                                  "entries": Array [
+                                    Object {
+                                      "hash": "",
+                                      "match": Object {
+                                        "params": Object {
+                                          "page": 1,
+                                          "search": undefined,
+                                          "sort": undefined,
+                                        },
+                                      },
+                                      "pathname": "/dashboard/35315",
+                                      "search": "?backPath=%2F",
+                                    },
+                                  ],
+                                  "go": [Function],
+                                  "goBack": [Function],
+                                  "goForward": [Function],
+                                  "index": 0,
+                                  "length": 1,
+                                  "listen": [Function],
+                                  "location": Object {
+                                    "hash": "",
+                                    "match": Object {
+                                      "params": Object {
+                                        "page": 1,
+                                        "search": undefined,
+                                        "sort": undefined,
+                                      },
+                                    },
+                                    "pathname": "/dashboard/35315",
+                                    "search": "?backPath=%2F",
+                                  },
+                                  "push": [Function],
+                                  "replace": [Function],
+                                }
+                              }
+                              location={
+                                Object {
+                                  "hash": "",
+                                  "match": Object {
+                                    "params": Object {
+                                      "page": 1,
+                                      "search": undefined,
+                                      "sort": undefined,
+                                    },
+                                  },
+                                  "pathname": "/dashboard/35315",
+                                  "search": "?backPath=%2F",
+                                }
+                              }
+                              match={
+                                Object {
+                                  "isExact": false,
+                                  "params": Object {},
+                                  "path": "/",
+                                  "url": "/",
+                                }
+                              }
+                              to="/slas/35315/20/1"
+                            >
+                              <ChildLinkWrapper
+                                backPath="/"
                                 className="dropdown-item"
+                                currentPath="/dashboard/35315?backPath=%2F"
                                 history={
                                   Object {
                                     "action": "POP",
@@ -269,99 +338,27 @@ exports[`Should render component with completed tab activated 1`] = `
                                     "replace": [Function],
                                   }
                                 }
-                                location={
-                                  Object {
-                                    "hash": "",
-                                    "match": Object {
-                                      "params": Object {
-                                        "page": 1,
-                                        "search": undefined,
-                                        "sort": undefined,
-                                      },
-                                    },
-                                    "pathname": "/dashboard/35315",
-                                    "search": "?backPath=%2F",
-                                  }
-                                }
-                                match={
-                                  Object {
-                                    "isExact": false,
-                                    "params": Object {},
-                                    "path": "/",
-                                    "url": "/",
-                                  }
-                                }
                                 to="/slas/35315/20/1"
                               >
-                                <ChildLinkWrapper
-                                  backPath="/"
+                                <Link
                                   className="dropdown-item"
-                                  currentPath="/dashboard/35315?backPath=%2F"
-                                  history={
+                                  to={
                                     Object {
-                                      "action": "POP",
-                                      "block": [Function],
-                                      "canGo": [Function],
-                                      "createHref": [Function],
-                                      "entries": Array [
-                                        Object {
-                                          "hash": "",
-                                          "match": Object {
-                                            "params": Object {
-                                              "page": 1,
-                                              "search": undefined,
-                                              "sort": undefined,
-                                            },
-                                          },
-                                          "pathname": "/dashboard/35315",
-                                          "search": "?backPath=%2F",
-                                        },
-                                      ],
-                                      "go": [Function],
-                                      "goBack": [Function],
-                                      "goForward": [Function],
-                                      "index": 0,
-                                      "length": 1,
-                                      "listen": [Function],
-                                      "location": Object {
-                                        "hash": "",
-                                        "match": Object {
-                                          "params": Object {
-                                            "page": 1,
-                                            "search": undefined,
-                                            "sort": undefined,
-                                          },
-                                        },
-                                        "pathname": "/dashboard/35315",
-                                        "search": "?backPath=%2F",
-                                      },
-                                      "push": [Function],
-                                      "replace": [Function],
+                                      "pathname": "/slas/35315/20/1",
+                                      "search": "?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F",
                                     }
                                   }
-                                  to="/slas/35315/20/1"
                                 >
-                                  <Link
+                                  <a
                                     className="dropdown-item"
-                                    replace={false}
-                                    to={
-                                      Object {
-                                        "pathname": "/slas/35315/20/1",
-                                        "search": "?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F",
-                                      }
-                                    }
+                                    href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
+                                    onClick={[Function]}
                                   >
-                                    <a
-                                      className="dropdown-item"
-                                      href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
-                                      onClick={[Function]}
-                                    >
-                                      sla-settings
-                                    </a>
-                                  </Link>
-                                </ChildLinkWrapper>
-                              </Component>
-                            </Route>
+                                    sla-settings
+                                  </a>
+                                </Link>
+                              </ChildLinkWrapper>
+                            </Component>
                           </withRouter()>
                         </li>
                       </MenuItem>
@@ -398,35 +395,15 @@ exports[`Should render component with completed tab activated 1`] = `
               ]
             }
           >
-            <Route>
-              <Tabs
-                history={
-                  Object {
-                    "action": "POP",
-                    "block": [Function],
-                    "canGo": [Function],
-                    "createHref": [Function],
-                    "entries": Array [
-                      Object {
-                        "hash": "",
-                        "match": Object {
-                          "params": Object {
-                            "page": 1,
-                            "search": undefined,
-                            "sort": undefined,
-                          },
-                        },
-                        "pathname": "/dashboard/35315",
-                        "search": "?backPath=%2F",
-                      },
-                    ],
-                    "go": [Function],
-                    "goBack": [Function],
-                    "goForward": [Function],
-                    "index": 0,
-                    "length": 1,
-                    "listen": [Function],
-                    "location": Object {
+            <Tabs
+              history={
+                Object {
+                  "action": "POP",
+                  "block": [Function],
+                  "canGo": [Function],
+                  "createHref": [Function],
+                  "entries": Array [
+                    Object {
                       "hash": "",
                       "match": Object {
                         "params": Object {
@@ -438,12 +415,14 @@ exports[`Should render component with completed tab activated 1`] = `
                       "pathname": "/dashboard/35315",
                       "search": "?backPath=%2F",
                     },
-                    "push": [Function],
-                    "replace": [Function],
-                  }
-                }
-                location={
-                  Object {
+                  ],
+                  "go": [Function],
+                  "goBack": [Function],
+                  "goForward": [Function],
+                  "index": 0,
+                  "length": 1,
+                  "listen": [Function],
+                  "location": Object {
                     "hash": "",
                     "match": Object {
                       "params": Object {
@@ -454,174 +433,188 @@ exports[`Should render component with completed tab activated 1`] = `
                     },
                     "pathname": "/dashboard/35315",
                     "search": "?backPath=%2F",
-                  }
+                  },
+                  "push": [Function],
+                  "replace": [Function],
                 }
-                match={
+              }
+              location={
+                Object {
+                  "hash": "",
+                  "match": Object {
+                    "params": Object {
+                      "page": 1,
+                      "search": undefined,
+                      "sort": undefined,
+                    },
+                  },
+                  "pathname": "/dashboard/35315",
+                  "search": "?backPath=%2F",
+                }
+              }
+              match={
+                Object {
+                  "isExact": false,
+                  "params": Object {},
+                  "path": "/",
+                  "url": "/",
+                }
+              }
+              tabs={
+                Array [
                   Object {
-                    "isExact": false,
-                    "params": Object {},
-                    "path": "/",
-                    "url": "/",
-                  }
-                }
-                tabs={
-                  Array [
-                    Object {
-                      "key": "pending",
-                      "name": "pending",
-                      "params": Object {
-                        "page": 1,
-                        "pageSize": 20,
-                        "processId": 35315,
-                        "sort": "overdueInstanceCount%3Aasc",
-                      },
-                      "path": "/dashboard/:processId/pending/:pageSize/:page/:sort",
-                      "query": undefined,
+                    "key": "pending",
+                    "name": "pending",
+                    "params": Object {
+                      "page": 1,
+                      "pageSize": 20,
+                      "processId": 35315,
+                      "sort": "overdueInstanceCount%3Aasc",
                     },
-                    Object {
-                      "key": "completed",
-                      "name": "completed",
-                      "params": Object {
-                        "processId": 35315,
-                      },
-                      "path": "/dashboard/:processId/completed",
-                      "query": undefined,
+                    "path": "/dashboard/:processId/pending/:pageSize/:page/:sort",
+                    "query": undefined,
+                  },
+                  Object {
+                    "key": "completed",
+                    "name": "completed",
+                    "params": Object {
+                      "processId": 35315,
                     },
-                  ]
-                }
+                    "path": "/dashboard/:processId/completed",
+                    "query": undefined,
+                  },
+                ]
+              }
+            >
+              <nav
+                className="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-secondary"
               >
-                <nav
-                  className="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-secondary"
+                <div
+                  className="container-fluid container-fluid-max-xl"
                 >
-                  <div
-                    className="container-fluid container-fluid-max-xl"
+                  <button
+                    aria-expanded={false}
+                    aria-label="toggle-navigation"
+                    className="collapsed navbar-toggler navbar-toggler-link"
+                    onClick={[Function]}
                   >
-                    <button
-                      aria-expanded={false}
-                      aria-label="toggle-navigation"
-                      className="collapsed navbar-toggler navbar-toggler-link"
-                      onClick={[Function]}
+                    <Icon
+                      iconName="caret-bottom"
                     >
-                      <Icon
-                        iconName="caret-bottom"
-                      >
-                        <svg
-                          className="lexicon-icon lexicon-icon-caret-bottom"
-                          dangerouslySetInnerHTML={
-                            Object {
-                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
-                            }
+                      <svg
+                        className="lexicon-icon lexicon-icon-caret-bottom"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
                           }
-                          focusable="false"
-                          role="presentation"
-                        />
-                      </Icon>
-                    </button>
+                        }
+                        focusable="false"
+                        role="presentation"
+                      />
+                    </Icon>
+                  </button>
+                  <div
+                    className="collapse navbar-collapse "
+                  >
                     <div
-                      className="collapse navbar-collapse "
+                      className="container-fluid container-fluid-max-xl"
                     >
-                      <div
-                        className="container-fluid container-fluid-max-xl"
+                      <ul
+                        className="navbar-nav"
                       >
-                        <ul
-                          className="navbar-nav"
+                        <li
+                          className="nav-item"
+                          key="0"
+                          onClick={[Function]}
                         >
-                          <li
-                            className="nav-item"
-                            key="0"
-                            onClick={[Function]}
+                          <TabItem
+                            active={false}
+                            key="pending"
+                            name="pending"
+                            params={
+                              Object {
+                                "page": 1,
+                                "pageSize": 20,
+                                "processId": 35315,
+                                "sort": "overdueInstanceCount%3Aasc",
+                              }
+                            }
+                            path="/dashboard/:processId/pending/:pageSize/:page/:sort"
+                            query="?backPath=%2F"
                           >
-                            <TabItem
-                              active={false}
-                              key="pending"
-                              name="pending"
-                              params={
+                            <Link
+                              aria-label=""
+                              className=" nav-link"
+                              to={
                                 Object {
-                                  "page": 1,
-                                  "pageSize": 20,
-                                  "processId": 35315,
-                                  "sort": "overdueInstanceCount%3Aasc",
+                                  "pathname": "/dashboard/35315/pending/20/1/overdueInstanceCount%253Aasc",
+                                  "search": "?backPath=%2F",
                                 }
                               }
-                              path="/dashboard/:processId/pending/:pageSize/:page/:sort"
-                              query="?backPath=%2F"
                             >
-                              <Link
+                              <a
                                 aria-label=""
                                 className=" nav-link"
-                                replace={false}
-                                to={
-                                  Object {
-                                    "pathname": "/dashboard/35315/pending/20/1/overdueInstanceCount%253Aasc",
-                                    "search": "?backPath=%2F",
-                                  }
-                                }
+                                href="/dashboard/35315/pending/20/1/overdueInstanceCount%253Aasc?backPath=%2F"
+                                onClick={[Function]}
                               >
-                                <a
-                                  aria-label=""
-                                  className=" nav-link"
-                                  href="/dashboard/35315/pending/20/1/overdueInstanceCount%253Aasc?backPath=%2F"
-                                  onClick={[Function]}
+                                <span
+                                  className="navbar-text-truncate"
                                 >
-                                  <span
-                                    className="navbar-text-truncate"
-                                  >
-                                    pending
-                                  </span>
-                                </a>
-                              </Link>
-                            </TabItem>
-                          </li>
-                          <li
-                            className="nav-item"
-                            key="1"
-                            onClick={[Function]}
+                                  pending
+                                </span>
+                              </a>
+                            </Link>
+                          </TabItem>
+                        </li>
+                        <li
+                          className="nav-item"
+                          key="1"
+                          onClick={[Function]}
+                        >
+                          <TabItem
+                            active={false}
+                            key="completed"
+                            name="completed"
+                            params={
+                              Object {
+                                "processId": 35315,
+                              }
+                            }
+                            path="/dashboard/:processId/completed"
+                            query="?backPath=%2F"
                           >
-                            <TabItem
-                              active={false}
-                              key="completed"
-                              name="completed"
-                              params={
+                            <Link
+                              aria-label=""
+                              className=" nav-link"
+                              to={
                                 Object {
-                                  "processId": 35315,
+                                  "pathname": "/dashboard/35315/completed",
+                                  "search": "?backPath=%2F",
                                 }
                               }
-                              path="/dashboard/:processId/completed"
-                              query="?backPath=%2F"
                             >
-                              <Link
+                              <a
                                 aria-label=""
                                 className=" nav-link"
-                                replace={false}
-                                to={
-                                  Object {
-                                    "pathname": "/dashboard/35315/completed",
-                                    "search": "?backPath=%2F",
-                                  }
-                                }
+                                href="/dashboard/35315/completed?backPath=%2F"
+                                onClick={[Function]}
                               >
-                                <a
-                                  aria-label=""
-                                  className=" nav-link"
-                                  href="/dashboard/35315/completed?backPath=%2F"
-                                  onClick={[Function]}
+                                <span
+                                  className="navbar-text-truncate"
                                 >
-                                  <span
-                                    className="navbar-text-truncate"
-                                  >
-                                    completed
-                                  </span>
-                                </a>
-                              </Link>
-                            </TabItem>
-                          </li>
-                        </ul>
-                      </div>
+                                  completed
+                                </span>
+                              </a>
+                            </Link>
+                          </TabItem>
+                        </li>
+                      </ul>
                     </div>
                   </div>
-                </nav>
-              </Tabs>
-            </Route>
+                </div>
+              </nav>
+            </Tabs>
           </withRouter(Tabs)>
           <HashRouter>
             <Router
@@ -880,9 +873,78 @@ exports[`Should render component with default tab activated 1`] = `
                             className="dropdown-item"
                             to="/slas/35315/20/1"
                           >
-                            <Route>
-                              <Component
+                            <Component
+                              className="dropdown-item"
+                              history={
+                                Object {
+                                  "action": "POP",
+                                  "block": [Function],
+                                  "canGo": [Function],
+                                  "createHref": [Function],
+                                  "entries": Array [
+                                    Object {
+                                      "hash": "",
+                                      "match": Object {
+                                        "params": Object {
+                                          "page": 1,
+                                          "search": undefined,
+                                          "sort": undefined,
+                                        },
+                                      },
+                                      "pathname": "/dashboard/35315",
+                                      "search": "?backPath=%2F",
+                                    },
+                                  ],
+                                  "go": [Function],
+                                  "goBack": [Function],
+                                  "goForward": [Function],
+                                  "index": 0,
+                                  "length": 1,
+                                  "listen": [Function],
+                                  "location": Object {
+                                    "hash": "",
+                                    "match": Object {
+                                      "params": Object {
+                                        "page": 1,
+                                        "search": undefined,
+                                        "sort": undefined,
+                                      },
+                                    },
+                                    "pathname": "/dashboard/35315",
+                                    "search": "?backPath=%2F",
+                                  },
+                                  "push": [Function],
+                                  "replace": [Function],
+                                }
+                              }
+                              location={
+                                Object {
+                                  "hash": "",
+                                  "match": Object {
+                                    "params": Object {
+                                      "page": 1,
+                                      "search": undefined,
+                                      "sort": undefined,
+                                    },
+                                  },
+                                  "pathname": "/dashboard/35315",
+                                  "search": "?backPath=%2F",
+                                }
+                              }
+                              match={
+                                Object {
+                                  "isExact": false,
+                                  "params": Object {},
+                                  "path": "/",
+                                  "url": "/",
+                                }
+                              }
+                              to="/slas/35315/20/1"
+                            >
+                              <ChildLinkWrapper
+                                backPath="/"
                                 className="dropdown-item"
+                                currentPath="/dashboard/35315?backPath=%2F"
                                 history={
                                   Object {
                                     "action": "POP",
@@ -925,99 +987,27 @@ exports[`Should render component with default tab activated 1`] = `
                                     "replace": [Function],
                                   }
                                 }
-                                location={
-                                  Object {
-                                    "hash": "",
-                                    "match": Object {
-                                      "params": Object {
-                                        "page": 1,
-                                        "search": undefined,
-                                        "sort": undefined,
-                                      },
-                                    },
-                                    "pathname": "/dashboard/35315",
-                                    "search": "?backPath=%2F",
-                                  }
-                                }
-                                match={
-                                  Object {
-                                    "isExact": false,
-                                    "params": Object {},
-                                    "path": "/",
-                                    "url": "/",
-                                  }
-                                }
                                 to="/slas/35315/20/1"
                               >
-                                <ChildLinkWrapper
-                                  backPath="/"
+                                <Link
                                   className="dropdown-item"
-                                  currentPath="/dashboard/35315?backPath=%2F"
-                                  history={
+                                  to={
                                     Object {
-                                      "action": "POP",
-                                      "block": [Function],
-                                      "canGo": [Function],
-                                      "createHref": [Function],
-                                      "entries": Array [
-                                        Object {
-                                          "hash": "",
-                                          "match": Object {
-                                            "params": Object {
-                                              "page": 1,
-                                              "search": undefined,
-                                              "sort": undefined,
-                                            },
-                                          },
-                                          "pathname": "/dashboard/35315",
-                                          "search": "?backPath=%2F",
-                                        },
-                                      ],
-                                      "go": [Function],
-                                      "goBack": [Function],
-                                      "goForward": [Function],
-                                      "index": 0,
-                                      "length": 1,
-                                      "listen": [Function],
-                                      "location": Object {
-                                        "hash": "",
-                                        "match": Object {
-                                          "params": Object {
-                                            "page": 1,
-                                            "search": undefined,
-                                            "sort": undefined,
-                                          },
-                                        },
-                                        "pathname": "/dashboard/35315",
-                                        "search": "?backPath=%2F",
-                                      },
-                                      "push": [Function],
-                                      "replace": [Function],
+                                      "pathname": "/slas/35315/20/1",
+                                      "search": "?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F",
                                     }
                                   }
-                                  to="/slas/35315/20/1"
                                 >
-                                  <Link
+                                  <a
                                     className="dropdown-item"
-                                    replace={false}
-                                    to={
-                                      Object {
-                                        "pathname": "/slas/35315/20/1",
-                                        "search": "?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F",
-                                      }
-                                    }
+                                    href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
+                                    onClick={[Function]}
                                   >
-                                    <a
-                                      className="dropdown-item"
-                                      href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%3FbackPath%3D%252F"
-                                      onClick={[Function]}
-                                    >
-                                      sla-settings
-                                    </a>
-                                  </Link>
-                                </ChildLinkWrapper>
-                              </Component>
-                            </Route>
+                                    sla-settings
+                                  </a>
+                                </Link>
+                              </ChildLinkWrapper>
+                            </Component>
                           </withRouter()>
                         </li>
                       </MenuItem>
@@ -1054,35 +1044,15 @@ exports[`Should render component with default tab activated 1`] = `
               ]
             }
           >
-            <Route>
-              <Tabs
-                history={
-                  Object {
-                    "action": "POP",
-                    "block": [Function],
-                    "canGo": [Function],
-                    "createHref": [Function],
-                    "entries": Array [
-                      Object {
-                        "hash": "",
-                        "match": Object {
-                          "params": Object {
-                            "page": 1,
-                            "search": undefined,
-                            "sort": undefined,
-                          },
-                        },
-                        "pathname": "/dashboard/35315",
-                        "search": "?backPath=%2F",
-                      },
-                    ],
-                    "go": [Function],
-                    "goBack": [Function],
-                    "goForward": [Function],
-                    "index": 0,
-                    "length": 1,
-                    "listen": [Function],
-                    "location": Object {
+            <Tabs
+              history={
+                Object {
+                  "action": "POP",
+                  "block": [Function],
+                  "canGo": [Function],
+                  "createHref": [Function],
+                  "entries": Array [
+                    Object {
                       "hash": "",
                       "match": Object {
                         "params": Object {
@@ -1094,12 +1064,14 @@ exports[`Should render component with default tab activated 1`] = `
                       "pathname": "/dashboard/35315",
                       "search": "?backPath=%2F",
                     },
-                    "push": [Function],
-                    "replace": [Function],
-                  }
-                }
-                location={
-                  Object {
+                  ],
+                  "go": [Function],
+                  "goBack": [Function],
+                  "goForward": [Function],
+                  "index": 0,
+                  "length": 1,
+                  "listen": [Function],
+                  "location": Object {
                     "hash": "",
                     "match": Object {
                       "params": Object {
@@ -1110,174 +1082,188 @@ exports[`Should render component with default tab activated 1`] = `
                     },
                     "pathname": "/dashboard/35315",
                     "search": "?backPath=%2F",
-                  }
+                  },
+                  "push": [Function],
+                  "replace": [Function],
                 }
-                match={
+              }
+              location={
+                Object {
+                  "hash": "",
+                  "match": Object {
+                    "params": Object {
+                      "page": 1,
+                      "search": undefined,
+                      "sort": undefined,
+                    },
+                  },
+                  "pathname": "/dashboard/35315",
+                  "search": "?backPath=%2F",
+                }
+              }
+              match={
+                Object {
+                  "isExact": false,
+                  "params": Object {},
+                  "path": "/",
+                  "url": "/",
+                }
+              }
+              tabs={
+                Array [
                   Object {
-                    "isExact": false,
-                    "params": Object {},
-                    "path": "/",
-                    "url": "/",
-                  }
-                }
-                tabs={
-                  Array [
-                    Object {
-                      "key": "pending",
-                      "name": "pending",
-                      "params": Object {
-                        "page": 1,
-                        "pageSize": 20,
-                        "processId": 35315,
-                        "sort": "overdueInstanceCount%3Aasc",
-                      },
-                      "path": "/dashboard/:processId/pending/:pageSize/:page/:sort",
-                      "query": undefined,
+                    "key": "pending",
+                    "name": "pending",
+                    "params": Object {
+                      "page": 1,
+                      "pageSize": 20,
+                      "processId": 35315,
+                      "sort": "overdueInstanceCount%3Aasc",
                     },
-                    Object {
-                      "key": "completed",
-                      "name": "completed",
-                      "params": Object {
-                        "processId": 35315,
-                      },
-                      "path": "/dashboard/:processId/completed",
-                      "query": undefined,
+                    "path": "/dashboard/:processId/pending/:pageSize/:page/:sort",
+                    "query": undefined,
+                  },
+                  Object {
+                    "key": "completed",
+                    "name": "completed",
+                    "params": Object {
+                      "processId": 35315,
                     },
-                  ]
-                }
+                    "path": "/dashboard/:processId/completed",
+                    "query": undefined,
+                  },
+                ]
+              }
+            >
+              <nav
+                className="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-secondary"
               >
-                <nav
-                  className="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-secondary"
+                <div
+                  className="container-fluid container-fluid-max-xl"
                 >
-                  <div
-                    className="container-fluid container-fluid-max-xl"
+                  <button
+                    aria-expanded={false}
+                    aria-label="toggle-navigation"
+                    className="collapsed navbar-toggler navbar-toggler-link"
+                    onClick={[Function]}
                   >
-                    <button
-                      aria-expanded={false}
-                      aria-label="toggle-navigation"
-                      className="collapsed navbar-toggler navbar-toggler-link"
-                      onClick={[Function]}
+                    <Icon
+                      iconName="caret-bottom"
                     >
-                      <Icon
-                        iconName="caret-bottom"
-                      >
-                        <svg
-                          className="lexicon-icon lexicon-icon-caret-bottom"
-                          dangerouslySetInnerHTML={
-                            Object {
-                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
-                            }
+                      <svg
+                        className="lexicon-icon lexicon-icon-caret-bottom"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
                           }
-                          focusable="false"
-                          role="presentation"
-                        />
-                      </Icon>
-                    </button>
+                        }
+                        focusable="false"
+                        role="presentation"
+                      />
+                    </Icon>
+                  </button>
+                  <div
+                    className="collapse navbar-collapse "
+                  >
                     <div
-                      className="collapse navbar-collapse "
+                      className="container-fluid container-fluid-max-xl"
                     >
-                      <div
-                        className="container-fluid container-fluid-max-xl"
+                      <ul
+                        className="navbar-nav"
                       >
-                        <ul
-                          className="navbar-nav"
+                        <li
+                          className="nav-item"
+                          key="0"
+                          onClick={[Function]}
                         >
-                          <li
-                            className="nav-item"
-                            key="0"
-                            onClick={[Function]}
+                          <TabItem
+                            active={false}
+                            key="pending"
+                            name="pending"
+                            params={
+                              Object {
+                                "page": 1,
+                                "pageSize": 20,
+                                "processId": 35315,
+                                "sort": "overdueInstanceCount%3Aasc",
+                              }
+                            }
+                            path="/dashboard/:processId/pending/:pageSize/:page/:sort"
+                            query="?backPath=%2F"
                           >
-                            <TabItem
-                              active={false}
-                              key="pending"
-                              name="pending"
-                              params={
+                            <Link
+                              aria-label=""
+                              className=" nav-link"
+                              to={
                                 Object {
-                                  "page": 1,
-                                  "pageSize": 20,
-                                  "processId": 35315,
-                                  "sort": "overdueInstanceCount%3Aasc",
+                                  "pathname": "/dashboard/35315/pending/20/1/overdueInstanceCount%253Aasc",
+                                  "search": "?backPath=%2F",
                                 }
                               }
-                              path="/dashboard/:processId/pending/:pageSize/:page/:sort"
-                              query="?backPath=%2F"
                             >
-                              <Link
+                              <a
                                 aria-label=""
                                 className=" nav-link"
-                                replace={false}
-                                to={
-                                  Object {
-                                    "pathname": "/dashboard/35315/pending/20/1/overdueInstanceCount%253Aasc",
-                                    "search": "?backPath=%2F",
-                                  }
-                                }
+                                href="/dashboard/35315/pending/20/1/overdueInstanceCount%253Aasc?backPath=%2F"
+                                onClick={[Function]}
                               >
-                                <a
-                                  aria-label=""
-                                  className=" nav-link"
-                                  href="/dashboard/35315/pending/20/1/overdueInstanceCount%253Aasc?backPath=%2F"
-                                  onClick={[Function]}
+                                <span
+                                  className="navbar-text-truncate"
                                 >
-                                  <span
-                                    className="navbar-text-truncate"
-                                  >
-                                    pending
-                                  </span>
-                                </a>
-                              </Link>
-                            </TabItem>
-                          </li>
-                          <li
-                            className="nav-item"
-                            key="1"
-                            onClick={[Function]}
+                                  pending
+                                </span>
+                              </a>
+                            </Link>
+                          </TabItem>
+                        </li>
+                        <li
+                          className="nav-item"
+                          key="1"
+                          onClick={[Function]}
+                        >
+                          <TabItem
+                            active={false}
+                            key="completed"
+                            name="completed"
+                            params={
+                              Object {
+                                "processId": 35315,
+                              }
+                            }
+                            path="/dashboard/:processId/completed"
+                            query="?backPath=%2F"
                           >
-                            <TabItem
-                              active={false}
-                              key="completed"
-                              name="completed"
-                              params={
+                            <Link
+                              aria-label=""
+                              className=" nav-link"
+                              to={
                                 Object {
-                                  "processId": 35315,
+                                  "pathname": "/dashboard/35315/completed",
+                                  "search": "?backPath=%2F",
                                 }
                               }
-                              path="/dashboard/:processId/completed"
-                              query="?backPath=%2F"
                             >
-                              <Link
+                              <a
                                 aria-label=""
                                 className=" nav-link"
-                                replace={false}
-                                to={
-                                  Object {
-                                    "pathname": "/dashboard/35315/completed",
-                                    "search": "?backPath=%2F",
-                                  }
-                                }
+                                href="/dashboard/35315/completed?backPath=%2F"
+                                onClick={[Function]}
                               >
-                                <a
-                                  aria-label=""
-                                  className=" nav-link"
-                                  href="/dashboard/35315/completed?backPath=%2F"
-                                  onClick={[Function]}
+                                <span
+                                  className="navbar-text-truncate"
                                 >
-                                  <span
-                                    className="navbar-text-truncate"
-                                  >
-                                    completed
-                                  </span>
-                                </a>
-                              </Link>
-                            </TabItem>
-                          </li>
-                        </ul>
-                      </div>
+                                  completed
+                                </span>
+                              </a>
+                            </Link>
+                          </TabItem>
+                        </li>
+                      </ul>
                     </div>
                   </div>
-                </nav>
-              </Tabs>
-            </Route>
+                </div>
+              </nav>
+            </Tabs>
           </withRouter(Tabs)>
           <HashRouter>
             <Router
@@ -1536,9 +1522,78 @@ exports[`Should render component with failure state 1`] = `
                             className="dropdown-item"
                             to="/slas/35315/20/1"
                           >
-                            <Route>
-                              <Component
+                            <Component
+                              className="dropdown-item"
+                              history={
+                                Object {
+                                  "action": "POP",
+                                  "block": [Function],
+                                  "canGo": [Function],
+                                  "createHref": [Function],
+                                  "entries": Array [
+                                    Object {
+                                      "hash": "",
+                                      "match": Object {
+                                        "params": Object {
+                                          "page": 1,
+                                          "search": undefined,
+                                          "sort": undefined,
+                                        },
+                                      },
+                                      "pathname": "/dashboard/35315/completed",
+                                      "search": "?backPath=%2F",
+                                    },
+                                  ],
+                                  "go": [Function],
+                                  "goBack": [Function],
+                                  "goForward": [Function],
+                                  "index": 0,
+                                  "length": 1,
+                                  "listen": [Function],
+                                  "location": Object {
+                                    "hash": "",
+                                    "match": Object {
+                                      "params": Object {
+                                        "page": 1,
+                                        "search": undefined,
+                                        "sort": undefined,
+                                      },
+                                    },
+                                    "pathname": "/dashboard/35315/completed",
+                                    "search": "?backPath=%2F",
+                                  },
+                                  "push": [Function],
+                                  "replace": [Function],
+                                }
+                              }
+                              location={
+                                Object {
+                                  "hash": "",
+                                  "match": Object {
+                                    "params": Object {
+                                      "page": 1,
+                                      "search": undefined,
+                                      "sort": undefined,
+                                    },
+                                  },
+                                  "pathname": "/dashboard/35315/completed",
+                                  "search": "?backPath=%2F",
+                                }
+                              }
+                              match={
+                                Object {
+                                  "isExact": false,
+                                  "params": Object {},
+                                  "path": "/",
+                                  "url": "/",
+                                }
+                              }
+                              to="/slas/35315/20/1"
+                            >
+                              <ChildLinkWrapper
+                                backPath="/"
                                 className="dropdown-item"
+                                currentPath="/dashboard/35315/completed?backPath=%2F"
                                 history={
                                   Object {
                                     "action": "POP",
@@ -1581,99 +1636,27 @@ exports[`Should render component with failure state 1`] = `
                                     "replace": [Function],
                                   }
                                 }
-                                location={
-                                  Object {
-                                    "hash": "",
-                                    "match": Object {
-                                      "params": Object {
-                                        "page": 1,
-                                        "search": undefined,
-                                        "sort": undefined,
-                                      },
-                                    },
-                                    "pathname": "/dashboard/35315/completed",
-                                    "search": "?backPath=%2F",
-                                  }
-                                }
-                                match={
-                                  Object {
-                                    "isExact": false,
-                                    "params": Object {},
-                                    "path": "/",
-                                    "url": "/",
-                                  }
-                                }
                                 to="/slas/35315/20/1"
                               >
-                                <ChildLinkWrapper
-                                  backPath="/"
+                                <Link
                                   className="dropdown-item"
-                                  currentPath="/dashboard/35315/completed?backPath=%2F"
-                                  history={
+                                  to={
                                     Object {
-                                      "action": "POP",
-                                      "block": [Function],
-                                      "canGo": [Function],
-                                      "createHref": [Function],
-                                      "entries": Array [
-                                        Object {
-                                          "hash": "",
-                                          "match": Object {
-                                            "params": Object {
-                                              "page": 1,
-                                              "search": undefined,
-                                              "sort": undefined,
-                                            },
-                                          },
-                                          "pathname": "/dashboard/35315/completed",
-                                          "search": "?backPath=%2F",
-                                        },
-                                      ],
-                                      "go": [Function],
-                                      "goBack": [Function],
-                                      "goForward": [Function],
-                                      "index": 0,
-                                      "length": 1,
-                                      "listen": [Function],
-                                      "location": Object {
-                                        "hash": "",
-                                        "match": Object {
-                                          "params": Object {
-                                            "page": 1,
-                                            "search": undefined,
-                                            "sort": undefined,
-                                          },
-                                        },
-                                        "pathname": "/dashboard/35315/completed",
-                                        "search": "?backPath=%2F",
-                                      },
-                                      "push": [Function],
-                                      "replace": [Function],
+                                      "pathname": "/slas/35315/20/1",
+                                      "search": "?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F",
                                     }
                                   }
-                                  to="/slas/35315/20/1"
                                 >
-                                  <Link
+                                  <a
                                     className="dropdown-item"
-                                    replace={false}
-                                    to={
-                                      Object {
-                                        "pathname": "/slas/35315/20/1",
-                                        "search": "?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F",
-                                      }
-                                    }
+                                    href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
+                                    onClick={[Function]}
                                   >
-                                    <a
-                                      className="dropdown-item"
-                                      href="/slas/35315/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
-                                      onClick={[Function]}
-                                    >
-                                      sla-settings
-                                    </a>
-                                  </Link>
-                                </ChildLinkWrapper>
-                              </Component>
-                            </Route>
+                                    sla-settings
+                                  </a>
+                                </Link>
+                              </ChildLinkWrapper>
+                            </Component>
                           </withRouter()>
                         </li>
                       </MenuItem>
@@ -1710,35 +1693,15 @@ exports[`Should render component with failure state 1`] = `
               ]
             }
           >
-            <Route>
-              <Tabs
-                history={
-                  Object {
-                    "action": "POP",
-                    "block": [Function],
-                    "canGo": [Function],
-                    "createHref": [Function],
-                    "entries": Array [
-                      Object {
-                        "hash": "",
-                        "match": Object {
-                          "params": Object {
-                            "page": 1,
-                            "search": undefined,
-                            "sort": undefined,
-                          },
-                        },
-                        "pathname": "/dashboard/35315/completed",
-                        "search": "?backPath=%2F",
-                      },
-                    ],
-                    "go": [Function],
-                    "goBack": [Function],
-                    "goForward": [Function],
-                    "index": 0,
-                    "length": 1,
-                    "listen": [Function],
-                    "location": Object {
+            <Tabs
+              history={
+                Object {
+                  "action": "POP",
+                  "block": [Function],
+                  "canGo": [Function],
+                  "createHref": [Function],
+                  "entries": Array [
+                    Object {
                       "hash": "",
                       "match": Object {
                         "params": Object {
@@ -1750,12 +1713,14 @@ exports[`Should render component with failure state 1`] = `
                       "pathname": "/dashboard/35315/completed",
                       "search": "?backPath=%2F",
                     },
-                    "push": [Function],
-                    "replace": [Function],
-                  }
-                }
-                location={
-                  Object {
+                  ],
+                  "go": [Function],
+                  "goBack": [Function],
+                  "goForward": [Function],
+                  "index": 0,
+                  "length": 1,
+                  "listen": [Function],
+                  "location": Object {
                     "hash": "",
                     "match": Object {
                       "params": Object {
@@ -1766,175 +1731,189 @@ exports[`Should render component with failure state 1`] = `
                     },
                     "pathname": "/dashboard/35315/completed",
                     "search": "?backPath=%2F",
-                  }
+                  },
+                  "push": [Function],
+                  "replace": [Function],
                 }
-                match={
+              }
+              location={
+                Object {
+                  "hash": "",
+                  "match": Object {
+                    "params": Object {
+                      "page": 1,
+                      "search": undefined,
+                      "sort": undefined,
+                    },
+                  },
+                  "pathname": "/dashboard/35315/completed",
+                  "search": "?backPath=%2F",
+                }
+              }
+              match={
+                Object {
+                  "isExact": false,
+                  "params": Object {},
+                  "path": "/",
+                  "url": "/",
+                }
+              }
+              tabs={
+                Array [
                   Object {
-                    "isExact": false,
-                    "params": Object {},
-                    "path": "/",
-                    "url": "/",
-                  }
-                }
-                tabs={
-                  Array [
-                    Object {
-                      "key": "pending",
-                      "name": "pending",
-                      "params": Object {
-                        "page": 1,
-                        "pageSize": 20,
-                        "processId": 35315,
-                        "sort": "overdueInstanceCount%3Aasc",
-                      },
-                      "path": "/dashboard/:processId/pending/:pageSize/:page/:sort",
-                      "query": undefined,
+                    "key": "pending",
+                    "name": "pending",
+                    "params": Object {
+                      "page": 1,
+                      "pageSize": 20,
+                      "processId": 35315,
+                      "sort": "overdueInstanceCount%3Aasc",
                     },
-                    Object {
-                      "key": "completed",
-                      "name": "completed",
-                      "params": Object {
-                        "processId": 35315,
-                      },
-                      "path": "/dashboard/:processId/completed",
-                      "query": undefined,
+                    "path": "/dashboard/:processId/pending/:pageSize/:page/:sort",
+                    "query": undefined,
+                  },
+                  Object {
+                    "key": "completed",
+                    "name": "completed",
+                    "params": Object {
+                      "processId": 35315,
                     },
-                  ]
-                }
+                    "path": "/dashboard/:processId/completed",
+                    "query": undefined,
+                  },
+                ]
+              }
+            >
+              <nav
+                className="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-secondary"
               >
-                <nav
-                  className="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-secondary"
+                <div
+                  className="container-fluid container-fluid-max-xl"
                 >
-                  <div
-                    className="container-fluid container-fluid-max-xl"
+                  <button
+                    aria-expanded={false}
+                    aria-label="toggle-navigation"
+                    className="collapsed navbar-toggler navbar-toggler-link"
+                    onClick={[Function]}
                   >
-                    <button
-                      aria-expanded={false}
-                      aria-label="toggle-navigation"
-                      className="collapsed navbar-toggler navbar-toggler-link"
-                      onClick={[Function]}
+                    completed
+                    <Icon
+                      iconName="caret-bottom"
                     >
-                      completed
-                      <Icon
-                        iconName="caret-bottom"
-                      >
-                        <svg
-                          className="lexicon-icon lexicon-icon-caret-bottom"
-                          dangerouslySetInnerHTML={
-                            Object {
-                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
-                            }
+                      <svg
+                        className="lexicon-icon lexicon-icon-caret-bottom"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
                           }
-                          focusable="false"
-                          role="presentation"
-                        />
-                      </Icon>
-                    </button>
+                        }
+                        focusable="false"
+                        role="presentation"
+                      />
+                    </Icon>
+                  </button>
+                  <div
+                    className="collapse navbar-collapse "
+                  >
                     <div
-                      className="collapse navbar-collapse "
+                      className="container-fluid container-fluid-max-xl"
                     >
-                      <div
-                        className="container-fluid container-fluid-max-xl"
+                      <ul
+                        className="navbar-nav"
                       >
-                        <ul
-                          className="navbar-nav"
+                        <li
+                          className="nav-item"
+                          key="0"
+                          onClick={[Function]}
                         >
-                          <li
-                            className="nav-item"
-                            key="0"
-                            onClick={[Function]}
+                          <TabItem
+                            active={false}
+                            key="pending"
+                            name="pending"
+                            params={
+                              Object {
+                                "page": 1,
+                                "pageSize": 20,
+                                "processId": 35315,
+                                "sort": "overdueInstanceCount%3Aasc",
+                              }
+                            }
+                            path="/dashboard/:processId/pending/:pageSize/:page/:sort"
+                            query="?backPath=%2F"
                           >
-                            <TabItem
-                              active={false}
-                              key="pending"
-                              name="pending"
-                              params={
+                            <Link
+                              aria-label=""
+                              className=" nav-link"
+                              to={
                                 Object {
-                                  "page": 1,
-                                  "pageSize": 20,
-                                  "processId": 35315,
-                                  "sort": "overdueInstanceCount%3Aasc",
+                                  "pathname": "/dashboard/35315/pending/20/1/overdueInstanceCount%253Aasc",
+                                  "search": "?backPath=%2F",
                                 }
                               }
-                              path="/dashboard/:processId/pending/:pageSize/:page/:sort"
-                              query="?backPath=%2F"
                             >
-                              <Link
+                              <a
                                 aria-label=""
                                 className=" nav-link"
-                                replace={false}
-                                to={
-                                  Object {
-                                    "pathname": "/dashboard/35315/pending/20/1/overdueInstanceCount%253Aasc",
-                                    "search": "?backPath=%2F",
-                                  }
-                                }
+                                href="/dashboard/35315/pending/20/1/overdueInstanceCount%253Aasc?backPath=%2F"
+                                onClick={[Function]}
                               >
-                                <a
-                                  aria-label=""
-                                  className=" nav-link"
-                                  href="/dashboard/35315/pending/20/1/overdueInstanceCount%253Aasc?backPath=%2F"
-                                  onClick={[Function]}
+                                <span
+                                  className="navbar-text-truncate"
                                 >
-                                  <span
-                                    className="navbar-text-truncate"
-                                  >
-                                    pending
-                                  </span>
-                                </a>
-                              </Link>
-                            </TabItem>
-                          </li>
-                          <li
-                            className="nav-item"
-                            key="1"
-                            onClick={[Function]}
+                                  pending
+                                </span>
+                              </a>
+                            </Link>
+                          </TabItem>
+                        </li>
+                        <li
+                          className="nav-item"
+                          key="1"
+                          onClick={[Function]}
+                        >
+                          <TabItem
+                            active={true}
+                            key="completed"
+                            name="completed"
+                            params={
+                              Object {
+                                "processId": 35315,
+                              }
+                            }
+                            path="/dashboard/:processId/completed"
+                            query="?backPath=%2F"
                           >
-                            <TabItem
-                              active={true}
-                              key="completed"
-                              name="completed"
-                              params={
+                            <Link
+                              aria-label="current-page"
+                              className="active nav-link"
+                              to={
                                 Object {
-                                  "processId": 35315,
+                                  "pathname": "/dashboard/35315/completed",
+                                  "search": "?backPath=%2F",
                                 }
                               }
-                              path="/dashboard/:processId/completed"
-                              query="?backPath=%2F"
                             >
-                              <Link
+                              <a
                                 aria-label="current-page"
                                 className="active nav-link"
-                                replace={false}
-                                to={
-                                  Object {
-                                    "pathname": "/dashboard/35315/completed",
-                                    "search": "?backPath=%2F",
-                                  }
-                                }
+                                href="/dashboard/35315/completed?backPath=%2F"
+                                onClick={[Function]}
                               >
-                                <a
-                                  aria-label="current-page"
-                                  className="active nav-link"
-                                  href="/dashboard/35315/completed?backPath=%2F"
-                                  onClick={[Function]}
+                                <span
+                                  className="navbar-text-truncate"
                                 >
-                                  <span
-                                    className="navbar-text-truncate"
-                                  >
-                                    completed
-                                  </span>
-                                </a>
-                              </Link>
-                            </TabItem>
-                          </li>
-                        </ul>
-                      </div>
+                                  completed
+                                </span>
+                              </a>
+                            </Link>
+                          </TabItem>
+                        </li>
+                      </ul>
                     </div>
                   </div>
-                </nav>
-              </Tabs>
-            </Route>
+                </div>
+              </nav>
+            </Tabs>
           </withRouter(Tabs)>
           <HashRouter>
             <Router
@@ -2461,9 +2440,78 @@ exports[`Should render with blocked SLA 1`] = `
                             className="dropdown-item"
                             to="/slas/123/20/1"
                           >
-                            <Route>
-                              <Component
+                            <Component
+                              className="dropdown-item"
+                              history={
+                                Object {
+                                  "action": "POP",
+                                  "block": [Function],
+                                  "canGo": [Function],
+                                  "createHref": [Function],
+                                  "entries": Array [
+                                    Object {
+                                      "hash": "",
+                                      "match": Object {
+                                        "params": Object {
+                                          "page": 1,
+                                          "search": undefined,
+                                          "sort": undefined,
+                                        },
+                                      },
+                                      "pathname": "/dashboard/35315/completed",
+                                      "search": "?backPath=%2F",
+                                    },
+                                  ],
+                                  "go": [Function],
+                                  "goBack": [Function],
+                                  "goForward": [Function],
+                                  "index": 0,
+                                  "length": 1,
+                                  "listen": [Function],
+                                  "location": Object {
+                                    "hash": "",
+                                    "match": Object {
+                                      "params": Object {
+                                        "page": 1,
+                                        "search": undefined,
+                                        "sort": undefined,
+                                      },
+                                    },
+                                    "pathname": "/dashboard/35315/completed",
+                                    "search": "?backPath=%2F",
+                                  },
+                                  "push": [Function],
+                                  "replace": [Function],
+                                }
+                              }
+                              location={
+                                Object {
+                                  "hash": "",
+                                  "match": Object {
+                                    "params": Object {
+                                      "page": 1,
+                                      "search": undefined,
+                                      "sort": undefined,
+                                    },
+                                  },
+                                  "pathname": "/dashboard/35315/completed",
+                                  "search": "?backPath=%2F",
+                                }
+                              }
+                              match={
+                                Object {
+                                  "isExact": false,
+                                  "params": Object {},
+                                  "path": "/",
+                                  "url": "/",
+                                }
+                              }
+                              to="/slas/123/20/1"
+                            >
+                              <ChildLinkWrapper
+                                backPath="/"
                                 className="dropdown-item"
+                                currentPath="/dashboard/35315/completed?backPath=%2F"
                                 history={
                                   Object {
                                     "action": "POP",
@@ -2506,99 +2554,27 @@ exports[`Should render with blocked SLA 1`] = `
                                     "replace": [Function],
                                   }
                                 }
-                                location={
-                                  Object {
-                                    "hash": "",
-                                    "match": Object {
-                                      "params": Object {
-                                        "page": 1,
-                                        "search": undefined,
-                                        "sort": undefined,
-                                      },
-                                    },
-                                    "pathname": "/dashboard/35315/completed",
-                                    "search": "?backPath=%2F",
-                                  }
-                                }
-                                match={
-                                  Object {
-                                    "isExact": false,
-                                    "params": Object {},
-                                    "path": "/",
-                                    "url": "/",
-                                  }
-                                }
                                 to="/slas/123/20/1"
                               >
-                                <ChildLinkWrapper
-                                  backPath="/"
+                                <Link
                                   className="dropdown-item"
-                                  currentPath="/dashboard/35315/completed?backPath=%2F"
-                                  history={
+                                  to={
                                     Object {
-                                      "action": "POP",
-                                      "block": [Function],
-                                      "canGo": [Function],
-                                      "createHref": [Function],
-                                      "entries": Array [
-                                        Object {
-                                          "hash": "",
-                                          "match": Object {
-                                            "params": Object {
-                                              "page": 1,
-                                              "search": undefined,
-                                              "sort": undefined,
-                                            },
-                                          },
-                                          "pathname": "/dashboard/35315/completed",
-                                          "search": "?backPath=%2F",
-                                        },
-                                      ],
-                                      "go": [Function],
-                                      "goBack": [Function],
-                                      "goForward": [Function],
-                                      "index": 0,
-                                      "length": 1,
-                                      "listen": [Function],
-                                      "location": Object {
-                                        "hash": "",
-                                        "match": Object {
-                                          "params": Object {
-                                            "page": 1,
-                                            "search": undefined,
-                                            "sort": undefined,
-                                          },
-                                        },
-                                        "pathname": "/dashboard/35315/completed",
-                                        "search": "?backPath=%2F",
-                                      },
-                                      "push": [Function],
-                                      "replace": [Function],
+                                      "pathname": "/slas/123/20/1",
+                                      "search": "?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F",
                                     }
                                   }
-                                  to="/slas/123/20/1"
                                 >
-                                  <Link
+                                  <a
                                     className="dropdown-item"
-                                    replace={false}
-                                    to={
-                                      Object {
-                                        "pathname": "/slas/123/20/1",
-                                        "search": "?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F",
-                                      }
-                                    }
+                                    href="/slas/123/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
+                                    onClick={[Function]}
                                   >
-                                    <a
-                                      className="dropdown-item"
-                                      href="/slas/123/20/1?backPath=%2Fdashboard%2F35315%2Fcompleted%3FbackPath%3D%252F"
-                                      onClick={[Function]}
-                                    >
-                                      sla-settings
-                                    </a>
-                                  </Link>
-                                </ChildLinkWrapper>
-                              </Component>
-                            </Route>
+                                    sla-settings
+                                  </a>
+                                </Link>
+                              </ChildLinkWrapper>
+                            </Component>
                           </withRouter()>
                         </li>
                       </MenuItem>
@@ -2635,35 +2611,15 @@ exports[`Should render with blocked SLA 1`] = `
               ]
             }
           >
-            <Route>
-              <Tabs
-                history={
-                  Object {
-                    "action": "POP",
-                    "block": [Function],
-                    "canGo": [Function],
-                    "createHref": [Function],
-                    "entries": Array [
-                      Object {
-                        "hash": "",
-                        "match": Object {
-                          "params": Object {
-                            "page": 1,
-                            "search": undefined,
-                            "sort": undefined,
-                          },
-                        },
-                        "pathname": "/dashboard/35315/completed",
-                        "search": "?backPath=%2F",
-                      },
-                    ],
-                    "go": [Function],
-                    "goBack": [Function],
-                    "goForward": [Function],
-                    "index": 0,
-                    "length": 1,
-                    "listen": [Function],
-                    "location": Object {
+            <Tabs
+              history={
+                Object {
+                  "action": "POP",
+                  "block": [Function],
+                  "canGo": [Function],
+                  "createHref": [Function],
+                  "entries": Array [
+                    Object {
                       "hash": "",
                       "match": Object {
                         "params": Object {
@@ -2675,12 +2631,14 @@ exports[`Should render with blocked SLA 1`] = `
                       "pathname": "/dashboard/35315/completed",
                       "search": "?backPath=%2F",
                     },
-                    "push": [Function],
-                    "replace": [Function],
-                  }
-                }
-                location={
-                  Object {
+                  ],
+                  "go": [Function],
+                  "goBack": [Function],
+                  "goForward": [Function],
+                  "index": 0,
+                  "length": 1,
+                  "listen": [Function],
+                  "location": Object {
                     "hash": "",
                     "match": Object {
                       "params": Object {
@@ -2691,175 +2649,189 @@ exports[`Should render with blocked SLA 1`] = `
                     },
                     "pathname": "/dashboard/35315/completed",
                     "search": "?backPath=%2F",
-                  }
+                  },
+                  "push": [Function],
+                  "replace": [Function],
                 }
-                match={
+              }
+              location={
+                Object {
+                  "hash": "",
+                  "match": Object {
+                    "params": Object {
+                      "page": 1,
+                      "search": undefined,
+                      "sort": undefined,
+                    },
+                  },
+                  "pathname": "/dashboard/35315/completed",
+                  "search": "?backPath=%2F",
+                }
+              }
+              match={
+                Object {
+                  "isExact": false,
+                  "params": Object {},
+                  "path": "/",
+                  "url": "/",
+                }
+              }
+              tabs={
+                Array [
                   Object {
-                    "isExact": false,
-                    "params": Object {},
-                    "path": "/",
-                    "url": "/",
-                  }
-                }
-                tabs={
-                  Array [
-                    Object {
-                      "key": "pending",
-                      "name": "pending",
-                      "params": Object {
-                        "page": 1,
-                        "pageSize": 20,
-                        "processId": "123",
-                        "sort": "overdueInstanceCount%3Aasc",
-                      },
-                      "path": "/dashboard/:processId/pending/:pageSize/:page/:sort",
-                      "query": undefined,
+                    "key": "pending",
+                    "name": "pending",
+                    "params": Object {
+                      "page": 1,
+                      "pageSize": 20,
+                      "processId": "123",
+                      "sort": "overdueInstanceCount%3Aasc",
                     },
-                    Object {
-                      "key": "completed",
-                      "name": "completed",
-                      "params": Object {
-                        "processId": "123",
-                      },
-                      "path": "/dashboard/:processId/completed",
-                      "query": undefined,
+                    "path": "/dashboard/:processId/pending/:pageSize/:page/:sort",
+                    "query": undefined,
+                  },
+                  Object {
+                    "key": "completed",
+                    "name": "completed",
+                    "params": Object {
+                      "processId": "123",
                     },
-                  ]
-                }
+                    "path": "/dashboard/:processId/completed",
+                    "query": undefined,
+                  },
+                ]
+              }
+            >
+              <nav
+                className="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-secondary"
               >
-                <nav
-                  className="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-secondary"
+                <div
+                  className="container-fluid container-fluid-max-xl"
                 >
-                  <div
-                    className="container-fluid container-fluid-max-xl"
+                  <button
+                    aria-expanded={false}
+                    aria-label="toggle-navigation"
+                    className="collapsed navbar-toggler navbar-toggler-link"
+                    onClick={[Function]}
                   >
-                    <button
-                      aria-expanded={false}
-                      aria-label="toggle-navigation"
-                      className="collapsed navbar-toggler navbar-toggler-link"
-                      onClick={[Function]}
+                    completed
+                    <Icon
+                      iconName="caret-bottom"
                     >
-                      completed
-                      <Icon
-                        iconName="caret-bottom"
-                      >
-                        <svg
-                          className="lexicon-icon lexicon-icon-caret-bottom"
-                          dangerouslySetInnerHTML={
-                            Object {
-                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
-                            }
+                      <svg
+                        className="lexicon-icon lexicon-icon-caret-bottom"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
                           }
-                          focusable="false"
-                          role="presentation"
-                        />
-                      </Icon>
-                    </button>
+                        }
+                        focusable="false"
+                        role="presentation"
+                      />
+                    </Icon>
+                  </button>
+                  <div
+                    className="collapse navbar-collapse "
+                  >
                     <div
-                      className="collapse navbar-collapse "
+                      className="container-fluid container-fluid-max-xl"
                     >
-                      <div
-                        className="container-fluid container-fluid-max-xl"
+                      <ul
+                        className="navbar-nav"
                       >
-                        <ul
-                          className="navbar-nav"
+                        <li
+                          className="nav-item"
+                          key="0"
+                          onClick={[Function]}
                         >
-                          <li
-                            className="nav-item"
-                            key="0"
-                            onClick={[Function]}
+                          <TabItem
+                            active={false}
+                            key="pending"
+                            name="pending"
+                            params={
+                              Object {
+                                "page": 1,
+                                "pageSize": 20,
+                                "processId": "123",
+                                "sort": "overdueInstanceCount%3Aasc",
+                              }
+                            }
+                            path="/dashboard/:processId/pending/:pageSize/:page/:sort"
+                            query="?backPath=%2F"
                           >
-                            <TabItem
-                              active={false}
-                              key="pending"
-                              name="pending"
-                              params={
+                            <Link
+                              aria-label=""
+                              className=" nav-link"
+                              to={
                                 Object {
-                                  "page": 1,
-                                  "pageSize": 20,
-                                  "processId": "123",
-                                  "sort": "overdueInstanceCount%3Aasc",
+                                  "pathname": "/dashboard/123/pending/20/1/overdueInstanceCount%253Aasc",
+                                  "search": "?backPath=%2F",
                                 }
                               }
-                              path="/dashboard/:processId/pending/:pageSize/:page/:sort"
-                              query="?backPath=%2F"
                             >
-                              <Link
+                              <a
                                 aria-label=""
                                 className=" nav-link"
-                                replace={false}
-                                to={
-                                  Object {
-                                    "pathname": "/dashboard/123/pending/20/1/overdueInstanceCount%253Aasc",
-                                    "search": "?backPath=%2F",
-                                  }
-                                }
+                                href="/dashboard/123/pending/20/1/overdueInstanceCount%253Aasc?backPath=%2F"
+                                onClick={[Function]}
                               >
-                                <a
-                                  aria-label=""
-                                  className=" nav-link"
-                                  href="/dashboard/123/pending/20/1/overdueInstanceCount%253Aasc?backPath=%2F"
-                                  onClick={[Function]}
+                                <span
+                                  className="navbar-text-truncate"
                                 >
-                                  <span
-                                    className="navbar-text-truncate"
-                                  >
-                                    pending
-                                  </span>
-                                </a>
-                              </Link>
-                            </TabItem>
-                          </li>
-                          <li
-                            className="nav-item"
-                            key="1"
-                            onClick={[Function]}
+                                  pending
+                                </span>
+                              </a>
+                            </Link>
+                          </TabItem>
+                        </li>
+                        <li
+                          className="nav-item"
+                          key="1"
+                          onClick={[Function]}
+                        >
+                          <TabItem
+                            active={true}
+                            key="completed"
+                            name="completed"
+                            params={
+                              Object {
+                                "processId": "123",
+                              }
+                            }
+                            path="/dashboard/:processId/completed"
+                            query="?backPath=%2F"
                           >
-                            <TabItem
-                              active={true}
-                              key="completed"
-                              name="completed"
-                              params={
+                            <Link
+                              aria-label="current-page"
+                              className="active nav-link"
+                              to={
                                 Object {
-                                  "processId": "123",
+                                  "pathname": "/dashboard/123/completed",
+                                  "search": "?backPath=%2F",
                                 }
                               }
-                              path="/dashboard/:processId/completed"
-                              query="?backPath=%2F"
                             >
-                              <Link
+                              <a
                                 aria-label="current-page"
                                 className="active nav-link"
-                                replace={false}
-                                to={
-                                  Object {
-                                    "pathname": "/dashboard/123/completed",
-                                    "search": "?backPath=%2F",
-                                  }
-                                }
+                                href="/dashboard/123/completed?backPath=%2F"
+                                onClick={[Function]}
                               >
-                                <a
-                                  aria-label="current-page"
-                                  className="active nav-link"
-                                  href="/dashboard/123/completed?backPath=%2F"
-                                  onClick={[Function]}
+                                <span
+                                  className="navbar-text-truncate"
                                 >
-                                  <span
-                                    className="navbar-text-truncate"
-                                  >
-                                    completed
-                                  </span>
-                                </a>
-                              </Link>
-                            </TabItem>
-                          </li>
-                        </ul>
-                      </div>
+                                  completed
+                                </span>
+                              </a>
+                            </Link>
+                          </TabItem>
+                        </li>
+                      </ul>
                     </div>
                   </div>
-                </nav>
-              </Tabs>
-            </Route>
+                </div>
+              </nav>
+            </Tabs>
           </withRouter(Tabs)>
           <HashRouter>
             <Router

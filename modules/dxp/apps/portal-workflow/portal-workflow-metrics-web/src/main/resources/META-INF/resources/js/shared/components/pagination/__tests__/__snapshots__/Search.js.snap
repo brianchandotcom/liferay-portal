@@ -51,98 +51,96 @@ exports[`Should change search value 1`] = `
       }
     >
       <withRouter(Search)>
-        <Route>
-          <Search
-            history={
-              Object {
-                "action": "REPLACE",
-                "block": [Function],
-                "canGo": [Function],
-                "createHref": [Function],
-                "entries": Array [
-                  Object {
-                    "hash": "",
-                    "pathname": "/",
-                    "search": "?backPath=%2F",
-                  },
-                ],
-                "go": [Function],
-                "goBack": [Function],
-                "goForward": [Function],
-                "index": 0,
-                "length": 1,
-                "listen": [Function],
-                "location": Object {
+        <Search
+          history={
+            Object {
+              "action": "REPLACE",
+              "block": [Function],
+              "canGo": [Function],
+              "createHref": [Function],
+              "entries": Array [
+                Object {
                   "hash": "",
                   "pathname": "/",
                   "search": "?backPath=%2F",
                 },
-                "push": [Function],
-                "replace": [Function],
-              }
-            }
-            location={
-              Object {
+              ],
+              "go": [Function],
+              "goBack": [Function],
+              "goForward": [Function],
+              "index": 0,
+              "length": 1,
+              "listen": [Function],
+              "location": Object {
                 "hash": "",
                 "pathname": "/",
                 "search": "?backPath=%2F",
-              }
+              },
+              "push": [Function],
+              "replace": [Function],
             }
-            match={
-              Object {
-                "isExact": true,
-                "params": Object {},
-                "path": "/",
-                "url": "/",
-              }
+          }
+          location={
+            Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "?backPath=%2F",
             }
+          }
+          match={
+            Object {
+              "isExact": true,
+              "params": Object {},
+              "path": "/",
+              "url": "/",
+            }
+          }
+        >
+          <form
+            method="GET"
+            onSubmit={[Function]}
+            role="search"
           >
-            <form
-              method="GET"
-              onSubmit={[Function]}
-              role="search"
+            <div
+              className="input-group"
             >
               <div
-                className="input-group"
+                className="input-group-item"
               >
-                <div
-                  className="input-group-item"
+                <input
+                  className="form-control input-group-inset input-group-inset-after"
+                  onChange={[Function]}
+                  placeholder="search-for"
+                  type="text"
+                  value=""
+                />
+                <span
+                  className="input-group-inset-item input-group-inset-item-after"
                 >
-                  <input
-                    className="form-control input-group-inset input-group-inset-after"
-                    onChange={[Function]}
-                    placeholder="search-for"
-                    type="text"
-                    value=""
-                  />
-                  <span
-                    className="input-group-inset-item input-group-inset-item-after"
+                  <button
+                    className="btn btn-unstyled"
+                    type="submit"
                   >
-                    <button
-                      className="btn btn-unstyled"
-                      type="submit"
+                    <Icon
+                      iconName="search"
                     >
-                      <Icon
-                        iconName="search"
-                      >
-                        <svg
-                          className="lexicon-icon lexicon-icon-search"
-                          dangerouslySetInnerHTML={
-                            Object {
-                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search\\" />",
-                            }
+                      <svg
+                        className="lexicon-icon lexicon-icon-search"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search\\" />",
                           }
-                          focusable="false"
-                          role="presentation"
-                        />
-                      </Icon>
-                    </button>
-                  </span>
-                </div>
+                        }
+                        focusable="false"
+                        role="presentation"
+                      />
+                    </Icon>
+                  </button>
+                </span>
               </div>
-            </form>
-          </Search>
-        </Route>
+            </div>
+          </form>
+        </Search>
       </withRouter(Search)>
     </Router>
   </MemoryRouter>

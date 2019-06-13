@@ -127,36 +127,16 @@ exports[`Should component receive props 1`] = `
                   multiple={true}
                   name="sla-status"
                 >
-                  <Route>
-                    <Filter
-                      filterKey="slaStatuses"
-                      history={
-                        Object {
-                          "action": "POP",
-                          "block": [Function],
-                          "canGo": [Function],
-                          "createHref": [Function],
-                          "entries": Array [
-                            Object {
-                              "hash": "",
-                              "match": Object {
-                                "params": Object {
-                                  "page": 1,
-                                  "search": undefined,
-                                  "sort": undefined,
-                                },
-                              },
-                              "pathname": "/processes/1/10/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                          ],
-                          "go": [Function],
-                          "goBack": [Function],
-                          "goForward": [Function],
-                          "index": 0,
-                          "length": 1,
-                          "listen": [Function],
-                          "location": Object {
+                  <Filter
+                    filterKey="slaStatuses"
+                    history={
+                      Object {
+                        "action": "POP",
+                        "block": [Function],
+                        "canGo": [Function],
+                        "createHref": [Function],
+                        "entries": Array [
+                          Object {
                             "hash": "",
                             "match": Object {
                               "params": Object {
@@ -168,31 +148,14 @@ exports[`Should component receive props 1`] = `
                             "pathname": "/processes/1/10/title%3Aasc",
                             "search": "?backPath=%2F",
                           },
-                          "push": [Function],
-                          "replace": [Function],
-                        }
-                      }
-                      items={
-                        Array [
-                          Object {
-                            "active": false,
-                            "key": "Overdue",
-                            "name": "overdue",
-                          },
-                          Object {
-                            "active": false,
-                            "key": "OnTime",
-                            "name": "on-time",
-                          },
-                          Object {
-                            "active": false,
-                            "key": "Untracked",
-                            "name": "untracked",
-                          },
-                        ]
-                      }
-                      location={
-                        Object {
+                        ],
+                        "go": [Function],
+                        "goBack": [Function],
+                        "goForward": [Function],
+                        "index": 0,
+                        "length": 1,
+                        "listen": [Function],
+                        "location": Object {
                           "hash": "",
                           "match": Object {
                             "params": Object {
@@ -203,187 +166,222 @@ exports[`Should component receive props 1`] = `
                           },
                           "pathname": "/processes/1/10/title%3Aasc",
                           "search": "?backPath=%2F",
-                        }
+                        },
+                        "push": [Function],
+                        "replace": [Function],
                       }
-                      match={
+                    }
+                    items={
+                      Array [
                         Object {
-                          "isExact": false,
-                          "params": Object {},
-                          "path": "/",
-                          "url": "/",
-                        }
+                          "active": false,
+                          "key": "Overdue",
+                          "name": "overdue",
+                        },
+                        Object {
+                          "active": false,
+                          "key": "OnTime",
+                          "name": "on-time",
+                        },
+                        Object {
+                          "active": false,
+                          "key": "Untracked",
+                          "name": "untracked",
+                        },
+                      ]
+                    }
+                    location={
+                      Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
                       }
-                      multiple={true}
-                      name="sla-status"
+                    }
+                    match={
+                      Object {
+                        "isExact": false,
+                        "params": Object {},
+                        "path": "/",
+                        "url": "/",
+                      }
+                    }
+                    multiple={true}
+                    name="sla-status"
+                  >
+                    <li
+                      className="dropdown nav-item"
                     >
-                      <li
-                        className="dropdown nav-item"
+                      <button
+                        aria-expanded={false}
+                        aria-haspopup="true"
+                        className="dropdown-toggle nav-link"
+                        onClick={[Function]}
+                        type="button"
                       >
-                        <button
-                          aria-expanded={false}
-                          aria-haspopup="true"
-                          className="dropdown-toggle nav-link"
-                          onClick={[Function]}
-                          type="button"
+                        <span
+                          className="mr-2 navbar-text-truncate"
                         >
-                          <span
-                            className="mr-2 navbar-text-truncate"
-                          >
-                            sla-status
-                          </span>
-                          <Icon
-                            iconName="caret-bottom"
-                          >
-                            <svg
-                              className="lexicon-icon lexicon-icon-caret-bottom"
-                              dangerouslySetInnerHTML={
-                                Object {
-                                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
-                                }
+                          sla-status
+                        </span>
+                        <Icon
+                          iconName="caret-bottom"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-caret-bottom"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
                               }
-                              focusable="false"
-                              role="presentation"
-                            />
-                          </Icon>
-                        </button>
-                        <div
-                          className="dropdown-menu"
-                          role="menu"
-                        >
-                          <FilterSearch
-                            filteredItems={
-                              Array [
-                                Object {
-                                  "active": false,
-                                  "key": "Overdue",
-                                  "name": "overdue",
-                                },
-                                Object {
-                                  "active": false,
-                                  "key": "OnTime",
-                                  "name": "on-time",
-                                },
-                                Object {
-                                  "active": false,
-                                  "key": "Untracked",
-                                  "name": "untracked",
-                                },
-                              ]
                             }
-                            onChange={[Function]}
-                            totalCount={3}
+                            focusable="false"
+                            role="presentation"
+                          />
+                        </Icon>
+                      </button>
+                      <div
+                        className="dropdown-menu"
+                        role="menu"
+                      >
+                        <FilterSearch
+                          filteredItems={
+                            Array [
+                              Object {
+                                "active": false,
+                                "key": "Overdue",
+                                "name": "overdue",
+                              },
+                              Object {
+                                "active": false,
+                                "key": "OnTime",
+                                "name": "on-time",
+                              },
+                              Object {
+                                "active": false,
+                                "key": "Untracked",
+                                "name": "untracked",
+                              },
+                            ]
+                          }
+                          onChange={[Function]}
+                          totalCount={3}
+                        >
+                          <ul
+                            className="list-unstyled"
                           >
-                            <ul
-                              className="list-unstyled"
+                            <FilterItem
+                              active={false}
+                              hideControl={false}
+                              itemKey="Overdue"
+                              key="0"
+                              multiple={true}
+                              name="overdue"
+                              onChange={[Function]}
                             >
-                              <FilterItem
-                                active={false}
-                                hideControl={false}
-                                itemKey="Overdue"
-                                key="0"
-                                multiple={true}
-                                name="overdue"
-                                onChange={[Function]}
+                              <li
+                                className="dropdown-item"
                               >
-                                <li
-                                  className="dropdown-item"
+                                <label
+                                  className="custom-control custom-checkbox"
                                 >
-                                  <label
-                                    className="custom-control custom-checkbox"
+                                  <input
+                                    checked={false}
+                                    className="custom-control-input"
+                                    data-key="Overdue"
+                                    onChange={[Function]}
+                                    type="checkbox"
+                                  />
+                                  <span
+                                    className="custom-control-label"
                                   >
-                                    <input
-                                      checked={false}
-                                      className="custom-control-input"
-                                      data-key="Overdue"
-                                      onChange={[Function]}
-                                      type="checkbox"
-                                    />
                                     <span
-                                      className="custom-control-label"
+                                      className="custom-control-label-text"
                                     >
-                                      <span
-                                        className="custom-control-label-text"
-                                      >
-                                        overdue
-                                      </span>
+                                      overdue
                                     </span>
-                                  </label>
-                                </li>
-                              </FilterItem>
-                              <FilterItem
-                                active={false}
-                                hideControl={false}
-                                itemKey="OnTime"
-                                key="1"
-                                multiple={true}
-                                name="on-time"
-                                onChange={[Function]}
+                                  </span>
+                                </label>
+                              </li>
+                            </FilterItem>
+                            <FilterItem
+                              active={false}
+                              hideControl={false}
+                              itemKey="OnTime"
+                              key="1"
+                              multiple={true}
+                              name="on-time"
+                              onChange={[Function]}
+                            >
+                              <li
+                                className="dropdown-item"
                               >
-                                <li
-                                  className="dropdown-item"
+                                <label
+                                  className="custom-control custom-checkbox"
                                 >
-                                  <label
-                                    className="custom-control custom-checkbox"
+                                  <input
+                                    checked={false}
+                                    className="custom-control-input"
+                                    data-key="OnTime"
+                                    onChange={[Function]}
+                                    type="checkbox"
+                                  />
+                                  <span
+                                    className="custom-control-label"
                                   >
-                                    <input
-                                      checked={false}
-                                      className="custom-control-input"
-                                      data-key="OnTime"
-                                      onChange={[Function]}
-                                      type="checkbox"
-                                    />
                                     <span
-                                      className="custom-control-label"
+                                      className="custom-control-label-text"
                                     >
-                                      <span
-                                        className="custom-control-label-text"
-                                      >
-                                        on-time
-                                      </span>
+                                      on-time
                                     </span>
-                                  </label>
-                                </li>
-                              </FilterItem>
-                              <FilterItem
-                                active={false}
-                                hideControl={false}
-                                itemKey="Untracked"
-                                key="2"
-                                multiple={true}
-                                name="untracked"
-                                onChange={[Function]}
+                                  </span>
+                                </label>
+                              </li>
+                            </FilterItem>
+                            <FilterItem
+                              active={false}
+                              hideControl={false}
+                              itemKey="Untracked"
+                              key="2"
+                              multiple={true}
+                              name="untracked"
+                              onChange={[Function]}
+                            >
+                              <li
+                                className="dropdown-item"
                               >
-                                <li
-                                  className="dropdown-item"
+                                <label
+                                  className="custom-control custom-checkbox"
                                 >
-                                  <label
-                                    className="custom-control custom-checkbox"
+                                  <input
+                                    checked={false}
+                                    className="custom-control-input"
+                                    data-key="Untracked"
+                                    onChange={[Function]}
+                                    type="checkbox"
+                                  />
+                                  <span
+                                    className="custom-control-label"
                                   >
-                                    <input
-                                      checked={false}
-                                      className="custom-control-input"
-                                      data-key="Untracked"
-                                      onChange={[Function]}
-                                      type="checkbox"
-                                    />
                                     <span
-                                      className="custom-control-label"
+                                      className="custom-control-label-text"
                                     >
-                                      <span
-                                        className="custom-control-label-text"
-                                      >
-                                        untracked
-                                      </span>
+                                      untracked
                                     </span>
-                                  </label>
-                                </li>
-                              </FilterItem>
-                            </ul>
-                          </FilterSearch>
-                        </div>
-                      </li>
-                    </Filter>
-                  </Route>
+                                  </span>
+                                </label>
+                              </li>
+                            </FilterItem>
+                          </ul>
+                        </FilterSearch>
+                      </div>
+                    </li>
+                  </Filter>
                 </withRouter(Filter)>
                 <withRouter(Filter)
                   filterKey="statuses"
@@ -405,36 +403,16 @@ exports[`Should component receive props 1`] = `
                   multiple={true}
                   name="process-status"
                 >
-                  <Route>
-                    <Filter
-                      filterKey="statuses"
-                      history={
-                        Object {
-                          "action": "POP",
-                          "block": [Function],
-                          "canGo": [Function],
-                          "createHref": [Function],
-                          "entries": Array [
-                            Object {
-                              "hash": "",
-                              "match": Object {
-                                "params": Object {
-                                  "page": 1,
-                                  "search": undefined,
-                                  "sort": undefined,
-                                },
-                              },
-                              "pathname": "/processes/1/10/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                          ],
-                          "go": [Function],
-                          "goBack": [Function],
-                          "goForward": [Function],
-                          "index": 0,
-                          "length": 1,
-                          "listen": [Function],
-                          "location": Object {
+                  <Filter
+                    filterKey="statuses"
+                    history={
+                      Object {
+                        "action": "POP",
+                        "block": [Function],
+                        "canGo": [Function],
+                        "createHref": [Function],
+                        "entries": Array [
+                          Object {
                             "hash": "",
                             "match": Object {
                               "params": Object {
@@ -446,26 +424,14 @@ exports[`Should component receive props 1`] = `
                             "pathname": "/processes/1/10/title%3Aasc",
                             "search": "?backPath=%2F",
                           },
-                          "push": [Function],
-                          "replace": [Function],
-                        }
-                      }
-                      items={
-                        Array [
-                          Object {
-                            "active": false,
-                            "key": "Pending",
-                            "name": "pending",
-                          },
-                          Object {
-                            "active": false,
-                            "key": "Completed",
-                            "name": "completed",
-                          },
-                        ]
-                      }
-                      location={
-                        Object {
+                        ],
+                        "go": [Function],
+                        "goBack": [Function],
+                        "goForward": [Function],
+                        "index": 0,
+                        "length": 1,
+                        "listen": [Function],
+                        "location": Object {
                           "hash": "",
                           "match": Object {
                             "params": Object {
@@ -476,148 +442,178 @@ exports[`Should component receive props 1`] = `
                           },
                           "pathname": "/processes/1/10/title%3Aasc",
                           "search": "?backPath=%2F",
-                        }
+                        },
+                        "push": [Function],
+                        "replace": [Function],
                       }
-                      match={
+                    }
+                    items={
+                      Array [
                         Object {
-                          "isExact": false,
-                          "params": Object {},
-                          "path": "/",
-                          "url": "/",
-                        }
+                          "active": false,
+                          "key": "Pending",
+                          "name": "pending",
+                        },
+                        Object {
+                          "active": false,
+                          "key": "Completed",
+                          "name": "completed",
+                        },
+                      ]
+                    }
+                    location={
+                      Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
                       }
-                      multiple={true}
-                      name="process-status"
+                    }
+                    match={
+                      Object {
+                        "isExact": false,
+                        "params": Object {},
+                        "path": "/",
+                        "url": "/",
+                      }
+                    }
+                    multiple={true}
+                    name="process-status"
+                  >
+                    <li
+                      className="dropdown nav-item"
                     >
-                      <li
-                        className="dropdown nav-item"
+                      <button
+                        aria-expanded={false}
+                        aria-haspopup="true"
+                        className="dropdown-toggle nav-link"
+                        onClick={[Function]}
+                        type="button"
                       >
-                        <button
-                          aria-expanded={false}
-                          aria-haspopup="true"
-                          className="dropdown-toggle nav-link"
-                          onClick={[Function]}
-                          type="button"
+                        <span
+                          className="mr-2 navbar-text-truncate"
                         >
-                          <span
-                            className="mr-2 navbar-text-truncate"
-                          >
-                            process-status
-                          </span>
-                          <Icon
-                            iconName="caret-bottom"
-                          >
-                            <svg
-                              className="lexicon-icon lexicon-icon-caret-bottom"
-                              dangerouslySetInnerHTML={
-                                Object {
-                                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
-                                }
+                          process-status
+                        </span>
+                        <Icon
+                          iconName="caret-bottom"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-caret-bottom"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
                               }
-                              focusable="false"
-                              role="presentation"
-                            />
-                          </Icon>
-                        </button>
-                        <div
-                          className="dropdown-menu"
-                          role="menu"
-                        >
-                          <FilterSearch
-                            filteredItems={
-                              Array [
-                                Object {
-                                  "active": false,
-                                  "key": "Pending",
-                                  "name": "pending",
-                                },
-                                Object {
-                                  "active": false,
-                                  "key": "Completed",
-                                  "name": "completed",
-                                },
-                              ]
                             }
-                            onChange={[Function]}
-                            totalCount={2}
+                            focusable="false"
+                            role="presentation"
+                          />
+                        </Icon>
+                      </button>
+                      <div
+                        className="dropdown-menu"
+                        role="menu"
+                      >
+                        <FilterSearch
+                          filteredItems={
+                            Array [
+                              Object {
+                                "active": false,
+                                "key": "Pending",
+                                "name": "pending",
+                              },
+                              Object {
+                                "active": false,
+                                "key": "Completed",
+                                "name": "completed",
+                              },
+                            ]
+                          }
+                          onChange={[Function]}
+                          totalCount={2}
+                        >
+                          <ul
+                            className="list-unstyled"
                           >
-                            <ul
-                              className="list-unstyled"
+                            <FilterItem
+                              active={false}
+                              hideControl={false}
+                              itemKey="Pending"
+                              key="0"
+                              multiple={true}
+                              name="pending"
+                              onChange={[Function]}
                             >
-                              <FilterItem
-                                active={false}
-                                hideControl={false}
-                                itemKey="Pending"
-                                key="0"
-                                multiple={true}
-                                name="pending"
-                                onChange={[Function]}
+                              <li
+                                className="dropdown-item"
                               >
-                                <li
-                                  className="dropdown-item"
+                                <label
+                                  className="custom-control custom-checkbox"
                                 >
-                                  <label
-                                    className="custom-control custom-checkbox"
+                                  <input
+                                    checked={false}
+                                    className="custom-control-input"
+                                    data-key="Pending"
+                                    onChange={[Function]}
+                                    type="checkbox"
+                                  />
+                                  <span
+                                    className="custom-control-label"
                                   >
-                                    <input
-                                      checked={false}
-                                      className="custom-control-input"
-                                      data-key="Pending"
-                                      onChange={[Function]}
-                                      type="checkbox"
-                                    />
                                     <span
-                                      className="custom-control-label"
+                                      className="custom-control-label-text"
                                     >
-                                      <span
-                                        className="custom-control-label-text"
-                                      >
-                                        pending
-                                      </span>
+                                      pending
                                     </span>
-                                  </label>
-                                </li>
-                              </FilterItem>
-                              <FilterItem
-                                active={false}
-                                hideControl={false}
-                                itemKey="Completed"
-                                key="1"
-                                multiple={true}
-                                name="completed"
-                                onChange={[Function]}
+                                  </span>
+                                </label>
+                              </li>
+                            </FilterItem>
+                            <FilterItem
+                              active={false}
+                              hideControl={false}
+                              itemKey="Completed"
+                              key="1"
+                              multiple={true}
+                              name="completed"
+                              onChange={[Function]}
+                            >
+                              <li
+                                className="dropdown-item"
                               >
-                                <li
-                                  className="dropdown-item"
+                                <label
+                                  className="custom-control custom-checkbox"
                                 >
-                                  <label
-                                    className="custom-control custom-checkbox"
+                                  <input
+                                    checked={false}
+                                    className="custom-control-input"
+                                    data-key="Completed"
+                                    onChange={[Function]}
+                                    type="checkbox"
+                                  />
+                                  <span
+                                    className="custom-control-label"
                                   >
-                                    <input
-                                      checked={false}
-                                      className="custom-control-input"
-                                      data-key="Completed"
-                                      onChange={[Function]}
-                                      type="checkbox"
-                                    />
                                     <span
-                                      className="custom-control-label"
+                                      className="custom-control-label-text"
                                     >
-                                      <span
-                                        className="custom-control-label-text"
-                                      >
-                                        completed
-                                      </span>
+                                      completed
                                     </span>
-                                  </label>
-                                </li>
-                              </FilterItem>
-                            </ul>
-                          </FilterSearch>
-                        </div>
-                      </li>
-                    </Filter>
-                  </Route>
+                                  </span>
+                                </label>
+                              </li>
+                            </FilterItem>
+                          </ul>
+                        </FilterSearch>
+                      </div>
+                    </li>
+                  </Filter>
                 </withRouter(Filter)>
                 <withRouter(Filter)
                   filterKey="taskKeys"
@@ -626,36 +622,16 @@ exports[`Should component receive props 1`] = `
                   multiple={true}
                   name="process-step"
                 >
-                  <Route>
-                    <Filter
-                      filterKey="taskKeys"
-                      history={
-                        Object {
-                          "action": "POP",
-                          "block": [Function],
-                          "canGo": [Function],
-                          "createHref": [Function],
-                          "entries": Array [
-                            Object {
-                              "hash": "",
-                              "match": Object {
-                                "params": Object {
-                                  "page": 1,
-                                  "search": undefined,
-                                  "sort": undefined,
-                                },
-                              },
-                              "pathname": "/processes/1/10/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                          ],
-                          "go": [Function],
-                          "goBack": [Function],
-                          "goForward": [Function],
-                          "index": 0,
-                          "length": 1,
-                          "listen": [Function],
-                          "location": Object {
+                  <Filter
+                    filterKey="taskKeys"
+                    history={
+                      Object {
+                        "action": "POP",
+                        "block": [Function],
+                        "canGo": [Function],
+                        "createHref": [Function],
+                        "entries": Array [
+                          Object {
                             "hash": "",
                             "match": Object {
                               "params": Object {
@@ -667,13 +643,14 @@ exports[`Should component receive props 1`] = `
                             "pathname": "/processes/1/10/title%3Aasc",
                             "search": "?backPath=%2F",
                           },
-                          "push": [Function],
-                          "replace": [Function],
-                        }
-                      }
-                      items={Array []}
-                      location={
-                        Object {
+                        ],
+                        "go": [Function],
+                        "goBack": [Function],
+                        "goForward": [Function],
+                        "index": 0,
+                        "length": 1,
+                        "listen": [Function],
+                        "location": Object {
                           "hash": "",
                           "match": Object {
                             "params": Object {
@@ -684,77 +661,94 @@ exports[`Should component receive props 1`] = `
                           },
                           "pathname": "/processes/1/10/title%3Aasc",
                           "search": "?backPath=%2F",
-                        }
+                        },
+                        "push": [Function],
+                        "replace": [Function],
                       }
-                      match={
-                        Object {
-                          "isExact": false,
-                          "params": Object {},
-                          "path": "/",
-                          "url": "/",
-                        }
+                    }
+                    items={Array []}
+                    location={
+                      Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
                       }
-                      multiple={true}
-                      name="process-step"
+                    }
+                    match={
+                      Object {
+                        "isExact": false,
+                        "params": Object {},
+                        "path": "/",
+                        "url": "/",
+                      }
+                    }
+                    multiple={true}
+                    name="process-step"
+                  >
+                    <li
+                      className="dropdown nav-item"
                     >
-                      <li
-                        className="dropdown nav-item"
+                      <button
+                        aria-expanded={false}
+                        aria-haspopup="true"
+                        className="dropdown-toggle nav-link"
+                        onClick={[Function]}
+                        type="button"
                       >
-                        <button
-                          aria-expanded={false}
-                          aria-haspopup="true"
-                          className="dropdown-toggle nav-link"
-                          onClick={[Function]}
-                          type="button"
+                        <span
+                          className="mr-2 navbar-text-truncate"
                         >
-                          <span
-                            className="mr-2 navbar-text-truncate"
-                          >
-                            process-step
-                          </span>
-                          <Icon
-                            iconName="caret-bottom"
-                          >
-                            <svg
-                              className="lexicon-icon lexicon-icon-caret-bottom"
-                              dangerouslySetInnerHTML={
-                                Object {
-                                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
-                                }
+                          process-step
+                        </span>
+                        <Icon
+                          iconName="caret-bottom"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-caret-bottom"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
                               }
-                              focusable="false"
-                              role="presentation"
-                            />
-                          </Icon>
-                        </button>
-                        <div
-                          className="dropdown-menu"
-                          role="menu"
+                            }
+                            focusable="false"
+                            role="presentation"
+                          />
+                        </Icon>
+                      </button>
+                      <div
+                        className="dropdown-menu"
+                        role="menu"
+                      >
+                        <FilterSearch
+                          filteredItems={Array []}
+                          onChange={[Function]}
+                          totalCount={0}
                         >
-                          <FilterSearch
-                            filteredItems={Array []}
-                            onChange={[Function]}
-                            totalCount={0}
+                          <ul
+                            className="list-unstyled"
                           >
-                            <ul
-                              className="list-unstyled"
-                            >
-                              <li>
-                                <span
-                                  className="disabled dropdown-item"
-                                >
-                                  no-results-were-found
-                                </span>
-                              </li>
-                            </ul>
-                            <ul
-                              className="list-unstyled"
-                            />
-                          </FilterSearch>
-                        </div>
-                      </li>
-                    </Filter>
-                  </Route>
+                            <li>
+                              <span
+                                className="disabled dropdown-item"
+                              >
+                                no-results-were-found
+                              </span>
+                            </li>
+                          </ul>
+                          <ul
+                            className="list-unstyled"
+                          />
+                        </FilterSearch>
+                      </div>
+                    </li>
+                  </Filter>
                 </withRouter(Filter)>
               </ul>
             </div>
@@ -784,57 +778,37 @@ exports[`Should component receive props 1`] = `
             }
             totalCount={0}
           >
-            <Route>
-              <FilterResultsBar
-                filters={
-                  Array [
-                    Object {
-                      "items": Array [],
-                      "key": "slaStatuses",
-                      "multiple": true,
-                      "name": "sla-status",
-                    },
-                    Object {
-                      "items": Array [],
-                      "key": "statuses",
-                      "multiple": true,
-                      "name": "process-status",
-                    },
-                    Object {
-                      "items": Array [],
-                      "key": "taskKeys",
-                      "multiple": true,
-                      "name": "process-step",
-                    },
-                  ]
-                }
-                history={
+            <FilterResultsBar
+              filters={
+                Array [
                   Object {
-                    "action": "POP",
-                    "block": [Function],
-                    "canGo": [Function],
-                    "createHref": [Function],
-                    "entries": Array [
-                      Object {
-                        "hash": "",
-                        "match": Object {
-                          "params": Object {
-                            "page": 1,
-                            "search": undefined,
-                            "sort": undefined,
-                          },
-                        },
-                        "pathname": "/processes/1/10/title%3Aasc",
-                        "search": "?backPath=%2F",
-                      },
-                    ],
-                    "go": [Function],
-                    "goBack": [Function],
-                    "goForward": [Function],
-                    "index": 0,
-                    "length": 1,
-                    "listen": [Function],
-                    "location": Object {
+                    "items": Array [],
+                    "key": "slaStatuses",
+                    "multiple": true,
+                    "name": "sla-status",
+                  },
+                  Object {
+                    "items": Array [],
+                    "key": "statuses",
+                    "multiple": true,
+                    "name": "process-status",
+                  },
+                  Object {
+                    "items": Array [],
+                    "key": "taskKeys",
+                    "multiple": true,
+                    "name": "process-step",
+                  },
+                ]
+              }
+              history={
+                Object {
+                  "action": "POP",
+                  "block": [Function],
+                  "canGo": [Function],
+                  "createHref": [Function],
+                  "entries": Array [
+                    Object {
                       "hash": "",
                       "match": Object {
                         "params": Object {
@@ -846,12 +820,14 @@ exports[`Should component receive props 1`] = `
                       "pathname": "/processes/1/10/title%3Aasc",
                       "search": "?backPath=%2F",
                     },
-                    "push": [Function],
-                    "replace": [Function],
-                  }
-                }
-                location={
-                  Object {
+                  ],
+                  "go": [Function],
+                  "goBack": [Function],
+                  "goForward": [Function],
+                  "index": 0,
+                  "length": 1,
+                  "listen": [Function],
+                  "location": Object {
                     "hash": "",
                     "match": Object {
                       "params": Object {
@@ -862,19 +838,35 @@ exports[`Should component receive props 1`] = `
                     },
                     "pathname": "/processes/1/10/title%3Aasc",
                     "search": "?backPath=%2F",
-                  }
+                  },
+                  "push": [Function],
+                  "replace": [Function],
                 }
-                match={
-                  Object {
-                    "isExact": false,
-                    "params": Object {},
-                    "path": "/",
-                    "url": "/",
-                  }
+              }
+              location={
+                Object {
+                  "hash": "",
+                  "match": Object {
+                    "params": Object {
+                      "page": 1,
+                      "search": undefined,
+                      "sort": undefined,
+                    },
+                  },
+                  "pathname": "/processes/1/10/title%3Aasc",
+                  "search": "?backPath=%2F",
                 }
-                totalCount={0}
-              />
-            </Route>
+              }
+              match={
+                Object {
+                  "isExact": false,
+                  "params": Object {},
+                  "path": "/",
+                  "url": "/",
+                }
+              }
+              totalCount={0}
+            />
           </withRouter(FilterResultsBar)>
         </InstanceListFilter>
         <div
@@ -1235,36 +1227,16 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                   multiple={true}
                   name="sla-status"
                 >
-                  <Route>
-                    <Filter
-                      filterKey="slaStatuses"
-                      history={
-                        Object {
-                          "action": "POP",
-                          "block": [Function],
-                          "canGo": [Function],
-                          "createHref": [Function],
-                          "entries": Array [
-                            Object {
-                              "hash": "",
-                              "match": Object {
-                                "params": Object {
-                                  "page": 1,
-                                  "search": undefined,
-                                  "sort": undefined,
-                                },
-                              },
-                              "pathname": "/processes/1/10/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                          ],
-                          "go": [Function],
-                          "goBack": [Function],
-                          "goForward": [Function],
-                          "index": 0,
-                          "length": 1,
-                          "listen": [Function],
-                          "location": Object {
+                  <Filter
+                    filterKey="slaStatuses"
+                    history={
+                      Object {
+                        "action": "POP",
+                        "block": [Function],
+                        "canGo": [Function],
+                        "createHref": [Function],
+                        "entries": Array [
+                          Object {
                             "hash": "",
                             "match": Object {
                               "params": Object {
@@ -1276,31 +1248,14 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                             "pathname": "/processes/1/10/title%3Aasc",
                             "search": "?backPath=%2F",
                           },
-                          "push": [Function],
-                          "replace": [Function],
-                        }
-                      }
-                      items={
-                        Array [
-                          Object {
-                            "active": false,
-                            "key": "Overdue",
-                            "name": "overdue",
-                          },
-                          Object {
-                            "active": false,
-                            "key": "OnTime",
-                            "name": "on-time",
-                          },
-                          Object {
-                            "active": false,
-                            "key": "Untracked",
-                            "name": "untracked",
-                          },
-                        ]
-                      }
-                      location={
-                        Object {
+                        ],
+                        "go": [Function],
+                        "goBack": [Function],
+                        "goForward": [Function],
+                        "index": 0,
+                        "length": 1,
+                        "listen": [Function],
+                        "location": Object {
                           "hash": "",
                           "match": Object {
                             "params": Object {
@@ -1311,187 +1266,222 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                           },
                           "pathname": "/processes/1/10/title%3Aasc",
                           "search": "?backPath=%2F",
-                        }
+                        },
+                        "push": [Function],
+                        "replace": [Function],
                       }
-                      match={
+                    }
+                    items={
+                      Array [
                         Object {
-                          "isExact": false,
-                          "params": Object {},
-                          "path": "/",
-                          "url": "/",
-                        }
+                          "active": false,
+                          "key": "Overdue",
+                          "name": "overdue",
+                        },
+                        Object {
+                          "active": false,
+                          "key": "OnTime",
+                          "name": "on-time",
+                        },
+                        Object {
+                          "active": false,
+                          "key": "Untracked",
+                          "name": "untracked",
+                        },
+                      ]
+                    }
+                    location={
+                      Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
                       }
-                      multiple={true}
-                      name="sla-status"
+                    }
+                    match={
+                      Object {
+                        "isExact": false,
+                        "params": Object {},
+                        "path": "/",
+                        "url": "/",
+                      }
+                    }
+                    multiple={true}
+                    name="sla-status"
+                  >
+                    <li
+                      className="dropdown nav-item"
                     >
-                      <li
-                        className="dropdown nav-item"
+                      <button
+                        aria-expanded={false}
+                        aria-haspopup="true"
+                        className="dropdown-toggle nav-link"
+                        onClick={[Function]}
+                        type="button"
                       >
-                        <button
-                          aria-expanded={false}
-                          aria-haspopup="true"
-                          className="dropdown-toggle nav-link"
-                          onClick={[Function]}
-                          type="button"
+                        <span
+                          className="mr-2 navbar-text-truncate"
                         >
-                          <span
-                            className="mr-2 navbar-text-truncate"
-                          >
-                            sla-status
-                          </span>
-                          <Icon
-                            iconName="caret-bottom"
-                          >
-                            <svg
-                              className="lexicon-icon lexicon-icon-caret-bottom"
-                              dangerouslySetInnerHTML={
-                                Object {
-                                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
-                                }
+                          sla-status
+                        </span>
+                        <Icon
+                          iconName="caret-bottom"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-caret-bottom"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
                               }
-                              focusable="false"
-                              role="presentation"
-                            />
-                          </Icon>
-                        </button>
-                        <div
-                          className="dropdown-menu"
-                          role="menu"
-                        >
-                          <FilterSearch
-                            filteredItems={
-                              Array [
-                                Object {
-                                  "active": false,
-                                  "key": "Overdue",
-                                  "name": "overdue",
-                                },
-                                Object {
-                                  "active": false,
-                                  "key": "OnTime",
-                                  "name": "on-time",
-                                },
-                                Object {
-                                  "active": false,
-                                  "key": "Untracked",
-                                  "name": "untracked",
-                                },
-                              ]
                             }
-                            onChange={[Function]}
-                            totalCount={3}
+                            focusable="false"
+                            role="presentation"
+                          />
+                        </Icon>
+                      </button>
+                      <div
+                        className="dropdown-menu"
+                        role="menu"
+                      >
+                        <FilterSearch
+                          filteredItems={
+                            Array [
+                              Object {
+                                "active": false,
+                                "key": "Overdue",
+                                "name": "overdue",
+                              },
+                              Object {
+                                "active": false,
+                                "key": "OnTime",
+                                "name": "on-time",
+                              },
+                              Object {
+                                "active": false,
+                                "key": "Untracked",
+                                "name": "untracked",
+                              },
+                            ]
+                          }
+                          onChange={[Function]}
+                          totalCount={3}
+                        >
+                          <ul
+                            className="list-unstyled"
                           >
-                            <ul
-                              className="list-unstyled"
+                            <FilterItem
+                              active={false}
+                              hideControl={false}
+                              itemKey="Overdue"
+                              key="0"
+                              multiple={true}
+                              name="overdue"
+                              onChange={[Function]}
                             >
-                              <FilterItem
-                                active={false}
-                                hideControl={false}
-                                itemKey="Overdue"
-                                key="0"
-                                multiple={true}
-                                name="overdue"
-                                onChange={[Function]}
+                              <li
+                                className="dropdown-item"
                               >
-                                <li
-                                  className="dropdown-item"
+                                <label
+                                  className="custom-control custom-checkbox"
                                 >
-                                  <label
-                                    className="custom-control custom-checkbox"
+                                  <input
+                                    checked={false}
+                                    className="custom-control-input"
+                                    data-key="Overdue"
+                                    onChange={[Function]}
+                                    type="checkbox"
+                                  />
+                                  <span
+                                    className="custom-control-label"
                                   >
-                                    <input
-                                      checked={false}
-                                      className="custom-control-input"
-                                      data-key="Overdue"
-                                      onChange={[Function]}
-                                      type="checkbox"
-                                    />
                                     <span
-                                      className="custom-control-label"
+                                      className="custom-control-label-text"
                                     >
-                                      <span
-                                        className="custom-control-label-text"
-                                      >
-                                        overdue
-                                      </span>
+                                      overdue
                                     </span>
-                                  </label>
-                                </li>
-                              </FilterItem>
-                              <FilterItem
-                                active={false}
-                                hideControl={false}
-                                itemKey="OnTime"
-                                key="1"
-                                multiple={true}
-                                name="on-time"
-                                onChange={[Function]}
+                                  </span>
+                                </label>
+                              </li>
+                            </FilterItem>
+                            <FilterItem
+                              active={false}
+                              hideControl={false}
+                              itemKey="OnTime"
+                              key="1"
+                              multiple={true}
+                              name="on-time"
+                              onChange={[Function]}
+                            >
+                              <li
+                                className="dropdown-item"
                               >
-                                <li
-                                  className="dropdown-item"
+                                <label
+                                  className="custom-control custom-checkbox"
                                 >
-                                  <label
-                                    className="custom-control custom-checkbox"
+                                  <input
+                                    checked={false}
+                                    className="custom-control-input"
+                                    data-key="OnTime"
+                                    onChange={[Function]}
+                                    type="checkbox"
+                                  />
+                                  <span
+                                    className="custom-control-label"
                                   >
-                                    <input
-                                      checked={false}
-                                      className="custom-control-input"
-                                      data-key="OnTime"
-                                      onChange={[Function]}
-                                      type="checkbox"
-                                    />
                                     <span
-                                      className="custom-control-label"
+                                      className="custom-control-label-text"
                                     >
-                                      <span
-                                        className="custom-control-label-text"
-                                      >
-                                        on-time
-                                      </span>
+                                      on-time
                                     </span>
-                                  </label>
-                                </li>
-                              </FilterItem>
-                              <FilterItem
-                                active={false}
-                                hideControl={false}
-                                itemKey="Untracked"
-                                key="2"
-                                multiple={true}
-                                name="untracked"
-                                onChange={[Function]}
+                                  </span>
+                                </label>
+                              </li>
+                            </FilterItem>
+                            <FilterItem
+                              active={false}
+                              hideControl={false}
+                              itemKey="Untracked"
+                              key="2"
+                              multiple={true}
+                              name="untracked"
+                              onChange={[Function]}
+                            >
+                              <li
+                                className="dropdown-item"
                               >
-                                <li
-                                  className="dropdown-item"
+                                <label
+                                  className="custom-control custom-checkbox"
                                 >
-                                  <label
-                                    className="custom-control custom-checkbox"
+                                  <input
+                                    checked={false}
+                                    className="custom-control-input"
+                                    data-key="Untracked"
+                                    onChange={[Function]}
+                                    type="checkbox"
+                                  />
+                                  <span
+                                    className="custom-control-label"
                                   >
-                                    <input
-                                      checked={false}
-                                      className="custom-control-input"
-                                      data-key="Untracked"
-                                      onChange={[Function]}
-                                      type="checkbox"
-                                    />
                                     <span
-                                      className="custom-control-label"
+                                      className="custom-control-label-text"
                                     >
-                                      <span
-                                        className="custom-control-label-text"
-                                      >
-                                        untracked
-                                      </span>
+                                      untracked
                                     </span>
-                                  </label>
-                                </li>
-                              </FilterItem>
-                            </ul>
-                          </FilterSearch>
-                        </div>
-                      </li>
-                    </Filter>
-                  </Route>
+                                  </span>
+                                </label>
+                              </li>
+                            </FilterItem>
+                          </ul>
+                        </FilterSearch>
+                      </div>
+                    </li>
+                  </Filter>
                 </withRouter(Filter)>
                 <withRouter(Filter)
                   filterKey="statuses"
@@ -1513,36 +1503,16 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                   multiple={true}
                   name="process-status"
                 >
-                  <Route>
-                    <Filter
-                      filterKey="statuses"
-                      history={
-                        Object {
-                          "action": "POP",
-                          "block": [Function],
-                          "canGo": [Function],
-                          "createHref": [Function],
-                          "entries": Array [
-                            Object {
-                              "hash": "",
-                              "match": Object {
-                                "params": Object {
-                                  "page": 1,
-                                  "search": undefined,
-                                  "sort": undefined,
-                                },
-                              },
-                              "pathname": "/processes/1/10/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                          ],
-                          "go": [Function],
-                          "goBack": [Function],
-                          "goForward": [Function],
-                          "index": 0,
-                          "length": 1,
-                          "listen": [Function],
-                          "location": Object {
+                  <Filter
+                    filterKey="statuses"
+                    history={
+                      Object {
+                        "action": "POP",
+                        "block": [Function],
+                        "canGo": [Function],
+                        "createHref": [Function],
+                        "entries": Array [
+                          Object {
                             "hash": "",
                             "match": Object {
                               "params": Object {
@@ -1554,26 +1524,14 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                             "pathname": "/processes/1/10/title%3Aasc",
                             "search": "?backPath=%2F",
                           },
-                          "push": [Function],
-                          "replace": [Function],
-                        }
-                      }
-                      items={
-                        Array [
-                          Object {
-                            "active": false,
-                            "key": "Pending",
-                            "name": "pending",
-                          },
-                          Object {
-                            "active": false,
-                            "key": "Completed",
-                            "name": "completed",
-                          },
-                        ]
-                      }
-                      location={
-                        Object {
+                        ],
+                        "go": [Function],
+                        "goBack": [Function],
+                        "goForward": [Function],
+                        "index": 0,
+                        "length": 1,
+                        "listen": [Function],
+                        "location": Object {
                           "hash": "",
                           "match": Object {
                             "params": Object {
@@ -1584,148 +1542,178 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                           },
                           "pathname": "/processes/1/10/title%3Aasc",
                           "search": "?backPath=%2F",
-                        }
+                        },
+                        "push": [Function],
+                        "replace": [Function],
                       }
-                      match={
+                    }
+                    items={
+                      Array [
                         Object {
-                          "isExact": false,
-                          "params": Object {},
-                          "path": "/",
-                          "url": "/",
-                        }
+                          "active": false,
+                          "key": "Pending",
+                          "name": "pending",
+                        },
+                        Object {
+                          "active": false,
+                          "key": "Completed",
+                          "name": "completed",
+                        },
+                      ]
+                    }
+                    location={
+                      Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
                       }
-                      multiple={true}
-                      name="process-status"
+                    }
+                    match={
+                      Object {
+                        "isExact": false,
+                        "params": Object {},
+                        "path": "/",
+                        "url": "/",
+                      }
+                    }
+                    multiple={true}
+                    name="process-status"
+                  >
+                    <li
+                      className="dropdown nav-item"
                     >
-                      <li
-                        className="dropdown nav-item"
+                      <button
+                        aria-expanded={false}
+                        aria-haspopup="true"
+                        className="dropdown-toggle nav-link"
+                        onClick={[Function]}
+                        type="button"
                       >
-                        <button
-                          aria-expanded={false}
-                          aria-haspopup="true"
-                          className="dropdown-toggle nav-link"
-                          onClick={[Function]}
-                          type="button"
+                        <span
+                          className="mr-2 navbar-text-truncate"
                         >
-                          <span
-                            className="mr-2 navbar-text-truncate"
-                          >
-                            process-status
-                          </span>
-                          <Icon
-                            iconName="caret-bottom"
-                          >
-                            <svg
-                              className="lexicon-icon lexicon-icon-caret-bottom"
-                              dangerouslySetInnerHTML={
-                                Object {
-                                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
-                                }
+                          process-status
+                        </span>
+                        <Icon
+                          iconName="caret-bottom"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-caret-bottom"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
                               }
-                              focusable="false"
-                              role="presentation"
-                            />
-                          </Icon>
-                        </button>
-                        <div
-                          className="dropdown-menu"
-                          role="menu"
-                        >
-                          <FilterSearch
-                            filteredItems={
-                              Array [
-                                Object {
-                                  "active": false,
-                                  "key": "Pending",
-                                  "name": "pending",
-                                },
-                                Object {
-                                  "active": false,
-                                  "key": "Completed",
-                                  "name": "completed",
-                                },
-                              ]
                             }
-                            onChange={[Function]}
-                            totalCount={2}
+                            focusable="false"
+                            role="presentation"
+                          />
+                        </Icon>
+                      </button>
+                      <div
+                        className="dropdown-menu"
+                        role="menu"
+                      >
+                        <FilterSearch
+                          filteredItems={
+                            Array [
+                              Object {
+                                "active": false,
+                                "key": "Pending",
+                                "name": "pending",
+                              },
+                              Object {
+                                "active": false,
+                                "key": "Completed",
+                                "name": "completed",
+                              },
+                            ]
+                          }
+                          onChange={[Function]}
+                          totalCount={2}
+                        >
+                          <ul
+                            className="list-unstyled"
                           >
-                            <ul
-                              className="list-unstyled"
+                            <FilterItem
+                              active={false}
+                              hideControl={false}
+                              itemKey="Pending"
+                              key="0"
+                              multiple={true}
+                              name="pending"
+                              onChange={[Function]}
                             >
-                              <FilterItem
-                                active={false}
-                                hideControl={false}
-                                itemKey="Pending"
-                                key="0"
-                                multiple={true}
-                                name="pending"
-                                onChange={[Function]}
+                              <li
+                                className="dropdown-item"
                               >
-                                <li
-                                  className="dropdown-item"
+                                <label
+                                  className="custom-control custom-checkbox"
                                 >
-                                  <label
-                                    className="custom-control custom-checkbox"
+                                  <input
+                                    checked={false}
+                                    className="custom-control-input"
+                                    data-key="Pending"
+                                    onChange={[Function]}
+                                    type="checkbox"
+                                  />
+                                  <span
+                                    className="custom-control-label"
                                   >
-                                    <input
-                                      checked={false}
-                                      className="custom-control-input"
-                                      data-key="Pending"
-                                      onChange={[Function]}
-                                      type="checkbox"
-                                    />
                                     <span
-                                      className="custom-control-label"
+                                      className="custom-control-label-text"
                                     >
-                                      <span
-                                        className="custom-control-label-text"
-                                      >
-                                        pending
-                                      </span>
+                                      pending
                                     </span>
-                                  </label>
-                                </li>
-                              </FilterItem>
-                              <FilterItem
-                                active={false}
-                                hideControl={false}
-                                itemKey="Completed"
-                                key="1"
-                                multiple={true}
-                                name="completed"
-                                onChange={[Function]}
+                                  </span>
+                                </label>
+                              </li>
+                            </FilterItem>
+                            <FilterItem
+                              active={false}
+                              hideControl={false}
+                              itemKey="Completed"
+                              key="1"
+                              multiple={true}
+                              name="completed"
+                              onChange={[Function]}
+                            >
+                              <li
+                                className="dropdown-item"
                               >
-                                <li
-                                  className="dropdown-item"
+                                <label
+                                  className="custom-control custom-checkbox"
                                 >
-                                  <label
-                                    className="custom-control custom-checkbox"
+                                  <input
+                                    checked={false}
+                                    className="custom-control-input"
+                                    data-key="Completed"
+                                    onChange={[Function]}
+                                    type="checkbox"
+                                  />
+                                  <span
+                                    className="custom-control-label"
                                   >
-                                    <input
-                                      checked={false}
-                                      className="custom-control-input"
-                                      data-key="Completed"
-                                      onChange={[Function]}
-                                      type="checkbox"
-                                    />
                                     <span
-                                      className="custom-control-label"
+                                      className="custom-control-label-text"
                                     >
-                                      <span
-                                        className="custom-control-label-text"
-                                      >
-                                        completed
-                                      </span>
+                                      completed
                                     </span>
-                                  </label>
-                                </li>
-                              </FilterItem>
-                            </ul>
-                          </FilterSearch>
-                        </div>
-                      </li>
-                    </Filter>
-                  </Route>
+                                  </span>
+                                </label>
+                              </li>
+                            </FilterItem>
+                          </ul>
+                        </FilterSearch>
+                      </div>
+                    </li>
+                  </Filter>
                 </withRouter(Filter)>
                 <withRouter(Filter)
                   filterKey="taskKeys"
@@ -1734,36 +1722,16 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                   multiple={true}
                   name="process-step"
                 >
-                  <Route>
-                    <Filter
-                      filterKey="taskKeys"
-                      history={
-                        Object {
-                          "action": "POP",
-                          "block": [Function],
-                          "canGo": [Function],
-                          "createHref": [Function],
-                          "entries": Array [
-                            Object {
-                              "hash": "",
-                              "match": Object {
-                                "params": Object {
-                                  "page": 1,
-                                  "search": undefined,
-                                  "sort": undefined,
-                                },
-                              },
-                              "pathname": "/processes/1/10/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                          ],
-                          "go": [Function],
-                          "goBack": [Function],
-                          "goForward": [Function],
-                          "index": 0,
-                          "length": 1,
-                          "listen": [Function],
-                          "location": Object {
+                  <Filter
+                    filterKey="taskKeys"
+                    history={
+                      Object {
+                        "action": "POP",
+                        "block": [Function],
+                        "canGo": [Function],
+                        "createHref": [Function],
+                        "entries": Array [
+                          Object {
                             "hash": "",
                             "match": Object {
                               "params": Object {
@@ -1775,13 +1743,14 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                             "pathname": "/processes/1/10/title%3Aasc",
                             "search": "?backPath=%2F",
                           },
-                          "push": [Function],
-                          "replace": [Function],
-                        }
-                      }
-                      items={Array []}
-                      location={
-                        Object {
+                        ],
+                        "go": [Function],
+                        "goBack": [Function],
+                        "goForward": [Function],
+                        "index": 0,
+                        "length": 1,
+                        "listen": [Function],
+                        "location": Object {
                           "hash": "",
                           "match": Object {
                             "params": Object {
@@ -1792,77 +1761,94 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                           },
                           "pathname": "/processes/1/10/title%3Aasc",
                           "search": "?backPath=%2F",
-                        }
+                        },
+                        "push": [Function],
+                        "replace": [Function],
                       }
-                      match={
-                        Object {
-                          "isExact": false,
-                          "params": Object {},
-                          "path": "/",
-                          "url": "/",
-                        }
+                    }
+                    items={Array []}
+                    location={
+                      Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
                       }
-                      multiple={true}
-                      name="process-step"
+                    }
+                    match={
+                      Object {
+                        "isExact": false,
+                        "params": Object {},
+                        "path": "/",
+                        "url": "/",
+                      }
+                    }
+                    multiple={true}
+                    name="process-step"
+                  >
+                    <li
+                      className="dropdown nav-item"
                     >
-                      <li
-                        className="dropdown nav-item"
+                      <button
+                        aria-expanded={false}
+                        aria-haspopup="true"
+                        className="dropdown-toggle nav-link"
+                        onClick={[Function]}
+                        type="button"
                       >
-                        <button
-                          aria-expanded={false}
-                          aria-haspopup="true"
-                          className="dropdown-toggle nav-link"
-                          onClick={[Function]}
-                          type="button"
+                        <span
+                          className="mr-2 navbar-text-truncate"
                         >
-                          <span
-                            className="mr-2 navbar-text-truncate"
-                          >
-                            process-step
-                          </span>
-                          <Icon
-                            iconName="caret-bottom"
-                          >
-                            <svg
-                              className="lexicon-icon lexicon-icon-caret-bottom"
-                              dangerouslySetInnerHTML={
-                                Object {
-                                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
-                                }
+                          process-step
+                        </span>
+                        <Icon
+                          iconName="caret-bottom"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-caret-bottom"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
                               }
-                              focusable="false"
-                              role="presentation"
-                            />
-                          </Icon>
-                        </button>
-                        <div
-                          className="dropdown-menu"
-                          role="menu"
+                            }
+                            focusable="false"
+                            role="presentation"
+                          />
+                        </Icon>
+                      </button>
+                      <div
+                        className="dropdown-menu"
+                        role="menu"
+                      >
+                        <FilterSearch
+                          filteredItems={Array []}
+                          onChange={[Function]}
+                          totalCount={0}
                         >
-                          <FilterSearch
-                            filteredItems={Array []}
-                            onChange={[Function]}
-                            totalCount={0}
+                          <ul
+                            className="list-unstyled"
                           >
-                            <ul
-                              className="list-unstyled"
-                            >
-                              <li>
-                                <span
-                                  className="disabled dropdown-item"
-                                >
-                                  no-results-were-found
-                                </span>
-                              </li>
-                            </ul>
-                            <ul
-                              className="list-unstyled"
-                            />
-                          </FilterSearch>
-                        </div>
-                      </li>
-                    </Filter>
-                  </Route>
+                            <li>
+                              <span
+                                className="disabled dropdown-item"
+                              >
+                                no-results-were-found
+                              </span>
+                            </li>
+                          </ul>
+                          <ul
+                            className="list-unstyled"
+                          />
+                        </FilterSearch>
+                      </div>
+                    </li>
+                  </Filter>
                 </withRouter(Filter)>
               </ul>
             </div>
@@ -1892,57 +1878,37 @@ exports[`Should component shows empty state when items is undefined 1`] = `
             }
             totalCount={0}
           >
-            <Route>
-              <FilterResultsBar
-                filters={
-                  Array [
-                    Object {
-                      "items": Array [],
-                      "key": "slaStatuses",
-                      "multiple": true,
-                      "name": "sla-status",
-                    },
-                    Object {
-                      "items": Array [],
-                      "key": "statuses",
-                      "multiple": true,
-                      "name": "process-status",
-                    },
-                    Object {
-                      "items": Array [],
-                      "key": "taskKeys",
-                      "multiple": true,
-                      "name": "process-step",
-                    },
-                  ]
-                }
-                history={
+            <FilterResultsBar
+              filters={
+                Array [
                   Object {
-                    "action": "POP",
-                    "block": [Function],
-                    "canGo": [Function],
-                    "createHref": [Function],
-                    "entries": Array [
-                      Object {
-                        "hash": "",
-                        "match": Object {
-                          "params": Object {
-                            "page": 1,
-                            "search": undefined,
-                            "sort": undefined,
-                          },
-                        },
-                        "pathname": "/processes/1/10/title%3Aasc",
-                        "search": "?backPath=%2F",
-                      },
-                    ],
-                    "go": [Function],
-                    "goBack": [Function],
-                    "goForward": [Function],
-                    "index": 0,
-                    "length": 1,
-                    "listen": [Function],
-                    "location": Object {
+                    "items": Array [],
+                    "key": "slaStatuses",
+                    "multiple": true,
+                    "name": "sla-status",
+                  },
+                  Object {
+                    "items": Array [],
+                    "key": "statuses",
+                    "multiple": true,
+                    "name": "process-status",
+                  },
+                  Object {
+                    "items": Array [],
+                    "key": "taskKeys",
+                    "multiple": true,
+                    "name": "process-step",
+                  },
+                ]
+              }
+              history={
+                Object {
+                  "action": "POP",
+                  "block": [Function],
+                  "canGo": [Function],
+                  "createHref": [Function],
+                  "entries": Array [
+                    Object {
                       "hash": "",
                       "match": Object {
                         "params": Object {
@@ -1954,12 +1920,14 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                       "pathname": "/processes/1/10/title%3Aasc",
                       "search": "?backPath=%2F",
                     },
-                    "push": [Function],
-                    "replace": [Function],
-                  }
-                }
-                location={
-                  Object {
+                  ],
+                  "go": [Function],
+                  "goBack": [Function],
+                  "goForward": [Function],
+                  "index": 0,
+                  "length": 1,
+                  "listen": [Function],
+                  "location": Object {
                     "hash": "",
                     "match": Object {
                       "params": Object {
@@ -1970,19 +1938,35 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                     },
                     "pathname": "/processes/1/10/title%3Aasc",
                     "search": "?backPath=%2F",
-                  }
+                  },
+                  "push": [Function],
+                  "replace": [Function],
                 }
-                match={
-                  Object {
-                    "isExact": false,
-                    "params": Object {},
-                    "path": "/",
-                    "url": "/",
-                  }
+              }
+              location={
+                Object {
+                  "hash": "",
+                  "match": Object {
+                    "params": Object {
+                      "page": 1,
+                      "search": undefined,
+                      "sort": undefined,
+                    },
+                  },
+                  "pathname": "/processes/1/10/title%3Aasc",
+                  "search": "?backPath=%2F",
                 }
-                totalCount={0}
-              />
-            </Route>
+              }
+              match={
+                Object {
+                  "isExact": false,
+                  "params": Object {},
+                  "path": "/",
+                  "url": "/",
+                }
+              }
+              totalCount={0}
+            />
           </withRouter(FilterResultsBar)>
         </InstanceListFilter>
         <div
@@ -2346,36 +2330,16 @@ exports[`Should render component 1`] = `
                   multiple={true}
                   name="sla-status"
                 >
-                  <Route>
-                    <Filter
-                      filterKey="slaStatuses"
-                      history={
-                        Object {
-                          "action": "POP",
-                          "block": [Function],
-                          "canGo": [Function],
-                          "createHref": [Function],
-                          "entries": Array [
-                            Object {
-                              "hash": "",
-                              "match": Object {
-                                "params": Object {
-                                  "page": 1,
-                                  "search": undefined,
-                                  "sort": undefined,
-                                },
-                              },
-                              "pathname": "/processes/1/10/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                          ],
-                          "go": [Function],
-                          "goBack": [Function],
-                          "goForward": [Function],
-                          "index": 0,
-                          "length": 1,
-                          "listen": [Function],
-                          "location": Object {
+                  <Filter
+                    filterKey="slaStatuses"
+                    history={
+                      Object {
+                        "action": "POP",
+                        "block": [Function],
+                        "canGo": [Function],
+                        "createHref": [Function],
+                        "entries": Array [
+                          Object {
                             "hash": "",
                             "match": Object {
                               "params": Object {
@@ -2387,31 +2351,14 @@ exports[`Should render component 1`] = `
                             "pathname": "/processes/1/10/title%3Aasc",
                             "search": "?backPath=%2F",
                           },
-                          "push": [Function],
-                          "replace": [Function],
-                        }
-                      }
-                      items={
-                        Array [
-                          Object {
-                            "active": false,
-                            "key": "Overdue",
-                            "name": "overdue",
-                          },
-                          Object {
-                            "active": false,
-                            "key": "OnTime",
-                            "name": "on-time",
-                          },
-                          Object {
-                            "active": false,
-                            "key": "Untracked",
-                            "name": "untracked",
-                          },
-                        ]
-                      }
-                      location={
-                        Object {
+                        ],
+                        "go": [Function],
+                        "goBack": [Function],
+                        "goForward": [Function],
+                        "index": 0,
+                        "length": 1,
+                        "listen": [Function],
+                        "location": Object {
                           "hash": "",
                           "match": Object {
                             "params": Object {
@@ -2422,187 +2369,222 @@ exports[`Should render component 1`] = `
                           },
                           "pathname": "/processes/1/10/title%3Aasc",
                           "search": "?backPath=%2F",
-                        }
+                        },
+                        "push": [Function],
+                        "replace": [Function],
                       }
-                      match={
+                    }
+                    items={
+                      Array [
                         Object {
-                          "isExact": false,
-                          "params": Object {},
-                          "path": "/",
-                          "url": "/",
-                        }
+                          "active": false,
+                          "key": "Overdue",
+                          "name": "overdue",
+                        },
+                        Object {
+                          "active": false,
+                          "key": "OnTime",
+                          "name": "on-time",
+                        },
+                        Object {
+                          "active": false,
+                          "key": "Untracked",
+                          "name": "untracked",
+                        },
+                      ]
+                    }
+                    location={
+                      Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
                       }
-                      multiple={true}
-                      name="sla-status"
+                    }
+                    match={
+                      Object {
+                        "isExact": false,
+                        "params": Object {},
+                        "path": "/",
+                        "url": "/",
+                      }
+                    }
+                    multiple={true}
+                    name="sla-status"
+                  >
+                    <li
+                      className="dropdown nav-item"
                     >
-                      <li
-                        className="dropdown nav-item"
+                      <button
+                        aria-expanded={false}
+                        aria-haspopup="true"
+                        className="dropdown-toggle nav-link"
+                        onClick={[Function]}
+                        type="button"
                       >
-                        <button
-                          aria-expanded={false}
-                          aria-haspopup="true"
-                          className="dropdown-toggle nav-link"
-                          onClick={[Function]}
-                          type="button"
+                        <span
+                          className="mr-2 navbar-text-truncate"
                         >
-                          <span
-                            className="mr-2 navbar-text-truncate"
-                          >
-                            sla-status
-                          </span>
-                          <Icon
-                            iconName="caret-bottom"
-                          >
-                            <svg
-                              className="lexicon-icon lexicon-icon-caret-bottom"
-                              dangerouslySetInnerHTML={
-                                Object {
-                                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
-                                }
+                          sla-status
+                        </span>
+                        <Icon
+                          iconName="caret-bottom"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-caret-bottom"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
                               }
-                              focusable="false"
-                              role="presentation"
-                            />
-                          </Icon>
-                        </button>
-                        <div
-                          className="dropdown-menu"
-                          role="menu"
-                        >
-                          <FilterSearch
-                            filteredItems={
-                              Array [
-                                Object {
-                                  "active": false,
-                                  "key": "Overdue",
-                                  "name": "overdue",
-                                },
-                                Object {
-                                  "active": false,
-                                  "key": "OnTime",
-                                  "name": "on-time",
-                                },
-                                Object {
-                                  "active": false,
-                                  "key": "Untracked",
-                                  "name": "untracked",
-                                },
-                              ]
                             }
-                            onChange={[Function]}
-                            totalCount={3}
+                            focusable="false"
+                            role="presentation"
+                          />
+                        </Icon>
+                      </button>
+                      <div
+                        className="dropdown-menu"
+                        role="menu"
+                      >
+                        <FilterSearch
+                          filteredItems={
+                            Array [
+                              Object {
+                                "active": false,
+                                "key": "Overdue",
+                                "name": "overdue",
+                              },
+                              Object {
+                                "active": false,
+                                "key": "OnTime",
+                                "name": "on-time",
+                              },
+                              Object {
+                                "active": false,
+                                "key": "Untracked",
+                                "name": "untracked",
+                              },
+                            ]
+                          }
+                          onChange={[Function]}
+                          totalCount={3}
+                        >
+                          <ul
+                            className="list-unstyled"
                           >
-                            <ul
-                              className="list-unstyled"
+                            <FilterItem
+                              active={false}
+                              hideControl={false}
+                              itemKey="Overdue"
+                              key="0"
+                              multiple={true}
+                              name="overdue"
+                              onChange={[Function]}
                             >
-                              <FilterItem
-                                active={false}
-                                hideControl={false}
-                                itemKey="Overdue"
-                                key="0"
-                                multiple={true}
-                                name="overdue"
-                                onChange={[Function]}
+                              <li
+                                className="dropdown-item"
                               >
-                                <li
-                                  className="dropdown-item"
+                                <label
+                                  className="custom-control custom-checkbox"
                                 >
-                                  <label
-                                    className="custom-control custom-checkbox"
+                                  <input
+                                    checked={false}
+                                    className="custom-control-input"
+                                    data-key="Overdue"
+                                    onChange={[Function]}
+                                    type="checkbox"
+                                  />
+                                  <span
+                                    className="custom-control-label"
                                   >
-                                    <input
-                                      checked={false}
-                                      className="custom-control-input"
-                                      data-key="Overdue"
-                                      onChange={[Function]}
-                                      type="checkbox"
-                                    />
                                     <span
-                                      className="custom-control-label"
+                                      className="custom-control-label-text"
                                     >
-                                      <span
-                                        className="custom-control-label-text"
-                                      >
-                                        overdue
-                                      </span>
+                                      overdue
                                     </span>
-                                  </label>
-                                </li>
-                              </FilterItem>
-                              <FilterItem
-                                active={false}
-                                hideControl={false}
-                                itemKey="OnTime"
-                                key="1"
-                                multiple={true}
-                                name="on-time"
-                                onChange={[Function]}
+                                  </span>
+                                </label>
+                              </li>
+                            </FilterItem>
+                            <FilterItem
+                              active={false}
+                              hideControl={false}
+                              itemKey="OnTime"
+                              key="1"
+                              multiple={true}
+                              name="on-time"
+                              onChange={[Function]}
+                            >
+                              <li
+                                className="dropdown-item"
                               >
-                                <li
-                                  className="dropdown-item"
+                                <label
+                                  className="custom-control custom-checkbox"
                                 >
-                                  <label
-                                    className="custom-control custom-checkbox"
+                                  <input
+                                    checked={false}
+                                    className="custom-control-input"
+                                    data-key="OnTime"
+                                    onChange={[Function]}
+                                    type="checkbox"
+                                  />
+                                  <span
+                                    className="custom-control-label"
                                   >
-                                    <input
-                                      checked={false}
-                                      className="custom-control-input"
-                                      data-key="OnTime"
-                                      onChange={[Function]}
-                                      type="checkbox"
-                                    />
                                     <span
-                                      className="custom-control-label"
+                                      className="custom-control-label-text"
                                     >
-                                      <span
-                                        className="custom-control-label-text"
-                                      >
-                                        on-time
-                                      </span>
+                                      on-time
                                     </span>
-                                  </label>
-                                </li>
-                              </FilterItem>
-                              <FilterItem
-                                active={false}
-                                hideControl={false}
-                                itemKey="Untracked"
-                                key="2"
-                                multiple={true}
-                                name="untracked"
-                                onChange={[Function]}
+                                  </span>
+                                </label>
+                              </li>
+                            </FilterItem>
+                            <FilterItem
+                              active={false}
+                              hideControl={false}
+                              itemKey="Untracked"
+                              key="2"
+                              multiple={true}
+                              name="untracked"
+                              onChange={[Function]}
+                            >
+                              <li
+                                className="dropdown-item"
                               >
-                                <li
-                                  className="dropdown-item"
+                                <label
+                                  className="custom-control custom-checkbox"
                                 >
-                                  <label
-                                    className="custom-control custom-checkbox"
+                                  <input
+                                    checked={false}
+                                    className="custom-control-input"
+                                    data-key="Untracked"
+                                    onChange={[Function]}
+                                    type="checkbox"
+                                  />
+                                  <span
+                                    className="custom-control-label"
                                   >
-                                    <input
-                                      checked={false}
-                                      className="custom-control-input"
-                                      data-key="Untracked"
-                                      onChange={[Function]}
-                                      type="checkbox"
-                                    />
                                     <span
-                                      className="custom-control-label"
+                                      className="custom-control-label-text"
                                     >
-                                      <span
-                                        className="custom-control-label-text"
-                                      >
-                                        untracked
-                                      </span>
+                                      untracked
                                     </span>
-                                  </label>
-                                </li>
-                              </FilterItem>
-                            </ul>
-                          </FilterSearch>
-                        </div>
-                      </li>
-                    </Filter>
-                  </Route>
+                                  </span>
+                                </label>
+                              </li>
+                            </FilterItem>
+                          </ul>
+                        </FilterSearch>
+                      </div>
+                    </li>
+                  </Filter>
                 </withRouter(Filter)>
                 <withRouter(Filter)
                   filterKey="statuses"
@@ -2624,36 +2606,16 @@ exports[`Should render component 1`] = `
                   multiple={true}
                   name="process-status"
                 >
-                  <Route>
-                    <Filter
-                      filterKey="statuses"
-                      history={
-                        Object {
-                          "action": "POP",
-                          "block": [Function],
-                          "canGo": [Function],
-                          "createHref": [Function],
-                          "entries": Array [
-                            Object {
-                              "hash": "",
-                              "match": Object {
-                                "params": Object {
-                                  "page": 1,
-                                  "search": undefined,
-                                  "sort": undefined,
-                                },
-                              },
-                              "pathname": "/processes/1/10/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                          ],
-                          "go": [Function],
-                          "goBack": [Function],
-                          "goForward": [Function],
-                          "index": 0,
-                          "length": 1,
-                          "listen": [Function],
-                          "location": Object {
+                  <Filter
+                    filterKey="statuses"
+                    history={
+                      Object {
+                        "action": "POP",
+                        "block": [Function],
+                        "canGo": [Function],
+                        "createHref": [Function],
+                        "entries": Array [
+                          Object {
                             "hash": "",
                             "match": Object {
                               "params": Object {
@@ -2665,26 +2627,14 @@ exports[`Should render component 1`] = `
                             "pathname": "/processes/1/10/title%3Aasc",
                             "search": "?backPath=%2F",
                           },
-                          "push": [Function],
-                          "replace": [Function],
-                        }
-                      }
-                      items={
-                        Array [
-                          Object {
-                            "active": false,
-                            "key": "Pending",
-                            "name": "pending",
-                          },
-                          Object {
-                            "active": false,
-                            "key": "Completed",
-                            "name": "completed",
-                          },
-                        ]
-                      }
-                      location={
-                        Object {
+                        ],
+                        "go": [Function],
+                        "goBack": [Function],
+                        "goForward": [Function],
+                        "index": 0,
+                        "length": 1,
+                        "listen": [Function],
+                        "location": Object {
                           "hash": "",
                           "match": Object {
                             "params": Object {
@@ -2695,148 +2645,178 @@ exports[`Should render component 1`] = `
                           },
                           "pathname": "/processes/1/10/title%3Aasc",
                           "search": "?backPath=%2F",
-                        }
+                        },
+                        "push": [Function],
+                        "replace": [Function],
                       }
-                      match={
+                    }
+                    items={
+                      Array [
                         Object {
-                          "isExact": false,
-                          "params": Object {},
-                          "path": "/",
-                          "url": "/",
-                        }
+                          "active": false,
+                          "key": "Pending",
+                          "name": "pending",
+                        },
+                        Object {
+                          "active": false,
+                          "key": "Completed",
+                          "name": "completed",
+                        },
+                      ]
+                    }
+                    location={
+                      Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
                       }
-                      multiple={true}
-                      name="process-status"
+                    }
+                    match={
+                      Object {
+                        "isExact": false,
+                        "params": Object {},
+                        "path": "/",
+                        "url": "/",
+                      }
+                    }
+                    multiple={true}
+                    name="process-status"
+                  >
+                    <li
+                      className="dropdown nav-item"
                     >
-                      <li
-                        className="dropdown nav-item"
+                      <button
+                        aria-expanded={false}
+                        aria-haspopup="true"
+                        className="dropdown-toggle nav-link"
+                        onClick={[Function]}
+                        type="button"
                       >
-                        <button
-                          aria-expanded={false}
-                          aria-haspopup="true"
-                          className="dropdown-toggle nav-link"
-                          onClick={[Function]}
-                          type="button"
+                        <span
+                          className="mr-2 navbar-text-truncate"
                         >
-                          <span
-                            className="mr-2 navbar-text-truncate"
-                          >
-                            process-status
-                          </span>
-                          <Icon
-                            iconName="caret-bottom"
-                          >
-                            <svg
-                              className="lexicon-icon lexicon-icon-caret-bottom"
-                              dangerouslySetInnerHTML={
-                                Object {
-                                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
-                                }
+                          process-status
+                        </span>
+                        <Icon
+                          iconName="caret-bottom"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-caret-bottom"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
                               }
-                              focusable="false"
-                              role="presentation"
-                            />
-                          </Icon>
-                        </button>
-                        <div
-                          className="dropdown-menu"
-                          role="menu"
-                        >
-                          <FilterSearch
-                            filteredItems={
-                              Array [
-                                Object {
-                                  "active": false,
-                                  "key": "Pending",
-                                  "name": "pending",
-                                },
-                                Object {
-                                  "active": false,
-                                  "key": "Completed",
-                                  "name": "completed",
-                                },
-                              ]
                             }
-                            onChange={[Function]}
-                            totalCount={2}
+                            focusable="false"
+                            role="presentation"
+                          />
+                        </Icon>
+                      </button>
+                      <div
+                        className="dropdown-menu"
+                        role="menu"
+                      >
+                        <FilterSearch
+                          filteredItems={
+                            Array [
+                              Object {
+                                "active": false,
+                                "key": "Pending",
+                                "name": "pending",
+                              },
+                              Object {
+                                "active": false,
+                                "key": "Completed",
+                                "name": "completed",
+                              },
+                            ]
+                          }
+                          onChange={[Function]}
+                          totalCount={2}
+                        >
+                          <ul
+                            className="list-unstyled"
                           >
-                            <ul
-                              className="list-unstyled"
+                            <FilterItem
+                              active={false}
+                              hideControl={false}
+                              itemKey="Pending"
+                              key="0"
+                              multiple={true}
+                              name="pending"
+                              onChange={[Function]}
                             >
-                              <FilterItem
-                                active={false}
-                                hideControl={false}
-                                itemKey="Pending"
-                                key="0"
-                                multiple={true}
-                                name="pending"
-                                onChange={[Function]}
+                              <li
+                                className="dropdown-item"
                               >
-                                <li
-                                  className="dropdown-item"
+                                <label
+                                  className="custom-control custom-checkbox"
                                 >
-                                  <label
-                                    className="custom-control custom-checkbox"
+                                  <input
+                                    checked={false}
+                                    className="custom-control-input"
+                                    data-key="Pending"
+                                    onChange={[Function]}
+                                    type="checkbox"
+                                  />
+                                  <span
+                                    className="custom-control-label"
                                   >
-                                    <input
-                                      checked={false}
-                                      className="custom-control-input"
-                                      data-key="Pending"
-                                      onChange={[Function]}
-                                      type="checkbox"
-                                    />
                                     <span
-                                      className="custom-control-label"
+                                      className="custom-control-label-text"
                                     >
-                                      <span
-                                        className="custom-control-label-text"
-                                      >
-                                        pending
-                                      </span>
+                                      pending
                                     </span>
-                                  </label>
-                                </li>
-                              </FilterItem>
-                              <FilterItem
-                                active={false}
-                                hideControl={false}
-                                itemKey="Completed"
-                                key="1"
-                                multiple={true}
-                                name="completed"
-                                onChange={[Function]}
+                                  </span>
+                                </label>
+                              </li>
+                            </FilterItem>
+                            <FilterItem
+                              active={false}
+                              hideControl={false}
+                              itemKey="Completed"
+                              key="1"
+                              multiple={true}
+                              name="completed"
+                              onChange={[Function]}
+                            >
+                              <li
+                                className="dropdown-item"
                               >
-                                <li
-                                  className="dropdown-item"
+                                <label
+                                  className="custom-control custom-checkbox"
                                 >
-                                  <label
-                                    className="custom-control custom-checkbox"
+                                  <input
+                                    checked={false}
+                                    className="custom-control-input"
+                                    data-key="Completed"
+                                    onChange={[Function]}
+                                    type="checkbox"
+                                  />
+                                  <span
+                                    className="custom-control-label"
                                   >
-                                    <input
-                                      checked={false}
-                                      className="custom-control-input"
-                                      data-key="Completed"
-                                      onChange={[Function]}
-                                      type="checkbox"
-                                    />
                                     <span
-                                      className="custom-control-label"
+                                      className="custom-control-label-text"
                                     >
-                                      <span
-                                        className="custom-control-label-text"
-                                      >
-                                        completed
-                                      </span>
+                                      completed
                                     </span>
-                                  </label>
-                                </li>
-                              </FilterItem>
-                            </ul>
-                          </FilterSearch>
-                        </div>
-                      </li>
-                    </Filter>
-                  </Route>
+                                  </span>
+                                </label>
+                              </li>
+                            </FilterItem>
+                          </ul>
+                        </FilterSearch>
+                      </div>
+                    </li>
+                  </Filter>
                 </withRouter(Filter)>
                 <withRouter(Filter)
                   filterKey="taskKeys"
@@ -2845,36 +2825,16 @@ exports[`Should render component 1`] = `
                   multiple={true}
                   name="process-step"
                 >
-                  <Route>
-                    <Filter
-                      filterKey="taskKeys"
-                      history={
-                        Object {
-                          "action": "POP",
-                          "block": [Function],
-                          "canGo": [Function],
-                          "createHref": [Function],
-                          "entries": Array [
-                            Object {
-                              "hash": "",
-                              "match": Object {
-                                "params": Object {
-                                  "page": 1,
-                                  "search": undefined,
-                                  "sort": undefined,
-                                },
-                              },
-                              "pathname": "/processes/1/10/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                          ],
-                          "go": [Function],
-                          "goBack": [Function],
-                          "goForward": [Function],
-                          "index": 0,
-                          "length": 1,
-                          "listen": [Function],
-                          "location": Object {
+                  <Filter
+                    filterKey="taskKeys"
+                    history={
+                      Object {
+                        "action": "POP",
+                        "block": [Function],
+                        "canGo": [Function],
+                        "createHref": [Function],
+                        "entries": Array [
+                          Object {
                             "hash": "",
                             "match": Object {
                               "params": Object {
@@ -2886,13 +2846,14 @@ exports[`Should render component 1`] = `
                             "pathname": "/processes/1/10/title%3Aasc",
                             "search": "?backPath=%2F",
                           },
-                          "push": [Function],
-                          "replace": [Function],
-                        }
-                      }
-                      items={Array []}
-                      location={
-                        Object {
+                        ],
+                        "go": [Function],
+                        "goBack": [Function],
+                        "goForward": [Function],
+                        "index": 0,
+                        "length": 1,
+                        "listen": [Function],
+                        "location": Object {
                           "hash": "",
                           "match": Object {
                             "params": Object {
@@ -2903,77 +2864,94 @@ exports[`Should render component 1`] = `
                           },
                           "pathname": "/processes/1/10/title%3Aasc",
                           "search": "?backPath=%2F",
-                        }
+                        },
+                        "push": [Function],
+                        "replace": [Function],
                       }
-                      match={
-                        Object {
-                          "isExact": false,
-                          "params": Object {},
-                          "path": "/",
-                          "url": "/",
-                        }
+                    }
+                    items={Array []}
+                    location={
+                      Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
                       }
-                      multiple={true}
-                      name="process-step"
+                    }
+                    match={
+                      Object {
+                        "isExact": false,
+                        "params": Object {},
+                        "path": "/",
+                        "url": "/",
+                      }
+                    }
+                    multiple={true}
+                    name="process-step"
+                  >
+                    <li
+                      className="dropdown nav-item"
                     >
-                      <li
-                        className="dropdown nav-item"
+                      <button
+                        aria-expanded={false}
+                        aria-haspopup="true"
+                        className="dropdown-toggle nav-link"
+                        onClick={[Function]}
+                        type="button"
                       >
-                        <button
-                          aria-expanded={false}
-                          aria-haspopup="true"
-                          className="dropdown-toggle nav-link"
-                          onClick={[Function]}
-                          type="button"
+                        <span
+                          className="mr-2 navbar-text-truncate"
                         >
-                          <span
-                            className="mr-2 navbar-text-truncate"
-                          >
-                            process-step
-                          </span>
-                          <Icon
-                            iconName="caret-bottom"
-                          >
-                            <svg
-                              className="lexicon-icon lexicon-icon-caret-bottom"
-                              dangerouslySetInnerHTML={
-                                Object {
-                                  "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
-                                }
+                          process-step
+                        </span>
+                        <Icon
+                          iconName="caret-bottom"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-caret-bottom"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
                               }
-                              focusable="false"
-                              role="presentation"
-                            />
-                          </Icon>
-                        </button>
-                        <div
-                          className="dropdown-menu"
-                          role="menu"
+                            }
+                            focusable="false"
+                            role="presentation"
+                          />
+                        </Icon>
+                      </button>
+                      <div
+                        className="dropdown-menu"
+                        role="menu"
+                      >
+                        <FilterSearch
+                          filteredItems={Array []}
+                          onChange={[Function]}
+                          totalCount={0}
                         >
-                          <FilterSearch
-                            filteredItems={Array []}
-                            onChange={[Function]}
-                            totalCount={0}
+                          <ul
+                            className="list-unstyled"
                           >
-                            <ul
-                              className="list-unstyled"
-                            >
-                              <li>
-                                <span
-                                  className="disabled dropdown-item"
-                                >
-                                  no-results-were-found
-                                </span>
-                              </li>
-                            </ul>
-                            <ul
-                              className="list-unstyled"
-                            />
-                          </FilterSearch>
-                        </div>
-                      </li>
-                    </Filter>
-                  </Route>
+                            <li>
+                              <span
+                                className="disabled dropdown-item"
+                              >
+                                no-results-were-found
+                              </span>
+                            </li>
+                          </ul>
+                          <ul
+                            className="list-unstyled"
+                          />
+                        </FilterSearch>
+                      </div>
+                    </li>
+                  </Filter>
                 </withRouter(Filter)>
               </ul>
             </div>
@@ -3003,57 +2981,37 @@ exports[`Should render component 1`] = `
             }
             totalCount={0}
           >
-            <Route>
-              <FilterResultsBar
-                filters={
-                  Array [
-                    Object {
-                      "items": Array [],
-                      "key": "slaStatuses",
-                      "multiple": true,
-                      "name": "sla-status",
-                    },
-                    Object {
-                      "items": Array [],
-                      "key": "statuses",
-                      "multiple": true,
-                      "name": "process-status",
-                    },
-                    Object {
-                      "items": Array [],
-                      "key": "taskKeys",
-                      "multiple": true,
-                      "name": "process-step",
-                    },
-                  ]
-                }
-                history={
+            <FilterResultsBar
+              filters={
+                Array [
                   Object {
-                    "action": "POP",
-                    "block": [Function],
-                    "canGo": [Function],
-                    "createHref": [Function],
-                    "entries": Array [
-                      Object {
-                        "hash": "",
-                        "match": Object {
-                          "params": Object {
-                            "page": 1,
-                            "search": undefined,
-                            "sort": undefined,
-                          },
-                        },
-                        "pathname": "/processes/1/10/title%3Aasc",
-                        "search": "?backPath=%2F",
-                      },
-                    ],
-                    "go": [Function],
-                    "goBack": [Function],
-                    "goForward": [Function],
-                    "index": 0,
-                    "length": 1,
-                    "listen": [Function],
-                    "location": Object {
+                    "items": Array [],
+                    "key": "slaStatuses",
+                    "multiple": true,
+                    "name": "sla-status",
+                  },
+                  Object {
+                    "items": Array [],
+                    "key": "statuses",
+                    "multiple": true,
+                    "name": "process-status",
+                  },
+                  Object {
+                    "items": Array [],
+                    "key": "taskKeys",
+                    "multiple": true,
+                    "name": "process-step",
+                  },
+                ]
+              }
+              history={
+                Object {
+                  "action": "POP",
+                  "block": [Function],
+                  "canGo": [Function],
+                  "createHref": [Function],
+                  "entries": Array [
+                    Object {
                       "hash": "",
                       "match": Object {
                         "params": Object {
@@ -3065,12 +3023,14 @@ exports[`Should render component 1`] = `
                       "pathname": "/processes/1/10/title%3Aasc",
                       "search": "?backPath=%2F",
                     },
-                    "push": [Function],
-                    "replace": [Function],
-                  }
-                }
-                location={
-                  Object {
+                  ],
+                  "go": [Function],
+                  "goBack": [Function],
+                  "goForward": [Function],
+                  "index": 0,
+                  "length": 1,
+                  "listen": [Function],
+                  "location": Object {
                     "hash": "",
                     "match": Object {
                       "params": Object {
@@ -3081,19 +3041,35 @@ exports[`Should render component 1`] = `
                     },
                     "pathname": "/processes/1/10/title%3Aasc",
                     "search": "?backPath=%2F",
-                  }
+                  },
+                  "push": [Function],
+                  "replace": [Function],
                 }
-                match={
-                  Object {
-                    "isExact": false,
-                    "params": Object {},
-                    "path": "/",
-                    "url": "/",
-                  }
+              }
+              location={
+                Object {
+                  "hash": "",
+                  "match": Object {
+                    "params": Object {
+                      "page": 1,
+                      "search": undefined,
+                      "sort": undefined,
+                    },
+                  },
+                  "pathname": "/processes/1/10/title%3Aasc",
+                  "search": "?backPath=%2F",
                 }
-                totalCount={0}
-              />
-            </Route>
+              }
+              match={
+                Object {
+                  "isExact": false,
+                  "params": Object {},
+                  "path": "/",
+                  "url": "/",
+                }
+              }
+              totalCount={0}
+            />
           </withRouter(FilterResultsBar)>
         </InstanceListFilter>
         <div

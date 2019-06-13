@@ -103,9 +103,78 @@ exports[`Should remove a item 1`] = `
                         className="btn btn-primary nav-btn nav-btn-monospaced"
                         to="/sla/new/undefined"
                       >
-                        <Route>
-                          <Component
+                        <Component
+                          className="btn btn-primary nav-btn nav-btn-monospaced"
+                          history={
+                            Object {
+                              "action": "POP",
+                              "block": [Function],
+                              "canGo": [Function],
+                              "createHref": [Function],
+                              "entries": Array [
+                                Object {
+                                  "hash": "",
+                                  "match": Object {
+                                    "params": Object {
+                                      "page": 1,
+                                      "search": undefined,
+                                      "sort": undefined,
+                                    },
+                                  },
+                                  "pathname": "/processes/1/10/title%3Aasc",
+                                  "search": "?backPath=%2F",
+                                },
+                              ],
+                              "go": [Function],
+                              "goBack": [Function],
+                              "goForward": [Function],
+                              "index": 0,
+                              "length": 1,
+                              "listen": [Function],
+                              "location": Object {
+                                "hash": "",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
+                                "search": "?backPath=%2F",
+                              },
+                              "push": [Function],
+                              "replace": [Function],
+                            }
+                          }
+                          location={
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            }
+                          }
+                          match={
+                            Object {
+                              "isExact": false,
+                              "params": Object {},
+                              "path": "/",
+                              "url": "/",
+                            }
+                          }
+                          to="/sla/new/undefined"
+                        >
+                          <ChildLinkWrapper
+                            backPath="/"
                             className="btn btn-primary nav-btn nav-btn-monospaced"
+                            currentPath="/processes/1/10/title%3Aasc?backPath=%2F"
                             history={
                               Object {
                                 "action": "POP",
@@ -148,112 +217,40 @@ exports[`Should remove a item 1`] = `
                                 "replace": [Function],
                               }
                             }
-                            location={
-                              Object {
-                                "hash": "",
-                                "match": Object {
-                                  "params": Object {
-                                    "page": 1,
-                                    "search": undefined,
-                                    "sort": undefined,
-                                  },
-                                },
-                                "pathname": "/processes/1/10/title%3Aasc",
-                                "search": "?backPath=%2F",
-                              }
-                            }
-                            match={
-                              Object {
-                                "isExact": false,
-                                "params": Object {},
-                                "path": "/",
-                                "url": "/",
-                              }
-                            }
                             to="/sla/new/undefined"
                           >
-                            <ChildLinkWrapper
-                              backPath="/"
+                            <Link
                               className="btn btn-primary nav-btn nav-btn-monospaced"
-                              currentPath="/processes/1/10/title%3Aasc?backPath=%2F"
-                              history={
+                              to={
                                 Object {
-                                  "action": "POP",
-                                  "block": [Function],
-                                  "canGo": [Function],
-                                  "createHref": [Function],
-                                  "entries": Array [
-                                    Object {
-                                      "hash": "",
-                                      "match": Object {
-                                        "params": Object {
-                                          "page": 1,
-                                          "search": undefined,
-                                          "sort": undefined,
-                                        },
-                                      },
-                                      "pathname": "/processes/1/10/title%3Aasc",
-                                      "search": "?backPath=%2F",
-                                    },
-                                  ],
-                                  "go": [Function],
-                                  "goBack": [Function],
-                                  "goForward": [Function],
-                                  "index": 0,
-                                  "length": 1,
-                                  "listen": [Function],
-                                  "location": Object {
-                                    "hash": "",
-                                    "match": Object {
-                                      "params": Object {
-                                        "page": 1,
-                                        "search": undefined,
-                                        "sort": undefined,
-                                      },
-                                    },
-                                    "pathname": "/processes/1/10/title%3Aasc",
-                                    "search": "?backPath=%2F",
-                                  },
-                                  "push": [Function],
-                                  "replace": [Function],
+                                  "pathname": "/sla/new/undefined",
+                                  "search": "?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F",
                                 }
                               }
-                              to="/sla/new/undefined"
                             >
-                              <Link
+                              <a
                                 className="btn btn-primary nav-btn nav-btn-monospaced"
-                                replace={false}
-                                to={
-                                  Object {
-                                    "pathname": "/sla/new/undefined",
-                                    "search": "?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F",
-                                  }
-                                }
+                                href="/sla/new/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                                onClick={[Function]}
                               >
-                                <a
-                                  className="btn btn-primary nav-btn nav-btn-monospaced"
-                                  href="/sla/new/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                                  onClick={[Function]}
+                                <Icon
+                                  iconName="plus"
                                 >
-                                  <Icon
-                                    iconName="plus"
-                                  >
-                                    <svg
-                                      className="lexicon-icon lexicon-icon-plus"
-                                      dangerouslySetInnerHTML={
-                                        Object {
-                                          "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
-                                        }
+                                  <svg
+                                    className="lexicon-icon lexicon-icon-plus"
+                                    dangerouslySetInnerHTML={
+                                      Object {
+                                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
                                       }
-                                      focusable="false"
-                                      role="presentation"
-                                    />
-                                  </Icon>
-                                </a>
-                              </Link>
-                            </ChildLinkWrapper>
-                          </Component>
-                        </Route>
+                                    }
+                                    focusable="false"
+                                    role="presentation"
+                                  />
+                                </Icon>
+                              </a>
+                            </Link>
+                          </ChildLinkWrapper>
+                        </Component>
                       </withRouter()>
                     </span>
                   </span>
@@ -516,9 +513,78 @@ exports[`Should render toast with SLA saved message 1`] = `
                         className="btn btn-primary nav-btn nav-btn-monospaced"
                         to="/sla/new/undefined"
                       >
-                        <Route>
-                          <Component
+                        <Component
+                          className="btn btn-primary nav-btn nav-btn-monospaced"
+                          history={
+                            Object {
+                              "action": "POP",
+                              "block": [Function],
+                              "canGo": [Function],
+                              "createHref": [Function],
+                              "entries": Array [
+                                Object {
+                                  "hash": "",
+                                  "match": Object {
+                                    "params": Object {
+                                      "page": 1,
+                                      "search": undefined,
+                                      "sort": undefined,
+                                    },
+                                  },
+                                  "pathname": "/processes/1/10/title%3Aasc",
+                                  "search": "?backPath=%2F",
+                                },
+                              ],
+                              "go": [Function],
+                              "goBack": [Function],
+                              "goForward": [Function],
+                              "index": 0,
+                              "length": 1,
+                              "listen": [Function],
+                              "location": Object {
+                                "hash": "",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
+                                "search": "?backPath=%2F",
+                              },
+                              "push": [Function],
+                              "replace": [Function],
+                            }
+                          }
+                          location={
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            }
+                          }
+                          match={
+                            Object {
+                              "isExact": false,
+                              "params": Object {},
+                              "path": "/",
+                              "url": "/",
+                            }
+                          }
+                          to="/sla/new/undefined"
+                        >
+                          <ChildLinkWrapper
+                            backPath="/"
                             className="btn btn-primary nav-btn nav-btn-monospaced"
+                            currentPath="/processes/1/10/title%3Aasc?backPath=%2F"
                             history={
                               Object {
                                 "action": "POP",
@@ -561,112 +627,40 @@ exports[`Should render toast with SLA saved message 1`] = `
                                 "replace": [Function],
                               }
                             }
-                            location={
-                              Object {
-                                "hash": "",
-                                "match": Object {
-                                  "params": Object {
-                                    "page": 1,
-                                    "search": undefined,
-                                    "sort": undefined,
-                                  },
-                                },
-                                "pathname": "/processes/1/10/title%3Aasc",
-                                "search": "?backPath=%2F",
-                              }
-                            }
-                            match={
-                              Object {
-                                "isExact": false,
-                                "params": Object {},
-                                "path": "/",
-                                "url": "/",
-                              }
-                            }
                             to="/sla/new/undefined"
                           >
-                            <ChildLinkWrapper
-                              backPath="/"
+                            <Link
                               className="btn btn-primary nav-btn nav-btn-monospaced"
-                              currentPath="/processes/1/10/title%3Aasc?backPath=%2F"
-                              history={
+                              to={
                                 Object {
-                                  "action": "POP",
-                                  "block": [Function],
-                                  "canGo": [Function],
-                                  "createHref": [Function],
-                                  "entries": Array [
-                                    Object {
-                                      "hash": "",
-                                      "match": Object {
-                                        "params": Object {
-                                          "page": 1,
-                                          "search": undefined,
-                                          "sort": undefined,
-                                        },
-                                      },
-                                      "pathname": "/processes/1/10/title%3Aasc",
-                                      "search": "?backPath=%2F",
-                                    },
-                                  ],
-                                  "go": [Function],
-                                  "goBack": [Function],
-                                  "goForward": [Function],
-                                  "index": 0,
-                                  "length": 1,
-                                  "listen": [Function],
-                                  "location": Object {
-                                    "hash": "",
-                                    "match": Object {
-                                      "params": Object {
-                                        "page": 1,
-                                        "search": undefined,
-                                        "sort": undefined,
-                                      },
-                                    },
-                                    "pathname": "/processes/1/10/title%3Aasc",
-                                    "search": "?backPath=%2F",
-                                  },
-                                  "push": [Function],
-                                  "replace": [Function],
+                                  "pathname": "/sla/new/undefined",
+                                  "search": "?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F",
                                 }
                               }
-                              to="/sla/new/undefined"
                             >
-                              <Link
+                              <a
                                 className="btn btn-primary nav-btn nav-btn-monospaced"
-                                replace={false}
-                                to={
-                                  Object {
-                                    "pathname": "/sla/new/undefined",
-                                    "search": "?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F",
-                                  }
-                                }
+                                href="/sla/new/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                                onClick={[Function]}
                               >
-                                <a
-                                  className="btn btn-primary nav-btn nav-btn-monospaced"
-                                  href="/sla/new/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                                  onClick={[Function]}
+                                <Icon
+                                  iconName="plus"
                                 >
-                                  <Icon
-                                    iconName="plus"
-                                  >
-                                    <svg
-                                      className="lexicon-icon lexicon-icon-plus"
-                                      dangerouslySetInnerHTML={
-                                        Object {
-                                          "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
-                                        }
+                                  <svg
+                                    className="lexicon-icon lexicon-icon-plus"
+                                    dangerouslySetInnerHTML={
+                                      Object {
+                                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
                                       }
-                                      focusable="false"
-                                      role="presentation"
-                                    />
-                                  </Icon>
-                                </a>
-                              </Link>
-                            </ChildLinkWrapper>
-                          </Component>
-                        </Route>
+                                    }
+                                    focusable="false"
+                                    role="presentation"
+                                  />
+                                </Icon>
+                              </a>
+                            </Link>
+                          </ChildLinkWrapper>
+                        </Component>
                       </withRouter()>
                     </span>
                   </span>
@@ -807,9 +801,78 @@ exports[`Should render toast with SLA updated message 1`] = `
                         className="btn btn-primary nav-btn nav-btn-monospaced"
                         to="/sla/new/undefined"
                       >
-                        <Route>
-                          <Component
+                        <Component
+                          className="btn btn-primary nav-btn nav-btn-monospaced"
+                          history={
+                            Object {
+                              "action": "POP",
+                              "block": [Function],
+                              "canGo": [Function],
+                              "createHref": [Function],
+                              "entries": Array [
+                                Object {
+                                  "hash": "",
+                                  "match": Object {
+                                    "params": Object {
+                                      "page": 1,
+                                      "search": undefined,
+                                      "sort": undefined,
+                                    },
+                                  },
+                                  "pathname": "/processes/1/10/title%3Aasc",
+                                  "search": "?backPath=%2F",
+                                },
+                              ],
+                              "go": [Function],
+                              "goBack": [Function],
+                              "goForward": [Function],
+                              "index": 0,
+                              "length": 1,
+                              "listen": [Function],
+                              "location": Object {
+                                "hash": "",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
+                                "search": "?backPath=%2F",
+                              },
+                              "push": [Function],
+                              "replace": [Function],
+                            }
+                          }
+                          location={
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            }
+                          }
+                          match={
+                            Object {
+                              "isExact": false,
+                              "params": Object {},
+                              "path": "/",
+                              "url": "/",
+                            }
+                          }
+                          to="/sla/new/undefined"
+                        >
+                          <ChildLinkWrapper
+                            backPath="/"
                             className="btn btn-primary nav-btn nav-btn-monospaced"
+                            currentPath="/processes/1/10/title%3Aasc?backPath=%2F"
                             history={
                               Object {
                                 "action": "POP",
@@ -852,112 +915,40 @@ exports[`Should render toast with SLA updated message 1`] = `
                                 "replace": [Function],
                               }
                             }
-                            location={
-                              Object {
-                                "hash": "",
-                                "match": Object {
-                                  "params": Object {
-                                    "page": 1,
-                                    "search": undefined,
-                                    "sort": undefined,
-                                  },
-                                },
-                                "pathname": "/processes/1/10/title%3Aasc",
-                                "search": "?backPath=%2F",
-                              }
-                            }
-                            match={
-                              Object {
-                                "isExact": false,
-                                "params": Object {},
-                                "path": "/",
-                                "url": "/",
-                              }
-                            }
                             to="/sla/new/undefined"
                           >
-                            <ChildLinkWrapper
-                              backPath="/"
+                            <Link
                               className="btn btn-primary nav-btn nav-btn-monospaced"
-                              currentPath="/processes/1/10/title%3Aasc?backPath=%2F"
-                              history={
+                              to={
                                 Object {
-                                  "action": "POP",
-                                  "block": [Function],
-                                  "canGo": [Function],
-                                  "createHref": [Function],
-                                  "entries": Array [
-                                    Object {
-                                      "hash": "",
-                                      "match": Object {
-                                        "params": Object {
-                                          "page": 1,
-                                          "search": undefined,
-                                          "sort": undefined,
-                                        },
-                                      },
-                                      "pathname": "/processes/1/10/title%3Aasc",
-                                      "search": "?backPath=%2F",
-                                    },
-                                  ],
-                                  "go": [Function],
-                                  "goBack": [Function],
-                                  "goForward": [Function],
-                                  "index": 0,
-                                  "length": 1,
-                                  "listen": [Function],
-                                  "location": Object {
-                                    "hash": "",
-                                    "match": Object {
-                                      "params": Object {
-                                        "page": 1,
-                                        "search": undefined,
-                                        "sort": undefined,
-                                      },
-                                    },
-                                    "pathname": "/processes/1/10/title%3Aasc",
-                                    "search": "?backPath=%2F",
-                                  },
-                                  "push": [Function],
-                                  "replace": [Function],
+                                  "pathname": "/sla/new/undefined",
+                                  "search": "?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F",
                                 }
                               }
-                              to="/sla/new/undefined"
                             >
-                              <Link
+                              <a
                                 className="btn btn-primary nav-btn nav-btn-monospaced"
-                                replace={false}
-                                to={
-                                  Object {
-                                    "pathname": "/sla/new/undefined",
-                                    "search": "?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F",
-                                  }
-                                }
+                                href="/sla/new/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                                onClick={[Function]}
                               >
-                                <a
-                                  className="btn btn-primary nav-btn nav-btn-monospaced"
-                                  href="/sla/new/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                                  onClick={[Function]}
+                                <Icon
+                                  iconName="plus"
                                 >
-                                  <Icon
-                                    iconName="plus"
-                                  >
-                                    <svg
-                                      className="lexicon-icon lexicon-icon-plus"
-                                      dangerouslySetInnerHTML={
-                                        Object {
-                                          "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
-                                        }
+                                  <svg
+                                    className="lexicon-icon lexicon-icon-plus"
+                                    dangerouslySetInnerHTML={
+                                      Object {
+                                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
                                       }
-                                      focusable="false"
-                                      role="presentation"
-                                    />
-                                  </Icon>
-                                </a>
-                              </Link>
-                            </ChildLinkWrapper>
-                          </Component>
-                        </Route>
+                                    }
+                                    focusable="false"
+                                    role="presentation"
+                                  />
+                                </Icon>
+                              </a>
+                            </Link>
+                          </ChildLinkWrapper>
+                        </Component>
                       </withRouter()>
                     </span>
                   </span>
@@ -1098,9 +1089,78 @@ exports[`Should test props change 1`] = `
                         className="btn btn-primary nav-btn nav-btn-monospaced"
                         to="/sla/new/undefined"
                       >
-                        <Route>
-                          <Component
+                        <Component
+                          className="btn btn-primary nav-btn nav-btn-monospaced"
+                          history={
+                            Object {
+                              "action": "POP",
+                              "block": [Function],
+                              "canGo": [Function],
+                              "createHref": [Function],
+                              "entries": Array [
+                                Object {
+                                  "hash": "",
+                                  "match": Object {
+                                    "params": Object {
+                                      "page": 1,
+                                      "search": undefined,
+                                      "sort": undefined,
+                                    },
+                                  },
+                                  "pathname": "/processes/1/10/title%3Aasc",
+                                  "search": "?backPath=%2F",
+                                },
+                              ],
+                              "go": [Function],
+                              "goBack": [Function],
+                              "goForward": [Function],
+                              "index": 0,
+                              "length": 1,
+                              "listen": [Function],
+                              "location": Object {
+                                "hash": "",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
+                                "search": "?backPath=%2F",
+                              },
+                              "push": [Function],
+                              "replace": [Function],
+                            }
+                          }
+                          location={
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            }
+                          }
+                          match={
+                            Object {
+                              "isExact": false,
+                              "params": Object {},
+                              "path": "/",
+                              "url": "/",
+                            }
+                          }
+                          to="/sla/new/undefined"
+                        >
+                          <ChildLinkWrapper
+                            backPath="/"
                             className="btn btn-primary nav-btn nav-btn-monospaced"
+                            currentPath="/processes/1/10/title%3Aasc?backPath=%2F"
                             history={
                               Object {
                                 "action": "POP",
@@ -1143,112 +1203,40 @@ exports[`Should test props change 1`] = `
                                 "replace": [Function],
                               }
                             }
-                            location={
-                              Object {
-                                "hash": "",
-                                "match": Object {
-                                  "params": Object {
-                                    "page": 1,
-                                    "search": undefined,
-                                    "sort": undefined,
-                                  },
-                                },
-                                "pathname": "/processes/1/10/title%3Aasc",
-                                "search": "?backPath=%2F",
-                              }
-                            }
-                            match={
-                              Object {
-                                "isExact": false,
-                                "params": Object {},
-                                "path": "/",
-                                "url": "/",
-                              }
-                            }
                             to="/sla/new/undefined"
                           >
-                            <ChildLinkWrapper
-                              backPath="/"
+                            <Link
                               className="btn btn-primary nav-btn nav-btn-monospaced"
-                              currentPath="/processes/1/10/title%3Aasc?backPath=%2F"
-                              history={
+                              to={
                                 Object {
-                                  "action": "POP",
-                                  "block": [Function],
-                                  "canGo": [Function],
-                                  "createHref": [Function],
-                                  "entries": Array [
-                                    Object {
-                                      "hash": "",
-                                      "match": Object {
-                                        "params": Object {
-                                          "page": 1,
-                                          "search": undefined,
-                                          "sort": undefined,
-                                        },
-                                      },
-                                      "pathname": "/processes/1/10/title%3Aasc",
-                                      "search": "?backPath=%2F",
-                                    },
-                                  ],
-                                  "go": [Function],
-                                  "goBack": [Function],
-                                  "goForward": [Function],
-                                  "index": 0,
-                                  "length": 1,
-                                  "listen": [Function],
-                                  "location": Object {
-                                    "hash": "",
-                                    "match": Object {
-                                      "params": Object {
-                                        "page": 1,
-                                        "search": undefined,
-                                        "sort": undefined,
-                                      },
-                                    },
-                                    "pathname": "/processes/1/10/title%3Aasc",
-                                    "search": "?backPath=%2F",
-                                  },
-                                  "push": [Function],
-                                  "replace": [Function],
+                                  "pathname": "/sla/new/undefined",
+                                  "search": "?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F",
                                 }
                               }
-                              to="/sla/new/undefined"
                             >
-                              <Link
+                              <a
                                 className="btn btn-primary nav-btn nav-btn-monospaced"
-                                replace={false}
-                                to={
-                                  Object {
-                                    "pathname": "/sla/new/undefined",
-                                    "search": "?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F",
-                                  }
-                                }
+                                href="/sla/new/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                                onClick={[Function]}
                               >
-                                <a
-                                  className="btn btn-primary nav-btn nav-btn-monospaced"
-                                  href="/sla/new/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                                  onClick={[Function]}
+                                <Icon
+                                  iconName="plus"
                                 >
-                                  <Icon
-                                    iconName="plus"
-                                  >
-                                    <svg
-                                      className="lexicon-icon lexicon-icon-plus"
-                                      dangerouslySetInnerHTML={
-                                        Object {
-                                          "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
-                                        }
+                                  <svg
+                                    className="lexicon-icon lexicon-icon-plus"
+                                    dangerouslySetInnerHTML={
+                                      Object {
+                                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
                                       }
-                                      focusable="false"
-                                      role="presentation"
-                                    />
-                                  </Icon>
-                                </a>
-                              </Link>
-                            </ChildLinkWrapper>
-                          </Component>
-                        </Route>
+                                    }
+                                    focusable="false"
+                                    role="presentation"
+                                  />
+                                </Icon>
+                              </a>
+                            </Link>
+                          </ChildLinkWrapper>
+                        </Component>
                       </withRouter()>
                     </span>
                   </span>

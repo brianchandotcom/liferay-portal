@@ -147,7 +147,6 @@ exports[`Should expand tab items 1`] = `
                       <Link
                         aria-label="current-page"
                         className="active nav-link"
-                        replace={false}
                         to={
                           Object {
                             "pathname": "/dashboard/35135/completed",
@@ -189,7 +188,6 @@ exports[`Should expand tab items 1`] = `
                       <Link
                         aria-label=""
                         className=" nav-link"
-                        replace={false}
                         to={
                           Object {
                             "pathname": "/dashboard/35135/pending",
@@ -370,7 +368,6 @@ exports[`Should hide tab items 1`] = `
                       <Link
                         aria-label="current-page"
                         className="active nav-link"
-                        replace={false}
                         to={
                           Object {
                             "pathname": "/dashboard/35135/completed",
@@ -412,7 +409,6 @@ exports[`Should hide tab items 1`] = `
                       <Link
                         aria-label=""
                         className=" nav-link"
-                        replace={false}
                         to={
                           Object {
                             "pathname": "/dashboard/35135/pending",

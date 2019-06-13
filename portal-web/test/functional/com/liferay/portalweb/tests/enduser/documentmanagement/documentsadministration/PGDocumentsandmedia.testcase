@@ -1530,12 +1530,9 @@ definition {
 
 		UserGroup.addCP(userGroupName = "UG UserGroup Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name 1");
 
-		Site.addBlankCP(siteName = "Site Name 1");
+		ProductMenu.gotoSite(site = "Site Name 1");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -1603,12 +1600,9 @@ definition {
 			userGroupName = "UG UserGroup Name",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name 2");
 
-		Site.addBlankCP(siteName = "Site Name 2");
+		ProductMenu.gotoSite(site = "Site Name 2");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

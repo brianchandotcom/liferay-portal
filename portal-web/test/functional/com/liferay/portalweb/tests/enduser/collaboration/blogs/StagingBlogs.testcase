@@ -10,12 +10,9 @@ definition {
 
 		User.firstLoginPG();
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
+		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -404,14 +401,9 @@ definition {
 
 	@priority = "3"
 	test StagingBlogsPG {
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addCP(
-			siteName = "Site Name",
-			siteType = "Blank");
+		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -619,14 +611,9 @@ definition {
 	test StagingBlogsWithScheduledPublishing {
 		property test.name.skip.portal.instance = "BlogsUsecase#StagingBlogsWithScheduledPublishing";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addCP(
-			siteName = "Site Name",
-			siteType = "Blank");
+		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

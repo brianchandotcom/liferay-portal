@@ -55,9 +55,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		Site.addCP(
-			siteName = "Site Name",
-			siteType = "Blank");
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

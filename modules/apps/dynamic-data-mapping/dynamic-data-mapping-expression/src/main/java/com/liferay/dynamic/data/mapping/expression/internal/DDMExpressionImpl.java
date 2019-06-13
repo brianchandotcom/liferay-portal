@@ -112,7 +112,19 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 
 		_expressionContext = createExpressionContext();
 
-		findFunctionsAndVariables();
+		ParseTreeWalker parseTreeWalker = new ParseTreeWalker();
+
+		DDMExpressionListener ddmExpressionListener =
+			new DDMExpressionListener();
+
+		parseTreeWalker.walk(ddmExpressionListener, _expressionContext);
+
+		_ddmExpressionFunctionNames.addAll(
+			ddmExpressionListener.getFunctionNames());
+
+		for (String variableName : ddmExpressionListener.getVariableNames()) {
+			_variables.put(variableName, null);
+		}
 	}
 
 	protected DDMExpressionParser.ExpressionContext createExpressionContext()
@@ -133,22 +145,6 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		}
 		catch (Exception e) {
 			throw new DDMExpressionException.InvalidSyntax(e);
-		}
-	}
-
-	protected void findFunctionsAndVariables() {
-		ParseTreeWalker parseTreeWalker = new ParseTreeWalker();
-
-		DDMExpressionListener ddmExpressionListener =
-			new DDMExpressionListener();
-
-		parseTreeWalker.walk(ddmExpressionListener, _expressionContext);
-
-		_ddmExpressionFunctionNames.addAll(
-			ddmExpressionListener.getFunctionNames());
-
-		for (String variableName : ddmExpressionListener.getVariableNames()) {
-			_variables.put(variableName, null);
 		}
 	}
 

@@ -27,8 +27,6 @@ import java.io.IOException;
 
 import java.nio.file.Files;
 
-import org.apache.commons.fileupload.FileItem;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -72,16 +70,17 @@ public class LiferayFileItemTest {
 
 	@Test
 	public void testGetContentTypeFromInvalidFile() throws IOException {
-		FileItem fileItem = _liferayFileItemFactory.createItem(
+		LiferayFileItem liferayFileItem = _liferayFileItemFactory.createItem(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
 			RandomTestUtil.randomString());
 
-		Assert.assertNotNull(fileItem);
+		Assert.assertNotNull(liferayFileItem);
 
-		fileItem.getOutputStream();
+		liferayFileItem.getOutputStream();
 
 		Assert.assertEquals(
-			ContentTypes.APPLICATION_OCTET_STREAM, fileItem.getContentType());
+			ContentTypes.APPLICATION_OCTET_STREAM,
+			liferayFileItem.getContentType());
 	}
 
 	@Test
@@ -91,14 +90,14 @@ public class LiferayFileItemTest {
 
 		String contentType = Files.probeContentType(file.toPath());
 
-		FileItem fileItem = _liferayFileItemFactory.createItem(
+		LiferayFileItem liferayFileItem = _liferayFileItemFactory.createItem(
 			RandomTestUtil.randomString(), contentType, false, file.getName());
 
-		Assert.assertNotNull(fileItem);
+		Assert.assertNotNull(liferayFileItem);
 
-		fileItem.getOutputStream();
+		liferayFileItem.getOutputStream();
 
-		Assert.assertEquals(contentType, fileItem.getContentType());
+		Assert.assertEquals(contentType, liferayFileItem.getContentType());
 	}
 
 	@Test

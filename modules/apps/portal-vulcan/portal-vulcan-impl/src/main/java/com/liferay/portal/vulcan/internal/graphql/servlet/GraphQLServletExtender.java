@@ -73,16 +73,16 @@ import javax.servlet.Servlet;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Preston Crary
@@ -174,18 +174,13 @@ public class GraphQLServletExtender {
 				},
 				properties);
 
+		_servletDataServiceTracker = new ServiceTracker<>(
+			bundleContext, ServletData.class,
+			new ServletDataServiceTrackerCustomizer());
+
+		_servletDataServiceTracker.open();
+
 		_activated = true;
-
-		rewire();
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected synchronized void addServletData(ServletData servletData) {
-		_servletDataList.add(servletData);
 
 		rewire();
 	}
@@ -193,6 +188,8 @@ public class GraphQLServletExtender {
 	@Deactivate
 	protected void deactivate() {
 		_activated = false;
+
+		_servletDataServiceTracker.close();
 
 		if (_servletServiceRegistration != null) {
 			_servletServiceRegistration.unregister();
@@ -224,13 +221,7 @@ public class GraphQLServletExtender {
 			Servlet.class, servlet, properties);
 	}
 
-	protected synchronized void removeServletData(ServletData servletData) {
-		_servletDataList.remove(servletData);
-
-		rewire();
-	}
-
-	protected synchronized void rewire() {
+	protected void rewire() {
 		if (!_activated) {
 			return;
 		}
@@ -381,6 +372,7 @@ public class GraphQLServletExtender {
 	private ServiceRegistration<ServletContextHelper>
 		_servletContextHelperServiceRegistration;
 	private final List<ServletData> _servletDataList = new ArrayList<>();
+	private ServiceTracker<ServletData, ServletData> _servletDataServiceTracker;
 	private ServiceRegistration<Servlet> _servletServiceRegistration;
 
 	private class LiferayGraphQLFieldRetriever extends GraphQLFieldRetriever {
@@ -445,6 +437,43 @@ public class GraphQLServletExtender {
 		}
 
 		private final Method _method;
+
+	}
+
+	private class ServletDataServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<ServletData, ServletData> {
+
+		@Override
+		public synchronized ServletData addingService(
+			ServiceReference<ServletData> serviceReference) {
+
+			ServletData servletData = _bundleContext.getService(
+				serviceReference);
+
+			_servletDataList.add(servletData);
+
+			rewire();
+
+			return servletData;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<ServletData> serviceReference,
+			ServletData servletData) {
+		}
+
+		@Override
+		public synchronized void removedService(
+			ServiceReference<ServletData> serviceReference,
+			ServletData servletData) {
+
+			_servletDataList.remove(servletData);
+
+			rewire();
+
+			_bundleContext.ungetService(serviceReference);
+		}
 
 	}
 

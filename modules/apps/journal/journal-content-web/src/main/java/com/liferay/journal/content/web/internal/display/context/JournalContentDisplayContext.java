@@ -96,7 +96,7 @@ public class JournalContentDisplayContext {
 
 	public static JournalContentDisplayContext create(
 			PortletRequest portletRequest, PortletResponse portletResponse,
-			PortletDisplay portletDisplay, long ddmStructureClassNameId,
+			long ddmStructureClassNameId,
 			ModelResourcePermission<DDMTemplate>
 				ddmTemplateModelResourcePermission)
 		throws PortalException {
@@ -106,13 +106,19 @@ public class JournalContentDisplayContext {
 				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT);
 
 		if (journalContentDisplayContext == null) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 			JournalContentPortletInstanceConfiguration
 				journalContentPortletInstanceConfiguration =
 					portletDisplay.getPortletInstanceConfiguration(
 						JournalContentPortletInstanceConfiguration.class);
 
 			journalContentDisplayContext = new JournalContentDisplayContext(
-				portletRequest, portletResponse,
+				portletRequest, portletResponse, themeDisplay,
 				journalContentPortletInstanceConfiguration,
 				ddmStructureClassNameId, ddmTemplateModelResourcePermission);
 
@@ -142,14 +148,11 @@ public class JournalContentDisplayContext {
 			return _article;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		_article = _getArticleByPreviewAssetEntryId();
 
 		if ((_article != null) &&
 			JournalArticlePermission.contains(
-				themeDisplay.getPermissionChecker(), _article,
+				_themeDisplay.getPermissionChecker(), _article,
 				ActionKeys.UPDATE)) {
 
 			return _article;
@@ -189,13 +192,10 @@ public class JournalContentDisplayContext {
 			return null;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String viewMode = ParamUtil.getString(
 			_portletRequest, "viewMode", null);
 		String languageId = ParamUtil.getString(
-			_portletRequest, "languageId", themeDisplay.getLanguageId());
+			_portletRequest, "languageId", _themeDisplay.getLanguageId());
 		int page = ParamUtil.getInteger(_portletRequest, "page", 1);
 
 		if (article.isApproved()) {
@@ -212,7 +212,7 @@ public class JournalContentDisplayContext {
 				article.getVersion(), getDDMTemplateKey(), viewMode, languageId,
 				page,
 				new PortletRequestModel(_portletRequest, _portletResponse),
-				themeDisplay);
+				_themeDisplay);
 		}
 		else {
 			try {
@@ -222,7 +222,7 @@ public class JournalContentDisplayContext {
 						page,
 						new PortletRequestModel(
 							_portletRequest, _portletResponse),
-						themeDisplay);
+						_themeDisplay);
 			}
 			catch (PortalException pe) {
 				_log.error(pe, pe);
@@ -242,11 +242,7 @@ public class JournalContentDisplayContext {
 			_journalContentPortletInstanceConfiguration.groupId());
 
 		if (_articleGroupId <= 0) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			_articleGroupId = themeDisplay.getScopeGroupId();
+			_articleGroupId = _themeDisplay.getScopeGroupId();
 		}
 
 		return _articleGroupId;
@@ -488,12 +484,9 @@ public class JournalContentDisplayContext {
 	}
 
 	public long getGroupId() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		long groupId = _themeDisplay.getScopeGroupId();
 
-		long groupId = themeDisplay.getScopeGroupId();
-
-		Group scopeGroup = themeDisplay.getScopeGroup();
+		Group scopeGroup = _themeDisplay.getScopeGroup();
 
 		if (scopeGroup.isStaged() &&
 			!scopeGroup.isInStagingPortlet(JournalPortletKeys.JOURNAL)) {
@@ -593,10 +586,7 @@ public class JournalContentDisplayContext {
 	}
 
 	public long[] getSelectedGroupIds() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Group scopeGroup = themeDisplay.getScopeGroup();
+		Group scopeGroup = _themeDisplay.getScopeGroup();
 
 		if (scopeGroup.isStagingGroup() &&
 			!scopeGroup.isInStagingPortlet(JournalPortletKeys.JOURNAL)) {
@@ -604,8 +594,8 @@ public class JournalContentDisplayContext {
 			return new long[] {scopeGroup.getLiveGroupId()};
 		}
 
-		if (themeDisplay.getScopeGroupId() != themeDisplay.getSiteGroupId()) {
-			return new long[] {themeDisplay.getScopeGroupId()};
+		if (_themeDisplay.getScopeGroupId() != _themeDisplay.getSiteGroupId()) {
+			return new long[] {_themeDisplay.getScopeGroupId()};
 		}
 
 		return null;
@@ -649,9 +639,6 @@ public class JournalContentDisplayContext {
 	}
 
 	public String getURLEdit() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		try {
 			AssetRendererFactory<JournalArticle> assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
@@ -665,7 +652,7 @@ public class JournalContentDisplayContext {
 
 			PortletURL portletURL = latestArticleAssetRenderer.getURLEdit(
 				PortalUtil.getLiferayPortletRequest(_portletRequest), null,
-				LiferayWindowState.NORMAL, themeDisplay.getURLCurrent());
+				LiferayWindowState.NORMAL, _themeDisplay.getURLCurrent());
 
 			return portletURL.toString();
 		}
@@ -683,15 +670,12 @@ public class JournalContentDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			_portletRequest, JournalPortletKeys.JOURNAL,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_ddm_template.jsp");
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		portletURL.setParameter("redirect", _themeDisplay.getURLCurrent());
 
 		portletURL.setParameter(
 			"ddmTemplateId", String.valueOf(ddmTemplate.getTemplateId()));
@@ -704,17 +688,13 @@ public class JournalContentDisplayContext {
 		try {
 			JournalArticle article = getArticle();
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
 			PortletURL portletURL = PortletURLFactoryUtil.create(
 				_portletRequest, JournalPortletKeys.JOURNAL,
 				PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter("mvcPath", "/view_article_history.jsp");
 
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
 			portletURL.setParameter(
 				"referringPortletResource", portletDisplay.getId());
@@ -741,16 +721,13 @@ public class JournalContentDisplayContext {
 			return false;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			JournalArticle.class.getName());
 
 		TrashEntry trashEntry = selectedArticle.getTrashEntry();
 
 		return trashHandler.hasTrashPermission(
-			themeDisplay.getPermissionChecker(), 0, trashEntry.getClassPK(),
+			_themeDisplay.getPermissionChecker(), 0, trashEntry.getClassPK(),
 			TrashActionKeys.RESTORE);
 	}
 
@@ -764,12 +741,8 @@ public class JournalContentDisplayContext {
 		JournalArticle article = getArticle();
 
 		if (article != null) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
 			_hasViewPermission = JournalArticlePermission.contains(
-				themeDisplay.getPermissionChecker(), article, ActionKeys.VIEW);
+				_themeDisplay.getPermissionChecker(), article, ActionKeys.VIEW);
 		}
 
 		return _hasViewPermission;
@@ -925,10 +898,7 @@ public class JournalContentDisplayContext {
 
 		_showEditArticleIcon = false;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Group group = themeDisplay.getScopeGroup();
+		Group group = _themeDisplay.getScopeGroup();
 
 		if (group.hasStagingGroup() && _STAGING_LIVE_GROUP_LOCKING_ENABLED) {
 			return _showEditArticleIcon;
@@ -941,7 +911,7 @@ public class JournalContentDisplayContext {
 		}
 
 		_showEditArticleIcon = JournalArticlePermission.contains(
-			themeDisplay.getPermissionChecker(), latestArticle,
+			_themeDisplay.getPermissionChecker(), latestArticle,
 			ActionKeys.UPDATE);
 
 		return _showEditArticleIcon;
@@ -960,13 +930,10 @@ public class JournalContentDisplayContext {
 			return _showEditTemplateIcon;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		try {
 			_showEditTemplateIcon =
 				_ddmTemplateModelResourcePermission.contains(
-					themeDisplay.getPermissionChecker(), ddmTemplate,
+					_themeDisplay.getPermissionChecker(), ddmTemplate,
 					ActionKeys.UPDATE);
 		}
 		catch (PortalException pe) {
@@ -984,10 +951,7 @@ public class JournalContentDisplayContext {
 			return _showSelectArticleLink;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
+		Layout layout = _themeDisplay.getLayout();
 
 		if (layout.isLayoutPrototypeLinkActive()) {
 			_showSelectArticleLink = false;
@@ -995,7 +959,7 @@ public class JournalContentDisplayContext {
 			return _showSelectArticleLink;
 		}
 
-		Group scopeGroup = themeDisplay.getScopeGroup();
+		Group scopeGroup = _themeDisplay.getScopeGroup();
 
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();
@@ -1015,6 +979,7 @@ public class JournalContentDisplayContext {
 
 	private JournalContentDisplayContext(
 			PortletRequest portletRequest, PortletResponse portletResponse,
+			ThemeDisplay themeDisplay,
 			JournalContentPortletInstanceConfiguration
 				journalContentPortletInstanceConfiguration,
 			long ddmStructureClassNameId,
@@ -1024,6 +989,7 @@ public class JournalContentDisplayContext {
 
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
+		_themeDisplay = themeDisplay;
 		_journalContentPortletInstanceConfiguration =
 			journalContentPortletInstanceConfiguration;
 		_ddmStructureClassNameId = ddmStructureClassNameId;
@@ -1170,6 +1136,7 @@ public class JournalContentDisplayContext {
 	private Boolean _showEditArticleIcon;
 	private Boolean _showEditTemplateIcon;
 	private Boolean _showSelectArticleLink;
+	private final ThemeDisplay _themeDisplay;
 	private List<UserToolAssetAddonEntry> _userToolAssetAddonEntries;
 
 }

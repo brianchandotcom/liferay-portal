@@ -33,12 +33,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -77,10 +75,6 @@ public class JournalContentConfigurationAction
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		PortletRequest portletRequest =
 			(PortletRequest)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_REQUEST);
@@ -94,8 +88,7 @@ public class JournalContentConfigurationAction
 
 		try {
 			JournalContentDisplayContext.create(
-				portletRequest, portletResponse,
-				themeDisplay.getPortletDisplay(), _CLASS_NAME_ID,
+				portletRequest, portletResponse, _CLASS_NAME_ID,
 				_ddmTemplateModelResourcePermission);
 		}
 		catch (PortalException pe) {

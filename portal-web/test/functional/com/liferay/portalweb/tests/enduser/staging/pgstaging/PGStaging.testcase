@@ -30,10 +30,10 @@ definition {
 
 	@priority = "4"
 	test ActivateDeactivateRemoteStaging {
-		property app.server.bundles.size = "2";
+		property app.server.bundles.size = "1";
 		property app.server.types = "jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
-		property databases.size = "2";
+		property databases.size = "1";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
 
@@ -158,9 +158,9 @@ definition {
 
 	@priority = "5"
 	test ActivateRemoteStaging {
-		property app.server.bundles.size = "2";
+		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
-		property databases.size = "2";
+		property databases.size = "1";
 		property portal.acceptance = "true";
 
 		Staging.remoteStagingSetUp(siteName = "Site Name");
@@ -742,9 +742,9 @@ definition {
 
 	@priority = "3"
 	test PublishWCViaRemoteStaging {
-		property app.server.bundles.size = "2";
+		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
-		property databases.size = "2";
+		property databases.size = "1";
 
 		Staging.remoteStagingSetUp(
 			pageVersioningEnabled = "true",
@@ -851,9 +851,9 @@ definition {
 
 	@priority = "3"
 	test PublishWCWithPagesVariationViaRemoteStaging {
-		property app.server.bundles.size = "2";
+		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
-		property databases.size = "2";
+		property databases.size = "1";
 		property test.name.skip.portal.instance = "PGStaging#PublishWCWithPagesVariationViaRemoteStaging";
 
 		Staging.remoteStagingSetUp(

@@ -294,9 +294,9 @@ definition {
 	@description = "This is a use case for LPS-88045."
 	@priority = "3"
 	test PublishChildSiteViaRemoteStagingWithParentStructure {
-		property app.server.bundles.size = "2";
+		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
-		property databases.size = "2";
+		property databases.size = "1";
 		property test.name.skip.portal.instance = "Staging#PublishChildSiteViaRemoteStagingWithParentStructure";
 
 		JSONGroup.addChildSite(
@@ -369,9 +369,9 @@ definition {
 	@description = "This is a use case for LPS-72545."
 	@priority = "4"
 	test PublishCustomFieldDeletionviaRemoteStaging {
-		property app.server.bundles.size = "2";
+		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
-		property databases.size = "2";
+		property databases.size = "1";
 		property test.name.skip.portal.instance = "Staging#PublishCustomFieldDeletionviaRemoteStaging";
 
 		Staging.remoteStagingSetUp(siteName = "Site Name");
@@ -1454,9 +1454,9 @@ definition {
 	@description = "This is a use case for LPS-80494."
 	@priority = "3"
 	test StagingRemoteDMDocumentType {
-		property app.server.bundles.size = "2";
+		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
-		property databases.size = "2";
+		property databases.size = "1";
 		property test.name.skip.portal.instance = "Staging#StagingRemoteDMDocumentType";
 
 		Staging.remoteStagingSetUp(siteName = "Site Name");
@@ -1533,9 +1533,9 @@ definition {
 	@description = "This is a use case for LPS-72478."
 	@priority = "5"
 	test StagingRemoteLivePolls {
-		property app.server.bundles.size = "2";
+		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
-		property databases.size = "2";
+		property databases.size = "1";
 		property test.name.skip.portal.instance = "Staging#StagingRemoteLivePolls";
 
 		Staging.remoteStagingSetUp(siteName = "Site Name");
@@ -1591,9 +1591,9 @@ definition {
 
 	@priority = "4"
 	test StagingRemoteLiveWebContent {
-		property app.server.bundles.size = "2";
+		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
-		property databases.size = "2";
+		property databases.size = "1";
 		property test.name.skip.portal.instance = "Staging#StagingRemoteLiveWebContent";
 
 		Staging.remoteStagingSetUp(siteName = "Site Name");
@@ -1714,9 +1714,9 @@ definition {
 	@description = "This is a use case for LPS-82839."
 	@priority = "5"
 	test StagingRemoteLiveWebContentViaPortletCP {
-		property app.server.bundles.size = "2";
+		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
-		property databases.size = "2";
+		property databases.size = "1";
 		property test.name.skip.portal.instance = "Staging#StagingRemoteLiveWebContentViaPortletCP";
 
 		Staging.remoteStagingSetUp(siteName = "Site Name");
@@ -1760,9 +1760,9 @@ definition {
 	@description = "This is a use case for LPS-81950."
 	@priority = "5"
 	test StagingRemoteLiveWebContentViaPortletPG {
-		property app.server.bundles.size = "2";
+		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
-		property databases.size = "2";
+		property databases.size = "1";
 		property test.name.skip.portal.instance = "Staging#StagingRemoteLiveWebContentViaPortletPG";
 
 		Staging.remoteStagingSetUp(siteName = "Site Name");
@@ -1824,9 +1824,9 @@ definition {
 	@description = "This is a use case for LPS-81953"
 	@priority = "3"
 	test StagingRemoteLiveWebContentWithManualChosenID {
-		property app.server.bundles.size = "2";
+		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
-		property databases.size = "2";
+		property databases.size = "1";
 		property test.name.skip.portal.instance = "Staging#StagingRemoteLiveWebContentWithManualChosenID";
 
 		Staging.remoteStagingSetUp(siteName = "Site Name");
@@ -1887,9 +1887,9 @@ definition {
 	@description = "This is a use case for LPS-89629."
 	@priority = "3"
 	test StagingRemoteWithDynamicExportLimit {
-		property app.server.bundles.size = "2";
+		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
-		property databases.size = "2";
+		property databases.size = "1";
 		property test.name.skip.portal.instance = "Staging#StagingRemoteWithDynamicExportLimit";
 
 		Staging.remoteStagingSetUp(siteName = "Site Name");

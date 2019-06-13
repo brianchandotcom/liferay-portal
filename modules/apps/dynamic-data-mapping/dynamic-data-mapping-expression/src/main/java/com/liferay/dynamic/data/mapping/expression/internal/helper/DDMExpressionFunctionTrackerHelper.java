@@ -35,7 +35,8 @@ public class DDMExpressionFunctionTrackerHelper {
 
 	public void addComponentFactory(ComponentFactory componentFactory) {
 		GenericObjectPool<DDMExpressionFunction> ddmExpressionFunctionPool =
-			createDDMExpressionFunctionPool(componentFactory);
+			new GenericObjectPool<>(
+				new DDMExpressionFunctionPooledFactory(componentFactory));
 
 		DDMExpressionFunction ddmExpressionFunction = _getDDMExpressionFunction(
 			ddmExpressionFunctionPool);
@@ -109,15 +110,6 @@ public class DDMExpressionFunctionTrackerHelper {
 				ddmExpressionFunction.getName());
 
 		ddmExpressionFunctionPool.returnObject(ddmExpressionFunction);
-	}
-
-	protected GenericObjectPool<DDMExpressionFunction>
-		createDDMExpressionFunctionPool(ComponentFactory componentFactory) {
-
-		DDMExpressionFunctionPooledFactory ddmExpressionFunctionPooledFactory =
-			new DDMExpressionFunctionPooledFactory(componentFactory);
-
-		return new GenericObjectPool<>(ddmExpressionFunctionPooledFactory);
 	}
 
 	protected Map<String, GenericObjectPool<DDMExpressionFunction>>

@@ -134,22 +134,14 @@ definition {
 
 		AutoTagging.disableAutoTagging(disableAutoTaggingFor = "Settings");
 
-		Navigator.openSiteURL(siteName = "Site AutoTag Enabled");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-autotag-enabled");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_4.jpg",
 			dmDocumentTitle = "DM Document JPG");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-autotag-enabled");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG");
 
@@ -157,22 +149,14 @@ definition {
 
 		AutoTagging.assertAutoTagPresent(tagName = "carton");
 
-		Navigator.openSiteURL(siteName = "Site AutoTag Disabled");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-autotag-disabled");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_4.jpg",
 			dmDocumentTitle = "DM Document JPG");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-autotag-disabled");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG");
 
@@ -286,20 +270,14 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DMAutoTagging#Smoke";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_4.jpg",
 			dmDocumentTitle = "DM Document JPG");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG");
 

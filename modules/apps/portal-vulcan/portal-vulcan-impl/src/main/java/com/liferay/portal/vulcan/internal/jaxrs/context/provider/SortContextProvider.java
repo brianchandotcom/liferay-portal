@@ -83,12 +83,10 @@ public class SortContextProvider implements ContextProvider<Sort[]> {
 
 		EntityModel entityModel = ContextProviderUtil.getEntityModel(message);
 
-		if (entityModel == null) {
-			return null;
-		}
-
 		if (_log.isDebugEnabled()) {
-			_log.debug("OData entity model name: " + entityModel.getName());
+			if (entityModel != null) {
+				_log.debug("OData entity model name: " + entityModel.getName());
+			}
 		}
 
 		SortParser sortParser = _sortParserProvider.provide(entityModel);

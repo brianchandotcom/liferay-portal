@@ -284,7 +284,7 @@ public class ZipWriterImplTest {
 	}
 
 	@Test
-	public void testConstructor() throws Exception {
+	public void testConstructor() {
 		ZipWriter zipWriter = new ZipWriterImpl();
 
 		Assert.assertNotNull(zipWriter);

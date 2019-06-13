@@ -376,7 +376,7 @@ public class GraphQLServletExtender {
 		return graphQLFieldDefinitions;
 	}
 
-	private volatile boolean _activated;
+	private boolean _activated;
 	private BundleContext _bundleContext;
 
 	@Reference
@@ -393,7 +393,7 @@ public class GraphQLServletExtender {
 	private ServiceRegistration<ServletContextHelper>
 		_servletContextHelperServiceRegistration;
 	private final List<ServletData> _servletDataList = new ArrayList<>();
-	private volatile ServiceRegistration<Servlet> _servletServiceRegistration;
+	private ServiceRegistration<Servlet> _servletServiceRegistration;
 
 	private class LiferayGraphQLFieldRetriever extends GraphQLFieldRetriever {
 

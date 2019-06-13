@@ -21,11 +21,6 @@
 </tr>
 <!--MANAGE_COLLABORATORS-->
 <tr>
-	<td>MANAGE_COLLABORATORS_NAME</td>
-	<td>//div//span[contains(.,'${key_userName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MANAGE_COLLABORATORS_ACCESS_DROPDOWN</td>
 	<td>//li/div[contains(.,'${key_userName}')]//div[4]/div/select</td>
 	<td></td>
@@ -33,6 +28,11 @@
 <tr>
 	<td>MANAGE_COLLABORATORS_EMPTY_STATE_MESSAGE</td>
 	<td>//h3[contains(.,'No Collaborators')]/../p[contains(.,'To add collaborators, share the file again.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_COLLABORATORS_NAME</td>
+	<td>//div//span[contains(.,'${key_userName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -79,11 +79,6 @@
 </tr>
 <!--SHARED_CONTENT-->
 <tr>
-	<td>SHARED_CONTENT_ASSET_TYPE</td>
-	<td>//*[@data-qa-id='rowItemContent']/h5[contains(.,'${key_assetType}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SHARED_CONTENT_ASSET_OPTIONS</td>
 	<td>//tr/td[contains(.,'${key_assetTitle}')]/..//div//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
@@ -91,6 +86,11 @@
 <tr>
 	<td>SHARED_CONTENT_ASSET_TITLE</td>
 	<td>//tbody/tr/td[contains(@class,'table-cell-content')]/a[contains(.,'${key_assetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHARED_CONTENT_ASSET_TYPE</td>
+	<td>//*[@data-qa-id='rowItemContent']/h5[contains(.,'${key_assetType}')]</td>
 	<td></td>
 </tr>
 <tr>

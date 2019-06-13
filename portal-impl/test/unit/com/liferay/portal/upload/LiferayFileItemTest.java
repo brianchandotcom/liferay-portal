@@ -26,9 +26,8 @@ import java.nio.file.Files;
 import org.apache.commons.fileupload.FileItem;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Rule;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
@@ -37,15 +36,15 @@ import org.junit.rules.TemporaryFolder;
  */
 public class LiferayFileItemTest {
 
+	@ClassRule
+	public static final TemporaryFolder temporaryFolder = new TemporaryFolder();
+
 	@BeforeClass
 	public static void setUpClass() {
 		FileUtil fileUtil = new FileUtil();
 
 		fileUtil.setFile(new FileImpl());
-	}
 
-	@Before
-	public void setUp() {
 		_liferayFileItemFactory = new LiferayFileItemFactory(
 			temporaryFolder.getRoot());
 	}
@@ -155,9 +154,6 @@ public class LiferayFileItemTest {
 		Assert.assertEquals("", liferayFileItem.getEncodedString());
 	}
 
-	@Rule
-	public TemporaryFolder temporaryFolder = new TemporaryFolder();
-
-	private LiferayFileItemFactory _liferayFileItemFactory;
+	private static LiferayFileItemFactory _liferayFileItemFactory;
 
 }

@@ -65,7 +65,6 @@ import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
 
 import javax.servlet.Servlet;
 import javax.servlet.http.HttpServletRequest;
@@ -235,24 +234,39 @@ public class GraphQLServletExtender {
 		GraphQLObjectType.Builder mutationBuilder =
 			GraphQLObjectType.newObject();
 
-		mutationBuilder = mutationBuilder.name("mutation");
-
-		mutationBuilder.fields(
-			_getGraphQLFieldDefinitions(
-				processingElementsContainer, graphQLFieldRetriever,
-				ServletData::getMutation));
-
-		schemaBuilder.mutation(mutationBuilder.build());
+		mutationBuilder.name("mutation");
 
 		GraphQLObjectType.Builder queryBuilder = GraphQLObjectType.newObject();
 
-		queryBuilder = queryBuilder.name("query");
+		queryBuilder.name("query");
 
-		queryBuilder.fields(
-			_getGraphQLFieldDefinitions(
-				processingElementsContainer, graphQLFieldRetriever,
-				ServletData::getQuery));
+		for (ServletData servletData : _servletDataList) {
+			Object mutation = servletData.getMutation();
 
+			Class<?> mutationClass = mutation.getClass();
+
+			for (Method method : mutationClass.getMethods()) {
+				if (method.isAnnotationPresent(GraphQLField.class)) {
+					mutationBuilder.field(
+						graphQLFieldRetriever.getField(
+							method, processingElementsContainer));
+				}
+			}
+
+			Object query = servletData.getQuery();
+
+			Class<?> queryClazz = query.getClass();
+
+			for (Method method : queryClazz.getMethods()) {
+				if (method.isAnnotationPresent(GraphQLField.class)) {
+					queryBuilder.field(
+						graphQLFieldRetriever.getField(
+							method, processingElementsContainer));
+				}
+			}
+		}
+
+		schemaBuilder.mutation(mutationBuilder.build());
 		schemaBuilder.query(queryBuilder.build());
 
 		registerServlet(schemaBuilder);
@@ -324,31 +338,6 @@ public class GraphQLServletExtender {
 		}
 
 		return method.invoke(instance, args);
-	}
-
-	private List<GraphQLFieldDefinition> _getGraphQLFieldDefinitions(
-		ProcessingElementsContainer processingElementsContainer,
-		GraphQLFieldRetriever graphQLFieldRetriever,
-		Function<ServletData, Object> objectClassFunction) {
-
-		List<GraphQLFieldDefinition> graphQLFieldDefinitions =
-			new ArrayList<>();
-
-		for (ServletData servletData : _servletDataList) {
-			Object object = objectClassFunction.apply(servletData);
-
-			Class<?> clazz = object.getClass();
-
-			for (Method method : clazz.getMethods()) {
-				if (method.isAnnotationPresent(GraphQLField.class)) {
-					graphQLFieldDefinitions.add(
-						graphQLFieldRetriever.getField(
-							method, processingElementsContainer));
-				}
-			}
-		}
-
-		return graphQLFieldDefinitions;
 	}
 
 	private boolean _activated;

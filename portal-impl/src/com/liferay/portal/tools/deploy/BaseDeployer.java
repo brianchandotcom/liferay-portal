@@ -948,7 +948,6 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			deployDir = GetterUtil.getString(wildflyPrefix) + deployDir;
 		}
 		else if (appServerType.equals(ServerDetector.GLASSFISH_ID) ||
-				 appServerType.equals(ServerDetector.OC4J_ID) ||
 				 appServerType.equals(ServerDetector.RESIN_ID) ||
 				 appServerType.equals(ServerDetector.TOMCAT_ID) ||
 				 appServerType.equals(ServerDetector.WEBLOGIC_ID)) {

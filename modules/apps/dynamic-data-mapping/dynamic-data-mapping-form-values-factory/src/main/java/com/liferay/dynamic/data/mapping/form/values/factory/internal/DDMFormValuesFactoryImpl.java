@@ -391,7 +391,7 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			sb.append(LocaleUtil.toLanguageId(themeDisplay.getLocale()));
+			sb.append(themeDisplay.getLanguageId());
 		}
 
 		DDMFormFieldValueRequestParameterRetriever

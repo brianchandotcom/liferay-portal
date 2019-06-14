@@ -166,18 +166,19 @@ public class LiferayConnectionProperties
 		}
 
 		PropertiesUtils.setHidden(form, apiSpecURL, hidden);
+		PropertiesUtils.setHidden(form, loginType, hidden);
 
 		Form basicAuthorizationPropertiesForm =
 			basicAuthorizationProperties.getForm(
 				UIKeys.FORM_BASIC_AUTHORIZATION);
 
-		basicAuthorizationPropertiesForm.setVisible(hidden);
+		basicAuthorizationPropertiesForm.setHidden(hidden);
 
 		Form oAuthAuthorizationPropertiesForm =
 			oAuthAuthorizationProperties.getForm(
 				UIKeys.FORM_OAUTH_AUTHORIZATION);
 
-		oAuthAuthorizationPropertiesForm.setVisible(hidden);
+		oAuthAuthorizationPropertiesForm.setHidden(hidden);
 
 		if (hidden) {
 			return;
@@ -216,8 +217,6 @@ public class LiferayConnectionProperties
 		// Main form
 
 		Form mainForm = _createForm(this, Form.MAIN);
-
-		mainForm.addRow(Widget.widget(new PresentationItem("horizontalSpace")));
 
 		_addAuthorizationProps(mainForm);
 
@@ -367,8 +366,16 @@ public class LiferayConnectionProperties
 		if (Objects.equals(formName, UIKeys.FORM_WIZARD)) {
 			form.addRow(name);
 		}
+		else if (Objects.equals(formName, Form.MAIN)) {
+			Widget horizontalSpace = Widget.widget(
+				new PresentationItem("horizontalSpace"));
 
-		if (Objects.equals(formName, Form.REFERENCE)) {
+			horizontalSpace.setWidgetType(Widget.DEFAULT_WIDGET_TYPE);
+			horizontalSpace.setHidden(true);
+
+			form.addRow(horizontalSpace);
+		}
+		else if (Objects.equals(formName, Form.REFERENCE)) {
 			Widget referencedComponentWidget = Widget.widget(
 				referencedComponent);
 
@@ -377,6 +384,8 @@ public class LiferayConnectionProperties
 
 			form.addRow(referencedComponentWidget);
 		}
+
+		form.addRow(apiSpecURL);
 
 		return form;
 	}

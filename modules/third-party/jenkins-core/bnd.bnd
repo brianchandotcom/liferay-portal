@@ -1,2 +1,3 @@
 Bundle-SymbolicName: jenkins-core
 Bundle-Version: 1.565.1.LIFERAY-PATCHED-1
+-fixupmessages: Classes found in the wrong directory: ...;is:=ignore

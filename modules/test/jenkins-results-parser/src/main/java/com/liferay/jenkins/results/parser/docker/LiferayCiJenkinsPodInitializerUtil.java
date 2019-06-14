@@ -30,33 +30,33 @@ import java.util.List;
  * @author Peter Yoo
  * @author Michael Hashimoto
  */
-public class LiferayCiInitK8sPodUtil {
+public class LiferayCiJenkinsPodInitializerUtil {
 
 	public static void init() {
 		String gitRepositoryNamesString =
 			JenkinsResultsParserUtil.getEnvironmentVariable(
 				"GIT_REPOSITORY_NAMES");
 
-		_createGitArtifacts(
+		_createGitRepositoryDirs(
 			new File(
 				JenkinsResultsParserUtil.getEnvironmentVariable(
-					"GIT_ARTIFACTS_CLUSTER_DIR")),
+					"GIT_REPOSITORY_ARCHIVES_NFS_DIR")),
 			new File(
 				JenkinsResultsParserUtil.getEnvironmentVariable(
-					"GIT_ARTIFACTS_LOCAL_DIR")),
+					"GIT_REPOSITORY_BASE_DIR")),
 			Arrays.asList(gitRepositoryNamesString.split(",")));
 	}
 
-	private static void _createGitArtifacts(
-		File gitArtifactsClusterDir, File gitArtifactsLocalDir,
+	private static void _createGitRepositoryDirs(
+		File gitRepositoryArchivesNFSDir, File gitRepositoryBaseDir,
 		List<String> gitRepositoryNames) {
 
-		if (!gitArtifactsClusterDir.exists()) {
-			gitArtifactsClusterDir.mkdir();
+		if (!gitRepositoryArchivesNFSDir.exists()) {
+			gitRepositoryArchivesNFSDir.mkdir();
 		}
 
-		if (!gitArtifactsLocalDir.exists()) {
-			gitArtifactsLocalDir.mkdir();
+		if (!gitRepositoryBaseDir.exists()) {
+			gitRepositoryBaseDir.mkdir();
 		}
 
 		for (String gitRepositoryName : gitRepositoryNames) {
@@ -66,27 +66,24 @@ public class LiferayCiInitK8sPodUtil {
 			System.out.println("##");
 			System.out.println();
 
-			File gitRepositoryClusterArtifact = new File(
-				gitArtifactsClusterDir, gitRepositoryName + ".tar.gz");
-			File gitRepositoryLocalArtifact = new File(
-				gitArtifactsLocalDir, gitRepositoryName + ".tar.gz");
+			File gitRepositoryArchiveNFS = new File(
+				gitRepositoryArchivesNFSDir, gitRepositoryName + ".tar.gz");
 
-			if (!gitRepositoryClusterArtifact.exists()) {
+			if (!gitRepositoryArchiveNFS.exists()) {
 				throw new RuntimeException(
-					"Could not find " + gitRepositoryClusterArtifact);
+					"Could not find " + gitRepositoryArchiveNFS);
 			}
 
-			File gitRepositoryLocalDir = new File(
-				gitArtifactsLocalDir, gitRepositoryName);
+			File gitRepositoryDir = new File(
+				gitRepositoryBaseDir, gitRepositoryName);
 
-			if (gitRepositoryLocalDir.exists()) {
-				if (gitRepositoryLocalDir.isDirectory()) {
+			if (gitRepositoryDir.exists()) {
+				if (gitRepositoryDir.isDirectory()) {
 					try {
 						GitWorkingDirectory gitWorkingDirectory =
 							GitWorkingDirectoryFactory.newGitWorkingDirectory(
-								GitUtil.getDefaultBranchName(
-									gitRepositoryLocalDir),
-								gitRepositoryLocalDir, gitRepositoryName);
+								GitUtil.getDefaultBranchName(gitRepositoryDir),
+								gitRepositoryDir, gitRepositoryName);
 
 						gitWorkingDirectory.reset("--hard");
 
@@ -99,20 +96,23 @@ public class LiferayCiInitK8sPodUtil {
 					}
 				}
 
-				JenkinsResultsParserUtil.delete(gitRepositoryLocalDir);
+				JenkinsResultsParserUtil.delete(gitRepositoryDir);
 			}
+
+			File gitRepositoryArchive = new File(
+				gitRepositoryBaseDir, gitRepositoryName + ".tar.gz");
 
 			try {
 				JenkinsResultsParserUtil.copy(
-					gitRepositoryClusterArtifact, gitRepositoryLocalArtifact);
+					gitRepositoryArchiveNFS, gitRepositoryArchive);
 
-				TGZUtil.unarchive(
-					gitRepositoryLocalArtifact, gitArtifactsLocalDir);
-
-				JenkinsResultsParserUtil.delete(gitRepositoryLocalArtifact);
+				TGZUtil.unarchive(gitRepositoryArchive, gitRepositoryBaseDir);
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(ioe);
+			}
+			finally {
+				JenkinsResultsParserUtil.delete(gitRepositoryArchive);
 			}
 		}
 	}

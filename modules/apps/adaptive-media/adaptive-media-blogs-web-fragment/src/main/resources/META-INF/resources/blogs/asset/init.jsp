@@ -14,10 +14,8 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%
-String customUserAttributes = GetterUtil.getString(portletPreferences.getValue("customUserAttributes", StringPool.BLANK));
-%>
-
-<aui:input helpMessage='<%= LanguageUtil.get(resourceBundle, "custom-user-attributes-help") %>' label='<%= LanguageUtil.get(resourceBundle, "displayed-assets-must-match-these-custom-user-profile-attributes") %>' name="preferences--customUserAttributes--" value="<%= customUserAttributes %>" />
+<%@ page import="com.liferay.adaptive.media.blogs.web.fragment.internal.content.transformer.ContentTransformerUtil" %><%@
+page import="com.liferay.adaptive.media.content.transformer.ContentTransformerHandler" %><%@
+page import="com.liferay.adaptive.media.content.transformer.constants.ContentTransformerContentTypes" %>

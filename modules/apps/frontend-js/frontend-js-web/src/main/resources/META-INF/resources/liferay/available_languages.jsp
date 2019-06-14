@@ -14,12 +14,7 @@
  */
 --%>
 
-<%@ page contentType="text/javascript; charset=UTF-8" %>
-
-<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.util.LocaleUtil" %>
-
-<%@ page import="java.util.Locale" %>
+<%@ include file="/liferay/init.jsp" %>
 
 <%
 String languageId = LanguageUtil.getLanguageId(request);

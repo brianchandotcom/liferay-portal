@@ -91,51 +91,47 @@ public class DataDefinitionResourceTest
 	public void testSearchSiteDataDefinitionByCaseSensitiveDescription()
 		throws Exception {
 
-		testSearchDataDefinition(
-			"name", "DeFiNiTiON dEsCrIpTiOn", "DEFINITION");
+		search("name", "DeFiNiTiON dEsCrIpTiOn", "DEFINITION");
 	}
 
 	@Test
 	public void testSearchSiteDataDefinitionByCaseSensitiveName()
 		throws Exception {
 
-		testSearchDataDefinition(
-			"DeFiNiTiON NaMe", "description", "DEFINITION");
+		search("DeFiNiTiON NaMe", "description", "DEFINITION");
 	}
 
 	@Test
 	public void testSearchSiteDataDefinitionByDescriptionWithNonasciiChar()
 		throws Exception {
 
-		testSearchDataDefinition("name", "π€† description", "π€†");
+		search("name", "π€† description", "π€†");
 	}
 
 	@Test
 	public void testSearchSiteDataDefinitionByDescriptionWithSpecialASCIIChar()
 		throws Exception {
 
-		testSearchDataDefinition("name", "!@#description", "!@#d");
+		search("name", "!@#description", "!@#d");
 	}
 
 	@Test
 	public void testSearchSiteDataDefinitionByFullDescription()
 		throws Exception {
 
-		testSearchDataDefinition(
-			"definition", "description name", "description name");
+		search("definition", "description name", "description name");
 	}
 
 	@Test
 	public void testSearchSiteDataDefinitionByFullName() throws Exception {
-		testSearchDataDefinition(
-			"definition name", "description", "definition name");
+		search("definition name", "description", "definition name");
 	}
 
 	@Test
 	public void testSearchSiteDataDefinitionByLongDescription()
 		throws Exception {
 
-		testSearchDataDefinition(
+		search(
 			"definition", "abcdefghijklmnopqrstuvwxyz0123456789",
 			"abcdefghijklmnopqrstuvwxyz0123456789");
 	}
@@ -144,26 +140,26 @@ public class DataDefinitionResourceTest
 	public void testSearchSiteDataDefinitionByNameWithNonasciiChar()
 		throws Exception {
 
-		testSearchDataDefinition("π€† name", "description", "π€†");
+		search("π€† name", "description", "π€†");
 	}
 
 	@Test
 	public void testSearchSiteDataDefinitionByNameWithSpecialASCIIChar()
 		throws Exception {
 
-		testSearchDataDefinition("!@#name", "description", "!@#n");
+		search("!@#name", "description", "!@#n");
 	}
 
 	@Test
 	public void testSearchSiteDataDefinitionByPartialDescription()
 		throws Exception {
 
-		testSearchDataDefinition("name", "definition description", "descr");
+		search("name", "definition description", "descr");
 	}
 
 	@Test
 	public void testSearchSiteDataDefinitionByPartialName() throws Exception {
-		testSearchDataDefinition("definition name", "description", "nam");
+		search("definition name", "description", "nam");
 	}
 
 	@Override
@@ -203,7 +199,7 @@ public class DataDefinitionResourceTest
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 	}
 
-	protected void testSearchDataDefinition(
+	protected void search(
 			String dataDefinitionName, String dataDefinitionDescription,
 			String keywords)
 		throws Exception {

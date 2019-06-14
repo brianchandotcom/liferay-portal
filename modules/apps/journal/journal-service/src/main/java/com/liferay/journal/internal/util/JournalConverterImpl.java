@@ -560,7 +560,7 @@ public class JournalConverterImpl implements JournalConverter {
 						uuid, groupId);
 				}
 
-				serializable = jsonObject.toString();
+				serializable = dynamicContentElement.getText();
 			}
 			catch (Exception e) {
 				return StringPool.BLANK;

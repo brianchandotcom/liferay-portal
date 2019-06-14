@@ -23,7 +23,6 @@ import com.liferay.talend.exception.ExceptionUtils;
 import com.liferay.talend.openapi.Parameter;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
-import com.liferay.talend.utils.URIUtils;
 
 import java.io.IOException;
 
@@ -54,13 +53,10 @@ import org.talend.daikon.exception.TalendRuntimeException;
 import org.talend.daikon.i18n.GlobalI18N;
 import org.talend.daikon.i18n.I18nMessageProvider;
 import org.talend.daikon.i18n.I18nMessages;
-import org.talend.daikon.properties.PresentationItem;
 import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.ValidationResultMutable;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
-import org.talend.daikon.properties.property.Property;
-import org.talend.daikon.properties.property.PropertyFactory;
 import org.talend.daikon.properties.property.StringProperty;
 
 /**
@@ -247,32 +243,9 @@ public class LiferayResourceProperties
 	public void setupProperties() {
 		super.setupProperties();
 
-		condition.setValue("");
 		endpoint.setValue(null);
 	}
 
-	public ValidationResult validateValidateCondition() {
-		ValidationResultMutable validationResultMutable =
-			new ValidationResultMutable();
-
-		validationResultMutable.setStatus(ValidationResult.Result.OK);
-
-		LiferayConnectionProperties liferayConnectionProperties =
-			getEffectiveLiferayConnectionProperties();
-
-		String endpointUrl = liferayConnectionProperties.getApiSpecURL();
-
-		try {
-			URIUtils.addQueryConditionToURL(endpointUrl, condition.getValue());
-		}
-		catch (Exception exception) {
-			return ExceptionUtils.exceptionToValidationResult(exception);
-		}
-
-		return validationResultMutable;
-	}
-
-	public Property<String> condition = PropertyFactory.newString("condition");
 	public LiferayConnectionProperties connection =
 		new LiferayConnectionProperties("connection");
 	public StringProperty endpoint = new StringProperty("endpoint");
@@ -291,8 +264,6 @@ public class LiferayResourceProperties
 	public ParametersTable parametersTable = new ParametersTable(
 		"parametersTable");
 	public ISchemaListener schemaListener;
-	public transient PresentationItem validateCondition = new PresentationItem(
-		"validateCondition");
 
 	protected LiferayConnectionProperties
 		getEffectiveLiferayConnectionProperties() {
@@ -403,17 +374,6 @@ public class LiferayResourceProperties
 			Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
 
 		referenceForm.addRow(endpointReferenceWidget);
-
-		referenceForm.addRow(condition);
-
-		Widget validateConditionReferenceWidget = Widget.widget(
-			validateCondition);
-
-		validateConditionReferenceWidget.setLongRunning(true);
-		validateConditionReferenceWidget.setWidgetType(
-			Widget.BUTTON_WIDGET_TYPE);
-
-		referenceForm.addColumn(validateConditionReferenceWidget);
 
 		referenceForm.addRow(main.getForm(Form.REFERENCE));
 

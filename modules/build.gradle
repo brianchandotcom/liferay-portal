@@ -189,6 +189,12 @@ gradle.beforeProject {
 			}
 		}
 
+		if (project.path.startsWith(":third-party:")) {
+			bundle {
+				instruction "-includeresource.thirdparty", "-classes"
+			}
+		}
+
 		pluginManager.withPlugin("com.liferay.ant.plugin") {
 			task buildLang(dependsOn: "build-lang")
 

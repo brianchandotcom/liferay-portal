@@ -16,6 +16,7 @@ package com.liferay.knowledge.base.service.persistence.impl;
 
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.persistence.KBArticlePersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,19 +33,18 @@ import java.util.Set;
  * @generated
  */
 public class KBArticleFinderBaseImpl extends BasePersistenceImpl<KBArticle> {
-
 	public KBArticleFinderBaseImpl() {
 		setModelClass(KBArticle.class);
 
-		Map<String, String> dbColumnNames = new HashMap<String, String>();
-
-		dbColumnNames.put("uuid", "uuid_");
-
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"_dbColumnNames");
+					"_dbColumnNames");
 
 			field.setAccessible(true);
+
+			Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+			dbColumnNames.put("uuid", "uuid_");
 
 			field.set(this, dbColumnNames);
 		}
@@ -76,14 +76,10 @@ public class KBArticleFinderBaseImpl extends BasePersistenceImpl<KBArticle> {
 	 */
 	public void setKBArticlePersistence(
 		KBArticlePersistence kbArticlePersistence) {
-
 		this.kbArticlePersistence = kbArticlePersistence;
 	}
 
 	@BeanReference(type = KBArticlePersistence.class)
 	protected KBArticlePersistence kbArticlePersistence;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		KBArticleFinderBaseImpl.class);
-
+	private static final Log _log = LogFactoryUtil.getLog(KBArticleFinderBaseImpl.class);
 }

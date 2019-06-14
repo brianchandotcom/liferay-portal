@@ -15,6 +15,7 @@
 package com.liferay.knowledge.base.service.impl;
 
 import com.liferay.knowledge.base.constants.KBActionKeys;
+import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
@@ -70,6 +71,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * @author Peter Shin
  * @author Brian Wing Shun Chan
@@ -85,6 +87,13 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		
+		/*
+		 *  FIXME: portlet permissions should be checked in the portlet(s) not here !!!
+		 *  Once fixed this method should be removed
+		 */
+		
+		
 		if (portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
 			_adminPortletResourcePermission.check(
 				getPermissionChecker(), serviceContext.getScopeGroupId(),
@@ -96,6 +105,32 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 				KBActionKeys.ADD_KB_ARTICLE);
 		}
 
+		return addKBArticle(
+			parentResourceClassNameId, parentResourcePrimKey,
+			title, urlTitle, content, description, sourceURL, sections,
+			selectedFileNames, serviceContext);
+	}
+
+	public KBArticle addKBArticle(
+			long parentResourceClassNameId,
+			long parentResourcePrimKey, String title, String urlTitle,
+			String content, String description, String sourceURL,
+			String[] sections, String[] selectedFileNames,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+
+		if (parentResourceClassNameId == PortalUtil.getClassNameId(KBFolderConstants.getClassName())) {
+			_kbFolderModelResourcePermission.check(
+					getPermissionChecker(), parentResourcePrimKey, KBActionKeys.ADD_KB_ARTICLE);
+			
+		} else if (parentResourceClassNameId == PortalUtil.getClassNameId(KBArticleConstants.getClassName())) {
+			_kbArticleModelResourcePermission.check(
+					getPermissionChecker(), parentResourcePrimKey, KBActionKeys.ADD_KB_ARTICLE);
+		} else {
+			throw new PortalException("Can not find article's parent with id " + parentResourcePrimKey);
+		}
+		
 		return kbArticleLocalService.addKBArticle(
 			getUserId(), parentResourceClassNameId, parentResourcePrimKey,
 			title, urlTitle, content, description, sourceURL, sections,
@@ -170,22 +205,6 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 
 		List<KBArticle> kbArticles = kbArticlePersistence.filterFindByG_P_L(
 			groupId, parentResourcePrimKey, true, 0, 1,
-			new KBArticlePriorityComparator(true));
-
-		if (kbArticles.isEmpty()) {
-			return null;
-		}
-
-		return kbArticles.get(0);
-	}
-
-	@Override
-	public KBArticle fetchFirstChildKBArticle(
-		long groupId, long parentResourcePrimKey, int status) {
-
-		List<KBArticle> kbArticles = kbArticlePersistence.filterFindByG_P_L_S(
-			groupId, parentResourcePrimKey, true,
-			WorkflowConstants.STATUS_APPROVED, 0, 1,
 			new KBArticlePriorityComparator(true));
 
 		if (kbArticles.isEmpty()) {
@@ -739,6 +758,10 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			getPermissionChecker(), resourcePrimKey,
 			KBActionKeys.MOVE_KB_ARTICLE);
 
+		_kbFolderModelResourcePermission.check(
+				getPermissionChecker(), parentResourcePrimKey,
+				KBActionKeys.ADD_KB_ARTICLE);
+		
 		kbArticleLocalService.moveKBArticle(
 			getUserId(), resourcePrimKey, parentResourceClassNameId,
 			parentResourcePrimKey, priority);
@@ -1091,6 +1114,13 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			ModelResourcePermissionFactory.getInstance(
 				KBArticleServiceImpl.class, "_kbArticleModelResourcePermission",
 				KBArticle.class);
+	
+	private static volatile ModelResourcePermission<KBFolder>
+		_kbFolderModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				KBFolderServiceImpl.class, "_kbFolderModelResourcePermission",
+				KBFolder.class);
+
 
 	@BeanReference(type = AdminHelper.class)
 	private AdminHelper _adminHelper;

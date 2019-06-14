@@ -147,36 +147,23 @@ public class KBArchiveFactoryTest {
 		KBArchive.Folder folder0 = folderIterator.next();
 
 		Assert.assertEquals(StringPool.SLASH, folder0.getName());
-
-		KBArchive.File introFile0 = folder0.getIntroFile();
-
-		Assert.assertEquals("/intro.md", introFile0.getName());
-
+		Assert.assertEquals("/intro.md", folder0.getIntroFile().getName());
 		Assert.assertNull(folder0.getParentFolderIntroFile());
-
-		Collection<KBArchive.File> files0 = folder0.getFiles();
-
-		Assert.assertTrue(files0.isEmpty());
+		Assert.assertTrue(folder0.getFiles().isEmpty());
 
 		KBArchive.Folder folder1 = folderIterator.next();
 
 		Assert.assertEquals("/x", folder1.getName());
 		Assert.assertNull(folder1.getIntroFile());
 		Assert.assertNotNull(folder1.getParentFolderIntroFile());
-
-		Collection<KBArchive.File> files1 = folder1.getFiles();
-
-		Assert.assertEquals(files1.toString(), 1, files1.size());
+		Assert.assertEquals(1, folder1.getFiles().size());
 
 		KBArchive.Folder folder2 = folderIterator.next();
 
 		Assert.assertEquals("/y/z", folder2.getName());
 		Assert.assertNull(folder2.getIntroFile());
 		Assert.assertNull(folder2.getParentFolderIntroFile());
-
-		Collection<KBArchive.File> files2 = folder2.getFiles();
-
-		Assert.assertEquals(files2.toString(), 2, files2.size());
+		Assert.assertEquals(2, folder2.getFiles().size());
 	}
 
 	@Test(expected = KBArticleImportException.class)
@@ -205,9 +192,7 @@ public class KBArchiveFactoryTest {
 
 		Assert.assertEquals(folders.toString(), 1, folders.size());
 
-		Iterator<KBArchive.Folder> foldersIterator = folders.iterator();
-
-		KBArchive.Folder folder = foldersIterator.next();
+		KBArchive.Folder folder = folders.iterator().next();
 
 		Assert.assertNull(folder.getIntroFile());
 
@@ -215,13 +200,13 @@ public class KBArchiveFactoryTest {
 
 		Assert.assertEquals(files.toString(), 2, files.size());
 
-		Iterator<KBArchive.File> filesIterator = files.iterator();
+		Iterator<KBArchive.File> iterator = files.iterator();
 
-		KBArchive.File file0 = filesIterator.next();
+		KBArchive.File file0 = iterator.next();
 
 		Assert.assertEquals("/a.md", file0.getName());
 
-		KBArchive.File file1 = filesIterator.next();
+		KBArchive.File file1 = iterator.next();
 
 		Assert.assertEquals("/b.md", file1.getName());
 	}

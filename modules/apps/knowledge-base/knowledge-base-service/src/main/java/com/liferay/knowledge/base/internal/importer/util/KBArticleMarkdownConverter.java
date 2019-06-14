@@ -14,32 +14,28 @@
 
 package com.liferay.knowledge.base.internal.importer.util;
 
-import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.knowledge.base.exception.KBArticleImportException;
 import com.liferay.knowledge.base.markdown.converter.MarkdownConverter;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.zip.ZipReader;
 
 import java.io.IOException;
 
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Sergio González
+ * @author Rich Sezov
  */
 public class KBArticleMarkdownConverter {
 
@@ -47,13 +43,12 @@ public class KBArticleMarkdownConverter {
 			String markdown, String fileEntryName, Map<String, String> metadata)
 		throws KBArticleImportException {
 
-		MarkdownConverter markdownConverter =
-			MarkdownConverterFactoryUtil.create();
+		_markdownConverter = MarkdownConverterFactoryUtil.create();
 
-		String html = null;
+		_html = null;
 
 		try {
-			html = markdownConverter.convert(markdown);
+			_markdownConverter.parse(markdown);
 		}
 		catch (IOException ioe) {
 			throw new KBArticleImportException(
@@ -62,37 +57,76 @@ public class KBArticleMarkdownConverter {
 				ioe);
 		}
 
-		String heading = getHeading(html);
+		String heading = getHeading(markdown);
 
-		if (Validator.isNull(heading)) {
-			throw new KBArticleImportException(
-				"Unable to extract title heading from file: " + fileEntryName);
-		}
+		String urlTitle = _markdownConverter.getURLTitle();
 
-		_urlTitle = getUrlTitle(heading);
+		_urlTitle = formatURLTitle(urlTitle);
 
 		if (Validator.isNull(_urlTitle)) {
 			throw new KBArticleImportException(
 				"Missing title heading ID in file: " + fileEntryName);
 		}
 
-		String title = HtmlUtil.unescape(heading);
-
-		int x = title.indexOf("[](id=");
-
-		if (x != -1) {
-			title = title.substring(0, x);
-		}
-
-		_title = title;
-
-		html = stripIds(html);
-
-		_html = stripHeading(html);
+		_title = HtmlUtil.unescape(heading);
 
 		String baseSourceURL = metadata.get(_METADATA_BASE_SOURCE_URL);
 
 		_sourceURL = buildSourceURL(baseSourceURL, fileEntryName);
+
+		_imageNames = _markdownConverter.getImageNames();
+	}
+
+	public KBArticleMarkdownConverter(
+			String markdown, String fileEntryName, Map<String, String> metadata,
+			KBArticle article, ZipReader zip, long userId)
+		throws KBArticleImportException {
+
+		_markdownConverter = MarkdownConverterFactoryUtil.create();
+
+		//_html = null;
+
+		try {
+			_html = _markdownConverter.convert(markdown, article, zip, userId);
+		}
+		catch (IOException ioe) {
+			throw new KBArticleImportException(
+				"Unable to convert Markdown to HTML: " +
+					ioe.getLocalizedMessage(),
+				ioe);
+		}
+
+		String heading = getHeading(markdown);
+
+		String urlTitle = _markdownConverter.getURLTitle();
+
+		_urlTitle = formatURLTitle(urlTitle);
+
+		if (Validator.isNull(_urlTitle)) {
+			throw new KBArticleImportException(
+				"Missing title heading ID in file: " + fileEntryName);
+		}
+
+		_title = HtmlUtil.unescape(heading);
+
+		String baseSourceURL = metadata.get(_METADATA_BASE_SOURCE_URL);
+
+		_sourceURL = buildSourceURL(baseSourceURL, fileEntryName);
+
+		_imageNames = _markdownConverter.getImageNames();
+	}
+
+	public String getHtml(
+		String markdown, KBArticle article, ZipReader zip, long userId) {
+
+		try {
+			_html = _markdownConverter.convert(markdown, article, zip, userId);
+		}
+		catch (IOException ioe) {
+			_logger.log(Level.SEVERE, ioe.getMessage());
+		}
+
+		return _html;
 	}
 
 	public String getSourceURL() {
@@ -105,108 +139,6 @@ public class KBArticleMarkdownConverter {
 
 	public String getUrlTitle() {
 		return _urlTitle;
-	}
-
-	public String processAttachmentsReferences(
-			long userId, KBArticle kbArticle, ZipReader zipReader,
-			Map<String, FileEntry> fileEntriesMap)
-		throws PortalException {
-
-		Set<Integer> indexes = new TreeSet<>();
-
-		int index = 0;
-
-		while ((index = _html.indexOf("<img", index)) > -1) {
-			indexes.add(index);
-
-			index += 4;
-		}
-
-		if (indexes.isEmpty()) {
-			return _html;
-		}
-
-		StringBundler sb = new StringBundler();
-
-		int previousIndex = 0;
-
-		for (int curIndex : indexes) {
-			if (curIndex < 0) {
-				break;
-			}
-
-			if (curIndex > previousIndex) {
-
-				// Append text from previous position up to image tag
-
-				String text = _html.substring(previousIndex, curIndex);
-
-				sb.append(text);
-			}
-
-			int pos = _html.indexOf(">", curIndex);
-
-			if (pos < 0) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Expected close tag for image " +
-							_html.substring(curIndex));
-				}
-
-				sb.append(_html.substring(curIndex));
-
-				previousIndex = curIndex;
-
-				break;
-			}
-
-			String text = _html.substring(curIndex, pos);
-
-			String imageFileName = KBArticleImporterUtil.extractImageFileName(
-				text);
-
-			FileEntry imageFileEntry = KBArticleImporterUtil.addImageFileEntry(
-				imageFileName, userId, kbArticle, zipReader, fileEntriesMap);
-
-			if (imageFileEntry == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to find image source " + text);
-				}
-
-				sb.append("<img alt=\"missing image\" src=\"\" ");
-			}
-			else {
-				String imageSrc = StringPool.BLANK;
-
-				try {
-					imageSrc = DLUtil.getPreviewURL(
-						imageFileEntry, imageFileEntry.getFileVersion(), null,
-						StringPool.BLANK);
-				}
-				catch (PortalException pe) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to obtain image URL from file entry " +
-								imageFileEntry.getFileEntryId(),
-							pe);
-					}
-				}
-
-				sb.append("<img alt=\"");
-				sb.append(HtmlUtil.escapeAttribute(imageFileEntry.getTitle()));
-				sb.append("\" src=\"");
-				sb.append(imageSrc);
-				sb.append("\" ");
-			}
-
-			previousIndex = pos;
-		}
-
-		if (previousIndex < _html.length()) {
-			sb.append(_html.substring(previousIndex));
-		}
-
-		return sb.toString();
 	}
 
 	protected String buildSourceURL(
@@ -241,39 +173,7 @@ public class KBArticleMarkdownConverter {
 		return sb.toString();
 	}
 
-	protected String getHeading(String html) {
-		int x = html.indexOf("<h1>");
-		int y = html.indexOf("</h1>");
-
-		if ((x == -1) || (y == -1) || (x > y)) {
-			return null;
-		}
-
-		return html.substring(x + 4, y);
-	}
-
-	protected String getUrlTitle(String heading) {
-		int x = heading.indexOf("[](id=");
-
-		if (x == -1) {
-			return null;
-		}
-
-		String urlTitle = null;
-
-		int y = heading.indexOf(StringPool.CLOSE_PARENTHESIS, x);
-
-		if (y > (x + 1)) {
-			int equalsSign = heading.indexOf(StringPool.EQUAL, x);
-
-			urlTitle = heading.substring(equalsSign + 1, y);
-
-			urlTitle = StringUtil.replace(
-				urlTitle, CharPool.SPACE, CharPool.DASH);
-
-			urlTitle = StringUtil.toLowerCase(urlTitle);
-		}
-
+	protected String formatURLTitle(String urlTitle) {
 		if (urlTitle == null) {
 			return null;
 		}
@@ -299,80 +199,23 @@ public class KBArticleMarkdownConverter {
 		return urlTitle;
 	}
 
-	protected String stripHeading(String html) {
-		int index = html.indexOf("</h1>");
+	protected String getHeading(String html) {
+		int x = html.indexOf("#");
 
-		if (index == -1) {
-			return html;
-		}
+		int y = html.indexOf(StringPool.NEW_LINE, x);
 
-		return html.substring(index + 5);
-	}
+		String heading = html.substring(x + 1, y);
 
-	protected String stripIds(String content) {
-		int index = content.indexOf("[](id=");
-
-		if (index == -1) {
-			return content;
-		}
-
-		StringBundler sb = new StringBundler();
-
-		do {
-			int x = content.indexOf(StringPool.EQUAL, index);
-
-			int y = content.indexOf(StringPool.CLOSE_PARENTHESIS, x);
-
-			if (y != -1) {
-				int z = content.indexOf("</h", y);
-
-				if (z != (y + 1)) {
-					sb.append(content.substring(0, y + 1));
-				}
-				else {
-					sb.append(
-						StringUtil.trimTrailing(content.substring(0, index)));
-				}
-
-				content = content.substring(y + 1);
-			}
-			else {
-				if (_log.isWarnEnabled()) {
-					String msg = content.substring(index);
-
-					// Get the invalid id text from the content
-
-					int spaceIndex = content.indexOf(StringPool.SPACE);
-
-					if (spaceIndex != -1) {
-						msg = content.substring(index, spaceIndex);
-					}
-
-					_log.warn(
-						"Missing ')' for web content containing header id " +
-							msg);
-				}
-
-				// Since no close parenthesis remains in the content, stop
-				// stripping out IDs and simply include all of the remaining
-				// content
-
-				break;
-			}
-		}
-		while ((index = content.indexOf("[](id=")) != -1);
-
-		sb.append(content);
-
-		return sb.toString();
+		return heading.trim();
 	}
 
 	private static final String _METADATA_BASE_SOURCE_URL = "base.source.url";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		KBArticleMarkdownConverter.class);
+	private static Logger _logger;
 
-	private final String _html;
+	private String _html;
+	private final List<String> _imageNames;
+	private final MarkdownConverter _markdownConverter;
 	private final String _sourceURL;
 	private final String _title;
 	private final String _urlTitle;

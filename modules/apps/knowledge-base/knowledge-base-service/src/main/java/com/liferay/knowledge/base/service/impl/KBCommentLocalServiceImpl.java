@@ -14,6 +14,9 @@
 
 package com.liferay.knowledge.base.service.impl;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration;
 import com.liferay.knowledge.base.constants.AdminActivityKeys;
 import com.liferay.knowledge.base.constants.KBCommentConstants;
@@ -25,21 +28,30 @@ import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.service.base.KBCommentLocalServiceBaseImpl;
 import com.liferay.knowledge.base.util.comparator.KBCommentCreateDateComparator;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Validator;
@@ -47,14 +59,18 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 
+import java.io.Serializable;
+
 import java.text.DateFormat;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Callable;
 
 /**
  * @author Peter Shin
+ * @author Gregory Amerson
  */
 public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 
@@ -105,6 +121,10 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		// Subscriptions
 
 		notifySubscribers(userId, kbComment, serviceContext);
+
+		// Notification
+
+		_sendNotificationEvents(kbComment, serviceContext);
 
 		return kbComment;
 	}
@@ -224,6 +244,7 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 	}
 
 	@Override
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	public List<KBComment> getKBComments(
 		String className, long classPK, int start, int end,
 		OrderByComparator orderByComparator) {
@@ -544,7 +565,131 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		return dateFormat.format(kbComment.getCreateDate());
 	}
 
+	private long[] _getNotificationReceiverUserIds() throws PortalException {
+		Role kbSuggestionRecipientsRole = roleLocalService.fetchRole(
+			PortalUtil.getDefaultCompanyId(),
+			KBConstants.ROLE_NAME_KB_FEEDBACK);
+
+		if (kbSuggestionRecipientsRole == null) {
+			return new long[0];
+		}
+
+		long[] roleUserIds = userLocalService.getRoleUserIds(
+			kbSuggestionRecipientsRole.getRoleId());
+
+		if (roleUserIds == null) {
+			return new long[0];
+		}
+
+		return roleUserIds;
+	}
+
+	private void _sendNotificationEvents(
+			KBComment kbComment, ServiceContext serviceContext)
+		throws PortalException {
+
+		final JSONObject notificationEventJSONObject =
+			JSONFactoryUtil.createJSONObject();
+
+		notificationEventJSONObject.put("className", KBComment.class.getName());
+		notificationEventJSONObject.put("classPK", kbComment.getKbCommentId());
+		notificationEventJSONObject.put(
+			"entryTitle", StringUtil.shorten(kbComment.getContent(), 50));
+		notificationEventJSONObject.put(
+			"notificationType", UserNotificationDeliveryConstants.TYPE_WEBSITE);
+
+		AssetRendererFactory<KBComment> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				KBComment.class);
+
+		AssetRenderer<KBComment> assetRenderer =
+			assetRendererFactory.getAssetRenderer(kbComment.getKbCommentId());
+
+		String entryURL = StringPool.BLANK;
+
+		try {
+			entryURL = assetRenderer.getURLViewInContext(
+				serviceContext.getLiferayPortletRequest(),
+				serviceContext.getLiferayPortletResponse(), null);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
+
+		notificationEventJSONObject.put("entryURL", entryURL);
+		notificationEventJSONObject.put("userId", kbComment.getUserId());
+
+		final long[] receiverUserIds = _getNotificationReceiverUserIds();
+
+		String portletId = serviceContext.getPortletId();
+
+		Callable<Void> callable = new Callable<Void>() {
+
+			@Override
+			public Void call() throws Exception {
+				MessageBusUtil.sendMessage(
+					DestinationNames.ASYNC_SERVICE,
+					new NotificationProcessCallable(
+						receiverUserIds, portletId,
+						notificationEventJSONObject));
+
+				return null;
+			}
+
+		};
+
+		TransactionCommitCallbackUtil.registerCallback(callable);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBCommentLocalServiceImpl.class);
+
+	private class NotificationProcessCallable
+		implements ProcessCallable<Serializable> {
+
+		public NotificationProcessCallable(
+			long[] receiverUserIds, String portletId,
+			JSONObject notificationEventJSONObject) {
+
+			_receiverUserIds = receiverUserIds;
+			_portletId = portletId;
+			_notificationEventJSONObject = notificationEventJSONObject;
+		}
+
+		@Override
+		public Serializable call() throws ProcessException {
+			try {
+				_sendUserNotifications(
+					_receiverUserIds, _portletId, _notificationEventJSONObject);
+			}
+			catch (Exception e) {
+				throw new ProcessException(e);
+			}
+
+			return null;
+		}
+
+		private void _sendUserNotifications(
+				long[] receiverUserIds, String portletId,
+				JSONObject notificationEventJSONObject)
+			throws PortalException {
+
+			for (long receiverUserId : receiverUserIds) {
+				userNotificationEventLocalService.sendUserNotificationEvents(
+					receiverUserId, portletId,
+					UserNotificationDeliveryConstants.TYPE_WEBSITE,
+					notificationEventJSONObject);
+			}
+		}
+
+		private static final long serialVersionUID = 1L;
+
+		private final JSONObject _notificationEventJSONObject;
+		private String _portletId;
+		private final long[] _receiverUserIds;
+
+	}
 
 }

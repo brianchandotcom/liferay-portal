@@ -110,6 +110,8 @@ public class KBArticleImporter {
 				serviceContext.setWorkflowAction(
 					WorkflowConstants.ACTION_SAVE_DRAFT);
 
+				// Need to add KBArticle so image attachments can be added.
+
 				kbArticle = _kbArticleLocalService.addKBArticle(
 					userId, parentResourceClassNameId, parentResourcePrimaryKey,
 					kbArticleMarkdownConverter.getTitle(), urlTitle, markdown,
@@ -134,9 +136,12 @@ public class KBArticleImporter {
 		}
 
 		try {
-			String html =
+			/*String html =
 				kbArticleMarkdownConverter.processAttachmentsReferences(
-					userId, kbArticle, zipReader, new HashMap<>());
+					userId, kbArticle, zipReader, new HashMap<>()); */
+
+			String html = kbArticleMarkdownConverter.getHtml(
+				markdown, kbArticle, zipReader, userId);
 
 			kbArticle = _kbArticleLocalService.updateKBArticle(
 				userId, kbArticle.getResourcePrimKey(),

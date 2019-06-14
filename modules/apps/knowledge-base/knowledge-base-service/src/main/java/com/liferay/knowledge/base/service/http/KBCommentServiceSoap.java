@@ -17,6 +17,7 @@ package com.liferay.knowledge.base.service.http;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.knowledge.base.service.KBCommentServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -24,20 +25,19 @@ import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * <code>KBCommentServiceUtil</code> service
- * utility. The static methods of this class call the same methods of the
- * service utility. However, the signatures are different because it is
- * difficult for SOAP to support certain types.
+ * {@link KBCommentServiceUtil} service utility. The
+ * static methods of this class calls the same methods of the service utility.
+ * However, the signatures are different because it is difficult for SOAP to
+ * support certain types.
  *
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
- * if the method in the service utility returns a <code>java.util.List</code>,
- * that is translated to an array of
- * <code>com.liferay.knowledge.base.model.KBCommentSoap</code>. If the method in the
- * service utility returns a
- * <code>com.liferay.knowledge.base.model.KBComment</code>, that is translated to a
- * <code>com.liferay.knowledge.base.model.KBCommentSoap</code>. Methods that SOAP
- * cannot safely wire are skipped.
+ * if the method in the service utility returns a {@link java.util.List}, that
+ * is translated to an array of {@link com.liferay.knowledge.base.model.KBCommentSoap}.
+ * If the method in the service utility returns a
+ * {@link com.liferay.knowledge.base.model.KBComment}, that is translated to a
+ * {@link com.liferay.knowledge.base.model.KBCommentSoap}. Methods that SOAP cannot
+ * safely wire are skipped.
  * </p>
  *
  * <p>
@@ -59,24 +59,20 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see KBCommentServiceHttp
+ * @see com.liferay.knowledge.base.model.KBCommentSoap
+ * @see KBCommentServiceUtil
  * @generated
  */
 @ProviderType
 public class KBCommentServiceSoap {
-
-	public static com.liferay.knowledge.base.model.KBCommentSoap
-			deleteKBComment(
-				com.liferay.knowledge.base.model.KBCommentSoap kbComment)
+	public static com.liferay.knowledge.base.model.KBCommentSoap deleteKBComment(
+		com.liferay.knowledge.base.model.KBCommentSoap kbComment)
 		throws RemoteException {
-
 		try {
-			com.liferay.knowledge.base.model.KBComment returnValue =
-				KBCommentServiceUtil.deleteKBComment(
-					com.liferay.knowledge.base.model.impl.KBCommentModelImpl.
-						toModel(kbComment));
+			com.liferay.knowledge.base.model.KBComment returnValue = KBCommentServiceUtil.deleteKBComment(com.liferay.knowledge.base.model.impl.KBCommentModelImpl.toModel(
+						kbComment));
 
-			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModel(
-				returnValue);
+			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -85,16 +81,12 @@ public class KBCommentServiceSoap {
 		}
 	}
 
-	public static com.liferay.knowledge.base.model.KBCommentSoap
-			deleteKBComment(long kbCommentId)
-		throws RemoteException {
-
+	public static com.liferay.knowledge.base.model.KBCommentSoap deleteKBComment(
+		long kbCommentId) throws RemoteException {
 		try {
-			com.liferay.knowledge.base.model.KBComment returnValue =
-				KBCommentServiceUtil.deleteKBComment(kbCommentId);
+			com.liferay.knowledge.base.model.KBComment returnValue = KBCommentServiceUtil.deleteKBComment(kbCommentId);
 
-			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModel(
-				returnValue);
+			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -104,15 +96,11 @@ public class KBCommentServiceSoap {
 	}
 
 	public static com.liferay.knowledge.base.model.KBCommentSoap getKBComment(
-			long kbCommentId)
-		throws RemoteException {
-
+		long kbCommentId) throws RemoteException {
 		try {
-			com.liferay.knowledge.base.model.KBComment returnValue =
-				KBCommentServiceUtil.getKBComment(kbCommentId);
+			com.liferay.knowledge.base.model.KBComment returnValue = KBCommentServiceUtil.getKBComment(kbCommentId);
 
-			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModel(
-				returnValue);
+			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -121,17 +109,13 @@ public class KBCommentServiceSoap {
 		}
 	}
 
-	public static com.liferay.knowledge.base.model.KBCommentSoap[]
-			getKBComments(long groupId, int status, int start, int end)
-		throws RemoteException {
-
+	public static com.liferay.knowledge.base.model.KBCommentSoap[] getKBComments(
+		long groupId, int status, int start, int end) throws RemoteException {
 		try {
-			java.util.List<com.liferay.knowledge.base.model.KBComment>
-				returnValue = KBCommentServiceUtil.getKBComments(
-					groupId, status, start, end);
+			java.util.List<com.liferay.knowledge.base.model.KBComment> returnValue =
+				KBCommentServiceUtil.getKBComments(groupId, status, start, end);
 
-			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModels(
-				returnValue);
+			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -140,20 +124,16 @@ public class KBCommentServiceSoap {
 		}
 	}
 
-	public static com.liferay.knowledge.base.model.KBCommentSoap[]
-			getKBComments(
-				long groupId, int status, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.knowledge.base.model.KBComment> obc)
+	public static com.liferay.knowledge.base.model.KBCommentSoap[] getKBComments(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBComment> obc)
 		throws RemoteException {
-
 		try {
-			java.util.List<com.liferay.knowledge.base.model.KBComment>
-				returnValue = KBCommentServiceUtil.getKBComments(
-					groupId, status, start, end, obc);
+			java.util.List<com.liferay.knowledge.base.model.KBComment> returnValue =
+				KBCommentServiceUtil.getKBComments(groupId, status, start, end,
+					obc);
 
-			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModels(
-				returnValue);
+			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -162,20 +142,15 @@ public class KBCommentServiceSoap {
 		}
 	}
 
-	public static com.liferay.knowledge.base.model.KBCommentSoap[]
-			getKBComments(
-				long groupId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.knowledge.base.model.KBComment> obc)
+	public static com.liferay.knowledge.base.model.KBCommentSoap[] getKBComments(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBComment> obc)
 		throws RemoteException {
-
 		try {
-			java.util.List<com.liferay.knowledge.base.model.KBComment>
-				returnValue = KBCommentServiceUtil.getKBComments(
-					groupId, start, end, obc);
+			java.util.List<com.liferay.knowledge.base.model.KBComment> returnValue =
+				KBCommentServiceUtil.getKBComments(groupId, start, end, obc);
 
-			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModels(
-				returnValue);
+			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -184,19 +159,15 @@ public class KBCommentServiceSoap {
 		}
 	}
 
-	public static com.liferay.knowledge.base.model.KBCommentSoap[]
-			getKBComments(
-				long groupId, String className, long classPK, int status,
-				int start, int end)
-		throws RemoteException {
-
+	public static com.liferay.knowledge.base.model.KBCommentSoap[] getKBComments(
+		long groupId, String className, long classPK, int status, int start,
+		int end) throws RemoteException {
 		try {
-			java.util.List<com.liferay.knowledge.base.model.KBComment>
-				returnValue = KBCommentServiceUtil.getKBComments(
-					groupId, className, classPK, status, start, end);
+			java.util.List<com.liferay.knowledge.base.model.KBComment> returnValue =
+				KBCommentServiceUtil.getKBComments(groupId, className, classPK,
+					status, start, end);
 
-			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModels(
-				returnValue);
+			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -205,21 +176,17 @@ public class KBCommentServiceSoap {
 		}
 	}
 
-	public static com.liferay.knowledge.base.model.KBCommentSoap[]
-			getKBComments(
-				long groupId, String className, long classPK, int status,
-				int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.knowledge.base.model.KBComment> obc)
+	public static com.liferay.knowledge.base.model.KBCommentSoap[] getKBComments(
+		long groupId, String className, long classPK, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBComment> obc)
 		throws RemoteException {
-
 		try {
-			java.util.List<com.liferay.knowledge.base.model.KBComment>
-				returnValue = KBCommentServiceUtil.getKBComments(
-					groupId, className, classPK, status, start, end, obc);
+			java.util.List<com.liferay.knowledge.base.model.KBComment> returnValue =
+				KBCommentServiceUtil.getKBComments(groupId, className, classPK,
+					status, start, end, obc);
 
-			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModels(
-				returnValue);
+			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -228,21 +195,16 @@ public class KBCommentServiceSoap {
 		}
 	}
 
-	public static com.liferay.knowledge.base.model.KBCommentSoap[]
-			getKBComments(
-				long groupId, String className, long classPK, int start,
-				int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.knowledge.base.model.KBComment> obc)
+	public static com.liferay.knowledge.base.model.KBCommentSoap[] getKBComments(
+		long groupId, String className, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBComment> obc)
 		throws RemoteException {
-
 		try {
-			java.util.List<com.liferay.knowledge.base.model.KBComment>
-				returnValue = KBCommentServiceUtil.getKBComments(
-					groupId, className, classPK, start, end, obc);
+			java.util.List<com.liferay.knowledge.base.model.KBComment> returnValue =
+				KBCommentServiceUtil.getKBComments(groupId, className, classPK,
+					start, end, obc);
 
-			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModels(
-				returnValue);
+			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -251,7 +213,8 @@ public class KBCommentServiceSoap {
 		}
 	}
 
-	public static int getKBCommentsCount(long groupId) throws RemoteException {
+	public static int getKBCommentsCount(long groupId)
+		throws RemoteException {
 		try {
 			int returnValue = KBCommentServiceUtil.getKBCommentsCount(groupId);
 
@@ -266,10 +229,9 @@ public class KBCommentServiceSoap {
 
 	public static int getKBCommentsCount(long groupId, int status)
 		throws RemoteException {
-
 		try {
-			int returnValue = KBCommentServiceUtil.getKBCommentsCount(
-				groupId, status);
+			int returnValue = KBCommentServiceUtil.getKBCommentsCount(groupId,
+					status);
 
 			return returnValue;
 		}
@@ -280,13 +242,11 @@ public class KBCommentServiceSoap {
 		}
 	}
 
-	public static int getKBCommentsCount(
-			long groupId, String className, long classPK)
-		throws RemoteException {
-
+	public static int getKBCommentsCount(long groupId, String className,
+		long classPK) throws RemoteException {
 		try {
-			int returnValue = KBCommentServiceUtil.getKBCommentsCount(
-				groupId, className, classPK);
+			int returnValue = KBCommentServiceUtil.getKBCommentsCount(groupId,
+					className, classPK);
 
 			return returnValue;
 		}
@@ -297,13 +257,11 @@ public class KBCommentServiceSoap {
 		}
 	}
 
-	public static int getKBCommentsCount(
-			long groupId, String className, long classPK, int status)
-		throws RemoteException {
-
+	public static int getKBCommentsCount(long groupId, String className,
+		long classPK, int status) throws RemoteException {
 		try {
-			int returnValue = KBCommentServiceUtil.getKBCommentsCount(
-				groupId, className, classPK, status);
+			int returnValue = KBCommentServiceUtil.getKBCommentsCount(groupId,
+					className, classPK, status);
 
 			return returnValue;
 		}
@@ -314,21 +272,16 @@ public class KBCommentServiceSoap {
 		}
 	}
 
-	public static com.liferay.knowledge.base.model.KBCommentSoap
-			updateKBComment(
-				long kbCommentId, long classNameId, long classPK,
-				String content, int status,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.knowledge.base.model.KBCommentSoap updateKBComment(
+		long kbCommentId, long classNameId, long classPK, String content,
+		int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
-
 		try {
-			com.liferay.knowledge.base.model.KBComment returnValue =
-				KBCommentServiceUtil.updateKBComment(
-					kbCommentId, classNameId, classPK, content, status,
-					serviceContext);
+			com.liferay.knowledge.base.model.KBComment returnValue = KBCommentServiceUtil.updateKBComment(kbCommentId,
+					classNameId, classPK, content, status, serviceContext);
 
-			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModel(
-				returnValue);
+			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -337,20 +290,15 @@ public class KBCommentServiceSoap {
 		}
 	}
 
-	public static com.liferay.knowledge.base.model.KBCommentSoap
-			updateKBComment(
-				long kbCommentId, long classNameId, long classPK,
-				String content,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.knowledge.base.model.KBCommentSoap updateKBComment(
+		long kbCommentId, long classNameId, long classPK, String content,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
-
 		try {
-			com.liferay.knowledge.base.model.KBComment returnValue =
-				KBCommentServiceUtil.updateKBComment(
-					kbCommentId, classNameId, classPK, content, serviceContext);
+			com.liferay.knowledge.base.model.KBComment returnValue = KBCommentServiceUtil.updateKBComment(kbCommentId,
+					classNameId, classPK, content, serviceContext);
 
-			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModel(
-				returnValue);
+			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -360,17 +308,14 @@ public class KBCommentServiceSoap {
 	}
 
 	public static com.liferay.knowledge.base.model.KBCommentSoap updateStatus(
-			long kbCommentId, int status,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long kbCommentId, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
-
 		try {
-			com.liferay.knowledge.base.model.KBComment returnValue =
-				KBCommentServiceUtil.updateStatus(
-					kbCommentId, status, serviceContext);
+			com.liferay.knowledge.base.model.KBComment returnValue = KBCommentServiceUtil.updateStatus(kbCommentId,
+					status, serviceContext);
 
-			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModel(
-				returnValue);
+			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -380,5 +325,4 @@ public class KBCommentServiceSoap {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(KBCommentServiceSoap.class);
-
 }

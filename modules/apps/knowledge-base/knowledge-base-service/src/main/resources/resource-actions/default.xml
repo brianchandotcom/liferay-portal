@@ -78,6 +78,7 @@
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>
+				<action-key>ADD_KB_ARTICLE</action-key>
 				<action-key>MOVE_KB_ARTICLE</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>SUBSCRIBE</action-key>

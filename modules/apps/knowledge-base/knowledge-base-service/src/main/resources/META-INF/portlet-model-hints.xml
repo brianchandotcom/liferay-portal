@@ -22,7 +22,6 @@
 		<field name="urlTitle" type="String" />
 		<field name="content" type="String">
 			<hint-collection name="CLOB" />
-			<sanitize content-type="text/html" modes="ALL" />
 		</field>
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />

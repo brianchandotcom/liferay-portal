@@ -32,13 +32,12 @@ import com.liferay.knowledge.base.service.KBCommentLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class KBCommentBaseImpl
-	extends KBCommentModelImpl implements KBComment {
-
+public abstract class KBCommentBaseImpl extends KBCommentModelImpl
+	implements KBComment {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a kb comment model instance should use the <code>KBComment</code> interface instead.
+	 * Never modify or reference this class directly. All methods that expect a kb comment model instance should use the {@link KBComment} interface instead.
 	 */
 	@Override
 	public void persist() {
@@ -49,5 +48,4 @@ public abstract class KBCommentBaseImpl
 			KBCommentLocalServiceUtil.updateKBComment(this);
 		}
 	}
-
 }

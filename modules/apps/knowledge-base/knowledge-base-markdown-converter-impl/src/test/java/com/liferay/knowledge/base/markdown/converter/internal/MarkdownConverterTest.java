@@ -16,7 +16,7 @@ package com.liferay.knowledge.base.markdown.converter.internal;
 
 import com.liferay.knowledge.base.markdown.converter.MarkdownConverter;
 import com.liferay.knowledge.base.markdown.converter.factory.MarkdownConverterFactory;
-import com.liferay.knowledge.base.markdown.converter.internal.pegdown.factory.MarkdownConverterFactoryImpl;
+import com.liferay.knowledge.base.markdown.converter.internal.flexmark.factory.MarkdownConverterFactoryImpl;
 
 import org.junit.Assert;
 import org.junit.Test;

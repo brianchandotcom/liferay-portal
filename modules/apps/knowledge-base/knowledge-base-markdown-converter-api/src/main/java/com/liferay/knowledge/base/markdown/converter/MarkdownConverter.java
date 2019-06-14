@@ -15,12 +15,25 @@
 package com.liferay.knowledge.base.markdown.converter;
 
 import java.io.IOException;
+import java.util.List;
+
+import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.portal.kernel.zip.ZipReader;
 
 /**
  * @author James Hinkey
+ * @author Rich Sezov
  */
 public interface MarkdownConverter {
 
 	public abstract String convert(String markdown) throws IOException;
+
+	public String convert(String markdown, KBArticle article, ZipReader zip, long userId) throws IOException;
+	
+	public void parse(String markdown) throws IOException;
+
+	public abstract String getURLTitle();
+	
+	public abstract List<String>getImageNames();
 
 }

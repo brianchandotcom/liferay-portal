@@ -105,6 +105,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADMIN_RESOURCE_SCOPE_REMOVED</td>
+	<td>//span[contains(.,'${key_scopeName}') and contains(@class,'removed-scope-alias')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADMIN_TABLE_APP_CLIENT_ID</td>
 	<td>//tr[td[@class=' lfr-name-column' and contains(.,'${key_tableName}')]]/td[@class=' lfr-client-id-column']</td>
 	<td></td>

@@ -15,7 +15,6 @@
 package com.liferay.talend.connection;
 
 import com.liferay.talend.ui.UIKeys;
-import com.liferay.talend.utils.PropertiesUtils;
 
 import java.util.EnumSet;
 
@@ -32,7 +31,6 @@ public class BasicAuthorizationProperties extends PropertiesImpl {
 	public BasicAuthorizationProperties(String name) {
 		super(name);
 
-		anonymousLogin = PropertyFactory.newBoolean("anonymousLogin");
 		password = PropertyFactory.newString("password");
 
 		password.setFlags(
@@ -42,31 +40,12 @@ public class BasicAuthorizationProperties extends PropertiesImpl {
 		userId = PropertyFactory.newString("userId");
 	}
 
-	public void afterAnonymousLogin() {
-		getForms().forEach(this::refreshLayout);
-	}
-
-	@Override
-	public void refreshLayout(Form form) {
-		super.refreshLayout(form);
-
-		boolean hidden = false;
-
-		if (anonymousLogin.getValue()) {
-			hidden = true;
-		}
-
-		PropertiesUtils.setHidden(form, password, hidden);
-		PropertiesUtils.setHidden(form, userId, hidden);
-	}
-
 	@Override
 	public void setupLayout() {
 		super.setupLayout();
 
 		Form referenceForm = new Form(this, UIKeys.FORM_BASIC_AUTHORIZATION);
 
-		referenceForm.addRow(anonymousLogin);
 		referenceForm.addRow(userId);
 
 		referenceForm.addColumn(password);
@@ -80,7 +59,6 @@ public class BasicAuthorizationProperties extends PropertiesImpl {
 		userId.setValue(UIKeys.LIFERAY_DEFAULT_USER_ID);
 	}
 
-	public Property<Boolean> anonymousLogin;
 	public Property<String> password;
 	public Property<String> userId;
 

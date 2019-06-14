@@ -130,10 +130,6 @@ public class LiferayConnectionProperties
 		return _getValue(basicAuthorizationProperties.userId);
 	}
 
-	public boolean isAnonymousLogin() {
-		return _getValue(basicAuthorizationProperties.anonymousLogin);
-	}
-
 	public boolean isBasicAuthorization() {
 		if (loginType.getValue() == LoginType.BASIC) {
 			return true;

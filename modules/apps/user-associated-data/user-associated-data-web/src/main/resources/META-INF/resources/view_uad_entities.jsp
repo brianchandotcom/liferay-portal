@@ -109,6 +109,10 @@ long[] groupIds = (long[])request.getAttribute(UADWebKeys.GROUP_IDS);
 						uadEntityHref = uadEntity.getEditURL();
 					}
 
+					if (uadEntity.isInTrash()) {
+						uadEntityHref = null;
+					}
+
 					boolean showUserIcon = false;
 
 					if ((uadEntity.getViewURL() != null) && !uadEntity.isUserOwned()) {
@@ -131,14 +135,22 @@ long[] groupIds = (long[])request.getAttribute(UADWebKeys.GROUP_IDS);
 						>
 							<aui:a href="<%= uadEntityHref %>"><%= StringUtil.shorten(columnEntry.getValue(), 200) %></aui:a>
 
-							<c:if test='<%= columnEntryKey.equals("name") && showUserIcon %>'>
-								<liferay-ui:icon
-									cssClass="disabled"
-									icon="user"
-									markupView="lexicon"
-									message="this-parent-item-does-not-belong-to-the-user-but-contains-children-items-belonging-to-the-user"
-									toolTip="<%= true %>"
-								/>
+							<c:if test='<%= columnEntryKey.equals("name") || columnEntryKey.equals("title") %>'>
+								<c:if test="<%= uadEntity.isInTrash() %>">
+									<span class="label label-secondary">
+										<span class="label-item label-item-expand"><%= StringUtil.toUpperCase(LanguageUtil.get(request, "in-trash"), locale) %></span>
+									</span>
+								</c:if>
+
+								<c:if test="<%= showUserIcon %>">
+									<liferay-ui:icon
+										cssClass="disabled"
+										icon="user"
+										markupView="lexicon"
+										message="this-parent-item-does-not-belong-to-the-user-but-contains-children-items-belonging-to-the-user"
+										toolTip="<%= true %>"
+									/>
+								</c:if>
 							</c:if>
 						</liferay-ui:search-container-column-text>
 

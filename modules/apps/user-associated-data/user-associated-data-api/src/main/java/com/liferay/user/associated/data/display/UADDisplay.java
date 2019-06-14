@@ -20,6 +20,8 @@ import com.liferay.user.associated.data.component.UADComponent;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationTargetException;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -200,6 +202,9 @@ public interface UADDisplay<T> extends UADComponent<T> {
 	 * @return the localized string representing type {@code T}
 	 */
 	public String getTypeName(Locale locale);
+
+	public boolean isInTrash(T t)
+		throws IllegalAccessException, InvocationTargetException;
 
 	/**
 	 * Returns <code>true</code> if type {@code T} entities are scoped by site.

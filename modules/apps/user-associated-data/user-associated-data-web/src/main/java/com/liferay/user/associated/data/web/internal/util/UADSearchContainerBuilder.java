@@ -318,6 +318,7 @@ public class UADSearchContainerBuilder {
 		UADEntity<T> uadEntity = new UADEntity(
 			uadHierarchyDisplay.unwrap(entity),
 			uadHierarchyDisplay.getPrimaryKey(entity), editURL,
+			uadHierarchyDisplay.isInTrash(entity),
 			uadHierarchyDisplay.getTypeClass(entity),
 			uadHierarchyDisplay.isUserOwned(entity, selectedUserId), viewURL);
 
@@ -343,7 +344,8 @@ public class UADSearchContainerBuilder {
 			entity, uadDisplay.getPrimaryKey(entity),
 			uadDisplay.getEditURL(
 				entity, liferayPortletRequest, liferayPortletResponse),
-			uadDisplay.getTypeClass(), true, null);
+			uadDisplay.isInTrash(entity), uadDisplay.getTypeClass(), true,
+			null);
 
 		Map<String, Object> columnFieldValues = uadDisplay.getFieldValues(
 			entity, uadDisplay.getColumnFieldNames(),
@@ -376,8 +378,8 @@ public class UADSearchContainerBuilder {
 			"applicationKey", uadApplicationSummaryDisplay.getApplicationKey());
 
 		UADEntity<T> uadEntity = new UADEntity(
-			null, uadApplicationSummaryDisplay.getApplicationKey(), null, null,
-			true, viewURL.toString());
+			null, uadApplicationSummaryDisplay.getApplicationKey(), null, false,
+			null, true, viewURL.toString());
 
 		uadEntity.addColumnEntry(
 			"name",

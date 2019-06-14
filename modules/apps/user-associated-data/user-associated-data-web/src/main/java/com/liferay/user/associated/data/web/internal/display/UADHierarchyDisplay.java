@@ -29,6 +29,8 @@ import com.liferay.user.associated.data.web.internal.util.UADLanguageUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationTargetException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -331,6 +333,16 @@ public class UADHierarchyDisplay {
 		renderURL.setParameter("scope", scope);
 
 		return renderURL.toString();
+	}
+
+	public <T> boolean isInTrash(T object)
+		throws IllegalAccessException, InvocationTargetException {
+
+		T unwrappedObject = unwrap(object);
+
+		UADDisplay uadDisplay = _getUADDisplayByObject(unwrappedObject);
+
+		return uadDisplay.isInTrash(unwrappedObject);
 	}
 
 	public <T> boolean isUserOwned(T object, long userId) {

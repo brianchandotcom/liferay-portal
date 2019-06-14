@@ -27,12 +27,13 @@ import java.util.List;
 public class UADEntity<T> {
 
 	public UADEntity(
-		T entity, Serializable primaryKey, String editURL, Class<?> typeClass,
-		boolean userOwned, String viewURL) {
+		T entity, Serializable primaryKey, String editURL, boolean inTrash,
+		Class<?> typeClass, boolean userOwned, String viewURL) {
 
 		_entity = entity;
 		_primaryKey = primaryKey;
 		_editURL = editURL;
+		_inTrash = inTrash;
 		_typeClass = typeClass;
 		_userOwned = userOwned;
 		_viewURL = viewURL;
@@ -82,6 +83,10 @@ public class UADEntity<T> {
 		return _viewURL;
 	}
 
+	public boolean isInTrash() {
+		return _inTrash;
+	}
+
 	public boolean isUserOwned() {
 		return _userOwned;
 	}
@@ -89,6 +94,7 @@ public class UADEntity<T> {
 	private final List<KeyValuePair> _columnEntries = new ArrayList<>();
 	private final String _editURL;
 	private final T _entity;
+	private final boolean _inTrash;
 	private final Serializable _primaryKey;
 	private final Class<?> _typeClass;
 	private final boolean _userOwned;

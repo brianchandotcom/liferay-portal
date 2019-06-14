@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -33,6 +34,7 @@ import com.liferay.user.associated.data.util.UADDynamicQueryUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
@@ -90,6 +92,26 @@ public abstract class BaseModelUADDisplay<T extends BaseModel>
 	@Override
 	public String getTypeName(Locale locale) {
 		return getTypeClass().getSimpleName();
+	}
+
+	@Override
+	public boolean isInTrash(T t)
+		throws IllegalAccessException, InvocationTargetException {
+
+		if (!TrashedModel.class.isAssignableFrom(t.getClass())) {
+			return false;
+		}
+
+		try {
+			Class<?> clazz = t.getClass();
+
+			Method method = clazz.getMethod("isInTrash");
+
+			return (boolean)method.invoke(t);
+		}
+		catch (NoSuchMethodException nsme) {
+			return false;
+		}
 	}
 
 	@Override

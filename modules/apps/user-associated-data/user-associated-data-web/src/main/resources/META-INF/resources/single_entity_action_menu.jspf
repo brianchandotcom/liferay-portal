@@ -29,7 +29,14 @@
 		/>
 	</c:if>
 
-	<c:if test="<%= uadEntity.getEditURL() != null %>">
+	<c:if test="<%= uadEntity.isInTrash() %>">
+		<liferay-ui:icon
+			cssClass="disabled dropdown-item"
+			message="edit"
+		/>
+	</c:if>
+
+	<c:if test="<%= (uadEntity.getEditURL() != null) && !uadEntity.isInTrash() %>">
 		<liferay-ui:icon
 			message="edit"
 			url="<%= uadEntity.getEditURL() %>"

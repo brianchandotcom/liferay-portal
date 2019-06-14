@@ -56,12 +56,14 @@ public class FreeMarkerTemplate extends BaseTemplate {
 		TemplateResource templateResource, Map<String, Object> context,
 		Configuration configuration,
 		TemplateContextHelper templateContextHelper,
-		TemplateResourceCache templateResourceCache, boolean restricted) {
+		TemplateResourceCache templateResourceCache, boolean restricted,
+		ObjectWrapper objectWrapper) {
 
 		super(templateResource, context, templateContextHelper, restricted);
 
 		_configuration = configuration;
 		_templateResourceCache = templateResourceCache;
+		_objectWrapper = objectWrapper;
 
 		if (templateResourceCache.isEnabled()) {
 			cacheTemplateResource(templateResourceCache, templateResource);
@@ -130,10 +132,10 @@ public class FreeMarkerTemplate extends BaseTemplate {
 				getTemplateResourceUUID(templateResource),
 				TemplateConstants.DEFAUT_ENCODING);
 
+			template.setObjectWrapper(_objectWrapper);
+
 			template.process(
-				new CachableDefaultMapAdapter(
-					context, template.getObjectWrapper()),
-				writer);
+				new CachableDefaultMapAdapter(context, _objectWrapper), writer);
 		}
 		finally {
 			TemplateResourceThreadLocal.setTemplateResource(
@@ -146,6 +148,7 @@ public class FreeMarkerTemplate extends BaseTemplate {
 		};
 
 	private final Configuration _configuration;
+	private final ObjectWrapper _objectWrapper;
 	private final TemplateResourceCache _templateResourceCache;
 
 	private class CachableDefaultMapAdapter

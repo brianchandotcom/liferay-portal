@@ -15,10 +15,12 @@
 package com.liferay.jenkins.results.parser.docker;
 
 import com.liferay.jenkins.results.parser.GitHubDevSyncUtil;
+import com.liferay.jenkins.results.parser.GitRepositoryArchivesNFSDirResourceMonitor;
 import com.liferay.jenkins.results.parser.GitUtil;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.ReadWriteResourceMonitor;
 import com.liferay.jenkins.results.parser.TGZUtil;
 
 import java.io.File;
@@ -35,7 +37,7 @@ import java.util.Map;
  * @author Peter Yoo
  * @author Michael Hashimoto
  */
-public class LiferayCiGitRepositoryArchivesInitializerUtil {
+public class LiferayCiNfsInitializerUtil {
 
 	public static void init() {
 		JenkinsResultsParserUtil.regenerateSshIdRsa(
@@ -57,7 +59,9 @@ public class LiferayCiGitRepositoryArchivesInitializerUtil {
 			new File(
 				JenkinsResultsParserUtil.getEnvironmentVariable(
 					"GIT_REPOSITORY_BASE_DIR")),
-			Arrays.asList(gitRepositoryNamesString.split(",")));
+			Arrays.asList(gitRepositoryNamesString.split(",")),
+			new GitRepositoryArchivesNFSDirResourceMonitor(
+				JenkinsResultsParserUtil.getEnvironmentVariable("ETCD_URL")));
 	}
 
 	private static boolean _cloneGitRepositoryFromGitHub(
@@ -199,7 +203,8 @@ public class LiferayCiGitRepositoryArchivesInitializerUtil {
 
 	private static void _createGitRepositoryArchives(
 		File gitRepositoryArchivesNFSDir, File gitRepositoryBaseDir,
-		List<String> gitRepositoryNames) {
+		List<String> gitRepositoryNames,
+		ReadWriteResourceMonitor readWriteResourceMonitor) {
 
 		if (!gitRepositoryArchivesNFSDir.exists()) {
 			gitRepositoryArchivesNFSDir.mkdirs();
@@ -256,8 +261,12 @@ public class LiferayCiGitRepositoryArchivesInitializerUtil {
 			File gitRepositoryArchiveNFS = new File(
 				gitRepositoryArchivesNFSDir, gitRepositoryName + ".tar.gz");
 
+			String connectionKey = "git_archives_" + System.currentTimeMillis();
+
 			try {
 				TGZUtil.archive(gitRepositoryDir, gitRepositoryArchive);
+
+				readWriteResourceMonitor.waitWrite(connectionKey);
 
 				JenkinsResultsParserUtil.move(
 					gitRepositoryArchive, gitRepositoryArchiveNFS);
@@ -266,6 +275,8 @@ public class LiferayCiGitRepositoryArchivesInitializerUtil {
 				throw new RuntimeException(ioe);
 			}
 			finally {
+				readWriteResourceMonitor.signalWrite(connectionKey);
+
 				JenkinsResultsParserUtil.delete(gitRepositoryArchive);
 			}
 		}

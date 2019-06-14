@@ -14,10 +14,12 @@
 
 package com.liferay.jenkins.results.parser.docker;
 
+import com.liferay.jenkins.results.parser.GitRepositoryArchivesNFSDirResourceMonitor;
 import com.liferay.jenkins.results.parser.GitUtil;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.ReadWriteResourceMonitor;
 import com.liferay.jenkins.results.parser.TGZUtil;
 
 import java.io.File;
@@ -44,12 +46,15 @@ public class LiferayCiJenkinsPodInitializerUtil {
 			new File(
 				JenkinsResultsParserUtil.getEnvironmentVariable(
 					"GIT_REPOSITORY_BASE_DIR")),
-			Arrays.asList(gitRepositoryNamesString.split(",")));
+			Arrays.asList(gitRepositoryNamesString.split(",")),
+			new GitRepositoryArchivesNFSDirResourceMonitor(
+				JenkinsResultsParserUtil.getEnvironmentVariable("ETCD_URL")));
 	}
 
 	private static void _createGitRepositoryDirs(
 		File gitRepositoryArchivesNFSDir, File gitRepositoryBaseDir,
-		List<String> gitRepositoryNames) {
+		List<String> gitRepositoryNames,
+		ReadWriteResourceMonitor readWriteResourceMonitor) {
 
 		if (!gitRepositoryArchivesNFSDir.exists()) {
 			gitRepositoryArchivesNFSDir.mkdir();
@@ -102,7 +107,11 @@ public class LiferayCiJenkinsPodInitializerUtil {
 			File gitRepositoryArchive = new File(
 				gitRepositoryBaseDir, gitRepositoryName + ".tar.gz");
 
+			String connectionKey = "git_archives_" + System.currentTimeMillis();
+
 			try {
+				readWriteResourceMonitor.wait(connectionKey);
+
 				JenkinsResultsParserUtil.copy(
 					gitRepositoryArchiveNFS, gitRepositoryArchive);
 
@@ -112,6 +121,8 @@ public class LiferayCiJenkinsPodInitializerUtil {
 				throw new RuntimeException(ioe);
 			}
 			finally {
+				readWriteResourceMonitor.signal(connectionKey);
+
 				JenkinsResultsParserUtil.delete(gitRepositoryArchive);
 			}
 		}

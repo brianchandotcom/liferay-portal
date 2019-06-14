@@ -131,7 +131,10 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 		throws Exception {
 
 		if (pagination.getPageSize() > 250) {
-			throw new BadRequestException("Page size is out of limit");
+			throw new BadRequestException(
+				LanguageUtil.format(
+					contextAcceptLanguage.getPreferredLocale(),
+					"page-size-is-greater-than-x", 250));
 		}
 
 		return Page.of(

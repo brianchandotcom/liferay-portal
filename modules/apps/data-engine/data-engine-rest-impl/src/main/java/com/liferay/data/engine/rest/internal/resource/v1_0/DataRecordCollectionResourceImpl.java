@@ -256,11 +256,15 @@ public class DataRecordCollectionResourceImpl
 
 		List<String> actionIds = new ArrayList<>();
 
-		if (dataRecordCollectionPermission.getAddDataRecordCollection()) {
+		if (GetterUtil.getBoolean(
+				dataRecordCollectionPermission.getAddDataRecordCollection())) {
+
 			actionIds.add(DataActionKeys.ADD_DATA_RECORD_COLLECTION);
 		}
 
-		if (dataRecordCollectionPermission.getDefinePermissions()) {
+		if (GetterUtil.getBoolean(
+				dataRecordCollectionPermission.getDefinePermissions())) {
+
 			actionIds.add(DataActionKeys.DEFINE_PERMISSIONS);
 		}
 

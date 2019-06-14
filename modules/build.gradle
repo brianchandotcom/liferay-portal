@@ -331,6 +331,7 @@ gradle.beforeProject {
 								manifestMFFile.text = manifestMFFile.text.replace(oldLine.trim(), "Bundle-SymbolicName: " + properties.getProperty("Bundle-SymbolicName"))
 							}
 
+
 							oldLine = manifestMFFile.filterLine {
 								it =~ "^Bundle-Version:.*"
 							}

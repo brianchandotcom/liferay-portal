@@ -38,8 +38,8 @@ public class MetaTypeProviderImpl implements MetaTypeProvider {
 
 	Bundle _bundle;
 
-	Hashtable<String, ObjectClassDefinitionImpl> _allPidOCDs = new Hashtable<String, ObjectClassDefinitionImpl>(7);
-	Hashtable<String, ObjectClassDefinitionImpl> _allFPidOCDs = new Hashtable<String, ObjectClassDefinitionImpl>(7);
+	Map<String, ObjectClassDefinitionImpl> _allPidOCDs = new HashMap<>();
+	Map<String, ObjectClassDefinitionImpl> _allFPidOCDs = new HashMap<>();
 
 	String[] _locales;
 	boolean _isThereMeta = false;
@@ -168,17 +168,13 @@ public class MetaTypeProviderImpl implements MetaTypeProvider {
 			return checkForDefault(_locales);
 		Vector<String> localizationFiles = new Vector<String>(7);
 		// get all the localization resources for PIDS
-		Enumeration<ObjectClassDefinitionImpl> ocds = _allPidOCDs.elements();
-		while (ocds.hasMoreElements()) {
-			ObjectClassDefinitionImpl ocd = ocds.nextElement();
+		for (ObjectClassDefinitionImpl ocd : _allPidOCDs.values()) {
 			String localization = ocd.getLocalization();
 			if (localization != null && !localizationFiles.contains(localization))
 				localizationFiles.add(localization);
 		}
 		// get all the localization resources for FPIDS
-		ocds = _allFPidOCDs.elements();
-		while (ocds.hasMoreElements()) {
-			ObjectClassDefinitionImpl ocd = ocds.nextElement();
+		for (ObjectClassDefinitionImpl ocd : _allFPidOCDs.values()) {
 			String localization = ocd.getLocalization();
 			if (localization != null && !localizationFiles.contains(localization))
 				localizationFiles.add(localization);
@@ -230,3 +226,4 @@ public class MetaTypeProviderImpl implements MetaTypeProvider {
 		return locales;
 	}
 }
+/* @generated */

@@ -12,7 +12,8 @@ package org.eclipse.equinox.metatype.impl;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;
-import java.util.Hashtable;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.xml.parsers.*;
 import org.eclipse.equinox.metatype.EquinoxMetaTypeInformation;
 import org.eclipse.equinox.metatype.EquinoxMetaTypeService;
@@ -28,7 +29,7 @@ import org.xml.sax.SAXException;
 public class MetaTypeServiceImpl implements EquinoxMetaTypeService, SynchronousBundleListener {
 
 	SAXParserFactory _parserFactory;
-	private Hashtable<Long, EquinoxMetaTypeInformation> _mtps = new Hashtable<Long, EquinoxMetaTypeInformation>(7);
+	private final Map<Long, EquinoxMetaTypeInformation> _mtps = new ConcurrentHashMap<>();
 
 	private final LogService logger;
 	private final ServiceTracker<Object, Object> metaTypeProviderTracker;
@@ -59,6 +60,13 @@ public class MetaTypeServiceImpl implements EquinoxMetaTypeService, SynchronousB
 		final LogService loggerTemp = this.logger;
 		final ServiceTracker<Object, Object> tracker = this.metaTypeProviderTracker;
 		Long bID = Long.valueOf(b.getBundleId());
+
+		EquinoxMetaTypeInformation equinoxMetaTypeInformation = _mtps.get(bID);
+
+		if (equinoxMetaTypeInformation != null) {
+			return equinoxMetaTypeInformation;
+		}
+
 		synchronized (_mtps) {
 			if (_mtps.containsKey(bID))
 				return _mtps.get(bID);
@@ -133,3 +141,4 @@ public class MetaTypeServiceImpl implements EquinoxMetaTypeService, SynchronousB
 		}
 	}
 }
+/* @generated */

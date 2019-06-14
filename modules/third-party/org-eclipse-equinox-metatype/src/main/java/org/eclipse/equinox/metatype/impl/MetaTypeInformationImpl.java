@@ -12,8 +12,7 @@ package org.eclipse.equinox.metatype.impl;
 
 import org.eclipse.equinox.metatype.EquinoxMetaTypeInformation;
 
-import java.util.Enumeration;
-import java.util.Vector;
+import java.util.Set;
 import javax.xml.parsers.SAXParser;
 import org.osgi.framework.Bundle;
 import org.osgi.service.log.LogService;
@@ -48,15 +47,9 @@ public class MetaTypeInformationImpl extends MetaTypeProviderImpl implements Equ
 			return new String[0];
 		}
 
-		Vector<String> pids = new Vector<String>(7);
-		Enumeration<String> e = _allPidOCDs.keys();
-		while (e.hasMoreElements()) {
-			pids.addElement(e.nextElement());
-		}
+		Set<String> keySet = _allPidOCDs.keySet();
 
-		String[] retvalue = new String[pids.size()];
-		pids.toArray(retvalue);
-		return retvalue;
+		return keySet.toArray(new String[0]);
 	}
 
 	/*
@@ -68,14 +61,10 @@ public class MetaTypeInformationImpl extends MetaTypeProviderImpl implements Equ
 		if (_allFPidOCDs.size() == 0) {
 			return new String[0];
 		}
-		Vector<String> fpids = new Vector<String>(7);
-		Enumeration<String> e = _allFPidOCDs.keys();
-		while (e.hasMoreElements()) {
-			fpids.addElement(e.nextElement());
-		}
-		String[] retvalue = new String[fpids.size()];
-		fpids.toArray(retvalue);
-		return retvalue;
+
+		Set<String> keySet = _allFPidOCDs.keySet();
+
+		return keySet.toArray(new String[0]);
 	}
 
 	/*
@@ -87,3 +76,4 @@ public class MetaTypeInformationImpl extends MetaTypeProviderImpl implements Equ
 		return this._bundle;
 	}
 }
+/* @generated */

@@ -401,7 +401,7 @@ definition {
 
 	@priority = "3"
 	test StagingBlogsPG {
-		JSONGroup.addGroup(groupName = "Site Name");
+		property test.name.skip.portal.instance = "BlogsUsecase#StagingBlogsPG";
 
 		ProductMenu.gotoSite(site = "Site Name");
 
@@ -610,8 +610,6 @@ definition {
 	@priority = "3"
 	test StagingBlogsWithScheduledPublishing {
 		property test.name.skip.portal.instance = "BlogsUsecase#StagingBlogsWithScheduledPublishing";
-
-		JSONGroup.addGroup(groupName = "Site Name");
 
 		ProductMenu.gotoSite(site = "Site Name");
 

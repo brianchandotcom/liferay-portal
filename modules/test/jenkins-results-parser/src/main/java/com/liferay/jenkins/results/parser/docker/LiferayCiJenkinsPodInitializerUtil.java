@@ -107,7 +107,7 @@ public class LiferayCiJenkinsPodInitializerUtil {
 			File gitRepositoryArchive = new File(
 				gitRepositoriesBaseDir, gitRepositoryName + ".tar.gz");
 
-			String connectionKey = "git_archives_" + System.currentTimeMillis();
+			String connectionKey = _getNewConnectionKey();
 
 			try {
 				readWriteResourceMonitor.wait(connectionKey);
@@ -126,6 +126,11 @@ public class LiferayCiJenkinsPodInitializerUtil {
 				JenkinsResultsParserUtil.delete(gitRepositoryArchive);
 			}
 		}
+	}
+
+	private static String _getNewConnectionKey() {
+		return "git_archives_" +
+			JenkinsResultsParserUtil.getRandomValue(1, Integer.MAX_VALUE);
 	}
 
 }

@@ -107,10 +107,11 @@ public class LiferayCiJenkinsPodInitializerUtil {
 			File localGitRepositoryArchiveFile = new File(
 				gitRepositoriesBaseDir, gitRepositoryName + ".tar.gz");
 
-			String connectionKey = _getNewConnectionKey();
+			String connectionName =
+				readWriteResourceMonitor.getNewConnectionName();
 
 			try {
-				readWriteResourceMonitor.wait(connectionKey);
+				readWriteResourceMonitor.wait(connectionName);
 
 				JenkinsResultsParserUtil.copy(
 					gitRepositoryArchiveFile, localGitRepositoryArchiveFile);
@@ -122,7 +123,7 @@ public class LiferayCiJenkinsPodInitializerUtil {
 					"Unable to copy repository archive file", ioe);
 			}
 			finally {
-				readWriteResourceMonitor.signal(connectionKey);
+				readWriteResourceMonitor.signal(connectionName);
 			}
 
 			try {
@@ -137,11 +138,6 @@ public class LiferayCiJenkinsPodInitializerUtil {
 				JenkinsResultsParserUtil.delete(localGitRepositoryArchiveFile);
 			}
 		}
-	}
-
-	private static String _getNewConnectionKey() {
-		return "git_archives_" +
-			JenkinsResultsParserUtil.getRandomValue(1, Integer.MAX_VALUE);
 	}
 
 }

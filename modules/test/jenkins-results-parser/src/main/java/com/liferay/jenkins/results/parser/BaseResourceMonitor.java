@@ -70,6 +70,12 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 	}
 
 	@Override
+	public String getNewConnectionName() {
+		return String.valueOf(
+			JenkinsResultsParserUtil.getRandomValue(1, Integer.MAX_VALUE));
+	}
+
+	@Override
 	public synchronized List<ResourceConnection> getResourceConnectionQueue() {
 		Set<ResourceConnection> resourceConnections = new TreeSet<>();
 

@@ -122,19 +122,6 @@ public class SettingsFactory implements Serializable {
 					metaReportsDDLCausesTxnCommit = meta.dataDefinitionCausesTransactionCommit();
 					metaReportsDDLInTxnSupported = !meta.dataDefinitionIgnoredInTransactions();
 					metaSupportsGetGeneratedKeys = meta.supportsGetGeneratedKeys();
-					
-					log.info( "Database ->\n" +
-							"       name : " + meta.getDatabaseProductName() + '\n' +
-							"    version : " +  meta.getDatabaseProductVersion() + '\n' +
-							"      major : " + meta.getDatabaseMajorVersion() + '\n' +
-							"      minor : " + meta.getDatabaseMinorVersion()
-					);
-					log.info( "Driver ->\n" +
-							"       name : " + meta.getDriverName() + '\n' +
-							"    version : " + meta.getDriverVersion() + '\n' +
-							"      major : " + meta.getDriverMajorVersion() + '\n' +
-							"      minor : " + meta.getDriverMinorVersion()
-					);
 				}
 				catch ( SQLException sqle ) {
 					log.warn( "Could not obtain connection metadata", sqle );
@@ -468,3 +455,4 @@ public class SettingsFactory implements Serializable {
 	}
 
 }
+/* @generated */

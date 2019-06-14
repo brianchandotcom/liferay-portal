@@ -4,5 +4,5 @@ targetCompatibility = "1.7"
 dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
-	compileOnly project(":modules:knowledge-base:knowledge-base-api")
+	compileOnly project(":apps:knowledge-base:knowledge-base-api")
 }

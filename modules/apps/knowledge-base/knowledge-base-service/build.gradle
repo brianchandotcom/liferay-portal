@@ -26,8 +26,8 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.core"
 	compileOnly group: "org.osgi", name: "osgi.cmpn"
 	compileOnly group: "org.slf4j", name: "slf4j-api", version: "1.7.22"
-	compileOnly project(":modules:knowledge-base:knowledge-base-api")
-	compileOnly project(":modules:knowledge-base:knowledge-base-markdown-converter-api")
+	compileOnly project(":apps:knowledge-base:knowledge-base-api")
+	compileOnly project(":apps:knowledge-base:knowledge-base-markdown-converter-api")
 
 	testCompile group: "com.liferay", name: "com.liferay.petra.lang"
 	testCompile group: "easyconf", name: "easyconf", version: "0.9.5"

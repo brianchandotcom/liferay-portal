@@ -12,9 +12,9 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
-	compileOnly project(":modules:knowledge-base:knowledge-base-api")
-	compileOnly project(":modules:knowledge-base:knowledge-base-markdown-converter-api")
-	compileOnly project(":modules:knowledge-base:knowledge-base-service")
+	compileOnly project(":apps:knowledge-base:knowledge-base-api")
+	compileOnly project(":apps:knowledge-base:knowledge-base-markdown-converter-api")
+	compileOnly project(":apps:knowledge-base:knowledge-base-service")
 
 	testCompile group: "junit", name: "junit", version: "4.12"
 	testCompile group:"com.vladsch.flexmark", name:"flexmark-osgi", version:"0.40.16"

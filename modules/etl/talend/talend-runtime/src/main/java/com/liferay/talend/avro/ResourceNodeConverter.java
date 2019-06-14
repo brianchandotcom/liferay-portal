@@ -24,6 +24,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.talend.daikon.avro.AvroUtils;
+import org.talend.daikon.avro.converter.AvroConverter;
+import org.talend.daikon.avro.converter.string.StringTimestampConverter;
 
 /**
  * @author Zoltán Takács
@@ -88,9 +90,24 @@ public class ResourceNodeConverter
 					record.put(schemaEntry.pos(), value);
 				}
 				else if (AvroUtils.isSameType(fieldSchema, AvroUtils._long())) {
-					Object value =
-						avroConverters[schemaEntry.pos()].convertToAvro(
+					AvroConverter avroConverter =
+						avroConverters[schemaEntry.pos()];
+
+					Object value = null;
+
+					if (avroConverter instanceof StringTimestampConverter) {
+						String valueText = fieldJsonNode.asText();
+
+						if ((valueText != null) && !valueText.equals("")) {
+							value =
+								avroConverters[schemaEntry.pos()].convertToAvro(
+									valueText);
+						}
+					}
+					else {
+						value = avroConverters[schemaEntry.pos()].convertToAvro(
 							fieldJsonNode.asText("0"));
+					}
 
 					record.put(schemaEntry.pos(), value);
 				}

@@ -104,7 +104,7 @@ public class LiferayCiJenkinsPodInitializerUtil {
 				JenkinsResultsParserUtil.delete(gitRepositoryDir);
 			}
 
-			File gitRepositoryArchive = new File(
+			File localGitRepositoryArchiveFile = new File(
 				gitRepositoriesBaseDir, gitRepositoryName + ".tar.gz");
 
 			String connectionKey = _getNewConnectionKey();
@@ -113,9 +113,10 @@ public class LiferayCiJenkinsPodInitializerUtil {
 				readWriteResourceMonitor.wait(connectionKey);
 
 				JenkinsResultsParserUtil.copy(
-					gitRepositoryArchiveFile, gitRepositoryArchive);
+					gitRepositoryArchiveFile, localGitRepositoryArchiveFile);
 
-				TGZUtil.unarchive(gitRepositoryArchive, gitRepositoriesBaseDir);
+				TGZUtil.unarchive(
+					localGitRepositoryArchiveFile, gitRepositoriesBaseDir);
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(ioe);
@@ -123,7 +124,7 @@ public class LiferayCiJenkinsPodInitializerUtil {
 			finally {
 				readWriteResourceMonitor.signal(connectionKey);
 
-				JenkinsResultsParserUtil.delete(gitRepositoryArchive);
+				JenkinsResultsParserUtil.delete(localGitRepositoryArchiveFile);
 			}
 		}
 	}

@@ -37,7 +37,7 @@ import java.util.Map;
  * @author Peter Yoo
  * @author Michael Hashimoto
  */
-public class LiferayCiNfsInitializerUtil {
+public class LiferayCiGitRepositoriesInitializerUtil {
 
 	public static void init() {
 		JenkinsResultsParserUtil.regenerateSshIdRsa(

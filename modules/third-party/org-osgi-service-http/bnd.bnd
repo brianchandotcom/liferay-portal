@@ -6,4 +6,4 @@ Export-Package:\
 	org.osgi.service.http.runtime;version=1.0,\
 	org.osgi.service.http.runtime.dto;version=1.0,\
 	org.osgi.service.http.whiteboard;version=1.0
--includeresource: @lib/org.eclipse.osgi.services.jar!/org/osgi/service/http/**
+-includeresource: @org.osgi.service.http-[0-9]*.jar!/org/osgi/service/http/**

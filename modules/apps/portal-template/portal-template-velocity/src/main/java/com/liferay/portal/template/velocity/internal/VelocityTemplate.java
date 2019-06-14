@@ -48,6 +48,7 @@ public class VelocityTemplate extends BaseTemplate {
 		_velocityContext = new VelocityContext(super.context);
 		_velocityEngine = velocityEngine;
 		_templateResourceCache = templateResourceCache;
+		_restricted = restricted;
 
 		if (templateResourceCache.isEnabled()) {
 			cacheTemplateResource(templateResourceCache, templateResource);
@@ -101,6 +102,10 @@ public class VelocityTemplate extends BaseTemplate {
 		TemplateResourceThreadLocal.setTemplateResource(
 			TemplateConstants.LANG_TYPE_VM, templateResource);
 
+		if (_restricted) {
+			RestrictedTemplateThreadLocal.setRestricted(true);
+		}
+
 		try {
 			Template template = _velocityEngine.getTemplate(
 				getTemplateResourceUUID(templateResource),
@@ -111,9 +116,14 @@ public class VelocityTemplate extends BaseTemplate {
 		finally {
 			TemplateResourceThreadLocal.setTemplateResource(
 				TemplateConstants.LANG_TYPE_VM, null);
+
+			if (_restricted) {
+				RestrictedTemplateThreadLocal.setRestricted(false);
+			}
 		}
 	}
 
+	private final boolean _restricted;
 	private final TemplateResourceCache _templateResourceCache;
 	private final VelocityContext _velocityContext;
 	private final VelocityEngine _velocityEngine;

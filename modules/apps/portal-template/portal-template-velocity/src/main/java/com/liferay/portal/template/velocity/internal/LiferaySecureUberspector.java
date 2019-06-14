@@ -257,9 +257,11 @@ public class LiferaySecureUberspector extends SecureUberspector {
 					"Executing method " + methodName + " is not allowed");
 			}
 
-			_checkClassIsRestricted(clazz);
+			if (RestrictedTemplateThreadLocal.isRestricted()) {
+				_checkClassIsRestricted(clazz);
 
-			_checkMethodIsRestricted(clazz, methodName);
+				_checkMethodIsRestricted(clazz, methodName);
+			}
 
 			return true;
 		}

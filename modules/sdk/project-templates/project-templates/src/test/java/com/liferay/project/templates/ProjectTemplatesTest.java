@@ -2616,24 +2616,26 @@ public class ProjectTemplatesTest {
 			packageName + ".exception,\\", packageName + ".model,\\",
 			packageName + ".service,\\", packageName + ".service.persistence");
 
-		Optional<String> stdOutput = _executeGradle(
-			gradleProjectDir, false, true,
-			name + "-service" + _GRADLE_TASK_PATH_BUILD);
+		if (_isBuildProjects()) {
+			Optional<String> stdOutput = _executeGradle(
+				gradleProjectDir, false, true,
+				name + "-service" + _GRADLE_TASK_PATH_BUILD);
 
-		Assert.assertTrue(stdOutput.isPresent());
+			Assert.assertTrue(stdOutput.isPresent());
 
-		String gradleOutput = stdOutput.get();
+			String gradleOutput = stdOutput.get();
 
-		Assert.assertTrue(
-			"Expected gradle output to include build error. " + gradleOutput,
-			gradleOutput.contains("Exporting an empty package"));
+			Assert.assertTrue(
+				"Expected gradle output to include build error. " + gradleOutput,
+				gradleOutput.contains("Exporting an empty package"));
 
-		String mavenOutput = _executeMaven(
-			mavenProjectDir, true, _MAVEN_GOAL_PACKAGE);
+			String mavenOutput = _executeMaven(
+				mavenProjectDir, true, _MAVEN_GOAL_PACKAGE);
 
-		Assert.assertTrue(
-			"Expected maven output to include build error. " + mavenOutput,
-			mavenOutput.contains("Exporting an empty package"));
+			Assert.assertTrue(
+				"Expected maven output to include build error. " + mavenOutput,
+				mavenOutput.contains("Exporting an empty package"));
+		}
 	}
 
 	@Test
@@ -2744,13 +2746,15 @@ public class ProjectTemplatesTest {
 			modulesDir, "service-builder", "foo", "--package-name", "test",
 			"--liferayVersion", "7.0", "--dependency-management-enabled");
 
-		_executeGradle(
-			workspaceProjectDir,
-			":modules:foo:foo-service" + _GRADLE_TASK_PATH_BUILD_SERVICE);
+		if (_isBuildProjects()) {
+			_executeGradle(
+				workspaceProjectDir,
+				":modules:foo:foo-service" + _GRADLE_TASK_PATH_BUILD_SERVICE);
 
-		_executeGradle(workspaceProjectDir, ":modules:foo:foo-api:build");
+			_executeGradle(workspaceProjectDir, ":modules:foo:foo-api:build");
 
-		_executeGradle(workspaceProjectDir, ":modules:foo:foo-service:build");
+			_executeGradle(workspaceProjectDir, ":modules:foo:foo-service:build");
+		}
 	}
 
 	@Test
@@ -2774,13 +2778,15 @@ public class ProjectTemplatesTest {
 			modulesDir, "service-builder", "foo", "--package-name", "test",
 			"--liferayVersion", "7.1", "--dependency-management-enabled");
 
-		_executeGradle(
-			workspaceProjectDir,
-			":modules:foo:foo-service" + _GRADLE_TASK_PATH_BUILD_SERVICE);
+		if (_isBuildProjects()) {
+			_executeGradle(
+				workspaceProjectDir,
+				":modules:foo:foo-service" + _GRADLE_TASK_PATH_BUILD_SERVICE);
 
-		_executeGradle(workspaceProjectDir, ":modules:foo:foo-api:build");
+			_executeGradle(workspaceProjectDir, ":modules:foo:foo-api:build");
 
-		_executeGradle(workspaceProjectDir, ":modules:foo:foo-service:build");
+			_executeGradle(workspaceProjectDir, ":modules:foo:foo-service:build");
+		}
 	}
 
 	@Test
@@ -2804,13 +2810,15 @@ public class ProjectTemplatesTest {
 			modulesDir, "service-builder", "foo", "--package-name", "test",
 			"--liferayVersion", "7.2", "--dependency-management-enabled");
 
-		_executeGradle(
-			workspaceProjectDir,
-			":modules:foo:foo-service" + _GRADLE_TASK_PATH_BUILD_SERVICE);
+		if (_isBuildProjects()) {
+			_executeGradle(
+				workspaceProjectDir,
+				":modules:foo:foo-service" + _GRADLE_TASK_PATH_BUILD_SERVICE);
 
-		_executeGradle(workspaceProjectDir, ":modules:foo:foo-api:build");
+			_executeGradle(workspaceProjectDir, ":modules:foo:foo-api:build");
 
-		_executeGradle(workspaceProjectDir, ":modules:foo:foo-service:build");
+			_executeGradle(workspaceProjectDir, ":modules:foo:foo-service:build");
+		}
 	}
 
 	@Test
@@ -4012,11 +4020,13 @@ public class ProjectTemplatesTest {
 		_testNotContains(
 			moduleProjectDir, "build.gradle", "buildscript", "repositories");
 
-		_executeGradle(
-			workspaceProjectDir,
-			":modules:foo-portlet" + _GRADLE_TASK_PATH_BUILD);
+		if (_isBuildProjects()) {
+			_executeGradle(
+				workspaceProjectDir,
+				":modules:foo-portlet" + _GRADLE_TASK_PATH_BUILD);
 
-		_testExists(moduleProjectDir, "build/libs/foo.portlet-1.0.0.jar");
+			_testExists(moduleProjectDir, "build/libs/foo.portlet-1.0.0.jar");
+		}
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -4168,17 +4178,19 @@ public class ProjectTemplatesTest {
 			"mvc-portlet", "foo-portlet", "com.test", "-DclassName=Foo",
 			"-Dpackage=foo.portlet", "-DprojectType=workspace");
 
-		_executeGradle(
-			gradleWorkspaceProjectDir,
-			":modules:foo-portlet" + _GRADLE_TASK_PATH_BUILD);
+		if (_isBuildProjects()) {
+			_executeGradle(
+				gradleWorkspaceProjectDir,
+				":modules:foo-portlet" + _GRADLE_TASK_PATH_BUILD);
 
-		_testExists(
-			gradleModulesDir, "foo-portlet/build/libs/foo.portlet-1.0.0.jar");
+			_testExists(
+				gradleModulesDir, "foo-portlet/build/libs/foo.portlet-1.0.0.jar");
 
-		_executeMaven(mavenModulesDir, _MAVEN_GOAL_PACKAGE);
+			_executeMaven(mavenModulesDir, _MAVEN_GOAL_PACKAGE);
 
-		_testExists(
-			mavenModulesDir, "foo-portlet/target/foo-portlet-1.0.0.jar");
+			_testExists(
+				mavenModulesDir, "foo-portlet/target/foo-portlet-1.0.0.jar");
+		}
 	}
 
 	@Test
@@ -6296,74 +6308,76 @@ public class ProjectTemplatesTest {
 				"compileOnly project(\":" + apiProjectName + "\")");
 		}
 
-		_testChangePortletModelHintsXml(
-			gradleProjectDir, serviceProjectName,
-			new Callable<Void>() {
+		if (_isBuildProjects()) {
+			_testChangePortletModelHintsXml(
+				gradleProjectDir, serviceProjectName,
+				new Callable<Void>() {
 
-				@Override
-				public Void call() throws Exception {
-					_executeGradle(
-						rootProject,
-						projectPath + ":" + serviceProjectName +
-							_GRADLE_TASK_PATH_BUILD_SERVICE);
+					@Override
+					public Void call() throws Exception {
+						_executeGradle(
+							rootProject,
+							projectPath + ":" + serviceProjectName +
+								_GRADLE_TASK_PATH_BUILD_SERVICE);
 
-					return null;
-				}
+						return null;
+					}
 
-			});
+				});
 
-		_executeGradle(
-			rootProject,
-			projectPath + ":" + serviceProjectName + _GRADLE_TASK_PATH_BUILD);
+			_executeGradle(
+				rootProject,
+				projectPath + ":" + serviceProjectName + _GRADLE_TASK_PATH_BUILD);
 
-		File gradleApiBundleFile = _testExists(
-			gradleProjectDir,
-			apiProjectName + "/build/libs/" + packageName + ".api-1.0.0.jar");
+			File gradleApiBundleFile = _testExists(
+				gradleProjectDir,
+				apiProjectName + "/build/libs/" + packageName + ".api-1.0.0.jar");
 
-		File gradleServiceBundleFile = _testExists(
-			gradleProjectDir,
-			serviceProjectName + "/build/libs/" + packageName +
-				".service-1.0.0.jar");
+			File gradleServiceBundleFile = _testExists(
+				gradleProjectDir,
+				serviceProjectName + "/build/libs/" + packageName +
+					".service-1.0.0.jar");
 
-		_testChangePortletModelHintsXml(
-			mavenProjectDir, serviceProjectName,
-			new Callable<Void>() {
+			_testChangePortletModelHintsXml(
+				mavenProjectDir, serviceProjectName,
+				new Callable<Void>() {
 
-				@Override
-				public Void call() throws Exception {
-					_executeMaven(
-						new File(mavenProjectDir, serviceProjectName),
-						_MAVEN_GOAL_BUILD_SERVICE);
+					@Override
+					public Void call() throws Exception {
+						_executeMaven(
+							new File(mavenProjectDir, serviceProjectName),
+							_MAVEN_GOAL_BUILD_SERVICE);
 
-					return null;
-				}
+						return null;
+					}
 
-			});
+				});
 
-		File gradleServicePropertiesFile = new File(
-			gradleProjectDir,
-			serviceProjectName + "/src/main/resources/service.properties");
+			File gradleServicePropertiesFile = new File(
+				gradleProjectDir,
+				serviceProjectName + "/src/main/resources/service.properties");
 
-		File mavenServicePropertiesFile = new File(
-			mavenProjectDir,
-			serviceProjectName + "/src/main/resources/service.properties");
+			File mavenServicePropertiesFile = new File(
+				mavenProjectDir,
+				serviceProjectName + "/src/main/resources/service.properties");
 
-		Files.copy(
-			gradleServicePropertiesFile.toPath(),
-			mavenServicePropertiesFile.toPath(),
-			StandardCopyOption.REPLACE_EXISTING);
+			Files.copy(
+				gradleServicePropertiesFile.toPath(),
+				mavenServicePropertiesFile.toPath(),
+				StandardCopyOption.REPLACE_EXISTING);
 
-		_executeMaven(mavenProjectDir, _MAVEN_GOAL_PACKAGE);
+			_executeMaven(mavenProjectDir, _MAVEN_GOAL_PACKAGE);
 
-		File mavenApiBundleFile = _testExists(
-			mavenProjectDir,
-			apiProjectName + "/target/" + name + "-api-1.0.0.jar");
-		File mavenServiceBundleFile = _testExists(
-			mavenProjectDir,
-			serviceProjectName + "/target/" + name + "-service-1.0.0.jar");
+			File mavenApiBundleFile = _testExists(
+				mavenProjectDir,
+				apiProjectName + "/target/" + name + "-api-1.0.0.jar");
+			File mavenServiceBundleFile = _testExists(
+				mavenProjectDir,
+				serviceProjectName + "/target/" + name + "-service-1.0.0.jar");
 
-		_testBundlesDiff(gradleApiBundleFile, mavenApiBundleFile);
-		_testBundlesDiff(gradleServiceBundleFile, mavenServiceBundleFile);
+			_testBundlesDiff(gradleApiBundleFile, mavenApiBundleFile);
+			_testBundlesDiff(gradleServiceBundleFile, mavenServiceBundleFile);
+		}
 	}
 
 	private File _testBuildTemplateWithWorkspace(

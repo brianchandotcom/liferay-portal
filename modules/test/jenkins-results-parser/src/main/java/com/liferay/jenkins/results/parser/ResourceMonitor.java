@@ -29,6 +29,8 @@ public interface ResourceMonitor {
 
 	public String getName();
 
+	public String getNewConnectionName();
+
 	public List<ResourceConnection> getResourceConnectionQueue();
 
 	public void printResourceConnectionQueue();

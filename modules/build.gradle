@@ -142,12 +142,6 @@ gradle.beforeProject {
 			}
 		}
 
-		if (project.path.startsWith(":third-party:")) {
-			bundle {
-				instruction "-include", '-${.}/classes/META-INF/MANIFEST.MF,${.}/bnd.bnd'
-			}
-		}
-
 		if (project.path.startsWith(":sdk:project-templates:project-templates-")) {
 			task generateSampleProject(type:JavaExec)
 

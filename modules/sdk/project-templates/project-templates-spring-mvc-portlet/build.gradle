@@ -1,0 +1,172 @@
+import groovy.transform.Immutable
+import groovy.transform.ToString
+
+import java.security.MessageDigest
+
+import static groovy.io.FileType.FILES
+
+task buildSampleProjects
+task compareSampleProjects
+task generateSampleProjects
+
+def generateOptions = [
+	[framework: "springportletmvc", frameworkDependencies: "embedded", viewType: "jsp", liferayVersion: "7.0"],
+	[framework: "springportletmvc", frameworkDependencies: "embedded", viewType: "thymeleaf", liferayVersion: "7.0"],
+	[framework: "springportletmvc", frameworkDependencies: "embedded", viewType: "jsp", liferayVersion: "7.1"],
+	[framework: "springportletmvc", frameworkDependencies: "embedded", viewType: "thymeleaf", liferayVersion: "7.1"],
+	[framework: "springportletmvc", frameworkDependencies: "provided", viewType: "jsp", liferayVersion: "7.1"],
+	[framework: "springportletmvc", frameworkDependencies: "provided", viewType: "thymeleaf", liferayVersion: "7.1"],
+	[framework: "springportletmvc", frameworkDependencies: "embedded", viewType: "jsp", liferayVersion: "7.2"],
+	[framework: "springportletmvc", frameworkDependencies: "embedded", viewType: "thymeleaf", liferayVersion: "7.2"],
+	[framework: "springportletmvc", frameworkDependencies: "provided", viewType: "jsp", liferayVersion: "7.2"],
+	[framework: "springportletmvc", frameworkDependencies: "provided", viewType: "thymeleaf", liferayVersion: "7.2"],
+	[framework: "springportletmvc", frameworkDependencies: "embedded", viewType: "jsp", liferayVersion: "7.3"],
+	[framework: "springportletmvc", frameworkDependencies: "embedded", viewType: "thymeleaf", liferayVersion: "7.3"],
+	[framework: "portletmvc4spring", frameworkDependencies: "embedded", viewType: "jsp", liferayVersion: "7.1"],
+	[framework: "portletmvc4spring", frameworkDependencies: "embedded", viewType: "thymeleaf", liferayVersion: "7.1"],
+	[framework: "portletmvc4spring", frameworkDependencies: "embedded", viewType: "jsp", liferayVersion: "7.2"],
+	[framework: "portletmvc4spring", frameworkDependencies: "embedded", viewType: "thymeleaf", liferayVersion: "7.2"],
+	[framework: "portletmvc4spring", frameworkDependencies: "embedded", viewType: "jsp", liferayVersion: "7.3"],
+	[framework: "portletmvc4spring", frameworkDependencies: "embedded", viewType: "thymeleaf", liferayVersion: "7.3"],
+	[framework: "portletmvc4spring", frameworkDependencies: "provided", viewType: "jsp", liferayVersion: "7.3"],
+	[framework: "portletmvc4spring", frameworkDependencies: "provided", viewType: "thymeleaf", liferayVersion: "7.3"],
+]
+
+generateOptions.each { options ->
+	String optionsPath = "${options.framework}_${options.frameworkDependencies}_${options.viewType}_${options.liferayVersion}"
+
+	Task generateSampleProjectGradleTask = tasks.create(name: "generate_${optionsPath}_gradle", type: JavaExec) {
+		args "--archetypes-dirs", jar.archivePath.parent, "--destination", "${buildDir}/gradle", "--name", "sample-${optionsPath}", "--template", "spring-mvc-portlet", "--package-name", "com.test", "--class-name", "Sample", "--framework", "${options.framework}", "--frameworkDependencies", "${options.frameworkDependencies}", "--viewType", "${options.viewType}", "--template-version", "${options.liferayVersion}"
+		classpath = configurations.projectTemplatesMain
+		dependsOn jar
+		main = "com.liferay.project.templates.ProjectTemplates"
+
+		doFirst {
+			delete "${buildDir}/gradle/sample-${optionsPath}"
+		}
+	}
+
+	Task buildSampleProjectGradleTask = tasks.create(name: "build_${optionsPath}_gradle", type: Exec) {
+		dependsOn generateSampleProjectGradleTask
+
+		workingDir "${buildDir}/gradle/sample-${optionsPath}"
+		commandLine "./gradlew", "clean", "build"
+	}
+
+	Task unzipSampleProjectGradleWar = tasks.create(name: "unzip_${optionsPath}_gradle_war", type: Copy) {
+		dependsOn buildSampleProjectGradleTask
+		from zipTree(file("${buildDir}/gradle/sample-${optionsPath}/build/libs/sample-${optionsPath}.war"))
+		into file("${buildDir}/gradle/sample-${optionsPath}-war")
+	}
+
+	Task generateSampleProjectMavenTask = tasks.create(name: "generate_${optionsPath}_maven", type: JavaExec) {
+		args "--archetypes-dirs", jar.archivePath.parent, "--destination", "${buildDir}/maven", "--name", "sample-${optionsPath}", "--maven", "--template", "spring-mvc-portlet", "--package-name", "com.test", "--class-name", "Sample", "--framework", "${options.framework}", "--frameworkDependencies", "${options.frameworkDependencies}", "--viewType", "${options.viewType}", "--template-version", "${options.liferayVersion}"
+		classpath = configurations.projectTemplatesMain
+		dependsOn jar
+		main = "com.liferay.project.templates.ProjectTemplates"
+
+		doFirst {
+			delete "${buildDir}/maven/sample-${optionsPath}"
+		}
+	}
+
+	Task buildSampleProjectMavenTask = tasks.create(name: "build_${optionsPath}_maven", type: Exec) {
+		dependsOn generateSampleProjectMavenTask
+
+		workingDir "${buildDir}/maven/sample-${optionsPath}"
+		commandLine "./mvnw", "clean", "package"
+	}
+
+	Task unzipSampleProjectMavenWar = tasks.create(name: "unzip_${optionsPath}_maven_war", type: Copy) {
+		dependsOn buildSampleProjectMavenTask
+		from zipTree(file("${buildDir}/maven/sample-${optionsPath}/target/sample-${optionsPath}-1.0.0.war"))
+		into file("${buildDir}/maven/sample-${optionsPath}-war")
+
+		doLast {
+			delete "${buildDir}/maven/sample-${optionsPath}-war/META-INF/maven"
+		}
+	}
+
+	Task compareSampleProjectsTask = tasks.create(name: "compare_${optionsPath}") {
+		dependsOn unzipSampleProjectGradleWar, unzipSampleProjectMavenWar
+
+		doLast {
+			DirectoryDifferences directoryDifferences = new DirectoryDifferenceCollector().scan(new File("${buildDir}/gradle/sample-${optionsPath}-war"), new File("${buildDir}/maven/sample-${optionsPath}-war"))
+
+			if (!directoryDifferences.filesOnlyInA.isEmpty() || !directoryDifferences.filesOnlyInB.isEmpty()) {
+				throw new GradleException("${directoryDifferences}")
+			}
+
+			List<String> modified = new ArrayList<>(directoryDifferences.modifiedFiles)
+
+			modified.remove("META-INF/MANIFEST.MF")
+
+			if (!modified.isEmpty()) {
+				throw new GradleException("${directoryDifferences}")
+			}
+		}
+	}
+
+	buildSampleProjects.dependsOn buildSampleProjectGradleTask, buildSampleProjectMavenTask
+	generateSampleProjects.dependsOn generateSampleProjectGradleTask, generateSampleProjectMavenTask
+	compareSampleProjects.dependsOn compareSampleProjectsTask
+}
+
+@Immutable @ToString(includeNames = true)
+class DirectoryDifferences {
+
+	/**
+	* The files found only in the first directory (A).
+	*/
+	Collection<String> filesOnlyInA
+
+	/**
+	* The files found only in the second directory (B).
+	*/
+	Collection<String> filesOnlyInB
+
+	/**
+	* The files existing in both directories that do not have the same content.
+	*/
+	Collection<String> modifiedFiles
+}
+
+class DirectoryDifferenceCollector {
+
+	private final MessageDigest digester = MessageDigest.getInstance('SHA')
+
+	DirectoryDifferences scan(File dirA, File dirB) {
+		def filesInA = collectFiles(dirA)
+		def filesInB = collectFiles(dirB)
+
+		new DirectoryDifferences(
+			findFiles(filesInA, filesInB).asImmutable(),
+			findFiles(filesInB, filesInA).asImmutable(),
+			filesInA.intersect(filesInB).findAll { file -> different(dirA, dirB, file) }.asImmutable()
+		)
+	}
+
+	private List<File> collectFiles(File dir) {
+		def files = []
+		dir.eachFileRecurse(FILES) {
+			files << (it.toURI() as String) - (dir.toURI() as String)
+		}
+		files
+	}
+
+	private boolean different(File dirA, File dirB, String path) {
+		hashFile(asFile(dirA, path)) != hashFile(asFile(dirB, path))
+	}
+
+	private static File asFile(File dir, String path) {
+		new File(new URI((dir.toURI() as String) + path))
+	}
+
+	private static Collection findFiles(Collection thatAreIn, Collection notIn) {
+		(thatAreIn - notIn)
+	}
+
+	private byte[] hashFile(File file) {
+		digester.digest(file.bytes)
+	}
+}

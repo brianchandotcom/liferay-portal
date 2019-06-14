@@ -45,7 +45,7 @@ dependencies {
 	compileInclude group: "com.liferay", name: "com.liferay.sass.compiler.api", version: "2.0.1"
 	compileInclude group: "com.liferay", name: "com.liferay.sass.compiler.jni", version: "2.0.8"
 
-	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.7"
+	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.14"
 	compileOnly group: "org.apache.maven", name: "maven-artifact", version: "3.2.5"
 	compileOnly group: "org.apache.maven", name: "maven-core", version: "3.2.5"
 	compileOnly group: "org.apache.maven", name: "maven-plugin-api", version: "3.2.5"
@@ -55,7 +55,7 @@ dependencies {
 	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
 
 	testCompile group: "com.liferay", name: "com.liferay.maven.executor", version: "1.0.0"
-	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"
+	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.14"
 }
 
 formatSource {

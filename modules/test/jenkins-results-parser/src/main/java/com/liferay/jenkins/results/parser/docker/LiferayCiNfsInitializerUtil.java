@@ -15,7 +15,7 @@
 package com.liferay.jenkins.results.parser.docker;
 
 import com.liferay.jenkins.results.parser.GitHubDevSyncUtil;
-import com.liferay.jenkins.results.parser.GitRepositoryArchivesNFSDirResourceMonitor;
+import com.liferay.jenkins.results.parser.GitRepositoryArchivesDirResourceMonitor;
 import com.liferay.jenkins.results.parser.GitUtil;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
@@ -55,12 +55,12 @@ public class LiferayCiNfsInitializerUtil {
 		_createGitRepositoryArchives(
 			new File(
 				JenkinsResultsParserUtil.getEnvironmentVariable(
-					"GIT_REPOSITORY_ARCHIVES_NFS_DIR")),
+					"GIT_REPOSITORY_ARCHIVES_DIR")),
 			new File(
 				JenkinsResultsParserUtil.getEnvironmentVariable(
-					"GIT_REPOSITORY_BASE_DIR")),
+					"GIT_REPOSITORIES_BASE_DIR")),
 			Arrays.asList(gitRepositoryNamesString.split(",")),
-			new GitRepositoryArchivesNFSDirResourceMonitor(
+			new GitRepositoryArchivesDirResourceMonitor(
 				JenkinsResultsParserUtil.getEnvironmentVariable("ETCD_URL")));
 	}
 

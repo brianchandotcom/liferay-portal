@@ -14,7 +14,7 @@
 
 package com.liferay.jenkins.results.parser.docker;
 
-import com.liferay.jenkins.results.parser.GitRepositoryArchivesNFSDirResourceMonitor;
+import com.liferay.jenkins.results.parser.GitRepositoryArchivesDirResourceMonitor;
 import com.liferay.jenkins.results.parser.GitUtil;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
@@ -42,26 +42,26 @@ public class LiferayCiJenkinsPodInitializerUtil {
 		_createGitRepositoryDirs(
 			new File(
 				JenkinsResultsParserUtil.getEnvironmentVariable(
-					"GIT_REPOSITORY_ARCHIVES_NFS_DIR")),
+					"GIT_REPOSITORY_ARCHIVES_DIR")),
 			new File(
 				JenkinsResultsParserUtil.getEnvironmentVariable(
-					"GIT_REPOSITORY_BASE_DIR")),
+					"GIT_REPOSITORIES_BASE_DIR")),
 			Arrays.asList(gitRepositoryNamesString.split(",")),
-			new GitRepositoryArchivesNFSDirResourceMonitor(
+			new GitRepositoryArchivesDirResourceMonitor(
 				JenkinsResultsParserUtil.getEnvironmentVariable("ETCD_URL")));
 	}
 
 	private static void _createGitRepositoryDirs(
-		File gitRepositoryArchivesNFSDir, File gitRepositoryBaseDir,
+		File gitRepositoryArchivesDir, File gitRepositoriesBaseDir,
 		List<String> gitRepositoryNames,
 		ReadWriteResourceMonitor readWriteResourceMonitor) {
 
-		if (!gitRepositoryArchivesNFSDir.exists()) {
-			gitRepositoryArchivesNFSDir.mkdir();
+		if (!gitRepositoryArchivesDir.exists()) {
+			gitRepositoryArchivesDir.mkdir();
 		}
 
-		if (!gitRepositoryBaseDir.exists()) {
-			gitRepositoryBaseDir.mkdir();
+		if (!gitRepositoriesBaseDir.exists()) {
+			gitRepositoriesBaseDir.mkdir();
 		}
 
 		for (String gitRepositoryName : gitRepositoryNames) {
@@ -71,16 +71,16 @@ public class LiferayCiJenkinsPodInitializerUtil {
 			System.out.println("##");
 			System.out.println();
 
-			File gitRepositoryArchiveNFS = new File(
-				gitRepositoryArchivesNFSDir, gitRepositoryName + ".tar.gz");
+			File gitRepositoryArchiveFile = new File(
+				gitRepositoryArchivesDir, gitRepositoryName + ".tar.gz");
 
-			if (!gitRepositoryArchiveNFS.exists()) {
+			if (!gitRepositoryArchiveFile.exists()) {
 				throw new RuntimeException(
-					"Could not find " + gitRepositoryArchiveNFS);
+					"Could not find " + gitRepositoryArchiveFile);
 			}
 
 			File gitRepositoryDir = new File(
-				gitRepositoryBaseDir, gitRepositoryName);
+				gitRepositoriesBaseDir, gitRepositoryName);
 
 			if (gitRepositoryDir.exists()) {
 				if (gitRepositoryDir.isDirectory()) {
@@ -105,7 +105,7 @@ public class LiferayCiJenkinsPodInitializerUtil {
 			}
 
 			File gitRepositoryArchive = new File(
-				gitRepositoryBaseDir, gitRepositoryName + ".tar.gz");
+				gitRepositoriesBaseDir, gitRepositoryName + ".tar.gz");
 
 			String connectionKey = "git_archives_" + System.currentTimeMillis();
 
@@ -113,9 +113,9 @@ public class LiferayCiJenkinsPodInitializerUtil {
 				readWriteResourceMonitor.wait(connectionKey);
 
 				JenkinsResultsParserUtil.copy(
-					gitRepositoryArchiveNFS, gitRepositoryArchive);
+					gitRepositoryArchiveFile, gitRepositoryArchive);
 
-				TGZUtil.unarchive(gitRepositoryArchive, gitRepositoryBaseDir);
+				TGZUtil.unarchive(gitRepositoryArchive, gitRepositoriesBaseDir);
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(ioe);

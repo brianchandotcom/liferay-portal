@@ -17,10 +17,10 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class GitRepositoryArchivesNFSDirResourceMonitor
+public class GitRepositoryArchivesDirResourceMonitor
 	extends BaseReadWriteResourceMonitor {
 
-	public GitRepositoryArchivesNFSDirResourceMonitor(String etcdServerURL) {
+	public GitRepositoryArchivesDirResourceMonitor(String etcdServerURL) {
 		super(
 			etcdServerURL, "git_repository_archives_nfs",
 			_ALLOWED_RESOURCE_CONNECTIONS);

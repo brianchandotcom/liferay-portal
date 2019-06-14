@@ -42,7 +42,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
-	public void testPostDataDefinitionDataLayout_addMultiplesDataLayout()
+	public void testCreateMultipleDataLayoutsForSameDefinition()
 		throws Exception {
 
 		DataLayout randomDataLayout = randomDataLayout();

@@ -5,25 +5,25 @@ definition {
 
 		FormFields.editText(
 			fieldName = "name",
-			fieldValue = "${SAPName}");
+			fieldValue = "${policyName}");
 
 		FormFields.editText(
 			fieldName = "title",
-			fieldValue = "${SAPTitle}");
+			fieldValue = "${title}");
 
-		if (isSet(SAPServiceClass)) {
+		if (isSet(serviceClass)) {
 			FormFields.editText(
 				fieldName = "serviceClass",
-				fieldValue = "${SAPServiceClass}");
+				fieldValue = "${serviceClass}");
 		}
 
-		if (isSet(SAPServiceClass)) {
+		if (isSet(methodName)) {
 			FormFields.editText(
 				fieldName = "MethodName",
-				fieldValue = "${SAPMethodName}");
+				fieldValue = "${methodName}");
 		}
 
-		if ("${SAPEnabled}" == "true") {
+		if ("${enabled}" == "true") {
 			FormFields.enableCheckbox(fieldName = "enabled");
 		}
 
@@ -43,9 +43,37 @@ definition {
 				value1 = "${allowedServiceSignature}");
 		}
 
-		AssertClick(
-			locator1 = "Button#SAVE",
-			value1 = "Save");
+		if ("${enabled}" == "true") {
+			FormFields.enableCheckbox(fieldName = "enabled");
+		} else if ("${enabled}" == "false") {
+			FormFields.disableCheckbox(fieldName = "enabled");
+		}
+
+		if (isSet(newName)) {
+			FormFields.editText(
+				fieldName = "name",
+				fieldValue = "${newName}");
+		}
+
+		if (isSet(title)) {
+			FormFields.editText(
+				fieldName = "title",
+				fieldValue = "${title}");
+		}
+
+		if (isSet(serviceClass)) {
+			FormFields.editText(
+				fieldName = "serviceClass",
+				fieldValue = "${serviceClass}");
+		}
+
+		if (isSet(methodName)) {
+			FormFields.editText(
+				fieldName = "MethodName",
+				fieldValue = "${methodName}");
+		}
+
+		PortletEntry.save();
 	}
 
 	macro gotoServiceAccessPolicy {

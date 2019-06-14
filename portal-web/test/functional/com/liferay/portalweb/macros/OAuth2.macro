@@ -156,10 +156,19 @@ definition {
 	}
 
 	macro getAccessToken {
-		var reponse = JSONCurlUtil.post("${curl}");
+		var portalURL = PropsUtil.get("portal.url");
 
-		var partialReponse = StringUtil.extractFirst("${reponse}", "&quot;,&quot;token_type");
-		var accessToken = StringUtil.extractLast("${partialReponse}", "access_token&quot;:&quot;");
+		if ("${grantFlow}" == "clientCredentials") {
+			var tokenCurl = '''
+				${portalURL}/o/oauth2/token \
+					--data grant_type=client_credentials&client_id=${clientId}&client_secret=${clientSecret}
+			''';
+		}
+
+		var response = JSONCurlUtil.post("${tokenCurl}");
+
+		var partialResponse = StringUtil.extractFirst("${response}", "&quot;,&quot;token_type");
+		var accessToken = StringUtil.extractLast("${partialResponse}", "access_token&quot;:&quot;");
 		echo("## * Access Token: ${accessToken}");
 
 		return "${accessToken}";
@@ -504,7 +513,7 @@ definition {
 			}
 		}
 
-		if ((isSet(allResourceScopesUnchecked)) || (isSet(checkedGlobalScopesViaModal)) || (isSet(resourceCheckedList)) || (isSet(resourceUncheckedList))) {
+		if ((isSet(allResourceScopesUnchecked)) || (isSet(checkedGlobalScopesViaModal)) || (isSet(removedScope)) || (isSet(resourceCheckedList)) || (isSet(resourceUncheckedList))) {
 			if (IsElementPresent(locator1 = "NavUnderline#ACTIVE_NAV_UNDERLINE_LINK", key_navUnderline = "Global scopes")) {
 				Navigator.gotoNavUnderline(navUnderline = "Resource scopes");
 			}
@@ -548,6 +557,12 @@ definition {
 				}
 
 				Click(locator1 = "Button#CLOSE_IFRAME");
+			}
+
+			if (isSet(removedScope)) {
+				AssertElementPresent(
+					key_scopeName = "${removedScope}",
+					locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_REMOVED");
 			}
 		}
 

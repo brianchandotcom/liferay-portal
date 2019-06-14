@@ -162,11 +162,11 @@ definition {
 			portlet = "Service Access Policy");
 
 		ServiceAccessPolicy.addServiceAccessPolicy(
-			SAPEnabled = "true",
-			SAPMethodName = "deleteArticle",
-			SAPName = "OAUTH2_delete.journalarticles",
-			SAPServiceClass = "com.liferay.journal.service.JournalArticleService",
-			SAPTitle = "delete journal articles");
+			enabled = "true",
+			methodName = "deleteArticle",
+			policyName = "OAUTH2_delete.journalarticles",
+			serviceClass = "com.liferay.journal.service.JournalArticleService",
+			title = "delete journal articles");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -202,7 +202,7 @@ definition {
 				--data grant_type=client_credentials&client_id=abc123&client_secret=abc123
 		''';
 
-		var accessToken = OAuth2.getAccessToken(curl = "${tokenCurl}");
+		var accessToken = OAuth2.getAccessToken(tokenCurl = "${tokenCurl}");
 
 		var articleId = JSONWebcontent.getWebContentIdByURLTitle(
 			groupName = "Guest",

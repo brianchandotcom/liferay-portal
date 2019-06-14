@@ -16,6 +16,10 @@ package com.liferay.talend.avro;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import java.util.Objects;
+
+import org.apache.avro.LogicalType;
+import org.apache.avro.LogicalTypes;
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.IndexedRecord;
@@ -24,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.talend.daikon.avro.AvroUtils;
+import org.talend.daikon.avro.converter.AvroConverter;
 
 /**
  * @author Zoltán Takács
@@ -59,52 +64,65 @@ public class ResourceNodeConverter
 					return;
 				}
 
+				AvroConverter avroConverter = avroConverters[schemaEntry.pos()];
 				Schema fieldSchema = AvroUtils.unwrapIfNullable(
 					schemaEntry.schema());
 
 				if (AvroUtils.isSameType(fieldSchema, AvroUtils._boolean())) {
-					Object value =
-						avroConverters[schemaEntry.pos()].convertToAvro(
-							fieldJsonNode.asText());
+					Object value = avroConverter.convertToAvro(
+						fieldJsonNode.asText());
 
 					record.put(schemaEntry.pos(), value);
 				}
 				else if (AvroUtils.isSameType(
 							fieldSchema, AvroUtils._bytes())) {
 
-					Object value =
-						avroConverters[schemaEntry.pos()].convertToAvro(
-							fieldJsonNode.asText());
+					Object value = avroConverter.convertToAvro(
+						fieldJsonNode.asText());
 
 					record.put(schemaEntry.pos(), value);
 				}
 				else if (AvroUtils.isSameType(
 							fieldSchema, AvroUtils._double())) {
 
-					Object value =
-						avroConverters[schemaEntry.pos()].convertToAvro(
-							fieldJsonNode.asText("0"));
+					Object value = avroConverter.convertToAvro(
+						fieldJsonNode.asText("0"));
 
 					record.put(schemaEntry.pos(), value);
 				}
 				else if (AvroUtils.isSameType(fieldSchema, AvroUtils._long())) {
-					Object value =
-						avroConverters[schemaEntry.pos()].convertToAvro(
+					Object value = null;
+
+					LogicalType logicalType = fieldSchema.getLogicalType();
+					LogicalTypes.TimestampMillis timestampMillis =
+						LogicalTypes.timestampMillis();
+
+					if ((logicalType != null) &&
+						Objects.equals(
+							logicalType.getName(), timestampMillis.getName())) {
+
+						String valueText = fieldJsonNode.asText();
+
+						if ((valueText != null) && !valueText.equals("")) {
+							value = avroConverter.convertToAvro(valueText);
+						}
+					}
+					else {
+						value = avroConverter.convertToAvro(
 							fieldJsonNode.asText("0"));
+					}
 
 					record.put(schemaEntry.pos(), value);
 				}
 				else if (AvroUtils.isSameType(fieldSchema, AvroUtils._int())) {
-					Object value =
-						avroConverters[schemaEntry.pos()].convertToAvro(
-							fieldJsonNode.asText("0"));
+					Object value = avroConverter.convertToAvro(
+						fieldJsonNode.asText("0"));
 
 					record.put(schemaEntry.pos(), value);
 				}
 				else {
-					Object value =
-						avroConverters[schemaEntry.pos()].convertToAvro(
-							fieldJsonNode.toString());
+					Object value = avroConverter.convertToAvro(
+						fieldJsonNode.toString());
 
 					record.put(schemaEntry.pos(), value);
 				}

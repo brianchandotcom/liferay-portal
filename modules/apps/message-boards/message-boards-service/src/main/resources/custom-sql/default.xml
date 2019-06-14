@@ -16,7 +16,7 @@
 	<sql id="com.liferay.message.boards.service.persistence.MBCategoryFinder.countC_ByS_G_U_P">
 		<![CDATA[
 			SELECT
-				COUNT(DISTINCT MBCategory.categoryId) AS COUNT_VALUE
+				COUNT(*) AS COUNT_VALUE
 			FROM
 				MBCategory
 			INNER JOIN
@@ -57,7 +57,7 @@
 	<sql id="com.liferay.message.boards.service.persistence.MBCategoryFinder.findC_ByS_G_U_P">
 		<![CDATA[
 			SELECT
-				DISTINCT {MBCategory.*}
+				{MBCategory.*}
 			FROM
 				MBCategory
 			INNER JOIN
@@ -289,7 +289,7 @@
 	<sql id="com.liferay.message.boards.service.persistence.MBThreadFinder.countByS_G_U">
 		<![CDATA[
 			SELECT
-				COUNT(DISTINCT MBThread.threadId) AS COUNT_VALUE
+				COUNT(*) AS COUNT_VALUE
 			FROM
 				MBThread
 			INNER JOIN
@@ -321,7 +321,7 @@
 	<sql id="com.liferay.message.boards.service.persistence.MBThreadFinder.countByS_G_U_C">
 		<![CDATA[
 			SELECT
-				COUNT(DISTINCT MBThread.threadId) AS COUNT_VALUE
+				COUNT(*) AS COUNT_VALUE
 			FROM
 				MBThread
 			INNER JOIN
@@ -441,7 +441,7 @@
 	<sql id="com.liferay.message.boards.service.persistence.MBThreadFinder.findByS_G_U">
 		<![CDATA[
 			SELECT
-				DISTINCT {MBThread.*}
+				{MBThread.*}
 			FROM
 				MBThread
 			INNER JOIN
@@ -479,7 +479,7 @@
 	<sql id="com.liferay.message.boards.service.persistence.MBThreadFinder.findByS_G_U_C">
 		<![CDATA[
 			SELECT
-				DISTINCT {MBThread.*}
+				{MBThread.*}
 			FROM
 				MBThread
 			INNER JOIN

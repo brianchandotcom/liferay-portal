@@ -176,10 +176,18 @@ public class MissingEmptyLineCheck extends BaseCheck {
 					return;
 				}
 
-				log(
-					nextExpressionStartLineNumber,
-					_MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_REFERENCE,
-					nextExpressionStartLineNumber, variableName);
+				String methodCallVariableName = _getMethodCallVariableName(
+					nextSiblingDetailAST);
+
+				if (!_hasFollowingMethodCallWithVariableName(
+						nextSiblingDetailAST, methodCallVariableName,
+						variableName)) {
+
+					log(
+						nextExpressionStartLineNumber,
+						_MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_REFERENCE,
+						nextExpressionStartLineNumber, variableName);
+				}
 
 				return;
 			}
@@ -469,6 +477,32 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		return identDetailASTList;
 	}
 
+	private String _getMethodCallVariableName(DetailAST detailAST) {
+		if (detailAST.getType() != TokenTypes.EXPR) {
+			return null;
+		}
+
+		DetailAST firstChildDetailAST = detailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() != TokenTypes.METHOD_CALL) {
+			return null;
+		}
+
+		firstChildDetailAST = firstChildDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() != TokenTypes.DOT) {
+			return null;
+		}
+
+		firstChildDetailAST = firstChildDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
+			return firstChildDetailAST.getText();
+		}
+
+		return null;
+	}
+
 	private String _getVariableName(DetailAST assignDetailAST) {
 		DetailAST nameDetailAST = null;
 
@@ -486,6 +520,51 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		}
 
 		return null;
+	}
+
+	private boolean _hasFollowingMethodCallWithVariableName(
+		DetailAST detailAST, String methodCallVariableName,
+		String variableName) {
+
+		if (methodCallVariableName == null) {
+			return false;
+		}
+
+		DetailAST nextSiblingDetailAST = detailAST.getNextSibling();
+
+		if ((nextSiblingDetailAST == null) ||
+			(nextSiblingDetailAST.getType() != TokenTypes.SEMI)) {
+
+			return false;
+		}
+
+		nextSiblingDetailAST = nextSiblingDetailAST.getNextSibling();
+
+		if (nextSiblingDetailAST == null) {
+			return false;
+		}
+
+		int endLineNumber = DetailASTUtil.getEndLineNumber(detailAST);
+		int nextExpressionStartLineNumber = DetailASTUtil.getStartLineNumber(
+			nextSiblingDetailAST);
+
+		if ((endLineNumber + 1) != nextExpressionStartLineNumber) {
+			return false;
+		}
+
+		String nextMethodCallVariableName = _getMethodCallVariableName(
+			nextSiblingDetailAST);
+
+		if (!methodCallVariableName.equals(nextMethodCallVariableName)) {
+			return false;
+		}
+
+		if (_containsVariableName(nextSiblingDetailAST, variableName)) {
+			return true;
+		}
+
+		return _hasFollowingMethodCallWithVariableName(
+			nextSiblingDetailAST, methodCallVariableName, variableName);
 	}
 
 	private boolean _hasPrecedingVariableDef(

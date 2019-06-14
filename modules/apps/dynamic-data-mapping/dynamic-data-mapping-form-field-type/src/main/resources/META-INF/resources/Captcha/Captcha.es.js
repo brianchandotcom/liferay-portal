@@ -10,7 +10,11 @@ import {Config} from 'metal-state';
  * @extends Component
  */
 
-class Captcha extends Component {}
+class Captcha extends Component {
+	shouldUpdate() {
+		return false;
+	}
+}
 
 Soy.register(Captcha, templates);
 

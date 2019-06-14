@@ -26,11 +26,11 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.knowledge.base.service.http.KBArticleServiceSoap}.
  *
  * @author Brian Wing Shun Chan
+ * @see com.liferay.knowledge.base.service.http.KBArticleServiceSoap
  * @generated
  */
 @ProviderType
 public class KBArticleSoap implements Serializable {
-
 	public static KBArticleSoap toSoapModel(KBArticle model) {
 		KBArticleSoap soapModel = new KBArticleSoap();
 
@@ -44,8 +44,7 @@ public class KBArticleSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setRootResourcePrimKey(model.getRootResourcePrimKey());
-		soapModel.setParentResourceClassNameId(
-			model.getParentResourceClassNameId());
+		soapModel.setParentResourceClassNameId(model.getParentResourceClassNameId());
 		soapModel.setParentResourcePrimKey(model.getParentResourcePrimKey());
 		soapModel.setKbFolderId(model.getKbFolderId());
 		soapModel.setVersion(model.getVersion());
@@ -96,8 +95,7 @@ public class KBArticleSoap implements Serializable {
 	}
 
 	public static KBArticleSoap[] toSoapModels(List<KBArticle> models) {
-		List<KBArticleSoap> soapModels = new ArrayList<KBArticleSoap>(
-			models.size());
+		List<KBArticleSoap> soapModels = new ArrayList<KBArticleSoap>(models.size());
 
 		for (KBArticle model : models) {
 			soapModels.add(toSoapModel(model));
@@ -386,5 +384,4 @@ public class KBArticleSoap implements Serializable {
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-
 }

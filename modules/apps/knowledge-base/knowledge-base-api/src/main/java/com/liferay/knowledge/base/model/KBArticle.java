@@ -25,20 +25,19 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see KBArticleModel
+ * @see com.liferay.knowledge.base.model.impl.KBArticleImpl
+ * @see com.liferay.knowledge.base.model.impl.KBArticleModelImpl
  * @generated
  */
 @ImplementationClassName("com.liferay.knowledge.base.model.impl.KBArticleImpl")
 @ProviderType
 public interface KBArticle extends KBArticleModel, PersistedModel {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to <code>com.liferay.knowledge.base.model.impl.KBArticleImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.knowledge.base.model.impl.KBArticleImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<KBArticle, Long> KB_ARTICLE_ID_ACCESSOR =
-		new Accessor<KBArticle, Long>() {
-
+	public static final Accessor<KBArticle, Long> KB_ARTICLE_ID_ACCESSOR = new Accessor<KBArticle, Long>() {
 			@Override
 			public Long get(KBArticle kbArticle) {
 				return kbArticle.getKbArticleId();
@@ -53,14 +52,12 @@ public interface KBArticle extends KBArticleModel, PersistedModel {
 			public Class<KBArticle> getTypeClass() {
 				return KBArticle.class;
 			}
-
 		};
 
 	public java.util.List<Long> getAncestorResourcePrimaryKeys()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry>
-			getAttachmentsFileEntries()
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public long getAttachmentsFolderId()
@@ -79,5 +76,4 @@ public interface KBArticle extends KBArticleModel, PersistedModel {
 	public boolean isFirstVersion();
 
 	public boolean isRoot();
-
 }

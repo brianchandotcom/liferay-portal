@@ -17,6 +17,7 @@ package com.liferay.knowledge.base.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.knowledge.base.model.KBFolder;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -38,34 +39,26 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see KBFolderServiceUtil
+ * @see com.liferay.knowledge.base.service.base.KBFolderServiceBaseImpl
+ * @see com.liferay.knowledge.base.service.impl.KBFolderServiceImpl
  * @generated
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=kb",
-		"json.web.service.context.path=KBFolder"
-	},
-	service = KBFolderService.class
-)
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=kb", "json.web.service.context.path=KBFolder"}, service = KBFolderService.class)
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface KBFolderService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link KBFolderServiceUtil} to access the kb folder remote service. Add custom service methods to <code>com.liferay.knowledge.base.service.impl.KBFolderServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link KBFolderServiceUtil} to access the kb folder remote service. Add custom service methods to {@link com.liferay.knowledge.base.service.impl.KBFolderServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public KBFolder addKBFolder(
-			long groupId, long parentResourceClassNameId,
-			long parentResourcePrimKey, String name, String description,
-			ServiceContext serviceContext)
-		throws PortalException;
+	public KBFolder addKBFolder(long groupId, long parentResourceClassNameId,
+		long parentResourcePrimKey, String name, String description,
+		ServiceContext serviceContext) throws PortalException;
 
 	public KBFolder deleteKBFolder(long kbFolderId) throws PortalException;
 
@@ -74,69 +67,61 @@ public interface KBFolderService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBFolder fetchFirstChildKBFolder(
-			long groupId, long kbFolderId, OrderByComparator<KBFolder> obc)
-		throws PortalException;
+	public KBFolder fetchFirstChildKBFolder(long groupId, long kbFolderId,
+		OrderByComparator<KBFolder> obc) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBFolder fetchKBFolder(long kbFolderId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBFolder fetchKBFolderByUrlTitle(
-			long groupId, long parentKbFolderId, String urlTitle)
-		throws PortalException;
+	public KBFolder fetchKBFolderByUrlTitle(long groupId,
+		long parentKbFolderId, String urlTitle) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBFolder getKBFolder(long kbFolderId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBFolder getKBFolderByUrlTitle(
-			long groupId, long parentKbFolderId, String urlTitle)
-		throws PortalException;
+	public KBFolder getKBFolderByUrlTitle(long groupId, long parentKbFolderId,
+		String urlTitle) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBFolder> getKBFolders(
-			long groupId, long parentKBFolderId, int start, int end)
-		throws PortalException;
+	public List<KBFolder> getKBFolders(long groupId, long parentKBFolderId,
+		int start, int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Object> getKBFoldersAndKBArticles(
-		long groupId, long parentResourcePrimKey, int status, int start,
-		int end, OrderByComparator<?> orderByComparator);
+	public List<Object> getKBFoldersAndKBArticles(long groupId,
+		long parentResourcePrimKey, int status, int start, int end,
+		OrderByComparator<?> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKBFoldersAndKBArticlesCount(
-		long groupId, long parentResourcePrimKey, int status);
+	public int getKBFoldersAndKBArticlesCount(long groupId,
+		long parentResourcePrimKey, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKBFoldersCount(long groupId, long parentKBFolderId)
-		throws PortalException;
+	public int getKBFoldersCount(long groupId, long parentKBFolderId);
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	public void moveKBFolder(long kbFolderId, long parentKBFolderId)
 		throws PortalException;
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #updateKBFolder(long, long, long, String, String,
-	 ServiceContext)}
-	 */
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#updateKBFolder(long, long, long, String, String,
+	ServiceContext)}
+	*/
 	@Deprecated
-	public KBFolder updateKBFolder(
-			long parentResourceClassNameId, long parentResourcePrimKey,
-			long kbFolderId, String name, String description)
-		throws PortalException;
+	public KBFolder updateKBFolder(long parentResourceClassNameId,
+		long parentResourcePrimKey, long kbFolderId, String name,
+		String description) throws PortalException;
 
-	public KBFolder updateKBFolder(
-			long parentResourceClassNameId, long parentResourcePrimKey,
-			long kbFolderId, String name, String description,
-			ServiceContext serviceContext)
+	public KBFolder updateKBFolder(long parentResourceClassNameId,
+		long parentResourcePrimKey, long kbFolderId, String name,
+		String description, ServiceContext serviceContext)
 		throws PortalException;
-
 }

@@ -17,7 +17,9 @@ package com.liferay.knowledge.base.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
 import com.liferay.knowledge.base.model.KBArticle;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -55,110 +57,97 @@ import java.util.Map;
  *
  * @author Brian Wing Shun Chan
  * @see KBArticleLocalServiceUtil
+ * @see com.liferay.knowledge.base.service.base.KBArticleLocalServiceBaseImpl
+ * @see com.liferay.knowledge.base.service.impl.KBArticleLocalServiceImpl
  * @generated
  */
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
-public interface KBArticleLocalService
-	extends BaseLocalService, PersistedModelLocalService,
-			PersistedResourcedModelLocalService {
-
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
+public interface KBArticleLocalService extends BaseLocalService,
+	PersistedModelLocalService, PersistedResourcedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link KBArticleLocalServiceUtil} to access the kb article local service. Add custom service methods to <code>com.liferay.knowledge.base.service.impl.KBArticleLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link KBArticleLocalServiceUtil} to access the kb article local service. Add custom service methods to {@link com.liferay.knowledge.base.service.impl.KBArticleLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public FileEntry addAttachment(
-			long userId, long resourcePrimKey, String fileName,
-			InputStream inputStream, String mimeType)
+	public FileEntry addAttachment(long userId, long resourcePrimKey,
+		String fileName, InputStream inputStream, String mimeType)
 		throws PortalException;
 
 	/**
-	 * Adds the kb article to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param kbArticle the kb article
-	 * @return the kb article that was added
-	 */
+	* Adds the kb article to the database. Also notifies the appropriate model listeners.
+	*
+	* @param kbArticle the kb article
+	* @return the kb article that was added
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public KBArticle addKBArticle(KBArticle kbArticle);
 
-	public KBArticle addKBArticle(
-			long userId, long parentResourceClassNameId,
-			long parentResourcePrimKey, String title, String urlTitle,
-			String content, String description, String sourceURL,
-			String[] sections, String[] selectedFileNames,
-			ServiceContext serviceContext)
+	public KBArticle addKBArticle(long userId, long parentResourceClassNameId,
+		long parentResourcePrimKey, String title, String urlTitle,
+		String content, String description, String sourceURL,
+		String[] sections, String[] selectedFileNames,
+		ServiceContext serviceContext) throws PortalException;
+
+	public void addKBArticleResources(KBArticle kbArticle,
+		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
 
-	public void addKBArticleResources(
-			KBArticle kbArticle, boolean addGroupPermissions,
-			boolean addGuestPermissions)
+	public void addKBArticleResources(KBArticle kbArticle,
+		String[] groupPermissions, String[] guestPermissions)
 		throws PortalException;
 
-	public void addKBArticleResources(
-			KBArticle kbArticle, String[] groupPermissions,
-			String[] guestPermissions)
+	public void addKBArticleResources(long kbArticleId,
+		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
 
-	public void addKBArticleResources(
-			long kbArticleId, boolean addGroupPermissions,
-			boolean addGuestPermissions)
+	public void addKBArticleResources(long kbArticleId,
+		String[] groupPermissions, String[] guestPermissions)
 		throws PortalException;
 
-	public void addKBArticleResources(
-			long kbArticleId, String[] groupPermissions,
-			String[] guestPermissions)
-		throws PortalException;
+	public int addKBArticlesMarkdown(long userId, long groupId,
+		long parentKbFolderId, String fileName,
+		boolean prioritizeByNumericalPrefix, InputStream inputStream,
+		ServiceContext serviceContext) throws PortalException;
 
-	public int addKBArticlesMarkdown(
-			long userId, long groupId, long parentKbFolderId, String fileName,
-			boolean prioritizeByNumericalPrefix, InputStream inputStream,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	public void addTempAttachment(
-			long groupId, long userId, String fileName, String tempFolderName,
-			InputStream inputStream, String mimeType)
+	public void addTempAttachment(long groupId, long userId, String fileName,
+		String tempFolderName, InputStream inputStream, String mimeType)
 		throws PortalException;
 
 	/**
-	 * Creates a new kb article with the primary key. Does not add the kb article to the database.
-	 *
-	 * @param kbArticleId the primary key for the new kb article
-	 * @return the new kb article
-	 */
+	* Creates a new kb article with the primary key. Does not add the kb article to the database.
+	*
+	* @param kbArticleId the primary key for the new kb article
+	* @return the new kb article
+	*/
 	@Transactional(enabled = false)
 	public KBArticle createKBArticle(long kbArticleId);
 
 	public void deleteGroupKBArticles(long groupId) throws PortalException;
 
 	/**
-	 * Deletes the kb article from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param kbArticle the kb article
-	 * @return the kb article that was removed
-	 * @throws PortalException
-	 */
+	* Deletes the kb article from the database. Also notifies the appropriate model listeners.
+	*
+	* @param kbArticle the kb article
+	* @return the kb article that was removed
+	* @throws PortalException
+	*/
 	@Indexable(type = IndexableType.DELETE)
-	@SystemEvent(
-		action = SystemEventConstants.ACTION_SKIP,
-		type = SystemEventConstants.TYPE_DELETE
-	)
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public KBArticle deleteKBArticle(KBArticle kbArticle)
 		throws PortalException;
 
 	/**
-	 * Deletes the kb article with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param kbArticleId the primary key of the kb article
-	 * @return the kb article that was removed
-	 * @throws PortalException if a kb article with the primary key could not be found
-	 */
+	* Deletes the kb article with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param kbArticleId the primary key of the kb article
+	* @return the kb article that was removed
+	* @throws PortalException if a kb article with the primary key could not be found
+	*/
 	@Indexable(type = IndexableType.DELETE)
-	public KBArticle deleteKBArticle(long kbArticleId) throws PortalException;
+	public KBArticle deleteKBArticle(long kbArticleId)
+		throws PortalException;
 
 	public void deleteKBArticles(long groupId, long parentResourcePrimKey)
 		throws PortalException;
@@ -167,109 +156,106 @@ public interface KBArticleLocalService
 		throws PortalException;
 
 	/**
-	 * @throws PortalException
-	 */
+	* @throws PortalException
+	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public void deleteTempAttachment(
-			long groupId, long userId, String fileName, String tempFolderName)
-		throws PortalException;
+	public void deleteTempAttachment(long groupId, long userId,
+		String fileName, String tempFolderName) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();
 
 	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBArticleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.knowledge.base.model.impl.KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end);
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBArticleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.knowledge.base.model.impl.KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBArticle fetchFirstChildKBArticle(
-		long groupId, long parentResourcePrimKey);
+	public KBArticle fetchFirstChildKBArticle(long groupId,
+		long parentResourcePrimKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle fetchKBArticle(long kbArticleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBArticle fetchKBArticle(
-		long resourcePrimKey, long groupId, int version);
+	public KBArticle fetchKBArticle(long resourcePrimKey, long groupId,
+		int version);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBArticle fetchKBArticleByUrlTitle(
-		long groupId, long kbFolderId, String urlTitle);
+	public KBArticle fetchKBArticleByUrlTitle(long groupId, long kbFolderId,
+		String urlTitle);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBArticle fetchKBArticleByUrlTitle(
-			long groupId, String kbFolderUrlTitle, String urlTitle)
-		throws PortalException;
+	public KBArticle fetchKBArticleByUrlTitle(long groupId,
+		String kbFolderUrlTitle, String urlTitle) throws PortalException;
 
 	/**
-	 * Returns the kb article matching the UUID and group.
-	 *
-	 * @param uuid the kb article's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
+	* Returns the kb article matching the UUID and group.
+	*
+	* @param uuid the kb article's UUID
+	* @param groupId the primary key of the group
+	* @return the matching kb article, or <code>null</code> if a matching kb article could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle fetchKBArticleByUuidAndGroupId(String uuid, long groupId);
 
@@ -280,21 +266,19 @@ public interface KBArticleLocalService
 	public KBArticle fetchLatestKBArticle(long resourcePrimKey, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBArticle fetchLatestKBArticleByUrlTitle(
-		long groupId, long kbFolderId, String urlTitle, int status);
+	public KBArticle fetchLatestKBArticleByUrlTitle(long groupId,
+		long kbFolderId, String urlTitle, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBArticle> getAllDescendantKBArticles(
-		long resourcePrimKey, int status,
-		OrderByComparator<KBArticle> orderByComparator);
+	public List<KBArticle> getAllDescendantKBArticles(long resourcePrimKey,
+		int status, OrderByComparator<KBArticle> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBArticle> getCompanyKBArticles(
-		long companyId, int status, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator);
+	public List<KBArticle> getCompanyKBArticles(long companyId, int status,
+		int start, int end, OrderByComparator<KBArticle> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyKBArticlesCount(long companyId, int status);
@@ -304,9 +288,8 @@ public interface KBArticleLocalService
 		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBArticle> getGroupKBArticles(
-		long groupId, int status, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator);
+	public List<KBArticle> getGroupKBArticles(long groupId, int status,
+		int start, int end, OrderByComparator<KBArticle> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupKBArticlesCount(long groupId, int status);
@@ -315,12 +298,12 @@ public interface KBArticleLocalService
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	 * Returns the kb article with the primary key.
-	 *
-	 * @param kbArticleId the primary key of the kb article
-	 * @return the kb article
-	 * @throws PortalException if a kb article with the primary key could not be found
-	 */
+	* Returns the kb article with the primary key.
+	*
+	* @param kbArticleId the primary key of the kb article
+	* @return the kb article
+	* @throws PortalException if a kb article with the primary key could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle getKBArticle(long kbArticleId) throws PortalException;
 
@@ -334,103 +317,99 @@ public interface KBArticleLocalService
 		OrderByComparator<KBArticle> orderByComparator);
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #getKBArticleAndAllDescendantKBArticles(long, int,
-	 OrderByComparator)}
-	 */
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#getKBArticleAndAllDescendantKBArticles(long, int,
+	OrderByComparator)}
+	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBArticle> getKBArticleAndAllDescendants(
-		long resourcePrimKey, int status,
-		OrderByComparator<KBArticle> orderByComparator);
+	public List<KBArticle> getKBArticleAndAllDescendants(long resourcePrimKey,
+		int status, OrderByComparator<KBArticle> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBArticle getKBArticleByUrlTitle(
-			long groupId, long kbFolderId, String urlTitle)
-		throws PortalException;
+	public KBArticle getKBArticleByUrlTitle(long groupId, long kbFolderId,
+		String urlTitle) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBArticle getKBArticleByUrlTitle(
-			long groupId, String kbFolderUrlTitle, String urlTitle)
-		throws PortalException;
+	public KBArticle getKBArticleByUrlTitle(long groupId,
+		String kbFolderUrlTitle, String urlTitle) throws PortalException;
 
 	/**
-	 * Returns the kb article matching the UUID and group.
-	 *
-	 * @param uuid the kb article's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching kb article
-	 * @throws PortalException if a matching kb article could not be found
-	 */
+	* Returns the kb article matching the UUID and group.
+	*
+	* @param uuid the kb article's UUID
+	* @param groupId the primary key of the group
+	* @return the matching kb article
+	* @throws PortalException if a matching kb article could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle getKBArticleByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException;
 
 	/**
-	 * Returns a range of all the kb articles.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBArticleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of kb articles
-	 */
+	* Returns a range of all the kb articles.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.knowledge.base.model.impl.KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of kb articles
+	* @param end the upper bound of the range of kb articles (not inclusive)
+	* @return the range of kb articles
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KBArticle> getKBArticles(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBArticle> getKBArticles(
-		long groupId, long parentResourcePrimKey, int status, int start,
-		int end, OrderByComparator<KBArticle> orderByComparator);
+	public List<KBArticle> getKBArticles(long groupId,
+		long parentResourcePrimKey, int status, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBArticle> getKBArticles(
-		long[] resourcePrimKeys, int status,
+	public List<KBArticle> getKBArticles(long[] resourcePrimKeys, int status,
 		OrderByComparator<KBArticle> orderByComparator);
 
 	/**
-	 * Returns all the kb articles matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the kb articles
-	 * @param companyId the primary key of the company
-	 * @return the matching kb articles, or an empty list if no matches were found
-	 */
+	* Returns all the kb articles matching the UUID and company.
+	*
+	* @param uuid the UUID of the kb articles
+	* @param companyId the primary key of the company
+	* @return the matching kb articles, or an empty list if no matches were found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBArticle> getKBArticlesByUuidAndCompanyId(
-		String uuid, long companyId);
+	public List<KBArticle> getKBArticlesByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	/**
-	 * Returns a range of kb articles matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the kb articles
-	 * @param companyId the primary key of the company
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the range of matching kb articles, or an empty list if no matches were found
-	 */
+	* Returns a range of kb articles matching the UUID and company.
+	*
+	* @param uuid the UUID of the kb articles
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of kb articles
+	* @param end the upper bound of the range of kb articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching kb articles, or an empty list if no matches were found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBArticle> getKBArticlesByUuidAndCompanyId(
-		String uuid, long companyId, int start, int end,
+	public List<KBArticle> getKBArticlesByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator);
 
 	/**
-	 * Returns the number of kb articles.
-	 *
-	 * @return the number of kb articles
-	 */
+	* Returns the number of kb articles.
+	*
+	* @return the number of kb articles
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getKBArticlesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKBArticlesCount(
-		long groupId, long parentResourcePrimKey, int status);
+	public int getKBArticlesCount(long groupId, long parentResourcePrimKey,
+		int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBArticle> getKBArticleVersions(
-		long resourcePrimKey, int status, int start, int end,
+	public List<KBArticle> getKBArticleVersions(long resourcePrimKey,
+		int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -440,29 +419,27 @@ public interface KBArticleLocalService
 	public List<KBArticle> getKBFolderKBArticles(long groupId, long kbFolderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKBFolderKBArticlesCount(
-		long groupId, long kbFolderId, int status);
+	public int getKBFolderKBArticlesCount(long groupId, long kbFolderId,
+		int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle getLatestKBArticle(long resourcePrimKey, int status)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBArticle getLatestKBArticleByUrlTitle(
-			long groupId, long kbFolderId, String urlTitle, int status)
-		throws PortalException;
+	public KBArticle getLatestKBArticleByUrlTitle(long groupId,
+		long kbFolderId, String urlTitle, int status) throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<? extends PersistedModel> getPersistedModel(
-			long resourcePrimKey)
+	public List<?extends PersistedModel> getPersistedModel(long resourcePrimKey)
 		throws PortalException;
 
 	@Override
@@ -475,60 +452,54 @@ public interface KBArticleLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBArticle> getSectionsKBArticles(
-		long groupId, String[] sections, int status, int start, int end,
+	public List<KBArticle> getSectionsKBArticles(long groupId,
+		String[] sections, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSectionsKBArticlesCount(
-		long groupId, String[] sections, int status);
+	public int getSectionsKBArticlesCount(long groupId, String[] sections,
+		int status);
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getKBArticles(long,
-	 long, int, int, int, OrderByComparator)}
-	 */
+	* @deprecated As of Judson (7.1.x), replaced by {@link #getKBArticles(long,
+	long, int, int, int, OrderByComparator)}
+	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBArticle> getSiblingKBArticles(
-		long groupId, long parentResourcePrimKey, int status, int start,
-		int end, OrderByComparator<KBArticle> orderByComparator);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 #getKBArticlesCount(long, long, int)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSiblingKBArticlesCount(
-		long groupId, long parentResourcePrimKey, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public String[] getTempAttachmentNames(
-			long groupId, long userId, String tempFolderName)
-		throws PortalException;
-
-	public void moveKBArticle(
-			long userId, long resourcePrimKey, long parentResourceClassNameId,
-			long parentResourcePrimKey, double priority)
-		throws PortalException;
-
-	public KBArticle revertKBArticle(
-			long userId, long resourcePrimKey, int version,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBArticle> search(
-		long groupId, String title, String content, int status, Date startDate,
-		Date endDate, boolean andOperator, int start, int end,
+	public List<KBArticle> getSiblingKBArticles(long groupId,
+		long parentResourcePrimKey, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator);
+
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#getKBArticlesCount(long, long, int)}
+	*/
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSiblingKBArticlesCount(long groupId,
+		long parentResourcePrimKey, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public String[] getTempAttachmentNames(long groupId, long userId,
+		String tempFolderName) throws PortalException;
+
+	public void moveKBArticle(long userId, long resourcePrimKey,
+		long parentResourceClassNameId, long parentResourcePrimKey,
+		double priority) throws PortalException;
+
+	public KBArticle revertKBArticle(long userId, long resourcePrimKey,
+		int version, ServiceContext serviceContext) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KBArticle> search(long groupId, String title, String content,
+		int status, Date startDate, Date endDate, boolean andOperator,
+		int start, int end, OrderByComparator<KBArticle> orderByComparator);
 
 	public void subscribeGroupKBArticles(long userId, long groupId)
 		throws PortalException;
 
-	public void subscribeKBArticle(
-			long userId, long groupId, long resourcePrimKey)
-		throws PortalException;
+	public void subscribeKBArticle(long userId, long groupId,
+		long resourcePrimKey) throws PortalException;
 
 	public void unsubscribeGroupKBArticles(long userId, long groupId)
 		throws PortalException;
@@ -537,44 +508,37 @@ public interface KBArticleLocalService
 		throws PortalException;
 
 	/**
-	 * Updates the kb article in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param kbArticle the kb article
-	 * @return the kb article that was updated
-	 */
+	* Updates the kb article in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kbArticle the kb article
+	* @return the kb article that was updated
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public KBArticle updateKBArticle(KBArticle kbArticle);
 
-	public KBArticle updateKBArticle(
-			long userId, long resourcePrimKey, String title, String content,
-			String description, String sourceURL, String[] sections,
-			String[] selectedFileNames, long[] removeFileEntryIds,
-			ServiceContext serviceContext)
+	public KBArticle updateKBArticle(long userId, long resourcePrimKey,
+		String title, String content, String description, String sourceURL,
+		String[] sections, String[] selectedFileNames,
+		long[] removeFileEntryIds, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void updateKBArticleAsset(
-			long userId, KBArticle kbArticle, long[] assetCategoryIds,
-			String[] assetTagNames, long[] assetLinkEntryIds)
-		throws PortalException;
+	public void updateKBArticleAsset(long userId, KBArticle kbArticle,
+		long[] assetCategoryIds, String[] assetTagNames,
+		long[] assetLinkEntryIds) throws PortalException;
 
-	public void updateKBArticleResources(
-			KBArticle kbArticle, String[] groupPermissions,
-			String[] guestPermissions)
+	public void updateKBArticleResources(KBArticle kbArticle,
+		String[] groupPermissions, String[] guestPermissions)
 		throws PortalException;
 
 	public void updateKBArticlesPriorities(
-			Map<Long, Double> resourcePrimKeyToPriorityMap)
+		Map<Long, Double> resourcePrimKeyToPriorityMap)
 		throws PortalException;
 
 	public void updatePriority(long resourcePrimKey, double priority);
 
-	public KBArticle updateStatus(
-			long userId, long resourcePrimKey, int status,
-			ServiceContext serviceContext)
-		throws PortalException;
+	public KBArticle updateStatus(long userId, long resourcePrimKey,
+		int status, ServiceContext serviceContext) throws PortalException;
 
-	public void updateViewCount(
-			long userId, long resourcePrimKey, int viewCount)
+	public void updateViewCount(long userId, long resourcePrimKey, int viewCount)
 		throws PortalException;
-
 }

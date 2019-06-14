@@ -26,11 +26,11 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.knowledge.base.service.http.KBFolderServiceSoap}.
  *
  * @author Brian Wing Shun Chan
+ * @see com.liferay.knowledge.base.service.http.KBFolderServiceSoap
  * @generated
  */
 @ProviderType
 public class KBFolderSoap implements Serializable {
-
 	public static KBFolderSoap toSoapModel(KBFolder model) {
 		KBFolderSoap soapModel = new KBFolderSoap();
 
@@ -79,8 +79,7 @@ public class KBFolderSoap implements Serializable {
 	}
 
 	public static KBFolderSoap[] toSoapModels(List<KBFolder> models) {
-		List<KBFolderSoap> soapModels = new ArrayList<KBFolderSoap>(
-			models.size());
+		List<KBFolderSoap> soapModels = new ArrayList<KBFolderSoap>(models.size());
 
 		for (KBFolder model : models) {
 			soapModels.add(toSoapModel(model));
@@ -217,5 +216,4 @@ public class KBFolderSoap implements Serializable {
 	private String _urlTitle;
 	private String _description;
 	private Date _lastPublishDate;
-
 }

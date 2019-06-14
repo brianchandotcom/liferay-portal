@@ -17,6 +17,7 @@ package com.liferay.knowledge.base.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.knowledge.base.model.KBComment;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -38,69 +39,56 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see KBCommentServiceUtil
+ * @see com.liferay.knowledge.base.service.base.KBCommentServiceBaseImpl
+ * @see com.liferay.knowledge.base.service.impl.KBCommentServiceImpl
  * @generated
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=kb",
-		"json.web.service.context.path=KBComment"
-	},
-	service = KBCommentService.class
-)
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=kb", "json.web.service.context.path=KBComment"}, service = KBCommentService.class)
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface KBCommentService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link KBCommentServiceUtil} to access the kb comment remote service. Add custom service methods to <code>com.liferay.knowledge.base.service.impl.KBCommentServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link KBCommentServiceUtil} to access the kb comment remote service. Add custom service methods to {@link com.liferay.knowledge.base.service.impl.KBCommentServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public KBComment deleteKBComment(KBComment kbComment)
 		throws PortalException;
 
-	public KBComment deleteKBComment(long kbCommentId) throws PortalException;
+	public KBComment deleteKBComment(long kbCommentId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBComment getKBComment(long kbCommentId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBComment> getKBComments(
-			long groupId, int status, int start, int end)
-		throws PortalException;
+	public List<KBComment> getKBComments(long groupId, int status, int start,
+		int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBComment> getKBComments(
-			long groupId, int status, int start, int end,
-			OrderByComparator<KBComment> obc)
-		throws PortalException;
+	public List<KBComment> getKBComments(long groupId, int status, int start,
+		int end, OrderByComparator<KBComment> obc) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBComment> getKBComments(
-			long groupId, int start, int end, OrderByComparator<KBComment> obc)
-		throws PortalException;
+	public List<KBComment> getKBComments(long groupId, int start, int end,
+		OrderByComparator<KBComment> obc) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBComment> getKBComments(
-			long groupId, String className, long classPK, int status, int start,
-			int end)
-		throws PortalException;
+	public List<KBComment> getKBComments(long groupId, String className,
+		long classPK, int status, int start, int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBComment> getKBComments(
-			long groupId, String className, long classPK, int status, int start,
-			int end, OrderByComparator<KBComment> obc)
-		throws PortalException;
+	public List<KBComment> getKBComments(long groupId, String className,
+		long classPK, int status, int start, int end,
+		OrderByComparator<KBComment> obc) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBComment> getKBComments(
-			long groupId, String className, long classPK, int start, int end,
-			OrderByComparator<KBComment> obc)
+	public List<KBComment> getKBComments(long groupId, String className,
+		long classPK, int start, int end, OrderByComparator<KBComment> obc)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -115,29 +103,24 @@ public interface KBCommentService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKBCommentsCount(
-			long groupId, String className, long classPK, int status)
-		throws PortalException;
+	public int getKBCommentsCount(long groupId, String className, long classPK,
+		int status) throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
-	public KBComment updateKBComment(
-			long kbCommentId, long classNameId, long classPK, String content,
-			int status, ServiceContext serviceContext)
+	public KBComment updateKBComment(long kbCommentId, long classNameId,
+		long classPK, String content, int status, ServiceContext serviceContext)
 		throws PortalException;
 
-	public KBComment updateKBComment(
-			long kbCommentId, long classNameId, long classPK, String content,
-			ServiceContext serviceContext)
+	public KBComment updateKBComment(long kbCommentId, long classNameId,
+		long classPK, String content, ServiceContext serviceContext)
 		throws PortalException;
 
-	public KBComment updateStatus(
-			long kbCommentId, int status, ServiceContext serviceContext)
-		throws PortalException;
-
+	public KBComment updateStatus(long kbCommentId, int status,
+		ServiceContext serviceContext) throws PortalException;
 }

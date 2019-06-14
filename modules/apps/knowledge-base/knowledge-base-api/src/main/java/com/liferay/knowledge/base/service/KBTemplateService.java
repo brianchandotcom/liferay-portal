@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.model.KBTemplateSearchDisplay;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -40,32 +41,25 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see KBTemplateServiceUtil
+ * @see com.liferay.knowledge.base.service.base.KBTemplateServiceBaseImpl
+ * @see com.liferay.knowledge.base.service.impl.KBTemplateServiceImpl
  * @generated
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=kb",
-		"json.web.service.context.path=KBTemplate"
-	},
-	service = KBTemplateService.class
-)
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=kb", "json.web.service.context.path=KBTemplate"}, service = KBTemplateService.class)
 @ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
+@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+	PortalException.class, SystemException.class})
 public interface KBTemplateService extends BaseService {
-
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link KBTemplateServiceUtil} to access the kb template remote service. Add custom service methods to <code>com.liferay.knowledge.base.service.impl.KBTemplateServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link KBTemplateServiceUtil} to access the kb template remote service. Add custom service methods to {@link com.liferay.knowledge.base.service.impl.KBTemplateServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public KBTemplate addKBTemplate(
-			String portletId, String title, String content,
-			ServiceContext serviceContext)
+	public KBTemplate addKBTemplate(String portletId, String title,
+		String content, ServiceContext serviceContext)
 		throws PortalException;
 
 	public KBTemplate deleteKBTemplate(long kbTemplateId)
@@ -75,33 +69,31 @@ public interface KBTemplateService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBTemplate> getGroupKBTemplates(
-		long groupId, int start, int end,
-		OrderByComparator<KBTemplate> orderByComparator);
+	public List<KBTemplate> getGroupKBTemplates(long groupId, int start,
+		int end, OrderByComparator<KBTemplate> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupKBTemplatesCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBTemplate getKBTemplate(long kbTemplateId) throws PortalException;
+	public KBTemplate getKBTemplate(long kbTemplateId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBTemplateSearchDisplay getKBTemplateSearchDisplay(
-			long groupId, String title, String content, Date startDate,
-			Date endDate, boolean andOperator, int[] curStartValues, int cur,
-			int delta, OrderByComparator<KBTemplate> orderByComparator)
+	public KBTemplateSearchDisplay getKBTemplateSearchDisplay(long groupId,
+		String title, String content, Date startDate, Date endDate,
+		boolean andOperator, int[] curStartValues, int cur, int delta,
+		OrderByComparator<KBTemplate> orderByComparator)
 		throws PortalException;
 
 	/**
-	 * Returns the OSGi service identifier.
-	 *
-	 * @return the OSGi service identifier
-	 */
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	public String getOSGiServiceIdentifier();
 
-	public KBTemplate updateKBTemplate(
-			long kbTemplateId, String title, String content,
-			ServiceContext serviceContext)
+	public KBTemplate updateKBTemplate(long kbTemplateId, String title,
+		String content, ServiceContext serviceContext)
 		throws PortalException;
-
 }

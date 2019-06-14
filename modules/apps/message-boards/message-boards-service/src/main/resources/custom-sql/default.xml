@@ -4,7 +4,7 @@
 	<sql id="com.liferay.message.boards.service.persistence.MBCategoryFinder.countC_ByG_P">
 		<![CDATA[
 			SELECT
-				COUNT(DISTINCT MBCategory.categoryId) AS COUNT_VALUE
+				COUNT(*) AS COUNT_VALUE
 			FROM
 				MBCategory
 			WHERE
@@ -33,7 +33,7 @@
 	<sql id="com.liferay.message.boards.service.persistence.MBCategoryFinder.countT_ByG_C">
 		<![CDATA[
 			SELECT
-				COUNT(DISTINCT MBThread.threadId) AS COUNT_VALUE
+				COUNT(*) AS COUNT_VALUE
 			FROM
 				MBThread
 			WHERE
@@ -45,7 +45,7 @@
 	<sql id="com.liferay.message.boards.service.persistence.MBCategoryFinder.findC_ByG_P">
 		<![CDATA[
 			SELECT
-				DISTINCT MBCategory.categoryId AS modelId, [$NULL_DATE$] AS modifiedDate, 0 AS priority, MBCategory.name AS name, 0 AS modelCategory
+				MBCategory.categoryId AS modelId, [$NULL_DATE$] AS modifiedDate, 0 AS priority, MBCategory.name AS name, 0 AS modelCategory
 			FROM
 				MBCategory
 			WHERE
@@ -76,7 +76,7 @@
 	<sql id="com.liferay.message.boards.service.persistence.MBCategoryFinder.findT_ByG_C">
 		<![CDATA[
 			SELECT
-				DISTINCT MBThread.threadId AS modelId, MBThread.modifiedDate AS modifiedDate, MBThread.priority AS priority, MBThread.title AS name, 1 AS modelCategory
+				MBThread.threadId AS modelId, MBThread.modifiedDate AS modifiedDate, MBThread.priority AS priority, MBThread.title AS name, 1 AS modelCategory
 			FROM
 				MBThread
 			WHERE
@@ -230,7 +230,7 @@
 	<sql id="com.liferay.message.boards.service.persistence.MBThreadFinder.countByG_C">
 		<![CDATA[
 			SELECT
-				COUNT(DISTINCT MBThread.threadId) AS COUNT_VALUE
+				COUNT(*) AS COUNT_VALUE
 			FROM
 				MBThread
 			WHERE
@@ -371,7 +371,7 @@
 	<sql id="com.liferay.message.boards.service.persistence.MBThreadFinder.findByG_C">
 		<![CDATA[
 			SELECT
-				DISTINCT {MBThread.*}
+				{MBThread.*}
 			FROM
 				MBThread
 			WHERE

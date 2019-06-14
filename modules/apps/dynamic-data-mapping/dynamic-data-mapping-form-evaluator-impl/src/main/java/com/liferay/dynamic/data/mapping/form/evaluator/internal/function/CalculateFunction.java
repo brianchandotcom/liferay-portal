@@ -14,16 +14,12 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 
-import com.liferay.dynamic.data.mapping.constants.DDMConstants;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Rafael Praxedes
  */
-@Component(
-	factory = DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME, service = {}
-)
+@Component(service = {})
 public class CalculateFunction extends SetPropertyFunction<String> {
 
 	@Override

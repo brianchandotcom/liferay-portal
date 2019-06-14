@@ -18,6 +18,9 @@ package org.apache.felix.utils.properties;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 import org.osgi.framework.BundleContext;
 
@@ -39,6 +42,10 @@ public class InterpolationHelper {
     private static final String DELIM_STOP = "}";
     private static final String MARKER = "$__";
     private static final String ENV_PREFIX = "env:";
+
+    private static final Pattern ESCAPED_OPENING_CURLY = Pattern.compile("\\\\+\\{");
+    private static final Pattern ESCAPED_CLOSING_CURLY = Pattern.compile("\\\\+\\}");
+    private static final Pattern EXISTING_SUBST_VAR = Pattern.compile(".*\\$\\\\*\\{.*\\}.*");
 
 
     /**
@@ -407,7 +414,13 @@ public class InterpolationHelper {
     private static String unescape(String val)
     {
         val = val.replaceAll("\\" + MARKER, "\\$");
-        int escape = val.indexOf(ESCAPE_CHAR);
+
+        Matcher existingSubstVarMatcher = EXISTING_SUBST_VAR.matcher(val);
+
+        if (!existingSubstVarMatcher.matches()) {
+            return val;
+        }
+        int escape = indexOf(val, 0);
         while (escape >= 0 && escape < val.length() - 1)
         {
             char c = val.charAt(escape + 1);
@@ -415,9 +428,22 @@ public class InterpolationHelper {
             {
                 val = val.substring(0, escape) + val.substring(escape + 1);
             }
-            escape = val.indexOf(ESCAPE_CHAR, escape + 1);
+            escape = indexOf(val, escape + 1);
         }
         return val;
+    }
+
+    private static int indexOf(String val, int fromIndex) {
+        Matcher escapedOpeningCurlyMatcher = ESCAPED_OPENING_CURLY.matcher(val);
+
+        Matcher escapedClosingCurlyMatcher = ESCAPED_CLOSING_CURLY.matcher(val);
+
+        int escapedOpeningCurlyMatcherIndex = escapedOpeningCurlyMatcher.find(fromIndex) ? escapedOpeningCurlyMatcher.start() : Integer.MAX_VALUE;
+        int escapedClosingCurlyMatcherIndex = escapedClosingCurlyMatcher.find(fromIndex) ? escapedClosingCurlyMatcher.start() : Integer.MAX_VALUE;
+
+        int indexOf = Math.min(escapedOpeningCurlyMatcherIndex, escapedClosingCurlyMatcherIndex);
+
+        return indexOf == Integer.MAX_VALUE ? -1 : indexOf;
     }
 
     public static class BundleContextSubstitutionCallback implements SubstitutionCallback
@@ -452,3 +478,4 @@ public class InterpolationHelper {
     }
 
 }
+/* @generated */

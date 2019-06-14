@@ -23,6 +23,90 @@
 				}
 			},
 			{
+				"template_string_sortable_en": {
+					"mapping": {
+						"country": "US",
+						"language": "en",
+						"store": true,
+						"type": "icu_collation_keyword"
+					},
+					"match": "*_en_US_sortable",
+					"match_mapping_type": "string"
+				}
+			},
+			{
+				"template_string_sortable_fr": {
+					"mapping": {
+						"country": "FR",
+						"language": "fr",
+						"store": true,
+						"type": "icu_collation_keyword"
+					},
+					"match": "*_fr_FR_sortable",
+					"match_mapping_type": "string"
+				}
+			},
+			{
+				"template_string_sortable_de": {
+					"mapping": {
+						"country": "DE",
+						"language": "de",
+						"store": true,
+						"type": "icu_collation_keyword"
+					},
+					"match": "*_de_DE_sortable",
+					"match_mapping_type": "string"
+				}
+			},
+			{
+				"template_string_sortable_pl": {
+					"mapping": {
+						"country": "PL",
+						"language": "pl",
+						"store": true,
+						"type": "icu_collation_keyword"
+					},
+					"match": "*_pl_PL_sortable",
+					"match_mapping_type": "string"
+				}
+			},
+			{
+				"template_string_sortable_pt": {
+					"mapping": {
+						"country": "BR",
+						"language": "pt",
+						"store": true,
+						"type": "icu_collation_keyword"
+					},
+					"match": "*_pt_BR_sortable",
+					"match_mapping_type": "string"
+				}
+			},
+			{
+				"template_string_sortable_ja": {
+					"mapping": {
+						"country": "JP",
+						"language": "ja",
+						"store": true,
+						"type": "icu_collation_keyword"
+					},
+					"match": "*_ja_JP_sortable",
+					"match_mapping_type": "string"
+				}
+			},
+			{
+				"template_string_sortable_es": {
+					"mapping": {
+						"country": "ES",
+						"language": "es",
+						"store": true,
+						"type": "icu_collation_keyword"
+					},
+					"match": "*_es_ES_sortable",
+					"match_mapping_type": "string"
+				}
+			},
+			{
 				"template_string_sortable": {
 					"mapping": {
 						"store": true,

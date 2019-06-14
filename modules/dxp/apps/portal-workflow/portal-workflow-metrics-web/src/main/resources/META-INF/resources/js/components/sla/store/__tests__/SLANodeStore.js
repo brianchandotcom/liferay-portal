@@ -2,7 +2,7 @@ import {act, renderHook} from 'react-hooks-testing-library';
 import client from '../../../../test/mock/fetch';
 import {useSLANodes} from '../SLANodeStore';
 
-test('Should test fetch data', () => {
+test('Should test fetch', () => {
 	const defaultData = {
 		items: [
 			{
@@ -97,7 +97,7 @@ test('Should test fetch data', () => {
 	});
 });
 
-test('Should test fetch', () => {
+test('Should test fetch data', () => {
 	const defaultData = {
 		items: [
 			{
@@ -134,7 +134,6 @@ test('Should test fetch', () => {
 		pageSize: 4,
 		totalCount: 4
 	};
-
 	const pauseNodeKeys = [
 		{
 			executionType: 'leave',
@@ -154,7 +153,6 @@ test('Should test fetch', () => {
 			id: 26625
 		}
 	];
-
 	const {result, waitForNextUpdate} = renderHook(() =>
 		useSLANodes('123', client(defaultData))
 	);

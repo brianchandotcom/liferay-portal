@@ -17,8 +17,6 @@ const useSLANodes = (processId, fetchClient) => {
 					'process-begins'
 				);
 				const processEndsString = Liferay.Language.get('process-ends');
-				const compareToName = (curNode, nextNode) =>
-					curNode.name.localeCompare(nextNode.name);
 
 				items.forEach(node => {
 					if (node.type === 'STATE') {
@@ -51,6 +49,9 @@ const useSLANodes = (processId, fetchClient) => {
 						});
 					}
 				});
+
+				const compareToName = (curNode, nextNode) =>
+					curNode.name.localeCompare(nextNode.name);
 
 				nodeEnters.sort(compareToName);
 				nodeLeaves.sort(compareToName);

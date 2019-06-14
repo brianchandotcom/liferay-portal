@@ -12,7 +12,6 @@
  * details.
  */
 
-
 import groovy.io.FileType
 
 import java.nio.file.DirectoryStream

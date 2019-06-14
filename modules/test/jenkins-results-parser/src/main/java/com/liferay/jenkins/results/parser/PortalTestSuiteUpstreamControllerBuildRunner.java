@@ -16,6 +16,11 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -27,6 +32,8 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 	@Override
 	public void run() {
+		List<Build> builds = _getBuildHistory();
+
 		updateBuildDescription();
 
 		keepJenkinsBuild(true);
@@ -78,6 +85,55 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		super.updateBuildDescription();
 	}
 
+	private List<Build> _getBuildHistory() {
+		S buildData = getBuildData();
+
+		Build build = BuildFactory.newBuild(buildData.getBuildURL(), null);
+
+		Job job = JobFactory.newJob(buildData.getJobName());
+
+		return job.getBuildHistory(build.getJenkinsMaster());
+	}
+
+	private Map<String, Long> _getCandidateTestSuiteStaleDurations() {
+		S buildData = getBuildData();
+
+		String upstreamBranchName = buildData.getPortalUpstreamBranchName();
+
+		Properties buildProperties;
+		List<String> testSuites;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+
+			testSuites = JenkinsResultsParserUtil.getBuildPropertyAsList(
+				true,
+				"portal.testsuite.upstream.suites[" + upstreamBranchName + "]");
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+
+		Map<String, Long> candidateTestSuiteStaleDurations =
+			new LinkedHashMap();
+
+		for (String testSuite : testSuites) {
+			String suiteStaleDuration = buildProperties.getProperty(
+				JenkinsResultsParserUtil.combine(
+					"portal.testsuite.upstream.stale.duration[",
+					upstreamBranchName, "][", testSuite, "]"));
+
+			if (suiteStaleDuration == null) {
+				continue;
+			}
+
+			candidateTestSuiteStaleDurations.put(
+				testSuite, Long.parseLong(suiteStaleDuration) * 60 * 1000);
+		}
+
+		return candidateTestSuiteStaleDurations;
+	}
+
 	private String _getInvocationCohortName() {
 		String invocationCorhortName = System.getenv("INVOCATION_COHORT_NAME");
 
@@ -90,6 +146,73 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		BuildData buildData = getBuildData();
 
 		return buildData.getCohortName();
+	}
+
+	private Map<String, Long> _getLatestTestSuiteStartTimes() {
+		List<Build> builds = _getBuildHistory();
+
+		BuildData buildData = getBuildData();
+
+		Build currentBuild = BuildFactory.newBuild(
+			buildData.getBuildURL(), null);
+
+		Map<String, Long> latestTestSuiteStartTimes = new LinkedHashMap();
+
+		for (Build build : builds) {
+			if (build == currentBuild) {
+				continue;
+			}
+
+			String buildDescription = build.getBuildDescription();
+
+			if (buildDescription == null) {
+				continue;
+			}
+
+			Long buildStartTime = build.getStartTime();
+
+			for (String testSuite : buildDescription.split(",")) {
+				testSuite = testSuite.trim();
+
+				if (!latestTestSuiteStartTimes.containsKey(testSuite)) {
+					latestTestSuiteStartTimes.put(testSuite, buildStartTime);
+				}
+			}
+		}
+
+		return latestTestSuiteStartTimes;
+	}
+
+	private String _getTestrayProjectName(String testSuite) {
+		try {
+			Properties buildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
+
+			S buildData = getBuildData();
+
+			return buildProperties.getProperty(
+				JenkinsResultsParserUtil.combine(
+					"portal.testsuite.upstream.testray.project.name[",
+					buildData.getPortalUpstreamBranchName(), "][", testSuite,
+					"]"));
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
+	private List<String> _getTestSuites() {
+		if (_testSuites != null) {
+			return _testSuites;
+		}
+
+		Map<String, Long> candidateTestSuiteStaleDurations =
+			_getCandidateTestSuiteStaleDurations();
+
+		Map<String, Long> latestTestSuiteStartTimes =
+			_getLatestTestSuiteStartTimes();
+
+		return _testSuites;
 	}
 
 	private void _invokeJob() {
@@ -145,7 +268,9 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 			throw new RuntimeException(ioe);
 		}
 	}
-
+	
 	private String _invocationURL;
+	private List<String> _invokedTestSuites = new ArrayList();
+	private List<String> _testSuites;
 
 }

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+<%@ include file="/init.jsp" %>
 
 <liferay-ui:error-header />
 

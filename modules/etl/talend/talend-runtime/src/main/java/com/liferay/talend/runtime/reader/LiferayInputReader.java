@@ -21,7 +21,6 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.liferay.talend.avro.ResourceNodeConverter;
 import com.liferay.talend.runtime.LiferaySource;
 import com.liferay.talend.tliferayinput.TLiferayInputProperties;
-import com.liferay.talend.utils.URIUtils;
 
 import java.io.IOException;
 
@@ -52,7 +51,6 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		super(runtimeContainer, liferaySource);
 
 		liferayConnectionResourceBaseProperties = tLiferayInputProperties;
-		_queryCondition = tLiferayInputProperties.resource.condition.getValue();
 	}
 
 	@Override
@@ -206,18 +204,15 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 			"pageSize", pageSize
 		).build();
 
-		URI decoratedResourceURI = URIUtils.addQueryConditionToURL(
-			resourceURI.toASCIIString(), _queryCondition);
-
 		LiferaySource liferaySource = (LiferaySource)getCurrentSource();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"Started to process resources at entry point: " +
-					decoratedResourceURI.toString());
+					resourceURI.toString());
 		}
 
-		return liferaySource.doGetRequest(decoratedResourceURI.toString());
+		return liferaySource.doGetRequest(resourceURI.toString());
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(
@@ -242,8 +237,6 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	 * @review
 	 */
 	private transient JsonNode _inputRecordsJsonNode;
-
-	private final String _queryCondition;
 
 	/**
 	 * Converts row retrieved from data source to Avro format {@link

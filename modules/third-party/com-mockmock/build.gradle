@@ -19,6 +19,14 @@ compileJavaMvn {
 }
 
 downloadSrc {
+	doLast {
+		File pomXmlFile = new File(srcDir, "pom.xml")
+
+		if (pomXmlFile.exists()) {
+			pomXmlFile.text = pomXmlFile.text.replace("<groupId>org.dstovall</groupId>", "<groupId>com.jolira</groupId>")
+		}
+	}
+
 	from {
 		zipTree(FileUtil.get(project, mockMockSrcUrl))
 	}

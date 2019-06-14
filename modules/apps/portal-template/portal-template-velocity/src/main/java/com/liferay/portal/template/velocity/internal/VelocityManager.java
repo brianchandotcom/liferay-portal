@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.template.BaseTemplateManager;
-import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration;
 import com.liferay.taglib.util.VelocityTaglib;
@@ -278,16 +277,9 @@ public class VelocityManager extends BaseTemplateManager {
 		TemplateResource templateResource, boolean restricted,
 		Map<String, Object> helperUtilities) {
 
-		Template template = new VelocityTemplate(
+		return new VelocityTemplate(
 			templateResource, helperUtilities, _velocityEngine,
-			templateContextHelper, _velocityTemplateResourceCache);
-
-		if (restricted) {
-			template = new RestrictedTemplate(
-				template, templateContextHelper.getRestrictedVariables());
-		}
-
-		return template;
+			templateContextHelper, _velocityTemplateResourceCache, restricted);
 	}
 
 	private String _getVelocimacroLibrary(Class<?> clazz) {

@@ -50,10 +50,11 @@ public class XSLTemplate extends BaseTemplate {
 	public XSLTemplate(
 		XSLTemplateResource xslTemplateResource,
 		TemplateContextHelper templateContextHelper,
-		XSLEngineConfiguration xslEngineConfiguration) {
+		XSLEngineConfiguration xslEngineConfiguration, boolean restricted) {
 
 		super(
-			xslTemplateResource, Collections.emptyMap(), templateContextHelper);
+			xslTemplateResource, Collections.emptyMap(), templateContextHelper,
+			restricted);
 
 		_preventLocalConnections =
 			xslEngineConfiguration.preventLocalConnections();

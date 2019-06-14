@@ -68,9 +68,9 @@ public class SoyTemplate extends BaseTemplate {
 	public SoyTemplate(
 		SoyTemplateResource soyTemplateResource, Map<String, Object> context,
 		SoyTemplateContextHelper templateContextHelper,
-		SoyTofuCacheHandler soyTofuCacheHandler) {
+		SoyTofuCacheHandler soyTofuCacheHandler, boolean restricted) {
 
-		super(soyTemplateResource, null, templateContextHelper);
+		super(soyTemplateResource, null, templateContextHelper, restricted);
 
 		if (ListUtil.isEmpty(soyTemplateResource.getTemplateResources())) {
 			throw new IllegalArgumentException("Template resource is null");

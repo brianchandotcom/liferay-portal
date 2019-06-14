@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.template.BaseTemplateManager;
-import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.soy.SoyTemplateResource;
 import com.liferay.portal.template.soy.SoyTemplateResourceFactory;
@@ -123,17 +122,10 @@ public class SoyManager extends BaseTemplateManager {
 					Collections.singletonList(templateResource));
 		}
 
-		Template template = new SoyTemplate(
+		return new SoyTemplate(
 			soyTemplateResource, helperUtilities,
 			(SoyTemplateContextHelper)templateContextHelper,
-			_soyTofuCacheHandler);
-
-		if (restricted) {
-			template = new RestrictedTemplate(
-				template, templateContextHelper.getRestrictedVariables());
-		}
-
-		return template;
+			_soyTofuCacheHandler, restricted);
 	}
 
 	@Reference(unbind = "-")

@@ -56,9 +56,9 @@ public class FreeMarkerTemplate extends BaseTemplate {
 		TemplateResource templateResource, Map<String, Object> context,
 		Configuration configuration,
 		TemplateContextHelper templateContextHelper,
-		TemplateResourceCache templateResourceCache) {
+		TemplateResourceCache templateResourceCache, boolean restricted) {
 
-		super(templateResource, context, templateContextHelper);
+		super(templateResource, context, templateContextHelper, restricted);
 
 		_configuration = configuration;
 		_templateResourceCache = templateResourceCache;

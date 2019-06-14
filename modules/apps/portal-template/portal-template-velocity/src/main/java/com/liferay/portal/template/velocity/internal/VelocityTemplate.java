@@ -41,9 +41,9 @@ public class VelocityTemplate extends BaseTemplate {
 		TemplateResource templateResource, Map<String, Object> context,
 		VelocityEngine velocityEngine,
 		TemplateContextHelper templateContextHelper,
-		TemplateResourceCache templateResourceCache) {
+		TemplateResourceCache templateResourceCache, boolean restricted) {
 
-		super(templateResource, context, templateContextHelper);
+		super(templateResource, context, templateContextHelper, restricted);
 
 		_velocityContext = new VelocityContext(super.context);
 		_velocityEngine = velocityEngine;

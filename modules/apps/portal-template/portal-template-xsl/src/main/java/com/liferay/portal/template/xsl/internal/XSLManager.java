@@ -85,8 +85,8 @@ public class XSLManager extends BaseTemplateManager {
 			(XSLTemplateResource)templateResource;
 
 		return new XSLTemplate(
-			xslTemplateResource, templateContextHelper,
-			_xslEngineConfiguration);
+			xslTemplateResource, templateContextHelper, _xslEngineConfiguration,
+			restricted);
 	}
 
 	private volatile XSLEngineConfiguration _xslEngineConfiguration;

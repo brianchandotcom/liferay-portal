@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.template.TemplateResourceLoader;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.template.BaseTemplateManager;
-import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
 
@@ -375,16 +374,10 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		TemplateResource templateResource, boolean restricted,
 		Map<String, Object> helperUtilities) {
 
-		Template template = new FreeMarkerTemplate(
+		return new FreeMarkerTemplate(
 			templateResource, helperUtilities, _configuration,
-			templateContextHelper, _freeMarkerTemplateResourceCache);
-
-		if (restricted) {
-			template = new RestrictedTemplate(
-				template, templateContextHelper.getRestrictedVariables());
-		}
-
-		return template;
+			templateContextHelper, _freeMarkerTemplateResourceCache,
+			restricted);
 	}
 
 	protected FreeMarkerBundleClassloader getFreeMarkerBundleClassloader() {

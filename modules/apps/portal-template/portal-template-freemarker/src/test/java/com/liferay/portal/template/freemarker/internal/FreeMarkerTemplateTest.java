@@ -92,7 +92,8 @@ public class FreeMarkerTemplateTest {
 	public void testGet() throws Exception {
 		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, _configuration,
-			_templateContextHelper, _templateResourceCache);
+			_templateContextHelper, _templateResourceCache, false,
+			_configuration.getObjectWrapper());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -111,7 +112,8 @@ public class FreeMarkerTemplateTest {
 	public void testPrepare() throws Exception {
 		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, _configuration,
-			_templateContextHelper, _templateResourceCache);
+			_templateContextHelper, _templateResourceCache, false,
+			_configuration.getObjectWrapper());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -132,7 +134,8 @@ public class FreeMarkerTemplateTest {
 	public void testProcessTemplate1() throws Exception {
 		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, _configuration,
-			_templateContextHelper, _templateResourceCache);
+			_templateContextHelper, _templateResourceCache, false,
+			_configuration.getObjectWrapper());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -149,7 +152,8 @@ public class FreeMarkerTemplateTest {
 	public void testProcessTemplate2() throws Exception {
 		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_WRONG_TEMPLATE_ID), null, _configuration,
-			_templateContextHelper, _templateResourceCache);
+			_templateContextHelper, _templateResourceCache, false,
+			_configuration.getObjectWrapper());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -173,7 +177,7 @@ public class FreeMarkerTemplateTest {
 			new StringTemplateResource(
 				_WRONG_TEMPLATE_ID, _TEST_TEMPLATE_CONTENT),
 			null, _configuration, _templateContextHelper,
-			_templateResourceCache);
+			_templateResourceCache, false, _configuration.getObjectWrapper());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -190,7 +194,8 @@ public class FreeMarkerTemplateTest {
 	public void testProcessTemplate4() throws Exception {
 		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, _configuration,
-			_templateContextHelper, _templateResourceCache);
+			_templateContextHelper, _templateResourceCache, false,
+			_configuration.getObjectWrapper());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -209,7 +214,8 @@ public class FreeMarkerTemplateTest {
 	public void testProcessTemplate5() throws Exception {
 		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_WRONG_TEMPLATE_ID), null, _configuration,
-			_templateContextHelper, _templateResourceCache);
+			_templateContextHelper, _templateResourceCache, false,
+			_configuration.getObjectWrapper());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -228,7 +234,8 @@ public class FreeMarkerTemplateTest {
 	public void testProcessTemplate6() throws Exception {
 		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_WRONG_TEMPLATE_ID), null, _configuration,
-			_templateContextHelper, _templateResourceCache);
+			_templateContextHelper, _templateResourceCache, false,
+			_configuration.getObjectWrapper());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -253,7 +260,8 @@ public class FreeMarkerTemplateTest {
 	public void testProcessTemplate7() throws Exception {
 		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_WRONG_TEMPLATE_ID), null, _configuration,
-			_templateContextHelper, _templateResourceCache);
+			_templateContextHelper, _templateResourceCache, false,
+			_configuration.getObjectWrapper());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -277,7 +285,8 @@ public class FreeMarkerTemplateTest {
 
 		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), context,
-			_configuration, _templateContextHelper, _templateResourceCache);
+			_configuration, _templateContextHelper, _templateResourceCache,
+			false, _configuration.getObjectWrapper());
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 

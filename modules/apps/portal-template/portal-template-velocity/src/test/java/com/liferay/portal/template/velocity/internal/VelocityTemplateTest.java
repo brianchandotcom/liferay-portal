@@ -163,7 +163,8 @@ public class VelocityTemplateTest {
 	public void testGet() throws Exception {
 		Template template = new VelocityTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null,
-			_velocityEngine, _templateContextHelper, _templateResourceCache);
+			_velocityEngine, _templateContextHelper, _templateResourceCache,
+			false);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -182,7 +183,8 @@ public class VelocityTemplateTest {
 	public void testPrepare() throws Exception {
 		Template template = new VelocityTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null,
-			_velocityEngine, _templateContextHelper, _templateResourceCache);
+			_velocityEngine, _templateContextHelper, _templateResourceCache,
+			false);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -203,7 +205,8 @@ public class VelocityTemplateTest {
 	public void testProcessTemplate1() throws Exception {
 		Template template = new VelocityTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null,
-			_velocityEngine, _templateContextHelper, _templateResourceCache);
+			_velocityEngine, _templateContextHelper, _templateResourceCache,
+			false);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -220,7 +223,7 @@ public class VelocityTemplateTest {
 	public void testProcessTemplate2() throws Exception {
 		Template template = new VelocityTemplate(
 			new MockTemplateResource(_WRONG_TEMPLATE_ID), null, _velocityEngine,
-			_templateContextHelper, _templateResourceCache);
+			_templateContextHelper, _templateResourceCache, false);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -244,7 +247,7 @@ public class VelocityTemplateTest {
 			new StringTemplateResource(
 				_WRONG_TEMPLATE_ID, _TEST_TEMPLATE_CONTENT),
 			null, _velocityEngine, _templateContextHelper,
-			_templateResourceCache);
+			_templateResourceCache, false);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -261,7 +264,8 @@ public class VelocityTemplateTest {
 	public void testProcessTemplate4() throws Exception {
 		Template template = new VelocityTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null,
-			_velocityEngine, _templateContextHelper, _templateResourceCache);
+			_velocityEngine, _templateContextHelper, _templateResourceCache,
+			false);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -280,7 +284,7 @@ public class VelocityTemplateTest {
 	public void testProcessTemplate5() throws Exception {
 		Template template = new VelocityTemplate(
 			new MockTemplateResource(_WRONG_TEMPLATE_ID), null, _velocityEngine,
-			_templateContextHelper, _templateResourceCache);
+			_templateContextHelper, _templateResourceCache, false);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -299,7 +303,7 @@ public class VelocityTemplateTest {
 	public void testProcessTemplate6() throws Exception {
 		Template template = new VelocityTemplate(
 			new MockTemplateResource(_WRONG_TEMPLATE_ID), null, _velocityEngine,
-			_templateContextHelper, _templateResourceCache);
+			_templateContextHelper, _templateResourceCache, false);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -324,7 +328,7 @@ public class VelocityTemplateTest {
 	public void testProcessTemplate7() throws Exception {
 		Template template = new VelocityTemplate(
 			new MockTemplateResource(_WRONG_TEMPLATE_ID), null, _velocityEngine,
-			_templateContextHelper, _templateResourceCache);
+			_templateContextHelper, _templateResourceCache, false);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -348,7 +352,8 @@ public class VelocityTemplateTest {
 
 		Template template = new VelocityTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), context,
-			_velocityEngine, _templateContextHelper, _templateResourceCache);
+			_velocityEngine, _templateContextHelper, _templateResourceCache,
+			false);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 

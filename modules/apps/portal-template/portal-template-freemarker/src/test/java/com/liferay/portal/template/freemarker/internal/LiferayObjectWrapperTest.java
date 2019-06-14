@@ -14,12 +14,6 @@
 
 package com.liferay.portal.template.freemarker.internal;
 
-import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.templateparser.TemplateNode;
-import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
@@ -30,31 +24,20 @@ import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
 import freemarker.ext.beans.EnumerationModel;
-import freemarker.ext.beans.InvalidPropertyException;
-import freemarker.ext.beans.MapModel;
 import freemarker.ext.beans.ResourceBundleModel;
 import freemarker.ext.beans.StringModel;
 import freemarker.ext.dom.NodeModel;
 import freemarker.ext.util.ModelFactory;
 
-import freemarker.template.SimpleSequence;
 import freemarker.template.TemplateModel;
-import freemarker.template.TemplateModelException;
 import freemarker.template.Version;
 
 import java.lang.reflect.Field;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
-
-import org.hamcrest.CoreMatchers;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -67,7 +50,7 @@ import org.w3c.dom.Node;
 /**
  * @author Xiangyue Cai
  */
-public class LiferayObjectWrapperTest {
+public class LiferayObjectWrapperTest extends BaseObjectWrapperTest {
 
 	@ClassRule
 	@Rule
@@ -76,117 +59,12 @@ public class LiferayObjectWrapperTest {
 			AspectJNewEnvTestRule.INSTANCE, CodeCoverageAssertor.INSTANCE);
 
 	@Test
-	public void testCheckClassIsRestricted() {
-		_testCheckClassIsRestricted(
-			new LiferayObjectWrapper(null, null, null), TestLiferayObject.class,
-			null);
-
-		_testCheckClassIsRestricted(
-			new LiferayObjectWrapper(
-				new String[] {TestLiferayObject.class.getName()},
-				new String[] {TestLiferayObject.class.getName()}, null),
-			TestLiferayObject.class, null);
-
-		_testCheckClassIsRestricted(
-			new LiferayObjectWrapper(
-				null, new String[] {"java.lang.String"}, null),
-			TestLiferayObject.class, null);
-
-		_testCheckClassIsRestricted(
-			new LiferayObjectWrapper(
-				null, new String[] {"com.liferay.portal.cache"}, null),
-			TestLiferayObject.class, null);
-
-		_testCheckClassIsRestricted(
-			new LiferayObjectWrapper(
-				null, new String[] {TestLiferayObject.class.getName()}, null),
-			TestLiferayObject.class,
-			StringBundler.concat(
-				"Denied resolving class ", TestLiferayObject.class.getName(),
-				" by ", TestLiferayObject.class.getName()));
-
-		_testCheckClassIsRestricted(
-			new LiferayObjectWrapper(
-				null, new String[] {"com.liferay.portal.template.freemarker"},
-				null),
-			TestLiferayObject.class,
-			StringBundler.concat(
-				"Denied resolving class ", TestLiferayObject.class.getName(),
-				" by com.liferay.portal.template.freemarker"));
-
-		_testCheckClassIsRestricted(
-			new LiferayObjectWrapper(
-				null, new String[] {"com.liferay.portal.template.freemarker"},
-				null),
-			byte.class, null);
-	}
-
-	@Test
-	public void testCheckClassIsRestrictedWithNoContextClassloader() {
-		Thread thread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = thread.getContextClassLoader();
-
-		thread.setContextClassLoader(null);
-
-		try {
-			_testCheckClassIsRestricted(
-				new LiferayObjectWrapper(
-					new String[] {TestLiferayObject.class.getName()},
-					new String[] {TestLiferayObject.class.getName()}, null),
-				TestLiferayObject.class, null);
-		}
-		finally {
-			thread.setContextClassLoader(contextClassLoader);
-		}
-	}
-
-	@Test
 	public void testConstructor() {
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					LiferayObjectWrapper.class.getName(), Level.INFO)) {
-
-			Assert.assertEquals(
-				Collections.singletonList("com.liferay.package.name"),
-				ReflectionTestUtil.getFieldValue(
-					new LiferayObjectWrapper(
-						null, new String[] {"com.liferay.package.name"}, null),
-					"_restrictedPackageNames"));
-
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
-
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
-
-			LogRecord logRecord = logRecords.get(0);
-
-			Assert.assertEquals(
-				"Unable to find restricted class com.liferay.package.name. " +
-					"Registering as a package.",
-				logRecord.getMessage());
-		}
-
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					LiferayObjectWrapper.class.getName(), Level.OFF)) {
-
-			Assert.assertEquals(
-				Collections.singletonList("com.liferay.package.name"),
-				ReflectionTestUtil.getFieldValue(
-					new LiferayObjectWrapper(
-						null, new String[] {"com.liferay.package.name"}, null),
-					"_restrictedPackageNames"));
-
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
-
-			Assert.assertEquals(logRecords.toString(), 0, logRecords.size());
-		}
-
 		Field cacheClassNamesField = ReflectionTestUtil.getAndSetFieldValue(
 			LiferayObjectWrapper.class, "_cacheClassNamesField", null);
 
 		try {
-			new LiferayObjectWrapper(null, null, null);
+			new LiferayObjectWrapper();
 
 			Assert.fail("NullPointerException was not thrown");
 		}
@@ -202,15 +80,14 @@ public class LiferayObjectWrapperTest {
 
 	@Test
 	public void testHandleUnknownType() throws Exception {
-		LiferayObjectWrapper liferayObjectWrapper = new LiferayObjectWrapper(
-			null, null, null);
+		LiferayObjectWrapper liferayObjectWrapper = new LiferayObjectWrapper();
 
 		// 1. Handle Enumeration
 
 		Enumeration<String> enumeration = Collections.enumeration(
 			Collections.singletonList("testElement"));
 
-		_assertTemplateModel(
+		assertTemplateModel(
 			"testElement", enumerationModel -> enumerationModel.next(),
 			EnumerationModel.class.cast(
 				liferayObjectWrapper.handleUnknownType(enumeration)));
@@ -263,7 +140,7 @@ public class LiferayObjectWrapperTest {
 
 		};
 
-		_assertTemplateModel(
+		assertTemplateModel(
 			resourceBundle.toString(),
 			resourceBundleModel -> resourceBundleModel.getBundle(),
 			ResourceBundleModel.class.cast(
@@ -274,7 +151,7 @@ public class LiferayObjectWrapperTest {
 
 		// 4. Handle Version
 
-		_assertTemplateModel(
+		assertTemplateModel(
 			"1.0", stringModel -> stringModel.getAsString(),
 			StringModel.class.cast(
 				liferayObjectWrapper.handleUnknownType(
@@ -305,86 +182,8 @@ public class LiferayObjectWrapperTest {
 	}
 
 	@Test
-	public void testRestrictedMethodNames() throws Exception {
-		LiferayObjectWrapper liferayObjectWrapper = new LiferayObjectWrapper(
-			null, null,
-			new String[] {
-				TestLiferayMethodObject.class.getName() + "#getName"
-			});
-
-		TemplateModel model = liferayObjectWrapper.wrap(
-			new TestLiferayMethodObject("name"));
-
-		Assert.assertThat(
-			model, CoreMatchers.instanceOf(LiferayFreeMarkerBeanModel.class));
-
-		LiferayFreeMarkerBeanModel liferayFreeMarkerBeanModel =
-			(LiferayFreeMarkerBeanModel)model;
-
-		_testRestrictedMethodNames(liferayFreeMarkerBeanModel, "name");
-		_testRestrictedMethodNames(liferayFreeMarkerBeanModel, "Name");
-		_testRestrictedMethodNames(liferayFreeMarkerBeanModel, "getName");
-		_testRestrictedMethodNames(liferayFreeMarkerBeanModel, "getname");
-	}
-
-	@Test
-	public void testRestrictedMethodNamesIncorrectSyntax() throws Exception {
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					LiferayObjectWrapper.class.getName(), Level.INFO)) {
-
-			String methodName =
-				TestLiferayMethodObject.class.getName() + ".getName";
-
-			new LiferayObjectWrapper(null, null, new String[] {methodName});
-
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
-
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
-
-			LogRecord logRecord = logRecords.get(0);
-
-			Assert.assertEquals(
-				"\"" + methodName + "\" does not match format " +
-					"\"className#methodName\"",
-				logRecord.getMessage());
-		}
-	}
-
-	@Test
 	public void testWrap() throws Exception {
-		_testWrap(new LiferayObjectWrapper(null, null, null));
-		_testWrap(
-			new LiferayObjectWrapper(
-				new String[] {StringPool.STAR}, null, null));
-		_testWrap(
-			new LiferayObjectWrapper(
-				new String[] {StringPool.STAR},
-				new String[] {LiferayObjectWrapper.class.getName()}, null));
-		_testWrap(
-			new LiferayObjectWrapper(
-				new String[] {StringPool.BLANK}, null, null));
-		_testWrap(
-			new LiferayObjectWrapper(
-				null, new String[] {StringPool.BLANK}, null));
-		_testWrap(
-			new LiferayObjectWrapper(
-				new String[] {StringPool.BLANK},
-				new String[] {StringPool.BLANK}, null));
-
-		_testWrap(
-			new LiferayObjectWrapper(
-				new String[] {StringPool.BLANK},
-				new String[] {StringPool.BLANK},
-				new String[] {StringPool.BLANK}));
-
-		_testWrap(
-			new LiferayObjectWrapper(
-				new String[] {StringPool.BLANK},
-				new String[] {StringPool.BLANK},
-				new String[] {
-					TestLiferayMethodObject.class.getName() + "#getName"
-				}));
+		testWrap(new LiferayObjectWrapper());
 	}
 
 	private void _assertModelFactoryCache(
@@ -398,186 +197,6 @@ public class LiferayObjectWrapperTest {
 			ReflectionTestUtil.getFieldValue(
 				LiferayObjectWrapper.class, modelFactoryFieldName),
 			modelFactories.get(clazz));
-	}
-
-	private <T, R> void _assertTemplateModel(
-			String expectResult, UnsafeFunction<T, R, Exception> unsafeFunction,
-			T templateModel)
-		throws Exception {
-
-		R result = unsafeFunction.apply(templateModel);
-
-		Assert.assertEquals(expectResult, result.toString());
-	}
-
-	private void _testCheckClassIsRestricted(
-		LiferayObjectWrapper liferayObjectWrapper, Class<?> targetClass,
-		String exceptionMessage) {
-
-		try {
-			ReflectionTestUtil.invoke(
-				liferayObjectWrapper, "_checkClassIsRestricted",
-				new Class<?>[] {Class.class}, targetClass);
-
-			Assert.assertNull(
-				"Should throw TemplateModelException", exceptionMessage);
-		}
-		catch (Exception e) {
-			Assert.assertSame(TemplateModelException.class, e.getClass());
-
-			TemplateModelException templateModelException =
-				(TemplateModelException)e;
-
-			Assert.assertEquals(
-				exceptionMessage, templateModelException.getMessage());
-		}
-	}
-
-	private void _testRestrictedMethodNames(
-		LiferayFreeMarkerBeanModel liferayFreeMarkerBeanModel, String key) {
-
-		try {
-			liferayFreeMarkerBeanModel.get(key);
-
-			Assert.assertNull("Should throw TemplateModelException for " + key);
-		}
-		catch (TemplateModelException tme) {
-			Assert.assertSame(InvalidPropertyException.class, tme.getClass());
-
-			Assert.assertEquals(
-				"Denied access to method or field " + key + " of " +
-					TestLiferayMethodObject.class.toString(),
-				tme.getMessage());
-		}
-	}
-
-	private void _testWrap(LiferayObjectWrapper liferayObjectWrapper)
-		throws Exception {
-
-		// 1. Wrap null
-
-		Assert.assertNull(liferayObjectWrapper.wrap(null));
-
-		// 2. Wrap TemplateModel
-
-		TemplateModel dummyTemplateModel = new TemplateModel() {
-		};
-
-		Assert.assertSame(
-			dummyTemplateModel, liferayObjectWrapper.wrap(dummyTemplateModel));
-
-		// 3. Wrap TemplateNode
-
-		_assertTemplateModel(
-			"testName",
-			liferayTemplateModel -> liferayTemplateModel.get("name"),
-			LiferayTemplateModel.class.cast(
-				liferayObjectWrapper.wrap(
-					new TemplateNode(null, "testName", "", "", null))));
-
-		// 4. Wrap Liferay collection
-
-		_assertTemplateModel(
-			"testElement", simpleSequence -> simpleSequence.get(0),
-			SimpleSequence.class.cast(
-				liferayObjectWrapper.wrap(
-					new TestLiferayCollection("testElement"))));
-
-		// 5. Wrap Liferay map
-
-		_assertTemplateModel(
-			"testValue", mapModel -> mapModel.get("testKey"),
-			MapModel.class.cast(
-				liferayObjectWrapper.wrap(
-					new TestLiferayMap("testKey", "testValue"))));
-
-		// 6. Wrap Liferay object
-
-		_assertTemplateModel(
-			"TestLiferayObject", stringModel -> stringModel.getAsString(),
-			StringModel.class.cast(
-				liferayObjectWrapper.wrap(
-					new TestLiferayObject("TestLiferayObject"))));
-
-		// 7. Wrap non-Liferay object when module factory is avaiable
-
-		Map<Class<?>, ModelFactory> modelFactories =
-			ReflectionTestUtil.getFieldValue(
-				LiferayObjectWrapper.class, "_modelFactories");
-
-		modelFactories.put(
-			String.class, (object, wrapper) -> dummyTemplateModel);
-
-		Assert.assertSame(
-			dummyTemplateModel, liferayObjectWrapper.wrap(StringPool.BLANK));
-
-		modelFactories.clear();
-
-		// 8. Test
-
-		_assertTemplateModel(
-			"TestLiferayObject", stringModel -> stringModel.getAsString(),
-			StringModel.class.cast(
-				liferayObjectWrapper.wrap(
-					new TestLiferayObject("TestLiferayObject"))));
-	}
-
-	private class TestLiferayCollection extends ArrayList<String> {
-
-		private TestLiferayCollection(String element) {
-			add(element);
-		}
-
-		private static final long serialVersionUID = 1L;
-
-	}
-
-	private class TestLiferayMap extends HashMap<String, String> {
-
-		private TestLiferayMap(String key, String value) {
-			put(key, value);
-		}
-
-		private static final long serialVersionUID = 1L;
-
-	}
-
-	private class TestLiferayMethodObject {
-
-		public String getName() {
-			return _name;
-		}
-
-		public void setName(String name) {
-			_name = name;
-		}
-
-		@Override
-		public String toString() {
-			return _name;
-		}
-
-		private TestLiferayMethodObject(String name) {
-			_name = name;
-		}
-
-		private String _name;
-
-	}
-
-	private class TestLiferayObject {
-
-		@Override
-		public String toString() {
-			return _name;
-		}
-
-		private TestLiferayObject(String name) {
-			_name = name;
-		}
-
-		private final String _name;
-
 	}
 
 }

@@ -437,18 +437,13 @@ public class LiferaySourceOrSink
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveConnection(runtimeContainer);
 
-		ValidationResultMutable validationResultMutable =
-			new ValidationResultMutable();
-
 		try {
 			URIUtils.validateOpenAPISpecURL(
 				liferayConnectionProperties.getApiSpecURL());
 		}
 		catch (MalformedURLException murle) {
-			validationResultMutable.setMessage(murle.getMessage());
-			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
-
-			return validationResultMutable;
+			return new ValidationResult(
+				ValidationResult.Result.ERROR, murle.getMessage());
 		}
 
 		String target = liferayConnectionProperties.getApiSpecURL();
@@ -462,27 +457,20 @@ public class LiferaySourceOrSink
 				liferayConnectionProperties.getUserId());
 		}
 
-		if ((target == null) || target.isEmpty()) {
-			validationResultMutable.setMessage(
+		if (_isNullString(target)) {
+			return new ValidationResult(
+				ValidationResult.Result.ERROR,
 				i18nMessages.getMessage(
 					"error.validation.connection.apiSpecURL"));
-
-			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
-
-			return validationResultMutable;
 		}
 
-		if (!liferayConnectionProperties.isAnonymousLogin()) {
-			_validateCredentials(
-				liferayConnectionProperties.getUserId(),
-				liferayConnectionProperties.getPassword(),
-				validationResultMutable);
+		if (_isNullString(liferayConnectionProperties.getUserId()) ||
+			_isNullString(liferayConnectionProperties.getPassword())) {
 
-			if (validationResultMutable.getStatus() ==
-					ValidationResult.Result.ERROR) {
-
-				return validationResultMutable;
-			}
+			return new ValidationResult(
+				ValidationResult.Result.ERROR,
+				i18nMessages.getMessage(
+					"error.validation.connection.credentials"));
 		}
 
 		return validateConnection(
@@ -494,46 +482,40 @@ public class LiferaySourceOrSink
 		LiferayConnectionPropertiesProvider liferayConnectionPropertiesProvider,
 		RuntimeContainer runtimeContainer) {
 
-		ValidationResultMutable validationResultMutable =
-			new ValidationResultMutable();
-
-		validationResultMutable.setStatus(ValidationResult.Result.OK);
-
 		try {
 			doGetRequest(runtimeContainer);
 
-			validationResultMutable.setMessage(
+			return new ValidationResult(
+				ValidationResult.Result.OK,
 				i18nMessages.getMessage("success.validation.connection"));
 		}
 		catch (TalendRuntimeException tre) {
-			validationResultMutable.setMessage(
+			_log.error(tre.getMessage(), tre);
+
+			return new ValidationResult(
+				ValidationResult.Result.ERROR,
 				i18nMessages.getMessage(
 					"error.validation.connection.testconnection",
 					tre.getLocalizedMessage()));
-			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
-
-			_log.error(tre.getMessage(), tre);
 		}
 		catch (ProcessingException pe) {
-			validationResultMutable.setMessage(
+			_log.error(pe.getMessage(), pe);
+
+			return new ValidationResult(
+				ValidationResult.Result.ERROR,
 				i18nMessages.getMessage(
 					"error.validation.connection.testconnection.jersey",
 					pe.getLocalizedMessage()));
-			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
-
-			_log.error(pe.getMessage(), pe);
 		}
 		catch (Throwable t) {
-			validationResultMutable.setMessage(
+			_log.error(t.getMessage(), t);
+
+			return new ValidationResult(
+				ValidationResult.Result.ERROR,
 				i18nMessages.getMessage(
 					"error.validation.connection.testconnection.general",
 					t.getLocalizedMessage()));
-			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
-
-			_log.error(t.getMessage(), t);
 		}
-
-		return validationResultMutable;
 	}
 
 	protected static final String KEY_CONNECTION_PROPERTIES = "Connection";
@@ -577,6 +559,20 @@ public class LiferaySourceOrSink
 		return false;
 	}
 
+	private boolean _isNullString(String value) {
+		if (value == null) {
+			return true;
+		}
+
+		value = value.trim();
+
+		if (value.isEmpty()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private String _toLowerCase(String value) {
 		return value.toLowerCase(Locale.US);
 	}
@@ -605,30 +601,6 @@ public class LiferaySourceOrSink
 
 	private String _toUpperCase(String value) {
 		return value.toUpperCase(Locale.getDefault());
-	}
-
-	private void _validateCredentials(
-		String userId, String password,
-		ValidationResultMutable validationResultMutable) {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Validating credentials...");
-		}
-
-		if ((userId == null) || userId.isEmpty()) {
-			validationResultMutable.setMessage(
-				i18nMessages.getMessage("error.validation.connection.userId"));
-			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
-
-			return;
-		}
-
-		if ((password == null) || password.isEmpty()) {
-			validationResultMutable.setMessage(
-				i18nMessages.getMessage(
-					"error.validation.connection.password"));
-			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
-		}
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(

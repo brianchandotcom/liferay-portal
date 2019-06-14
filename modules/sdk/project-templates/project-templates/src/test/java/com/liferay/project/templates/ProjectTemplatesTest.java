@@ -2626,7 +2626,8 @@ public class ProjectTemplatesTest {
 			String gradleOutput = stdOutput.get();
 
 			Assert.assertTrue(
-				"Expected gradle output to include build error. " + gradleOutput,
+				"Expected gradle output to include build error. " +
+					gradleOutput,
 				gradleOutput.contains("Exporting an empty package"));
 
 			String mavenOutput = _executeMaven(
@@ -2753,7 +2754,8 @@ public class ProjectTemplatesTest {
 
 			_executeGradle(workspaceProjectDir, ":modules:foo:foo-api:build");
 
-			_executeGradle(workspaceProjectDir, ":modules:foo:foo-service:build");
+			_executeGradle(
+				workspaceProjectDir, ":modules:foo:foo-service:build");
 		}
 	}
 
@@ -2785,7 +2787,8 @@ public class ProjectTemplatesTest {
 
 			_executeGradle(workspaceProjectDir, ":modules:foo:foo-api:build");
 
-			_executeGradle(workspaceProjectDir, ":modules:foo:foo-service:build");
+			_executeGradle(
+				workspaceProjectDir, ":modules:foo:foo-service:build");
 		}
 	}
 
@@ -2817,7 +2820,8 @@ public class ProjectTemplatesTest {
 
 			_executeGradle(workspaceProjectDir, ":modules:foo:foo-api:build");
 
-			_executeGradle(workspaceProjectDir, ":modules:foo:foo-service:build");
+			_executeGradle(
+				workspaceProjectDir, ":modules:foo:foo-service:build");
 		}
 	}
 
@@ -4184,7 +4188,8 @@ public class ProjectTemplatesTest {
 				":modules:foo-portlet" + _GRADLE_TASK_PATH_BUILD);
 
 			_testExists(
-				gradleModulesDir, "foo-portlet/build/libs/foo.portlet-1.0.0.jar");
+				gradleModulesDir,
+				"foo-portlet/build/libs/foo.portlet-1.0.0.jar");
 
 			_executeMaven(mavenModulesDir, _MAVEN_GOAL_PACKAGE);
 
@@ -6327,11 +6332,13 @@ public class ProjectTemplatesTest {
 
 			_executeGradle(
 				rootProject,
-				projectPath + ":" + serviceProjectName + _GRADLE_TASK_PATH_BUILD);
+				projectPath + ":" + serviceProjectName +
+					_GRADLE_TASK_PATH_BUILD);
 
 			File gradleApiBundleFile = _testExists(
 				gradleProjectDir,
-				apiProjectName + "/build/libs/" + packageName + ".api-1.0.0.jar");
+				apiProjectName + "/build/libs/" + packageName +
+					".api-1.0.0.jar");
 
 			File gradleServiceBundleFile = _testExists(
 				gradleProjectDir,

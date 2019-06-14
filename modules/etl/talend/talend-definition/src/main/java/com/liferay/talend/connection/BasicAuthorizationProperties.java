@@ -64,13 +64,6 @@ public class BasicAuthorizationProperties extends PropertiesImpl {
 	public void setupLayout() {
 		super.setupLayout();
 
-		Form mainForm = new Form(this, Form.MAIN);
-
-		mainForm.addRow(anonymousLogin);
-		mainForm.addRow(userId);
-
-		mainForm.addColumn(password);
-
 		Form referenceForm = new Form(this, UIKeys.FORM_BASIC_AUTHORIZATION);
 
 		referenceForm.addRow(anonymousLogin);

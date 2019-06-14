@@ -38,9 +38,21 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class BaseTemplate implements Template {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #BaseTemplate(
+	 * 			TemplateResource, Map, TemplateContextHelper, boolean)}
+	 */
+	@Deprecated
 	public BaseTemplate(
 		TemplateResource templateResource, Map<String, Object> context,
 		TemplateContextHelper templateContextHelper) {
+
+		this(templateResource, context, templateContextHelper, false);
+	}
+
+	public BaseTemplate(
+		TemplateResource templateResource, Map<String, Object> context,
+		TemplateContextHelper templateContextHelper, boolean restricted) {
 
 		if (templateResource == null) {
 			throw new IllegalArgumentException("Template resource is null");
@@ -62,6 +74,7 @@ public abstract class BaseTemplate implements Template {
 		}
 
 		_templateContextHelper = templateContextHelper;
+		_restricted = restricted;
 	}
 
 	@Override
@@ -172,6 +185,15 @@ public abstract class BaseTemplate implements Template {
 			return null;
 		}
 
+		if (_restricted) {
+			Set<String> restrictedVariables =
+				_templateContextHelper.getRestrictedVariables();
+
+			if (restrictedVariables.contains(key)) {
+				return null;
+			}
+		}
+
 		return context.put(key, value);
 	}
 
@@ -233,6 +255,7 @@ public abstract class BaseTemplate implements Template {
 
 	protected Map<String, Object> context;
 
+	private final boolean _restricted;
 	private final TemplateContextHelper _templateContextHelper;
 	private final TemplateResource _templateResource;
 

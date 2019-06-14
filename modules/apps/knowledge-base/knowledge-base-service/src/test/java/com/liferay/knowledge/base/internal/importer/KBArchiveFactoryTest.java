@@ -147,23 +147,34 @@ public class KBArchiveFactoryTest {
 		KBArchive.Folder folder0 = folderIterator.next();
 
 		Assert.assertEquals(StringPool.SLASH, folder0.getName());
-		Assert.assertEquals("/intro.md", folder0.getIntroFile().getName());
+		Assert.assertEquals(
+			"/intro.md",
+			folder0.getIntroFile(
+			).getName());
 		Assert.assertNull(folder0.getParentFolderIntroFile());
-		Assert.assertTrue(folder0.getFiles().isEmpty());
+		Assert.assertTrue(
+			folder0.getFiles(
+			).isEmpty());
 
 		KBArchive.Folder folder1 = folderIterator.next();
 
 		Assert.assertEquals("/x", folder1.getName());
 		Assert.assertNull(folder1.getIntroFile());
 		Assert.assertNotNull(folder1.getParentFolderIntroFile());
-		Assert.assertEquals(1, folder1.getFiles().size());
+		Assert.assertEquals(
+			1,
+			folder1.getFiles(
+			).size());
 
 		KBArchive.Folder folder2 = folderIterator.next();
 
 		Assert.assertEquals("/y/z", folder2.getName());
 		Assert.assertNull(folder2.getIntroFile());
 		Assert.assertNull(folder2.getParentFolderIntroFile());
-		Assert.assertEquals(2, folder2.getFiles().size());
+		Assert.assertEquals(
+			2,
+			folder2.getFiles(
+			).size());
 	}
 
 	@Test(expected = KBArticleImportException.class)
@@ -192,7 +203,8 @@ public class KBArchiveFactoryTest {
 
 		Assert.assertEquals(folders.toString(), 1, folders.size());
 
-		KBArchive.Folder folder = folders.iterator().next();
+		KBArchive.Folder folder = folders.iterator(
+		).next();
 
 		Assert.assertNull(folder.getIntroFile());
 

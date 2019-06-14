@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.knowledge.base.markdown.converter.internal.flexmark.processor;
 
 import com.vladsch.flexmark.Extension;
@@ -19,43 +20,41 @@ import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.util.options.MutableDataHolder;
 
 /**
- * An extension that registers a post processor that copies image alt text 
+ * An extension that registers a post processor that copies image alt text
  * to a paragraph below the image.
- * 
+ *
  * @author Rich Sezov
  */
-public class ImageCaptionPostProcessorExtension implements Parser.ParserExtension, 
-	HtmlRenderer.HtmlRendererExtension {
-
-	private ImageCaptionPostProcessorExtension() {}
-
-	@Override
-	public void extend(final HtmlRenderer.Builder rendererBuilder, 
-		final String rendererType) {
-		rendererBuilder.attributeProviderFactory(EmbeddedAttributeProvider.Factory());
-	}
-
-	@Override
-	public void extend(Parser.Builder parserBuilder) {
-		parserBuilder.postProcessorFactory(ImageCaptionPostProcessor.Factory(parserBuilder));
-	}
-
-	@Override
-	public void parserOptions(MutableDataHolder options) {
-
-	}
-
-	@Override
-	public void rendererOptions(final MutableDataHolder options) {
-
-	}
+public class ImageCaptionPostProcessorExtension
+	implements HtmlRenderer.HtmlRendererExtension, Parser.ParserExtension {
 
 	public static Extension create() {
 		return new ImageCaptionPostProcessorExtension();
 	}
 
-	
+	@Override
+	public void extend(
+		final HtmlRenderer.Builder rendererBuilder, final String rendererType) {
+
+		rendererBuilder.attributeProviderFactory(
+			EmbeddedAttributeProvider.Factory());
+	}
+
+	@Override
+	public void extend(Parser.Builder parserBuilder) {
+		parserBuilder.postProcessorFactory(
+			ImageCaptionPostProcessor.Factory(parserBuilder));
+	}
+
+	@Override
+	public void parserOptions(MutableDataHolder options) {
+	}
+
+	@Override
+	public void rendererOptions(final MutableDataHolder options) {
+	}
+
+	private ImageCaptionPostProcessorExtension() {
+	}
+
 }
-
-	
-

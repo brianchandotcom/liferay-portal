@@ -71,12 +71,44 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * @author Peter Shin
  * @author Brian Wing Shun Chan
  */
 public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
+
+	public KBArticle addKBArticle(
+			long parentResourceClassNameId, long parentResourcePrimKey,
+			String title, String urlTitle, String content, String description,
+			String sourceURL, String[] sections, String[] selectedFileNames,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (parentResourceClassNameId == PortalUtil.getClassNameId(
+				KBFolderConstants.getClassName())) {
+
+			_kbFolderModelResourcePermission.check(
+				getPermissionChecker(), parentResourcePrimKey,
+				KBActionKeys.ADD_KB_ARTICLE);
+		}
+		else if (parentResourceClassNameId == PortalUtil.getClassNameId(
+					KBArticleConstants.getClassName())) {
+
+			_kbArticleModelResourcePermission.check(
+				getPermissionChecker(), parentResourcePrimKey,
+				KBActionKeys.ADD_KB_ARTICLE);
+		}
+		else {
+			throw new PortalException(
+				"Can not find article's parent with id " +
+					parentResourcePrimKey);
+		}
+
+		return kbArticleLocalService.addKBArticle(
+			getUserId(), parentResourceClassNameId, parentResourcePrimKey,
+			title, urlTitle, content, description, sourceURL, sections,
+			selectedFileNames, serviceContext);
+	}
 
 	@Override
 	public KBArticle addKBArticle(
@@ -87,13 +119,10 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		
-		/*
+		/**
 		 *  FIXME: portlet permissions should be checked in the portlet(s) not here !!!
 		 *  Once fixed this method should be removed
 		 */
-		
-		
 		if (portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
 			_adminPortletResourcePermission.check(
 				getPermissionChecker(), serviceContext.getScopeGroupId(),
@@ -106,35 +135,9 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		}
 
 		return addKBArticle(
-			parentResourceClassNameId, parentResourcePrimKey,
-			title, urlTitle, content, description, sourceURL, sections,
-			selectedFileNames, serviceContext);
-	}
-
-	public KBArticle addKBArticle(
-			long parentResourceClassNameId,
-			long parentResourcePrimKey, String title, String urlTitle,
-			String content, String description, String sourceURL,
-			String[] sections, String[] selectedFileNames,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-
-		if (parentResourceClassNameId == PortalUtil.getClassNameId(KBFolderConstants.getClassName())) {
-			_kbFolderModelResourcePermission.check(
-					getPermissionChecker(), parentResourcePrimKey, KBActionKeys.ADD_KB_ARTICLE);
-			
-		} else if (parentResourceClassNameId == PortalUtil.getClassNameId(KBArticleConstants.getClassName())) {
-			_kbArticleModelResourcePermission.check(
-					getPermissionChecker(), parentResourcePrimKey, KBActionKeys.ADD_KB_ARTICLE);
-		} else {
-			throw new PortalException("Can not find article's parent with id " + parentResourcePrimKey);
-		}
-		
-		return kbArticleLocalService.addKBArticle(
-			getUserId(), parentResourceClassNameId, parentResourcePrimKey,
-			title, urlTitle, content, description, sourceURL, sections,
-			selectedFileNames, serviceContext);
+			parentResourceClassNameId, parentResourcePrimKey, title, urlTitle,
+			content, description, sourceURL, sections, selectedFileNames,
+			serviceContext);
 	}
 
 	@Override
@@ -759,9 +762,9 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			KBActionKeys.MOVE_KB_ARTICLE);
 
 		_kbFolderModelResourcePermission.check(
-				getPermissionChecker(), parentResourcePrimKey,
-				KBActionKeys.ADD_KB_ARTICLE);
-		
+			getPermissionChecker(), parentResourcePrimKey,
+			KBActionKeys.ADD_KB_ARTICLE);
+
 		kbArticleLocalService.moveKBArticle(
 			getUserId(), resourcePrimKey, parentResourceClassNameId,
 			parentResourcePrimKey, priority);
@@ -1114,13 +1117,11 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			ModelResourcePermissionFactory.getInstance(
 				KBArticleServiceImpl.class, "_kbArticleModelResourcePermission",
 				KBArticle.class);
-	
 	private static volatile ModelResourcePermission<KBFolder>
 		_kbFolderModelResourcePermission =
 			ModelResourcePermissionFactory.getInstance(
 				KBFolderServiceImpl.class, "_kbFolderModelResourcePermission",
 				KBFolder.class);
-
 
 	@BeanReference(type = AdminHelper.class)
 	private AdminHelper _adminHelper;

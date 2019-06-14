@@ -25,13 +25,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Rich Sezov
  */
 @Component(
-        enabled = true, immediate = true, service = MarkdownConverterFactory.class
+	enabled = true, immediate = true, service = MarkdownConverterFactory.class
 )
 public class MarkdownConverterFactoryImpl implements MarkdownConverterFactory {
 
-    @Override
-    public MarkdownConverter create() {
-        return new LiferayFlexmarkConverter();
-    }
+	@Override
+	public MarkdownConverter create() {
+		return new LiferayFlexmarkConverter();
+	}
 
 }

@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.knowledge.base.markdown.converter.internal.flexmark.processor;
 
 import com.vladsch.flexmark.ast.Image;
@@ -28,67 +29,87 @@ import com.vladsch.flexmark.util.sequence.BasedSequence;
 import com.vladsch.flexmark.util.sequence.PrefixedSubSequence;
 
 /**
- * 
+ *
  * @author Rich Sezov
  */
 public class ImageCaptionPostProcessor extends NodePostProcessor {
-
-	private static class ImageCaptionFactory extends NodePostProcessorFactory {
-		private ImageCaptionFactory (DataHolder options) {
-			super(false);
-
-			addNodes(Image.class);
-			addNodes(ImageRef.class);
-		}
-
-		@Override
-		public NodePostProcessor create(Document document) {
-			return new ImageCaptionPostProcessor();
-		}
-	}
 
 	public static NodePostProcessorFactory Factory(DataHolder options) {
 		return new ImageCaptionFactory(options);
 	}
 
 	@Override
-        public void process(NodeTracker state, Node node) {
-            BasedSequence paragraphText = BasedSequence.NULL;
-            if (node instanceof ImageRef) { // [foo](http://example.com)
-                ImageRef imageRef = (ImageRef) node;
-                paragraphText = imageRef.isReferenceTextCombined() ? imageRef.getReference() : imageRef.getText();
-            } else if (node instanceof Image) { // ![bar](http://example.com)
-                Image image = (Image) node;
-                paragraphText = image.getText();
-            }
+	public void process(NodeTracker state, Node node) {
+		BasedSequence paragraphText = BasedSequence.NULL;
 
-            if (!paragraphText.isBlank()) {
-		    
-	    if (paragraphText.toString().contains("Figure")) {
+		if (node instanceof ImageRef) { // [foo](http://example.com)
+			ImageRef imageRef = (ImageRef)node;
+
+			paragraphText =
+				imageRef.isReferenceTextCombined() ? imageRef.getReference() :
+				imageRef.getText();
+		}
+		else if (node instanceof Image) { // ![bar](http://example.com)
+			Image image = (Image)node;
+
+			paragraphText = image.getText();
+		}
+
+		if (!paragraphText.isBlank()) {
+			if (paragraphText.toString().contains("Figure")) {
                 Node paragraphParent = node.getAncestorOfType(Paragraph.class);
 
                 // should always have a paragraph wrapper
                 assert paragraphParent != null;
 
-                // create a text element to hold the text
-                Text text = new Text(PrefixedSubSequence.of(paragraphText.toString(), paragraphParent.getChars().subSequence(paragraphParent.getTextLength())));
+				// create a text element to hold the text
 
-                // create a paragraph for the text
-                Paragraph paragraph = new Paragraph(text.getChars());
-                
-                // this will allows us add attributes in the AST without needing to modify the attribute provider
-                Attributes attributes = new Attributes();
-                attributes.addValue("class", "caption");
+				Text text = new Text(
+					PrefixedSubSequence.of(
+						paragraphText.toString(),
+						paragraphParent.getChars(
+						).subSequence(
+							paragraphParent.getTextLength()
+						)));
 
-                paragraph.appendChild(new EmbeddedAttributeProvider.EmbeddedNodeAttributes(paragraph, attributes));
-                paragraph.appendChild(text);
-                paragraph.setCharsFromContent();
+				// create a paragraph for the text
 
-                paragraphParent.insertAfter(paragraph);
-                paragraphParent.setCharsFromContent();
+				Paragraph paragraph = new Paragraph(text.getChars());
 
-                state.nodeAddedWithChildren(paragraph);
-            }
-	    }
-}
+				// this will allows us add attributes in the AST without needing to modify the attribute provider
+
+				Attributes attributes = new Attributes();
+
+				attributes.addValue("class", "caption");
+
+				paragraph.appendChild(
+					new EmbeddedAttributeProvider.EmbeddedNodeAttributes(
+						paragraph, attributes));
+				paragraph.appendChild(text);
+				paragraph.setCharsFromContent();
+
+				paragraphParent.insertAfter(paragraph);
+				paragraphParent.setCharsFromContent();
+
+				state.nodeAddedWithChildren(paragraph);
+			}
+		}
+	}
+
+	private static class ImageCaptionFactory extends NodePostProcessorFactory {
+
+		@Override
+		public NodePostProcessor create(Document document) {
+			return new ImageCaptionPostProcessor();
+		}
+
+		private ImageCaptionFactory(DataHolder options) {
+			super(false);
+
+			addNodes(Image.class);
+			addNodes(ImageRef.class);
+		}
+
+	}
+
 }

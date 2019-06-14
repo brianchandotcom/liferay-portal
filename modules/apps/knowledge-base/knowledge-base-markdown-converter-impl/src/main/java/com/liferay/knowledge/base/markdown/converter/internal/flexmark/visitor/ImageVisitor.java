@@ -14,11 +14,6 @@
 
 package com.liferay.knowledge.base.markdown.converter.internal.flexmark.visitor;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.knowledge.base.importer.util.KBArticleImporterUtil;
 import com.liferay.knowledge.base.markdown.converter.internal.flexmark.util.FlexmarkUtil;
@@ -27,6 +22,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.zip.ZipReader;
+
 import com.vladsch.flexmark.ast.Image;
 import com.vladsch.flexmark.util.ast.Node;
 import com.vladsch.flexmark.util.ast.NodeVisitor;
@@ -34,67 +30,84 @@ import com.vladsch.flexmark.util.ast.VisitHandler;
 import com.vladsch.flexmark.util.ast.Visitor;
 import com.vladsch.flexmark.util.sequence.BasedSequence;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
- * Visitor to replace image sources with uploaded Doc Library entries. 
+ * Visitor to replace image sources with uploaded Doc Library entries.
  * @author Rich Sezov
  */
 public class ImageVisitor {
 
 	public ImageVisitor() {
-		_images = new ArrayList<String>();
+		_images = new ArrayList<>();
 		_logger = Logger.getLogger(ImageVisitor.class.getName());
 	}
-	public void visit (Node node) {
-		_visitor.visit(node);
-	}
-	
-	public void visit(Node node, KBArticle article, ZipReader zip, long userId) {
-		_kbArticle = article;
-		_zip = zip;
-		_userId = userId;
-		visit (node);
+
+	public List<String> getImages() {
+		return _images;
 	}
 
-	public void visit (Image image) {
+	public void visit(Image image) {
 		BasedSequence url = image.getUrl();
+
 		BasedSequence[] urlparts = url.split("/");
-		BasedSequence fileName = urlparts[urlparts.length -1];
+		BasedSequence fileName = urlparts[urlparts.length - 1];
+
 		String file = fileName.toString();
+
 		try {
-			
-			FileEntry entry = KBArticleImporterUtil.addImageFileEntry(file, _userId, _kbArticle, _zip);
+			FileEntry entry = KBArticleImporterUtil.addImageFileEntry(
+				file, _userId, _kbArticle, _zip);
+
 			String imageSrc = DLUtil.getPreviewURL(
-						entry, entry.getFileVersion(), null,
-						StringPool.BLANK);
+				entry, entry.getFileVersion(), null, StringPool.BLANK);
 
 			BasedSequence newUrl = FlexmarkUtil.StringtoBS(imageSrc);
 
 			image.setUrl(newUrl);
-			
-		} catch (PortalException pe) {
-			_logger.log(Level.SEVERE, "PortalException while trying to add images.");
+		}
+		catch (PortalException pe) {
+			_logger.log(
+				Level.SEVERE, "PortalException while trying to add images.");
 		}
 
 		_images.add(file);
 		_visitor.visitChildren(image);
 	}
 
-	public List <String>getImages() {
-		return _images;
+	public void visit(Node node) {
+		_visitor.visit(node);
 	}
 
-	NodeVisitor _visitor = new NodeVisitor (new VisitHandler<Image>(Image.class, new Visitor<Image>() {
-		@Override
-		public void visit (Image image) {
-			ImageVisitor.this.visit(image);
-		}
-	}));
+	public void visit(
+		Node node, KBArticle article, ZipReader zip, long userId) {
 
-	private List <String>_images;
+		_kbArticle = article;
+		_zip = zip;
+		_userId = userId;
+		visit(node);
+	}
+
+	NodeVisitor _visitor = new NodeVisitor(
+		new VisitHandler<Image>(
+			Image.class,
+			new Visitor<Image>() {
+
+				@Override
+				public void visit(Image image) {
+					ImageVisitor.this.visit(image);
+				}
+
+			}));
+
+	private static final Logger _logger;
+
+	private final List<String> _images;
 	private KBArticle _kbArticle;
-	private ZipReader _zip;
 	private long _userId;
-	private static Logger _logger;
+	private ZipReader _zip;
 
-	
 }

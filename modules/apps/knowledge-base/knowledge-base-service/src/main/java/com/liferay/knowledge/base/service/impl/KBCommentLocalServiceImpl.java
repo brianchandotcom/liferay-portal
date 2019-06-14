@@ -687,7 +687,7 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		private static final long serialVersionUID = 1L;
 
 		private final JSONObject _notificationEventJSONObject;
-		private String _portletId;
+		private final String _portletId;
 		private final long[] _receiverUserIds;
 
 	}

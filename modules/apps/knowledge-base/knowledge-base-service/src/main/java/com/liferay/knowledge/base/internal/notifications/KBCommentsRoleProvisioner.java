@@ -71,7 +71,7 @@ public class KBCommentsRoleProvisioner
 				descriptionMap.put(
 					LocaleUtil.getDefault(),
 					"This role is for those users who wish to be notified " +
-					"when a suggestion is made on a Knowledge Base article.");
+						"when a suggestion is made on a Knowledge Base article.");
 
 				_roleLocalService.addRole(
 					defaultUser.getUserId(), null, 0,

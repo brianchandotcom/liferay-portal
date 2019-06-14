@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.knowledge.base.markdown.converter.internal.flexmark.processor;
 
 import com.vladsch.flexmark.html.AttributeProvider;
@@ -26,38 +27,53 @@ import com.vladsch.flexmark.util.sequence.BasedSequence;
  *
  * @author vladsch
  */
-// NOTE: EmbeddedAttributeProvider is part of flexmark core HtmlRenderer as of version 0.40.18, but 
+// NOTE: EmbeddedAttributeProvider is part of flexmark core HtmlRenderer as of version 0.40.18, but
 // the latest release is 0.40.16.
 public class EmbeddedAttributeProvider implements AttributeProvider {
 
 	@Override
-	public void setAttributes(final Node node, final AttributablePart part, final Attributes attributes) {
+	public void setAttributes(
+		final Node node, final AttributablePart part,
+		final Attributes attributes) {
+
 		if (part == AttributablePart.NODE) {
-			Node firstChild = node.getChildOfType(EmbeddedAttributeProvider.EmbeddedNodeAttributes.class);
-			if (firstChild instanceof EmbeddedAttributeProvider.EmbeddedNodeAttributes) {
-				attributes.addValues(((EmbeddedAttributeProvider.EmbeddedNodeAttributes) firstChild).attributes);
+			Node firstChild = node.getChildOfType(
+				EmbeddedAttributeProvider.EmbeddedNodeAttributes.class);
+
+			if (firstChild instanceof
+					EmbeddedAttributeProvider.EmbeddedNodeAttributes) {
+
+				attributes.addValues(
+					((EmbeddedAttributeProvider.EmbeddedNodeAttributes)
+						firstChild).attributes);
 			}
 		}
 	}
 
 	public static AttributeProviderFactory Factory() {
 		return new IndependentAttributeProviderFactory() {
+
 			@Override
 			public AttributeProvider create(LinkResolverContext context) {
 				//noinspection ReturnOfInnerClass
+
 				return new EmbeddedAttributeProvider();
 			}
+
 		};
 	}
-//---- Internal Classes -----
+
+	//---- Internal Classes -----
 
 	// so we can attach attributes to any node in the AST and have a generic attribute provider serve them up
+
 	static class EmbeddedNodeAttributes extends Node {
 
 		final Attributes attributes;
 
 		public EmbeddedNodeAttributes(Node parent, Attributes attributes) {
 			super(parent.getChars().subSequence(0, 0));
+
 			this.attributes = attributes;
 		}
 
@@ -67,10 +83,26 @@ public class EmbeddedAttributeProvider implements AttributeProvider {
 		}
 
 		@Override
-		public void astString(final StringBuilder out, final boolean withExtra) {
+		public void astString(
+			final StringBuilder out, final boolean withExtra) {
+
 			out.append(EmbeddedNodeAttributes.class.getSimpleName());
-			out.append("[").append(getStartOffset()).append(", ").append(getEndOffset()).append("]");
-			out.append(", attributes: ").append(attributes.toString());
+			out.append(
+				"["
+			).append(
+				getStartOffset()
+			).append(
+				", "
+			).append(
+				getEndOffset()
+			).append(
+				"]"
+			);
+			out.append(
+				", attributes: "
+			).append(
+				attributes.toString()
+			);
 
 			if (withExtra) {
 				getAstExtra(out);
@@ -80,5 +112,7 @@ public class EmbeddedAttributeProvider implements AttributeProvider {
 		@Override
 		public void astExtraChars(final StringBuilder out) {
 		}
+
 	}
+
 }

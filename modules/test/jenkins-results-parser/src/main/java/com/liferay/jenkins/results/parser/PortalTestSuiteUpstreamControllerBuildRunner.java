@@ -32,10 +32,6 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 	@Override
 	public void run() {
-		List<Build> builds = _getBuildHistory();
-
-		updateBuildDescription();
-
 		keepJenkinsBuild(true);
 
 		_invokeJob();
@@ -78,9 +74,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 	protected void updateBuildDescription() {
 		S buildData = getBuildData();
 
-		StringBuilder sb = new StringBuilder();
-
-		buildData.setBuildDescription(sb.toString());
+		buildData.setBuildDescription(String.join(",", _getTestSuites()));
 
 		super.updateBuildDescription();
 	}
@@ -206,16 +200,52 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 			return _testSuites;
 		}
 
+		_testSuites = new ArrayList();
+
+		S buildData = getBuildData();
+
 		Map<String, Long> candidateTestSuiteStaleDurations =
 			_getCandidateTestSuiteStaleDurations();
 
 		Map<String, Long> latestTestSuiteStartTimes =
 			_getLatestTestSuiteStartTimes();
 
+		Long startTime = buildData.getStartTime();
+
+		for (Map.Entry<String, Long> entry :
+				candidateTestSuiteStaleDurations.entrySet()) {
+
+			String testSuite = entry.getKey();
+
+			if (!latestTestSuiteStartTimes.containsKey(testSuite)) {
+				_testSuites.add(testSuite);
+
+				continue;
+			}
+
+			Long testSuiteStaleDuration = entry.getValue();
+
+			Long testSuiteduration =
+				startTime - latestTestSuiteStartTimes.get(testSuite);
+
+			if (testSuiteduration > testSuiteStaleDuration) {
+				_testSuites.add(testSuite);
+			}
+		}
+
 		return _testSuites;
 	}
 
 	private void _invokeJob() {
+		List<String> testSuites = _getTestSuites();
+
+		if ((testSuites == null) || testSuites.isEmpty()) {
+			System.out.println(
+				"There are no test suites to be run at this time.");
+
+			return;
+		}
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(getInvocationURL());

@@ -7,12 +7,6 @@ task patch(type: PatchTask)
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"
 
-copyPatchOriginalLibClasses {
-	doLast {
-		delete "classes/META-INF/ECLIPSE_.RSA", "classes/META-INF/ECLIPSE_.SF"
-	}
-}
-
 dependencies {
 	compileOnly group: "org.eclipse.platform", name: "org.eclipse.osgi", version: "3.13.0"
 }

@@ -1,0 +1,99 @@
+diff --git a/org/eclipse/osgi/framework/util/WeakCacheHook.java b/org/eclipse/osgi/framework/util/WeakCacheHook.java
+new file mode 100644
+index 0000000..841af79
+--- /dev/null
++++ b/org/eclipse/osgi/framework/util/WeakCacheHook.java
+@@ -0,0 +1,27 @@
++/**
++ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
++ *
++ * This library is free software; you can redistribute it and/or modify it under
++ * the terms of the GNU Lesser General Public License as published by the Free
++ * Software Foundation; either version 2.1 of the License, or (at your option)
++ * any later version.
++ *
++ * This library is distributed in the hope that it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
++ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
++ * details.
++ */
++
++package org.eclipse.osgi.framework.util;
++
++import java.util.concurrent.Callable;
++
++/**
++ * @author Preston Crary
++ */
++public interface WeakCacheHook {
++
++	public <K, V> V computeIfAbsent(K key, Callable<V> valueCallable) throws Exception;
++
++}
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/osgi/internal/framework/FilterImpl.java b/org/eclipse/osgi/internal/framework/FilterImpl.java
+index 0cc706d..526c704 100644
+--- a/org/eclipse/osgi/internal/framework/FilterImpl.java
++++ b/org/eclipse/osgi/internal/framework/FilterImpl.java
+@@ -15,7 +15,10 @@ import java.lang.reflect.*;
+ import java.security.AccessController;
+ import java.security.PrivilegedAction;
+ import java.util.*;
++import java.util.concurrent.Callable;
++
+ import org.eclipse.osgi.framework.util.CaseInsensitiveDictionaryMap;
++import org.eclipse.osgi.framework.util.WeakCacheHook;
+ import org.eclipse.osgi.internal.debug.Debug;
+ import org.eclipse.osgi.internal.messages.Msg;
+ import org.eclipse.osgi.internal.serviceregistry.ServiceReferenceImpl;
+@@ -143,7 +146,28 @@ public class FilterImpl implements Filter /* since Framework 1.1 */ {
+ 		return newInstance(filterString, false);
+ 	}
+ 
+-	public static FilterImpl newInstance(String filterString, boolean debug) throws InvalidSyntaxException {
++	public static FilterImpl newInstance(final String filterString, boolean debug) throws InvalidSyntaxException {
++		if ((_weakCacheHook != null) && !debug) {
++			try {
++				return _weakCacheHook.computeIfAbsent(
++					filterString,
++					new Callable<FilterImpl>() {
++
++						@Override
++						public FilterImpl call() throws InvalidSyntaxException {
++							return new Parser(filterString, false).parse();
++						}
++
++					});
++			}
++			catch (RuntimeException re) {
++				throw re;
++			}
++			catch (Exception e) {
++				throw (InvalidSyntaxException)e;
++			}
++		}
++
+ 		return new Parser(filterString, debug).parse();
+ 	}
+ 
+@@ -1934,4 +1958,18 @@ public class FilterImpl implements Filter /* since Framework 1.1 */ {
+ 			throw new IllegalStateException("Invalid filter for standard OSGi requirements: " + op); //$NON-NLS-1$
+ 		}
+ 	}
++
++	private static final WeakCacheHook _weakCacheHook;
++
++	static {
++		WeakCacheHook weakCacheHook = null;
++
++		for (WeakCacheHook currentWeakCacheHook : ServiceLoader.load(WeakCacheHook.class)) {
++			weakCacheHook = currentWeakCacheHook;
++		}
++
++		_weakCacheHook = weakCacheHook;
++	}
++
+ }
++/* @generated */
+\ No newline at end of file

@@ -15,7 +15,10 @@ import java.lang.reflect.*;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.*;
+import java.util.concurrent.Callable;
+
 import org.eclipse.osgi.framework.util.CaseInsensitiveDictionaryMap;
+import org.eclipse.osgi.framework.util.WeakCacheHook;
 import org.eclipse.osgi.internal.debug.Debug;
 import org.eclipse.osgi.internal.messages.Msg;
 import org.eclipse.osgi.internal.serviceregistry.ServiceReferenceImpl;
@@ -143,7 +146,28 @@ public class FilterImpl implements Filter /* since Framework 1.1 */ {
 		return newInstance(filterString, false);
 	}
 
-	public static FilterImpl newInstance(String filterString, boolean debug) throws InvalidSyntaxException {
+	public static FilterImpl newInstance(final String filterString, boolean debug) throws InvalidSyntaxException {
+		if ((_weakCacheHook != null) && !debug) {
+			try {
+				return _weakCacheHook.computeIfAbsent(
+					filterString,
+					new Callable<FilterImpl>() {
+
+						@Override
+						public FilterImpl call() throws InvalidSyntaxException {
+							return new Parser(filterString, false).parse();
+						}
+
+					});
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw (InvalidSyntaxException)e;
+			}
+		}
+
 		return new Parser(filterString, debug).parse();
 	}
 
@@ -1934,4 +1958,18 @@ public class FilterImpl implements Filter /* since Framework 1.1 */ {
 			throw new IllegalStateException("Invalid filter for standard OSGi requirements: " + op); //$NON-NLS-1$
 		}
 	}
+
+	private static final WeakCacheHook _weakCacheHook;
+
+	static {
+		WeakCacheHook weakCacheHook = null;
+
+		for (WeakCacheHook currentWeakCacheHook : ServiceLoader.load(WeakCacheHook.class)) {
+			weakCacheHook = currentWeakCacheHook;
+		}
+
+		_weakCacheHook = weakCacheHook;
+	}
+
 }
+/* @generated */

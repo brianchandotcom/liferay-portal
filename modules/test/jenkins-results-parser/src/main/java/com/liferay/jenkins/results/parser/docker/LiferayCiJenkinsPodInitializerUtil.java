@@ -114,7 +114,17 @@ public class LiferayCiJenkinsPodInitializerUtil {
 
 				JenkinsResultsParserUtil.copy(
 					gitRepositoryArchiveFile, localGitRepositoryArchiveFile);
+			}
+			catch (IOException ioe) {
+				JenkinsResultsParserUtil.delete(localGitRepositoryArchiveFile);
 
+				throw new RuntimeException(ioe);
+			}
+			finally {
+				readWriteResourceMonitor.signal(connectionKey);
+			}
+
+			try {
 				TGZUtil.unarchive(
 					localGitRepositoryArchiveFile, gitRepositoriesBaseDir);
 			}
@@ -122,8 +132,6 @@ public class LiferayCiJenkinsPodInitializerUtil {
 				throw new RuntimeException(ioe);
 			}
 			finally {
-				readWriteResourceMonitor.signal(connectionKey);
-
 				JenkinsResultsParserUtil.delete(localGitRepositoryArchiveFile);
 			}
 		}

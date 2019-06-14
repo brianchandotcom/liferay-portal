@@ -118,7 +118,8 @@ public class LiferayCiJenkinsPodInitializerUtil {
 			catch (IOException ioe) {
 				JenkinsResultsParserUtil.delete(localGitRepositoryArchiveFile);
 
-				throw new RuntimeException(ioe);
+				throw new RuntimeException(
+					"Unable to copy repository archive file", ioe);
 			}
 			finally {
 				readWriteResourceMonitor.signal(connectionKey);
@@ -129,7 +130,8 @@ public class LiferayCiJenkinsPodInitializerUtil {
 					localGitRepositoryArchiveFile, gitRepositoriesBaseDir);
 			}
 			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
+				throw new RuntimeException(
+					"Unable to unarchive the repository archive file", ioe);
 			}
 			finally {
 				JenkinsResultsParserUtil.delete(localGitRepositoryArchiveFile);

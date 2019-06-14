@@ -327,18 +327,13 @@ gradle.beforeProject {
 								it =~ "^Bundle-SymbolicName:.*"
 							}
 
-							if (oldLine?.trim()) {
-								manifestMFFile.text = manifestMFFile.text.replace(oldLine.trim(), "Bundle-SymbolicName: " + properties.getProperty("Bundle-SymbolicName"))
-							}
-
+							manifestMFFile.text = manifestMFFile.text.replace(oldLine.trim(), "Bundle-SymbolicName: " + properties.getProperty("Bundle-SymbolicName"))
 
 							oldLine = manifestMFFile.filterLine {
 								it =~ "^Bundle-Version:.*"
 							}
 
-							if (oldLine?.trim()) {
-								manifestMFFile.text = manifestMFFile.text.replace(oldLine.trim(), "Bundle-Version: " + properties.getProperty("Bundle-Version"))
-							}
+							manifestMFFile.text = manifestMFFile.text.replace(oldLine.trim(), "Bundle-Version: " + properties.getProperty("Bundle-Version"))
 
 							ant.jar(basedir: project.file("classes"), destfile: jar.archivePath, manifest: manifestMFFile)
 						}

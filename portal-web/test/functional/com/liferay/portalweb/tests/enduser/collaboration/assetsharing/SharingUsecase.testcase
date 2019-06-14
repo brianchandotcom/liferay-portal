@@ -1,0 +1,230 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Asset Sharing";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(
+			pageName = "Documents and Media Page",
+			sitePageType = "Widget Page");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Documents and Media Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			DMFolder.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "This test ensures that Sharing can be disabled at the instance level."
+	@priority = "4"
+	test DisableSharingAtInstanceScope {
+		property test.name.skip.portal.instance = "DMSharing#DisableSharingAtInstanceScope";
+
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Sharing",
+			configurationName = "Sharing",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.disableCheckbox(fieldName = "enabled");
+
+		SystemSettings.saveConfiguration();
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Document with sharing disabled");
+
+		LexiconEntry.openEntryMenu(rowEntry = "Document with sharing disabled");
+
+		AssertElementNotPresent(
+			key_menuItem = "Share",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+
+		AssertClick(
+			key_dmDocumentTitle = "Document with sharing disabled",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "Document with sharing disabled");
+
+		AssertElementNotPresent(
+			key_text = "Share",
+			locator1 = "Button#ANY");
+	}
+
+	@description = "This test ensures that Sharing can be disabled at the system level."
+	@priority = "4"
+	test DisableSharingAtSystemScope {
+		property test.name.skip.portal.instance = "DMSharing#DisableSharingAtSystemScope";
+
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Sharing",
+			configurationName = "Sharing",
+			configurationScope = "System Scope");
+
+		FormFields.disableCheckbox(fieldName = "enabled");
+
+		SystemSettings.saveConfiguration();
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Document with sharing disabled");
+
+		LexiconEntry.openEntryMenu(rowEntry = "Document with sharing disabled");
+
+		AssertElementNotPresent(
+			key_menuItem = "Share",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+
+		AssertClick(
+			key_dmDocumentTitle = "Document with sharing disabled",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "Document with sharing disabled");
+
+		AssertElementNotPresent(
+			key_text = "Share",
+			locator1 = "Button#ANY");
+	}
+
+	@description = "This test ensures that users can Order By Shared Date in the Shared Content app."
+	@priority = "3"
+	test FilterByAssetType {
+
+		DMDocument.addMultiplePG(
+			dmDocumentFileList = "Document_1.jpeg,Document_2.docx",
+			viewableBy = "Owner");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "Document_1.jpeg");
+
+		DMDocument.sharePG(
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Asset Types");
+
+		AssertTextEquals(
+			locator1 = "Portlet#H3_MODAL_TITLE",
+			value1 = "Select Asset Type");
+
+		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
+
+		var key_assetType = "Documents";
+
+		AssertClick(
+			locator1 = "Sharing#SHARED_CONTENT_ASSET_TYPE",
+			value1 = "Documents");
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertClick(
+			locator1 = "Button#SELECT",
+			value1 = "Select");
+	}
+
+	@description = "This test ensures that users can Order By Shared Date in the Shared Content app."
+	@priority = "3"
+	test OrderBySharedDate {
+		DMDocument.addMultiplePG(
+			dmDocumentFileList = "Document_1.jpeg,Document_2.docx",
+			viewableBy = "Owner");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "Document_1.jpeg");
+
+		DMDocument.sharePG(
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "Document_2.docx");
+
+		DMDocument.sharePG(
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
+
+		ManagementBar.setFilterAndOrder(orderBy = "Shared Date");
+
+		ManagementBar.toggleViewOrder(order = "Descending");
+	}
+
+}

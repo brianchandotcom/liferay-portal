@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>TITLE_FIELD_HELPER</td>
-	<td>//div[contains(@class,'required') and contains(.,'This field is required to publish the entry')]</td>
+	<td>//div[contains(@class,'required') and contains(.,'This field is required')]</td>
 	<td></td>
 </tr>
 <tr>

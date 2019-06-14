@@ -430,7 +430,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "BlogsEntry#TITLE_FIELD_HELPER",
-			value1 = "This field is required to publish the entry.");
+			value1 = "This field is required.");
 
 		AssertElementNotPresent(locator1 = "Message#SUCCESS");
 	}

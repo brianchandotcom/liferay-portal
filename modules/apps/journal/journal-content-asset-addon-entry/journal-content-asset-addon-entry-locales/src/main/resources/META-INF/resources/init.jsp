@@ -14,15 +14,15 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%
-JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribute(WebKeys.JOURNAL_ARTICLE_DISPLAY);
-%>
+<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<div class="content-metadata-asset-addon-entry content-metadata-asset-addon-entry-links">
-	<liferay-asset:asset-links
-		className="<%= JournalArticle.class.getName() %>"
-		classPK="<%= articleDisplay.getResourcePrimKey() %>"
-	/>
-</div>
+<%@ page import="com.liferay.journal.model.JournalArticleDisplay" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %>
+
+<liferay-frontend:defineObjects />

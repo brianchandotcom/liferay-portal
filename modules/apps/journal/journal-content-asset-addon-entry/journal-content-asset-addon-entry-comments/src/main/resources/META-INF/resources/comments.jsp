@@ -14,17 +14,7 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/comment" prefix="liferay-comment" %><%@
-taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
-
-<%@ page import="com.liferay.journal.content.asset.addon.entry.comments.internal.CommentsContentMetadataAssetAddonEntry" %><%@
-page import="com.liferay.journal.model.JournalArticle" %><%@
-page import="com.liferay.journal.model.JournalArticleDisplay" %><%@
-page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %>
-
-<liferay-frontend:defineObjects />
+<%@ include file="/init.jsp" %>
 
 <%
 CommentsContentMetadataAssetAddonEntry commentsContentMetadataAssetAddonEntry = (CommentsContentMetadataAssetAddonEntry)request.getAttribute(WebKeys.ASSET_ADDON_ENTRY);

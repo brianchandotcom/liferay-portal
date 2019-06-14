@@ -14,15 +14,8 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ taglib uri="http://liferay.com/tld/asset" prefix="liferay-asset" %>
 
-<%
-JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribute(WebKeys.JOURNAL_ARTICLE_DISPLAY);
-%>
-
-<div class="content-metadata-asset-addon-entry content-metadata-asset-addon-entry-links">
-	<liferay-asset:asset-links
-		className="<%= JournalArticle.class.getName() %>"
-		classPK="<%= articleDisplay.getResourcePrimKey() %>"
-	/>
-</div>
+<%@ page import="com.liferay.journal.model.JournalArticle" %><%@
+page import="com.liferay.journal.model.JournalArticleDisplay" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %>

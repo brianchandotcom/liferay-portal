@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -144,6 +145,8 @@ public class SlimRuntimeServlet extends HttpServlet {
 				"Please upgrade to at least MySQL 5.6.4. The portal no " +
 					"longer supports older versions of MySQL.");
 		}
+
+		ReleaseLocalServiceUtil.getBuildNumberOrCreate();
 
 		// Check required schema version
 

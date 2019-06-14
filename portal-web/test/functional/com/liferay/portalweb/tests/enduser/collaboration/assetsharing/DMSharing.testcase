@@ -1,4 +1,4 @@
-@component-name = "portal-document-management"
+@component-name = "portal-collaboration"
 definition {
 
 	property portal.release = "true";

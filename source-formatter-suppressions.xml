@@ -108,6 +108,10 @@
 
 		<!-- Temporary suppressions for portal -->
 
+		<suppress checks="GradleDependencyArtifactsCheck" files="modules/util/osgi-bundle-builder/build.gradle" />
+		<suppress checks="GradleDependencyArtifactsCheck" files="modules/util/deployment-helper/build.gradle" />
+		<suppress checks="GradleDependencyVersionCheck" files="modules/apps/portal-security-sso-openid/portal-security-sso-openid-impl/build.gradle" />
+		<suppress checks="GradleDependencyVersionCheck" files="modules/private/apps/vldap/vldap-server/build.gradle" />
 		<suppress checks="GradleDependencyVersionCheck" files="modules/sdk/.*" />
 		<suppress checks="GradleDependencyVersionCheck" files="modules/util/.*" />
 

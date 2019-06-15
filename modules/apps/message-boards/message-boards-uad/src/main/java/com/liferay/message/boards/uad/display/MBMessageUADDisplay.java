@@ -18,6 +18,7 @@ import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.Portal;
@@ -67,6 +68,10 @@ public class MBMessageUADDisplay extends BaseMBMessageUADDisplay {
 				MBCategoryConstants.DISCUSSION_CATEGORY_ID) {
 
 			return null;
+		}
+
+		if (mbMessage.isInTrash()) {
+			return StringPool.BLANK;
 		}
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(

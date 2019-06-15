@@ -21,6 +21,7 @@ import com.liferay.change.tracking.engine.exception.CTCollectionDescriptionCTEng
 import com.liferay.change.tracking.engine.exception.CTCollectionNameCTEngineException;
 import com.liferay.change.tracking.exception.NoSuchCollectionException;
 import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.rest.constant.v1_0.CollectionType;
 import com.liferay.change.tracking.rest.dto.v1_0.Collection;
 import com.liferay.change.tracking.rest.dto.v1_0.CollectionUpdate;
 import com.liferay.change.tracking.rest.internal.jaxrs.exception.ChangeTrackingDisabledException;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,7 +53,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.ws.rs.core.Response;
@@ -108,13 +109,13 @@ public class CollectionResourceImpl extends BaseCollectionResourceImpl {
 
 	@Override
 	public Page<Collection> getCollectionsPage(
-			Long companyId, String type, Long userId, Pagination pagination,
-			Sort[] sorts)
+			Long companyId, CollectionType collectionType, Long userId,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		List<CTCollection> ctCollections = new ArrayList<>();
 
-		if (_TYPE_ACTIVE.equals(type)) {
+		if (CollectionType.ACTIVE == collectionType) {
 			_userLocalService.getUser(userId);
 
 			Optional<CTCollection> activeCTCollectionOptional =
@@ -122,7 +123,7 @@ public class CollectionResourceImpl extends BaseCollectionResourceImpl {
 
 			activeCTCollectionOptional.ifPresent(ctCollections::add);
 		}
-		else if (_TYPE_PRODUCTION.equals(type)) {
+		else if (CollectionType.PRODUCTION == collectionType) {
 			_companyLocalService.getCompany(companyId);
 
 			Optional<CTCollection> productionCTCollectionOptional =
@@ -135,14 +136,14 @@ public class CollectionResourceImpl extends BaseCollectionResourceImpl {
 
 			ctCollections.add(ctCollection);
 		}
-		else if (_TYPE_ALL.equals(type)) {
+		else if (CollectionType.ALL == collectionType) {
 			_companyLocalService.getCompany(companyId);
 
 			ctCollections = _ctManager.getCTCollections(
 				companyId, userId, false, true,
 				_getQueryDefinition(pagination, sorts));
 		}
-		else if (_TYPE_RECENT.equals(type)) {
+		else if (CollectionType.RECENT == collectionType) {
 			_companyLocalService.getCompany(companyId);
 
 			_userLocalService.getUser(userId);
@@ -157,17 +158,14 @@ public class CollectionResourceImpl extends BaseCollectionResourceImpl {
 		}
 		else {
 			throw new IllegalArgumentException(
-				"Invalid type parameter value: " + type +
-					". The valid options are: all, active and production.");
+				String.format(
+					"Invalid type parameter value: %s. The valid options " +
+						"are: all, active, recent and production.",
+					collectionType));
 		}
 
-		Stream<CTCollection> ctCollectionsStream = ctCollections.stream();
-
-		List<Collection> collections = ctCollectionsStream.map(
-			this::_toCollection
-		).collect(
-			Collectors.toList()
-		);
+		List<Collection> collections = TransformUtil.transform(
+			ctCollections, this::_toCollection);
 
 		return Page.of(collections, pagination, collections.size());
 	}
@@ -309,14 +307,6 @@ public class CollectionResourceImpl extends BaseCollectionResourceImpl {
 			}
 		};
 	}
-
-	private static final String _TYPE_ACTIVE = "active";
-
-	private static final String _TYPE_ALL = "all";
-
-	private static final String _TYPE_PRODUCTION = "production";
-
-	private static final String _TYPE_RECENT = "recent";
 
 	private static final Set<String> _orderByColumnNames = new HashSet<>(
 		Arrays.asList("createDate", "modifiedDate", "name", "statusDate"));

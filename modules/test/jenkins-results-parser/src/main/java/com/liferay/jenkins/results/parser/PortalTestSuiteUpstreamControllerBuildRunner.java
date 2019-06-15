@@ -82,7 +82,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 	protected void updateBuildDescription() {
 		S buildData = getBuildData();
 
-		buildData.setBuildDescription(String.join(",", _getTestSuites()));
+		buildData.setBuildDescription(String.join(", ", _invokedTestSuites));
 
 		super.updateBuildDescription();
 	}
@@ -313,6 +313,8 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 				ioe.printStackTrace();
 			}
 		}
+
+		updateBuildDescription();
 	}
 
 	private List<String> _invokedTestSuites = new ArrayList();

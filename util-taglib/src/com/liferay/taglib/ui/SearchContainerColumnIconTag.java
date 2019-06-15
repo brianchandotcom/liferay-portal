@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.SearchEntry;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.search.IconSearchEntry;
 
@@ -83,15 +82,13 @@ public class SearchContainerColumnIconTag<R> extends SearchContainerColumnTag {
 			index = -1;
 			_icon = null;
 
-			if (!ServerDetector.isResin()) {
-				align = SearchEntry.DEFAULT_ALIGN;
-				colspan = SearchEntry.DEFAULT_COLSPAN;
-				cssClass = SearchEntry.DEFAULT_CSS_CLASS;
-				_href = null;
-				name = null;
-				_toggleRowChecker = false;
-				valign = SearchEntry.DEFAULT_VALIGN;
-			}
+			align = SearchEntry.DEFAULT_ALIGN;
+			colspan = SearchEntry.DEFAULT_COLSPAN;
+			cssClass = SearchEntry.DEFAULT_CSS_CLASS;
+			_href = null;
+			name = null;
+			_toggleRowChecker = false;
+			valign = SearchEntry.DEFAULT_VALIGN;
 		}
 	}
 

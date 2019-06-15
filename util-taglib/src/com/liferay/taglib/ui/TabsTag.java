@@ -17,7 +17,6 @@ package com.liferay.taglib.ui;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
@@ -63,36 +62,34 @@ public class TabsTag extends IncludeTag {
 			throw new JspException(e);
 		}
 		finally {
-			if (!ServerDetector.isResin()) {
-				_backLabel = null;
-				_backURL = null;
-				_cssClass = StringPool.BLANK;
-				_endPage = null;
-				_formName = StringPool.BLANK;
-				_names = null;
-				_namesJS = null;
-				_namesPos = 0;
-				_onClick = null;
-				_param = "tabs1";
-				_portletURL = null;
-				_refresh = true;
-				_startPage = null;
-				_tabsValues = null;
-				_type = null;
-				_url = null;
-				_url0 = null;
-				_url1 = null;
-				_url2 = null;
-				_url3 = null;
-				_url4 = null;
-				_url5 = null;
-				_url6 = null;
-				_url7 = null;
-				_url8 = null;
-				_url9 = null;
-				_urls = null;
-				_value = null;
-			}
+			_backLabel = null;
+			_backURL = null;
+			_cssClass = StringPool.BLANK;
+			_endPage = null;
+			_formName = StringPool.BLANK;
+			_names = null;
+			_namesJS = null;
+			_namesPos = 0;
+			_onClick = null;
+			_param = "tabs1";
+			_portletURL = null;
+			_refresh = true;
+			_startPage = null;
+			_tabsValues = null;
+			_type = null;
+			_url = null;
+			_url0 = null;
+			_url1 = null;
+			_url2 = null;
+			_url3 = null;
+			_url4 = null;
+			_url5 = null;
+			_url6 = null;
+			_url7 = null;
+			_url8 = null;
+			_url9 = null;
+			_urls = null;
+			_value = null;
 		}
 	}
 

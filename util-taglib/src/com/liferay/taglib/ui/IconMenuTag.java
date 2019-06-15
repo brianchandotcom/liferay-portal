@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.BaseBodyTagSupport;
@@ -90,27 +89,25 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 			throw new JspException(e);
 		}
 		finally {
-			if (!ServerDetector.isResin()) {
-				_cssClass = null;
-				_data = null;
-				_direction = "left";
-				_endPage = null;
-				_extended = true;
-				_icon = null;
-				_id = null;
-				_localizeMessage = true;
-				_maxDisplayItems = _DEFAULT_MAX_DISPLAY_ITEMS;
-				_message = "actions";
-				_scroll = false;
-				_select = false;
-				_showArrow = true;
-				_showExpanded = false;
-				_showWhenSingleIcon = false;
-				_startPage = null;
-				_triggerCssClass = null;
-				_triggerLabel = null;
-				_triggerType = null;
-			}
+			_cssClass = null;
+			_data = null;
+			_direction = "left";
+			_endPage = null;
+			_extended = true;
+			_icon = null;
+			_id = null;
+			_localizeMessage = true;
+			_maxDisplayItems = _DEFAULT_MAX_DISPLAY_ITEMS;
+			_message = "actions";
+			_scroll = false;
+			_select = false;
+			_showArrow = true;
+			_showExpanded = false;
+			_showWhenSingleIcon = false;
+			_startPage = null;
+			_triggerCssClass = null;
+			_triggerLabel = null;
+			_triggerType = null;
 		}
 	}
 

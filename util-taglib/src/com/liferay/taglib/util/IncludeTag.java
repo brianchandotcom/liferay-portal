@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -204,12 +203,10 @@ public class IncludeTag extends AttributesTagSupport {
 
 		cleanUpSetAttributes();
 
-		if (!ServerDetector.isResin()) {
-			setPage(null);
-			setUseCustomPage(true);
+		setPage(null);
+		setUseCustomPage(true);
 
-			cleanUp();
-		}
+		cleanUp();
 	}
 
 	protected void doInclude(

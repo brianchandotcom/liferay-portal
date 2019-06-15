@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.DirectTag;
@@ -118,15 +117,13 @@ public class MessageTag extends TagSupport implements DirectTag {
 			throw new JspException(e);
 		}
 		finally {
-			if (!ServerDetector.isResin()) {
-				_arguments = null;
-				_escape = false;
-				_escapeAttribute = false;
-				_key = null;
-				_localizeKey = true;
-				_translateArguments = true;
-				_unicode = false;
-			}
+			_arguments = null;
+			_escape = false;
+			_escapeAttribute = false;
+			_key = null;
+			_localizeKey = true;
+			_translateArguments = true;
+			_unicode = false;
 		}
 	}
 

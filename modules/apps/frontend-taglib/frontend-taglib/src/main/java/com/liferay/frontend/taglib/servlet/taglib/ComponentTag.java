@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -117,12 +116,10 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 	}
 
 	protected void cleanUp() {
-		if (!ServerDetector.isResin()) {
-			_componentId = null;
-			_containerId = null;
-			_context = null;
-			_module = null;
-		}
+		_componentId = null;
+		_containerId = null;
+		_context = null;
+		_module = null;
 	}
 
 	protected Map<String, Object> getContext() {

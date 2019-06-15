@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -82,11 +81,6 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 		setXContentOptions(httpServletRequest, httpServletResponse);
 		setXFrameOptions(httpServletRequest, httpServletResponse);
 		setXXSSProtection(httpServletRequest, httpServletResponse);
-
-		if (ServerDetector.isResin()) {
-			httpServletResponse = new SanitizedServletResponse(
-				httpServletResponse);
-		}
 
 		return httpServletResponse;
 	}

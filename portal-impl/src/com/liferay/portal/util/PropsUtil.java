@@ -306,9 +306,6 @@ public class PropsUtil {
 			defaultLiferayHome =
 				SystemProperties.get("env.DOMAIN_HOME") + "/..";
 		}
-		else if (ServerDetector.isResin()) {
-			defaultLiferayHome = SystemProperties.get("resin.home") + "/..";
-		}
 		else if (ServerDetector.isTomcat()) {
 			defaultLiferayHome = SystemProperties.get("catalina.base") + "/..";
 		}

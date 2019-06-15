@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.SearchEntry;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.search.StatusSearchEntry;
 
@@ -105,17 +104,15 @@ public class SearchContainerColumnStatusTag<R>
 			_statusByUserId = -1;
 			_statusDate = null;
 
-			if (!ServerDetector.isResin()) {
-				align = SearchEntry.DEFAULT_ALIGN;
-				colspan = SearchEntry.DEFAULT_COLSPAN;
-				cssClass = SearchEntry.DEFAULT_CSS_CLASS;
-				_href = null;
-				name = null;
-				_orderable = false;
-				_orderableProperty = null;
-				_property = null;
-				valign = SearchEntry.DEFAULT_VALIGN;
-			}
+			align = SearchEntry.DEFAULT_ALIGN;
+			colspan = SearchEntry.DEFAULT_COLSPAN;
+			cssClass = SearchEntry.DEFAULT_CSS_CLASS;
+			_href = null;
+			name = null;
+			_orderable = false;
+			_orderableProperty = null;
+			_property = null;
+			valign = SearchEntry.DEFAULT_VALIGN;
 		}
 	}
 

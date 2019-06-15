@@ -16,7 +16,6 @@ package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.QuickAccessEntry;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.BaseBodyTagSupport;
@@ -44,11 +43,9 @@ public class QuickAccessEntryTag extends BaseBodyTagSupport implements BodyTag {
 			throw new JspException(e);
 		}
 		finally {
-			if (!ServerDetector.isResin()) {
-				_label = null;
-				_onClick = null;
-				_url = null;
-			}
+			_label = null;
+			_onClick = null;
+			_url = null;
 		}
 	}
 

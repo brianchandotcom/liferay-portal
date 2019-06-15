@@ -50,7 +50,6 @@ Export-Package:\
 	!com.liferay.portal.tools.comparator,\
 	!com.liferay.portal.tools.javadocformatter,\
 	!com.liferay.portal.tools.jspc.common,\
-	!com.liferay.portal.tools.jspc.resin,\
 	!com.liferay.portal.tools.propertiesdoc,\
 	!com.liferay.portal.tools.sass,\
 	!com.liferay.portal.tools.seleniumbuilder,\

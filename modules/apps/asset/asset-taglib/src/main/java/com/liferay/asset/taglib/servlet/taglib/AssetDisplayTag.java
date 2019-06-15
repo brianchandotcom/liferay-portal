@@ -22,7 +22,6 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
@@ -59,12 +58,10 @@ public class AssetDisplayTag extends IncludeTag {
 
 			cleanUpSetAttributes();
 
-			if (!ServerDetector.isResin()) {
-				setPage(null);
-				setUseCustomPage(true);
+			setPage(null);
+			setUseCustomPage(true);
 
-				cleanUp();
-			}
+			cleanUp();
 		}
 	}
 

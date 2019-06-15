@@ -148,7 +148,7 @@ public class AxisServlet extends org.apache.axis.transport.http.AxisServlet {
 
 		_incorrectStringArray = sb.toString();
 
-		if (ServerDetector.isResin() || ServerDetector.isWebLogic()) {
+		if (ServerDetector.isWebLogic()) {
 			doInit();
 		}
 		else {

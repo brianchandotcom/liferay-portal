@@ -14,7 +14,6 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.FileAvailabilityUtil;
 import com.liferay.taglib.util.IncludeTag;
@@ -48,16 +47,14 @@ public class ToggleAreaTag extends IncludeTag {
 			throw new JspException(e);
 		}
 		finally {
-			if (!ServerDetector.isResin()) {
-				_startPage = null;
-				_endPage = null;
-				_id = null;
-				_showMessage = null;
-				_hideMessage = null;
-				_defaultShowContent = true;
-				_stateVar = null;
-				_align = "left";
-			}
+			_startPage = null;
+			_endPage = null;
+			_id = null;
+			_showMessage = null;
+			_hideMessage = null;
+			_defaultShowContent = true;
+			_stateVar = null;
+			_align = "left";
 		}
 	}
 

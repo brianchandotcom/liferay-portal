@@ -17,7 +17,6 @@ package com.liferay.taglib.ui;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.SearchEntry;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.taglib.search.JSPSearchEntry;
 
 import java.util.List;
@@ -71,14 +70,12 @@ public class SearchContainerColumnJSPTag<R> extends SearchContainerColumnTag {
 		finally {
 			index = -1;
 
-			if (!ServerDetector.isResin()) {
-				align = SearchEntry.DEFAULT_ALIGN;
-				colspan = SearchEntry.DEFAULT_COLSPAN;
-				cssClass = SearchEntry.DEFAULT_CSS_CLASS;
-				name = StringPool.BLANK;
-				_path = null;
-				valign = SearchEntry.DEFAULT_VALIGN;
-			}
+			align = SearchEntry.DEFAULT_ALIGN;
+			colspan = SearchEntry.DEFAULT_COLSPAN;
+			cssClass = SearchEntry.DEFAULT_CSS_CLASS;
+			name = StringPool.BLANK;
+			_path = null;
+			valign = SearchEntry.DEFAULT_VALIGN;
 		}
 	}
 

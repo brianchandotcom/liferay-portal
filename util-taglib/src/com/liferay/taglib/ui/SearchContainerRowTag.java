@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.repository.model.RepositoryModel;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 
@@ -102,20 +101,18 @@ public class SearchContainerRowTag<R>
 		_rowIndex = 0;
 		_resultRow = null;
 
-		if (!ServerDetector.isResin()) {
-			_bold = false;
-			_className = null;
-			_cssClass = StringPool.BLANK;
-			_escapedModel = false;
-			_indexVar = DEFAULT_INDEX_VAR;
-			_keyProperty = null;
-			_modelVar = DEFAULT_MODEL_VAR;
-			_orderableHeaders = null;
-			_rowIdProperty = null;
-			_rowVar = DEFAULT_ROW_VAR;
-			_stringKey = false;
-			_state = StringPool.BLANK;
-		}
+		_bold = false;
+		_className = null;
+		_cssClass = StringPool.BLANK;
+		_escapedModel = false;
+		_indexVar = DEFAULT_INDEX_VAR;
+		_keyProperty = null;
+		_modelVar = DEFAULT_MODEL_VAR;
+		_orderableHeaders = null;
+		_rowIdProperty = null;
+		_rowVar = DEFAULT_ROW_VAR;
+		_stringKey = false;
+		_state = StringPool.BLANK;
 
 		return EVAL_PAGE;
 	}

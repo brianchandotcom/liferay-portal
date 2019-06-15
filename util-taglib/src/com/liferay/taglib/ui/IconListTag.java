@@ -15,7 +15,6 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.util.IntegerWrapper;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.BaseBodyTagSupport;
 import com.liferay.taglib.FileAvailabilityUtil;
@@ -117,11 +116,9 @@ public class IconListTag extends BaseBodyTagSupport implements BodyTag {
 			throw new JspException(e);
 		}
 		finally {
-			if (!ServerDetector.isResin()) {
-				_endPage = null;
-				_showWhenSingleIcon = false;
-				_startPage = null;
-			}
+			_endPage = null;
+			_showWhenSingleIcon = false;
+			_startPage = null;
 		}
 	}
 

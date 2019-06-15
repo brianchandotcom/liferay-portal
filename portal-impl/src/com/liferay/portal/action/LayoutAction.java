@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.sso.SSOUtil;
@@ -430,27 +429,24 @@ public class LayoutAction implements Action {
 			return null;
 		}
 		finally {
-			if (!ServerDetector.isResin()) {
-				PortletRequest portletRequest =
-					(PortletRequest)httpServletRequest.getAttribute(
-						JavaConstants.JAVAX_PORTLET_REQUEST);
+			PortletRequest portletRequest =
+				(PortletRequest)httpServletRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_REQUEST);
 
-				if (portletRequest != null) {
-					LiferayPortletRequest liferayPortletRequest =
-						LiferayPortletUtil.getLiferayPortletRequest(
-							portletRequest);
+			if (portletRequest != null) {
+				LiferayPortletRequest liferayPortletRequest =
+					LiferayPortletUtil.getLiferayPortletRequest(portletRequest);
 
-					if (liferayPortletRequest instanceof ResourceRequest) {
-						ResourceRequest resourceRequest =
-							(ResourceRequest)liferayPortletRequest;
+				if (liferayPortletRequest instanceof ResourceRequest) {
+					ResourceRequest resourceRequest =
+						(ResourceRequest)liferayPortletRequest;
 
-						if (!resourceRequest.isAsyncStarted()) {
-							liferayPortletRequest.cleanUp();
-						}
-					}
-					else {
+					if (!resourceRequest.isAsyncStarted()) {
 						liferayPortletRequest.cleanUp();
 					}
+				}
+				else {
+					liferayPortletRequest.cleanUp();
 				}
 			}
 		}

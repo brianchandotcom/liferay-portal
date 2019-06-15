@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -138,13 +137,11 @@ public class CustomAttributesAvailableTag extends TagSupport {
 			throw new JspException(e);
 		}
 		finally {
-			if (!ServerDetector.isResin()) {
-				_className = null;
-				_classPK = 0;
-				_companyId = 0;
-				_editable = false;
-				_ignoreAttributeNames = null;
-			}
+			_className = null;
+			_classPK = 0;
+			_companyId = 0;
+			_editable = false;
+			_ignoreAttributeNames = null;
 		}
 	}
 

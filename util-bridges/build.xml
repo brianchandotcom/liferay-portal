@@ -14,7 +14,7 @@
 		<pathelement path="${project.dir}/util-java/classes" />
 		<fileset
 			dir="${project.dir}/lib/development"
-			includes="groovy.jar,jruby.jar,resin.jar"
+			includes="groovy.jar,jruby.jar"
 		/>
 		<fileset
 			dir="${project.dir}/lib/portal"

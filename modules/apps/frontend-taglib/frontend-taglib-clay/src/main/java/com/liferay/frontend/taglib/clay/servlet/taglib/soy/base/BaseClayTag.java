@@ -24,7 +24,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -146,11 +145,9 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		if (!ServerDetector.isResin()) {
-			_componentBaseName = null;
-			_moduleBaseName = null;
-			_namespace = null;
-		}
+		_componentBaseName = null;
+		_moduleBaseName = null;
+		_namespace = null;
 	}
 
 	protected String[] getNamespacedParams() {

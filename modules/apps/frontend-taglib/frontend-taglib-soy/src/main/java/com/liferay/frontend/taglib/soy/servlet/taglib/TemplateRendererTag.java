@@ -19,7 +19,6 @@ import com.liferay.frontend.taglib.soy.internal.util.SoyComponentRendererProvide
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.soy.renderer.ComponentDescriptor;
@@ -195,16 +194,14 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 	}
 
 	protected void cleanUp() {
-		if (!ServerDetector.isResin()) {
-			_componentId = null;
-			_context = null;
-			_dependencies = null;
-			_hydrate = null;
-			_module = null;
-			_templateNamespace = null;
-			_useNamespace = true;
-			_wrapper = null;
-		}
+		_componentId = null;
+		_context = null;
+		_dependencies = null;
+		_hydrate = null;
+		_module = null;
+		_templateNamespace = null;
+		_useNamespace = true;
+		_wrapper = null;
 	}
 
 	protected Map<String, Object> getContext() {

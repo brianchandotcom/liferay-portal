@@ -27,6 +27,10 @@ components:
                     format: date-time
                     type: string
             type: object
+        CollectionType:
+            type: string
+            enum: [active, all, production, recent]
+            default: "all"
         CollectionUpdate:
             properties:
                 description:
@@ -99,8 +103,7 @@ paths:
                   name: type
                   required: false
                   schema:
-                      default: "all"
-                      type: string
+                      $ref: "#/components/schemas/CollectionType"
                 - in: query
                   name: userId
                   required: false

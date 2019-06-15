@@ -84,6 +84,17 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 	}
 
 	@Override
+	protected String getInvocationURL() {
+		if (_invocationURL != null) {
+			return _invocationURL;
+		}
+
+		_invocationURL = super.getInvocationURL();
+
+		return _invocationURL;
+	}
+
+	@Override
 	protected void updateBuildDescription() {
 		S buildData = getBuildData();
 
@@ -350,5 +361,7 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 	private static final Pattern _portalGitHubCompareURLPattern =
 		Pattern.compile(
 			"<strong>Git Compare:</strong> <a href=\"[^\"]+\">[^<]+</a>");
+
+	private String _invocationURL;
 
 }

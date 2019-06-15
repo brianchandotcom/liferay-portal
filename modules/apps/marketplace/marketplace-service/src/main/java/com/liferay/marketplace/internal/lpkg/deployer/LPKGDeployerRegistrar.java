@@ -64,10 +64,8 @@ public class LPKGDeployerRegistrar {
 		Map<Bundle, List<Bundle>> deployedLPKGBundles =
 			_lpkgDeployer.getDeployedLPKGBundles();
 
-		for (Map.Entry<Bundle, List<Bundle>> entry :
-				deployedLPKGBundles.entrySet()) {
-
-			_register(entry.getKey());
+		for (Bundle bundle : deployedLPKGBundles.keySet()) {
+			_register(bundle);
 		}
 	}
 

@@ -109,10 +109,6 @@ long[] groupIds = (long[])request.getAttribute(UADWebKeys.GROUP_IDS);
 						uadEntityHref = uadEntity.getEditURL();
 					}
 
-					if (uadEntity.isInTrash()) {
-						uadEntityHref = null;
-					}
-
 					boolean showUserIcon = false;
 
 					if ((uadEntity.getViewURL() != null) && !uadEntity.isUserOwned()) {

@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MODIFIED_FACET_RANGE</td>
+	<td>//li[contains(@name,'ModifiedFacet')]//span[contains(.,'${rangeName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_BAR_WIDGET</td>
 	<td>//input[not(ancestor::header[@id='banner'])][contains(@data-qa-id,'searchInput')]</td>
 	<td></td>

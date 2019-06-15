@@ -192,8 +192,7 @@ public abstract class BaseCollectionResourceTestCase {
 	@Test
 	public void testGetCollectionsPage() throws Exception {
 		Page<Collection> page = collectionResource.getCollectionsPage(
-			null, RandomTestUtil.randomString(), null, Pagination.of(1, 2),
-			null);
+			null, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 

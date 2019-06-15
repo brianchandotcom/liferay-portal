@@ -75,7 +75,7 @@ public abstract class BaseCollectionResourceImpl implements CollectionResource {
 	@Tags(value = {@Tag(name = "Collection")})
 	public Page<Collection> getCollectionsPage(
 			@Parameter(hidden = true) @QueryParam("companyId") Long companyId,
-			@Parameter(hidden = true) @QueryParam("type") String type,
+			com.liferay.change.tracking.rest.constant.v1_0.CollectionType type,
 			@Parameter(hidden = true) @QueryParam("userId") Long userId,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {

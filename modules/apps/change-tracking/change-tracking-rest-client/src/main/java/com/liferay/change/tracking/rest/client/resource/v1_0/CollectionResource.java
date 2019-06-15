@@ -38,13 +38,15 @@ public interface CollectionResource {
 	}
 
 	public Page<Collection> getCollectionsPage(
-			Long companyId, String type, Long userId, Pagination pagination,
-			String sortString)
+			Long companyId,
+			com.liferay.change.tracking.rest.constant.v1_0.CollectionType type,
+			Long userId, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getCollectionsPageHttpResponse(
-			Long companyId, String type, Long userId, Pagination pagination,
-			String sortString)
+			Long companyId,
+			com.liferay.change.tracking.rest.constant.v1_0.CollectionType type,
+			Long userId, Pagination pagination, String sortString)
 		throws Exception;
 
 	public Collection postCollection(
@@ -127,8 +129,10 @@ public interface CollectionResource {
 	public static class CollectionResourceImpl implements CollectionResource {
 
 		public Page<Collection> getCollectionsPage(
-				Long companyId, String type, Long userId, Pagination pagination,
-				String sortString)
+				Long companyId,
+				com.liferay.change.tracking.rest.constant.v1_0.CollectionType
+					type,
+				Long userId, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -147,8 +151,10 @@ public interface CollectionResource {
 		}
 
 		public HttpInvoker.HttpResponse getCollectionsPageHttpResponse(
-				Long companyId, String type, Long userId, Pagination pagination,
-				String sortString)
+				Long companyId,
+				com.liferay.change.tracking.rest.constant.v1_0.CollectionType
+					type,
+				Long userId, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

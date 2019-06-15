@@ -61,7 +61,9 @@ public class Query {
 	@GraphQLInvokeDetached
 	public java.util.Collection<Collection> getCollectionsPage(
 			@GraphQLName("companyId") Long companyId,
-			@GraphQLName("type") String type,
+			@GraphQLName("type")
+				com.liferay.change.tracking.rest.constant.v1_0.CollectionType
+					type,
 			@GraphQLName("userId") Long userId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)

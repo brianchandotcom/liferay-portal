@@ -38,8 +38,9 @@ import javax.ws.rs.core.Response;
 public interface CollectionResource {
 
 	public Page<Collection> getCollectionsPage(
-			Long companyId, String type, Long userId, Pagination pagination,
-			Sort[] sorts)
+			Long companyId,
+			com.liferay.change.tracking.rest.constant.v1_0.CollectionType type,
+			Long userId, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public Collection postCollection(

@@ -28,7 +28,7 @@ import java.util.logging.Logger;
 import javax.annotation.Generated;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  * @generated
  */
 @Generated("")

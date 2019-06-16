@@ -14,9 +14,17 @@
 
 package com.liferay.change.tracking.rest.internal.graphql.query.v1_0;
 
+import com.liferay.change.tracking.rest.dto.v1_0.AffectedEntry;
 import com.liferay.change.tracking.rest.dto.v1_0.Collection;
+import com.liferay.change.tracking.rest.dto.v1_0.Entry;
+import com.liferay.change.tracking.rest.dto.v1_0.Process;
+import com.liferay.change.tracking.rest.dto.v1_0.ProcessUser;
 import com.liferay.change.tracking.rest.dto.v1_0.Settings;
+import com.liferay.change.tracking.rest.resource.v1_0.AffectedEntryResource;
 import com.liferay.change.tracking.rest.resource.v1_0.CollectionResource;
+import com.liferay.change.tracking.rest.resource.v1_0.EntryResource;
+import com.liferay.change.tracking.rest.resource.v1_0.ProcessResource;
+import com.liferay.change.tracking.rest.resource.v1_0.ProcessUserResource;
 import com.liferay.change.tracking.rest.resource.v1_0.SettingsResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -35,11 +43,19 @@ import javax.annotation.Generated;
 import org.osgi.service.component.ComponentServiceObjects;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  * @generated
  */
 @Generated("")
 public class Query {
+
+	public static void setAffectedEntryResourceComponentServiceObjects(
+		ComponentServiceObjects<AffectedEntryResource>
+			affectedEntryResourceComponentServiceObjects) {
+
+		_affectedEntryResourceComponentServiceObjects =
+			affectedEntryResourceComponentServiceObjects;
+	}
 
 	public static void setCollectionResourceComponentServiceObjects(
 		ComponentServiceObjects<CollectionResource>
@@ -49,12 +65,59 @@ public class Query {
 			collectionResourceComponentServiceObjects;
 	}
 
+	public static void setEntryResourceComponentServiceObjects(
+		ComponentServiceObjects<EntryResource>
+			entryResourceComponentServiceObjects) {
+
+		_entryResourceComponentServiceObjects =
+			entryResourceComponentServiceObjects;
+	}
+
+	public static void setProcessResourceComponentServiceObjects(
+		ComponentServiceObjects<ProcessResource>
+			processResourceComponentServiceObjects) {
+
+		_processResourceComponentServiceObjects =
+			processResourceComponentServiceObjects;
+	}
+
+	public static void setProcessUserResourceComponentServiceObjects(
+		ComponentServiceObjects<ProcessUserResource>
+			processUserResourceComponentServiceObjects) {
+
+		_processUserResourceComponentServiceObjects =
+			processUserResourceComponentServiceObjects;
+	}
+
 	public static void setSettingsResourceComponentServiceObjects(
 		ComponentServiceObjects<SettingsResource>
 			settingsResourceComponentServiceObjects) {
 
 		_settingsResourceComponentServiceObjects =
 			settingsResourceComponentServiceObjects;
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public java.util.Collection<AffectedEntry> getEntryAffectedsPage(
+			@GraphQLName("collectionId") Long collectionId,
+			@GraphQLName("entryId") Long entryId,
+			@GraphQLName("keywords") String keywords,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_affectedEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			affectedEntryResource -> {
+				Page paginationPage =
+					affectedEntryResource.getEntryAffectedsPage(
+						collectionId, entryId, keywords,
+						Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -96,6 +159,101 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public java.util.Collection<Entry> getCollectionEntriesPage(
+			@GraphQLName("collectionId") Long collectionId,
+			@GraphQLName("changeTypesFilter") String changeTypesFilter,
+			@GraphQLName("classNameIdsFilter") String classNameIdsFilter,
+			@GraphQLName("collision") Boolean collision,
+			@GraphQLName("groupIdsFilter") String groupIdsFilter,
+			@GraphQLName("status") Integer status,
+			@GraphQLName("userIdsFilter") String userIdsFilter,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_entryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			entryResource -> {
+				Page paginationPage = entryResource.getCollectionEntriesPage(
+					collectionId, changeTypesFilter, classNameIdsFilter,
+					collision, groupIdsFilter, status, userIdsFilter,
+					Pagination.of(pageSize, page), sorts);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Entry getEntry(
+			@GraphQLName("collectionId") Long collectionId,
+			@GraphQLName("entryId") Long entryId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_entryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			entryResource -> entryResource.getEntry(collectionId, entryId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Process getProccessProcess(@GraphQLName("processId") Long processId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_processResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			processResource -> processResource.getProccessProcess(processId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public java.util.Collection<Process> getProcessesPage(
+			@GraphQLName("companyId") Long companyId,
+			@GraphQLName("keywords") String keywords,
+			@GraphQLName("type") String type,
+			@GraphQLName("userId") Long userId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_processResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			processResource -> {
+				Page paginationPage = processResource.getProcessesPage(
+					companyId, keywords, type, userId,
+					Pagination.of(pageSize, page), sorts);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public java.util.Collection<ProcessUser> getProcessUsersPage(
+			@GraphQLName("companyId") Long companyId,
+			@GraphQLName("keywords") String keywords,
+			@GraphQLName("type") String type,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_processUserResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			processUserResource -> {
+				Page paginationPage = processUserResource.getProcessUsersPage(
+					companyId, keywords, type, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public java.util.Collection<Settings> getSettingsPage(
 			@GraphQLName("companyId") Long companyId,
 			@GraphQLName("userId") Long userId)
@@ -131,11 +289,41 @@ public class Query {
 		}
 	}
 
+	private void _populateResourceContext(
+			AffectedEntryResource affectedEntryResource)
+		throws Exception {
+
+		affectedEntryResource.setContextAcceptLanguage(_acceptLanguage);
+		affectedEntryResource.setContextCompany(_company);
+	}
+
 	private void _populateResourceContext(CollectionResource collectionResource)
 		throws Exception {
 
 		collectionResource.setContextAcceptLanguage(_acceptLanguage);
 		collectionResource.setContextCompany(_company);
+	}
+
+	private void _populateResourceContext(EntryResource entryResource)
+		throws Exception {
+
+		entryResource.setContextAcceptLanguage(_acceptLanguage);
+		entryResource.setContextCompany(_company);
+	}
+
+	private void _populateResourceContext(ProcessResource processResource)
+		throws Exception {
+
+		processResource.setContextAcceptLanguage(_acceptLanguage);
+		processResource.setContextCompany(_company);
+	}
+
+	private void _populateResourceContext(
+			ProcessUserResource processUserResource)
+		throws Exception {
+
+		processUserResource.setContextAcceptLanguage(_acceptLanguage);
+		processUserResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(SettingsResource settingsResource)
@@ -145,8 +333,16 @@ public class Query {
 		settingsResource.setContextCompany(_company);
 	}
 
+	private static ComponentServiceObjects<AffectedEntryResource>
+		_affectedEntryResourceComponentServiceObjects;
 	private static ComponentServiceObjects<CollectionResource>
 		_collectionResourceComponentServiceObjects;
+	private static ComponentServiceObjects<EntryResource>
+		_entryResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ProcessResource>
+		_processResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ProcessUserResource>
+		_processUserResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SettingsResource>
 		_settingsResourceComponentServiceObjects;
 

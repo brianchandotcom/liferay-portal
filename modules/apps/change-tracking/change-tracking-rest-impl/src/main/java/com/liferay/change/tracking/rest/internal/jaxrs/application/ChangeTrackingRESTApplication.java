@@ -21,7 +21,7 @@ import javax.ws.rs.core.Application;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  * @generated
  */
 @Component(

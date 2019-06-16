@@ -36,7 +36,7 @@ import javax.annotation.Generated;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  * @generated
  */
 @Generated("")

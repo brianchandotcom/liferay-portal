@@ -79,6 +79,39 @@ components:
                 version:
                     type: string
             type: object
+        Process:
+            properties:
+                collection:
+                    allOf:
+                        - $ref: "#/components/schemas/Collection"
+                companyId:
+                    format: int64
+                    type: integer
+                date:
+                    format: date-time
+                    type: string
+                percentage:
+                    type: integer
+                processId:
+                    format: int64
+                    type: integer
+                status:
+                    type: string
+                userInitials:
+                    type: string
+                userName:
+                    type: string
+                userPortraitURL:
+                    type: string
+            type: object
+        ProcessUser:
+            properties:
+                userId:
+                    format: int64
+                    type: integer
+                userName:
+                    type: string
+            type: object
         Settings:
             properties:
                 changeTrackingAllowed:
@@ -466,6 +499,130 @@ paths:
                                 type: string
                     description: ""
             tags: ["Collection"]
+    "/proccesses/{processId}":
+        get:
+            operationId: getProccessProcess
+            parameters:
+                - in: path
+                  name: processId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Process"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Process"
+                    description: ""
+            tags: ["Process"]
+    "/processes":
+        get:
+            operationId: getProcessesPage
+            parameters:
+                - in: query
+                  name: companyId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: keywords
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: type
+                  required: false
+                  schema:
+                      default: "all"
+                      type: string
+                - in: query
+                  name: userId
+                  required: false
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Process"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Process"
+                                type: array
+                    description: ""
+            tags: ["Process"]
+    "/processes/users":
+        get:
+            operationId: getProcessUsersPage
+            parameters:
+                - in: query
+                  name: companyId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: keywords
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: type
+                  required: false
+                  schema:
+                      default: "all"
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ProcessUser"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ProcessUser"
+                                type: array
+                    description: ""
+            tags: ["ProcessUser"]
     "/settings":
         get:
             operationId: getSettingsPage

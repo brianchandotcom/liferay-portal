@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  *
  *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/change-tracking/v1.0
  *
- * @author Mate Thurzo
+ * @author Máté Thurzó
  * @generated
  */
 @Generated("")

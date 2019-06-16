@@ -16,7 +16,11 @@ package com.liferay.change.tracking.rest.internal.graphql.servlet.v1_0;
 
 import com.liferay.change.tracking.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.change.tracking.rest.internal.graphql.query.v1_0.Query;
+import com.liferay.change.tracking.rest.resource.v1_0.AffectedEntryResource;
 import com.liferay.change.tracking.rest.resource.v1_0.CollectionResource;
+import com.liferay.change.tracking.rest.resource.v1_0.EntryResource;
+import com.liferay.change.tracking.rest.resource.v1_0.ProcessResource;
+import com.liferay.change.tracking.rest.resource.v1_0.ProcessUserResource;
 import com.liferay.change.tracking.rest.resource.v1_0.SettingsResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -30,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  * @generated
  */
 @Component(immediate = true, service = ServletData.class)
@@ -44,8 +48,16 @@ public class ServletDataImpl implements ServletData {
 		Mutation.setSettingsResourceComponentServiceObjects(
 			_settingsResourceComponentServiceObjects);
 
+		Query.setAffectedEntryResourceComponentServiceObjects(
+			_affectedEntryResourceComponentServiceObjects);
 		Query.setCollectionResourceComponentServiceObjects(
 			_collectionResourceComponentServiceObjects);
+		Query.setEntryResourceComponentServiceObjects(
+			_entryResourceComponentServiceObjects);
+		Query.setProcessResourceComponentServiceObjects(
+			_processResourceComponentServiceObjects);
+		Query.setProcessUserResourceComponentServiceObjects(
+			_processUserResourceComponentServiceObjects);
 		Query.setSettingsResourceComponentServiceObjects(
 			_settingsResourceComponentServiceObjects);
 	}
@@ -72,5 +84,21 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SettingsResource>
 		_settingsResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<AffectedEntryResource>
+		_affectedEntryResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<EntryResource>
+		_entryResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ProcessResource>
+		_processResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ProcessUserResource>
+		_processUserResourceComponentServiceObjects;
 
 }

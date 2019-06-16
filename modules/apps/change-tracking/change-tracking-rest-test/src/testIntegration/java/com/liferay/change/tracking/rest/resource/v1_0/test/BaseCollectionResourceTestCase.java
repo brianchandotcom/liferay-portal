@@ -75,7 +75,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  * @generated
  */
 @Generated("")

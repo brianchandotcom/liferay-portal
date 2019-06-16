@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  * @generated
  */
 @Component(
@@ -76,7 +76,15 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
+			add(AffectedEntryResourceImpl.class);
+
 			add(CollectionResourceImpl.class);
+
+			add(EntryResourceImpl.class);
+
+			add(ProcessResourceImpl.class);
+
+			add(ProcessUserResourceImpl.class);
 
 			add(SettingsResourceImpl.class);
 

@@ -4,6 +4,6 @@ application:
     baseURI: "/change-tracking"
     className: "ChangeTrackingRESTApplication"
     name: "Liferay.Change.Tracking.REST"
-author: "Mate Thurzo"
+author: "Máté Thurzó"
 clientDir: "../change-tracking-rest-client/src/main/java"
 testDir: "../change-tracking-rest-test/src/testIntegration/java"

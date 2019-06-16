@@ -44,26 +44,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Collection")
+@GraphQLName("Process")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Collection")
-public class Collection {
+@XmlRootElement(name = "Process")
+public class Process {
 
 	@Schema
-	public Long getAdditionCount() {
-		return additionCount;
+	public Collection getCollection() {
+		return collection;
 	}
 
-	public void setAdditionCount(Long additionCount) {
-		this.additionCount = additionCount;
+	public void setCollection(Collection collection) {
+		this.collection = collection;
 	}
 
 	@JsonIgnore
-	public void setAdditionCount(
-		UnsafeSupplier<Long, Exception> additionCountUnsafeSupplier) {
+	public void setCollection(
+		UnsafeSupplier<Collection, Exception> collectionUnsafeSupplier) {
 
 		try {
-			additionCount = additionCountUnsafeSupplier.get();
+			collection = collectionUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -75,35 +75,7 @@ public class Collection {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long additionCount;
-
-	@Schema
-	public Long getCollectionId() {
-		return collectionId;
-	}
-
-	public void setCollectionId(Long collectionId) {
-		this.collectionId = collectionId;
-	}
-
-	@JsonIgnore
-	public void setCollectionId(
-		UnsafeSupplier<Long, Exception> collectionIdUnsafeSupplier) {
-
-		try {
-			collectionId = collectionIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long collectionId;
+	protected Collection collection;
 
 	@Schema
 	public Long getCompanyId() {
@@ -134,20 +106,18 @@ public class Collection {
 	protected Long companyId;
 
 	@Schema
-	public Long getDeletionCount() {
-		return deletionCount;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setDeletionCount(Long deletionCount) {
-		this.deletionCount = deletionCount;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	@JsonIgnore
-	public void setDeletionCount(
-		UnsafeSupplier<Long, Exception> deletionCountUnsafeSupplier) {
-
+	public void setDate(UnsafeSupplier<Date, Exception> dateUnsafeSupplier) {
 		try {
-			deletionCount = deletionCountUnsafeSupplier.get();
+			date = dateUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -159,23 +129,23 @@ public class Collection {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long deletionCount;
+	protected Date date;
 
 	@Schema
-	public String getDescription() {
-		return description;
+	public Integer getPercentage() {
+		return percentage;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setPercentage(Integer percentage) {
+		this.percentage = percentage;
 	}
 
 	@JsonIgnore
-	public void setDescription(
-		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
+	public void setPercentage(
+		UnsafeSupplier<Integer, Exception> percentageUnsafeSupplier) {
 
 		try {
-			description = descriptionUnsafeSupplier.get();
+			percentage = percentageUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -187,23 +157,23 @@ public class Collection {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String description;
+	protected Integer percentage;
 
 	@Schema
-	public Long getModificationCount() {
-		return modificationCount;
+	public Long getProcessId() {
+		return processId;
 	}
 
-	public void setModificationCount(Long modificationCount) {
-		this.modificationCount = modificationCount;
+	public void setProcessId(Long processId) {
+		this.processId = processId;
 	}
 
 	@JsonIgnore
-	public void setModificationCount(
-		UnsafeSupplier<Long, Exception> modificationCountUnsafeSupplier) {
+	public void setProcessId(
+		UnsafeSupplier<Long, Exception> processIdUnsafeSupplier) {
 
 		try {
-			modificationCount = modificationCountUnsafeSupplier.get();
+			processId = processIdUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -215,21 +185,23 @@ public class Collection {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long modificationCount;
+	protected Long processId;
 
 	@Schema
-	public String getName() {
-		return name;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+	public void setStatus(
+		UnsafeSupplier<String, Exception> statusUnsafeSupplier) {
+
 		try {
-			name = nameUnsafeSupplier.get();
+			status = statusUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -241,23 +213,23 @@ public class Collection {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String name;
+	protected String status;
 
 	@Schema
-	public String getStatusByUserName() {
-		return statusByUserName;
+	public String getUserInitials() {
+		return userInitials;
 	}
 
-	public void setStatusByUserName(String statusByUserName) {
-		this.statusByUserName = statusByUserName;
+	public void setUserInitials(String userInitials) {
+		this.userInitials = userInitials;
 	}
 
 	@JsonIgnore
-	public void setStatusByUserName(
-		UnsafeSupplier<String, Exception> statusByUserNameUnsafeSupplier) {
+	public void setUserInitials(
+		UnsafeSupplier<String, Exception> userInitialsUnsafeSupplier) {
 
 		try {
-			statusByUserName = statusByUserNameUnsafeSupplier.get();
+			userInitials = userInitialsUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -269,23 +241,23 @@ public class Collection {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String statusByUserName;
+	protected String userInitials;
 
 	@Schema
-	public Date getStatusDate() {
-		return statusDate;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setStatusDate(Date statusDate) {
-		this.statusDate = statusDate;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	@JsonIgnore
-	public void setStatusDate(
-		UnsafeSupplier<Date, Exception> statusDateUnsafeSupplier) {
+	public void setUserName(
+		UnsafeSupplier<String, Exception> userNameUnsafeSupplier) {
 
 		try {
-			statusDate = statusDateUnsafeSupplier.get();
+			userName = userNameUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -297,7 +269,35 @@ public class Collection {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Date statusDate;
+	protected String userName;
+
+	@Schema
+	public String getUserPortraitURL() {
+		return userPortraitURL;
+	}
+
+	public void setUserPortraitURL(String userPortraitURL) {
+		this.userPortraitURL = userPortraitURL;
+	}
+
+	@JsonIgnore
+	public void setUserPortraitURL(
+		UnsafeSupplier<String, Exception> userPortraitURLUnsafeSupplier) {
+
+		try {
+			userPortraitURL = userPortraitURLUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String userPortraitURL;
 
 	@Override
 	public boolean equals(Object object) {
@@ -305,13 +305,13 @@ public class Collection {
 			return true;
 		}
 
-		if (!(object instanceof Collection)) {
+		if (!(object instanceof Process)) {
 			return false;
 		}
 
-		Collection collection = (Collection)object;
+		Process process = (Process)object;
 
-		return Objects.equals(toString(), collection.toString());
+		return Objects.equals(toString(), process.toString());
 	}
 
 	@Override
@@ -329,24 +329,14 @@ public class Collection {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (additionCount != null) {
+		if (collection != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"additionCount\": ");
+			sb.append("\"collection\": ");
 
-			sb.append(additionCount);
-		}
-
-		if (collectionId != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"collectionId\": ");
-
-			sb.append(collectionId);
+			sb.append(String.valueOf(collection));
 		}
 
 		if (companyId != null) {
@@ -359,78 +349,92 @@ public class Collection {
 			sb.append(companyId);
 		}
 
-		if (deletionCount != null) {
+		if (date != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"deletionCount\": ");
-
-			sb.append(deletionCount);
-		}
-
-		if (description != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"description\": ");
+			sb.append("\"date\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(description));
+			sb.append(liferayToJSONDateFormat.format(date));
 
 			sb.append("\"");
 		}
 
-		if (modificationCount != null) {
+		if (percentage != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"modificationCount\": ");
+			sb.append("\"percentage\": ");
 
-			sb.append(modificationCount);
+			sb.append(percentage);
 		}
 
-		if (name != null) {
+		if (processId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"name\": ");
+			sb.append("\"processId\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(name));
-
-			sb.append("\"");
+			sb.append(processId);
 		}
 
-		if (statusByUserName != null) {
+		if (status != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"statusByUserName\": ");
+			sb.append("\"status\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(statusByUserName));
+			sb.append(_escape(status));
 
 			sb.append("\"");
 		}
 
-		if (statusDate != null) {
+		if (userInitials != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"statusDate\": ");
+			sb.append("\"userInitials\": ");
 
 			sb.append("\"");
 
-			sb.append(liferayToJSONDateFormat.format(statusDate));
+			sb.append(_escape(userInitials));
+
+			sb.append("\"");
+		}
+
+		if (userName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(userName));
+
+			sb.append("\"");
+		}
+
+		if (userPortraitURL != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userPortraitURL\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(userPortraitURL));
 
 			sb.append("\"");
 		}

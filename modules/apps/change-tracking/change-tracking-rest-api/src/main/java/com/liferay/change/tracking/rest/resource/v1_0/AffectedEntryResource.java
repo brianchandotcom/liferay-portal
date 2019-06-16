@@ -14,11 +14,11 @@
 
 package com.liferay.change.tracking.rest.resource.v1_0;
 
-import com.liferay.change.tracking.rest.dto.v1_0.Settings;
-import com.liferay.change.tracking.rest.dto.v1_0.SettingsUpdate;
+import com.liferay.change.tracking.rest.dto.v1_0.AffectedEntry;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import javax.annotation.Generated;
 
@@ -31,13 +31,11 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface SettingsResource {
+public interface AffectedEntryResource {
 
-	public Page<Settings> getSettingsPage(Long companyId, Long userId)
-		throws Exception;
-
-	public Settings putSettings(
-			Long companyId, Long userId, SettingsUpdate settingsUpdate)
+	public Page<AffectedEntry> getCollectionEntryAffectedsPage(
+			Long collectionId, Long entryId, String keywords,
+			Pagination pagination)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

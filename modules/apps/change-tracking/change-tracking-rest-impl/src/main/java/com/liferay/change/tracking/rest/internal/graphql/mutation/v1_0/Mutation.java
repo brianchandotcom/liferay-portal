@@ -36,7 +36,7 @@ import javax.ws.rs.core.Response;
 import org.osgi.service.component.ComponentServiceObjects;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  * @generated
  */
 @Generated("")

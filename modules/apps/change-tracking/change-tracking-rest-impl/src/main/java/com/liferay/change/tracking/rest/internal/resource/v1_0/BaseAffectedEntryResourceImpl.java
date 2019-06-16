@@ -14,14 +14,14 @@
 
 package com.liferay.change.tracking.rest.internal.resource.v1_0;
 
+import com.liferay.change.tracking.rest.dto.v1_0.AffectedEntry;
 import com.liferay.change.tracking.rest.dto.v1_0.Collection;
-import com.liferay.change.tracking.rest.dto.v1_0.Settings;
-import com.liferay.change.tracking.rest.dto.v1_0.SettingsUpdate;
-import com.liferay.change.tracking.rest.resource.v1_0.SettingsResource;
+import com.liferay.change.tracking.rest.resource.v1_0.AffectedEntryResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import io.swagger.v3.oas.annotations.Parameter;
@@ -37,10 +37,9 @@ import javax.annotation.Generated;
 
 import javax.validation.constraints.NotNull;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
@@ -52,48 +51,33 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseSettingsResourceImpl implements SettingsResource {
+public abstract class BaseAffectedEntryResourceImpl
+	implements AffectedEntryResource {
 
 	@Override
 	@GET
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "companyId"),
-			@Parameter(in = ParameterIn.QUERY, name = "userId")
+			@Parameter(in = ParameterIn.PATH, name = "collectionId"),
+			@Parameter(in = ParameterIn.PATH, name = "entryId"),
+			@Parameter(in = ParameterIn.QUERY, name = "keywords"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/settings")
-	@Produces({"application/json", "application/xml", "text/plain"})
-	@Tags(value = {@Tag(name = "Settings")})
-	public Page<Settings> getSettingsPage(
-			@NotNull @Parameter(hidden = true) @QueryParam("companyId") Long
-				companyId,
-			@Parameter(hidden = true) @QueryParam("userId") Long userId)
+	@Path("/collections/{collectionId}/entries/{entryId}/affecteds")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "AffectedEntry")})
+	public Page<AffectedEntry> getCollectionEntryAffectedsPage(
+			@NotNull @Parameter(hidden = true) @PathParam("collectionId") Long
+				collectionId,
+			@NotNull @Parameter(hidden = true) @PathParam("entryId") Long
+				entryId,
+			@Parameter(hidden = true) @QueryParam("keywords") String keywords,
+			@Context Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	@Consumes({"application/json", "application/xml"})
-	@PUT
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "companyId"),
-			@Parameter(in = ParameterIn.QUERY, name = "userId")
-		}
-	)
-	@Path("/settings")
-	@Produces({"application/json", "application/xml", "text/plain"})
-	@Tags(value = {@Tag(name = "Settings")})
-	public Settings putSettings(
-			@NotNull @Parameter(hidden = true) @QueryParam("companyId") Long
-				companyId,
-			@Parameter(hidden = true) @QueryParam("userId") Long userId,
-			SettingsUpdate settingsUpdate)
-		throws Exception {
-
-		return new Settings();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -104,7 +88,8 @@ public abstract class BaseSettingsResourceImpl implements SettingsResource {
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(Settings settings, Settings existingSettings) {
+	protected void preparePatch(
+		AffectedEntry affectedEntry, AffectedEntry existingAffectedEntry) {
 	}
 
 	protected <T, R> List<R> transform(

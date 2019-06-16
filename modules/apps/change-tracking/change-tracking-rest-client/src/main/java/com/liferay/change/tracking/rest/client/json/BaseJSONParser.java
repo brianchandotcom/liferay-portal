@@ -29,7 +29,7 @@ import java.util.stream.Stream;
 import javax.annotation.Generated;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  * @generated
  */
 @Generated("")

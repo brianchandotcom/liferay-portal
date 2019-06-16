@@ -15,7 +15,7 @@
 package com.liferay.change.tracking.rest.client.dto.v1_0;
 
 import com.liferay.change.tracking.rest.client.function.UnsafeSupplier;
-import com.liferay.change.tracking.rest.client.serdes.v1_0.CollectionUpdateSerDes;
+import com.liferay.change.tracking.rest.client.serdes.v1_0.AffectedEntrySerDes;
 
 import java.util.Objects;
 
@@ -26,47 +26,49 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class CollectionUpdate {
+public class AffectedEntry {
 
-	public String getDescription() {
-		return description;
+	public String getContentType() {
+		return contentType;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
 	}
 
-	public void setDescription(
-		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
+	public void setContentType(
+		UnsafeSupplier<String, Exception> contentTypeUnsafeSupplier) {
 
 		try {
-			description = descriptionUnsafeSupplier.get();
+			contentType = contentTypeUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String description;
+	protected String contentType;
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+	public void setTitle(
+		UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
+
 		try {
-			name = nameUnsafeSupplier.get();
+			title = titleUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String name;
+	protected String title;
 
 	@Override
 	public boolean equals(Object object) {
@@ -74,13 +76,13 @@ public class CollectionUpdate {
 			return true;
 		}
 
-		if (!(object instanceof CollectionUpdate)) {
+		if (!(object instanceof AffectedEntry)) {
 			return false;
 		}
 
-		CollectionUpdate collectionUpdate = (CollectionUpdate)object;
+		AffectedEntry affectedEntry = (AffectedEntry)object;
 
-		return Objects.equals(toString(), collectionUpdate.toString());
+		return Objects.equals(toString(), affectedEntry.toString());
 	}
 
 	@Override
@@ -91,7 +93,7 @@ public class CollectionUpdate {
 	}
 
 	public String toString() {
-		return CollectionUpdateSerDes.toJSON(this);
+		return AffectedEntrySerDes.toJSON(this);
 	}
 
 }

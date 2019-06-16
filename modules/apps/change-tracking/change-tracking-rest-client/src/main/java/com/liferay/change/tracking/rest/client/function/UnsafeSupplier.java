@@ -17,7 +17,7 @@ package com.liferay.change.tracking.rest.client.function;
 import javax.annotation.Generated;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  * @generated
  */
 @FunctionalInterface

@@ -14,8 +14,8 @@
 
 package com.liferay.change.tracking.rest.client.serdes.v1_0;
 
-import com.liferay.change.tracking.rest.client.dto.v1_0.CollectionUpdate;
 import com.liferay.change.tracking.rest.client.dto.v1_0.Entry;
+import com.liferay.change.tracking.rest.client.dto.v1_0.ProcessUser;
 import com.liferay.change.tracking.rest.client.json.BaseJSONParser;
 
 import java.util.HashMap;
@@ -31,24 +31,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class CollectionUpdateSerDes {
+public class ProcessUserSerDes {
 
-	public static CollectionUpdate toDTO(String json) {
-		CollectionUpdateJSONParser collectionUpdateJSONParser =
-			new CollectionUpdateJSONParser();
+	public static ProcessUser toDTO(String json) {
+		ProcessUserJSONParser processUserJSONParser =
+			new ProcessUserJSONParser();
 
-		return collectionUpdateJSONParser.parseToDTO(json);
+		return processUserJSONParser.parseToDTO(json);
 	}
 
-	public static CollectionUpdate[] toDTOs(String json) {
-		CollectionUpdateJSONParser collectionUpdateJSONParser =
-			new CollectionUpdateJSONParser();
+	public static ProcessUser[] toDTOs(String json) {
+		ProcessUserJSONParser processUserJSONParser =
+			new ProcessUserJSONParser();
 
-		return collectionUpdateJSONParser.parseToDTOs(json);
+		return processUserJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(CollectionUpdate collectionUpdate) {
-		if (collectionUpdate == null) {
+	public static String toJSON(ProcessUser processUser) {
+		if (processUser == null) {
 			return "null";
 		}
 
@@ -56,30 +56,26 @@ public class CollectionUpdateSerDes {
 
 		sb.append("{");
 
-		if (collectionUpdate.getDescription() != null) {
+		if (processUser.getUserId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"description\": ");
+			sb.append("\"userId\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(collectionUpdate.getDescription()));
-
-			sb.append("\"");
+			sb.append(processUser.getUserId());
 		}
 
-		if (collectionUpdate.getName() != null) {
+		if (processUser.getUserName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"name\": ");
+			sb.append("\"userName\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(collectionUpdate.getName()));
+			sb.append(_escape(processUser.getUserName()));
 
 			sb.append("\"");
 		}
@@ -90,33 +86,31 @@ public class CollectionUpdateSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		CollectionUpdateJSONParser collectionUpdateJSONParser =
-			new CollectionUpdateJSONParser();
+		ProcessUserJSONParser processUserJSONParser =
+			new ProcessUserJSONParser();
 
-		return collectionUpdateJSONParser.parseToMap(json);
+		return processUserJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(CollectionUpdate collectionUpdate) {
-		if (collectionUpdate == null) {
+	public static Map<String, String> toMap(ProcessUser processUser) {
+		if (processUser == null) {
 			return null;
 		}
 
 		Map<String, String> map = new HashMap<>();
 
-		if (collectionUpdate.getDescription() == null) {
-			map.put("description", null);
+		if (processUser.getUserId() == null) {
+			map.put("userId", null);
 		}
 		else {
-			map.put(
-				"description",
-				String.valueOf(collectionUpdate.getDescription()));
+			map.put("userId", String.valueOf(processUser.getUserId()));
 		}
 
-		if (collectionUpdate.getName() == null) {
-			map.put("name", null);
+		if (processUser.getUserName() == null) {
+			map.put("userName", null);
 		}
 		else {
-			map.put("name", String.valueOf(collectionUpdate.getName()));
+			map.put("userName", String.valueOf(processUser.getUserName()));
 		}
 
 		return map;
@@ -159,33 +153,33 @@ public class CollectionUpdateSerDes {
 		return sb.toString();
 	}
 
-	private static class CollectionUpdateJSONParser
-		extends BaseJSONParser<CollectionUpdate> {
+	private static class ProcessUserJSONParser
+		extends BaseJSONParser<ProcessUser> {
 
 		@Override
-		protected CollectionUpdate createDTO() {
-			return new CollectionUpdate();
+		protected ProcessUser createDTO() {
+			return new ProcessUser();
 		}
 
 		@Override
-		protected CollectionUpdate[] createDTOArray(int size) {
-			return new CollectionUpdate[size];
+		protected ProcessUser[] createDTOArray(int size) {
+			return new ProcessUser[size];
 		}
 
 		@Override
 		protected void setField(
-			CollectionUpdate collectionUpdate, String jsonParserFieldName,
+			ProcessUser processUser, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "description")) {
+			if (Objects.equals(jsonParserFieldName, "userId")) {
 				if (jsonParserFieldValue != null) {
-					collectionUpdate.setDescription(
-						(String)jsonParserFieldValue);
+					processUser.setUserId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
+			else if (Objects.equals(jsonParserFieldName, "userName")) {
 				if (jsonParserFieldValue != null) {
-					collectionUpdate.setName((String)jsonParserFieldValue);
+					processUser.setUserName((String)jsonParserFieldValue);
 				}
 			}
 			else {

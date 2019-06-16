@@ -40,26 +40,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("CollectionUpdate")
+@GraphQLName("ProcessUser")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "CollectionUpdate")
-public class CollectionUpdate {
+@XmlRootElement(name = "ProcessUser")
+public class ProcessUser {
 
 	@Schema
-	public String getDescription() {
-		return description;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	@JsonIgnore
-	public void setDescription(
-		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
+	public void setUserId(
+		UnsafeSupplier<Long, Exception> userIdUnsafeSupplier) {
 
 		try {
-			description = descriptionUnsafeSupplier.get();
+			userId = userIdUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -71,21 +71,23 @@ public class CollectionUpdate {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String description;
+	protected Long userId;
 
 	@Schema
-	public String getName() {
-		return name;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+	public void setUserName(
+		UnsafeSupplier<String, Exception> userNameUnsafeSupplier) {
+
 		try {
-			name = nameUnsafeSupplier.get();
+			userName = userNameUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -97,7 +99,7 @@ public class CollectionUpdate {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String name;
+	protected String userName;
 
 	@Override
 	public boolean equals(Object object) {
@@ -105,13 +107,13 @@ public class CollectionUpdate {
 			return true;
 		}
 
-		if (!(object instanceof CollectionUpdate)) {
+		if (!(object instanceof ProcessUser)) {
 			return false;
 		}
 
-		CollectionUpdate collectionUpdate = (CollectionUpdate)object;
+		ProcessUser processUser = (ProcessUser)object;
 
-		return Objects.equals(toString(), collectionUpdate.toString());
+		return Objects.equals(toString(), processUser.toString());
 	}
 
 	@Override
@@ -126,30 +128,26 @@ public class CollectionUpdate {
 
 		sb.append("{");
 
-		if (description != null) {
+		if (userId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"description\": ");
+			sb.append("\"userId\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(description));
-
-			sb.append("\"");
+			sb.append(userId);
 		}
 
-		if (name != null) {
+		if (userName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"name\": ");
+			sb.append("\"userName\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(name));
+			sb.append(_escape(userName));
 
 			sb.append("\"");
 		}

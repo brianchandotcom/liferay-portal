@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.rest.client.serdes.v1_0;
 
-import com.liferay.change.tracking.rest.client.dto.v1_0.CollectionUpdate;
+import com.liferay.change.tracking.rest.client.dto.v1_0.AffectedEntry;
 import com.liferay.change.tracking.rest.client.dto.v1_0.Entry;
 import com.liferay.change.tracking.rest.client.json.BaseJSONParser;
 
@@ -31,24 +31,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class CollectionUpdateSerDes {
+public class AffectedEntrySerDes {
 
-	public static CollectionUpdate toDTO(String json) {
-		CollectionUpdateJSONParser collectionUpdateJSONParser =
-			new CollectionUpdateJSONParser();
+	public static AffectedEntry toDTO(String json) {
+		AffectedEntryJSONParser affectedEntryJSONParser =
+			new AffectedEntryJSONParser();
 
-		return collectionUpdateJSONParser.parseToDTO(json);
+		return affectedEntryJSONParser.parseToDTO(json);
 	}
 
-	public static CollectionUpdate[] toDTOs(String json) {
-		CollectionUpdateJSONParser collectionUpdateJSONParser =
-			new CollectionUpdateJSONParser();
+	public static AffectedEntry[] toDTOs(String json) {
+		AffectedEntryJSONParser affectedEntryJSONParser =
+			new AffectedEntryJSONParser();
 
-		return collectionUpdateJSONParser.parseToDTOs(json);
+		return affectedEntryJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(CollectionUpdate collectionUpdate) {
-		if (collectionUpdate == null) {
+	public static String toJSON(AffectedEntry affectedEntry) {
+		if (affectedEntry == null) {
 			return "null";
 		}
 
@@ -56,30 +56,30 @@ public class CollectionUpdateSerDes {
 
 		sb.append("{");
 
-		if (collectionUpdate.getDescription() != null) {
+		if (affectedEntry.getContentType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"description\": ");
+			sb.append("\"contentType\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(collectionUpdate.getDescription()));
+			sb.append(_escape(affectedEntry.getContentType()));
 
 			sb.append("\"");
 		}
 
-		if (collectionUpdate.getName() != null) {
+		if (affectedEntry.getTitle() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"name\": ");
+			sb.append("\"title\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(collectionUpdate.getName()));
+			sb.append(_escape(affectedEntry.getTitle()));
 
 			sb.append("\"");
 		}
@@ -90,33 +90,32 @@ public class CollectionUpdateSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		CollectionUpdateJSONParser collectionUpdateJSONParser =
-			new CollectionUpdateJSONParser();
+		AffectedEntryJSONParser affectedEntryJSONParser =
+			new AffectedEntryJSONParser();
 
-		return collectionUpdateJSONParser.parseToMap(json);
+		return affectedEntryJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(CollectionUpdate collectionUpdate) {
-		if (collectionUpdate == null) {
+	public static Map<String, String> toMap(AffectedEntry affectedEntry) {
+		if (affectedEntry == null) {
 			return null;
 		}
 
 		Map<String, String> map = new HashMap<>();
 
-		if (collectionUpdate.getDescription() == null) {
-			map.put("description", null);
+		if (affectedEntry.getContentType() == null) {
+			map.put("contentType", null);
 		}
 		else {
 			map.put(
-				"description",
-				String.valueOf(collectionUpdate.getDescription()));
+				"contentType", String.valueOf(affectedEntry.getContentType()));
 		}
 
-		if (collectionUpdate.getName() == null) {
-			map.put("name", null);
+		if (affectedEntry.getTitle() == null) {
+			map.put("title", null);
 		}
 		else {
-			map.put("name", String.valueOf(collectionUpdate.getName()));
+			map.put("title", String.valueOf(affectedEntry.getTitle()));
 		}
 
 		return map;
@@ -159,33 +158,32 @@ public class CollectionUpdateSerDes {
 		return sb.toString();
 	}
 
-	private static class CollectionUpdateJSONParser
-		extends BaseJSONParser<CollectionUpdate> {
+	private static class AffectedEntryJSONParser
+		extends BaseJSONParser<AffectedEntry> {
 
 		@Override
-		protected CollectionUpdate createDTO() {
-			return new CollectionUpdate();
+		protected AffectedEntry createDTO() {
+			return new AffectedEntry();
 		}
 
 		@Override
-		protected CollectionUpdate[] createDTOArray(int size) {
-			return new CollectionUpdate[size];
+		protected AffectedEntry[] createDTOArray(int size) {
+			return new AffectedEntry[size];
 		}
 
 		@Override
 		protected void setField(
-			CollectionUpdate collectionUpdate, String jsonParserFieldName,
+			AffectedEntry affectedEntry, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "description")) {
+			if (Objects.equals(jsonParserFieldName, "contentType")) {
 				if (jsonParserFieldValue != null) {
-					collectionUpdate.setDescription(
-						(String)jsonParserFieldValue);
+					affectedEntry.setContentType((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
+			else if (Objects.equals(jsonParserFieldName, "title")) {
 				if (jsonParserFieldValue != null) {
-					collectionUpdate.setName((String)jsonParserFieldValue);
+					affectedEntry.setTitle((String)jsonParserFieldValue);
 				}
 			}
 			else {

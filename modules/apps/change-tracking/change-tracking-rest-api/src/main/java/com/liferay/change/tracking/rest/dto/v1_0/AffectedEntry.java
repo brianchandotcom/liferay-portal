@@ -40,26 +40,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("CollectionUpdate")
+@GraphQLName("AffectedEntry")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "CollectionUpdate")
-public class CollectionUpdate {
+@XmlRootElement(name = "AffectedEntry")
+public class AffectedEntry {
 
 	@Schema
-	public String getDescription() {
-		return description;
+	public String getContentType() {
+		return contentType;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
 	}
 
 	@JsonIgnore
-	public void setDescription(
-		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
+	public void setContentType(
+		UnsafeSupplier<String, Exception> contentTypeUnsafeSupplier) {
 
 		try {
-			description = descriptionUnsafeSupplier.get();
+			contentType = contentTypeUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -71,21 +71,23 @@ public class CollectionUpdate {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String description;
+	protected String contentType;
 
 	@Schema
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+	public void setTitle(
+		UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
+
 		try {
-			name = nameUnsafeSupplier.get();
+			title = titleUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -97,7 +99,7 @@ public class CollectionUpdate {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String name;
+	protected String title;
 
 	@Override
 	public boolean equals(Object object) {
@@ -105,13 +107,13 @@ public class CollectionUpdate {
 			return true;
 		}
 
-		if (!(object instanceof CollectionUpdate)) {
+		if (!(object instanceof AffectedEntry)) {
 			return false;
 		}
 
-		CollectionUpdate collectionUpdate = (CollectionUpdate)object;
+		AffectedEntry affectedEntry = (AffectedEntry)object;
 
-		return Objects.equals(toString(), collectionUpdate.toString());
+		return Objects.equals(toString(), affectedEntry.toString());
 	}
 
 	@Override
@@ -126,30 +128,30 @@ public class CollectionUpdate {
 
 		sb.append("{");
 
-		if (description != null) {
+		if (contentType != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"description\": ");
+			sb.append("\"contentType\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(description));
+			sb.append(_escape(contentType));
 
 			sb.append("\"");
 		}
 
-		if (name != null) {
+		if (title != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"name\": ");
+			sb.append("\"title\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(name));
+			sb.append(_escape(title));
 
 			sb.append("\"");
 		}

@@ -22,12 +22,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.change.tracking.rest.client.dto.v1_0.AffectedEntry;
 import com.liferay.change.tracking.rest.client.dto.v1_0.Collection;
-import com.liferay.change.tracking.rest.client.dto.v1_0.Settings;
 import com.liferay.change.tracking.rest.client.http.HttpInvoker;
 import com.liferay.change.tracking.rest.client.pagination.Page;
-import com.liferay.change.tracking.rest.client.resource.v1_0.SettingsResource;
-import com.liferay.change.tracking.rest.client.serdes.v1_0.SettingsSerDes;
+import com.liferay.change.tracking.rest.client.pagination.Pagination;
+import com.liferay.change.tracking.rest.client.resource.v1_0.AffectedEntryResource;
+import com.liferay.change.tracking.rest.client.serdes.v1_0.AffectedEntrySerDes;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -75,7 +76,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseSettingsResourceTestCase {
+public abstract class BaseAffectedEntryResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -96,11 +97,11 @@ public abstract class BaseSettingsResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_settingsResource.setContextCompany(testCompany);
+		_affectedEntryResource.setContextCompany(testCompany);
 
-		SettingsResource.Builder builder = SettingsResource.builder();
+		AffectedEntryResource.Builder builder = AffectedEntryResource.builder();
 
-		settingsResource = builder.locale(
+		affectedEntryResource = builder.locale(
 			LocaleUtil.getDefault()
 		).build();
 	}
@@ -129,13 +130,13 @@ public abstract class BaseSettingsResourceTestCase {
 			}
 		};
 
-		Settings settings1 = randomSettings();
+		AffectedEntry affectedEntry1 = randomAffectedEntry();
 
-		String json = objectMapper.writeValueAsString(settings1);
+		String json = objectMapper.writeValueAsString(affectedEntry1);
 
-		Settings settings2 = SettingsSerDes.toDTO(json);
+		AffectedEntry affectedEntry2 = AffectedEntrySerDes.toDTO(json);
 
-		Assert.assertTrue(equals(settings1, settings2));
+		Assert.assertTrue(equals(affectedEntry1, affectedEntry2));
 	}
 
 	@Test
@@ -155,10 +156,10 @@ public abstract class BaseSettingsResourceTestCase {
 			}
 		};
 
-		Settings settings = randomSettings();
+		AffectedEntry affectedEntry = randomAffectedEntry();
 
-		String json1 = objectMapper.writeValueAsString(settings);
-		String json2 = SettingsSerDes.toJSON(settings);
+		String json1 = objectMapper.writeValueAsString(affectedEntry);
+		String json2 = AffectedEntrySerDes.toJSON(affectedEntry);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -168,45 +169,161 @@ public abstract class BaseSettingsResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		Settings settings = randomSettings();
+		AffectedEntry affectedEntry = randomAffectedEntry();
 
-		String json = SettingsSerDes.toJSON(settings);
+		affectedEntry.setContentType(regex);
+		affectedEntry.setTitle(regex);
+
+		String json = AffectedEntrySerDes.toJSON(affectedEntry);
 
 		Assert.assertFalse(json.contains(regex));
 
-		settings = SettingsSerDes.toDTO(json);
+		affectedEntry = AffectedEntrySerDes.toDTO(json);
+
+		Assert.assertEquals(regex, affectedEntry.getContentType());
+		Assert.assertEquals(regex, affectedEntry.getTitle());
 	}
 
 	@Test
-	public void testGetSettingsPage() throws Exception {
-		Page<Settings> page = settingsResource.getSettingsPage(null, null);
+	public void testGetCollectionEntryAffectedsPage() throws Exception {
+		Page<AffectedEntry> page =
+			affectedEntryResource.getCollectionEntryAffectedsPage(
+				testGetCollectionEntryAffectedsPage_getCollectionId(),
+				testGetCollectionEntryAffectedsPage_getEntryId(),
+				RandomTestUtil.randomString(), Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Settings settings1 = testGetSettingsPage_addSettings(randomSettings());
+		Long collectionId =
+			testGetCollectionEntryAffectedsPage_getCollectionId();
+		Long irrelevantCollectionId =
+			testGetCollectionEntryAffectedsPage_getIrrelevantCollectionId();
+		Long entryId = testGetCollectionEntryAffectedsPage_getEntryId();
+		Long irrelevantEntryId =
+			testGetCollectionEntryAffectedsPage_getIrrelevantEntryId();
 
-		Settings settings2 = testGetSettingsPage_addSettings(randomSettings());
+		if ((irrelevantCollectionId != null) && (irrelevantEntryId != null)) {
+			AffectedEntry irrelevantAffectedEntry =
+				testGetCollectionEntryAffectedsPage_addAffectedEntry(
+					irrelevantCollectionId, irrelevantEntryId,
+					randomIrrelevantAffectedEntry());
 
-		page = settingsResource.getSettingsPage(null, null);
+			page = affectedEntryResource.getCollectionEntryAffectedsPage(
+				irrelevantCollectionId, irrelevantEntryId, null,
+				Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantAffectedEntry),
+				(List<AffectedEntry>)page.getItems());
+			assertValid(page);
+		}
+
+		AffectedEntry affectedEntry1 =
+			testGetCollectionEntryAffectedsPage_addAffectedEntry(
+				collectionId, entryId, randomAffectedEntry());
+
+		AffectedEntry affectedEntry2 =
+			testGetCollectionEntryAffectedsPage_addAffectedEntry(
+				collectionId, entryId, randomAffectedEntry());
+
+		page = affectedEntryResource.getCollectionEntryAffectedsPage(
+			collectionId, entryId, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(settings1, settings2),
-			(List<Settings>)page.getItems());
+			Arrays.asList(affectedEntry1, affectedEntry2),
+			(List<AffectedEntry>)page.getItems());
 		assertValid(page);
 	}
 
-	protected Settings testGetSettingsPage_addSettings(Settings settings)
+	@Test
+	public void testGetCollectionEntryAffectedsPageWithPagination()
+		throws Exception {
+
+		Long collectionId =
+			testGetCollectionEntryAffectedsPage_getCollectionId();
+		Long entryId = testGetCollectionEntryAffectedsPage_getEntryId();
+
+		AffectedEntry affectedEntry1 =
+			testGetCollectionEntryAffectedsPage_addAffectedEntry(
+				collectionId, entryId, randomAffectedEntry());
+
+		AffectedEntry affectedEntry2 =
+			testGetCollectionEntryAffectedsPage_addAffectedEntry(
+				collectionId, entryId, randomAffectedEntry());
+
+		AffectedEntry affectedEntry3 =
+			testGetCollectionEntryAffectedsPage_addAffectedEntry(
+				collectionId, entryId, randomAffectedEntry());
+
+		Page<AffectedEntry> page1 =
+			affectedEntryResource.getCollectionEntryAffectedsPage(
+				collectionId, entryId, null, Pagination.of(1, 2));
+
+		List<AffectedEntry> affectedEntries1 =
+			(List<AffectedEntry>)page1.getItems();
+
+		Assert.assertEquals(
+			affectedEntries1.toString(), 2, affectedEntries1.size());
+
+		Page<AffectedEntry> page2 =
+			affectedEntryResource.getCollectionEntryAffectedsPage(
+				collectionId, entryId, null, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<AffectedEntry> affectedEntries2 =
+			(List<AffectedEntry>)page2.getItems();
+
+		Assert.assertEquals(
+			affectedEntries2.toString(), 1, affectedEntries2.size());
+
+		Page<AffectedEntry> page3 =
+			affectedEntryResource.getCollectionEntryAffectedsPage(
+				collectionId, entryId, null, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(affectedEntry1, affectedEntry2, affectedEntry3),
+			(List<AffectedEntry>)page3.getItems());
+	}
+
+	protected AffectedEntry
+			testGetCollectionEntryAffectedsPage_addAffectedEntry(
+				Long collectionId, Long entryId, AffectedEntry affectedEntry)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	@Test
-	public void testPutSettings() throws Exception {
-		Assert.assertTrue(true);
+	protected Long testGetCollectionEntryAffectedsPage_getCollectionId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetCollectionEntryAffectedsPage_getIrrelevantCollectionId()
+		throws Exception {
+
+		return null;
+	}
+
+	protected Long testGetCollectionEntryAffectedsPage_getEntryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetCollectionEntryAffectedsPage_getIrrelevantEntryId()
+		throws Exception {
+
+		return null;
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -217,35 +334,39 @@ public abstract class BaseSettingsResourceTestCase {
 			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
-	protected void assertEquals(Settings settings1, Settings settings2) {
+	protected void assertEquals(
+		AffectedEntry affectedEntry1, AffectedEntry affectedEntry2) {
+
 		Assert.assertTrue(
-			settings1 + " does not equal " + settings2,
-			equals(settings1, settings2));
+			affectedEntry1 + " does not equal " + affectedEntry2,
+			equals(affectedEntry1, affectedEntry2));
 	}
 
 	protected void assertEquals(
-		List<Settings> settingses1, List<Settings> settingses2) {
+		List<AffectedEntry> affectedEntries1,
+		List<AffectedEntry> affectedEntries2) {
 
-		Assert.assertEquals(settingses1.size(), settingses2.size());
+		Assert.assertEquals(affectedEntries1.size(), affectedEntries2.size());
 
-		for (int i = 0; i < settingses1.size(); i++) {
-			Settings settings1 = settingses1.get(i);
-			Settings settings2 = settingses2.get(i);
+		for (int i = 0; i < affectedEntries1.size(); i++) {
+			AffectedEntry affectedEntry1 = affectedEntries1.get(i);
+			AffectedEntry affectedEntry2 = affectedEntries2.get(i);
 
-			assertEquals(settings1, settings2);
+			assertEquals(affectedEntry1, affectedEntry2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<Settings> settingses1, List<Settings> settingses2) {
+		List<AffectedEntry> affectedEntries1,
+		List<AffectedEntry> affectedEntries2) {
 
-		Assert.assertEquals(settingses1.size(), settingses2.size());
+		Assert.assertEquals(affectedEntries1.size(), affectedEntries2.size());
 
-		for (Settings settings1 : settingses1) {
+		for (AffectedEntry affectedEntry1 : affectedEntries1) {
 			boolean contains = false;
 
-			for (Settings settings2 : settingses2) {
-				if (equals(settings1, settings2)) {
+			for (AffectedEntry affectedEntry2 : affectedEntries2) {
+				if (equals(affectedEntry1, affectedEntry2)) {
 					contains = true;
 
 					break;
@@ -253,80 +374,27 @@ public abstract class BaseSettingsResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				settingses2 + " does not contain " + settings1, contains);
+				affectedEntries2 + " does not contain " + affectedEntry1,
+				contains);
 		}
 	}
 
-	protected void assertValid(Settings settings) {
+	protected void assertValid(AffectedEntry affectedEntry) {
 		boolean valid = true;
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals(
-					"changeTrackingAllowed", additionalAssertFieldName)) {
-
-				if (settings.getChangeTrackingAllowed() == null) {
+			if (Objects.equals("contentType", additionalAssertFieldName)) {
+				if (affectedEntry.getContentType() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals(
-					"changeTrackingEnabled", additionalAssertFieldName)) {
-
-				if (settings.getChangeTrackingEnabled() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"checkoutCTCollectionConfirmationEnabled",
-					additionalAssertFieldName)) {
-
-				if (settings.getCheckoutCTCollectionConfirmationEnabled() ==
-						null) {
-
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("companyId", additionalAssertFieldName)) {
-				if (settings.getCompanyId() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"supportedContentTypeLanguageKeys",
-					additionalAssertFieldName)) {
-
-				if (settings.getSupportedContentTypeLanguageKeys() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"supportedContentTypes", additionalAssertFieldName)) {
-
-				if (settings.getSupportedContentTypes() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("userId", additionalAssertFieldName)) {
-				if (settings.getUserId() == null) {
+			if (Objects.equals("title", additionalAssertFieldName)) {
+				if (affectedEntry.getTitle() == null) {
 					valid = false;
 				}
 
@@ -341,12 +409,12 @@ public abstract class BaseSettingsResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Settings> page) {
+	protected void assertValid(Page<AffectedEntry> page) {
 		boolean valid = false;
 
-		java.util.Collection<Settings> settingses = page.getItems();
+		java.util.Collection<AffectedEntry> affectedEntries = page.getItems();
 
-		int size = settingses.size();
+		int size = affectedEntries.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -366,20 +434,20 @@ public abstract class BaseSettingsResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(Settings settings1, Settings settings2) {
-		if (settings1 == settings2) {
+	protected boolean equals(
+		AffectedEntry affectedEntry1, AffectedEntry affectedEntry2) {
+
+		if (affectedEntry1 == affectedEntry2) {
 			return true;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals(
-					"changeTrackingAllowed", additionalAssertFieldName)) {
-
+			if (Objects.equals("contentType", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						settings1.getChangeTrackingAllowed(),
-						settings2.getChangeTrackingAllowed())) {
+						affectedEntry1.getContentType(),
+						affectedEntry2.getContentType())) {
 
 					return false;
 				}
@@ -387,74 +455,9 @@ public abstract class BaseSettingsResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"changeTrackingEnabled", additionalAssertFieldName)) {
-
+			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						settings1.getChangeTrackingEnabled(),
-						settings2.getChangeTrackingEnabled())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"checkoutCTCollectionConfirmationEnabled",
-					additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						settings1.getCheckoutCTCollectionConfirmationEnabled(),
-						settings2.
-							getCheckoutCTCollectionConfirmationEnabled())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("companyId", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						settings1.getCompanyId(), settings2.getCompanyId())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"supportedContentTypeLanguageKeys",
-					additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						settings1.getSupportedContentTypeLanguageKeys(),
-						settings2.getSupportedContentTypeLanguageKeys())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"supportedContentTypes", additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						settings1.getSupportedContentTypes(),
-						settings2.getSupportedContentTypes())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("userId", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						settings1.getUserId(), settings2.getUserId())) {
+						affectedEntry1.getTitle(), affectedEntry2.getTitle())) {
 
 					return false;
 				}
@@ -473,13 +476,13 @@ public abstract class BaseSettingsResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_settingsResource instanceof EntityModelResource)) {
+		if (!(_affectedEntryResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_settingsResource;
+			(EntityModelResource)_affectedEntryResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -508,7 +511,7 @@ public abstract class BaseSettingsResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, Settings settings) {
+		EntityField entityField, String operator, AffectedEntry affectedEntry) {
 
 		StringBundler sb = new StringBundler();
 
@@ -520,75 +523,52 @@ public abstract class BaseSettingsResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("changeTrackingAllowed")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+		if (entityFieldName.equals("contentType")) {
+			sb.append("'");
+			sb.append(String.valueOf(affectedEntry.getContentType()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
-		if (entityFieldName.equals("changeTrackingEnabled")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
+		if (entityFieldName.equals("title")) {
+			sb.append("'");
+			sb.append(String.valueOf(affectedEntry.getTitle()));
+			sb.append("'");
 
-		if (entityFieldName.equals("checkoutCTCollectionConfirmationEnabled")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("companyId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("supportedContentTypeLanguageKeys")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("supportedContentTypes")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("userId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected Settings randomSettings() throws Exception {
-		return new Settings() {
+	protected AffectedEntry randomAffectedEntry() throws Exception {
+		return new AffectedEntry() {
 			{
-				changeTrackingAllowed = RandomTestUtil.randomBoolean();
-				changeTrackingEnabled = RandomTestUtil.randomBoolean();
-				checkoutCTCollectionConfirmationEnabled =
-					RandomTestUtil.randomBoolean();
-				companyId = RandomTestUtil.randomLong();
-				userId = RandomTestUtil.randomLong();
+				contentType = RandomTestUtil.randomString();
+				title = RandomTestUtil.randomString();
 			}
 		};
 	}
 
-	protected Settings randomIrrelevantSettings() throws Exception {
-		Settings randomIrrelevantSettings = randomSettings();
+	protected AffectedEntry randomIrrelevantAffectedEntry() throws Exception {
+		AffectedEntry randomIrrelevantAffectedEntry = randomAffectedEntry();
 
-		return randomIrrelevantSettings;
+		return randomIrrelevantAffectedEntry;
 	}
 
-	protected Settings randomPatchSettings() throws Exception {
-		return randomSettings();
+	protected AffectedEntry randomPatchAffectedEntry() throws Exception {
+		return randomAffectedEntry();
 	}
 
-	protected SettingsResource settingsResource;
+	protected AffectedEntryResource affectedEntryResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseSettingsResourceTestCase.class);
+		BaseAffectedEntryResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 
@@ -605,7 +585,7 @@ public abstract class BaseSettingsResourceTestCase {
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private com.liferay.change.tracking.rest.resource.v1_0.SettingsResource
-		_settingsResource;
+	private com.liferay.change.tracking.rest.resource.v1_0.AffectedEntryResource
+		_affectedEntryResource;
 
 }

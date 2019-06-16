@@ -12,43 +12,19 @@
  * details.
  */
 
-package com.liferay.change.tracking.rest.client.pagination;
+package com.liferay.change.tracking.rest.internal.resource.v1_0;
 
-import javax.annotation.Generated;
+import com.liferay.change.tracking.rest.resource.v1_0.EntryResource;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Máté Thurzó
- * @generated
  */
-@Generated("")
-public class Pagination {
-
-	public static Pagination of(int page, int pageSize) {
-		return new Pagination(page, pageSize);
-	}
-
-	public int getEndPosition() {
-		return _page * _pageSize;
-	}
-
-	public int getPage() {
-		return _page;
-	}
-
-	public int getPageSize() {
-		return _pageSize;
-	}
-
-	public int getStartPosition() {
-		return (_page - 1) * _pageSize;
-	}
-
-	private Pagination(int page, int pageSize) {
-		_page = page;
-		_pageSize = pageSize;
-	}
-
-	private final int _page;
-	private final int _pageSize;
-
+@Component(
+	properties = "OSGI-INF/liferay/rest/v1_0/entry.properties",
+	scope = ServiceScope.PROTOTYPE, service = EntryResource.class
+)
+public class EntryResourceImpl extends BaseEntryResourceImpl {
 }

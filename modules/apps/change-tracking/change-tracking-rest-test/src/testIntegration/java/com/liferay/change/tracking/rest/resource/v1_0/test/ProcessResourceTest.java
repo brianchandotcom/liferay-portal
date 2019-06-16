@@ -12,43 +12,17 @@
  * details.
  */
 
-package com.liferay.change.tracking.rest.client.pagination;
+package com.liferay.change.tracking.rest.resource.v1_0.test;
 
-import javax.annotation.Generated;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
+import org.junit.Ignore;
+import org.junit.runner.RunWith;
 
 /**
  * @author Máté Thurzó
- * @generated
  */
-@Generated("")
-public class Pagination {
-
-	public static Pagination of(int page, int pageSize) {
-		return new Pagination(page, pageSize);
-	}
-
-	public int getEndPosition() {
-		return _page * _pageSize;
-	}
-
-	public int getPage() {
-		return _page;
-	}
-
-	public int getPageSize() {
-		return _pageSize;
-	}
-
-	public int getStartPosition() {
-		return (_page - 1) * _pageSize;
-	}
-
-	private Pagination(int page, int pageSize) {
-		_page = page;
-		_pageSize = pageSize;
-	}
-
-	private final int _page;
-	private final int _pageSize;
-
+@Ignore
+@RunWith(Arquillian.class)
+public class ProcessResourceTest extends BaseProcessResourceTestCase {
 }

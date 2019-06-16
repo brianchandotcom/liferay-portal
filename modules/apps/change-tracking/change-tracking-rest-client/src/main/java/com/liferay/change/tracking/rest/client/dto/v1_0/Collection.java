@@ -23,7 +23,7 @@ import java.util.Objects;
 import javax.annotation.Generated;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  * @generated
  */
 @Generated("")

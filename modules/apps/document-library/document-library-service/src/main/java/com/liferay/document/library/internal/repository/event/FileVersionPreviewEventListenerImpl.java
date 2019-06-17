@@ -36,6 +36,11 @@ import org.osgi.service.component.annotations.Reference;
 public class FileVersionPreviewEventListenerImpl
 	implements FileVersionPreviewEventListener {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
+	@Override
 	public void deleteDLFileVersionPreviews(long fileEntryId) {
 		List<DLFileVersionPreview> fileVersionPreviews =
 			_dlFileVersionPreviewLocalService.getFileEntryDLFileVersionPreviews(
@@ -48,6 +53,10 @@ public class FileVersionPreviewEventListenerImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public long getDLFileVersionPreviewId(
 		long fileEntryId, long fileVersionId, int fileVersionPreviewStatus) {

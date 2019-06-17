@@ -22,8 +22,16 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
  */
 public interface FileVersionPreviewEventListener {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public void deleteDLFileVersionPreviews(long fileEntryId);
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public long getDLFileVersionPreviewId(
 		long fileEntryId, long fileVersionId, int fileVersionPreviewStatus);
 
@@ -31,6 +39,10 @@ public interface FileVersionPreviewEventListener {
 
 	public void onSuccess(FileVersion fileVersion);
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public enum DLFileEntryPreviewType {
 
 		FAIL(0), NOT_GENERATED(1), SUCCESS(2);

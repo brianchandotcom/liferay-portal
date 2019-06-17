@@ -11,6 +11,9 @@ components:
                 companyId:
                     format: int64
                     type: integer
+                dateStatus:
+                    format: date-time
+                    type: string
                 deletionCount:
                     format: int64
                     type: integer
@@ -22,9 +25,6 @@ components:
                 name:
                     type: string
                 statusByUserName:
-                    type: string
-                statusDate:
-                    format: date-time
                     type: string
             type: object
         CollectionType:

@@ -1,0 +1,18 @@
+{
+	"devDependencies": {
+		"karma": "4.0.0",
+		"liferay-jest-junit-reporter": "1.0.1",
+		"liferay-karma-alloy-config": "0.0.15",
+		"liferay-karma-config": "0.0.3"
+	},
+	"private": true,
+	"scripts": {
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"workspaces": {
+		"packages": [
+			"apps/**/*-web"
+		]
+	}
+}

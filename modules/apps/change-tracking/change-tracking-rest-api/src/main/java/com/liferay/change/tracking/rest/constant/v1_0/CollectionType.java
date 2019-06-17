@@ -41,6 +41,10 @@ public enum CollectionType {
 		return null;
 	}
 
+	public static CollectionType fromString(String value) {
+		return CollectionType.create(value);
+	}
+
 	@JsonValue
 	public String getValue() {
 		return _value;

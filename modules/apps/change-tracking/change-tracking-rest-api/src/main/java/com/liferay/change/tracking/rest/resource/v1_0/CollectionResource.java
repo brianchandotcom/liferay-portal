@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.rest.resource.v1_0;
 
+import com.liferay.change.tracking.rest.constant.v1_0.CollectionType;
 import com.liferay.change.tracking.rest.dto.v1_0.Collection;
 import com.liferay.change.tracking.rest.dto.v1_0.CollectionUpdate;
 import com.liferay.portal.kernel.model.Company;
@@ -38,9 +39,8 @@ import javax.ws.rs.core.Response;
 public interface CollectionResource {
 
 	public Page<Collection> getCollectionsPage(
-			Long companyId,
-			com.liferay.change.tracking.rest.constant.v1_0.CollectionType type,
-			Long userId, Pagination pagination, Sort[] sorts)
+			Long companyId, CollectionType type, Long userId,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public Collection postCollection(

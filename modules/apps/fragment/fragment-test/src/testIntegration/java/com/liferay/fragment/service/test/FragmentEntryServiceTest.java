@@ -360,8 +360,6 @@ public class FragmentEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), _groupUser.getUserId());
 
-		_setRolePermissions(FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
-
 		ServiceTestUtil.setUser(_groupUser);
 
 		String html = "<div>Valid HTML</div>";

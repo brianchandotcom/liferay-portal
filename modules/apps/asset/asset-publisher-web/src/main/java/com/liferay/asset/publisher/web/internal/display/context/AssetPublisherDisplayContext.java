@@ -306,7 +306,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public String getAssetEntryId() {
-		return ParamUtil.get(_httpServletRequest, "assetEntryId", "");
+		return ParamUtil.getString(_httpServletRequest, "assetEntryId");
 	}
 
 	public List<InfoListProvider> getAssetEntryInfoListProviders() {

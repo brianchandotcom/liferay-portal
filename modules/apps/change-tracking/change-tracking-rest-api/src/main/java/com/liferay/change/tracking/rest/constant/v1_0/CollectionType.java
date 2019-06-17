@@ -31,7 +31,7 @@ public enum CollectionType {
 	ACTIVE("active"), ALL("all"), PRODUCTION("production"), RECENT("recent");
 
 	@JsonCreator
-	public static CollectionType create(String value) {
+	public static CollectionType fromString(String value) {
 		for (CollectionType collectionType : values()) {
 			if (Objects.equals(collectionType.getValue(), value)) {
 				return collectionType;

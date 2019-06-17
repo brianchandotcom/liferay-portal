@@ -376,6 +376,12 @@ public class JSPIndentationCheck extends BaseFileCheck {
 
 				String trimmedLine = StringUtil.trimLeading(line);
 
+				if (trimmedLine.matches(
+						"(<%@ )?(page import|tag import|taglib uri)=.*")) {
+
+					continue;
+				}
+
 				if (javaSource) {
 					if (trimmedLine.matches("%>[\"']?")) {
 						javaSource = false;

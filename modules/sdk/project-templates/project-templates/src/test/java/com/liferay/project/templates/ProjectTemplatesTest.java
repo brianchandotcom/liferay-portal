@@ -5176,20 +5176,18 @@ public class ProjectTemplatesTest {
 			destinationDir, WorkspaceUtil.WORKSPACE, "test-workspace");
 	}
 
-	private void _enableTargetPlatformInWorkspace(File workspaceDir) throws IOException {
+	private void _enableTargetPlatformInWorkspace(File workspaceDir)
+		throws IOException {
 
-			File gradlePropFile = new File(workspaceDir, "gradle.properties");
+		File gradlePropFile = new File(workspaceDir, "gradle.properties");
 
-			Path gradlePropPath = gradlePropFile.toPath();
+		Path gradlePropPath = gradlePropFile.toPath();
 
-			String content = FileUtil.read(gradlePropPath);
+		String content = FileUtil.read(gradlePropPath);
 
-			content +=
-				"\nliferay.workspace.target.platform.version=7.2.0";
+		content += "\nliferay.workspace.target.platform.version=7.2.0";
 
-			Files.write(
-				gradlePropPath, content.getBytes(StandardCharsets.UTF_8));
-
+		Files.write(gradlePropPath, content.getBytes(StandardCharsets.UTF_8));
 	}
 
 	private void _testBuildTemplateNpm70(
@@ -5964,7 +5962,7 @@ public class ProjectTemplatesTest {
 		if (!template.equals("war-hook")) {
 			_testContains(
 				workspaceProjectDir, "build.gradle", "buildscript {",
-				 "cssBuilder group", "portalCommonCSS group");
+				"cssBuilder group", "portalCommonCSS group");
 		}
 
 		_testNotContains(

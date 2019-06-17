@@ -226,7 +226,7 @@ public class MVCPortlet extends LiferayPortlet {
 			getPortletName(), portletId, MVCResourceCommand.class,
 			"ResourceCommand");
 
-		_initValidPaths(templatePath, ".jsp");
+		_initValidPaths(templatePath);
 	}
 
 	/**
@@ -653,7 +653,7 @@ public class MVCPortlet extends LiferayPortlet {
 		return null;
 	}
 
-	private void _initValidPaths(String rootPath, String extension) {
+	private void _initValidPaths(String rootPath) {
 		if (rootPath.equals(StringPool.SLASH)) {
 			PortletContext portletContext = getPortletContext();
 
@@ -673,14 +673,14 @@ public class MVCPortlet extends LiferayPortlet {
 			}
 		}
 
-		_validPaths = getPaths(rootPath, extension);
+		_validPaths = getPaths(rootPath, ".jsp");
 
 		if (!rootPath.equals(StringPool.SLASH) &&
 			!rootPath.equals("/META-INF/") &&
 			!rootPath.equals("/META-INF/resources/")) {
 
 			_validPaths.addAll(
-				getPaths(_PATH_META_INF_RESOURCES.concat(rootPath), extension));
+				getPaths(_PATH_META_INF_RESOURCES.concat(rootPath), ".jsp"));
 		}
 
 		Collections.addAll(

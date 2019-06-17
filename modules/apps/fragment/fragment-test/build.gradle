@@ -1,6 +1,4 @@
 dependencies {
-	compileOnly group: "org.jsoup", name: "jsoup", version: "1.10.2"
-
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"

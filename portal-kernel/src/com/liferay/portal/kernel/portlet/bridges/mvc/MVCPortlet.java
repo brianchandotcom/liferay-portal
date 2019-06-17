@@ -628,7 +628,9 @@ public class MVCPortlet extends LiferayPortlet {
 	protected String viewTemplate;
 
 	private void _checkPath(String path) throws PortletException {
-		if (Validator.isNotNull(path) && !_isValidPath(path)) {
+		if (Validator.isNotNull(path) && !_validPaths.contains(path) &&
+			!_validPaths.contains(_PATH_META_INF_RESOURCES.concat(path))) {
+
 			throw new PortletException(
 				"Path " + path + " is not accessible by this portlet");
 		}
@@ -687,16 +689,6 @@ public class MVCPortlet extends LiferayPortlet {
 
 		Collections.addAll(
 			_validPaths, StringUtil.split(getInitParameter("valid-paths")));
-	}
-
-	private boolean _isValidPath(String path) {
-		if (_validPaths.contains(path) ||
-			_validPaths.contains(_PATH_META_INF_RESOURCES.concat(path))) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final String _PATH_META_INF_RESOURCES =

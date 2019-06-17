@@ -464,7 +464,7 @@ public class DefaultUserResolver implements UserResolver {
 				user.getUserId(), StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, false, user.getReminderQueryQuestion(),
 				user.getReminderQueryAnswer(), screenName, emailAddress,
-				user.getFacebookId(), user.getOpenId(), false, null,
+				user.getFacebookId(), user.getOpenId(), true, null,
 				user.getLanguageId(), user.getTimeZoneId(), user.getGreeting(),
 				user.getComments(), firstName, user.getMiddleName(), lastName,
 				contact.getPrefixId(), contact.getSuffixId(), user.getMale(),

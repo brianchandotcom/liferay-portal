@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/sort/facet/init.jsp" %>
+<%@ include file="/sort/init.jsp" %>
 
 <%
 SortDisplayContext sortDisplayContext = (SortDisplayContext)java.util.Objects.requireNonNull(request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT));

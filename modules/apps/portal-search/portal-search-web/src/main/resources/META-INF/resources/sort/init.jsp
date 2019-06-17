@@ -15,3 +15,9 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%@ page import="com.liferay.portal.search.web.internal.sort.display.context.SortDisplayContext" %><%@
+page import="com.liferay.portal.search.web.internal.sort.display.context.SortTermDisplayContext" %><%@
+page import="com.liferay.portal.search.web.internal.sort.portlet.SortPortletPreferences" %><%@
+page import="com.liferay.portal.search.web.internal.sort.portlet.SortPortletPreferencesImpl" %><%@
+page import="com.liferay.portal.search.web.internal.util.PortletPreferencesJspUtil" %>

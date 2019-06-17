@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/sort/facet/init.jsp" %>
+<%@ include file="/sort/init.jsp" %>
 
 <%
 SortPortletPreferences sortPortletPreferences = new SortPortletPreferencesImpl(java.util.Optional.ofNullable(portletPreferences));

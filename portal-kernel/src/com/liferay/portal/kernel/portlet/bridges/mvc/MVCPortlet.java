@@ -725,7 +725,7 @@ public class MVCPortlet extends LiferayPortlet {
 						"all portal paths"));
 
 				_validPaths = validPathsMap.computeIfAbsent(
-					rootPath, key -> new HashSet<>());
+					rootPath, key -> Collections.emptySet());
 
 				return;
 			}

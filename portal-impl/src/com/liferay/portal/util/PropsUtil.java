@@ -299,11 +299,7 @@ public class PropsUtil {
 	private static String _getDefaultLiferayHome() {
 		String defaultLiferayHome = null;
 
-		if (ServerDetector.isGlassfish()) {
-			defaultLiferayHome =
-				SystemProperties.get("com.sun.aas.installRoot") + "/..";
-		}
-		else if (ServerDetector.isJBoss()) {
+		if (ServerDetector.isJBoss()) {
 			defaultLiferayHome = SystemProperties.get("jboss.home.dir") + "/..";
 		}
 		else if (ServerDetector.isWebLogic()) {

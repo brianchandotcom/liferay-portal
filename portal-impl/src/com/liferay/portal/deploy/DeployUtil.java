@@ -177,8 +177,7 @@ public class DeployUtil {
 			return;
 		}
 
-		if (!appServerType.equals(ServerDetector.GLASSFISH_ID) &&
-			!appServerType.equals(ServerDetector.JBOSS_ID) &&
+		if (!appServerType.equals(ServerDetector.JBOSS_ID) &&
 			!appServerType.equals(ServerDetector.TOMCAT_ID) &&
 			!appServerType.equals(ServerDetector.WEBLOGIC_ID) &&
 			!appServerType.equals(ServerDetector.WILDFLY_ID)) {

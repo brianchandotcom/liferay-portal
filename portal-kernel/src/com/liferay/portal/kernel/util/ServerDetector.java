@@ -85,6 +85,10 @@ public class ServerDetector {
 		}
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static boolean isGlassfish() {
 		if (_serverType == ServerType.GLASSFISH) {
 			return true;
@@ -146,8 +150,7 @@ public class ServerDetector {
 	}
 
 	public static boolean isSupported(String serverType) {
-		if (serverType.equals(ServerDetector.GLASSFISH_ID) ||
-			serverType.equals(ServerDetector.JBOSS_ID) ||
+		if (serverType.equals(ServerDetector.JBOSS_ID) ||
 			serverType.equals(ServerDetector.RESIN_ID) ||
 			serverType.equals(ServerDetector.TOMCAT_ID) ||
 			serverType.equals(ServerDetector.WEBLOGIC_ID) ||

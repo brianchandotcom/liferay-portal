@@ -260,9 +260,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 				appServerType + " is not a valid application server type");
 		}
 
-		if (appServerType.equals(ServerDetector.GLASSFISH_ID) ||
-			appServerType.equals(ServerDetector.WEBSPHERE_ID)) {
-
+		if (appServerType.equals(ServerDetector.WEBSPHERE_ID)) {
 			unpackWar = false;
 		}
 
@@ -947,8 +945,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		else if (appServerType.equals(ServerDetector.WILDFLY_ID)) {
 			deployDir = GetterUtil.getString(wildflyPrefix) + deployDir;
 		}
-		else if (appServerType.equals(ServerDetector.GLASSFISH_ID) ||
-				 appServerType.equals(ServerDetector.RESIN_ID) ||
+		else if (appServerType.equals(ServerDetector.RESIN_ID) ||
 				 appServerType.equals(ServerDetector.TOMCAT_ID) ||
 				 appServerType.equals(ServerDetector.WEBLOGIC_ID)) {
 
@@ -1616,10 +1613,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 	}
 
 	public void postDeploy(String destDir, String deployDir) throws Exception {
-		if (appServerType.equals(ServerDetector.GLASSFISH_ID)) {
-			postDeployGlassfish(destDir, deployDir);
-		}
-		else if (appServerType.equals(ServerDetector.JBOSS_ID)) {
+		if (appServerType.equals(ServerDetector.JBOSS_ID)) {
 			postDeployJBoss(destDir, deployDir);
 		}
 		else if (appServerType.equals(ServerDetector.WILDFLY_ID)) {
@@ -1633,12 +1627,6 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 				deploymentExtension.postDeploy(destDir, deployDir);
 			}
 		}
-	}
-
-	public void postDeployGlassfish(String destDir, String deployDir)
-		throws Exception {
-
-		FileUtil.delete(destDir + "/.autodeploystatus/" + deployDir);
 	}
 
 	public void postDeployJBoss(String destDir, String deployDir)

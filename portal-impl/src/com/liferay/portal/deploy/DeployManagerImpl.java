@@ -51,13 +51,6 @@ public class DeployManagerImpl implements DeployManager {
 
 	@Override
 	public String getInstalledDir() throws Exception {
-		if (ServerDetector.isGlassfish()) {
-			File file = new File(
-				System.getProperty("com.sun.aas.instanceRoot"), "autodeploy");
-
-			return file.getAbsolutePath();
-		}
-
 		return DeployUtil.getAutoDeployDestDir();
 	}
 

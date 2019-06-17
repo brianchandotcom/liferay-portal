@@ -68,12 +68,15 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 
 		if (isPortalSource() || isSubrepository()) {
 			content = _removeUnusedPortletDefineObjects(fileName, content);
-			content = _removeUnusedVariables(fileName, absolutePath, content);
+
+			content = _removeDuplicateDefineObjects(fileName, content);
 
 			content = _removeUnusedTaglibs(fileName, content);
 
 			content = JSPSourceUtil.compressImportsOrTaglibs(
 				fileName, content, "<%@ taglib uri=");
+
+			content = _removeUnusedVariables(fileName, absolutePath, content);
 		}
 
 		_contentsMap.put(fileName, content);
@@ -301,6 +304,49 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 			checkedFileNames, includeFileNames, _getContentsMap());
 	}
 
+	private boolean _isJSPDuplicateDefineObjects(
+			String fileName, String defineObjects, boolean checkFile)
+		throws IOException {
+
+		Map<String, String> contentsMap = _getContentsMap();
+
+		String content = contentsMap.get(fileName);
+
+		if (Validator.isNull(content)) {
+			return false;
+		}
+
+		if (checkFile && content.contains(defineObjects)) {
+			return true;
+		}
+
+		int x = content.indexOf("<%@ include file=");
+
+		if (x == -1) {
+			return false;
+		}
+
+		x = content.indexOf(CharPool.QUOTE, x);
+
+		if (x == -1) {
+			return false;
+		}
+
+		int y = content.indexOf(CharPool.QUOTE, x + 1);
+
+		if (y == -1) {
+			return false;
+		}
+
+		String includeFileName = content.substring(x + 1, y);
+
+		includeFileName = JSPSourceUtil.buildFullPathIncludeFileName(
+			fileName, includeFileName, _getContentsMap());
+
+		return _isJSPDuplicateDefineObjects(
+			includeFileName, defineObjects, true);
+	}
+
 	private boolean _isJSPDuplicateImport(
 			String fileName, String importLine, boolean checkFile)
 		throws IOException {
@@ -467,6 +513,25 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		}
 
 		return false;
+	}
+
+	private String _removeDuplicateDefineObjects(
+			String fileName, String content)
+		throws IOException {
+
+		Matcher matcher = _defineObjectsPattern.matcher(content);
+
+		while (matcher.find()) {
+			if (_isJSPDuplicateDefineObjects(
+					fileName, matcher.group(), false)) {
+
+				return StringUtil.replaceFirst(
+					content, matcher.group(), StringPool.BLANK,
+					matcher.start());
+			}
+		}
+
+		return content;
 	}
 
 	private String _removeUnusedImports(String fileName, String content)
@@ -657,6 +722,8 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		"(<.*\n*(?:page|tag) import=\".*>\n*)+", Pattern.MULTILINE);
 	private static final Pattern _compressedJSPTaglibPattern = Pattern.compile(
 		"(<.*\n*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
+	private static final Pattern _defineObjectsPattern = Pattern.compile(
+		"<[\\w-]+:defineObjects />");
 
 	private List<String> _allFileNames;
 	private Map<String, String> _contentsMap;

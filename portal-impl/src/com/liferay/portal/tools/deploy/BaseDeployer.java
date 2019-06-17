@@ -845,10 +845,6 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 					System.currentTimeMillis() + (Time.SECOND * 6));
 			}
 		}
-
-		if (appServerType.equals(ServerDetector.JETTY_ID)) {
-			DeployUtil.redeployJetty(displayName);
-		}
 	}
 
 	public void deployDirectory(
@@ -952,7 +948,6 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			deployDir = GetterUtil.getString(wildflyPrefix) + deployDir;
 		}
 		else if (appServerType.equals(ServerDetector.GLASSFISH_ID) ||
-				 appServerType.equals(ServerDetector.JETTY_ID) ||
 				 appServerType.equals(ServerDetector.JONAS_ID) ||
 				 appServerType.equals(ServerDetector.OC4J_ID) ||
 				 appServerType.equals(ServerDetector.RESIN_ID) ||

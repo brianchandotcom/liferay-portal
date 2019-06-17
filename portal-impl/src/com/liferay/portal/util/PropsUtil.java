@@ -313,9 +313,6 @@ public class PropsUtil {
 			defaultLiferayHome =
 				SystemProperties.get("env.DOMAIN_HOME") + "/..";
 		}
-		else if (ServerDetector.isJetty()) {
-			defaultLiferayHome = SystemProperties.get("jetty.home") + "/..";
-		}
 		else if (ServerDetector.isResin()) {
 			defaultLiferayHome = SystemProperties.get("resin.home") + "/..";
 		}

@@ -448,13 +448,6 @@
 	<bean class="com.liferay.portal.language.LanguageResources" id="com.liferay.portal.language.LanguageResources">
 		<property name="config" value="content.Language,content.Language-ext" />
 	</bean>
-	<bean class="com.liferay.portal.layoutconfiguration.util.JettyThreadLocalBinder" id="com.liferay.portal.layoutconfiguration.util.JettyThreadLocalBinder">
-		<property name="threadLocalSources">
-			<map>
-				<entry key="org.eclipse.jetty.server.AbstractHttpConnection" value="__currentConnection" />
-			</map>
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.model.adapter.builder.ServiceTrackerMapModelAdapterBuilderLocator" id="com.liferay.portal.model.adapter.builder.ServiceTrackerMapModelAdapterBuilderLocator" />
 	<bean class="com.liferay.portal.resiliency.mpi.portlet.PortalResiliencyPortletContainerWrapper" factory-method="createPortalResiliencyPortletContainerWrapper" id="com.liferay.portal.resiliency.mpi.portlet.PortalResiliencyPortletContainerWrapper">
 		<constructor-arg name="portletContainer" ref="com.liferay.portlet.internal.PortletContainerImpl" />

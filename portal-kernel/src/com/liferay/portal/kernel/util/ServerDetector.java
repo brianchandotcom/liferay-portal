@@ -101,6 +101,10 @@ public class ServerDetector {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static boolean isJetty() {
 		if (_serverType == ServerType.JETTY) {
 			return true;
@@ -137,7 +141,6 @@ public class ServerDetector {
 		if (serverType.equals(ServerDetector.GLASSFISH_ID) ||
 			serverType.equals(ServerDetector.JBOSS_ID) ||
 			serverType.equals(ServerDetector.JONAS_ID) ||
-			serverType.equals(ServerDetector.JETTY_ID) ||
 			serverType.equals(ServerDetector.OC4J_ID) ||
 			serverType.equals(ServerDetector.RESIN_ID) ||
 			serverType.equals(ServerDetector.TOMCAT_ID) ||

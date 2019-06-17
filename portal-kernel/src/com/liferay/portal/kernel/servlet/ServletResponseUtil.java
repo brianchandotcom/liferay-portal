@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.RandomAccessInputStream;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -254,14 +253,10 @@ public class ServletResponseUtil {
 						ByteBuffer.wrap(bytes, offset, contentLength));
 				}
 				else {
-					if ((contentLength == 0) && ServerDetector.isJetty()) {
-					}
-					else {
-						ServletOutputStream servletOutputStream =
-							httpServletResponse.getOutputStream();
+					ServletOutputStream servletOutputStream =
+						httpServletResponse.getOutputStream();
 
-						servletOutputStream.write(bytes, offset, contentLength);
-					}
+					servletOutputStream.write(bytes, offset, contentLength);
 				}
 			}
 		}

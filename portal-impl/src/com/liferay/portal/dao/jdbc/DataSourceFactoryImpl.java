@@ -572,7 +572,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			Class.forName(driverClassName);
 		}
 		catch (ClassNotFoundException cnfe) {
-			if (!ServerDetector.isJetty() && !ServerDetector.isTomcat()) {
+			if (!ServerDetector.isTomcat()) {
 				throw cnfe;
 			}
 
@@ -608,7 +608,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			Class.forName(className);
 		}
 		catch (ClassNotFoundException cnfe) {
-			if (!ServerDetector.isJetty() && !ServerDetector.isTomcat()) {
+			if (!ServerDetector.isTomcat()) {
 				throw cnfe;
 			}
 

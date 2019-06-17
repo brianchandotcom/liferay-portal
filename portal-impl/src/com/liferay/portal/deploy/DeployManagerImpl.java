@@ -106,10 +106,7 @@ public class DeployManagerImpl implements DeployManager {
 
 	@Override
 	public void redeploy(String context) throws Exception {
-		if (ServerDetector.isJetty()) {
-			DeployUtil.redeployJetty(context);
-		}
-		else if (ServerDetector.isTomcat()) {
+		if (ServerDetector.isTomcat()) {
 			DeployUtil.redeployTomcat(context);
 		}
 	}

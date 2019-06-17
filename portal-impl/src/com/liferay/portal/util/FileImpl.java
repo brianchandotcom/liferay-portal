@@ -1186,9 +1186,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			try {
 				InputStream is = new UnsyncByteArrayInputStream(_data);
 
-				TikaInputStream tikaInputStream = TikaInputStream.get(is);
-
-				return _parseToString(tika, tikaInputStream);
+				return _parseToString(tika, TikaInputStream.get(is));
 			}
 			catch (Exception e) {
 				throw new ProcessException(e);

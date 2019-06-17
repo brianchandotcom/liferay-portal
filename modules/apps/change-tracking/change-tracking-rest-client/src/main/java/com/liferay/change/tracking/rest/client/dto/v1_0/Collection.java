@@ -92,6 +92,27 @@ public class Collection {
 
 	protected Long companyId;
 
+	public Date getDateStatus() {
+		return dateStatus;
+	}
+
+	public void setDateStatus(Date dateStatus) {
+		this.dateStatus = dateStatus;
+	}
+
+	public void setDateStatus(
+		UnsafeSupplier<Date, Exception> dateStatusUnsafeSupplier) {
+
+		try {
+			dateStatus = dateStatusUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date dateStatus;
+
 	public Long getDeletionCount() {
 		return deletionCount;
 	}
@@ -194,27 +215,6 @@ public class Collection {
 	}
 
 	protected String statusByUserName;
-
-	public Date getStatusDate() {
-		return statusDate;
-	}
-
-	public void setStatusDate(Date statusDate) {
-		this.statusDate = statusDate;
-	}
-
-	public void setStatusDate(
-		UnsafeSupplier<Date, Exception> statusDateUnsafeSupplier) {
-
-		try {
-			statusDate = statusDateUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Date statusDate;
 
 	@Override
 	public boolean equals(Object object) {

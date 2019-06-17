@@ -134,6 +134,34 @@ public class Collection {
 	protected Long companyId;
 
 	@Schema
+	public Date getDateStatus() {
+		return dateStatus;
+	}
+
+	public void setDateStatus(Date dateStatus) {
+		this.dateStatus = dateStatus;
+	}
+
+	@JsonIgnore
+	public void setDateStatus(
+		UnsafeSupplier<Date, Exception> dateStatusUnsafeSupplier) {
+
+		try {
+			dateStatus = dateStatusUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Date dateStatus;
+
+	@Schema
 	public Long getDeletionCount() {
 		return deletionCount;
 	}
@@ -271,34 +299,6 @@ public class Collection {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String statusByUserName;
 
-	@Schema
-	public Date getStatusDate() {
-		return statusDate;
-	}
-
-	public void setStatusDate(Date statusDate) {
-		this.statusDate = statusDate;
-	}
-
-	@JsonIgnore
-	public void setStatusDate(
-		UnsafeSupplier<Date, Exception> statusDateUnsafeSupplier) {
-
-		try {
-			statusDate = statusDateUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Date statusDate;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -359,6 +359,20 @@ public class Collection {
 			sb.append(companyId);
 		}
 
+		if (dateStatus != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateStatus\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(dateStatus));
+
+			sb.append("\"");
+		}
+
 		if (deletionCount != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -417,20 +431,6 @@ public class Collection {
 			sb.append("\"");
 
 			sb.append(_escape(statusByUserName));
-
-			sb.append("\"");
-		}
-
-		if (statusDate != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"statusDate\": ");
-
-			sb.append("\"");
-
-			sb.append(liferayToJSONDateFormat.format(statusDate));
 
 			sb.append("\"");
 		}

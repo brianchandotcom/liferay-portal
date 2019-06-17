@@ -1,20 +1,17 @@
-Liferay.Loader.define("samples@1.0.0/math/math", ["exports"], function(exports) {
-    "use strict";
+Liferay.Loader.define("samples@1.0.0/math/math", ['exports'], function(exports) {
+	'use strict';
 
-    Object.defineProperty(
-        exports,
-        "__esModule",
-        {
-            value: true
-        });
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
 
-    exports.sum = sum;
+	exports.sum = sum;
 
-    function sum(x, y) {
-        return x + y;
-    }
+	function sum(x, y) {
+		return x + y;
+	}
 
-    var pi = 3.141593;
+	var pi = 3.141593;
 
-    exports.pi = pi;
+	exports.pi = pi;
 });

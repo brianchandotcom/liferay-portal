@@ -449,6 +449,14 @@ public abstract class BaseCollectionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("dateStatus", additionalAssertFieldName)) {
+				if (collection.getDateStatus() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("deletionCount", additionalAssertFieldName)) {
 				if (collection.getDeletionCount() == null) {
 					valid = false;
@@ -485,14 +493,6 @@ public abstract class BaseCollectionResourceTestCase {
 
 			if (Objects.equals("statusByUserName", additionalAssertFieldName)) {
 				if (collection.getStatusByUserName() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("statusDate", additionalAssertFieldName)) {
-				if (collection.getStatusDate() == null) {
 					valid = false;
 				}
 
@@ -573,6 +573,17 @@ public abstract class BaseCollectionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("dateStatus", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						collection1.getDateStatus(),
+						collection2.getDateStatus())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("deletionCount", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						collection1.getDeletionCount(),
@@ -622,17 +633,6 @@ public abstract class BaseCollectionResourceTestCase {
 				if (!Objects.deepEquals(
 						collection1.getStatusByUserName(),
 						collection2.getStatusByUserName())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("statusDate", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						collection1.getStatusDate(),
-						collection2.getStatusDate())) {
 
 					return false;
 				}
@@ -713,6 +713,37 @@ public abstract class BaseCollectionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("dateStatus")) {
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(collection.getDateStatus(), -2)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(collection.getDateStatus(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(collection.getDateStatus()));
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("deletionCount")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -747,37 +778,6 @@ public abstract class BaseCollectionResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("statusDate")) {
-			if (operator.equals("between")) {
-				sb = new StringBundler();
-
-				sb.append("(");
-				sb.append(entityFieldName);
-				sb.append(" gt ");
-				sb.append(
-					_dateFormat.format(
-						DateUtils.addSeconds(collection.getStatusDate(), -2)));
-				sb.append(" and ");
-				sb.append(entityFieldName);
-				sb.append(" lt ");
-				sb.append(
-					_dateFormat.format(
-						DateUtils.addSeconds(collection.getStatusDate(), 2)));
-				sb.append(")");
-			}
-			else {
-				sb.append(entityFieldName);
-
-				sb.append(" ");
-				sb.append(operator);
-				sb.append(" ");
-
-				sb.append(_dateFormat.format(collection.getStatusDate()));
-			}
-
-			return sb.toString();
-		}
-
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -788,12 +788,12 @@ public abstract class BaseCollectionResourceTestCase {
 				additionCount = RandomTestUtil.randomLong();
 				collectionId = RandomTestUtil.randomLong();
 				companyId = RandomTestUtil.randomLong();
+				dateStatus = RandomTestUtil.nextDate();
 				deletionCount = RandomTestUtil.randomLong();
 				description = RandomTestUtil.randomString();
 				modificationCount = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
 				statusByUserName = RandomTestUtil.randomString();
-				statusDate = RandomTestUtil.nextDate();
 			}
 		};
 	}

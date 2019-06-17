@@ -122,7 +122,9 @@ public class ListUtilCheck extends BaseCheck {
 		if (absolutePath.contains("/modules/")) {
 			String buildGradleContent = _getBuildGradleContent(absolutePath);
 
-			if (!buildGradleContent.contains("com.liferay.portal.kernel")) {
+			if ((buildGradleContent == null) ||
+				!buildGradleContent.contains("com.liferay.portal.kernel")) {
+
 				return;
 			}
 		}

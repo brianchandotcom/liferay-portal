@@ -30,6 +30,7 @@ import com.liferay.change.tracking.rest.internal.jaxrs.exception.CollectionNameT
 import com.liferay.change.tracking.rest.internal.jaxrs.exception.CollectionNameTooShortException;
 import com.liferay.change.tracking.rest.internal.jaxrs.exception.CreateCollectionException;
 import com.liferay.change.tracking.rest.internal.jaxrs.exception.DeleteCollectionException;
+import com.liferay.change.tracking.rest.internal.odata.entity.v1_0.CollectionEntityModel;
 import com.liferay.change.tracking.rest.resource.v1_0.CollectionResource;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -37,24 +38,21 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Stream;
 
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -68,7 +66,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/collection.properties",
 	scope = ServiceScope.PROTOTYPE, service = CollectionResource.class
 )
-public class CollectionResourceImpl extends BaseCollectionResourceImpl {
+public class CollectionResourceImpl
+	extends BaseCollectionResourceImpl implements EntityModelResource {
 
 	@Override
 	public Response deleteCollection(Long collectionId) throws Exception {
@@ -141,15 +140,17 @@ public class CollectionResourceImpl extends BaseCollectionResourceImpl {
 
 			ctCollections = _ctManager.getCTCollections(
 				companyId, userId, false, true,
-				_getQueryDefinition(pagination, sorts));
+				SearchUtil.getQueryDefinition(
+					CTCollection.class, pagination, sorts));
 		}
 		else if (CollectionType.RECENT == collectionType) {
 			_companyLocalService.getCompany(companyId);
 
 			_userLocalService.getUser(userId);
 
-			QueryDefinition<CTCollection> queryDefinition = _getQueryDefinition(
-				pagination, sorts);
+			QueryDefinition<CTCollection> queryDefinition =
+				SearchUtil.getQueryDefinition(
+					CTCollection.class, pagination, sorts);
 
 			queryDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
 
@@ -168,6 +169,11 @@ public class CollectionResourceImpl extends BaseCollectionResourceImpl {
 			ctCollections, this::_toCollection);
 
 		return Page.of(collections, pagination, collections.size());
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return new CollectionEntityModel();
 	}
 
 	@Override
@@ -245,46 +251,6 @@ public class CollectionResourceImpl extends BaseCollectionResourceImpl {
 		return responseBuilder.build();
 	}
 
-	private QueryDefinition<CTCollection> _getQueryDefinition(
-		Pagination pagination, Sort[] sorts) {
-
-		QueryDefinition<CTCollection> queryDefinition = new QueryDefinition<>();
-
-		queryDefinition.setEnd(pagination.getEndPosition());
-		queryDefinition.setStart(pagination.getStartPosition());
-
-		Object[] sortColumns = _getSortColumns(sorts);
-
-		if (sortColumns != null) {
-			OrderByComparator<CTCollection> orderByComparator =
-				OrderByComparatorFactoryUtil.create(
-					"CTCollection", sortColumns);
-
-			queryDefinition.setOrderByComparator(orderByComparator);
-		}
-
-		return queryDefinition;
-	}
-
-	private Object[] _getSortColumns(Sort[] sorts) {
-		if (ArrayUtil.isEmpty(sorts)) {
-			return null;
-		}
-
-		return Stream.of(
-			sorts
-		).flatMap(
-			sort -> {
-				if (!_orderByColumnNames.contains(sort.getFieldName())) {
-					throw new IllegalArgumentException(
-						"Invalid sort column name");
-				}
-
-				return Stream.of(sort.getFieldName(), !sort.isReverse());
-			}
-		).toArray();
-	}
-
 	private Collection _toCollection(CTCollection ctCollection) {
 		Map<Integer, Long> ctEntriesChangeTypes =
 			_ctEngineManager.getCTCollectionChangeTypeCounts(
@@ -307,9 +273,6 @@ public class CollectionResourceImpl extends BaseCollectionResourceImpl {
 			}
 		};
 	}
-
-	private static final Set<String> _orderByColumnNames = new HashSet<>(
-		Arrays.asList("createDate", "modifiedDate", "name", "statusDate"));
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

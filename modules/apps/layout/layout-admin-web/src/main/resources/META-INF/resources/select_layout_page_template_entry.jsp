@@ -187,7 +187,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 					},
 					id: '<portlet:namespace />addLayoutDialog',
 					title: '<liferay-ui:message key="add-page" />',
-					uri: actionElement.getAttribute('data-add-layout-url')
+					uri: actionElement.dataset.addLayoutUrl
 				}
 			);
 		}

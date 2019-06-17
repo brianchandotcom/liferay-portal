@@ -62,7 +62,7 @@
 .celleditor-view-menu-remove {
 	position: absolute;
 	right: -8px;
-	top: -3px;
+	top: -8px;
 
 	.lexicon-icon-times {
 		width: 10px;
@@ -375,6 +375,12 @@
 	textarea {
 		width: 100%;
 	}
+}
+
+.timer-actions-editor-container .editor-container {
+	border: 1px solid #EFEFEF;
+	margin-bottom: 8px;
+    padding: 8px;
 }
 
 .workflow-definition-container,

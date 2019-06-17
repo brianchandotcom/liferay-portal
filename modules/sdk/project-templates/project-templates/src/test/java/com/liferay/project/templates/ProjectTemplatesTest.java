@@ -1199,6 +1199,8 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateModuleExtInWorkspace() throws Exception {
 		File workspaceDir = _buildWorkspace();
 
+		_enableTargetPlatformInWorkspace(workspaceDir);
+
 		File workspaceProjectDir = _buildTemplateWithGradle(
 			new File(workspaceDir, "ext"), "modules-ext", "loginExt",
 			"--original-module-name", "com.liferay.login.web",
@@ -2712,6 +2714,8 @@ public class ProjectTemplatesTest {
 
 		File workspaceDir = _buildWorkspace();
 
+		_enableTargetPlatformInWorkspace(workspaceDir);
+
 		File modulesDir = new File(workspaceDir, "modules");
 
 		File workspaceProjectDir = _buildTemplateWithGradle(
@@ -2836,6 +2840,8 @@ public class ProjectTemplatesTest {
 			"repositories {");
 
 		File workspaceDir = _buildWorkspace();
+
+		_enableTargetPlatformInWorkspace(workspaceDir);
 
 		File modulesDir = new File(workspaceDir, "modules");
 
@@ -5216,6 +5222,22 @@ public class ProjectTemplatesTest {
 			destinationDir, WorkspaceUtil.WORKSPACE, "test-workspace");
 	}
 
+	private void _enableTargetPlatformInWorkspace(File workspaceDir) throws IOException {
+
+			File gradlePropFile = new File(workspaceDir, "gradle.properties");
+
+			Path gradlePropPath = gradlePropFile.toPath();
+
+			String content = FileUtil.read(gradlePropPath);
+
+			content +=
+				"\nliferay.workspace.target.platform.version=7.2.0";
+
+			Files.write(
+				gradlePropPath, content.getBytes(StandardCharsets.UTF_8));
+
+	}
+
 	private void _testBuildTemplateNpm70(
 			String template, String name, String packageName, String className)
 		throws Exception {
@@ -5978,6 +6000,8 @@ public class ProjectTemplatesTest {
 
 		File workspaceDir = _buildWorkspace();
 
+		_enableTargetPlatformInWorkspace(workspaceDir);
+
 		File warsDir = new File(workspaceDir, "wars");
 
 		File workspaceProjectDir = _buildTemplateWithGradle(
@@ -6121,6 +6145,8 @@ public class ProjectTemplatesTest {
 			".*^repositories \\{.*");
 
 		File workspaceDir = _buildWorkspace();
+
+		_enableTargetPlatformInWorkspace(workspaceDir);
 
 		File modulesDir = new File(workspaceDir, "modules");
 

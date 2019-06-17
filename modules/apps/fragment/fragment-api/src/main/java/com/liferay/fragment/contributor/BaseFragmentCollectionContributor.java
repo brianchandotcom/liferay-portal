@@ -23,7 +23,6 @@ import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -188,9 +187,7 @@ public abstract class BaseFragmentCollectionContributor
 		return servletContext.getContextPath() + "/thumbnails/" + fileName;
 	}
 
-	private void _updateFragmentEntryLinks(FragmentEntry fragmentEntry)
-		throws PortalException {
-
+	private void _updateFragmentEntryLinks(FragmentEntry fragmentEntry) {
 		List<FragmentEntryLink> fragmentEntryLinks =
 			fragmentEntryLinkLocalService.getFragmentEntryLinks(
 				fragmentEntry.getFragmentEntryKey());

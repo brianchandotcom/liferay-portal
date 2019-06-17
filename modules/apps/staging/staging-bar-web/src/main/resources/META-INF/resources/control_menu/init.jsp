@@ -14,10 +14,6 @@
  */
 --%>
 
-<%@ include file="/control_menu/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
-<li class="control-menu-nav-item staging-links">
-	<liferay-portlet:runtime
-		portletName="<%= StagingBarPortletKeys.STAGING_BAR %>"
-	/>
-</li>
+<%@ page import="com.liferay.staging.bar.web.internal.portlet.constants.StagingBarPortletKeys" %>

@@ -214,7 +214,7 @@ public class FragmentEntryServiceTest {
 
 		_fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString(), null, "test", null,
+			RandomTestUtil.randomString(), null, null, null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 

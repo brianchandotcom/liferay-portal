@@ -63,7 +63,6 @@
 /portal-impl/portal-impl*.jar
 /portal-impl/service.xml
 /portal-impl/ServiceBuilder.temp
-/portal-impl/src/META-INF/MANIFEST.MF.JOnAS
 /portal-impl/src/META-INF/portal-log4j-ext.xml
 /portal-impl/src/portal-ext.properties
 /portal-impl/src/system-ext.properties

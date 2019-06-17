@@ -687,7 +687,6 @@ public class UpgradeClient {
 		new LinkedHashMap<String, AppServer>() {
 			{
 				put("jboss", AppServer.getJBossEAPAppServer());
-				put("jonas", AppServer.getJOnASAppServer());
 				put("resin", AppServer.getResinAppServer());
 				put("tcserver", AppServer.getTCServerAppServer());
 				put("tomcat", AppServer.getTomcatAppServer());

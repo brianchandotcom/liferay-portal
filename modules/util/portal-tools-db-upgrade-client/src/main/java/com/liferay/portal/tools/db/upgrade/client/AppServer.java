@@ -32,12 +32,6 @@ public class AppServer {
 			"/standalone/deployments/ROOT.war", "jboss");
 	}
 
-	public static AppServer getJOnASAppServer() {
-		return new AppServer(
-			"../../jonas-5.2.3", "", "/lib/ext", "/deploy/liferay-portal",
-			"jonas");
-	}
-
 	public static AppServer getResinAppServer() {
 		return new AppServer(
 			"../../resin-4.0.44", "", "/ext-lib", "/webapps/ROOT", "resin");

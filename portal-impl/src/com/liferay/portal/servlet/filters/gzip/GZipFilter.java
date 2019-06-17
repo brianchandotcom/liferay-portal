@@ -38,15 +38,15 @@ public class GZipFilter extends BasePortalFilter {
 
 	public GZipFilter() {
 
-		// The compression filter will work on JBoss, JOnAS, OC4J,
-		// Tomcat, WebLogic, and WebSphere, but may break on other servers
+		// The compression filter will work on JBoss, OC4J, Tomcat, WebLogic,
+		// and WebSphere, but may break on other servers
 
 		boolean filterEnabled = false;
 
 		if (super.isFilterEnabled()) {
-			if (ServerDetector.isJBoss() || ServerDetector.isJOnAS() ||
-				ServerDetector.isOC4J() || ServerDetector.isTomcat() ||
-				ServerDetector.isWebLogic() || ServerDetector.isWebSphere()) {
+			if (ServerDetector.isJBoss() || ServerDetector.isOC4J() ||
+				ServerDetector.isTomcat() || ServerDetector.isWebLogic() ||
+				ServerDetector.isWebSphere()) {
 
 				filterEnabled = true;
 			}

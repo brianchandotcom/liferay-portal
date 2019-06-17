@@ -19,6 +19,10 @@ package com.liferay.asset.display.page.constants;
  */
 public class AssetDisplayPageWebKeys {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String CURRENT_I18N_LANGUAGE_ID =
 		"CURRENT_I18N_LANGUAGE_ID";
 

@@ -1218,9 +1218,10 @@ public class ProjectTemplatesTest {
 		if (_isBuildProjects()) {
 			_executeGradle(workspaceDir, ":ext:loginExt:build");
 
-		_testExists(
-			workspaceProjectDir,
-			"build/libs/com.liferay.login.web-1.0.0.ext.jar");
+			_testExists(
+				workspaceProjectDir,
+				"build/libs/com.liferay.login.web-4.0.8.ext.jar");
+		}
 	}
 
 	@Test

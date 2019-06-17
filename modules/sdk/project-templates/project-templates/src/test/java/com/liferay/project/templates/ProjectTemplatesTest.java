@@ -2227,17 +2227,18 @@ public class ProjectTemplatesTest {
 			"apply plugin: \"com.liferay.plugin\"",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0");
 
-		_writeServiceClass(gradleProjectDir);
-
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"service", "servicepreaction", "com.test", "-DclassName=FooAction",
 			"-Dpackage=servicepreaction",
 			"-DserviceClass=com.liferay.portal.kernel.events.LifecycleAction",
 			"-DliferayVersion=7.0");
 
-		_writeServiceClass(mavenProjectDir);
+		if (_isBuildProjects()) {
+			_writeServiceClass(gradleProjectDir);
+			_writeServiceClass(mavenProjectDir);
 
-		_buildProjects(gradleProjectDir, mavenProjectDir);
+			_buildProjects(gradleProjectDir, mavenProjectDir);
+		}
 	}
 
 	@Test
@@ -2252,17 +2253,18 @@ public class ProjectTemplatesTest {
 			"apply plugin: \"com.liferay.plugin\"",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
 
-		_writeServiceClass(gradleProjectDir);
-
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"service", "servicepreaction", "com.test", "-DclassName=FooAction",
 			"-Dpackage=servicepreaction",
 			"-DserviceClass=com.liferay.portal.kernel.events.LifecycleAction",
 			"-DliferayVersion=7.1");
 
-		_writeServiceClass(mavenProjectDir);
+		if (_isBuildProjects()) {
+			_writeServiceClass(gradleProjectDir);
+			_writeServiceClass(mavenProjectDir);
 
-		_buildProjects(gradleProjectDir, mavenProjectDir);
+			_buildProjects(gradleProjectDir, mavenProjectDir);
+		}
 	}
 
 	@Test
@@ -2277,17 +2279,18 @@ public class ProjectTemplatesTest {
 			"apply plugin: \"com.liferay.plugin\"",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0");
 
-		_writeServiceClass(gradleProjectDir);
-
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"service", "servicepreaction", "com.test", "-DclassName=FooAction",
 			"-Dpackage=servicepreaction",
 			"-DserviceClass=com.liferay.portal.kernel.events.LifecycleAction",
 			"-DliferayVersion=7.2");
 
-		_writeServiceClass(mavenProjectDir);
+		if (_isBuildProjects()) {
+			_writeServiceClass(gradleProjectDir);
+			_writeServiceClass(mavenProjectDir);
 
-		_buildProjects(gradleProjectDir, mavenProjectDir);
+			_buildProjects(gradleProjectDir, mavenProjectDir);
+		}
 	}
 
 	@Test
@@ -2703,16 +2706,6 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateServiceInWorkspace() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"service", "servicepreaction", "--class-name", "FooAction",
-			"--service", "com.liferay.portal.kernel.events.LifecycleAction");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", "buildscript {",
-			"repositories {");
-
-		_writeServiceClass(gradleProjectDir);
-
 		File workspaceDir = _buildWorkspace();
 
 		_enableTargetPlatformInWorkspace(workspaceDir);
@@ -2722,38 +2715,22 @@ public class ProjectTemplatesTest {
 		File workspaceProjectDir = _buildTemplateWithGradle(
 			modulesDir, "service", "servicepreaction", "--class-name",
 			"FooAction", "--service",
-			"com.liferay.portal.kernel.events.LifecycleAction");
+			"com.liferay.portal.kernel.events.LifecycleAction",
+			"--dependency-management-enabled");
 
 		_testNotContains(
 			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
-
-		_writeServiceClass(workspaceProjectDir);
+		_testNotContains(
+			workspaceProjectDir, "build.gradle", "version: \"[0-9].*");
 
 		if (_isBuildProjects()) {
-			_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
-
-			_testExists(
-				gradleProjectDir, "build/libs/servicepreaction-1.0.0.jar");
+			_writeServiceClass(workspaceProjectDir);
 
 			_executeGradle(workspaceDir, ":modules:servicepreaction:build");
 
 			_testExists(
 				workspaceProjectDir, "build/libs/servicepreaction-1.0.0.jar");
 		}
-	}
-
-	@Test
-	public void testBuildTemplateServiceWithBOM() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"service", "service-dependency-management", "--service",
-			"com.liferay.portal.kernel.events.LifecycleAction",
-			"--dependency-management-enabled");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
 	}
 
 	@Test
@@ -2832,14 +2809,6 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateServiceWrapperInWorkspace() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"service-wrapper", "serviceoverride", "--service",
-			"com.liferay.portal.kernel.service.UserLocalServiceWrapper");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", "buildscript {",
-			"repositories {");
-
 		File workspaceDir = _buildWorkspace();
 
 		_enableTargetPlatformInWorkspace(workspaceDir);
@@ -2848,36 +2817,20 @@ public class ProjectTemplatesTest {
 
 		File workspaceProjectDir = _buildTemplateWithGradle(
 			modulesDir, "service-wrapper", "serviceoverride", "--service",
-			"com.liferay.portal.kernel.service.UserLocalServiceWrapper");
+			"com.liferay.portal.kernel.service.UserLocalServiceWrapper",
+			"--dependency-management-enabled");
 
 		_testNotContains(
 			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
+		_testNotContains(
+			workspaceProjectDir, "build.gradle", "version: \"[0-9].*");
 
 		if (_isBuildProjects()) {
-			_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
-
-			_testExists(
-				gradleProjectDir, "build/libs/serviceoverride-1.0.0.jar");
-
 			_executeGradle(workspaceDir, ":modules:serviceoverride:build");
 
 			_testExists(
 				workspaceProjectDir, "build/libs/serviceoverride-1.0.0.jar");
 		}
-	}
-
-	@Test
-	public void testBuildTemplateServiceWrapperWithBOM() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"service-wrapper", "wrapper-dependency-management", "--service",
-			"com.liferay.portal.kernel.service.UserLocalServiceWrapper",
-			"--dependency-management-enabled");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
 	}
 
 	@Test
@@ -6139,12 +6092,6 @@ public class ProjectTemplatesTest {
 			String template, String name, String jarFilePath, String... args)
 		throws Exception {
 
-		File gradleProjectDir = _buildTemplateWithGradle(template, name, args);
-
-		_testContains(
-			gradleProjectDir, "build.gradle", true, ".*^buildscript \\{.*",
-			".*^repositories \\{.*");
-
 		File workspaceDir = _buildWorkspace();
 
 		_enableTargetPlatformInWorkspace(workspaceDir);
@@ -6156,12 +6103,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
+		_testNotContains(
+			workspaceProjectDir, "build.gradle", "version: \"[0-9].*");
 
 		if (_isBuildProjects()) {
-			_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
-
-			_testExists(gradleProjectDir, jarFilePath);
-
 			_executeGradle(workspaceDir, ":modules:" + name + ":build");
 
 			_testExists(workspaceProjectDir, jarFilePath);

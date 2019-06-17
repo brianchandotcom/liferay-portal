@@ -59,14 +59,9 @@ else {
 
 com.liferay.portal.kernel.lock.Lock lock = fileEntry.getLock();
 
-long assetClassPK = 0;
+DLAssetHelper dlAssetHelper = DLAssetHelperUtil.getDLAssetHelper();
 
-if (!fileVersion.isApproved() && !fileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT) && !fileEntry.isInTrash()) {
-	assetClassPK = fileVersion.getFileVersionId();
-}
-else {
-	assetClassPK = fileEntry.getFileEntryId();
-}
+long assetClassPK = dlAssetHelper.getAssetClassPK(fileEntry, fileVersion);
 
 AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryConstants.getClassName(), assetClassPK);
 

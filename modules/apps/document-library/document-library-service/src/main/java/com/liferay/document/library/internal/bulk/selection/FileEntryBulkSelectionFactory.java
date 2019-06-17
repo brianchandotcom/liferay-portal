@@ -20,6 +20,7 @@ import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.bulk.selection.EmptyBulkSelection;
 import com.liferay.document.library.internal.bulk.selection.util.BulkSelectionFactoryUtil;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.util.DLAssetHelper;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -49,7 +50,7 @@ public class FileEntryBulkSelectionFactory
 
 			return new FolderFileEntryBulkSelection(
 				repositoryId, folderId, parameterMap, _repositoryProvider,
-				_dlAppService, _assetEntryLocalService);
+				_dlAppService, _assetEntryLocalService, _dlAssetHelper);
 		}
 
 		if (!parameterMap.containsKey("rowIdsFileEntry")) {
@@ -73,11 +74,12 @@ public class FileEntryBulkSelectionFactory
 		if (fileEntryIds.length == 1) {
 			return new SingleFileEntryBulkSelection(
 				fileEntryIds[0], parameterMap, _dlAppService,
-				_assetEntryLocalService);
+				_assetEntryLocalService, _dlAssetHelper);
 		}
 
 		return new MultipleFileEntryBulkSelection(
-			fileEntryIds, parameterMap, _dlAppService, _assetEntryLocalService);
+			fileEntryIds, parameterMap, _dlAppService, _assetEntryLocalService,
+			_dlAssetHelper);
 	}
 
 	@Reference
@@ -85,6 +87,9 @@ public class FileEntryBulkSelectionFactory
 
 	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
+	private DLAssetHelper _dlAssetHelper;
 
 	@Reference
 	private RepositoryProvider _repositoryProvider;

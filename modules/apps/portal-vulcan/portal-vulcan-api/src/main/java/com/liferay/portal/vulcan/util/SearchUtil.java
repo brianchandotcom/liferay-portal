@@ -16,6 +16,8 @@ package com.liferay.portal.vulcan.util;
 
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -34,11 +36,15 @@ import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * @author Brian Wing Shun Chan
@@ -120,6 +126,40 @@ public class SearchUtil {
 		queryConfigUnsafeConsumer.accept(queryConfig);
 
 		return searchContext;
+	}
+
+	public static <T extends BaseModel<T>> QueryDefinition<T> getQueryDefinition(
+		Class<T> clazz,
+		Pagination pagination, Sort[] sorts) {
+
+		QueryDefinition<T> queryDefinition = new QueryDefinition<>();
+
+		queryDefinition.setEnd(pagination.getEndPosition());
+		queryDefinition.setStart(pagination.getStartPosition());
+
+		Object[] sortColumns = _getSortColumns(sorts);
+
+		if (sortColumns != null) {
+			OrderByComparator<T> orderByComparator =
+				OrderByComparatorFactoryUtil.create(
+					clazz.getSimpleName(), sortColumns);
+
+			queryDefinition.setOrderByComparator(orderByComparator);
+		}
+
+		return queryDefinition;
+	}
+
+	private static Object[] _getSortColumns(Sort[] sorts) {
+		if (ArrayUtil.isEmpty(sorts)) {
+			return null;
+		}
+
+		return Stream.of(
+			sorts
+		).flatMap(
+			sort -> Stream.of(sort.getFieldName(), !sort.isReverse())
+		).toArray();
 	}
 
 	private static BooleanClause<?> _getBooleanClause(

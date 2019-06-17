@@ -157,7 +157,7 @@ public class OpenAPIParserUtil {
 			return Object.class.getName();
 		}
 
-		if (StringUtil.equals(schema.getType(), "array")) {
+		if (schema.getItems() != null) {
 			Items items = schema.getItems();
 
 			String javaDataType = _openAPIDataTypeMap.get(
@@ -190,14 +190,6 @@ public class OpenAPIParserUtil {
 
 				if (_openAPIDataTypeMap.containsKey(key)) {
 					javaDataType = Map.class.getName();
-				}
-			}
-			else if (schema.getItems() != null) {
-				Items items = schema.getItems();
-
-				if (items.getReference() != null) {
-					javaDataType = javaDataTypeMap.get(
-						getReferenceName(items.getReference()));
 				}
 			}
 

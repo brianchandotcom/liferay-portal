@@ -375,6 +375,10 @@ public class LiferayPortlet extends GenericPortlet {
 		return ContentTypes.APPLICATION_JSON;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	protected Set<String> getPaths(String path, String extension) {
 		Set<String> paths = new HashSet<>();
 

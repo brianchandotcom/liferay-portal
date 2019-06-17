@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.portlet.bridges.mvc;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -33,10 +34,12 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import java.util.ArrayDeque;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -661,6 +664,35 @@ public class MVCPortlet extends LiferayPortlet {
 		return null;
 	}
 
+	private Set<String> _getPaths(String path, String extension) {
+		Set<String> paths = new HashSet<>();
+
+		PortletContext portletContext = getPortletContext();
+
+		Queue<String> queue = new ArrayDeque<>();
+
+		queue.add(path);
+
+		while ((path = queue.poll()) != null) {
+			Set<String> childPaths = portletContext.getResourcePaths(path);
+
+			if (childPaths != null) {
+				for (String childPath : childPaths) {
+					if (childPath.charAt(childPath.length() - 1) ==
+							CharPool.SLASH) {
+
+						queue.add(childPath);
+					}
+					else if (childPath.endsWith(extension)) {
+						paths.add(childPath);
+					}
+				}
+			}
+		}
+
+		return paths;
+	}
+
 	private void _initValidPaths(String rootPath) {
 		PortletContext portletContext = getPortletContext();
 
@@ -699,14 +731,14 @@ public class MVCPortlet extends LiferayPortlet {
 			}
 		}
 
-		Set<String> validPath = getPaths(rootPath, ".jsp");
+		Set<String> validPath = _getPaths(rootPath, ".jsp");
 
 		if (!rootPath.equals(StringPool.SLASH) &&
 			!rootPath.equals("/META-INF/") &&
 			!rootPath.equals("/META-INF/resources/")) {
 
 			validPath.addAll(
-				getPaths(_PATH_META_INF_RESOURCES.concat(rootPath), ".jsp"));
+				_getPaths(_PATH_META_INF_RESOURCES.concat(rootPath), ".jsp"));
 		}
 
 		Collections.addAll(

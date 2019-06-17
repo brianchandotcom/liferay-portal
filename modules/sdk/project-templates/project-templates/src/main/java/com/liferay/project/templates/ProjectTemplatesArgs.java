@@ -52,6 +52,10 @@ public class ProjectTemplatesArgs {
 		return _destinationDir;
 	}
 
+	public String getDependencyInjector() {
+		return _dependencyInjector;
+	}
+
 	public String getGroupId() {
 		return _groupId;
 	}
@@ -126,6 +130,10 @@ public class ProjectTemplatesArgs {
 
 	public void setContributorType(String contributorType) {
 		_contributorType = contributorType;
+	}
+
+	public void setDependencyInjector(String dependencyInjector) {
+		_dependencyInjector = dependencyInjector;
 	}
 
 	public void setDependencyManagementEnabled(
@@ -222,6 +230,12 @@ public class ProjectTemplatesArgs {
 		names = "--contributor-type"
 	)
 	private String _contributorType;
+
+	@Parameter(
+		description = "For Service Builder projects, specify the preferred dependency injection method. Default is DS",
+		names = "--dependency-injector"
+	)
+	private String _dependencyInjector = "ds";
 
 	@Parameter(
 		description = "If workspace support target platform, no version number is required for the module.",

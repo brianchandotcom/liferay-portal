@@ -220,19 +220,6 @@ public class FragmentCollectionServiceTest {
 			fragmentCollection.getFragmentCollectionId());
 	}
 
-	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testFetchFragmentCollectionWithoutPermissions()
-		throws Exception {
-
-		FragmentCollection fragmentCollection =
-			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
-
-		ServiceTestUtil.setUser(_groupUser);
-
-		_fragmentCollectionService.fetchFragmentCollection(
-			fragmentCollection.getFragmentCollectionId());
-	}
-
 	@Test
 	public void testFetchFragmentCollectionWithPermissions() throws Exception {
 		FragmentCollection fragmentCollection =

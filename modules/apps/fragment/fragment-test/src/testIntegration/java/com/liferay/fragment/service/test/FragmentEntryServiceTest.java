@@ -642,17 +642,6 @@ public class FragmentEntryServiceTest {
 		Assert.assertEquals("Fragment Entry", persistedFragmentEntry.getName());
 	}
 
-	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testFetchFragmentEntryWithoutPermissions() throws Exception {
-		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
-			_fragmentCollection.getFragmentCollectionId(), "Fragment Entry");
-
-		ServiceTestUtil.setUser(_groupUser);
-
-		_fragmentEntryService.fetchFragmentEntry(
-			fragmentEntry.getFragmentEntryId());
-	}
-
 	@Test
 	public void testGetFragmentCollectionsCount() throws Exception {
 		int originalFragmentCollectionsCount =

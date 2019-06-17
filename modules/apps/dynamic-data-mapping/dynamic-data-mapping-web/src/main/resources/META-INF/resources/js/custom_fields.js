@@ -119,9 +119,7 @@ AUI.add(
 		var UNLOCALIZABLE_FIELD_ATTRS =
 			Liferay.FormBuilder.UNLOCALIZABLE_FIELD_ATTRS;
 
-		DEFAULTS_FORM_VALIDATOR.STRINGS.structureDuplicateFieldName = Liferay.Language.get(
-			'please-enter-a-unique-field-name'
-		);
+		DEFAULTS_FORM_VALIDATOR.STRINGS.structureDuplicateFieldName = Liferay.Language.get('please-enter-a-unique-field-name');
 
 		DEFAULTS_FORM_VALIDATOR.RULES.structureDuplicateFieldName = function(
 			value,
@@ -142,9 +140,7 @@ AUI.add(
 			return !duplicate;
 		};
 
-		DEFAULTS_FORM_VALIDATOR.STRINGS.structureFieldName = Liferay.Language.get(
-			'please-enter-only-alphanumeric-characters-or-underscore'
-		);
+		DEFAULTS_FORM_VALIDATOR.STRINGS.structureFieldName = Liferay.Language.get('please-enter-only-alphanumeric-characters-or-underscore');
 
 		DEFAULTS_FORM_VALIDATOR.RULES.structureFieldName = function(value) {
 			return LiferayFormBuilderUtil.validateFieldName(value);
@@ -2051,9 +2047,7 @@ AUI.add(
 								if (value !== STR_BLANK) {
 									label =
 										'(' +
-										Liferay.Language.get(
-											'journal-article'
-										) +
+										Liferay.Language.get('journal-article') +
 										')';
 								}
 

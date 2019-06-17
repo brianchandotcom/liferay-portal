@@ -749,7 +749,9 @@ public class SiteAdminPortlet extends MVCPortlet {
 			Locale defaultLocale = LocaleUtil.fromLanguageId(
 				unicodeProperties.getProperty("languageId"));
 
-			validateDefaultLocaleGroupName(nameMap, defaultLocale);
+			if (!liveGroup.isGuest()) {
+				validateDefaultLocaleGroupName(nameMap, defaultLocale);
+			}
 
 			liveGroup = groupService.updateGroup(
 				liveGroupId, parentGroupId, nameMap, descriptionMap, type,

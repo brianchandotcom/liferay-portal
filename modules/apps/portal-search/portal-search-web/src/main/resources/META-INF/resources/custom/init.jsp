@@ -31,9 +31,3 @@ page import="com.liferay.portal.search.web.internal.custom.filter.portlet.action
 page import="com.liferay.portal.search.web.internal.util.PortletPreferencesJspUtil" %>
 
 <%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %>
-
-<liferay-frontend:defineObjects />
-
-<liferay-theme:defineObjects />
-
-<portlet:defineObjects />

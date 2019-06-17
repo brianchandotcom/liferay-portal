@@ -18,8 +18,10 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.portlet.LiferayPortlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -31,7 +33,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -221,7 +226,7 @@ public class MVCPortlet extends LiferayPortlet {
 			getPortletName(), portletId, MVCResourceCommand.class,
 			"ResourceCommand");
 
-		initValidPaths(templatePath, ".jsp");
+		_initValidPaths(templatePath, ".jsp");
 	}
 
 	/**
@@ -566,7 +571,7 @@ public class MVCPortlet extends LiferayPortlet {
 			_log.error(path + " is not a valid include");
 		}
 		else {
-			checkPath(path);
+			_checkPath(path);
 
 			portletRequestDispatcher.include(portletRequest, portletResponse);
 		}
@@ -622,6 +627,13 @@ public class MVCPortlet extends LiferayPortlet {
 	protected String templatePath;
 	protected String viewTemplate;
 
+	private void _checkPath(String path) throws PortletException {
+		if (Validator.isNotNull(path) && !_isValidPath(path)) {
+			throw new PortletException(
+				"Path " + path + " is not accessible by this portlet");
+		}
+	}
+
 	private String _getInitParameter(String name) {
 		String value = getInitParameter(name);
 
@@ -643,10 +655,58 @@ public class MVCPortlet extends LiferayPortlet {
 		return null;
 	}
 
+	private void _initValidPaths(String rootPath, String extension) {
+		if (rootPath.equals(StringPool.SLASH)) {
+			PortletContext portletContext = getPortletContext();
+
+			PortletApp portletApp = PortletLocalServiceUtil.getPortletApp(
+				portletContext.getPortletContextName());
+
+			if (!portletApp.isWARFile()) {
+				_log.error(
+					StringBundler.concat(
+						"Disabling paths for portlet ", getPortletName(),
+						" because root path is configured to have access to ",
+						"all portal paths"));
+
+				_validPaths = new HashSet<>();
+
+				return;
+			}
+		}
+
+		_validPaths = getPaths(rootPath, extension);
+
+		if (!rootPath.equals(StringPool.SLASH) &&
+			!rootPath.equals("/META-INF/") &&
+			!rootPath.equals("/META-INF/resources/")) {
+
+			_validPaths.addAll(
+				getPaths(_PATH_META_INF_RESOURCES.concat(rootPath), extension));
+		}
+
+		Collections.addAll(
+			_validPaths, StringUtil.split(getInitParameter("valid-paths")));
+	}
+
+	private boolean _isValidPath(String path) {
+		if (_validPaths.contains(path) ||
+			_validPaths.contains(_PATH_META_INF_RESOURCES.concat(path))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private static final String _PATH_META_INF_RESOURCES =
+		"/META-INF/resources";
+
 	private static final Log _log = LogFactoryUtil.getLog(MVCPortlet.class);
 
 	private MVCCommandCache<MVCActionCommand> _actionMVCCommandCache;
 	private MVCCommandCache<MVCRenderCommand> _renderMVCCommandCache;
 	private MVCCommandCache<MVCResourceCommand> _resourceMVCCommandCache;
+	private Set<String> _validPaths;
 
 }

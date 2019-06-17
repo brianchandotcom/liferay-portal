@@ -664,7 +664,7 @@ public class MVCPortlet extends LiferayPortlet {
 		return null;
 	}
 
-	private Set<String> _getPaths(String path, String extension) {
+	private Set<String> _getJspPaths(String path) {
 		Set<String> paths = new HashSet<>();
 
 		PortletContext portletContext = getPortletContext();
@@ -683,7 +683,7 @@ public class MVCPortlet extends LiferayPortlet {
 
 						queue.add(childPath);
 					}
-					else if (childPath.endsWith(extension)) {
+					else if (childPath.endsWith(".jsp")) {
 						paths.add(childPath);
 					}
 				}
@@ -731,14 +731,14 @@ public class MVCPortlet extends LiferayPortlet {
 			}
 		}
 
-		Set<String> validPath = _getPaths(rootPath, ".jsp");
+		Set<String> validPath = _getJspPaths(rootPath);
 
 		if (!rootPath.equals(StringPool.SLASH) &&
 			!rootPath.equals("/META-INF/") &&
 			!rootPath.equals("/META-INF/resources/")) {
 
 			validPath.addAll(
-				_getPaths(_PATH_META_INF_RESOURCES.concat(rootPath), ".jsp"));
+				_getJspPaths(_PATH_META_INF_RESOURCES.concat(rootPath)));
 		}
 
 		Collections.addAll(

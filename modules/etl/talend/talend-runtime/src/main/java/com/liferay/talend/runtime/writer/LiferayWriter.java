@@ -17,7 +17,6 @@ package com.liferay.talend.runtime.writer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import com.liferay.talend.avro.constants.AvroConstants;
 import com.liferay.talend.runtime.LiferaySink;
 import com.liferay.talend.tliferayoutput.Action;
 import com.liferay.talend.tliferayoutput.TLiferayOutputProperties;
@@ -29,7 +28,6 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
@@ -52,6 +50,7 @@ import org.talend.daikon.i18n.I18nMessages;
 
 /**
  * @author Zoltán Takács
+ * @author Igor Beslic
  */
 public class LiferayWriter
 	implements WriterWithFeedback<Result, IndexedRecord, IndexedRecord> {
@@ -180,41 +179,6 @@ public class LiferayWriter
 		_result.totalCount++;
 	}
 
-	protected String getIndexedRecordId(IndexedRecord indexedRecord)
-		throws IOException {
-
-		Schema indexRecordSchema = indexedRecord.getSchema();
-
-		List<Schema.Field> indexRecordFields = indexRecordSchema.getFields();
-
-		Stream<Schema.Field> stream = indexRecordFields.stream();
-
-		Schema.Field idField = stream.filter(
-			field -> AvroConstants.ID.equals(field.name())
-		).findFirst(
-		).orElseThrow(
-			() -> new IOException(
-				String.format(
-					"Unable to find '%s' field in the incoming indexed record",
-					AvroConstants.ID))
-		);
-
-		Schema fieldSchema = idField.schema();
-
-		Schema unwrappedSchema = AvroUtils.unwrapIfNullable(fieldSchema);
-
-		Schema.Type fieldType = unwrappedSchema.getType();
-
-		if (fieldType == Schema.Type.STRING) {
-			return (String)indexedRecord.get(idField.pos());
-		}
-
-		throw new IOException(
-			i18nMessages.getMessage(
-				"error.unsupported.field.schema", idField.name(),
-				fieldType.getName()));
-	}
-
 	protected static final I18nMessages i18nMessages;
 
 	static {
@@ -237,173 +201,78 @@ public class LiferayWriter
 		for (Schema.Field field : indexRecordFields) {
 			String fieldName = field.name();
 
-			Schema fieldSchema = field.schema();
+			Schema unwrappedSchema = AvroUtils.unwrapIfNullable(field.schema());
 
-			Schema unwrappedSchema = AvroUtils.unwrapIfNullable(fieldSchema);
-
-			Schema.Type fieldType = unwrappedSchema.getType();
-
-			if (fieldType == Schema.Type.NULL) {
+			if (unwrappedSchema.getType() == Schema.Type.NULL) {
 				continue;
 			}
 
-			if (AvroUtils.isSameType(unwrappedSchema, AvroUtils._boolean())) {
-				if (fieldName.contains("_")) {
-					String[] nameParts = fieldName.split("_");
+			ObjectNode targetObjectNode = objectNode;
 
-					objectNode.with(
-						nameParts[0]
-					).put(
-						nameParts[1], (boolean)indexedRecord.get(field.pos())
-					);
-				}
-				else {
-					objectNode.put(
-						fieldName, (boolean)indexedRecord.get(field.pos()));
-				}
+			if (_isNestedFieldName(fieldName)) {
+				String[] nameParts = fieldName.split("_");
+
+				targetObjectNode = objectNode.with(nameParts[0]);
+
+				fieldName = nameParts[1];
+			}
+
+			if (AvroUtils.isSameType(unwrappedSchema, AvroUtils._boolean())) {
+				targetObjectNode.put(
+					fieldName, (boolean)indexedRecord.get(field.pos()));
 			}
 			else if (AvroUtils.isSameType(
 						unwrappedSchema, AvroUtils._bytes())) {
 
-				if (fieldName.contains("_")) {
-					String[] nameParts = fieldName.split("_");
-
-					objectNode.with(
-						nameParts[0]
-					).put(
-						nameParts[1], (byte[])indexedRecord.get(field.pos())
-					);
-				}
-				else {
-					objectNode.put(
-						fieldName, (byte[])indexedRecord.get(field.pos()));
-				}
+				targetObjectNode.put(
+					fieldName, (byte[])indexedRecord.get(field.pos()));
 			}
 			else if (AvroUtils.isSameType(
 						unwrappedSchema, AvroUtils._logicalTimestamp()) ||
 					 AvroUtils.isSameType(unwrappedSchema, AvroUtils._date())) {
 
-				if (fieldName.contains("_")) {
-					String[] nameParts = fieldName.split("_");
-
-					objectNode.with(
-						nameParts[0]
-					).put(
-						nameParts[1], (String)indexedRecord.get(field.pos())
-					);
-				}
-				else {
-					objectNode.put(
-						fieldName, (String)indexedRecord.get(field.pos()));
-				}
+				targetObjectNode.put(
+					fieldName, (String)indexedRecord.get(field.pos()));
 			}
 			else if (AvroUtils.isSameType(
 						unwrappedSchema, AvroUtils._double())) {
 
-				if (fieldName.contains("_")) {
-					String[] nameParts = fieldName.split("_");
-
-					objectNode.with(
-						nameParts[0]
-					).put(
-						nameParts[1], (double)indexedRecord.get(field.pos())
-					);
-				}
-				else {
-					objectNode.put(
-						fieldName, (double)indexedRecord.get(field.pos()));
-				}
+				targetObjectNode.put(
+					fieldName, (double)indexedRecord.get(field.pos()));
 			}
 			else if (AvroUtils.isSameType(
 						unwrappedSchema, AvroUtils._float())) {
 
-				if (fieldName.contains("_")) {
-					String[] nameParts = fieldName.split("_");
-
-					objectNode.with(
-						nameParts[0]
-					).put(
-						nameParts[1], (float)indexedRecord.get(field.pos())
-					);
-				}
-				else {
-					objectNode.put(
-						fieldName, (float)indexedRecord.get(field.pos()));
-				}
+				targetObjectNode.put(
+					fieldName, (float)indexedRecord.get(field.pos()));
 			}
 			else if (AvroUtils.isSameType(unwrappedSchema, AvroUtils._int())) {
-				if (fieldName.contains("_")) {
-					String[] nameParts = fieldName.split("_");
-
-					objectNode.with(
-						nameParts[0]
-					).put(
-						nameParts[1], (int)indexedRecord.get(field.pos())
-					);
-				}
-				else {
-					objectNode.put(
-						fieldName, (int)indexedRecord.get(field.pos()));
-				}
+				targetObjectNode.put(
+					fieldName, (int)indexedRecord.get(field.pos()));
 			}
 			else if (AvroUtils.isSameType(unwrappedSchema, AvroUtils._long())) {
-				if (fieldName.contains("_")) {
-					String[] nameParts = fieldName.split("_");
-
-					objectNode.with(
-						nameParts[0]
-					).put(
-						nameParts[1], (long)indexedRecord.get(field.pos())
-					);
-				}
-				else {
-					objectNode.put(
-						fieldName, (long)indexedRecord.get(field.pos()));
-				}
+				targetObjectNode.put(
+					fieldName, (long)indexedRecord.get(field.pos()));
 			}
 			else if (AvroUtils.isSameType(
 						unwrappedSchema, AvroUtils._string())) {
 
 				try {
-					if (fieldName.contains("_")) {
-						String[] nameParts = fieldName.split("_");
-
-						objectNode.with(
-							nameParts[0]
-						).put(
-							nameParts[1],
-							_mapper.readTree(
-								(String)indexedRecord.get(field.pos()))
-						);
-					}
-					else {
-						objectNode.put(
-							fieldName,
-							_mapper.readTree(
-								(String)indexedRecord.get(field.pos())));
-					}
+					targetObjectNode.put(
+						fieldName,
+						_mapper.readTree(
+							(String)indexedRecord.get(field.pos())));
 				}
 				catch (IOException ioe) {
-					if (fieldName.contains("_")) {
-						String[] nameParts = fieldName.split("_");
-
-						objectNode.with(
-							nameParts[0]
-						).put(
-							nameParts[1], (String)indexedRecord.get(field.pos())
-						);
-					}
-					else {
-						objectNode.put(
-							fieldName, (String)indexedRecord.get(field.pos()));
-					}
+					targetObjectNode.put(
+						fieldName, (String)indexedRecord.get(field.pos()));
 				}
 			}
 			else {
 				throw new IOException(
 					i18nMessages.getMessage(
 						"error.unsupported.field.schema", fieldName,
-						fieldType.getName()));
+						unwrappedSchema.getType()));
 			}
 		}
 
@@ -465,6 +334,14 @@ public class LiferayWriter
 	private void _handleSuccessRecord(IndexedRecord indexedRecord) {
 		_result.successCount++;
 		_successWrites.add(indexedRecord);
+	}
+
+	private boolean _isNestedFieldName(String fieldName) {
+		if (fieldName.contains("_")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(

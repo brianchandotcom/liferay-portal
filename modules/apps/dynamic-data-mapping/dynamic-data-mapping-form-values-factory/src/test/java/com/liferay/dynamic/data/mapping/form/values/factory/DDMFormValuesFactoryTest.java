@@ -175,6 +175,58 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 	}
 
 	@Test
+	public void testCreateWithDifferentLanguageFromRequest() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createTextDDMFormField(
+				"Name", false, false, false));
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createDDMFormField(
+				"Boolean", "Boolean", "checkbox", "boolean", false, false,
+				false));
+
+		DDMFormValues expectedDDMFormValues = createDDMFormValues(
+			ddmForm, createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+
+		expectedDDMFormValues.addDDMFormFieldValue(
+			createDDMFormFieldValue(
+				"amay", "Name", new UnlocalizedValue("Joe")));
+
+		expectedDDMFormValues.addDDMFormFieldValue(
+			createDDMFormFieldValue(
+				"wqer", "Boolean", new UnlocalizedValue("true")));
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, mockThemeDisplay());
+
+		mockHttpServletRequest.addParameter(
+			"languageId", LocaleUtil.toLanguageId(LocaleUtil.US));
+
+		mockHttpServletRequest.addParameter("ddm$$Name$amay$0$$pt_BR", "Joe");
+
+		mockHttpServletRequest.addParameter(
+			"ddm$$Boolean$wqer$0$$pt_BR", "true");
+
+		DDMFormValues actualDDMFormValues = _ddmFormValuesFactory.create(
+			mockHttpServletRequest, ddmForm);
+
+		List<DDMFormFieldValue> actualDDMFormFieldValues =
+			actualDDMFormValues.getDDMFormFieldValues();
+
+		Assert.assertEquals(
+			actualDDMFormFieldValues.toString(), 2,
+			actualDDMFormFieldValues.size());
+
+		assertEquals("Joe", actualDDMFormFieldValues.get(0), LocaleUtil.US);
+		assertEquals("true", actualDDMFormFieldValues.get(1), LocaleUtil.US);
+	}
+
+	@Test
 	public void testCreateWithLocalizableFields() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("Title", "Content");
 
@@ -980,9 +1032,9 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 		ThemeDisplay themeDisplay = mock(ThemeDisplay.class);
 
 		when(
-			themeDisplay.getLocale()
+			themeDisplay.getLanguageId()
 		).thenReturn(
-			LocaleUtil.US
+			"pt_BR"
 		);
 
 		return themeDisplay;

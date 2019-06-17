@@ -17,6 +17,8 @@ package com.liferay.portal.vulcan.internal.graphql.servlet;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -25,6 +27,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 
 import graphql.annotations.GraphQLFieldDefinitionWrapper;
 import graphql.annotations.annotationTypes.GraphQLField;
@@ -48,7 +51,16 @@ import graphql.annotations.processor.typeFunctions.DefaultTypeFunction;
 import graphql.annotations.processor.typeFunctions.TypeFunction;
 import graphql.annotations.processor.util.NamingKit;
 
+import graphql.language.ArrayValue;
+import graphql.language.BooleanValue;
+import graphql.language.EnumValue;
+import graphql.language.FloatValue;
+import graphql.language.IntValue;
+import graphql.language.NullValue;
+import graphql.language.ObjectField;
+import graphql.language.ObjectValue;
 import graphql.language.StringValue;
+import graphql.language.Value;
 
 import graphql.schema.Coercing;
 import graphql.schema.CoercingParseLiteralException;
@@ -83,6 +95,7 @@ import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
@@ -175,6 +188,7 @@ public class GraphQLServletExtender {
 			});
 
 		_defaultTypeFunction.register(new DateTypeFunction());
+		_defaultTypeFunction.register(new ObjectTypeFunction());
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
@@ -437,8 +451,10 @@ public class GraphQLServletExtender {
 
 					try {
 						if (value instanceof StringValue) {
+							StringValue stringValue = (StringValue)value;
+
 							return simpleDateFormat.parse(
-								((StringValue)value).getValue());
+								stringValue.getValue());
 						}
 
 						return simpleDateFormat.parse(value.toString());
@@ -447,6 +463,96 @@ public class GraphQLServletExtender {
 						throw new CoercingSerializeException(
 							"Unable to parse to java.util.Date", pe);
 					}
+				}
+
+			});
+
+	private static final GraphQLScalarType _objectGraphQLScalarType =
+		new GraphQLScalarType(
+			"Object", "Any kind of Object supported by basic scalar types",
+			new Coercing<Object, Object>() {
+
+				@Override
+				public Object parseLiteral(Object value)
+					throws CoercingParseLiteralException {
+
+					if (value instanceof NullValue) {
+						return null;
+					}
+
+					if (value instanceof FloatValue) {
+						FloatValue floatValue = (FloatValue)value;
+
+						return floatValue.getValue();
+					}
+
+					if (value instanceof StringValue) {
+						StringValue stringValue = (StringValue)value;
+
+						return stringValue.getValue();
+					}
+
+					if (value instanceof IntValue) {
+						IntValue intValue = (IntValue)value;
+
+						return intValue.getValue();
+					}
+
+					if (value instanceof BooleanValue) {
+						BooleanValue booleanValue = (BooleanValue)value;
+
+						return booleanValue.isValue();
+					}
+
+					if (value instanceof EnumValue) {
+						EnumValue enumValue = (EnumValue)value;
+
+						return enumValue.getName();
+					}
+
+					if (value instanceof ArrayValue) {
+						ArrayValue arrayValue = (ArrayValue)value;
+
+						List<Value> values = arrayValue.getValues();
+
+						return values.stream(
+						).map(
+							this::parseLiteral
+						).collect(
+							Collectors.toList()
+						);
+					}
+
+					if (value instanceof ObjectValue) {
+						ObjectValue objectValue = (ObjectValue)value;
+
+						List<ObjectField> values =
+							objectValue.getObjectFields();
+
+						return values.stream(
+						).collect(
+							Collectors.toMap(
+								ObjectField::getName,
+								field -> parseLiteral(field.getValue()))
+						);
+					}
+
+					throw new CoercingSerializeException(
+						"Expected something we can convert");
+				}
+
+				@Override
+				public Object parseValue(Object value)
+					throws CoercingParseValueException {
+
+					return value;
+				}
+
+				@Override
+				public Object serialize(Object value)
+					throws CoercingSerializeException {
+
+					return value;
 				}
 
 			});
@@ -484,9 +590,9 @@ public class GraphQLServletExtender {
 
 		@Override
 		public boolean canBuildType(
-			Class<?> aClass, AnnotatedType annotatedType) {
+			Class<?> clazz, AnnotatedType annotatedType) {
 
-			if (aClass == Date.class) {
+			if (clazz == Date.class) {
 				return true;
 			}
 
@@ -557,6 +663,31 @@ public class GraphQLServletExtender {
 		}
 
 		private final Method _method;
+
+	}
+
+	private class ObjectTypeFunction implements TypeFunction {
+
+		@Override
+		public GraphQLType buildType(
+			boolean input, Class<?> aClass, AnnotatedType annotatedType,
+			ProcessingElementsContainer processingElementsContainer) {
+
+			return _objectGraphQLScalarType;
+		}
+
+		@Override
+		public boolean canBuildType(
+			Class<?> clazz, AnnotatedType annotatedType) {
+
+			if ((clazz == Object.class) || (clazz == Filter.class) ||
+				(clazz == Sort[].class) || (clazz == MultipartBody.class)) {
+
+				return true;
+			}
+
+			return false;
+		}
 
 	}
 

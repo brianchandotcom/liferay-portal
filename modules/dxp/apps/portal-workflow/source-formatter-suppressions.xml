@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<source-check>
-		<suppress checks="JSONDeprecatedPackagesCheck" files="modules/private/apps/portal-workflow/portal-workflow-kaleo-designer-web/package\.json" />
-	</source-check>
-</suppressions>

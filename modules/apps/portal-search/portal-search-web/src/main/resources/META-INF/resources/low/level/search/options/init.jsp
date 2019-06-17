@@ -14,8 +14,12 @@
  */
 --%>
 
-<%@ include file="/low/level/search/options/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
-<div class="alert alert-info text-center">
-	<aui:a href="javascript:;" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="low-level-search-options-help" /></aui:a>
-</div>
+<%@ page import="com.liferay.portal.search.web.internal.low.level.search.options.portlet.preferences.LowLevelSearchOptionsPortletPreferences" %><%@
+page import="com.liferay.portal.search.web.internal.low.level.search.options.portlet.preferences.LowLevelSearchOptionsPortletPreferencesImpl" %><%@
+page import="com.liferay.portal.search.web.internal.util.PortletPreferencesJspUtil" %>
+
+<liferay-theme:defineObjects />
+
+<portlet:defineObjects />

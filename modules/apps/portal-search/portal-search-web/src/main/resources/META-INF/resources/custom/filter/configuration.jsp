@@ -47,11 +47,11 @@ OccurEntriesHolder occurEntriesHolder = configurationDisplayContext.getOccurEntr
 
 				<%
 				for (QueryTypeEntry queryTypeEntry : queryTypeEntriesHolder.getQueryTypeEntries()) {
-					%>
+				%>
 
-						<aui:option data-field="<%= queryTypeEntry.getTypeId() %>" data-type="<%= queryTypeEntry.getTypeId() %>" label="<%= queryTypeEntry.getName() %>" selected="<%= Objects.equals(customFilterPortletPreferences.getFilterQueryType(), queryTypeEntry.getTypeId()) %>" value="<%= queryTypeEntry.getTypeId() %>" />
+					<aui:option data-field="<%= queryTypeEntry.getTypeId() %>" data-type="<%= queryTypeEntry.getTypeId() %>" label="<%= queryTypeEntry.getName() %>" selected="<%= Objects.equals(customFilterPortletPreferences.getFilterQueryType(), queryTypeEntry.getTypeId()) %>" value="<%= queryTypeEntry.getTypeId() %>" />
 
-					<%
+				<%
 				}
 				%>
 
@@ -61,11 +61,11 @@ OccurEntriesHolder occurEntriesHolder = configurationDisplayContext.getOccurEntr
 
 				<%
 				for (OccurEntry occurEntry : occurEntriesHolder.getOccurEntries()) {
-					%>
+				%>
 
-						<aui:option label="<%= occurEntry.getName() %>" selected="<%= Objects.equals(customFilterPortletPreferences.getOccur(), occurEntry.getOccur()) %>" value="<%= occurEntry.getOccur() %>" />
+					<aui:option label="<%= occurEntry.getName() %>" selected="<%= Objects.equals(customFilterPortletPreferences.getOccur(), occurEntry.getOccur()) %>" value="<%= occurEntry.getOccur() %>" />
 
-					<%
+				<%
 				}
 				%>
 

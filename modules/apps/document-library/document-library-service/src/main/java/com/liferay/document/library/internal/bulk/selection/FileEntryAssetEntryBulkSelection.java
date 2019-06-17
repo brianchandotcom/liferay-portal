@@ -23,6 +23,8 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -78,11 +80,29 @@ public class FileEntryAssetEntryBulkSelection
 		return this;
 	}
 
+	private long _getAssetClassPK(FileEntry fileEntry) throws PortalException {
+		FileVersion fileVersion = fileEntry.getLatestFileVersion();
+
+		String version = fileVersion.getVersion();
+
+		if ((fileVersion != null) && !fileVersion.isApproved() &&
+			Validator.isNotNull(version) &&
+			!version.equals(DLFileEntryConstants.VERSION_DEFAULT)) {
+
+			return fileVersion.getFileVersionId();
+		}
+		else if (fileEntry != null) {
+			return fileEntry.getFileEntryId();
+		}
+
+		return 0;
+	}
+
 	private AssetEntry _toAssetEntry(FileEntry fileEntry) {
 		try {
 			return _assetEntryLocalService.getEntry(
 				DLFileEntryConstants.getClassName(),
-				fileEntry.getFileEntryId());
+				_getAssetClassPK(fileEntry));
 		}
 		catch (PortalException pe) {
 			return ReflectionUtil.throwException(pe);

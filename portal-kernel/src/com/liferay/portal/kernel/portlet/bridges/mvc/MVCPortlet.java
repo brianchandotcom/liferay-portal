@@ -571,7 +571,12 @@ public class MVCPortlet extends LiferayPortlet {
 			_log.error(path + " is not a valid include");
 		}
 		else {
-			_checkPath(path);
+			if (Validator.isNotNull(path) && !_validPaths.contains(path) &&
+				!_validPaths.contains(_PATH_META_INF_RESOURCES.concat(path))) {
+
+				throw new PortletException(
+					"Path " + path + " is not accessible by this portlet");
+			}
 
 			portletRequestDispatcher.include(portletRequest, portletResponse);
 		}
@@ -626,15 +631,6 @@ public class MVCPortlet extends LiferayPortlet {
 	protected String printTemplate;
 	protected String templatePath;
 	protected String viewTemplate;
-
-	private void _checkPath(String path) throws PortletException {
-		if (Validator.isNotNull(path) && !_validPaths.contains(path) &&
-			!_validPaths.contains(_PATH_META_INF_RESOURCES.concat(path))) {
-
-			throw new PortletException(
-				"Path " + path + " is not accessible by this portlet");
-		}
-	}
 
 	private String _getInitParameter(String name) {
 		String value = getInitParameter(name);

@@ -17,6 +17,7 @@ package com.liferay.portal.service.permission;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -195,9 +196,10 @@ public class GroupPermissionImpl
 			return true;
 		}
 		else if (actionId.equals(ActionKeys.VIEW) &&
-				 (permissionChecker.hasPermission(
-					 originalGroup, Group.class.getName(), groupId,
-					 ActionKeys.ASSIGN_USER_ROLES) ||
+				 ((originalGroup.getType() == GroupConstants.TYPE_SITE_OPEN) ||
+				  permissionChecker.hasPermission(
+					  originalGroup, Group.class.getName(), groupId,
+					  ActionKeys.ASSIGN_USER_ROLES) ||
 				  permissionChecker.hasPermission(
 					  originalGroup, Group.class.getName(), groupId,
 					  ActionKeys.MANAGE_LAYOUTS) ||

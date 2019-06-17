@@ -36,7 +36,9 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -65,6 +67,10 @@ public class MVCPortlet extends LiferayPortlet {
 
 	@Override
 	public void destroy() {
+		PortletContext portletContext = getPortletContext();
+
+		_validPathsMaps.remove(portletContext.getPortletContextName());
+
 		super.destroy();
 
 		_actionMVCCommandCache.close();
@@ -654,11 +660,28 @@ public class MVCPortlet extends LiferayPortlet {
 	}
 
 	private void _initValidPaths(String rootPath) {
-		if (rootPath.equals(StringPool.SLASH)) {
-			PortletContext portletContext = getPortletContext();
+		PortletContext portletContext = getPortletContext();
 
+		String portletContextName = portletContext.getPortletContextName();
+
+		Map<String, Set<String>> validPathsMap = _validPathsMaps.get(
+			portletContextName);
+
+		if (validPathsMap != null) {
+			_validPaths = validPathsMap.get(rootPath);
+
+			if (_validPaths != null) {
+				return;
+			}
+		}
+		else {
+			validPathsMap = _validPathsMaps.computeIfAbsent(
+				portletContextName, key -> new ConcurrentHashMap<>());
+		}
+
+		if (rootPath.equals(StringPool.SLASH)) {
 			PortletApp portletApp = PortletLocalServiceUtil.getPortletApp(
-				portletContext.getPortletContextName());
+				portletContextName);
 
 			if (!portletApp.isWARFile()) {
 				_log.error(
@@ -667,30 +690,36 @@ public class MVCPortlet extends LiferayPortlet {
 						" because root path is configured to have access to ",
 						"all portal paths"));
 
-				_validPaths = new HashSet<>();
+				_validPaths = validPathsMap.computeIfAbsent(
+					rootPath, key -> new HashSet<>());
 
 				return;
 			}
 		}
 
-		_validPaths = getPaths(rootPath, ".jsp");
+		Set<String> validPath = getPaths(rootPath, ".jsp");
 
 		if (!rootPath.equals(StringPool.SLASH) &&
 			!rootPath.equals("/META-INF/") &&
 			!rootPath.equals("/META-INF/resources/")) {
 
-			_validPaths.addAll(
+			validPath.addAll(
 				getPaths(_PATH_META_INF_RESOURCES.concat(rootPath), ".jsp"));
 		}
 
 		Collections.addAll(
-			_validPaths, StringUtil.split(getInitParameter("valid-paths")));
+			validPath, StringUtil.split(getInitParameter("valid-paths")));
+
+		_validPaths = validPathsMap.computeIfAbsent(rootPath, key -> validPath);
 	}
 
 	private static final String _PATH_META_INF_RESOURCES =
 		"/META-INF/resources";
 
 	private static final Log _log = LogFactoryUtil.getLog(MVCPortlet.class);
+
+	private static final Map<String, Map<String, Set<String>>> _validPathsMaps =
+		new ConcurrentHashMap<>();
 
 	private MVCCommandCache<MVCActionCommand> _actionMVCCommandCache;
 	private MVCCommandCache<MVCRenderCommand> _renderMVCCommandCache;

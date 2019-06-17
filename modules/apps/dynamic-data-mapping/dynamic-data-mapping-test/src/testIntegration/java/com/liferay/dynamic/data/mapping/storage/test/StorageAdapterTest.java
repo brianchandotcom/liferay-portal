@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.test.BaseDDMServiceTestCase;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -150,9 +151,12 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		DDMFormFieldValidation ddmFormFieldValidation =
 			new DDMFormFieldValidation();
 
+		LocalizedValue errorMessage =
+			DDMFormValuesTestUtil.createLocalizedValue(
+				"custom validation error message", LocaleUtil.US);
+
 		ddmFormFieldValidation.setExpression("contains(text, \"test\")");
-		ddmFormFieldValidation.setErrorMessage(
-			"custom validation error message");
+		ddmFormFieldValidation.setErrorMessage(errorMessage);
 
 		ddmFormField.setDDMFormFieldValidation(ddmFormFieldValidation);
 
@@ -207,9 +211,12 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		DDMFormFieldValidation ddmFormFieldValidation =
 			new DDMFormFieldValidation();
 
+		LocalizedValue errorMessage =
+			DDMFormValuesTestUtil.createLocalizedValue(
+				"custom validation error message", LocaleUtil.US);
+
 		ddmFormFieldValidation.setExpression("NOT(equals(text, \"\"))");
-		ddmFormFieldValidation.setErrorMessage(
-			"custom validation error message");
+		ddmFormFieldValidation.setErrorMessage(errorMessage);
 
 		ddmFormField.setDDMFormFieldValidation(ddmFormFieldValidation);
 

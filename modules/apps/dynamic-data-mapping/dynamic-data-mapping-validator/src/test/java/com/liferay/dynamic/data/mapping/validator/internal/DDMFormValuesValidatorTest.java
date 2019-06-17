@@ -74,8 +74,12 @@ public class DDMFormValuesValidatorTest {
 		DDMFormFieldValidation ddmFormFieldValidation =
 			new DDMFormFieldValidation();
 
+		LocalizedValue errorMessage =
+			DDMFormValuesTestUtil.createLocalizedValue(
+				"maximum height allowed 3.5.", LocaleUtil.US);
+
 		ddmFormFieldValidation.setExpression("Height <= 3.5");
-		ddmFormFieldValidation.setErrorMessage("maximum height allowed 3.5.");
+		ddmFormFieldValidation.setErrorMessage(errorMessage);
 
 		ddmFormField.setDDMFormFieldValidation(ddmFormFieldValidation);
 

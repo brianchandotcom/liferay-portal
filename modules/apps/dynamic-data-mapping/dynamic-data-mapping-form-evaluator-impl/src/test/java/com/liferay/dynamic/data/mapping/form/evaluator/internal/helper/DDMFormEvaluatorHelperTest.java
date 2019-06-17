@@ -43,6 +43,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -810,7 +811,12 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 		DDMFormFieldValidation ddmFormFieldValidation =
 			new DDMFormFieldValidation();
 
-		ddmFormFieldValidation.setErrorMessage("This field should be zero.");
+		LocalizedValue errorMessage =
+			DDMFormTestUtil.createLocalizedErrorMessage(
+				"This field should be zero.");
+
+		ddmFormFieldValidation.setErrorMessage(errorMessage);
+
 		ddmFormFieldValidation.setExpression("field0 == 0");
 
 		ddmFormField.setDDMFormFieldValidation(ddmFormFieldValidation);
@@ -859,8 +865,12 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 		DDMFormFieldValidation ddmFormFieldValidation =
 			new DDMFormFieldValidation();
 
-		ddmFormFieldValidation.setErrorMessage(
-			"This field should be less than zero.");
+		LocalizedValue errorMessage =
+			DDMFormTestUtil.createLocalizedErrorMessage(
+				"This field should be less than zero.");
+
+		ddmFormFieldValidation.setErrorMessage(errorMessage);
+
 		ddmFormFieldValidation.setExpression("field0 < 0");
 
 		ddmFormField.setDDMFormFieldValidation(ddmFormFieldValidation);
@@ -943,8 +953,11 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 		DDMFormFieldValidation ddmFormFieldValidation =
 			new DDMFormFieldValidation();
 
-		ddmFormFieldValidation.setErrorMessage(
-			"This field should not contain zero.");
+		LocalizedValue errorMessage =
+			DDMFormTestUtil.createLocalizedErrorMessage(
+				"This field should not contain zero.");
+
+		ddmFormFieldValidation.setErrorMessage(errorMessage);
 
 		ddmFormFieldValidation.setExpression("NOT(contains(field0, \"0\"))");
 

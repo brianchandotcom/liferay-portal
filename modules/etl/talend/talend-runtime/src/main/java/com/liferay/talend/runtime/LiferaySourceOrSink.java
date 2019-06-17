@@ -14,9 +14,6 @@
 
 package com.liferay.talend.runtime;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-
 import com.liferay.talend.avro.EndpointSchemaInferrer;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
@@ -29,24 +26,21 @@ import com.liferay.talend.utils.URIUtils;
 
 import java.io.IOException;
 
-import java.net.URI;
-import java.net.URL;
-
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
 
 import org.apache.avro.Schema;
 
@@ -57,7 +51,6 @@ import org.talend.components.api.component.runtime.SourceOrSink;
 import org.talend.components.api.container.RuntimeContainer;
 import org.talend.components.api.properties.ComponentProperties;
 import org.talend.daikon.NamedThing;
-import org.talend.daikon.SimpleNamedThing;
 import org.talend.daikon.exception.TalendRuntimeException;
 import org.talend.daikon.i18n.GlobalI18N;
 import org.talend.daikon.i18n.I18nMessageProvider;
@@ -74,127 +67,85 @@ public class LiferaySourceOrSink
 	extends TranslatableImpl
 	implements LiferaySourceOrSinkRuntime, SourceOrSink {
 
-	public JsonNode doDeleteRequest(RuntimeContainer runtimeContainer) {
+	public JsonObject doDeleteRequest(RuntimeContainer runtimeContainer) {
 		return doDeleteRequest(runtimeContainer, null);
 	}
 
-	public JsonNode doDeleteRequest(
+	public JsonObject doDeleteRequest(
 		RuntimeContainer runtimeContainer, String resourceURL) {
 
 		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
 
 		Response response = restClient.executeDeleteRequest();
 
-		return response.readEntity(JsonNode.class);
+		return response.readEntity(JsonObject.class);
 	}
 
-	public JsonNode doDeleteRequest(String resourceURL) {
+	public JsonObject doDeleteRequest(String resourceURL) {
 		return doDeleteRequest(null, resourceURL);
 	}
 
-	public JsonNode doGetRequest(RuntimeContainer runtimeContainer) {
+	public JsonObject doGetRequest(RuntimeContainer runtimeContainer) {
 		return doGetRequest(runtimeContainer, null);
 	}
 
-	public JsonNode doGetRequest(
+	public JsonObject doGetRequest(
 		RuntimeContainer runtimeContainer, String resourceURL) {
 
 		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
 
 		Response response = restClient.executeGetRequest();
 
-		return response.readEntity(JsonNode.class);
+		return response.readEntity(JsonObject.class);
 	}
 
-	public JsonNode doGetRequest(String resourceURL) {
+	public JsonObject doGetRequest(String resourceURL) {
 		return doGetRequest(null, resourceURL);
 	}
 
-	public JsonNode doPatchRequest(
-			RuntimeContainer runtimeContainer, JsonNode jsonNode)
+	public JsonObject doPatchRequest(
+			RuntimeContainer runtimeContainer, JsonObject jsonNode)
 		throws IOException {
 
 		return doPatchRequest(runtimeContainer, null, jsonNode);
 	}
 
-	public JsonNode doPatchRequest(
+	public JsonObject doPatchRequest(
 		RuntimeContainer runtimeContainer, String resourceURL,
-		JsonNode jsonNode) {
+		JsonObject jsonNode) {
 
 		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
 
 		Response response = restClient.executePatchRequest(jsonNode);
 
-		return response.readEntity(JsonNode.class);
+		return response.readEntity(JsonObject.class);
 	}
 
-	public JsonNode doPatchRequest(String resourceURL, JsonNode jsonNode) {
+	public JsonObject doPatchRequest(String resourceURL, JsonObject jsonNode) {
 		return doPatchRequest(null, resourceURL, jsonNode);
 	}
 
-	public JsonNode doPostRequest(
-		RuntimeContainer runtimeContainer, JsonNode jsonNode) {
+	public JsonObject doPostRequest(
+		RuntimeContainer runtimeContainer, JsonObject jsonNode) {
 
 		return doPostRequest(runtimeContainer, null, jsonNode);
 	}
 
-	public JsonNode doPostRequest(
+	public JsonObject doPostRequest(
 		RuntimeContainer runtimeContainer, String resourceURL,
-		JsonNode jsonNode) {
+		JsonObject jsonNode) {
 
 		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
 
 		Response response = restClient.executePostRequest(jsonNode);
 
-		return response.readEntity(JsonNode.class);
+		return response.readEntity(JsonObject.class);
 	}
 
-	public JsonNode doPostRequest(String resourceURL, JsonNode jsonNode)
+	public JsonObject doPostRequest(String resourceURL, JsonObject jsonNode)
 		throws IOException {
 
 		return doPostRequest(null, resourceURL, jsonNode);
-	}
-
-	@Override
-	public List<NamedThing> getAvailableWebSites() throws IOException {
-		LiferayConnectionProperties liferayConnectionProperties =
-			getEffectiveConnection(null);
-
-		URL serverURL = URIUtils.extractServerURL(
-			URIUtils.toURL(liferayConnectionProperties.getApiSpecURL()));
-
-		UriBuilder uriBuilder = UriBuilder.fromPath(serverURL.toExternalForm());
-
-		URI myUserAccountURI = uriBuilder.path(
-			"o/headless-admin-user/v1.0/my-user-account"
-		).build();
-
-		JsonNode myUserAccountJsonNode = doGetRequest(
-			myUserAccountURI.toASCIIString());
-
-		JsonNode siteBriefsJsonNode = myUserAccountJsonNode.path("siteBriefs");
-
-		List<NamedThing> webSitesList = new ArrayList<>();
-
-		if (!siteBriefsJsonNode.isArray()) {
-			return webSitesList;
-		}
-
-		for (JsonNode siteBriefJsonNode : siteBriefsJsonNode) {
-			JsonNode idJsonNode = siteBriefJsonNode.path("id");
-			JsonNode nameJsonNode = siteBriefJsonNode.path("name");
-
-			webSitesList.add(
-				new SimpleNamedThing(
-					idJsonNode.asText(), nameJsonNode.asText()));
-		}
-
-		Comparator<NamedThing> comparator = Comparator.comparing(
-			NamedThing::getDisplayName);
-
-		Collections.sort(webSitesList, comparator);
-
-		return webSitesList;
 	}
 
 	public LiferayConnectionProperties getConnectionProperties() {
@@ -259,45 +210,43 @@ public class LiferaySourceOrSink
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveConnection(null);
 
-		JsonNode apiSpecJsonNode = doGetRequest(
+		JsonObject apiSpecJsonObject = doGetRequest(
 			liferayConnectionProperties.getApiSpecURL());
 
-		JsonNode pathsJsonNode = apiSpecJsonNode.path(OpenAPIConstants.PATHS);
+		JsonObject pathsJsonObject = apiSpecJsonObject.getJsonObject(
+			OpenAPIConstants.PATHS);
 
-		Iterator<Map.Entry<String, JsonNode>> pathFields =
-			pathsJsonNode.fields();
+		pathsJsonObject.forEach(
+			(path, operationJsonValue) -> {
+				JsonObject operationsJsonObject =
+					operationJsonValue.asJsonObject();
 
-		while (pathFields.hasNext()) {
-			Map.Entry<String, JsonNode> pathEntry = pathFields.next();
+				operationsJsonObject.forEach(
+					(operationName, operationJsonObject) -> {
+						if (!Objects.equals(
+								operation, _toUpperCase(operationName))) {
 
-			JsonNode pathJsonNode = pathEntry.getValue();
+							return;
+						}
 
-			Iterator<String> operationNameIterator = pathJsonNode.fieldNames();
+						if (!Objects.equals(operation, HttpMethod.GET)) {
+							endpoints.add(path);
 
-			while (operationNameIterator.hasNext()) {
-				String operationName = operationNameIterator.next();
+							return;
+						}
 
-				if (!Objects.equals(operation, _toUpperCase(operationName))) {
-					continue;
-				}
+						if (_hasPath(
+								OpenAPIConstants.PATH_RESPONSE_SCHEMA_REFERENCE,
+								operationsJsonObject) ||
+							_hasPath(
+								OpenAPIConstants.
+									PATH_RESPONSE_SCHEMA_ITEMS_REFERENCE,
+								operationsJsonObject)) {
 
-				if (!Objects.equals(operation, HttpMethod.GET)) {
-					endpoints.add(pathEntry.getKey());
-
-					continue;
-				}
-
-				if (_hasPath(
-						OpenAPIConstants.PATH_RESPONSE_SCHEMA_REFERENCE,
-						pathJsonNode.get(operationName)) ||
-					_hasPath(
-						OpenAPIConstants.PATH_RESPONSE_SCHEMA_ITEMS_REFERENCE,
-						pathJsonNode.get(operationName))) {
-
-					endpoints.add(pathEntry.getKey());
-				}
-			}
-		}
+							endpoints.add(path);
+						}
+					});
+			});
 
 		return endpoints;
 	}
@@ -321,10 +270,10 @@ public class LiferaySourceOrSink
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveConnection(null);
 
-		JsonNode apiSpecJsonNode = doGetRequest(
+		JsonObject apiSpecJsonNode = doGetRequest(
 			liferayConnectionProperties.getApiSpecURL());
 
-		return EndpointSchemaInferrer.inferSchema(
+		return _endpointSchemaInferrer.inferSchema(
 			endpoint, operation, apiSpecJsonNode);
 	}
 
@@ -337,14 +286,15 @@ public class LiferaySourceOrSink
 
 		String apiSpecURLHref = liferayConnectionProperties.getApiSpecURL();
 
-		JsonNode apiSpecJsonNode = doGetRequest(apiSpecURLHref);
+		JsonObject apiSpecJsonObject = doGetRequest(apiSpecURLHref);
 
-		ArrayNode parametersArrayNode = (ArrayNode)_getChildNode(
-			apiSpecJsonNode, OpenAPIConstants.PATHS, endpoint,
-			_toLowerCase(operation), OpenAPIConstants.PARAMETRERS);
+		JsonArray parametersArrayNode = _getDescendantArray(
+			OpenAPIConstants.PATHS + ">" + endpoint + ">" +
+				_toLowerCase(operation) + ">" + OpenAPIConstants.PARAMETRERS,
+			apiSpecJsonObject);
 
 		for (int i = 0; i < parametersArrayNode.size(); i++) {
-			parameters.add(_toParameter(parametersArrayNode.get(i)));
+			parameters.add(_toParameter(parametersArrayNode.getJsonObject(i)));
 		}
 
 		return parameters;
@@ -391,22 +341,16 @@ public class LiferaySourceOrSink
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveConnection(null);
 
-		JsonNode apiSpecJsonNode = doGetRequest(
+		JsonObject apiSpecJsonObject = doGetRequest(
 			liferayConnectionProperties.getApiSpecURL());
 
-		JsonNode endpointJsonNode = apiSpecJsonNode.path(
+		JsonObject endpointJsonObject = apiSpecJsonObject.getJsonObject(
 			OpenAPIConstants.PATHS
-		).path(
+		).getJsonObject(
 			endpoint
 		);
 
-		Iterator<String> operationsIterator = endpointJsonNode.fieldNames();
-
-		Set<String> supportedOperations = new TreeSet<>();
-
-		operationsIterator.forEachRemaining(supportedOperations::add);
-
-		return supportedOperations;
+		return endpointJsonObject.keySet();
 	}
 
 	@Override
@@ -534,26 +478,41 @@ public class LiferaySourceOrSink
 		liferayConnectionPropertiesProvider;
 	protected RESTClient restClient;
 
-	private JsonNode _getChildNode(JsonNode jsonNode, String... paths) {
-		for (String path : paths) {
-			jsonNode = jsonNode.path(path);
-		}
-
-		return jsonNode;
-	}
-
-	private boolean _hasPath(String path, JsonNode jsonNode) {
+	private JsonArray _getDescendantArray(String path, JsonObject jsonObject) {
 		if (!path.contains(">")) {
-			return jsonNode.has(path);
+			if (jsonObject.containsKey(path)) {
+				return jsonObject.getJsonArray(path);
+			}
 		}
 
 		int subpathEndIdx = path.indexOf(">");
 
 		String subpath = path.substring(0, subpathEndIdx);
 
-		if (jsonNode.has(subpath)) {
+		if (jsonObject.containsKey(subpath)) {
+			return _getDescendantArray(
+				path.substring(subpathEndIdx + 1),
+				jsonObject.getJsonObject(subpath));
+		}
+
+		JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+
+		return jsonArrayBuilder.build();
+	}
+
+	private boolean _hasPath(String path, JsonObject jsonNode) {
+		if (!path.contains(">")) {
+			return jsonNode.containsKey(path);
+		}
+
+		int subpathEndIdx = path.indexOf(">");
+
+		String subpath = path.substring(0, subpathEndIdx);
+
+		if (jsonNode.containsKey(subpath)) {
 			return _hasPath(
-				path.substring(subpathEndIdx + 1), jsonNode.path(subpath));
+				path.substring(subpathEndIdx + 1),
+				jsonNode.getJsonObject(subpath));
 		}
 
 		return false;
@@ -577,23 +536,16 @@ public class LiferaySourceOrSink
 		return value.toLowerCase(Locale.US);
 	}
 
-	private Parameter _toParameter(JsonNode jsonNode) {
+	private Parameter _toParameter(JsonObject jsonObject) {
 		Parameter parameter = new Parameter();
 
-		JsonNode inJsonNode = jsonNode.get("in");
+		parameter.setType(
+			Parameter.Type.valueOf(_toUpperCase(jsonObject.getString("in"))));
 
-		String inString = inJsonNode.asText();
+		parameter.setName(jsonObject.getString("name"));
 
-		parameter.setType(Parameter.Type.valueOf(_toUpperCase(inString)));
-
-		JsonNode nameJsonNode = jsonNode.get("name");
-
-		parameter.setName(nameJsonNode.asText());
-
-		JsonNode requiredJsonNode = jsonNode.get("required");
-
-		if (requiredJsonNode != null) {
-			parameter.setRequired(requiredJsonNode.asBoolean());
+		if (!jsonObject.isNull("required")) {
+			parameter.setRequired(jsonObject.getBoolean("required"));
 		}
 
 		return parameter;
@@ -607,5 +559,8 @@ public class LiferaySourceOrSink
 		LiferaySourceOrSink.class);
 
 	private static final long serialVersionUID = 3109815759807236523L;
+
+	private final EndpointSchemaInferrer _endpointSchemaInferrer =
+		new EndpointSchemaInferrer();
 
 }

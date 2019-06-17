@@ -16,14 +16,15 @@ package com.liferay.talend.avro;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.liferay.talend.openapi.constants.OpenAPIConstants;
 
 import java.io.InputStream;
 
 import java.util.List;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 
 import javax.ws.rs.HttpMethod;
 
@@ -42,7 +43,7 @@ public class EndpointSchemaInferrerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		if (_openAPISpecJsonNode != null) {
+		if (_openAPISpecJsonObject != null) {
 			return;
 		}
 
@@ -52,7 +53,9 @@ public class EndpointSchemaInferrerTest {
 		InputStream resourceAsStream =
 			endpointSchemaInferrerTestClass.getResourceAsStream("openapi.json");
 
-		_openAPISpecJsonNode = _objectMapper.readTree(resourceAsStream);
+		JsonReader jsonReader = Json.createReader(resourceAsStream);
+
+		_openAPISpecJsonObject = jsonReader.readObject();
 	}
 
 	@Test
@@ -166,7 +169,8 @@ public class EndpointSchemaInferrerTest {
 
 	@Test
 	public void testOpenAPISpecification() {
-		Assert.assertTrue("Test", _openAPISpecJsonNode.has("openapi"));
+		Assert.assertTrue(
+			"Test", _openAPISpecJsonObject.containsKey("openapi"));
 	}
 
 	@Test
@@ -217,16 +221,17 @@ public class EndpointSchemaInferrerTest {
 	}
 
 	private Schema _getSchema(String endpoint, String operation) {
-		JsonNode endpointsJsonNode = _openAPISpecJsonNode.path(
+		JsonObject endpointsJsonObject = _openAPISpecJsonObject.getJsonObject(
 			OpenAPIConstants.PATHS);
 
-		Assert.assertTrue(endpointsJsonNode.has(endpoint));
+		Assert.assertTrue(endpointsJsonObject.containsKey(endpoint));
 
-		return EndpointSchemaInferrer.inferSchema(
-			endpoint, operation, _openAPISpecJsonNode);
+		return _endpointSchemaInferrer.inferSchema(
+			endpoint, operation, _openAPISpecJsonObject);
 	}
 
-	private final ObjectMapper _objectMapper = new ObjectMapper();
-	private JsonNode _openAPISpecJsonNode;
+	private final EndpointSchemaInferrer _endpointSchemaInferrer =
+		new EndpointSchemaInferrer();
+	private JsonObject _openAPISpecJsonObject;
 
 }

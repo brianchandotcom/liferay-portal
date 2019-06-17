@@ -14,8 +14,6 @@
 
 package com.liferay.talend.avro;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
 import com.liferay.talend.avro.constants.AvroConstants;
 import com.liferay.talend.openapi.OpenAPIFormat;
 import com.liferay.talend.openapi.OpenAPIType;
@@ -33,6 +31,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonString;
+import javax.json.JsonValue;
 
 import javax.ws.rs.HttpMethod;
 
@@ -52,8 +55,8 @@ import org.talend.daikon.exception.TalendRuntimeException;
  */
 public class EndpointSchemaInferrer {
 
-	public static Schema inferSchema(
-		String endpoint, String operation, JsonNode apiSpecJsonNode) {
+	public Schema inferSchema(
+		String endpoint, String operation, JsonObject apiSpecJsonObject) {
 
 		operation = operation.toLowerCase(Locale.US);
 
@@ -63,94 +66,96 @@ public class EndpointSchemaInferrer {
 			schema = _getDeleteSchema();
 		}
 		else {
-			schema = _getSchema(endpoint, operation, apiSpecJsonNode);
+			schema = _getSchema(endpoint, operation, apiSpecJsonObject);
 		}
 
 		return schema;
 	}
 
 	private static String _extractEndpointSchemaName(
-		String endpoint, String operation, JsonNode apiSpecJsonNode) {
+		String endpoint, String operation, JsonObject apiSpecJsonNode) {
 
 		String schemaName = null;
 
 		if (Objects.equals(operation, HttpMethod.GET.toLowerCase(Locale.US))) {
-			JsonNode schemaRefJsonNode = apiSpecJsonNode.path(
+			JsonObject schemaJsonObject = apiSpecJsonNode.getJsonObject(
 				OpenAPIConstants.PATHS
-			).path(
+			).getJsonObject(
 				endpoint
-			).path(
+			).getJsonObject(
 				operation
-			).path(
+			).getJsonObject(
 				OpenAPIConstants.RESPONSES
-			).path(
+			).getJsonObject(
 				OpenAPIConstants.DEFAULT
-			).path(
+			).getJsonObject(
 				OpenAPIConstants.CONTENT
-			).path(
+			).getJsonObject(
 				OpenAPIConstants.APPLICATION_JSON
-			).path(
+			).getJsonObject(
 				OpenAPIConstants.SCHEMA
-			).path(
-				OpenAPIConstants.REF
 			);
 
-			schemaName = _stripSchemaName(schemaRefJsonNode);
+			schemaName = _stripSchemaName(
+				schemaJsonObject.getString(OpenAPIConstants.REF));
 
-			JsonNode schemaJsonNode = _extractSchemaJsonNode(
+			JsonObject schemaJsonNode = _extractSchemaJsonObject(
 				schemaName, apiSpecJsonNode);
 
-			JsonNode referenceSchemaJsonNode = schemaJsonNode.path(
+			JsonObject itemsPropertiesJsonNode = schemaJsonNode.getJsonObject(
 				OpenAPIConstants.PROPERTIES
-			).path(
+			).getJsonObject(
 				OpenAPIConstants.ITEMS
-			).path(
-				OpenAPIConstants.ITEMS
-			).path(
-				OpenAPIConstants.REF
 			);
 
-			if (!referenceSchemaJsonNode.isMissingNode()) {
-				schemaName = _stripSchemaName(referenceSchemaJsonNode);
+			if ((itemsPropertiesJsonNode != null) &&
+				itemsPropertiesJsonNode.containsKey(OpenAPIConstants.REF)) {
+
+				schemaName = _stripSchemaName(
+					itemsPropertiesJsonNode.getString(OpenAPIConstants.REF));
 			}
-		}
-		else if (Objects.equals(
-					operation, HttpMethod.PATCH.toLowerCase(Locale.US)) ||
-				 Objects.equals(
-					 operation, HttpMethod.POST.toLowerCase(Locale.US))) {
 
-			JsonNode schemaRefJsonNode = apiSpecJsonNode.path(
-				OpenAPIConstants.PATHS
-			).path(
-				endpoint
-			).path(
-				operation
-			).path(
-				OpenAPIConstants.REQUEST_BODY
-			).path(
-				OpenAPIConstants.CONTENT
-			).path(
-				OpenAPIConstants.APPLICATION_JSON
-			).path(
-				OpenAPIConstants.SCHEMA
-			).path(
-				OpenAPIConstants.REF
-			);
-
-			schemaName = _stripSchemaName(schemaRefJsonNode);
+			return schemaName;
 		}
+
+		if (!Objects.equals(
+				operation, HttpMethod.PATCH.toLowerCase(Locale.US)) &&
+			!Objects.equals(
+				operation, HttpMethod.POST.toLowerCase(Locale.US))) {
+
+			return null;
+		}
+
+		JsonObject schemaJsonNode = apiSpecJsonNode.getJsonObject(
+			OpenAPIConstants.PATHS
+		).getJsonObject(
+			endpoint
+		).getJsonObject(
+			operation
+		).getJsonObject(
+			OpenAPIConstants.REQUEST_BODY
+		).getJsonObject(
+			OpenAPIConstants.CONTENT
+		).getJsonObject(
+			OpenAPIConstants.APPLICATION_JSON
+		).getJsonObject(
+			OpenAPIConstants.SCHEMA
+		);
+
+		schemaName = _stripSchemaName(
+			schemaJsonNode.getString(OpenAPIConstants.REF));
 
 		return schemaName;
 	}
 
-	private static JsonNode _extractSchemaJsonNode(
-		String schemaName, JsonNode apiSpecJsonNode) {
+	private static JsonObject _extractSchemaJsonObject(
+		String schemaName, JsonObject apiSpecJsonNode) {
 
-		return apiSpecJsonNode.path(
+		return apiSpecJsonNode.getJsonObject(
 			OpenAPIConstants.COMPONENTS
-		).path(
+		).getJsonObject(
 			OpenAPIConstants.SCHEMAS
-		).path(
+		).getJsonObject(
 			schemaName
 		);
 	}
@@ -169,41 +174,40 @@ public class EndpointSchemaInferrer {
 	}
 
 	private static Schema.Field _getDesignField(
-		String fieldName, Map.Entry<String, JsonNode> propertyEntry,
-		Set<String> requiredPropertyNames) {
+		String fieldName, JsonObject propertyJsonObject) {
 
 		Schema.Field designField = new Schema.Field(
 			fieldName, AvroUtils.wrapAsNullable(AvroUtils._string()), null,
 			(Object)null);
 
-		designField = _processFieldRequirements(
-			designField, propertyEntry, requiredPropertyNames);
-
-		JsonNode propertyJsonNode = propertyEntry.getValue();
-
-		JsonNode openAPIFormatDefinitionJsonNode = propertyJsonNode.path(
-			OpenAPIConstants.FORMAT);
-
 		OpenAPIType openAPIType = OpenAPIType.fromDefinition(
-			propertyJsonNode.path(
-				OpenAPIConstants.TYPE
-			).asText());
+			propertyJsonObject.getString(OpenAPIConstants.TYPE));
 
 		if (openAPIType == OpenAPIType.ARRAY) {
 			return designField;
 		}
-		else if (openAPIType == OpenAPIType.OBJECT) {
-			openAPIFormatDefinitionJsonNode = propertyJsonNode.path(
-				OpenAPIConstants.ADDITIONAL_PROPERTIES
-			).path(
-				OpenAPIConstants.TYPE
-			);
-		}
 
 		String openAPIFormatDefinition = null;
 
-		if (!openAPIFormatDefinitionJsonNode.isMissingNode()) {
-			openAPIFormatDefinition = openAPIFormatDefinitionJsonNode.asText();
+		if (propertyJsonObject.containsKey(OpenAPIConstants.FORMAT)) {
+			openAPIFormatDefinition = propertyJsonObject.getString(
+				OpenAPIConstants.FORMAT);
+		}
+		else if ((openAPIType == OpenAPIType.OBJECT) &&
+				 propertyJsonObject.containsKey(
+					 OpenAPIConstants.ADDITIONAL_PROPERTIES)) {
+
+			JsonObject additionalPropertiesJsonObject =
+				propertyJsonObject.getJsonObject(
+					OpenAPIConstants.ADDITIONAL_PROPERTIES);
+
+			if (additionalPropertiesJsonObject.containsKey(
+					OpenAPIConstants.TYPE)) {
+
+				openAPIFormatDefinition =
+					additionalPropertiesJsonObject.getString(
+						OpenAPIConstants.TYPE);
+			}
 		}
 
 		OpenAPIFormat openAPIFormat = OpenAPIFormat.fromOpenAPITypeAndFormat(
@@ -261,38 +265,38 @@ public class EndpointSchemaInferrer {
 				(Object)null);
 		}
 
-		designField = _processFieldRequirements(
-			designField, propertyEntry, requiredPropertyNames);
-
 		return designField;
 	}
 
-	private static Set<String> _getRequiredPropertyNames(
-		JsonNode schemaJsonNode) {
-
-		JsonNode requiredJsonNode = schemaJsonNode.path(
-			OpenAPIConstants.REQUIRED);
-
-		Set<String> requiredProperties = new HashSet<>();
-
-		if (requiredJsonNode.isArray()) {
-			for (JsonNode valueJsonNode : requiredJsonNode) {
-				requiredProperties.add(valueJsonNode.asText());
-			}
-		}
-
-		return Collections.unmodifiableSet(requiredProperties);
+	private static String _stripSchemaName(String reference) {
+		return reference.replaceAll(OpenAPIConstants.PATH_SCHEMA_REFERENCE, "");
 	}
 
-	private static Schema _getSchema(
-		String endpoint, String operation, JsonNode apiSpecJsonNode) {
+	private Set<String> _asSet(JsonArray jsonArray) {
+		if ((jsonArray == null) || jsonArray.isEmpty()) {
+			return Collections.emptySet();
+		}
+
+		List<JsonString> jsonStrings = jsonArray.getValuesAs(JsonString.class);
+
+		Set<String> strings = new HashSet<>();
+
+		for (JsonString jsonString : jsonStrings) {
+			strings.add(jsonString.getString());
+		}
+
+		return strings;
+	}
+
+	private Schema _getSchema(
+		String endpoint, String operation, JsonObject apiSpecJsonObject) {
 
 		AtomicInteger index = new AtomicInteger();
 		List<Schema.Field> schemaFields = new ArrayList<>();
 		Set<String> previousFieldNames = new HashSet<>();
 
 		String schemaName = _extractEndpointSchemaName(
-			endpoint, operation, apiSpecJsonNode);
+			endpoint, operation, apiSpecJsonObject);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Schema name: {}", schemaName);
@@ -303,66 +307,51 @@ public class EndpointSchemaInferrer {
 				"Unable to determine the Schema for the selected endpoint");
 		}
 
-		JsonNode schemaJsonNode = _extractSchemaJsonNode(
-			schemaName, apiSpecJsonNode);
+		JsonObject schemaJsonObject = _extractSchemaJsonObject(
+			schemaName, apiSpecJsonObject);
 
-		_processSchemaJsonNode(
-			null, schemaJsonNode, index, previousFieldNames, schemaFields,
-			apiSpecJsonNode);
+		_processSchemaJsonObject(
+			null, schemaJsonObject, index, previousFieldNames, schemaFields,
+			apiSpecJsonObject);
 
 		return Schema.createRecord("Runtime", null, null, false, schemaFields);
 	}
 
-	private static Schema.Field _processFieldRequirements(
-		Schema.Field designField, Map.Entry<String, JsonNode> propertyEntry,
-		Set<String> requiredPropertyNames) {
+	private void _processSchemaJsonObject(
+		String parentPropertyName, JsonObject schemaJsonObject,
+		AtomicInteger index, Set<String> previousFieldNames,
+		List<Schema.Field> schemaFields, JsonObject apiSpecJsonObject) {
 
-		if (requiredPropertyNames.contains(propertyEntry.getKey())) {
-			designField = new Schema.Field(
-				designField.name(),
-				AvroUtils.unwrapIfNullable(designField.schema()), null,
-				(Object)null);
+		Set<String> required = _asSet(
+			schemaJsonObject.getJsonArray(OpenAPIConstants.REQUIRED));
 
-			designField.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
-		}
-
-		return designField;
-	}
-
-	private static void _processSchemaJsonNode(
-		String parentPropertyName, JsonNode schemaJsonNode, AtomicInteger index,
-		Set<String> previousFieldNames, List<Schema.Field> schemaFields,
-		JsonNode apiSpecJsonNode) {
-
-		Set<String> requiredPropertyNames = _getRequiredPropertyNames(
-			schemaJsonNode);
-
-		JsonNode schemaPropertiesJsonNode = schemaJsonNode.path(
+		JsonObject schemaPropertiesJsonObject = schemaJsonObject.getJsonObject(
 			OpenAPIConstants.PROPERTIES);
 
-		for (Iterator<Map.Entry<String, JsonNode>> it =
-				schemaPropertiesJsonNode.fields(); it.hasNext();
-			 index.incrementAndGet()) {
+		Set<Map.Entry<String, JsonValue>> entries =
+			schemaPropertiesJsonObject.entrySet();
 
-			Map.Entry<String, JsonNode> propertyEntry = it.next();
+		for (Iterator<Map.Entry<String, JsonValue>> it = entries.iterator();
+			 it.hasNext(); index.incrementAndGet()) {
 
-			JsonNode propertyJsonNode = propertyEntry.getValue();
+			Map.Entry<String, JsonValue> propertyEntry = it.next();
 
-			JsonNode schemaRefJsonNode = propertyJsonNode.path(
-				OpenAPIConstants.REF);
+			JsonValue propertyJsonValue = propertyEntry.getValue();
 
-			if (!schemaRefJsonNode.isMissingNode() &&
+			JsonObject propertyJsonObject = propertyJsonValue.asJsonObject();
+
+			if (propertyJsonObject.containsKey(OpenAPIConstants.REF) &&
 				(parentPropertyName == null)) {
 
 				String referenceSchemaName = _stripSchemaName(
-					schemaRefJsonNode);
+					propertyJsonObject.getString(OpenAPIConstants.REF));
 
-				JsonNode referenceSchemaJsonNode = _extractSchemaJsonNode(
-					referenceSchemaName, apiSpecJsonNode);
+				JsonObject referenceSchemaJsonNode = _extractSchemaJsonObject(
+					referenceSchemaName, apiSpecJsonObject);
 
-				_processSchemaJsonNode(
+				_processSchemaJsonObject(
 					propertyEntry.getKey(), referenceSchemaJsonNode, index,
-					previousFieldNames, schemaFields, apiSpecJsonNode);
+					previousFieldNames, schemaFields, apiSpecJsonObject);
 
 				continue;
 			}
@@ -379,16 +368,14 @@ public class EndpointSchemaInferrer {
 			previousFieldNames.add(fieldName);
 
 			Schema.Field designField = _getDesignField(
-				fieldName, propertyEntry, requiredPropertyNames);
+				fieldName, propertyJsonValue.asJsonObject());
+
+			if (required.contains(fieldName)) {
+				designField.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
+			}
 
 			schemaFields.add(designField);
 		}
-	}
-
-	private static String _stripSchemaName(JsonNode schemaRefJsonNode) {
-		String reference = schemaRefJsonNode.asText();
-
-		return reference.replaceAll(OpenAPIConstants.PATH_SCHEMA_REFERENCE, "");
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(

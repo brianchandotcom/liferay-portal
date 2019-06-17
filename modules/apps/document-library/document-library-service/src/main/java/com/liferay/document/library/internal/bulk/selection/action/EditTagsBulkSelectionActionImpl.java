@@ -15,6 +15,7 @@
 package com.liferay.document.library.internal.bulk.selection.action;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionAction;
@@ -71,12 +72,7 @@ public class EditTagsBulkSelectionActionImpl
 		bulkSelection.forEach(
 			assetEntry -> {
 				try {
-					if (!BaseModelPermissionCheckerUtil.
-							containsBaseModelPermission(
-								permissionChecker, assetEntry.getGroupId(),
-								assetEntry.getClassName(),
-								assetEntry.getClassPK(), ActionKeys.UPDATE)) {
-
+					if (!_hasEditPermission(assetEntry, permissionChecker)) {
 						return;
 					}
 
@@ -107,6 +103,22 @@ public class EditTagsBulkSelectionActionImpl
 					}
 				}
 			});
+	}
+
+	private boolean _hasEditPermission(
+			AssetEntry assetEntry, PermissionChecker permissionChecker)
+		throws PortalException {
+
+		AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
+
+		if (assetRenderer != null) {
+			return assetRenderer.hasEditPermission(permissionChecker);
+		}
+
+		return BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+			permissionChecker, assetEntry.getGroupId(),
+			assetEntry.getClassName(), assetEntry.getClassPK(),
+			ActionKeys.UPDATE);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

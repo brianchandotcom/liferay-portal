@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.delivery.client.dto.v1_0.Rating;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
@@ -1346,6 +1347,12 @@ public abstract class BaseStructuredContentResourceTestCase {
 			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
+	protected void assertEquals(Rating rating1, Rating rating2) {
+
+		Assert.assertTrue(
+			rating1 + " does not equal " + rating2, equals(rating1, rating2));
+	}
+
 	protected void assertEquals(
 		StructuredContent structuredContent1,
 		StructuredContent structuredContent2) {
@@ -1586,6 +1593,64 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected void assertValid(Rating rating) {
+		boolean valid = true;
+
+		if (rating.getDateCreated() == null) {
+			valid = false;
+		}
+
+		if (rating.getDateModified() == null) {
+			valid = false;
+		}
+
+		if (rating.getId() == null) {
+			valid = false;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalRatingAssertFieldNames()) {
+
+			if (Objects.equals("bestRating", additionalAssertFieldName)) {
+				if (rating.getBestRating() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (rating.getCreator() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("ratingValue", additionalAssertFieldName)) {
+				if (rating.getRatingValue() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("worstRating", additionalAssertFieldName)) {
+				if (rating.getWorstRating() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		Assert.assertTrue(valid);
+	}
+
 	protected void assertValid(Page<StructuredContent> page) {
 		boolean valid = false;
 
@@ -1605,6 +1670,10 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {
+		return new String[0];
+	}
+
+	protected String[] getAdditionalRatingAssertFieldNames() {
 		return new String[0];
 	}
 
@@ -1873,6 +1942,80 @@ public abstract class BaseStructuredContentResourceTestCase {
 				if (!Objects.deepEquals(
 						structuredContent1.getViewableBy(),
 						structuredContent2.getViewableBy())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		return true;
+	}
+
+	protected boolean equals(
+		Rating rating1,
+		Rating rating2) {
+
+		if (rating1 == rating2) {
+			return true;
+		}
+
+			for (String additionalAssertFieldName :
+				getAdditionalRatingAssertFieldNames()) {
+
+			if (Objects.equals("bestRating", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						rating1.getBestRating(),
+						rating2.getBestRating())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						rating1.getDateCreated(),
+						rating2.getDateCreated())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateModified", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						rating1.getDateModified(),
+						rating2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("ratingValue", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						rating1.getRatingValue(),
+						rating2.getRatingValue())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("worstRating", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						rating1.getWorstRating(),
+						rating2.getWorstRating())) {
 
 					return false;
 				}
@@ -2158,6 +2301,19 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
+	}
+
+	protected Rating randomRating() throws Exception {
+		return new Rating() {
+			{
+				bestRating = RandomTestUtil.randomDouble();
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				id = RandomTestUtil.randomLong();
+				ratingValue = RandomTestUtil.randomDouble();
+				worstRating = RandomTestUtil.randomDouble();
+			}
+		};
 	}
 
 	protected StructuredContent randomStructuredContent() throws Exception {

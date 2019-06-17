@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
+import com.liferay.headless.delivery.client.dto.v1_0.Rating;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResource;
 import com.liferay.journal.model.JournalArticle;
@@ -125,9 +126,72 @@ public class StructuredContentResourceTest
 		Assert.assertEquals(title, structuredContent.getTitle());
 	}
 
+	@Test
+	public void testGetStructuredContentMyRating() throws Exception {
+		StructuredContent postStructuredContent =
+			testGetSiteStructuredContentByKey_addStructuredContent();
+
+		Rating randomRating = randomRating();
+
+		Rating postRating = testPostStructuredContentMyRating_addMyRating(
+			postStructuredContent.getId(), randomRating);
+
+		Rating getRating =
+			structuredContentResource.getStructuredContentMyRating(
+				postStructuredContent.getId());
+
+		assertEquals(postRating, getRating);
+		assertValid(getRating);
+	}
+
+	@Test
+	public void testPostStructuredContentMyRating() throws Exception {
+		StructuredContent randomStructuredContent = randomStructuredContent();
+
+		StructuredContent postStructuredContent =
+			testPostSiteStructuredContent_addStructuredContent(
+				randomStructuredContent);
+
+		Rating randomRating = randomRating();
+
+		Rating postRating = testPostStructuredContentMyRating_addMyRating(
+			postStructuredContent.getContentStructureId(), randomRating);
+
+		Assert.assertTrue(equals(randomRating, postRating));
+	}
+
+	@Test
+	public void testPutStructuredContentMyRating() throws Exception {
+		StructuredContent postStructuredContent =
+			testPutStructuredContent_addStructuredContent();
+
+		testPostStructuredContentMyRating_addMyRating(
+			postStructuredContent.getContentStructureId(), randomRating());
+
+		Rating randomRating = randomRating();
+
+		Rating putRating =
+			structuredContentResource.putStructuredContentMyRating(
+				postStructuredContent.getId(), randomRating);
+
+		assertEquals(randomRating, putRating);
+		assertValid(putRating);
+
+		Rating getRating =
+			structuredContentResource.getStructuredContentMyRating(
+				postStructuredContent.getId());
+
+		assertEquals(randomRating, getRating);
+		assertValid(getRating);
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"contentStructureId", "description", "title"};
+	}
+
+	protected String[] getAdditionalRatingAssertFieldNames() {
+		return new String[] {"bestRating", "ratingValue", "worstRating"};
 	}
 
 	@Override
@@ -145,6 +209,15 @@ public class StructuredContentResourceTest
 			_irrelevantDDMStructure.getStructureId());
 
 		return structuredContent;
+	}
+
+	protected Rating randomRating() throws Exception {
+		Rating rating = super.randomRating();
+
+		rating.setBestRating(1D);
+		rating.setWorstRating(0D);
+
+		return rating;
 	}
 
 	@Override
@@ -186,6 +259,14 @@ public class StructuredContentResourceTest
 		testGetStructuredContentFolderStructuredContentsPage_getStructuredContentFolderId() {
 
 		return _journalFolder.getFolderId();
+	}
+
+	protected Rating testPostStructuredContentMyRating_addMyRating(
+			long structuredContentId, Rating rating)
+		throws Exception {
+
+		return structuredContentResource.postStructuredContentMyRating(
+			structuredContentId, rating);
 	}
 
 	private DDMStructure _addDDMStructure(Group group) throws Exception {

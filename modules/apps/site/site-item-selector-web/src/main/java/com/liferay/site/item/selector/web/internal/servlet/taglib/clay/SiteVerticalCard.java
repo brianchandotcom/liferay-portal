@@ -18,6 +18,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -27,8 +29,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.constants.SiteWebKeys;
 import com.liferay.site.util.GroupURLProvider;
 
-import java.util.List;
 import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -79,9 +81,15 @@ public class SiteVerticalCard implements VerticalCard {
 		}
 
 		List<Group> childSites = null;
+
 		try {
 			childSites = _group.getFilteredChildren(true);
-		} catch (PortalException pe) {
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			childSites = Collections.emptyList();
 		}
 
@@ -96,6 +104,9 @@ public class SiteVerticalCard implements VerticalCard {
 				_group.getDescriptiveName(_themeDisplay.getLocale()));
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 
 		return HtmlUtil.escape(_group.getName(_themeDisplay.getLocale()));
@@ -105,6 +116,9 @@ public class SiteVerticalCard implements VerticalCard {
 	public boolean isSelectable() {
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SiteVerticalCard.class);
 
 	private final Group _group;
 	private final GroupURLProvider _groupURLProvider;

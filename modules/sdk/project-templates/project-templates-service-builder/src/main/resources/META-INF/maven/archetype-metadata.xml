@@ -30,6 +30,9 @@
 		<requiredProperty key="buildType">
 			<defaultValue>maven</defaultValue>
 		</requiredProperty>
+		<requiredProperty key="dependencyInjector">
+			<defaultValue>ds</defaultValue>
+		</requiredProperty>
 		<requiredProperty key="dependencyManagementEnabled">
 			<defaultValue>false</defaultValue>
 		</requiredProperty>

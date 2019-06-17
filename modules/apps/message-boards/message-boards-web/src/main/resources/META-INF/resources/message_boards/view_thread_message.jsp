@@ -33,7 +33,7 @@ if (message.isAnonymous()) {
 
 <a id="<portlet:namespace />message_<%= message.getMessageId() %>"></a>
 
-<div class="card list-group-card panel">
+<div class="card panel">
 	<div class="panel-heading">
 		<div class="card-row card-row-padded">
 			<div class="card-col-field">

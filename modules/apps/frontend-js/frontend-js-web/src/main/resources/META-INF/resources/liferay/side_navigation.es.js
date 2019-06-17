@@ -212,7 +212,11 @@ function subscribe(element, eventName, handler) {
 		}
 
 		const emitter = emitters[selector];
-		const subscription = emitter.on(eventName, handler);
+		const subscription = emitter.on(eventName, event => {
+			if (!event.defaultPrevented) {
+				handler(event);
+			}
+		});
 
 		return {
 			dispose() {

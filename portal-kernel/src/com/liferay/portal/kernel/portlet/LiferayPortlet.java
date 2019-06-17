@@ -252,7 +252,7 @@ public class LiferayPortlet extends GenericPortlet {
 	 */
 	@Deprecated
 	protected void checkPath(String path) throws PortletException {
-		if (Validator.isNotNull(path) && !isValidPath(path)) {
+		if (Validator.isNotNull(path)) {
 			throw new PortletException(
 				"Path " + path + " is not accessible by this portlet");
 		}

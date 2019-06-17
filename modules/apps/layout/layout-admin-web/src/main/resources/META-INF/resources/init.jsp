@@ -55,7 +55,6 @@ page import="com.liferay.layout.admin.web.internal.display.context.SelectLayoutP
 page import="com.liferay.layout.admin.web.internal.display.context.SelectThemeDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.SelectThemeManagementToolbarDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.product.navigation.control.menu.CustomizationSettingsProductNavigationControlMenuEntry" %><%@
-page import="com.liferay.layout.admin.web.internal.product.navigation.control.menu.InformationMessagesProductNavigationControlMenuEntry" %><%@
 page import="com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplateCollectionPermission" %><%@
 page import="com.liferay.layout.admin.web.internal.servlet.taglib.clay.DisplayPageVerticalCard" %><%@
 page import="com.liferay.layout.admin.web.internal.servlet.taglib.clay.LayoutPageTemplateEntryVerticalCard" %><%@

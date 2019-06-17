@@ -45,6 +45,7 @@ import graphql.annotations.processor.retrievers.fieldBuilders.method.MethodTypeB
 import graphql.annotations.processor.searchAlgorithms.BreadthFirstSearch;
 import graphql.annotations.processor.searchAlgorithms.ParentalSearch;
 import graphql.annotations.processor.typeFunctions.DefaultTypeFunction;
+import graphql.annotations.processor.typeFunctions.TypeFunction;
 import graphql.annotations.processor.util.NamingKit;
 
 import graphql.schema.DataFetcher;
@@ -53,10 +54,12 @@ import graphql.schema.GraphQLFieldDefinition;
 import graphql.schema.GraphQLObjectType;
 import graphql.schema.GraphQLOutputType;
 import graphql.schema.GraphQLSchema;
+import graphql.schema.GraphQLType;
 
 import graphql.servlet.GraphQLContext;
 import graphql.servlet.SimpleGraphQLHttpServlet;
 
+import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
@@ -65,6 +68,7 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
@@ -91,6 +95,29 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 @Component(immediate = true, service = {})
 public class GraphQLServletExtender {
+
+	public class DateTypeFunction implements TypeFunction {
+
+		@Override
+		public GraphQLType buildType(
+			boolean input, Class<?> aClass, AnnotatedType annotatedType,
+			ProcessingElementsContainer processingElementsContainer) {
+
+			return _DATE_GRAPHQL_SCALAR_TYPE;
+		}
+
+		@Override
+		public boolean canBuildType(
+			Class<?> aClass, AnnotatedType annotatedType) {
+
+			if (aClass == Date.class) {
+				return true;
+			}
+
+			return false;
+		}
+
+	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
@@ -159,6 +186,8 @@ public class GraphQLServletExtender {
 					setGraphQLTypeRetriever(graphQLTypeRetriever);
 				}
 			});
+
+		_defaultTypeFunction.register(new DateTypeFunction());
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
@@ -381,6 +410,9 @@ public class GraphQLServletExtender {
 			return _servlet;
 		}
 	}
+
+	private static final DateGraphQLScalarType _DATE_GRAPHQL_SCALAR_TYPE =
+		new DateGraphQLScalarType();
 
 	private BundleContext _bundleContext;
 

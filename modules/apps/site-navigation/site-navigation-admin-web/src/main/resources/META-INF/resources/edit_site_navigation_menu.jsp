@@ -142,6 +142,7 @@ StringBundler sb = new StringBundler(4);
 
 sb.append("metal-dom/src/dom as dom, ");
 sb.append("metal-dom/src/globalEval as globalEval, ");
+sb.append("frontend-js-web/liferay/util/form/object_to_form_data.es as objectToFormDataModule, ");
 sb.append(npmResolvedPackageName);
 sb.append("/js/SiteNavigationMenuEditor.es as siteNavigationMenuEditorModule, ");
 sb.append(npmResolvedPackageName);
@@ -283,18 +284,12 @@ sb.append("/js/SiteNavigationMenuItemDOMHandler.es as siteNavigationMenuItemDOMH
 		sidebar.header = '<div class="autofit-row sidebar-section"><div class="autofit-col autofit-col-expand"><h4 class="component-title"><span class="text-truncate-inline"><span class="text-truncate">' + title + '</span></span></h4></div><div class="autofit-col"><button class="btn btn-monospaced btn-unstyled" id="<portlet:namespace />sidebarHeaderButton" type="button"><span class="icon-monospaced"><aui:icon image="times" markupView="lexicon" /></span></button></div></div>';
 		sidebar.visible = true;
 
-		const formData = new FormData();
-
-		Object.keys(data).forEach(
-			function(key) {
-				formData.append('<portlet:namespace />' + key, data[key]);
-			}
-		);
-
 		Liferay.Util.fetch(
 			url,
 			{
-				body: formData,
+				body: objectToFormDataModule.default(
+					Liferay.Util.ns('<portlet:namespace />', data)
+				),
 				method: 'POST'
 			}
 		).then(

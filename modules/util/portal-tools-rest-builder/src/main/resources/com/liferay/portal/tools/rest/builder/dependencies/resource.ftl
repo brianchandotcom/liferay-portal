@@ -1,7 +1,10 @@
 package ${configYAML.apiPackagePath}.resource.${escapedVersion};
 
-<#list openAPIYAML.components.schemas?keys as schemaName>
+<#list allSchemas?keys as schemaName>
 	import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
+</#list>
+<#list globalEnumSchemas?keys as globalEnumSchemaName>
+	import ${configYAML.apiPackagePath}.constant.${escapedVersion}.${globalEnumSchemaName};
 </#list>
 
 import com.liferay.portal.kernel.model.Company;

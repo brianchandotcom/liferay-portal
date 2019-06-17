@@ -45,6 +45,10 @@ public class Schema {
 		return _anyOfSchemas;
 	}
 
+	public String getDefault() {
+		return _default;
+	}
+
 	public String getDescription() {
 		return _description;
 	}
@@ -110,6 +114,10 @@ public class Schema {
 		_anyOfSchemas = anyOfSchemas;
 	}
 
+	public void setDefault(String aDefault) {
+		_default = aDefault;
+	}
+
 	public void setDescription(String description) {
 		_description = description;
 	}
@@ -168,6 +176,7 @@ public class Schema {
 	private Schema _additionalPropertySchema;
 	private List<Schema> _allOfSchemas;
 	private List<Schema> _anyOfSchemas;
+	private String _default;
 	private String _description;
 	private List<String> _enumValues;
 	private String _example;

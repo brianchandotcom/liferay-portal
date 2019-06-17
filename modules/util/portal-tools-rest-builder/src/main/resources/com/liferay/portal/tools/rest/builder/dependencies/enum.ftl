@@ -23,7 +23,7 @@ public enum ${schemaName} {
 	</#list>;
 
 	@JsonCreator
-	public static ${schemaName} create(String value) {
+	public static ${schemaName} fromString(String value) {
 		for (${schemaName} ${schemaVarName} : values()) {
 			if (Objects.equals(${schemaVarName}.getValue(), value)) {
 				return ${schemaVarName};

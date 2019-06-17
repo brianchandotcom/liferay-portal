@@ -1,6 +1,6 @@
 package ${configYAML.apiPackagePath}.internal.graphql.query.${escapedVersion};
 
-<#list openAPIYAML.components.schemas?keys as schemaName>
+<#list allSchemas?keys as schemaName>
 	import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
 	import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
 </#list>

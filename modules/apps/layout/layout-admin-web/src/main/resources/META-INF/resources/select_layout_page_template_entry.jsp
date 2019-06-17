@@ -164,11 +164,15 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 	</div>
 </div>
 
-<aui:script use="aui-base">
-	var addLayoutActionOptionQueryClickHandler = A.one('#<portlet:namespace />layoutPageTemplateEntries').delegate(
+<aui:script require="metal-dom/src/all/dom as dom">
+	const layoutPageTemplateEntries = document.getElementById('<portlet:namespace />layoutPageTemplateEntries');
+
+	const addLayoutActionOptionQueryClickHandler = dom.delegate(
+		layoutPageTemplateEntries,
 		'click',
+		'.add-layout-action-option',
 		function(event) {
-			var actionElement = event.currentTarget;
+			const actionElement = event.delegateTarget;
 
 			Liferay.Util.openWindow(
 				{
@@ -183,15 +187,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 					},
 					id: '<portlet:namespace />addLayoutDialog',
 					title: '<liferay-ui:message key="add-page" />',
-					uri: actionElement.getData('add-layout-url')
+					uri: actionElement.getAttribute('data-add-layout-url')
 				}
 			);
-		},
-		'.add-layout-action-option'
+		}
 	);
 
 	function handleDestroyPortlet() {
-		addLayoutActionOptionQueryClickHandler.detach();
+		addLayoutActionOptionQueryClickHandler.removeListener();
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);
 	}

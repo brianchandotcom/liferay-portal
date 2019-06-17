@@ -33,6 +33,10 @@ public enum ${schemaName} {
 		return null;
 	}
 
+	public static ${schemaName} fromString(String value) {
+		return ${schemaName}.create(value);
+	}
+
 	@JsonValue
 	public String getValue() {
 		return _value;

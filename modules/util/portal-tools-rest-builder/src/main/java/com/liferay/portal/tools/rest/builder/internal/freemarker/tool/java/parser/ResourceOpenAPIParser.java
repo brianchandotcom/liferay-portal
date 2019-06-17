@@ -560,24 +560,20 @@ public class ResourceOpenAPIParser {
 				continue;
 			}
 
-			Schema schema = parameter.getSchema();
+			StringBuilder sb = new StringBuilder();
 
-			if (schema.getType() != null) {
-				StringBuilder sb = new StringBuilder();
-
-				if (parameter.isRequired()) {
-					sb.append("@NotNull ");
-				}
-
-				sb.append("@Parameter(hidden=true)");
-				sb.append("@");
-				sb.append(StringUtil.upperCaseFirstLetter(parameter.getIn()));
-				sb.append("Param(\"");
-				sb.append(parameter.getName());
-				sb.append("\")");
-
-				return sb.toString();
+			if (parameter.isRequired()) {
+				sb.append("@NotNull ");
 			}
+
+			sb.append("@Parameter(hidden=true)");
+			sb.append("@");
+			sb.append(StringUtil.upperCaseFirstLetter(parameter.getIn()));
+			sb.append("Param(\"");
+			sb.append(parameter.getName());
+			sb.append("\")");
+
+			return sb.toString();
 		}
 
 		return "";

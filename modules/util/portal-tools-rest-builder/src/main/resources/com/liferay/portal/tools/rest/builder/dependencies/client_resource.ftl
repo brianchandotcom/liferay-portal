@@ -1,5 +1,9 @@
 package ${configYAML.apiPackagePath}.client.resource.${escapedVersion};
 
+<#list globalEnumSchemas?keys as globalEnumSchemaName>
+	import ${configYAML.apiPackagePath}.client.constant.${escapedVersion}.${globalEnumSchemaName};
+</#list>
+
 import ${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${schemaName};
 import ${configYAML.apiPackagePath}.client.http.HttpInvoker;
 import ${configYAML.apiPackagePath}.client.pagination.Page;
@@ -28,10 +32,10 @@ public interface ${schemaName}Resource {
 
 	<#list freeMarkerTool.getResourceTestCaseJavaMethodSignatures(configYAML, openAPIYAML, schemaName) as javaMethodSignature>
 		<#assign
-			parameters = freeMarkerTool.getResourceTestCaseParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, false)?replace(".dto.", ".client.dto.")?replace("com.liferay.portal.kernel.search.filter.Filter filter", "String filterString")?replace("com.liferay.portal.kernel.search.Sort[] sorts", "String sortString")?replace("com.liferay.portal.vulcan.multipart.MultipartBody multipartBody", "${schemaName} ${schemaVarName}, Map<String, File> multipartFiles")?replace("com.liferay.portal.vulcan.pagination", "${configYAML.apiPackagePath}.client.pagination")
+			parameters = freeMarkerTool.getResourceTestCaseParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, false)?replace(".constant.", ".client.constant.")?replace(".dto.", ".client.dto.")?replace("com.liferay.portal.kernel.search.filter.Filter filter", "String filterString")?replace("com.liferay.portal.kernel.search.Sort[] sorts", "String sortString")?replace("com.liferay.portal.vulcan.multipart.MultipartBody multipartBody", "${schemaName} ${schemaVarName}, Map<String, File> multipartFiles")?replace("com.liferay.portal.vulcan.pagination", "${configYAML.apiPackagePath}.client.pagination")
 		/>
 
-		public ${javaMethodSignature.returnType?replace(".dto.", ".client.dto.")?replace("com.liferay.portal.vulcan.pagination.", "")?replace("javax.ws.rs.core.Response", "void")} ${javaMethodSignature.methodName}(${parameters}) throws Exception;
+		public ${javaMethodSignature.returnType?replace(".constant.", ".client.constant.")?replace(".dto.", ".client.dto.")?replace("com.liferay.portal.vulcan.pagination.", "")?replace("javax.ws.rs.core.Response", "void")} ${javaMethodSignature.methodName}(${parameters}) throws Exception;
 
 		public HttpInvoker.HttpResponse ${javaMethodSignature.methodName}HttpResponse(${parameters}) throws Exception;
 	</#list>
@@ -80,10 +84,10 @@ public interface ${schemaName}Resource {
 		<#list freeMarkerTool.getResourceTestCaseJavaMethodSignatures(configYAML, openAPIYAML, schemaName) as javaMethodSignature>
 			<#assign
 				arguments = freeMarkerTool.getResourceTestCaseArguments(javaMethodSignature.javaMethodParameters)?replace("filter", "filterString")?replace("sorts", "sortString")?replace("multipartBody", "${schemaVarName}, multipartFiles")
-				parameters = freeMarkerTool.getResourceTestCaseParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, false)?replace(".dto.", ".client.dto.")?replace("com.liferay.portal.kernel.search.filter.Filter filter", "String filterString")?replace("com.liferay.portal.kernel.search.Sort[] sorts", "String sortString")?replace("com.liferay.portal.vulcan.multipart.MultipartBody multipartBody", "${schemaName} ${schemaVarName}, Map<String, File> multipartFiles")?replace("com.liferay.portal.vulcan.pagination", "${configYAML.apiPackagePath}.client.pagination")
+				parameters = freeMarkerTool.getResourceTestCaseParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, false)?replace(".constant.", ".client.constant.")?replace(".dto.", ".client.dto.")?replace("com.liferay.portal.kernel.search.filter.Filter filter", "String filterString")?replace("com.liferay.portal.kernel.search.Sort[] sorts", "String sortString")?replace("com.liferay.portal.vulcan.multipart.MultipartBody multipartBody", "${schemaName} ${schemaVarName}, Map<String, File> multipartFiles")?replace("com.liferay.portal.vulcan.pagination", "${configYAML.apiPackagePath}.client.pagination")
 			/>
 
-			public ${javaMethodSignature.returnType?replace(".dto.", ".client.dto.")?replace("com.liferay.portal.vulcan.pagination.", "")?replace("javax.ws.rs.core.Response", "void")} ${javaMethodSignature.methodName}(${parameters}) throws Exception {
+			public ${javaMethodSignature.returnType?replace(".constant.", ".client.constant.")?replace(".dto.", ".client.dto.")?replace("com.liferay.portal.vulcan.pagination.", "")?replace("javax.ws.rs.core.Response", "void")} ${javaMethodSignature.methodName}(${parameters}) throws Exception {
 				HttpInvoker.HttpResponse httpResponse = ${javaMethodSignature.methodName}HttpResponse(${arguments});
 
 				String content = httpResponse.getContent();

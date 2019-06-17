@@ -227,6 +227,13 @@ public class StagedGroupImpl implements StagedGroup {
 	}
 
 	@Override
+	public List<Group> getFilteredChildren(boolean site)
+		throws PortalException {
+
+		return _group.getFilteredChildren(site);
+	}
+
+	@Override
 	public String getFriendlyURL() {
 		return _group.getFriendlyURL();
 	}

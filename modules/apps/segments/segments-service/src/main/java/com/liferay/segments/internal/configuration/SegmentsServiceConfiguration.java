@@ -32,7 +32,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SegmentsServiceConfiguration {
 
-	@Meta.AD(deflt = "true", name = "segmentation-enabled", required = false)
+	@Meta.AD(
+		deflt = "true", description = "segmentation-enabled-description",
+		name = "segmentation-enabled-name", required = false
+	)
 	public boolean segmentationEnabled();
 
 }

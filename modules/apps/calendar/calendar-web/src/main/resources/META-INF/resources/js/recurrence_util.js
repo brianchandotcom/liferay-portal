@@ -140,14 +140,10 @@ AUI.add(
 
 				if (actionName === 'delete') {
 					titleText = Liferay.Language.get('delete-recurring-event');
-					modalDescription = Liferay.Language.get(
-						'would-you-like-to-delete-only-this-event-all-events-in-the-series-or-this-and-all-future-events-in-the-series'
-					);
+					modalDescription = Liferay.Language.get('would-you-like-to-delete-only-this-event-all-events-in-the-series-or-this-and-all-future-events-in-the-series');
 				} else {
 					titleText = Liferay.Language.get('change-recurring-event');
-					modalDescription = Liferay.Language.get(
-						'would-you-like-to-change-only-this-event-all-events-in-the-series-or-this-and-all-future-events-in-the-series'
-					);
+					modalDescription = Liferay.Language.get('would-you-like-to-change-only-this-event-all-events-in-the-series-or-this-and-all-future-events-in-the-series');
 				}
 
 				bodyContent = instance._createConfirmationPanelContent(
@@ -251,9 +247,7 @@ AUI.add(
 								onlyThisInstanceFn,
 								'btn-sm'
 							),
-							confirmationDescription: Liferay.Language.get(
-								'only-this-event-will-be-modified-the-rest-of-the-series-will-not-change'
-							)
+							confirmationDescription: Liferay.Language.get('only-this-event-will-be-modified-the-rest-of-the-series-will-not-change')
 						},
 						{
 							button: getButtonConfig(
@@ -261,12 +255,8 @@ AUI.add(
 								allFollowingFn,
 								'btn-sm'
 							),
-							confirmationDescription: Liferay.Language.get(
-								'this-event-and-any-future-events-in-the-series-will-be-modified'
-							),
-							confirmationDescriptionComplement: Liferay.Language.get(
-								'any-previous-edits-to-future-events-will-be-overwritten'
-							)
+							confirmationDescription: Liferay.Language.get('this-event-and-any-future-events-in-the-series-will-be-modified'),
+							confirmationDescriptionComplement: Liferay.Language.get('any-previous-edits-to-future-events-will-be-overwritten')
 						},
 						{
 							button: getButtonConfig(
@@ -274,12 +264,8 @@ AUI.add(
 								allEventsInFn,
 								'btn-sm'
 							),
-							confirmationDescription: Liferay.Language.get(
-								'the-modification-will-change-the-entire-series-of-events'
-							),
-							confirmationDescriptionComplement: Liferay.Language.get(
-								'any-events-edited-previously-will-not-be-affected-by-this-modification'
-							)
+							confirmationDescription: Liferay.Language.get('the-modification-will-change-the-entire-series-of-events'),
+							confirmationDescriptionComplement: Liferay.Language.get('any-events-edited-previously-will-not-be-affected-by-this-modification')
 						}
 					],
 					dismiss: getButtonConfig(

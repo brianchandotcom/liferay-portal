@@ -529,13 +529,9 @@ AUI.add(
 						var confirmationMessage;
 
 						if (schedulerEvent.get('hasChildCalendarBookings')) {
-							confirmationMessage = Liferay.Language.get(
-								'deleting-this-event-will-cancel-the-meeting-with-your-guests-would-you-like-to-delete'
-							);
+							confirmationMessage = Liferay.Language.get('deleting-this-event-will-cancel-the-meeting-with-your-guests-would-you-like-to-delete');
 						} else {
-							confirmationMessage = Liferay.Language.get(
-								'would-you-like-to-delete-this-event'
-							);
+							confirmationMessage = Liferay.Language.get('would-you-like-to-delete-this-event');
 						}
 
 						if (confirm(confirmationMessage)) {

@@ -523,9 +523,7 @@ AUI.add(
 							modal: true
 						},
 						refreshWindow: window,
-						title: Liferay.Language.get(
-							'view-calendar-booking-details'
-						),
+						title: Liferay.Language.get('view-calendar-booking-details'),
 						uri: CalendarUtil.fillURLParameters(
 							viewCalendarBookingURL,
 							data

@@ -731,21 +731,25 @@ public class MVCPortlet extends LiferayPortlet {
 			}
 		}
 
-		Set<String> validPaths = _getJspPaths(rootPath);
-
-		if (!rootPath.equals(StringPool.SLASH) &&
-			!rootPath.equals("/META-INF/") &&
-			!rootPath.equals("/META-INF/resources/")) {
-
-			validPaths.addAll(
-				_getJspPaths(_PATH_META_INF_RESOURCES.concat(rootPath)));
-		}
-
-		Collections.addAll(
-			validPaths, StringUtil.split(getInitParameter("valid-paths")));
-
 		_validPaths = validPathsMap.computeIfAbsent(
-			rootPath, key -> validPaths);
+			rootPath,
+			key -> {
+				Set<String> validPaths = _getJspPaths(key);
+
+				if (!key.equals(StringPool.SLASH) &&
+					!key.equals("/META-INF/") &&
+					!key.equals("/META-INF/resources/")) {
+
+					validPaths.addAll(
+						_getJspPaths(_PATH_META_INF_RESOURCES.concat(key)));
+				}
+
+				Collections.addAll(
+					validPaths,
+					StringUtil.split(getInitParameter("valid-paths")));
+
+				return validPaths;
+			});
 	}
 
 	private static final String _PATH_META_INF_RESOURCES =

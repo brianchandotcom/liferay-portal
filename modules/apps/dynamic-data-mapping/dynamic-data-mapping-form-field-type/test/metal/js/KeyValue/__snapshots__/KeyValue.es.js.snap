@@ -23,7 +23,7 @@ exports[`KeyValue should have a label 1`] = `
 
 exports[`KeyValue should have a predefined Value 1`] = `
 <div class="form-group">
-  <div class="form-group"><input class="ddm-field-text form-control" name="keyValueLabelkeyValue" type="text" placeholder="Option 1" value=""></div>
+  <div class="form-group"><input class="ddm-field-text form-control" name="keyValueLabelkeyValue" placeholder="Option 1" type="text" value=""></div>
   <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text"></div>
 </div>
 `;

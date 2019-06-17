@@ -50,13 +50,13 @@ class ContrastComponent extends Component {
 	 * finishes processing the image.
 	 */
 	process(imageData) {
-		let contrastValue = this.components.slider.value;
+		const contrastValue = this.components.slider.value;
 		let promise = this.cache_[contrastValue];
 
 		if (!promise) {
 			promise = this.spawnWorker_({
-				contrastValue: contrastValue,
-				imageData: imageData
+				contrastValue,
+				imageData
 			});
 
 			this.cache_[contrastValue] = promise;
@@ -82,8 +82,8 @@ class ContrastComponent extends Component {
 	 */
 	spawnWorker_(message) {
 		return new CancellablePromise((resolve, reject) => {
-			let workerURI = this.modulePath + '/ContrastWorker.js';
-			let processWorker = new Worker(workerURI);
+			const workerURI = this.modulePath + '/ContrastWorker.js';
+			const processWorker = new Worker(workerURI);
 
 			processWorker.onmessage = event => resolve(event.data);
 			processWorker.postMessage(message);

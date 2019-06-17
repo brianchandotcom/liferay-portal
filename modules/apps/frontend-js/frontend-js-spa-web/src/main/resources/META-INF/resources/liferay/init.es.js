@@ -17,13 +17,13 @@ import RenderURLScreen from './screen/RenderURLScreen.es';
  * @return {!App} The Senna App initialized
  */
 
-let initSPA = function() {
-	let app = new App();
+const initSPA = function() {
+	const app = new App();
 
 	app.addRoutes([
 		{
 			handler: ActionURLScreen,
-			path: function(url) {
+			path(url) {
 				let match = false;
 
 				const uri = new Uri(url);
@@ -41,7 +41,7 @@ let initSPA = function() {
 		},
 		{
 			handler: RenderURLScreen,
-			path: function(url) {
+			path(url) {
 				let match = false;
 
 				if (
@@ -69,10 +69,10 @@ let initSPA = function() {
 
 	Liferay.Util.submitForm = function(form) {
 		async.nextTick(() => {
-			let formElement = form.getDOM();
-			let formSelector =
+			const formElement = form.getDOM();
+			const formSelector =
 				'form' + Liferay.SPA.navigationExceptionSelectors;
-			let url = formElement.action;
+			const url = formElement.action;
 
 			if (
 				match(formElement, formSelector) &&
@@ -114,7 +114,7 @@ let initSPA = function() {
 };
 
 export default {
-	init: function(callback) {
+	init(callback) {
 		if (globals.document.readyState == 'loading') {
 			globals.document.addEventListener('DOMContentLoaded', () => {
 				callback.call(this, initSPA());

@@ -32,7 +32,7 @@ function updateRowColumnsNumberAction(numberOfColumns, rowId) {
 		const columnsSize = Math.floor(MAX_COLUMNS / numberOfColumns);
 		const rowIndex = getRowIndex(state.layoutData.structure, rowId);
 
-		let columns = state.layoutData.structure[rowIndex].columns;
+		const columns = state.layoutData.structure[rowIndex].columns;
 		let nextData;
 
 		if (numberOfColumns > columns.length) {
@@ -51,7 +51,7 @@ function updateRowColumnsNumberAction(numberOfColumns, rowId) {
 			);
 		}
 
-		let fragmentEntryLinkIdsToRemove = getRowFragmentEntryLinkIds({
+		const fragmentEntryLinkIdsToRemove = getRowFragmentEntryLinkIds({
 			columns: columns.slice(numberOfColumns - columns.length)
 		});
 
@@ -205,7 +205,7 @@ function _getColumnSize(numberOfColumns, columnsSize, columnIndex) {
  * @return {object}
  */
 function _removeColumns(layoutData, rowIndex, numberOfColumns, columnsSize) {
-	let nextData = updateIn(
+	const nextData = updateIn(
 		layoutData,
 		['structure', rowIndex, 'columns'],
 		columns => {

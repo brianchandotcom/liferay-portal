@@ -36,7 +36,7 @@ function openToast({
 
 	const mergedEvents = Object.assign(
 		{
-			disposed: function(event) {
+			disposed(event) {
 				if (!alertContainer.hasChildNodes()) {
 					dom.exitDocument(alertContainer);
 				}
@@ -50,10 +50,10 @@ function openToast({
 			autoClose: true,
 			destroyOnHide: true,
 			events: mergedEvents,
-			message: message,
+			message,
 			spritemap: themeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
 			style: type,
-			title: title
+			title
 		},
 		alertContainer
 	);

@@ -21,7 +21,7 @@ class FragmentsEditorToolbar extends Component {
 		if (savingChanges) {
 			lastSaveText = Liferay.Language.get('saving-changes');
 		} else if (lastSaveDate) {
-			let placeholder = Liferay.Language.get('draft-saved-at-x');
+			const placeholder = Liferay.Language.get('draft-saved-at-x');
 
 			lastSaveText = placeholder.replace('{0}', lastSaveDate);
 		}

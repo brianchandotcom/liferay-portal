@@ -25,11 +25,11 @@ class PublishChangeList extends Component {
 	_checkoutProduction() {
 		this.refs.modal.visible = false;
 
-		let headers = new Headers();
+		const headers = new Headers();
 		headers.append('Content-Type', 'application/json');
 		headers.append('X-CSRF-Token', Liferay.authToken);
 
-		let body = {
+		const body = {
 			credentials: 'include',
 			headers,
 			method: 'POST'
@@ -43,17 +43,17 @@ class PublishChangeList extends Component {
 	}
 
 	_publishChangeList() {
-		let headers = new Headers();
+		const headers = new Headers();
 		headers.append('Content-Type', 'application/json');
 		headers.append('X-CSRF-Token', Liferay.authToken);
 
-		let init = {
+		const init = {
 			credentials: 'include',
 			headers,
 			method: this.urlPublishChangeList.type
 		};
 
-		let url =
+		const url =
 			this.urlPublishChangeList.href +
 			'?userId=' +
 			Liferay.ThemeDisplay.getUserId() +

@@ -3,13 +3,13 @@ import Soy from 'metal-soy';
 
 import templates from './form.soy';
 
-let FormTemplates = [];
+const FormTemplates = [];
 
 if (!window.ddm) {
 	window.ddm = {};
 }
 
-for (let template in templates) {
+for (const template in templates) {
 	if (template !== 'templates') {
 		class C extends Component {}
 

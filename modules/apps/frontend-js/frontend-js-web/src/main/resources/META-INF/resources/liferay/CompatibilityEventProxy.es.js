@@ -64,10 +64,10 @@ class CompatibilityEventProxy extends State {
 	emitCompatibleEvents_(eventName, event) {
 		this.eventTargets_.forEach(target => {
 			if (target.fire) {
-				let prefixedEventName = this.namespace
+				const prefixedEventName = this.namespace
 					? this.namespace + ':' + eventName
 					: eventName;
-				let yuiEvent = target._yuievt.events[prefixedEventName];
+				const yuiEvent = target._yuievt.events[prefixedEventName];
 
 				if (core.isObject(event)) {
 					try {
@@ -104,7 +104,7 @@ class CompatibilityEventProxy extends State {
 				eventFacade = event;
 			}
 
-			let compatibleEvent = this.checkAttributeEvent_(eventFacade.type);
+			const compatibleEvent = this.checkAttributeEvent_(eventFacade.type);
 
 			if (compatibleEvent !== eventFacade.type) {
 				eventFacade.type = compatibleEvent;

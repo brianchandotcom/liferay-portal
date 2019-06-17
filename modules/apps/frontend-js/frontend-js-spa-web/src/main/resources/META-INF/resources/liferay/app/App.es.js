@@ -315,7 +315,7 @@ class LiferayApp extends App {
 			Liferay.Data.layoutConfig = this.dataLayoutConfig_;
 
 			this._createNotification({
-				message: message,
+				message,
 				title: Liferay.Language.get('error'),
 				type: 'danger'
 			});
@@ -451,7 +451,7 @@ class LiferayApp extends App {
 		if (Liferay.SPA.userNotification.timeout > 0) {
 			this.requestTimer = setTimeout(() => {
 				Liferay.fire('spaRequestTimeout', {
-					path: path
+					path
 				});
 
 				this._hideTimeoutAlert();

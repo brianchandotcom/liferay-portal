@@ -24,7 +24,7 @@ class GoogleMapsMarker extends MarkerBase {
 		if (!this._nativeMarker) {
 			this._nativeMarker = new google.maps.Marker({
 				draggable: true,
-				map: map,
+				map,
 				position: location
 			});
 

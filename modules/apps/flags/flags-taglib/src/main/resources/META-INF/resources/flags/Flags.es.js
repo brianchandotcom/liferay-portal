@@ -89,9 +89,9 @@ class Flags extends PortletBase {
 			this.ns('reporterEmailAddress')
 		] = this.refs.modal.refs.reporterEmailAddress.value;
 
-		let formData = new FormData();
+		const formData = new FormData();
 
-		for (let name in this.formData) {
+		for (const name in this.formData) {
 			formData.append(name, this.formData[name]);
 		}
 

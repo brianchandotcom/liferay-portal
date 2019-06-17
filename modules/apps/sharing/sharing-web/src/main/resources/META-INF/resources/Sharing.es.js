@@ -34,7 +34,7 @@ class Sharing extends PortletBase {
 					label: fullName,
 					portraitURL,
 					spritemap: this.spritemap,
-					userId: userId,
+					userId,
 					value: emailAddress
 				}))
 			);
@@ -102,14 +102,14 @@ class Sharing extends PortletBase {
 	 * @review
 	 */
 	_handleEmailAddressAdded(event) {
-		let {item, selectedItems} = event.data;
+		const {item, selectedItems} = event.data;
 
 		this._userEmailAddresses = selectedItems;
 
 		this.emailAddressErrorMessage = '';
 		this._inputValue = '';
 
-		let itemAdded = item.value;
+		const itemAdded = item.value;
 
 		if (!this._isEmailAddressValid(itemAdded)) {
 			this.emailAddressErrorMessage = Liferay.Language.get(
@@ -123,7 +123,7 @@ class Sharing extends PortletBase {
 			})
 				.then(response => response.json())
 				.then(result => {
-					let {userExists} = result;
+					const {userExists} = result;
 
 					if (!userExists) {
 						this.emailAddressErrorMessage = Liferay.Util.sub(

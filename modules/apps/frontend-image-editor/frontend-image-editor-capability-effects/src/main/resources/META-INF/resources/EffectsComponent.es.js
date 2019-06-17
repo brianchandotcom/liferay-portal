@@ -63,13 +63,13 @@ class EffectsComponent extends Component {
 	 * is generated.
 	 */
 	generateThumbnail_(effect, imageData) {
-		let promise = this.spawnWorker_({
-			effect: effect,
-			imageData: imageData
+		const promise = this.spawnWorker_({
+			effect,
+			imageData
 		});
 
 		promise.then(imageData => {
-			let canvas = this.element.querySelector(
+			const canvas = this.element.querySelector(
 				'#' + this.ref + effect + ' canvas'
 			);
 			canvas.getContext('2d').putImageData(imageData, 0, 0);
@@ -101,22 +101,22 @@ class EffectsComponent extends Component {
 	 * @return {ImageData} The resized image data.
 	 */
 	generateThumbnailImageData_(imageData) {
-		let thumbnailSize = this.thumbnailSize;
-		let imageWidth = imageData.width;
-		let imageHeight = imageData.height;
+		const thumbnailSize = this.thumbnailSize;
+		const imageWidth = imageData.width;
+		const imageHeight = imageData.height;
 
-		let rawCanvas = document.createElement('canvas');
+		const rawCanvas = document.createElement('canvas');
 		rawCanvas.width = imageWidth;
 		rawCanvas.height = imageHeight;
 		rawCanvas.getContext('2d').putImageData(imageData, 0, 0);
 
-		let commonSize = imageWidth > imageHeight ? imageHeight : imageWidth;
+		const commonSize = imageWidth > imageHeight ? imageHeight : imageWidth;
 
-		let canvas = document.createElement('canvas');
+		const canvas = document.createElement('canvas');
 		canvas.width = thumbnailSize;
 		canvas.height = thumbnailSize;
 
-		let context = canvas.getContext('2d');
+		const context = canvas.getContext('2d');
 		context.drawImage(
 			rawCanvas,
 			imageWidth - commonSize,
@@ -141,7 +141,7 @@ class EffectsComponent extends Component {
 	prefetchEffects_() {
 		return new CancellablePromise((resolve, reject) => {
 			if (!this.isDisposed()) {
-				let missingEffects = this.effects.filter(
+				const missingEffects = this.effects.filter(
 					effect => !this.cache_[effect]
 				);
 
@@ -189,13 +189,13 @@ class EffectsComponent extends Component {
 	 * finishes processing the image.
 	 */
 	process(imageData, effectName) {
-		let effect = effectName || this.currentEffect_;
+		const effect = effectName || this.currentEffect_;
 		let promise = this.cache_[effect];
 
 		if (!promise) {
 			promise = this.spawnWorker_({
-				effect: effect,
-				imageData: imageData
+				effect,
+				imageData
 			});
 
 			this.cache_[effect] = promise;
@@ -246,7 +246,7 @@ class EffectsComponent extends Component {
 	 */
 	spawnWorker_(message) {
 		return new CancellablePromise((resolve, reject) => {
-			let processWorker = new Worker(
+			const processWorker = new Worker(
 				this.modulePath + '/EffectsWorker.js'
 			);
 

@@ -9,8 +9,8 @@ class SharedAssets extends PortletBase {
 	}
 
 	handleFilterItemClicked(event) {
-		let namespace = this.namespace;
-		let viewAssetTypeURL = this._viewAssetTypeURL;
+		const namespace = this.namespace;
+		const viewAssetTypeURL = this._viewAssetTypeURL;
 
 		AUI().use('liferay-item-selector-dialog', A => {
 			var itemData = event.data.item.data;
@@ -19,7 +19,7 @@ class SharedAssets extends PortletBase {
 				var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 					eventName: namespace + 'selectAssetType',
 					on: {
-						selectedItemChange: function(event) {
+						selectedItemChange(event) {
 							var selectedItem = event.newVal;
 
 							if (selectedItem) {

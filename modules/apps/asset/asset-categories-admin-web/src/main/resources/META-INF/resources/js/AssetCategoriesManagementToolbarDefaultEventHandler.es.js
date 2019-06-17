@@ -12,13 +12,13 @@ class AssetCategoriesManagementToolbarDefaultEventHandler extends DefaultEventHa
 	}
 
 	selectCategory(itemData) {
-		let namespace = this.namespace;
+		const namespace = this.namespace;
 
 		AUI().use('liferay-item-selector-dialog', A => {
 			const itemSelectorDialog = new A.LiferayItemSelectorDialog({
 				eventName: this.ns('selectCategory'),
 				on: {
-					selectedItemChange: function(event) {
+					selectedItemChange(event) {
 						const selectedItem = event.newVal;
 
 						const category = selectedItem

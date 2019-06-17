@@ -41,7 +41,7 @@ const UPDATE_SEGMENTS_EXPERIENCE_PRIORITY_URL =
  * @returns {Promise}
  */
 function _storeNewLayoutData(state, segmentsExperienceId) {
-	let nextState = state;
+	const nextState = state;
 
 	return new Promise((resolve, reject) => {
 		let baseLayoutData = null;
@@ -164,7 +164,7 @@ function _switchLayoutDataList(state, segmentsExperienceId) {
 function _switchLayoutDataToDefault(state) {
 	let nextState = state;
 
-	let baseLayoutData = nextState.layoutDataList.find(layoutDataItem => {
+	const baseLayoutData = nextState.layoutDataList.find(layoutDataItem => {
 		return (
 			layoutDataItem.segmentsExperienceId ===
 			nextState.defaultSegmentsExperienceId
@@ -231,7 +231,7 @@ function createSegmentsExperienceReducer(state, action) {
 					classNameId,
 					classPK,
 					nameMap,
-					segmentsEntryId: segmentsEntryId,
+					segmentsEntryId,
 					serviceContext: JSON.stringify({
 						scopeGroupId: themeDisplay.getScopeGroupId(),
 						userId: themeDisplay.getUserId()
@@ -306,7 +306,7 @@ function createSegmentsExperienceReducer(state, action) {
  * @returns {object}
  */
 function _provideDefaultValueToFragments(state, incomingExperienceId) {
-	let nextState = state;
+	const nextState = state;
 
 	const defaultSegmentsExperienceKey = prefixSegmentsExperienceId(
 		nextState.defaultSegmentsExperienceId
@@ -490,11 +490,11 @@ function deleteSegmentsExperienceReducer(state, action) {
  */
 function selectSegmentsExperienceReducer(state, action) {
 	return new Promise((resolve, reject) => {
-		let nextState = state;
+		const nextState = state;
 		if (action.type === SELECT_SEGMENTS_EXPERIENCE) {
 			_switchLayoutDataList(nextState, action.segmentsExperienceId)
 				.then(newState => {
-					let nextNewState = setIn(
+					const nextNewState = setIn(
 						newState,
 						['segmentsExperienceId'],
 						action.segmentsExperienceId

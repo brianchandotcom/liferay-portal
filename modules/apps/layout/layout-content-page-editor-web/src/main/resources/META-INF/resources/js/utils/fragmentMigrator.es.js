@@ -6,7 +6,7 @@ import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from './constants';
  */
 function _editableFragmentMigrator(object, defaultSegmentsExperienceKey) {
 	let alternativeObject = null;
-	let defaultSegment = {};
+	const defaultSegment = {};
 	Object.keys(object).forEach(oKey => {
 		if (oKey !== 'defaultValue' && typeof object[oKey] === 'string') {
 			defaultSegment[oKey] = object[oKey];
@@ -26,7 +26,7 @@ function _editableFragmentMigrator(object, defaultSegmentsExperienceKey) {
  * @param {string} defaultSegmentsExperienceKey
  */
 function editableValuesMigrator(editableValue, defaultSegmentsExperienceKey) {
-	let jsonEditableValues = JSON.parse(editableValue);
+	const jsonEditableValues = JSON.parse(editableValue);
 	let result;
 
 	if (!defaultSegmentsExperienceKey) {

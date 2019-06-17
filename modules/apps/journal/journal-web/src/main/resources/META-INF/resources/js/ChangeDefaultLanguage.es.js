@@ -27,7 +27,7 @@ class ChangeDefaultLanguage extends Component {
 		);
 
 		Liferay.fire('inputLocalized:defaultLocaleChanged', {
-			item: item
+			item
 		});
 	}
 }

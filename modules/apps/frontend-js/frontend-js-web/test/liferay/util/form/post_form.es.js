@@ -14,7 +14,7 @@ describe('Liferay.Util.postForm', () => {
 	});
 
 	it('should do nothing if the form parameter is not a form node', () => {
-		let fragment = dom.buildFragment('<div />');
+		const fragment = dom.buildFragment('<div />');
 
 		postForm(undefined);
 		postForm(fragment.firstElementChild);
@@ -23,9 +23,9 @@ describe('Liferay.Util.postForm', () => {
 	});
 
 	it('should submit form even if options parameter is not set', () => {
-		let fragment = dom.buildFragment('<form />');
+		const fragment = dom.buildFragment('<form />');
 
-		let form = fragment.firstElementChild;
+		const form = fragment.firstElementChild;
 
 		postForm(form);
 
@@ -33,9 +33,9 @@ describe('Liferay.Util.postForm', () => {
 	});
 
 	it('should do nothing if the url optional parameter is not a string', () => {
-		let fragment = dom.buildFragment('<form />');
+		const fragment = dom.buildFragment('<form />');
 
-		let form = fragment.firstElementChild;
+		const form = fragment.firstElementChild;
 
 		postForm(form, {url: undefined});
 		postForm(form, {url: {}});
@@ -44,9 +44,9 @@ describe('Liferay.Util.postForm', () => {
 	});
 
 	it('should do nothing if the data optional parameter is not an object', () => {
-		let fragment = dom.buildFragment('<form />');
+		const fragment = dom.buildFragment('<form />');
 
-		let form = fragment.firstElementChild;
+		const form = fragment.firstElementChild;
 
 		postForm(form, {data: undefined});
 		postForm(form, {data: 'abc'});
@@ -55,14 +55,14 @@ describe('Liferay.Util.postForm', () => {
 	});
 
 	it('should set given element values in data parameter, and submit form to a given url', () => {
-		let fragment = dom.buildFragment(`
+		const fragment = dom.buildFragment(`
 					<form data-fm-namespace="_com_liferay_test_portlet_" id="fm">
 						<input name="_com_liferay_test_portlet_foo" type="text" value="abc">
 						<input name="_com_liferay_test_portlet_bar" type="text" value="123">
 					</form>
 				`);
 
-		let form = fragment.firstElementChild;
+		const form = fragment.firstElementChild;
 
 		postForm(form, {
 			data: {

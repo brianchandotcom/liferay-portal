@@ -206,7 +206,7 @@ Treeview.STATE = {
 
 	nodes: {
 		validator: Array.isArray,
-		valueFn: function() {
+		valueFn() {
 			return [];
 		}
 	}

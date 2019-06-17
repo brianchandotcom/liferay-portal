@@ -10,7 +10,7 @@ describe('ManagementToolbar', () => {
 
 	beforeAll(() => {
 		global.Liferay = {
-			componentReady: function() {
+			componentReady() {
 				return {
 					then: jest.fn(cb => cb(searchContainer))
 				};

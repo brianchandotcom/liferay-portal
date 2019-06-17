@@ -31,10 +31,10 @@ class ActionURLScreen extends EventScreen {
 	getRequestPath() {
 		let requestPath = null;
 
-		let request = this.getRequest();
+		const request = this.getRequest();
 
 		if (request) {
-			let uri = new Uri(super.getRequestPath());
+			const uri = new Uri(super.getRequestPath());
 
 			if (uri.getParameterValue('p_p_lifecycle') === '1') {
 				uri.setParameterValue('p_p_lifecycle', '0');

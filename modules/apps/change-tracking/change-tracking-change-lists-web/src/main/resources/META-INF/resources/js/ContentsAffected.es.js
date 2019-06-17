@@ -13,11 +13,11 @@ class ContentsAffected extends Component {
 	}
 
 	_fetchAffectedContents(page) {
-		let headers = new Headers();
+		const headers = new Headers();
 		headers.append('Content-Type', 'application/json');
 		headers.append('X-CSRF-Token', Liferay.authToken);
 
-		let init = {
+		const init = {
 			credentials: 'include',
 			headers,
 			method: 'GET'
@@ -35,13 +35,13 @@ class ContentsAffected extends Component {
 			page = 1;
 		}
 
-		let queryParam =
+		const queryParam =
 			'?pageSize=' +
 			this.pageSize +
 			(keywords.length > 0 ? '&keywords=' + keywords : '') +
 			(page > 1 ? '&page=' + page : '');
 
-		let url = this.urlAffectedContents + queryParam;
+		const url = this.urlAffectedContents + queryParam;
 
 		fetch(url, init)
 			.then(r => r.json())
@@ -84,7 +84,7 @@ class ContentsAffected extends Component {
 	}
 
 	_handleClickPageNumber(event) {
-		let page = event.target.getAttribute('data-page');
+		const page = event.target.getAttribute('data-page');
 
 		if (page >= 1 && page <= this.lastPage) {
 			this._fetchAffectedContents(page);
@@ -121,7 +121,7 @@ class ContentsAffected extends Component {
 
 		if (affectedContentsResult.items) {
 			affectedContentsResult.items.forEach(affectedContent => {
-				let entityNameTranslation = this.entityNameTranslations.find(
+				const entityNameTranslation = this.entityNameTranslations.find(
 					entityNameTranslation =>
 						entityNameTranslation.key ===
 						affectedContent.contentType

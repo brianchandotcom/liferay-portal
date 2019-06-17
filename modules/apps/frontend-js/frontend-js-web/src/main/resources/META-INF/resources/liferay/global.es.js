@@ -35,8 +35,8 @@ Liferay.getComponentCache = getComponentCache;
 Liferay.initComponentCache = initComponentCache;
 
 Liferay.Address = {
-	getCountries: getCountries,
-	getRegions: getRegions
+	getCountries,
+	getRegions
 };
 
 Liferay.SideNavigation = SideNavigation;

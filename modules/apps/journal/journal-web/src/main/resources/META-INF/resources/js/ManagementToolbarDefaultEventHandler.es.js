@@ -3,8 +3,8 @@ import {Config} from 'metal-state';
 
 class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	created() {
-		let addArticleURL = this.addArticleURL;
-		let namespace = this.namespace;
+		const addArticleURL = this.addArticleURL;
+		const namespace = this.namespace;
 
 		Liferay.on(this.ns('selectAddMenuItem'), function(event) {
 			const selectAddMenuItemWindow = Liferay.Util.Window.getById(
@@ -55,7 +55,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 		Liferay.Util.openWindow({
 			dialog: {
 				after: {
-					destroy: function(event) {
+					destroy(event) {
 						if (event.target.get('destroyOnHide')) {
 							window.location.reload();
 						}
@@ -77,8 +77,8 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	openDDMStructuresSelector() {
-		let namespace = this.namespace;
-		let uri = this.viewDDMStructureArticlesURL;
+		const namespace = this.namespace;
+		const uri = this.viewDDMStructureArticlesURL;
 
 		Liferay.Util.selectEntity(
 			{

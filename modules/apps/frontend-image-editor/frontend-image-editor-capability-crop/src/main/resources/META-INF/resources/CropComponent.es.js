@@ -18,35 +18,35 @@ class CropComponent extends Component {
 	 * finishes processing the image for preview.
 	 */
 	process(imageData) {
-		let imageCanvas = this.getImageEditorCanvas();
+		const imageCanvas = this.getImageEditorCanvas();
 
 		var horizontalRatio = imageData.width / imageCanvas.offsetWidth;
 		var verticalRatio = imageData.height / imageCanvas.offsetHeight;
 
-		let cropHandles = this.components[this.ref + 'CropHandles'];
-		let selection = {
+		const cropHandles = this.components[this.ref + 'CropHandles'];
+		const selection = {
 			height: cropHandles.element.offsetHeight,
 			left: cropHandles.element.offsetLeft - imageCanvas.offsetLeft,
 			top: cropHandles.element.offsetTop - imageCanvas.offsetTop,
 			width: cropHandles.element.offsetWidth
 		};
 
-		let rawCanvas = document.createElement('canvas');
+		const rawCanvas = document.createElement('canvas');
 		rawCanvas.width = imageData.width;
 		rawCanvas.height = imageData.height;
 
 		rawCanvas.getContext('2d').putImageData(imageData, 0, 0);
 
-		let canvas = document.createElement('canvas');
-		let normalizedLeft = selection.left * horizontalRatio;
-		let normalizedWidth = selection.width * horizontalRatio;
-		let normalizedTop = selection.top * verticalRatio;
-		let normalizedHeight = selection.height * verticalRatio;
+		const canvas = document.createElement('canvas');
+		const normalizedLeft = selection.left * horizontalRatio;
+		const normalizedWidth = selection.width * horizontalRatio;
+		const normalizedTop = selection.top * verticalRatio;
+		const normalizedHeight = selection.height * verticalRatio;
 
 		canvas.width = normalizedWidth;
 		canvas.height = normalizedHeight;
 
-		let context = canvas.getContext('2d');
+		const context = canvas.getContext('2d');
 		context.drawImage(
 			rawCanvas,
 			normalizedLeft,

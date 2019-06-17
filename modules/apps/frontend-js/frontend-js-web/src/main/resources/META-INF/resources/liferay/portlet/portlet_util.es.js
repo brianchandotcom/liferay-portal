@@ -109,7 +109,7 @@ const encodeFormAsString = function(portletId, form) {
 				(type !== 'CHECKBOX' && type !== 'RADIO') ||
 				element.checked
 			) {
-				let param =
+				const param =
 					encodeURIComponent(portletId + name) +
 					'=' +
 					encodeURIComponent(value);
@@ -140,7 +140,7 @@ const encodeParameter = function(name, values) {
 				VALUE_DELIM +
 				VALUE_ARRAY_EMPTY;
 		} else {
-			for (let value of values) {
+			for (const value of values) {
 				str += TOKEN_DELIM + encodeURIComponent(name);
 				if (value === null) {
 					str += VALUE_DELIM + VALUE_NULL;
@@ -168,7 +168,7 @@ const generateActionUrl = function(portletId, url, form) {
 	const request = {
 		credentials: 'same-origin',
 		method: 'POST',
-		url: url
+		url
 	};
 
 	if (form) {
@@ -309,7 +309,7 @@ const getUpdatedPublicRenderParameters = function(
 
 			const keys = Object.keys(portletPublicParameters);
 
-			for (let key of keys) {
+			for (const key of keys) {
 				if (
 					!isParameterInStateEqual(
 						pageRenderState,
@@ -431,7 +431,7 @@ const getUrl = function(
 
 						const keys = Object.keys(stateParameters);
 
-						for (let key of keys) {
+						for (const key of keys) {
 							if (
 								!isPublicParameter(
 									pageRenderState,
@@ -459,11 +459,11 @@ const getUrl = function(
 					const publicRenderParameters = {};
 
 					const mapKeys = Object.keys(pageRenderState.prpMap);
-					for (let mapKey of mapKeys) {
+					for (const mapKey of mapKeys) {
 						const groupKeys = Object.keys(
 							pageRenderState.prpMap[mapKey]
 						);
-						for (let groupKey of groupKeys) {
+						for (const groupKey of groupKeys) {
 							const groupName =
 								pageRenderState.prpMap[mapKey][groupKey];
 							const parts = groupName.split('|');
@@ -500,7 +500,7 @@ const getUrl = function(
 		str = '';
 		const parameterKeys = Object.keys(parameters);
 
-		for (let parameterKey of parameterKeys) {
+		for (const parameterKey of parameterKeys) {
 			str += encodeParameter(
 				portletId + parameterKey,
 				parameters[parameterKey]
@@ -790,7 +790,7 @@ const validateParameters = function(parameters) {
 	}
 
 	const keys = Object.keys(parameters);
-	for (let key of keys) {
+	for (const key of keys) {
 		if (!Array.isArray(parameters[key])) {
 			throw new TypeError(`${key} parameter is not an array`);
 		}

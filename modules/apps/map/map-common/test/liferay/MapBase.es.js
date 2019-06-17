@@ -36,21 +36,21 @@ describe('MapBase', () => {
 		};
 	});
 
-	let DialogImpl = jest.fn().mockImplementation(({map}) => {});
+	const DialogImpl = jest.fn().mockImplementation(({map}) => {});
 
-	let geocoderImpl = {
-		reverse: function(location, cb) {
+	const geocoderImpl = {
+		reverse(location, cb) {
 			cb({data: {name: 'data', location}});
 		}
 	};
 
-	let GeocoderImpl = jest.fn().mockImplementation(() => geocoderImpl);
+	const GeocoderImpl = jest.fn().mockImplementation(() => geocoderImpl);
 
-	let geoJSONImpl = {
+	const geoJSONImpl = {
 		on: jest.fn()
 	};
 
-	let GeoJSONImpl = jest.fn().mockImplementation(({map}) => geoJSONImpl);
+	const GeoJSONImpl = jest.fn().mockImplementation(({map}) => geoJSONImpl);
 
 	beforeEach(() => {
 		window.Liferay = {
@@ -74,7 +74,7 @@ describe('MapBase', () => {
 
 		bounds = {
 			locations: [],
-			extend: function(location) {
+			extend(location) {
 				this.locations.push(location);
 			}
 		};

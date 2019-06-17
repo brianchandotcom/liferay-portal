@@ -48,7 +48,7 @@ class Utils {
 			index,
 			collection
 		) {
-			let portlet = document.querySelector('#' + value);
+			const portlet = document.querySelector('#' + value);
 
 			if (portlet) {
 				Liferay.Portlet.destroy(portlet);

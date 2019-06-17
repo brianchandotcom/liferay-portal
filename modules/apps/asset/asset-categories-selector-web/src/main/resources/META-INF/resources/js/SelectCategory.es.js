@@ -78,7 +78,7 @@ class SelectCategory extends PortletBase {
 			this.nodes = this.originalNodes;
 		}
 
-		let filterValue = event.delegateTarget.value.toLowerCase();
+		const filterValue = event.delegateTarget.value.toLowerCase();
 
 		if (filterValue !== '') {
 			this.viewType = 'flat';
@@ -96,7 +96,7 @@ class SelectCategory extends PortletBase {
 	 */
 
 	_selectedNodeChange(event) {
-		let newVal = event.newVal;
+		const newVal = event.newVal;
 		let selectedNodes = this.selectedNodes_;
 
 		if (!selectedNodes) {
@@ -104,7 +104,7 @@ class SelectCategory extends PortletBase {
 		}
 
 		if (newVal) {
-			let data = {};
+			const data = {};
 
 			newVal.forEach(node => {
 				data[node.name] = {
@@ -134,7 +134,7 @@ class SelectCategory extends PortletBase {
 			this.selectedNodes_ = selectedNodes;
 
 			Liferay.Util.getOpener().Liferay.fire(this.itemSelectorSaveEvent, {
-				data: data
+				data
 			});
 		}
 	}

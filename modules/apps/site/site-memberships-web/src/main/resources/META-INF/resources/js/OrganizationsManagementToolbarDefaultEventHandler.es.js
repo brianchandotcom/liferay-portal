@@ -21,7 +21,7 @@ class OrganizationsManagementToolbarDefaultEventHandler extends DefaultEventHand
 						const selectedItem = event.newVal;
 
 						if (selectedItem) {
-							let addGroupOrganizationsFm = this.one(
+							const addGroupOrganizationsFm = this.one(
 								'#addGroupOrganizationsFm'
 							);
 

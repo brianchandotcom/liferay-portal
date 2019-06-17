@@ -33,7 +33,7 @@ class TranslationManager extends Component {
 	 * @review
 	 */
 	addLocale(event) {
-		let locale = event.data.item;
+		const locale = event.data.item;
 
 		if (this.availableLocales.indexOf(locale) === -1) {
 			this.availableLocales.push(locale);
@@ -59,7 +59,7 @@ class TranslationManager extends Component {
 	 * @review
 	 */
 	changeDefaultLocale(event) {
-		let localeId = event.delegateTarget.getAttribute('data-locale-id');
+		const localeId = event.delegateTarget.getAttribute('data-locale-id');
 
 		this.defaultLocale = localeId;
 
@@ -72,7 +72,7 @@ class TranslationManager extends Component {
 	 * @review
 	 */
 	changeLocale(event) {
-		let localeId = event.delegateTarget.getAttribute('data-locale-id');
+		const localeId = event.delegateTarget.getAttribute('data-locale-id');
 
 		this.editingLocale = localeId;
 	}

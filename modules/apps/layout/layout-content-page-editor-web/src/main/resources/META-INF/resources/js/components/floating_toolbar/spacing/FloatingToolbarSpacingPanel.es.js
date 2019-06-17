@@ -72,7 +72,9 @@ class FloatingToolbarSpacingPanel extends Component {
 		let updateRowColumns = true;
 
 		if (newValue < prevValue) {
-			let columnsToRemove = this.item.columns.slice(newValue - prevValue);
+			const columnsToRemove = this.item.columns.slice(
+				newValue - prevValue
+			);
 			let showConfirmation;
 
 			for (let i = 0; i < columnsToRemove.length; i++) {

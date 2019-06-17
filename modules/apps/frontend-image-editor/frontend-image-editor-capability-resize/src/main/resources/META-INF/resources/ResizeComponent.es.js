@@ -50,17 +50,17 @@ class ResizeComponent extends Component {
 	 * height values specified by the user.
 	 */
 	resizeImageData_(imageData) {
-		let rawCanvas = document.createElement('canvas');
+		const rawCanvas = document.createElement('canvas');
 		rawCanvas.width = imageData.width;
 		rawCanvas.height = imageData.height;
 
 		rawCanvas.getContext('2d').putImageData(imageData, 0, 0);
 
-		let canvas = document.createElement('canvas');
+		const canvas = document.createElement('canvas');
 		canvas.width = this.imageWidth;
 		canvas.height = this.imageHeight;
 
-		let context = canvas.getContext('2d');
+		const context = canvas.getContext('2d');
 		context.drawImage(rawCanvas, 0, 0, this.imageWidth, this.imageHeight);
 
 		return context.getImageData(0, 0, this.imageWidth, this.imageHeight);
@@ -73,7 +73,7 @@ class ResizeComponent extends Component {
 	 * @param  {InputEvent} event The input event.
 	 */
 	syncDimensions(event) {
-		let newValue = parseInt(event.delegateTarget.value, 10);
+		const newValue = parseInt(event.delegateTarget.value, 10);
 
 		if (event.delegateTarget === this.imageWidthInput_) {
 			this.imageWidth = newValue;

@@ -50,13 +50,13 @@ class SaturationComponent extends Component {
 	 * finishes processing the image.
 	 */
 	process(imageData) {
-		let saturationValue = this.components.slider.value;
+		const saturationValue = this.components.slider.value;
 		let promise = this.cache_[saturationValue];
 
 		if (!promise) {
 			promise = this.spawnWorker_({
-				saturationValue: saturationValue,
-				imageData: imageData
+				saturationValue,
+				imageData
 			});
 
 			this.cache_[saturationValue] = promise;
@@ -82,8 +82,8 @@ class SaturationComponent extends Component {
 	 */
 	spawnWorker_(message) {
 		return new CancellablePromise((resolve, reject) => {
-			let workerURI = this.modulePath + '/SaturationWorker.js';
-			let processWorker = new Worker(workerURI);
+			const workerURI = this.modulePath + '/SaturationWorker.js';
+			const processWorker = new Worker(workerURI);
 
 			processWorker.onmessage = event => resolve(event.data);
 			processWorker.postMessage(message);

@@ -12,7 +12,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	mergeTags(itemData) {
-		let mergeURL = itemData.mergeTagsURL;
+		const mergeURL = itemData.mergeTagsURL;
 
 		location.href = mergeURL.replace(
 			escape('[$MERGE_TAGS_IDS$]'),

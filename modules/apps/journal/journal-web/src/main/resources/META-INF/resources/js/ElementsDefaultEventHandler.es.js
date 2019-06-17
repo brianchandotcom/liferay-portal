@@ -3,7 +3,7 @@ import {Config} from 'metal-state';
 
 class ElementsDefaultEventHandler extends DefaultEventHandler {
 	compareVersions(itemData) {
-		let namespace = this.namespace;
+		const namespace = this.namespace;
 
 		Liferay.Util.selectEntity(
 			{

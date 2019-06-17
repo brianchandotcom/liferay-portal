@@ -58,7 +58,7 @@ class TopSearch extends State {
 	 */
 	onSearchInputBlur_(event) {
 		async.nextTick(() => {
-			let stateActiveElementBlur =
+			const stateActiveElementBlur =
 				document.activeElement !== this.searchIcon_ &&
 				document.activeElement !== this.searchInput_ &&
 				document.activeElement !== this.searchOptions_;
@@ -89,7 +89,7 @@ class TopSearch extends State {
 	 * @protected
 	 */
 	onVisibleChanged_(event) {
-		let updateFn = this.visible ? 'addClasses' : 'removeClasses';
+		const updateFn = this.visible ? 'addClasses' : 'removeClasses';
 
 		dom[updateFn](document.body, 'search-opened');
 		dom[updateFn](this.search_, 'focus');

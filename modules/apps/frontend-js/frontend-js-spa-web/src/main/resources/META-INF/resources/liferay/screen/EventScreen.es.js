@@ -221,7 +221,7 @@ class EventScreen extends HtmlScreen {
 
 			Liferay.fire('screenLoad', {
 				app: Liferay.SPA.app,
-				content: content,
+				content,
 				screen: this
 			});
 

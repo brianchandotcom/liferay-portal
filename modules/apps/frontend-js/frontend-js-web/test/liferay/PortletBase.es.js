@@ -28,7 +28,7 @@ describe('PortletBase', () => {
 		};
 
 		portletBase = new PortletBase({
-			namespace: namespace
+			namespace
 		});
 	});
 
@@ -232,7 +232,7 @@ describe('PortletBase', () => {
 
 		it('should override the default root node if specified', () => {
 			portletBase = new PortletBase({
-				namespace: namespace,
+				namespace,
 				rootNode: '#' + namespace + 'child_container'
 			});
 

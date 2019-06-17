@@ -16,7 +16,7 @@ class ColorPickerInput extends Component {
 	 */
 
 	rendered() {
-		let instance = this;
+		const instance = this;
 
 		AUI().use('aui-color-picker-popover', function(A) {
 			instance.colorPickerPopover = new A.ColorPickerPopover({

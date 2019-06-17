@@ -45,7 +45,7 @@ class GoogleMapsGeocoder extends State {
 		} else {
 			result.data = {
 				address: '',
-				location: location
+				location
 			};
 		}
 

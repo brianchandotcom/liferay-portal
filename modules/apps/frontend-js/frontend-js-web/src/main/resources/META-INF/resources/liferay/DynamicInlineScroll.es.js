@@ -155,7 +155,7 @@ class DynamicInlineScroll extends PortletBase {
 		);
 
 		if (pageIndex === 0) {
-			let pageIndexCurrent = this.getNumber_(
+			const pageIndexCurrent = this.getNumber_(
 				target.getAttribute('data-current-index')
 			);
 

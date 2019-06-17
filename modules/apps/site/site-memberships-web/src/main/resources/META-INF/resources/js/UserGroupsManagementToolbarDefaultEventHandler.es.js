@@ -45,10 +45,10 @@ class UserGroupsManagementToolbarDefaultEventHandler extends DefaultEventHandler
 				eventName: this.ns('selectSiteRole'),
 				on: {
 					selectedItemChange: function(event) {
-						let selectedItem = event.newVal;
+						const selectedItem = event.newVal;
 
 						if (selectedItem) {
-							let fm = this.one('#fm');
+							const fm = this.one('#fm');
 
 							selectedItem.forEach(item => {
 								dom.append(fm, item);
@@ -76,7 +76,7 @@ class UserGroupsManagementToolbarDefaultEventHandler extends DefaultEventHandler
 						const selectedItem = event.newVal;
 
 						if (selectedItem) {
-							let addGroupUserGroupsFm = this.one(
+							const addGroupUserGroupsFm = this.one(
 								'#addGroupUserGroupsFm'
 							);
 

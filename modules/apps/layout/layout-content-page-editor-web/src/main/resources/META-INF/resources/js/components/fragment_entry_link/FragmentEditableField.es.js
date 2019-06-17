@@ -159,7 +159,7 @@ class FragmentEditableField extends PortletBase {
 
 		const mapped = FragmentEditableField._isMapped(this.editableValues);
 
-		let value = mapped
+		const value = mapped
 			? this._mappedFieldValue || this.editableValues.defaultValue
 			: translatedValue || this.editableValues.defaultValue;
 

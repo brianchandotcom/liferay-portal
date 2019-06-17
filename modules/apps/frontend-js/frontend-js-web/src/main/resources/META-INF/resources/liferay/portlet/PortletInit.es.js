@@ -227,14 +227,14 @@ class PortletInit {
 
 		const parameterKeys = Object.keys(publicRenderParameters);
 
-		for (let parameterKey of parameterKeys) {
+		for (const parameterKey of parameterKeys) {
 			const newValue = publicRenderParameters[parameterKey];
 
 			const groupMap = pageRenderState.prpMap[parameterKey];
 
 			const groupKeys = Object.keys(groupMap);
 
-			for (let groupKey of groupKeys) {
+			for (const groupKey of groupKeys) {
 				if (groupKey !== this._portletId) {
 					const parts = groupMap[groupKey].split('|');
 
@@ -265,7 +265,7 @@ class PortletInit {
 		// Delete render data for all affected portlets in order to avoid dispatching
 		// stale render data
 
-		for (let updatedId of updatedIds) {
+		for (const updatedId of updatedIds) {
 			pageRenderState.portlets[updatedId].renderData.content = null;
 		}
 
@@ -394,7 +394,7 @@ class PortletInit {
 
 		const keys = Object.keys(portlets);
 
-		for (let key of keys) {
+		for (const key of keys) {
 			const portletData = portlets[key];
 
 			pageRenderState.portlets[key] = portletData;
@@ -429,7 +429,7 @@ class PortletInit {
 			if (updatedIds.length === 0) {
 				busy = false;
 			} else {
-				for (let updatedId of updatedIds) {
+				for (const updatedId of updatedIds) {
 					this._updateStateForPortlet(updatedId);
 				}
 			}
@@ -487,7 +487,7 @@ class PortletInit {
 
 		const keys = Object.keys(eventListeners);
 
-		for (let key of keys) {
+		for (const key of keys) {
 			const eventData = eventListeners[key];
 
 			if (eventData.type !== 'portlet.onStateChange') {
@@ -552,7 +552,7 @@ class PortletInit {
 		let argCount = 0;
 		let el = null;
 
-		for (let arg of args) {
+		for (const arg of args) {
 			if (arg instanceof HTMLFormElement) {
 				if (el !== null) {
 					throw new TypeError(
@@ -820,7 +820,7 @@ class PortletInit {
 			if (eventListeners[handle].id === this._portletId) {
 				delete eventListeners[handle];
 
-				let l = eventListenersQueue.length;
+				const l = eventListenersQueue.length;
 
 				for (let i = 0; i < l; i++) {
 					const eventData = eventListenersQueue[i];

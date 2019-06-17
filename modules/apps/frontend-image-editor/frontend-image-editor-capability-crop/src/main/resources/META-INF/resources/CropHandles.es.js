@@ -31,7 +31,7 @@ class CropHandles extends Component {
 		this.croppedPreviewContext_ = this.croppedPreview_.getContext('2d');
 
 		async.nextTick(() => {
-			let canvas = this.getImageEditorCanvas();
+			const canvas = this.getImageEditorCanvas();
 
 			this.setSelectionInitialStyle_();
 
@@ -46,7 +46,7 @@ class CropHandles extends Component {
 	 * @inheritDoc
 	 */
 	detached() {
-		let canvas = this.getImageEditorCanvas();
+		const canvas = this.getImageEditorCanvas();
 
 		canvas.style.opacity = 1;
 	}
@@ -71,12 +71,12 @@ class CropHandles extends Component {
 	 * @protected
 	 */
 	bindSelectionDrag_() {
-		let canvas = this.getImageEditorCanvas();
+		const canvas = this.getImageEditorCanvas();
 
 		this.selectionDrag_.on(Drag.Events.DRAG, (data, event) => {
-			let left =
+			const left =
 				data.relativeX - canvas.offsetLeft + this.selectionBorderWidth_;
-			let top =
+			const top =
 				data.relativeY - canvas.offsetTop + this.selectionBorderWidth_;
 
 			this.element.style.left = left + 'px';
@@ -102,11 +102,11 @@ class CropHandles extends Component {
 	 * @protected
 	 */
 	bindSizeDrag_() {
-		let canvas = this.getImageEditorCanvas();
+		const canvas = this.getImageEditorCanvas();
 
 		this.sizeDrag_.on(Drag.Events.DRAG, (data, event) => {
-			let width = data.relativeX + this.resizer.offsetWidth / 2;
-			let height = data.relativeY + this.resizer.offsetHeight / 2;
+			const width = data.relativeX + this.resizer.offsetWidth / 2;
+			const height = data.relativeY + this.resizer.offsetHeight / 2;
 
 			this.element.style.width =
 				width + this.selectionBorderWidth_ * 2 + 'px';
@@ -142,11 +142,11 @@ class CropHandles extends Component {
 	 * @protected
 	 */
 	getSizeDragConstrain_(region) {
-		let canvas = this.getImageEditorCanvas();
+		const canvas = this.getImageEditorCanvas();
 
-		let constrain = Position.getRegion(canvas);
+		const constrain = Position.getRegion(canvas);
 
-		let selection = Position.getRegion(this.element);
+		const selection = Position.getRegion(this.element);
 
 		constrain.left =
 			selection.left +
@@ -185,7 +185,7 @@ class CropHandles extends Component {
 	 * @protected
 	 */
 	initializeDrags_() {
-		let canvas = this.getImageEditorCanvas();
+		const canvas = this.getImageEditorCanvas();
 
 		this.selectionDrag_ = new Drag({
 			constrain: canvas,
@@ -208,7 +208,7 @@ class CropHandles extends Component {
 	 * @protected
 	 */
 	setSelectionInitialStyle_() {
-		let canvas = this.getImageEditorCanvas();
+		const canvas = this.getImageEditorCanvas();
 
 		canvas.style.opacity = 0.5;
 

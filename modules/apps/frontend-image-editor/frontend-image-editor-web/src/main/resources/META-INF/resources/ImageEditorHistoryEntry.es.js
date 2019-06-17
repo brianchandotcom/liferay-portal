@@ -33,14 +33,14 @@ class ImageEditorHistoryEntry {
 	 */
 	loadData_(imageURL) {
 		return new CancellablePromise((resolve, reject) => {
-			let bufferImage = new Image();
+			const bufferImage = new Image();
 
 			bufferImage.onload = () => {
-				let bufferCanvas = document.createElement('canvas');
-				let bufferContext = bufferCanvas.getContext('2d');
+				const bufferCanvas = document.createElement('canvas');
+				const bufferContext = bufferCanvas.getContext('2d');
 
-				let height = bufferImage.height;
-				let width = bufferImage.width;
+				const height = bufferImage.height;
+				const width = bufferImage.width;
 
 				bufferCanvas.width = width;
 				bufferCanvas.height = height;

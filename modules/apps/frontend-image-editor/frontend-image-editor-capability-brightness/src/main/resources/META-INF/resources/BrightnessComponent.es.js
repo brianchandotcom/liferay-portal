@@ -50,13 +50,13 @@ class BrightnessComponent extends Component {
 	 * finishes processing the image.
 	 */
 	process(imageData) {
-		let brightnessValue = this.components.slider.value;
+		const brightnessValue = this.components.slider.value;
 		let promise = this.cache_[brightnessValue];
 
 		if (!promise) {
 			promise = this.spawnWorker_({
-				brightnessValue: brightnessValue,
-				imageData: imageData
+				brightnessValue,
+				imageData
 			});
 
 			this.cache_[brightnessValue] = promise;
@@ -83,8 +83,8 @@ class BrightnessComponent extends Component {
 	 */
 	spawnWorker_(message) {
 		return new CancellablePromise((resolve, reject) => {
-			let workerURI = this.modulePath + '/BrightnessWorker.js';
-			let processWorker = new Worker(workerURI);
+			const workerURI = this.modulePath + '/BrightnessWorker.js';
+			const processWorker = new Worker(workerURI);
 
 			processWorker.onmessage = event => resolve(event.data);
 			processWorker.postMessage(message);

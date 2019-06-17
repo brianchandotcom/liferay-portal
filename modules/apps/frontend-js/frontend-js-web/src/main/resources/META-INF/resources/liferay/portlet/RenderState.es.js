@@ -33,7 +33,7 @@ class RenderState {
 	from(renderState) {
 		this.parameters = {};
 
-		for (let name in renderState.parameters) {
+		for (const name in renderState.parameters) {
 			if (
 				renderState.parameters.hasOwnProperty(name) &&
 				Array.isArray(renderState.parameters[name])

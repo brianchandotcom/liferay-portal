@@ -147,7 +147,7 @@ class ImagePreviewer extends Component {
 	 * @review
 	 */
 	_setScrollContainer() {
-		let imageContainer = this.refs.imageContainer;
+		const imageContainer = this.refs.imageContainer;
 		let scrollLeft;
 		let scrollTop;
 

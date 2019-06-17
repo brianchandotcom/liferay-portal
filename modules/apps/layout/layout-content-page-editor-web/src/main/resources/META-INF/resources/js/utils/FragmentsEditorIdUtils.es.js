@@ -7,7 +7,7 @@ import {setIn} from './FragmentsEditorUpdateUtils.es';
  * @private
  */
 function _addEncodedId(obj, ids) {
-	let idObj = {};
+	const idObj = {};
 
 	ids.forEach(id => {
 		idObj[id] = obj[id];

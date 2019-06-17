@@ -82,7 +82,7 @@ class FloatingToolbarLinkPanel extends Component {
 		const buttonElementValue =
 			buttonElement.options[buttonElement.selectedIndex].value;
 
-		let buttonType = this._buttonTypes.find(
+		const buttonType = this._buttonTypes.find(
 			type => type.buttonTypeId === buttonElementValue
 		);
 

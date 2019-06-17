@@ -82,7 +82,7 @@ class ChangeListsConfiguration extends PortletBase {
 	_handleUserConfigSave(event) {
 		event.preventDefault();
 
-		let data = {
+		const data = {
 			checkoutCTCollectionConfirmationEnabled: this
 				.checkoutCTCollectionConfirmationEnabled
 		};
@@ -115,7 +115,7 @@ class ChangeListsConfiguration extends PortletBase {
 	_handleSave(event) {
 		event.preventDefault();
 
-		let data = {
+		const data = {
 			changeTrackingEnabled: this.changeTrackingEnabled
 		};
 
@@ -135,7 +135,7 @@ class ChangeListsConfiguration extends PortletBase {
 	 * @private
 	 */
 	_handleSaveAndGoToOverview(event) {
-		let data = {
+		const data = {
 			changeTrackingEnabled: this.changeTrackingEnabled
 		};
 
@@ -161,7 +161,7 @@ class ChangeListsConfiguration extends PortletBase {
 	}
 
 	_getDataRequest(url, callback) {
-		let headers = new Headers();
+		const headers = new Headers();
 		headers.append('Content-Type', 'application/json');
 		headers.append('X-CSRF-Token', Liferay.authToken);
 
@@ -191,9 +191,9 @@ class ChangeListsConfiguration extends PortletBase {
 	}
 
 	_putDataRequest(url, bodyData, callback) {
-		let body = JSON.stringify(bodyData);
+		const body = JSON.stringify(bodyData);
 
-		let headers = new Headers();
+		const headers = new Headers();
 		headers.append('Content-Type', 'application/json');
 		headers.append('X-CSRF-Token', Liferay.authToken);
 

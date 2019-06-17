@@ -19,11 +19,11 @@ const USER_FILTER_ALL = -1;
  */
 class ChangeListsHistory extends PortletBase {
 	created() {
-		let headers = new Headers();
+		const headers = new Headers();
 		headers.append('Content-Type', 'application/json');
 		headers.append('X-CSRF-Token', Liferay.authToken);
 
-		let init = {
+		const init = {
 			credentials: 'include',
 			headers,
 			method: 'GET'
@@ -33,11 +33,11 @@ class ChangeListsHistory extends PortletBase {
 
 		let beforeUnloadHandler = null;
 
-		let urlProcesses = this._getUrlProcesses();
+		const urlProcesses = this._getUrlProcesses();
 
 		this._fetchProcesses(urlProcesses, init);
 
-		let instance = this;
+		const instance = this;
 
 		this.timeoutId = setTimeout(
 			() => instance._fetchProcesses(urlProcesses, init),
@@ -151,7 +151,7 @@ class ChangeListsHistory extends PortletBase {
 	}
 
 	_getUrlProcesses() {
-		let sort = '&sort=' + this.orderByCol + ':' + this.orderByType;
+		const sort = '&sort=' + this.orderByCol + ':' + this.orderByType;
 
 		let urlProcesses =
 			this.urlProcesses +
@@ -175,18 +175,18 @@ class ChangeListsHistory extends PortletBase {
 
 	_populateProcessUsers(processUsers) {
 		AUI().use('liferay-portlet-url', A => {
-			let managementToolbar = Liferay.component(
+			const managementToolbar = Liferay.component(
 				'changeListHistoryManagementToolbar'
 			);
 
-			let filterByUserIndex = managementToolbar.filterItems.findIndex(
+			const filterByUserIndex = managementToolbar.filterItems.findIndex(
 				e => e.label === 'Filter by User'
 			);
 
-			let filterByUserItems =
+			const filterByUserItems =
 				managementToolbar.filterItems[filterByUserIndex].items;
 
-			let updatedFilterByUserItems = [];
+			const updatedFilterByUserItems = [];
 
 			updatedFilterByUserItems.push(
 				filterByUserItems[

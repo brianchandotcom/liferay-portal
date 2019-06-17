@@ -21,7 +21,7 @@ class UserDropdownDefaultEventHandler extends DefaultEventHandler {
 						const selectedItem = event.newVal;
 
 						if (selectedItem) {
-							let editUserGroupRoleFm = this.one(
+							const editUserGroupRoleFm = this.one(
 								'#editUserGroupRoleFm'
 							);
 

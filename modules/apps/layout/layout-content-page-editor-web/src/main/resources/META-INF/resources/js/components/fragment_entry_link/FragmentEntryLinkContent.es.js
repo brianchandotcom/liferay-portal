@@ -159,7 +159,7 @@ class FragmentEntryLinkContent extends Component {
 			return new FragmentEditableBackgroundImage({
 				editableId,
 				editableValues,
-				element: element,
+				element,
 				fragmentEntryLinkId: this.fragmentEntryLinkId,
 				processor: BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 				showMapping: this.showMapping,

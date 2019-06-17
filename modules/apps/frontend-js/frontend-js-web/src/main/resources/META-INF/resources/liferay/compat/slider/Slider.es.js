@@ -216,7 +216,7 @@ Slider.STATE = {
 	 */
 
 	value: {
-		validator: function(val) {
+		validator(val) {
 			return core.isNumber(val) && this.min <= val && val <= this.max;
 		},
 		value: 0

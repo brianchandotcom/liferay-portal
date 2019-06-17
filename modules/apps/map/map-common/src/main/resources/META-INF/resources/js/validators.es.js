@@ -18,7 +18,7 @@ function isInputNode(node) {
  */
 function isSubsetOf(superset) {
 	return subset => {
-		for (let element of subset) {
+		for (const element of subset) {
 			if (superset.indexOf(element) === -1) {
 				return false;
 			}

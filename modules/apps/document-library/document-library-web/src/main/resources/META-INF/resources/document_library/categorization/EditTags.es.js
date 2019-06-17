@@ -56,9 +56,9 @@ class EditTags extends Component {
 	 * @param {Function} callback Callback function
 	 */
 	_fetchTagsRequest(url, method, bodyData) {
-		let body = JSON.stringify(bodyData);
+		const body = JSON.stringify(bodyData);
 
-		let headers = new Headers();
+		const headers = new Headers();
 		headers.append('Content-Type', 'application/json');
 		headers.append('X-CSRF-Token', Liferay.authToken);
 
@@ -105,7 +105,7 @@ class EditTags extends Component {
 	_getCommonTags() {
 		this._loading = true;
 
-		let selection = this._getSelection();
+		const selection = this._getSelection();
 
 		Promise.all([
 			this._fetchTagsRequest(this.urlTags, 'POST', selection),
@@ -152,7 +152,7 @@ class EditTags extends Component {
 	_handleFormSubmit(event) {
 		event.preventDefault();
 
-		let finalTags = this._commonTags.map(tag => tag.label);
+		const finalTags = this._commonTags.map(tag => tag.label);
 
 		let addedTags = [];
 
@@ -164,11 +164,11 @@ class EditTags extends Component {
 			);
 		}
 
-		let removedTags = this._initialTags.filter(
+		const removedTags = this._initialTags.filter(
 			tag => finalTags.indexOf(tag) == -1
 		);
 
-		let instance = this;
+		const instance = this;
 
 		this._fetchTagsRequest(
 			this.urlUpdateTags,
@@ -197,11 +197,11 @@ class EditTags extends Component {
 	_setCommonTags(commonTags) {
 		this._initialTags = commonTags;
 
-		let commonTagsObjList = [];
+		const commonTagsObjList = [];
 
 		if (commonTags.length > 0) {
 			commonTags.forEach(tag => {
-				let tagObj = {
+				const tagObj = {
 					label: tag,
 					value: tag
 				};

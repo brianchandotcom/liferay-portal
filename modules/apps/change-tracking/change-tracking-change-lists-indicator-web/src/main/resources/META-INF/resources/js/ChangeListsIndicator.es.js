@@ -26,7 +26,7 @@ class ChangeListsIndicator extends PortletBase {
 	 */
 	created() {
 		this._eventHandler = new EventHandler();
-		let urlActiveCollection =
+		const urlActiveCollection =
 			this.urlCollectionsBase +
 			'?companyId=' +
 			Liferay.ThemeDisplay.getCompanyId() +
@@ -36,7 +36,7 @@ class ChangeListsIndicator extends PortletBase {
 
 		this._render(urlActiveCollection);
 
-		let instance = this;
+		const instance = this;
 
 		Liferay.on('refreshChangeTrackingIndicator', function() {
 			instance._render(urlActiveCollection);
@@ -64,7 +64,7 @@ class ChangeListsIndicator extends PortletBase {
 	 * @private
 	 */
 	_checkElement(selector) {
-		let element = document.querySelector(selector);
+		const element = document.querySelector(selector);
 
 		var result = Promise.resolve(element);
 
@@ -96,7 +96,7 @@ class ChangeListsIndicator extends PortletBase {
 	 * @private
 	 */
 	_checkElementHidden(selector) {
-		let element = document.querySelector(selector);
+		const element = document.querySelector(selector);
 
 		var result = Promise.resolve(element);
 
@@ -116,13 +116,13 @@ class ChangeListsIndicator extends PortletBase {
 	 * @private
 	 */
 	_getDataRequest(url, callback) {
-		let headers = new Headers();
+		const headers = new Headers();
 		headers.append('Content-Type', 'application/json');
 		headers.append('X-CSRF-Token', Liferay.authToken);
 
-		let type = 'GET';
+		const type = 'GET';
 
-		let init = {
+		const init = {
 			credentials: 'include',
 			headers,
 			method: type

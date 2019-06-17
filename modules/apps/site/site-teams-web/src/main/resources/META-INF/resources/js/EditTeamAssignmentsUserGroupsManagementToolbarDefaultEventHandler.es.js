@@ -11,7 +11,7 @@ class EditTeamAssignmentsUserGroupsManagementToolbarDefaultEventHandler extends 
 						const selectedItem = event.newVal;
 
 						if (selectedItem) {
-							let addTeamUserGroupsFm = this.one(
+							const addTeamUserGroupsFm = this.one(
 								'#addTeamUserGroupsFm'
 							);
 

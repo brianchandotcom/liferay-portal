@@ -1,11 +1,11 @@
 import {isFunction} from 'metal';
 import Uri from 'metal-uri';
 
-let componentConfigs = {};
+const componentConfigs = {};
 let componentPromiseWrappers = {};
-let components = {};
+const components = {};
 let componentsCache = {};
-let componentsFn = {};
+const componentsFn = {};
 
 const DEFAULT_CACHE_VALIDATION_PARAMS = ['p_p_id', 'p_p_lifecycle'];
 const DEFAULT_CACHE_VALIDATION_PORTLET_PARAMS = [
@@ -24,7 +24,7 @@ const _createPromiseWrapper = function(value) {
 	if (value) {
 		promiseWrapper = {
 			promise: Promise.resolve(value),
-			resolve: function() {}
+			resolve() {}
 		};
 	} else {
 		let promiseResolve;
@@ -34,7 +34,7 @@ const _createPromiseWrapper = function(value) {
 		});
 
 		promiseWrapper = {
-			promise: promise,
+			promise,
 			resolve: promiseResolve
 		};
 	}

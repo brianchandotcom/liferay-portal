@@ -6,14 +6,14 @@ import setFormValues from '../../../../src/main/resources/META-INF/resources/lif
 
 describe('Liferay.Util.setFormValues', () => {
 	it('should set the given values of form elements', () => {
-		let fragment = dom.buildFragment(`
+		const fragment = dom.buildFragment(`
 					<form data-fm-namespace="_com_liferay_test_portlet_" id="fm">
 						<input name="_com_liferay_test_portlet_foo" type="text" value="abc">
 						<input name="_com_liferay_test_portlet_bar" type="text" value="123">
 					</form>
 				`);
 
-		let form = fragment.firstElementChild;
+		const form = fragment.firstElementChild;
 
 		setFormValues(form, {
 			foo: 'def',

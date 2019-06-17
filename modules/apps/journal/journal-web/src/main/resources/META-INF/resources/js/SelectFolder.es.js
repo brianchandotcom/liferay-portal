@@ -55,7 +55,7 @@ class SelectFolder extends PortletBase {
 			this.nodes = this.originalNodes;
 		}
 
-		let filterValue = event.delegateTarget.value.toLowerCase();
+		const filterValue = event.delegateTarget.value.toLowerCase();
 
 		if (filterValue !== '') {
 			this.viewType = 'flat';
@@ -82,7 +82,7 @@ class SelectFolder extends PortletBase {
 			};
 
 			Liferay.Util.getOpener().Liferay.fire(this.itemSelectorSaveEvent, {
-				data: data
+				data
 			});
 		}
 	}

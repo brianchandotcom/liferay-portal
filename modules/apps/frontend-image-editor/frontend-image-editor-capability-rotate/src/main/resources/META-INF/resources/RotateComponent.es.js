@@ -66,22 +66,22 @@ class RotateComponent extends Component {
 	 * rotated.
 	 */
 	rotate_(imageData, rotationAngle) {
-		let cancellablePromise = new CancellablePromise((resolve, reject) => {
-			let imageWidth = imageData.width;
-			let imageHeight = imageData.height;
+		const cancellablePromise = new CancellablePromise((resolve, reject) => {
+			const imageWidth = imageData.width;
+			const imageHeight = imageData.height;
 
-			let swapDimensions = (rotationAngle / 90) % 2;
+			const swapDimensions = (rotationAngle / 90) % 2;
 
-			let imageCanvas = document.createElement('canvas');
+			const imageCanvas = document.createElement('canvas');
 			imageCanvas.width = imageWidth;
 			imageCanvas.height = imageHeight;
 			imageCanvas.getContext('2d').putImageData(imageData, 0, 0);
 
-			let offscreenCanvas = document.createElement('canvas');
+			const offscreenCanvas = document.createElement('canvas');
 			offscreenCanvas.width = swapDimensions ? imageHeight : imageWidth;
 			offscreenCanvas.height = swapDimensions ? imageWidth : imageHeight;
 
-			let offscreenContext = offscreenCanvas.getContext('2d');
+			const offscreenContext = offscreenCanvas.getContext('2d');
 			offscreenContext.save();
 			offscreenContext.translate(
 				offscreenCanvas.width / 2,

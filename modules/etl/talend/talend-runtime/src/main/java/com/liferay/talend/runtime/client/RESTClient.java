@@ -14,16 +14,14 @@
 
 package com.liferay.talend.runtime.client;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.exception.MalformedURLException;
 import com.liferay.talend.runtime.client.exception.ConnectionException;
 import com.liferay.talend.runtime.client.exception.OAuth2Exception;
 import com.liferay.talend.utils.URIUtils;
+
+import java.io.StringReader;
+import java.io.StringWriter;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -37,6 +35,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import javax.json.JsonWriter;
 
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.client.Client;
@@ -102,19 +105,19 @@ public class RESTClient {
 		return _execute(HttpMethod.GET, _createBuilder(decoratedURI));
 	}
 
-	public Response executePatchRequest(JsonNode jsonNode) {
+	public Response executePatchRequest(JsonObject jsonNode) {
 		return _execute(
 			HttpMethod.PATCH, _createBuilder(_getTargetURI()),
 			Entity.json(_jsonNodeToPrettyString(jsonNode)));
 	}
 
-	public Response executePostRequest(JsonNode jsonNode) {
+	public Response executePostRequest(JsonObject jsonNode) {
 		return _execute(
 			HttpMethod.POST, _createBuilder(_getTargetURI()),
 			Entity.json(_jsonNodeToPrettyString(jsonNode)));
 	}
 
-	public Response executePutRequest(JsonNode jsonNode) {
+	public Response executePutRequest(JsonObject jsonNode) {
 		return _execute(
 			HttpMethod.PUT, _createBuilder(_getTargetURI()),
 			Entity.json(_jsonNodeToPrettyString(jsonNode)));
@@ -133,11 +136,13 @@ public class RESTClient {
 		return String.format("REST API Client [%s].", _getTarget());
 	}
 
-	private JsonNode _asJsonNode(Response response) {
+	private JsonObject _asJsonNode(Response response) {
 		try {
 			String entity = response.readEntity(String.class);
 
-			return _objectMapper.readTree(entity);
+			JsonReader jsonReader = Json.createReader(new StringReader(entity));
+
+			return jsonReader.readObject();
 		}
 		catch (Throwable t) {
 			throw TalendRuntimeException.createUnexpectedException(t);
@@ -252,22 +257,17 @@ public class RESTClient {
 	private String _getBearerToken(
 		LiferayConnectionProperties liferayConnectionProperties) {
 
-		JsonNode authorizationJsonNode = _requestAuthorizationJsonNode(
+		JsonObject authorizationJsonObject = _requestAuthorizationJsonNode(
 			liferayConnectionProperties);
 
-		JsonNode tokenTypeJsonNode = authorizationJsonNode.get("token_type");
-
-		String tokenType = tokenTypeJsonNode.asText();
+		String tokenType = authorizationJsonObject.getString("token_type");
 
 		if (!Objects.equals(tokenType, "Bearer")) {
 			throw new OAuth2Exception(
 				"Unexpected token type received " + tokenType);
 		}
 
-		JsonNode accessTokenJsonNode = authorizationJsonNode.get(
-			"access_token");
-
-		return accessTokenJsonNode.asText();
+		return authorizationJsonObject.getString("access_token");
 	}
 
 	private ClientConfig _getClientConfig() {
@@ -371,25 +371,16 @@ public class RESTClient {
 		return false;
 	}
 
-	private String _jsonNodeToPrettyString(JsonNode jsonNode) {
-		String json;
+	private String _jsonNodeToPrettyString(JsonObject jsonNode) {
+		StringWriter stringWriter = new StringWriter();
 
-		try {
-			ObjectWriter objectWriter =
-				_objectMapper.writerWithDefaultPrettyPrinter();
+		JsonWriter jsonWriter = Json.createWriter(stringWriter);
 
-			json = objectWriter.writeValueAsString(jsonNode);
-		}
-		catch (JsonProcessingException jpe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to convert JsonNode to a String representation");
-			}
+		jsonWriter.writeObject(jsonNode);
 
-			throw TalendRuntimeException.createUnexpectedException(jpe);
-		}
+		stringWriter.flush();
 
-		return json;
+		return stringWriter.toString();
 	}
 
 	private Response _processRedirects(Response response) {
@@ -427,7 +418,7 @@ public class RESTClient {
 		return currentResponse;
 	}
 
-	private JsonNode _requestAuthorizationJsonNode(
+	private JsonObject _requestAuthorizationJsonNode(
 			LiferayConnectionProperties liferayConnectionProperties)
 		throws ConnectionException {
 
@@ -485,7 +476,6 @@ public class RESTClient {
 
 	private final Client _client;
 	private final LiferayConnectionProperties _liferayConnectionProperties;
-	private final ObjectMapper _objectMapper = new ObjectMapper();
 	private final String _target;
 
 }

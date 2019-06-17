@@ -14,10 +14,6 @@
 
 package com.liferay.talend.runtime.reader;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-
 import com.liferay.talend.avro.ResourceNodeConverter;
 import com.liferay.talend.runtime.LiferaySource;
 import com.liferay.talend.tliferayinput.TLiferayInputProperties;
@@ -27,6 +23,12 @@ import java.io.IOException;
 import java.net.URI;
 
 import java.util.NoSuchElementException;
+
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import javax.json.JsonValue;
 
 import javax.ws.rs.core.UriBuilder;
 
@@ -41,6 +43,7 @@ import org.talend.daikon.avro.converter.AvroConverter;
 
 /**
  * @author Zoltán Takács
+ * @author Igor Beslic
  */
 public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
@@ -63,19 +66,15 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
 		// Fast return conditions
 
-		if (_inputRecordsIndex < _inputRecordsJsonNode.size()) {
+		if (_inputRecordsIndex < _inputRecordsJsonArray.size()) {
 			dataCount++;
 			_hasMore = true;
 
 			return true;
 		}
 
-		int actual = _endpointJsonNode.path(
-			"page"
-		).asInt();
-		int last = _endpointJsonNode.path(
-			"lastPage"
-		).asInt();
+		int actual = _endpointJsonObject.getInt("page");
+		int last = _endpointJsonObject.getInt("lastPage");
 
 		if (actual >= last) {
 			_hasMore = false;
@@ -88,13 +87,13 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		URI endpointURI =
 			liferayConnectionResourceBaseProperties.resource.getEndpointURI();
 
-		_endpointJsonNode = _getEndpointJsonNode(endpointURI, ++actual, -1);
+		_endpointJsonObject = _getEndpointJsonNode(endpointURI, ++actual, -1);
 
-		_inputRecordsJsonNode = _endpointJsonNode.path("items");
+		_inputRecordsJsonArray = _endpointJsonObject.getJsonArray("items");
 
 		_inputRecordsIndex = 0;
 
-		_hasMore = _inputRecordsJsonNode.size() > 0;
+		_hasMore = _inputRecordsJsonArray.size() > 0;
 
 		if (_hasMore) {
 
@@ -127,8 +126,8 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		}
 	}
 
-	public JsonNode getCurrentJsonNode() throws NoSuchElementException {
-		return _inputRecordsJsonNode.get(_inputRecordsIndex);
+	public JsonValue getCurrentJsonNode() throws NoSuchElementException {
+		return _inputRecordsJsonArray.get(_inputRecordsIndex);
 	}
 
 	@Override
@@ -136,14 +135,14 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		URI endpointURI =
 			liferayConnectionResourceBaseProperties.resource.getEndpointURI();
 
-		_endpointJsonNode = _getEndpointJsonNode(endpointURI, 1, -1);
+		_endpointJsonObject = _getEndpointJsonNode(endpointURI, 1, -1);
 
-		if (_endpointJsonNode.has("items")) {
-			_inputRecordsJsonNode = _endpointJsonNode.path("items");
+		if (_endpointJsonObject.containsKey("items")) {
+			_inputRecordsJsonArray = _endpointJsonObject.getJsonArray("items");
 
 			boolean start = false;
 
-			if (_inputRecordsJsonNode.size() > 0) {
+			if (_inputRecordsJsonArray.size() > 0) {
 				start = true;
 			}
 
@@ -152,9 +151,11 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 			}
 		}
 		else {
-			ArrayNode arrayNode = _objectMapper.createArrayNode();
+			JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
 
-			_inputRecordsJsonNode = arrayNode.add(_endpointJsonNode);
+			jsonArrayBuilder.add(_endpointJsonObject);
+
+			_inputRecordsJsonArray = jsonArrayBuilder.build();
 		}
 
 		dataCount++;
@@ -183,7 +184,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		return _resourceEntityAvroConverter;
 	}
 
-	private JsonNode _getEndpointJsonNode(
+	private JsonObject _getEndpointJsonNode(
 		URI endpointURI, int page, int pageSize) {
 
 		if (page <= 0) {
@@ -218,9 +219,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	private static final Logger _log = LoggerFactory.getLogger(
 		LiferayInputReader.class);
 
-	private static final ObjectMapper _objectMapper = new ObjectMapper();
-
-	private transient JsonNode _endpointJsonNode;
+	private transient JsonObject _endpointJsonObject;
 
 	/**
 	 * Represents state of this Reader: whether it has more records
@@ -236,7 +235,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	 *
 	 * @review
 	 */
-	private transient JsonNode _inputRecordsJsonNode;
+	private transient JsonArray _inputRecordsJsonArray;
 
 	/**
 	 * Converts row retrieved from data source to Avro format {@link

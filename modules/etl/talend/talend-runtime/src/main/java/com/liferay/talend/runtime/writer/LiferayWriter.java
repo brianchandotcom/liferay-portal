@@ -14,20 +14,26 @@
 
 package com.liferay.talend.runtime.writer;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import com.liferay.talend.runtime.LiferaySink;
 import com.liferay.talend.tliferayoutput.Action;
 import com.liferay.talend.tliferayoutput.TLiferayOutputProperties;
 
 import java.io.IOException;
+import java.io.StringReader;
 
 import java.net.URI;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+import javax.json.JsonReader;
 
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
@@ -90,21 +96,19 @@ public class LiferayWriter
 	}
 
 	public void doInsert(IndexedRecord indexedRecord) throws IOException {
-		ObjectNode objectNode = _createEndpointRequestPayload(indexedRecord);
-
 		URI resourceURI = _tLiferayOutputProperties.resource.getEndpointURI();
 
 		_liferaySink.doPostRequest(
-			_runtimeContainer, resourceURI.toASCIIString(), objectNode);
+			_runtimeContainer, resourceURI.toASCIIString(),
+			_createEndpointRequestPayload(indexedRecord));
 	}
 
 	public void doUpdate(IndexedRecord indexedRecord) throws IOException {
-		ObjectNode objectNode = _createEndpointRequestPayload(indexedRecord);
-
 		URI resourceURI = _tLiferayOutputProperties.resource.getEndpointURI();
 
 		_liferaySink.doPatchRequest(
-			_runtimeContainer, resourceURI.toASCIIString(), objectNode);
+			_runtimeContainer, resourceURI.toASCIIString(),
+			_createEndpointRequestPayload(indexedRecord));
 	}
 
 	@Override
@@ -188,7 +192,7 @@ public class LiferayWriter
 		i18nMessages = i18nMessageProvider.getI18nMessages(LiferayWriter.class);
 	}
 
-	private ObjectNode _createEndpointRequestPayload(
+	private JsonObject _createEndpointRequestPayload(
 			IndexedRecord indexedRecord)
 		throws IOException {
 
@@ -196,7 +200,10 @@ public class LiferayWriter
 
 		List<Schema.Field> indexRecordFields = indexRecordSchema.getFields();
 
-		ObjectNode objectNode = _mapper.createObjectNode();
+		JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+
+		Map<String, JsonObjectBuilder> nestedJsonObjectBuilders =
+			new HashMap<>();
 
 		for (Schema.Field field : indexRecordFields) {
 			String fieldName = field.name();
@@ -207,66 +214,72 @@ public class LiferayWriter
 				continue;
 			}
 
-			ObjectNode targetObjectNode = objectNode;
+			JsonObjectBuilder currentJsonObjectBuilder = objectBuilder;
 
 			if (_isNestedFieldName(fieldName)) {
 				String[] nameParts = fieldName.split("_");
 
-				targetObjectNode = objectNode.with(nameParts[0]);
+				if (!nestedJsonObjectBuilders.containsKey(nameParts[0])) {
+					nestedJsonObjectBuilders.put(
+						nameParts[0], Json.createObjectBuilder());
+				}
+
+				currentJsonObjectBuilder = nestedJsonObjectBuilders.get(
+					nameParts[0]);
 
 				fieldName = nameParts[1];
 			}
 
 			if (AvroUtils.isSameType(unwrappedSchema, AvroUtils._boolean())) {
-				targetObjectNode.put(
+				currentJsonObjectBuilder.add(
 					fieldName, (boolean)indexedRecord.get(field.pos()));
 			}
 			else if (AvroUtils.isSameType(
 						unwrappedSchema, AvroUtils._bytes())) {
 
-				targetObjectNode.put(
-					fieldName, (byte[])indexedRecord.get(field.pos()));
+				Base64.Encoder encoder = Base64.getEncoder();
+
+				currentJsonObjectBuilder.add(
+					fieldName,
+					encoder.encodeToString(
+						(byte[])indexedRecord.get(field.pos())));
 			}
 			else if (AvroUtils.isSameType(
 						unwrappedSchema, AvroUtils._logicalTimestamp()) ||
 					 AvroUtils.isSameType(unwrappedSchema, AvroUtils._date())) {
 
-				targetObjectNode.put(
+				currentJsonObjectBuilder.add(
 					fieldName, (String)indexedRecord.get(field.pos()));
 			}
 			else if (AvroUtils.isSameType(
 						unwrappedSchema, AvroUtils._double())) {
 
-				targetObjectNode.put(
+				currentJsonObjectBuilder.add(
 					fieldName, (double)indexedRecord.get(field.pos()));
 			}
 			else if (AvroUtils.isSameType(
 						unwrappedSchema, AvroUtils._float())) {
 
-				targetObjectNode.put(
+				currentJsonObjectBuilder.add(
 					fieldName, (float)indexedRecord.get(field.pos()));
 			}
 			else if (AvroUtils.isSameType(unwrappedSchema, AvroUtils._int())) {
-				targetObjectNode.put(
+				currentJsonObjectBuilder.add(
 					fieldName, (int)indexedRecord.get(field.pos()));
 			}
 			else if (AvroUtils.isSameType(unwrappedSchema, AvroUtils._long())) {
-				targetObjectNode.put(
+				currentJsonObjectBuilder.add(
 					fieldName, (long)indexedRecord.get(field.pos()));
 			}
 			else if (AvroUtils.isSameType(
 						unwrappedSchema, AvroUtils._string())) {
 
-				try {
-					targetObjectNode.put(
-						fieldName,
-						_mapper.readTree(
-							(String)indexedRecord.get(field.pos())));
-				}
-				catch (IOException ioe) {
-					targetObjectNode.put(
-						fieldName, (String)indexedRecord.get(field.pos()));
-				}
+				StringReader stringReader = new StringReader(
+					(String)indexedRecord.get(field.pos()));
+
+				JsonReader jsonReader = Json.createReader(stringReader);
+
+				currentJsonObjectBuilder.add(fieldName, jsonReader.readValue());
 			}
 			else {
 				throw new IOException(
@@ -276,7 +289,15 @@ public class LiferayWriter
 			}
 		}
 
-		return objectNode;
+		for (Map.Entry<String, JsonObjectBuilder> nestedJsonObjectBuilder :
+				nestedJsonObjectBuilders.entrySet()) {
+
+			objectBuilder.add(
+				nestedJsonObjectBuilder.getKey(),
+				nestedJsonObjectBuilder.getValue());
+		}
+
+		return objectBuilder.build();
 	}
 
 	private void _handleRejectRecord(
@@ -353,7 +374,6 @@ public class LiferayWriter
 	private final boolean _dieOnError;
 	private final LiferaySink _liferaySink;
 	private final LiferayWriteOperation _liferayWriteOperation;
-	private final ObjectMapper _mapper = new ObjectMapper();
 	private final Schema _rejectSchema;
 	private final List<IndexedRecord> _rejectWrites;
 	private Result _result;

@@ -108,7 +108,7 @@ public class FileShortcutStagedModelDataHandler
 		List<DLFileShortcut> dlFileShortcuts =
 			_dlFileShortcutLocalService.getDLFileShortcutsByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<DLFileShortcut>());
+				new StagedModelModifiedDateComparator<>());
 
 		List<FileShortcut> fileShortcuts = new ArrayList<>();
 
@@ -274,22 +274,13 @@ public class FileShortcutStagedModelDataHandler
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLFileShortcutLocalService(
-		DLFileShortcutLocalService dlFileShortcutLocalService) {
-
-		_dlFileShortcutLocalService = dlFileShortcutLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		FileShortcutStagedModelDataHandler.class);
 
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
 	private DLFileShortcutLocalService _dlFileShortcutLocalService;
 
 	@Reference

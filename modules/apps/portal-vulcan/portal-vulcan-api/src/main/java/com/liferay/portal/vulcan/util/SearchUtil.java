@@ -51,6 +51,28 @@ import java.util.stream.Stream;
  */
 public class SearchUtil {
 
+	public static <T extends BaseModel<T>> QueryDefinition<T>
+		getQueryDefinition(
+			Class<T> clazz, Pagination pagination, Sort[] sorts) {
+
+		QueryDefinition<T> queryDefinition = new QueryDefinition<>();
+
+		queryDefinition.setEnd(pagination.getEndPosition());
+		queryDefinition.setStart(pagination.getStartPosition());
+
+		Object[] sortColumns = _getSortColumns(sorts);
+
+		if (sortColumns != null) {
+			OrderByComparator<T> orderByComparator =
+				OrderByComparatorFactoryUtil.create(
+					clazz.getSimpleName(), sortColumns);
+
+			queryDefinition.setOrderByComparator(orderByComparator);
+		}
+
+		return queryDefinition;
+	}
+
 	public static <T> Page<T> search(
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
 			Filter filter, Class<?> indexerClass, String keywords,
@@ -128,40 +150,6 @@ public class SearchUtil {
 		return searchContext;
 	}
 
-	public static <T extends BaseModel<T>> QueryDefinition<T> getQueryDefinition(
-		Class<T> clazz,
-		Pagination pagination, Sort[] sorts) {
-
-		QueryDefinition<T> queryDefinition = new QueryDefinition<>();
-
-		queryDefinition.setEnd(pagination.getEndPosition());
-		queryDefinition.setStart(pagination.getStartPosition());
-
-		Object[] sortColumns = _getSortColumns(sorts);
-
-		if (sortColumns != null) {
-			OrderByComparator<T> orderByComparator =
-				OrderByComparatorFactoryUtil.create(
-					clazz.getSimpleName(), sortColumns);
-
-			queryDefinition.setOrderByComparator(orderByComparator);
-		}
-
-		return queryDefinition;
-	}
-
-	private static Object[] _getSortColumns(Sort[] sorts) {
-		if (ArrayUtil.isEmpty(sorts)) {
-			return null;
-		}
-
-		return Stream.of(
-			sorts
-		).flatMap(
-			sort -> Stream.of(sort.getFieldName(), !sort.isReverse())
-		).toArray();
-	}
-
 	private static BooleanClause<?> _getBooleanClause(
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
 			Filter filter)
@@ -185,6 +173,18 @@ public class SearchUtil {
 
 		return BooleanClauseFactoryUtil.create(
 			booleanQuery, BooleanClauseOccur.MUST.getName());
+	}
+
+	private static Object[] _getSortColumns(Sort[] sorts) {
+		if (ArrayUtil.isEmpty(sorts)) {
+			return null;
+		}
+
+		return Stream.of(
+			sorts
+		).flatMap(
+			sort -> Stream.of(sort.getFieldName(), !sort.isReverse())
+		).toArray();
 	}
 
 }

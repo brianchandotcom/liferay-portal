@@ -219,7 +219,11 @@ if ((publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLay
 
 				const defaultLanguage = languageSelectInput.val();
 
-				const defaultLanguageSiteName = nameInput.getValue(defaultLanguage);
+				var defaultLanguageSiteName = null;
+
+				if (nameInput) {
+					defaultLanguageSiteName = nameInput.getValue(defaultLanguage);
+				}
 
 				new A.Alert(
 					{

@@ -62,7 +62,7 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 		window,
 		'<portlet:namespace />addReplyToMessage',
 		function(messageId, quote) {
-			var addQuickReplyContainer = document.getElementById('<portlet:namespace />addReplyToMessage' + messageId);
+			var addQuickReplyContainer = document.querySelector('#<portlet:namespace />addReplyToMessage' + messageId + ' .panel');
 
 			if (addQuickReplyContainer) {
 
@@ -75,6 +75,11 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 				if (quote) {
 					editMessageQuickURL = Liferay.Util.addParams('<portlet:namespace />quote=true', editMessageQuickURL);
 				}
+
+				var addQuickReplyLoadingMask = document.querySelector('#<portlet:namespace />addReplyToMessage' + messageId + ' .loading-animation');
+
+				addQuickReplyContainer.classList.add('hide');
+				addQuickReplyLoadingMask.classList.remove('hide');
 
 				fetch(
 					editMessageQuickURL,
@@ -100,6 +105,7 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 						domAll.globalEval.runScriptsInElement(addQuickReplyContainer);
 
 						addQuickReplyContainer.classList.remove('hide');
+						addQuickReplyLoadingMask.classList.add('hide');
 
 						var parentMessageIdInput = addQuickReplyContainer.querySelector('#<portlet:namespace />parentMessageId');
 

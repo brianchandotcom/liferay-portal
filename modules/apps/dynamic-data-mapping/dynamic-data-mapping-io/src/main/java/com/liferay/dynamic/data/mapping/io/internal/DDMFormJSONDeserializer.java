@@ -167,8 +167,11 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 
 		ddmFormFieldValidation.setExpression(
 			jsonObject.getString("expression"));
-		ddmFormFieldValidation.setErrorMessage(
+
+		LocalizedValue errorMessage = deserializeLocalizedValue(
 			jsonObject.getString("errorMessage"));
+
+		ddmFormFieldValidation.setErrorMessage(errorMessage);
 
 		return ddmFormFieldValidation;
 	}

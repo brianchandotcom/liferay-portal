@@ -23,9 +23,11 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -65,13 +67,26 @@ public class ValidationDDMFormFieldTemplateContextContributor
 
 		String valueString = ddmFormFieldRenderingContext.getValue();
 
+		Locale locale = ddmFormFieldRenderingContext.getLocale();
+
+		String languageId = LocaleUtil.toLanguageId(locale);
+
 		if (Validator.isNotNull(valueString)) {
 			try {
 				JSONObject valueJSONObject = jsonFactory.createJSONObject(
 					valueString);
 
-				value.put(
-					"errorMessage", valueJSONObject.getString("errorMessage"));
+				JSONObject errorMessageJSONObject =
+					valueJSONObject.getJSONObject("errorMessage");
+
+				String errorMessage = valueJSONObject.getString("errorMessage");
+
+				if (errorMessageJSONObject != null) {
+					errorMessage = errorMessageJSONObject.getString(languageId);
+				}
+
+				value.put("errorMessage", errorMessage);
+
 				value.put(
 					"expression", valueJSONObject.getString("expression"));
 			}

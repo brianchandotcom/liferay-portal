@@ -20,9 +20,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -40,20 +40,19 @@ public class FriendlyURLEntryImpl extends FriendlyURLEntryBaseImpl {
 			return urlTitle;
 		}
 
-		if (getLanguageIdToUrlTitleMap().size() > 0) {
-			Map<String, String> urlTitleMap = getLanguageIdToUrlTitleMap();
+		Map<String, String> languageIdToUrlTitleMap =
+			getLanguageIdToUrlTitleMap();
 
-			Set<Map.Entry<String, String>> urlTitleEntrySet =
-				urlTitleMap.entrySet();
+		if (languageIdToUrlTitleMap.isEmpty()) {
+			return StringPool.BLANK;
+		}
 
-			Iterator<Map.Entry<String, String>> itr =
-				urlTitleEntrySet.iterator();
+		Collection<String> urlTitles = languageIdToUrlTitleMap.values();
 
-			if (itr.hasNext()) {
-				Map.Entry<String, String> lang = itr.next();
+		Iterator<String> iterator = urlTitles.iterator();
 
-				return lang.getValue();
-			}
+		if (iterator.hasNext()) {
+			return iterator.next();
 		}
 
 		return StringPool.BLANK;

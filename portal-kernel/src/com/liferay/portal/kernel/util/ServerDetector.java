@@ -25,16 +25,36 @@ import java.lang.reflect.Field;
  */
 public class ServerDetector {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String GLASSFISH_ID = "glassfish";
 
 	public static final String JBOSS_ID = "jboss";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String JETTY_ID = "jetty";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String JONAS_ID = "jonas";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String OC4J_ID = "oc4j";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String RESIN_ID = "resin";
 
 	public static final String SYSTEM_PROPERTY_KEY_SERVER_DETECTOR_SERVER_ID =

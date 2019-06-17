@@ -190,16 +190,9 @@ public class FileShortcutStagedModelDataHandler
 			fileEntryIds, fileShortcut.getToFileEntryId(),
 			fileShortcut.getToFileEntryId());
 
-		FileEntry importedFileEntry = null;
+		FileEntry importedFileEntry = _fetchFileEntry(fileEntryId);
 
-		try {
-			importedFileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
-		}
-		catch (PortalException pe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to fetch file entry " + fileEntryId, pe);
-			}
-
+		if (importedFileEntry == null) {
 			return;
 		}
 
@@ -271,6 +264,19 @@ public class FileShortcutStagedModelDataHandler
 
 			trashHandler.restoreTrashEntry(
 				userId, existingFileShortcut.getFileShortcutId());
+		}
+	}
+
+	private FileEntry _fetchFileEntry(long fileEntryId) {
+		try {
+			return _dlAppLocalService.getFileEntry(fileEntryId);
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to fetch file entry " + fileEntryId, pe);
+			}
+
+			return null;
 		}
 	}
 

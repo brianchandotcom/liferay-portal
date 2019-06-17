@@ -113,8 +113,6 @@ String redirect = PortalUtil.getLayoutFullURL(layout, themeDisplay);
 			assetEntryTypeSelector.selectedIndex
 		];
 
-		const url = selectedOption.getAttribute('data-url');
-
-		Liferay.Util.navigate(url);
+		Liferay.Util.navigate(selectedOption.dataset.url);
 	}
 </aui:script>

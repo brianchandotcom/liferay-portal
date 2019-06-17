@@ -146,6 +146,10 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 		File[] fileArray = source.listFiles();
 
+		if (fileArray == null) {
+			return;
+		}
+
 		for (File file : fileArray) {
 			if (file.isDirectory()) {
 				copyDirectory(
@@ -338,6 +342,10 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	public void deltree(File directory) {
 		if (directory.exists() && directory.isDirectory()) {
 			File[] fileArray = directory.listFiles();
+
+			if (fileArray == null) {
+				return;
+			}
 
 			for (File file : fileArray) {
 				if (file.isDirectory()) {

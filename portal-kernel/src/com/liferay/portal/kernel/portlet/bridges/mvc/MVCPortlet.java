@@ -581,7 +581,9 @@ public class MVCPortlet extends LiferayPortlet {
 				!_validPaths.contains(_PATH_META_INF_RESOURCES.concat(path))) {
 
 				throw new PortletException(
-					"Path " + path + " is not accessible by this portlet");
+					StringBundler.concat(
+						"Path ", path, " is not accessible by portlet ",
+						getPortletName()));
 			}
 
 			portletRequestDispatcher.include(portletRequest, portletResponse);

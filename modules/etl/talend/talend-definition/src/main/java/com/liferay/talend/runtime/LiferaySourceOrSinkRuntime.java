@@ -26,15 +26,12 @@ import org.apache.avro.Schema;
 
 import org.talend.components.api.component.runtime.SourceOrSink;
 import org.talend.components.api.container.RuntimeContainer;
-import org.talend.daikon.NamedThing;
 import org.talend.daikon.properties.ValidationResult;
 
 /**
  * @author Zoltán Takács
  */
 public interface LiferaySourceOrSinkRuntime extends SourceOrSink {
-
-	public List<NamedThing> getAvailableWebSites() throws IOException;
 
 	public Set<String> getEndpointList(String operation) throws IOException;
 

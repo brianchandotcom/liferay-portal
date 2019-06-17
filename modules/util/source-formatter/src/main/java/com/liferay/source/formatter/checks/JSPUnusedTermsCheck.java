@@ -68,8 +68,12 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 
 		if (isPortalSource() || isSubrepository()) {
 			content = _removeUnusedPortletDefineObjects(fileName, content);
-			content = _removeUnusedTaglibs(fileName, content);
 			content = _removeUnusedVariables(fileName, absolutePath, content);
+
+			content = _removeUnusedTaglibs(fileName, content);
+
+			content = JSPSourceUtil.compressImportsOrTaglibs(
+				fileName, content, "<%@ taglib uri=");
 		}
 
 		_contentsMap.put(fileName, content);
@@ -104,6 +108,38 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 					checkedFileNames, includeFileNames, _getContentsMap())) {
 
 				unneededImports.add(importLine);
+			}
+		}
+	}
+
+	private void _addJSPUnusedTaglibs(
+			String fileName, List<String> taglibLines,
+			List<String> unneededTaglibs)
+		throws IOException {
+
+		Set<String> checkedFileNames = new HashSet<>();
+		Set<String> includeFileNames = new HashSet<>();
+
+		for (String taglibLine : taglibLines) {
+			int x = taglibLine.indexOf("prefix=\"");
+
+			int y = taglibLine.indexOf(CharPool.QUOTE, x + 8);
+
+			if ((x == -1) || (y == -1)) {
+				continue;
+			}
+
+			String prefix = taglibLine.substring(x + 8, y);
+
+			String regex = StringBundler.concat(
+				StringPool.LESS_THAN, prefix, StringPool.COLON, StringPool.PIPE,
+				"\\$\\{" + prefix, StringPool.COLON);
+
+			if (_hasUnusedJSPTerm(
+					fileName, regex, "taglib", checkedFileNames,
+					includeFileNames, _getContentsMap())) {
+
+				unneededTaglibs.add(taglibLine);
 			}
 		}
 	}
@@ -156,6 +192,33 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		}
 
 		return duplicateImports;
+	}
+
+	private List<String> _getJSPDuplicateTaglibs(
+			String fileName, String content, List<String> taglibLines)
+		throws IOException {
+
+		List<String> duplicateTaglibs = new ArrayList<>();
+
+		for (String taglibLine : taglibLines) {
+			int x = content.indexOf("<%@ include file=");
+
+			if (x == -1) {
+				continue;
+			}
+
+			int y = content.indexOf("<%@ taglib uri=");
+
+			if (y == -1) {
+				continue;
+			}
+
+			if ((x < y) && _isJSPDuplicateTaglib(fileName, taglibLine, false)) {
+				duplicateTaglibs.add(taglibLine);
+			}
+		}
+
+		return duplicateTaglibs;
 	}
 
 	private String _getVariableName(String line) {
@@ -288,6 +351,54 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 			fileName, includeFileName, _getContentsMap());
 
 		return _isJSPDuplicateImport(includeFileName, importLine, true);
+	}
+
+	private boolean _isJSPDuplicateTaglib(
+			String fileName, String taglibLine, boolean checkFile)
+		throws IOException {
+
+		Map<String, String> contentsMap = _getContentsMap();
+
+		String content = contentsMap.get(fileName);
+
+		if (Validator.isNull(content)) {
+			return false;
+		}
+
+		int x = taglibLine.indexOf("taglib");
+
+		if (x == -1) {
+			return false;
+		}
+
+		if (checkFile && content.contains(taglibLine.substring(x))) {
+			return true;
+		}
+
+		int y = content.indexOf("<%@ include file=");
+
+		if (y == -1) {
+			return false;
+		}
+
+		y = content.indexOf(CharPool.QUOTE, y);
+
+		if (y == -1) {
+			return false;
+		}
+
+		int z = content.indexOf(CharPool.QUOTE, y + 1);
+
+		if (z == -1) {
+			return false;
+		}
+
+		String includeFileName = content.substring(y + 1, z);
+
+		includeFileName = JSPSourceUtil.buildFullPathIncludeFileName(
+			fileName, includeFileName, _getContentsMap());
+
+		return _isJSPDuplicateTaglib(includeFileName, taglibLine, true);
 	}
 
 	private boolean _isJSPTermRequired(
@@ -431,34 +542,46 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	private String _removeUnusedTaglibs(String fileName, String content)
 		throws IOException {
 
-		Set<String> checkedFileNames = new HashSet<>();
-		Set<String> includeFileNames = new HashSet<>();
+		if (fileName.endsWith("init-ext.jsp")) {
+			return content;
+		}
 
-		return _removeUnusedTaglibs(
-			fileName, content, checkedFileNames, includeFileNames);
-	}
+		Matcher matcher = _compressedJSPTaglibPattern.matcher(content);
 
-	private String _removeUnusedTaglibs(
-			String fileName, String content, Set<String> checkedFileNames,
-			Set<String> includeFileNames)
-		throws IOException {
+		if (!matcher.find()) {
+			return content;
+		}
 
-		Matcher matcher = _taglibURIPattern.matcher(content);
+		String taglibs = matcher.group();
 
-		while (matcher.find()) {
-			String regex = StringBundler.concat(
-				StringPool.LESS_THAN, matcher.group(1), StringPool.COLON,
-				StringPool.PIPE, "\\$\\{" + matcher.group(1), StringPool.COLON);
+		String newTaglibs = StringUtil.replace(
+			taglibs, new String[] {"<%@\r\n", "<%@\n", " %><%@ "},
+			new String[] {"\r\n<%@ ", "\n<%@ ", " %>\n<%@ "});
 
-			if (_hasUnusedJSPTerm(
-					fileName, regex, "taglib", checkedFileNames,
-					includeFileNames, _getContentsMap())) {
+		List<String> taglibLines = new ArrayList<>();
 
-				return StringUtil.removeSubstring(content, matcher.group());
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new UnsyncStringReader(newTaglibs));
+
+		String line = null;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			if (line.contains("uri=")) {
+				taglibLines.add(line);
 			}
 		}
 
-		return content;
+		List<String> unneededTaglibs = _getJSPDuplicateTaglibs(
+			fileName, content, taglibLines);
+
+		_addJSPUnusedTaglibs(fileName, taglibLines, unneededTaglibs);
+
+		for (String unneededTaglib : unneededTaglibs) {
+			newTaglibs = StringUtil.replace(
+				newTaglibs, unneededTaglib, StringPool.BLANK);
+		}
+
+		return StringUtil.replaceFirst(content, taglibs, newTaglibs);
 	}
 
 	private String _removeUnusedVariables(
@@ -532,8 +655,8 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 
 	private static final Pattern _compressedJSPImportPattern = Pattern.compile(
 		"(<.*\n*(?:page|tag) import=\".*>\n*)+", Pattern.MULTILINE);
-	private static final Pattern _taglibURIPattern = Pattern.compile(
-		"<%@\\s+taglib uri=.* prefix=\"(.*?)\" %>");
+	private static final Pattern _compressedJSPTaglibPattern = Pattern.compile(
+		"(<.*\n*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
 
 	private List<String> _allFileNames;
 	private Map<String, String> _contentsMap;

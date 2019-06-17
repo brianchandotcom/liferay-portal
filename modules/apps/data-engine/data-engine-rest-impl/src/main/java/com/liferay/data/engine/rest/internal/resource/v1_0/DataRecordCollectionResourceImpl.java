@@ -28,6 +28,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -38,12 +39,14 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.ws.rs.BadRequestException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -76,21 +79,15 @@ public class DataRecordCollectionResourceImpl
 				Long dataDefinitionId, String keywords, Pagination pagination)
 		throws Exception {
 
+		if (pagination.getPageSize() > 250) {
+			throw new BadRequestException(
+				LanguageUtil.format(
+					contextAcceptLanguage.getPreferredLocale(),
+					"page-size-is-greater-than-x", 250));
+		}
+
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			dataDefinitionId);
-
-		if (Validator.isNull(keywords)) {
-			return Page.of(
-				transform(
-					_ddlRecordSetLocalService.getRecordSets(
-						ddmStructure.getGroupId(),
-						pagination.getStartPosition(),
-						pagination.getEndPosition()),
-					DataRecordCollectionUtil::toDataRecordCollection),
-				pagination,
-				_ddlRecordSetLocalService.getRecordSetsCount(
-					ddmStructure.getGroupId()));
-		}
 
 		return Page.of(
 			transform(
@@ -124,15 +121,11 @@ public class DataRecordCollectionResourceImpl
 			Long siteId, String keywords, Pagination pagination)
 		throws Exception {
 
-		if (Validator.isNull(keywords)) {
-			return Page.of(
-				transform(
-					_ddlRecordSetLocalService.getRecordSets(
-						siteId, pagination.getStartPosition(),
-						pagination.getEndPosition()),
-					DataRecordCollectionUtil::toDataRecordCollection),
-				pagination,
-				_ddlRecordSetLocalService.getRecordSetsCount(siteId));
+		if (pagination.getPageSize() > 250) {
+			throw new BadRequestException(
+				LanguageUtil.format(
+					contextAcceptLanguage.getPreferredLocale(),
+					"page-size-is-greater-than-x", 250));
 		}
 
 		Group group = _groupLocalService.getGroup(siteId);

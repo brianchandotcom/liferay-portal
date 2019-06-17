@@ -2381,6 +2381,41 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateServiceBuilder72Spring() throws Exception {
+		String name = "guestbook";
+		String packageName = "com.liferay.docs.guestbook";
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"service-builder", name, "--package-name", packageName,
+			"--liferayVersion", "7.2", "--dependency-injector", "spring");
+
+		_testContains(
+			gradleProjectDir, name + "-api/build.gradle",
+			"com.liferay.petra.lang\", version: \"3.0.0\"",
+			"com.liferay.petra.string\", version: \"3.0.0\"",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0");
+		_testContains(
+			gradleProjectDir, name + "-service/build.gradle",
+			"com.liferay.petra.lang\", version: \"3.0.0\"",
+			"com.liferay.petra.string\", version: \"3.0.0\"",
+			"com.liferay.portal.aop.api\", version: \"1.0.0\"",
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0");
+		_testContains(
+			gradleProjectDir, name + "-service/service.xml",
+			"dependency-injector=\"ds\"");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"service-builder", name, "com.test", "-Dpackage=" + packageName,
+			"-DliferayVersion=7.2");
+
+		if (_isBuildProjects()) {
+			_testBuildTemplateServiceBuilder(
+				gradleProjectDir, mavenProjectDir, gradleProjectDir, name,
+				packageName, "");
+		}
+	}
+
+	@Test
 	public void testBuildTemplateServiceBuilderCheckExports() throws Exception {
 		String name = "guestbook";
 		String packageName = "com.liferay.docs.guestbook";

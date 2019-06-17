@@ -125,7 +125,7 @@ else {
 <liferay-frontend:edit-form
 	action="<%= editExpandoURL %>"
 >
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= portletURL %>" />
 	<aui:input name="columnId" type="hidden" value="<%= columnId %>" />
 	<aui:input name="modelResource" type="hidden" value="<%= modelResource %>" />
 	<aui:input name="type" type="hidden" value="<%= type %>" />

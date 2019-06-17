@@ -14,10 +14,7 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
-
-<%@ page import="com.liferay.portal.kernel.security.auth.PrincipalException" %><%@
-page import="com.liferay.portal.kernel.servlet.SessionErrors" %>
+<%@ include file="/init.jsp" %>
 
 <liferay-ui:header
 	showBackURL="<%= false %>"

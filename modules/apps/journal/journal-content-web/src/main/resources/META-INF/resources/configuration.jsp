@@ -54,13 +54,14 @@ String redirect = ParamUtil.getString(request, "redirect");
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script sandbox="<%= true %>" use="aui-base">
-	var form = A.one('#<portlet:namespace />fm');
+<aui:script require="metal-dom/src/all/dom as dom">
+	const assetEntryIdInput = document.getElementById('<portlet:namespace />assetEntryId');
+	const articlePreview = document.getElementById('<portlet:namespace />articlePreview');
 
-	var articlePreview = A.one('#<portlet:namespace />articlePreview');
-
-	articlePreview.delegate(
+	dom.delegate(
+		articlePreview,
 		'click',
+		'.web-content-selector',
 		function(event) {
 			event.preventDefault();
 
@@ -105,24 +106,23 @@ String redirect = ParamUtil.getString(request, "redirect");
 					eventName: 'selectContent',
 					id: 'selectContent',
 					title: '<liferay-ui:message key="select-web-content" />',
-					uri: baseSelectWebContentURI.replace(encodeURIComponent('[$ARTICLE_REFERER_ASSET_ENTRY_ID$]'), form.attr('<portlet:namespace />assetEntryId').val())
+					uri: baseSelectWebContentURI.replace(encodeURIComponent('[$ARTICLE_REFERER_ASSET_ENTRY_ID$]'), assetEntryIdInput.value)
 				},
 				function(event) {
 					retrieveWebContent(event.assetclasspk);
 				}
 			);
-		},
-		'.web-content-selector'
+		}
 	);
 
-	articlePreview.delegate(
+	dom.delegate(
+		articlePreview,
 		'click',
+		'.selector-button',
 		function(event) {
 			event.preventDefault();
-
 			retrieveWebContent(-1);
-		},
-		'.selector-button'
+		}
 	);
 
 	function retrieveWebContent(assetClassPK) {

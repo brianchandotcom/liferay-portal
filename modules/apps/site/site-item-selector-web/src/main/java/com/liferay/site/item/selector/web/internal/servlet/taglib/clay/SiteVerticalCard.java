@@ -16,6 +16,7 @@ package com.liferay.site.item.selector.web.internal.servlet.taglib.clay;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -27,6 +28,7 @@ import com.liferay.site.constants.SiteWebKeys;
 import com.liferay.site.util.GroupURLProvider;
 
 import java.util.List;
+import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -76,7 +78,12 @@ public class SiteVerticalCard implements VerticalCard {
 			return StringPool.DASH;
 		}
 
-		List<Group> childSites = _group.getChildren(true);
+		List<Group> childSites = null;
+		try {
+			childSites = _group.getFilteredChildren(true);
+		} catch (PortalException pe) {
+			childSites = Collections.emptyList();
+		}
 
 		return LanguageUtil.format(
 			_httpServletRequest, "x-child-sites", childSites.size());

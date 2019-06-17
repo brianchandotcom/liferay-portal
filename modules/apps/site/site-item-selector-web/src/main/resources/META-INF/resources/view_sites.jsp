@@ -55,7 +55,7 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 		>
 
 			<%
-			List<Group> childGroups = group.getChildren(true);
+			List<Group> childGroups = group.getFilteredChildren(true);
 
 			Map<String, Object> data = new HashMap<String, Object>();
 

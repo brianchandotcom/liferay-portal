@@ -140,6 +140,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 <%
 StringBundler sb = new StringBundler(4);
 
+sb.append("metal-dom/src/dom as dom, ");
 sb.append(npmResolvedPackageName);
 sb.append("/js/SiteNavigationMenuEditor.es as siteNavigationMenuEditorModule, ");
 sb.append(npmResolvedPackageName);
@@ -222,9 +223,9 @@ sb.append("/js/SiteNavigationMenuItemDOMHandler.es as siteNavigationMenuItemDOMH
 	var handlePortletDestroy = function() {
 		sidebar.dispose();
 		siteNavigationMenuEditor.dispose();
-		siteNavigationMenuItemRemoveButtonClickHandler.detach();
-		siteNavigationMenuItemRemoveButtonKeyupHandler.detach();
-		showSiteNavigationMenuSettingsButtonClickHandler.detach();
+		siteNavigationMenuItemRemoveButtonClickHandler.removeListener();
+		siteNavigationMenuItemRemoveButtonKeyupHandler.removeListener();
+		showSiteNavigationMenuSettingsButtonClickHandler.removeListener();
 
 		sidebar = null;
 		siteNavigationMenuEditor = null;
@@ -346,21 +347,24 @@ sb.append("/js/SiteNavigationMenuItemDOMHandler.es as siteNavigationMenuItemDOMH
 					handleSelectedMenuItemChanged
 				);
 
-				AUI().use(
-					['aui-base'],
-					function(A) {
-						siteNavigationMenuItemRemoveButtonClickHandler = A
-							.all('.site-navigation-menu-item__remove-icon')
-							.on('click', handleSiteNavigationMenuItemRemoveIconClick);
+				siteNavigationMenuItemRemoveButtonClickHandler = dom.delegate(
+					document.body,
+					'click',
+					'.site-navigation-menu-item__remove-icon',
+					handleSiteNavigationMenuItemRemoveIconClick
+				);
 
-						siteNavigationMenuItemRemoveButtonKeyupHandler = A
-							.all('.site-navigation-menu-item__remove-icon')
-							.on('keyup', handleSiteNavigationMenuItemRemoveIconKeyup);
+				siteNavigationMenuItemRemoveButtonKeyupHandler = dom.delegate(
+					document.body,
+					'keyup',
+					'.site-navigation-menu-item__remove-icon',
+					handleSiteNavigationMenuItemRemoveIconKeyup
+				);
 
-						showSiteNavigationMenuSettingsButtonClickHandler = A
-							.one('#<portlet:namespace />showSiteNavigationMenuSettings')
-							.on('click', handleShowSiteNavigationMenuSettingsButtonClick);
-					}
+				showSiteNavigationMenuSettingsButtonClickHandler = dom.on(
+					'#<portlet:namespace />showSiteNavigationMenuSettings',
+					'click',
+					handleShowSiteNavigationMenuSettingsButtonClick
 				);
 
 				Liferay.on('<%= portletDisplay.getId() %>:portletRefreshed', handlePortletDestroy);

@@ -11,7 +11,7 @@ definition {
 	}
 
 	macro deleteDisplayPage {
-		Pause(locator = "1000");
+		Pause(locator = "5000");
 
 		LexiconCard.delete(card = "${displayPageName}");
 	}

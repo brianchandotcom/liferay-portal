@@ -28,9 +28,9 @@ components:
                     type: string
             type: object
         CollectionType:
-            type: string
-            enum: [active, all, production, recent]
             default: "all"
+            enum: [active, all, production, recent]
+            type: string
         CollectionUpdate:
             properties:
                 description:

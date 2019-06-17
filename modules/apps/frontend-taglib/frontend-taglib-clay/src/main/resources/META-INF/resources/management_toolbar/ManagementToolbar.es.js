@@ -89,6 +89,14 @@ class ManagementToolbar extends ClayComponent {
 	disposed(...args) {
 		super.disposed(...args);
 
+		if (this.infoPanelId) {
+			const sidenavToggle = this.refs.managementToolbar.refs.infoButton;
+
+			if (sidenavToggle) {
+				Liferay.SideNavigation.destroy(sidenavToggle);
+			}
+		}
+
 		if (this._eventHandler) {
 			this._eventHandler.forEach(eventHandler => {
 				eventHandler.detach();

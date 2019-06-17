@@ -15,11 +15,9 @@
 package com.liferay.message.boards.web.internal.portlet.action;
 
 import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.ResourceRequest;
@@ -46,12 +44,6 @@ public class GetEditMessageQuickMVCResourceCommand
 	protected void doServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
-
-		MBMessage message = _mbMessageService.getMessage(
-			ParamUtil.getLong(resourceRequest, "messageId"));
-
-		resourceRequest.setAttribute(
-			"edit_message_quick_content.jsp-message", message);
 
 		PortletRequestDispatcher portletRequestDispatcher =
 			getPortletRequestDispatcher(

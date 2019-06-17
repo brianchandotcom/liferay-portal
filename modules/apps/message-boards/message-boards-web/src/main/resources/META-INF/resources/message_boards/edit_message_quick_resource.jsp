@@ -17,7 +17,9 @@
 <%@ include file="/message_boards/init.jsp" %>
 
 <%
-MBMessage message = (MBMessage)GetterUtil.getObject(request.getAttribute("edit_message_quick_content.jsp-message"));
+MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(request);
+
+MBMessage message = messageDisplay.getMessage();
 
 long categoryId = message.getCategoryId();
 long threadId = message.getThreadId();

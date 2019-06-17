@@ -105,6 +105,7 @@ page import="com.liferay.message.boards.web.internal.display.context.MBBannedUse
 page import="com.liferay.message.boards.web.internal.display.context.MBDisplayContextProvider" %><%@
 page import="com.liferay.message.boards.web.internal.display.context.MBEntriesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.message.boards.web.internal.display.context.util.MBRequestHelper" %><%@
+page import="com.liferay.message.boards.web.internal.portlet.action.ActionUtil" %><%@
 page import="com.liferay.message.boards.web.internal.search.EntriesChecker" %><%@
 page import="com.liferay.message.boards.web.internal.security.permission.MBCategoryPermission" %><%@
 page import="com.liferay.message.boards.web.internal.security.permission.MBMessagePermission" %><%@

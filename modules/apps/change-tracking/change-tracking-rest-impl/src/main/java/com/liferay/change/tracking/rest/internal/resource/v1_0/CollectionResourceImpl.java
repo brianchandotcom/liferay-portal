@@ -262,6 +262,7 @@ public class CollectionResourceImpl
 					CTConstants.CT_CHANGE_TYPE_ADDITION, 0L);
 				collectionId = ctCollection.getCtCollectionId();
 				companyId = ctCollection.getCompanyId();
+				dateStatus = ctCollection.getStatusDate();
 				deletionCount = ctEntriesChangeTypes.getOrDefault(
 					CTConstants.CT_CHANGE_TYPE_DELETION, 0L);
 				description = ctCollection.getDescription();
@@ -269,7 +270,6 @@ public class CollectionResourceImpl
 					CTConstants.CT_CHANGE_TYPE_MODIFICATION, 0L);
 				name = ctCollection.getName();
 				statusByUserName = ctCollection.getStatusByUserName();
-				statusDate = ctCollection.getStatusDate();
 			}
 		};
 	}

@@ -40,7 +40,7 @@ public class CollectionEntityModel implements EntityModel {
 				"dateModified", locale -> Field.MODIFIED_DATE,
 				locale -> Field.MODIFIED_DATE),
 			new DateTimeEntityField(
-				"statusDate", locale -> "statusDate", locale -> "statusDate"),
+				"dateStatus", locale -> "statusDate", locale -> "statusDate"),
 			new StringEntityField("name", locale -> Field.NAME)
 		).collect(
 			Collectors.toMap(EntityField::getName, Function.identity())

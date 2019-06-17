@@ -261,7 +261,8 @@ public class LiferayCIGitRepositoriesInitializerUtil {
 			File gitRepositoryArchiveNFS = new File(
 				gitRepositoryArchivesNFSDir, gitRepositoryName + ".tar.gz");
 
-			String connectionKey = "git_archives_" + System.currentTimeMillis();
+			String connectionKey =
+				readWriteResourceMonitor.getNewConnectionName();
 
 			try {
 				TGZUtil.archive(gitRepositoryDir, gitRepositoryArchive);

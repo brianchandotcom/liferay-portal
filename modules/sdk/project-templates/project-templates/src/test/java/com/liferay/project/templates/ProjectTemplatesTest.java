@@ -210,20 +210,8 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateActivatorInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
-			"activator", "bar-activator", "build/libs/bar.activator-1.0.0.jar");
-	}
-
-	@Test
-	public void testBuildTemplateActivatorWithBOM() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"activator", "activator-dependency-management",
+			"activator", "bar-activator", "build/libs/bar.activator-1.0.0.jar",
 			"--dependency-management-enabled");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_OSGI_CORE + "\n");
 	}
 
 	@Test
@@ -286,20 +274,8 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateApiInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
-			"api", "foo", "build/libs/foo-1.0.0.jar");
-	}
-
-	@Test
-	public void testBuildTemplateApiWithBOM() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"api", "api-dependency-management",
+			"api", "foo", "build/libs/foo-1.0.0.jar",
 			"--dependency-management-enabled");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_OSGI_CORE + "\n");
 	}
 
 	@Test
@@ -554,22 +530,8 @@ public class ProjectTemplatesTest {
 
 		_testBuildTemplateWithWorkspace(
 			"content-targeting-report", "foo-bar",
-			"build/libs/foo.bar-1.0.0.jar", "--liferayVersion", "7.1");
-	}
-
-	@Test
-	public void testBuildTemplateContentTargetingReportWithBOM()
-		throws Exception {
-
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"content-targeting-report", "report-dependency-management",
-			"--dependency-management-enabled", "--liferayVersion", "7.1");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
+			"build/libs/foo.bar-1.0.0.jar", "--liferayVersion", "7.1",
+			"--dependency-management-enabled");
 	}
 
 	@Test
@@ -619,22 +581,7 @@ public class ProjectTemplatesTest {
 
 		_testBuildTemplateWithWorkspace(
 			"content-targeting-rule", "foo-bar", "build/libs/foo.bar-1.0.0.jar",
-			"--liferayVersion", "7.1");
-	}
-
-	@Test
-	public void testBuildTemplateContentTargetingRuleWithBOM()
-		throws Exception {
-
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"content-targeting-rule", "rule-dependency-management",
-			"--dependency-management-enabled", "--liferayVersion", "7.1");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
+			"--liferayVersion", "7.1", "--dependency-management-enabled");
 	}
 
 	@Test
@@ -693,23 +640,8 @@ public class ProjectTemplatesTest {
 
 		_testBuildTemplateWithWorkspace(
 			"content-targeting-tracking-action", "foo-bar",
-			"build/libs/foo.bar-1.0.0.jar", "--liferayVersion", "7.1");
-	}
-
-	@Test
-	public void testBuildTemplateContentTargetingTrackingActionWithBOM()
-		throws Exception {
-
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"content-targeting-tracking-action",
-			"tracking-dependency-management", "--dependency-management-enabled",
-			"--liferayVersion", "7.1");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
+			"build/libs/foo.bar-1.0.0.jar", "--liferayVersion", "7.1",
+			"--dependency-management-enabled");
 	}
 
 	@Test
@@ -780,33 +712,8 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateWithWorkspace(
-			"control-menu-entry", "foo-bar", "build/libs/foo.bar-1.0.0.jar");
-	}
-
-	@Test
-	public void testBuildTemplateControlMenuEntryWithBOM() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"control-menu-entry", "entry-dependency-management",
+			"control-menu-entry", "foo-bar", "build/libs/foo.bar-1.0.0.jar",
 			"--dependency-management-enabled");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
-	}
-
-	@Test
-	public void testBuildTemplateFMPortletWithBOM() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"freemarker-portlet", "freemarker-dependency-management",
-			"--dependency-management-enabled");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
 	}
 
 	@Test
@@ -998,20 +905,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateFormFieldInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"form-field", "foobar", "build/libs/foobar-1.0.0.jar",
-			"--liferayVersion", "7.1");
-	}
-
-	@Test
-	public void testBuildTemplateFormFieldWithBOM() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"form-field", "field-dependency-management",
-			"--dependency-management-enabled", "--liferayVersion", "7.1");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
+			"--liferayVersion", "7.1", "--dependency-management-enabled");
 	}
 
 	@Test
@@ -1080,7 +974,8 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateWithWorkspace(
-			"freemarker-portlet", "foo", "build/libs/foo-1.0.0.jar");
+			"freemarker-portlet", "foo", "build/libs/foo-1.0.0.jar",
+			"--dependency-management-enabled");
 	}
 
 	@Test
@@ -1204,7 +1099,8 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			null, "hello-world-portlet",
-			"build/libs/hello.world.portlet-1.0.0.jar");
+			"build/libs/hello.world.portlet-1.0.0.jar",
+			"--dependency-management-enabled");
 	}
 
 	@Test
@@ -1306,16 +1202,19 @@ public class ProjectTemplatesTest {
 		File workspaceProjectDir = _buildTemplateWithGradle(
 			new File(workspaceDir, "ext"), "modules-ext", "loginExt",
 			"--original-module-name", "com.liferay.login.web",
-			"--original-module-version", "1.0.0");
+			"--dependency-management-enabled");
 
 		_testContains(
 			workspaceProjectDir, "build.gradle",
 			"originalModule group: \"com.liferay\", name: " +
-				"\"com.liferay.login.web\", version: \"1.0.0\"");
+				"\"com.liferay.login.web\"");
 		_testNotContains(
 			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
+		_testNotContains(
+			workspaceProjectDir, "build.gradle", "version: \"[0-9].*");
 
-		_executeGradle(workspaceDir, ":ext:loginExt:build");
+		if (_isBuildProjects()) {
+			_executeGradle(workspaceDir, ":ext:loginExt:build");
 
 		_testExists(
 			workspaceProjectDir,
@@ -1418,20 +1317,8 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateMVCPortletInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
-			"mvc-portlet", "foo", "build/libs/foo-1.0.0.jar");
-	}
-
-	@Test
-	public void testBuildTemplateMVCPortletWithBOM() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"mvc-portlet", "mvc-dependency-management",
+			"mvc-portlet", "foo", "build/libs/foo-1.0.0.jar",
 			"--dependency-management-enabled");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
 	}
 
 	@Test
@@ -1763,27 +1650,16 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplatePanelAppInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
-			"panel-app", "gradle.test", "build/libs/gradle.test-1.0.0.jar");
-	}
-
-	@Test
-	public void testBuildTemplatePanelAppWithBOM() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"panel-app", "panel-dependency-management",
+			"panel-app", "gradle.test", "build/libs/gradle.test-1.0.0.jar",
 			"--dependency-management-enabled");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
 	}
 
 	@Test
 	public void testBuildTemplatePorletProviderInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"portlet-provider", "provider.test",
-			"build/libs/provider.test-1.0.0.jar");
+			"build/libs/provider.test-1.0.0.jar",
+			"--dependency-management-enabled");
 	}
 
 	@Test
@@ -1956,28 +1832,15 @@ public class ProjectTemplatesTest {
 
 		_testBuildTemplateWithWorkspace(
 			"portlet-configuration-icon", "blade.test",
-			"build/libs/blade.test-1.0.0.jar");
-	}
-
-	@Test
-	public void testBuildTemplatePortletConfigurationIconWithBOM()
-		throws Exception {
-
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"portlet-configuration-icon", "icon-dependency-management",
+			"build/libs/blade.test-1.0.0.jar",
 			"--dependency-management-enabled");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
 	}
 
 	@Test
 	public void testBuildTemplatePortletInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
-			"portlet", "foo.test", "build/libs/foo.test-1.0.0.jar");
+			"portlet", "foo.test", "build/libs/foo.test-1.0.0.jar",
+			"--dependency-management-enabled");
 	}
 
 	@Test
@@ -2080,19 +1943,6 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplatePortletProviderWithBOM() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"portlet-provider", "provider-dependency-management",
-			"--dependency-management-enabled");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
-	}
-
-	@Test
 	public void testBuildTemplatePortletToolbarContributor70()
 		throws Exception {
 
@@ -2175,35 +2025,8 @@ public class ProjectTemplatesTest {
 
 		_testBuildTemplateWithWorkspace(
 			"portlet-toolbar-contributor", "blade.test",
-			"build/libs/blade.test-1.0.0.jar");
-	}
-
-	@Test
-	public void testBuildTemplatePortletToolbarContributorWithBOM()
-		throws Exception {
-
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"portlet-toolbar-contributor", "contributor-dependency-management",
+			"build/libs/blade.test-1.0.0.jar",
 			"--dependency-management-enabled");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
-	}
-
-	@Test
-	public void testBuildTemplatePortletWithBOM() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"portlet", "portlet-dependency-management",
-			"--dependency-management-enabled");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
 	}
 
 	@Test
@@ -2367,55 +2190,24 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateRestInWorkspace() throws Exception {
+	public void testBuildTemplateRestInWorkspace70() throws Exception {
 		_testBuildTemplateWithWorkspace(
-			"rest", "my-rest", "build/libs/my.rest-1.0.0.jar");
-	}
-
-	@Test
-	public void testBuildTemplateRestWithBOM70() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"rest", "rest-dependency-management",
+			"rest", "my-rest", "build/libs/my.rest-1.0.0.jar",
 			"--dependency-management-enabled", "--liferayVersion", "7.0");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle",
-			"compileOnly group: \"javax.ws.rs\", name: \"javax.ws.rs-api\"");
 	}
 
 	@Test
-	public void testBuildTemplateRestWithBOM71() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"rest", "rest-dependency-management",
+	public void testBuildTemplateRestInWorkspace71() throws Exception {
+		_testBuildTemplateWithWorkspace(
+			"rest", "my-rest", "build/libs/my.rest-1.0.0.jar",
 			"--dependency-management-enabled", "--liferayVersion", "7.1");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle",
-			"compileOnly group: \"javax.ws.rs\", name: \"javax.ws.rs-api\"\n",
-			"compileOnly group: \"org.osgi\", name: " +
-				"\"org.osgi.service.jaxrs\"");
 	}
 
 	@Test
-	public void testBuildTemplateRestWithBOM72() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"rest", "rest-dependency-management",
+	public void testBuildTemplateRestInWorkspace72() throws Exception {
+		_testBuildTemplateWithWorkspace(
+			"rest", "my-rest", "build/libs/my.rest-1.0.0.jar",
 			"--dependency-management-enabled", "--liferayVersion", "7.2");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle",
-			"compileOnly group: \"javax.ws.rs\", name: \"javax.ws.rs-api\"\n",
-			"compileOnly group: \"org.osgi\", name: " +
-				"\"org.osgi.service.jaxrs\"");
 	}
 
 	@Test
@@ -3156,22 +2948,8 @@ public class ProjectTemplatesTest {
 
 		_testBuildTemplateWithWorkspace(
 			"simulation-panel-entry", "test.simulator",
-			"build/libs/test.simulator-1.0.0.jar");
-	}
-
-	@Test
-	public void testBuildTemplateSimulationPanelEntryWithBOM()
-		throws Exception {
-
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"simulation-panel-entry", "simulator-dependency-management",
+			"build/libs/test.simulator-1.0.0.jar",
 			"--dependency-management-enabled");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -3294,19 +3072,6 @@ public class ProjectTemplatesTest {
 
 		_testBuildTemplateProjectWarInWorkspace(
 			"spring-mvc-portlet", "foo", "foo");
-	}
-
-	@Test
-	public void testBuildTemplateSpringMvcPortletWithBOM() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"spring-mvc-portlet", "spring-mvc-dependency-management",
-			"--dependency-management-enabled");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
 	}
 
 	@Test
@@ -3459,23 +3224,8 @@ public class ProjectTemplatesTest {
 
 		_testBuildTemplateWithWorkspace(
 			"template-context-contributor", "blade-test",
-			"build/libs/blade.test-1.0.0.jar");
-	}
-
-	@Test
-	public void testBuildTemplateTemplateContextContributorWithBOM()
-		throws Exception {
-
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"template-context-contributor",
-			"context-contributor-dependency-management",
+			"build/libs/blade.test-1.0.0.jar",
 			"--dependency-management-enabled");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
 	}
 
 	@Test
@@ -3665,7 +3415,8 @@ public class ProjectTemplatesTest {
 
 		_testBuildTemplateWithWorkspace(
 			"theme-contributor", "my-contributor",
-			"build/libs/my.contributor-1.0.0.jar");
+			"build/libs/my.contributor-1.0.0.jar",
+			"--dependency-management-enabled");
 	}
 
 	@Test
@@ -3682,10 +3433,12 @@ public class ProjectTemplatesTest {
 		File warsDir = new File(workspaceDir, "wars");
 
 		File workspaceProjectDir = _buildTemplateWithGradle(
-			warsDir, "theme", "theme-test");
+			warsDir, "theme", "theme-test", "--dependency-management-enabled");
 
 		_testNotContains(
 			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
+		_testNotContains(
+			workspaceProjectDir, "build.gradle", "version: \"[0-9].*");
 
 		if (_isBuildProjects()) {
 			_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
@@ -3796,16 +3549,9 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateWarHookWithBOM() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-hook", "war-hook-dependency-management",
-			"--dependency-management-enabled");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
+	public void testBuildTemplateWarHookInWorkspace() throws Exception {
+		_testBuildTemplateProjectWarInWorkspace(
+			"war-hook", "WarHook", "warhook");
 	}
 
 	@Test
@@ -3953,19 +3699,6 @@ public class ProjectTemplatesTest {
 			"-DclassName=WarMVCPortlet", "-Dpackage=WarMVC.portlet");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
-	}
-
-	@Test
-	public void testBuildTemplateWarMvcWithBOM() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-mvc-portlet", "war-mvc-dependency-management",
-			"--dependency-management-enabled");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
 	}
 
 	@Test
@@ -6243,41 +5976,31 @@ public class ProjectTemplatesTest {
 			String template, String name, String warFileName)
 		throws Exception {
 
-		File gradleProjectDir = _buildTemplateWithGradle(template, name);
-
-		_testContains(
-			gradleProjectDir, "build.gradle", "buildscript {",
-			"apply plugin: \"war\"", "repositories {", "cssBuilder group",
-			"portalCommonCSS group");
-
 		File workspaceDir = _buildWorkspace();
 
 		File warsDir = new File(workspaceDir, "wars");
 
 		File workspaceProjectDir = _buildTemplateWithGradle(
-			warsDir, template, name);
+			warsDir, template, name, "--dependency-management-enabled");
 
-		_testContains(
-			workspaceProjectDir, "build.gradle", "cssBuilder group",
-			"portalCommonCSS group");
+		if (!template.equals("war-hook")) {
+			_testContains(
+				workspaceProjectDir, "build.gradle", "buildscript {",
+				 "cssBuilder group", "portalCommonCSS group");
+		}
 
 		_testNotContains(
 			workspaceProjectDir, "build.gradle", "apply plugin: \"war\"");
 		_testNotContains(
 			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
+		_testNotContains(
+			workspaceProjectDir, "build.gradle", "version: \"[0-9].*");
 
 		if (_isBuildProjects()) {
-			_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
-
-			File gradleWarFile = _testExists(
-				gradleProjectDir, "build/libs/" + warFileName + ".war");
-
 			_executeGradle(workspaceDir, ":wars:" + name + ":build");
 
-			File workspaceWarFile = _testExists(
+			_testExists(
 				workspaceProjectDir, "build/libs/" + warFileName + ".war");
-
-			_testWarsDiff(gradleWarFile, workspaceWarFile);
 		}
 	}
 

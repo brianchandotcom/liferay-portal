@@ -48,6 +48,18 @@ if (row != null) {
 		/>
 	</c:if>
 
+	<c:if test="<%= BlogsEntrySharingUtil.containsSharePermission(permissionChecker, entry) %>">
+		<liferay-ui:menu-item
+			menuItem="<%= BlogsEntrySharingUtil.createShareMenuItem(entry, request) %>"
+		/>
+	</c:if>
+
+	<c:if test="<%= BlogsEntrySharingUtil.containsManageCollaboratorsPermission(permissionChecker, entry) %>">
+		<liferay-ui:menu-item
+			menuItem="<%= BlogsEntrySharingUtil.createManageCollaboratorsMenuItem(entry, request) %>"
+		/>
+	</c:if>
+
 	<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= BlogsEntry.class.getName() %>"
@@ -80,18 +92,6 @@ if (row != null) {
 			label="<%= true %>"
 			trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
 			url="<%= deleteEntryURL %>"
-		/>
-	</c:if>
-
-	<c:if test="<%= BlogsEntrySharingUtil.containsSharePermission(permissionChecker, entry) %>">
-		<liferay-ui:menu-item
-			menuItem="<%= BlogsEntrySharingUtil.createShareMenuItem(entry, request) %>"
-		/>
-	</c:if>
-
-	<c:if test="<%= BlogsEntrySharingUtil.containsManageCollaboratorsPermission(permissionChecker, entry) %>">
-		<liferay-ui:menu-item
-			menuItem="<%= BlogsEntrySharingUtil.createManageCollaboratorsMenuItem(entry, request) %>"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>

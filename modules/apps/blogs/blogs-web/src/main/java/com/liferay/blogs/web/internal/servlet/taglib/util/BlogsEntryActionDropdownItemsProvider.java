@@ -80,6 +80,23 @@ public class BlogsEntryActionDropdownItemsProvider {
 					add(_getEditEntryActionUnsafeConsumer());
 				}
 
+				if (BlogsEntrySharingUtil.containsSharePermission(
+						_permissionChecker, _blogsEntry)) {
+
+					add(
+						BlogsEntrySharingUtil.createShareDropdownItem(
+							_blogsEntry, _httpServletRequest));
+				}
+
+				if (BlogsEntrySharingUtil.containsManageCollaboratorsPermission(
+						_permissionChecker, _blogsEntry)) {
+
+					add(
+						BlogsEntrySharingUtil.
+							createManageCollaboratorsDropdownItem(
+								_blogsEntry, _httpServletRequest));
+				}
+
 				if (_hasPermissionsPermission()) {
 					add(_getPermissionsActionUnsafeConsumer());
 				}
@@ -97,23 +114,6 @@ public class BlogsEntryActionDropdownItemsProvider {
 					_hasExportImportPortletInfoPermission()) {
 
 					add(_getPublishToLiveEntryActionUnsafeConsumer());
-				}
-
-				if (BlogsEntrySharingUtil.containsSharePermission(
-						_permissionChecker, _blogsEntry)) {
-
-					add(
-						BlogsEntrySharingUtil.createShareDropdownItem(
-							_blogsEntry, _httpServletRequest));
-				}
-
-				if (BlogsEntrySharingUtil.containsManageCollaboratorsPermission(
-						_permissionChecker, _blogsEntry)) {
-
-					add(
-						BlogsEntrySharingUtil.
-							createManageCollaboratorsDropdownItem(
-								_blogsEntry, _httpServletRequest));
 				}
 			}
 		};

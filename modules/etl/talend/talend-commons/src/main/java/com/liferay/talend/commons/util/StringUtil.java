@@ -20,7 +20,7 @@ import java.util.Locale;
  * @author Zoltán Takács
  * @author Igor Beslic
  */
-public class StringUtils {
+public class StringUtil {
 
 	public static boolean isEmpty(final CharSequence cs) {
 		if ((cs == null) || (cs.length() == 0)) {
@@ -50,7 +50,7 @@ public class StringUtils {
 		return value.toUpperCase(Locale.getDefault());
 	}
 
-	private StringUtils() {
+	private StringUtil() {
 	}
 
 }

@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -107,7 +107,7 @@ public class JournalArticleImageUpgradeUtil {
 		long repositoryId = _getRepositoryId(groupId);
 
 		try {
-			Folder folder = PortletFileRepositoryUtil.getPortletFolder(
+			Folder folder = _portletFileRepository.getPortletFolder(
 				repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				String.valueOf(resourcePrimKey));
 
@@ -127,7 +127,7 @@ public class JournalArticleImageUpgradeUtil {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
+		Folder folder = _portletFileRepository.addPortletFolder(
 			userId, repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			String.valueOf(resourcePrimKey), serviceContext);
 
@@ -179,9 +179,8 @@ public class JournalArticleImageUpgradeUtil {
 	}
 
 	private long _getRepositoryId(long groupId) throws PortalException {
-		Repository repository =
-			PortletFileRepositoryUtil.fetchPortletRepository(
-				groupId, JournalConstants.SERVICE_NAME);
+		Repository repository = _portletFileRepository.fetchPortletRepository(
+			groupId, JournalConstants.SERVICE_NAME);
 
 		if (repository != null) {
 			return repository.getRepositoryId();
@@ -192,7 +191,7 @@ public class JournalArticleImageUpgradeUtil {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		repository = PortletFileRepositoryUtil.addPortletRepository(
+		repository = _portletFileRepository.addPortletRepository(
 			groupId, JournalConstants.SERVICE_NAME, serviceContext);
 
 		return repository.getRepositoryId();
@@ -238,5 +237,8 @@ public class JournalArticleImageUpgradeUtil {
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 }

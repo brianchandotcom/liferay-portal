@@ -36,12 +36,13 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Sergio González
+ * @author Alejandro Tardín
  */
 @RunWith(Arquillian.class)
 public class BlogsEntrySharingTest extends BaseSharingTestCase<BlogsEntry> {
 
 	@Override
-	protected void delete(BlogsEntry blogsEntry) {
+	protected void deleteModel(BlogsEntry blogsEntry) {
 		_blogsEntryLocalService.deleteBlogsEntry(blogsEntry);
 	}
 
@@ -99,7 +100,9 @@ public class BlogsEntrySharingTest extends BaseSharingTestCase<BlogsEntry> {
 	}
 
 	@Override
-	protected void moveToTrash(BlogsEntry blogsEntry) throws PortalException {
+	protected void moveModelToTrash(BlogsEntry blogsEntry)
+		throws PortalException {
+
 		_blogsEntryLocalService.moveEntryToTrash(
 			blogsEntry.getUserId(), blogsEntry);
 	}

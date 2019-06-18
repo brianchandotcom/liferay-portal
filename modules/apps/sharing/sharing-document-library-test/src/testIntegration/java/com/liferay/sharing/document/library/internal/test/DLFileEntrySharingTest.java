@@ -42,12 +42,13 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Sergio González
+ * @author Alejandro Tardín
  */
 @RunWith(Arquillian.class)
 public class DLFileEntrySharingTest extends BaseSharingTestCase<DLFileEntry> {
 
 	@Override
-	protected void delete(DLFileEntry dlFileEntry) throws PortalException {
+	protected void deleteModel(DLFileEntry dlFileEntry) throws PortalException {
 		_dlAppLocalService.deleteFileEntry(dlFileEntry.getFileEntryId());
 	}
 
@@ -128,7 +129,9 @@ public class DLFileEntrySharingTest extends BaseSharingTestCase<DLFileEntry> {
 	}
 
 	@Override
-	protected void moveToTrash(DLFileEntry dlFileEntry) throws PortalException {
+	protected void moveModelToTrash(DLFileEntry dlFileEntry)
+		throws PortalException {
+
 		_dlTrashService.moveFileEntryToTrash(dlFileEntry.getFileEntryId());
 	}
 

@@ -72,6 +72,7 @@ import org.osgi.framework.ServiceReference;
 
 /**
  * @author Sergio González
+ * @author Alejandro Tardín
  */
 public abstract class BaseSharingTestCase<T extends ClassedModel> {
 
@@ -197,7 +198,7 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		Assert.assertEquals(
 			toUserSharingEntries.toString(), 1, toUserSharingEntries.size());
 
-		delete(model);
+		deleteModel(model);
 
 		toUserSharingEntries =
 			_sharingEntryLocalService.getToUserSharingEntries(
@@ -246,7 +247,7 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		Assert.assertEquals(
 			toUserSharingEntries.toString(), 2, toUserSharingEntries.size());
 
-		delete(model);
+		deleteModel(model);
 
 		toUserSharingEntries =
 			_sharingEntryLocalService.getToUserSharingEntries(
@@ -341,7 +342,7 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		Assert.assertEquals(
 			toUserSharingEntries.toString(), 1, toUserSharingEntries.size());
 
-		moveToTrash(model);
+		moveModelToTrash(model);
 
 		toUserSharingEntries =
 			_sharingEntryLocalService.getToUserSharingEntries(
@@ -873,7 +874,7 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		}
 	}
 
-	protected abstract void delete(T model) throws PortalException;
+	protected abstract void deleteModel(T model) throws PortalException;
 
 	protected abstract String getClassName();
 
@@ -885,7 +886,7 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 	protected abstract T getPendingModel(User user, Group group)
 		throws PortalException;
 
-	protected abstract void moveToTrash(T model) throws PortalException;
+	protected abstract void moveModelToTrash(T model) throws PortalException;
 
 	private ModelResourcePermission _getModelResourcePermission()
 		throws InvalidSyntaxException {

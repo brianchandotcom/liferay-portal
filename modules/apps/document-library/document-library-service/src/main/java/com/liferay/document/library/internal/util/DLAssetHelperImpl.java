@@ -30,22 +30,24 @@ public class DLAssetHelperImpl implements DLAssetHelper {
 
 	@Override
 	public long getAssetClassPK(FileEntry fileEntry, FileVersion fileVersion) {
-		if ((fileVersion != null) && (fileEntry != null)) {
-			String version = fileVersion.getVersion();
-
-			if (!fileVersion.isApproved() && Validator.isNotNull(version) &&
-				!version.equals(DLFileEntryConstants.VERSION_DEFAULT) &&
-				!fileEntry.isInTrash()) {
-
-				return fileVersion.getFileVersionId();
-			}
+		if (fileEntry == null) {
+			return 0;
 		}
 
-		if (fileEntry != null) {
+		if (fileVersion == null) {
 			return fileEntry.getFileEntryId();
 		}
 
-		return 0;
+		String version = fileVersion.getVersion();
+
+		if (!fileVersion.isApproved() && Validator.isNotNull(version) &&
+			!version.equals(DLFileEntryConstants.VERSION_DEFAULT) &&
+			!fileEntry.isInTrash()) {
+
+			return fileVersion.getFileVersionId();
+		}
+
+		return fileEntry.getFileEntryId();
 	}
 
 }

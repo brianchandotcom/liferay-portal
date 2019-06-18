@@ -14,6 +14,10 @@
 
 package com.liferay.portal.vulcan.internal.graphql.servlet;
 
+import static java.util.Comparator.comparingInt;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.maxBy;
+
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
@@ -90,11 +94,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javax.servlet.Servlet;
@@ -282,12 +288,28 @@ public class GraphQLServletExtender {
 
 	private void _collectObjectFields(
 		ProcessingElementsContainer processingElementsContainer,
-		GraphQLObjectType.Builder builder, Object object) {
+		GraphQLObjectType.Builder builder,
+		Function<ServletData, Object> function) {
 
-		Class<?> clazz = object.getClass();
+		Map<String, Optional<Method>> methods = _servletDataList.stream(
+		).map(
+			function
+		).map(
+			Object::getClass
+		).map(
+			Class::getMethods
+		).flatMap(
+			Arrays::stream
+		).filter(
+			method -> method.isAnnotationPresent(GraphQLField.class)
+		).collect(
+			groupingBy(Method::getName, maxBy(comparingInt(this::_getVersion)))
+		);
 
-		for (Method method : clazz.getMethods()) {
-			if (method.isAnnotationPresent(GraphQLField.class)) {
+		for (Optional<Method> methodOptional : methods.values()) {
+			if (methodOptional.isPresent()) {
+				Method method = methodOptional.get();
+
 				builder.field(
 					_graphQLFieldRetriever.getField(
 						method, processingElementsContainer));
@@ -390,15 +412,13 @@ public class GraphQLServletExtender {
 
 			queryBuilder.name("query");
 
-			for (ServletData servletData : _servletDataList) {
-				_collectObjectFields(
-					processingElementsContainer, mutationBuilder,
-					servletData.getMutation());
+			_collectObjectFields(
+				processingElementsContainer, mutationBuilder,
+				ServletData::getMutation);
 
-				_collectObjectFields(
-					processingElementsContainer, queryBuilder,
-					servletData.getQuery());
-			}
+			_collectObjectFields(
+				processingElementsContainer, queryBuilder,
+				ServletData::getQuery);
 
 			schemaBuilder.mutation(mutationBuilder.build());
 			schemaBuilder.query(queryBuilder.build());
@@ -410,6 +430,20 @@ public class GraphQLServletExtender {
 
 			return _servlet;
 		}
+	}
+
+	private Integer _getVersion(Method method) {
+		Class<?> clazz = method.getDeclaringClass();
+
+		Package classPackage = clazz.getPackage();
+
+		String stringPackage = classPackage.toString();
+
+		String[] packages = stringPackage.split("\\.");
+
+		String version = packages[packages.length - 1];
+
+		return Integer.valueOf(version.replaceAll("\\D", ""));
 	}
 
 	private static final GraphQLScalarType _dateGraphQLScalarType =

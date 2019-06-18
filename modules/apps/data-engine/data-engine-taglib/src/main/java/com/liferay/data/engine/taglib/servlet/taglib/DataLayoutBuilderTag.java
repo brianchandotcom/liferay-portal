@@ -17,9 +17,8 @@ package com.liferay.data.engine.taglib.servlet.taglib;
 import com.liferay.data.engine.taglib.servlet.taglib.base.BaseDataLayoutBuilderTag;
 import com.liferay.data.engine.taglib.servlet.taglib.util.DataLayoutTaglibUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
-
-import java.util.Locale;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,7 +34,7 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 
 		setNamespacedAttribute(
 			httpServletRequest, "availableLocales",
-			new Locale[] {LocaleThreadLocal.getThemeDisplayLocale()});
+			LanguageUtil.getAvailableLocales(GroupThreadLocal.getGroupId()));
 
 		setNamespacedAttribute(
 			httpServletRequest, "dataLayout",

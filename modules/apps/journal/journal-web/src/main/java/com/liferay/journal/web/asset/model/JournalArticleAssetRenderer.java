@@ -645,7 +645,8 @@ public class JournalArticleAssetRenderer
 			Layout hitLayout = LayoutLocalServiceUtil.getLayout(
 				_article.getGroupId(), privateLayout, hitLayoutId.longValue());
 
-			if (LayoutPermissionUtil.contains(
+			if (!hitLayout.isSystem() &&
+				LayoutPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), hitLayout,
 					ActionKeys.VIEW)) {
 

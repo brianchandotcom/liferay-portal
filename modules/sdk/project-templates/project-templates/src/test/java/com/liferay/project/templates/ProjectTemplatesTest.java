@@ -2400,9 +2400,6 @@ public class ProjectTemplatesTest {
 			"com.liferay.petra.string\", version: \"3.0.0\"",
 			"com.liferay.portal.aop.api\", version: \"1.0.0\"",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0");
-		_testContains(
-			gradleProjectDir, name + "-service/service.xml",
-			"dependency-injector=\"ds\"");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"service-builder", name, "com.test", "-Dpackage=" + packageName,

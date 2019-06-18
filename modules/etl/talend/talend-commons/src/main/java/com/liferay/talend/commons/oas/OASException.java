@@ -17,28 +17,10 @@ package com.liferay.talend.commons.oas;
 /**
  * @author Igor Beslic
  */
-public enum OpenAPIType {
+public class OASException extends RuntimeException {
 
-	ARRAY("array"), BOOLEAN("boolean"), INTEGER("integer"), NUMBER("number"),
-	OBJECT("object"), STRING("string");
-
-	public static OpenAPIType fromDefinition(String openAPITypeDefinition) {
-		for (OpenAPIType openAPIType : values()) {
-			if (openAPITypeDefinition.equals(
-					openAPIType._openAPITypeDefinition)) {
-
-				return openAPIType;
-			}
-		}
-
-		throw new OpenAPIException(
-			"Unknown OpenAPI type " + openAPITypeDefinition);
+	public OASException(String message) {
+		super(message);
 	}
-
-	private OpenAPIType(String openAPITypeDefinition) {
-		_openAPITypeDefinition = openAPITypeDefinition;
-	}
-
-	private final String _openAPITypeDefinition;
 
 }

@@ -15,8 +15,8 @@
 package com.liferay.talend.avro;
 
 import com.liferay.talend.avro.constants.AvroConstants;
-import com.liferay.talend.commons.oas.OpenAPIFormat;
-import com.liferay.talend.commons.oas.OpenAPIType;
+import com.liferay.talend.commons.oas.OASFormat;
+import com.liferay.talend.commons.oas.OASType;
 import com.liferay.talend.commons.oas.constants.OpenAPIConstants;
 import com.liferay.talend.commons.util.StringUtils;
 import com.liferay.talend.tliferayoutput.Action;
@@ -180,10 +180,10 @@ public class EndpointSchemaInferrer {
 			fieldName, AvroUtils.wrapAsNullable(AvroUtils._string()), null,
 			(Object)null);
 
-		OpenAPIType openAPIType = OpenAPIType.fromDefinition(
+		OASType oasType = OASType.fromDefinition(
 			propertyJsonObject.getString(OpenAPIConstants.TYPE));
 
-		if (openAPIType == OpenAPIType.ARRAY) {
+		if (oasType == OASType.ARRAY) {
 			return designField;
 		}
 
@@ -193,7 +193,7 @@ public class EndpointSchemaInferrer {
 			openAPIFormatDefinition = propertyJsonObject.getString(
 				OpenAPIConstants.FORMAT);
 		}
-		else if ((openAPIType == OpenAPIType.OBJECT) &&
+		else if ((oasType == OASType.OBJECT) &&
 				 propertyJsonObject.containsKey(
 					 OpenAPIConstants.ADDITIONAL_PROPERTIES)) {
 
@@ -210,56 +210,56 @@ public class EndpointSchemaInferrer {
 			}
 		}
 
-		OpenAPIFormat openAPIFormat = OpenAPIFormat.fromOpenAPITypeAndFormat(
-			openAPIType, openAPIFormatDefinition);
+		OASFormat oasFormat = OASFormat.fromOpenAPITypeAndFormat(
+			oasType, openAPIFormatDefinition);
 
-		if (openAPIFormat == OpenAPIFormat.BOOLEAN) {
+		if (oasFormat == OASFormat.BOOLEAN) {
 			designField = new Schema.Field(
 				fieldName, AvroUtils.wrapAsNullable(AvroUtils._boolean()), null,
 				(Object)null);
 		}
-		else if (openAPIFormat == OpenAPIFormat.BINARY) {
+		else if (oasFormat == OASFormat.BINARY) {
 			designField = new Schema.Field(
 				fieldName, AvroUtils.wrapAsNullable(AvroUtils._bytes()), null,
 				(Object)null);
 		}
-		else if (openAPIFormat == OpenAPIFormat.DATE) {
+		else if (oasFormat == OASFormat.DATE) {
 			designField = new Schema.Field(
 				fieldName, AvroUtils.wrapAsNullable(AvroUtils._date()), null,
 				(Object)null);
 		}
-		else if (openAPIFormat == OpenAPIFormat.DATE_TIME) {
+		else if (oasFormat == OASFormat.DATE_TIME) {
 			designField = new Schema.Field(
 				fieldName,
 				AvroUtils.wrapAsNullable(AvroUtils._logicalTimestamp()), null,
 				(Object)null);
 		}
-		else if (openAPIFormat == OpenAPIFormat.DICTIONARY) {
+		else if (oasFormat == OASFormat.DICTIONARY) {
 			designField = new Schema.Field(
 				fieldName, AvroUtils.wrapAsNullable(AvroUtils._string()), null,
 				(Object)null);
 		}
-		else if (openAPIFormat == OpenAPIFormat.DOUBLE) {
+		else if (oasFormat == OASFormat.DOUBLE) {
 			designField = new Schema.Field(
 				fieldName, AvroUtils.wrapAsNullable(AvroUtils._double()), null,
 				(Object)null);
 		}
-		else if (openAPIFormat == OpenAPIFormat.FLOAT) {
+		else if (oasFormat == OASFormat.FLOAT) {
 			designField = new Schema.Field(
 				fieldName, AvroUtils.wrapAsNullable(AvroUtils._float()), null,
 				(Object)null);
 		}
-		else if (openAPIFormat == OpenAPIFormat.INT32) {
+		else if (oasFormat == OASFormat.INT32) {
 			designField = new Schema.Field(
 				fieldName, AvroUtils.wrapAsNullable(AvroUtils._int()), null,
 				(Object)null);
 		}
-		else if (openAPIFormat == OpenAPIFormat.INT64) {
+		else if (oasFormat == OASFormat.INT64) {
 			designField = new Schema.Field(
 				fieldName, AvroUtils.wrapAsNullable(AvroUtils._long()), null,
 				(Object)null);
 		}
-		else if (openAPIFormat == OpenAPIFormat.STRING) {
+		else if (oasFormat == OASFormat.STRING) {
 			designField = new Schema.Field(
 				fieldName, AvroUtils.wrapAsNullable(AvroUtils._string()), null,
 				(Object)null);

@@ -17,7 +17,7 @@ package com.liferay.talend.resource;
 import static org.talend.daikon.properties.presentation.Widget.widget;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
-import com.liferay.talend.commons.oas.Parameter;
+import com.liferay.talend.commons.oas.OASParameter;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
 import com.liferay.talend.properties.ExceptionUtils;
@@ -199,7 +199,7 @@ public class LiferayResourceProperties
 		for (int i = 0; i < parameterNames.size(); i++) {
 			String typeString = parameterTypes.get(i);
 
-			if (Parameter.Type.PATH == Parameter.Type.valueOf(
+			if (OASParameter.Type.PATH == OASParameter.Type.valueOf(
 					typeString.toUpperCase())) {
 
 				continue;
@@ -310,17 +310,18 @@ public class LiferayResourceProperties
 		List<String> parameterValues = new ArrayList<>();
 		List<String> parameterTypes = new ArrayList<>();
 
-		List<Parameter> parameters = liferaySourceOrSinkRuntime.getParameters(
-			endpoint.getValue(), HttpMethod.GET);
+		List<OASParameter> oasParameters =
+			liferaySourceOrSinkRuntime.getParameters(
+				endpoint.getValue(), HttpMethod.GET);
 
-		if (parameters.isEmpty()) {
+		if (oasParameters.isEmpty()) {
 			parametersTable.columnName.setValue(Collections.emptyList());
 			parametersTable.valueColumnName.setValue(Collections.emptyList());
 			parametersTable.typeColumnName.setValue(Collections.emptyList());
 		}
 		else {
-			for (Parameter parameter : parameters) {
-				String name = parameter.getName();
+			for (OASParameter oasParameter : oasParameters) {
+				String name = oasParameter.getName();
 
 				if (Objects.equals(name, "page") ||
 					Objects.equals(name, "pageSize")) {
@@ -328,15 +329,15 @@ public class LiferayResourceProperties
 					continue;
 				}
 
-				if (parameter.isRequired() ||
-					(Parameter.Type.PATH == parameter.getType())) {
+				if (oasParameter.isRequired() ||
+					(OASParameter.Type.PATH == oasParameter.getType())) {
 
 					name = name + "*";
 				}
 
 				parameterNames.add(name);
 
-				Parameter.Type type = parameter.getType();
+				OASParameter.Type type = oasParameter.getType();
 
 				String typeString = type.toString();
 

@@ -124,9 +124,22 @@ public class MicrosoftGeolocationProvider implements GeolocationProvider {
 				"Microsoft Bing API key is not configured properly");
 		}
 
-		Http.Options options = new Http.Options();
-
 		String url = _getUrl(geolocationAddress);
+
+		JSONObject resourceJSONObject = _getResourceJSONObject(url);
+
+		JSONObject pointJSONObject = resourceJSONObject.getJSONObject("point");
+
+		JSONArray coordinatesJSONArray = pointJSONObject.getJSONArray(
+			"coordinates");
+
+		return new MicrosoftGeolocationPosition(
+			coordinatesJSONArray.getDouble(0),
+			coordinatesJSONArray.getDouble(1));
+	}
+
+	private JSONObject _getResourceJSONObject(String url) throws Exception {
+		Http.Options options = new Http.Options();
 
 		options.setLocation(url);
 
@@ -165,22 +178,13 @@ public class MicrosoftGeolocationProvider implements GeolocationProvider {
 				"Microsoft geolocation did not return a result");
 		}
 
-		JSONObject resourceJSONObject = resourcesJSONArray.getJSONObject(0);
-
-		JSONObject pointJSONObject = resourceJSONObject.getJSONObject("point");
-
-		JSONArray coordinatesJSONArray = pointJSONObject.getJSONArray(
-			"coordinates");
-
-		return new MicrosoftGeolocationPosition(
-			coordinatesJSONArray.getDouble(0),
-			coordinatesJSONArray.getDouble(1));
+		return resourcesJSONArray.getJSONObject(0);
 	}
 
 	private String _getUrl(GeolocationAddress geolocationAddress) {
 		StringBundler sb = new StringBundler();
 
-		sb.append("https://dev.virtualearth.net/REST/v1/Locations?");
+		sb.append(_LOCATIONS_BASE_URL);
 
 		_addParameter(sb, "addressLine", geolocationAddress.getStreet());
 		_addParameter(sb, "adminDistrict", geolocationAddress.getRegionCode());
@@ -193,6 +197,9 @@ public class MicrosoftGeolocationProvider implements GeolocationProvider {
 
 		return sb.toString();
 	}
+
+	private static final String _LOCATIONS_BASE_URL =
+		"https://dev.virtualearth.net/REST/v1/Locations/";
 
 	private volatile String _bingApiKey;
 

@@ -107,7 +107,10 @@ public class UADHierarchyDisplay {
 
 		baseURL.setParameter("applicationKey", applicationKey);
 		baseURL.setParameter("p_u_i_d", puid);
-		baseURL.setParameter("scope", scope);
+
+		if (Validator.isNotNull(scope)) {
+			baseURL.setParameter("scope", scope);
+		}
 
 		PortletURL applicationURL = PortletURLUtil.clone(
 			baseURL, renderResponse);

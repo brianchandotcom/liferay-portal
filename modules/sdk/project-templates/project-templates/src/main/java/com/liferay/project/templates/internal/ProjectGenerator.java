@@ -59,7 +59,8 @@ public class ProjectGenerator {
 		List<File> archetypesDirs = projectTemplatesArgs.getArchetypesDirs();
 		String artifactId = projectTemplatesArgs.getName();
 		String author = projectTemplatesArgs.getAuthor();
-		String dependencyInjector = projectTemplatesArgs.getDependencyInjector();
+		String dependencyInjector =
+			projectTemplatesArgs.getDependencyInjector();
 		String className = projectTemplatesArgs.getClassName();
 		boolean dependencyManagementEnabled =
 			projectTemplatesArgs.isDependencyManagementEnabled();

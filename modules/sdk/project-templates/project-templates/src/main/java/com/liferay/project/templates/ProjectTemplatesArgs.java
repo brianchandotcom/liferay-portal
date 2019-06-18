@@ -48,12 +48,12 @@ public class ProjectTemplatesArgs {
 		return _contributorType;
 	}
 
-	public File getDestinationDir() {
-		return _destinationDir;
-	}
-
 	public String getDependencyInjector() {
 		return _dependencyInjector;
+	}
+
+	public File getDestinationDir() {
+		return _destinationDir;
 	}
 
 	public String getGroupId() {

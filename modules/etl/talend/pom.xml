@@ -28,7 +28,7 @@
 		<maven.deploy.skip>true</maven.deploy.skip>
 	</properties>
 	<modules>
-		<module>talend-commons</module>
+		<module>talend-common</module>
 		<module>talend-definition</module>
 		<module>talend-runtime</module>
 	</modules>

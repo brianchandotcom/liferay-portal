@@ -19,19 +19,10 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionActionHandlerAwa
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.expression.ExecuteActionRequest;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Inácio Nery
  * @author Leonardo Barros
  */
-@Component(
-	property = "name=" + JumpPageFunction.NAME,
-	service = {
-		DDMExpressionActionHandlerAware.class,
-		DDMExpressionFunction.Function2.class
-	}
-)
 public class JumpPageFunction
 	implements DDMExpressionActionHandlerAware,
 			   DDMExpressionFunction.Function2<Number, Number, Boolean> {

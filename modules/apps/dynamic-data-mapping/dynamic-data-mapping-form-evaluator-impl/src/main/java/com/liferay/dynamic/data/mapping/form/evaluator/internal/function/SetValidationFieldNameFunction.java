@@ -14,14 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Jeyvison Nascimento
  */
-@Component(
-	property = "name=" + SetValidationFieldNameFunction.NAME, service = {}
-)
 public class SetValidationFieldNameFunction
 	extends SetPropertyFunction<String> {
 

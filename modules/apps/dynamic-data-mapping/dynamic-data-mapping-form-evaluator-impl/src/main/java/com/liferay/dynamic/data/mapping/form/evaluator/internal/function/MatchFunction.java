@@ -21,15 +21,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Leonardo Barros
  */
-@Component(
-	property = "name=" + MatchFunction.NAME,
-	service = DDMExpressionFunction.Function2.class
-)
 public class MatchFunction
 	implements DDMExpressionFunction.Function2<String, String, Boolean> {
 

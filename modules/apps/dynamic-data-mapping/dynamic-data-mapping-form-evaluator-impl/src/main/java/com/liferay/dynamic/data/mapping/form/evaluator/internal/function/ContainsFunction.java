@@ -19,15 +19,9 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Leonardo Barros
  */
-@Component(
-	property = "name=" + ContainsFunction.NAME,
-	service = DDMExpressionFunction.Function2.class
-)
 public class ContainsFunction
 	implements DDMExpressionFunction.Function2<Object, String, Boolean> {
 

@@ -18,15 +18,9 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 
 import org.apache.commons.lang.math.NumberUtils;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Leonardo Barros
  */
-@Component(
-	property = "name=" + IsIntegerFunction.NAME,
-	service = DDMExpressionFunction.Function1.class
-)
 public class IsIntegerFunction
 	implements DDMExpressionFunction.Function1<Object, Boolean> {
 

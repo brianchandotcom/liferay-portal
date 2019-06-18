@@ -19,15 +19,9 @@ import com.liferay.portal.kernel.json.JSONArray;
 
 import java.util.Objects;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Leonardo Barros
  */
-@Component(
-	property = "name=" + EqualsFunction.NAME,
-	service = DDMExpressionFunction.Function2.class
-)
 public class EqualsFunction
 	implements DDMExpressionFunction.Function2<Object, Object, Boolean> {
 

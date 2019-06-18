@@ -19,17 +19,9 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionObserver;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionObserverAware;
 import com.liferay.dynamic.data.mapping.expression.UpdateFieldPropertyRequest;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Leonardo Barros
  */
-@Component(
-	property = "name=" + SetInvalidFunction.NAME,
-	service = {
-		DDMExpressionFunction.Function2.class, DDMExpressionObserverAware.class
-	}
-)
 public class SetInvalidFunction
 	implements DDMExpressionFunction.Function2<String, String, Boolean>,
 			   DDMExpressionObserverAware {

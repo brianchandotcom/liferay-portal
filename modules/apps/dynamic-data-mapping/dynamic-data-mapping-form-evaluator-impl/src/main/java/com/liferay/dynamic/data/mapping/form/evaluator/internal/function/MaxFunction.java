@@ -21,15 +21,9 @@ import java.math.BigDecimal;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Leonardo Barros
  */
-@Component(
-	property = "name=" + MaxFunction.NAME,
-	service = DDMExpressionFunction.Function1.class
-)
 public class MaxFunction
 	implements DDMExpressionFunction.Function1<BigDecimal[], BigDecimal> {
 

@@ -14,12 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Leonardo Barros
  */
-@Component(property = "name=" + SetEnabledFunction.NAME, service = {})
 public class SetEnabledFunction extends SetPropertyFunction<Boolean> {
 
 	public static final String NAME = "setEnabled";

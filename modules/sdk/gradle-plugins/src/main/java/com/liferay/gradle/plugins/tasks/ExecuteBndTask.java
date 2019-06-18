@@ -283,11 +283,10 @@ public class ExecuteBndTask extends DefaultTask {
 
 				if ((location != null) && (location.file != null)) {
 					logger.warn(
-						"{}:{}: warning: {}", location.file, location.line,
-						warning);
+						"{}:{}:{}", location.file, location.line, warning);
 				}
 				else {
-					logger.warn("warning: {}", warning);
+					logger.warn(warning);
 				}
 			}
 		}
@@ -298,11 +297,10 @@ public class ExecuteBndTask extends DefaultTask {
 
 				if ((location != null) && (location.file != null)) {
 					logger.error(
-						"{}:{}: warning: {}", location.file, location.line,
-						error);
+						"{}:{}:{}", location.file, location.line, error);
 				}
 				else {
-					logger.error("warning: {}", error);
+					logger.error(error);
 				}
 			}
 		}

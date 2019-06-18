@@ -202,7 +202,7 @@
 </tr>
 <tr>
 	<td>TEXT_LABEL_2</td>
-	<td>xpath=(//div[contains(@class,'form-field-container')][2]//label[contains(.,'${key_fieldLabel}')])</td>
+	<td>xpath=(//div[contains(@class,'form-group')][2]//label[contains(.,'${key_fieldLabel}')])</td>
 	<td></td>
 </tr>
 <tr>

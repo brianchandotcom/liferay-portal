@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import ThemeContext from '../../ThemeContext.es';
 import {DragTypes} from '../../utils/drag-types.es';
 import {DropTarget as dropTarget} from 'react-dnd';
+import EmptyPlaceholder from './EmptyPlaceholder.es';
 
 /**
  * Prevents items from being dropped from other contributors.
@@ -52,8 +53,11 @@ class EmptyDropZone extends Component {
 			hover
 		} = this.props;
 
+		const displayEmptyPlaceholder = canDrop || !emptyContributors;
+
 		const emptyZoneClasses = getCN('empty-drop-zone-root', {
-			'empty-drop-zone-dashed border-primary rounded': !canDrop || !hover
+			'empty-drop-zone-dashed border-primary rounded':
+				displayEmptyPlaceholder && (!canDrop || !hover)
 		});
 
 		const targetClasses = getCN(
@@ -69,9 +73,15 @@ class EmptyDropZone extends Component {
 		return (
 			<div className={emptyZoneClasses}>
 				{connectDropTarget(
-					<div className={targetClasses}>
-						<div className='empty-drop-zone-indicator' />
-					</div>
+					displayEmptyPlaceholder ? (
+						<div className={targetClasses}>
+							<div className='empty-drop-zone-indicator' />
+						</div>
+					) : (
+						<div>
+							<EmptyPlaceholder />
+						</div>
+					)
 				)}
 			</div>
 		);

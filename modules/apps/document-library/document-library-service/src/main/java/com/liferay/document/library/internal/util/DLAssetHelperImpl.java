@@ -40,14 +40,14 @@ public class DLAssetHelperImpl implements DLAssetHelper {
 
 		String version = fileVersion.getVersion();
 
-		if (!fileVersion.isApproved() && Validator.isNotNull(version) &&
-			!version.equals(DLFileEntryConstants.VERSION_DEFAULT) &&
-			!fileEntry.isInTrash()) {
+		if (fileVersion.isApproved() || Validator.isNull(version) ||
+			version.equals(DLFileEntryConstants.VERSION_DEFAULT) ||
+			fileEntry.isInTrash()) {
 
-			return fileVersion.getFileVersionId();
+			return fileEntry.getFileEntryId();
 		}
 
-		return fileEntry.getFileEntryId();
+		return fileVersion.getFileVersionId();
 	}
 
 }

@@ -1143,7 +1143,7 @@ definition {
 			userLoginEmailAddress = "author1ea@liferay.com",
 			userLoginFullName = "author1 author1");
 
-		WebContent.openWebContentAdmin(siteURLKey = "site-name");
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -1168,7 +1168,7 @@ definition {
 			userLoginEmailAddress = "author2ea@liferay.com",
 			userLoginFullName = "author2 author2");
 
-		WebContent.openWebContentAdmin(siteURLKey = "site-name");
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 

@@ -174,13 +174,14 @@ class Sidebar extends Component {
 	}
 
 	open() {
+		const {container} = this.refs;
 		const {transitionEnd} = this;
 
-		dom.once(this.refs.container, transitionEnd, () => {
+		dom.once(container, transitionEnd, () => {
 			if (this._isEditMode()) {
 				const firstInput = this.element.querySelector('input');
 
-				if (firstInput && document.activeElement !== firstInput) {
+				if (firstInput && !container.contains(document.activeElement)) {
 					firstInput.focus();
 					selectText(firstInput);
 				}

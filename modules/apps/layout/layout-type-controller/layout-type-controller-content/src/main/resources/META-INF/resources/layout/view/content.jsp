@@ -102,8 +102,8 @@ int previewAssetEntryType = ParamUtil.getInteger(request, "previewAssetEntryType
 								}
 					%>
 
-								<section class="bg-<%= backgroundColorCssClass %> px-<%= paddingHorizontal %> py-<%= paddingVertical %>" style="<%= Validator.isNotNull(backgroundImage) ? "background-image: url(" + backgroundImage + "); background-position: 50% 50%; background-repeat: no-repeat; background-size: cover;" : StringPool.BLANK %>">
-									<div class="<%= Objects.equals(containerType, "fluid") ? "container-fluid" : "container" %>">
+								<section class="bg-<%= backgroundColorCssClass %>" style="<%= Validator.isNotNull(backgroundImage) ? "background-image: url(" + backgroundImage + "); background-position: 50% 50%; background-repeat: no-repeat; background-size: cover;" : StringPool.BLANK %>">
+									<div class="<%= Objects.equals(containerType, "fluid") ? "container-fluid" : "container" %> px-<%= paddingHorizontal %> py-<%= paddingVertical %>">
 										<div class="row <%= !columnSpacing ? "no-gutters" : StringPool.BLANK %>">
 
 											<%

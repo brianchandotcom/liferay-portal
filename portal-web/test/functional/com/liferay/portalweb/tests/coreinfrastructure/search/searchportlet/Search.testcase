@@ -350,6 +350,14 @@ definition {
 
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "WC Title");
 
+		// Workaround for LPS-82584
+
+		Click(locator1 = "Link#CLEAR");
+
+		Click(
+			locator1 = "Search#MODIFIED_FACET_RANGE",
+			rangeName = "Custom Range");
+
 		Click(locator1 = "Search#CUSTOM_RANGE_FROM");
 
 		Click(locator1 = "YUICalendarWidget#PREVIOUS_MONTH_ARROW");

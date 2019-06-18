@@ -27,10 +27,10 @@
 		<relativePath />
 	</parent>
 	<groupId>com.liferay</groupId>
-	<artifactId>com.liferay.talend.definition</artifactId>
+	<artifactId>com.liferay.talend.commons</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
-	<name>Liferay Talend Definition</name>
-	<packaging>bundle</packaging>
+	<name>Liferay Talend Commons</name>
+	<packaging>jar</packaging>
 	<repositories>
 		<repository>
 			<id>liferay</id>
@@ -64,37 +64,8 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>biz.aQute.bnd</groupId>
-			<artifactId>annotation</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.google.auto.service</groupId>
-			<artifactId>auto-service</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.liferay</groupId>
-			<artifactId>com.liferay.talend.commons</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>org.talend.components</groupId>
 			<artifactId>components-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.talend.components</groupId>
-			<artifactId>components-api</artifactId>
-			<classifier>tests</classifier>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.talend.components</groupId>
-			<artifactId>components-common</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.talend.components</groupId>
-			<artifactId>components-common</artifactId>
-			<classifier>bundle</classifier>
-			<scope>test</scope>
 		</dependency>
 
 		<!-- Start Jersey dependencies -->
@@ -179,11 +150,6 @@
 			<artifactId>jersey-media-jaxb</artifactId>
 			<version>2.22.2</version>
 		</dependency>
-		<!--<dependency>
-			<groupId>org.glassfish.jersey.media</groupId>
-			<artifactId>jersey-media-json-jackson</artifactId>
-			<version>2.22.2</version>
-		</dependency>-->
 		<dependency>
 			<groupId>org.javassist</groupId>
 			<artifactId>javassist</artifactId>
@@ -192,66 +158,9 @@
 
 		<!-- End Jersey dependencies -->
 
-		<dependency>
-			<groupId>org.ops4j.pax.url</groupId>
-			<artifactId>pax-url-aether</artifactId>
-			<version>2.4.7</version>
-		</dependency>
-		<dependency>
-			<groupId>org.talend.components</groupId>
-			<artifactId>components-api-service-rest</artifactId>
-			<classifier>lib</classifier>
-			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>ch.qos.logback</groupId>
-					<artifactId>logback-classic</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.talend.components</groupId>
-			<artifactId>components-api-service-rest</artifactId>
-			<type>test-jar</type>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.talend.components</groupId>
-			<artifactId>components-osgitest</artifactId>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>com.github.veithen.alta</groupId>
-				<artifactId>alta-maven-plugin</artifactId>
-				<version>0.4.2-Talend</version>
-				<executions>
-					<execution>
-						<phase>pre-integration-test</phase>
-						<goals>
-							<goal>generate-test-resources</goal>
-						</goals>
-						<configuration>
-							<name>%groupId%-%artifactId%%dashClassifier%.link</name>
-							<value>%url%</value>
-							<separator>${line.separator}</separator>
-							<outputDirectory>${project.build.testOutputDirectory}</outputDirectory>
-							<dependencySet>
-								<scope>test</scope>
-							</dependencySet>
-							<artifacts>
-								<artifact>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>${project.artifactId}</artifactId>
-									<version>${project.version}</version>
-								</artifact>
-							</artifacts>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.javadoc.formatter</artifactId>
@@ -290,37 +199,8 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.felix</groupId>
-				<artifactId>maven-bundle-plugin</artifactId>
-				<extensions>true</extensions>
-				<executions>
-					<execution>
-						<id>osgi-bundle</id>
-						<phase>package</phase>
-						<goals>
-							<goal>bundle</goal>
-						</goals>
-						<configuration>
-							<instructions>
-								<Bundle-SymbolicName>com.liferay.talend</Bundle-SymbolicName>
-								<Import-Package>!com.sun.jdi.*, !jersey.repackaged.com.google.common.*, !sun.misc.*, *</Import-Package>
-								<Service-Component>*</Service-Component>
-								<Embed-Dependency>*;scope=compile|runtime;inline=false;artifactId=!components*|auto-service|pax-url-aether</Embed-Dependency>
-								<Include-Resource>{maven-resources},META-INF/services/=target/classes/META-INF/services/,META-INF/maven/${project.groupId}/${project.artifactId}/dependencies.txt=target/classes/META-INF/maven/${project.groupId}/${project.artifactId}/dependencies.txt</Include-Resource>
-								<Bundle-ActivationPolicy>lazy</Bundle-ActivationPolicy>
-							</instructions>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>${maven-resources-plugin.version}</version>
-			</plugin>
-			<plugin>
-				<groupId>org.eclipse.tycho.extras</groupId>
-				<artifactId>tycho-p2-extras-plugin</artifactId>
-				<version>${tycho-p2-extras-plugin.version}</version>
 			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>

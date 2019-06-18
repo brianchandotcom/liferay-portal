@@ -42,6 +42,8 @@ definition {
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 
+		Navigator.openURL();
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",

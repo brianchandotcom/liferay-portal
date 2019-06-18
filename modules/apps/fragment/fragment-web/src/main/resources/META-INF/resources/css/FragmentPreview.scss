@@ -24,7 +24,6 @@
 		border: none;
 		height: calc(100% - #{$toolbarHeight} - #{$toolbarBorderWidth});
 		left: 0;
-		pointer-events: none;
 		position: absolute;
 		top: calc(#{$toolbarHeight} + #{$toolbarBorderWidth});
 		width: 100%;

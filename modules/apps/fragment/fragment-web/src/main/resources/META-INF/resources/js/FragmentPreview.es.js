@@ -52,6 +52,14 @@ class FragmentPreview extends PortletBase {
 		this.on('cssChanged', this._updatePreview);
 		this.on('htmlChanged', this._updatePreview);
 		this.on('jsChanged', this._updatePreview);
+
+		if (this.refs.previewFrame && this.refs.previewFrame.contentWindow) {
+			this.refs.previewFrame.contentWindow.addEventListener(
+				'click',
+				this._handleIframeClick,
+				true
+			);
+		}
 	}
 
 	/**
@@ -69,6 +77,10 @@ class FragmentPreview extends PortletBase {
 				JSON.stringify({data: ''}),
 				'*'
 			);
+			this.refs.previewFrame.contentWindow.removeEventListener(
+				'click',
+				this._handleIframeClick
+			);
 		}
 	}
 
@@ -77,6 +89,16 @@ class FragmentPreview extends PortletBase {
 	 */
 	shouldUpdate(changes) {
 		return !!changes._currentPreviewSize;
+	}
+
+	/**
+	 * Handle iframe clicks, preventing any click event to be executed
+	 * @param {Event} event
+	 * @review
+	 */
+	_handleIframeClick(event) {
+		event.preventDefault();
+		event.stopPropagation();
 	}
 
 	/**

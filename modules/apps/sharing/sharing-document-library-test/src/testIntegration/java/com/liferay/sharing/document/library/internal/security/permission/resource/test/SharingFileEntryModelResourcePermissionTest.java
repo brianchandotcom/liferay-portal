@@ -21,316 +21,71 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.context.ContextUserReplace;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.sharing.security.permission.SharingEntryAction;
-import com.liferay.sharing.service.SharingEntryLocalService;
-
-import java.util.Arrays;
+import com.liferay.sharing.test.util.BaseSharingModelResourcePermissionTestCase;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Sergio González
  */
 @RunWith(Arquillian.class)
-public class SharingFileEntryModelResourcePermissionTest {
+public class SharingFileEntryModelResourcePermissionTest
+	extends BaseSharingModelResourcePermissionTestCase<DLFileEntry> {
 
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			PermissionCheckerMethodTestRule.INSTANCE);
-
-	@Before
-	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		_user = UserTestUtil.addCompanyAdminUser(_company);
-
-		_group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), _user.getUserId(),
-			GroupConstants.DEFAULT_PARENT_GROUP_ID);
-
-		_groupUser = UserTestUtil.addGroupUser(
-			_group, RoleConstants.POWER_USER);
+	@Override
+	protected DLFileEntry getModel(User user, Group group)
+		throws PortalException {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
+				group.getGroupId(), user.getUserId());
 
 		serviceContext.setAddGuestPermissions(false);
 		serviceContext.setAddGroupPermissions(false);
 
-		_fileEntry = _dlAppLocalService.addFileEntry(
-			_user.getUserId(), _group.getGroupId(),
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			user.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), "text/plain", StringUtil.randomString(),
 			StringUtil.randomString(), StringPool.BLANK, "test".getBytes(),
 			serviceContext);
 
-		_classNameId = _classNameLocalService.getClassNameId(
-			DLFileEntry.class.getName());
+		return (DLFileEntry)fileEntry.getModel();
 	}
 
-	@Test
-	public void testUserWithAddDiscussionAndViewSharingEntryActionCanAddDiscussionPrivateFileEntry()
-		throws Exception {
+	@Override
+	protected ModelResourcePermission<DLFileEntry>
+		getModelResourcePermission() {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		_sharingEntryLocalService.addSharingEntry(
-			_user.getUserId(), _groupUser.getUserId(), _classNameId,
-			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
-			Arrays.asList(
-				SharingEntryAction.ADD_DISCUSSION, SharingEntryAction.VIEW),
-			null, serviceContext);
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_groupUser);
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_groupUser, permissionChecker)) {
-
-			Assert.assertTrue(
-				_fileEntryModelResourcePermission.contains(
-					permissionChecker, _fileEntry, ActionKeys.ADD_DISCUSSION));
-		}
+		return _fileEntryModelResourcePermission;
 	}
 
-	@Test
-	public void testUserWithAddDiscussionAndViewSharingEntryActionCannotUpdatePrivateFileEntry()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		_sharingEntryLocalService.addSharingEntry(
-			_user.getUserId(), _groupUser.getUserId(), _classNameId,
-			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
-			Arrays.asList(
-				SharingEntryAction.ADD_DISCUSSION, SharingEntryAction.VIEW),
-			null, serviceContext);
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_groupUser);
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_groupUser, permissionChecker)) {
-
-			Assert.assertFalse(
-				_fileEntryModelResourcePermission.contains(
-					permissionChecker, _fileEntry, ActionKeys.UPDATE));
-		}
-	}
-
-	@Test
-	public void testUserWithoutAddDiscussionSharingEntryActionCannotAddDiscussionPrivateFileEntry()
-		throws Exception {
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_groupUser);
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_groupUser, permissionChecker)) {
-
-			Assert.assertFalse(
-				_fileEntryModelResourcePermission.contains(
-					permissionChecker, _fileEntry, ActionKeys.ADD_DISCUSSION));
-		}
-	}
-
-	@Test
-	public void testUserWithoutSharingCannotViewPrivateFileEntry()
-		throws Exception {
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_groupUser);
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_groupUser, permissionChecker)) {
-
-			Assert.assertFalse(
-				_fileEntryModelResourcePermission.contains(
-					permissionChecker, _fileEntry, ActionKeys.VIEW));
-		}
-	}
-
-	@Test
-	public void testUserWithoutUpdateSharingEntryActionCannotUpdatePrivateFileEntry()
-		throws Exception {
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_groupUser);
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_groupUser, permissionChecker)) {
-
-			Assert.assertFalse(
-				_fileEntryModelResourcePermission.contains(
-					permissionChecker, _fileEntry, ActionKeys.UPDATE));
-		}
-	}
-
-	@Test
-	public void testUserWithoutViewSharingEntryActionCannotViewPrivateFileEntry()
-		throws Exception {
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_groupUser);
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_groupUser, permissionChecker)) {
-
-			Assert.assertFalse(
-				_fileEntryModelResourcePermission.contains(
-					permissionChecker, _fileEntry, ActionKeys.VIEW));
-		}
-	}
-
-	@Test
-	public void testUserWithUpdateAndViewSharingEntryActionCannotAddDiscussionPrivateFileEntry()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		_sharingEntryLocalService.addSharingEntry(
-			_user.getUserId(), _groupUser.getUserId(), _classNameId,
-			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
-			Arrays.asList(SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
-			null, serviceContext);
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_groupUser);
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_groupUser, permissionChecker)) {
-
-			Assert.assertFalse(
-				_fileEntryModelResourcePermission.contains(
-					permissionChecker, _fileEntry, ActionKeys.ADD_DISCUSSION));
-		}
-	}
-
-	@Test
-	public void testUserWithUpdateAndViewSharingEntryActionCanUpdatePrivateFileEntry()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		_sharingEntryLocalService.addSharingEntry(
-			_user.getUserId(), _groupUser.getUserId(), _classNameId,
-			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
-			Arrays.asList(SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
-			null, serviceContext);
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_groupUser);
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_groupUser, permissionChecker)) {
-
-			Assert.assertTrue(
-				_fileEntryModelResourcePermission.contains(
-					permissionChecker, _fileEntry, ActionKeys.UPDATE));
-		}
-	}
-
-	@Test
-	public void testUserWithViewSharingEntryActionCannotViewPendingFileEntry()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		FileEntry fileEntry = _addPendingFileEntry(serviceContext);
-
-		_sharingEntryLocalService.addSharingEntry(
-			_user.getUserId(), _groupUser.getUserId(), _classNameId,
-			fileEntry.getFileEntryId(), fileEntry.getGroupId(), true,
-			Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_groupUser);
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_groupUser, permissionChecker)) {
-
-			Assert.assertFalse(
-				_fileEntryModelResourcePermission.contains(
-					permissionChecker, fileEntry, ActionKeys.VIEW));
-		}
-	}
-
-	@Test
-	public void testUserWithViewSharingEntryActionCanViewPrivateFileEntry()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		_sharingEntryLocalService.addSharingEntry(
-			_user.getUserId(), _groupUser.getUserId(), _classNameId,
-			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
-			Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_groupUser);
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_groupUser, permissionChecker)) {
-
-			Assert.assertTrue(
-				_fileEntryModelResourcePermission.contains(
-					permissionChecker, _fileEntry, ActionKeys.VIEW));
-		}
-	}
-
-	private FileEntry _addPendingFileEntry(ServiceContext serviceContext)
+	@Override
+	protected DLFileEntry getPendingModel(User user, Group group)
 		throws PortalException {
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), user.getUserId());
+
+		serviceContext.setAddGuestPermissions(false);
+		serviceContext.setAddGroupPermissions(false);
+
 		Folder folder = _dlAppLocalService.addFolder(
-			_user.getUserId(), _group.getGroupId(),
+			user.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
@@ -349,7 +104,7 @@ public class SharingFileEntryModelResourcePermissionTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			_user.getUserId(), _group.getGroupId(), folder.getFolderId(),
+			user.getUserId(), group.getGroupId(), folder.getFolderId(),
 			RandomTestUtil.randomString(), "text",
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.SPACE.getBytes(), serviceContext);
@@ -359,33 +114,16 @@ public class SharingFileEntryModelResourcePermissionTest {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_PENDING, fileVersion.getStatus());
 
-		return fileEntry;
+		return (DLFileEntry)fileEntry.getModel();
 	}
 
 	@Inject(
-		filter = "model.class.name=com.liferay.portal.kernel.repository.model.FileEntry"
+		filter = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry"
 	)
-	private static ModelResourcePermission<FileEntry>
+	private static ModelResourcePermission<DLFileEntry>
 		_fileEntryModelResourcePermission;
-
-	private long _classNameId;
-
-	@Inject
-	private ClassNameLocalService _classNameLocalService;
-
-	@DeleteAfterTestRun
-	private Company _company;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
-
-	private FileEntry _fileEntry;
-	private Group _group;
-	private User _groupUser;
-
-	@Inject
-	private SharingEntryLocalService _sharingEntryLocalService;
-
-	private User _user;
 
 }

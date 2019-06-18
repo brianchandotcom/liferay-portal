@@ -73,7 +73,7 @@
 	{@param? predefinedValue: list<any>}
 	{@param? showAsSwitcher: bool}
 
-	{let $displayValue: $value ? $value : $predefinedValue /}
+	{let $displayValue: $value and length($value) > 0 ? $value : $predefinedValue /}
 
 	<div class="lfr-ddm-checkbox-multiple">
 		{if $options}

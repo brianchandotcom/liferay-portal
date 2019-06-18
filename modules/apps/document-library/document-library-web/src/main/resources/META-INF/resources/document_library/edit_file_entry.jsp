@@ -80,9 +80,7 @@ if (fileEntryTypeId >= 0) {
 DLVersionNumberIncrease dlVersionNumberIncrease = DLVersionNumberIncrease.valueOf(request.getParameter("versionIncrease"), DLVersionNumberIncrease.AUTOMATIC);
 boolean updateVersionDetails = ParamUtil.getBoolean(request, "updateVersionDetails");
 
-DLAssetHelper dlAssetHelper = DLAssetHelperUtil.getDLAssetHelper();
-
-long assetClassPK = dlAssetHelper.getAssetClassPK(fileEntry, fileVersion);
+long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 
 boolean checkedOut = false;
 boolean pending = false;

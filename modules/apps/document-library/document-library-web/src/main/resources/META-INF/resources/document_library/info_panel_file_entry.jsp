@@ -23,9 +23,7 @@ boolean hideActions = GetterUtil.getBoolean(request.getAttribute("info_panel_fil
 
 DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileVersion);
 
-DLAssetHelper dlAssetHelper = DLAssetHelperUtil.getDLAssetHelper();
-
-long assetClassPK = dlAssetHelper.getAssetClassPK(fileEntry, fileVersion);
+long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 %>
 
 <div class="sidebar-header">

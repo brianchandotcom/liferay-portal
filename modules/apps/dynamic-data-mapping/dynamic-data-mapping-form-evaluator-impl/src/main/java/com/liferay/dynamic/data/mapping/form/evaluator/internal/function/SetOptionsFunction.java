@@ -41,6 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Leonardo Barros
  */
 @Component(
+	property = "name=" + SetOptionsFunction.NAME,
 	service = {
 		DDMExpressionFunction.Function2.class, DDMExpressionObserverAware.class,
 		DDMExpressionParameterAccessorAware.class
@@ -49,6 +50,8 @@ import org.osgi.service.component.annotations.Reference;
 public class SetOptionsFunction
 	implements DDMExpressionFunction.Function2<String, String, Boolean>,
 			   DDMExpressionObserverAware, DDMExpressionParameterAccessorAware {
+
+	public static final String NAME = "setOptions";
 
 	@Override
 	public Boolean apply(String field, String json) {
@@ -71,7 +74,7 @@ public class SetOptionsFunction
 
 	@Override
 	public String getName() {
-		return "setOptions";
+		return NAME;
 	}
 
 	@Override

@@ -25,9 +25,14 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Leonardo Barros
  */
-@Component(service = DDMExpressionFunction.Function1.class)
+@Component(
+	property = "name=" + JoinFunction.NAME,
+	service = DDMExpressionFunction.Function1.class
+)
 public class JoinFunction
 	implements DDMExpressionFunction.Function1<JSONArray, String> {
+
+	public static final String NAME = "join";
 
 	@Override
 	public String apply(JSONArray jsonArray) {
@@ -46,7 +51,7 @@ public class JoinFunction
 
 	@Override
 	public String getName() {
-		return "join";
+		return NAME;
 	}
 
 }

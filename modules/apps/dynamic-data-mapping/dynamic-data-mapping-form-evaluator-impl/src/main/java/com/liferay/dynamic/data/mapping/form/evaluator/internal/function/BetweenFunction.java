@@ -23,10 +23,15 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Leonardo Barros
  */
-@Component(service = DDMExpressionFunction.Function3.class)
+@Component(
+	property = "name=" + BetweenFunction.NAME,
+	service = DDMExpressionFunction.Function3.class
+)
 public class BetweenFunction
 	implements DDMExpressionFunction.Function3
 		<BigDecimal, BigDecimal, BigDecimal, Boolean> {
+
+	public static final String NAME = "between";
 
 	@Override
 	public Boolean apply(
@@ -44,7 +49,7 @@ public class BetweenFunction
 
 	@Override
 	public String getName() {
-		return "between";
+		return NAME;
 	}
 
 }

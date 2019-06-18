@@ -30,9 +30,14 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Leonardo Barros
  */
-@Component(service = DDMExpressionFunction.Function2.class)
+@Component(
+	property = "name=" + AllFunction.NAME,
+	service = DDMExpressionFunction.Function2.class
+)
 public class AllFunction
 	implements DDMExpressionFunction.Function2<String, Object, Boolean> {
+
+	public static final String NAME = "all";
 
 	@Override
 	public Boolean apply(String expression, Object parameter) {
@@ -62,7 +67,7 @@ public class AllFunction
 
 	@Override
 	public String getName() {
-		return "all";
+		return NAME;
 	}
 
 	protected boolean accept(String expression, Object value) {

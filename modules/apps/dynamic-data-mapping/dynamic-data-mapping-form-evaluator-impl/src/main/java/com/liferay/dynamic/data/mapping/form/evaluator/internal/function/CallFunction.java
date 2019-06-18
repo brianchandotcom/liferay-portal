@@ -51,6 +51,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Leonardo Barros
  */
 @Component(
+	property = "name=" + CallFunction.NAME,
 	service = {
 		DDMExpressionFieldAccessorAware.class,
 		DDMExpressionFunction.Function3.class, DDMExpressionObserverAware.class
@@ -60,6 +61,8 @@ public class CallFunction
 	implements DDMExpressionFieldAccessorAware,
 			   DDMExpressionFunction.Function3<String, String, String, Boolean>,
 			   DDMExpressionObserverAware {
+
+	public static final String NAME = "call";
 
 	@Override
 	public Boolean apply(
@@ -105,7 +108,7 @@ public class CallFunction
 
 	@Override
 	public String getName() {
-		return "call";
+		return NAME;
 	}
 
 	@Override

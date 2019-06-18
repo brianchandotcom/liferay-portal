@@ -25,6 +25,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Leonardo Barros
  */
 @Component(
+	property = "name=" + SetInvalidFunction.NAME,
 	service = {
 		DDMExpressionFunction.Function2.class, DDMExpressionObserverAware.class
 	}
@@ -32,6 +33,8 @@ import org.osgi.service.component.annotations.Component;
 public class SetInvalidFunction
 	implements DDMExpressionFunction.Function2<String, String, Boolean>,
 			   DDMExpressionObserverAware {
+
+	public static final String NAME = "setInvalid";
 
 	@Override
 	public Boolean apply(String field, String errorMessage) {
@@ -55,7 +58,7 @@ public class SetInvalidFunction
 
 	@Override
 	public String getName() {
-		return "setInvalid";
+		return NAME;
 	}
 
 	@Override

@@ -26,9 +26,14 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Leonardo Barros
  */
-@Component(service = DDMExpressionFunction.Function2.class)
+@Component(
+	property = "name=" + MatchFunction.NAME,
+	service = DDMExpressionFunction.Function2.class
+)
 public class MatchFunction
 	implements DDMExpressionFunction.Function2<String, String, Boolean> {
+
+	public static final String NAME = "match";
 
 	@Override
 	public Boolean apply(String value, String regex) {
@@ -50,7 +55,7 @@ public class MatchFunction
 
 	@Override
 	public String getName() {
-		return "match";
+		return NAME;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(MatchFunction.class);

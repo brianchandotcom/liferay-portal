@@ -19,12 +19,14 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Leonardo Barros
  */
-@Component(service = {})
+@Component(property = "name=" + SetRequiredFunction.NAME, service = {})
 public class SetRequiredFunction extends SetPropertyFunction<Boolean> {
+
+	public static final String NAME = "setRequired";
 
 	@Override
 	public String getName() {
-		return "setRequired";
+		return NAME;
 	}
 
 	@Override

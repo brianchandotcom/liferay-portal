@@ -31,6 +31,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.XmlProvider;
+import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
@@ -89,7 +90,9 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 
 			SourceSetOutput sourceSetOutput = sourceSet.getOutput();
 
-			File classesDir = sourceSetOutput.getClassesDir();
+      SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
+
+      File classesDir = javaSourceDirectorySet.getOutputDir();
 
 			if (!FileUtil.isChild(classesDir, project.getBuildDir())) {
 				excludeDirs.add(classesDir);

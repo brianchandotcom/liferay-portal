@@ -150,6 +150,8 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 
 		final SourceSetOutput sourceSetOutput =
 			testIntegrationSourceSet.getOutput();
+		final SourceDirectorySet javaSourceDirectorySet =
+			testIntegrationSourceSet.getJava();
 
 		final Method getClassesDirsMethod = ReflectionUtil.getMethod(
 			sourceSetOutput, "getClassesDirs");
@@ -203,7 +205,7 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 
 					@Override
 					public File call() throws Exception {
-						return sourceSetOutput.getClassesDir();
+						return javaSourceDirectorySet.getOutputDir();
 					}
 
 				});

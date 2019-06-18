@@ -145,9 +145,9 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+					SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
 
-					return sourceSetOutput.getClassesDir();
+					return javaSourceDirectorySet.getOutputDir();
 				}
 
 			});

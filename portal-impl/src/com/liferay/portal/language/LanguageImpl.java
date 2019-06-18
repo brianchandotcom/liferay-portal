@@ -1974,7 +1974,8 @@ public class LanguageImpl implements Language, Serializable {
 	private static PortalCache<Long, Serializable> _groupLocalesPortalCache;
 	private static volatile long _lastModified = System.currentTimeMillis();
 	private static final Pattern _pattern = Pattern.compile(
-		"Liferay\\s*\\.\\s*Language\\s*\\.\\s*get\\s*\\(\\s*[\"']([^)]+)[\"']\\s*\\)",
+		"Liferay\\s*\\.\\s*Language\\s*\\.\\s*get\\s*" +
+			"\\(\\s*[\"']([^)]+)[\"']\\s*\\)",
 		Pattern.MULTILINE);
 
 	private static final Synchronizer<Long, Serializable> _removeSynchronizer =

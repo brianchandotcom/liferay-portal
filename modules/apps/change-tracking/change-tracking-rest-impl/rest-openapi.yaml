@@ -395,9 +395,40 @@ paths:
                                 type: array
                     description: ""
             tags: ["Entry"]
-    "/collections/{collectionId}/entries/{entryId}":
+    "/collections/{collectionId}/publish":
+        post:
+            operationId: postCollectionPublish
+            parameters:
+                - in: path
+                  name: collectionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: ignoreCollision
+                  required: true
+                  schema:
+                      type: boolean
+                - in: query
+                  name: userId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                202:
+                    description: ""
+                400:
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                    description: ""
+            tags: ["Collection"]
+    "/entries/{entryId}":
         get:
-            operationId: getCollectionEntry
+            operationId: getEntry
             parameters:
                 - in: path
                   name: collectionId
@@ -422,9 +453,9 @@ paths:
                                 $ref: "#/components/schemas/Entry"
                     description: ""
             tags: ["Entry"]
-    "/collections/{collectionId}/entries/{entryId}/affecteds":
+    "/entries/{entryId}/affecteds":
         get:
-            operationId: getCollectionEntryAffectedsPage
+            operationId: getEntryAffectedsPage
             parameters:
                 - in: path
                   name: collectionId
@@ -468,37 +499,6 @@ paths:
                                 type: array
                     description: ""
             tags: ["AffectedEntry"]
-    "/collections/{collectionId}/publish":
-        post:
-            operationId: postCollectionPublish
-            parameters:
-                - in: path
-                  name: collectionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: ignoreCollision
-                  required: true
-                  schema:
-                      type: boolean
-                - in: query
-                  name: userId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                202:
-                    description: ""
-                400:
-                    content:
-                        text/plain:
-                            schema:
-                                type: string
-                    description: ""
-            tags: ["Collection"]
     "/proccesses/{processId}":
         get:
             operationId: getProccessProcess

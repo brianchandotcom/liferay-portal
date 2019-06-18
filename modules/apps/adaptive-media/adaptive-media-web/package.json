@@ -2,7 +2,6 @@
 	"dependencies": {
 		"frontend-js-web": "^4.0.0",
 		"metal": "2.16.8",
-		"metal-ajax": "2.1.1",
 		"metal-component": "2.16.8",
 		"metal-dom": "2.16.8",
 		"metal-events": "2.16.8",

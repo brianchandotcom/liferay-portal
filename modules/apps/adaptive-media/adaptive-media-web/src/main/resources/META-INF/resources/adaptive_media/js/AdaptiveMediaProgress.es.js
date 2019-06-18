@@ -1,6 +1,5 @@
 import 'clay-progress-bar';
-import Ajax from 'metal-ajax';
-import {PortletBase} from 'frontend-js-web';
+import {PortletBase, fetch} from 'frontend-js-web';
 import Soy from 'metal-soy';
 import core from 'metal';
 
@@ -44,7 +43,7 @@ class AdaptiveMediaProgress extends PortletBase {
 		}
 
 		if (backgroundTaskUrl) {
-			Ajax.request(backgroundTaskUrl);
+			fetch(backgroundTaskUrl);
 		}
 
 		this.clearInterval_();
@@ -77,19 +76,18 @@ class AdaptiveMediaProgress extends PortletBase {
 	 * @protected
 	 */
 	getAdaptedImagesPercentage_() {
-		Ajax.request(this.percentageUrl).then(xhr => {
-			try {
-				const json = JSON.parse(xhr.response);
-
+		fetch(this.percentageUrl)
+			.then(res => res.json())
+			.then(json => {
 				this.updateProgressBar_(json.adaptedImages, json.totalImages);
 
 				if (this.percentage_ >= 100) {
 					this.onProgressBarComplete_();
 				}
-			} catch (e) {
+			})
+			.catch(() => {
 				clearInterval(this.intervalId_);
-			}
-		});
+			});
 	}
 
 	/**

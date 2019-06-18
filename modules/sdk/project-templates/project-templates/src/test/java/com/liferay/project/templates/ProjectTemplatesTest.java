@@ -2304,10 +2304,20 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, name + "-api/build.gradle",
+			"biz.aQute.bndlib\", version: \"3.5.0",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0");
 		_testContains(
 			gradleProjectDir, name + "-service/build.gradle",
+			"biz.aQute.bndlib\", version: \"3.5.0",
+			"com.liferay.portal.spring.extender\", version: \"2.0.0",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.6.0");
+
+		_testNotContains(
+			gradleProjectDir, name + "-api/build.gradle",
+			"org.osgi.annotation.versioning");
+		_testNotContains(
+			gradleProjectDir, name + "-service/build.gradle",
+			"org.osgi.annotation.versioning");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"service-builder", name, "com.test", "-Dpackage=" + packageName,
@@ -2331,10 +2341,20 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, name + "-api/build.gradle",
+			"biz.aQute.bndlib\", version: \"3.5.0",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
 		_testContains(
 			gradleProjectDir, name + "-service/build.gradle",
+			"biz.aQute.bndlib\", version: \"3.5.0",
+			"com.liferay.portal.spring.extender.api\", version: \"3.0.0",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
+
+		_testNotContains(
+			gradleProjectDir, name + "-api/build.gradle",
+			"org.osgi.annotation.versioning");
+		_testNotContains(
+			gradleProjectDir, name + "-service/build.gradle",
+			"org.osgi.annotation.versioning");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"service-builder", name, "com.test", "-Dpackage=" + packageName,
@@ -2354,25 +2374,30 @@ public class ProjectTemplatesTest {
 			"service-builder", name, "--package-name", packageName,
 			"--liferayVersion", "7.2");
 
-		_testNotContains(
-			gradleProjectDir, name + "-api/build.gradle",
-			"com.liferay.petra.lang\", version: \"3.0.0\"",
-			"com.liferay.petra.string\", version: \"3.0.0\"");
 		_testContains(
 			gradleProjectDir, name + "-api/build.gradle",
-			_DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0",
+			"org.osgi.annotation.versioning\", version: \"1.1.0");
 		_testContains(
 			gradleProjectDir, name + "-service/build.gradle",
 			"com.liferay.petra.lang\", version: \"3.0.0\"",
 			"com.liferay.petra.string\", version: \"3.0.0\"",
 			"com.liferay.portal.aop.api\", version: \"1.0.0\"",
-			_DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0",
+			"org.osgi.annotation.versioning\", version: \"1.1.0");
 		_testContains(
 			gradleProjectDir, name + "-service/service.xml",
 			"dependency-injector=\"ds\"");
 		_testContains(
 			gradleProjectDir, name + "-service/bnd.bnd",
 			"-dsannotations-options: inherit");
+
+		_testNotContains(
+			gradleProjectDir, name + "-api/build.gradle", "biz.aQute.bndlib",
+			"com.liferay.petra.lang", "com.liferay.petra.string");
+		_testNotContains(
+			gradleProjectDir, name + "-service/build.gradle",
+			"biz.aQute.bndlib", "com.liferay.portal.spring.extender");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"service-builder", name, "com.test", "-Dpackage=" + packageName,
@@ -2395,19 +2420,23 @@ public class ProjectTemplatesTest {
 			"--liferayVersion", "7.2", "--dependency-injector", "spring");
 
 		_testNotContains(
-			gradleProjectDir, name + "-api/build.gradle",
-			"com.liferay.petra.lang\", version: \"3.0.0\"",
-			"com.liferay.petra.string\", version: \"3.0.0\"");
+			gradleProjectDir, name + "-api/build.gradle", "biz.aQute.bnd",
+			"com.liferay.petra.lang", "com.liferay.petra.string");
+		_testNotContains(
+			gradleProjectDir, name + "-service/build.gradle", "biz.aQute.bnd");
+
 		_testContains(
 			gradleProjectDir, name + "-api/build.gradle",
-			_DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0",
+			"org.osgi.annotation.versioning\", version: \"1.1.0");
 		_testContains(
 			gradleProjectDir, name + "-service/build.gradle",
 			"com.liferay.petra.lang\", version: \"3.0.0\"",
 			"com.liferay.petra.string\", version: \"3.0.0\"",
 			"com.liferay.portal.aop.api\", version: \"1.0.0\"",
+			"com.liferay.portal.spring.extender.api\", version: \"3.0.0",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0",
-			"com.liferay.portal.spring.extender.api\", version: \"3.0.0");
+			"org.osgi.annotation.versioning\", version: \"1.1.0");
 		_testNotContains(
 			gradleProjectDir, name + "-service/bnd.bnd",
 			"-dsannotations-options: inherit");
@@ -2571,32 +2600,40 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateServiceBuilderTargetPlatformEnabled70()
 		throws Exception {
 
-		File workspaceProjectDir = _buildTemplateWithGradle(
+		File workspaceDir = _buildTemplateWithGradle(
 			WorkspaceUtil.WORKSPACE, "workspace");
 
-		File gradlePropertiesFile = new File(
-			workspaceProjectDir, "gradle.properties");
+		_enableTargetPlatformInWorkspace(workspaceDir, "7.0.6");
 
-		Files.write(
-			gradlePropertiesFile.toPath(),
-			"\nliferay.workspace.target.platform.version=7.0.6".getBytes(),
-			StandardOpenOption.APPEND);
+		File modulesDir = new File(workspaceDir, "modules");
 
-		File modulesDir = new File(workspaceProjectDir, "modules");
-
-		_buildTemplateWithGradle(
+		File workspaceProjectDir = _buildTemplateWithGradle(
 			modulesDir, "service-builder", "foo", "--package-name", "test",
 			"--liferayVersion", "7.0", "--dependency-management-enabled");
 
+		_testContains(
+			workspaceProjectDir, "foo-api/build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL, "biz.aQute.bndlib");
+		_testContains(
+			workspaceProjectDir, "foo-service/build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL, "biz.aQute.bndlib",
+			"com.liferay.portal.spring.extender");
+
+		_testNotContains(
+			workspaceProjectDir, "foo-api/build.gradle",
+			"org.osgi.annotation.versioning");
+		_testNotContains(
+			workspaceProjectDir, "foo-service/build.gradle",
+			"org.osgi.annotation.versioning");
+
 		if (_isBuildProjects()) {
 			_executeGradle(
-				workspaceProjectDir,
+				workspaceDir,
 				":modules:foo:foo-service" + _GRADLE_TASK_PATH_BUILD_SERVICE);
 
-			_executeGradle(workspaceProjectDir, ":modules:foo:foo-api:build");
+			_executeGradle(workspaceDir, ":modules:foo:foo-api:build");
 
-			_executeGradle(
-				workspaceProjectDir, ":modules:foo:foo-service:build");
+			_executeGradle(workspaceDir, ":modules:foo:foo-service:build");
 		}
 	}
 
@@ -2604,32 +2641,40 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateServiceBuilderTargetPlatformEnabled71()
 		throws Exception {
 
-		File workspaceProjectDir = _buildTemplateWithGradle(
+		File workspaceDir = _buildTemplateWithGradle(
 			WorkspaceUtil.WORKSPACE, "workspace");
 
-		File gradlePropertiesFile = new File(
-			workspaceProjectDir, "gradle.properties");
+		_enableTargetPlatformInWorkspace(workspaceDir, "7.1.0");
 
-		Files.write(
-			gradlePropertiesFile.toPath(),
-			"\nliferay.workspace.target.platform.version=7.1.0".getBytes(),
-			StandardOpenOption.APPEND);
+		File modulesDir = new File(workspaceDir, "modules");
 
-		File modulesDir = new File(workspaceProjectDir, "modules");
-
-		_buildTemplateWithGradle(
+		File workspaceProjectDir = _buildTemplateWithGradle(
 			modulesDir, "service-builder", "foo", "--package-name", "test",
 			"--liferayVersion", "7.1", "--dependency-management-enabled");
 
+		_testContains(
+			workspaceProjectDir, "foo-api/build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL, "biz.aQute.bndlib");
+		_testContains(
+			workspaceProjectDir, "foo-service/build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL, "biz.aQute.bndlib",
+			"com.liferay.portal.spring.extender.api");
+
+		_testNotContains(
+			workspaceProjectDir, "foo-api/build.gradle",
+			"org.osgi.annotation.versioning");
+		_testNotContains(
+			workspaceProjectDir, "foo-service/build.gradle",
+			"org.osgi.annotation.versioning");
+
 		if (_isBuildProjects()) {
 			_executeGradle(
-				workspaceProjectDir,
+				workspaceDir,
 				":modules:foo:foo-service" + _GRADLE_TASK_PATH_BUILD_SERVICE);
 
-			_executeGradle(workspaceProjectDir, ":modules:foo:foo-api:build");
+			_executeGradle(workspaceDir, ":modules:foo:foo-api:build");
 
-			_executeGradle(
-				workspaceProjectDir, ":modules:foo:foo-service:build");
+			_executeGradle(workspaceDir, ":modules:foo:foo-service:build");
 		}
 	}
 
@@ -2637,32 +2682,40 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateServiceBuilderTargetPlatformEnabled72()
 		throws Exception {
 
-		File workspaceProjectDir = _buildTemplateWithGradle(
+		File workspaceDir = _buildTemplateWithGradle(
 			WorkspaceUtil.WORKSPACE, "workspace");
 
-		File gradlePropertiesFile = new File(
-			workspaceProjectDir, "gradle.properties");
+		_enableTargetPlatformInWorkspace(workspaceDir);
 
-		Files.write(
-			gradlePropertiesFile.toPath(),
-			"\nliferay.workspace.target.platform.version=7.2.0".getBytes(),
-			StandardOpenOption.APPEND);
+		File modulesDir = new File(workspaceDir, "modules");
 
-		File modulesDir = new File(workspaceProjectDir, "modules");
-
-		_buildTemplateWithGradle(
+		File workspaceProjectDir = _buildTemplateWithGradle(
 			modulesDir, "service-builder", "foo", "--package-name", "test",
 			"--liferayVersion", "7.2", "--dependency-management-enabled");
 
+		_testContains(
+			workspaceProjectDir, "foo-api/build.gradle",
+			_DEPENDENCY_PORTAL_KERNEL, "org.osgi.annotation.versioning");
+		_testContains(
+			workspaceProjectDir, "foo-service/build.gradle",
+			"com.liferay.petra.lang", "com.liferay.petra.string",
+			"com.liferay.portal.aop.api", _DEPENDENCY_PORTAL_KERNEL,
+			"org.osgi.annotation.versioning");
+
+		_testNotContains(
+			workspaceProjectDir, "foo-api/build.gradle", "biz.aQute.bndlib");
+		_testNotContains(
+			workspaceProjectDir, "foo-service/build.gradle", "biz.aQute.bndlib",
+			"com.liferay.portal.spring.extender");
+
 		if (_isBuildProjects()) {
 			_executeGradle(
-				workspaceProjectDir,
+				workspaceDir,
 				":modules:foo:foo-service" + _GRADLE_TASK_PATH_BUILD_SERVICE);
 
-			_executeGradle(workspaceProjectDir, ":modules:foo:foo-api:build");
+			_executeGradle(workspaceDir, ":modules:foo:foo-api:build");
 
-			_executeGradle(
-				workspaceProjectDir, ":modules:foo:foo-service:build");
+			_executeGradle(workspaceDir, ":modules:foo:foo-service:build");
 		}
 	}
 
@@ -4475,6 +4528,28 @@ public class ProjectTemplatesTest {
 		transformer.transform(domSource, new StreamResult(xmlFile));
 	}
 
+	private static File _enableTargetPlatformInWorkspace(File workspaceDir)
+		throws IOException {
+
+		return _enableTargetPlatformInWorkspace(workspaceDir, "7.2.0");
+	}
+
+	private static File _enableTargetPlatformInWorkspace(
+			File workspaceDir, String liferayVersion)
+		throws IOException {
+
+		File gradlePropertiesFile = new File(workspaceDir, "gradle.properties");
+
+		String targetPlatformProp =
+			"\nliferay.workspace.target.platform.version=" + liferayVersion;
+
+		Files.write(
+			gradlePropertiesFile.toPath(), targetPlatformProp.getBytes(),
+			StandardOpenOption.APPEND);
+
+		return gradlePropertiesFile;
+	}
+
 	private static Optional<String> _executeGradle(
 			File projectDir, boolean debug, boolean buildAndFail,
 			String... taskPaths)
@@ -5223,20 +5298,6 @@ public class ProjectTemplatesTest {
 
 		return _buildTemplateWithGradle(
 			destinationDir, WorkspaceUtil.WORKSPACE, "test-workspace");
-	}
-
-	private void _enableTargetPlatformInWorkspace(File workspaceDir)
-		throws IOException {
-
-		File gradlePropFile = new File(workspaceDir, "gradle.properties");
-
-		Path gradlePropPath = gradlePropFile.toPath();
-
-		String content = FileUtil.read(gradlePropPath);
-
-		content += "\nliferay.workspace.target.platform.version=7.2.0";
-
-		Files.write(gradlePropPath, content.getBytes(StandardCharsets.UTF_8));
 	}
 
 	private void _testBuildTemplateNpm70(

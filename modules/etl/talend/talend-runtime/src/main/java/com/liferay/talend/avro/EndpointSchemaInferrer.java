@@ -15,6 +15,7 @@
 package com.liferay.talend.avro;
 
 import com.liferay.talend.avro.constants.AvroConstants;
+import com.liferay.talend.commons.json.JsonFinder;
 import com.liferay.talend.commons.oas.OASFormat;
 import com.liferay.talend.commons.oas.OASType;
 import com.liferay.talend.commons.oas.constants.OpenAPIConstants;
@@ -52,6 +53,7 @@ import org.talend.daikon.exception.TalendRuntimeException;
 
 /**
  * @author Zoltán Takács
+ * @author Igor Beslic
  */
 public class EndpointSchemaInferrer {
 
@@ -78,41 +80,30 @@ public class EndpointSchemaInferrer {
 		String schemaName = null;
 
 		if (Objects.equals(operation, HttpMethod.GET.toLowerCase(Locale.US))) {
-			JsonObject schemaJsonObject = apiSpecJsonNode.getJsonObject(
-				OpenAPIConstants.PATHS
-			).getJsonObject(
-				endpoint
-			).getJsonObject(
-				operation
-			).getJsonObject(
-				OpenAPIConstants.RESPONSES
-			).getJsonObject(
-				OpenAPIConstants.DEFAULT
-			).getJsonObject(
-				OpenAPIConstants.CONTENT
-			).getJsonObject(
-				OpenAPIConstants.APPLICATION_JSON
-			).getJsonObject(
-				OpenAPIConstants.SCHEMA
-			);
+			String jsonFinderPath = StringUtils.replace(
+				OpenAPIConstants.
+					PATH_RESPONSES_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,
+				"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
+
+			JsonObject schemaJsonObject = _jsonFinder.getDescendantJsonObject(
+				jsonFinderPath, apiSpecJsonNode);
 
 			schemaName = _stripSchemaName(
 				schemaJsonObject.getString(OpenAPIConstants.REF));
 
-			JsonObject schemaJsonNode = _extractSchemaJsonObject(
+			JsonObject schemaDefinitionJsonObject = _extractSchemaJsonObject(
 				schemaName, apiSpecJsonNode);
 
-			JsonObject itemsPropertiesJsonNode = schemaJsonNode.getJsonObject(
-				OpenAPIConstants.PROPERTIES
-			).getJsonObject(
-				OpenAPIConstants.ITEMS
-			);
+			JsonObject itemsPropertiesJsonObject =
+				_jsonFinder.getDescendantJsonObject(
+					OpenAPIConstants.PATH_PROPERTIES_ITEMS,
+					schemaDefinitionJsonObject);
 
-			if ((itemsPropertiesJsonNode != null) &&
-				itemsPropertiesJsonNode.containsKey(OpenAPIConstants.REF)) {
+			if (!itemsPropertiesJsonObject.isEmpty() &&
+				itemsPropertiesJsonObject.containsKey(OpenAPIConstants.REF)) {
 
 				schemaName = _stripSchemaName(
-					itemsPropertiesJsonNode.getString(OpenAPIConstants.REF));
+					itemsPropertiesJsonObject.getString(OpenAPIConstants.REF));
 			}
 
 			return schemaName;
@@ -126,21 +117,13 @@ public class EndpointSchemaInferrer {
 			return null;
 		}
 
-		JsonObject schemaJsonNode = apiSpecJsonNode.getJsonObject(
-			OpenAPIConstants.PATHS
-		).getJsonObject(
-			endpoint
-		).getJsonObject(
-			operation
-		).getJsonObject(
-			OpenAPIConstants.REQUEST_BODY
-		).getJsonObject(
-			OpenAPIConstants.CONTENT
-		).getJsonObject(
-			OpenAPIConstants.APPLICATION_JSON
-		).getJsonObject(
-			OpenAPIConstants.SCHEMA
-		);
+		String jsonFinderPath = StringUtils.replace(
+			OpenAPIConstants.
+				PATH_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,
+			"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
+
+		JsonObject schemaJsonNode = _jsonFinder.getDescendantJsonObject(
+			jsonFinderPath, apiSpecJsonNode);
 
 		schemaName = _stripSchemaName(
 			schemaJsonNode.getString(OpenAPIConstants.REF));
@@ -151,13 +134,12 @@ public class EndpointSchemaInferrer {
 	private static JsonObject _extractSchemaJsonObject(
 		String schemaName, JsonObject apiSpecJsonNode) {
 
-		return apiSpecJsonNode.getJsonObject(
-			OpenAPIConstants.COMPONENTS
-		).getJsonObject(
-			OpenAPIConstants.SCHEMAS
-		).getJsonObject(
-			schemaName
-		);
+		String jsonFinderPath = StringUtils.replace(
+			OpenAPIConstants.PATH_COMPONENTS_SCHEMAS_PATTERN, "SCHEMA_TPL",
+			schemaName);
+
+		return _jsonFinder.getDescendantJsonObject(
+			jsonFinderPath, apiSpecJsonNode);
 	}
 
 	private static Schema _getDeleteSchema() {
@@ -380,5 +362,7 @@ public class EndpointSchemaInferrer {
 
 	private static final Logger _log = LoggerFactory.getLogger(
 		EndpointSchemaInferrer.class);
+
+	private static final JsonFinder _jsonFinder = new JsonFinder();
 
 }

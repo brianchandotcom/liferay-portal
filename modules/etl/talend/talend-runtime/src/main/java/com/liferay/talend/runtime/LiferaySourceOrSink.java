@@ -16,8 +16,10 @@ package com.liferay.talend.runtime;
 
 import com.liferay.talend.avro.EndpointSchemaInferrer;
 import com.liferay.talend.commons.exception.MalformedURLException;
+import com.liferay.talend.commons.json.JsonFinder;
 import com.liferay.talend.commons.oas.OASParameter;
 import com.liferay.talend.commons.oas.constants.OpenAPIConstants;
+import com.liferay.talend.commons.util.StringUtils;
 import com.liferay.talend.commons.util.URIUtils;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
@@ -28,14 +30,11 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.json.Json;
 import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 
 import javax.ws.rs.HttpMethod;
@@ -226,7 +225,8 @@ public class LiferaySourceOrSink
 				operationsJsonObject.forEach(
 					(operationName, operationJsonValue) -> {
 						if (!Objects.equals(
-								operation, _toUpperCase(operationName))) {
+								operation,
+								StringUtils.toUpperCase(operationName))) {
 
 							return;
 						}
@@ -237,10 +237,10 @@ public class LiferaySourceOrSink
 							return;
 						}
 
-						if (_hasPath(
+						if (_jsonFinder.hasPath(
 								OpenAPIConstants.PATH_RESPONSE_SCHEMA_REFERENCE,
 								operationJsonValue.asJsonObject()) ||
-							_hasPath(
+							_jsonFinder.hasPath(
 								OpenAPIConstants.
 									PATH_RESPONSE_SCHEMA_ITEMS_REFERENCE,
 								operationJsonValue.asJsonObject())) {
@@ -290,10 +290,12 @@ public class LiferaySourceOrSink
 
 		JsonObject apiSpecJsonObject = doGetRequest(apiSpecURLHref);
 
-		JsonArray parametersArrayNode = _getDescendantArray(
-			OpenAPIConstants.PATHS + ">" + endpoint + ">" +
-				_toLowerCase(operation) + ">" + OpenAPIConstants.PARAMETRERS,
-			apiSpecJsonObject);
+		String jsonFinderPath = StringUtils.replace(
+			OpenAPIConstants.PATH_ENDPOINT_OPERATION_PARAMETERS_PATTERN,
+			"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
+
+		JsonArray parametersArrayNode = _jsonFinder.getDescendantJsonArray(
+			jsonFinderPath, apiSpecJsonObject);
 
 		for (int i = 0; i < parametersArrayNode.size(); i++) {
 			oasParameters.add(
@@ -344,14 +346,14 @@ public class LiferaySourceOrSink
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveConnection(null);
 
-		JsonObject apiSpecJsonObject = doGetRequest(
+		JsonObject oasJsonObject = doGetRequest(
 			liferayConnectionProperties.getApiSpecURL());
 
-		JsonObject endpointJsonObject = apiSpecJsonObject.getJsonObject(
-			OpenAPIConstants.PATHS
-		).getJsonObject(
-			endpoint
-		);
+		String jsonFinderPath = StringUtils.replace(
+			OpenAPIConstants.PATH_ENDPOINT_PATTERN, "ENDPOINT_TPL", endpoint);
+
+		JsonObject endpointJsonObject = _jsonFinder.getDescendantJsonObject(
+			jsonFinderPath, oasJsonObject);
 
 		return endpointJsonObject.keySet();
 	}
@@ -481,46 +483,6 @@ public class LiferaySourceOrSink
 		liferayConnectionPropertiesProvider;
 	protected RESTClient restClient;
 
-	private JsonArray _getDescendantArray(String path, JsonObject jsonObject) {
-		if (!path.contains(">")) {
-			if (jsonObject.containsKey(path)) {
-				return jsonObject.getJsonArray(path);
-			}
-		}
-
-		int subpathEndIdx = path.indexOf(">");
-
-		String subpath = path.substring(0, subpathEndIdx);
-
-		if (jsonObject.containsKey(subpath)) {
-			return _getDescendantArray(
-				path.substring(subpathEndIdx + 1),
-				jsonObject.getJsonObject(subpath));
-		}
-
-		JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
-
-		return jsonArrayBuilder.build();
-	}
-
-	private boolean _hasPath(String path, JsonObject jsonObject) {
-		if (!path.contains(">")) {
-			return jsonObject.containsKey(path);
-		}
-
-		int subpathEndIdx = path.indexOf(">");
-
-		String subpath = path.substring(0, subpathEndIdx);
-
-		if (jsonObject.containsKey(subpath)) {
-			return _hasPath(
-				path.substring(subpathEndIdx + 1),
-				jsonObject.getJsonObject(subpath));
-		}
-
-		return false;
-	}
-
 	private boolean _isNullString(String value) {
 		if (value == null) {
 			return true;
@@ -535,16 +497,12 @@ public class LiferaySourceOrSink
 		return false;
 	}
 
-	private String _toLowerCase(String value) {
-		return value.toLowerCase(Locale.US);
-	}
-
 	private OASParameter _toParameter(JsonObject jsonObject) {
 		OASParameter oasParameter = new OASParameter();
 
 		oasParameter.setType(
 			OASParameter.Type.valueOf(
-				_toUpperCase(jsonObject.getString("in"))));
+				StringUtils.toUpperCase(jsonObject.getString("in"))));
 
 		oasParameter.setName(jsonObject.getString("name"));
 
@@ -555,10 +513,6 @@ public class LiferaySourceOrSink
 		return oasParameter;
 	}
 
-	private String _toUpperCase(String value) {
-		return value.toUpperCase(Locale.getDefault());
-	}
-
 	private static final Logger _log = LoggerFactory.getLogger(
 		LiferaySourceOrSink.class);
 
@@ -566,5 +520,6 @@ public class LiferaySourceOrSink
 
 	private final EndpointSchemaInferrer _endpointSchemaInferrer =
 		new EndpointSchemaInferrer();
+	private final JsonFinder _jsonFinder = new JsonFinder();
 
 }

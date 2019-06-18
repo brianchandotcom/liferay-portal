@@ -304,7 +304,10 @@ public class UADHierarchyDisplay {
 
 		portletURL.setParameter("applicationKey", applicationKey);
 		portletURL.setParameter("p_u_i_d", puid);
-		portletURL.setParameter("scope", scope);
+
+		if (Validator.isNotNull(scope)) {
+			portletURL.setParameter("scope", scope);
+		}
 
 		UADDisplay uadDisplay = _getUADDisplayByTypeClassName(className);
 

@@ -14,12 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Leonardo Barros
  */
-@Component(property = "name=" + SetDataTypeFunction.NAME, service = {})
 public class SetDataTypeFunction extends SetPropertyFunction<String> {
 
 	public static final String NAME = "setDataType";

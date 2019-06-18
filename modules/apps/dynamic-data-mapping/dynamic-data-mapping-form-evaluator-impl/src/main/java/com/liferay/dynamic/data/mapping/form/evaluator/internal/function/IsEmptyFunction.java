@@ -20,15 +20,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.stream.Stream;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Leonardo Barros
  */
-@Component(
-	property = "name=" + IsEmptyFunction.NAME,
-	service = DDMExpressionFunction.Function1.class
-)
 public class IsEmptyFunction
 	implements DDMExpressionFunction.Function1<Object, Boolean> {
 

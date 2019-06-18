@@ -14,12 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Leonardo Barros
  */
-@Component(property = "name=" + SetMultipleFunction.NAME, service = {})
 public class SetMultipleFunction extends SetPropertyFunction<Boolean> {
 
 	public static final String NAME = "setMultiple";

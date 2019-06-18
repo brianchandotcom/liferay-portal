@@ -12,37 +12,27 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
+package com.liferay.dynamic.data.mapping.form.evaluator.internal.function.factory;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionFactory;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.SetRequiredFunction;
 
-import java.math.BigDecimal;
-
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Leonardo Barros
+ * @author Matthew Tambara
  */
-public class MinFunction
-	implements DDMExpressionFunction.Function1<BigDecimal[], BigDecimal> {
-
-	public static final String NAME = "MIN";
-
-	@Override
-	public BigDecimal apply(BigDecimal[] values) {
-		return Stream.of(
-			values
-		).collect(
-			Collectors.minBy((num1, num2) -> num1.compareTo(num2))
-		).orElse(
-			BigDecimal.ZERO
-		);
-	}
+@Component(
+	property = "name=" + SetRequiredFunction.NAME,
+	service = DDMExpressionFunctionFactory.class
+)
+public class SetRequiredFunctionFactory
+	implements DDMExpressionFunctionFactory {
 
 	@Override
-	public String getName() {
-		return NAME;
+	public DDMExpressionFunction create() {
+		return new SetRequiredFunction();
 	}
 
 }

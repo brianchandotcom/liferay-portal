@@ -18,15 +18,9 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 
 import java.math.BigDecimal;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Leonardo Barros
  */
-@Component(
-	property = "name=" + IsDecimalFunction.NAME,
-	service = DDMExpressionFunction.Function1.class
-)
 public class IsDecimalFunction
 	implements DDMExpressionFunction.Function1<Object, Boolean> {
 

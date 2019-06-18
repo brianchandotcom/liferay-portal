@@ -21,18 +21,9 @@ import com.liferay.dynamic.data.mapping.expression.GetFieldPropertyRequest;
 import com.liferay.dynamic.data.mapping.expression.GetFieldPropertyResponse;
 import com.liferay.petra.string.StringPool;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Leonardo Barros
  */
-@Component(
-	property = "name=" + GetValueFunction.NAME,
-	service = {
-		DDMExpressionFieldAccessorAware.class,
-		DDMExpressionFunction.Function1.class
-	}
-)
 public class GetValueFunction
 	implements DDMExpressionFieldAccessorAware,
 			   DDMExpressionFunction.Function1<String, Object> {

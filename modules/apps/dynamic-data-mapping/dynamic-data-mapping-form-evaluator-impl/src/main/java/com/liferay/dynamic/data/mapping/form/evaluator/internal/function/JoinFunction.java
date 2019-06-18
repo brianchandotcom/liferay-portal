@@ -20,15 +20,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.util.GetterUtil;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Leonardo Barros
  */
-@Component(
-	property = "name=" + JoinFunction.NAME,
-	service = DDMExpressionFunction.Function1.class
-)
 public class JoinFunction
 	implements DDMExpressionFunction.Function1<JSONArray, String> {
 

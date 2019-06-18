@@ -26,24 +26,24 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Leonardo Barros
  */
-@Component(
-	property = "name=" + BelongsToRoleFunction.NAME,
-	service = {
-		DDMExpressionFunction.Function1.class,
-		DDMExpressionParameterAccessorAware.class
-	}
-)
 public class BelongsToRoleFunction
 	implements DDMExpressionFunction.Function1<String[], Boolean>,
 			   DDMExpressionParameterAccessorAware {
 
 	public static final String NAME = "belongsTo";
+
+	public BelongsToRoleFunction(
+		RoleLocalService roleLocalService,
+		UserGroupRoleLocalService userGroupRoleLocalService,
+		UserLocalService userLocalService) {
+
+		this.roleLocalService = roleLocalService;
+		this.userGroupRoleLocalService = userGroupRoleLocalService;
+		this.userLocalService = userLocalService;
+	}
 
 	@Override
 	public Boolean apply(String[] roles) {
@@ -108,13 +108,8 @@ public class BelongsToRoleFunction
 		_ddmExpressionParameterAccessor = ddmExpressionParameterAccessor;
 	}
 
-	@Reference
 	protected RoleLocalService roleLocalService;
-
-	@Reference
 	protected UserGroupRoleLocalService userGroupRoleLocalService;
-
-	@Reference
 	protected UserLocalService userLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(

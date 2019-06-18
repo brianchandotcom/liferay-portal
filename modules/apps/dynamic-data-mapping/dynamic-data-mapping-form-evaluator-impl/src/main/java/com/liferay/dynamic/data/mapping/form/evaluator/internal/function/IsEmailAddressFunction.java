@@ -21,15 +21,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.stream.Stream;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Leonardo Barros
  */
-@Component(
-	property = "name=" + IsEmailAddressFunction.NAME,
-	service = DDMExpressionFunction.Function1.class
-)
 public class IsEmailAddressFunction
 	implements DDMExpressionFunction.Function1<String, Boolean> {
 

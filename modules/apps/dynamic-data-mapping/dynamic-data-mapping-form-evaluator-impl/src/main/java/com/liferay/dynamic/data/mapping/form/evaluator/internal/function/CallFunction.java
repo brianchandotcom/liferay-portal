@@ -44,25 +44,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Leonardo Barros
  */
-@Component(
-	property = "name=" + CallFunction.NAME,
-	service = {
-		DDMExpressionFieldAccessorAware.class,
-		DDMExpressionFunction.Function3.class, DDMExpressionObserverAware.class
-	}
-)
 public class CallFunction
 	implements DDMExpressionFieldAccessorAware,
 			   DDMExpressionFunction.Function3<String, String, String, Boolean>,
 			   DDMExpressionObserverAware {
 
 	public static final String NAME = "call";
+
+	public CallFunction(
+		DDMDataProviderInvoker ddmDataProviderInvoker,
+		JSONFactory jsonFactory) {
+
+		this.ddmDataProviderInvoker = ddmDataProviderInvoker;
+		this.jsonFactory = jsonFactory;
+	}
 
 	@Override
 	public Boolean apply(
@@ -273,10 +271,7 @@ public class CallFunction
 		}
 	}
 
-	@Reference
 	protected DDMDataProviderInvoker ddmDataProviderInvoker;
-
-	@Reference
 	protected JSONFactory jsonFactory;
 
 	private static final Log _log = LogFactoryUtil.getLog(CallFunction.class);

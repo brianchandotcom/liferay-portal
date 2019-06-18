@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.talend.commons.exception;
+package com.liferay.talend.common.exception;
 
 /**
  * @author Zoltán Takács

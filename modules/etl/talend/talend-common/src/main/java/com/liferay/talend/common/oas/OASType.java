@@ -12,19 +12,31 @@
  * details.
  */
 
-package com.liferay.talend.commons.exception;
+package com.liferay.talend.common.oas;
 
 /**
- * @author Zoltán Takács
+ * @author Igor Beslic
  */
-public class MalformedURLException extends RuntimeException {
+public enum OASType {
 
-	public MalformedURLException(String message) {
-		super(message);
+	ARRAY("array"), BOOLEAN("boolean"), INTEGER("integer"), NUMBER("number"),
+	OBJECT("object"), STRING("string");
+
+	public static OASType fromDefinition(String oasTypeDefinition) {
+		for (OASType oasType : values()) {
+			if (oasTypeDefinition.equals(oasType._oasTypeDefinition)) {
+				return oasType;
+			}
+		}
+
+		throw new OASException(
+			"Unknown OpenAPI specification type " + oasTypeDefinition);
 	}
 
-	public MalformedURLException(Throwable throwable) {
-		super(throwable);
+	private OASType(String oasTypeDefinition) {
+		_oasTypeDefinition = oasTypeDefinition;
 	}
+
+	private final String _oasTypeDefinition;
 
 }

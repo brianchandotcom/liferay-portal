@@ -15,11 +15,11 @@
 package com.liferay.talend.avro;
 
 import com.liferay.talend.avro.constants.AvroConstants;
-import com.liferay.talend.commons.json.JsonFinder;
-import com.liferay.talend.commons.oas.OASFormat;
-import com.liferay.talend.commons.oas.OASType;
-import com.liferay.talend.commons.oas.constants.OASConstants;
-import com.liferay.talend.commons.util.StringUtil;
+import com.liferay.talend.common.json.JsonFinder;
+import com.liferay.talend.common.oas.OASFormat;
+import com.liferay.talend.common.oas.OASType;
+import com.liferay.talend.common.oas.constants.OASConstants;
+import com.liferay.talend.common.util.StringUtil;
 import com.liferay.talend.tliferayoutput.Action;
 
 import java.util.ArrayList;

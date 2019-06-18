@@ -14,8 +14,8 @@
 
 package com.liferay.talend.runtime.client;
 
-import com.liferay.talend.commons.exception.MalformedURLException;
-import com.liferay.talend.commons.util.URIUtil;
+import com.liferay.talend.common.exception.MalformedURLException;
+import com.liferay.talend.common.util.URIUtil;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.runtime.client.exception.ConnectionException;
 import com.liferay.talend.runtime.client.exception.OAuth2Exception;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.talend.commons.json;
+package com.liferay.talend.common.json;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;

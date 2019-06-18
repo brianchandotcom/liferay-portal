@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.talend.commons.oas.constants;
+package com.liferay.talend.common.oas.constants;
 
 /**
  * @author Zoltán Takács

@@ -12,15 +12,19 @@
  * details.
  */
 
-package com.liferay.talend.commons.oas;
+package com.liferay.talend.common.exception;
 
 /**
- * @author Igor Beslic
+ * @author Zoltán Takács
  */
-public class OASException extends RuntimeException {
+public class MalformedURLException extends RuntimeException {
 
-	public OASException(String message) {
+	public MalformedURLException(String message) {
 		super(message);
+	}
+
+	public MalformedURLException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

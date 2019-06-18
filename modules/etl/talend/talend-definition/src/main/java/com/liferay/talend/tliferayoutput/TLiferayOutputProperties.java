@@ -15,8 +15,8 @@
 package com.liferay.talend.tliferayoutput;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
-import com.liferay.talend.commons.log.DebugUtils;
-import com.liferay.talend.commons.schema.SchemaUtils;
+import com.liferay.talend.common.log.DebugUtils;
+import com.liferay.talend.common.schema.SchemaUtils;
 import com.liferay.talend.connection.LiferayConnectionResourceBaseProperties;
 import com.liferay.talend.properties.ExceptionUtils;
 import com.liferay.talend.resource.LiferayResourceProperties;

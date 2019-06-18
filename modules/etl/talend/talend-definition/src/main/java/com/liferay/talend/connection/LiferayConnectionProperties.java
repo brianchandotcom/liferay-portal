@@ -15,7 +15,7 @@
 package com.liferay.talend.connection;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
-import com.liferay.talend.commons.util.URIUtil;
+import com.liferay.talend.common.util.URIUtil;
 import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
 import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
 import com.liferay.talend.ui.UIKeys;

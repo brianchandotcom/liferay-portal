@@ -16,7 +16,7 @@ package com.liferay.talend.avro;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
-import com.liferay.talend.commons.oas.constants.OASConstants;
+import com.liferay.talend.common.oas.constants.OASConstants;
 
 import java.io.InputStream;
 

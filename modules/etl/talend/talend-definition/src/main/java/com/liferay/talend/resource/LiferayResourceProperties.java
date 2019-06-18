@@ -17,7 +17,7 @@ package com.liferay.talend.resource;
 import static org.talend.daikon.properties.presentation.Widget.widget;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
-import com.liferay.talend.commons.oas.OASParameter;
+import com.liferay.talend.common.oas.OASParameter;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
 import com.liferay.talend.properties.ExceptionUtils;

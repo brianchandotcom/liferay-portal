@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.talend.commons.util;
+package com.liferay.talend.common.util;
 
-import com.liferay.talend.commons.exception.MalformedURLException;
-import com.liferay.talend.commons.exception.URIPathException;
+import com.liferay.talend.common.exception.MalformedURLException;
+import com.liferay.talend.common.exception.URIPathException;
 
 import java.net.URI;
 import java.net.URISyntaxException;

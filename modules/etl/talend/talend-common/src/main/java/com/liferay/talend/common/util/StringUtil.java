@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.talend.commons.util;
+package com.liferay.talend.common.util;
 
 import java.util.Locale;
 

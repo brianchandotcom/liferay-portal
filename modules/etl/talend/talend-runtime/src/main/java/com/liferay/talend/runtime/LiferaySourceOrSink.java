@@ -15,12 +15,12 @@
 package com.liferay.talend.runtime;
 
 import com.liferay.talend.avro.EndpointSchemaInferrer;
-import com.liferay.talend.commons.exception.MalformedURLException;
-import com.liferay.talend.commons.json.JsonFinder;
-import com.liferay.talend.commons.oas.OASParameter;
-import com.liferay.talend.commons.oas.constants.OASConstants;
-import com.liferay.talend.commons.util.StringUtil;
-import com.liferay.talend.commons.util.URIUtil;
+import com.liferay.talend.common.exception.MalformedURLException;
+import com.liferay.talend.common.json.JsonFinder;
+import com.liferay.talend.common.oas.OASParameter;
+import com.liferay.talend.common.oas.constants.OASConstants;
+import com.liferay.talend.common.util.StringUtil;
+import com.liferay.talend.common.util.URIUtil;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
 import com.liferay.talend.properties.ExceptionUtils;

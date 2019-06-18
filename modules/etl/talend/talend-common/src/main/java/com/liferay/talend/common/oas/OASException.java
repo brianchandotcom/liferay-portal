@@ -12,31 +12,15 @@
  * details.
  */
 
-package com.liferay.talend.commons.oas;
+package com.liferay.talend.common.oas;
 
 /**
  * @author Igor Beslic
  */
-public enum OASType {
+public class OASException extends RuntimeException {
 
-	ARRAY("array"), BOOLEAN("boolean"), INTEGER("integer"), NUMBER("number"),
-	OBJECT("object"), STRING("string");
-
-	public static OASType fromDefinition(String oasTypeDefinition) {
-		for (OASType oasType : values()) {
-			if (oasTypeDefinition.equals(oasType._oasTypeDefinition)) {
-				return oasType;
-			}
-		}
-
-		throw new OASException(
-			"Unknown OpenAPI specification type " + oasTypeDefinition);
+	public OASException(String message) {
+		super(message);
 	}
-
-	private OASType(String oasTypeDefinition) {
-		_oasTypeDefinition = oasTypeDefinition;
-	}
-
-	private final String _oasTypeDefinition;
 
 }

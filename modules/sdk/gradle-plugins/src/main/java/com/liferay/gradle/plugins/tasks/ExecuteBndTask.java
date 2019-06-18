@@ -278,41 +278,33 @@ public class ExecuteBndTask extends DefaultTask {
 
 	private static void _logReport(Report report, Logger logger) {
 		if (logger.isWarnEnabled()) {
-			report.getWarnings(
-			).stream(
-			).forEach(
-				msg -> {
-					Report.Location location = report.getLocation(msg);
+			for (String warning : report.getWarnings()) {
+				Report.Location location = report.getLocation(warning);
 
-					if ((location != null) && (location.file != null)) {
-						logger.warn(
-							"{}:{}: warning: {}", location.file, location.line,
-							msg);
-					}
-					else {
-						logger.warn("warning: {}", msg);
-					}
+				if ((location != null) && (location.file != null)) {
+					logger.warn(
+						"{}:{}: warning: {}", location.file, location.line,
+						warning);
 				}
-			);
+				else {
+					logger.warn("warning: {}", warning);
+				}
+			}
 		}
 
 		if (logger.isErrorEnabled()) {
-			report.getErrors(
-			).stream(
-			).forEach(
-				msg -> {
-					Report.Location location = report.getLocation(msg);
+			for (String error : report.getErrors()) {
+				Report.Location location = report.getLocation(error);
 
-					if ((location != null) && (location.file != null)) {
-						logger.error(
-							"{}:{}: warning: {}", location.file, location.line,
-							msg);
-					}
-					else {
-						logger.error("warning: {}", msg);
-					}
+				if ((location != null) && (location.file != null)) {
+					logger.error(
+						"{}:{}: warning: {}", location.file, location.line,
+						error);
 				}
-			);
+				else {
+					logger.error("warning: {}", error);
+				}
+			}
 		}
 	}
 

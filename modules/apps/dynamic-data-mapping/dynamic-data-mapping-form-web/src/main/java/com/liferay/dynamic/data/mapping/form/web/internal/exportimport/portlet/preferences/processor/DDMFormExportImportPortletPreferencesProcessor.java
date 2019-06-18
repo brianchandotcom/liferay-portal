@@ -18,18 +18,14 @@ import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
-import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -94,39 +90,6 @@ public class DDMFormExportImportPortletPreferencesProcessor
 			return portletPreferences;
 		}
 
-		long formInstanceGroupId = GetterUtil.getLong(
-			portletPreferences.getValue("groupId", StringPool.BLANK));
-
-		if (formInstanceGroupId <= 0) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"No group ID found in preferences of portlet " + portletId);
-			}
-
-			return portletPreferences;
-		}
-
-		Group group = _groupLocalService.fetchGroup(formInstanceGroupId);
-
-		if (ExportImportThreadLocal.isStagingInProcess() &&
-			!group.isStagedPortlet(
-				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN)) {
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Form instance is not staged in the site " +
-						group.getName());
-			}
-
-			return portletPreferences;
-		}
-
-		long previousScopeGroupId = portletDataContext.getScopeGroupId();
-
-		if (formInstanceGroupId != previousScopeGroupId) {
-			portletDataContext.setScopeGroupId(formInstanceGroupId);
-		}
-
 		DDMFormInstance ddmFormInstance =
 			_ddmFormInstanceLocalService.fetchFormInstance(formInstanceId);
 
@@ -134,8 +97,6 @@ public class DDMFormExportImportPortletPreferencesProcessor
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, portletId, ddmFormInstance);
 		}
-
-		portletDataContext.setScopeGroupId(previousScopeGroupId);
 
 		return portletPreferences;
 	}
@@ -155,29 +116,8 @@ public class DDMFormExportImportPortletPreferencesProcessor
 				"Unable to export portlet permissions", pe);
 		}
 
-		long previousScopeGroupId = portletDataContext.getScopeGroupId();
-
-		Map<Long, Long> groupIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				Group.class);
-
-		long importGroupId = GetterUtil.getLong(
-			portletPreferences.getValue("groupId", null));
-
-		long groupId = MapUtil.getLong(groupIds, importGroupId, importGroupId);
-
 		long importedFormInstanceId = GetterUtil.getLong(
 			portletPreferences.getValue("formInstanceId", null));
-
-		Map<String, Long> formInstanceGroupIds =
-			(Map<String, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DDMFormInstance.class + ".groupId");
-
-		if (formInstanceGroupIds.containsKey(importedFormInstanceId)) {
-			groupId = formInstanceGroupIds.get(importedFormInstanceId);
-		}
-
-		portletDataContext.setScopeGroupId(groupId);
 
 		Map<Long, Long> formInstanceIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -189,15 +129,11 @@ public class DDMFormExportImportPortletPreferencesProcessor
 		try {
 			portletPreferences.setValue(
 				"formInstanceId", String.valueOf(formInstanceId));
-
-			portletPreferences.setValue("groupId", String.valueOf(groupId));
 		}
 		catch (ReadOnlyException roe) {
 			throw new PortletDataException(
 				"Unable to update portlet preferences during import", roe);
 		}
-
-		portletDataContext.setScopeGroupId(previousScopeGroupId);
 
 		return portletPreferences;
 	}
@@ -210,8 +146,5 @@ public class DDMFormExportImportPortletPreferencesProcessor
 
 	@Reference
 	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
-
-	@Reference(unbind = "-")
-	private GroupLocalService _groupLocalService;
 
 }

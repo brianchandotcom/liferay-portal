@@ -62,11 +62,11 @@ public class ResourceTestCaseOpenAPIParser {
 	}
 
 	public static String getParameters(
-		List<JavaMethodParameter> javaMethodParameters, Operation operation,
-		boolean annotation) {
+		OpenAPIYAML openAPIYAML, List<JavaMethodParameter> javaMethodParameters,
+		Operation operation, boolean annotation) {
 
 		return ResourceOpenAPIParser.getParameters(
-			javaMethodParameters, operation, annotation);
+			javaMethodParameters, openAPIYAML, operation, annotation);
 	}
 
 	private static String _getMethodName(

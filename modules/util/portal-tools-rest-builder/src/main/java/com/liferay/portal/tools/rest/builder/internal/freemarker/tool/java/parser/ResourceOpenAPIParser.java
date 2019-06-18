@@ -184,8 +184,8 @@ public class ResourceOpenAPIParser {
 	}
 
 	public static String getParameters(
-		List<JavaMethodParameter> javaMethodParameters, Operation operation,
-		boolean annotation) {
+		List<JavaMethodParameter> javaMethodParameters, OpenAPIYAML openAPIYAML,
+		Operation operation, boolean annotation) {
 
 		StringBuilder sb = new StringBuilder();
 
@@ -194,7 +194,7 @@ public class ResourceOpenAPIParser {
 
 			if (annotation) {
 				parameterAnnotation = _getParameterAnnotation(
-					javaMethodParameter, operation);
+					javaMethodParameter, openAPIYAML, operation);
 			}
 
 			String parameter = OpenAPIParserUtil.getParameter(
@@ -242,6 +242,34 @@ public class ResourceOpenAPIParser {
 			if (parameterName.equals(parameter.getName())) {
 				return parameter;
 			}
+		}
+
+		return null;
+	}
+
+	private static String _getDefaultValue(
+		OpenAPIYAML openAPIYAML, Schema schema) {
+
+		if (schema.getDefault() != null) {
+			return schema.getDefault();
+		}
+		else if (schema.getReference() != null) {
+			Map<String, Schema> schemas = OpenAPIUtil.getAllSchemas(
+				openAPIYAML);
+
+			String referenceName = OpenAPIParserUtil.getReferenceName(
+				schema.getReference());
+
+			Schema referenceSchema = schemas.get(referenceName);
+
+			if (referenceSchema == null) {
+				Map<String, Schema> enumSchemas =
+					OpenAPIUtil.getGlobalEnumSchemas(openAPIYAML);
+
+				referenceSchema = enumSchemas.get(referenceName);
+			}
+
+			return referenceSchema.getDefault();
 		}
 
 		return null;
@@ -519,7 +547,8 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static String _getParameterAnnotation(
-		JavaMethodParameter javaMethodParameter, Operation operation) {
+		JavaMethodParameter javaMethodParameter, OpenAPIYAML openAPIYAML,
+		Operation operation) {
 
 		List<Parameter> parameters = operation.getParameters();
 
@@ -564,6 +593,15 @@ public class ResourceOpenAPIParser {
 
 			if (parameter.isRequired()) {
 				sb.append("@NotNull ");
+			}
+
+			String defaultValue = _getDefaultValue(
+				openAPIYAML, parameter.getSchema());
+
+			if (defaultValue != null) {
+				sb.append("@DefaultValue(\"");
+				sb.append(defaultValue);
+				sb.append("\")");
 			}
 
 			sb.append("@Parameter(hidden=true)");

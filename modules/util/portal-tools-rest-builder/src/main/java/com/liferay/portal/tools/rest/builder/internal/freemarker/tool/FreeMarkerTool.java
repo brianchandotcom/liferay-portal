@@ -239,11 +239,11 @@ public class FreeMarkerTool {
 	}
 
 	public String getResourceParameters(
-		List<JavaMethodParameter> javaMethodParameters, Operation operation,
-		boolean annotation) {
+		List<JavaMethodParameter> javaMethodParameters, OpenAPIYAML openAPIYAML,
+		Operation operation, boolean annotation) {
 
 		return ResourceOpenAPIParser.getParameters(
-			javaMethodParameters, operation, annotation);
+			javaMethodParameters, openAPIYAML, operation, annotation);
 	}
 
 	public String getResourceTestCaseArguments(
@@ -260,11 +260,11 @@ public class FreeMarkerTool {
 	}
 
 	public String getResourceTestCaseParameters(
-		List<JavaMethodParameter> javaMethodParameters, Operation operation,
-		boolean annotation) {
+		List<JavaMethodParameter> javaMethodParameters, OpenAPIYAML openAPIYAML,
+		Operation operation, boolean annotation) {
 
 		return ResourceTestCaseOpenAPIParser.getParameters(
-			javaMethodParameters, operation, annotation);
+			openAPIYAML, javaMethodParameters, operation, annotation);
 	}
 
 	public String getSchemaVarName(String schemaName) {

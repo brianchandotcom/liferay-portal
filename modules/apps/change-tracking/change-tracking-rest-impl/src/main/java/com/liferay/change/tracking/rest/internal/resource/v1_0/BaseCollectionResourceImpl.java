@@ -40,6 +40,7 @@ import javax.validation.constraints.NotNull;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -75,7 +76,7 @@ public abstract class BaseCollectionResourceImpl implements CollectionResource {
 	@Tags(value = {@Tag(name = "Collection")})
 	public Page<Collection> getCollectionsPage(
 			@Parameter(hidden = true) @QueryParam("companyId") Long companyId,
-			@Parameter(hidden = true) @QueryParam("type")
+			@DefaultValue("all") @Parameter(hidden = true) @QueryParam("type")
 				com.liferay.change.tracking.rest.constant.v1_0.CollectionType
 					type,
 			@Parameter(hidden = true) @QueryParam("userId") Long userId,

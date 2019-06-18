@@ -52,14 +52,23 @@ import com.liferay.sharing.security.permission.SharingPermissionChecker;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Sergio González
@@ -89,9 +98,22 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		_powerUserRole = _roleLocalService.getRole(
 			_company.getCompanyId(), RoleConstants.POWER_USER);
 
-		_sharingPermissionChecker = getSharingPermissionChecker();
+		Bundle bundle = FrameworkUtil.getBundle(BaseSharingTestCase.class);
 
-		_modelResourcePermission = getModelResourcePermission();
+		_bundleContext = bundle.getBundleContext();
+
+		_sharingPermissionChecker = _getSharingPermissionChecker();
+
+		_modelResourcePermission = _getModelResourcePermission();
+
+		_permissionSQLContributor = _getPermissionSQLContributor();
+	}
+
+	@After
+	public void tearDown() {
+		_bundleContext.ungetService(_sharingPermissionCheckerServiceReference);
+		_bundleContext.ungetService(_modelResourcePermissionServiceReference);
+		_bundleContext.ungetService(_permissionSQLContributorServiceReference);
 	}
 
 	@Test
@@ -285,12 +307,9 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 					model.getModelClassName()));
 			sb.append("))");
 
-			PermissionSQLContributor permissionSQLContributor =
-				getPermissionSQLContributor();
-
 			Assert.assertEquals(
 				sb.toString(),
-				permissionSQLContributor.getPermissionSQL(
+				_permissionSQLContributor.getPermissionSQL(
 					model.getModelClassName(), "1234", null, null, null));
 		}
 	}
@@ -863,19 +882,57 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 
 	protected abstract int getModelCount(Group group) throws PortalException;
 
-	protected abstract ModelResourcePermission<T> getModelResourcePermission();
-
 	protected abstract T getPendingModel(User user, Group group)
 		throws PortalException;
 
-	protected abstract PermissionSQLContributor getPermissionSQLContributor();
-
-	protected abstract SharingPermissionChecker getSharingPermissionChecker();
-
 	protected abstract void moveToTrash(T model) throws PortalException;
+
+	private ModelResourcePermission _getModelResourcePermission()
+		throws InvalidSyntaxException {
+
+		_modelResourcePermissionServiceReference = _getServiceReference(
+			ModelResourcePermission.class);
+
+		return _bundleContext.getService(
+			_modelResourcePermissionServiceReference);
+	}
+
+	private PermissionSQLContributor _getPermissionSQLContributor()
+		throws InvalidSyntaxException {
+
+		_permissionSQLContributorServiceReference = _getServiceReference(
+			PermissionSQLContributor.class);
+
+		return _bundleContext.getService(
+			_permissionSQLContributorServiceReference);
+	}
+
+	private <T> ServiceReference<T> _getServiceReference(Class<T> clazz)
+		throws InvalidSyntaxException {
+
+		Collection<ServiceReference<T>> serviceReferences =
+			_bundleContext.getServiceReferences(
+				clazz, "(model.class.name=" + getClassName() + ")");
+
+		Iterator<ServiceReference<T>> iterator = serviceReferences.iterator();
+
+		return iterator.next();
+	}
+
+	private SharingPermissionChecker _getSharingPermissionChecker()
+		throws InvalidSyntaxException {
+
+		_sharingPermissionCheckerServiceReference = _getServiceReference(
+			SharingPermissionChecker.class);
+
+		return _bundleContext.getService(
+			_sharingPermissionCheckerServiceReference);
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseSharingTestCase.class);
+
+	private BundleContext _bundleContext;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
@@ -886,6 +943,11 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 	private Group _group;
 	private User _groupUser;
 	private ModelResourcePermission<T> _modelResourcePermission;
+	private ServiceReference<ModelResourcePermission>
+		_modelResourcePermissionServiceReference;
+	private PermissionSQLContributor _permissionSQLContributor;
+	private ServiceReference<PermissionSQLContributor>
+		_permissionSQLContributorServiceReference;
 	private Role _powerUserRole;
 
 	@Inject
@@ -898,6 +960,8 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 	private SharingEntryLocalService _sharingEntryLocalService;
 
 	private SharingPermissionChecker _sharingPermissionChecker;
+	private ServiceReference<SharingPermissionChecker>
+		_sharingPermissionCheckerServiceReference;
 	private User _user;
 
 	private class AddModelResourcePermission implements AutoCloseable {

@@ -29,15 +29,12 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.security.permission.contributor.PermissionSQLContributor;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.sharing.security.permission.SharingPermissionChecker;
 import com.liferay.sharing.test.util.BaseSharingTestCase;
 
 import org.junit.Assert;
@@ -87,13 +84,6 @@ public class DLFileEntrySharingTest extends BaseSharingTestCase<DLFileEntry> {
 	}
 
 	@Override
-	protected ModelResourcePermission<DLFileEntry>
-		getModelResourcePermission() {
-
-		return _fileEntryModelResourcePermission;
-	}
-
-	@Override
 	protected DLFileEntry getPendingModel(User user, Group group)
 		throws PortalException {
 
@@ -138,16 +128,6 @@ public class DLFileEntrySharingTest extends BaseSharingTestCase<DLFileEntry> {
 	}
 
 	@Override
-	protected PermissionSQLContributor getPermissionSQLContributor() {
-		return _permissionSQLContributor;
-	}
-
-	@Override
-	protected SharingPermissionChecker getSharingPermissionChecker() {
-		return _sharingPermissionChecker;
-	}
-
-	@Override
 	protected void moveToTrash(DLFileEntry dlFileEntry) throws PortalException {
 		_dlTrashService.moveFileEntryToTrash(dlFileEntry.getFileEntryId());
 	}
@@ -160,22 +140,5 @@ public class DLFileEntrySharingTest extends BaseSharingTestCase<DLFileEntry> {
 
 	@Inject
 	private DLTrashService _dlTrashService;
-
-	@Inject(
-		filter = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry"
-	)
-	private ModelResourcePermission<DLFileEntry>
-		_fileEntryModelResourcePermission;
-
-	@Inject(
-		filter = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
-		type = PermissionSQLContributor.class
-	)
-	private PermissionSQLContributor _permissionSQLContributor;
-
-	@Inject(
-		filter = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry"
-	)
-	private SharingPermissionChecker _sharingPermissionChecker;
 
 }

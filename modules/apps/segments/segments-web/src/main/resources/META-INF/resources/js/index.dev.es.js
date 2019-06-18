@@ -301,6 +301,9 @@ window.Liferay = {
 		available: {
 			en_US: 'aosidopaisd',
 			es_ES: 'aosidopaisd'
+		},
+		get(name) {
+			return name;
 		}
 	}
 };

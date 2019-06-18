@@ -25,6 +25,8 @@ import aQute.bnd.version.Version;
 
 import aQute.lib.utf8properties.UTF8Properties;
 
+import aQute.service.reporter.Report;
+
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
@@ -164,7 +166,7 @@ public class ExecuteBndTask extends DefaultTask {
 				jar.write(outputFile);
 			}
 
-			BndUtils.logReport(builder, logger);
+			_logReport(builder, logger);
 
 			if (!builder.isOk()) {
 				throw new GradleException(this + " failed");
@@ -272,6 +274,46 @@ public class ExecuteBndTask extends DefaultTask {
 
 	public void setWriteManifest(boolean writeManifest) {
 		_writeManifest = writeManifest;
+	}
+
+	private static void _logReport(Report report, Logger logger) {
+		if (logger.isWarnEnabled()) {
+			report.getWarnings(
+			).stream(
+			).forEach(
+				msg -> {
+					Report.Location location = report.getLocation(msg);
+
+					if ((location != null) && (location.file != null)) {
+						logger.warn(
+							"{}:{}: warning: {}", location.file, location.line,
+							msg);
+					}
+					else {
+						logger.warn("warning: {}", msg);
+					}
+				}
+			);
+		}
+
+		if (logger.isErrorEnabled()) {
+			report.getErrors(
+			).stream(
+			).forEach(
+				msg -> {
+					Report.Location location = report.getLocation(msg);
+
+					if ((location != null) && (location.file != null)) {
+						logger.error(
+							"{}:{}: warning: {}", location.file, location.line,
+							msg);
+					}
+					else {
+						logger.error("warning: {}", msg);
+					}
+				}
+			);
+		}
 	}
 
 	private static File[] _toArray(FileCollection fileCollection) {

@@ -64,6 +64,7 @@ public class ServletDataImpl implements ServletData {
 	}
 
 	@Override
+	@Deprecated
 	public String getPath() {
 		return "/headless-form-graphql/v1_0";
 	}

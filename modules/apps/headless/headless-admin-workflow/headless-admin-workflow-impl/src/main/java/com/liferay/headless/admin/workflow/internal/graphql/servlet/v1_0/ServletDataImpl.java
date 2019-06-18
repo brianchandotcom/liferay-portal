@@ -54,6 +54,7 @@ public class ServletDataImpl implements ServletData {
 	}
 
 	@Override
+	@Deprecated
 	public String getPath() {
 		return "/headless-admin-workflow-graphql/v1_0";
 	}

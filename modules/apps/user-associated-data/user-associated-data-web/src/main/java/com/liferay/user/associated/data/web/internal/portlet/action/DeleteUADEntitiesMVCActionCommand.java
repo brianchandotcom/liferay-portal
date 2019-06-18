@@ -95,7 +95,7 @@ public class DeleteUADEntitiesMVCActionCommand extends BaseUADMVCActionCommand {
 			}
 		}
 
-		if ((uadHierarchyDisplay != null) && (redirect != null)) {
+		if (redirect != null) {
 			long parentContainerId = ParamUtil.getLong(
 				actionRequest, "parentContainerId");
 

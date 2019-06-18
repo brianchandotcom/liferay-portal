@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionActionHandler;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFieldAccessor;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionFactory;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionObserver;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccessor;
@@ -47,8 +47,8 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 
 	@Override
 	public T evaluate() throws DDMExpressionException {
-		Map<String, DDMExpressionFunction> ddmExpressionFunctions =
-			_ddmExpressionFunctionTracker.getDDMExpressionFunctions(
+		Map<String, DDMExpressionFunctionFactory> ddmExpressionFunctions =
+			_ddmExpressionFunctionTracker.getDDMExpressionFunctionFactories(
 				_ddmExpressionFunctionNames);
 
 		try {
@@ -75,12 +75,6 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		}
 		catch (Exception e) {
 			throw new DDMExpressionException(e);
-		}
-		finally {
-			if (!ddmExpressionFunctions.isEmpty()) {
-				_ddmExpressionFunctionTracker.ungetDDMExpressionFunctions(
-					ddmExpressionFunctions);
-			}
 		}
 	}
 

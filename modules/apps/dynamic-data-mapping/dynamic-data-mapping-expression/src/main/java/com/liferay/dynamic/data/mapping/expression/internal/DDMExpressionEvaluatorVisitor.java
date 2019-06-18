@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionActionHandlerAwa
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFieldAccessor;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFieldAccessorAware;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionFactory;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionObserver;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionObserverAware;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccessor;
@@ -150,8 +151,11 @@ public class DDMExpressionEvaluatorVisitor
 
 		String functionName = getFunctionName(context.functionName);
 
+		DDMExpressionFunctionFactory ddmExpressionFunctionFactory =
+			_ddmExpressionFunctionFactories.get(functionName);
+
 		DDMExpressionFunction ddmExpressionFunction =
-			_ddmExpressionFunctions.get(functionName);
+			ddmExpressionFunctionFactory.create();
 
 		if (ddmExpressionFunction instanceof DDMExpressionObserverAware) {
 			DDMExpressionObserverAware ddmExpressionObserverAware =
@@ -472,14 +476,15 @@ public class DDMExpressionEvaluatorVisitor
 	}
 
 	protected DDMExpressionEvaluatorVisitor(
-		Map<String, DDMExpressionFunction> ddmExpressionFunctions,
+		Map<String, DDMExpressionFunctionFactory>
+			ddmExpressionFunctionFactories,
 		Map<String, Object> variables,
 		DDMExpressionActionHandler ddmExpressionActionHandler,
 		DDMExpressionFieldAccessor ddmExpressionFieldAccessor,
 		DDMExpressionObserver ddmExpressionObserver,
 		DDMExpressionParameterAccessor ddmExpressionParameterAccessor) {
 
-		_ddmExpressionFunctions = ddmExpressionFunctions;
+		_ddmExpressionFunctionFactories = ddmExpressionFunctionFactories;
 		_variables = variables;
 		_ddmExpressionActionHandler = ddmExpressionActionHandler;
 		_ddmExpressionFieldAccessor = ddmExpressionFieldAccessor;
@@ -527,7 +532,8 @@ public class DDMExpressionEvaluatorVisitor
 
 	private final DDMExpressionActionHandler _ddmExpressionActionHandler;
 	private final DDMExpressionFieldAccessor _ddmExpressionFieldAccessor;
-	private final Map<String, DDMExpressionFunction> _ddmExpressionFunctions;
+	private final Map<String, DDMExpressionFunctionFactory>
+		_ddmExpressionFunctionFactories;
 	private final DDMExpressionObserver _ddmExpressionObserver;
 	private final DDMExpressionParameterAccessor
 		_ddmExpressionParameterAccessor;

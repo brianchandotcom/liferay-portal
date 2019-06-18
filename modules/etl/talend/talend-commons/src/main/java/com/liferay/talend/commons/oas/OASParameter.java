@@ -17,7 +17,7 @@ package com.liferay.talend.commons.oas;
 /**
  * @author Ivica Cardic
  */
-public class Parameter {
+public class OASParameter {
 
 	public String getName() {
 		return _name;

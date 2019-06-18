@@ -16,7 +16,7 @@ package com.liferay.talend.runtime;
 
 import com.liferay.talend.avro.EndpointSchemaInferrer;
 import com.liferay.talend.commons.exception.MalformedURLException;
-import com.liferay.talend.commons.oas.Parameter;
+import com.liferay.talend.commons.oas.OASParameter;
 import com.liferay.talend.commons.oas.constants.OpenAPIConstants;
 import com.liferay.talend.commons.util.URIUtils;
 import com.liferay.talend.connection.LiferayConnectionProperties;
@@ -280,8 +280,8 @@ public class LiferaySourceOrSink
 	}
 
 	@Override
-	public List<Parameter> getParameters(String endpoint, String operation) {
-		List<Parameter> parameters = new ArrayList<>();
+	public List<OASParameter> getParameters(String endpoint, String operation) {
+		List<OASParameter> oasParameters = new ArrayList<>();
 
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveConnection(null);
@@ -296,10 +296,11 @@ public class LiferaySourceOrSink
 			apiSpecJsonObject);
 
 		for (int i = 0; i < parametersArrayNode.size(); i++) {
-			parameters.add(_toParameter(parametersArrayNode.getJsonObject(i)));
+			oasParameters.add(
+				_toParameter(parametersArrayNode.getJsonObject(i)));
 		}
 
-		return parameters;
+		return oasParameters;
 	}
 
 	public RESTClient getRestClient(RuntimeContainer runtimeContainer) {
@@ -538,19 +539,20 @@ public class LiferaySourceOrSink
 		return value.toLowerCase(Locale.US);
 	}
 
-	private Parameter _toParameter(JsonObject jsonObject) {
-		Parameter parameter = new Parameter();
+	private OASParameter _toParameter(JsonObject jsonObject) {
+		OASParameter oasParameter = new OASParameter();
 
-		parameter.setType(
-			Parameter.Type.valueOf(_toUpperCase(jsonObject.getString("in"))));
+		oasParameter.setType(
+			OASParameter.Type.valueOf(
+				_toUpperCase(jsonObject.getString("in"))));
 
-		parameter.setName(jsonObject.getString("name"));
+		oasParameter.setName(jsonObject.getString("name"));
 
 		if (!jsonObject.isNull("required")) {
-			parameter.setRequired(jsonObject.getBoolean("required"));
+			oasParameter.setRequired(jsonObject.getBoolean("required"));
 		}
 
-		return parameter;
+		return oasParameter;
 	}
 
 	private String _toUpperCase(String value) {

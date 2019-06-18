@@ -2,14 +2,15 @@
 #end
 dependencies {
 #if (${dependencyManagementEnabled} == "true")
-#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")} || ((${liferayVersion.startsWith("7.2")} && ${dependencyInjector} = "spring" )))
+#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")} || ((${liferayVersion.startsWith("7.2")} && ${dependencyInjector.equals("spring")})))
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib"
 #end
 #if (${liferayVersion.startsWith("7.0")})
 	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender"
-#elseif (${liferayVersion.startsWith("7.1")})
+#elseif (${liferayVersion.startsWith("7.1")} || ((${liferayVersion.startsWith("7.2")} && ${dependencyInjector.equals("spring")})))
 	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender.api"
-#elseif (${liferayVersion.startsWith("7.2")})
+#end
+#if (${liferayVersion.startsWith("7.2")})
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.aop.api"
@@ -26,14 +27,19 @@ dependencies {
 #end
 #if (${liferayVersion.startsWith("7.0")})
 	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.6.0"
-#elseif (${liferayVersion.startsWith("7.1")})
+#elseif (${liferayVersion.startsWith("7.1")} || ((${liferayVersion.startsWith("7.2")} && ${dependencyInjector.equals("spring")})))
 	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender.api", version: "3.0.0"
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0"
-#elseif (${liferayVersion.startsWith("7.2")})
+#end
+#if (${liferayVersion.startsWith("7.2")})
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "3.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "3.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.aop.api", version: "1.0.0"
+#end
+#if (${liferayVersion.startsWith("7.0")})
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.6.0"
+#elseif (${liferayVersion.startsWith("7.1")})
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0"
+#elseif (${liferayVersion.startsWith("7.2")})
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "4.4.0"
 #end
 #if (${liferayVersion.startsWith("7.2")})

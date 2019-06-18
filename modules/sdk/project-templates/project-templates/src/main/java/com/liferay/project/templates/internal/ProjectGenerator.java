@@ -59,6 +59,7 @@ public class ProjectGenerator {
 		List<File> archetypesDirs = projectTemplatesArgs.getArchetypesDirs();
 		String artifactId = projectTemplatesArgs.getName();
 		String author = projectTemplatesArgs.getAuthor();
+		String dependencyInjector = projectTemplatesArgs.getDependencyInjector();
 		String className = projectTemplatesArgs.getClassName();
 		boolean dependencyManagementEnabled =
 			projectTemplatesArgs.isDependencyManagementEnabled();
@@ -132,6 +133,7 @@ public class ProjectGenerator {
 		_setProperty(properties, "author", author);
 		_setProperty(properties, "buildType", buildType);
 		_setProperty(properties, "className", className);
+		_setProperty(properties, "dependencyInjector", dependencyInjector);
 		_setProperty(
 			properties, "dependencyManagementEnabled",
 			String.valueOf(dependencyManagementEnabled));

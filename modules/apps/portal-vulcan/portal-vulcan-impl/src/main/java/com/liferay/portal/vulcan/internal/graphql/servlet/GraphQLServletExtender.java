@@ -308,6 +308,8 @@ public class GraphQLServletExtender {
 			if (methodOptional.isPresent()) {
 				Method method = methodOptional.get();
 
+				Class<?> clazz = method.getDeclaringClass();
+
 				builder.field(
 					_graphQLFieldRetriever.getField(
 						clazz.getSimpleName(), method,

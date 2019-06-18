@@ -29,7 +29,7 @@
 			<version>2.0.0</version>
 			<scope>provided</scope>
 		</dependency>
-#elseif (${liferayVersion.startsWith("7.1")} || ((${liferayVersion.startsWith("7.2")} && ${dependencyInjector.equals("spring")})))
+#elseif (${liferayVersion.startsWith("7.1")} || (${dependencyInjector} != "ds"))
 		<dependency>
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.portal.spring.extender.api</artifactId>

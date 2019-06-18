@@ -20,14 +20,20 @@ class Editor extends Component {
 		return false;
 	}
 
-	syncValue(value) {
+	syncEditingLanguageId() {
+		const {value} = this;
+
+		this.syncValue(value, null, true);
+	}
+
+	syncValue(value, prevVal, force = false) {
 		const {_alloyEditor} = this;
 
 		if (_alloyEditor && _alloyEditor.getHTML() !== value) {
 			const nativeEditor = _alloyEditor.getNativeEditor();
 			const {hasFocus} = nativeEditor.focusManager;
 
-			if (!hasFocus) {
+			if (force || !hasFocus) {
 				nativeEditor.setData(value);
 			}
 		}
@@ -94,6 +100,15 @@ class Editor extends Component {
 }
 
 Editor.STATE = {
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Editor
+	 * @type {?string}
+	 */
+
+	editingLanguageId: Config.string(),
+
 	/**
 	 * @default false
 	 * @instance

@@ -16,220 +16,64 @@ package com.liferay.sharing.document.library.internal.model.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLTrashService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.sharing.model.SharingEntry;
-import com.liferay.sharing.security.permission.SharingEntryAction;
-import com.liferay.sharing.service.SharingEntryLocalService;
+import com.liferay.sharing.test.util.BaseSharingModelListenerTestCase;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Sergio González
  */
 @RunWith(Arquillian.class)
-public class DLFileEntryModelListenerTest {
+public class DLFileEntryModelListenerTest
+	extends BaseSharingModelListenerTestCase<DLFileEntry> {
 
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			PermissionCheckerMethodTestRule.INSTANCE);
+	@Override
+	protected void delete(DLFileEntry dlFileEntry) throws PortalException {
+		_dlAppLocalService.deleteFileEntry(dlFileEntry.getFileEntryId());
+	}
 
-	@Before
-	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		_user = UserTestUtil.addCompanyAdminUser(_company);
-
-		_group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), _user.getUserId(),
-			GroupConstants.DEFAULT_PARENT_GROUP_ID);
-
-		_groupUser = UserTestUtil.addGroupUser(
-			_group, RoleConstants.POWER_USER);
+	@Override
+	protected DLFileEntry getModel(User user, Group group)
+		throws PortalException {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
+				group.getGroupId(), user.getUserId());
 
 		serviceContext.setAddGuestPermissions(false);
 		serviceContext.setAddGroupPermissions(false);
 
-		_fileEntry = _dlAppLocalService.addFileEntry(
-			_user.getUserId(), _group.getGroupId(),
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			user.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), "text/plain", StringUtil.randomString(),
 			StringUtil.randomString(), StringPool.BLANK, "test".getBytes(),
 			serviceContext);
 
-		_classNameId = _classNameLocalService.getClassNameId(
-			DLFileEntry.class.getName());
-
-		_folder = _dlAppLocalService.addFolder(
-			_user.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), StringUtil.randomString(),
-			serviceContext);
+		return (DLFileEntry)fileEntry.getModel();
 	}
 
-	@Test
-	public void testDeletingSharedFileEntryDeletesSharingEntries()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		_sharingEntryLocalService.addSharingEntry(
-			_user.getUserId(), _groupUser.getUserId(), _classNameId,
-			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
-			Arrays.asList(SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
-			null, serviceContext);
-
-		List<SharingEntry> toUserSharingEntries =
-			_sharingEntryLocalService.getToUserSharingEntries(
-				_groupUser.getUserId());
-
-		Assert.assertEquals(
-			toUserSharingEntries.toString(), 1, toUserSharingEntries.size());
-
-		_dlAppLocalService.deleteFileEntry(_fileEntry.getFileEntryId());
-
-		toUserSharingEntries =
-			_sharingEntryLocalService.getToUserSharingEntries(
-				_groupUser.getUserId());
-
-		Assert.assertEquals(
-			toUserSharingEntries.toString(), 0, toUserSharingEntries.size());
+	@Override
+	protected void moveToTrash(DLFileEntry dlFileEntry) throws PortalException {
+		_dlTrashService.moveFileEntryToTrash(dlFileEntry.getFileEntryId());
 	}
-
-	@Test
-	public void testDeletingSharedFileEntryDoesNotDeleteOtherSharingEntries()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		_sharingEntryLocalService.addSharingEntry(
-			_user.getUserId(), _groupUser.getUserId(), _classNameId,
-			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
-			Arrays.asList(SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
-			null, serviceContext);
-
-		long classNameId = _classNameLocalService.getClassNameId(
-			DLFolder.class.getName());
-		long classPK = _folder.getFolderId();
-
-		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
-			_user.getUserId(), _groupUser.getUserId(), classNameId, classPK,
-			_fileEntry.getGroupId(), true,
-			Arrays.asList(SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
-			null, serviceContext);
-
-		List<SharingEntry> toUserSharingEntries =
-			_sharingEntryLocalService.getToUserSharingEntries(
-				_groupUser.getUserId());
-
-		Assert.assertEquals(
-			toUserSharingEntries.toString(), 2, toUserSharingEntries.size());
-
-		_dlAppLocalService.deleteFileEntry(_fileEntry.getFileEntryId());
-
-		toUserSharingEntries =
-			_sharingEntryLocalService.getToUserSharingEntries(
-				_groupUser.getUserId());
-
-		Assert.assertEquals(
-			toUserSharingEntries.toString(), 1, toUserSharingEntries.size());
-		Assert.assertEquals(sharingEntry, toUserSharingEntries.get(0));
-	}
-
-	@Test
-	public void testMovingToRecycleBinSharedFileEntryDoesNotDeleteSharingEntries()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		_sharingEntryLocalService.addSharingEntry(
-			_user.getUserId(), _groupUser.getUserId(), _classNameId,
-			_fileEntry.getFileEntryId(), _fileEntry.getGroupId(), true,
-			Arrays.asList(SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
-			null, serviceContext);
-
-		List<SharingEntry> toUserSharingEntries =
-			_sharingEntryLocalService.getToUserSharingEntries(
-				_groupUser.getUserId());
-
-		Assert.assertEquals(
-			toUserSharingEntries.toString(), 1, toUserSharingEntries.size());
-
-		_dlTrashService.moveFileEntryToTrash(_fileEntry.getFileEntryId());
-
-		toUserSharingEntries =
-			_sharingEntryLocalService.getToUserSharingEntries(
-				_groupUser.getUserId());
-
-		Assert.assertEquals(
-			toUserSharingEntries.toString(), 1, toUserSharingEntries.size());
-	}
-
-	private long _classNameId;
-
-	@Inject
-	private ClassNameLocalService _classNameLocalService;
-
-	@DeleteAfterTestRun
-	private Company _company;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
 
 	@Inject
 	private DLTrashService _dlTrashService;
-
-	private FileEntry _fileEntry;
-	private Folder _folder;
-	private Group _group;
-	private User _groupUser;
-
-	@Inject
-	private SharingEntryLocalService _sharingEntryLocalService;
-
-	private User _user;
 
 }

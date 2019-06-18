@@ -15,11 +15,11 @@
 package com.liferay.talend.avro;
 
 import com.liferay.talend.avro.constants.AvroConstants;
-import com.liferay.talend.openapi.OpenAPIFormat;
-import com.liferay.talend.openapi.OpenAPIType;
-import com.liferay.talend.openapi.constants.OpenAPIConstants;
+import com.liferay.talend.commons.oas.OpenAPIFormat;
+import com.liferay.talend.commons.oas.OpenAPIType;
+import com.liferay.talend.commons.oas.constants.OpenAPIConstants;
+import com.liferay.talend.commons.util.StringUtils;
 import com.liferay.talend.tliferayoutput.Action;
-import com.liferay.talend.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;

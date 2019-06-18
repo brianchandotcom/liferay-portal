@@ -12,29 +12,19 @@
  * details.
  */
 
-package com.liferay.talend.exception;
-
-import org.talend.daikon.properties.ValidationResult;
-import org.talend.daikon.properties.ValidationResultMutable;
+package com.liferay.talend.commons.exception;
 
 /**
  * @author Zoltán Takács
  */
-public class ExceptionUtils {
+public class MalformedURLException extends RuntimeException {
 
-	public static ValidationResultMutable exceptionToValidationResult(
-		Exception e) {
-
-		ValidationResultMutable validationResultMutable =
-			new ValidationResultMutable();
-
-		validationResultMutable.setMessage(e.getMessage());
-		validationResultMutable.setStatus(ValidationResult.Result.ERROR);
-
-		return validationResultMutable;
+	public MalformedURLException(String message) {
+		super(message);
 	}
 
-	private ExceptionUtils() {
+	public MalformedURLException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

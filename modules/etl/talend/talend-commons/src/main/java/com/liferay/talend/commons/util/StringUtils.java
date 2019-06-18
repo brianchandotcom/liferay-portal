@@ -12,15 +12,26 @@
  * details.
  */
 
-package com.liferay.talend.openapi;
+package com.liferay.talend.commons.util;
 
 /**
- * @author Igor Beslic
+ * @author Zoltán Takács
  */
-public class OpenAPIException extends RuntimeException {
+public class StringUtils {
 
-	public OpenAPIException(String message) {
-		super(message);
+	public static boolean isEmpty(final CharSequence cs) {
+		if ((cs == null) || (cs.length() == 0)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static String removeQuotes(String s) {
+		return s.replace("\"", "");
+	}
+
+	private StringUtils() {
 	}
 
 }

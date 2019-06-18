@@ -17,10 +17,10 @@ package com.liferay.talend.resource;
 import static org.talend.daikon.properties.presentation.Widget.widget;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
+import com.liferay.talend.commons.oas.Parameter;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
-import com.liferay.talend.exception.ExceptionUtils;
-import com.liferay.talend.openapi.Parameter;
+import com.liferay.talend.properties.ExceptionUtils;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
 

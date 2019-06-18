@@ -14,8 +14,8 @@
 
 package com.liferay.talend.runtime;
 
+import com.liferay.talend.commons.oas.Parameter;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
-import com.liferay.talend.openapi.Parameter;
 
 import java.io.IOException;
 

@@ -12,26 +12,15 @@
  * details.
  */
 
-package com.liferay.talend.exception;
+package com.liferay.talend.commons.oas;
 
 /**
- * @author Zoltán Takács
+ * @author Igor Beslic
  */
-public class URIPathException extends RuntimeException {
+public class OpenAPIException extends RuntimeException {
 
-	public URIPathException() {
-	}
-
-	public URIPathException(String message) {
+	public OpenAPIException(String message) {
 		super(message);
-	}
-
-	public URIPathException(String message, Throwable cause) {
-		super(message, cause);
-	}
-
-	public URIPathException(Throwable cause) {
-		super(cause);
 	}
 
 }

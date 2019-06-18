@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.talend.utils;
+package com.liferay.talend.commons.log;
 
 import java.util.ArrayList;
 import java.util.Arrays;

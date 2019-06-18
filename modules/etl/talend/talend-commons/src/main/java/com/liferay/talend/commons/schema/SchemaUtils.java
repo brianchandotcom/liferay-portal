@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.talend.utils;
+package com.liferay.talend.commons.schema;
 
 import java.util.ArrayList;
 import java.util.HashSet;

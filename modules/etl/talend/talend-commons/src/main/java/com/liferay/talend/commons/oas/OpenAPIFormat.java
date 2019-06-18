@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.talend.openapi;
+package com.liferay.talend.commons.oas;
 
 /**
  * @author Igor Beslic

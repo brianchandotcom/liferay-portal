@@ -44,8 +44,6 @@ page import="com.liferay.taglib.search.ResultRow" %>
 
 <liferay-theme:defineObjects />
 
-<portlet:defineObjects />
-
 <%
 WorkflowInstanceViewDisplayContext workflowInstanceViewDisplayContext = null;
 

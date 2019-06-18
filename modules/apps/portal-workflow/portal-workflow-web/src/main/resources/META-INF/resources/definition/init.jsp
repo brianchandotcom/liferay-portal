@@ -56,8 +56,6 @@ page import="javax.portlet.WindowState" %>
 
 <liferay-theme:defineObjects />
 
-<portlet:defineObjects />
-
 <%
 WorkflowDefinitionDisplayContext workflowDefinitionDisplayContext = (WorkflowDefinitionDisplayContext)renderRequest.getAttribute(WorkflowWebKeys.WORKFLOW_DEFINITION_DISPLAY_CONTEXT);
 

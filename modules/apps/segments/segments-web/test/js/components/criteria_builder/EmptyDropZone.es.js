@@ -13,6 +13,22 @@ describe('EmptyDropZone', () => {
 		const {asFragment} = render(
 			<OriginalEmptyDropZone
 				connectDropTarget={connectDnd}
+				emptyContributors={false}
+				onCriterionAdd={jest.fn()}
+				propertyKey='user'
+			/>
+		);
+
+		expect(asFragment()).toMatchSnapshot();
+	});
+
+	it('should render illustration when empty contributors', () => {
+		const OriginalEmptyDropZone = EmptyDropZone.DecoratedComponent;
+
+		const {asFragment} = render(
+			<OriginalEmptyDropZone
+				connectDropTarget={connectDnd}
+				emptyContributors={true}
 				onCriterionAdd={jest.fn()}
 				propertyKey='user'
 			/>

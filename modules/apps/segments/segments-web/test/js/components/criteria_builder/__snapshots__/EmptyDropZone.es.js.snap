@@ -15,3 +15,33 @@ exports[`EmptyDropZone should render 1`] = `
   </div>
 </DocumentFragment>
 `;
+
+exports[`EmptyDropZone should render illustration when empty contributors 1`] = `
+<DocumentFragment>
+  <div
+    class="empty-drop-zone-root"
+  >
+    <div>
+      <div
+        class="taglib-empty-result-message mb-0 p-5 rounded empty-contributors"
+      >
+        <div
+          class="taglib-empty-result-message-header"
+        />
+        <div
+          class="sheet-text text-center"
+        >
+          <h1
+            class="mb-3 mt-4"
+          >
+            no-x-yet
+          </h1>
+          <p>
+            empty-conditions-message
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

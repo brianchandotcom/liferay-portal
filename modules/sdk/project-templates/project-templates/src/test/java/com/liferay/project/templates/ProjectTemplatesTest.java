@@ -2354,10 +2354,12 @@ public class ProjectTemplatesTest {
 			"service-builder", name, "--package-name", packageName,
 			"--liferayVersion", "7.2");
 
-		_testContains(
+		_testNotContains(
 			gradleProjectDir, name + "-api/build.gradle",
 			"com.liferay.petra.lang\", version: \"3.0.0\"",
-			"com.liferay.petra.string\", version: \"3.0.0\"",
+			"com.liferay.petra.string\", version: \"3.0.0\"");
+		_testContains(
+			gradleProjectDir, name + "-api/build.gradle",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0");
 		_testContains(
 			gradleProjectDir, name + "-service/build.gradle",
@@ -2368,6 +2370,9 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir, name + "-service/service.xml",
 			"dependency-injector=\"ds\"");
+		_testContains(
+			gradleProjectDir, name + "-service/bnd.bnd",
+			"-dsannotations-options: inherit");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"service-builder", name, "com.test", "-Dpackage=" + packageName,
@@ -2389,17 +2394,23 @@ public class ProjectTemplatesTest {
 			"service-builder", name, "--package-name", packageName,
 			"--liferayVersion", "7.2", "--dependency-injector", "spring");
 
-		_testContains(
+		_testNotContains(
 			gradleProjectDir, name + "-api/build.gradle",
 			"com.liferay.petra.lang\", version: \"3.0.0\"",
-			"com.liferay.petra.string\", version: \"3.0.0\"",
+			"com.liferay.petra.string\", version: \"3.0.0\"");
+		_testContains(
+			gradleProjectDir, name + "-api/build.gradle",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0");
 		_testContains(
 			gradleProjectDir, name + "-service/build.gradle",
 			"com.liferay.petra.lang\", version: \"3.0.0\"",
 			"com.liferay.petra.string\", version: \"3.0.0\"",
 			"com.liferay.portal.aop.api\", version: \"1.0.0\"",
-			_DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0",
+			"com.liferay.portal.spring.extender.api\", version: \"3.0.0");
+		_testNotContains(
+			gradleProjectDir, name + "-service/bnd.bnd",
+			"-dsannotations-options: inherit");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"service-builder", name, "com.test", "-Dpackage=" + packageName,

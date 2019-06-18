@@ -14,8 +14,11 @@
 
 package com.liferay.talend.commons.util;
 
+import java.util.Locale;
+
 /**
  * @author Zoltán Takács
+ * @author Igor Beslic
  */
 public class StringUtils {
 
@@ -29,6 +32,22 @@ public class StringUtils {
 
 	public static String removeQuotes(String s) {
 		return s.replace("\"", "");
+	}
+
+	public static String replace(String pattern, String... tplArgs) {
+		String replaced = pattern;
+
+		for (int i = 0; i < tplArgs.length;) {
+			replaced = replaced.replace(tplArgs[i], tplArgs[i + 1]);
+
+			i = i + 2;
+		}
+
+		return replaced;
+	}
+
+	public static String toUpperCase(String value) {
+		return value.toUpperCase(Locale.getDefault());
 	}
 
 	private StringUtils() {

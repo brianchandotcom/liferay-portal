@@ -14,17 +14,13 @@
 
 package com.liferay.sharing.test.util;
 
-import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -36,7 +32,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.contributor.PermissionSQLContributor;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -55,7 +50,8 @@ import org.junit.Test;
 /**
  * @author Sergio González
  */
-public abstract class BaseSharingPermissionSQLContributorTestCase {
+public abstract class BaseSharingPermissionSQLContributorTestCase
+	<T extends ClassedModel> {
 
 	@ClassRule
 	@Rule
@@ -72,48 +68,6 @@ public abstract class BaseSharingPermissionSQLContributorTestCase {
 
 		_groupUser = UserTestUtil.addGroupUser(
 			_group, RoleConstants.POWER_USER);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		serviceContext.setAddGuestPermissions(false);
-		serviceContext.setAddGroupPermissions(false);
-
-		_fileEntry = _dlAppLocalService.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), "text/plain", StringUtil.randomString(),
-			StringUtil.randomString(), StringPool.BLANK, "test".getBytes(),
-			serviceContext);
-	}
-
-	@Test
-	public void testDLFileEntryClassNameReturnsPermissionSQL()
-		throws Exception {
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser());
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				TestPropsValues.getUser(), permissionChecker)) {
-
-			StringBundler sb = new StringBundler(6);
-
-			sb.append("1234 IN (SELECT SharingEntry.classPK FROM ");
-			sb.append("SharingEntry WHERE (SharingEntry.toUserId = ");
-			sb.append(TestPropsValues.getUserId());
-			sb.append(") AND (SharingEntry.classNameId = ");
-			sb.append(
-				_classNameLocalService.getClassNameId(
-					DLFileEntry.class.getName()));
-			sb.append("))");
-
-			Assert.assertEquals(
-				sb.toString(),
-				_permissionSQLContributor.getPermissionSQL(
-					DLFileEntry.class.getName(), "1234", null, null, null));
-		}
 	}
 
 	@Test
@@ -124,51 +78,70 @@ public abstract class BaseSharingPermissionSQLContributorTestCase {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, permissionChecker)) {
 
-			Assert.assertEquals(
-				0,
-				_dlAppService.getFileEntriesCount(
-					_group.getGroupId(),
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+			Assert.assertEquals(0, getModelCount(_group));
+
+			T model = getModel(TestPropsValues.getUser(), _group);
 
 			long classNameId = _classNameLocalService.getClassNameId(
-				DLFileEntry.class.getName());
+				model.getModelClassName());
+			long classPK = (long)model.getPrimaryKeyObj();
 
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 			_sharingEntryLocalService.addSharingEntry(
 				TestPropsValues.getUserId(), _groupUser.getUserId(),
-				classNameId, _fileEntry.getFileEntryId(), _group.getGroupId(),
-				true, Collections.singletonList(SharingEntryAction.VIEW), null,
+				classNameId, classPK, _group.getGroupId(), true,
+				Collections.singletonList(SharingEntryAction.VIEW), null,
 				serviceContext);
 
-			Assert.assertEquals(
-				1,
-				_dlAppService.getFileEntriesCount(
-					_group.getGroupId(),
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+			Assert.assertEquals(1, getModelCount(_group));
 		}
 	}
+
+	@Test
+	public void testModelClassNameReturnsPermissionSQL() throws Exception {
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser());
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				TestPropsValues.getUser(), permissionChecker)) {
+
+			T model = getModel(TestPropsValues.getUser(), _group);
+
+			StringBundler sb = new StringBundler(6);
+
+			sb.append("1234 IN (SELECT SharingEntry.classPK FROM ");
+			sb.append("SharingEntry WHERE (SharingEntry.toUserId = ");
+			sb.append(TestPropsValues.getUserId());
+			sb.append(") AND (SharingEntry.classNameId = ");
+			sb.append(
+				_classNameLocalService.getClassNameId(
+					model.getModelClassName()));
+			sb.append("))");
+
+			PermissionSQLContributor permissionSQLContributor =
+				getPermissionSQLContributor();
+
+			Assert.assertEquals(
+				sb.toString(),
+				permissionSQLContributor.getPermissionSQL(
+					model.getModelClassName(), "1234", null, null, null));
+		}
+	}
+
+	protected abstract T getModel(User user, Group group)
+		throws PortalException;
+
+	protected abstract int getModelCount(Group group) throws PortalException;
+
+	protected abstract PermissionSQLContributor getPermissionSQLContributor();
 
 	@Inject
 	private static ClassNameLocalService _classNameLocalService;
 
 	@Inject
-	private static DLAppLocalService _dlAppLocalService;
-
-	@Inject
-	private static DLAppService _dlAppService;
-
-	@Inject(
-		filter = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
-		type = PermissionSQLContributor.class
-	)
-	private static PermissionSQLContributor _permissionSQLContributor;
-
-	@Inject
 	private static SharingEntryLocalService _sharingEntryLocalService;
-
-	private FileEntry _fileEntry;
 
 	@DeleteAfterTestRun
 	private Group _group;

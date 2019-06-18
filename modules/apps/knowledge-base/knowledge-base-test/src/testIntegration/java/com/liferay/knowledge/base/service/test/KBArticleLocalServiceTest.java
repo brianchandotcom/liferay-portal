@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
@@ -55,6 +56,8 @@ import com.liferay.subscription.service.SubscriptionLocalServiceUtil;
 import java.io.InputStream;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -269,16 +272,28 @@ public class KBArticleLocalServiceTest {
 
 	@Test
 	public void testAddKBArticleWithCustomHTML() throws Exception {
-		String content =
-			"<a href=\"http://www.liferay.com\" target=\"_blank\" />";
+		String name = PrincipalThreadLocal.getName();
 
-		KBArticle kbArticle = KBArticleLocalServiceUtil.addKBArticle(
-			_user.getUserId(), _kbFolderClassNameId,
-			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), StringUtil.randomString(), content,
-			StringUtil.randomString(), null, null, null, _serviceContext);
+		try {
+			PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 
-		Assert.assertEquals(content, kbArticle.getContent());
+			String content =
+				"<a href=\"http://www.liferay.com\" target=\"_blank\" />";
+
+			KBArticle kbArticle = KBArticleLocalServiceUtil.addKBArticle(
+				_user.getUserId(), _kbFolderClassNameId,
+				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				StringUtil.randomString(), StringUtil.randomString(), content,
+				StringUtil.randomString(), null, null, null, _serviceContext);
+
+			Matcher matcher = _tagetBlankPattern.matcher(
+				kbArticle.getContent());
+
+			Assert.assertTrue(matcher.matches());
+		}
+		finally {
+			PrincipalThreadLocal.setName(name);
+		}
 	}
 
 	@Test(expected = KBArticleUrlTitleException.class)
@@ -963,6 +978,9 @@ public class KBArticleLocalServiceTest {
 			_user.getUserId(), _user.getCompanyId(), _group.getGroupId(),
 			KBArticle.class.getName(), 0, 0, workflowDefinition);
 	}
+
+	private static final Pattern _tagetBlankPattern = Pattern.compile(
+		".*target=\"_blank\".*");
 
 	@DeleteAfterTestRun
 	private Group _group;

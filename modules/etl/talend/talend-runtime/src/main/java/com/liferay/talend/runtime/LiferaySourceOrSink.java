@@ -27,6 +27,7 @@ import com.liferay.talend.properties.ExceptionUtils;
 import com.liferay.talend.runtime.client.RESTClient;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +35,10 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
+import javax.json.JsonReader;
 
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.ProcessingException;
@@ -75,9 +78,7 @@ public class LiferaySourceOrSink
 
 		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
 
-		Response response = restClient.executeDeleteRequest();
-
-		return response.readEntity(JsonObject.class);
+		return _readJsonObject(restClient.executeDeleteRequest());
 	}
 
 	public JsonObject doDeleteRequest(String resourceURL) {
@@ -93,9 +94,7 @@ public class LiferaySourceOrSink
 
 		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
 
-		Response response = restClient.executeGetRequest();
-
-		return response.readEntity(JsonObject.class);
+		return _readJsonObject(restClient.executeGetRequest());
 	}
 
 	public JsonObject doGetRequest(String resourceURL) {
@@ -115,9 +114,7 @@ public class LiferaySourceOrSink
 
 		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
 
-		Response response = restClient.executePatchRequest(jsonObject);
-
-		return response.readEntity(JsonObject.class);
+		return _readJsonObject(restClient.executePatchRequest(jsonObject));
 	}
 
 	public JsonObject doPatchRequest(
@@ -138,9 +135,7 @@ public class LiferaySourceOrSink
 
 		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
 
-		Response response = restClient.executePostRequest(jsonObject);
-
-		return response.readEntity(JsonObject.class);
+		return _readJsonObject(restClient.executePostRequest(jsonObject));
 	}
 
 	public JsonObject doPostRequest(String resourceURL, JsonObject jsonObject)
@@ -495,6 +490,13 @@ public class LiferaySourceOrSink
 		}
 
 		return false;
+	}
+
+	private JsonObject _readJsonObject(Response response) {
+		JsonReader jsonReader = Json.createReader(
+			(InputStream)response.getEntity());
+
+		return jsonReader.readObject();
 	}
 
 	private OASParameter _toParameter(JsonObject jsonObject) {

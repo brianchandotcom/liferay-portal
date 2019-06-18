@@ -195,10 +195,10 @@ public class DDMFormPortlet extends MVCPortlet {
 		RenderRequest renderRequest,
 		DDMFormDisplayContext ddmFormPortletDisplayContext) {
 
-		if (ddmFormPortletDisplayContext.getFormInstanceId() > 0) {
-			DDMFormInstance ddmFormInstance =
-				ddmFormPortletDisplayContext.getFormInstance();
+		DDMFormInstance ddmFormInstance =
+			ddmFormPortletDisplayContext.getFormInstance();
 
+		if (ddmFormInstance != null) {
 			renderRequest.setAttribute(
 				DDMFormWebKeys.REFERER_GROUP_ID, ddmFormInstance.getGroupId());
 		}

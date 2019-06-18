@@ -134,16 +134,15 @@ public class SearchBarPortletSharedSearchContributor
 				themeDisplay.getCompanyId(), Layout.class.getName(),
 				themeDisplay.getScopeGroupId());
 
-			for (Group scopeGroup : groups) {
-				groupIds.add(scopeGroup.getGroupId());
+			for (Group group : groups) {
+				groupIds.add(group.getGroupId());
 			}
 
 			return ArrayUtil.toLongArray(groupIds);
 		}
 		catch (Exception e) {
+			return new long[] {themeDisplay.getScopeGroupId()};
 		}
-
-		return new long[] {themeDisplay.getScopeGroupId()};
 	}
 
 	protected Stream<Portlet> getPortletsStream(ThemeDisplay themeDisplay) {

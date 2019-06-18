@@ -36,6 +36,7 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -62,6 +63,7 @@ public class TextDDMFormFieldTypeSettingsTest
 	}
 
 	@Test
+	@Ignore
 	public void testCreateTextDDMFormFieldTypeSettingsDDMForm() {
 		DDMForm ddmForm = DDMFormFactory.create(
 			TextDDMFormFieldTypeSettings.class);

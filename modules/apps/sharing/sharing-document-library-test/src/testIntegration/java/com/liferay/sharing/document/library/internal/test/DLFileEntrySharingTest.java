@@ -12,13 +12,16 @@
  * details.
  */
 
-package com.liferay.sharing.document.library.internal.security.permission.resource.test;
+package com.liferay.sharing.document.library.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLTrashService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -32,8 +35,10 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.security.permission.contributor.PermissionSQLContributor;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.sharing.test.util.BaseSharingModelResourcePermissionTestCase;
+import com.liferay.sharing.security.permission.SharingPermissionChecker;
+import com.liferay.sharing.test.util.BaseSharingTestCase;
 
 import org.junit.Assert;
 import org.junit.runner.RunWith;
@@ -42,8 +47,17 @@ import org.junit.runner.RunWith;
  * @author Sergio González
  */
 @RunWith(Arquillian.class)
-public class SharingFileEntryModelResourcePermissionTest
-	extends BaseSharingModelResourcePermissionTestCase<DLFileEntry> {
+public class DLFileEntrySharingTest extends BaseSharingTestCase<DLFileEntry> {
+
+	@Override
+	protected void delete(DLFileEntry dlFileEntry) throws PortalException {
+		_dlAppLocalService.deleteFileEntry(dlFileEntry.getFileEntryId());
+	}
+
+	@Override
+	protected String getClassName() {
+		return DLFileEntryConstants.getClassName();
+	}
 
 	@Override
 	protected DLFileEntry getModel(User user, Group group)
@@ -64,6 +78,12 @@ public class SharingFileEntryModelResourcePermissionTest
 			serviceContext);
 
 		return (DLFileEntry)fileEntry.getModel();
+	}
+
+	@Override
+	protected int getModelCount(Group group) throws PortalException {
+		return _dlAppService.getFileEntriesCount(
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	@Override
@@ -117,13 +137,45 @@ public class SharingFileEntryModelResourcePermissionTest
 		return (DLFileEntry)fileEntry.getModel();
 	}
 
-	@Inject(
-		filter = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry"
-	)
-	private static ModelResourcePermission<DLFileEntry>
-		_fileEntryModelResourcePermission;
+	@Override
+	protected PermissionSQLContributor getPermissionSQLContributor() {
+		return _permissionSQLContributor;
+	}
+
+	@Override
+	protected SharingPermissionChecker getSharingPermissionChecker() {
+		return _sharingPermissionChecker;
+	}
+
+	@Override
+	protected void moveToTrash(DLFileEntry dlFileEntry) throws PortalException {
+		_dlTrashService.moveFileEntryToTrash(dlFileEntry.getFileEntryId());
+	}
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private DLAppService _dlAppService;
+
+	@Inject
+	private DLTrashService _dlTrashService;
+
+	@Inject(
+		filter = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry"
+	)
+	private ModelResourcePermission<DLFileEntry>
+		_fileEntryModelResourcePermission;
+
+	@Inject(
+		filter = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
+		type = PermissionSQLContributor.class
+	)
+	private PermissionSQLContributor _permissionSQLContributor;
+
+	@Inject(
+		filter = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry"
+	)
+	private SharingPermissionChecker _sharingPermissionChecker;
 
 }

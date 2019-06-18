@@ -221,7 +221,7 @@ definition {
 		if (isSet(templateName)) {
 			if (IsTextNotEqual(locator1 = "WCEditWebContent#SELECTED_TEMPLATE", value1 = "${templateName}")) {
 				WebContent.selectTemplateCP(
-					structureName = "${structureName}",
+					structureName = "Basic Web Content",
 					templateName = "${templateName}");
 			}
 		}

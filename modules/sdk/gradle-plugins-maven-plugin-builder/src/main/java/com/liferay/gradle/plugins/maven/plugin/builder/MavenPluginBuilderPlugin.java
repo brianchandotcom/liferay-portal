@@ -39,7 +39,6 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.SourceSet;
-import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.Upload;
 import org.gradle.api.tasks.javadoc.Javadoc;
@@ -145,7 +144,8 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
+					SourceDirectorySet javaSourceDirectorySet =
+						sourceSet.getJava();
 
 					return javaSourceDirectorySet.getOutputDir();
 				}

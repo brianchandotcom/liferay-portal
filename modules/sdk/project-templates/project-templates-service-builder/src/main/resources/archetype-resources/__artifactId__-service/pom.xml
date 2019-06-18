@@ -122,7 +122,9 @@
 					<osgiModule>true</osgiModule>
 					<propsUtil>${package}.service.util.ServiceProps</propsUtil>
 					<resourcesDirName>src/main/resources</resourcesDirName>
+#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")} || (${dependencyInjector} != "ds"))
 					<springFileName>src/main/resources/META-INF/spring/module-spring.xml</springFileName>
+#end
 					<sqlDirName>src/main/resources/META-INF/sql</sqlDirName>
 					<sqlFileName>tables.sql</sqlFileName>
 				</configuration>

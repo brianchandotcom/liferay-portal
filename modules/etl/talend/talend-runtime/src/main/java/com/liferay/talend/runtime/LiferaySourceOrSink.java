@@ -18,7 +18,7 @@ import com.liferay.talend.avro.EndpointSchemaInferrer;
 import com.liferay.talend.commons.exception.MalformedURLException;
 import com.liferay.talend.commons.json.JsonFinder;
 import com.liferay.talend.commons.oas.OASParameter;
-import com.liferay.talend.commons.oas.constants.OpenAPIConstants;
+import com.liferay.talend.commons.oas.constants.OASConstants;
 import com.liferay.talend.commons.util.StringUtils;
 import com.liferay.talend.commons.util.URIUtils;
 import com.liferay.talend.connection.LiferayConnectionProperties;
@@ -211,11 +211,11 @@ public class LiferaySourceOrSink
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveConnection(null);
 
-		JsonObject apiSpecJsonObject = doGetRequest(
+		JsonObject oasJsonObject = doGetRequest(
 			liferayConnectionProperties.getApiSpecURL());
 
-		JsonObject pathsJsonObject = apiSpecJsonObject.getJsonObject(
-			OpenAPIConstants.PATHS);
+		JsonObject pathsJsonObject = oasJsonObject.getJsonObject(
+			OASConstants.PATHS);
 
 		pathsJsonObject.forEach(
 			(path, operationsJsonValue) -> {
@@ -238,10 +238,10 @@ public class LiferaySourceOrSink
 						}
 
 						if (_jsonFinder.hasPath(
-								OpenAPIConstants.PATH_RESPONSE_SCHEMA_REFERENCE,
+								OASConstants.PATH_RESPONSE_SCHEMA_REFERENCE,
 								operationJsonValue.asJsonObject()) ||
 							_jsonFinder.hasPath(
-								OpenAPIConstants.
+								OASConstants.
 									PATH_RESPONSE_SCHEMA_ITEMS_REFERENCE,
 								operationJsonValue.asJsonObject())) {
 
@@ -288,14 +288,14 @@ public class LiferaySourceOrSink
 
 		String apiSpecURLHref = liferayConnectionProperties.getApiSpecURL();
 
-		JsonObject apiSpecJsonObject = doGetRequest(apiSpecURLHref);
+		JsonObject oasJsonObject = doGetRequest(apiSpecURLHref);
 
 		String jsonFinderPath = StringUtils.replace(
-			OpenAPIConstants.PATH_ENDPOINT_OPERATION_PARAMETERS_PATTERN,
+			OASConstants.PATH_ENDPOINT_OPERATION_PARAMETERS_PATTERN,
 			"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
 
 		JsonArray parametersArrayNode = _jsonFinder.getDescendantJsonArray(
-			jsonFinderPath, apiSpecJsonObject);
+			jsonFinderPath, oasJsonObject);
 
 		for (int i = 0; i < parametersArrayNode.size(); i++) {
 			oasParameters.add(
@@ -350,7 +350,7 @@ public class LiferaySourceOrSink
 			liferayConnectionProperties.getApiSpecURL());
 
 		String jsonFinderPath = StringUtils.replace(
-			OpenAPIConstants.PATH_ENDPOINT_PATTERN, "ENDPOINT_TPL", endpoint);
+			OASConstants.PATH_ENDPOINT_PATTERN, "ENDPOINT_TPL", endpoint);
 
 		JsonObject endpointJsonObject = _jsonFinder.getDescendantJsonObject(
 			jsonFinderPath, oasJsonObject);

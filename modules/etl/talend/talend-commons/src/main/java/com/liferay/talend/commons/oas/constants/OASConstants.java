@@ -18,7 +18,7 @@ package com.liferay.talend.commons.oas.constants;
  * @author Zoltán Takács
  * @author Igor Beslic
  */
-public class OpenAPIConstants {
+public class OASConstants {
 
 	public static final String ADDITIONAL_PROPERTIES = "additionalProperties";
 
@@ -62,7 +62,7 @@ public class OpenAPIConstants {
 
 	public static final String TYPE = "type";
 
-	private OpenAPIConstants() {
+	private OASConstants() {
 	}
 
 }

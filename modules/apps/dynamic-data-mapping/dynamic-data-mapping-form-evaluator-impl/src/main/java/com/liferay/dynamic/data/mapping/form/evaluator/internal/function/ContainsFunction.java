@@ -24,9 +24,14 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Leonardo Barros
  */
-@Component(service = DDMExpressionFunction.Function2.class)
+@Component(
+	property = "name=" + ContainsFunction.NAME,
+	service = DDMExpressionFunction.Function2.class
+)
 public class ContainsFunction
 	implements DDMExpressionFunction.Function2<Object, String, Boolean> {
+
+	public static final String NAME = "contains";
 
 	@Override
 	public Boolean apply(Object object, String key) {
@@ -47,7 +52,7 @@ public class ContainsFunction
 
 	@Override
 	public String getName() {
-		return "contains";
+		return NAME;
 	}
 
 	protected Boolean apply(String string1, String string2) {

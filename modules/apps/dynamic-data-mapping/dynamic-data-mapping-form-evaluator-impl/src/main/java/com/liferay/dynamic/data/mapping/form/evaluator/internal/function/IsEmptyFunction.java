@@ -25,9 +25,14 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Leonardo Barros
  */
-@Component(service = DDMExpressionFunction.Function1.class)
+@Component(
+	property = "name=" + IsEmptyFunction.NAME,
+	service = DDMExpressionFunction.Function1.class
+)
 public class IsEmptyFunction
 	implements DDMExpressionFunction.Function1<Object, Boolean> {
+
+	public static final String NAME = "isEmpty";
 
 	@Override
 	public Boolean apply(Object parameter) {
@@ -56,7 +61,7 @@ public class IsEmptyFunction
 
 	@Override
 	public String getName() {
-		return "isEmpty";
+		return NAME;
 	}
 
 	protected boolean isArray(Object parameter) {

@@ -19,12 +19,14 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Leonardo Barros
  */
-@Component(service = {})
+@Component(property = "name=" + SetMultipleFunction.NAME, service = {})
 public class SetMultipleFunction extends SetPropertyFunction<Boolean> {
+
+	public static final String NAME = "setMultiple";
 
 	@Override
 	public String getName() {
-		return "setMultiple";
+		return NAME;
 	}
 
 	@Override

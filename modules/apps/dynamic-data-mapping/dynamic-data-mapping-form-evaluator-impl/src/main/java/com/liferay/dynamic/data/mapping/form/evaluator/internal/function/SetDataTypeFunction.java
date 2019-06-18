@@ -19,12 +19,14 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Leonardo Barros
  */
-@Component(service = {})
+@Component(property = "name=" + SetDataTypeFunction.NAME, service = {})
 public class SetDataTypeFunction extends SetPropertyFunction<String> {
+
+	public static final String NAME = "setDataType";
 
 	@Override
 	public String getName() {
-		return "setDataType";
+		return NAME;
 	}
 
 	@Override

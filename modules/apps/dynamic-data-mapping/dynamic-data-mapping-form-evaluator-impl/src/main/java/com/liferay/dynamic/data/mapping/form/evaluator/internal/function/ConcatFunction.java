@@ -25,9 +25,14 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Leonardo Barros
  */
-@Component(service = DDMExpressionFunction.Function1.class)
+@Component(
+	property = "name=" + ConcatFunction.NAME,
+	service = DDMExpressionFunction.Function1.class
+)
 public class ConcatFunction
 	implements DDMExpressionFunction.Function1<String[], String> {
+
+	public static final String NAME = "concat";
 
 	@Override
 	public String apply(String[] values) {
@@ -42,7 +47,7 @@ public class ConcatFunction
 
 	@Override
 	public String getName() {
-		return "concat";
+		return NAME;
 	}
 
 }

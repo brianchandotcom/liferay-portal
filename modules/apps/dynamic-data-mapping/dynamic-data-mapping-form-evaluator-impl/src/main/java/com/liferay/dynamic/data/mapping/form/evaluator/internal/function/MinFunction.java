@@ -26,9 +26,14 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Leonardo Barros
  */
-@Component(service = DDMExpressionFunction.Function1.class)
+@Component(
+	property = "name=" + MinFunction.NAME,
+	service = DDMExpressionFunction.Function1.class
+)
 public class MinFunction
 	implements DDMExpressionFunction.Function1<BigDecimal[], BigDecimal> {
+
+	public static final String NAME = "MIN";
 
 	@Override
 	public BigDecimal apply(BigDecimal[] values) {
@@ -43,7 +48,7 @@ public class MinFunction
 
 	@Override
 	public String getName() {
-		return "min";
+		return NAME;
 	}
 
 }

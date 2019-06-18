@@ -27,6 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Leonardo Barros
  */
 @Component(
+	property = "name=" + GetValueFunction.NAME,
 	service = {
 		DDMExpressionFieldAccessorAware.class,
 		DDMExpressionFunction.Function1.class
@@ -35,6 +36,8 @@ import org.osgi.service.component.annotations.Component;
 public class GetValueFunction
 	implements DDMExpressionFieldAccessorAware,
 			   DDMExpressionFunction.Function1<String, Object> {
+
+	public static final String NAME = "getValue";
 
 	@Override
 	public Object apply(String field) {
@@ -53,7 +56,7 @@ public class GetValueFunction
 
 	@Override
 	public String getName() {
-		return "getValue";
+		return NAME;
 	}
 
 	@Override

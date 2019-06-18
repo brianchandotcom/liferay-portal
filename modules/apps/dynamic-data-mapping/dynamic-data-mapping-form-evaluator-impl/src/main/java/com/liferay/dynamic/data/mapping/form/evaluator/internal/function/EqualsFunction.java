@@ -24,9 +24,14 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Leonardo Barros
  */
-@Component(service = DDMExpressionFunction.Function2.class)
+@Component(
+	property = "name=" + EqualsFunction.NAME,
+	service = DDMExpressionFunction.Function2.class
+)
 public class EqualsFunction
 	implements DDMExpressionFunction.Function2<Object, Object, Boolean> {
+
+	public static final String NAME = "equals";
 
 	@Override
 	public Boolean apply(Object object1, Object object2) {
@@ -47,7 +52,7 @@ public class EqualsFunction
 
 	@Override
 	public String getName() {
-		return "equals";
+		return NAME;
 	}
 
 	private Object _getValue(JSONArray jsonArray) {

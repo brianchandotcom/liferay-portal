@@ -19,12 +19,14 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Leonardo Barros
  */
-@Component(service = {})
+@Component(property = "name=" + SetVisibleFunction.NAME, service = {})
 public class SetVisibleFunction extends SetPropertyFunction<Boolean> {
+
+	public static final String NAME = "setVisible";
 
 	@Override
 	public String getName() {
-		return "setVisible";
+		return NAME;
 	}
 
 	@Override

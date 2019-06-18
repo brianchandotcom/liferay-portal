@@ -19,13 +19,17 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jeyvison Nascimento
  */
-@Component(service = {})
+@Component(
+	property = "name=" + SetValidationFieldNameFunction.NAME, service = {}
+)
 public class SetValidationFieldNameFunction
 	extends SetPropertyFunction<String> {
 
+	public static final String NAME = "setValidationFieldName";
+
 	@Override
 	public String getName() {
-		return "setValidationFieldName";
+		return NAME;
 	}
 
 	@Override

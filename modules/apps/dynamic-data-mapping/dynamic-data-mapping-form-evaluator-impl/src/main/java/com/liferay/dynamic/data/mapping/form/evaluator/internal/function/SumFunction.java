@@ -26,9 +26,14 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Leonardo Barros
  */
-@Component(service = DDMExpressionFunction.Function1.class)
+@Component(
+	property = "name=" + SumFunction.NAME,
+	service = DDMExpressionFunction.Function1.class
+)
 public class SumFunction
 	implements DDMExpressionFunction.Function1<BigDecimal[], BigDecimal> {
+
+	public static final String NAME = "sum";
 
 	@Override
 	public BigDecimal apply(BigDecimal[] values) {
@@ -41,7 +46,7 @@ public class SumFunction
 
 	@Override
 	public String getName() {
-		return "sum";
+		return NAME;
 	}
 
 }

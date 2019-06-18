@@ -23,9 +23,14 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Leonardo Barros
  */
-@Component(service = DDMExpressionFunction.Function1.class)
+@Component(
+	property = "name=" + IsDecimalFunction.NAME,
+	service = DDMExpressionFunction.Function1.class
+)
 public class IsDecimalFunction
 	implements DDMExpressionFunction.Function1<Object, Boolean> {
+
+	public static final String NAME = "isDecimal";
 
 	@Override
 	public Boolean apply(Object value) {
@@ -41,7 +46,7 @@ public class IsDecimalFunction
 
 	@Override
 	public String getName() {
-		return "isDecimal";
+		return NAME;
 	}
 
 }

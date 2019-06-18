@@ -33,6 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Leonardo Barros
  */
 @Component(
+	property = "name=" + BelongsToRoleFunction.NAME,
 	service = {
 		DDMExpressionFunction.Function1.class,
 		DDMExpressionParameterAccessorAware.class
@@ -41,6 +42,8 @@ import org.osgi.service.component.annotations.Reference;
 public class BelongsToRoleFunction
 	implements DDMExpressionFunction.Function1<String[], Boolean>,
 			   DDMExpressionParameterAccessorAware {
+
+	public static final String NAME = "belongsTo";
 
 	@Override
 	public Boolean apply(String[] roles) {
@@ -95,7 +98,7 @@ public class BelongsToRoleFunction
 
 	@Override
 	public String getName() {
-		return "belongsTo";
+		return NAME;
 	}
 
 	@Override

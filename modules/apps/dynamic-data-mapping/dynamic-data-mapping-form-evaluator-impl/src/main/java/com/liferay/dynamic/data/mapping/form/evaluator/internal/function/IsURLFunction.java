@@ -22,9 +22,14 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Leonardo Barros
  */
-@Component(service = DDMExpressionFunction.Function1.class)
+@Component(
+	property = "name=" + IsURLFunction.NAME,
+	service = DDMExpressionFunction.Function1.class
+)
 public class IsURLFunction
 	implements DDMExpressionFunction.Function1<Object, Boolean> {
+
+	public static final String NAME = "isURL";
 
 	@Override
 	public Boolean apply(Object parameter) {
@@ -37,7 +42,7 @@ public class IsURLFunction
 
 	@Override
 	public String getName() {
-		return "isURL";
+		return NAME;
 	}
 
 }

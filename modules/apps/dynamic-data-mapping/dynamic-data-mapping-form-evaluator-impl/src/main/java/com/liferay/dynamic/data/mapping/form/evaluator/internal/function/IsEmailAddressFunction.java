@@ -26,9 +26,14 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Leonardo Barros
  */
-@Component(service = DDMExpressionFunction.Function1.class)
+@Component(
+	property = "name=" + IsEmailAddressFunction.NAME,
+	service = DDMExpressionFunction.Function1.class
+)
 public class IsEmailAddressFunction
 	implements DDMExpressionFunction.Function1<String, Boolean> {
+
+	public static final String NAME = "isEmailAddress";
 
 	@Override
 	public Boolean apply(String parameter) {
@@ -43,7 +48,7 @@ public class IsEmailAddressFunction
 
 	@Override
 	public String getName() {
-		return "isEmailAddress";
+		return NAME;
 	}
 
 }

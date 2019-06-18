@@ -26,6 +26,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Leonardo Barros
  */
 @Component(
+	property = "name=" + JumpPageFunction.NAME,
 	service = {
 		DDMExpressionActionHandlerAware.class,
 		DDMExpressionFunction.Function2.class
@@ -34,6 +35,8 @@ import org.osgi.service.component.annotations.Component;
 public class JumpPageFunction
 	implements DDMExpressionActionHandlerAware,
 			   DDMExpressionFunction.Function2<Number, Number, Boolean> {
+
+	public static final String NAME = "jumpPage";
 
 	@Override
 	public Boolean apply(Number fromPage, Number toPage) {
@@ -57,7 +60,7 @@ public class JumpPageFunction
 
 	@Override
 	public String getName() {
-		return "jumpPage";
+		return NAME;
 	}
 
 	@Override

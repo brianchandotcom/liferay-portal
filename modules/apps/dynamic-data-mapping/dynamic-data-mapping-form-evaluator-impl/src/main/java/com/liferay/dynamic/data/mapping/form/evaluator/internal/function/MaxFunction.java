@@ -26,9 +26,14 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Leonardo Barros
  */
-@Component(service = DDMExpressionFunction.Function1.class)
+@Component(
+	property = "name=" + MaxFunction.NAME,
+	service = DDMExpressionFunction.Function1.class
+)
 public class MaxFunction
 	implements DDMExpressionFunction.Function1<BigDecimal[], BigDecimal> {
+
+	public static final String NAME = "MAX";
 
 	@Override
 	public BigDecimal apply(BigDecimal[] values) {
@@ -43,7 +48,7 @@ public class MaxFunction
 
 	@Override
 	public String getName() {
-		return "max";
+		return NAME;
 	}
 
 }

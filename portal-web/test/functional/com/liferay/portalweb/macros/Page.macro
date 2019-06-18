@@ -441,7 +441,7 @@ definition {
 	}
 
 	macro viewChildPageDropdown {
-		ClickNoError.clickNoMouseOver(locator1 = "Home#${viewChildPageDropdown}");
+		ClickNoError(locator1 = "Home#${viewChildPageDropdown}");
 
 		if (isSet(javaScriptPage)) {
 			AssertConfirm.waitForConfirmation(value1 = "${javaScriptPage}");

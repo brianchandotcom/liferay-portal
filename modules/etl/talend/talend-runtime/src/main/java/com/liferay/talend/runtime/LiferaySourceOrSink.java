@@ -15,14 +15,14 @@
 package com.liferay.talend.runtime;
 
 import com.liferay.talend.avro.EndpointSchemaInferrer;
+import com.liferay.talend.commons.exception.MalformedURLException;
+import com.liferay.talend.commons.oas.Parameter;
+import com.liferay.talend.commons.oas.constants.OpenAPIConstants;
+import com.liferay.talend.commons.util.URIUtils;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
-import com.liferay.talend.exception.ExceptionUtils;
-import com.liferay.talend.exception.MalformedURLException;
-import com.liferay.talend.openapi.Parameter;
-import com.liferay.talend.openapi.constants.OpenAPIConstants;
+import com.liferay.talend.properties.ExceptionUtils;
 import com.liferay.talend.runtime.client.RESTClient;
-import com.liferay.talend.utils.URIUtils;
 
 import java.io.IOException;
 

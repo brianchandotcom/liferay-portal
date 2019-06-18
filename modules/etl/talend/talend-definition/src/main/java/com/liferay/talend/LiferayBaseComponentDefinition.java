@@ -15,7 +15,7 @@
 package com.liferay.talend;
 
 import com.liferay.talend.connection.LiferayConnectionProperties;
-import com.liferay.talend.exception.ExceptionUtils;
+import com.liferay.talend.properties.ExceptionUtils;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
 

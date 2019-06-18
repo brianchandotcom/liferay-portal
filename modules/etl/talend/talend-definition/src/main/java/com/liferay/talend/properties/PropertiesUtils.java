@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.talend.utils;
+package com.liferay.talend.properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

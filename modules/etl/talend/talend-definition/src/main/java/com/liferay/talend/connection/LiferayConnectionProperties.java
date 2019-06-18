@@ -15,11 +15,11 @@
 package com.liferay.talend.connection;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
+import com.liferay.talend.commons.util.URIUtils;
+import com.liferay.talend.properties.PropertiesUtils;
 import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
 import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
 import com.liferay.talend.ui.UIKeys;
-import com.liferay.talend.utils.PropertiesUtils;
-import com.liferay.talend.utils.URIUtils;
 
 import java.net.URL;
 

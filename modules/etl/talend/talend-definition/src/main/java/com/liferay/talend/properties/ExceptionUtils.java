@@ -12,26 +12,29 @@
  * details.
  */
 
-package com.liferay.talend.utils;
+package com.liferay.talend.properties;
+
+import org.talend.daikon.properties.ValidationResult;
+import org.talend.daikon.properties.ValidationResultMutable;
 
 /**
  * @author Zoltán Takács
  */
-public class StringUtils {
+public class ExceptionUtils {
 
-	public static boolean isEmpty(final CharSequence cs) {
-		if ((cs == null) || (cs.length() == 0)) {
-			return true;
-		}
+	public static ValidationResultMutable exceptionToValidationResult(
+		Exception e) {
 
-		return false;
+		ValidationResultMutable validationResultMutable =
+			new ValidationResultMutable();
+
+		validationResultMutable.setMessage(e.getMessage());
+		validationResultMutable.setStatus(ValidationResult.Result.ERROR);
+
+		return validationResultMutable;
 	}
 
-	public static String removeQuotes(String s) {
-		return s.replace("\"", "");
-	}
-
-	private StringUtils() {
+	private ExceptionUtils() {
 	}
 
 }

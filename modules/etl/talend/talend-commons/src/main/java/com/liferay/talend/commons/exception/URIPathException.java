@@ -12,19 +12,26 @@
  * details.
  */
 
-package com.liferay.talend.exception;
+package com.liferay.talend.commons.exception;
 
 /**
  * @author Zoltán Takács
  */
-public class MalformedURLException extends RuntimeException {
+public class URIPathException extends RuntimeException {
 
-	public MalformedURLException(String message) {
+	public URIPathException() {
+	}
+
+	public URIPathException(String message) {
 		super(message);
 	}
 
-	public MalformedURLException(Throwable throwable) {
-		super(throwable);
+	public URIPathException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public URIPathException(Throwable cause) {
+		super(cause);
 	}
 
 }

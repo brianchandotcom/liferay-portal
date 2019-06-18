@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -34,6 +33,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
@@ -105,17 +105,11 @@ public class DataLayoutTaglibUtil {
 		HttpServletRequest httpServletRequest, Locale locale, String type) {
 
 		try {
-			String portletNamespace = ParamUtil.getString(
-				httpServletRequest, "portletNamespace");
-
 			Class<?> ddmFormFieldTypeSettings = _getDDMFormFieldTypeSettings(
 				type);
 
 			DDMForm ddmFormFieldTypeSettingsDDMForm = DDMFormFactory.create(
 				ddmFormFieldTypeSettings);
-
-			DDMFormLayout ddmFormFieldTypeSettingsDDMFormLayout =
-				DDMFormLayoutFactory.create(ddmFormFieldTypeSettings);
 
 			DDMFormRenderingContext ddmFormRenderingContext =
 				new DDMFormRenderingContext();
@@ -130,16 +124,16 @@ public class DataLayoutTaglibUtil {
 			ddmFormRenderingContext.setHttpServletRequest(httpServletRequest);
 			ddmFormRenderingContext.setContainerId("settings");
 			ddmFormRenderingContext.setLocale(locale);
-			ddmFormRenderingContext.setPortletNamespace(portletNamespace);
+			ddmFormRenderingContext.setPortletNamespace(
+				ParamUtil.getString(httpServletRequest, "portletNamespace"));
 			ddmFormRenderingContext.setReturnFullContext(true);
 
-			String json = _jsonFactory.looseSerializeDeep(
-				_ddmFormTemplateContextFactory.create(
-					ddmFormFieldTypeSettingsDDMForm,
-					ddmFormFieldTypeSettingsDDMFormLayout,
-					ddmFormRenderingContext));
-
-			return _jsonFactory.createJSONObject(json);
+			return _jsonFactory.createJSONObject(
+				_jsonFactory.looseSerializeDeep(
+					_ddmFormTemplateContextFactory.create(
+						ddmFormFieldTypeSettingsDDMForm,
+						DDMFormLayoutFactory.create(ddmFormFieldTypeSettings),
+						ddmFormRenderingContext)));
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
@@ -160,12 +154,10 @@ public class DataLayoutTaglibUtil {
 	private JSONObject _getFieldTypeMetadataJSONObject(
 		FieldType fieldType, HttpServletRequest httpServletRequest) {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
 		Map<String, Object> fieldTypeProperties =
 			_fieldTypeTracker.getFieldTypeProperties(fieldType.getName());
 
-		jsonObject.put(
+		return JSONUtil.put(
 			"description",
 			_getLanguageTerm(
 				MapUtil.getString(
@@ -198,8 +190,6 @@ public class DataLayoutTaglibUtil {
 				httpServletRequest, LocaleThreadLocal.getThemeDisplayLocale(),
 				fieldType.getName())
 		);
-
-		return jsonObject;
 	}
 
 	private JSONArray _getFieldTypesJSONArray(
@@ -254,12 +244,10 @@ public class DataLayoutTaglibUtil {
 	}
 
 	private String _resolveFieldTypeModule(FieldType fieldType) {
-		Map<String, Object> fieldTypeProperties =
-			_fieldTypeTracker.getFieldTypeProperties(fieldType.getName());
-
 		return _getJavaScriptModule(
 			MapUtil.getString(
-				fieldTypeProperties, "data.engine.field.type.js.module"));
+				_fieldTypeTracker.getFieldTypeProperties(fieldType.getName()),
+				"data.engine.field.type.js.module"));
 	}
 
 	private String _resolveFieldTypesModules() {

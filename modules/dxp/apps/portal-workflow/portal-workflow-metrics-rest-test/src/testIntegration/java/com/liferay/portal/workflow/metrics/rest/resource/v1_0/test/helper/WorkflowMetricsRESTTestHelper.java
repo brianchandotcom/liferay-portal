@@ -38,7 +38,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.Method;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -338,7 +337,7 @@ public class WorkflowMetricsRESTTestHelper {
 			"name", task.getKey(), "processId", processId);
 	}
 
-	public Document getSingleApproverDocument(long companyId) throws Exception {
+	public Document[] getDocuments(long companyId) throws Exception {
 		return IdempotentRetryAssert.retryAssert(
 			10, TimeUnit.SECONDS,
 			() -> {
@@ -352,19 +351,18 @@ public class WorkflowMetricsRESTTestHelper {
 				searchSearchRequest.setQuery(
 					booleanQuery.addMustQueryClauses(
 						_queries.term("companyId", companyId),
-						_queries.term("name", "Single Approver")));
+						_queries.term("deleted", Boolean.FALSE)));
+
+				searchSearchRequest.setSize(10000);
 
 				SearchSearchResponse searchSearchResponse =
 					_searchEngineAdapter.execute(searchSearchRequest);
 
 				Hits hits = searchSearchResponse.getHits();
 
-				Document[] documents = hits.getDocs();
+				Assert.assertNotEquals(hits.toString(), 0, hits.getLength());
 
-				Assert.assertEquals(
-					Arrays.toString(documents), 1, documents.length);
-
-				return documents[0];
+				return hits.getDocs();
 			});
 	}
 

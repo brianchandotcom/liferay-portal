@@ -108,12 +108,11 @@ export const mergePages = (
 				};
 			}
 
-			if (field.localizable) {
+			if (newField.localizable) {
 				newField = {
 					...newField,
 					localizedValue: {
-						...sourceField.localizedValue,
-						...(newField.localizedValue || {})
+						...sourceField.localizedValue
 					}
 				};
 			}

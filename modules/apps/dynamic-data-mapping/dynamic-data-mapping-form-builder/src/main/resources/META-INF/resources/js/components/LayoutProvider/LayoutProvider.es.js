@@ -90,17 +90,25 @@ class LayoutProvider extends Component {
 	}
 
 	getFocusedField() {
+		const {defaultLanguageId, editingLanguageId} = this.props;
 		let {focusedField} = this.state;
 
 		if (focusedField && focusedField.settingsContext) {
+			const settingsContext = {
+				...focusedField.settingsContext,
+				pages: this.getLocalizedPages(
+					focusedField.settingsContext.pages
+				)
+			};
+
 			focusedField = {
 				...focusedField,
-				settingsContext: {
-					...focusedField.settingsContext,
-					pages: this.getLocalizedPages(
-						focusedField.settingsContext.pages
-					)
-				}
+				...getFieldProperties(
+					settingsContext,
+					defaultLanguageId,
+					editingLanguageId
+				),
+				settingsContext
 			};
 
 			if (focusedField.originalContext) {
@@ -140,16 +148,24 @@ class LayoutProvider extends Component {
 				if (localizedValue !== undefined) {
 					value = localizedValue;
 				}
-			}
-
-			if (value && value.JSONArray) {
-				value = value.JSONArray;
+			} else if (
+				field.dataType === 'ddm-options' &&
+				value[editingLanguageId] === undefined
+			) {
+				value = {
+					...value,
+					[editingLanguageId]: value[defaultLanguageId]
+				};
 			}
 
 			return {
 				...field,
 				defaultLanguageId,
 				editingLanguageId,
+				localizedValue: {
+					...field.localizedValue,
+					[editingLanguageId]: value
+				},
 				value
 			};
 		});
@@ -161,7 +177,7 @@ class LayoutProvider extends Component {
 		const visitor = new PagesVisitor(pages);
 
 		pages = visitor.mapFields(field => {
-			const {options, settingsContext} = field;
+			const {settingsContext} = field;
 
 			return {
 				...getFieldProperties(
@@ -169,7 +185,6 @@ class LayoutProvider extends Component {
 					defaultLanguageId,
 					editingLanguageId
 				),
-				options,
 				settingsContext: {
 					...settingsContext,
 					availableLanguageIds: [editingLanguageId],

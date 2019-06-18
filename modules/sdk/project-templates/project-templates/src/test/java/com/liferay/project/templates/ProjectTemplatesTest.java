@@ -4689,7 +4689,7 @@ public class ProjectTemplatesTest {
 		String author = System.getProperty("user.name");
 		String className = name;
 		String contributorType = null;
-		String dependencyInjector = "spring";
+		String dependencyInjector = "ds";
 		String hostBundleSymbolicName = null;
 		String hostBundleVersion = null;
 		String packageName = name.replace('-', '.');

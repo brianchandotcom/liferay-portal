@@ -21,6 +21,8 @@ import Soy from 'metal-soy';
 
 import templates from './AssetVocabularyCategoriesSelector.soy';
 
+import {ItemSelectorDialog} from 'frontend-js-web';
+
 /**
  * Wraps Clay's existing <code>MultiSelect</code> component that offers the user
  * a categories selection input.
@@ -42,43 +44,37 @@ class AssetVocabularyCategoriesSelector extends Component {
 	 * @private
 	 */
 	_handleButtonClicked(event) {
-		AUI().use(
-			'liferay-item-selector-dialog',
-			function(A) {
-				var uri = A.Lang.sub(decodeURIComponent(this.portletURL), {
-					selectedCategories: this.selectedItems
-						.map(item => item.value)
-						.join(),
-					singleSelect: this.singleSelect,
-					vocabularyIds: this.vocabularyIds.concat()
-				});
+		const sub = (str, obj)  => str.replace(/\{([^}]+)\}/g, (_, m) => obj[m]);
 
-				const itemSelectorDialog = new A.LiferayItemSelectorDialog({
-					eventName: this.eventName,
-					on: {
-						selectedItemChange: function(event) {
-							const selectedItems = event.newVal;
+		const uri = sub(decodeURIComponent(this.portletURL), {
+			selectedCategories: this.selectedItems
+				.map(item => item.value)
+				.join(),
+			singleSelect: this.singleSelect,
+			vocabularyIds: this.vocabularyIds.concat()
+		});
 
-							if (selectedItems) {
-								this.selectedItems = Object.keys(
-									selectedItems
-								).map(itemKey => {
-									return {
-										label: selectedItems[itemKey].value,
-										value: selectedItems[itemKey].categoryId
-									};
-								});
-							}
-						}.bind(this)
-					},
-					'strings.add': Liferay.Language.get('add'),
-					title: Liferay.Language.get('select-categories'),
-					url: uri
-				});
+		const itemSelectorDialog = new ItemSelectorDialog({
+			eventName: this.eventName,
+			title: Liferay.Language.get('select-categories'),
+			url: uri
+		});
 
-				itemSelectorDialog.open();
-			}.bind(this)
-		);
+		itemSelectorDialog.open();
+		itemSelectorDialog.on('selectedItemChange', event => {
+			const selectedItems = event.selectedItem;
+
+			if (selectedItems) {
+				this.selectedItems = Object.keys(selectedItems).map(
+					itemKey => {
+						return {
+							label: selectedItems[itemKey].value,
+							value: selectedItems[itemKey].categoryId
+						};
+					}
+				);
+			}
+		});
 	}
 
 	_handleInputFocus(event) {

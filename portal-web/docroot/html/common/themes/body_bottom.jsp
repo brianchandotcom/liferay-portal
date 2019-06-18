@@ -14,14 +14,10 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
-
-<%@ page import="com.liferay.petra.string.StringBundler" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %><%@
-page import="com.liferay.taglib.util.OutputTag" %>
+<%@ include file="/html/common/themes/init.jsp" %>
 
 <%
-StringBundler bodyBottomSB = OutputTag.getDataSB(request, WebKeys.PAGE_BODY_BOTTOM);
+com.liferay.petra.string.StringBundler bodyBottomSB = OutputTag.getDataSB(request, WebKeys.PAGE_BODY_BOTTOM);
 
 if (bodyBottomSB != null) {
 	bodyBottomSB.writeTo(out);

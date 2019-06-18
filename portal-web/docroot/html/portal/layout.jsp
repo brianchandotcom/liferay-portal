@@ -14,8 +14,7 @@
  */
 --%>
 
-<%@ page import="com.liferay.portal.kernel.util.StringBundler" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %>
+<%@ include file="/html/portal/init.jsp" %>
 
 <%
 StringBundler sb = (StringBundler)request.getAttribute(WebKeys.LAYOUT_CONTENT);

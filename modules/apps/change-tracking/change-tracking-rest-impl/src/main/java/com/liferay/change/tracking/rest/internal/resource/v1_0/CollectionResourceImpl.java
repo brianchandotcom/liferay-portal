@@ -156,10 +156,6 @@ public class CollectionResourceImpl
 			ctCollections = _ctManager.getCTCollections(
 				companyId, userId, false, false, queryDefinition);
 		}
-		else {
-			throw new IllegalArgumentException(
-				"Invalid collection type: " + collectionType);
-		}
 
 		List<Collection> collections = TransformUtil.transform(
 			ctCollections, this::_toCollection);

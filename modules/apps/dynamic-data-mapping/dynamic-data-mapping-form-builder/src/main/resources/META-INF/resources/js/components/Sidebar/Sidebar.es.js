@@ -269,10 +269,20 @@ class Sidebar extends Component {
 	}
 
 	syncEditingLanguageId() {
+		const {dispatch} = this.context;
 		const {evaluableForm} = this.refs;
+		const {focusedField} = this.props;
 
 		if (evaluableForm) {
-			evaluableForm.evaluate();
+			evaluableForm.evaluate().then(pages => {
+				dispatch('focusedFieldUpdated', {
+					...focusedField,
+					settingsContext: {
+						...focusedField.settingsContext,
+						pages
+					}
+				});
+			});
 		}
 	}
 
@@ -439,9 +449,10 @@ class Sidebar extends Component {
 	}
 
 	_handleEvaluatorChanged(pages) {
+		const {dispatch} = this.context;
 		const {focusedField} = this.props;
 
-		this.emit('focusedFieldUpdated', {
+		dispatch('focusedFieldUpdated', {
 			...focusedField,
 			settingsContext: {
 				...focusedField.settingsContext,

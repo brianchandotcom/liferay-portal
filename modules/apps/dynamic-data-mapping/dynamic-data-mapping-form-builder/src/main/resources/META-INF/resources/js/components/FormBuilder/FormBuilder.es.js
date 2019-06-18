@@ -79,7 +79,6 @@ class FormBuilderBase extends Component {
 			fieldDeleted: this._handleFieldDeleted.bind(this),
 			fieldDuplicated: this._handleFieldDuplicated.bind(this),
 			fieldSetAdded: this._handleFieldSetAdded.bind(this),
-			focusedFieldUpdated: this._handleFocusedFieldUpdated.bind(this),
 			settingsFieldBlurred: this._handleSettingsFieldBlurred.bind(this),
 			settingsFieldEdited: this._handleSettingsFieldEdited.bind(this)
 		};
@@ -385,16 +384,6 @@ class FormBuilderBase extends Component {
 				...event,
 				fieldSetPages: pages
 			});
-		});
-	}
-
-	_handleFocusedFieldUpdated(focusedField) {
-		const {dispatch} = this.context;
-		const settingsContext = focusedField.settingsContext;
-
-		dispatch('focusedFieldUpdated', {
-			...focusedField,
-			settingsContext
 		});
 	}
 

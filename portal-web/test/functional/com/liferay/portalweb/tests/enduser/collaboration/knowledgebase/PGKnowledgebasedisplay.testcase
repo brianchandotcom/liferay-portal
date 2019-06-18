@@ -580,7 +580,7 @@ definition {
 
 	@priority = "3"
 	test ViewKBArticleWithBlogsEntryRelatedAsset {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",

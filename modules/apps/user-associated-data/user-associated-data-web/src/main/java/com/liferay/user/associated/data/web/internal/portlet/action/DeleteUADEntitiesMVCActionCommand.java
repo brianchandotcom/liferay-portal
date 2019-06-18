@@ -147,8 +147,8 @@ public class DeleteUADEntitiesMVCActionCommand extends BaseUADMVCActionCommand {
 							actionRequest, "deleteUADEntityException",
 							exceptionMessageMap.get(e.getClass()));
 
-						String redirect = _portal.escapeRedirect(
-							ParamUtil.getString(actionRequest, "redirect"));
+						String redirect = ParamUtil.getString(
+							actionRequest, "redirect");
 
 						if (Validator.isNotNull(redirect)) {
 							sendRedirect(

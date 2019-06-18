@@ -274,7 +274,8 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 						TokenTypes.LAMBDA, TokenTypes.METHOD_DEF);
 			}
 
-			if ((branchedStatementDetailAST.getLineNo() < start) &&
+			if ((branchedStatementDetailAST != null) &&
+				(branchedStatementDetailAST.getLineNo() < start) &&
 				((lastBranchingStatementDetailAST == null) ||
 				 (branchingStatementDetailAST.getLineNo() >
 					 lastBranchingStatementDetailAST.getLineNo()))) {

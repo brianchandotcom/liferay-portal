@@ -1312,7 +1312,12 @@ definition {
 			currentKBPageScope = "Liferay",
 			newKBPageScope = "Knowledge Base Display Page 2 (Create New)");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Knowledge Base");
 
 		KBArticle.setScopeCP(kbPageScope = "Knowledge Base Display Page 1");
 

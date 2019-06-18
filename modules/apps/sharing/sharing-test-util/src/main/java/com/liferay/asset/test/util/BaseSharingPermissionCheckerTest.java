@@ -61,7 +61,7 @@ import java.util.Arrays;
 /**
  * @author Sergio González
  */
-public class BaseSharingPermissionCheckerTest {
+public abstract class BaseSharingPermissionCheckerTest {
 
 	@ClassRule
 	@Rule

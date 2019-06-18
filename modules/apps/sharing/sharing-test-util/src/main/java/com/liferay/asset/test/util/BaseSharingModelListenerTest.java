@@ -55,7 +55,7 @@ import java.util.List;
 /**
  * @author Sergio González
  */
-public class BaseSharingModelListenerTest {
+public abstract class BaseSharingModelListenerTest {
 
 	@ClassRule
 	@Rule

@@ -61,7 +61,7 @@ import java.util.Arrays;
 /**
  * @author Sergio González
  */
-public class BaseSharingModelResourcePermissionTest {
+public abstract class BaseSharingModelResourcePermissionTest {
 
 	@ClassRule
 	@Rule

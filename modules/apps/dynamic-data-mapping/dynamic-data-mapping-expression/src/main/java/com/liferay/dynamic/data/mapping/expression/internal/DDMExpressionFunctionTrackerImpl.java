@@ -14,19 +14,18 @@
 
 package com.liferay.dynamic.data.mapping.expression.internal;
 
-import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionFactory;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.service.component.ComponentFactory;
-import org.osgi.service.component.ComponentInstance;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -40,45 +39,41 @@ public class DDMExpressionFunctionTrackerImpl
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		_componentFactoryMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, ComponentFactory.class,
-			"(component.factory=" +
-				DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME + ")",
-			(serviceReference, emitter) -> {
-				ComponentFactory componentFactory = bundleContext.getService(
-					serviceReference);
-
-				ComponentInstance componentInstance =
-					componentFactory.newInstance(null);
-
-				DDMExpressionFunction ddmExpressionFunction =
-					(DDMExpressionFunction)componentInstance.getInstance();
-
-				bundleContext.ungetService(serviceReference);
-
-				emitter.emit(ddmExpressionFunction.getName());
-			});
+		_ddmExpressionFunctionFactoryMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, DDMExpressionFunctionFactory.class, "name");
 	}
 
+	@Override
+	public Map<String, DDMExpressionFunctionFactory>
+		getDDMExpressionFunctionFactories(Set<String> functionNames) {
+
+		Map<String, DDMExpressionFunctionFactory>
+			ddmExpressionFunctionFactoriesMap = new HashMap<>(
+				functionNames.size());
+
+		for (String functionName : functionNames) {
+			DDMExpressionFunctionFactory ddmExpressionFunctionFactory =
+				_ddmExpressionFunctionFactoryMap.getService(functionName);
+
+			if (ddmExpressionFunctionFactory != null) {
+				ddmExpressionFunctionFactoriesMap.put(
+					functionName, ddmExpressionFunctionFactory);
+			}
+		}
+
+		return ddmExpressionFunctionFactoriesMap;
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public Map<String, DDMExpressionFunction> getDDMExpressionFunctions(
 		Set<String> functionNames) {
 
-		Map<String, DDMExpressionFunction> ddmExpressionFunctionsMap =
-			new HashMap<>(functionNames.size());
-
-		for (String functionName : functionNames) {
-			ComponentFactory componentFactory = _componentFactoryMap.getService(
-				functionName);
-
-			if (componentFactory != null) {
-				ddmExpressionFunctionsMap.put(
-					functionName,
-					_createDDMExpressionFunction(componentFactory));
-			}
-		}
-
-		return ddmExpressionFunctionsMap;
+		return Collections.emptyMap();
 	}
 
 	/**
@@ -92,23 +87,10 @@ public class DDMExpressionFunctionTrackerImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_componentFactoryMap.close();
+		_ddmExpressionFunctionFactoryMap.close();
 	}
 
-	private DDMExpressionFunction _createDDMExpressionFunction(
-		ComponentFactory componentFactory) {
-
-		ComponentInstance componentInstance = componentFactory.newInstance(
-			null);
-
-		DDMExpressionFunction ddmExpressionFunction =
-			(DDMExpressionFunction)componentInstance.getInstance();
-
-		componentInstance.dispose();
-
-		return ddmExpressionFunction;
-	}
-
-	private ServiceTrackerMap<String, ComponentFactory> _componentFactoryMap;
+	private ServiceTrackerMap<String, DDMExpressionFunctionFactory>
+		_ddmExpressionFunctionFactoryMap;
 
 }

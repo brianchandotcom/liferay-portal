@@ -276,7 +276,7 @@ public class ExecuteBndTask extends DefaultTask {
 		_writeManifest = writeManifest;
 	}
 
-	private static void _logReport(Report report, Logger logger) {
+	private void _logReport(Report report, Logger logger) {
 		if (logger.isWarnEnabled()) {
 			for (String warning : report.getWarnings()) {
 				Report.Location location = report.getLocation(warning);
@@ -306,7 +306,7 @@ public class ExecuteBndTask extends DefaultTask {
 		}
 	}
 
-	private static File[] _toArray(FileCollection fileCollection) {
+	private File[] _toArray(FileCollection fileCollection) {
 		Set<File> files = fileCollection.getFiles();
 
 		return files.toArray(new File[0]);

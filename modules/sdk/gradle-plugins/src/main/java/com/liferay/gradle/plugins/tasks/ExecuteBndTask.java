@@ -276,6 +276,12 @@ public class ExecuteBndTask extends DefaultTask {
 		_writeManifest = writeManifest;
 	}
 
+	private static File[] _toArray(FileCollection fileCollection) {
+		Set<File> files = fileCollection.getFiles();
+
+		return files.toArray(new File[0]);
+	}
+
 	private void _logReport(Report report, Logger logger) {
 		if (logger.isWarnEnabled()) {
 			for (String warning : report.getWarnings()) {
@@ -304,12 +310,6 @@ public class ExecuteBndTask extends DefaultTask {
 				}
 			}
 		}
-	}
-
-	private static File[] _toArray(FileCollection fileCollection) {
-		Set<File> files = fileCollection.getFiles();
-
-		return files.toArray(new File[0]);
 	}
 
 	private Object _baseDir;

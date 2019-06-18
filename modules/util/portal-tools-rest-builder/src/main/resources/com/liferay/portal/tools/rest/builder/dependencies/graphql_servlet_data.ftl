@@ -48,6 +48,7 @@ public class ServletDataImpl implements ServletData {
 	}
 
 	@Override
+	@Deprecated
 	public String getPath() {
 		return "${configYAML.application.baseURI}-graphql/${escapedVersion}";
 	}

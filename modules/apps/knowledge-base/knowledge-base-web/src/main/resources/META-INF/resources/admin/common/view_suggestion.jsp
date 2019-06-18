@@ -27,7 +27,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(kbCommentTitle);
 %>
 
-<div class="card list-group-card panel" id="<portlet:namespace /><%= kbComment.getKbCommentId() %>">
+<div class="card panel" id="<portlet:namespace /><%= kbComment.getKbCommentId() %>">
 	<div class="panel-heading">
 		<div class="card-row card-row-padded">
 			<div class="card-col-field">

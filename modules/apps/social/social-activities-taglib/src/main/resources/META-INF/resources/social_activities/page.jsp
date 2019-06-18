@@ -68,7 +68,7 @@
 			}
 			%>
 
-			<ul class="list-group-card list-unstyled">
+			<ul class="list-unstyled">
 				<li class="splitter">
 					<c:choose>
 						<c:when test="<%= curDaysBetween == 0 %>">

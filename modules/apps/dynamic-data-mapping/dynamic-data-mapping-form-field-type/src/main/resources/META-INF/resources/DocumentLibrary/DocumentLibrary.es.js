@@ -7,7 +7,7 @@ import {Config} from 'metal-state';
 
 class DocumentLibrary extends Component {
 	created() {
-		AUI().use('liferay-item-selector-dialog', A => {
+		AUI().use('liferay-item-selector-dialog', 'liferay-portlet-url', A => {
 			this.A = A;
 		});
 	}

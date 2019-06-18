@@ -18,9 +18,7 @@ class EffectsComponent extends Component {
 		async.nextTick(() => {
 			this.getImageEditorImageData()
 				.then(imageData =>
-					Promise.resolve(
-						this.generateThumbnailImageData_(imageData)
-					)
+					Promise.resolve(this.generateThumbnailImageData_(imageData))
 				)
 				.then(previewImageData =>
 					this.generateThumbnails_(previewImageData)

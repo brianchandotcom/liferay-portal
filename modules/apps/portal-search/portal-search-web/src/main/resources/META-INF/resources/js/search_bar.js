@@ -14,8 +14,7 @@ AUI.add(
 
 			if (emptySearchInput.val() === 'true') {
 				instance.emptySearchEnabled = true;
-			}
-			else {
+			} else {
 				instance.emptySearchEnabled = false;
 			}
 
@@ -79,11 +78,10 @@ AUI.add(
 				searchParams.delete('p_p_id');
 				searchParams.delete('p_p_state');
 
-
 				if (instance.scopeSelect) {
 					searchParams.set(
 						instance.scopeSelect.get('name'),
-						instance.scopeSelect.val(),
+						instance.scopeSelect.val()
 					);
 				}
 

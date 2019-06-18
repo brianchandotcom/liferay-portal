@@ -338,7 +338,9 @@ AUI.add(
 
 					if (
 						confirm(
-							Liferay.Language.get('you-have-unsaved-changes-do-you-want-to-proceed-without-saving')
+							Liferay.Language.get(
+								'you-have-unsaved-changes-do-you-want-to-proceed-without-saving'
+							)
 						)
 					) {
 						instance._doToggleDefinitionLinkEditionMode(

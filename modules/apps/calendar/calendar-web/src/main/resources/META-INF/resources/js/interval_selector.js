@@ -332,7 +332,9 @@ AUI.add(
 						if (!validDate && !helpInline) {
 							var inlineHelp = A.Node.create(
 								'<div class="help-inline">' +
-									Liferay.Language.get('the-end-time-must-be-after-the-start-time') +
+									Liferay.Language.get(
+										'the-end-time-must-be-after-the-start-time'
+									) +
 									'</div>'
 							);
 

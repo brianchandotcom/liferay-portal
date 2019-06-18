@@ -152,7 +152,9 @@ AUI.add(
 				var instance = this;
 
 				if (!message) {
-					message = Liferay.Language.get('your-request-completed-successfully');
+					message = Liferay.Language.get(
+						'your-request-completed-successfully'
+					);
 				}
 
 				var alert = instance._alert;
@@ -253,7 +255,9 @@ AUI.add(
 					var content = [
 						'<p class="calendar-portlet-confirmation-text">',
 						Lang.sub(
-							Liferay.Language.get('you-are-about-to-make-changes-that-will-only-affect-your-calendar-x'),
+							Liferay.Language.get(
+								'you-are-about-to-make-changes-that-will-only-affect-your-calendar-x'
+							),
 							[LString.escapeHTML(data.calendarName)]
 						),
 						'</p>'

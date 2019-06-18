@@ -91,29 +91,29 @@ describe('Liferay.Search.SearchBar', function() {
 		);
 	});
 
-	describe(
-		'.updateQueryString',
-		function() {
-			it(
-				'should remove p_p_id, p_p_state, start and add query keyword',
-				withAlloyUI(
-					function (done, A) {
-						var form = A.Node.create(getFormTemplate('example'));
+	describe('.updateQueryString', function() {
+		it(
+			'should remove p_p_id, p_p_state, start and add query keyword',
+			withAlloyUI(
+				function(done, A) {
+					var form = A.Node.create(getFormTemplate('example'));
 
-						var searchBar = new Liferay.Search.SearchBar(form);
+					var searchBar = new Liferay.Search.SearchBar(form);
 
-						var queryString = '?p_p_lifecycle=0&p_p_mode=view&p_p_id=com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet&p_p_state=maximized&start=1';
+					var queryString =
+						'?p_p_lifecycle=0&p_p_mode=view&p_p_id=com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet&p_p_state=maximized&start=1';
 
-						queryString = searchBar.updateQueryString(queryString);
+					queryString = searchBar.updateQueryString(queryString);
 
-						assert.equal(queryString, '?p_p_lifecycle=0&p_p_mode=view&q=example');
+					assert.equal(
+						queryString,
+						'?p_p_lifecycle=0&p_p_mode=view&q=example'
+					);
 
-						done();
-
-					},
-					['aui-node', 'liferay-search-bar']
-				)
-			);
-		}
-	);
+					done();
+				},
+				['aui-node', 'liferay-search-bar']
+			)
+		);
+	});
 });

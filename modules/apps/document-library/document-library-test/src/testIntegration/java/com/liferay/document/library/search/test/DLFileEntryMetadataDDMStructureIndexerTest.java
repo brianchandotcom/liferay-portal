@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.test.util.IndexerFixture;
@@ -47,6 +48,7 @@ import org.junit.runner.RunWith;
  * @author Lucas Marques de Paula
  */
 @RunWith(Arquillian.class)
+@Sync
 public class DLFileEntryMetadataDDMStructureIndexerTest
 	extends BaseDLIndexerTestCase {
 

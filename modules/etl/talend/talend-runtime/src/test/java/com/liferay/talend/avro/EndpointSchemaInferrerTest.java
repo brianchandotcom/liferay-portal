@@ -16,7 +16,7 @@ package com.liferay.talend.avro;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
-import com.liferay.talend.commons.oas.constants.OpenAPIConstants;
+import com.liferay.talend.commons.oas.constants.OASConstants;
 
 import java.io.InputStream;
 
@@ -43,7 +43,7 @@ public class EndpointSchemaInferrerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		if (_openAPISpecJsonObject != null) {
+		if (_oasJsonObject != null) {
 			return;
 		}
 
@@ -55,7 +55,7 @@ public class EndpointSchemaInferrerTest {
 
 		JsonReader jsonReader = Json.createReader(resourceAsStream);
 
-		_openAPISpecJsonObject = jsonReader.readObject();
+		_oasJsonObject = jsonReader.readObject();
 	}
 
 	@Test
@@ -169,8 +169,7 @@ public class EndpointSchemaInferrerTest {
 
 	@Test
 	public void testOpenAPISpecification() {
-		Assert.assertTrue(
-			"Test", _openAPISpecJsonObject.containsKey("openapi"));
+		Assert.assertTrue("Test", _oasJsonObject.containsKey("openapi"));
 	}
 
 	@Test
@@ -221,17 +220,17 @@ public class EndpointSchemaInferrerTest {
 	}
 
 	private Schema _getSchema(String endpoint, String operation) {
-		JsonObject endpointsJsonObject = _openAPISpecJsonObject.getJsonObject(
-			OpenAPIConstants.PATHS);
+		JsonObject endpointsJsonObject = _oasJsonObject.getJsonObject(
+			OASConstants.PATHS);
 
 		Assert.assertTrue(endpointsJsonObject.containsKey(endpoint));
 
 		return _endpointSchemaInferrer.inferSchema(
-			endpoint, operation, _openAPISpecJsonObject);
+			endpoint, operation, _oasJsonObject);
 	}
 
 	private final EndpointSchemaInferrer _endpointSchemaInferrer =
 		new EndpointSchemaInferrer();
-	private JsonObject _openAPISpecJsonObject;
+	private JsonObject _oasJsonObject;
 
 }

@@ -18,7 +18,7 @@ import com.liferay.talend.avro.constants.AvroConstants;
 import com.liferay.talend.commons.json.JsonFinder;
 import com.liferay.talend.commons.oas.OASFormat;
 import com.liferay.talend.commons.oas.OASType;
-import com.liferay.talend.commons.oas.constants.OpenAPIConstants;
+import com.liferay.talend.commons.oas.constants.OASConstants;
 import com.liferay.talend.commons.util.StringUtils;
 import com.liferay.talend.tliferayoutput.Action;
 
@@ -81,7 +81,7 @@ public class EndpointSchemaInferrer {
 
 		if (Objects.equals(operation, HttpMethod.GET.toLowerCase(Locale.US))) {
 			String jsonFinderPath = StringUtils.replace(
-				OpenAPIConstants.
+				OASConstants.
 					PATH_RESPONSES_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,
 				"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
 
@@ -89,21 +89,21 @@ public class EndpointSchemaInferrer {
 				jsonFinderPath, apiSpecJsonNode);
 
 			schemaName = _stripSchemaName(
-				schemaJsonObject.getString(OpenAPIConstants.REF));
+				schemaJsonObject.getString(OASConstants.REF));
 
 			JsonObject schemaDefinitionJsonObject = _extractSchemaJsonObject(
 				schemaName, apiSpecJsonNode);
 
 			JsonObject itemsPropertiesJsonObject =
 				_jsonFinder.getDescendantJsonObject(
-					OpenAPIConstants.PATH_PROPERTIES_ITEMS,
+					OASConstants.PATH_PROPERTIES_ITEMS,
 					schemaDefinitionJsonObject);
 
 			if (!itemsPropertiesJsonObject.isEmpty() &&
-				itemsPropertiesJsonObject.containsKey(OpenAPIConstants.REF)) {
+				itemsPropertiesJsonObject.containsKey(OASConstants.REF)) {
 
 				schemaName = _stripSchemaName(
-					itemsPropertiesJsonObject.getString(OpenAPIConstants.REF));
+					itemsPropertiesJsonObject.getString(OASConstants.REF));
 			}
 
 			return schemaName;
@@ -118,7 +118,7 @@ public class EndpointSchemaInferrer {
 		}
 
 		String jsonFinderPath = StringUtils.replace(
-			OpenAPIConstants.
+			OASConstants.
 				PATH_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,
 			"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
 
@@ -126,7 +126,7 @@ public class EndpointSchemaInferrer {
 			jsonFinderPath, apiSpecJsonNode);
 
 		schemaName = _stripSchemaName(
-			schemaJsonNode.getString(OpenAPIConstants.REF));
+			schemaJsonNode.getString(OASConstants.REF));
 
 		return schemaName;
 	}
@@ -135,7 +135,7 @@ public class EndpointSchemaInferrer {
 		String schemaName, JsonObject apiSpecJsonNode) {
 
 		String jsonFinderPath = StringUtils.replace(
-			OpenAPIConstants.PATH_COMPONENTS_SCHEMAS_PATTERN, "SCHEMA_TPL",
+			OASConstants.PATH_COMPONENTS_SCHEMAS_PATTERN, "SCHEMA_TPL",
 			schemaName);
 
 		return _jsonFinder.getDescendantJsonObject(
@@ -163,7 +163,7 @@ public class EndpointSchemaInferrer {
 			(Object)null);
 
 		OASType oasType = OASType.fromDefinition(
-			propertyJsonObject.getString(OpenAPIConstants.TYPE));
+			propertyJsonObject.getString(OASConstants.TYPE));
 
 		if (oasType == OASType.ARRAY) {
 			return designField;
@@ -171,24 +171,24 @@ public class EndpointSchemaInferrer {
 
 		String openAPIFormatDefinition = null;
 
-		if (propertyJsonObject.containsKey(OpenAPIConstants.FORMAT)) {
+		if (propertyJsonObject.containsKey(OASConstants.FORMAT)) {
 			openAPIFormatDefinition = propertyJsonObject.getString(
-				OpenAPIConstants.FORMAT);
+				OASConstants.FORMAT);
 		}
 		else if ((oasType == OASType.OBJECT) &&
 				 propertyJsonObject.containsKey(
-					 OpenAPIConstants.ADDITIONAL_PROPERTIES)) {
+					 OASConstants.ADDITIONAL_PROPERTIES)) {
 
 			JsonObject additionalPropertiesJsonObject =
 				propertyJsonObject.getJsonObject(
-					OpenAPIConstants.ADDITIONAL_PROPERTIES);
+					OASConstants.ADDITIONAL_PROPERTIES);
 
 			if (additionalPropertiesJsonObject.containsKey(
-					OpenAPIConstants.TYPE)) {
+					OASConstants.TYPE)) {
 
 				openAPIFormatDefinition =
 					additionalPropertiesJsonObject.getString(
-						OpenAPIConstants.TYPE);
+						OASConstants.TYPE);
 			}
 		}
 
@@ -251,7 +251,7 @@ public class EndpointSchemaInferrer {
 	}
 
 	private static String _stripSchemaName(String reference) {
-		return reference.replaceAll(OpenAPIConstants.PATH_SCHEMA_REFERENCE, "");
+		return reference.replaceAll(OASConstants.PATH_SCHEMA_REFERENCE, "");
 	}
 
 	private Set<String> _asSet(JsonArray jsonArray) {
@@ -305,10 +305,10 @@ public class EndpointSchemaInferrer {
 		List<Schema.Field> schemaFields, JsonObject apiSpecJsonObject) {
 
 		Set<String> required = _asSet(
-			schemaJsonObject.getJsonArray(OpenAPIConstants.REQUIRED));
+			schemaJsonObject.getJsonArray(OASConstants.REQUIRED));
 
 		JsonObject schemaPropertiesJsonObject = schemaJsonObject.getJsonObject(
-			OpenAPIConstants.PROPERTIES);
+			OASConstants.PROPERTIES);
 
 		Set<Map.Entry<String, JsonValue>> entries =
 			schemaPropertiesJsonObject.entrySet();
@@ -322,11 +322,11 @@ public class EndpointSchemaInferrer {
 
 			JsonObject propertyJsonObject = propertyJsonValue.asJsonObject();
 
-			if (propertyJsonObject.containsKey(OpenAPIConstants.REF) &&
+			if (propertyJsonObject.containsKey(OASConstants.REF) &&
 				(parentPropertyName == null)) {
 
 				String referenceSchemaName = _stripSchemaName(
-					propertyJsonObject.getString(OpenAPIConstants.REF));
+					propertyJsonObject.getString(OASConstants.REF));
 
 				JsonObject referenceSchemaJsonNode = _extractSchemaJsonObject(
 					referenceSchemaName, apiSpecJsonObject);

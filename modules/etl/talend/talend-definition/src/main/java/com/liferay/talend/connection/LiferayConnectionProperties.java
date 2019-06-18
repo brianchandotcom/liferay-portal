@@ -16,7 +16,6 @@ package com.liferay.talend.connection;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
 import com.liferay.talend.commons.util.URIUtils;
-import com.liferay.talend.properties.PropertiesUtils;
 import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
 import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
 import com.liferay.talend.ui.UIKeys;
@@ -161,8 +160,17 @@ public class LiferayConnectionProperties
 			hidden = true;
 		}
 
-		PropertiesUtils.setHidden(form, apiSpecURL, hidden);
-		PropertiesUtils.setHidden(form, loginType, hidden);
+		Widget widget = form.getWidget(apiSpecURL.getName());
+
+		if (widget != null) {
+			widget.setHidden(hidden);
+		}
+
+		widget = form.getWidget(loginType.getName());
+
+		if (widget != null) {
+			widget.setHidden(hidden);
+		}
 
 		Form basicAuthorizationPropertiesForm =
 			basicAuthorizationProperties.getForm(

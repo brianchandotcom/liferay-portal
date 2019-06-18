@@ -38,8 +38,6 @@ page import="com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionL
 
 <liferay-theme:defineObjects />
 
-<portlet:defineObjects />
-
 <%
 WorkflowDefinitionLinkDisplayContext workflowDefinitionLinkDisplayContext = (WorkflowDefinitionLinkDisplayContext)renderRequest.getAttribute(WorkflowWebKeys.WORKFLOW_DEFINITION_LINK_DISPLAY_CONTEXT);
 %>

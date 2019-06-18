@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>SITE_TABLE_ACTIONS</td>
-	<td>//table[contains(@class,'table-autofit')]//tr[contains(.,'${key_siteName}')]/td//div/a[contains(@class,'dropdown-toggle')]</td>
+	<td>//table[contains(@class,'table-autofit')]//tr[contains(.,'${key_siteName}')]/td//div/*[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 </tbody>

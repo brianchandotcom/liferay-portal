@@ -58,12 +58,8 @@ const withMoveableFields = ChildComponent => {
 			);
 		}
 
-		willReceiveProps() {
-			this._dragAndDrop.setState({
-				targets: this._dragAndDrop.setterTargetsFn_(
-					'.moveable .ddm-target'
-				)
-			});
+		rendered() {
+			this._refreshDragAndDrop();
 		}
 
 		_handleDragAndDropEnd({source, target}) {

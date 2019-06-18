@@ -2403,7 +2403,7 @@ public class ProjectTemplatesTest {
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"service-builder", name, "com.test", "-Dpackage=" + packageName,
-			"-DliferayVersion=7.2");
+			"-DliferayVersion=7.2", "-DdependencyInjector=spring");
 
 		if (_isBuildProjects()) {
 			_testBuildTemplateServiceBuilder(
@@ -4689,6 +4689,7 @@ public class ProjectTemplatesTest {
 		String author = System.getProperty("user.name");
 		String className = name;
 		String contributorType = null;
+		String dependencyInjector = "spring";
 		String hostBundleSymbolicName = null;
 		String hostBundleVersion = null;
 		String packageName = name.replace('-', '.');
@@ -4713,6 +4714,9 @@ public class ProjectTemplatesTest {
 			}
 			else if (key.equals("contributorType")) {
 				contributorType = value;
+			}
+			else if (key.equals("dependencyInjector")) {
+				dependencyInjector = value;
 			}
 			else if (key.equals("hostBundleSymbolicName")) {
 				hostBundleSymbolicName = value;
@@ -4741,6 +4745,7 @@ public class ProjectTemplatesTest {
 		projectTemplatesArgs.setAuthor(author);
 		projectTemplatesArgs.setClassName(className);
 		projectTemplatesArgs.setContributorType(contributorType);
+		projectTemplatesArgs.setDependencyInjector(dependencyInjector);
 
 		File archetyperDestinationDir = null;
 
@@ -4780,6 +4785,7 @@ public class ProjectTemplatesTest {
 		File archetyperProjectDir = new File(archetyperDestinationDir, name);
 
 		FileUtil.deleteFiles(archetyperDestinationDir.toPath(), "build.gradle");
+		FileUtil.deleteFiles(archetyperProjectDir.toPath(), "settings.gradle");
 
 		DirectoryComparator directoryComparator = new DirectoryComparator(
 			projectDir, archetyperProjectDir);

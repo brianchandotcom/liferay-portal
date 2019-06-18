@@ -36,7 +36,8 @@
 			<version>3.0.0</version>
 			<scope>provided</scope>
 		</dependency>
-#elseif (${liferayVersion.startsWith("7.2")})
+#end
+#if (${liferayVersion.startsWith("7.2")})
 		<dependency>
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.petra.lang</artifactId>

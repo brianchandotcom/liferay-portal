@@ -1,6 +1,5 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import {CancellablePromise} from 'metal-promise';
 import {core} from 'metal';
 
 import componentTemplates from './CropComponent.soy';
@@ -14,7 +13,7 @@ class CropComponent extends Component {
 	 * Applies the brightness filter to generate a final version of the image.
 	 *
 	 * @param  {Object} imageData The image representations.
-	 * @return {CancellablePromise} A promise that resolves when the webworker
+	 * @return {Promise} A promise that resolves when the webworker
 	 * finishes processing the image for preview.
 	 */
 	process(imageData) {
@@ -61,7 +60,7 @@ class CropComponent extends Component {
 
 		cropHandles.dispose();
 
-		return CancellablePromise.resolve(
+		return Promise.resolve(
 			context.getImageData(0, 0, canvas.width, canvas.height)
 		);
 	}

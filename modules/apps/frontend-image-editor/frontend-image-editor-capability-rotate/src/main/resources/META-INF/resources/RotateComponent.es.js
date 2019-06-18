@@ -1,6 +1,5 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import {CancellablePromise} from 'metal-promise';
 import {core} from 'metal';
 
 import componentTemplates from './RotateComponent.soy';
@@ -29,7 +28,7 @@ class RotateComponent extends Component {
 	 * Rotates the image to the current selected rotation angle.
 	 *
 	 * @param  {ImageData} imageData The image data representation of the image.
-	 * @return {CancellablePromise} A promise that resolves when processing is
+	 * @return {Promise} A promise that resolves when processing is
 	 * complete.
 	 */
 	preview(imageData) {
@@ -40,7 +39,7 @@ class RotateComponent extends Component {
 	 * Rotates the image to the current selected rotation angle.
 	 *
 	 * @param  {ImageData} imageData The image data representation of the image.
-	 * @return {CancellablePromise} A promise that resolves when processing is
+	 * @return {Promise} A promise that resolves when processing is
 	 * complete.
 	 */
 	process(imageData) {
@@ -62,13 +61,13 @@ class RotateComponent extends Component {
 	 * @param  {number} rotationAngle The normalized rotation angle (in degrees)
 	 * in the range [0-360).
 	 * @protected
-	 * @return {CancellablePromise} A promise that resolves when the image is
+	 * @return {Promise} A promise that resolves when the image is
 	 * rotated.
 	 */
 	rotate_(imageData, rotationAngle) {
-		const cancellablePromise = new CancellablePromise((resolve, reject) => {
-			const imageWidth = imageData.width;
-			const imageHeight = imageData.height;
+		let cancellablePromise = new Promise((resolve, reject) => {
+			let imageWidth = imageData.width;
+			let imageHeight = imageData.height;
 
 			const swapDimensions = (rotationAngle / 90) % 2;
 

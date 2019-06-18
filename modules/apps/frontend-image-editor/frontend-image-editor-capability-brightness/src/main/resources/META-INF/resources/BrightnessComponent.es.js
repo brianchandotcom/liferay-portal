@@ -2,7 +2,6 @@ import Component from 'metal-component';
 import {Slider} from 'frontend-js-web';
 import Soy from 'metal-soy';
 import debounce from 'metal-debounce';
-import {CancellablePromise} from 'metal-promise';
 import {core} from 'metal';
 
 import componentTemplates from './BrightnessComponent.soy';
@@ -35,7 +34,7 @@ class BrightnessComponent extends Component {
 	 * Applies a brightness filter to the image.
 	 *
 	 * @param  {ImageData} imageData The image data representation of the image.
-	 * @return {CancellablePromise} A promise that resolves when the webworker
+	 * @return {Promise} A promise that resolves when the webworker
 	 * finishes processing the image.
 	 */
 	preview(imageData) {
@@ -46,7 +45,7 @@ class BrightnessComponent extends Component {
 	 * Applies a brightness filter to the image.
 	 *
 	 * @param  {ImageData} imageData The image data representation of the image.
-	 * @return {CancellablePromise} A promise that resolves when the webworker
+	 * @return {Promise} A promise that resolves when the webworker
 	 * finishes processing the image.
 	 */
 	process(imageData) {
@@ -78,14 +77,13 @@ class BrightnessComponent extends Component {
 	 * Spawns a webworker to process the image in a different thread.
 	 *
 	 * @param  {Object} message The image and brightness value.
-	 * @return {CancellablePromise} A promise that resolves when the webworker
+	 * @return {Promise} A promise that resolves when the webworker
 	 * finishes processing the image.
 	 */
 	spawnWorker_(message) {
-		return new CancellablePromise((resolve, reject) => {
-			const workerURI = this.modulePath + '/BrightnessWorker.js';
-			const processWorker = new Worker(workerURI);
-
+		return new Promise((resolve, reject) => {
+			let workerURI = this.modulePath + '/BrightnessWorker.js';
+			let processWorker = new Worker(workerURI);
 			processWorker.onmessage = event => resolve(event.data);
 			processWorker.postMessage(message);
 		});

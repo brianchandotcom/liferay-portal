@@ -195,7 +195,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 	<#list javaMethodSignatures as javaMethodSignature>
 		<#assign
 			arguments = freeMarkerTool.getResourceTestCaseArguments(javaMethodSignature.javaMethodParameters)
-			parameters = freeMarkerTool.getResourceTestCaseParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, false)
+			parameters = freeMarkerTool.getResourceTestCaseParameters(javaMethodSignature.javaMethodParameters, openAPIYAML, javaMethodSignature.operation, false)
 		/>
 
 		<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "delete")>

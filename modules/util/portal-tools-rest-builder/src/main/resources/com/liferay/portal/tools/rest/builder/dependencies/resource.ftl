@@ -34,7 +34,7 @@ import javax.ws.rs.core.Response;
 public interface ${schemaName}Resource {
 
 	<#list freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName) as javaMethodSignature>
-		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, false)}) throws Exception;
+		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaMethodParameters, openAPIYAML, javaMethodSignature.operation, false)}) throws Exception;
 	</#list>
 
 	public default void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

@@ -34,6 +34,7 @@ import javax.validation.constraints.NotNull;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.HEAD;
 import javax.ws.rs.HeaderParam;
@@ -60,7 +61,7 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 	<#list freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName) as javaMethodSignature>
 		@Override
 		${freeMarkerTool.getResourceMethodAnnotations(javaMethodSignature)}
-		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)}) throws Exception {
+		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaMethodParameters, openAPIYAML, javaMethodSignature.operation, true)}) throws Exception {
 			<#if stringUtil.equals(javaMethodSignature.returnType, "boolean")>
 				return false;
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.String")>

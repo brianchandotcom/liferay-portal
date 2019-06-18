@@ -912,7 +912,7 @@ definition {
 
 		KBArticle.viewImageViaContentCmd();
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.viewDefaultCP();
 

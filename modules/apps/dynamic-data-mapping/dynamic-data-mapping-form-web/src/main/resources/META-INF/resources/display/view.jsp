@@ -28,6 +28,28 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 			<liferay-ui:message key="select-an-existing-form-or-add-a-form-to-be-displayed-in-this-application" />
 		</div>
 	</c:when>
+	<c:when test="<%= !ddmFormDisplayContext.hasViewPermission() %>">
+		<div class="ddm-form-basic-info">
+			<div class="container-fluid-1280">
+				<clay:alert
+					message='<%= LanguageUtil.get(resourceBundle, "you-do-not-have-the-permission-to-view-this-form") %>'
+					style="warning"
+					title='<%= LanguageUtil.get(resourceBundle, "warning") %>'
+				/>
+			</div>
+		</div>
+	</c:when>
+	<c:when test="<%= ddmFormDisplayContext.isRequireAuthentication() %>">
+		<div class="ddm-form-basic-info">
+			<div class="container-fluid-1280">
+				<clay:alert
+					message='<%= LanguageUtil.get(resourceBundle, "you-need-to-be-signed-in-to-view-this-form") %>'
+					style="warning"
+					title='<%= LanguageUtil.get(resourceBundle, "warning") %>'
+				/>
+			</div>
+		</div>
+	</c:when>
 	<c:otherwise>
 
 		<%

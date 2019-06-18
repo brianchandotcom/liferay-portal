@@ -2812,6 +2812,13 @@ definition {
 			kfProcessFieldData = "One",
 			kfStatus = "Approved");
 
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Kaleo Forms Admin");
+
+		KaleoFormsAdmin.viewProcessRecord(kfProcessName = "Kaleo Forms Process");
+
 		KaleoFormsAdmin.viewProcessRecordTable(
 			kfAuthor = "Test Test",
 			kfProcessFieldData = "Two",

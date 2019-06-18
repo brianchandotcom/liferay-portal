@@ -75,16 +75,18 @@ definition {
 
 	@priority = "4"
 	test EnableStaging {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
 			portlet = "Staging");
 
-		Staging.activateStagingCP(siteName = "Liferay");
+		Staging.activateStagingCP(siteName = "${siteName}");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Home",
-			siteName = "Liferay");
+			siteName = "${siteName}");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 

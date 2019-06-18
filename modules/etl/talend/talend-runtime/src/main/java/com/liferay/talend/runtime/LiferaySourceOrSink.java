@@ -104,48 +104,50 @@ public class LiferaySourceOrSink
 	}
 
 	public JsonObject doPatchRequest(
-			RuntimeContainer runtimeContainer, JsonObject jsonNode)
+			RuntimeContainer runtimeContainer, JsonObject jsonObject)
 		throws IOException {
 
-		return doPatchRequest(runtimeContainer, null, jsonNode);
+		return doPatchRequest(runtimeContainer, null, jsonObject);
 	}
 
 	public JsonObject doPatchRequest(
 		RuntimeContainer runtimeContainer, String resourceURL,
-		JsonObject jsonNode) {
+		JsonObject jsonObject) {
 
 		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
 
-		Response response = restClient.executePatchRequest(jsonNode);
+		Response response = restClient.executePatchRequest(jsonObject);
 
 		return response.readEntity(JsonObject.class);
 	}
 
-	public JsonObject doPatchRequest(String resourceURL, JsonObject jsonNode) {
-		return doPatchRequest(null, resourceURL, jsonNode);
+	public JsonObject doPatchRequest(
+		String resourceURL, JsonObject jsonObject) {
+
+		return doPatchRequest(null, resourceURL, jsonObject);
 	}
 
 	public JsonObject doPostRequest(
-		RuntimeContainer runtimeContainer, JsonObject jsonNode) {
+		RuntimeContainer runtimeContainer, JsonObject jsonObject) {
 
-		return doPostRequest(runtimeContainer, null, jsonNode);
+		return doPostRequest(runtimeContainer, null, jsonObject);
 	}
 
 	public JsonObject doPostRequest(
 		RuntimeContainer runtimeContainer, String resourceURL,
-		JsonObject jsonNode) {
+		JsonObject jsonObject) {
 
 		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
 
-		Response response = restClient.executePostRequest(jsonNode);
+		Response response = restClient.executePostRequest(jsonObject);
 
 		return response.readEntity(JsonObject.class);
 	}
 
-	public JsonObject doPostRequest(String resourceURL, JsonObject jsonNode)
+	public JsonObject doPostRequest(String resourceURL, JsonObject jsonObject)
 		throws IOException {
 
-		return doPostRequest(null, resourceURL, jsonNode);
+		return doPostRequest(null, resourceURL, jsonObject);
 	}
 
 	public LiferayConnectionProperties getConnectionProperties() {
@@ -217,12 +219,12 @@ public class LiferaySourceOrSink
 			OpenAPIConstants.PATHS);
 
 		pathsJsonObject.forEach(
-			(path, operationJsonValue) -> {
+			(path, operationsJsonValue) -> {
 				JsonObject operationsJsonObject =
-					operationJsonValue.asJsonObject();
+					operationsJsonValue.asJsonObject();
 
 				operationsJsonObject.forEach(
-					(operationName, operationJsonObject) -> {
+					(operationName, operationJsonValue) -> {
 						if (!Objects.equals(
 								operation, _toUpperCase(operationName))) {
 
@@ -237,11 +239,11 @@ public class LiferaySourceOrSink
 
 						if (_hasPath(
 								OpenAPIConstants.PATH_RESPONSE_SCHEMA_REFERENCE,
-								operationsJsonObject) ||
+								operationJsonValue.asJsonObject()) ||
 							_hasPath(
 								OpenAPIConstants.
 									PATH_RESPONSE_SCHEMA_ITEMS_REFERENCE,
-								operationsJsonObject)) {
+								operationJsonValue.asJsonObject())) {
 
 							endpoints.add(path);
 						}
@@ -270,11 +272,11 @@ public class LiferaySourceOrSink
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveConnection(null);
 
-		JsonObject apiSpecJsonNode = doGetRequest(
+		JsonObject oasJsonObject = doGetRequest(
 			liferayConnectionProperties.getApiSpecURL());
 
 		return _endpointSchemaInferrer.inferSchema(
-			endpoint, operation, apiSpecJsonNode);
+			endpoint, operation, oasJsonObject);
 	}
 
 	@Override
@@ -500,19 +502,19 @@ public class LiferaySourceOrSink
 		return jsonArrayBuilder.build();
 	}
 
-	private boolean _hasPath(String path, JsonObject jsonNode) {
+	private boolean _hasPath(String path, JsonObject jsonObject) {
 		if (!path.contains(">")) {
-			return jsonNode.containsKey(path);
+			return jsonObject.containsKey(path);
 		}
 
 		int subpathEndIdx = path.indexOf(">");
 
 		String subpath = path.substring(0, subpathEndIdx);
 
-		if (jsonNode.containsKey(subpath)) {
+		if (jsonObject.containsKey(subpath)) {
 			return _hasPath(
 				path.substring(subpathEndIdx + 1),
-				jsonNode.getJsonObject(subpath));
+				jsonObject.getJsonObject(subpath));
 		}
 
 		return false;

@@ -145,7 +145,7 @@ public class DDMFormDisplayContext {
 
 		checkFormIsNotRestricted();
 
-		if ((ddmFormInstance == null) || !hasViewPermission()) {
+		if (ddmFormInstance == null) {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 		}
@@ -345,6 +345,27 @@ public class DDMFormDisplayContext {
 		}
 
 		return _hasAddFormInstanceRecordPermission;
+	}
+
+	public boolean hasViewPermission() throws PortalException {
+		if (_hasViewPermission != null) {
+			return _hasViewPermission;
+		}
+
+		_hasViewPermission = true;
+
+		DDMFormInstance ddmFormInstance =
+			_ddmFormInstanceLocalService.fetchFormInstance(getFormInstanceId());
+
+		if (ddmFormInstance != null) {
+			ThemeDisplay themeDisplay = getThemeDisplay();
+
+			_hasViewPermission = DDMFormInstancePermission.contains(
+				themeDisplay.getPermissionChecker(), ddmFormInstance,
+				ActionKeys.VIEW);
+		}
+
+		return _hasViewPermission;
 	}
 
 	public boolean isAutosaveEnabled() throws PortalException {
@@ -723,26 +744,6 @@ public class DDMFormDisplayContext {
 		ThemeDisplay themeDisplay = getThemeDisplay();
 
 		return themeDisplay.getUserId();
-	}
-
-	protected boolean hasViewPermission() throws PortalException {
-		if (_hasViewPermission != null) {
-			return _hasViewPermission;
-		}
-
-		_hasViewPermission = true;
-
-		DDMFormInstance ddmFormInstance = getFormInstance();
-
-		if (ddmFormInstance != null) {
-			ThemeDisplay themeDisplay = getThemeDisplay();
-
-			_hasViewPermission = DDMFormInstancePermission.contains(
-				themeDisplay.getPermissionChecker(), ddmFormInstance,
-				ActionKeys.VIEW);
-		}
-
-		return _hasViewPermission;
 	}
 
 	protected boolean hasWorkflowEnabled(

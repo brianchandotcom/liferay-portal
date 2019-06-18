@@ -24,7 +24,7 @@
 	</c:when>
 	<c:otherwise>
 		<div class="iframe-container">
-			<iframe alt="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.alt()) %>" border="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.border()) %>" bordercolor="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.bordercolor()) %>" frameborder="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.frameborder()) %>" height="<%= iFramePortletInstanceConfiguration.resizeAutomatically() ? StringPool.BLANK : HtmlUtil.escapeAttribute(iFrameDisplayContext.getHeight()) %>" hspace="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.hspace()) %>" id="<portlet:namespace />iframe" longdesc="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.longdesc()) %>" name="<portlet:namespace />iframe" onload="<%= iFramePortletInstanceConfiguration.dynamicUrlEnabled() ? renderResponse.getNamespace() + "monitorIframe();" : StringPool.BLANK %>" scrolling="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.scrolling()) %>" title="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.title()) %>" vspace="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.vspace()) %>" width="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.width()) %>">
+			<iframe alt="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.alt()) %>" border="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.border()) %>" bordercolor="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.bordercolor()) %>" frameborder="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.frameborder()) %>" height="<%= iFramePortletInstanceConfiguration.resizeAutomatically() ? StringPool.BLANK : HtmlUtil.escapeAttribute(iFrameDisplayContext.getHeight()) %>" hspace="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.hspace()) %>" id="<portlet:namespace />iframe" longdesc="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.longdesc()) %>" name="<portlet:namespace />iframe" scrolling="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.scrolling()) %>" title="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.title()) %>" vspace="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.vspace()) %>" width="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.width()) %>">
 				<liferay-ui:message arguments="<%= HtmlUtil.escape(iFrameDisplayContext.getIframeSrc()) %>" key="your-browser-does-not-support-inline-frames-or-is-currently-configured-not-to-display-inline-frames.-content-can-be-viewed-at-actual-source-page-x" translateArguments="<%= false %>" />
 			</iframe>
 		</div>
@@ -45,20 +45,22 @@
 
 				hash = hashObj['<portlet:namespace />'];
 
-				if (hash) {
-					var src = '';
+				var iframe = A.one('#<portlet:namespace />iframe');
 
-					var baseSrc = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
+				if (iframe) {
+					if (hash) {
+						var src = '';
 
-					if (!(/^https?\:\/\//.test(hash)) || !A.Lang.String.startsWith(hash, baseSrc)) {
-						src = A.QueryString.unescape(hash);
-					}
+						var baseSrc = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
 
-					var iframe = A.one('#<portlet:namespace />iframe');
+						if (!(/^https?\:\/\//.test(hash)) || !A.Lang.String.startsWith(hash, baseSrc)) {
+							src = A.QueryString.unescape(hash);
+						}
 
-					if (iframe) {
 						iframe.attr('src', baseSrc + src);
 					}
+
+					iframe.on('load', <portlet:namespace />monitorIframe);
 				}
 			},
 			['aui-base', 'querystring']
@@ -146,7 +148,7 @@
 	var iframe = A.one('#<portlet:namespace />iframe');
 
 	if (iframe) {
-		iframe._node.src = "<%= HtmlUtil.escapeHREF(iFrameDisplayContext.getIframeSrc()) %>";
+		iframe.set('src', '<%= HtmlUtil.escapeHREF(iFrameDisplayContext.getIframeSrc()) %>');
 
 		iframe.plug(
 			A.Plugin.AutosizeIframe,

@@ -604,7 +604,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "KaleoFormsAdminEditProcess#FORMS_TABLE_TASK");
 
-		PortletEntry.viewEmptyMessage(entity = "Results");
+		PortletEntry.viewEmptyMessage(entity = "Templates");
 
 		SelectFrame(value1 = "relative=top");
 	}

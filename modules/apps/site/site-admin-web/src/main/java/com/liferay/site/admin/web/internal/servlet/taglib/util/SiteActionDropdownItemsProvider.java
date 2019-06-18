@@ -323,7 +323,7 @@ public class SiteActionDropdownItemsProvider {
 			return false;
 		}
 
-		if (GroupLocalServiceUtil.hasUserGroup(
+		if (!GroupLocalServiceUtil.hasUserGroup(
 				_themeDisplay.getUserId(), _group.getGroupId())) {
 
 			return false;

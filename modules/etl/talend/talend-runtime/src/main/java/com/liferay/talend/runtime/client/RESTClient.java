@@ -15,7 +15,7 @@
 package com.liferay.talend.runtime.client;
 
 import com.liferay.talend.commons.exception.MalformedURLException;
-import com.liferay.talend.commons.util.URIUtils;
+import com.liferay.talend.commons.util.URIUtil;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.runtime.client.exception.ConnectionException;
 import com.liferay.talend.runtime.client.exception.OAuth2Exception;
@@ -99,7 +99,7 @@ public class RESTClient {
 	}
 
 	public Response executeGetRequest() {
-		URI decoratedURI = URIUtils.updateWithQueryParameters(
+		URI decoratedURI = URIUtil.updateWithQueryParameters(
 			_getTargetURI(), _getQueryParametersMap());
 
 		return _execute(HttpMethod.GET, _createBuilder(decoratedURI));

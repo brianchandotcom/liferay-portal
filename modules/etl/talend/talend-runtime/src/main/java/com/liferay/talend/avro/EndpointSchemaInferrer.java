@@ -19,7 +19,7 @@ import com.liferay.talend.commons.json.JsonFinder;
 import com.liferay.talend.commons.oas.OASFormat;
 import com.liferay.talend.commons.oas.OASType;
 import com.liferay.talend.commons.oas.constants.OASConstants;
-import com.liferay.talend.commons.util.StringUtils;
+import com.liferay.talend.commons.util.StringUtil;
 import com.liferay.talend.tliferayoutput.Action;
 
 import java.util.ArrayList;
@@ -80,7 +80,7 @@ public class EndpointSchemaInferrer {
 		String schemaName = null;
 
 		if (Objects.equals(operation, HttpMethod.GET.toLowerCase(Locale.US))) {
-			String jsonFinderPath = StringUtils.replace(
+			String jsonFinderPath = StringUtil.replace(
 				OASConstants.
 					PATH_RESPONSES_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,
 				"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
@@ -117,7 +117,7 @@ public class EndpointSchemaInferrer {
 			return null;
 		}
 
-		String jsonFinderPath = StringUtils.replace(
+		String jsonFinderPath = StringUtil.replace(
 			OASConstants.
 				PATH_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,
 			"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
@@ -134,7 +134,7 @@ public class EndpointSchemaInferrer {
 	private static JsonObject _extractSchemaJsonObject(
 		String schemaName, JsonObject apiSpecJsonNode) {
 
-		String jsonFinderPath = StringUtils.replace(
+		String jsonFinderPath = StringUtil.replace(
 			OASConstants.PATH_COMPONENTS_SCHEMAS_PATTERN, "SCHEMA_TPL",
 			schemaName);
 
@@ -183,12 +183,9 @@ public class EndpointSchemaInferrer {
 				propertyJsonObject.getJsonObject(
 					OASConstants.ADDITIONAL_PROPERTIES);
 
-			if (additionalPropertiesJsonObject.containsKey(
-					OASConstants.TYPE)) {
-
+			if (additionalPropertiesJsonObject.containsKey(OASConstants.TYPE)) {
 				openAPIFormatDefinition =
-					additionalPropertiesJsonObject.getString(
-						OASConstants.TYPE);
+					additionalPropertiesJsonObject.getString(OASConstants.TYPE);
 			}
 		}
 
@@ -284,7 +281,7 @@ public class EndpointSchemaInferrer {
 			_log.debug("Schema name: {}", schemaName);
 		}
 
-		if (StringUtils.isEmpty(schemaName)) {
+		if (StringUtil.isEmpty(schemaName)) {
 			throw TalendRuntimeException.createUnexpectedException(
 				"Unable to determine the Schema for the selected endpoint");
 		}

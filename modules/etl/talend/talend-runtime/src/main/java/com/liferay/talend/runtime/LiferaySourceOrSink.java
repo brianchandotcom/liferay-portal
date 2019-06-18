@@ -19,8 +19,8 @@ import com.liferay.talend.commons.exception.MalformedURLException;
 import com.liferay.talend.commons.json.JsonFinder;
 import com.liferay.talend.commons.oas.OASParameter;
 import com.liferay.talend.commons.oas.constants.OASConstants;
-import com.liferay.talend.commons.util.StringUtils;
-import com.liferay.talend.commons.util.URIUtils;
+import com.liferay.talend.commons.util.StringUtil;
+import com.liferay.talend.commons.util.URIUtil;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
 import com.liferay.talend.properties.ExceptionUtils;
@@ -226,7 +226,7 @@ public class LiferaySourceOrSink
 					(operationName, operationJsonValue) -> {
 						if (!Objects.equals(
 								operation,
-								StringUtils.toUpperCase(operationName))) {
+								StringUtil.toUpperCase(operationName))) {
 
 							return;
 						}
@@ -290,7 +290,7 @@ public class LiferaySourceOrSink
 
 		JsonObject oasJsonObject = doGetRequest(apiSpecURLHref);
 
-		String jsonFinderPath = StringUtils.replace(
+		String jsonFinderPath = StringUtil.replace(
 			OASConstants.PATH_ENDPOINT_OPERATION_PARAMETERS_PATTERN,
 			"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
 
@@ -349,7 +349,7 @@ public class LiferaySourceOrSink
 		JsonObject oasJsonObject = doGetRequest(
 			liferayConnectionProperties.getApiSpecURL());
 
-		String jsonFinderPath = StringUtils.replace(
+		String jsonFinderPath = StringUtil.replace(
 			OASConstants.PATH_ENDPOINT_PATTERN, "ENDPOINT_TPL", endpoint);
 
 		JsonObject endpointJsonObject = _jsonFinder.getDescendantJsonObject(
@@ -387,7 +387,7 @@ public class LiferaySourceOrSink
 			getEffectiveConnection(runtimeContainer);
 
 		try {
-			URIUtils.validateOpenAPISpecURL(
+			URIUtil.validateOpenAPISpecURL(
 				liferayConnectionProperties.getApiSpecURL());
 		}
 		catch (MalformedURLException murle) {
@@ -502,7 +502,7 @@ public class LiferaySourceOrSink
 
 		oasParameter.setType(
 			OASParameter.Type.valueOf(
-				StringUtils.toUpperCase(jsonObject.getString("in"))));
+				StringUtil.toUpperCase(jsonObject.getString("in"))));
 
 		oasParameter.setName(jsonObject.getString("name"));
 

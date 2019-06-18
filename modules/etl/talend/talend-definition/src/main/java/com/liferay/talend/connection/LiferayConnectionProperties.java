@@ -15,7 +15,7 @@
 package com.liferay.talend.connection;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
-import com.liferay.talend.commons.util.URIUtils;
+import com.liferay.talend.commons.util.URIUtil;
 import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
 import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
 import com.liferay.talend.ui.UIKeys;
@@ -69,10 +69,10 @@ public class LiferayConnectionProperties
 	}
 
 	public String getApplicationBaseHref() {
-		URL openAPISpecURL = URIUtils.toURL(_getValue(apiSpecURL));
+		URL openAPISpecURL = URIUtil.toURL(_getValue(apiSpecURL));
 
-		URL serverURL = URIUtils.extractServerURL(openAPISpecURL);
-		String jaxRSAppBase = URIUtils.extractJaxRSAppBasePathSegment(
+		URL serverURL = URIUtil.extractServerURL(openAPISpecURL);
+		String jaxRSAppBase = URIUtil.extractJaxRSAppBasePathSegment(
 			openAPISpecURL);
 
 		String serverHref = serverURL.toExternalForm();

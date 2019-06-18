@@ -34,12 +34,12 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Zoltán Takács
  */
-public class URIUtils {
+public class URIUtil {
 
 	public static URI addQueryConditionToURL(
 		String resourceURL, String queryCondition) {
 
-		if (StringUtils.isEmpty(queryCondition)) {
+		if (StringUtil.isEmpty(queryCondition)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Query condition was empty!");
 			}
@@ -149,7 +149,7 @@ public class URIUtils {
 
 	public static URI toURI(String href) {
 		try {
-			return new URI(StringUtils.removeQuotes(href));
+			return new URI(StringUtil.removeQuotes(href));
 		}
 		catch (URISyntaxException urise) {
 			_log.error("Unable to convert URL to URI: " + href);
@@ -162,7 +162,7 @@ public class URIUtils {
 		URL url = null;
 
 		try {
-			url = new URL(StringUtils.removeQuotes(href));
+			url = new URL(StringUtil.removeQuotes(href));
 		}
 		catch (java.net.MalformedURLException murle) {
 			throw new MalformedURLException(murle);
@@ -217,7 +217,7 @@ public class URIUtils {
 		}
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(URIUtils.class);
+	private static final Logger _log = LoggerFactory.getLogger(URIUtil.class);
 
 	private static final Pattern _openAPISpecURLPattern = Pattern.compile(
 		"(https?://.+(:\\d+)?)(/o/(.+)/)(v\\d+(.\\d+)*)/openapi\\.(yaml|json)");

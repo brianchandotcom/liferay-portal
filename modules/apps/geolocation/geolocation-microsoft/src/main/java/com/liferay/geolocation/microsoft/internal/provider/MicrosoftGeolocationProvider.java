@@ -16,6 +16,7 @@ package com.liferay.geolocation.microsoft.internal.provider;
 
 import com.liferay.geolocation.exception.GeolocationException;
 import com.liferay.geolocation.microsoft.internal.configuration.MicrosoftGeolocationConfiguration;
+import com.liferay.geolocation.microsoft.internal.model.MicrosoftGeolocationAddress;
 import com.liferay.geolocation.microsoft.internal.model.MicrosoftGeolocationPosition;
 import com.liferay.geolocation.model.GeolocationAddress;
 import com.liferay.geolocation.model.GeolocationPosition;
@@ -56,7 +57,15 @@ public class MicrosoftGeolocationProvider implements GeolocationProvider {
 			GeolocationPosition geolocationPosition)
 		throws GeolocationException {
 
-		throw new UnsupportedOperationException();
+		try {
+			return _getGeolocationAddress(geolocationPosition);
+		}
+		catch (GeolocationException ge) {
+			throw ge;
+		}
+		catch (Exception e) {
+			throw new GeolocationException(e);
+		}
 	}
 
 	@Override
@@ -113,6 +122,30 @@ public class MicrosoftGeolocationProvider implements GeolocationProvider {
 		sb.append(CharPool.EQUAL);
 		sb.append(URLCodec.encodeURL(value));
 		sb.append(CharPool.AMPERSAND);
+	}
+
+	private GeolocationAddress _getGeolocationAddress(
+			GeolocationPosition geolocationPosition)
+		throws Exception {
+
+		if (Validator.isNull(_bingApiKey)) {
+			throw new GeolocationException(
+				"Microsoft Bing API key is not configured properly");
+		}
+
+		String url = _getUrl(geolocationPosition);
+
+		JSONObject resourceJSONObject = _getResourceJSONObject(url);
+
+		JSONObject addressJSONObject = resourceJSONObject.getJSONObject(
+			"address");
+
+		return new MicrosoftGeolocationAddress(
+			addressJSONObject.getString("countryRegionIso2"),
+			addressJSONObject.getString("adminDistrict"),
+			addressJSONObject.getString("locality"),
+			addressJSONObject.getString("addressLine"),
+			addressJSONObject.getString("postalCode"));
 	}
 
 	private GeolocationPosition _getGeolocationPosition(
@@ -185,6 +218,7 @@ public class MicrosoftGeolocationProvider implements GeolocationProvider {
 		StringBundler sb = new StringBundler();
 
 		sb.append(_LOCATIONS_BASE_URL);
+		sb.append(StringPool.QUESTION);
 
 		_addParameter(sb, "addressLine", geolocationAddress.getStreet());
 		_addParameter(sb, "adminDistrict", geolocationAddress.getRegionCode());
@@ -192,6 +226,23 @@ public class MicrosoftGeolocationProvider implements GeolocationProvider {
 		_addParameter(sb, "key", _bingApiKey);
 		_addParameter(sb, "locality", geolocationAddress.getCity());
 		_addParameter(sb, "postalCode", geolocationAddress.getZip());
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
+	}
+
+	private String _getUrl(GeolocationPosition geolocationPosition) {
+		StringBundler sb = new StringBundler();
+
+		sb.append(_LOCATIONS_BASE_URL);
+		sb.append(geolocationPosition.getLatitude());
+		sb.append(StringPool.COMMA);
+		sb.append(geolocationPosition.getLongitude());
+		sb.append(StringPool.QUESTION);
+
+		_addParameter(sb, "key", _bingApiKey);
+		_addParameter(sb, "incl", "ciso2");
 
 		sb.setIndex(sb.index() - 1);
 

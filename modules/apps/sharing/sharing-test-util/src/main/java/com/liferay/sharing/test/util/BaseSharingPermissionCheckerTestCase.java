@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.test.util;
+package com.liferay.sharing.test.util;
 
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -49,19 +49,19 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.security.permission.SharingPermissionChecker;
+
+import java.util.Arrays;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.util.Arrays;
 
 /**
  * @author Sergio González
  */
-public abstract class BaseSharingPermissionCheckerTest {
+public abstract class BaseSharingPermissionCheckerTestCase {
 
 	@ClassRule
 	@Rule
@@ -391,7 +391,7 @@ public abstract class BaseSharingPermissionCheckerTest {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseSharingPermissionCheckerTest.class);
+		BaseSharingPermissionCheckerTestCase.class);
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

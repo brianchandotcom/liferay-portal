@@ -107,10 +107,6 @@ public class DDMFormDisplayExportImportTest
 			"formInstanceId",
 			new String[] {String.valueOf(ddmFormInstance.getFormInstanceId())});
 
-		preferenceMap.put(
-			"groupId",
-			new String[] {String.valueOf(importedGroup.getGroupId())});
-
 		PortletPreferences importedPortletPreferences =
 			getImportedPortletPreferences(preferenceMap);
 

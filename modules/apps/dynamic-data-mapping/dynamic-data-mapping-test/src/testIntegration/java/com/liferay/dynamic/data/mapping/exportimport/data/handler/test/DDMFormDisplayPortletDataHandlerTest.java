@@ -49,7 +49,7 @@ public class DDMFormDisplayPortletDataHandlerTest
 
 	@Override
 	protected String[] getDataPortletPreferences() {
-		return new String[] {"formInstanceId", "groupId"};
+		return new String[] {"formInstanceId"};
 	}
 
 	@Override

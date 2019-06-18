@@ -14,15 +14,7 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<%@ page contentType="text/html; charset=UTF-8" %>
-
-<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
-
-<%
-boolean showUserDetails = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:user-display:showUserDetails"));
-%>
+<%@ include file="/html/taglib/ui/user_display/init.jsp" %>
 
 	<c:if test="<%= showUserDetails %>">
 		</div>

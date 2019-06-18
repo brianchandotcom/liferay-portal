@@ -14,17 +14,7 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
-
-<%@ page contentType="text/html; charset=UTF-8" %>
-
-<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.taglib.aui.AUIUtil" %>
-
-<%@ page import="java.util.Map" %>
+<%@ include file="/html/taglib/init.jsp" %>
 
 <%
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:cssClass"));

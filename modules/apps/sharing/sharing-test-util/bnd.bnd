@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Sharing Test Utilities
+Bundle-SymbolicName: com.liferay.sharing.test.util
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.sharing.test.util

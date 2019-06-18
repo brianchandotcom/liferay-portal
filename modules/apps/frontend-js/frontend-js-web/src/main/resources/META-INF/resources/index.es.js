@@ -17,10 +17,12 @@ import DefaultEventHandler from './liferay/DefaultEventHandler.es';
 import PortletBase from './liferay/PortletBase.es';
 import fetch from './liferay/util/fetch.es';
 import navigate from './liferay/util/navigate.es';
+import ItemSelectorDialog from './liferay/ItemSelectorDialog.es';
 
 export {AOP} from './liferay/aop/AOP.es';
 export {CompatibilityEventProxy};
 export {DefaultEventHandler};
+export {ItemSelectorDialog};
 export {Modal} from './liferay/compat/modal/Modal.es';
 export {PortletBase};
 export {Slider} from './liferay/compat/slider/Slider.es';

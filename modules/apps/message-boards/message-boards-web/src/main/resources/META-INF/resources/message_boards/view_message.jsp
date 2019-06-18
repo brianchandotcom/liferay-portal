@@ -133,7 +133,7 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 
 <aui:script>
 	function <portlet:namespace />hideReplyMessage(messageId) {
-		var addQuickReplyContainer = document.getElementById('<portlet:namespace />addReplyToMessage' + messageId);
+		var addQuickReplyContainer = document.querySelector('#<portlet:namespace />addReplyToMessage' + messageId + ' .panel');
 
 		if (addQuickReplyContainer) {
 			addQuickReplyContainer.classList.add('hide');

@@ -117,13 +117,14 @@ public class DDMFormFieldTemplateContextFactory {
 
 		Map<String, Object> ddmFormFieldTemplateContext = new HashMap<>();
 
+		ddmFormFieldTemplateContext.put("type", ddmFormField.getType());
+
 		setDDMFormFieldTemplateContextFieldName(
 			ddmFormFieldTemplateContext, ddmFormField.getName());
 		setDDMFormFieldTemplateContextLocalizedValue(
 			ddmFormFieldTemplateContext, "label", ddmFormField.getLabel());
 		setDDMFormFieldTemplateContextName(
 			ddmFormFieldTemplateContext, ddmFormFieldParameterName);
-		ddmFormFieldTemplateContext.put("type", ddmFormField.getType());
 
 		return ddmFormFieldTemplateContext;
 	}

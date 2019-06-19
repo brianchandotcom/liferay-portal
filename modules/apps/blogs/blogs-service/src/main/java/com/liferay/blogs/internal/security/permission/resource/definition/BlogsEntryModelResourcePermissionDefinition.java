@@ -98,7 +98,7 @@ public class BlogsEntryModelResourcePermissionDefinition
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private SharingModelResourcePermissionConfigurator
+	private volatile SharingModelResourcePermissionConfigurator
 		_sharingModelResourcePermissionConfigurator;
 
 	@Reference

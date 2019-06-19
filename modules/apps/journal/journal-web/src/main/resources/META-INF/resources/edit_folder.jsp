@@ -57,7 +57,7 @@ else {
 renderResponse.setTitle(title);
 %>
 
-<portlet:actionURL name='<%= rootFolder ? "updateWorkflowDefinitions" : ((folder == null) ? "addFolder" : "updateFolder") %>' var="editFolderURL">
+<portlet:actionURL name='<%= rootFolder ? "updateWorkflowDefinitions" : ((folder == null) ? "/journal/add_folder" : "/journal/update_folder") %>' var="editFolderURL">
 	<portlet:param name="mvcPath" value="/edit_folder.jsp" />
 </portlet:actionURL>
 

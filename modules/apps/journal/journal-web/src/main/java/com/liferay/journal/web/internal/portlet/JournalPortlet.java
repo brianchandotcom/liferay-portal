@@ -214,13 +214,6 @@ public class JournalPortlet extends MVCPortlet {
 		updateFeed(actionRequest, actionResponse);
 	}
 
-	public void addFolder(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		updateFolder(actionRequest, actionResponse);
-	}
-
 	public void deleteEntries(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -846,48 +839,6 @@ public class JournalPortlet extends MVCPortlet {
 				ddmTemplateKey, ddmRendererTemplateKey, delta, orderByCol,
 				orderByType, targetLayoutFriendlyUrl, targetPortletId,
 				contentField, feedFormat, feedVersion, serviceContext);
-		}
-	}
-
-	public void updateFolder(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long folderId = ParamUtil.getLong(actionRequest, "folderId");
-
-		long parentFolderId = ParamUtil.getLong(
-			actionRequest, "parentFolderId");
-		String name = ParamUtil.getString(actionRequest, "name");
-		String description = ParamUtil.getString(actionRequest, "description");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			JournalFolder.class.getName(), actionRequest);
-
-		if (folderId <= 0) {
-
-			// Add folder
-
-			_journalFolderService.addFolder(
-				serviceContext.getScopeGroupId(), parentFolderId, name,
-				description, serviceContext);
-		}
-		else {
-
-			// Update folder
-
-			long[] ddmStructureIds = StringUtil.split(
-				ParamUtil.getString(
-					actionRequest, "ddmStructuresSearchContainerPrimaryKeys"),
-				0L);
-			int restrinctionType = ParamUtil.getInteger(
-				actionRequest, "restrictionType");
-			boolean mergeWithParentFolder = ParamUtil.getBoolean(
-				actionRequest, "mergeWithParentFolder");
-
-			_journalFolderService.updateFolder(
-				serviceContext.getScopeGroupId(), folderId, parentFolderId,
-				name, description, ddmStructureIds, restrinctionType,
-				mergeWithParentFolder, serviceContext);
 		}
 	}
 

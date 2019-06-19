@@ -14,6 +14,7 @@
 
 package com.liferay.configuration.admin.web.internal.util;
 
+import com.liferay.configuration.admin.definition.ConfigurationFieldOptionsProvider;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -28,6 +29,7 @@ import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDe
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -135,6 +137,22 @@ public class ConfigurationModelToDDMFormConverter {
 
 		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
 
+		ConfigurationFieldOptionsProvider configurationFieldOptionsProvider =
+			ConfigurationFieldOptionsProviderUtil.
+				getConfigurationFieldOptionsProvider(
+					_configurationModel.getID(), attributeDefinition.getID());
+
+		if (configurationFieldOptionsProvider != null) {
+			configurationFieldOptionsProvider.getOptions(
+			).stream(
+			).forEach(
+				option -> ddmFormFieldOptions.addOptionLabel(
+					option.getValue(), _locale, option.getLabel(_locale))
+			);
+
+			return ddmFormFieldOptions;
+		}
+
 		String[] optionLabels = attributeDefinition.getOptionLabels();
 		String[] optionValues = attributeDefinition.getOptionValues();
 
@@ -153,14 +171,18 @@ public class ConfigurationModelToDDMFormConverter {
 	protected DDMFormField getDDMFormField(
 		AttributeDefinition attributeDefinition, boolean required) {
 
-		String type = getDDMFormFieldType(attributeDefinition);
+		DDMFormFieldOptions ddmFormFieldOptions = getDDMFieldOptions(
+			attributeDefinition);
+
+		String type = getDDMFormFieldType(
+			attributeDefinition, ddmFormFieldOptions);
 
 		DDMFormField ddmFormField = new DDMFormField(
 			attributeDefinition.getID(), type);
 
 		setDDMFormFieldDataType(attributeDefinition, ddmFormField);
 		setDDMFormFieldLabel(attributeDefinition, ddmFormField);
-		setDDMFormFieldOptions(attributeDefinition, ddmFormField);
+		setDDMFormFieldOptions(ddmFormField, ddmFormFieldOptions);
 		setDDMFormFieldPredefinedValue(attributeDefinition, ddmFormField);
 		setDDMFormFieldRequired(attributeDefinition, ddmFormField, required);
 		setDDMFormFieldTip(attributeDefinition, ddmFormField);
@@ -226,14 +248,13 @@ public class ConfigurationModelToDDMFormConverter {
 	}
 
 	protected String getDDMFormFieldType(
-		AttributeDefinition attributeDefinition) {
+		AttributeDefinition attributeDefinition,
+		DDMFormFieldOptions ddmFormFieldOptions) {
 
 		int type = attributeDefinition.getType();
 
 		if (type == AttributeDefinition.BOOLEAN) {
-			String[] optionLabels = attributeDefinition.getOptionLabels();
-
-			if (ArrayUtil.isEmpty(optionLabels)) {
+			if (SetUtil.isEmpty(ddmFormFieldOptions.getOptionsValues())) {
 				return DDMFormFieldType.CHECKBOX;
 			}
 
@@ -243,9 +264,7 @@ public class ConfigurationModelToDDMFormConverter {
 			return DDMFormFieldType.PASSWORD;
 		}
 
-		if (ArrayUtil.isNotEmpty(attributeDefinition.getOptionLabels()) ||
-			ArrayUtil.isNotEmpty(attributeDefinition.getOptionValues())) {
-
+		if (!SetUtil.isEmpty(ddmFormFieldOptions.getOptionsValues())) {
 			return DDMFormFieldType.SELECT;
 		}
 
@@ -286,10 +305,7 @@ public class ConfigurationModelToDDMFormConverter {
 	}
 
 	protected void setDDMFormFieldOptions(
-		AttributeDefinition attributeDefinition, DDMFormField ddmFormField) {
-
-		DDMFormFieldOptions ddmFormFieldOptions = getDDMFieldOptions(
-			attributeDefinition);
+		DDMFormField ddmFormField, DDMFormFieldOptions ddmFormFieldOptions) {
 
 		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
 	}

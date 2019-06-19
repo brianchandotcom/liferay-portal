@@ -1071,10 +1071,11 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 							projectProperties.entrySet()) {
 
 						String key = entry.getKey();
+						Object value = entry.getValue();
 
 						Matcher matcher = _keyRegex.matcher(key);
 
-						if (matcher.matches()) {
+						if (matcher.matches() && (value instanceof String)) {
 							instructions.put(
 								key, GradleUtil.toString(entry.getValue()));
 						}

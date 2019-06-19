@@ -3,7 +3,7 @@
 	"scripts": {
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix",
-		"test": "karma start"
+		"test_DISABLED": "karma start"
 	},
 	"version": "5.0.0"
 }

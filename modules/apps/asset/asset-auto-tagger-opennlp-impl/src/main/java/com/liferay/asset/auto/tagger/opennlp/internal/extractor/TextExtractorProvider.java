@@ -14,11 +14,38 @@
 
 package com.liferay.asset.auto.tagger.opennlp.internal.extractor;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+
 /**
  * @author Alejandro Tardín
  */
-public interface TextExtractorProvider {
+@Component(service = TextExtractorProvider.class)
+public class TextExtractorProvider {
 
-	public TextExtractor getTextExtractor(String className);
+	public TextExtractor getTextExtractor(String className) {
+		return _serviceTrackerMap.getService(className);
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap =
+			(ServiceTrackerMap<String, TextExtractor<?>>)
+				(ServiceTrackerMap)ServiceTrackerMapFactory.openSingleValueMap(
+					bundleContext, TextExtractor.class, "model.class.name");
+	}
+
+	@Deactivate
+	protected synchronized void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
+	private volatile ServiceTrackerMap<String, TextExtractor<?>>
+		_serviceTrackerMap;
 
 }

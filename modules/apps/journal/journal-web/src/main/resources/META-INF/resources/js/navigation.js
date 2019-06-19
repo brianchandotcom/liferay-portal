@@ -118,7 +118,7 @@ AUI.add(
 					var instance = this;
 
 					instance._processAction(
-						'moveEntriesToTrash',
+						'/journal/move_entries_to_trash',
 						instance.get('editEntryUrl')
 					);
 				},

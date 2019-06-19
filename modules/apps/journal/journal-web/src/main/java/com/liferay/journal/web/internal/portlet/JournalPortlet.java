@@ -63,7 +63,6 @@ import com.liferay.journal.exception.NoSuchFeedException;
 import com.liferay.journal.exception.NoSuchFolderException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
-import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.journal.service.JournalFolderService;
@@ -87,7 +86,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
@@ -99,7 +97,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
@@ -125,7 +122,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -203,13 +199,6 @@ public class JournalPortlet extends MVCPortlet {
 		updateArticle(actionRequest, actionResponse);
 	}
 
-	public void deleteEntries(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		deleteEntries(actionRequest, actionResponse, false);
-	}
-
 	public void moveEntries(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -262,13 +251,6 @@ public class JournalPortlet extends MVCPortlet {
 		}
 
 		sendEditEntryRedirect(actionRequest, actionResponse);
-	}
-
-	public void moveEntriesToTrash(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		deleteEntries(actionRequest, actionResponse, true);
 	}
 
 	@Override
@@ -733,66 +715,6 @@ public class JournalPortlet extends MVCPortlet {
 
 		_journalWebConfiguration = ConfigurableUtil.createConfigurable(
 			JournalWebConfiguration.class, properties);
-	}
-
-	protected void deleteEntries(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			boolean moveToTrash)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		List<TrashedModel> trashedModels = new ArrayList<>();
-
-		long[] deleteFolderIds = ParamUtil.getLongValues(
-			actionRequest, "rowIdsJournalFolder");
-
-		for (long deleteFolderId : deleteFolderIds) {
-			if (moveToTrash) {
-				JournalFolder folder = _journalFolderService.moveFolderToTrash(
-					deleteFolderId);
-
-				trashedModels.add(folder);
-			}
-			else {
-				_journalFolderService.deleteFolder(deleteFolderId);
-			}
-		}
-
-		String[] deleteArticleIds = ParamUtil.getStringValues(
-			actionRequest, "rowIdsJournalArticle");
-
-		for (String deleteArticleId : deleteArticleIds) {
-			if (moveToTrash) {
-				JournalArticle article =
-					_journalArticleService.moveArticleToTrash(
-						themeDisplay.getScopeGroupId(),
-						HtmlUtil.unescape(deleteArticleId));
-
-				trashedModels.add(article);
-			}
-			else {
-				ActionUtil.deleteArticle(
-					actionRequest, HtmlUtil.unescape(deleteArticleId));
-			}
-		}
-
-		if (moveToTrash && !trashedModels.isEmpty()) {
-			Map<String, Object> data = new HashMap<>();
-
-			data.put("trashedModels", trashedModels);
-
-			SessionMessages.add(
-				actionRequest,
-				_portal.getPortletId(actionRequest) +
-					SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA,
-				data);
-
-			hideDefaultSuccessMessage(actionRequest);
-		}
-
-		sendEditEntryRedirect(actionRequest, actionResponse);
 	}
 
 	@Override

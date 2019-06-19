@@ -37,8 +37,8 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 		if (confirm(message)) {
 			Liferay.fire(this.ns('editEntry'), {
 				action: this.trashEnabled
-					? 'moveEntriesToTrash'
-					: 'deleteEntries'
+					? '/journal/move_entries_to_trash'
+					: '/journal/delete_entries'
 			});
 		}
 	}

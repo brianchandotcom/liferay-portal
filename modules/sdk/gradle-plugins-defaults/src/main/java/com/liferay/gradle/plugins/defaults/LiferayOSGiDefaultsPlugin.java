@@ -3309,13 +3309,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 
 		if (sourceSet != null) {
-			SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+			SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
 
 			ConfigurableFileTree configurableFileTree = project.fileTree(
-				sourceSetOutput.getClassesDirs());
+				javaSourceDirectorySet.getOutputDir());
 
 			configurableFileTree.setBuiltBy(
-				Collections.singleton(sourceSetOutput));
+				Collections.singleton(sourceSet.getOutput()));
 
 			configurableFileTree.setIncludes(
 				Collections.singleton("**/*.class"));

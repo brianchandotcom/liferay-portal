@@ -10,7 +10,6 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "5.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.friendly.url.api", version: "2.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.headless.common.spi", version: "5.0.0"
-	compileOnly group: "com.liferay", name: "com.liferay.headless.delivery.api", version: "5.1.0"
 	compileOnly group: "com.liferay", name: "com.liferay.journal.api", version: "4.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.knowledge.base.api", version: "6.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.message.boards.api", version: "5.0.0"
@@ -30,5 +29,6 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component", version: "1.3.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":apps:headless:headless-delivery:headless-delivery-api")
 	compileOnly project(":apps:segments:segments-api")
 }

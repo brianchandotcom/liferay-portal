@@ -254,7 +254,7 @@ public class JournalArticleActionDropdownItemsProvider {
 	public List<DropdownItem> getArticleVersionActionDropdownItems()
 		throws Exception {
 
-		return new DropdownItemList() {
+		DropdownItemList dropdownItems = new DropdownItemList() {
 			{
 				if (JournalArticlePermission.contains(
 						_themeDisplay.getPermissionChecker(), _article,
@@ -262,49 +262,12 @@ public class JournalArticleActionDropdownItemsProvider {
 
 					add(_getEditArticleActionUnsafeConsumer());
 				}
-
-				if (JournalArticlePermission.contains(
-						_themeDisplay.getPermissionChecker(), _article,
-						ActionKeys.VIEW)) {
-
-					add(_getPreviewArticleActionUnsafeConsumer());
-				}
-
-				if (JournalFolderPermission.contains(
-						_themeDisplay.getPermissionChecker(),
-						_themeDisplay.getScopeGroupId(), _article.getFolderId(),
-						ActionKeys.ADD_ARTICLE)) {
-
-					add(_getAutoCopyArticleActionUnsafeConsumer());
-				}
-
-				String articleId =
-					_article.getArticleId() + JournalPortlet.VERSION_SEPARATOR +
-						_article.getVersion();
-
-				if (JournalArticlePermission.contains(
-						_themeDisplay.getPermissionChecker(), _article,
-						ActionKeys.EXPIRE) &&
-					(_article.getStatus() ==
-						WorkflowConstants.STATUS_APPROVED)) {
-
-					add(
-						_getExpireArticleActionConsumer(
-							articleId, _themeDisplay.getURLCurrent()));
-				}
-
-				add(_getCompareArticleVersionsActionUnsafeConsumer());
-
-				if (JournalArticlePermission.contains(
-						_themeDisplay.getPermissionChecker(), _article,
-						ActionKeys.DELETE)) {
-
-					add(
-						_getDeleteArticleAction(
-							articleId, _themeDisplay.getURLCurrent()));
-				}
 			}
 		};
+
+		dropdownItems.addAll(getArticleHistoryActionDropdownItems());
+
+		return dropdownItems;
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>

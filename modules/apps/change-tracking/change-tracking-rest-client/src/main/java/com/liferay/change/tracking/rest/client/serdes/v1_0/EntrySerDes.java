@@ -123,38 +123,38 @@ public class EntrySerDes {
 			sb.append("\"");
 		}
 
-		if (entry.getCtEntryId() != null) {
+		if (entry.getDateModified() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"ctEntryId\": ");
-
-			sb.append(entry.getCtEntryId());
-		}
-
-		if (entry.getModifiedDate() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"modifiedDate\": ");
+			sb.append("\"dateModified\": ");
 
 			sb.append("\"");
 
-			sb.append(liferayToJSONDateFormat.format(entry.getModifiedDate()));
+			sb.append(liferayToJSONDateFormat.format(entry.getDateModified()));
 
 			sb.append("\"");
 		}
 
-		if (entry.getResourcePrimKey() != null) {
+		if (entry.getEntryId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"resourcePrimKey\": ");
+			sb.append("\"entryId\": ");
 
-			sb.append(entry.getResourcePrimKey());
+			sb.append(entry.getEntryId());
+		}
+
+		if (entry.getKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"key\": ");
+
+			sb.append(entry.getKey());
 		}
 
 		if (entry.getSiteName() != null) {
@@ -278,23 +278,22 @@ public class EntrySerDes {
 			map.put("contentType", String.valueOf(entry.getContentType()));
 		}
 
-		if (entry.getCtEntryId() == null) {
-			map.put("ctEntryId", null);
-		}
-		else {
-			map.put("ctEntryId", String.valueOf(entry.getCtEntryId()));
-		}
-
 		map.put(
-			"modifiedDate",
-			liferayToJSONDateFormat.format(entry.getModifiedDate()));
+			"dateModified",
+			liferayToJSONDateFormat.format(entry.getDateModified()));
 
-		if (entry.getResourcePrimKey() == null) {
-			map.put("resourcePrimKey", null);
+		if (entry.getEntryId() == null) {
+			map.put("entryId", null);
 		}
 		else {
-			map.put(
-				"resourcePrimKey", String.valueOf(entry.getResourcePrimKey()));
+			map.put("entryId", String.valueOf(entry.getEntryId()));
+		}
+
+		if (entry.getKey() == null) {
+			map.put("key", null);
+		}
+		else {
+			map.put("key", String.valueOf(entry.getKey()));
 		}
 
 		if (entry.getSiteName() == null) {
@@ -416,21 +415,20 @@ public class EntrySerDes {
 					entry.setContentType((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "ctEntryId")) {
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
 				if (jsonParserFieldValue != null) {
-					entry.setCtEntryId(
+					entry.setDateModified(toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "entryId")) {
+				if (jsonParserFieldValue != null) {
+					entry.setEntryId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "modifiedDate")) {
+			else if (Objects.equals(jsonParserFieldName, "key")) {
 				if (jsonParserFieldValue != null) {
-					entry.setModifiedDate(toDate((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "resourcePrimKey")) {
-				if (jsonParserFieldValue != null) {
-					entry.setResourcePrimKey(
-						Long.valueOf((String)jsonParserFieldValue));
+					entry.setKey(Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteName")) {

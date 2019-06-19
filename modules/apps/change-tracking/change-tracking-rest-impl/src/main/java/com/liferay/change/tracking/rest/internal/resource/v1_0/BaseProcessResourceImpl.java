@@ -38,6 +38,7 @@ import javax.annotation.Generated;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -57,10 +58,10 @@ public abstract class BaseProcessResourceImpl implements ProcessResource {
 	@Override
 	@GET
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "processId")})
-	@Path("/proccesses/{processId}")
+	@Path("/processes/{processId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Process")})
-	public Process getProccessProcess(
+	public Process getProcess(
 			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
 				processId)
 		throws Exception {
@@ -88,7 +89,9 @@ public abstract class BaseProcessResourceImpl implements ProcessResource {
 			@NotNull @Parameter(hidden = true) @QueryParam("companyId") Long
 				companyId,
 			@Parameter(hidden = true) @QueryParam("keywords") String keywords,
-			@Parameter(hidden = true) @QueryParam("type") String type,
+			@DefaultValue("all") @Parameter(hidden = true) @QueryParam("type")
+				com.liferay.change.tracking.rest.constant.v1_0.CollectionType
+					type,
 			@Parameter(hidden = true) @QueryParam("userId") Long userId,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {

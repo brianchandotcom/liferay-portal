@@ -58,7 +58,6 @@ public abstract class BaseAffectedEntryResourceImpl
 	@GET
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "collectionId"),
 			@Parameter(in = ParameterIn.PATH, name = "entryId"),
 			@Parameter(in = ParameterIn.QUERY, name = "keywords"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
@@ -69,8 +68,6 @@ public abstract class BaseAffectedEntryResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AffectedEntry")})
 	public Page<AffectedEntry> getEntryAffectedsPage(
-			@NotNull @Parameter(hidden = true) @PathParam("collectionId") Long
-				collectionId,
 			@NotNull @Parameter(hidden = true) @PathParam("entryId") Long
 				entryId,
 			@Parameter(hidden = true) @QueryParam("keywords") String keywords,

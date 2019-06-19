@@ -51,10 +51,9 @@ public interface EntryResource {
 			String sortString)
 		throws Exception;
 
-	public Entry getEntry(Long collectionId, Long entryId) throws Exception;
+	public Entry getEntry(Long entryId) throws Exception;
 
-	public HttpInvoker.HttpResponse getEntryHttpResponse(
-			Long collectionId, Long entryId)
+	public HttpInvoker.HttpResponse getEntryHttpResponse(Long entryId)
 		throws Exception;
 
 	public static class Builder {
@@ -189,11 +188,9 @@ public interface EntryResource {
 			return httpInvoker.invoke();
 		}
 
-		public Entry getEntry(Long collectionId, Long entryId)
-			throws Exception {
-
+		public Entry getEntry(Long entryId) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = getEntryHttpResponse(
-				collectionId, entryId);
+				entryId);
 
 			String content = httpResponse.getContent();
 
@@ -215,8 +212,7 @@ public interface EntryResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getEntryHttpResponse(
-				Long collectionId, Long entryId)
+		public HttpInvoker.HttpResponse getEntryHttpResponse(Long entryId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -232,7 +228,7 @@ public interface EntryResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/change-tracking/v1.0/entries/{entryId}",
-				collectionId, entryId);
+				entryId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

@@ -176,9 +176,6 @@ public abstract class BaseProcessResourceTestCase {
 		Process process = randomProcess();
 
 		process.setStatus(regex);
-		process.setUserInitials(regex);
-		process.setUserName(regex);
-		process.setUserPortraitURL(regex);
 
 		String json = ProcessSerDes.toJSON(process);
 
@@ -187,21 +184,18 @@ public abstract class BaseProcessResourceTestCase {
 		process = ProcessSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, process.getStatus());
-		Assert.assertEquals(regex, process.getUserInitials());
-		Assert.assertEquals(regex, process.getUserName());
-		Assert.assertEquals(regex, process.getUserPortraitURL());
 	}
 
 	@Test
-	public void testGetProccessProcess() throws Exception {
+	public void testGetProcess() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
 	public void testGetProcessesPage() throws Exception {
 		Page<Process> page = processResource.getProcessesPage(
-			null, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			null, Pagination.of(1, 2), null);
+			null, RandomTestUtil.randomString(), null, null,
+			Pagination.of(1, 2), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -382,6 +376,10 @@ public abstract class BaseProcessResourceTestCase {
 	protected void assertValid(Process process) {
 		boolean valid = true;
 
+		if (process.getDateCreated() == null) {
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -395,14 +393,6 @@ public abstract class BaseProcessResourceTestCase {
 
 			if (Objects.equals("companyId", additionalAssertFieldName)) {
 				if (process.getCompanyId() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("date", additionalAssertFieldName)) {
-				if (process.getDate() == null) {
 					valid = false;
 				}
 
@@ -425,32 +415,16 @@ public abstract class BaseProcessResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("processUser", additionalAssertFieldName)) {
+				if (process.getProcessUser() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("status", additionalAssertFieldName)) {
 				if (process.getStatus() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("userInitials", additionalAssertFieldName)) {
-				if (process.getUserInitials() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("userName", additionalAssertFieldName)) {
-				if (process.getUserName() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("userPortraitURL", additionalAssertFieldName)) {
-				if (process.getUserPortraitURL() == null) {
 					valid = false;
 				}
 
@@ -518,9 +492,9 @@ public abstract class BaseProcessResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("date", additionalAssertFieldName)) {
+			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						process1.getDate(), process2.getDate())) {
+						process1.getDateCreated(), process2.getDateCreated())) {
 
 					return false;
 				}
@@ -548,41 +522,19 @@ public abstract class BaseProcessResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("processUser", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						process1.getProcessUser(), process2.getProcessUser())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("status", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						process1.getStatus(), process2.getStatus())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("userInitials", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						process1.getUserInitials(),
-						process2.getUserInitials())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("userName", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						process1.getUserName(), process2.getUserName())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("userPortraitURL", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						process1.getUserPortraitURL(),
-						process2.getUserPortraitURL())) {
 
 					return false;
 				}
@@ -658,7 +610,7 @@ public abstract class BaseProcessResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("date")) {
+		if (entityFieldName.equals("dateCreated")) {
 			if (operator.equals("between")) {
 				sb = new StringBundler();
 
@@ -667,13 +619,13 @@ public abstract class BaseProcessResourceTestCase {
 				sb.append(" gt ");
 				sb.append(
 					_dateFormat.format(
-						DateUtils.addSeconds(process.getDate(), -2)));
+						DateUtils.addSeconds(process.getDateCreated(), -2)));
 				sb.append(" and ");
 				sb.append(entityFieldName);
 				sb.append(" lt ");
 				sb.append(
 					_dateFormat.format(
-						DateUtils.addSeconds(process.getDate(), 2)));
+						DateUtils.addSeconds(process.getDateCreated(), 2)));
 				sb.append(")");
 			}
 			else {
@@ -683,7 +635,7 @@ public abstract class BaseProcessResourceTestCase {
 				sb.append(operator);
 				sb.append(" ");
 
-				sb.append(_dateFormat.format(process.getDate()));
+				sb.append(_dateFormat.format(process.getDateCreated()));
 			}
 
 			return sb.toString();
@@ -699,33 +651,14 @@ public abstract class BaseProcessResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("processUser")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("status")) {
 			sb.append("'");
 			sb.append(String.valueOf(process.getStatus()));
-			sb.append("'");
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("userInitials")) {
-			sb.append("'");
-			sb.append(String.valueOf(process.getUserInitials()));
-			sb.append("'");
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("userName")) {
-			sb.append("'");
-			sb.append(String.valueOf(process.getUserName()));
-			sb.append("'");
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("userPortraitURL")) {
-			sb.append("'");
-			sb.append(String.valueOf(process.getUserPortraitURL()));
 			sb.append("'");
 
 			return sb.toString();
@@ -739,12 +672,9 @@ public abstract class BaseProcessResourceTestCase {
 		return new Process() {
 			{
 				companyId = RandomTestUtil.randomLong();
-				date = RandomTestUtil.nextDate();
+				dateCreated = RandomTestUtil.nextDate();
 				processId = RandomTestUtil.randomLong();
 				status = RandomTestUtil.randomString();
-				userInitials = RandomTestUtil.randomString();
-				userName = RandomTestUtil.randomString();
-				userPortraitURL = RandomTestUtil.randomString();
 			}
 		};
 	}

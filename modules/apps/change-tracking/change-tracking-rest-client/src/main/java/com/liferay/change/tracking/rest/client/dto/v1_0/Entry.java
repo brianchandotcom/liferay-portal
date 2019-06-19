@@ -156,68 +156,66 @@ public class Entry {
 
 	protected String contentType;
 
-	public Long getCtEntryId() {
-		return ctEntryId;
+	public Date getDateModified() {
+		return dateModified;
 	}
 
-	public void setCtEntryId(Long ctEntryId) {
-		this.ctEntryId = ctEntryId;
+	public void setDateModified(Date dateModified) {
+		this.dateModified = dateModified;
 	}
 
-	public void setCtEntryId(
-		UnsafeSupplier<Long, Exception> ctEntryIdUnsafeSupplier) {
+	public void setDateModified(
+		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
 
 		try {
-			ctEntryId = ctEntryIdUnsafeSupplier.get();
+			dateModified = dateModifiedUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long ctEntryId;
+	protected Date dateModified;
 
-	public Date getModifiedDate() {
-		return modifiedDate;
+	public Long getEntryId() {
+		return entryId;
 	}
 
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
+	public void setEntryId(Long entryId) {
+		this.entryId = entryId;
 	}
 
-	public void setModifiedDate(
-		UnsafeSupplier<Date, Exception> modifiedDateUnsafeSupplier) {
+	public void setEntryId(
+		UnsafeSupplier<Long, Exception> entryIdUnsafeSupplier) {
 
 		try {
-			modifiedDate = modifiedDateUnsafeSupplier.get();
+			entryId = entryIdUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Date modifiedDate;
+	protected Long entryId;
 
-	public Long getResourcePrimKey() {
-		return resourcePrimKey;
+	public Long getKey() {
+		return key;
 	}
 
-	public void setResourcePrimKey(Long resourcePrimKey) {
-		this.resourcePrimKey = resourcePrimKey;
+	public void setKey(Long key) {
+		this.key = key;
 	}
 
-	public void setResourcePrimKey(
-		UnsafeSupplier<Long, Exception> resourcePrimKeyUnsafeSupplier) {
-
+	public void setKey(UnsafeSupplier<Long, Exception> keyUnsafeSupplier) {
 		try {
-			resourcePrimKey = resourcePrimKeyUnsafeSupplier.get();
+			key = keyUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long resourcePrimKey;
+	protected Long key;
 
 	public String getSiteName() {
 		return siteName;

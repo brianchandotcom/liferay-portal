@@ -100,7 +100,6 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public java.util.Collection<AffectedEntry> getEntryAffectedsPage(
-			@GraphQLName("collectionId") Long collectionId,
 			@GraphQLName("entryId") Long entryId,
 			@GraphQLName("keywords") String keywords,
 			@GraphQLName("pageSize") int pageSize,
@@ -113,8 +112,7 @@ public class Query {
 			affectedEntryResource -> {
 				Page paginationPage =
 					affectedEntryResource.getEntryAffectedsPage(
-						collectionId, entryId, keywords,
-						Pagination.of(pageSize, page));
+						entryId, keywords, Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
 			});
@@ -186,26 +184,24 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Entry getEntry(
-			@GraphQLName("collectionId") Long collectionId,
-			@GraphQLName("entryId") Long entryId)
+	public Entry getEntry(@GraphQLName("entryId") Long entryId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_entryResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			entryResource -> entryResource.getEntry(collectionId, entryId));
+			entryResource -> entryResource.getEntry(entryId));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Process getProccessProcess(@GraphQLName("processId") Long processId)
+	public Process getProcess(@GraphQLName("processId") Long processId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_processResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			processResource -> processResource.getProccessProcess(processId));
+			processResource -> processResource.getProcess(processId));
 	}
 
 	@GraphQLField
@@ -213,7 +209,9 @@ public class Query {
 	public java.util.Collection<Process> getProcessesPage(
 			@GraphQLName("companyId") Long companyId,
 			@GraphQLName("keywords") String keywords,
-			@GraphQLName("type") String type,
+			@GraphQLName("type")
+				com.liferay.change.tracking.rest.constant.v1_0.CollectionType
+					type,
 			@GraphQLName("userId") Long userId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
@@ -236,7 +234,9 @@ public class Query {
 	public java.util.Collection<ProcessUser> getProcessUsersPage(
 			@GraphQLName("companyId") Long companyId,
 			@GraphQLName("keywords") String keywords,
-			@GraphQLName("type") String type,
+			@GraphQLName("type")
+				com.liferay.change.tracking.rest.constant.v1_0.CollectionType
+					type,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {

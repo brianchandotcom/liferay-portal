@@ -80,16 +80,16 @@ public class ProcessSerDes {
 			sb.append(process.getCompanyId());
 		}
 
-		if (process.getDate() != null) {
+		if (process.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"date\": ");
+			sb.append("\"dateCreated\": ");
 
 			sb.append("\"");
 
-			sb.append(liferayToJSONDateFormat.format(process.getDate()));
+			sb.append(liferayToJSONDateFormat.format(process.getDateCreated()));
 
 			sb.append("\"");
 		}
@@ -114,6 +114,16 @@ public class ProcessSerDes {
 			sb.append(process.getProcessId());
 		}
 
+		if (process.getProcessUser() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"processUser\": ");
+
+			sb.append(String.valueOf(process.getProcessUser()));
+		}
+
 		if (process.getStatus() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -124,48 +134,6 @@ public class ProcessSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(process.getStatus()));
-
-			sb.append("\"");
-		}
-
-		if (process.getUserInitials() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"userInitials\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(process.getUserInitials()));
-
-			sb.append("\"");
-		}
-
-		if (process.getUserName() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"userName\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(process.getUserName()));
-
-			sb.append("\"");
-		}
-
-		if (process.getUserPortraitURL() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"userPortraitURL\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(process.getUserPortraitURL()));
 
 			sb.append("\"");
 		}
@@ -205,7 +173,9 @@ public class ProcessSerDes {
 			map.put("companyId", String.valueOf(process.getCompanyId()));
 		}
 
-		map.put("date", liferayToJSONDateFormat.format(process.getDate()));
+		map.put(
+			"dateCreated",
+			liferayToJSONDateFormat.format(process.getDateCreated()));
 
 		if (process.getPercentage() == null) {
 			map.put("percentage", null);
@@ -221,34 +191,18 @@ public class ProcessSerDes {
 			map.put("processId", String.valueOf(process.getProcessId()));
 		}
 
+		if (process.getProcessUser() == null) {
+			map.put("processUser", null);
+		}
+		else {
+			map.put("processUser", String.valueOf(process.getProcessUser()));
+		}
+
 		if (process.getStatus() == null) {
 			map.put("status", null);
 		}
 		else {
 			map.put("status", String.valueOf(process.getStatus()));
-		}
-
-		if (process.getUserInitials() == null) {
-			map.put("userInitials", null);
-		}
-		else {
-			map.put("userInitials", String.valueOf(process.getUserInitials()));
-		}
-
-		if (process.getUserName() == null) {
-			map.put("userName", null);
-		}
-		else {
-			map.put("userName", String.valueOf(process.getUserName()));
-		}
-
-		if (process.getUserPortraitURL() == null) {
-			map.put("userPortraitURL", null);
-		}
-		else {
-			map.put(
-				"userPortraitURL",
-				String.valueOf(process.getUserPortraitURL()));
 		}
 
 		return map;
@@ -320,9 +274,10 @@ public class ProcessSerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "date")) {
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				if (jsonParserFieldValue != null) {
-					process.setDate(toDate((String)jsonParserFieldValue));
+					process.setDateCreated(
+						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "percentage")) {
@@ -337,24 +292,15 @@ public class ProcessSerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "processUser")) {
+				if (jsonParserFieldValue != null) {
+					process.setProcessUser(
+						ProcessUserSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {
 				if (jsonParserFieldValue != null) {
 					process.setStatus((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "userInitials")) {
-				if (jsonParserFieldValue != null) {
-					process.setUserInitials((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "userName")) {
-				if (jsonParserFieldValue != null) {
-					process.setUserName((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "userPortraitURL")) {
-				if (jsonParserFieldValue != null) {
-					process.setUserPortraitURL((String)jsonParserFieldValue);
 				}
 			}
 			else {

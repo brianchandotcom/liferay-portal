@@ -66,6 +66,20 @@ public class ProcessUserSerDes {
 			sb.append(processUser.getUserId());
 		}
 
+		if (processUser.getUserInitials() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userInitials\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(processUser.getUserInitials()));
+
+			sb.append("\"");
+		}
+
 		if (processUser.getUserName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -76,6 +90,20 @@ public class ProcessUserSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(processUser.getUserName()));
+
+			sb.append("\"");
+		}
+
+		if (processUser.getUserPortraitURL() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userPortraitURL\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(processUser.getUserPortraitURL()));
 
 			sb.append("\"");
 		}
@@ -106,11 +134,28 @@ public class ProcessUserSerDes {
 			map.put("userId", String.valueOf(processUser.getUserId()));
 		}
 
+		if (processUser.getUserInitials() == null) {
+			map.put("userInitials", null);
+		}
+		else {
+			map.put(
+				"userInitials", String.valueOf(processUser.getUserInitials()));
+		}
+
 		if (processUser.getUserName() == null) {
 			map.put("userName", null);
 		}
 		else {
 			map.put("userName", String.valueOf(processUser.getUserName()));
+		}
+
+		if (processUser.getUserPortraitURL() == null) {
+			map.put("userPortraitURL", null);
+		}
+		else {
+			map.put(
+				"userPortraitURL",
+				String.valueOf(processUser.getUserPortraitURL()));
 		}
 
 		return map;
@@ -177,9 +222,20 @@ public class ProcessUserSerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "userInitials")) {
+				if (jsonParserFieldValue != null) {
+					processUser.setUserInitials((String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "userName")) {
 				if (jsonParserFieldValue != null) {
 					processUser.setUserName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "userPortraitURL")) {
+				if (jsonParserFieldValue != null) {
+					processUser.setUserPortraitURL(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else {

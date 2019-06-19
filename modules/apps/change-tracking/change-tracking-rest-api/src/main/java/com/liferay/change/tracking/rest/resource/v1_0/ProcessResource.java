@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.rest.resource.v1_0;
 
+import com.liferay.change.tracking.rest.constant.v1_0.CollectionType;
 import com.liferay.change.tracking.rest.dto.v1_0.Process;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
@@ -34,10 +35,10 @@ import javax.annotation.Generated;
 @Generated("")
 public interface ProcessResource {
 
-	public Process getProccessProcess(Long processId) throws Exception;
+	public Process getProcess(Long processId) throws Exception;
 
 	public Page<Process> getProcessesPage(
-			Long companyId, String keywords, String type, Long userId,
+			Long companyId, String keywords, CollectionType type, Long userId,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 

@@ -34,8 +34,7 @@ import javax.annotation.Generated;
 public interface AffectedEntryResource {
 
 	public Page<AffectedEntry> getEntryAffectedsPage(
-			Long collectionId, Long entryId, String keywords,
-			Pagination pagination)
+			Long entryId, String keywords, Pagination pagination)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -41,7 +41,7 @@ public interface EntryResource {
 			Sort[] sorts)
 		throws Exception;
 
-	public Entry getEntry(Long collectionId, Long entryId) throws Exception;
+	public Entry getEntry(Long entryId) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

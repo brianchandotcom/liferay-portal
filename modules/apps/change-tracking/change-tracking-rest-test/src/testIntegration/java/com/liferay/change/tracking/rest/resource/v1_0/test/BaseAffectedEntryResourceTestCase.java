@@ -187,28 +187,22 @@ public abstract class BaseAffectedEntryResourceTestCase {
 	@Test
 	public void testGetEntryAffectedsPage() throws Exception {
 		Page<AffectedEntry> page = affectedEntryResource.getEntryAffectedsPage(
-			testGetEntryAffectedsPage_getCollectionId(),
 			testGetEntryAffectedsPage_getEntryId(),
 			RandomTestUtil.randomString(), Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long collectionId = testGetEntryAffectedsPage_getCollectionId();
-		Long irrelevantCollectionId =
-			testGetEntryAffectedsPage_getIrrelevantCollectionId();
 		Long entryId = testGetEntryAffectedsPage_getEntryId();
 		Long irrelevantEntryId =
 			testGetEntryAffectedsPage_getIrrelevantEntryId();
 
-		if ((irrelevantCollectionId != null) && (irrelevantEntryId != null)) {
+		if ((irrelevantEntryId != null)) {
 			AffectedEntry irrelevantAffectedEntry =
 				testGetEntryAffectedsPage_addAffectedEntry(
-					irrelevantCollectionId, irrelevantEntryId,
-					randomIrrelevantAffectedEntry());
+					irrelevantEntryId, randomIrrelevantAffectedEntry());
 
 			page = affectedEntryResource.getEntryAffectedsPage(
-				irrelevantCollectionId, irrelevantEntryId, null,
-				Pagination.of(1, 2));
+				irrelevantEntryId, null, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -220,14 +214,14 @@ public abstract class BaseAffectedEntryResourceTestCase {
 
 		AffectedEntry affectedEntry1 =
 			testGetEntryAffectedsPage_addAffectedEntry(
-				collectionId, entryId, randomAffectedEntry());
+				entryId, randomAffectedEntry());
 
 		AffectedEntry affectedEntry2 =
 			testGetEntryAffectedsPage_addAffectedEntry(
-				collectionId, entryId, randomAffectedEntry());
+				entryId, randomAffectedEntry());
 
 		page = affectedEntryResource.getEntryAffectedsPage(
-			collectionId, entryId, null, Pagination.of(1, 2));
+			entryId, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -239,23 +233,22 @@ public abstract class BaseAffectedEntryResourceTestCase {
 
 	@Test
 	public void testGetEntryAffectedsPageWithPagination() throws Exception {
-		Long collectionId = testGetEntryAffectedsPage_getCollectionId();
 		Long entryId = testGetEntryAffectedsPage_getEntryId();
 
 		AffectedEntry affectedEntry1 =
 			testGetEntryAffectedsPage_addAffectedEntry(
-				collectionId, entryId, randomAffectedEntry());
+				entryId, randomAffectedEntry());
 
 		AffectedEntry affectedEntry2 =
 			testGetEntryAffectedsPage_addAffectedEntry(
-				collectionId, entryId, randomAffectedEntry());
+				entryId, randomAffectedEntry());
 
 		AffectedEntry affectedEntry3 =
 			testGetEntryAffectedsPage_addAffectedEntry(
-				collectionId, entryId, randomAffectedEntry());
+				entryId, randomAffectedEntry());
 
 		Page<AffectedEntry> page1 = affectedEntryResource.getEntryAffectedsPage(
-			collectionId, entryId, null, Pagination.of(1, 2));
+			entryId, null, Pagination.of(1, 2));
 
 		List<AffectedEntry> affectedEntries1 =
 			(List<AffectedEntry>)page1.getItems();
@@ -264,7 +257,7 @@ public abstract class BaseAffectedEntryResourceTestCase {
 			affectedEntries1.toString(), 2, affectedEntries1.size());
 
 		Page<AffectedEntry> page2 = affectedEntryResource.getEntryAffectedsPage(
-			collectionId, entryId, null, Pagination.of(2, 2));
+			entryId, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -275,7 +268,7 @@ public abstract class BaseAffectedEntryResourceTestCase {
 			affectedEntries2.toString(), 1, affectedEntries2.size());
 
 		Page<AffectedEntry> page3 = affectedEntryResource.getEntryAffectedsPage(
-			collectionId, entryId, null, Pagination.of(1, 3));
+			entryId, null, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(affectedEntry1, affectedEntry2, affectedEntry3),
@@ -283,24 +276,11 @@ public abstract class BaseAffectedEntryResourceTestCase {
 	}
 
 	protected AffectedEntry testGetEntryAffectedsPage_addAffectedEntry(
-			Long collectionId, Long entryId, AffectedEntry affectedEntry)
+			Long entryId, AffectedEntry affectedEntry)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	protected Long testGetEntryAffectedsPage_getCollectionId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetEntryAffectedsPage_getIrrelevantCollectionId()
-		throws Exception {
-
-		return null;
 	}
 
 	protected Long testGetEntryAffectedsPage_getEntryId() throws Exception {

@@ -37,6 +37,7 @@ import javax.annotation.Generated;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -71,7 +72,9 @@ public abstract class BaseProcessUserResourceImpl
 			@NotNull @Parameter(hidden = true) @QueryParam("companyId") Long
 				companyId,
 			@Parameter(hidden = true) @QueryParam("keywords") String keywords,
-			@Parameter(hidden = true) @QueryParam("type") String type,
+			@DefaultValue("all") @Parameter(hidden = true) @QueryParam("type")
+				com.liferay.change.tracking.rest.constant.v1_0.CollectionType
+					type,
 			@Context Pagination pagination)
 		throws Exception {
 

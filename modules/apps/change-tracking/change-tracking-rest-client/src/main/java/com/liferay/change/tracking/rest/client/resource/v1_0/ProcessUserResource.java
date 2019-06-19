@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.rest.client.resource.v1_0;
 
+import com.liferay.change.tracking.rest.client.constant.v1_0.CollectionType;
 import com.liferay.change.tracking.rest.client.dto.v1_0.ProcessUser;
 import com.liferay.change.tracking.rest.client.http.HttpInvoker;
 import com.liferay.change.tracking.rest.client.pagination.Page;
@@ -37,11 +38,13 @@ public interface ProcessUserResource {
 	}
 
 	public Page<ProcessUser> getProcessUsersPage(
-			Long companyId, String keywords, String type, Pagination pagination)
+			Long companyId, String keywords, CollectionType type,
+			Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getProcessUsersPageHttpResponse(
-			Long companyId, String keywords, String type, Pagination pagination)
+			Long companyId, String keywords, CollectionType type,
+			Pagination pagination)
 		throws Exception;
 
 	public static class Builder {
@@ -86,7 +89,7 @@ public interface ProcessUserResource {
 	public static class ProcessUserResourceImpl implements ProcessUserResource {
 
 		public Page<ProcessUser> getProcessUsersPage(
-				Long companyId, String keywords, String type,
+				Long companyId, String keywords, CollectionType type,
 				Pagination pagination)
 			throws Exception {
 
@@ -106,7 +109,7 @@ public interface ProcessUserResource {
 		}
 
 		public HttpInvoker.HttpResponse getProcessUsersPageHttpResponse(
-				Long companyId, String keywords, String type,
+				Long companyId, String keywords, CollectionType type,
 				Pagination pagination)
 			throws Exception {
 

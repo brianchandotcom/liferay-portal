@@ -71,24 +71,26 @@ public class Process {
 
 	protected Long companyId;
 
-	public Date getDate() {
-		return date;
+	public Date getDateCreated() {
+		return dateCreated;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
 	}
 
-	public void setDate(UnsafeSupplier<Date, Exception> dateUnsafeSupplier) {
+	public void setDateCreated(
+		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
+
 		try {
-			date = dateUnsafeSupplier.get();
+			dateCreated = dateCreatedUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Date date;
+	protected Date dateCreated;
 
 	public Integer getPercentage() {
 		return percentage;
@@ -132,6 +134,27 @@ public class Process {
 
 	protected Long processId;
 
+	public ProcessUser getProcessUser() {
+		return processUser;
+	}
+
+	public void setProcessUser(ProcessUser processUser) {
+		this.processUser = processUser;
+	}
+
+	public void setProcessUser(
+		UnsafeSupplier<ProcessUser, Exception> processUserUnsafeSupplier) {
+
+		try {
+			processUser = processUserUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ProcessUser processUser;
+
 	public String getStatus() {
 		return status;
 	}
@@ -152,69 +175,6 @@ public class Process {
 	}
 
 	protected String status;
-
-	public String getUserInitials() {
-		return userInitials;
-	}
-
-	public void setUserInitials(String userInitials) {
-		this.userInitials = userInitials;
-	}
-
-	public void setUserInitials(
-		UnsafeSupplier<String, Exception> userInitialsUnsafeSupplier) {
-
-		try {
-			userInitials = userInitialsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String userInitials;
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public void setUserName(
-		UnsafeSupplier<String, Exception> userNameUnsafeSupplier) {
-
-		try {
-			userName = userNameUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String userName;
-
-	public String getUserPortraitURL() {
-		return userPortraitURL;
-	}
-
-	public void setUserPortraitURL(String userPortraitURL) {
-		this.userPortraitURL = userPortraitURL;
-	}
-
-	public void setUserPortraitURL(
-		UnsafeSupplier<String, Exception> userPortraitURLUnsafeSupplier) {
-
-		try {
-			userPortraitURL = userPortraitURLUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String userPortraitURL;
 
 	@Override
 	public boolean equals(Object object) {

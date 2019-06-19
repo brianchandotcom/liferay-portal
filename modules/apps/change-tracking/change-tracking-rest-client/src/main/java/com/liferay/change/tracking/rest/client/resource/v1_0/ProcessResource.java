@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.rest.client.resource.v1_0;
 
+import com.liferay.change.tracking.rest.client.constant.v1_0.CollectionType;
 import com.liferay.change.tracking.rest.client.dto.v1_0.Process;
 import com.liferay.change.tracking.rest.client.http.HttpInvoker;
 import com.liferay.change.tracking.rest.client.pagination.Page;
@@ -37,19 +38,18 @@ public interface ProcessResource {
 		return new Builder();
 	}
 
-	public Process getProccessProcess(Long processId) throws Exception;
+	public Process getProcess(Long processId) throws Exception;
 
-	public HttpInvoker.HttpResponse getProccessProcessHttpResponse(
-			Long processId)
+	public HttpInvoker.HttpResponse getProcessHttpResponse(Long processId)
 		throws Exception;
 
 	public Page<Process> getProcessesPage(
-			Long companyId, String keywords, String type, Long userId,
+			Long companyId, String keywords, CollectionType type, Long userId,
 			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getProcessesPageHttpResponse(
-			Long companyId, String keywords, String type, Long userId,
+			Long companyId, String keywords, CollectionType type, Long userId,
 			Pagination pagination, String sortString)
 		throws Exception;
 
@@ -94,9 +94,9 @@ public interface ProcessResource {
 
 	public static class ProcessResourceImpl implements ProcessResource {
 
-		public Process getProccessProcess(Long processId) throws Exception {
-			HttpInvoker.HttpResponse httpResponse =
-				getProccessProcessHttpResponse(processId);
+		public Process getProcess(Long processId) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = getProcessHttpResponse(
+				processId);
 
 			String content = httpResponse.getContent();
 
@@ -118,8 +118,7 @@ public interface ProcessResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getProccessProcessHttpResponse(
-				Long processId)
+		public HttpInvoker.HttpResponse getProcessHttpResponse(Long processId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -134,7 +133,7 @@ public interface ProcessResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/change-tracking/v1.0/proccesses/{processId}",
+						"/o/change-tracking/v1.0/processes/{processId}",
 				processId);
 
 			httpInvoker.userNameAndPassword(
@@ -144,8 +143,8 @@ public interface ProcessResource {
 		}
 
 		public Page<Process> getProcessesPage(
-				Long companyId, String keywords, String type, Long userId,
-				Pagination pagination, String sortString)
+				Long companyId, String keywords, CollectionType type,
+				Long userId, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -164,8 +163,8 @@ public interface ProcessResource {
 		}
 
 		public HttpInvoker.HttpResponse getProcessesPageHttpResponse(
-				Long companyId, String keywords, String type, Long userId,
-				Pagination pagination, String sortString)
+				Long companyId, String keywords, CollectionType type,
+				Long userId, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

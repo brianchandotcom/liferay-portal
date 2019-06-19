@@ -219,20 +219,20 @@ public class Entry {
 	protected String contentType;
 
 	@Schema
-	public Long getCtEntryId() {
-		return ctEntryId;
+	public Date getDateModified() {
+		return dateModified;
 	}
 
-	public void setCtEntryId(Long ctEntryId) {
-		this.ctEntryId = ctEntryId;
+	public void setDateModified(Date dateModified) {
+		this.dateModified = dateModified;
 	}
 
 	@JsonIgnore
-	public void setCtEntryId(
-		UnsafeSupplier<Long, Exception> ctEntryIdUnsafeSupplier) {
+	public void setDateModified(
+		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
 
 		try {
-			ctEntryId = ctEntryIdUnsafeSupplier.get();
+			dateModified = dateModifiedUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -243,24 +243,24 @@ public class Entry {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long ctEntryId;
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Date dateModified;
 
 	@Schema
-	public Date getModifiedDate() {
-		return modifiedDate;
+	public Long getEntryId() {
+		return entryId;
 	}
 
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
+	public void setEntryId(Long entryId) {
+		this.entryId = entryId;
 	}
 
 	@JsonIgnore
-	public void setModifiedDate(
-		UnsafeSupplier<Date, Exception> modifiedDateUnsafeSupplier) {
+	public void setEntryId(
+		UnsafeSupplier<Long, Exception> entryIdUnsafeSupplier) {
 
 		try {
-			modifiedDate = modifiedDateUnsafeSupplier.get();
+			entryId = entryIdUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -272,23 +272,21 @@ public class Entry {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Date modifiedDate;
+	protected Long entryId;
 
 	@Schema
-	public Long getResourcePrimKey() {
-		return resourcePrimKey;
+	public Long getKey() {
+		return key;
 	}
 
-	public void setResourcePrimKey(Long resourcePrimKey) {
-		this.resourcePrimKey = resourcePrimKey;
+	public void setKey(Long key) {
+		this.key = key;
 	}
 
 	@JsonIgnore
-	public void setResourcePrimKey(
-		UnsafeSupplier<Long, Exception> resourcePrimKeyUnsafeSupplier) {
-
+	public void setKey(UnsafeSupplier<Long, Exception> keyUnsafeSupplier) {
 		try {
-			resourcePrimKey = resourcePrimKeyUnsafeSupplier.get();
+			key = keyUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -300,7 +298,7 @@ public class Entry {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long resourcePrimKey;
+	protected Long key;
 
 	@Schema
 	public String getSiteName() {
@@ -508,38 +506,38 @@ public class Entry {
 			sb.append("\"");
 		}
 
-		if (ctEntryId != null) {
+		if (dateModified != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"ctEntryId\": ");
-
-			sb.append(ctEntryId);
-		}
-
-		if (modifiedDate != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"modifiedDate\": ");
+			sb.append("\"dateModified\": ");
 
 			sb.append("\"");
 
-			sb.append(liferayToJSONDateFormat.format(modifiedDate));
+			sb.append(liferayToJSONDateFormat.format(dateModified));
 
 			sb.append("\"");
 		}
 
-		if (resourcePrimKey != null) {
+		if (entryId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"resourcePrimKey\": ");
+			sb.append("\"entryId\": ");
 
-			sb.append(resourcePrimKey);
+			sb.append(entryId);
+		}
+
+		if (key != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"key\": ");
+
+			sb.append(key);
 		}
 
 		if (siteName != null) {

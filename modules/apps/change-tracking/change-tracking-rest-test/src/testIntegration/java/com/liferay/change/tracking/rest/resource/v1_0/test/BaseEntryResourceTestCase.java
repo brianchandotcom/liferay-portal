@@ -430,6 +430,10 @@ public abstract class BaseEntryResourceTestCase {
 	protected void assertValid(Entry entry) {
 		boolean valid = true;
 
+		if (entry.getDateModified() == null) {
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -483,24 +487,16 @@ public abstract class BaseEntryResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("ctEntryId", additionalAssertFieldName)) {
-				if (entry.getCtEntryId() == null) {
+			if (Objects.equals("entryId", additionalAssertFieldName)) {
+				if (entry.getEntryId() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("modifiedDate", additionalAssertFieldName)) {
-				if (entry.getModifiedDate() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("resourcePrimKey", additionalAssertFieldName)) {
-				if (entry.getResourcePrimKey() == null) {
+			if (Objects.equals("key", additionalAssertFieldName)) {
+				if (entry.getKey() == null) {
 					valid = false;
 				}
 
@@ -643,9 +639,9 @@ public abstract class BaseEntryResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("ctEntryId", additionalAssertFieldName)) {
+			if (Objects.equals("dateModified", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						entry1.getCtEntryId(), entry2.getCtEntryId())) {
+						entry1.getDateModified(), entry2.getDateModified())) {
 
 					return false;
 				}
@@ -653,9 +649,9 @@ public abstract class BaseEntryResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("modifiedDate", additionalAssertFieldName)) {
+			if (Objects.equals("entryId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						entry1.getModifiedDate(), entry2.getModifiedDate())) {
+						entry1.getEntryId(), entry2.getEntryId())) {
 
 					return false;
 				}
@@ -663,11 +659,8 @@ public abstract class BaseEntryResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("resourcePrimKey", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						entry1.getResourcePrimKey(),
-						entry2.getResourcePrimKey())) {
-
+			if (Objects.equals("key", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(entry1.getKey(), entry2.getKey())) {
 					return false;
 				}
 
@@ -803,12 +796,7 @@ public abstract class BaseEntryResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("ctEntryId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("modifiedDate")) {
+		if (entityFieldName.equals("dateModified")) {
 			if (operator.equals("between")) {
 				sb = new StringBundler();
 
@@ -817,13 +805,13 @@ public abstract class BaseEntryResourceTestCase {
 				sb.append(" gt ");
 				sb.append(
 					_dateFormat.format(
-						DateUtils.addSeconds(entry.getModifiedDate(), -2)));
+						DateUtils.addSeconds(entry.getDateModified(), -2)));
 				sb.append(" and ");
 				sb.append(entityFieldName);
 				sb.append(" lt ");
 				sb.append(
 					_dateFormat.format(
-						DateUtils.addSeconds(entry.getModifiedDate(), 2)));
+						DateUtils.addSeconds(entry.getDateModified(), 2)));
 				sb.append(")");
 			}
 			else {
@@ -833,13 +821,18 @@ public abstract class BaseEntryResourceTestCase {
 				sb.append(operator);
 				sb.append(" ");
 
-				sb.append(_dateFormat.format(entry.getModifiedDate()));
+				sb.append(_dateFormat.format(entry.getDateModified()));
 			}
 
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("resourcePrimKey")) {
+		if (entityFieldName.equals("entryId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("key")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -887,9 +880,9 @@ public abstract class BaseEntryResourceTestCase {
 				classPK = RandomTestUtil.randomLong();
 				collision = RandomTestUtil.randomBoolean();
 				contentType = RandomTestUtil.randomString();
-				ctEntryId = RandomTestUtil.randomLong();
-				modifiedDate = RandomTestUtil.nextDate();
-				resourcePrimKey = RandomTestUtil.randomLong();
+				dateModified = RandomTestUtil.nextDate();
+				entryId = RandomTestUtil.randomLong();
+				key = RandomTestUtil.randomLong();
 				siteName = RandomTestUtil.randomString();
 				title = RandomTestUtil.randomString();
 				userName = RandomTestUtil.randomString();

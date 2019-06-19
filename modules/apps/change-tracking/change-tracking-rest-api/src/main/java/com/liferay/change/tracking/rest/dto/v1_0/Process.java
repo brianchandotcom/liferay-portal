@@ -106,18 +106,20 @@ public class Process {
 	protected Long companyId;
 
 	@Schema
-	public Date getDate() {
-		return date;
+	public Date getDateCreated() {
+		return dateCreated;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
 	}
 
 	@JsonIgnore
-	public void setDate(UnsafeSupplier<Date, Exception> dateUnsafeSupplier) {
+	public void setDateCreated(
+		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
+
 		try {
-			date = dateUnsafeSupplier.get();
+			dateCreated = dateCreatedUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -129,7 +131,7 @@ public class Process {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Date date;
+	protected Date dateCreated;
 
 	@Schema
 	public Integer getPercentage() {
@@ -188,6 +190,34 @@ public class Process {
 	protected Long processId;
 
 	@Schema
+	public ProcessUser getProcessUser() {
+		return processUser;
+	}
+
+	public void setProcessUser(ProcessUser processUser) {
+		this.processUser = processUser;
+	}
+
+	@JsonIgnore
+	public void setProcessUser(
+		UnsafeSupplier<ProcessUser, Exception> processUserUnsafeSupplier) {
+
+		try {
+			processUser = processUserUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ProcessUser processUser;
+
+	@Schema
 	public String getStatus() {
 		return status;
 	}
@@ -214,90 +244,6 @@ public class Process {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String status;
-
-	@Schema
-	public String getUserInitials() {
-		return userInitials;
-	}
-
-	public void setUserInitials(String userInitials) {
-		this.userInitials = userInitials;
-	}
-
-	@JsonIgnore
-	public void setUserInitials(
-		UnsafeSupplier<String, Exception> userInitialsUnsafeSupplier) {
-
-		try {
-			userInitials = userInitialsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String userInitials;
-
-	@Schema
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	@JsonIgnore
-	public void setUserName(
-		UnsafeSupplier<String, Exception> userNameUnsafeSupplier) {
-
-		try {
-			userName = userNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String userName;
-
-	@Schema
-	public String getUserPortraitURL() {
-		return userPortraitURL;
-	}
-
-	public void setUserPortraitURL(String userPortraitURL) {
-		this.userPortraitURL = userPortraitURL;
-	}
-
-	@JsonIgnore
-	public void setUserPortraitURL(
-		UnsafeSupplier<String, Exception> userPortraitURLUnsafeSupplier) {
-
-		try {
-			userPortraitURL = userPortraitURLUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String userPortraitURL;
 
 	@Override
 	public boolean equals(Object object) {
@@ -349,16 +295,16 @@ public class Process {
 			sb.append(companyId);
 		}
 
-		if (date != null) {
+		if (dateCreated != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"date\": ");
+			sb.append("\"dateCreated\": ");
 
 			sb.append("\"");
 
-			sb.append(liferayToJSONDateFormat.format(date));
+			sb.append(liferayToJSONDateFormat.format(dateCreated));
 
 			sb.append("\"");
 		}
@@ -383,6 +329,16 @@ public class Process {
 			sb.append(processId);
 		}
 
+		if (processUser != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"processUser\": ");
+
+			sb.append(String.valueOf(processUser));
+		}
+
 		if (status != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -393,48 +349,6 @@ public class Process {
 			sb.append("\"");
 
 			sb.append(_escape(status));
-
-			sb.append("\"");
-		}
-
-		if (userInitials != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"userInitials\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(userInitials));
-
-			sb.append("\"");
-		}
-
-		if (userName != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"userName\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(userName));
-
-			sb.append("\"");
-		}
-
-		if (userPortraitURL != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"userPortraitURL\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(userPortraitURL));
 
 			sb.append("\"");
 		}

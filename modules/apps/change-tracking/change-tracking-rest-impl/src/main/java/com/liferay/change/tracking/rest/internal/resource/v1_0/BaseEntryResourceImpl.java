@@ -95,18 +95,11 @@ public abstract class BaseEntryResourceImpl implements EntryResource {
 
 	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "collectionId"),
-			@Parameter(in = ParameterIn.PATH, name = "entryId")
-		}
-	)
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "entryId")})
 	@Path("/entries/{entryId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Entry")})
 	public Entry getEntry(
-			@NotNull @Parameter(hidden = true) @PathParam("collectionId") Long
-				collectionId,
 			@NotNull @Parameter(hidden = true) @PathParam("entryId") Long
 				entryId)
 		throws Exception {

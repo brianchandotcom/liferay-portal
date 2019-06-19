@@ -243,7 +243,7 @@
 </tr>
 <tr>
 	<td>PAGE_1</td>
-	<td>//div[contains(@id,'navbar')]/ul/li[1]/a</td>
+	<td>//section[@class='portlet']//div[contains(@id,'navbar')]/ul/li[1]/a</td>
 	<td>1st Page</td>
 </tr>
 <tr>
@@ -278,7 +278,7 @@
 </tr>
 <tr>
 	<td>PAGE_2</td>
-	<td>//div[contains(@id,'navbar')]/ul/li[2]/a</td>
+	<td>//section[@class='portlet']//div[contains(@id,'navbar')]/ul/li[2]/a</td>
 	<td>2nd Page</td>
 </tr>
 <tr>

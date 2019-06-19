@@ -34,17 +34,22 @@ function render(content, value, editableValues) {
 			link.target = config.target;
 		}
 
-		Array.from(link.classList).forEach(elementClass => {
-			if (elementClass.indexOf('btn-') === 0 || elementClass === 'btn') {
-				link.classList.remove(elementClass);
-			}
-		});
+		if (config.buttonType) {
+			Array.from(link.classList).forEach(elementClass => {
+				if (
+					elementClass.indexOf('btn-') === 0 ||
+					elementClass === 'btn'
+				) {
+					link.classList.remove(elementClass);
+				}
+			});
 
-		if (config.buttonType && config.buttonType === 'link') {
-			link.classList.add('link');
-		} else {
-			link.classList.add('btn');
-			link.classList.add(`btn-${config.buttonType}`);
+			if (config.buttonType && config.buttonType === 'link') {
+				link.classList.add('link');
+			} else {
+				link.classList.add('btn');
+				link.classList.add(`btn-${config.buttonType}`);
+			}
 		}
 	}
 

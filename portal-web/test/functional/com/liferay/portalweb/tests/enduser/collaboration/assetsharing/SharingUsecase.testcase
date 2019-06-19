@@ -259,7 +259,7 @@ definition {
 
 		ManagementBar.setFilterAndOrder(orderBy = "Shared Date");
 
-		ManagementBar.toggleViewOrder(order = "Descending");
+		ManagementBar.toggleViewOrder(order = "down");
 	}
 
 }

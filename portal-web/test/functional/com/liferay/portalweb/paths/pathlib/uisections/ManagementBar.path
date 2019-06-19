@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ORDER_ICON_SPECIFIC</td>
-	<td>//nav[contains(@class,'management-bar')]//a[contains(@class,'order')][@title='${key_order}']</td>
+	<td>//nav[contains(@class,'management-bar')]//a[contains(@class,'${key_order}')][@title='Reverse Sort Direction']</td>
 	<td></td>
 </tr>
 </tbody>

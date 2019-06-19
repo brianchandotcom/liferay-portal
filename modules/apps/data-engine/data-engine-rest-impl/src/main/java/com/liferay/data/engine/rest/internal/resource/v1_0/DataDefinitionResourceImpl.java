@@ -50,8 +50,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -108,7 +106,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 	@Override
 	public DataDefinition getSiteDataDefinition(
-			@NotNull Long siteId, @NotNull String dataDefinitionKey)
+			Long siteId, String dataDefinitionKey)
 		throws Exception {
 
 		return DataDefinitionUtil.toDataDefinition(

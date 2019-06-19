@@ -65,7 +65,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.journal.service.JournalFeedService;
@@ -840,27 +839,6 @@ public class JournalPortlet extends MVCPortlet {
 				orderByType, targetLayoutFriendlyUrl, targetPortletId,
 				contentField, feedFormat, feedVersion, serviceContext);
 		}
-	}
-
-	public void updateWorkflowDefinitions(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long[] ddmStructureIds = StringUtil.split(
-			ParamUtil.getString(
-				actionRequest, "ddmStructuresSearchContainerPrimaryKeys"),
-			0L);
-		int restrinctionType = ParamUtil.getInteger(
-			actionRequest, "restrictionType");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			JournalFolder.class.getName(), actionRequest);
-
-		_journalFolderService.updateFolder(
-			serviceContext.getScopeGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, null, null,
-			ddmStructureIds, restrinctionType, false, serviceContext);
 	}
 
 	@Activate

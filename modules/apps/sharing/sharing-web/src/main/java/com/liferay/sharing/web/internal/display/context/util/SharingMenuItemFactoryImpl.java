@@ -16,7 +16,7 @@ package com.liferay.sharing.web.internal.display.context.util;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptToolbarItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
@@ -165,15 +165,18 @@ public class SharingMenuItemFactoryImpl
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, SharingJavaScriptFactoryImpl.class);
 
-		return LanguageUtil.get(resourceBundle, "manage-collaborators");
+		return _language.get(resourceBundle, "manage-collaborators");
 	}
 
 	private String _getSharingLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, SharingJavaScriptFactoryImpl.class);
 
-		return LanguageUtil.get(resourceBundle, "share");
+		return _language.get(resourceBundle, "share");
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private SharingJavaScriptFactory _sharingJavaScriptFactory;

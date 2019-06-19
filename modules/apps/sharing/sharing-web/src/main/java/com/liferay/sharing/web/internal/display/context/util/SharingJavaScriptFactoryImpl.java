@@ -19,25 +19,22 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharing.display.context.util.SharingJavaScriptFactory;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
-
-import javax.portlet.PortletResponse;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import javax.portlet.PortletResponse;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * @author Adolfo Pérez
@@ -119,11 +116,11 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 		String title = _getAssetTitle(className, classPK, locale);
 
 		if (Validator.isNotNull(title)) {
-			return LanguageUtil.format(
-				resourceBundle, "share-x", HtmlUtil.escapeJS(title));
+			return _language.format(
+				resourceBundle, "share-x", _html.escapeJS(title));
 		}
 
-		return LanguageUtil.get(resourceBundle, "share");
+		return _language.get(resourceBundle, "share");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -131,5 +128,11 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private Html _html;
+
+	@Reference
+	private Language _language;
 
 }

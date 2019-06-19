@@ -222,6 +222,10 @@ public class JournalArticleActionDropdownItemsProvider {
 					add(_getAutoCopyArticleActionUnsafeConsumer());
 				}
 
+				String articleId =
+					_article.getArticleId() + JournalPortlet.VERSION_SEPARATOR +
+						_article.getVersion();
+
 				if (JournalArticlePermission.contains(
 						_themeDisplay.getPermissionChecker(), _article,
 						ActionKeys.EXPIRE) &&
@@ -230,9 +234,7 @@ public class JournalArticleActionDropdownItemsProvider {
 
 					add(
 						_getExpireArticleActionConsumer(
-							_article.getArticleId() +
-								JournalPortlet.VERSION_SEPARATOR +
-									_article.getVersion()));
+							articleId, _themeDisplay.getURLCurrent()));
 				}
 
 				add(_getCompareArticleVersionsActionUnsafeConsumer());
@@ -243,9 +245,7 @@ public class JournalArticleActionDropdownItemsProvider {
 
 					add(
 						_getDeleteArticleAction(
-							_article.getArticleId() +
-								JournalPortlet.VERSION_SEPARATOR +
-									_article.getVersion()));
+							articleId, _themeDisplay.getURLCurrent()));
 				}
 			}
 		};
@@ -278,6 +278,10 @@ public class JournalArticleActionDropdownItemsProvider {
 					add(_getAutoCopyArticleActionUnsafeConsumer());
 				}
 
+				String articleId =
+					_article.getArticleId() + JournalPortlet.VERSION_SEPARATOR +
+						_article.getVersion();
+
 				if (JournalArticlePermission.contains(
 						_themeDisplay.getPermissionChecker(), _article,
 						ActionKeys.EXPIRE) &&
@@ -286,9 +290,7 @@ public class JournalArticleActionDropdownItemsProvider {
 
 					add(
 						_getExpireArticleActionConsumer(
-							_article.getArticleId() +
-								JournalPortlet.VERSION_SEPARATOR +
-									_article.getVersion()));
+							articleId, _themeDisplay.getURLCurrent()));
 				}
 
 				add(_getCompareArticleVersionsActionUnsafeConsumer());
@@ -299,9 +301,7 @@ public class JournalArticleActionDropdownItemsProvider {
 
 					add(
 						_getDeleteArticleAction(
-							_article.getArticleId() +
-								JournalPortlet.VERSION_SEPARATOR +
-									_article.getVersion()));
+							articleId, _themeDisplay.getURLCurrent()));
 				}
 			}
 		};
@@ -389,12 +389,18 @@ public class JournalArticleActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception> _getDeleteArticleAction(
 		String articleId) {
 
+		return _getDeleteArticleAction(articleId, _getRedirect());
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception> _getDeleteArticleAction(
+		String articleId, String redirect) {
+
 		PortletURL deleteURL = _liferayPortletResponse.createActionURL();
 
 		deleteURL.setParameter(
 			ActionRequest.ACTION_NAME, "/journal/delete_article");
 
-		deleteURL.setParameter("redirect", _getRedirect());
+		deleteURL.setParameter("redirect", redirect);
 		deleteURL.setParameter(
 			"groupId", String.valueOf(_article.getGroupId()));
 		deleteURL.setParameter("articleId", articleId);
@@ -427,11 +433,17 @@ public class JournalArticleActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getExpireArticleActionConsumer(String articleId) {
 
+		return _getExpireArticleActionConsumer(articleId, _getRedirect());
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getExpireArticleActionConsumer(String articleId, String redirect) {
+
 		PortletURL expireURL = _liferayPortletResponse.createActionURL();
 
 		expireURL.setParameter(
 			ActionRequest.ACTION_NAME, "/journal/expire_articles");
-		expireURL.setParameter("redirect", _getRedirect());
+		expireURL.setParameter("redirect", redirect);
 		expireURL.setParameter(
 			"groupId", String.valueOf(_article.getGroupId()));
 		expireURL.setParameter("articleId", articleId);

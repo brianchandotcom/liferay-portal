@@ -176,14 +176,17 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
-					_copyLayout(personalLayout);
+					Layout draftLayout = _layoutLocalService.fetchLayout(
+						_portal.getClassNameId(Layout.class),
+						personalLayout.getPlid());
 
 					_configureFragmentEntryLink(
 						serviceContext.getCompanyId(),
-						serviceContext.getScopeGroupId(),
-						personalLayout.getPlid(),
+						serviceContext.getScopeGroupId(), draftLayout.getPlid(),
 						carouselFragmentEntry.getFragmentEntryId(),
 						carouselJournalArticle.getArticleId());
+
+					_copyLayout(personalLayout);
 
 					return null;
 				});

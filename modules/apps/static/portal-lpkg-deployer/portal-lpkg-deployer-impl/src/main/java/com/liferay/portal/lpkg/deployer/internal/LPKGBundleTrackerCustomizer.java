@@ -52,6 +52,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
@@ -307,9 +308,12 @@ public class LPKGBundleTrackerCustomizer
 					_bundleContext);
 			}
 
-			bundles.addAll(_reloadTrackedBundles(symbolicName, bundle));
+			List<String> trackedBundleLocations = _reloadTrackedBundles(
+				symbolicName, bundle, bundles);
 
-			_recordTrackedBundles(bundle, innerBundleLocations);
+			if (!trackedBundleLocations.equals(innerBundleLocations)) {
+				_recordTrackedBundles(bundle, innerBundleLocations);
+			}
 		}
 		catch (Throwable t) {
 			_log.error("Rollback bundle installation for " + bundles, t);
@@ -638,13 +642,13 @@ public class LPKGBundleTrackerCustomizer
 		}
 	}
 
-	private List<Bundle> _reloadTrackedBundles(
-		String lpkgSymbolicName, Bundle bundle) {
+	private List<String> _reloadTrackedBundles(
+		String lpkgSymbolicName, Bundle bundle, Set<Bundle> trackedBundles) {
 
 		File dataFile = bundle.getDataFile(_FILE_NAME_LPKG_DATA);
 
 		if (!dataFile.exists()) {
-			return Collections.<Bundle>emptyList();
+			return Collections.emptyList();
 		}
 
 		Properties properties = new Properties();
@@ -654,8 +658,6 @@ public class LPKGBundleTrackerCustomizer
 
 			String[] locations = StringUtil.split(
 				properties.getProperty(_PROPERTY_KEY_INSTALLED_BUNDLES));
-
-			List<Bundle> trackedBundles = new ArrayList<>();
 
 			for (String location : locations) {
 				Bundle installedBundle = _bundleContext.getBundle(location);
@@ -674,12 +676,12 @@ public class LPKGBundleTrackerCustomizer
 				}
 			}
 
-			return trackedBundles;
+			return Arrays.asList(locations);
 		}
 		catch (Throwable t) {
 			_log.error("Unable to uninstall LPKG " + bundle, t);
 
-			return Collections.<Bundle>emptyList();
+			return Collections.emptyList();
 		}
 	}
 

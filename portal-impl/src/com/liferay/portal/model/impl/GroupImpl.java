@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
@@ -304,13 +303,6 @@ public class GroupImpl extends GroupBaseImpl {
 		}
 
 		return StringPool.BLANK;
-	}
-
-	@Override
-	public List<Group> getFilteredChildren(boolean site)
-		throws PortalException {
-
-		return GroupServiceUtil.getGroups(getCompanyId(), getGroupId(), site);
 	}
 
 	@Override

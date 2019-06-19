@@ -44,11 +44,12 @@ public interface OpenNLPDocumentAssetAutoTaggerCompanyConfiguration {
 	public float confidenceThreshold();
 
 	/**
-	 * Enables auto tagging of documents using a pre-trained opennlp model.
+	 * Sets the class names to enable auto tagging of documents using a
+	 * pre-trained opennlp model.
 	 *
 	 * @review
 	 */
-	@Meta.AD(deflt = "false", name = "enabled", required = false)
-	public boolean enabled();
+	@Meta.AD(deflt = "", name = "enabled-class-names", required = false)
+	public String[] enabledClassNames();
 
 }

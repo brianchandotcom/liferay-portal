@@ -14,6 +14,7 @@
 
 package com.liferay.asset.auto.tagger.opennlp.internal.extractor;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
@@ -45,12 +46,8 @@ public class TextExtractorProvider {
 			(ServiceTrackerMap<String, TextExtractor<?>>)
 				(ServiceTrackerMap)ServiceTrackerMapFactory.openSingleValueMap(
 					bundleContext, TextExtractor.class, null,
-					(serviceReference, emitter) -> {
-						TextExtractor textExtractor = bundleContext.getService(
-							serviceReference);
-
-						emitter.emit(textExtractor.getClassName());
-					});
+					ServiceReferenceMapperFactory.createFromFunction(
+						bundleContext, TextExtractor::getClassName));
 	}
 
 	@Deactivate

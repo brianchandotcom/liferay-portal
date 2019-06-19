@@ -215,6 +215,8 @@ components:
                 dataDefinitionId:
                     format: int64
                     type: integer
+                dataRecordCollectionKey:
+                    type: string
                 description:
                     additionalProperties:
                         type: object
@@ -226,6 +228,9 @@ components:
                     additionalProperties:
                         type: object
                     type: object
+                siteId:
+                    format: int64
+                    type: integer
             type: object
         DataRecordCollectionPermission:
             properties:

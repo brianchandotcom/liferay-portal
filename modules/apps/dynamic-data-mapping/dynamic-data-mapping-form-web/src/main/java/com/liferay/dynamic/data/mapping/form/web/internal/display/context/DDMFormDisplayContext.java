@@ -132,7 +132,7 @@ public class DDMFormDisplayContext {
 			workflowDefinitionLinkLocalService;
 		_portal = portal;
 
-		_containerId = "ddmForm" + StringUtil.randomString();
+		_containerId = "ddmForm".concat(StringUtil.randomString());
 
 		if (Validator.isNotNull(getPortletResource())) {
 			return;

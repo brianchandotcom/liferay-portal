@@ -38,12 +38,20 @@ public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.
 		return _dataLayoutId;
 	}
 
+	public java.lang.Long getDataRecordId() {
+		return _dataRecordId;
+	}
+
 	public java.lang.String getNamespace() {
 		return _namespace;
 	}
 
 	public void setDataLayoutId(java.lang.Long dataLayoutId) {
 		_dataLayoutId = dataLayoutId;
+	}
+
+	public void setDataRecordId(java.lang.Long dataRecordId) {
+		_dataRecordId = dataRecordId;
 	}
 
 	public void setNamespace(java.lang.String namespace) {
@@ -62,6 +70,7 @@ public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.
 		super.cleanUp();
 
 		_dataLayoutId = null;
+		_dataRecordId = null;
 		_namespace = null;
 	}
 
@@ -78,6 +87,7 @@ public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		setNamespacedAttribute(request, "dataLayoutId", _dataLayoutId);
+		setNamespacedAttribute(request, "dataRecordId", _dataRecordId);
 		setNamespacedAttribute(request, "namespace", _namespace);
 	}
 
@@ -90,6 +100,7 @@ public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.
 		"/data_layout_renderer/start.jsp";
 
 	private java.lang.Long _dataLayoutId = null;
+	private java.lang.Long _dataRecordId = null;
 	private java.lang.String _namespace = null;
 
 }

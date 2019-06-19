@@ -23,9 +23,9 @@ SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = new Segments
 <div class="container-fluid segments-simulation" id="<portlet:namespace />segmentsSimulationContainer">
 	<c:choose>
 		<c:when test="<%= segmentsSimulationDisplayContext.isShowEmptyMessage() %>">
-			<div class="alert alert-info">
-				<liferay-ui:message key="there-are-no-segments" />
-			</div>
+			<p class="mb-4 mt-1 small">
+				<liferay-ui:message key="no-segments-message" />
+			</p>
 		</c:when>
 		<c:otherwise>
 			<aui:form method="post" name="segmentsSimulationFm">

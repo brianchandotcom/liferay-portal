@@ -6,6 +6,7 @@ import dom from 'metal-dom';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
+import {setJSONArrayValue} from '../util/setters.es';
 
 import templates from './CheckboxMultiple.soy.js';
 
@@ -149,7 +150,9 @@ CheckboxMultiple.STATE = {
 	 * @type {?string}
 	 */
 
-	predefinedValue: Config.array().value([]),
+	predefinedValue: Config.oneOfType([Config.array(), Config.object()])
+		.setter(setJSONArrayValue)
+		.value([]),
 
 	/**
 	 * @default false
@@ -230,7 +233,9 @@ CheckboxMultiple.STATE = {
 	 * @type {?(bool)}
 	 */
 
-	value: Config.array().value([])
+	value: Config.oneOfType([Config.array(), Config.object()]).setter(
+		setJSONArrayValue
+	)
 };
 
 export default CheckboxMultiple;

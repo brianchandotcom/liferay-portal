@@ -10,6 +10,7 @@ import Soy from 'metal-soy';
 import templates from './Select.soy.js';
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
+import {setJSONArrayValue} from '../util/setters.es';
 
 class Select extends Component {
 	addValue(value) {
@@ -331,9 +332,13 @@ Select.STATE = {
 	 * @type {?string}
 	 */
 
-	predefinedValue: Config.oneOfType([Config.array(), Config.string()]).value(
-		[]
-	),
+	predefinedValue: Config.oneOfType([
+		Config.array(),
+		Config.object(),
+		Config.string()
+	])
+		.setter(setJSONArrayValue)
+		.value([]),
 
 	/**
 	 * @default false
@@ -397,7 +402,11 @@ Select.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
-	value: Config.oneOfType([Config.array(), Config.string()])
+	value: Config.oneOfType([
+		Config.array(),
+		Config.object(),
+		Config.string()
+	]).setter(setJSONArrayValue)
 };
 
 Soy.register(Select, templates);

@@ -5,6 +5,7 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './Radio.soy.js';
 import {Config} from 'metal-state';
+import {setJSONArrayValue} from '../util/setters.es';
 
 /**
  * Radio.
@@ -116,7 +117,13 @@ Radio.STATE = {
 	 * @type {?string}
 	 */
 
-	predefinedValue: Config.oneOfType([Config.array(), Config.string()]),
+	predefinedValue: Config.oneOfType([
+		Config.array(),
+		Config.object(),
+		Config.string()
+	])
+		.setter(setJSONArrayValue)
+		.value([]),
 
 	/**
 	 * @default false

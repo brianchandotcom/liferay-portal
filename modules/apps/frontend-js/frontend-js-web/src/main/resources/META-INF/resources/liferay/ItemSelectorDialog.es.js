@@ -22,7 +22,7 @@ class ItemSelectorDialog extends Component {
 					destroyOnHide: true,
 					modal: true,
 					on: {
-						visibleChange: (event) => {
+						visibleChange: event => {
 							if (!event.newVal) {
 								this.selectedItem = this._selectedItem;
 
@@ -95,6 +95,6 @@ ItemSelectorDialog.STATE = {
 	title: Config.string().value(Liferay.Language.get('select-file')),
 	zIndex: Config.number(),
 	url: Config.string().required()
-}
+};
 
 export default ItemSelectorDialog;

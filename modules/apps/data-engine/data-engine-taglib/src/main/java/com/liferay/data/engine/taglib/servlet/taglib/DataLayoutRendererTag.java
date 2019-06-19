@@ -43,7 +43,7 @@ public class DataLayoutRendererTag extends BaseDataLayoutRendererTag {
 
 		try {
 			content = DataLayoutTaglibUtil.renderDataLayout(
-				getDataLayoutId(), request,
+				getDataLayoutId(), getDataRecordId(), request,
 				PortalUtil.getHttpServletResponse(
 					(RenderResponse)request.getAttribute(
 						JavaConstants.JAVAX_PORTLET_RESPONSE)));

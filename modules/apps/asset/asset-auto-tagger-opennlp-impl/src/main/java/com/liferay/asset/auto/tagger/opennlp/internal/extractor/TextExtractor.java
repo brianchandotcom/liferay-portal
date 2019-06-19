@@ -19,6 +19,8 @@ package com.liferay.asset.auto.tagger.opennlp.internal.extractor;
  */
 public interface TextExtractor<T> {
 
+	public String getClassName();
+
 	public String getText(T source);
 
 }

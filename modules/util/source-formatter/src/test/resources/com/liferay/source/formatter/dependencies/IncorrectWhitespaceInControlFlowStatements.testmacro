@@ -7,7 +7,12 @@ definition {
 			("${check}" == "true") &&
 			("${check}" == "true")){
 
-			Alert.viewSuccessMessage();
+			Alert.viewSuccessMessage()
+			
+			
+			
+			
+			;
 		}
 
 		// if else statement

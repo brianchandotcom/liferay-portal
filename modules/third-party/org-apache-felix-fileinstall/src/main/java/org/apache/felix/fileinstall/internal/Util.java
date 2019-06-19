@@ -351,6 +351,11 @@ public class Util
     {
         String key = getBundleKey(b);
         File f = bc.getDataFile( key + CHECKSUM_SUFFIX );
+
+		if (!f.exists()) {
+			return Long.MIN_VALUE;
+		}
+
         DataInputStream in = null;
         try
         {
@@ -383,3 +388,4 @@ public class Util
     }
 
 }
+/* @generated */

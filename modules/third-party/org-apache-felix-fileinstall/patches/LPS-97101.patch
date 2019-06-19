@@ -1,0 +1,22 @@
+diff --git a/org/apache/felix/fileinstall/internal/Util.java b/org/apache/felix/fileinstall/internal/Util.java
+index db924e5cd2c1..9055c788c6e9 100644
+--- a/org/apache/felix/fileinstall/internal/Util.java
++++ b/org/apache/felix/fileinstall/internal/Util.java
+@@ -351,6 +351,11 @@ public class Util
+     {
+         String key = getBundleKey(b);
+         File f = bc.getDataFile( key + CHECKSUM_SUFFIX );
++
++		if (!f.exists()) {
++			return Long.MIN_VALUE;
++		}
++
+         DataInputStream in = null;
+         try
+         {
+@@ -383,3 +388,4 @@ public class Util
+     }
+ 
+ }
++/* @generated */
+\ No newline at end of file

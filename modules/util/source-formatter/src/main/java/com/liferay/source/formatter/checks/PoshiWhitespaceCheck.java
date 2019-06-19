@@ -55,24 +55,21 @@ public class PoshiWhitespaceCheck extends WhitespaceCheck {
 		Matcher matcher = _incorrectWhitespacePattern.matcher(content);
 
 		while (matcher.find()) {
-			int x;
+			String match = matcher.group(1);
 
-			String match = null;
+			int pos = matcher.start(1);
 
-			if (matcher.start(1) != -1) {
-				x = matcher.start(1);
-				match = matcher.group(1);
-			}
-			else {
-				x = matcher.start(2);
+			if (pos == -1) {
 				match = matcher.group(2);
+
+				pos = matcher.start(2);
 			}
 
-			if (!ToolsUtil.isInsideQuotes(content, x) &&
+			if (!ToolsUtil.isInsideQuotes(content, pos) &&
 				!PoshiSourceUtil.isInsideMultiLines(
-					getLineNumber(content, x), multiLineCommentsPositions) &&
+					getLineNumber(content, pos), multiLineCommentsPositions) &&
 				!PoshiSourceUtil.isInsideMultiLines(
-					getLineNumber(content, x), multiLineStringPositions)) {
+					getLineNumber(content, pos), multiLineStringPositions)) {
 
 				return StringUtil.replaceFirst(
 					content, match, StringPool.BLANK, matcher.start());

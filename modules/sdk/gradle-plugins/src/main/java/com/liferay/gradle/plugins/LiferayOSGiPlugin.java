@@ -1076,8 +1076,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 						Matcher matcher = _keyRegex.matcher(key);
 
 						if (matcher.matches() && (value instanceof String)) {
-							instructions.put(
-								key, GradleUtil.toString(entry.getValue()));
+							instructions.put(key, entry.getValue());
 						}
 					}
 

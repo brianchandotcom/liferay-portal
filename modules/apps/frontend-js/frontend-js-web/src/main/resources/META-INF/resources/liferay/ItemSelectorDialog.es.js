@@ -4,7 +4,6 @@ import {Config} from 'metal-state';
 class ItemSelectorDialog extends Component {
 	close() {
 		Liferay.Util.getWindow(this.eventName).hide();
-		console.log('Close ItemSelectorDialog');
 	}
 
 	open() {
@@ -26,6 +25,10 @@ class ItemSelectorDialog extends Component {
 						visibleChange: (event) => {
 							if (!event.newVal) {
 								this.selectedItem = this._selectedItem;
+
+								this.emit('selectedItemChange', {
+									selectedItem: this.selectedItem
+								});
 							}
 						}
 					},
@@ -86,8 +89,8 @@ ItemSelectorDialog.STATE = {
 	eventName: Config.string().required(),
 	selectedItem: Config.object(),
 	strings: Config.object().value({
-		add: Liferay.Language.get('add-new'),
-		cancel: Liferay.Language.get('cancel-new')
+		add: Liferay.Language.get('add'),
+		cancel: Liferay.Language.get('cancel')
 	}),
 	title: Config.string().value(Liferay.Language.get('select-file')),
 	zIndex: Config.number(),

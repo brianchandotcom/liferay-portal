@@ -15,6 +15,7 @@
 package com.liferay.fragment.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -33,14 +35,18 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.Dictionary;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -64,6 +70,17 @@ public class FragmentEntryLinkLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("propagateChanges", false);
+
+		_configurationProvider.saveCompanyConfiguration(
+			FragmentServiceConfiguration.class, _group.getCompanyId(),
+			properties);
 	}
 
 	@Test
@@ -282,6 +299,106 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		Assert.assertEquals(1, fragmentEntryLink.getPosition());
 	}
+
+	@Test
+	public void testUpdateFragmentEntryLinkWithoutPropagation()
+		throws Exception {
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("propagateChanges", false);
+
+		_configurationProvider.saveCompanyConfiguration(
+			FragmentServiceConfiguration.class, _group.getCompanyId(),
+			properties);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				"Fragment Collection", StringPool.BLANK, serviceContext);
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.addFragmentEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(), "Fragment Name",
+				StringPool.BLANK, StringUtil.randomString(), StringPool.BLANK,
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(),
+				PortalUtil.getClassNameId(Layout.class),
+				RandomTestUtil.randomLong(), fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(),
+				StringPool.BLANK, StringPool.BLANK, 0, null, serviceContext);
+
+		_fragmentEntryLocalService.updateFragmentEntry(
+			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
+			"Fragment Name", StringPool.BLANK, StringUtil.randomString(),
+			StringPool.BLANK, WorkflowConstants.STATUS_APPROVED);
+
+		fragmentEntryLink = _fragmentEntryLinkLocalService.getFragmentEntryLink(
+			fragmentEntryLink.getFragmentEntryLinkId());
+
+		Assert.assertEquals(
+			fragmentEntry.getHtml(), fragmentEntryLink.getHtml());
+	}
+
+	@Test
+	public void testUpdateFragmentEntryLinkWithPropagation() throws Exception {
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("propagateChanges", true);
+
+		_configurationProvider.saveCompanyConfiguration(
+			FragmentServiceConfiguration.class, _group.getCompanyId(),
+			properties);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				"Fragment Collection", StringPool.BLANK, serviceContext);
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.addFragmentEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(), "Fragment Name",
+				StringPool.BLANK, StringUtil.randomString(), StringPool.BLANK,
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(),
+				PortalUtil.getClassNameId(Layout.class),
+				RandomTestUtil.randomLong(), fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(),
+				StringPool.BLANK, StringPool.BLANK, 0, null, serviceContext);
+
+		String newHTML = StringUtil.randomString();
+
+		_fragmentEntryLocalService.updateFragmentEntry(
+			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
+			"Fragment Name", StringPool.BLANK, newHTML, StringPool.BLANK,
+			WorkflowConstants.STATUS_APPROVED);
+
+		fragmentEntryLink = _fragmentEntryLinkLocalService.getFragmentEntryLink(
+			fragmentEntryLink.getFragmentEntryLinkId());
+
+		Assert.assertEquals(newHTML, fragmentEntryLink.getHtml());
+	}
+
+	@Inject
+	private ConfigurationProvider _configurationProvider;
 
 	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;

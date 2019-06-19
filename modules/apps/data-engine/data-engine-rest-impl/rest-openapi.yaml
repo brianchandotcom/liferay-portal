@@ -1107,3 +1107,29 @@ paths:
                                 type: array
                     description: ""
             tags: ["DataRecordCollection"]
+    "/sites/{siteId}/data-record-collections/{dataRecordCollectionKey}":
+        get:
+            operationId: getSiteDataRecordCollection
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: dataRecordCollectionKey
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataRecordCollection"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DataRecordCollection"
+                    description: ""
+            tags: ["DataRecordCollection"]

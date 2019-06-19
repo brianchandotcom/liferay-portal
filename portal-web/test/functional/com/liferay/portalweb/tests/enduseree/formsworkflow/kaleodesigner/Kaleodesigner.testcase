@@ -224,6 +224,8 @@ definition {
 
 	@priority = "5"
 	test AddNewWorkflowDefinitionViaViewTab {
+		property test.name.skip.portal.instance = "Kaleodesigner#AddNewWorkflowDefinitionViaViewTab";
+
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",

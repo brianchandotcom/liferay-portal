@@ -220,6 +220,27 @@ public abstract class BaseDataRecordCollectionResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.PATH, name = "dataRecordCollectionKey")
+		}
+	)
+	@Path("/sites/{siteId}/data-record-collections/{dataRecordCollectionKey}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "DataRecordCollection")})
+	public DataRecordCollection getSiteDataRecordCollection(
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("dataRecordCollectionKey") String
+				dataRecordCollectionKey)
+		throws Exception {
+
+		return new DataRecordCollection();
+	}
+
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}

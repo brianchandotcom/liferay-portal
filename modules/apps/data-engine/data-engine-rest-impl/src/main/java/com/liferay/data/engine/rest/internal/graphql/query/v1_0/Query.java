@@ -291,6 +291,21 @@ public class Query {
 			});
 	}
 
+	@GraphQLField
+	public DataRecordCollection getSiteDataRecordCollection(
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("dataRecordCollectionKey") String
+				dataRecordCollectionKey)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataRecordCollectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataRecordCollectionResource ->
+				dataRecordCollectionResource.getSiteDataRecordCollection(
+					siteId, dataRecordCollectionKey));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,

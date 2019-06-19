@@ -72,6 +72,10 @@ public interface DataRecordCollectionResource {
 			Long siteId, String keywords, Pagination pagination)
 		throws Exception;
 
+	public DataRecordCollection getSiteDataRecordCollection(
+			Long siteId, String dataRecordCollectionKey)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

@@ -73,6 +73,36 @@ public class DataRecordCollection {
 	protected Long dataDefinitionId;
 
 	@Schema
+	public String getDataRecordCollectionKey() {
+		return dataRecordCollectionKey;
+	}
+
+	public void setDataRecordCollectionKey(String dataRecordCollectionKey) {
+		this.dataRecordCollectionKey = dataRecordCollectionKey;
+	}
+
+	@JsonIgnore
+	public void setDataRecordCollectionKey(
+		UnsafeSupplier<String, Exception>
+			dataRecordCollectionKeyUnsafeSupplier) {
+
+		try {
+			dataRecordCollectionKey =
+				dataRecordCollectionKeyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String dataRecordCollectionKey;
+
+	@Schema
 	public Map<String, Object> getDescription() {
 		return description;
 	}
@@ -155,6 +185,34 @@ public class DataRecordCollection {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> name;
 
+	@Schema
+	public Long getSiteId() {
+		return siteId;
+	}
+
+	public void setSiteId(Long siteId) {
+		this.siteId = siteId;
+	}
+
+	@JsonIgnore
+	public void setSiteId(
+		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
+
+		try {
+			siteId = siteIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long siteId;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -193,6 +251,20 @@ public class DataRecordCollection {
 			sb.append(dataDefinitionId);
 		}
 
+		if (dataRecordCollectionKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dataRecordCollectionKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(dataRecordCollectionKey));
+
+			sb.append("\"");
+		}
+
 		if (description != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -221,6 +293,16 @@ public class DataRecordCollection {
 			sb.append("\"name\": ");
 
 			sb.append(_toJSON(name));
+		}
+
+		if (siteId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"siteId\": ");
+
+			sb.append(siteId);
 		}
 
 		sb.append("}");

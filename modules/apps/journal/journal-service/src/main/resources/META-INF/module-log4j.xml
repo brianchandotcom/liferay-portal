@@ -10,7 +10,7 @@
 		<priority value="INFO" />
 	</category>
 
-	<category name="com.liferay.journal.internal.upgrade.util.JournalArticleImageUpgradeUtil">
+	<category name="com.liferay.journal.internal.upgrade.util.JournalArticleImageUpgradeHelper">
 		<priority value="WARN" />
 	</category>
 

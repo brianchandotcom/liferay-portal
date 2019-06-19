@@ -45,8 +45,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(service = JournalArticleImageUpgradeUtil.class)
-public class JournalArticleImageUpgradeUtil {
+@Component(service = JournalArticleImageUpgradeHelper.class)
+public class JournalArticleImageUpgradeHelper {
 
 	public String getDocumentLibraryValue(String url) {
 		try {
@@ -227,7 +227,7 @@ public class JournalArticleImageUpgradeUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		JournalArticleImageUpgradeUtil.class);
+		JournalArticleImageUpgradeHelper.class);
 
 	private static final Pattern _oldDocumentLibraryURLPattern =
 		Pattern.compile("uuid=([^&]+)&groupId=([^&]+)");

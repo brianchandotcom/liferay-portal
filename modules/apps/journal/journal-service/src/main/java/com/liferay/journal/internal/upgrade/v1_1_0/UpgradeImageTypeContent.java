@@ -15,7 +15,7 @@
 package com.liferay.journal.internal.upgrade.v1_1_0;
 
 import com.liferay.journal.constants.JournalConstants;
-import com.liferay.journal.internal.upgrade.util.JournalArticleImageUpgradeUtil;
+import com.liferay.journal.internal.upgrade.util.JournalArticleImageUpgradeHelper;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -49,11 +49,11 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 
 	public UpgradeImageTypeContent(
 		ImageLocalService imageLocalService,
-		JournalArticleImageUpgradeUtil journalArticleImageUpgradeUtil,
+		JournalArticleImageUpgradeHelper journalArticleImageUpgradeHelper,
 		PortletFileRepository portletFileRepository) {
 
 		_imageLocalService = imageLocalService;
-		_journalArticleImageUpgradeUtil = journalArticleImageUpgradeUtil;
+		_journalArticleImageUpgradeHelper = journalArticleImageUpgradeHelper;
 		_portletFileRepository = portletFileRepository;
 	}
 
@@ -87,7 +87,7 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 				long userId = PortalUtil.getValidUserId(
 					companyId, rs1.getLong(5));
 
-				long folderId = _journalArticleImageUpgradeUtil.getFolderId(
+				long folderId = _journalArticleImageUpgradeHelper.getFolderId(
 					userId, groupId, resourcePrimKey);
 
 				SaveImageFileEntryCallable saveImageFileEntryCallable =
@@ -135,8 +135,8 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 		UpgradeImageTypeContent.class);
 
 	private final ImageLocalService _imageLocalService;
-	private final JournalArticleImageUpgradeUtil
-		_journalArticleImageUpgradeUtil;
+	private final JournalArticleImageUpgradeHelper
+		_journalArticleImageUpgradeHelper;
 	private final PortletFileRepository _portletFileRepository;
 
 	private class SaveImageFileEntryCallable implements Callable<Boolean> {

@@ -14,7 +14,7 @@
 
 package com.liferay.journal.internal.upgrade.v1_1_5;
 
-import com.liferay.journal.internal.upgrade.util.JournalArticleImageUpgradeUtil;
+import com.liferay.journal.internal.upgrade.util.JournalArticleImageUpgradeHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -45,9 +45,9 @@ import java.util.List;
 public class UpgradeContentImages extends UpgradeProcess {
 
 	public UpgradeContentImages(
-		JournalArticleImageUpgradeUtil journalArticleImageUpgradeUtil) {
+		JournalArticleImageUpgradeHelper journalArticleImageUpgradeHelper) {
 
-		_journalArticleImageUpgradeUtil = journalArticleImageUpgradeUtil;
+		_journalArticleImageUpgradeHelper = journalArticleImageUpgradeHelper;
 	}
 
 	protected String convertTypeImageElements(
@@ -90,7 +90,7 @@ public class UpgradeContentImages extends UpgradeProcess {
 						dynamicContentElement.getData());
 
 					fileEntry =
-						_journalArticleImageUpgradeUtil.getFileEntryFromURL(
+						_journalArticleImageUpgradeHelper.getFileEntryFromURL(
 							data);
 				}
 
@@ -206,7 +206,7 @@ public class UpgradeContentImages extends UpgradeProcess {
 
 		userId = PortalUtil.getValidUserId(companyId, userId);
 
-		long folderId = _journalArticleImageUpgradeUtil.getFolderId(
+		long folderId = _journalArticleImageUpgradeHelper.getFolderId(
 			userId, groupId, resourcePrimKey);
 
 		FileEntry fileEntry = null;
@@ -235,7 +235,7 @@ public class UpgradeContentImages extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeContentImages.class);
 
-	private final JournalArticleImageUpgradeUtil
-		_journalArticleImageUpgradeUtil;
+	private final JournalArticleImageUpgradeHelper
+		_journalArticleImageUpgradeHelper;
 
 }

@@ -126,7 +126,7 @@ public class MicrosoftGeolocationProvider implements GeolocationProvider {
 
 		String url = _getUrl(geolocationAddress);
 
-		JSONObject resourceJSONObject = _getResourceJSON(url);
+		JSONObject resourceJSONObject = _getResourceJSONObject(url);
 
 		JSONObject pointJSONObject = resourceJSONObject.getJSONObject("point");
 
@@ -138,7 +138,7 @@ public class MicrosoftGeolocationProvider implements GeolocationProvider {
 			coordinatesJSONArray.getDouble(1));
 	}
 
-	private JSONObject _getResourceJSON(String url) throws Exception {
+	private JSONObject _getResourceJSONObject(String url) throws Exception {
 		Http.Options options = new Http.Options();
 
 		options.setLocation(url);

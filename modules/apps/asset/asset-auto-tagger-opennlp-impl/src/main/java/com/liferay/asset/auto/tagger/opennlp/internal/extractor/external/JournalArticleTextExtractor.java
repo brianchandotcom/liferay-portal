@@ -35,12 +35,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alicia García
  * @author Alejandro Tardín
  */
-@Component(
-	property = "model.class.name=com.liferay.journal.model.JournalArticle",
-	service = TextExtractor.class
-)
+@Component(service = TextExtractor.class)
 public class JournalArticleTextExtractor
 	implements TextExtractor<JournalArticle> {
+
+	@Override
+	public String getClassName() {
+		return JournalArticle.class.getName();
+	}
 
 	@Override
 	public String getText(JournalArticle journalArticle) {

@@ -16,6 +16,7 @@ package com.liferay.asset.auto.tagger.opennlp.internal.extractor.external;
 
 import com.liferay.asset.auto.tagger.opennlp.internal.extractor.TextExtractor;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,11 +30,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Alicia García
  * @author Alejandro Tardín
  */
-@Component(
-	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
-	service = TextExtractor.class
-)
+@Component(service = TextExtractor.class)
 public class DLFileEntryTextExtractor implements TextExtractor<DLFileEntry> {
+
+	@Override
+	public String getClassName() {
+		return DLFileEntryConstants.getClassName();
+	}
 
 	@Override
 	public String getText(DLFileEntry dlFileEntry) {

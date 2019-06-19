@@ -23,11 +23,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Alicia García
  * @author Alejandro Tardín
  */
-@Component(
-	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
-	service = TextExtractor.class
-)
+@Component(service = TextExtractor.class)
 public class BlogsEntryTextExtractor implements TextExtractor<BlogsEntry> {
+
+	@Override
+	public String getClassName() {
+		return BlogsEntry.class.getName();
+	}
 
 	@Override
 	public String getText(BlogsEntry blogsEntry) {

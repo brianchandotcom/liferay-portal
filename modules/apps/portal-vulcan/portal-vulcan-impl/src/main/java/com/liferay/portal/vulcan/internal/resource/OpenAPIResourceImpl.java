@@ -20,8 +20,8 @@ import com.liferay.portal.vulcan.resource.OpenAPIResource;
 import io.swagger.v3.core.util.Yaml;
 import io.swagger.v3.jaxrs2.integration.JaxrsOpenApiContextBuilder;
 import io.swagger.v3.jaxrs2.integration.ServletConfigContextUtils;
+import io.swagger.v3.oas.integration.GenericOpenApiContext;
 import io.swagger.v3.oas.integration.api.OpenAPIConfiguration;
-import io.swagger.v3.oas.integration.api.OpenApiContext;
 import io.swagger.v3.oas.integration.api.OpenApiScanner;
 import io.swagger.v3.oas.models.OpenAPI;
 
@@ -59,16 +59,18 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		JaxrsOpenApiContextBuilder jaxrsOpenApiContextBuilder =
 			new JaxrsOpenApiContextBuilder();
 
-		OpenApiContext openApiContext = jaxrsOpenApiContextBuilder.application(
-			application
-		).servletConfig(
-			servletConfig
-		).ctxId(
-			contextId
-		).buildContext(
-			true
-		);
+		GenericOpenApiContext openApiContext =
+			(GenericOpenApiContext)jaxrsOpenApiContextBuilder.application(
+				application
+			).servletConfig(
+				servletConfig
+			).ctxId(
+				contextId
+			).buildContext(
+				true
+			);
 
+		openApiContext.setCacheTTL(0L);
 		openApiContext.setOpenApiScanner(
 			new OpenApiScanner() {
 

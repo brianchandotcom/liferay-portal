@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Blogs Asset Auto Tagger OpenNLP
-Bundle-SymbolicName: com.liferay.blogs.asset.auto.tagger.opennlp
-Bundle-Version: 1.0.0
-Web-ContextPath: /blogs-asset-auto-tagger-opennlp

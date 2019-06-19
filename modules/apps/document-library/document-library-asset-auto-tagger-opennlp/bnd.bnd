@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Document Library Asset Auto Tagger OpenNLP
-Bundle-SymbolicName: com.liferay.document.library.asset.auto.tagger.opennlp
-Bundle-Version: 2.0.0
-Web-ContextPath: /document-library-asset-auto-tagger-opennlp

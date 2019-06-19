@@ -58,7 +58,7 @@ public class SharingModelResourcePermissionConfiguratorImpl
 	implements SharingModelResourcePermissionConfigurator {
 
 	@Activate
-	public void activate(
+	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
 		_sharingSystemConfiguration = ConfigurableUtil.createConfigurable(
@@ -96,7 +96,7 @@ public class SharingModelResourcePermissionConfiguratorImpl
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_sharingPermissionSQLContributorServiceRegistration.unregister();
 	}
 

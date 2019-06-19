@@ -87,9 +87,6 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay,
 		boolean privateLayout);
 
-	public java.util.List<Group> getFilteredChildren(boolean site)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 	public String getIconCssClass();
 
 	public String getIconURL(

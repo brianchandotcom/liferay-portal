@@ -440,13 +440,6 @@ public class GroupWrapper
 		return model.getDisplayURL(themeDisplay, privateLayout);
 	}
 
-	@Override
-	public java.util.List<Group> getFilteredChildren(boolean site)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return model.getFilteredChildren(site);
-	}
-
 	/**
 	 * Returns the friendly url of this group.
 	 *

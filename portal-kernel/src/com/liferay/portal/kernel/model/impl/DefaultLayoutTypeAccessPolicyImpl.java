@@ -61,7 +61,7 @@ public class DefaultLayoutTypeAccessPolicyImpl
 
 		String checkAccessAllowedToPortletCacheKey = StringBundler.concat(
 			DefaultLayoutTypeAccessPolicyImpl.class.getName(), "#",
-			layout.getPlid(), "#", portlet.getPrimaryKey());
+			layout.getPlid(), "#", portlet.getPortletId());
 
 		Boolean allowed = (Boolean)httpServletRequest.getAttribute(
 			checkAccessAllowedToPortletCacheKey);

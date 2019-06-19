@@ -32,7 +32,7 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_DISPLAY_SETTINGS</td>
-	<td>//ul[contains(@class,'lfr-nav nav')]//a[contains(.,'Display Settings')]</td>
+	<td>//ul[contains(@class,'nav nav-underline')]//a[contains(.,'Display Settings')]</td>
 	<td></td>
 </tr>
 <tr>

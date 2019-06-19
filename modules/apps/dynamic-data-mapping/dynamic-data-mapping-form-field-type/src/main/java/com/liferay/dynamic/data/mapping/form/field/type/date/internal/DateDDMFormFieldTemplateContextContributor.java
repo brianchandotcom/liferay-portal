@@ -21,7 +21,7 @@ import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,12 +61,14 @@ public class DateDDMFormFieldTemplateContextContributor
 
 		List<Integer> years = new ArrayList<>();
 
-		Date now = new Date();
+		Calendar calendar = Calendar.getInstance();
 
-		int currentYear = now.getYear();
+		calendar.add(Calendar.YEAR, -4);
 
-		for (int i = currentYear - 5; i < (currentYear + 5); i++) {
-			years.add(i);
+		for (int i = 0; i < 5; i++) {
+			years.add(calendar.get(Calendar.YEAR));
+
+			calendar.add(Calendar.YEAR, 1);
 		}
 
 		parameters.put("years", years);

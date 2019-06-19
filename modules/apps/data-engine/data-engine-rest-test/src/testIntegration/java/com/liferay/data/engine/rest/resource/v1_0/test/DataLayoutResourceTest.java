@@ -43,6 +43,15 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 
 	@Override
 	@Test
+	public void testDeleteDataLayout() throws Exception {
+		super.testDeleteDataLayout();
+
+		assertHttpResponseStatusCode(
+			404, dataLayoutResource.deleteDataLayoutHttpResponse(0L));
+	}
+
+	@Override
+	@Test
 	public void testPostDataDefinitionDataLayout() throws Exception {
 		super.testPostDataDefinitionDataLayout();
 

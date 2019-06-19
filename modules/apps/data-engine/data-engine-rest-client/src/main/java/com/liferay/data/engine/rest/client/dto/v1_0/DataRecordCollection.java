@@ -50,6 +50,29 @@ public class DataRecordCollection {
 
 	protected Long dataDefinitionId;
 
+	public String getDataRecordCollectionKey() {
+		return dataRecordCollectionKey;
+	}
+
+	public void setDataRecordCollectionKey(String dataRecordCollectionKey) {
+		this.dataRecordCollectionKey = dataRecordCollectionKey;
+	}
+
+	public void setDataRecordCollectionKey(
+		UnsafeSupplier<String, Exception>
+			dataRecordCollectionKeyUnsafeSupplier) {
+
+		try {
+			dataRecordCollectionKey =
+				dataRecordCollectionKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String dataRecordCollectionKey;
+
 	public Map<String, Object> getDescription() {
 		return description;
 	}
@@ -111,6 +134,27 @@ public class DataRecordCollection {
 	}
 
 	protected Map<String, Object> name;
+
+	public Long getSiteId() {
+		return siteId;
+	}
+
+	public void setSiteId(Long siteId) {
+		this.siteId = siteId;
+	}
+
+	public void setSiteId(
+		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
+
+		try {
+			siteId = siteIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long siteId;
 
 	@Override
 	public boolean equals(Object object) {

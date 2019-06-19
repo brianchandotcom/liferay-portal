@@ -175,11 +175,16 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		DataRecordCollection dataRecordCollection =
 			randomDataRecordCollection();
 
+		dataRecordCollection.setDataRecordCollectionKey(regex);
+
 		String json = DataRecordCollectionSerDes.toJSON(dataRecordCollection);
 
 		Assert.assertFalse(json.contains(regex));
 
 		dataRecordCollection = DataRecordCollectionSerDes.toDTO(json);
+
+		Assert.assertEquals(
+			regex, dataRecordCollection.getDataRecordCollectionKey());
 	}
 
 	@Test
@@ -562,6 +567,28 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
+	@Test
+	public void testGetSiteDataRecordCollection() throws Exception {
+		DataRecordCollection postDataRecordCollection =
+			testGetSiteDataRecordCollection_addDataRecordCollection();
+
+		DataRecordCollection getDataRecordCollection =
+			dataRecordCollectionResource.getSiteDataRecordCollection(
+				postDataRecordCollection.getSiteId(),
+				postDataRecordCollection.getDataRecordCollectionKey());
+
+		assertEquals(postDataRecordCollection, getDataRecordCollection);
+		assertValid(getDataRecordCollection);
+	}
+
+	protected DataRecordCollection
+			testGetSiteDataRecordCollection_addDataRecordCollection()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -632,11 +659,27 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			valid = false;
 		}
 
+		if (!Objects.equals(
+				dataRecordCollection.getSiteId(), testGroup.getGroupId())) {
+
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("dataDefinitionId", additionalAssertFieldName)) {
 				if (dataRecordCollection.getDataDefinitionId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"dataRecordCollectionKey", additionalAssertFieldName)) {
+
+				if (dataRecordCollection.getDataRecordCollectionKey() == null) {
 					valid = false;
 				}
 
@@ -701,6 +744,13 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			return true;
 		}
 
+		if (!Objects.equals(
+				dataRecordCollection1.getSiteId(),
+				dataRecordCollection2.getSiteId())) {
+
+			return false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -708,6 +758,19 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 				if (!Objects.deepEquals(
 						dataRecordCollection1.getDataDefinitionId(),
 						dataRecordCollection2.getDataDefinitionId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"dataRecordCollectionKey", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						dataRecordCollection1.getDataRecordCollectionKey(),
+						dataRecordCollection2.getDataRecordCollectionKey())) {
 
 					return false;
 				}
@@ -812,6 +875,16 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("dataRecordCollectionKey")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(
+					dataRecordCollection.getDataRecordCollectionKey()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("description")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -827,6 +900,11 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("siteId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -837,7 +915,9 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		return new DataRecordCollection() {
 			{
 				dataDefinitionId = RandomTestUtil.randomLong();
+				dataRecordCollectionKey = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
+				siteId = testGroup.getGroupId();
 			}
 		};
 	}
@@ -847,6 +927,9 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 
 		DataRecordCollection randomIrrelevantDataRecordCollection =
 			randomDataRecordCollection();
+
+		randomIrrelevantDataRecordCollection.setSiteId(
+			irrelevantGroup.getGroupId());
 
 		return randomIrrelevantDataRecordCollection;
 	}

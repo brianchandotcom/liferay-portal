@@ -3126,8 +3126,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateSpringMVCPortletInWorkspace()
 		throws Exception {
 
-		_testBuildTemplateProjectWarInWorkspace(
-			"spring-mvc-portlet", "foo", "foo");
+		_testBuildTemplateProjectWarInWorkspace("spring-mvc-portlet", "foo");
 	}
 
 	@Test
@@ -3606,8 +3605,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateWarHookInWorkspace() throws Exception {
-		_testBuildTemplateProjectWarInWorkspace(
-			"war-hook", "WarHook", "warhook");
+		_testBuildTemplateProjectWarInWorkspace("war-hook", "WarHook");
 	}
 
 	@Test
@@ -3677,7 +3675,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateWarMVCPortletInWorkspace() throws Exception {
 		_testBuildTemplateProjectWarInWorkspace(
-			"war-mvc-portlet", "WarMVCPortlet", "WarMVCPortlet");
+			"war-mvc-portlet", "WarMVCPortlet");
 	}
 
 	@Test
@@ -6057,7 +6055,7 @@ public class ProjectTemplatesTest {
 	}
 
 	private void _testBuildTemplateProjectWarInWorkspace(
-			String template, String name, String warFileName)
+			String template, String name)
 		throws Exception {
 
 		File workspaceDir = _buildWorkspace();
@@ -6085,8 +6083,7 @@ public class ProjectTemplatesTest {
 		if (_isBuildProjects()) {
 			_executeGradle(workspaceDir, ":wars:" + name + ":build");
 
-			_testExists(
-				workspaceProjectDir, "build/libs/" + warFileName + ".war");
+			_testExists(workspaceProjectDir, "build/libs/" + name + ".war");
 		}
 	}
 

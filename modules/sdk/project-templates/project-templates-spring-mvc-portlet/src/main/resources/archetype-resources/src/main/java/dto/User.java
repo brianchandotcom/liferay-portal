@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * @author ${author}
+ */
 public class User implements Serializable {
 
 	public String getFirstName() {

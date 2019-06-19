@@ -6,6 +6,9 @@ import org.springframework.beans.factory.FactoryBean;
 
 import org.springframework.web.context.ServletContextAware;
 
+/**
+ * @author ${author}
+ */
 public class ServletContextFactory implements FactoryBean<ServletContext>,
 	ServletContextAware {
 

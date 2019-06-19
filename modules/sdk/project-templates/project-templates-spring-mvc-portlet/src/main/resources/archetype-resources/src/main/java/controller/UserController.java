@@ -38,6 +38,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
+/**
+ * @author ${author}
+ */
 @Controller
 @RequestMapping("VIEW")
 public class UserController {

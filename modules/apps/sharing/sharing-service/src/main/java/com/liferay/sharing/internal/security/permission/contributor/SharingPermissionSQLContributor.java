@@ -32,6 +32,7 @@ import com.liferay.sharing.configuration.SharingConfigurationFactory;
  * returning results.
  *
  * @author Alejandro Tardín
+ * @review
  */
 public class SharingPermissionSQLContributor
 	implements PermissionSQLContributor {

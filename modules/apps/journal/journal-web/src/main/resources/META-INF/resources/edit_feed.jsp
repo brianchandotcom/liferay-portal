@@ -376,7 +376,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 	}
 
 	function <portlet:namespace />saveFeed() {
-		document.<portlet:namespace />fm['<portlet:namespace />javax-portlet-action'].value = '<%= (feed == null) ? "addFeed" : "updateFeed" %>';
+		document.<portlet:namespace />fm['<portlet:namespace />javax-portlet-action'].value = '<%= (feed == null) ? "/journal/add_feed" : "/journal/update_feed" %>';
 
 		<c:if test="<%= feed == null %>">
 			document.<portlet:namespace />fm.<portlet:namespace />feedId.value = document.<portlet:namespace />fm.<portlet:namespace />newFeedId.value;

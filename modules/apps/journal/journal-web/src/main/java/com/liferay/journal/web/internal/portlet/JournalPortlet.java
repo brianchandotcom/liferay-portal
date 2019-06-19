@@ -63,11 +63,9 @@ import com.liferay.journal.exception.NoSuchFeedException;
 import com.liferay.journal.exception.NoSuchFolderException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
-import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.service.JournalContentSearchLocalService;
-import com.liferay.journal.service.JournalFeedService;
 import com.liferay.journal.service.JournalFolderService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
@@ -119,7 +117,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.rss.util.RSSUtil;
 import com.liferay.trash.TrashHelper;
 import com.liferay.trash.util.TrashWebKeys;
 
@@ -204,13 +201,6 @@ public class JournalPortlet extends MVCPortlet {
 		throws Exception {
 
 		updateArticle(actionRequest, actionResponse);
-	}
-
-	public void addFeed(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		updateFeed(actionRequest, actionResponse);
 	}
 
 	public void deleteEntries(
@@ -778,69 +768,6 @@ public class JournalPortlet extends MVCPortlet {
 		}
 	}
 
-	public void updateFeed(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String actionName = ParamUtil.getString(
-			actionRequest, ActionRequest.ACTION_NAME);
-
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-
-		String feedId = ParamUtil.getString(actionRequest, "feedId");
-
-		String name = ParamUtil.getString(actionRequest, "name");
-		String description = ParamUtil.getString(actionRequest, "description");
-		String ddmStructureKey = ParamUtil.getString(
-			actionRequest, "ddmStructureKey");
-		String ddmTemplateKey = ParamUtil.getString(
-			actionRequest, "ddmTemplateKey");
-		String ddmRendererTemplateKey = ParamUtil.getString(
-			actionRequest, "ddmRendererTemplateKey");
-		int delta = ParamUtil.getInteger(actionRequest, "delta");
-		String orderByCol = ParamUtil.getString(actionRequest, "orderByCol");
-		String orderByType = ParamUtil.getString(actionRequest, "orderByType");
-		String targetLayoutFriendlyUrl = ParamUtil.getString(
-			actionRequest, "targetLayoutFriendlyUrl");
-		String targetPortletId = ParamUtil.getString(
-			actionRequest, "targetPortletId");
-		String contentField = ParamUtil.getString(
-			actionRequest, "contentField");
-
-		String feedType = ParamUtil.getString(
-			actionRequest, "feedType", RSSUtil.FEED_TYPE_DEFAULT);
-
-		String feedFormat = RSSUtil.getFeedTypeFormat(feedType);
-		double feedVersion = RSSUtil.getFeedTypeVersion(feedType);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			JournalFeed.class.getName(), actionRequest);
-
-		if (actionName.equals("addFeed")) {
-
-			// Add feed
-
-			boolean autoFeedId = ParamUtil.getBoolean(
-				actionRequest, "autoFeedId");
-
-			_journalFeedService.addFeed(
-				groupId, feedId, autoFeedId, name, description, ddmStructureKey,
-				ddmTemplateKey, ddmRendererTemplateKey, delta, orderByCol,
-				orderByType, targetLayoutFriendlyUrl, targetPortletId,
-				contentField, feedFormat, feedVersion, serviceContext);
-		}
-		else {
-
-			// Update feed
-
-			_journalFeedService.updateFeed(
-				groupId, feedId, name, description, ddmStructureKey,
-				ddmTemplateKey, ddmRendererTemplateKey, delta, orderByCol,
-				orderByType, targetLayoutFriendlyUrl, targetPortletId,
-				contentField, feedFormat, feedVersion, serviceContext);
-		}
-	}
-
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
@@ -1245,9 +1172,6 @@ public class JournalPortlet extends MVCPortlet {
 
 	@Reference
 	private JournalDDMTemplateUtil _journalDDMTemplateUtil;
-
-	@Reference
-	private JournalFeedService _journalFeedService;
 
 	private volatile JournalFileUploadsConfiguration
 		_journalFileUploadsConfiguration;

@@ -14,7 +14,6 @@
 
 package com.liferay.layout.page.template.service.impl;
 
-import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryServiceBaseImpl;
@@ -718,8 +717,5 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@ServiceReference(type = CustomSQL.class)
 	private CustomSQL _customSQL;
-
-	@ServiceReference(type = FragmentEntryService.class)
-	private FragmentEntryService _fragmentEntryService;
 
 }

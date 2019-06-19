@@ -16,7 +16,6 @@ package com.liferay.sharing.blogs.internal.filter;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.sharing.filter.SharedAssetsFilterItem;
 
 import java.util.Locale;

@@ -57,22 +57,6 @@ import org.osgi.service.component.annotations.Reference;
 public class SharingModelResourcePermissionConfiguratorImpl
 	implements SharingModelResourcePermissionConfigurator {
 
-	@Activate
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
-		_sharingSystemConfiguration = ConfigurableUtil.createConfigurable(
-			SharingSystemConfiguration.class, properties);
-
-		_sharingPermissionSQLContributorServiceRegistration =
-			bundleContext.registerService(
-				PermissionSQLContributor.class,
-				new SharingPermissionSQLContributor(
-					_classNameLocalService, _groupLocalService,
-					_sharingConfigurationFactory),
-				new HashMapDictionary<>());
-	}
-
 	@Override
 	public <T extends GroupedModel> void configure(
 		ModelResourcePermission<T> modelResourcePermission,
@@ -93,6 +77,22 @@ public class SharingModelResourcePermissionConfiguratorImpl
 					_classNameLocalService.getClassNameId(
 						modelResourcePermission.getModelName())));
 		}
+	}
+
+	@Activate
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		_sharingSystemConfiguration = ConfigurableUtil.createConfigurable(
+			SharingSystemConfiguration.class, properties);
+
+		_sharingPermissionSQLContributorServiceRegistration =
+			bundleContext.registerService(
+				PermissionSQLContributor.class,
+				new SharingPermissionSQLContributor(
+					_classNameLocalService, _groupLocalService,
+					_sharingConfigurationFactory),
+				new HashMapDictionary<>());
 	}
 
 	@Deactivate

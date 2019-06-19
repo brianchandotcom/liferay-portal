@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.expression.internal;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionFactory;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
 import com.liferay.dynamic.data.mapping.expression.internal.functions.AbsFunction;
 import com.liferay.dynamic.data.mapping.expression.internal.functions.AddFunction;
@@ -149,6 +150,15 @@ public class DDMExpressionImplTest extends PowerMockito {
 			new DDMExpressionFunctionTracker() {
 
 				@Override
+				public Map<String, DDMExpressionFunctionFactory>
+					getDDMExpressionFunctionFactories(
+						Set<String> functionNames) {
+
+					return _createDDMExpressionFunctionFactory(
+						new ZeroFunction());
+				}
+
+				@Override
 				public Map<String, DDMExpressionFunction>
 					getDDMExpressionFunctions(Set<String> functionNames) {
 
@@ -173,6 +183,15 @@ public class DDMExpressionImplTest extends PowerMockito {
 
 		ddmExpression.setDDMExpressionFunctionTracker(
 			new DDMExpressionFunctionTracker() {
+
+				@Override
+				public Map<String, DDMExpressionFunctionFactory>
+					getDDMExpressionFunctionFactories(
+						Set<String> functionNames) {
+
+					return _createDDMExpressionFunctionFactory(
+						new MultiplyFunction());
+				}
 
 				@Override
 				public Map<String, DDMExpressionFunction>
@@ -204,6 +223,15 @@ public class DDMExpressionImplTest extends PowerMockito {
 			new DDMExpressionFunctionTracker() {
 
 				@Override
+				public Map<String, DDMExpressionFunctionFactory>
+					getDDMExpressionFunctionFactories(
+						Set<String> functionNames) {
+
+					return _createDDMExpressionFunctionFactory(
+						new MaxFunction());
+				}
+
+				@Override
 				public Map<String, DDMExpressionFunction>
 					getDDMExpressionFunctions(Set<String> functionNames) {
 
@@ -230,6 +258,16 @@ public class DDMExpressionImplTest extends PowerMockito {
 
 		ddmExpression.setDDMExpressionFunctionTracker(
 			new DDMExpressionFunctionTracker() {
+
+				@Override
+				public Map<String, DDMExpressionFunctionFactory>
+					getDDMExpressionFunctionFactories(
+						Set<String> functionNames) {
+
+					return _createDDMExpressionFunctionFactory(
+						new AbsFunction(), new AddFunction(),
+						new SquareFunction());
+				}
 
 				@Override
 				public Map<String, DDMExpressionFunction>
@@ -513,6 +551,23 @@ public class DDMExpressionImplTest extends PowerMockito {
 			mock(DDMExpressionFunctionTracker.class));
 
 		return ddmExpression;
+	}
+
+	private Map<String, DDMExpressionFunctionFactory>
+		_createDDMExpressionFunctionFactory(
+			DDMExpressionFunction... ddmExpressionFunctions) {
+
+		Map<String, DDMExpressionFunctionFactory>
+			ddmExpressionFunctionFactoryMap = new HashMap<>();
+
+		for (DDMExpressionFunction ddmExpressionFunction :
+				ddmExpressionFunctions) {
+
+			ddmExpressionFunctionFactoryMap.put(
+				ddmExpressionFunction.getName(), () -> ddmExpressionFunction);
+		}
+
+		return ddmExpressionFunctionFactoryMap;
 	}
 
 }

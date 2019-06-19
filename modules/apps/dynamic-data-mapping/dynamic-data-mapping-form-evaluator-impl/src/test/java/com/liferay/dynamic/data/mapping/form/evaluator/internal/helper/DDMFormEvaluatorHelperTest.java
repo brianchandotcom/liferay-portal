@@ -14,30 +14,26 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.helper;
 
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionActionHandlerAware;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionFieldAccessorAware;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionFactory;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionObserverAware;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccessorAware;
 import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateRequest;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateResponse;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorFieldContextKey;
-import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.AllFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.BelongsToRoleFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.BetweenFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.CalculateFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.ContainsFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.GetValueFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.JumpPageFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.SetEnabledFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.SetInvalidFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.SetRequiredFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.SetValueFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.SetVisibleFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.SumFunction;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.factory.AllFunctionFactory;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.factory.BelongsToRoleFunctionFactory;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.factory.BetweenFunctionFactory;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.factory.CalculateFunctionFactory;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.factory.ContainsFunctionFactory;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.factory.GetValueFunctionFactory;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.factory.JumpPageFunctionFactory;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.factory.SetEnabledFunctionFactory;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.factory.SetInvalidFunctionFactory;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.factory.SetRequiredFunctionFactory;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.factory.SetValueFunctionFactory;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.factory.SetVisibleFunctionFactory;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.factory.SumFunctionFactory;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldValueAccessor;
@@ -62,6 +58,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -1084,68 +1081,69 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 		Assert.assertTrue((boolean)ddmFormFieldPropertyChanges.get("visible"));
 	}
 
-	protected DDMExpressionFunction createAllFunction() throws Exception {
-		AllFunction allFunction = new AllFunction();
-
-		field(
-			AllFunction.class, "ddmExpressionFactory"
-		).set(
-			allFunction, _ddmExpressionFactory
-		);
-
-		return allFunction;
-	}
-
-	protected DDMExpressionFunction createBelongsToRoleFunction()
+	protected DDMExpressionFunctionFactory createAllFunction()
 		throws Exception {
 
-		BelongsToRoleFunction belongsToRoleFunction =
-			new BelongsToRoleFunction();
+		AllFunctionFactory allFunctionFactory = new AllFunctionFactory();
 
-		field(
-			BelongsToRoleFunction.class, "roleLocalService"
-		).set(
-			belongsToRoleFunction, _roleLocalService
-		);
+		ReflectionTestUtil.setFieldValue(
+			allFunctionFactory, "_ddmExpressionFactory", _ddmExpressionFactory);
 
-		field(
-			BelongsToRoleFunction.class, "userGroupRoleLocalService"
-		).set(
-			belongsToRoleFunction, _userGroupRoleLocalService
-		);
-
-		field(
-			BelongsToRoleFunction.class, "userLocalService"
-		).set(
-			belongsToRoleFunction, _userLocalService
-		);
-
-		return belongsToRoleFunction;
+		return allFunctionFactory;
 	}
 
-	protected Map<String, DDMExpressionFunction>
+	protected DDMExpressionFunctionFactory createBelongsToRoleFunction()
+		throws Exception {
+
+		BelongsToRoleFunctionFactory belongsToRoleFunctionFactory =
+			new BelongsToRoleFunctionFactory();
+
+		ReflectionTestUtil.setFieldValue(
+			belongsToRoleFunctionFactory, "_roleLocalService",
+			_roleLocalService);
+		ReflectionTestUtil.setFieldValue(
+			belongsToRoleFunctionFactory, "_userGroupRoleLocalService",
+			_userGroupRoleLocalService);
+		ReflectionTestUtil.setFieldValue(
+			belongsToRoleFunctionFactory, "_userLocalService",
+			_userLocalService);
+
+		return belongsToRoleFunctionFactory;
+	}
+
+	protected Map<String, DDMExpressionFunctionFactory>
 			createDDMExpressionFunctionMap()
 		throws Exception {
 
-		Map<String, DDMExpressionFunction> ddmExpressionFunctionMap =
-			new HashMap<>();
+		Map<String, DDMExpressionFunctionFactory>
+			ddmExpressionFunctionFactoryMap = new HashMap<>();
 
-		ddmExpressionFunctionMap.put("all", createAllFunction());
-		ddmExpressionFunctionMap.put(
+		ddmExpressionFunctionFactoryMap.put("all", createAllFunction());
+		ddmExpressionFunctionFactoryMap.put(
 			"belongsTo", createBelongsToRoleFunction());
-		ddmExpressionFunctionMap.put("between", new BetweenFunction());
-		ddmExpressionFunctionMap.put("calculate", new CalculateFunction());
-		ddmExpressionFunctionMap.put("contains", new ContainsFunction());
-		ddmExpressionFunctionMap.put("getValue", new GetValueFunction());
-		ddmExpressionFunctionMap.put("jumpPage", new JumpPageFunction());
-		ddmExpressionFunctionMap.put("setEnabled", new SetEnabledFunction());
-		ddmExpressionFunctionMap.put("setInvalid", new SetInvalidFunction());
-		ddmExpressionFunctionMap.put("setRequired", new SetRequiredFunction());
-		ddmExpressionFunctionMap.put("setValue", new SetValueFunction());
-		ddmExpressionFunctionMap.put("setVisible", new SetVisibleFunction());
-		ddmExpressionFunctionMap.put("sum", new SumFunction());
+		ddmExpressionFunctionFactoryMap.put(
+			"between", new BetweenFunctionFactory());
+		ddmExpressionFunctionFactoryMap.put(
+			"calculate", new CalculateFunctionFactory());
+		ddmExpressionFunctionFactoryMap.put(
+			"contains", new ContainsFunctionFactory());
+		ddmExpressionFunctionFactoryMap.put(
+			"getValue", new GetValueFunctionFactory());
+		ddmExpressionFunctionFactoryMap.put(
+			"jumpPage", new JumpPageFunctionFactory());
+		ddmExpressionFunctionFactoryMap.put(
+			"setEnabled", new SetEnabledFunctionFactory());
+		ddmExpressionFunctionFactoryMap.put(
+			"setInvalid", new SetInvalidFunctionFactory());
+		ddmExpressionFunctionFactoryMap.put(
+			"setRequired", new SetRequiredFunctionFactory());
+		ddmExpressionFunctionFactoryMap.put(
+			"setValue", new SetValueFunctionFactory());
+		ddmExpressionFunctionFactoryMap.put(
+			"setVisible", new SetVisibleFunctionFactory());
+		ddmExpressionFunctionFactoryMap.put("sum", new SumFunctionFactory());
 
-		return ddmExpressionFunctionMap;
+		return ddmExpressionFunctionFactoryMap;
 	}
 
 	protected DDMFormField createDDMFormField(
@@ -1204,69 +1202,14 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 			DDMFormEvaluatorHelper ddmFormEvaluatorHelper)
 		throws Exception {
 
-		Map<String, DDMExpressionFunction> ddmExpressionFunctionMap =
-			createDDMExpressionFunctionMap();
-
-		for (Map.Entry<String, DDMExpressionFunction> entry :
-				ddmExpressionFunctionMap.entrySet()) {
-
-			DDMExpressionFunction ddmExpressionFunction = entry.getValue();
-
-			if (ddmExpressionFunction instanceof
-					DDMExpressionActionHandlerAware) {
-
-				DDMExpressionActionHandlerAware
-					ddmExpressionActionHandlerAware =
-						(DDMExpressionActionHandlerAware)ddmExpressionFunction;
-
-				ddmExpressionActionHandlerAware.setDDMExpressionActionHandler(
-					ddmFormEvaluatorHelper.
-						ddmFormEvaluatorExpressionActionHandler);
-			}
-
-			if (ddmExpressionFunction instanceof
-					DDMExpressionFieldAccessorAware) {
-
-				DDMExpressionFieldAccessorAware
-					ddmExpressionFieldAccessorAware =
-						(DDMExpressionFieldAccessorAware)ddmExpressionFunction;
-
-				ddmExpressionFieldAccessorAware.setDDMExpressionFieldAccessor(
-					ddmFormEvaluatorHelper.
-						ddmFormEvaluatorDDMExpressionFieldAccessor);
-			}
-
-			if (ddmExpressionFunction instanceof DDMExpressionObserverAware) {
-				DDMExpressionObserverAware ddmExpressionObserverAware =
-					(DDMExpressionObserverAware)ddmExpressionFunction;
-
-				ddmExpressionObserverAware.setDDMExpressionObserver(
-					ddmFormEvaluatorHelper.ddmFormEvaluatorExpressionObserver);
-			}
-
-			if (ddmExpressionFunction instanceof
-					DDMExpressionParameterAccessorAware) {
-
-				DDMExpressionParameterAccessorAware
-					ddmExpressionParameterAccessorAware =
-						(DDMExpressionParameterAccessorAware)
-							ddmExpressionFunction;
-
-				ddmExpressionParameterAccessorAware.
-					setDDMExpressionParameterAccessor(
-						ddmFormEvaluatorHelper.
-							ddmFormEvaluatorExpressionParameterAccessor);
-			}
-		}
-
 		DDMExpressionFunctionTracker ddmExpressionFunctionTracker = mock(
 			DDMExpressionFunctionTracker.class);
 
 		when(
-			ddmExpressionFunctionTracker.getDDMExpressionFunctions(
+			ddmExpressionFunctionTracker.getDDMExpressionFunctionFactories(
 				Matchers.any())
 		).thenReturn(
-			ddmExpressionFunctionMap
+			createDDMExpressionFunctionMap()
 		);
 
 		field(

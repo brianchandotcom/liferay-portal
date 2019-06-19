@@ -39,12 +39,8 @@ public class BelongsToRoleFunctionTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		_belongsToRoleFunction = new BelongsToRoleFunction();
-
-		_belongsToRoleFunction.roleLocalService = _roleLocalService;
-		_belongsToRoleFunction.userLocalService = _userLocalService;
-		_belongsToRoleFunction.userGroupRoleLocalService =
-			_userGroupRoleLocalService;
+		_belongsToRoleFunction = new BelongsToRoleFunction(
+			_roleLocalService, _userGroupRoleLocalService, _userLocalService);
 	}
 
 	@Test
@@ -234,8 +230,7 @@ public class BelongsToRoleFunctionTest extends PowerMockito {
 		return _belongsToRoleFunction.apply(new String[] {"test"});
 	}
 
-	private BelongsToRoleFunction _belongsToRoleFunction =
-		new BelongsToRoleFunction();
+	private BelongsToRoleFunction _belongsToRoleFunction;
 
 	@Mock
 	private Role _role;

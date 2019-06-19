@@ -36,7 +36,7 @@ public class AllFunctionTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		_allFunction.ddmExpressionFactory = _ddmExpressionFactory;
+		_allFunction = new AllFunction(_ddmExpressionFactory);
 
 		field(
 			DDMExpressionFactoryImpl.class, "ddmExpressionFunctionTracker"
@@ -96,7 +96,7 @@ public class AllFunctionTest extends PowerMockito {
 		Assert.assertTrue(result);
 	}
 
-	private final AllFunction _allFunction = new AllFunction();
+	private AllFunction _allFunction;
 	private final DDMExpressionFactoryImpl _ddmExpressionFactory =
 		new DDMExpressionFactoryImpl();
 

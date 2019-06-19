@@ -5,24 +5,6 @@ export const BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR =
 	'com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor';
 
 /**
- * Available values for buttonType config key
- */
-export const BUTTON_TYPES = [
-	{
-		buttonTypeId: 'link',
-		label: Liferay.Language.get('link')
-	},
-	{
-		buttonTypeId: 'primary',
-		label: Liferay.Language.get('primary-button')
-	},
-	{
-		buttonTypeId: 'secondary',
-		label: Liferay.Language.get('secondary-button')
-	}
-];
-
-/**
  * List of editable types and their compatibilities
  * with the corresponding mappeable types
  * @review

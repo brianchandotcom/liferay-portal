@@ -42,6 +42,12 @@
 			<type>java.lang.Long</type>
 		</attribute>
 		<attribute>
+			<name>dataRecordId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Long</type>
+		</attribute>
+		<attribute>
 			<name>namespace</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

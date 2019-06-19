@@ -1360,6 +1360,7 @@ public class RESTBuilder {
 				Schema propertySchema = entry2.getValue();
 
 				if (Objects.equals(propertySchema.getType(), "number") &&
+					!Objects.equals(propertySchema.getFormat(), "bigdecimal") &&
 					!Objects.equals(propertySchema.getFormat(), "double") &&
 					!Objects.equals(propertySchema.getFormat(), "float")) {
 

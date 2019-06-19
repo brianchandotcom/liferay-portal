@@ -56,7 +56,7 @@ public class CallFunctionTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
-		setUpCallFunction();
+		_callFunction = new CallFunction(null, _jsonFactory);
 	}
 
 	@Test
@@ -210,12 +210,6 @@ public class CallFunctionTest extends PowerMockito {
 		_callFunction.setDDMExpressionObserver(mockDDMExpressionObserver);
 
 		return mockDDMExpressionObserver;
-	}
-
-	protected void setUpCallFunction() {
-		_callFunction = new CallFunction();
-
-		_callFunction.jsonFactory = _jsonFactory;
 	}
 
 	private CallFunction _callFunction;

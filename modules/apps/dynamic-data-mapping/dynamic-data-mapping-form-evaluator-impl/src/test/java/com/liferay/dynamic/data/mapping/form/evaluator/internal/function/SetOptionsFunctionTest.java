@@ -50,9 +50,7 @@ public class SetOptionsFunctionTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		_setOptionsFunction = new SetOptionsFunction();
-
-		_setOptionsFunction.jsonFactory = _jsonFactory;
+		_setOptionsFunction = new SetOptionsFunction(_jsonFactory);
 
 		_setUpLanguageUtil();
 	}

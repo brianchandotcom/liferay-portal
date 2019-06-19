@@ -24,7 +24,7 @@ SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = new Segments
 	<c:choose>
 		<c:when test="<%= segmentsSimulationDisplayContext.isShowEmptyMessage() %>">
 			<p class="mb-4 mt-1 small">
-				<liferay-ui:message key="no-segments-message" />
+				<liferay-ui:message key="no-segments-have-been-added-yet" />
 			</p>
 		</c:when>
 		<c:otherwise>

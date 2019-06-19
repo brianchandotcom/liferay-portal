@@ -113,6 +113,7 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.LayoutBranchLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
@@ -125,6 +126,7 @@ import com.liferay.portal.kernel.service.RecentLayoutSetBranchLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -137,6 +139,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -1865,8 +1869,45 @@ public class StagingImpl implements Staging {
 		boolean secureConnection = GetterUtil.getBoolean(
 			typeSettingsProperties.getProperty("secureConnection"));
 
-		String groupDisplayURL = GroupServiceHttp.getGroupDisplayURL(
-			httpPrincipal, remoteGroupId, privateLayout, secureConnection);
+		String groupDisplayURL;
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				GroupServiceUtil.class, "getGroupDisplayURL",
+				_GET_GROUP_DISPLAY_URL_PARAMETER_TYPES);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, remoteGroupId, privateLayout, secureConnection);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof PortalException) {
+					throw (PortalException)e;
+				}
+
+				throw new SystemException(e);
+			}
+
+			groupDisplayURL = (String)returnObj;
+		}
+		catch (SystemException se) {
+			if (se.getCause() instanceof ConnectException) {
+				_log.error("Connection error: " + se.getMessage());
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(se, se);
+				}
+			}
+			else {
+				_log.error(se, se);
+			}
+
+			throw se;
+		}
 
 		try {
 			URL remoteSiteURL = new URL(groupDisplayURL);
@@ -3254,8 +3295,39 @@ public class StagingImpl implements Staging {
 			// Ping the remote host and verify that the remote group exists in
 			// the same company as the remote user
 
-			GroupServiceHttp.checkRemoteStagingGroup(
-				httpPrincipal, remoteGroupId);
+			try {
+				MethodKey methodKey = new MethodKey(
+					GroupServiceUtil.class, "checkRemoteStagingGroup",
+					_CHECK_REMOTE_STAGING_GROUP_PARAMETER_TYPES);
+
+				MethodHandler methodHandler = new MethodHandler(
+					methodKey, remoteGroupId);
+
+				try {
+					TunnelUtil.invoke(httpPrincipal, methodHandler);
+				}
+				catch (Exception e) {
+					if (e instanceof PortalException) {
+						throw (PortalException)e;
+					}
+
+					throw new SystemException(e);
+				}
+			}
+			catch (SystemException se) {
+				if (se.getCause() instanceof ConnectException) {
+					_log.error("Connection error: " + se.getMessage());
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(se, se);
+					}
+				}
+				else {
+					_log.error(se, se);
+				}
+
+				throw se;
+			}
 
 			Group group = _groupLocalService.getGroup(groupId);
 
@@ -3900,6 +3972,14 @@ public class StagingImpl implements Staging {
 
 		_groupLocalService.updateGroup(group);
 	}
+
+	private static final Class<?>[]
+		_CHECK_REMOTE_STAGING_GROUP_PARAMETER_TYPES = new Class<?>[] {
+			long.class
+		};
+
+	private static final Class<?>[] _GET_GROUP_DISPLAY_URL_PARAMETER_TYPES =
+		new Class<?>[] {long.class, boolean.class, boolean.class};
 
 	private static final Log _log = LogFactoryUtil.getLog(StagingImpl.class);
 

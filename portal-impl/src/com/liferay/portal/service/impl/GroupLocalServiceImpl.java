@@ -94,7 +94,9 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.security.permission.RolePermissions;
 import com.liferay.portal.kernel.security.permission.UserBag;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -110,6 +112,8 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -136,6 +140,8 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.io.File;
 import java.io.Serializable;
+
+import java.net.ConnectException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -5107,8 +5113,39 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			// Ping the remote host and verify that the remote group exists in
 			// the same company as the remote user
 
-			GroupServiceHttp.checkRemoteStagingGroup(
-				httpPrincipal, remoteGroupId);
+			try {
+				MethodKey methodKey = new MethodKey(
+					GroupService.class, "checkRemoteStagingGroup",
+					_CHECK_REMOTE_STAGING_GROUP_PARAMETER_TYPES);
+
+				MethodHandler methodHandler = new MethodHandler(
+					methodKey, remoteGroupId);
+
+				try {
+					TunnelUtil.invoke(httpPrincipal, methodHandler);
+				}
+				catch (Exception e) {
+					if (e instanceof PortalException) {
+						throw (PortalException)e;
+					}
+
+					throw new SystemException(e);
+				}
+			}
+			catch (SystemException se) {
+				if (se.getCause() instanceof ConnectException) {
+					_log.error("Connection error: " + se.getMessage());
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(se, se);
+					}
+				}
+				else {
+					_log.error(se, se);
+				}
+
+				throw se;
+			}
 
 			// Ensure that the local group and the remote group are not the same
 			// group and that they are either both company groups or both not
@@ -5228,6 +5265,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				nameMap.get(defaultLocale), group.getType(), group.isSite());
 		}
 	}
+
+	private static final Class<?>[]
+		_CHECK_REMOTE_STAGING_GROUP_PARAMETER_TYPES = new Class<?>[] {
+			long.class
+		};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupLocalServiceImpl.class);

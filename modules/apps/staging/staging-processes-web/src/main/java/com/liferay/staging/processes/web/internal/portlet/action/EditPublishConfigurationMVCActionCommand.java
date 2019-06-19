@@ -17,6 +17,7 @@ package com.liferay.staging.processes.web.internal.portlet.action;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationFactory;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationHelper;
+import com.liferay.exportimport.kernel.exception.RemoteExportException;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
@@ -45,6 +46,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.staging.constants.StagingProcessesPortletKeys;
 import com.liferay.taglib.ui.util.SessionTreeJSClicks;
 import com.liferay.trash.service.TrashEntryService;
+
+import java.net.ConnectException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -159,7 +162,18 @@ public class EditPublishConfigurationMVCActionCommand
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			if (exception instanceof ConnectException ||
+				exception instanceof RemoteExportException) {
+
+				_log.error("Connection error: " + exception.getMessage());
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception, exception);
+				}
+			}
+			else {
+				_log.error(exception, exception);
+			}
 
 			SessionErrors.add(actionRequest, exception.getClass(), exception);
 		}

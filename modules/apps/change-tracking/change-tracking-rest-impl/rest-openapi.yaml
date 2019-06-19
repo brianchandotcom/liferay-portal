@@ -61,13 +61,14 @@ components:
                     type: boolean
                 contentType:
                     type: string
-                ctEntryId:
+                dateModified:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                entryId:
                     format: int64
                     type: integer
-                modifiedDate:
-                    format: date-time
-                    type: string
-                resourcePrimKey:
+                key:
                     format: int64
                     type: integer
                 siteName:
@@ -82,12 +83,11 @@ components:
         Process:
             properties:
                 collection:
-                    allOf:
-                        - $ref: "#/components/schemas/Collection"
+                    $ref: "#/components/schemas/Collection"
                 companyId:
                     format: int64
                     type: integer
-                date:
+                dateCreated:
                     format: date-time
                     type: string
                 percentage:
@@ -95,13 +95,9 @@ components:
                 processId:
                     format: int64
                     type: integer
+                processUser:
+                    $ref: "#/components/schemas/ProcessUser"
                 status:
-                    type: string
-                userInitials:
-                    type: string
-                userName:
-                    type: string
-                userPortraitURL:
                     type: string
             type: object
         ProcessUser:
@@ -109,7 +105,11 @@ components:
                 userId:
                     format: int64
                     type: integer
+                userInitials:
+                    type: string
                 userName:
+                    type: string
+                userPortraitURL:
                     type: string
             type: object
         Settings:
@@ -431,12 +431,6 @@ paths:
             operationId: getEntry
             parameters:
                 - in: path
-                  name: collectionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
                   name: entryId
                   required: true
                   schema:
@@ -457,12 +451,6 @@ paths:
         get:
             operationId: getEntryAffectedsPage
             parameters:
-                - in: path
-                  name: collectionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
                 - in: path
                   name: entryId
                   required: true
@@ -499,27 +487,6 @@ paths:
                                 type: array
                     description: ""
             tags: ["AffectedEntry"]
-    "/proccesses/{processId}":
-        get:
-            operationId: getProccessProcess
-            parameters:
-                - in: path
-                  name: processId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Process"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Process"
-                    description: ""
-            tags: ["Process"]
     "/processes":
         get:
             operationId: getProcessesPage
@@ -554,8 +521,7 @@ paths:
                   name: type
                   required: false
                   schema:
-                      default: "all"
-                      type: string
+                      $ref: "#/components/schemas/CollectionType"
                 - in: query
                   name: userId
                   required: false
@@ -606,8 +572,7 @@ paths:
                   name: type
                   required: false
                   schema:
-                      default: "all"
-                      type: string
+                      $ref: "#/components/schemas/CollectionType"
             responses:
                 200:
                     content:
@@ -623,6 +588,27 @@ paths:
                                 type: array
                     description: ""
             tags: ["ProcessUser"]
+    "/processes/{processId}":
+        get:
+            operationId: getProcess
+            parameters:
+                - in: path
+                  name: processId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Process"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Process"
+                    description: ""
+            tags: ["Process"]
     "/settings":
         get:
             operationId: getSettingsPage

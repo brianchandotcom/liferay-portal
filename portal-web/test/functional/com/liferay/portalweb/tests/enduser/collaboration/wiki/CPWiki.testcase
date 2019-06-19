@@ -520,6 +520,11 @@ definition {
 			panel = "Site Administration",
 			portlet = "Recycle Bin");
 
+		RecycleBin.viewCP(
+			assetName = "Wiki Page 1 Original",
+			assetType = "Wiki Page",
+			deleteUser = "Test Test");
+
 		LexiconTable.clickEllipsisItem(
 			item = "Restore",
 			tableEntry = "Wiki Page 1 Original");

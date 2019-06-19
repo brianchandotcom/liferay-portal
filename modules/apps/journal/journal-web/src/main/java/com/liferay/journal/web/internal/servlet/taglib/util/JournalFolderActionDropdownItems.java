@@ -222,11 +222,11 @@ public class JournalFolderActionDropdownItems {
 
 		PortletURL deleteURL = _liferayPortletResponse.createActionURL();
 
-		String actionName = "deleteFolder";
+		String actionName = "/journal/delete_folder";
 		String key = "delete";
 
 		if (_trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId())) {
-			actionName = "moveFolderToTrash";
+			actionName = "/journal/move_folder_to_trash";
 			key = "move-to-recycle-bin";
 		}
 

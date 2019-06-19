@@ -210,13 +210,6 @@ public class JournalPortlet extends MVCPortlet {
 		deleteEntries(actionRequest, actionResponse, false);
 	}
 
-	public void deleteFolder(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		deleteFolder(actionRequest, actionResponse, false);
-	}
-
 	public void expireEntries(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -305,13 +298,6 @@ public class JournalPortlet extends MVCPortlet {
 		throws Exception {
 
 		deleteEntries(actionRequest, actionResponse, true);
-	}
-
-	public void moveFolderToTrash(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		deleteFolder(actionRequest, actionResponse, true);
 	}
 
 	@Override
@@ -836,40 +822,6 @@ public class JournalPortlet extends MVCPortlet {
 		}
 
 		sendEditEntryRedirect(actionRequest, actionResponse);
-	}
-
-	protected void deleteFolder(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			boolean moveToTrash)
-		throws Exception {
-
-		long folderId = ParamUtil.getLong(actionRequest, "folderId");
-
-		List<TrashedModel> trashedModels = new ArrayList<>();
-
-		if (moveToTrash) {
-			JournalFolder folder = _journalFolderService.moveFolderToTrash(
-				folderId);
-
-			trashedModels.add(folder);
-		}
-		else {
-			_journalFolderService.deleteFolder(folderId);
-		}
-
-		if (moveToTrash && !trashedModels.isEmpty()) {
-			Map<String, Object> data = new HashMap<>();
-
-			data.put("trashedModels", trashedModels);
-
-			SessionMessages.add(
-				actionRequest,
-				_portal.getPortletId(actionRequest) +
-					SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA,
-				data);
-
-			hideDefaultSuccessMessage(actionRequest);
-		}
 	}
 
 	@Override

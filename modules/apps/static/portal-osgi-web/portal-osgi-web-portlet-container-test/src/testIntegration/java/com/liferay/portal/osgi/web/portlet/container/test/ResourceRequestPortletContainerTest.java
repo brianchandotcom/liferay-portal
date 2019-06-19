@@ -103,10 +103,11 @@ public class ResourceRequestPortletContainerTest
 
 			Assert.assertEquals(
 				"User 0 is not allowed to serve resource for " + layoutURL +
-					" on '\"><script>alert(1)</script>",
+					" on '\"><script>alert(1)</script>: Invalid portlet ID " +
+						"'\"><script>alert(1)</script>",
 				loggingEvent.getMessage());
 
-			Assert.assertEquals(400, response.getCode());
+			Assert.assertEquals(403, response.getCode());
 		}
 	}
 

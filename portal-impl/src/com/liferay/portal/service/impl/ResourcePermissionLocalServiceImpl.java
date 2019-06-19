@@ -1710,13 +1710,11 @@ public class ResourcePermissionLocalServiceImpl
 		return roleLocalService.getRole(companyId, roleName);
 	}
 
-	protected boolean isGuestRoleId(long companyId, long roleId)
-		throws PortalException {
-
-		Role guestRole = roleLocalService.getRole(
+	protected boolean isGuestRoleId(long companyId, long roleId) {
+		Role guestRole = roleLocalService.fetchRole(
 			companyId, RoleConstants.GUEST);
 
-		if (roleId == guestRole.getRoleId()) {
+		if ((guestRole != null) && (roleId == guestRole.getRoleId())) {
 			return true;
 		}
 

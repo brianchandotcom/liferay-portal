@@ -6,6 +6,10 @@ package ${configYAML.apiPackagePath}.resource.${escapedVersion}.test;
 	import ${configYAML.apiPackagePath}.client.serdes.${escapedVersion}.${schemaName}SerDes;
 </#list>
 
+<#list subentities as subentityName>
+	import ${configYAML.apiPackagePath}.client.dto.${escapedVersion}.{subentityName};
+</#list>
+
 import ${configYAML.apiPackagePath}.client.http.HttpInvoker;
 import ${configYAML.apiPackagePath}.client.pagination.Page;
 import ${configYAML.apiPackagePath}.client.pagination.Pagination;
@@ -983,12 +987,107 @@ public abstract class Base${schemaName}ResourceTestCase {
 					</#if>
 				}
 			</#if>
-		<#else>
+		<#elseif !freeMarkerTool.isReturnTypeSubentity(javaMethodSignature, subentities)>
 			@Test
 			public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
 				Assert.assertTrue(true);
 			}
 		</#if>
+	</#list>
+
+	<#list subentities as subentityName>
+		<#assign
+			subentityProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, subentityName)
+			subentityVarName = freeMarkerTool.getSchemaVarName(subentityName)
+			subentityPathName = freeMarkerTool.getSchemaVarName(subentityName)
+		/>
+
+		<#list javaMethodSignatures as javaMethodSignature>
+			<#assign returnType = javaMethodSignature.getReturnType() />
+
+			<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "get") && returnType?ends_with("." + subentityName)>
+				<#assign methodName = javaMethodSignature.methodName?cap_first />
+
+				@Test
+				public void test${methodName}() throws Exception {
+
+					${schemaName} post${schemaName} = testGet${schemaName}_add${schemaName}();
+
+					${subentityName} random${subentityName} = random${subentityName}();
+
+					${subentityName} post${subentityName} = test${methodName}_add${subentityName}(
+						post${schemaName}.getId(), random${subentityName});
+
+					${subentityName} get${subentityName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
+						post${schemaName}.getId());
+
+					assertEquals(post${subentityName}, get${subentityName});
+					assertValid(get${subentityName});
+				}
+
+				protected ${subentityName} test${javaMethodSignature.methodName?cap_first}_add${subentityName}(
+					long ${schemaVarName}Id, ${subentityName} ${subentityVarName}) throws Exception {
+
+					return ${schemaVarName}Resource.${javaMethodSignature.methodName?replace("get","post")}(
+						${schemaVarName}Id, ${subentityVarName});
+				}
+
+			<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post") && returnType?ends_with("." + subentityName) && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "testPostSite${schemaName}_add${schemaName}")>
+
+				<#assign methodName = javaMethodSignature.methodName?cap_first />
+
+				@Test
+				public void test${methodName}() throws Exception {
+
+				${schemaName} random${schemaName} = random${schemaName}();
+
+					${schemaName} post${schemaName} = testPostSite${schemaName}_add${schemaName}(
+						random${schemaName}());
+
+					${subentityName} random${subentityName} = random${subentityName}();
+
+					${subentityName} post${subentityName} = test${methodName}_add${subentityName}(
+						post${schemaName}.getId(), random${subentityName});
+
+					Assert.assertTrue(equals(random${subentityName}, post${subentityName}));
+				}
+
+				protected ${subentityName} test${methodName}_add${subentityName}(
+					long ${schemaVarName}Id, ${subentityName} ${subentityVarName}) throws Exception {
+
+					return ${schemaVarName}Resource.${javaMethodSignature.methodName}(
+						${schemaVarName}Id, ${subentityVarName});
+				}
+
+			<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "put") && returnType?ends_with("." + subentityName)>
+
+				<#assign methodName = javaMethodSignature.methodName?cap_first />
+
+				@Test
+				public void test${methodName}() throws Exception {
+
+					${schemaName} post${schemaName} = testPut${schemaName}_add${schemaName}();
+
+					test${methodName}_add${subentityName}(
+						post${schemaName}.getId(), random${subentityName}());
+
+					${subentityName} random${subentityName} = random${subentityName}();
+
+					${subentityName} put${subentityName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
+						post${schemaName}.getId(), random${subentityName});
+
+					assertEquals(random${subentityName}, put${subentityName});
+					assertValid(put${subentityName});
+				}
+
+				protected ${subentityName} test${javaMethodSignature.methodName?cap_first}_add${subentityName}(
+					long ${schemaVarName}Id, ${subentityName} ${subentityVarName}) throws Exception {
+
+					return ${schemaVarName}Resource.${javaMethodSignature.methodName?replace("put","post")}(
+						${schemaVarName}Id, ${subentityVarName});
+				}
+			</#if>
+		</#list>
 	</#list>
 
 	protected void assertHttpResponseStatusCode(int expectedHttpResponseStatusCode, HttpInvoker.HttpResponse actualHttpResponse) {
@@ -1009,6 +1108,19 @@ public abstract class Base${schemaName}ResourceTestCase {
 			assertEquals(${schemaVarName}1, ${schemaVarName}2);
 		}
 	}
+
+	<#list subentities as subentityName>
+		<#assign
+			subentityProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, subentityName)
+			subentityVarName = freeMarkerTool.getSchemaVarName(subentityName)
+		/>
+
+		protected void assertEquals(${subentityName} ${subentityVarName}1, ${subentityName} ${subentityVarName}2) {
+
+			Assert.assertTrue(
+				${subentityVarName}1 + " does not equal " + ${subentityVarName}2, equals(${subentityVarName}1, ${subentityVarName}2));
+		}
+	</#list>
 
 	protected void assertEqualsIgnoringOrder(List<${schemaName}> ${schemaVarNames}1, List<${schemaName}> ${schemaVarNames}2) {
 		Assert.assertEquals(${schemaVarNames}1.size(), ${schemaVarNames}2.size());
@@ -1106,9 +1218,80 @@ public abstract class Base${schemaName}ResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	<#list subentities as subentityName>
+		<#assign
+			subentityProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, subentityName)
+			subentityVarName = freeMarkerTool.getSchemaVarName(subentityName)
+		/>
+
+		protected void assertValid(${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${subentityName} ${subentityVarName}) {
+			boolean valid = true;
+
+			<#if subentityProperties?keys?seq_contains("dateCreated")>
+				if (${subentityVarName}.getDateCreated() == null) {
+					valid = false;
+				}
+			</#if>
+
+			<#if subentityProperties?keys?seq_contains("dateModified")>
+				if (${subentityVarName}.getDateModified() == null) {
+					valid = false;
+				}
+			</#if>
+
+			<#if subentityProperties?keys?seq_contains("id")>
+				if (${subentityVarName}.getId() == null) {
+					valid = false;
+				}
+			</#if>
+
+			<#if subentityProperties?keys?seq_contains("siteId")>
+				if (!Objects.equals(${subentityVarName}.getSiteId(), testGroup.getGroupId())) {
+					valid = false;
+				}
+			</#if>
+
+			for (String additionalAssertFieldName : getAdditional${subentityName}AssertFieldNames()) {
+				<#list subentityProperties?keys as propertyName>
+					<#if stringUtil.equals(propertyName, "dateCreated") ||
+						 stringUtil.equals(propertyName, "dateModified") ||
+						 stringUtil.equals(propertyName, "id") ||
+						 stringUtil.equals(propertyName, "siteId")>
+
+						 <#continue>
+					</#if>
+
+					if (Objects.equals("${propertyName}", additionalAssertFieldName)) {
+						<#assign capitalizedPropertyName = propertyName?cap_first />
+
+						<#if enumSchemas?keys?seq_contains(subentityProperties[propertyName])>
+							<#assign capitalizedPropertyName = subentityProperties[propertyName] />
+						</#if>
+
+						if (${subentityVarName}.get${capitalizedPropertyName}() == null) {
+							valid = false;
+						}
+
+						continue;
+					}
+				</#list>
+
+				throw new IllegalArgumentException("Invalid additional assert field name " + additionalAssertFieldName);
+			}
+
+			Assert.assertTrue(valid);
+		}
+	</#list>
+
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[0];
 	}
+
+	<#list subentities as subentityName>
+		protected String[] getAdditional${subentityName}AssertFieldNames() {
+			return new String[0];
+		}
+	</#list>
 
 	protected String[] getIgnoredEntityFieldNames() {
 		return new String[0];
@@ -1151,6 +1334,41 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 		return true;
 	}
+
+	<#list subentities as subentityName>
+		<#assign
+			subentityProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, subentityName)
+			subentityVarName = freeMarkerTool.getSchemaVarName(subentityName)
+		/>
+
+		protected boolean equals(${subentityName} ${subentityVarName}1, ${subentityName} ${subentityVarName}2) {
+			if (${subentityVarName}1 == ${subentityVarName}2) {
+				return true;
+			}
+
+			for (String additionalAssertFieldName : getAdditional${subentityName}AssertFieldNames()) {
+				<#list subentityProperties?keys as propertyName>
+					if (Objects.equals("${propertyName}", additionalAssertFieldName)) {
+						<#assign capitalizedPropertyName = propertyName?cap_first />
+
+						<#if enumSchemas?keys?seq_contains(subentityProperties[propertyName])>
+							<#assign capitalizedPropertyName = subentityProperties[propertyName] />
+						</#if>
+
+						if (!Objects.deepEquals(${subentityVarName}1.get${capitalizedPropertyName}(), ${subentityVarName}2.get${capitalizedPropertyName}())) {
+							return false;
+						}
+
+						continue;
+					}
+				</#list>
+
+				throw new IllegalArgumentException("Invalid additional assert field name " + additionalAssertFieldName);
+			}
+
+			return true;
+		}
+	</#list>
 
 	protected java.util.Collection<EntityField> getEntityFields() throws Exception {
 		if (!(_${schemaVarName}Resource instanceof EntityModelResource)) {
@@ -1236,6 +1454,28 @@ public abstract class Base${schemaName}ResourceTestCase {
 			throw new UnsupportedOperationException("This method needs to be implemented");
 		}
 	</#if>
+
+	<#list subentities as subentityName>
+		protected ${subentityName} random${subentityName}() throws Exception {
+			return new ${subentityName}() {
+				{
+					<#assign
+						randomDataTypes = ["Boolean", "Double", "Long", "String"]
+						subentityProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, subentityName)
+					/>
+
+					<#list subentityProperties?keys as propertyName>
+						<#if randomDataTypes?seq_contains(subentityProperties[propertyName])>
+							${propertyName} = RandomTestUtil.random${subentityProperties[propertyName]}();
+						<#elseif stringUtil.equals(subentityProperties[propertyName], "Date")>
+							${propertyName} = RandomTestUtil.nextDate();
+						</#if>
+					</#list>
+				}
+			};
+		}
+
+	</#list>
 
 	protected ${schemaName} random${schemaName}() throws Exception {
 		return new ${schemaName}() {

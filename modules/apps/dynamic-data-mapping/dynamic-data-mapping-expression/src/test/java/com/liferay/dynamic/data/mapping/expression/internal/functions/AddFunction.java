@@ -32,7 +32,7 @@ public class AddFunction
 
 	@Override
 	public String getName() {
-		return "abs";
+		return "add";
 	}
 
 }

@@ -251,12 +251,28 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 		return assetAutoTagProviders;
 	}
 
+	private List<AssetAutoTagProvider<?>>
+		_getAssetEntryAssetAutoTagProviders() {
+
+		ServiceTrackerMap<String, List<AssetAutoTagProvider<?>>>
+			serviceTrackerMap = _getServiceTrackerMap();
+
+		return serviceTrackerMap.getService(AssetEntry.class.getName());
+	}
+
 	private List<String> _getAutoAssetTagNames(
 		AssetEntry assetEntry, int maximumNumberOfTagsPerAsset) {
 
 		AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
 
 		Set<String> assetTagNamesSet = new LinkedHashSet<>();
+
+		for (AssetAutoTagProvider assetEntryAssetAutoTagProvider :
+				_getAssetEntryAssetAutoTagProviders()) {
+
+			assetTagNamesSet.addAll(
+				assetEntryAssetAutoTagProvider.getTagNames(assetEntry));
+		}
 
 		if (assetRenderer != null) {
 			List<AssetAutoTagProvider<?>> assetAutoTagProviders =

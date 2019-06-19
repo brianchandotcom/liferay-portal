@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
@@ -30,6 +31,7 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -111,10 +113,12 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 
 	@Test
 	public void testIsFormAvailableForGuest() throws Exception {
+		DDMFormInstance ddmFormInstance = mockDDMFormInstance();
+
 		when(
 			_ddmFormInstanceLocalService.fetchFormInstance(Matchers.anyLong())
 		).thenReturn(
-			mock(DDMFormInstance.class)
+			ddmFormInstance
 		);
 
 		when(
@@ -131,16 +135,18 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 
 	@Test
 	public void testIsFormAvailableForLoggedUser() throws Exception {
+		DDMFormInstance ddmFormInstance = mockDDMFormInstance();
+
 		when(
 			_ddmFormInstanceLocalService.fetchFormInstance(Matchers.anyLong())
 		).thenReturn(
-			mock(DDMFormInstance.class)
+			ddmFormInstance
 		);
 
 		when(
 			_ddmFormInstanceService.fetchFormInstance(Matchers.anyLong())
 		).thenReturn(
-			mock(DDMFormInstance.class)
+			ddmFormInstance
 		);
 
 		DDMFormDisplayContext ddmFormDisplayContext =
@@ -214,12 +220,28 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 			mock(WorkflowDefinitionLinkLocalService.class), mock(Portal.class));
 	}
 
+	protected DDMFormInstance mockDDMFormInstance() throws PortalException {
+		DDMFormInstance formInstance = mock(DDMFormInstance.class);
+
+		DDMFormInstanceSettings settings = mock(DDMFormInstanceSettings.class);
+
+		when(
+			formInstance.getSettingsModel()
+		).thenReturn(
+			settings
+		);
+
+		return formInstance;
+	}
+
 	protected MockRenderRequest mockRenderRequest() {
 		MockRenderRequest mockRenderRequest = new MockRenderRequest();
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setLocale(LocaleUtil.SPAIN);
+
+		themeDisplay.setLayout(mock(Layout.class));
 
 		mockRenderRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 

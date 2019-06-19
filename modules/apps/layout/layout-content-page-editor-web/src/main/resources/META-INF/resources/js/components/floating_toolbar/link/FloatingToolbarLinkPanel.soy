@@ -13,8 +13,6 @@
 			]
 		]
 	]}
-	{@param? _buttonTypes: ?}
-	{@param? _handleButtonTypeOptionChange: any}
 	{@param? _handleInputHrefKeyUp: any}
 	{@param? _handleTargetOptionChange: any}
 	{@param? _handleSubmit: any}
@@ -57,58 +55,8 @@
 					</select>
 				</div>
 			{/if}
-
-			{if $_buttonTypes}
-				<div class="form-group">
-					<label for="floatingToolbarLinkButtonPanelOption">
-						{msg desc=""}display-type{/msg}
-					</label>
-
-					<select
-						class="form-control form-control-sm"
-						data-onchange="{$_handleButtonTypeOptionChange}"
-						id="floatingToolbarLinkButtonPanelOption"
-					>
-						{foreach $buttonType in $_buttonTypes}
-							{call .buttonTypeOption}
-								{param buttonType: $buttonType /}
-								{param item: $item /}
-							{/call}
-						{/foreach}
-					</select>
-				</div>
-			{/if}
 		</form>
 	</div>
-{/template}
-
-/**
- * Link button option
- */
-{template .buttonTypeOption}
-	{@param item: [
-		editableValues: [
-			config: [
-				buttonType: string
-			]
-		]
-	]}
-	{@param buttonType: [
-		buttonTypeId: string,
-		label: string
-	]}
-
-	{let $optionAttributes kind="attributes"}
-		value="{$buttonType.buttonTypeId}"
-
-		{if $item.editableValues.config and $item.editableValues.config.buttonType and $item.editableValues.config.buttonType == $buttonType.buttonTypeId}
-			selected
-		{/if}
-	{/let}
-
-	<option {$optionAttributes}>
-		{$buttonType.label}
-	</option>
 {/template}
 
 /**

@@ -3,7 +3,7 @@ import debounce from 'metal-debounce';
 import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarLinkPanelDelegateTemplate.soy';
-import {BUTTON_TYPES, TARGET_TYPES} from '../../../utils/constants';
+import {TARGET_TYPES} from '../../../utils/constants';
 import {
 	disableSavingChangesStatusAction,
 	enableSavingChangesStatusAction,
@@ -77,26 +77,6 @@ class FloatingToolbarLinkPanel extends Component {
 	 * Handle button type option change
 	 * @param {Event} event
 	 */
-	_handleButtonTypeOptionChange(event) {
-		const buttonElement = event.delegateTarget;
-		const buttonElementValue =
-			buttonElement.options[buttonElement.selectedIndex].value;
-
-		const buttonType = this._buttonTypes.find(
-			type => type.buttonTypeId === buttonElementValue
-		);
-
-		const config = {
-			buttonType: buttonType.buttonTypeId
-		};
-
-		this._updateRowConfig(config);
-	}
-
-	/**
-	 * Handle button type option change
-	 * @param {Event} event
-	 */
 	_handleTargetOptionChange(event) {
 		const targetElement = event.delegateTarget;
 
@@ -115,17 +95,6 @@ class FloatingToolbarLinkPanel extends Component {
  * @type {!Object}
  */
 FloatingToolbarLinkPanel.STATE = {
-	/**
-	 * @default BUTTON_TYPES
-	 * @memberOf FloatingToolbarLinkPanel
-	 * @private
-	 * @review
-	 * @type {object[]}
-	 */
-	_buttonTypes: Config.array()
-		.internal()
-		.value(BUTTON_TYPES),
-
 	/**
 	 * @default TARGET_TYPES
 	 * @memberOf FloatingToolbarLinkPanel

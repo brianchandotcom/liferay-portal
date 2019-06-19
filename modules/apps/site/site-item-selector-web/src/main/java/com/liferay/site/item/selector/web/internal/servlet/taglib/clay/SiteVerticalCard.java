@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -83,7 +84,8 @@ public class SiteVerticalCard implements VerticalCard {
 		List<Group> childSites = null;
 
 		try {
-			childSites = _group.getFilteredChildren(true);
+			childSites = GroupServiceUtil.getGroups(
+				_group.getCompanyId(), _group.getGroupId(), true);
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {

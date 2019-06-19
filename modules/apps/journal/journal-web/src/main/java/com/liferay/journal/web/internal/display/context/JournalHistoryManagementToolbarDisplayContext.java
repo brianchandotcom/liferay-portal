@@ -73,7 +73,8 @@ public class JournalHistoryManagementToolbarDisplayContext
 							liferayPortletResponse.createActionURL();
 
 						deleteArticlesURL.setParameter(
-							ActionRequest.ACTION_NAME, "deleteArticles");
+							ActionRequest.ACTION_NAME,
+							"/journal/delete_articles");
 						deleteArticlesURL.setParameter(
 							"redirect", themeDisplay.getURLCurrent());
 

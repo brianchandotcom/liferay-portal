@@ -221,20 +221,6 @@ public class JournalPortlet extends MVCPortlet {
 		updateFolder(actionRequest, actionResponse);
 	}
 
-	public void deleteArticle(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		deleteArticles(actionRequest, actionResponse, false);
-	}
-
-	public void deleteArticles(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		deleteArticles(actionRequest, actionResponse, false);
-	}
-
 	public void deleteEntries(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -344,13 +330,6 @@ public class JournalPortlet extends MVCPortlet {
 		throws Exception {
 
 		deleteFolder(actionRequest, actionResponse, true);
-	}
-
-	public void moveToTrash(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		deleteArticles(actionRequest, actionResponse, true);
 	}
 
 	@Override
@@ -943,60 +922,6 @@ public class JournalPortlet extends MVCPortlet {
 			JournalWebConfiguration.class, properties);
 	}
 
-	protected void deleteArticles(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			boolean moveToTrash)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String[] deleteArticleIds = null;
-
-		String articleId = ParamUtil.getString(actionRequest, "articleId");
-
-		if (Validator.isNotNull(articleId)) {
-			deleteArticleIds = new String[] {articleId};
-		}
-		else {
-			deleteArticleIds = ParamUtil.getParameterValues(
-				actionRequest, "rowIds");
-		}
-
-		List<TrashedModel> trashedModels = new ArrayList<>();
-
-		for (String deleteArticleId : deleteArticleIds) {
-			if (moveToTrash) {
-				JournalArticle article =
-					_journalArticleService.moveArticleToTrash(
-						themeDisplay.getScopeGroupId(),
-						HtmlUtil.unescape(deleteArticleId));
-
-				trashedModels.add(article);
-			}
-			else {
-				ActionUtil.deleteArticle(
-					actionRequest, HtmlUtil.unescape(deleteArticleId));
-			}
-		}
-
-		if (moveToTrash && !trashedModels.isEmpty()) {
-			Map<String, Object> data = new HashMap<>();
-
-			data.put("trashedModels", trashedModels);
-
-			SessionMessages.add(
-				actionRequest,
-				_portal.getPortletId(actionRequest) +
-					SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA,
-				data);
-
-			hideDefaultSuccessMessage(actionRequest);
-		}
-
-		sendEditArticleRedirect(actionRequest, actionResponse);
-	}
-
 	protected void deleteEntries(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			boolean moveToTrash)
@@ -1214,14 +1139,6 @@ public class JournalPortlet extends MVCPortlet {
 	}
 
 	protected void sendEditArticleRedirect(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		sendEditArticleRedirect(
-			actionRequest, actionResponse, null, StringPool.BLANK);
-	}
-
-	protected void sendEditArticleRedirect(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			JournalArticle article, String oldUrlTitle)
 		throws Exception {
@@ -1258,20 +1175,6 @@ public class JournalPortlet extends MVCPortlet {
 				redirect = StringUtil.replace(
 					redirect, oldRedirect, newRedirect);
 			}
-		}
-
-		if ((actionName.equals("deleteArticle") ||
-			 actionName.equals("deleteArticles")) &&
-			!ActionUtil.hasArticle(actionRequest)) {
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			PortletURL portletURL = PortletURLFactoryUtil.create(
-				actionRequest, themeDisplay.getPpid(),
-				PortletRequest.RENDER_PHASE);
-
-			redirect = portletURL.toString();
 		}
 
 		if ((article != null) &&

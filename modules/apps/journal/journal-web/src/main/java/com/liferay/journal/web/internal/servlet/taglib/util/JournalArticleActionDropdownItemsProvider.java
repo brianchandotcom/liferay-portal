@@ -391,7 +391,8 @@ public class JournalArticleActionDropdownItemsProvider {
 
 		PortletURL deleteURL = _liferayPortletResponse.createActionURL();
 
-		deleteURL.setParameter(ActionRequest.ACTION_NAME, "deleteArticle");
+		deleteURL.setParameter(
+			ActionRequest.ACTION_NAME, "/journal/delete_article");
 
 		deleteURL.setParameter("redirect", _getRedirect());
 		deleteURL.setParameter(
@@ -463,7 +464,8 @@ public class JournalArticleActionDropdownItemsProvider {
 
 		PortletURL deleteURL = _liferayPortletResponse.createActionURL();
 
-		deleteURL.setParameter(ActionRequest.ACTION_NAME, "moveToTrash");
+		deleteURL.setParameter(
+			ActionRequest.ACTION_NAME, "/journal/move_to_trash");
 
 		deleteURL.setParameter("redirect", _getRedirect());
 		deleteURL.setParameter(

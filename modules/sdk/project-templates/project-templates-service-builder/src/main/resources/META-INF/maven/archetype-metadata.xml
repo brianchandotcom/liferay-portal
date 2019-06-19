@@ -32,6 +32,7 @@
 		</requiredProperty>
 		<requiredProperty key="dependencyInjector">
 			<defaultValue>ds</defaultValue>
+			<validationRegex>(ds|spring)</validationRegex>
 		</requiredProperty>
 		<requiredProperty key="dependencyManagementEnabled">
 			<defaultValue>false</defaultValue>

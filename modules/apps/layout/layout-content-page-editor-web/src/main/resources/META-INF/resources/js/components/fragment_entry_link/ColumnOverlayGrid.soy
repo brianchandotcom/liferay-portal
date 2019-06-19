@@ -28,7 +28,9 @@
 			{else}
 				{sp}container
 			{/if}
-			{sp}px-{$padding ?: '3'}
+			{if $padding and $padding != '3'}
+				{sp}px-{$padding}
+			{/if}
 			{sp}py-0
 		{/let}
 

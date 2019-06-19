@@ -141,10 +141,8 @@
 			{else}
 				{sp}container
 			{/if}
-			{if $row and $row.config}
-				{sp}px-{$row.config.paddingHorizontal ?: '3'}
-			{else}
-				{sp}px-3
+			{if $row and $row.config and $row.config.paddingHorizontal and $row.config.paddingHorizontal != '3'}
+				{sp}px-{$row.config.paddingHorizontal}
 			{/if}
 
 			{if $row and $row.config}

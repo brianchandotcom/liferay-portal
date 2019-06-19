@@ -15,11 +15,11 @@
 package com.liferay.portal.search.solr7.internal.document;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.document.Field;
 
 import java.util.Locale;
 import java.util.Map;
@@ -35,12 +35,15 @@ import org.osgi.service.component.annotations.Component;
 public class DefaultSolrDocumentFactory implements SolrDocumentFactory {
 
 	@Override
-	public SolrInputDocument getSolrInputDocument(Document document) {
+	public SolrInputDocument getSolrInputDocument(
+		com.liferay.portal.kernel.search.Document document) {
+
 		SolrInputDocument solrInputDocument = new SolrInputDocument();
 
-		Map<String, Field> fields = document.getFields();
+		Map<String, com.liferay.portal.kernel.search.Field> fields =
+			document.getFields();
 
-		for (Field field : fields.values()) {
+		for (com.liferay.portal.kernel.search.Field field : fields.values()) {
 			String name = field.getName();
 
 			if (!field.isLocalized()) {
@@ -80,7 +83,9 @@ public class DefaultSolrDocumentFactory implements SolrDocumentFactory {
 						solrInputDocument.addField(name, value);
 					}
 
-					String localizedName = Field.getLocalizedName(locale, name);
+					String localizedName =
+						com.liferay.portal.kernel.search.Field.getLocalizedName(
+							locale, name);
 
 					addField(solrInputDocument, field, value, localizedName);
 				}
@@ -90,8 +95,28 @@ public class DefaultSolrDocumentFactory implements SolrDocumentFactory {
 		return solrInputDocument;
 	}
 
+	@Override
+	public SolrInputDocument getSolrInputDocument(Document document) {
+		SolrInputDocument solrInputDocument = new SolrInputDocument();
+
+		Map<String, Field> fields = document.getFields();
+
+		for (Field field : fields.values()) {
+			addField(field, solrInputDocument);
+		}
+
+		return solrInputDocument;
+	}
+
+	protected void addField(Field field, SolrInputDocument solrInputDocument) {
+		for (Object value : field.getValues()) {
+			solrInputDocument.addField(field.getName(), toSolrValue(value));
+		}
+	}
+
 	protected void addField(
-		SolrInputDocument solrInputDocument, Field field, String value,
+		SolrInputDocument solrInputDocument,
+		com.liferay.portal.kernel.search.Field field, String value,
 		String localizedName) {
 
 		GeoLocationPoint geoLocationPoint = field.getGeoLocationPoint();
@@ -105,11 +130,26 @@ public class DefaultSolrDocumentFactory implements SolrDocumentFactory {
 		solrInputDocument.addField(localizedName, value);
 
 		if (field.isSortable()) {
-			String sortableFieldName = Field.getSortableFieldName(
-				localizedName);
+			String sortableFieldName =
+				com.liferay.portal.kernel.search.Field.getSortableFieldName(
+					localizedName);
 
 			solrInputDocument.addField(sortableFieldName, value);
 		}
+	}
+
+	protected Object toSolrValue(Object value) {
+		if (value instanceof GeoLocationPoint) {
+			GeoLocationPoint geoLocationPoint = (GeoLocationPoint)value;
+
+			if (geoLocationPoint != null) {
+				value =
+					geoLocationPoint.getLatitude() + StringPool.COMMA +
+						geoLocationPoint.getLongitude();
+			}
+		}
+
+		return value;
 	}
 
 }

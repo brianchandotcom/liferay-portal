@@ -22,10 +22,13 @@ import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
+import com.liferay.headless.delivery.client.dto.v1_0.ContentField;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
+import com.liferay.headless.delivery.client.dto.v1_0.Value;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
@@ -69,6 +72,9 @@ public class StructuredContentResourceTest
 
 		_ddmStructure = _addDDMStructure(testGroup);
 		_irrelevantDDMStructure = _addDDMStructure(irrelevantGroup);
+
+		_ddmTemplate = _addDDMTemplate(_ddmStructure);
+		_addDDMTemplate(_irrelevantDDMStructure);
 
 		_journalFolder = JournalTestUtil.addFolder(
 			testGroup.getGroupId(), RandomTestUtil.randomString());
@@ -126,6 +132,32 @@ public class StructuredContentResourceTest
 	}
 
 	@Override
+	@Test
+	public void testGetStructuredContentRenderedContentTemplate()
+		throws Exception {
+
+		StructuredContent postStructuredContent =
+			testGetSiteStructuredContentByKey_addStructuredContent();
+
+		String structuredContentRenderedContent =
+			structuredContentResource.
+				getStructuredContentRenderedContentTemplate(
+					postStructuredContent.getId(),
+					_ddmTemplate.getTemplateId());
+
+		ContentField[] contentFields = postStructuredContent.getContentFields();
+
+		Value value = contentFields[0].getValue();
+
+		String expectedStructuredContentRenderedContent =
+			"<div>" + value.getData() + "</div>";
+
+		Assert.assertEquals(
+			expectedStructuredContentRenderedContent,
+			structuredContentRenderedContent);
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"contentStructureId", "description", "title"};
 	}
@@ -152,6 +184,19 @@ public class StructuredContentResourceTest
 		StructuredContent structuredContent = super.randomStructuredContent();
 
 		structuredContent.setContentStructureId(_ddmStructure.getStructureId());
+		structuredContent.setContentFields(
+			new ContentField[] {
+				new ContentField() {
+					{
+						name = "MyText";
+						value = new Value() {
+							{
+								data = RandomTestUtil.randomString(10);
+							}
+						};
+					}
+				}
+			});
 
 		return structuredContent;
 	}
@@ -193,19 +238,21 @@ public class StructuredContentResourceTest
 			new DDMStructureTestHelper(
 				PortalUtil.getClassNameId(JournalArticle.class), group);
 
-		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+		return ddmStructureTestHelper.addStructure(
 			PortalUtil.getClassNameId(JournalArticle.class),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			_deserialize(_read("test-structured-content-structure.json")),
 			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+	}
 
-		DDMTemplateTestUtil.addTemplate(
+	private DDMTemplate _addDDMTemplate(DDMStructure ddmStructure)
+		throws Exception {
+
+		return DDMTemplateTestUtil.addTemplate(
 			ddmStructure.getGroupId(), ddmStructure.getStructureId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
 			TemplateConstants.LANG_TYPE_VM,
 			_read("test-structured-content-template.xsl"), LocaleUtil.US);
-
-		return ddmStructure;
 	}
 
 	private DDMForm _deserialize(String content) {
@@ -233,6 +280,7 @@ public class StructuredContentResourceTest
 
 	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
 	private DDMStructure _ddmStructure;
+	private DDMTemplate _ddmTemplate;
 	private DDMStructure _irrelevantDDMStructure;
 	private JournalFolder _irrelevantJournalFolder;
 	private JournalFolder _journalFolder;

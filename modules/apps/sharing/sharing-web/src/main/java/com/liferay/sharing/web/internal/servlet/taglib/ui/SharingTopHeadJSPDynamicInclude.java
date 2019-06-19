@@ -48,17 +48,11 @@ public class SharingTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if ((themeDisplay == null) || (themeDisplay.getScopeGroup() == null)) {
-			return;
-		}
-
 		SharingConfiguration sharingConfiguration =
 			_sharingConfigurationFactory.getGroupSharingConfiguration(
 				themeDisplay.getScopeGroup());
 
-		if ((sharingConfiguration != null) &&
-			sharingConfiguration.isEnabled()) {
-
+		if (sharingConfiguration.isEnabled()) {
 			super.include(httpServletRequest, httpServletResponse, key);
 		}
 	}

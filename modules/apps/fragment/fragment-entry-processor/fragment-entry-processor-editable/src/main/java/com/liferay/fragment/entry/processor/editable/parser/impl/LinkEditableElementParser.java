@@ -113,22 +113,25 @@ public class LinkEditableElementParser implements EditableElementParser {
 		EditableElementParserUtil.addAttribute(
 			replaceableElement, configJSONObject, "target", "target");
 
-		for (String className : replaceableElement.classNames()) {
-			if (className.startsWith("btn-") ||
-				Objects.equals(className, "btn")) {
-
-				replaceableElement.removeClass(className);
-			}
-		}
-
 		String buttonType = configJSONObject.getString("buttonType");
 
-		if (Objects.equals(buttonType, "link")) {
-			replaceableElement.addClass("link");
-		}
-		else {
-			EditableElementParserUtil.addClass(
-				replaceableElement, configJSONObject, "btn btn-", "buttonType");
+		if (!buttonType.isEmpty()) {
+			for (String className : replaceableElement.classNames()) {
+				if (className.startsWith("btn-") ||
+					Objects.equals(className, "btn")) {
+
+					replaceableElement.removeClass(className);
+				}
+			}
+
+			if (Objects.equals(buttonType, "link")) {
+				replaceableElement.addClass("link");
+			}
+			else {
+				EditableElementParserUtil.addClass(
+					replaceableElement, configJSONObject, "btn btn-",
+					"buttonType");
+			}
 		}
 
 		replaceableElement.html(bodyElement.html());

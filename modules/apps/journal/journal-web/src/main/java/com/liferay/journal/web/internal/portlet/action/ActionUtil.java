@@ -271,11 +271,13 @@ public class ActionUtil {
 
 		JournalArticle article = null;
 
-		if (actionName.equals("addArticle") && (resourcePrimKey != 0)) {
+		if (actionName.equals("/journal/add_article") &&
+			(resourcePrimKey != 0)) {
+
 			article = JournalArticleLocalServiceUtil.getLatestArticle(
 				resourcePrimKey, status, false);
 		}
-		else if (!actionName.equals("addArticle") &&
+		else if (!actionName.equals("/journal/add_article") &&
 				 Validator.isNotNull(articleId)) {
 
 			article = JournalArticleServiceUtil.getLatestArticle(

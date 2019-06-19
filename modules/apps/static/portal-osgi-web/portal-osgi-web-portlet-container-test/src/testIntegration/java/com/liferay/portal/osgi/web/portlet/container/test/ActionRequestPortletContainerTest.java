@@ -213,10 +213,13 @@ public class ActionRequestPortletContainerTest
 			Assert.assertEquals(
 				"User 0 is not allowed to access URL " +
 					url.substring(0, url.indexOf('?')) + " and portlet " +
-						TEST_PORTLET_ID,
+						TEST_PORTLET_ID +
+							": User 0 did not provide a valid CSRF token for " +
+								"com.liferay.portlet." +
+									"SecurityPortletContainerWrapper",
 				loggingEvent.getMessage());
 
-			Assert.assertEquals(200, response.getCode());
+			Assert.assertEquals(403, response.getCode());
 			Assert.assertFalse(testPortlet.isCalledAction());
 		}
 	}

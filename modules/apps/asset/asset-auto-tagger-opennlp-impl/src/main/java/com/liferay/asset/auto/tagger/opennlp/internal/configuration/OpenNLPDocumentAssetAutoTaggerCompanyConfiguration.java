@@ -16,7 +16,6 @@ package com.liferay.asset.auto.tagger.opennlp.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -50,16 +49,7 @@ public interface OpenNLPDocumentAssetAutoTaggerCompanyConfiguration {
 	 *
 	 * @review
 	 */
-	@Meta.AD(
-		deflt = "", name = "enabled-class-names",
-		optionLabels = {"Blogs", "Documents", "Articles"},
-		optionValues = {
-			"com.liferay.blogs.model.BlogsEntry",
-			"com.liferay.document.library.kernel.model.DLFileEntry",
-			"com.liferay.journal.model.JournalArticle"
-		},
-		required = false
-	)
+	@Meta.AD(deflt = "", name = "enabled-class-names", required = false)
 	public String[] enabledClassNames();
 
 }

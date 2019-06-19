@@ -204,7 +204,6 @@ JournalArticle article = journalDisplayContext.getArticle();
 
 		<liferay-frontend:component
 			componentId="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-			context="<%= journalDisplayContext.getComponentContext() %>"
 			module="js/ElementsDefaultEventHandler.es"
 		/>
 

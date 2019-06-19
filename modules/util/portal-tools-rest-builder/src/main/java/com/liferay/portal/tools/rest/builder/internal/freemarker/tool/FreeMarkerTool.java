@@ -399,6 +399,23 @@ public class FreeMarkerTool {
 		return isParameter(javaMethodParameter, operation, "query");
 	}
 
+	public boolean isReturnTypeSubentity(
+		JavaMethodSignature javaMethodSignature, List<String> subentities) {
+
+		String returnType = javaMethodSignature.getReturnType();
+
+		String[] returnTypeParts = returnType.split("\\.");
+
+		if (returnTypeParts.length > 0) {
+			String returnTypeSingleName =
+				returnTypeParts[returnTypeParts.length - 1];
+
+			return subentities.contains(returnTypeSingleName);
+		}
+
+		return false;
+	}
+
 	private FreeMarkerTool() {
 	}
 

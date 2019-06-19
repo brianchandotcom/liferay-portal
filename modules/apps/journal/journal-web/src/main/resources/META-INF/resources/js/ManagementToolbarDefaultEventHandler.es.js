@@ -72,7 +72,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 
 	moveEntries() {
 		Liferay.fire(this.ns('editEntry'), {
-			action: 'moveEntries'
+			action: '/journal/move_entries'
 		});
 	}
 

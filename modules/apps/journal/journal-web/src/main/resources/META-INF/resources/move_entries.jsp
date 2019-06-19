@@ -20,7 +20,7 @@
 JournalMoveEntriesDisplayContext journalMovesEntriesDisplayContext = new JournalMoveEntriesDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>
 
-<portlet:actionURL name="moveEntries" var="moveArticleURL">
+<portlet:actionURL name="/journal/move_entries" var="moveArticleURL">
 	<portlet:param name="mvcPath" value="/move_entries.jsp" />
 </portlet:actionURL>
 

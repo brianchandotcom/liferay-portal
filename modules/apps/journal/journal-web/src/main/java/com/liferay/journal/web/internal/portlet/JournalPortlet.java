@@ -65,7 +65,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.service.JournalContentSearchLocalService;
-import com.liferay.journal.service.JournalFolderService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.JournalHelper;
@@ -74,7 +73,6 @@ import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.journal.web.internal.util.JournalDDMTemplateUtil;
 import com.liferay.journal.web.util.JournalUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.diff.CompareVersionsException;
@@ -86,7 +84,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -120,9 +117,7 @@ import com.liferay.trash.util.TrashWebKeys;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -141,7 +136,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import javax.portlet.WindowState;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -197,60 +191,6 @@ public class JournalPortlet extends MVCPortlet {
 		throws Exception {
 
 		updateArticle(actionRequest, actionResponse);
-	}
-
-	public void moveEntries(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long newFolderId = ParamUtil.getLong(actionRequest, "newFolderId");
-
-		long[] folderIds = ParamUtil.getLongValues(
-			actionRequest, "rowIdsJournalFolder");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			JournalArticle.class.getName(), actionRequest);
-
-		for (long folderId : folderIds) {
-			_journalFolderService.moveFolder(
-				folderId, newFolderId, serviceContext);
-		}
-
-		List<String> invalidArticleIds = new ArrayList<>();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String[] articleIds = ParamUtil.getStringValues(
-			actionRequest, "rowIdsJournalArticle");
-
-		for (String articleId : articleIds) {
-			try {
-				_journalArticleService.moveArticle(
-					themeDisplay.getScopeGroupId(),
-					HtmlUtil.unescape(articleId), newFolderId, serviceContext);
-			}
-			catch (InvalidDDMStructureException iddmse) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(iddmse.getMessage());
-				}
-
-				invalidArticleIds.add(articleId);
-			}
-		}
-
-		if (!invalidArticleIds.isEmpty()) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append("Folder ");
-			sb.append(newFolderId);
-			sb.append(" does not allow the structures for articles: ");
-			sb.append(StringUtil.merge(invalidArticleIds));
-
-			throw new InvalidDDMStructureException(sb.toString());
-		}
-
-		sendEditEntryRedirect(actionRequest, actionResponse);
 	}
 
 	@Override
@@ -906,23 +846,6 @@ public class JournalPortlet extends MVCPortlet {
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
-	protected void sendEditEntryRedirect(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String redirect = _portal.escapeRedirect(
-			ParamUtil.getString(actionRequest, "redirect"));
-
-		WindowState windowState = actionRequest.getWindowState();
-
-		if (!windowState.equals(LiferayWindowState.POP_UP)) {
-			sendRedirect(actionRequest, actionResponse);
-		}
-		else if (Validator.isNotNull(redirect)) {
-			actionResponse.sendRedirect(redirect);
-		}
-	}
-
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.journal.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=1.1.0))))",
 		unbind = "-"
@@ -1020,9 +943,6 @@ public class JournalPortlet extends MVCPortlet {
 
 	private volatile JournalFileUploadsConfiguration
 		_journalFileUploadsConfiguration;
-
-	@Reference
-	private JournalFolderService _journalFolderService;
 
 	@Reference
 	private JournalHelper _journalHelper;

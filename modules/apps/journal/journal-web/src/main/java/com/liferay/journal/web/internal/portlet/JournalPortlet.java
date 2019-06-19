@@ -210,35 +210,6 @@ public class JournalPortlet extends MVCPortlet {
 		deleteEntries(actionRequest, actionResponse, false);
 	}
 
-	public void expireEntries(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long[] expireFolderIds = ParamUtil.getLongValues(
-			actionRequest, "rowIdsJournalFolder");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			JournalArticle.class.getName(), actionRequest);
-
-		for (long expireFolderId : expireFolderIds) {
-			ActionUtil.expireFolder(
-				themeDisplay.getScopeGroupId(), expireFolderId, serviceContext);
-		}
-
-		String[] expireArticleIds = ParamUtil.getStringValues(
-			actionRequest, "rowIdsJournalArticle");
-
-		for (String expireArticleId : expireArticleIds) {
-			ActionUtil.expireArticle(
-				actionRequest, HtmlUtil.unescape(expireArticleId));
-		}
-
-		sendEditEntryRedirect(actionRequest, actionResponse);
-	}
-
 	public void moveEntries(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

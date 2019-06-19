@@ -45,7 +45,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 
 	expireEntries() {
 		Liferay.fire(this.ns('editEntry'), {
-			action: 'expireEntries'
+			action: '/journal/expire_entries'
 		});
 	}
 

@@ -48,10 +48,8 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 
 		// Multiple data layouts with the same data definition
 
-		DataLayout randomDataLayout = randomDataLayout();
-
 		for (int i = 0; i < 3; i++) {
-			randomDataLayout.setDataLayoutKey(RandomTestUtil.randomString());
+			DataLayout randomDataLayout = randomDataLayout();
 
 			DataLayout postDataLayout =
 				testPostDataDefinitionDataLayout_addDataLayout(

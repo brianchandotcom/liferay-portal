@@ -49,8 +49,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-
 import javax.ws.rs.BadRequestException;
 
 import org.osgi.service.component.annotations.Component;
@@ -118,8 +116,7 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 	}
 
 	@Override
-	public DataLayout getSiteDataLayout(
-			@NotNull Long siteId, @NotNull String dataLayoutKey)
+	public DataLayout getSiteDataLayout(Long siteId, String dataLayoutKey)
 		throws Exception {
 
 		return _toDataLayout(
@@ -322,15 +319,15 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 		dataLayout.setDateCreated(ddmStructureLayout.getCreateDate());
 		dataLayout.setDataDefinitionId(_getDDMStructureId(ddmStructureLayout));
 		dataLayout.setDataLayoutKey(ddmStructureLayout.getStructureLayoutKey());
-		dataLayout.setId(ddmStructureLayout.getStructureLayoutId());
+		dataLayout.setDateModified(ddmStructureLayout.getModifiedDate());
 		dataLayout.setDescription(
 			LocalizedValueUtil.toStringObjectMap(
 				ddmStructureLayout.getDescriptionMap()));
-		dataLayout.setDateModified(ddmStructureLayout.getModifiedDate());
-		dataLayout.setSiteId(ddmStructureLayout.getGroupId());
+		dataLayout.setId(ddmStructureLayout.getStructureLayoutId());
 		dataLayout.setName(
 			LocalizedValueUtil.toStringObjectMap(
 				ddmStructureLayout.getNameMap()));
+		dataLayout.setSiteId(ddmStructureLayout.getGroupId());
 		dataLayout.setUserId(ddmStructureLayout.getUserId());
 
 		return dataLayout;

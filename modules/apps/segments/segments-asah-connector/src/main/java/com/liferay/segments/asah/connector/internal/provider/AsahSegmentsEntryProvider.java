@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.segments.asah.connector.internal.cache.SegmentsAsahCache;
+import com.liferay.segments.asah.connector.internal.cache.SegmentsEntryIdsAsahCache;
 import com.liferay.segments.asah.connector.internal.constants.SegmentsAsahDestinationNames;
 import com.liferay.segments.asah.connector.internal.context.contributor.SegmentsAsahRequestContextContributor;
 import com.liferay.segments.constants.SegmentsConstants;
@@ -99,8 +99,8 @@ public class AsahSegmentsEntryProvider implements SegmentsEntryProvider {
 			return new long[0];
 		}
 
-		long[] cachedSegmentsEntryIds = _segmentsAsahCache.getSegmentsEntryIds(
-			userId);
+		long[] cachedSegmentsEntryIds =
+			_segmentsEntryIdsAsahCache.getSegmentsEntryIds(userId);
 
 		if (cachedSegmentsEntryIds == null) {
 			if (_log.isDebugEnabled()) {
@@ -154,7 +154,7 @@ public class AsahSegmentsEntryProvider implements SegmentsEntryProvider {
 	private MessageBus _messageBus;
 
 	@Reference
-	private SegmentsAsahCache _segmentsAsahCache;
+	private SegmentsEntryIdsAsahCache _segmentsEntryIdsAsahCache;
 
 	@Reference
 	private SegmentsEntryRelLocalService _segmentsEntryRelLocalService;

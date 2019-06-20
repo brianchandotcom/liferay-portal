@@ -28,22 +28,23 @@ import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author David Arques
+ * @author Sarai Díaz
  */
 @Component(
 	configurationPid = "com.liferay.segments.asah.connector.internal.configuration.SegmentsAsahConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	service = SegmentsAsahCache.class
+	service = SegmentsInterestTermsAsahCache.class
 )
-public class SegmentsAsahCache {
+public class SegmentsInterestTermsAsahCache {
 
-	public long[] getSegmentsEntryIds(String userId) {
+	public String[] getInterestTerms(String userId) {
 		return _portalCache.get(_generateCacheKey(userId));
 	}
 
-	public void putSegmentsEntryIds(String userId, long[] segmentsEntryIds) {
+	public void putInterestTerms(String userId, String[] terms) {
 		_portalCache.put(
-			_generateCacheKey(userId), segmentsEntryIds, _timeToLiveInSeconds);
+			_generateCacheKey(userId), terms,
+			_interestTermsTimeToLiveInSeconds);
 	}
 
 	@Activate
@@ -53,15 +54,15 @@ public class SegmentsAsahCache {
 			ConfigurableUtil.createConfigurable(
 				SegmentsAsahConfiguration.class, properties);
 
-		_timeToLiveInSeconds =
-			segmentsAsahConfiguration.
-				anonymousUserSegmentsCacheExpirationTime();
+		_interestTermsTimeToLiveInSeconds =
+			segmentsAsahConfiguration.interestTermsCacheExpirationTime();
 	}
 
 	@Reference(unbind = "-")
 	protected void setMultiVMPool(MultiVMPool multiVMPool) {
-		_portalCache = (PortalCache<String, long[]>)multiVMPool.getPortalCache(
-			SegmentsAsahCache.class.getName());
+		_portalCache =
+			(PortalCache<String, String[]>)multiVMPool.getPortalCache(
+				SegmentsInterestTermsAsahCache.class.getName());
 	}
 
 	private String _generateCacheKey(String userId) {
@@ -70,7 +71,8 @@ public class SegmentsAsahCache {
 
 	private static final String _CACHE_PREFIX = "segments-";
 
-	private PortalCache<String, long[]> _portalCache;
-	private int _timeToLiveInSeconds = PortalCache.DEFAULT_TIME_TO_LIVE;
+	private int _interestTermsTimeToLiveInSeconds =
+		PortalCache.DEFAULT_TIME_TO_LIVE;
+	private PortalCache<String, String[]> _portalCache;
 
 }

@@ -28,23 +28,23 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 /**
- * @author David Arques
+ * @author Sarai Díaz
  */
 @RunWith(MockitoJUnitRunner.class)
-public class SegmentsAsahCacheTest {
+public class SegmentsInterestTermsAsahCacheTest {
 
 	@Before
 	public void setUp() {
 		ReflectionTestUtil.setFieldValue(
-			_segmentsAsahCache, "_portalCache", _portalCache);
+			_segmentsInterestTermsAsahCache, "_portalCache", _portalCache);
 	}
 
 	@Test
-	public void testGetSegmentsEntryIds() {
+	public void testGetInterestTerms() {
 		String userId = RandomTestUtil.randomString();
 
-		long[] segmentsEntryIds = {
-			RandomTestUtil.randomLong(), RandomTestUtil.randomLong()
+		String[] interestTerms = {
+			RandomTestUtil.randomString(), RandomTestUtil.randomString()
 		};
 
 		String cacheKey = _generateCacheKey(userId);
@@ -52,11 +52,12 @@ public class SegmentsAsahCacheTest {
 		Mockito.when(
 			_portalCache.get(cacheKey)
 		).thenReturn(
-			segmentsEntryIds
+			interestTerms
 		);
 
 		Assert.assertArrayEquals(
-			segmentsEntryIds, _segmentsAsahCache.getSegmentsEntryIds(userId));
+			interestTerms,
+			_segmentsInterestTermsAsahCache.getInterestTerms(userId));
 
 		Mockito.verify(
 			_portalCache, Mockito.times(1)
@@ -66,21 +67,21 @@ public class SegmentsAsahCacheTest {
 	}
 
 	@Test
-	public void testPutSegmentsEntryIds() {
+	public void testPutInterestTerms() {
 		String userId = RandomTestUtil.randomString();
 
-		long[] segmentsEntryIds = {
-			RandomTestUtil.randomLong(), RandomTestUtil.randomLong()
+		String[] interestTerms = {
+			RandomTestUtil.randomString(), RandomTestUtil.randomString()
 		};
 
 		String cacheKey = _generateCacheKey(userId);
 
-		_segmentsAsahCache.putSegmentsEntryIds(userId, segmentsEntryIds);
+		_segmentsInterestTermsAsahCache.putInterestTerms(userId, interestTerms);
 
 		Mockito.verify(
 			_portalCache, Mockito.times(1)
 		).put(
-			cacheKey, segmentsEntryIds, 0
+			cacheKey, interestTerms, 0
 		);
 	}
 
@@ -89,9 +90,9 @@ public class SegmentsAsahCacheTest {
 	}
 
 	@Mock
-	private PortalCache<String, long[]> _portalCache;
+	private PortalCache<String, String[]> _portalCache;
 
-	private final SegmentsAsahCache _segmentsAsahCache =
-		new SegmentsAsahCache();
+	private final SegmentsInterestTermsAsahCache
+		_segmentsInterestTermsAsahCache = new SegmentsInterestTermsAsahCache();
 
 }

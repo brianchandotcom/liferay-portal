@@ -37,8 +37,8 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 		),
 		@DDMFormRule(
 			actions = {
-				"setVisible('autocomplete', FALSE)",
-				"setValue('autocomplete', FALSE)"
+				"setValue('autocomplete', FALSE)",
+				"setVisible('autocomplete', FALSE)"
 			},
 			condition = "not(equals(getValue('displayStyle'), 'singleline'))"
 		),

@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
@@ -26,6 +25,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Leonardo Barros
@@ -93,13 +94,12 @@ public class DDMFormTemplateContextFactoryHelper {
 		Set<String> referencedFieldNames = new HashSet<>();
 
 		for (String ddmFormFieldName : ddmFormFieldNames) {
-			String ddmFormFieldNameParameter = StringPool.APOSTROPHE.concat(
-				ddmFormFieldName
-			).concat(
-				StringPool.APOSTROPHE
-			);
+			Pattern pattern = Pattern.compile(
+				String.format(".*('?%s'?).*", ddmFormFieldName));
 
-			if (expression.contains(ddmFormFieldNameParameter)) {
+			Matcher matcher = pattern.matcher(expression);
+
+			if (matcher.matches()) {
 				referencedFieldNames.add(ddmFormFieldName);
 			}
 		}

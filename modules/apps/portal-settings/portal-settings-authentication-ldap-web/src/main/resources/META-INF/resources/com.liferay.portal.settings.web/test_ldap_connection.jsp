@@ -30,11 +30,11 @@ if (credentials.equals(Portal.TEMP_OBFUSCATION_VALUE)) {
 	credentials = ldapServerConfiguration.securityCredential();
 }
 
-SafeLDAPContext safeLDAPContext = PortalLDAPUtil.getInstance().getSafeLDAPContext(themeDisplay.getCompanyId(), baseProviderURL, principal, credentials);
+SafeLdapContext safeLdapContext = PortalLDAPUtil.getInstance().getSafeLDAPContext(themeDisplay.getCompanyId(), baseProviderURL, principal, credentials);
 %>
 
 <c:choose>
-	<c:when test="<%= safeLDAPContext != null %>">
+	<c:when test="<%= safeLdapContext != null %>">
 		<liferay-ui:message key="liferay-has-successfully-connected-to-the-ldap-server" />
 	</c:when>
 	<c:otherwise>
@@ -43,7 +43,7 @@ SafeLDAPContext safeLDAPContext = PortalLDAPUtil.getInstance().getSafeLDAPContex
 </c:choose>
 
 <%
-if (safeLDAPContext != null) {
-	safeLDAPContext.close();
+if (safeLdapContext != null) {
+	safeLdapContext.close();
 }
 %>

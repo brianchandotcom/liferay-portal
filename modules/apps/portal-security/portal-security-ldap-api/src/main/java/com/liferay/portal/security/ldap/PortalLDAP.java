@@ -172,10 +172,10 @@ public interface PortalLDAP {
 			long ldapServerId, long companyId, Binding binding)
 		throws Exception;
 
-	public SafeLDAPContext getSafeLDAPContext(
+	public SafeLdapContext getSafeLDAPContext(
 		long ldapServerId, long companyId);
 
-	public SafeLDAPContext getSafeLDAPContext(
+	public SafeLdapContext getSafeLDAPContext(
 		long companyId, String providerURL, String principal,
 		String credentials);
 

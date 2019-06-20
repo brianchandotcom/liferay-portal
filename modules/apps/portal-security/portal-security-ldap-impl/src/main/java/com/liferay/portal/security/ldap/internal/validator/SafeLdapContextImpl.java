@@ -16,7 +16,7 @@ package com.liferay.portal.security.ldap.internal.validator;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.security.ldap.SafeLDAPContext;
+import com.liferay.portal.security.ldap.SafeLdapContext;
 import com.liferay.portal.security.ldap.util.LDAPUtil;
 import com.liferay.portal.security.ldap.validator.LDAPFilter;
 
@@ -42,9 +42,9 @@ import javax.naming.ldap.LdapContext;
 /**
  * @author Tomas Polesovsky
  */
-public class SafeLDAPContextImpl implements SafeLDAPContext {
+public class SafeLdapContextImpl implements SafeLdapContext {
 
-	public SafeLDAPContextImpl(LdapContext ldapContext) {
+	public SafeLdapContextImpl(LdapContext ldapContext) {
 		_ldapContext = ldapContext;
 	}
 
@@ -518,7 +518,7 @@ public class SafeLDAPContextImpl implements SafeLDAPContext {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SafeLDAPContextImpl.class);
+		SafeLdapContextImpl.class);
 
 	private final LdapContext _ldapContext;
 

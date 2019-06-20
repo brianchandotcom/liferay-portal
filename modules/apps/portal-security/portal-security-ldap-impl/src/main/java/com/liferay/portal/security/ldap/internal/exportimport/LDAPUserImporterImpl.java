@@ -63,7 +63,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.exportimport.UserImporter;
 import com.liferay.portal.security.ldap.ContactConverterKeys;
 import com.liferay.portal.security.ldap.PortalLDAP;
-import com.liferay.portal.security.ldap.SafeLDAPContext;
+import com.liferay.portal.security.ldap.SafeLdapContext;
 import com.liferay.portal.security.ldap.UserConverterKeys;
 import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration;
@@ -165,7 +165,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			String screenName)
 		throws Exception {
 
-		SafeLDAPContext safeLDAPContext = null;
+		SafeLdapContext safeLdapContext = null;
 
 		NamingEnumeration<SearchResult> enu = null;
 
@@ -174,10 +174,10 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				_ldapServerConfigurationProvider.getConfiguration(
 					companyId, ldapServerId);
 
-			safeLDAPContext = _portalLDAP.getSafeLDAPContext(
+			safeLdapContext = _portalLDAP.getSafeLDAPContext(
 				ldapServerId, companyId);
 
-			if (safeLDAPContext == null) {
+			if (safeLdapContext == null) {
 				_log.error("Unable to bind to the LDAP server");
 
 				return null;
@@ -209,7 +209,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 					String.valueOf(companyId), emailAddress, screenName
 				});
 
-			enu = safeLDAPContext.search(
+			enu = safeLdapContext.search(
 				LDAPUtil.asLdapName(ldapServerConfiguration.baseDN()),
 				authSearchLDAPFilter, searchControls);
 
@@ -221,11 +221,11 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				Binding binding = enu.nextElement();
 
 				Attributes attributes = _portalLDAP.getUserAttributes(
-					ldapServerId, companyId, safeLDAPContext,
+					ldapServerId, companyId, safeLdapContext,
 					LDAPUtil.asLdapName(binding.getNameInNamespace()));
 
 				return importUser(
-					ldapServerId, companyId, safeLDAPContext, attributes, null);
+					ldapServerId, companyId, safeLdapContext, attributes, null);
 			}
 
 			return null;
@@ -247,8 +247,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				enu.close();
 			}
 
-			if (safeLDAPContext != null) {
-				safeLDAPContext.close();
+			if (safeLdapContext != null) {
+				safeLdapContext.close();
 			}
 		}
 	}

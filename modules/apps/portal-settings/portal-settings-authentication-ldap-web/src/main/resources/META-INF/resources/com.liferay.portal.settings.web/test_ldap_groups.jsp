@@ -31,9 +31,9 @@ if (credentials.equals(Portal.TEMP_OBFUSCATION_VALUE)) {
 	credentials = ldapServerConfiguration.securityCredential();
 }
 
-SafeLDAPContext safeLDAPContext = PortalLDAPUtil.getInstance().getSafeLDAPContext(themeDisplay.getCompanyId(), baseProviderURL, principal, credentials);
+SafeLdapContext safeLdapContext = PortalLDAPUtil.getInstance().getSafeLDAPContext(themeDisplay.getCompanyId(), baseProviderURL, principal, credentials);
 
-if (safeLDAPContext == null) {
+if (safeLdapContext == null) {
 %>
 
 	<liferay-ui:message key="liferay-has-failed-to-connect-to-the-ldap-server" />
@@ -71,7 +71,7 @@ String[] attributeIds = StringUtil.split(StringUtil.merge(groupMappings.values()
 List<SearchResult> searchResults = new ArrayList<SearchResult>();
 
 try {
-	PortalLDAPUtil.getInstance().getGroups(themeDisplay.getCompanyId(), safeLDAPContext, new byte[0], 20, LDAPUtil.asLdapName(baseDN), LDAPFilterValidatorUtil.getInstance().validate(groupFilter), attributeIds, searchResults);
+	PortalLDAPUtil.getInstance().getGroups(themeDisplay.getCompanyId(), safeLdapContext, new byte[0], 20, LDAPUtil.asLdapName(baseDN), LDAPFilterValidatorUtil.getInstance().validate(groupFilter), attributeIds, searchResults);
 }
 catch (NameNotFoundException | InvalidNameException nnfe) {
 %>
@@ -112,7 +112,7 @@ catch (NameNotFoundException | InvalidNameException nnfe) {
 		if (attribute != null) {
 			LDAPFilter ldapFilter = LDAPFilterValidatorUtil.getInstance().validate(groupFilter).and(LDAPFilter.eq(groupMappings.getProperty("groupName"), name));
 
-			attribute = PortalLDAPUtil.getInstance().getMultivaluedAttribute(themeDisplay.getCompanyId(), safeLDAPContext, LDAPUtil.asLdapName(baseDN), ldapFilter, attribute);
+			attribute = PortalLDAPUtil.getInstance().getMultivaluedAttribute(themeDisplay.getCompanyId(), safeLdapContext, LDAPUtil.asLdapName(baseDN), ldapFilter, attribute);
 		}
 
 		if (counter == 0) {
@@ -188,7 +188,7 @@ if (showMissingAttributeMessage) {
 <%
 }
 
-if (safeLDAPContext != null) {
-	safeLDAPContext.close();
+if (safeLdapContext != null) {
+	safeLdapContext.close();
 }
 %>

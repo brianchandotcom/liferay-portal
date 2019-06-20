@@ -29,7 +29,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Tomas Polesovsky
  */
 @ProviderType
-public interface SafeLDAPContext extends LdapContext {
+public interface SafeLdapContext extends LdapContext {
 
 	public NamingEnumeration<SearchResult> search(
 			Name name, LDAPFilter ldapFilter, SearchControls searchControls)

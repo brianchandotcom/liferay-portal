@@ -32,9 +32,9 @@ if (credentials.equals(Portal.TEMP_OBFUSCATION_VALUE)) {
 
 }
 
-SafeLDAPContext safeLDAPContext = PortalLDAPUtil.getInstance().getSafeLDAPContext(themeDisplay.getCompanyId(), baseProviderURL, principal, credentials);
+SafeLdapContext safeLdapContext = PortalLDAPUtil.getInstance().getSafeLDAPContext(themeDisplay.getCompanyId(), baseProviderURL, principal, credentials);
 
-if (safeLDAPContext == null) {
+if (safeLdapContext == null) {
 %>
 
 	<liferay-ui:message key="liferay-has-failed-to-connect-to-the-ldap-server" />
@@ -83,7 +83,7 @@ List<SearchResult> searchResults = new ArrayList<SearchResult>();
 
 if (Validator.isNotNull(userFilter) && !userFilter.equals(StringPool.STAR)) {
 	try {
-		PortalLDAPUtil.getInstance().getUsers(themeDisplay.getCompanyId(), safeLDAPContext, new byte[0], 20, LDAPUtil.asLdapName(baseDN), LDAPFilterValidatorUtil.getInstance().validate(userFilter), attributeIds, searchResults);
+		PortalLDAPUtil.getInstance().getUsers(themeDisplay.getCompanyId(), safeLdapContext, new byte[0], 20, LDAPUtil.asLdapName(baseDN), LDAPFilterValidatorUtil.getInstance().validate(userFilter), attributeIds, searchResults);
 	}
 	catch (NameNotFoundException | InvalidNameException nnfe) {
 %>
@@ -199,7 +199,7 @@ if (showMissingAttributeMessage) {
 <%
 }
 
-if (safeLDAPContext != null) {
-	safeLDAPContext.close();
+if (safeLdapContext != null) {
+	safeLdapContext.close();
 }
 %>

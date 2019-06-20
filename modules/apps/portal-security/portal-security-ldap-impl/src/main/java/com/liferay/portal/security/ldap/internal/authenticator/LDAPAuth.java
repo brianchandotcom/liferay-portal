@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ldap.PortalLDAP;
-import com.liferay.portal.security.ldap.SafeLDAPContext;
+import com.liferay.portal.security.ldap.SafeLdapContext;
 import com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration;
 import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration;
@@ -283,10 +283,10 @@ public class LDAPAuth implements Authenticator {
 			String screenName, long userId, String password)
 		throws Exception {
 
-		SafeLDAPContext safeLDAPContext = _portalLDAP.getSafeLDAPContext(
+		SafeLdapContext safeLdapContext = _portalLDAP.getSafeLDAPContext(
 			ldapServerId, companyId);
 
-		if (safeLDAPContext == null) {
+		if (safeLdapContext == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
@@ -337,7 +337,7 @@ public class LDAPAuth implements Authenticator {
 				SearchControls.SUBTREE_SCOPE, 1, 0,
 				new String[] {userMappingsScreenName}, false, false);
 
-			enu = safeLDAPContext.search(
+			enu = safeLdapContext.search(
 				baseDNName, ldapFilter, searchControls);
 
 			if (!enu.hasMoreElements()) {
@@ -358,13 +358,13 @@ public class LDAPAuth implements Authenticator {
 			String fullUserDN = searchResult.getNameInNamespace();
 
 			Attributes attributes = _portalLDAP.getUserAttributes(
-				ldapServerId, companyId, safeLDAPContext,
+				ldapServerId, companyId, safeLdapContext,
 				LDAPUtil.asLdapName(fullUserDN));
 
 			// Authenticate
 
 			LDAPAuthResult ldapAuthResult = authenticate(
-				safeLDAPContext, companyId, attributes, fullUserDN, password);
+				safeLdapContext, companyId, attributes, fullUserDN, password);
 
 			// Get user or create from LDAP
 
@@ -373,7 +373,7 @@ public class LDAPAuth implements Authenticator {
 			}
 
 			User user = _ldapUserImporter.importUser(
-				ldapServerId, companyId, safeLDAPContext, attributes, password);
+				ldapServerId, companyId, safeLdapContext, attributes, password);
 
 			// Process LDAP failure codes
 
@@ -414,7 +414,7 @@ public class LDAPAuth implements Authenticator {
 					sb.append(", company ");
 					sb.append(companyId);
 					sb.append(", and LDAP context ");
-					sb.append(safeLDAPContext);
+					sb.append(safeLdapContext);
 					sb.append(": ");
 					sb.append(errorMessage);
 
@@ -448,7 +448,7 @@ public class LDAPAuth implements Authenticator {
 				enu.close();
 			}
 
-			safeLDAPContext.close();
+			safeLdapContext.close();
 		}
 
 		return SUCCESS;

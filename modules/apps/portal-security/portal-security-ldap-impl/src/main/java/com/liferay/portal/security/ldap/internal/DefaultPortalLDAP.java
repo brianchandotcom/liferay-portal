@@ -32,12 +32,12 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ldap.PortalLDAP;
-import com.liferay.portal.security.ldap.SafeLDAPContext;
+import com.liferay.portal.security.ldap.SafeLdapContext;
 import com.liferay.portal.security.ldap.UserConverterKeys;
 import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration;
 import com.liferay.portal.security.ldap.configuration.SystemLDAPConfiguration;
-import com.liferay.portal.security.ldap.internal.validator.SafeLDAPContextImpl;
+import com.liferay.portal.security.ldap.internal.validator.SafeLdapContextImpl;
 import com.liferay.portal.security.ldap.util.LDAPUtil;
 import com.liferay.portal.security.ldap.validator.LDAPFilter;
 import com.liferay.portal.security.ldap.validator.LDAPFilterValidator;
@@ -155,13 +155,13 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
 
-		SafeLDAPContext safeLDAPContext = getSafeLDAPContext(
+		SafeLdapContext safeLdapContext = getSafeLDAPContext(
 			ldapServerId, companyId);
 
 		NamingEnumeration<SearchResult> enu = null;
 
 		try {
-			if (safeLDAPContext == null) {
+			if (safeLdapContext == null) {
 				return null;
 			}
 
@@ -183,7 +183,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			SearchControls searchControls = new SearchControls(
 				SearchControls.SUBTREE_SCOPE, 1, 0, null, false, false);
 
-			enu = safeLDAPContext.search(
+			enu = safeLdapContext.search(
 				LDAPUtil.asLdapName(ldapServerConfiguration.groupsDN()),
 				ldapFilter, searchControls);
 
@@ -198,8 +198,8 @@ public class DefaultPortalLDAP implements PortalLDAP {
 				enu.close();
 			}
 
-			if (safeLDAPContext != null) {
-				safeLDAPContext.close();
+			if (safeLdapContext != null) {
+				safeLdapContext.close();
 			}
 		}
 	}
@@ -446,7 +446,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 
 	@Override
 	public Attribute getMultivaluedAttribute(
-			long companyId, LdapContext safeLDAPContext, Name baseDN,
+			long companyId, LdapContext safeLdapContext, Name baseDN,
 			LDAPFilter ldapFilter, Attribute attribute)
 		throws Exception {
 
@@ -465,7 +465,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			List<SearchResult> searchResults = new ArrayList<>();
 
 			searchLDAP(
-				companyId, safeLDAPContext, new byte[0], 0, baseDN, ldapFilter,
+				companyId, safeLdapContext, new byte[0], 0, baseDN, ldapFilter,
 				attributeIds, searchResults);
 
 			if (searchResults.size() != 1) {
@@ -568,7 +568,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 	}
 
 	@Override
-	public SafeLDAPContext getSafeLDAPContext(
+	public SafeLdapContext getSafeLDAPContext(
 		long ldapServerId, long companyId) {
 
 		LDAPServerConfiguration ldapServerConfiguration =
@@ -582,7 +582,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 	}
 
 	@Override
-	public SafeLDAPContext getSafeLDAPContext(
+	public SafeLdapContext getSafeLDAPContext(
 		long companyId, String providerURL, String principal,
 		String credentials) {
 
@@ -628,7 +628,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 		}
 
 		try {
-			return new SafeLDAPContextImpl(
+			return new SafeLdapContextImpl(
 				new InitialLdapContext(environmentProperties, null));
 		}
 		catch (Exception e) {
@@ -656,13 +656,13 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			String emailAddress, boolean checkOriginalEmail)
 		throws Exception {
 
-		SafeLDAPContext safeLDAPContext = getSafeLDAPContext(
+		SafeLdapContext safeLdapContext = getSafeLDAPContext(
 			ldapServerId, companyId);
 
 		NamingEnumeration<SearchResult> enu = null;
 
 		try {
-			if (safeLDAPContext == null) {
+			if (safeLdapContext == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
@@ -715,7 +715,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			SearchControls searchControls = new SearchControls(
 				SearchControls.SUBTREE_SCOPE, 1, 0, null, false, false);
 
-			enu = safeLDAPContext.search(
+			enu = safeLdapContext.search(
 				LDAPUtil.asLdapName(ldapServerConfiguration.baseDN()),
 				ldapFilter, searchControls);
 
@@ -752,8 +752,8 @@ public class DefaultPortalLDAP implements PortalLDAP {
 				enu.close();
 			}
 
-			if (safeLDAPContext != null) {
-				safeLDAPContext.close();
+			if (safeLdapContext != null) {
+				safeLdapContext.close();
 			}
 		}
 	}
@@ -984,13 +984,13 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			Name userDNName)
 		throws Exception {
 
-		SafeLDAPContext safeLDAPContext = getSafeLDAPContext(
+		SafeLdapContext safeLdapContext = getSafeLDAPContext(
 			ldapServerId, companyId);
 
 		NamingEnumeration<SearchResult> enu = null;
 
 		try {
-			if (safeLDAPContext == null) {
+			if (safeLdapContext == null) {
 				return false;
 			}
 
@@ -1003,7 +1003,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			SearchControls searchControls = new SearchControls(
 				SearchControls.SUBTREE_SCOPE, 1, 0, null, false, false);
 
-			enu = safeLDAPContext.search(
+			enu = safeLdapContext.search(
 				groupDNName, ldapFilter, searchControls);
 
 			if (enu.hasMoreElements()) {
@@ -1024,8 +1024,8 @@ public class DefaultPortalLDAP implements PortalLDAP {
 				enu.close();
 			}
 
-			if (safeLDAPContext != null) {
-				safeLDAPContext.close();
+			if (safeLdapContext != null) {
+				safeLdapContext.close();
 			}
 		}
 
@@ -1053,13 +1053,13 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			Name userDNName)
 		throws Exception {
 
-		SafeLDAPContext safeLDAPContext = getSafeLDAPContext(
+		SafeLdapContext safeLdapContext = getSafeLDAPContext(
 			ldapServerId, companyId);
 
 		NamingEnumeration<SearchResult> enu = null;
 
 		try {
-			if (safeLDAPContext == null) {
+			if (safeLdapContext == null) {
 				return false;
 			}
 
@@ -1072,7 +1072,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			SearchControls searchControls = new SearchControls(
 				SearchControls.SUBTREE_SCOPE, 1, 0, null, false, false);
 
-			enu = safeLDAPContext.search(
+			enu = safeLdapContext.search(
 				userDNName, ldapFilter, searchControls);
 
 			if (enu.hasMoreElements()) {
@@ -1093,8 +1093,8 @@ public class DefaultPortalLDAP implements PortalLDAP {
 				enu.close();
 			}
 
-			if (safeLDAPContext != null) {
-				safeLDAPContext.close();
+			if (safeLdapContext != null) {
+				safeLdapContext.close();
 			}
 		}
 
@@ -1152,8 +1152,8 @@ public class DefaultPortalLDAP implements PortalLDAP {
 						});
 				}
 
-				if (ldapContext instanceof SafeLDAPContext) {
-					enu = ((SafeLDAPContext)ldapContext).search(
+				if (ldapContext instanceof SafeLdapContext) {
+					enu = ((SafeLdapContext)ldapContext).search(
 						baseDNName, ldapFilter, searchControls);
 				}
 				else {
@@ -1176,8 +1176,8 @@ public class DefaultPortalLDAP implements PortalLDAP {
 
 			ldapContext.setRequestControls(null);
 
-			if (ldapContext instanceof SafeLDAPContext) {
-				enu = ((SafeLDAPContext)ldapContext).search(
+			if (ldapContext instanceof SafeLdapContext) {
+				enu = ((SafeLdapContext)ldapContext).search(
 					baseDNName, ldapFilter, searchControls);
 			}
 			else {

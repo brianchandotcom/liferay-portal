@@ -20,7 +20,7 @@ import com.liferay.asset.auto.tagger.opennlp.internal.configuration.OpenNLPDocum
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.info.extractor.TextExtractor;
-import com.liferay.info.extractor.TextExtractorProvider;
+import com.liferay.info.extractor.TextExtractorTracker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -50,7 +50,7 @@ public class OpenNLPTextAssetAutoTagProvider
 		try {
 			if (_isEnabled(assetEntry)) {
 				TextExtractor textExtractor =
-					_textExtractorProvider.getTextExtractor(
+					_textExtractorTracker.getTextExtractor(
 						assetEntry.getClassName());
 
 				if (textExtractor != null) {
@@ -101,6 +101,6 @@ public class OpenNLPTextAssetAutoTagProvider
 	private OpenNLPDocumentAssetAutoTagger _openNLPDocumentAssetAutoTagger;
 
 	@Reference
-	private TextExtractorProvider _textExtractorProvider;
+	private TextExtractorTracker _textExtractorTracker;
 
 }

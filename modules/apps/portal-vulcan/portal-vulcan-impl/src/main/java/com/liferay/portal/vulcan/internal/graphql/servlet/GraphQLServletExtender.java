@@ -25,13 +25,17 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLName;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLName;
+import graphql.annotations.directives.DirectiveWirer;
+import graphql.annotations.directives.DirectiveWiringMapRetriever;
 import graphql.annotations.processor.ProcessingElementsContainer;
+import graphql.annotations.processor.exceptions.CannotCastMemberException;
+import graphql.annotations.processor.exceptions.GraphQLAnnotationsException;
 import graphql.annotations.processor.graphQLProcessors.GraphQLInputProcessor;
 import graphql.annotations.processor.graphQLProcessors.GraphQLOutputProcessor;
 import graphql.annotations.processor.retrievers.GraphQLExtensionsHandler;
@@ -42,6 +46,7 @@ import graphql.annotations.processor.retrievers.GraphQLTypeRetriever;
 import graphql.annotations.processor.retrievers.fieldBuilders.ArgumentBuilder;
 import graphql.annotations.processor.retrievers.fieldBuilders.DeprecateBuilder;
 import graphql.annotations.processor.retrievers.fieldBuilders.DescriptionBuilder;
+import graphql.annotations.processor.retrievers.fieldBuilders.DirectivesBuilder;
 import graphql.annotations.processor.retrievers.fieldBuilders.method.MethodNameBuilder;
 import graphql.annotations.processor.retrievers.fieldBuilders.method.MethodTypeBuilder;
 import graphql.annotations.processor.searchAlgorithms.BreadthFirstSearch;
@@ -67,7 +72,9 @@ import graphql.schema.CoercingParseValueException;
 import graphql.schema.CoercingSerializeException;
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
+import graphql.schema.GraphQLArgument;
 import graphql.schema.GraphQLFieldDefinition;
+import graphql.schema.GraphQLInputType;
 import graphql.schema.GraphQLObjectType;
 import graphql.schema.GraphQLOutputType;
 import graphql.schema.GraphQLScalarType;
@@ -77,10 +84,12 @@ import graphql.schema.GraphQLType;
 import graphql.servlet.GraphQLContext;
 import graphql.servlet.SimpleGraphQLHttpServlet;
 
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
@@ -90,9 +99,11 @@ import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Dictionary;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -147,9 +158,9 @@ public class GraphQLServletExtender {
 
 			};
 
-		BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch(
+		BreadthFirstSearch breadthFirstSearch = new LiferayBreadthFirstSearch(
 			graphQLObjectInfoRetriever);
-		ParentalSearch parentalSearch = new ParentalSearch(
+		ParentalSearch parentalSearch = new LiferayParentalSearch(
 			graphQLObjectInfoRetriever);
 
 		GraphQLTypeRetriever graphQLTypeRetriever = new GraphQLTypeRetriever() {
@@ -447,6 +458,17 @@ public class GraphQLServletExtender {
 		return Integer.valueOf(version.replaceAll("\\D", ""));
 	}
 
+	private Boolean _isGraphQLField(AnnotatedElement annotatedElement) {
+		GraphQLField graphQLField = annotatedElement.getAnnotation(
+			GraphQLField.class);
+
+		if (graphQLField == null) {
+			return null;
+		}
+
+		return graphQLField.value();
+	}
+
 	private static final GraphQLScalarType _dateGraphQLScalarType =
 		new GraphQLScalarType(
 			"Date", "An RFC-3339 compliant date time scalar",
@@ -630,6 +652,144 @@ public class GraphQLServletExtender {
 
 	}
 
+	private class LiferayArgumentBuilder extends ArgumentBuilder {
+
+		public LiferayArgumentBuilder(
+			Method method, TypeFunction typeFunction,
+			GraphQLFieldDefinition.Builder builder,
+			ProcessingElementsContainer processingElementsContainer,
+			GraphQLOutputType graphQLOutputType) {
+
+			super(
+				method, typeFunction, builder, processingElementsContainer,
+				graphQLOutputType);
+
+			_method = method;
+			_typeFunction = typeFunction;
+			_processingElementsContainer = processingElementsContainer;
+		}
+
+		@Override
+		public List<GraphQLArgument> build() {
+			return Arrays.stream(
+				_method.getParameters()
+			).filter(
+				parameter -> !DataFetchingEnvironment.class.isAssignableFrom(
+					parameter.getType())
+			).map(
+				parameter -> _getArgument(
+					parameter,
+					(GraphQLInputType)_typeFunction.buildType(
+						true, parameter.getType(), parameter.getAnnotatedType(),
+						_processingElementsContainer))
+			).collect(
+				Collectors.toList()
+			);
+		}
+
+		private GraphQLArgument _getArgument(
+				Parameter parameter, GraphQLInputType graphQLInputType)
+			throws GraphQLAnnotationsException {
+
+			GraphQLArgument.Builder builder = GraphQLArgument.newArgument();
+
+			builder.type(graphQLInputType);
+
+			GraphQLName graphQLName = parameter.getAnnotation(
+				GraphQLName.class);
+
+			if (graphQLName != null) {
+				builder.name(NamingKit.toGraphqlName(graphQLName.value()));
+			}
+			else {
+				builder.name(NamingKit.toGraphqlName(parameter.getName()));
+			}
+
+			builder.withDirectives(
+				new DirectivesBuilder(
+					parameter, _processingElementsContainer
+				).build());
+
+			return (GraphQLArgument)new DirectiveWirer().wire(
+				builder.build(),
+				new DirectiveWiringMapRetriever().getDirectiveWiringMap(
+					parameter, _processingElementsContainer),
+				_processingElementsContainer.getCodeRegistryBuilder(),
+				graphQLInputType.getName());
+		}
+
+		private Method _method;
+		private final ProcessingElementsContainer _processingElementsContainer;
+		private final TypeFunction _typeFunction;
+
+	}
+
+	private class LiferayBreadthFirstSearch extends BreadthFirstSearch {
+
+		@Override
+		public boolean isFound(Member member) throws CannotCastMemberException {
+			Method method = _toMethod(member);
+
+			List<Class<?>> queue = new LinkedList<>();
+
+			Class<?>[] parameterTypes = method.getParameterTypes();
+
+			queue.add(method.getDeclaringClass());
+
+			do {
+				Class<?> clazz = queue.remove(0);
+
+				try {
+					method = clazz.getDeclaredMethod(
+						method.getName(), parameterTypes);
+
+					Boolean field = _isGraphQLField(method);
+
+					if (field != null) {
+						return field;
+					}
+				}
+				catch (NoSuchMethodException nsme) {
+					throw new RuntimeException(nsme);
+				}
+
+				Boolean field = _isGraphQLField(clazz);
+
+				if (field != null) {
+					return field;
+				}
+
+				Collections.addAll(queue, clazz.getInterfaces());
+
+				Class<?> nextClass = clazz.getSuperclass();
+
+				if (nextClass != null) {
+					queue.add(nextClass);
+				}
+			}
+			while (!queue.isEmpty());
+
+			return false;
+		}
+
+		private LiferayBreadthFirstSearch(
+			GraphQLObjectInfoRetriever graphQLObjectInfoRetriever) {
+
+			super(graphQLObjectInfoRetriever);
+		}
+
+		private Method _toMethod(Member member)
+			throws CannotCastMemberException {
+
+			if (!(member instanceof Method)) {
+				throw new CannotCastMemberException(member.getName(), "Method");
+			}
+
+			return (Method)member;
+		}
+
+	}
+
 	private class LiferayGraphQLFieldRetriever extends GraphQLFieldRetriever {
 
 		@Override
@@ -647,7 +807,7 @@ public class GraphQLServletExtender {
 			GraphQLOutputType graphQLOutputType =
 				(GraphQLOutputType)methodTypeBuilder.build();
 
-			ArgumentBuilder argumentBuilder = new ArgumentBuilder(
+			ArgumentBuilder argumentBuilder = new LiferayArgumentBuilder(
 				method, processingElementsContainer.getDefaultTypeFunction(),
 				builder, processingElementsContainer, graphQLOutputType);
 
@@ -692,6 +852,50 @@ public class GraphQLServletExtender {
 		}
 
 		private final Method _method;
+
+	}
+
+	private class LiferayParentalSearch extends ParentalSearch {
+
+		public LiferayParentalSearch(
+			GraphQLObjectInfoRetriever graphQLObjectInfoRetriever) {
+
+			super(graphQLObjectInfoRetriever);
+		}
+
+		@Override
+		public boolean isFound(Member member) throws CannotCastMemberException {
+			Field field = _toField(member);
+
+			Boolean isField = _isGraphQLField(field);
+
+			if (isField != null) {
+				return isField;
+			}
+
+			Class<?> clazz = field.getDeclaringClass();
+
+			do {
+				isField = _isGraphQLField(clazz);
+
+				if (isField != null) {
+					return isField;
+				}
+
+				clazz = clazz.getSuperclass();
+			}
+			while (clazz != null);
+
+			return false;
+		}
+
+		private Field _toField(Member member) throws CannotCastMemberException {
+			if (!(member instanceof Field)) {
+				throw new CannotCastMemberException(member.getName(), "Field");
+			}
+
+			return (Field)member;
+		}
 
 	}
 

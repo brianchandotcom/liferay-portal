@@ -627,22 +627,17 @@ public class DefaultPortalLDAP implements PortalLDAP {
 					environmentProperties, null, Context.SECURITY_CREDENTIALS));
 		}
 
-		LdapContext ldapContext = null;
-
 		try {
-			ldapContext = new InitialLdapContext(environmentProperties, null);
+			return new SafeLDAPContextImpl(
+				new InitialLdapContext(environmentProperties, null));
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to bind to the LDAP server", e);
 			}
-		}
 
-		if (ldapContext == null) {
 			return null;
 		}
-
-		return new SafeLDAPContextImpl(ldapContext);
 	}
 
 	@Override

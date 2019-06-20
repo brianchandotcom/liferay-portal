@@ -287,6 +287,16 @@ tasks.withType(FormatSourceTask) {
 _createSetUpLibTasks(libDependenciesMap)
 _createSetUpPortalToolTasks()
 
+private String _camelCase(String dirName) {
+	String suffix = dirName.replaceAll(/\.(\w)/) {
+		String s = it[1]
+
+		s.toUpperCase()
+	}
+
+	return StringUtil.capitalize(suffix)
+}
+
 private void _createSetUpLibTasks(Map<File, Properties> libDependenciesMap) {
 	libDependenciesMap.each {
 		File dir, Properties properties ->
@@ -331,9 +341,7 @@ private void _createSetUpPortalToolTasks() {
 
 		File portalToolDir = ivyXmlFile.parentFile
 
-		String portalToolSuffix = _getPortalToolSuffix(portalToolDir.name)
-
-		CopyIvyDependenciesTask copyIvyDependenciesTask = tasks.create(name: "setUp" + portalToolSuffix, type: CopyIvyDependenciesTask) {
+		CopyIvyDependenciesTask copyIvyDependenciesTask = tasks.create(name: "setUp" + _camelCase(portalToolDir.name), type: CopyIvyDependenciesTask) {
 			configuration.exclude group: "com.liferay.portal"
 
 			dependencyTransformClosure = {
@@ -364,14 +372,4 @@ private void _createSetUpPortalToolTasks() {
 
 		setUpPortalTools.dependsOn copyIvyDependenciesTask
 	}
-}
-
-private String _getPortalToolSuffix(String name) {
-	String suffix = name.replaceAll(/\.(\w)/) {
-		String s = it[1]
-
-		s.toUpperCase()
-	}
-
-	return StringUtil.capitalize(suffix)
 }

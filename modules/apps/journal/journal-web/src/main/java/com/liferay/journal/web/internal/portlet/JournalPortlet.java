@@ -53,27 +53,19 @@ import com.liferay.journal.exception.NoSuchFeedException;
 import com.liferay.journal.exception.NoSuchFolderException;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
-import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.journal.web.internal.util.JournalDDMTemplateUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.diff.CompareVersionsException;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
 import com.liferay.trash.util.TrashWebKeys;
 
@@ -83,18 +75,11 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.Portlet;
-import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequestDispatcher;
-import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -200,68 +185,7 @@ public class JournalPortlet extends MVCPortlet {
 		resourceRequest.setAttribute(
 			JournalWebConfiguration.class.getName(), _journalWebConfiguration);
 
-		String resourceID = GetterUtil.getString(
-			resourceRequest.getResourceID());
-
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			resourceRequest);
-
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(resourceResponse);
-
-		if (resourceID.equals("compareVersions")) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)resourceRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			long groupId = ParamUtil.getLong(resourceRequest, "groupId");
-			String articleId = ParamUtil.getString(
-				resourceRequest, "articleId");
-			double sourceVersion = ParamUtil.getDouble(
-				resourceRequest, "filterSourceVersion");
-			double targetVersion = ParamUtil.getDouble(
-				resourceRequest, "filterTargetVersion");
-			String languageId = ParamUtil.getString(
-				resourceRequest, "languageId");
-
-			String diffHtmlResults = null;
-
-			try {
-				diffHtmlResults = _journalHelper.diffHtml(
-					groupId, articleId, sourceVersion, targetVersion,
-					languageId,
-					new PortletRequestModel(resourceRequest, resourceResponse),
-					themeDisplay);
-			}
-			catch (CompareVersionsException cve) {
-				resourceRequest.setAttribute(
-					WebKeys.DIFF_VERSION, cve.getVersion());
-			}
-			catch (Exception e) {
-				try {
-					_portal.sendError(
-						e, httpServletRequest, httpServletResponse);
-				}
-				catch (ServletException se) {
-				}
-			}
-
-			resourceRequest.setAttribute(
-				WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
-
-			PortletSession portletSession = resourceRequest.getPortletSession();
-
-			PortletContext portletContext = portletSession.getPortletContext();
-
-			PortletRequestDispatcher portletRequestDispatcher =
-				portletContext.getRequestDispatcher(
-					"/compare_versions_diff_html.jsp");
-
-			portletRequestDispatcher.include(resourceRequest, resourceResponse);
-		}
-		else {
-			super.serveResource(resourceRequest, resourceResponse);
-		}
+		super.serveResource(resourceRequest, resourceResponse);
 	}
 
 	@Activate
@@ -391,14 +315,7 @@ public class JournalPortlet extends MVCPortlet {
 
 	private volatile JournalFileUploadsConfiguration
 		_journalFileUploadsConfiguration;
-
-	@Reference
-	private JournalHelper _journalHelper;
-
 	private volatile JournalWebConfiguration _journalWebConfiguration;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private TrashHelper _trashHelper;

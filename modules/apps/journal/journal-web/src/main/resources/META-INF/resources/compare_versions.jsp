@@ -43,7 +43,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "compare-versions"));
 	<portlet:param name="articleId" value="<%= articleId %>" />
 </liferay-portlet:renderURL>
 
-<liferay-portlet:resourceURL id="compareVersions" varImpl="resourceURL">
+<liferay-portlet:resourceURL id="/journal/compare_versions" varImpl="resourceURL">
 	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="articleId" value="<%= articleId %>" />

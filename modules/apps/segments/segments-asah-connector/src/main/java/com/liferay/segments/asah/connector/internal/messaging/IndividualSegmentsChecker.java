@@ -24,18 +24,14 @@ import com.liferay.portal.kernel.model.UserModel;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.asah.connector.internal.cache.SegmentsEntryIdsAsahCache;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClient;
-import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientImpl;
-import com.liferay.segments.asah.connector.internal.client.JSONWebServiceClient;
+import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientUtil;
 import com.liferay.segments.asah.connector.internal.client.model.Individual;
 import com.liferay.segments.asah.connector.internal.client.model.IndividualSegment;
 import com.liferay.segments.asah.connector.internal.client.model.Results;
@@ -55,8 +51,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import javax.portlet.PortletPreferences;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -68,7 +62,7 @@ public class IndividualSegmentsChecker {
 
 	public void checkIndividualSegments() {
 		Optional<AsahFaroBackendClient> asahFaroBackendClientOptional =
-			_createAsahFaroBackendClient();
+			_asahFaroBackendClientUtil.createAsahFaroBackendClient();
 
 		if (!asahFaroBackendClientOptional.isPresent()) {
 			return;
@@ -91,7 +85,7 @@ public class IndividualSegmentsChecker {
 
 		if (_asahFaroBackendClient == null) {
 			Optional<AsahFaroBackendClient> asahFaroBackendClientOptional =
-				_createAsahFaroBackendClient();
+				_asahFaroBackendClientUtil.createAsahFaroBackendClient();
 
 			if (!asahFaroBackendClientOptional.isPresent()) {
 				return;
@@ -300,40 +294,6 @@ public class IndividualSegmentsChecker {
 		}
 	}
 
-	private Optional<AsahFaroBackendClient> _createAsahFaroBackendClient() {
-		Company company = _companyLocalService.fetchCompany(
-			_portal.getDefaultCompanyId());
-
-		PortletPreferences portletPreferences =
-			_portalPreferencesLocalService.getPreferences(
-				company.getCompanyId(), PortletKeys.PREFS_OWNER_TYPE_COMPANY);
-
-		String asahFaroBackendDataSourceId = GetterUtil.getString(
-			portletPreferences.getValue("liferayAnalyticsDataSourceId", null));
-		String asahFaroBackendSecuritySignature = GetterUtil.getString(
-			portletPreferences.getValue(
-				"liferayAnalyticsFaroBackendSecuritySignature", null));
-		String asahFaroBackendURL = GetterUtil.getString(
-			portletPreferences.getValue(
-				"liferayAnalyticsFaroBackendURL", null));
-
-		if (Validator.isNull(asahFaroBackendDataSourceId) ||
-			Validator.isNull(asahFaroBackendSecuritySignature) ||
-			Validator.isNull(asahFaroBackendURL)) {
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Unable to configure Asah Faro backend client");
-			}
-
-			return Optional.empty();
-		}
-
-		return Optional.of(
-			new AsahFaroBackendClientImpl(
-				_jsonWebServiceClient, asahFaroBackendDataSourceId,
-				asahFaroBackendSecuritySignature, asahFaroBackendURL));
-	}
-
 	private ServiceContext _getServiceContext() throws PortalException {
 		if (_serviceContext != null) {
 			return _serviceContext;
@@ -398,13 +358,13 @@ public class IndividualSegmentsChecker {
 	private AsahFaroBackendClient _asahFaroBackendClient;
 
 	@Reference
+	private AsahFaroBackendClientUtil _asahFaroBackendClientUtil;
+
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private JSONWebServiceClient _jsonWebServiceClient;
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;

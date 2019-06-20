@@ -167,10 +167,20 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text>
-								<clay:dropdown-actions
-									defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
-									dropdownItems="<%= trashDisplayContext.getTrashEntryActionDropdownItems(trashEntry) %>"
-								/>
+								<c:choose>
+									<c:when test="<%= trashEntry.getRootEntry() == null %>">
+										<clay:dropdown-actions
+											defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
+											dropdownItems="<%= trashDisplayContext.getTrashEntryActionDropdownItems(trashEntry) %>"
+										/>
+									</c:when>
+									<c:otherwise>
+										<clay:dropdown-actions
+											defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
+											dropdownItems="<%= trashDisplayContext.getTrashViewContentActionDropdownItems(trashRenderer.getClassName(), trashRenderer.getClassPK()) %>"
+										/>
+									</c:otherwise>
+								</c:choose>
 							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:when test="<%= trashDisplayContext.isIconView() %>">
@@ -249,10 +259,20 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 							/>
 
 							<liferay-ui:search-container-column-text>
-								<clay:dropdown-actions
-									defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
-									dropdownItems="<%= trashDisplayContext.getTrashEntryActionDropdownItems(trashEntry) %>"
-								/>
+								<c:choose>
+									<c:when test="<%= trashEntry.getRootEntry() == null %>">
+										<clay:dropdown-actions
+											defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
+											dropdownItems="<%= trashDisplayContext.getTrashEntryActionDropdownItems(trashEntry) %>"
+										/>
+									</c:when>
+									<c:otherwise>
+										<clay:dropdown-actions
+											defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
+											dropdownItems="<%= trashDisplayContext.getTrashViewContentActionDropdownItems(trashRenderer.getClassName(), trashRenderer.getClassPK()) %>"
+										/>
+									</c:otherwise>
+								</c:choose>
 							</liferay-ui:search-container-column-text>
 						</c:when>
 					</c:choose>

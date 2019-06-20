@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.web.internal.constants.TrashWebKeys;
 import com.liferay.trash.web.internal.servlet.taglib.util.TrashEntryActionDropdownItemsProvider;
+import com.liferay.trash.web.internal.servlet.taglib.util.TrashViewContentActionDropdownItemsProvider;
 
 import java.util.Collections;
 import java.util.List;
@@ -58,13 +59,25 @@ public class TrashEntryVerticalCard extends BaseVerticalCard {
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		try {
-			TrashEntryActionDropdownItemsProvider
-				trashEntryActionDropdownItemsProvider =
-					new TrashEntryActionDropdownItemsProvider(
-						_liferayPortletRequest, _liferayPortletResponse,
-						_trashEntry);
+			if (_trashEntry.getRootEntry() == null) {
+				TrashEntryActionDropdownItemsProvider
+					trashEntryActionDropdownItemsProvider =
+						new TrashEntryActionDropdownItemsProvider(
+							_liferayPortletRequest, _liferayPortletResponse,
+							_trashEntry);
 
-			return trashEntryActionDropdownItemsProvider.
+				return trashEntryActionDropdownItemsProvider.
+					getActionDropdownItems();
+			}
+
+			TrashViewContentActionDropdownItemsProvider
+				trashViewContentActionDropdownItemsProvider =
+					new TrashViewContentActionDropdownItemsProvider(
+						_liferayPortletRequest, _liferayPortletResponse,
+						_trashRenderer.getClassName(),
+						_trashRenderer.getClassPK());
+
+			return trashViewContentActionDropdownItemsProvider.
 				getActionDropdownItems();
 		}
 		catch (Exception e) {

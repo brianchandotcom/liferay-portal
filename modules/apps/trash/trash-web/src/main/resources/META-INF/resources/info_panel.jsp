@@ -46,7 +46,7 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 								<c:otherwise>
 									<clay:dropdown-actions
 										defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
-										dropdownItems="<%= trashDisplayContext.getTrashContainerActionDropdownItems(trashEntry) %>"
+										dropdownItems="<%= trashDisplayContext.getTrashViewContentActionDropdownItems(trashRenderer.getClassName(), trashRenderer.getClassPK()) %>"
 									/>
 								</c:otherwise>
 							</c:choose>

@@ -59,7 +59,8 @@ page import="com.liferay.trash.web.internal.display.context.TrashDisplayContext"
 page import="com.liferay.trash.web.internal.display.context.TrashManagementToolbarDisplayContext" %><%@
 page import="com.liferay.trash.web.internal.servlet.taglib.clay.TrashContentHorizontalCard" %><%@
 page import="com.liferay.trash.web.internal.servlet.taglib.clay.TrashContentVerticalCard" %><%@
-page import="com.liferay.trash.web.internal.servlet.taglib.clay.TrashEntryVerticalCard" %>
+page import="com.liferay.trash.web.internal.servlet.taglib.clay.TrashEntryVerticalCard" %><%@
+page import="com.liferay.trash.web.internal.servlet.taglib.util.TrashContainerActionDropdownItemsProvider" %>
 
 <%@ page import="java.text.Format" %>
 

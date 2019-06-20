@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ContainerModel;
-import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -50,8 +49,8 @@ import com.liferay.trash.util.comparator.EntryCreateDateComparator;
 import com.liferay.trash.web.internal.constants.TrashWebKeys;
 import com.liferay.trash.web.internal.search.EntrySearch;
 import com.liferay.trash.web.internal.search.EntrySearchTerms;
-import com.liferay.trash.web.internal.servlet.taglib.util.TrashContainerActionDropdownItemsProvider;
 import com.liferay.trash.web.internal.servlet.taglib.util.TrashEntryActionDropdownItemsProvider;
+import com.liferay.trash.web.internal.servlet.taglib.util.TrashViewContentActionDropdownItemsProvider;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -420,31 +419,6 @@ public class TrashDisplayContext {
 		return portletURL;
 	}
 
-	public List<DropdownItem> getTrashContainerActionDropdownItems(
-			TrashedModel trashedModel)
-		throws Exception {
-
-		TrashContainerActionDropdownItemsProvider
-			trashContainerActionDropdownItemsProvider =
-				new TrashContainerActionDropdownItemsProvider(
-					_liferayPortletRequest, _liferayPortletResponse,
-					trashedModel);
-
-		return trashContainerActionDropdownItemsProvider.
-			getActionDropdownItems();
-	}
-
-	public List<DropdownItem> getTrashContainerActionDropdownItems(
-			TrashEntry trashEntry)
-		throws Exception {
-
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			trashEntry.getClassName());
-
-		return getTrashContainerActionDropdownItems(
-			trashHandler.getTrashedModel(trashEntry.getClassPK()));
-	}
-
 	public SearchContainer getTrashContainerSearchContainer()
 		throws PortalException {
 
@@ -571,6 +545,20 @@ public class TrashDisplayContext {
 		}
 
 		return _trashRenderer;
+	}
+
+	public List<DropdownItem> getTrashViewContentActionDropdownItems(
+			String className, long classPK)
+		throws Exception {
+
+		TrashViewContentActionDropdownItemsProvider
+			trashViewContentActionDropdownItemsProvider =
+				new TrashViewContentActionDropdownItemsProvider(
+					_liferayPortletRequest, _liferayPortletResponse, className,
+					classPK);
+
+		return trashViewContentActionDropdownItemsProvider.
+			getActionDropdownItems();
 	}
 
 	public String getViewContentRedirectURL() throws PortalException {

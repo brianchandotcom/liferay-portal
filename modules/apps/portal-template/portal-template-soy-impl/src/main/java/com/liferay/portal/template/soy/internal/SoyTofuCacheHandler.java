@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.template.TemplateResource;
 
 import java.io.Serializable;
 
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -68,12 +67,6 @@ public class SoyTofuCacheHandler {
 				}
 			}
 		}
-	}
-
-	protected HashSet<TemplateResource> getKeySet(
-		List<TemplateResource> templateResources) {
-
-		return new HashSet<>(templateResources);
 	}
 
 	private final PortalCache<Serializable, SoyTofuCacheBag> _portalCache;

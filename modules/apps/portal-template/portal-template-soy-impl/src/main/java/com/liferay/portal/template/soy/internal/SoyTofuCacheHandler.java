@@ -60,9 +60,10 @@ public class SoyTofuCacheHandler {
 	public void removeIfAny(List<TemplateResource> templateResources) {
 		for (TemplateResource templateResource : templateResources) {
 			for (Serializable key : _portalCache.getKeys()) {
-				List<TemplateResource> keyList = (List<TemplateResource>)key;
+				List<TemplateResource> templateResourceList =
+					(List<TemplateResource>)key;
 
-				if (keyList.contains(templateResource)) {
+				if (templateResourceList.contains(templateResource)) {
 					_portalCache.remove(key);
 				}
 			}

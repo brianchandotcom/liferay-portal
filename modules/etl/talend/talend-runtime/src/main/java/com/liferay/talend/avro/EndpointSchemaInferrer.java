@@ -96,7 +96,7 @@ public class EndpointSchemaInferrer {
 
 			JsonObject itemsPropertiesJsonObject =
 				_jsonFinder.getDescendantJsonObject(
-					OASConstants.PATH_PROPERTIES_ITEMS,
+					OASConstants.PATH_PROPERTIES_ITEMS_ITEMS,
 					schemaDefinitionJsonObject);
 
 			if (!itemsPropertiesJsonObject.isEmpty() &&

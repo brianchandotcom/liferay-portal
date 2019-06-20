@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.trash.model.TrashEntry;
 
 import java.util.List;
 
@@ -35,39 +34,33 @@ import javax.portlet.PortletURL;
 /**
  * @author Eudaldo Alonso
  */
-public class TrashEntryActionDropdownItemsProvider {
+public class TrashViewContentActionDropdownItemsProvider {
 
-	public TrashEntryActionDropdownItemsProvider(
+	public TrashViewContentActionDropdownItemsProvider(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, TrashEntry trashEntry) {
+		LiferayPortletResponse liferayPortletResponse, String className,
+		long classPK) {
 
 		_liferayPortletResponse = liferayPortletResponse;
-		_trashEntry = trashEntry;
+		_className = className;
+		_classPK = classPK;
 
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			trashEntry.getClassName());
+		_trashHandler = TrashHandlerRegistryUtil.getTrashHandler(className);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
 		return new DropdownItemList() {
 			{
-				if (_trashHandler.isRestorable(_trashEntry.getClassPK()) &&
-					!_trashHandler.isInTrashContainer(
-						_trashEntry.getClassPK())) {
-
-					add(_getRestoreActionDropdownItem());
-				}
-				else if (!_trashHandler.isRestorable(
-							_trashEntry.getClassPK()) &&
-						 _trashHandler.isMovable()) {
-
+				if (_trashHandler.isMovable()) {
 					add(_getMoveActionDropdownItem());
 				}
 
-				add(_getDeleteActionDropdownItem());
+				if (_trashHandler.isDeletable()) {
+					add(_getDeleteActionDropdownItem());
+				}
 			}
 		};
 	}
@@ -84,8 +77,9 @@ public class TrashEntryActionDropdownItemsProvider {
 					ActionRequest.ACTION_NAME, "deleteEntries");
 				deleteEntryURL.setParameter(
 					"redirect", _themeDisplay.getURLCurrent());
+				deleteEntryURL.setParameter("className", _className);
 				deleteEntryURL.setParameter(
-					"trashEntryId", String.valueOf(_trashEntry.getEntryId()));
+					"classPK", String.valueOf(_classPK));
 
 				putData("deleteEntryURL", deleteEntryURL.toString());
 
@@ -106,15 +100,14 @@ public class TrashEntryActionDropdownItemsProvider {
 					"mvcPath", "/view_container_model.jsp");
 				moveEntryURL.setParameter(
 					"classNameId",
-					String.valueOf(_trashEntry.getClassNameId()));
-				moveEntryURL.setParameter(
-					"classPK", String.valueOf(_trashEntry.getClassPK()));
+					String.valueOf(PortalUtil.getClassNameId(_className)));
+				moveEntryURL.setParameter("classPK", String.valueOf(_classPK));
 				moveEntryURL.setParameter(
 					"containerModelClassNameId",
 					String.valueOf(
 						PortalUtil.getClassNameId(
 							_trashHandler.getContainerModelClassName(
-								_trashEntry.getClassPK()))));
+								_classPK))));
 				moveEntryURL.setWindowState(LiferayWindowState.POP_UP);
 
 				putData("moveEntryURL", moveEntryURL.toString());
@@ -125,32 +118,10 @@ public class TrashEntryActionDropdownItemsProvider {
 		};
 	}
 
-	private DropdownItem _getRestoreActionDropdownItem() {
-		return new DropdownItem() {
-			{
-				putData("action", "restoreEntry");
-
-				PortletURL restoreEntryURL =
-					_liferayPortletResponse.createActionURL();
-
-				restoreEntryURL.setParameter(
-					ActionRequest.ACTION_NAME, "restoreEntries");
-				restoreEntryURL.setParameter(
-					"redirect", _themeDisplay.getURLCurrent());
-				restoreEntryURL.setParameter(
-					"trashEntryId", String.valueOf(_trashEntry.getEntryId()));
-
-				putData("restoreEntryURL", restoreEntryURL.toString());
-
-				setLabel(
-					LanguageUtil.get(_themeDisplay.getLocale(), "restore"));
-			}
-		};
-	}
-
+	private final String _className;
+	private final long _classPK;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;
-	private final TrashEntry _trashEntry;
 	private final TrashHandler _trashHandler;
 
 }

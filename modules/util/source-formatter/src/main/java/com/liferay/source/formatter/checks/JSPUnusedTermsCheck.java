@@ -50,14 +50,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		// When running tests, the contentsMap is empty, because the file
-		// extension of the test files is *.testjsp
-
-		Map<String, String> contentsMap = _getContentsMap();
-
-		if (contentsMap.isEmpty()) {
-			_contentsMap.put(fileName, content);
-		}
+		_populateContentsMap(fileName, content);
 
 		content = _removeUnusedImports(fileName, content);
 
@@ -147,22 +140,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		}
 	}
 
-	private synchronized Map<String, String> _getContentsMap()
-		throws IOException {
-
-		if (_contentsMap != null) {
-			return _contentsMap;
-		}
-
-		String[] excludes = {"**/null.jsp", "**/tools/**"};
-
-		List<String> allJSPFileNames = SourceFormatterUtil.filterFileNames(
-			_allFileNames, excludes,
-			new String[] {"**/*.jsp", "**/*.jspf", "**/*.tag"},
-			getSourceFormatterExcludes(), true);
-
-		_contentsMap = JSPSourceUtil.getContentsMap(allJSPFileNames);
-
+	private Map<String, String> _getContentsMap() {
 		return _contentsMap;
 	}
 
@@ -513,6 +491,31 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		}
 
 		return false;
+	}
+
+	private synchronized void _populateContentsMap(
+			String fileName, String content)
+		throws IOException {
+
+		if (_contentsMap != null) {
+			return;
+		}
+
+		String[] excludes = {"**/null.jsp", "**/tools/**"};
+
+		List<String> allJSPFileNames = SourceFormatterUtil.filterFileNames(
+			_allFileNames, excludes,
+			new String[] {"**/*.jsp", "**/*.jspf", "**/*.tag"},
+			getSourceFormatterExcludes(), true);
+
+		_contentsMap = JSPSourceUtil.getContentsMap(allJSPFileNames);
+
+		// When running tests, the contentsMap is empty, because the file
+		// extension of the test files is *.testjsp
+
+		if (_contentsMap.isEmpty()) {
+			_contentsMap.put(fileName, content);
+		}
 	}
 
 	private String _removeDuplicateDefineObjects(

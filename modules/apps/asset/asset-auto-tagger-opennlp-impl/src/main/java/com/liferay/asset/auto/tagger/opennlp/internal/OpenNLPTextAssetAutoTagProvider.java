@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -54,12 +55,14 @@ public class OpenNLPTextAssetAutoTagProvider
 						assetEntry.getClassName());
 
 				if (textExtractor != null) {
+					Locale locale = LocaleUtil.fromLanguageId(
+						assetEntry.getDefaultLanguageId());
+
 					return _openNLPDocumentAssetAutoTagger.getTagNames(
 						assetEntry.getCompanyId(),
-						textExtractor.getText(_getAssetObject(assetEntry)),
-						LocaleUtil.fromLanguageId(
-							assetEntry.getDefaultLanguageId()),
-						ContentTypes.TEXT_PLAIN);
+						textExtractor.getText(
+							_getAssetObject(assetEntry), locale),
+						locale, ContentTypes.TEXT_PLAIN);
 				}
 			}
 		}

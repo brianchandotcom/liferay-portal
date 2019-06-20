@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.FileUtil;
 
 import java.io.InputStream;
 
+import java.util.Locale;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -39,7 +41,7 @@ public class DLFileEntryTextExtractor implements TextExtractor<DLFileEntry> {
 	}
 
 	@Override
-	public String getText(DLFileEntry dlFileEntry) {
+	public String getText(DLFileEntry dlFileEntry, Locale locale) {
 		try {
 			DLFileVersion fileVersion = dlFileEntry.getFileVersion();
 

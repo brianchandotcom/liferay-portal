@@ -109,6 +109,10 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				long classNameId = GetterUtil.getLong(
 					document.get(Field.CLASS_NAME_ID));
 
+				if (classNameId == 0) {
+					return;
+				}
+
 				className = portal.getClassName(classNameId);
 
 				classPK = document.get(Field.CLASS_PK);

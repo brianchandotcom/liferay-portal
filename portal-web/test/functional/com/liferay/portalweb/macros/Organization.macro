@@ -3,26 +3,15 @@ definition {
 	var orgName = "Organization Name";
 
 	macro addCategorizationCP {
-		var key_tagName = "${tagName}";
-
-		Click(locator1 = "AddTask#TASK_TAG_FIELD");
-
-		Type(
-			locator1 = "AddTask#TASK_TAG_FIELD",
-			value1 = "${tagName}");
-
-		AssertClick(
-			locator1 = "Button#ADD_TAGS",
-			value1 = "Add");
-
-		AssertElementPresent(locator1 = "UsersAndOrganizationsEditOrganization#CATEGORIZATION_TAG");
+		AssetCategorization.addTag(tagName = "${tagName}");
 
 		PortletEntry.save();
 
 		UsersAndOrganizationsNavigator.gotoMenuBarInformation();
 
 		AssertTextEquals(
-			locator1 = "UsersAndOrganizationsEditOrganization#CATEGORIZATION_TAG",
+			key_tagName = "${tagName}",
+			locator1 = "AssetCategorization#TAG",
 			value1 = "${tagName}");
 	}
 

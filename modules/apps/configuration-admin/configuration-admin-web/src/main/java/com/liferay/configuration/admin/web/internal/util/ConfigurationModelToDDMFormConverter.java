@@ -143,12 +143,12 @@ public class ConfigurationModelToDDMFormConverter {
 					_configurationModel.getID(), attributeDefinition.getID());
 
 		if (configurationFieldOptionsProvider != null) {
-			configurationFieldOptionsProvider.getOptions(
-			).stream(
-			).forEach(
-				option -> ddmFormFieldOptions.addOptionLabel(
-					option.getValue(), _locale, option.getLabel(_locale))
-			);
+			for (ConfigurationFieldOptionsProvider.Option option :
+					configurationFieldOptionsProvider.getOptions()) {
+
+				ddmFormFieldOptions.addOptionLabel(
+					option.getValue(), _locale, option.getLabel(_locale));
+			}
 
 			return ddmFormFieldOptions;
 		}

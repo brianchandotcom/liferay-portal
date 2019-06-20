@@ -498,8 +498,6 @@ public class ProjectTemplateFilesTest {
 	}
 
 	private void _testLanguageProperties(Path path) throws IOException {
-		boolean portlet = false;
-
 		try (BufferedReader bufferedReader = Files.newBufferedReader(
 				path, StandardCharsets.UTF_8)) {
 
@@ -532,49 +530,8 @@ public class ProjectTemplateFilesTest {
 					(_languagePropertiesKeyComparator.compare(
 						key, previousKey) > 0));
 
-				if (key.startsWith("javax.portlet.")) {
-					portlet = true;
-				}
-
 				previousKey = key;
 			}
-		}
-
-		if (portlet) {
-			Properties properties = FileUtil.readProperties(path);
-
-			String keywords = properties.getProperty(
-				"javax.portlet.keywords.${className.toLowerCase()}");
-
-			Assert.assertTrue(
-				"Value of \"javax.portlet.keywords.${className.toLowerCase()}" +
-					"\" in " + path + " must be \"${className}\"",
-				(keywords != null) && keywords.equals("${className}"));
-
-			String title = properties.getProperty(
-				"javax.portlet.title.${className.toLowerCase()}");
-
-			Assert.assertTrue(
-				"Value of \"javax.portlet.title.${className.toLowerCase()}" +
-					"\" in " + path + " must be \"${className}\"",
-				(title != null) && title.equals("${className}"));
-
-			String expectedShortTitle = "${className}";
-
-			Assert.assertEquals(
-				"Incorrect value of " +
-					"\"javax.portlet.display-name.${className.toLowerCase()}" +
-						"\" in " + path,
-				expectedShortTitle,
-				properties.getProperty(
-					"javax.portlet.display-name.${className.toLowerCase()}"));
-
-			Assert.assertEquals(
-				"Incorrect value of \"javax.portlet.short-title.${className." +
-					"toLowerCase()}\" in " + path,
-				expectedShortTitle,
-				properties.getProperty(
-					"javax.portlet.short-title.${className.toLowerCase()}"));
 		}
 	}
 

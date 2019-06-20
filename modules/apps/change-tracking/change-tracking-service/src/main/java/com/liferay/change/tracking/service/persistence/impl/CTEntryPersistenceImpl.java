@@ -34,10 +34,9 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.CompanyProvider;
-import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
@@ -974,7 +973,7 @@ public class CTEntryPersistenceImpl
 		ctEntry.setNew(true);
 		ctEntry.setPrimaryKey(ctEntryId);
 
-		ctEntry.setCompanyId(companyProvider.getCompanyId());
+		ctEntry.setCompanyId(CompanyThreadLocal.getCompanyId());
 
 		return ctEntry;
 	}
@@ -1551,7 +1550,7 @@ public class CTEntryPersistenceImpl
 
 		if (ctEntry == null) {
 			ctEntryToCTEntryAggregateTableMapper.addTableMapping(
-				companyProvider.getCompanyId(), pk, ctEntryAggregatePK);
+				CompanyThreadLocal.getCompanyId(), pk, ctEntryAggregatePK);
 		}
 		else {
 			ctEntryToCTEntryAggregateTableMapper.addTableMapping(
@@ -1573,7 +1572,7 @@ public class CTEntryPersistenceImpl
 
 		if (ctEntry == null) {
 			ctEntryToCTEntryAggregateTableMapper.addTableMapping(
-				companyProvider.getCompanyId(), pk,
+				CompanyThreadLocal.getCompanyId(), pk,
 				ctEntryAggregate.getPrimaryKey());
 		}
 		else {
@@ -1595,7 +1594,7 @@ public class CTEntryPersistenceImpl
 		CTEntry ctEntry = fetchByPrimaryKey(pk);
 
 		if (ctEntry == null) {
-			companyId = companyProvider.getCompanyId();
+			companyId = CompanyThreadLocal.getCompanyId();
 		}
 		else {
 			companyId = ctEntry.getCompanyId();
@@ -1716,7 +1715,7 @@ public class CTEntryPersistenceImpl
 		CTEntry ctEntry = fetchByPrimaryKey(pk);
 
 		if (ctEntry == null) {
-			companyId = companyProvider.getCompanyId();
+			companyId = CompanyThreadLocal.getCompanyId();
 		}
 		else {
 			companyId = ctEntry.getCompanyId();
@@ -1870,7 +1869,7 @@ public class CTEntryPersistenceImpl
 
 		if (ctEntry == null) {
 			ctEntryToCTCollectionTableMapper.addTableMapping(
-				companyProvider.getCompanyId(), pk, ctCollectionPK);
+				CompanyThreadLocal.getCompanyId(), pk, ctCollectionPK);
 		}
 		else {
 			ctEntryToCTCollectionTableMapper.addTableMapping(
@@ -1890,7 +1889,7 @@ public class CTEntryPersistenceImpl
 
 		if (ctEntry == null) {
 			ctEntryToCTCollectionTableMapper.addTableMapping(
-				companyProvider.getCompanyId(), pk,
+				CompanyThreadLocal.getCompanyId(), pk,
 				ctCollection.getPrimaryKey());
 		}
 		else {
@@ -1912,7 +1911,7 @@ public class CTEntryPersistenceImpl
 		CTEntry ctEntry = fetchByPrimaryKey(pk);
 
 		if (ctEntry == null) {
-			companyId = companyProvider.getCompanyId();
+			companyId = CompanyThreadLocal.getCompanyId();
 		}
 		else {
 			companyId = ctEntry.getCompanyId();
@@ -2022,7 +2021,7 @@ public class CTEntryPersistenceImpl
 		CTEntry ctEntry = fetchByPrimaryKey(pk);
 
 		if (ctEntry == null) {
-			companyId = companyProvider.getCompanyId();
+			companyId = CompanyThreadLocal.getCompanyId();
 		}
 		else {
 			companyId = ctEntry.getCompanyId();
@@ -2187,9 +2186,6 @@ public class CTEntryPersistenceImpl
 	}
 
 	private boolean _columnBitmaskEnabled;
-
-	@Reference(service = CompanyProviderWrapper.class)
-	protected CompanyProvider companyProvider;
 
 	@Reference
 	protected EntityCache entityCache;

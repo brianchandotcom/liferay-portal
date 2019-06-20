@@ -32,8 +32,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.persistence.CompanyProvider;
-import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -4612,7 +4611,7 @@ public class AMImageEntryPersistenceImpl
 
 		amImageEntry.setUuid(uuid);
 
-		amImageEntry.setCompanyId(companyProvider.getCompanyId());
+		amImageEntry.setCompanyId(CompanyThreadLocal.getCompanyId());
 
 		return amImageEntry;
 	}
@@ -5464,9 +5463,6 @@ public class AMImageEntryPersistenceImpl
 	}
 
 	private boolean _columnBitmaskEnabled;
-
-	@Reference(service = CompanyProviderWrapper.class)
-	protected CompanyProvider companyProvider;
 
 	@Reference
 	protected EntityCache entityCache;

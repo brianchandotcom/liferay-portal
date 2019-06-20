@@ -26,8 +26,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.persistence.CompanyProvider;
-import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
@@ -1864,7 +1863,7 @@ public class BigDecimalEntryPersistenceImpl
 		bigDecimalEntry.setNew(true);
 		bigDecimalEntry.setPrimaryKey(bigDecimalEntryId);
 
-		bigDecimalEntry.setCompanyId(companyProvider.getCompanyId());
+		bigDecimalEntry.setCompanyId(CompanyThreadLocal.getCompanyId());
 
 		return bigDecimalEntry;
 	}
@@ -2580,7 +2579,7 @@ public class BigDecimalEntryPersistenceImpl
 
 		if (bigDecimalEntry == null) {
 			bigDecimalEntryToLVEntryTableMapper.addTableMapping(
-				companyProvider.getCompanyId(), pk, lvEntryPK);
+				CompanyThreadLocal.getCompanyId(), pk, lvEntryPK);
 		}
 		else {
 			bigDecimalEntryToLVEntryTableMapper.addTableMapping(
@@ -2603,7 +2602,7 @@ public class BigDecimalEntryPersistenceImpl
 
 		if (bigDecimalEntry == null) {
 			bigDecimalEntryToLVEntryTableMapper.addTableMapping(
-				companyProvider.getCompanyId(), pk, lvEntry.getPrimaryKey());
+				CompanyThreadLocal.getCompanyId(), pk, lvEntry.getPrimaryKey());
 		}
 		else {
 			bigDecimalEntryToLVEntryTableMapper.addTableMapping(
@@ -2624,7 +2623,7 @@ public class BigDecimalEntryPersistenceImpl
 		BigDecimalEntry bigDecimalEntry = fetchByPrimaryKey(pk);
 
 		if (bigDecimalEntry == null) {
-			companyId = companyProvider.getCompanyId();
+			companyId = CompanyThreadLocal.getCompanyId();
 		}
 		else {
 			companyId = bigDecimalEntry.getCompanyId();
@@ -2748,7 +2747,7 @@ public class BigDecimalEntryPersistenceImpl
 		BigDecimalEntry bigDecimalEntry = fetchByPrimaryKey(pk);
 
 		if (bigDecimalEntry == null) {
-			companyId = companyProvider.getCompanyId();
+			companyId = CompanyThreadLocal.getCompanyId();
 		}
 		else {
 			companyId = bigDecimalEntry.getCompanyId();
@@ -2884,9 +2883,6 @@ public class BigDecimalEntryPersistenceImpl
 
 		TableMapperFactory.removeTableMapper("BigDecimalEntries_LVEntries");
 	}
-
-	@ServiceReference(type = CompanyProviderWrapper.class)
-	protected CompanyProvider companyProvider;
 
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;

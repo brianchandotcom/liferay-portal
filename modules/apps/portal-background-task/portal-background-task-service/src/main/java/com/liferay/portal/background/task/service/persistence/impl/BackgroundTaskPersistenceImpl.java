@@ -32,10 +32,9 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.CompanyProvider;
-import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -9009,7 +9008,7 @@ public class BackgroundTaskPersistenceImpl
 		backgroundTask.setNew(true);
 		backgroundTask.setPrimaryKey(backgroundTaskId);
 
-		backgroundTask.setCompanyId(companyProvider.getCompanyId());
+		backgroundTask.setCompanyId(CompanyThreadLocal.getCompanyId());
 
 		return backgroundTask;
 	}
@@ -10164,9 +10163,6 @@ public class BackgroundTaskPersistenceImpl
 	}
 
 	private boolean _columnBitmaskEnabled;
-
-	@Reference(service = CompanyProviderWrapper.class)
-	protected CompanyProvider companyProvider;
 
 	@Reference
 	protected EntityCache entityCache;

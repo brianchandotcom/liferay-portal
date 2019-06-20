@@ -29,11 +29,10 @@ import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.CompanyProvider;
-import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.RolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
@@ -9282,7 +9281,7 @@ public class RolePersistenceImpl
 
 		role.setUuid(uuid);
 
-		role.setCompanyId(companyProvider.getCompanyId());
+		role.setCompanyId(CompanyThreadLocal.getCompanyId());
 
 		return role;
 	}
@@ -10074,7 +10073,7 @@ public class RolePersistenceImpl
 
 		if (role == null) {
 			roleToGroupTableMapper.addTableMapping(
-				companyProvider.getCompanyId(), pk, groupPK);
+				CompanyThreadLocal.getCompanyId(), pk, groupPK);
 		}
 		else {
 			roleToGroupTableMapper.addTableMapping(
@@ -10094,7 +10093,7 @@ public class RolePersistenceImpl
 
 		if (role == null) {
 			roleToGroupTableMapper.addTableMapping(
-				companyProvider.getCompanyId(), pk, group.getPrimaryKey());
+				CompanyThreadLocal.getCompanyId(), pk, group.getPrimaryKey());
 		}
 		else {
 			roleToGroupTableMapper.addTableMapping(
@@ -10115,7 +10114,7 @@ public class RolePersistenceImpl
 		Role role = fetchByPrimaryKey(pk);
 
 		if (role == null) {
-			companyId = companyProvider.getCompanyId();
+			companyId = CompanyThreadLocal.getCompanyId();
 		}
 		else {
 			companyId = role.getCompanyId();
@@ -10229,7 +10228,7 @@ public class RolePersistenceImpl
 		Role role = fetchByPrimaryKey(pk);
 
 		if (role == null) {
-			companyId = companyProvider.getCompanyId();
+			companyId = CompanyThreadLocal.getCompanyId();
 		}
 		else {
 			companyId = role.getCompanyId();
@@ -10384,7 +10383,7 @@ public class RolePersistenceImpl
 
 		if (role == null) {
 			roleToUserTableMapper.addTableMapping(
-				companyProvider.getCompanyId(), pk, userPK);
+				CompanyThreadLocal.getCompanyId(), pk, userPK);
 		}
 		else {
 			roleToUserTableMapper.addTableMapping(
@@ -10404,7 +10403,7 @@ public class RolePersistenceImpl
 
 		if (role == null) {
 			roleToUserTableMapper.addTableMapping(
-				companyProvider.getCompanyId(), pk, user.getPrimaryKey());
+				CompanyThreadLocal.getCompanyId(), pk, user.getPrimaryKey());
 		}
 		else {
 			roleToUserTableMapper.addTableMapping(
@@ -10425,7 +10424,7 @@ public class RolePersistenceImpl
 		Role role = fetchByPrimaryKey(pk);
 
 		if (role == null) {
-			companyId = companyProvider.getCompanyId();
+			companyId = CompanyThreadLocal.getCompanyId();
 		}
 		else {
 			companyId = role.getCompanyId();
@@ -10535,7 +10534,7 @@ public class RolePersistenceImpl
 		Role role = fetchByPrimaryKey(pk);
 
 		if (role == null) {
-			companyId = companyProvider.getCompanyId();
+			companyId = CompanyThreadLocal.getCompanyId();
 		}
 		else {
 			companyId = role.getCompanyId();
@@ -10893,9 +10892,6 @@ public class RolePersistenceImpl
 		TableMapperFactory.removeTableMapper("Groups_Roles");
 		TableMapperFactory.removeTableMapper("Users_Roles");
 	}
-
-	@BeanReference(type = CompanyProviderWrapper.class)
-	protected CompanyProvider companyProvider;
 
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;

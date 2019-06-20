@@ -26,8 +26,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.persistence.CompanyProvider;
-import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
@@ -6245,7 +6244,7 @@ public class LVEntryVersionPersistenceImpl
 		lvEntryVersion.setNew(true);
 		lvEntryVersion.setPrimaryKey(lvEntryVersionId);
 
-		lvEntryVersion.setCompanyId(companyProvider.getCompanyId());
+		lvEntryVersion.setCompanyId(CompanyThreadLocal.getCompanyId());
 
 		return lvEntryVersion;
 	}
@@ -7211,7 +7210,7 @@ public class LVEntryVersionPersistenceImpl
 
 		if (lvEntryVersion == null) {
 			lvEntryVersionToBigDecimalEntryTableMapper.addTableMapping(
-				companyProvider.getCompanyId(), pk, bigDecimalEntryPK);
+				CompanyThreadLocal.getCompanyId(), pk, bigDecimalEntryPK);
 		}
 		else {
 			lvEntryVersionToBigDecimalEntryTableMapper.addTableMapping(
@@ -7235,7 +7234,7 @@ public class LVEntryVersionPersistenceImpl
 
 		if (lvEntryVersion == null) {
 			lvEntryVersionToBigDecimalEntryTableMapper.addTableMapping(
-				companyProvider.getCompanyId(), pk,
+				CompanyThreadLocal.getCompanyId(), pk,
 				bigDecimalEntry.getPrimaryKey());
 		}
 		else {
@@ -7258,7 +7257,7 @@ public class LVEntryVersionPersistenceImpl
 		LVEntryVersion lvEntryVersion = fetchByPrimaryKey(pk);
 
 		if (lvEntryVersion == null) {
-			companyId = companyProvider.getCompanyId();
+			companyId = CompanyThreadLocal.getCompanyId();
 		}
 		else {
 			companyId = lvEntryVersion.getCompanyId();
@@ -7389,7 +7388,7 @@ public class LVEntryVersionPersistenceImpl
 		LVEntryVersion lvEntryVersion = fetchByPrimaryKey(pk);
 
 		if (lvEntryVersion == null) {
-			companyId = companyProvider.getCompanyId();
+			companyId = CompanyThreadLocal.getCompanyId();
 		}
 		else {
 			companyId = lvEntryVersion.getCompanyId();
@@ -7773,9 +7772,6 @@ public class LVEntryVersionPersistenceImpl
 
 		TableMapperFactory.removeTableMapper("BigDecimalEntries_LVEntries");
 	}
-
-	@ServiceReference(type = CompanyProviderWrapper.class)
-	protected CompanyProvider companyProvider;
 
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;

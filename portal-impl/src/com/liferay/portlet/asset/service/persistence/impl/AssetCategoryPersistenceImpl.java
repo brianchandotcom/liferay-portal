@@ -32,11 +32,10 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.CompanyProvider;
-import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.NestedSetsTreeManager;
 import com.liferay.portal.kernel.service.persistence.impl.PersistenceNestedSetsTreeManager;
@@ -12251,7 +12250,7 @@ public class AssetCategoryPersistenceImpl
 
 		assetCategory.setUuid(uuid);
 
-		assetCategory.setCompanyId(companyProvider.getCompanyId());
+		assetCategory.setCompanyId(CompanyThreadLocal.getCompanyId());
 
 		return assetCategory;
 	}
@@ -13226,7 +13225,7 @@ public class AssetCategoryPersistenceImpl
 
 		if (assetCategory == null) {
 			assetCategoryToAssetEntryTableMapper.addTableMapping(
-				companyProvider.getCompanyId(), pk, assetEntryPK);
+				CompanyThreadLocal.getCompanyId(), pk, assetEntryPK);
 		}
 		else {
 			assetCategoryToAssetEntryTableMapper.addTableMapping(
@@ -13248,7 +13247,8 @@ public class AssetCategoryPersistenceImpl
 
 		if (assetCategory == null) {
 			assetCategoryToAssetEntryTableMapper.addTableMapping(
-				companyProvider.getCompanyId(), pk, assetEntry.getPrimaryKey());
+				CompanyThreadLocal.getCompanyId(), pk,
+				assetEntry.getPrimaryKey());
 		}
 		else {
 			assetCategoryToAssetEntryTableMapper.addTableMapping(
@@ -13269,7 +13269,7 @@ public class AssetCategoryPersistenceImpl
 		AssetCategory assetCategory = fetchByPrimaryKey(pk);
 
 		if (assetCategory == null) {
-			companyId = companyProvider.getCompanyId();
+			companyId = CompanyThreadLocal.getCompanyId();
 		}
 		else {
 			companyId = assetCategory.getCompanyId();
@@ -13389,7 +13389,7 @@ public class AssetCategoryPersistenceImpl
 		AssetCategory assetCategory = fetchByPrimaryKey(pk);
 
 		if (assetCategory == null) {
-			companyId = companyProvider.getCompanyId();
+			companyId = CompanyThreadLocal.getCompanyId();
 		}
 		else {
 			companyId = assetCategory.getCompanyId();
@@ -14177,9 +14177,6 @@ public class AssetCategoryPersistenceImpl
 
 		TableMapperFactory.removeTableMapper("AssetEntries_AssetCategories");
 	}
-
-	@BeanReference(type = CompanyProviderWrapper.class)
-	protected CompanyProvider companyProvider;
 
 	@BeanReference(type = AssetEntryPersistence.class)
 	protected AssetEntryPersistence assetEntryPersistence;

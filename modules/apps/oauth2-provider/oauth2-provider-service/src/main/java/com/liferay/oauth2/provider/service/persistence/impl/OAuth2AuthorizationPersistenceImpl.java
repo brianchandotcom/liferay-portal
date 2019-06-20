@@ -33,8 +33,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.persistence.CompanyProvider;
-import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
@@ -2308,7 +2307,7 @@ public class OAuth2AuthorizationPersistenceImpl
 		oAuth2Authorization.setNew(true);
 		oAuth2Authorization.setPrimaryKey(oAuth2AuthorizationId);
 
-		oAuth2Authorization.setCompanyId(companyProvider.getCompanyId());
+		oAuth2Authorization.setCompanyId(CompanyThreadLocal.getCompanyId());
 
 		return oAuth2Authorization;
 	}
@@ -2981,7 +2980,7 @@ public class OAuth2AuthorizationPersistenceImpl
 
 		if (oAuth2Authorization == null) {
 			oAuth2AuthorizationToOAuth2ScopeGrantTableMapper.addTableMapping(
-				companyProvider.getCompanyId(), pk, oAuth2ScopeGrantPK);
+				CompanyThreadLocal.getCompanyId(), pk, oAuth2ScopeGrantPK);
 		}
 		else {
 			oAuth2AuthorizationToOAuth2ScopeGrantTableMapper.addTableMapping(
@@ -3003,7 +3002,7 @@ public class OAuth2AuthorizationPersistenceImpl
 
 		if (oAuth2Authorization == null) {
 			oAuth2AuthorizationToOAuth2ScopeGrantTableMapper.addTableMapping(
-				companyProvider.getCompanyId(), pk,
+				CompanyThreadLocal.getCompanyId(), pk,
 				oAuth2ScopeGrant.getPrimaryKey());
 		}
 		else {
@@ -3026,7 +3025,7 @@ public class OAuth2AuthorizationPersistenceImpl
 		OAuth2Authorization oAuth2Authorization = fetchByPrimaryKey(pk);
 
 		if (oAuth2Authorization == null) {
-			companyId = companyProvider.getCompanyId();
+			companyId = CompanyThreadLocal.getCompanyId();
 		}
 		else {
 			companyId = oAuth2Authorization.getCompanyId();
@@ -3148,7 +3147,7 @@ public class OAuth2AuthorizationPersistenceImpl
 		OAuth2Authorization oAuth2Authorization = fetchByPrimaryKey(pk);
 
 		if (oAuth2Authorization == null) {
-			companyId = companyProvider.getCompanyId();
+			companyId = CompanyThreadLocal.getCompanyId();
 		}
 		else {
 			companyId = oAuth2Authorization.getCompanyId();
@@ -3378,9 +3377,6 @@ public class OAuth2AuthorizationPersistenceImpl
 	}
 
 	private boolean _columnBitmaskEnabled;
-
-	@Reference(service = CompanyProviderWrapper.class)
-	protected CompanyProvider companyProvider;
 
 	@Reference
 	protected EntityCache entityCache;

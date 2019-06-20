@@ -15,7 +15,6 @@
 package com.liferay.portlet.social.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -26,8 +25,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.persistence.CompanyProvider;
-import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -3375,7 +3373,8 @@ public class SocialActivityAchievementPersistenceImpl
 		socialActivityAchievement.setNew(true);
 		socialActivityAchievement.setPrimaryKey(activityAchievementId);
 
-		socialActivityAchievement.setCompanyId(companyProvider.getCompanyId());
+		socialActivityAchievement.setCompanyId(
+			CompanyThreadLocal.getCompanyId());
 
 		return socialActivityAchievement;
 	}
@@ -4169,9 +4168,6 @@ public class SocialActivityAchievementPersistenceImpl
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
-
-	@BeanReference(type = CompanyProviderWrapper.class)
-	protected CompanyProvider companyProvider;
 
 	private static final String _SQL_SELECT_SOCIALACTIVITYACHIEVEMENT =
 		"SELECT socialActivityAchievement FROM SocialActivityAchievement socialActivityAchievement";

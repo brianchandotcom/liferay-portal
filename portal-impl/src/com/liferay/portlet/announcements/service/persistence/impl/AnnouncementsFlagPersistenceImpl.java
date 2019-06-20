@@ -18,7 +18,6 @@ import com.liferay.announcements.kernel.exception.NoSuchFlagException;
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
 import com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagPersistence;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -29,8 +28,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.persistence.CompanyProvider;
-import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -993,7 +991,7 @@ public class AnnouncementsFlagPersistenceImpl
 		announcementsFlag.setNew(true);
 		announcementsFlag.setPrimaryKey(flagId);
 
-		announcementsFlag.setCompanyId(companyProvider.getCompanyId());
+		announcementsFlag.setCompanyId(CompanyThreadLocal.getCompanyId());
 
 		return announcementsFlag;
 	}
@@ -1529,9 +1527,6 @@ public class AnnouncementsFlagPersistenceImpl
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
-
-	@BeanReference(type = CompanyProviderWrapper.class)
-	protected CompanyProvider companyProvider;
 
 	private static final String _SQL_SELECT_ANNOUNCEMENTSFLAG =
 		"SELECT announcementsFlag FROM AnnouncementsFlag announcementsFlag";

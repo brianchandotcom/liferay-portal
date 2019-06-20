@@ -26,8 +26,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.persistence.CompanyProvider;
-import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
@@ -6336,7 +6335,7 @@ public class LVEntryPersistenceImpl
 
 		lvEntry.setUuid(uuid);
 
-		lvEntry.setCompanyId(companyProvider.getCompanyId());
+		lvEntry.setCompanyId(CompanyThreadLocal.getCompanyId());
 
 		return lvEntry;
 	}
@@ -7255,7 +7254,7 @@ public class LVEntryPersistenceImpl
 
 		if (lvEntry == null) {
 			lvEntryToBigDecimalEntryTableMapper.addTableMapping(
-				companyProvider.getCompanyId(), pk, bigDecimalEntryPK);
+				CompanyThreadLocal.getCompanyId(), pk, bigDecimalEntryPK);
 		}
 		else {
 			lvEntryToBigDecimalEntryTableMapper.addTableMapping(
@@ -7279,7 +7278,7 @@ public class LVEntryPersistenceImpl
 
 		if (lvEntry == null) {
 			lvEntryToBigDecimalEntryTableMapper.addTableMapping(
-				companyProvider.getCompanyId(), pk,
+				CompanyThreadLocal.getCompanyId(), pk,
 				bigDecimalEntry.getPrimaryKey());
 		}
 		else {
@@ -7301,7 +7300,7 @@ public class LVEntryPersistenceImpl
 		LVEntry lvEntry = fetchByPrimaryKey(pk);
 
 		if (lvEntry == null) {
-			companyId = companyProvider.getCompanyId();
+			companyId = CompanyThreadLocal.getCompanyId();
 		}
 		else {
 			companyId = lvEntry.getCompanyId();
@@ -7432,7 +7431,7 @@ public class LVEntryPersistenceImpl
 		LVEntry lvEntry = fetchByPrimaryKey(pk);
 
 		if (lvEntry == null) {
-			companyId = companyProvider.getCompanyId();
+			companyId = CompanyThreadLocal.getCompanyId();
 		}
 		else {
 			companyId = lvEntry.getCompanyId();
@@ -7778,9 +7777,6 @@ public class LVEntryPersistenceImpl
 
 		TableMapperFactory.removeTableMapper("BigDecimalEntries_LVEntries");
 	}
-
-	@ServiceReference(type = CompanyProviderWrapper.class)
-	protected CompanyProvider companyProvider;
 
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;

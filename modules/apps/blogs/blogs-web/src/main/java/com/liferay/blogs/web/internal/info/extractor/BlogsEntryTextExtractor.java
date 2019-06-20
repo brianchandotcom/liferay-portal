@@ -17,6 +17,8 @@ package com.liferay.blogs.web.internal.info.extractor;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.info.extractor.TextExtractor;
 
+import java.util.Locale;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -32,7 +34,7 @@ public class BlogsEntryTextExtractor implements TextExtractor<BlogsEntry> {
 	}
 
 	@Override
-	public String getText(BlogsEntry blogsEntry) {
+	public String getText(BlogsEntry blogsEntry, Locale locale) {
 		return blogsEntry.getContent();
 	}
 

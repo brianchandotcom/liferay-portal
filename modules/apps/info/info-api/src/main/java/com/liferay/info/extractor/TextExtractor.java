@@ -14,6 +14,8 @@
 
 package com.liferay.info.extractor;
 
+import java.util.Locale;
+
 /**
  * @author Alejandro Tardín
  */
@@ -21,6 +23,6 @@ public interface TextExtractor<T> {
 
 	public String getClassName();
 
-	public String getText(T source);
+	public String getText(T source, Locale locale);
 
 }

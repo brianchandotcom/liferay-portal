@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.auto.tagger.opennlp.internal.extractor;
+package com.liferay.journal.web.internal.info.extractor;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;

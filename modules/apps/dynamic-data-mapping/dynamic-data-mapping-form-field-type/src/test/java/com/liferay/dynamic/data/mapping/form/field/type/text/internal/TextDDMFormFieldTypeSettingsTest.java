@@ -148,7 +148,7 @@ public class TextDDMFormFieldTypeSettingsTest
 
 		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
 
-		Assert.assertEquals(ddmFormRules.toString(), 2, ddmFormRules.size());
+		Assert.assertEquals(ddmFormRules.toString(), 3, ddmFormRules.size());
 
 		DDMFormRule ddmFormRule0 = ddmFormRules.get(0);
 
@@ -168,11 +168,24 @@ public class TextDDMFormFieldTypeSettingsTest
 
 		Assert.assertEquals(sb.toString(), actions.get(0));
 
-		DDMFormRule ddmFormRule1 = ddmFormRules.get(1);
+		DDMFormRule ddmFormRule1 = ddmFormRules.get(0);
 
-		Assert.assertEquals("TRUE", ddmFormRule1.getCondition());
+		Assert.assertEquals(
+			"not(equals(getValue('displayStyle'), 'singleline'))",
+			ddmFormRule1.getCondition());
 
 		actions = ddmFormRule1.getActions();
+
+		Assert.assertEquals(actions.toString(), 1, actions.size());
+		Assert.assertEquals("setValue('autocomplete', FALSE)", actions.get(0));
+		Assert.assertEquals(
+			"setVisible('autocomplete', FALSE)", actions.get(1));
+
+		DDMFormRule ddmFormRule2 = ddmFormRules.get(2);
+
+		Assert.assertEquals("TRUE", ddmFormRule2.getCondition());
+
+		actions = ddmFormRule2.getActions();
 
 		Assert.assertEquals(actions.toString(), 8, actions.size());
 		Assert.assertTrue(

@@ -20,7 +20,6 @@ import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.encryptor.EncryptorException;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -68,8 +67,6 @@ import com.liferay.portal.kernel.search.facet.ScopeFacet;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManagerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.persistence.CompanyProvider;
-import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -309,9 +306,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		preregisterCompany(company.getCompanyId());
 
-		CompanyProvider currentCompanyProvider =
-			_companyProviderWrapper.getCompanyProvider();
-
 		Locale localeThreadLocalDefaultLocale =
 			LocaleThreadLocal.getDefaultLocale();
 		Locale localeThreadSiteDefaultLocale =
@@ -326,9 +320,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			LocaleThreadLocal.setSiteDefaultLocale(null);
 
 			final long companyId = company.getCompanyId();
-
-			_companyProviderWrapper.setCompanyProvider(
-				new CustomCompanyProvider(companyId));
 
 			// Key
 
@@ -464,8 +455,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				});
 		}
 		finally {
-			_companyProviderWrapper.setCompanyProvider(currentCompanyProvider);
-
 			LocaleThreadLocal.setDefaultLocale(localeThreadLocalDefaultLocale);
 			LocaleThreadLocal.setSiteDefaultLocale(
 				localeThreadSiteDefaultLocale);
@@ -1882,33 +1871,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyLocalServiceImpl.class);
 
-	@BeanReference(type = CompanyProviderWrapper.class)
-	private CompanyProviderWrapper _companyProviderWrapper;
-
 	private final Set<Company> _pendingCompanies = new HashSet<>();
 	private final ServiceTracker
 		<PortalInstanceLifecycleManager, PortalInstanceLifecycleManager>
 			_serviceTracker;
-
-	private static class CustomCompanyProvider implements CompanyProvider {
-
-		public CustomCompanyProvider(long companyId) {
-			_companyId = companyId;
-		}
-
-		@Override
-		public long getCompanyId() {
-			return _companyId;
-		}
-
-		@Override
-		public String getCompanyIdName() {
-			return "companyId";
-		}
-
-		private final long _companyId;
-
-	}
 
 	private class PortalInstanceLifecycleManagerServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

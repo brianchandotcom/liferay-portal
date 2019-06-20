@@ -128,6 +128,24 @@ public class SegmentsExperienceServiceTest {
 	}
 
 	@Test
+	public void testAddSegmentsExperienceWithoutManageSegmentsEntriesPermissionAndWithUpdateLayoutPermission()
+		throws Exception {
+
+		ResourcePermissionLocalServiceUtil.addResourcePermission(
+			_group.getCompanyId(), Layout.class.getName(),
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
+			_role.getRoleId(), ActionKeys.UPDATE);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_addSegmentsExperience(
+				ServiceContextTestUtil.getServiceContext(
+					_group, _user.getUserId()));
+		}
+	}
+
+	@Test
 	public void testDeleteSegmentsExperienceWithDeletePermission()
 		throws Exception {
 
@@ -141,6 +159,28 @@ public class SegmentsExperienceServiceTest {
 			"com.liferay.segments.model.SegmentsExperience",
 			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
 			_role.getRoleId(), ActionKeys.DELETE);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_segmentsExperienceService.deleteSegmentsExperience(
+				segmentsExperience.getSegmentsExperienceId());
+		}
+	}
+
+	@Test
+	public void testDeleteSegmentsExperienceWithDeletePermissionAndWithUpdateLayoutPermission()
+		throws Exception {
+
+		SegmentsExperience segmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				_classNameId, _classPK,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		ResourcePermissionLocalServiceUtil.addResourcePermission(
+			_group.getCompanyId(), Layout.class.getName(),
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
+			_role.getRoleId(), ActionKeys.UPDATE);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
@@ -202,6 +242,52 @@ public class SegmentsExperienceServiceTest {
 
 			Assert.assertEquals(
 				2,
+				_segmentsExperienceService.getSegmentsExperiencesCount(
+					_group.getGroupId(), _classNameId, _classPK, true));
+		}
+	}
+
+	@Test
+	public void testGetSegmentsExperiencesCountWithoutViewPermissionAndWithUpdateLayoutPermission()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		SegmentsExperience segmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				_classNameId, _classPK, serviceContext);
+		SegmentsTestUtil.addSegmentsExperience(
+			_classNameId, _classPK, serviceContext);
+		SegmentsTestUtil.addSegmentsExperience(
+			_classNameId, _classPK, serviceContext);
+
+		List<Role> roles = RoleLocalServiceUtil.getRoles(_group.getCompanyId());
+
+		for (Role role : roles) {
+			if (RoleConstants.OWNER.equals(role.getName())) {
+				continue;
+			}
+
+			ResourcePermissionLocalServiceUtil.removeResourcePermission(
+				_group.getCompanyId(),
+				"com.liferay.segments.model.SegmentsExperience",
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(segmentsExperience.getSegmentsExperienceId()),
+				role.getRoleId(), ActionKeys.VIEW);
+
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(
+				_group.getCompanyId(), Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(segmentsExperience.getClassPK()),
+				_role.getRoleId(), new String[] {ActionKeys.UPDATE});
+		}
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			Assert.assertEquals(
+				3,
 				_segmentsExperienceService.getSegmentsExperiencesCount(
 					_group.getGroupId(), _classNameId, _classPK, true));
 		}
@@ -278,6 +364,59 @@ public class SegmentsExperienceServiceTest {
 	}
 
 	@Test
+	public void testGetSegmentsExperiencesWithoutViewPermissionAndWithUpdateLayoutPermission()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		SegmentsExperience segmentsExperience1 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_classNameId, _classPK, serviceContext);
+		SegmentsExperience segmentsExperience2 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_classNameId, _classPK, serviceContext);
+		SegmentsExperience segmentsExperience3 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_classNameId, _classPK, serviceContext);
+
+		for (Role role : RoleLocalServiceUtil.getRoles(_group.getCompanyId())) {
+			if (RoleConstants.OWNER.equals(role.getName())) {
+				continue;
+			}
+
+			ResourcePermissionLocalServiceUtil.removeResourcePermission(
+				_group.getCompanyId(),
+				"com.liferay.segments.model.SegmentsExperience",
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(segmentsExperience2.getSegmentsExperienceId()),
+				role.getRoleId(), ActionKeys.VIEW);
+
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(
+				_group.getCompanyId(), Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(segmentsExperience2.getClassPK()),
+				_role.getRoleId(), new String[] {ActionKeys.UPDATE});
+		}
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			List<SegmentsExperience> segmentsEntries =
+				_segmentsExperienceService.getSegmentsExperiences(
+					_group.getGroupId(), _classNameId, _classPK, true,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			Assert.assertEquals(
+				segmentsEntries.toString(), 3, segmentsEntries.size());
+
+			Assert.assertTrue(segmentsEntries.contains(segmentsExperience1));
+			Assert.assertTrue(segmentsEntries.contains(segmentsExperience2));
+			Assert.assertTrue(segmentsEntries.contains(segmentsExperience3));
+		}
+	}
+
+	@Test
 	public void testGetSegmentsExperiencesWithViewPermission()
 		throws Exception {
 
@@ -344,6 +483,44 @@ public class SegmentsExperienceServiceTest {
 	}
 
 	@Test
+	public void testGetSegmentsExperienceWithoutViewPermissionAndWithUpdateLayoutPermission()
+		throws Exception {
+
+		SegmentsExperience segmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				_classNameId, _classPK,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		List<Role> roles = RoleLocalServiceUtil.getRoles(_group.getCompanyId());
+
+		for (Role role : roles) {
+			if (RoleConstants.OWNER.equals(role.getName())) {
+				continue;
+			}
+
+			ResourcePermissionLocalServiceUtil.removeResourcePermission(
+				_group.getCompanyId(),
+				"com.liferay.segments.model.SegmentsExperience",
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(segmentsExperience.getSegmentsExperienceId()),
+				role.getRoleId(), ActionKeys.VIEW);
+
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(
+				_group.getCompanyId(), Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(segmentsExperience.getClassPK()),
+				_role.getRoleId(), new String[] {ActionKeys.UPDATE});
+		}
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_segmentsExperienceService.getSegmentsExperience(
+				segmentsExperience.getSegmentsExperienceId());
+		}
+	}
+
+	@Test
 	public void testGetSegmentsExperienceWithViewPermission() throws Exception {
 		SegmentsExperience segmentsExperience =
 			SegmentsTestUtil.addSegmentsExperience(
@@ -366,6 +543,32 @@ public class SegmentsExperienceServiceTest {
 			SegmentsTestUtil.addSegmentsExperience(
 				_classNameId, _classPK,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_segmentsExperienceService.updateSegmentsExperience(
+				segmentsExperience.getSegmentsExperienceId(),
+				RandomTestUtil.randomLong(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomBoolean());
+		}
+	}
+
+	@Test
+	public void testUpdateSegmentsExperienceWithoutUpdatePermissionAndWithUpdateLayoutPermission()
+		throws Exception {
+
+		SegmentsExperience segmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				_classNameId, _classPK,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		ResourcePermissionLocalServiceUtil.setResourcePermissions(
+			_group.getCompanyId(), Layout.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(segmentsExperience.getClassPK()), _role.getRoleId(),
+			new String[] {ActionKeys.UPDATE});
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {

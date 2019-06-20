@@ -889,7 +889,6 @@ definition {
 
 			Organization.viewParentOrganizationCP(
 				orgName = "Suborganization Name ${count}",
-				parentOrgExist = "true",
 				parentOrgName = "Organization Name 2",
 				subOrgName = "Suborganization Name ${count}");
 

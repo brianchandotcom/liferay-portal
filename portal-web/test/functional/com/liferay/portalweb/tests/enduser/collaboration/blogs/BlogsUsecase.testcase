@@ -1592,8 +1592,7 @@ definition {
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.viewParentOrganizationCP(
-			orgName = "Organization1 Name",
-			parentOrgExist = "true",
+			orgName = "Organization3 Name",
 			parentOrgName = "Organization1 Name",
 			subOrgName = "Organization3 Name");
 
@@ -1604,9 +1603,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.viewParentOrganizationCP(
-			orgName = "Organization2 Name",
-			parentOrgExist = "false");
+		Organization.viewParentOrganizationCP(orgName = "Organization2 Name");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 

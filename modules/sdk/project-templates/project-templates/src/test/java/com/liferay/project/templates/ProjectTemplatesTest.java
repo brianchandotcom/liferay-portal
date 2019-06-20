@@ -4538,11 +4538,12 @@ public class ProjectTemplatesTest {
 
 		File gradlePropertiesFile = new File(workspaceDir, "gradle.properties");
 
-		String targetPlatformProp =
+		String targetPlatformVersionProperty =
 			"\nliferay.workspace.target.platform.version=" + liferayVersion;
 
 		Files.write(
-			gradlePropertiesFile.toPath(), targetPlatformProp.getBytes(),
+			gradlePropertiesFile.toPath(),
+			targetPlatformVersionProperty.getBytes(),
 			StandardOpenOption.APPEND);
 
 		return gradlePropertiesFile;

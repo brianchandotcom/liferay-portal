@@ -75,8 +75,6 @@ public class GraphQLOpenAPIParser {
 			methodAnnotations.add("@GraphQLField");
 		}
 
-		methodAnnotations.add("@GraphQLInvokeDetached");
-
 		String methodAnnotation = _getMethodAnnotationGraphQLName(
 			javaMethodSignature);
 

@@ -1153,7 +1153,10 @@ public class DefaultPortalLDAP implements PortalLDAP {
 				}
 
 				if (ldapContext instanceof SafeLdapContext) {
-					enu = ((SafeLdapContext)ldapContext).search(
+					SafeLdapContext safeLdapContext =
+						(SafeLdapContext)ldapContext;
+
+					enu = safeLdapContext.search(
 						baseDNName, ldapFilter, searchControls);
 				}
 				else {
@@ -1177,7 +1180,9 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			ldapContext.setRequestControls(null);
 
 			if (ldapContext instanceof SafeLdapContext) {
-				enu = ((SafeLdapContext)ldapContext).search(
+				SafeLdapContext safeLdapContext = (SafeLdapContext)ldapContext;
+
+				enu = safeLdapContext.search(
 					baseDNName, ldapFilter, searchControls);
 			}
 			else {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.auto.tagger.opennlp.internal.extractor;
+package com.liferay.blogs.web.internal.info.extractor;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.info.extractor.TextExtractor;

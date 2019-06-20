@@ -16,11 +16,11 @@ package com.liferay.asset.auto.tagger.opennlp.internal.configuration.admin.defin
 
 import com.liferay.asset.auto.tagger.opennlp.internal.extractor.TextExtractorProvider;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.configuration.admin.definition.ConfigurationFieldOptionsProvider;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.osgi.service.component.annotations.Component;
@@ -43,21 +43,23 @@ public class EnabledClassNamesConfigurationFieldOptionsProvider
 		return _textExtractorProvider.getTextExtractors(
 		).stream(
 		).map(
-			textExtractor -> new Option() {
+			textExtractor ->
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(
+						textExtractor.getClassName())
+		).filter(
+			Objects::nonNull
+		).map(
+			assetRendererFactory -> new Option() {
 
 				@Override
 				public String getLabel(Locale locale) {
-					AssetRendererFactory<?> assetRendererFactory =
-						AssetRendererFactoryRegistryUtil.
-							getAssetRendererFactoryByClassName(
-								textExtractor.getClassName());
-
 					return assetRendererFactory.getTypeName(locale);
 				}
 
 				@Override
 				public String getValue() {
-					return textExtractor.getClassName();
+					return assetRendererFactory.getClassName();
 				}
 
 			}

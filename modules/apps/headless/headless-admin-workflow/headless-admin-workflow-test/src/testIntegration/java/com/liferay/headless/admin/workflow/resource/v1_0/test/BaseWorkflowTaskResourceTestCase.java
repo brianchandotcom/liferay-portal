@@ -300,12 +300,12 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 	@Test
 	public void testGetWorkflowTasksAssignedToMePage() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test
 	public void testGetWorkflowTasksAssignedToMyRolesPage() throws Exception {
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 
 	@Test

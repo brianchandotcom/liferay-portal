@@ -1,4 +1,7 @@
 {
+	"_embedded": {
+		"individual-segments": []
+	},
 	"page": {
 		"number": 0,
 		"size": 20,

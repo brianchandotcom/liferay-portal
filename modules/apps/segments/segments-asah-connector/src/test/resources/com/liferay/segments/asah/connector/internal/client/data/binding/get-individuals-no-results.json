@@ -1,4 +1,7 @@
 {
+	"_embedded": {
+		"individuals": []
+	},
 	"page": {
 		"number": 0,
 		"size": 20,

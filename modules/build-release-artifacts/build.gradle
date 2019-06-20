@@ -30,7 +30,7 @@ buildscript {
 }
 
 task clean(type: Delete) {
-	delete "build"
+	delete "build", "project-templates-samples"
 }
 
 writeBoms {

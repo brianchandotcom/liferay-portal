@@ -35,6 +35,10 @@ public class ConfigurationFieldOptionsProviderUtil {
 		getConfigurationFieldOptionsProvider(
 			String configurationPid, String fieldName) {
 
+		if (_serviceTrackerMap == null) {
+			return null;
+		}
+
 		return _serviceTrackerMap.getService(
 			_getKey(configurationPid, fieldName));
 	}

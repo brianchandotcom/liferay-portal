@@ -51,11 +51,13 @@ public class DataRecordCollectionResourceTest
 		return new DataRecordCollection() {
 			{
 				dataDefinitionId = _ddmStructure.getStructureId();
+				dataRecordCollectionKey = RandomTestUtil.randomString();
 				name = new HashMap<String, Object>() {
 					{
 						put("en_US", RandomTestUtil.randomString());
 					}
 				};
+				siteId = testGroup.getGroupId();
 			}
 		};
 	}

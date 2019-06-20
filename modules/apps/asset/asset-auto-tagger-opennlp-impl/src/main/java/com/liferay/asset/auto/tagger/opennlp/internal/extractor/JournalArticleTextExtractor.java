@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.asset.auto.tagger.opennlp.internal.extractor.external;
+package com.liferay.asset.auto.tagger.opennlp.internal.extractor;
 
-import com.liferay.asset.auto.tagger.opennlp.internal.extractor.TextExtractor;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
+import com.liferay.info.extractor.TextExtractor;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.StringPool;

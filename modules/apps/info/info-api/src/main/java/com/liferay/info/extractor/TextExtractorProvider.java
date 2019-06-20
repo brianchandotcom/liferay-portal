@@ -12,15 +12,17 @@
  * details.
  */
 
-package com.liferay.asset.auto.tagger.opennlp.internal.extractor;
+package com.liferay.info.extractor;
+
+import java.util.List;
 
 /**
  * @author Alejandro Tardín
  */
-public interface TextExtractor<T> {
+public interface TextExtractorProvider {
 
-	public String getClassName();
+	public TextExtractor getTextExtractor(String className);
 
-	public String getText(T source);
+	public List<TextExtractor> getTextExtractors();
 
 }

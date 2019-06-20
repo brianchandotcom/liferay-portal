@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.asset.auto.tagger.opennlp.internal.extractor;
+package com.liferay.info.internal.extractor;
 
+import com.liferay.info.extractor.TextExtractor;
+import com.liferay.info.extractor.TextExtractorProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -30,7 +32,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Alejandro Tardín
  */
 @Component(service = TextExtractorProvider.class)
-public class TextExtractorProvider {
+public class TextExtractorTrackerImpl implements TextExtractorProvider {
 
 	public TextExtractor getTextExtractor(String className) {
 		return _serviceTrackerMap.getService(className);

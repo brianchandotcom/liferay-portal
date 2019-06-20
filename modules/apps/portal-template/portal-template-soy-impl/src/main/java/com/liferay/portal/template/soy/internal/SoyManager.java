@@ -25,8 +25,9 @@ import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.soy.SoyTemplateResource;
 import com.liferay.portal.template.soy.SoyTemplateResourceFactory;
 
+import java.io.Serializable;
+
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -75,7 +76,7 @@ public class SoyManager extends BaseTemplateManager {
 	@Reference(unbind = "-")
 	public void setSingleVMPool(SingleVMPool singleVMPool) {
 		_soyTofuCacheHandler = new SoyTofuCacheHandler(
-			(PortalCache<HashSet<TemplateResource>, SoyTofuCacheBag>)
+			(PortalCache<Serializable, SoyTofuCacheBag>)
 				singleVMPool.getPortalCache(SoyTemplate.class.getName()));
 	}
 

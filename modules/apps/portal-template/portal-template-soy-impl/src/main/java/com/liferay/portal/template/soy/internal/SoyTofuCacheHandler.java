@@ -20,6 +20,8 @@ import com.google.template.soy.tofu.SoyTofu;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.template.TemplateResource;
 
+import java.io.Serializable;
+
 import java.util.HashSet;
 import java.util.List;
 
@@ -29,7 +31,7 @@ import java.util.List;
 public class SoyTofuCacheHandler {
 
 	public SoyTofuCacheHandler(
-		PortalCache<HashSet<TemplateResource>, SoyTofuCacheBag> portalCache) {
+		PortalCache<Serializable, SoyTofuCacheBag> portalCache) {
 
 		_portalCache = portalCache;
 	}
@@ -38,20 +40,16 @@ public class SoyTofuCacheHandler {
 		List<TemplateResource> templateResources, SoyFileSet soyFileSet,
 		SoyTofu soyTofu) {
 
-		HashSet<TemplateResource> key = getKeySet(templateResources);
-
 		SoyTofuCacheBag soyTofuCacheBag = new SoyTofuCacheBag(
 			soyFileSet, soyTofu);
 
-		_portalCache.put(key, soyTofuCacheBag);
+		_portalCache.put((Serializable)templateResources, soyTofuCacheBag);
 
 		return soyTofuCacheBag;
 	}
 
 	public SoyTofuCacheBag get(List<TemplateResource> templateResources) {
-		HashSet<TemplateResource> key = getKeySet(templateResources);
-
-		return _portalCache.get(key);
+		return _portalCache.get((Serializable)templateResources);
 	}
 
 	public SoyTofu getSoyTofu(List<TemplateResource> templateResources) {
@@ -62,8 +60,10 @@ public class SoyTofuCacheHandler {
 
 	public void removeIfAny(List<TemplateResource> templateResources) {
 		for (TemplateResource templateResource : templateResources) {
-			for (HashSet<TemplateResource> key : _portalCache.getKeys()) {
-				if (key.contains(templateResource)) {
+			for (Serializable key : _portalCache.getKeys()) {
+				List<TemplateResource> keyList = (List<TemplateResource>)key;
+
+				if (keyList.contains(templateResource)) {
 					_portalCache.remove(key);
 				}
 			}
@@ -76,7 +76,6 @@ public class SoyTofuCacheHandler {
 		return new HashSet<>(templateResources);
 	}
 
-	private final PortalCache<HashSet<TemplateResource>, SoyTofuCacheBag>
-		_portalCache;
+	private final PortalCache<Serializable, SoyTofuCacheBag> _portalCache;
 
 }

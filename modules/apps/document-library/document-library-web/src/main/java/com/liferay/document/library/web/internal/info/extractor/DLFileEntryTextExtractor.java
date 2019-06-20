@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.auto.tagger.opennlp.internal.extractor;
+package com.liferay.document.library.web.internal.info.extractor;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;

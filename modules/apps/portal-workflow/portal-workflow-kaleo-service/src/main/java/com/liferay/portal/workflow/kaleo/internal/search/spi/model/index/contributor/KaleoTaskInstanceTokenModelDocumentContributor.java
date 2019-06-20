@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowHandler;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.portal.workflow.kaleo.internal.search.KaleoTaskInstanceTokenField;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
@@ -137,6 +139,22 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
 					assetEntry.getTitleMap(), assetEntry.getDefaultLanguageId(),
 					assetEntry.getGroupId()));
 		}
+		else {
+			WorkflowHandler<?> workflowHandler =
+				WorkflowHandlerRegistryUtil.getWorkflowHandler(
+					kaleoTaskInstanceToken.getClassName());
+
+			for (Locale availableLocale :
+					LanguageUtil.getAvailableLocales(
+						kaleoTaskInstanceToken.getGroupId())) {
+
+				document.addText(
+					LocalizationUtil.getLocalizedName(
+						KaleoTaskInstanceTokenField.ASSET_TITLE,
+						availableLocale.getLanguage()),
+					workflowHandler.getTitle(
+						kaleoTaskInstanceToken.getClassPK(), availableLocale));
+			}
 		}
 	}
 

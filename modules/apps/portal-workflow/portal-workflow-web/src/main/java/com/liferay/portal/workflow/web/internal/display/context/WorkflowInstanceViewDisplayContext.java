@@ -89,9 +89,14 @@ public class WorkflowInstanceViewDisplayContext
 		long classPK = getWorkflowContextEntryClassPK(
 			workflowInstance.getWorkflowContext());
 
-		return HtmlUtil.escape(
-			workflowHandler.getTitle(
-				classPK, workflowInstanceRequestHelper.getLocale()));
+		String title = workflowHandler.getTitle(
+			classPK, workflowInstanceRequestHelper.getLocale());
+
+		if (title != null) {
+			return HtmlUtil.escape(title);
+		}
+
+		return getAssetType(workflowInstance);
 	}
 
 	public String getAssetType(WorkflowInstance workflowInstance) {

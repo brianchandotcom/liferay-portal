@@ -174,13 +174,18 @@ public class WorkflowTaskDisplayContext {
 	public String getAssetTitle(WorkflowTask workflowTask)
 		throws PortalException {
 
-		long classPK = getWorkflowContextEntryClassPK(workflowTask);
-
 		WorkflowHandler<?> workflowHandler = getWorkflowHandler(workflowTask);
 
-		return HtmlUtil.escape(
-			workflowHandler.getTitle(
-				classPK, _workflowTaskRequestHelper.getLocale()));
+		long classPK = getWorkflowContextEntryClassPK(workflowTask);
+
+		String title = workflowHandler.getTitle(
+			classPK, getTaskContentLocale());
+
+		if (title != null) {
+			return HtmlUtil.escape(title);
+		}
+
+		return getAssetType(workflowTask);
 	}
 
 	public String getAssetType(WorkflowTask workflowTask)
@@ -188,7 +193,7 @@ public class WorkflowTaskDisplayContext {
 
 		WorkflowHandler<?> workflowHandler = getWorkflowHandler(workflowTask);
 
-		return workflowHandler.getType(_workflowTaskRequestHelper.getLocale());
+		return workflowHandler.getType(getTaskContentLocale());
 	}
 
 	public String getAssignedTheTaskMessageKey(WorkflowLog workflowLog)
@@ -319,14 +324,7 @@ public class WorkflowTaskDisplayContext {
 		String taskName = LanguageUtil.get(
 			_workflowTaskRequestHelper.getRequest(), workflowTask.getName());
 
-		WorkflowHandler<?> workflowHandler = getWorkflowHandler(workflowTask);
-
-		long classPK = getWorkflowContextEntryClassPK(workflowTask);
-
-		String title = workflowHandler.getTitle(
-			classPK, _workflowTaskRequestHelper.getLocale());
-
-		return taskName + ": " + title;
+		return taskName + ": " + getAssetTitle(workflowTask);
 	}
 
 	public Date getLastActivityDate(WorkflowTask workflowTask)
@@ -347,7 +345,7 @@ public class WorkflowTaskDisplayContext {
 		String className = _getWorkflowContextEntryClassName(workflowTask);
 
 		String modelResource = ResourceActionsUtil.getModelResource(
-			_workflowTaskRequestHelper.getLocale(), className);
+			getTaskContentLocale(), className);
 
 		return LanguageUtil.format(
 			_workflowTaskRequestHelper.getRequest(), "preview-of-x",
@@ -417,7 +415,7 @@ public class WorkflowTaskDisplayContext {
 		AssetRenderer<?> assetRenderer = getAssetRenderer(workflowTask);
 
 		String assetTitle = HtmlUtil.escape(
-			assetRenderer.getTitle(_workflowTaskRequestHelper.getLocale()));
+			assetRenderer.getTitle(getTaskContentLocale()));
 
 		sb.append(
 			LanguageUtil.format(
@@ -495,17 +493,6 @@ public class WorkflowTaskDisplayContext {
 		}
 
 		return _workflowTaskRequestHelper.getLocale();
-	}
-
-	public String getTaskContentTitle(WorkflowTask workflowTask)
-		throws PortalException {
-
-		WorkflowHandler<?> workflowHandler = getWorkflowHandler(workflowTask);
-
-		long classPK = getWorkflowContextEntryClassPK(workflowTask);
-
-		return HtmlUtil.escape(
-			workflowHandler.getTitle(classPK, getTaskContentLocale()));
 	}
 
 	public String getTaskInitiallyAssignedMessageArguments(
@@ -789,8 +776,7 @@ public class WorkflowTaskDisplayContext {
 		for (WorkflowHandler<?> workflowHandler :
 				_getSearchableAssetsWorkflowHandlers()) {
 
-			String assetType = workflowHandler.getType(
-				_workflowTaskRequestHelper.getLocale());
+			String assetType = workflowHandler.getType(getTaskContentLocale());
 
 			if (StringUtil.equalsIgnoreCase(keywords, assetType)) {
 				return new String[] {workflowHandler.getClassName()};

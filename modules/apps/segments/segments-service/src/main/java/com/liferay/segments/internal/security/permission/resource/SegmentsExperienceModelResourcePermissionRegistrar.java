@@ -89,10 +89,7 @@ public class SegmentsExperienceModelResourcePermissionRegistrar {
 				SegmentsExperience segmentsExperience, String actionId)
 			throws PortalException {
 
-			if ((actionId.equals(ActionKeys.DELETE) ||
-				 actionId.equals(ActionKeys.UPDATE) ||
-				 actionId.equals(ActionKeys.VIEW)) &&
-				LayoutPermissionUtil.contains(
+			if (LayoutPermissionUtil.contains(
 					permissionChecker, segmentsExperience.getClassPK(),
 					ActionKeys.UPDATE)) {
 

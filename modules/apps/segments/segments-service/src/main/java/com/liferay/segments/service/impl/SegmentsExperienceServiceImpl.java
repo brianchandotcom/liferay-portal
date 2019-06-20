@@ -46,15 +46,11 @@ public class SegmentsExperienceServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (_hasUpdateLayoutPermission(_getPublishedLayoutClassPK(classPK))) {
-			return segmentsExperienceLocalService.addSegmentsExperience(
-				segmentsEntryId, classNameId, classPK, nameMap, active,
-				serviceContext);
+		if (!_hasUpdateLayoutPermission(_getPublishedLayoutClassPK(classPK))) {
+			_portletResourcePermission.check(
+				getPermissionChecker(), serviceContext.getScopeGroupId(),
+				SegmentsActionKeys.MANAGE_SEGMENTS_ENTRIES);
 		}
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			SegmentsActionKeys.MANAGE_SEGMENTS_ENTRIES);
 
 		return segmentsExperienceLocalService.addSegmentsExperience(
 			segmentsEntryId, classNameId, classPK, nameMap, active,

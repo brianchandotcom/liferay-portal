@@ -20,7 +20,6 @@ import com.liferay.document.library.kernel.exception.DirectoryNameException;
 import com.liferay.document.library.kernel.store.DLStore;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLValidatorUtil;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
@@ -660,7 +659,10 @@ public class DLStoreImpl implements DLStore {
 		DLValidatorUtil.validateVersionLabel(versionLabel);
 	}
 
-	@BeanReference(type = GroupLocalService.class)
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	protected GroupLocalService groupLocalService;
 
 	private final StoreFactory _storeFactory;

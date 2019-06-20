@@ -14,9 +14,9 @@
 
 package com.liferay.asset.auto.tagger.opennlp.internal.configuration.admin.definition;
 
-import com.liferay.asset.auto.tagger.opennlp.internal.extractor.TextExtractorProvider;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.configuration.admin.definition.ConfigurationFieldOptionsProvider;
+import com.liferay.info.extractor.TextExtractorProvider;
 
 import java.util.List;
 import java.util.Locale;

@@ -12,28 +12,15 @@
  * details.
  */
 
-package com.liferay.asset.auto.tagger.opennlp.internal.extractor.external;
-
-import com.liferay.asset.auto.tagger.opennlp.internal.extractor.TextExtractor;
-import com.liferay.blogs.model.BlogsEntry;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.info.extractor;
 
 /**
- * @author Alicia García
  * @author Alejandro Tardín
  */
-@Component(service = TextExtractor.class)
-public class BlogsEntryTextExtractor implements TextExtractor<BlogsEntry> {
+public interface TextExtractor<T> {
 
-	@Override
-	public String getClassName() {
-		return BlogsEntry.class.getName();
-	}
+	public String getClassName();
 
-	@Override
-	public String getText(BlogsEntry blogsEntry) {
-		return blogsEntry.getContent();
-	}
+	public String getText(T source);
 
 }

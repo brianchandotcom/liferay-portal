@@ -190,7 +190,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 					Liferay.on('destroyPortlet', <portlet:namespace />clearPortletHandlers);
 
 					<c:if test="<%= ddmFormDisplayContext.isFormShared() %>">
-						document.title = '<%= HtmlUtil.escape(formInstance.getName(displayLocale)) %>';
+						document.title = '<%= HtmlUtil.escapeJS(formInstance.getName(displayLocale)) %>';
 					</c:if>
 
 					function <portlet:namespace />fireFormView() {

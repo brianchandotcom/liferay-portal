@@ -28,7 +28,9 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 		DropdownItemList dropdownItemList = new DropdownItemList();
 
 		for (DropdownItem dropdownItem : dropdownItems) {
-			dropdownItemList.add(dropdownItem);
+			if (dropdownItem != null) {
+				dropdownItemList.add(dropdownItem);
+			}
 		}
 
 		return dropdownItemList;
@@ -43,7 +45,11 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 				unsafeSuppliers) {
 
 			try {
-				dropdownItemList.add(unsafeSupplier.get());
+				DropdownItem dropdownItem = unsafeSupplier.get();
+
+				if (dropdownItem != null) {
+					dropdownItemList.add(dropdownItem);
+				}
 			}
 			catch (Exception e) {
 				throw new RuntimeException(e);

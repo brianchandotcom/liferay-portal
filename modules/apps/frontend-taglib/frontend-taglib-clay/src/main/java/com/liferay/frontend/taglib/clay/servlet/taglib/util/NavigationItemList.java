@@ -28,7 +28,9 @@ public class NavigationItemList extends ArrayList<NavigationItem> {
 		NavigationItemList navigationItemList = new NavigationItemList();
 
 		for (NavigationItem navigationItem : navigationItems) {
-			navigationItemList.add(navigationItem);
+			if (navigationItem != null) {
+				navigationItemList.add(navigationItem);
+			}
 		}
 
 		return navigationItemList;
@@ -43,7 +45,11 @@ public class NavigationItemList extends ArrayList<NavigationItem> {
 				unsafeSuppliers) {
 
 			try {
-				navigationItemList.add(unsafeSupplier.get());
+				NavigationItem navigationItem = unsafeSupplier.get();
+
+				if (navigationItem != null) {
+					navigationItemList.add(navigationItem);
+				}
 			}
 			catch (Exception e) {
 				throw new RuntimeException(e);

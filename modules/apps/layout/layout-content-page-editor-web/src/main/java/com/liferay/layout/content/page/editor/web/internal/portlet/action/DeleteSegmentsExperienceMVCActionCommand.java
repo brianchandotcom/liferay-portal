@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsConstants;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
+import com.liferay.segments.service.SegmentsExperienceService;
 
 import java.util.concurrent.Callable;
 
@@ -68,7 +68,7 @@ public class DeleteSegmentsExperienceMVCActionCommand
 		if (segmentsExperienceId !=
 				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT) {
 
-			_segmentsExperienceLocalService.deleteSegmentsExperience(
+			_segmentsExperienceService.deleteSegmentsExperience(
 				segmentsExperienceId);
 		}
 
@@ -126,7 +126,7 @@ public class DeleteSegmentsExperienceMVCActionCommand
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
-	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+	private SegmentsExperienceService _segmentsExperienceService;
 
 	private class DeleteSegmentsExperienceCallable implements Callable<Void> {
 

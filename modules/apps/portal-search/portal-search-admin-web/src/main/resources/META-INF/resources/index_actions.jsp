@@ -14,7 +14,38 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+
+<%@ page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.backgroundtask.BackgroundTask" %><%@
+page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants" %><%@
+page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil" %><%@
+page import="com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay" %><%@
+page import="com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplayFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.model.CompanyConstants" %><%@
+page import="com.liferay.portal.kernel.search.Indexer" %><%@
+page import="com.liferay.portal.kernel.search.IndexerClassNameComparator" %><%@
+page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.search.admin.web.internal.constants.SearchAdminWebKeys" %><%@
+page import="com.liferay.portal.search.admin.web.internal.display.context.IndexActionsDisplayContext" %>
+
+<%@ page import="java.io.Serializable" %>
+
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.Collections" %><%@
+page import="java.util.HashMap" %><%@
+page import="java.util.List" %><%@
+page import="java.util.Map" %>
+
+<%@ page import="javax.portlet.PortletURL" %>
+
+<portlet:defineObjects />
 
 <%
 IndexActionsDisplayContext indexActionsDisplayContext = (IndexActionsDisplayContext)request.getAttribute(SearchAdminWebKeys.INDEX_ACTIONS_DISPLAY_CONTEXT);

@@ -90,7 +90,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             com.liferay.portal.security.ldap.util.LDAPUtil#asLdapName(
+	 *             LDAPUtil#asLdapName(
 	 *             String)} for RDN escape and {@link
 	 *             LDAPFilter#rfc2254Escape(String)} to escape attribute value
 	 *             inside a filter

@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
 	service = AssetAutoTagProvider.class
 )
-public class OpenNLPTextAssetAutoTagProvider
+public class OpenNLPDocumentAssetAutoTagProvider
 	implements AssetAutoTagProvider<AssetEntry> {
 
 	@Override
@@ -95,7 +95,7 @@ public class OpenNLPTextAssetAutoTagProvider
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OpenNLPTextAssetAutoTagProvider.class);
+		OpenNLPDocumentAssetAutoTagProvider.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

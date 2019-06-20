@@ -7,6 +7,35 @@ import templates from './Text.soy.js';
 import {Config} from 'metal-state';
 
 class Text extends Component {
+	dispatchEvent(event, name, value) {
+		this.emit(name, {
+			fieldInstance: this,
+			originalEvent: event,
+			value
+		});
+	}
+
+	getAutocompleteOptions() {
+		const {options} = this;
+
+		if (!options) {
+			return [];
+		}
+
+		return options.map(option => {
+			return option.label;
+		});
+	}
+
+	prepareStateForRender(state) {
+		const {options} = this;
+
+		return {
+			...state,
+			options: this.getAutocompleteOptions(options)
+		};
+	}
+
 	willReceiveState(changes) {
 		if (changes.value) {
 			this.setState({
@@ -15,40 +44,24 @@ class Text extends Component {
 		}
 	}
 
-	prepareStateForRender(state) {
-		const {options} = this;
-
-		return {
-			...state,
-			options: this._fillAutocompleteOptions(options)
-		};
-	}
-
 	_handleAutocompleteFieldChanged(event) {
+		const {value} = event.data;
+
 		this.setState(
 			{
-				value: event.data.value
+				value
 			},
-			() => {
-				this.emit('fieldEdited', {
-					fieldInstance: this,
-					originalEvent: event,
-					value: event.data.value
-				});
-			}
+			() => this.dispatchEvent(event, 'fieldEdited', value)
 		);
 	}
 
 	_handleAutocompleteFieldFocused(event) {
-		this.emit('fieldFocused', {
-			fieldInstance: this,
-			originalEvent: event,
-			value: event.target.inputValue
-		});
+		this.dispatchEvent('fieldFocused', event, event.target.inputValue);
 	}
 
 	_handleAutocompleteFilteredItemsChanged(filteredItemsReceived) {
 		const {filteredItems} = this;
+
 		if (filteredItemsReceived.newVal.length != filteredItems.length) {
 			this.setState({
 				filteredItems: filteredItemsReceived.newVal
@@ -57,66 +70,42 @@ class Text extends Component {
 	}
 
 	_handleAutocompleteSelected(event) {
+		const {value} = event.data.item;
+
 		this.setState(
 			{
-				value: event.data.item.value,
+				value,
 				filteredItems: []
 			},
 			() => {
-				this.emit('fieldEdited', {
-					fieldInstance: this,
-					originalEvent: event,
-					value: event.data.item.value
-				});
+				this.dispatchEvent(event, 'fieldEdited', value);
 			}
 		);
 	}
 
 	_handleFieldBlurred(event) {
-		this.emit('fieldBlurred', {
-			fieldInstance: this,
-			originalEvent: event,
-			value: event.target.value
-		});
+		this.dispatchEvent(event, 'fieldBlurred', event.target.value);
 	}
 
 	_handleFieldChanged(event) {
+		const {value} = event.target;
+
 		this.setState(
 			{
-				value: event.target.value
+				value
 			},
-			() => {
-				this.emit('fieldEdited', {
-					fieldInstance: this,
-					originalEvent: event,
-					value: event.target.value
-				});
-			}
+			() => this.dispatchEvent(event, 'fieldEdited', value)
 		);
 	}
 
 	_handleFieldFocused(event) {
-		this.emit('fieldFocused', {
-			fieldInstance: this,
-			originalEvent: event,
-			value: event.target.value
-		});
+		this.dispatchEvent(event, 'fieldFocused', event.target.value);
 	}
 
 	_internalValueFn() {
 		const {value} = this;
 
 		return value;
-	}
-
-	_fillAutocompleteOptions() {
-		const {options} = this;
-
-		let autocompleteList = options ? options : [];
-
-		return autocompleteList.map(option => {
-			return option.label;
-		});
 	}
 }
 

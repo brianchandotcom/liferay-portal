@@ -205,7 +205,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		ProductMenu.gotoSite(site = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",

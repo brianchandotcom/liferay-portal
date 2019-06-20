@@ -24,8 +24,9 @@ import com.liferay.info.extractor.TextExtractor;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,7 +46,7 @@ public class JournalArticleTextExtractor
 	}
 
 	@Override
-	public String getText(JournalArticle journalArticle) {
+	public String getText(JournalArticle journalArticle, Locale locale) {
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
 			_portal.getSiteGroupId(journalArticle.getGroupId()),
 			_portal.getClassNameId(JournalArticle.class),
@@ -73,8 +74,7 @@ public class JournalArticleTextExtractor
 		}
 
 		return _ddmIndexer.extractIndexableAttributes(
-			ddmStructure, ddmFormValues,
-			LocaleUtil.fromLanguageId(journalArticle.getDefaultLanguageId()));
+			ddmStructure, ddmFormValues, locale);
 	}
 
 	@Reference

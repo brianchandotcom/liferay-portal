@@ -4,6 +4,7 @@ Bundle-Version: 4.0.0
 Export-Package:\
 	com.liferay.portal.vulcan.accept.language,\
 	com.liferay.portal.vulcan.fields,\
+	com.liferay.portal.vulcan.graphql.annotations,\
 	com.liferay.portal.vulcan.graphql.servlet,\
 	com.liferay.portal.vulcan.multipart,\
 	com.liferay.portal.vulcan.pagination,\
@@ -12,15 +13,4 @@ Export-Package:\
 	com.liferay.portal.vulcan.util,\
 	com.liferay.portal.vulcan.yaml,\
 	com.liferay.portal.vulcan.yaml.config,\
-	com.liferay.portal.vulcan.yaml.openapi,\
-	\
-	graphql.annotations.annotationTypes;version="7.0"
-Import-Package:\
-	!graphql.annotations.directives.*,\
-	!graphql.annotations.processor.typeFunctions.*,\
-	!graphql.annotations.typeResolvers.*,\
-	\
-	!graphql.schema.*,\
-	\
-	*
--includeresource: @graphql-java-annotations-[0-9]*.jar!/graphql/annotations/annotationTypes/*
+	com.liferay.portal.vulcan.yaml.openapi

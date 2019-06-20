@@ -16,7 +16,9 @@ package com.liferay.portal.kernel.service.persistence;
 
 /**
  * @author Manuel de la Peña
+ * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
+@Deprecated
 public interface CompanyProvider {
 
 	public long getCompanyId();

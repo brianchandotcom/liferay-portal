@@ -46,9 +46,8 @@ import org.apache.commons.lang.StringEscapeUtils;
 public class LDAPUtil {
 
 	public static LdapName asLdapName(Rdn prefix, LdapName baseDN) {
-		List<Rdn> rdnList = new ArrayList<>();
+		List<Rdn> rdnList = new ArrayList<>(baseDN.getRdns());
 
-		rdnList.addAll(baseDN.getRdns());
 		rdnList.add(prefix);
 
 		return new LdapName(rdnList);

@@ -575,13 +575,10 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
 
-		String baseProviderURL = ldapServerConfiguration.baseProviderURL();
-		String securityPrincipal = ldapServerConfiguration.securityPrincipal();
-		String securityCredential =
-			ldapServerConfiguration.securityCredential();
-
 		return getSafeLDAPContext(
-			companyId, baseProviderURL, securityPrincipal, securityCredential);
+			companyId, ldapServerConfiguration.baseProviderURL(),
+			ldapServerConfiguration.securityPrincipal(),
+			ldapServerConfiguration.securityCredential());
 	}
 
 	@Override

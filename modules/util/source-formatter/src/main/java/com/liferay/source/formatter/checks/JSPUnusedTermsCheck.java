@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
-import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.IOException;
 
@@ -38,19 +37,14 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class JSPUnusedTermsCheck extends BaseFileCheck {
-
-	@Override
-	public void setAllFileNames(List<String> allFileNames) {
-		_allFileNames = allFileNames;
-	}
+public class JSPUnusedTermsCheck extends JSPTermsBaseCheck {
 
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		_populateContentsMap(fileName, content);
+		populateContentsMap(fileName, content);
 
 		content = _removeUnusedImports(fileName, content);
 
@@ -72,7 +66,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 			content = _removeUnusedVariables(fileName, absolutePath, content);
 		}
 
-		_contentsMap.put(fileName, content);
+		put(fileName, content);
 
 		return content;
 	}
@@ -100,7 +94,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 
 			if (_hasUnusedJSPTerm(
 					fileName, "\\W" + className + "[^\\w\"]", "class",
-					checkedFileNames, includeFileNames, _getContentsMap())) {
+					checkedFileNames, includeFileNames, getContentsMap())) {
 
 				unneededImports.add(importLine);
 			}
@@ -131,15 +125,11 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 
 			if (_hasUnusedJSPTerm(
 					fileName, regex, "taglib", checkedFileNames,
-					includeFileNames, _getContentsMap())) {
+					includeFileNames, getContentsMap())) {
 
 				unneededTaglibs.add(taglibLine);
 			}
 		}
-	}
-
-	private Map<String, String> _getContentsMap() {
-		return _contentsMap;
 	}
 
 	private List<String> _getJSPDuplicateImports(
@@ -252,7 +242,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		return _hasUnusedJSPTerm(
 			fileName, "\\W" + portletDefineObjectProperty + "\\W",
 			"portletDefineObjectProperty", checkedFileNames, includeFileNames,
-			_getContentsMap());
+			getContentsMap());
 	}
 
 	private boolean _hasUnusedVariable(
@@ -273,13 +263,13 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 
 		return _hasUnusedJSPTerm(
 			fileName, "\\W" + variableName + "\\W", "variable",
-			checkedFileNames, includeFileNames, _getContentsMap());
+			checkedFileNames, includeFileNames, getContentsMap());
 	}
 
 	private boolean _isJSPDuplicateDefineObjects(
 		String fileName, String defineObjects, boolean checkFile) {
 
-		Map<String, String> contentsMap = _getContentsMap();
+		Map<String, String> contentsMap = getContentsMap();
 
 		String content = contentsMap.get(fileName);
 
@@ -312,7 +302,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		String includeFileName = content.substring(x + 1, y);
 
 		includeFileName = JSPSourceUtil.buildFullPathIncludeFileName(
-			fileName, includeFileName, _getContentsMap());
+			fileName, includeFileName, getContentsMap());
 
 		return _isJSPDuplicateDefineObjects(
 			includeFileName, defineObjects, true);
@@ -321,7 +311,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	private boolean _isJSPDuplicateImport(
 		String fileName, String importLine, boolean checkFile) {
 
-		Map<String, String> contentsMap = _getContentsMap();
+		Map<String, String> contentsMap = getContentsMap();
 
 		String content = contentsMap.get(fileName);
 
@@ -364,7 +354,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		String includeFileName = content.substring(y + 1, z);
 
 		includeFileName = JSPSourceUtil.buildFullPathIncludeFileName(
-			fileName, includeFileName, _getContentsMap());
+			fileName, includeFileName, getContentsMap());
 
 		return _isJSPDuplicateImport(includeFileName, importLine, true);
 	}
@@ -372,7 +362,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	private boolean _isJSPDuplicateTaglib(
 		String fileName, String taglibLine, boolean checkFile) {
 
-		Map<String, String> contentsMap = _getContentsMap();
+		Map<String, String> contentsMap = getContentsMap();
 
 		String content = contentsMap.get(fileName);
 
@@ -411,7 +401,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		String includeFileName = content.substring(y + 1, z);
 
 		includeFileName = JSPSourceUtil.buildFullPathIncludeFileName(
-			fileName, includeFileName, _getContentsMap());
+			fileName, includeFileName, getContentsMap());
 
 		return _isJSPDuplicateTaglib(includeFileName, taglibLine, true);
 	}
@@ -482,31 +472,6 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		}
 
 		return false;
-	}
-
-	private synchronized void _populateContentsMap(
-			String fileName, String content)
-		throws IOException {
-
-		if (_contentsMap != null) {
-			return;
-		}
-
-		String[] excludes = {"**/null.jsp", "**/tools/**"};
-
-		List<String> allJSPFileNames = SourceFormatterUtil.filterFileNames(
-			_allFileNames, excludes,
-			new String[] {"**/*.jsp", "**/*.jspf", "**/*.tag"},
-			getSourceFormatterExcludes(), true);
-
-		_contentsMap = JSPSourceUtil.getContentsMap(allJSPFileNames);
-
-		// When running tests, the contentsMap is empty, because the file
-		// extension of the test files is *.testjsp
-
-		if (_contentsMap.isEmpty()) {
-			_contentsMap.put(fileName, content);
-		}
 	}
 
 	private String _removeDuplicateDefineObjects(
@@ -716,8 +681,5 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		"(<.*\n*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
 	private static final Pattern _defineObjectsPattern = Pattern.compile(
 		"<[\\w-]+:defineObjects />");
-
-	private List<String> _allFileNames;
-	private Map<String, String> _contentsMap;
 
 }

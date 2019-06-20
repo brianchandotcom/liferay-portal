@@ -278,6 +278,9 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 			springInitThread.start();
 		}
+		else {
+			_initSpring(servletContextEvent, portalClassLoader);
+		}
 
 		try {
 			ModuleFrameworkUtilAdapter.registerContext(
@@ -291,10 +294,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			throw new RuntimeException(e);
 		}
 
-		if (springInitTask == null) {
-			_initSpring(servletContextEvent, portalClassLoader);
-		}
-		else {
+		if (springInitTask != null) {
 			try {
 				springInitTask.get();
 			}

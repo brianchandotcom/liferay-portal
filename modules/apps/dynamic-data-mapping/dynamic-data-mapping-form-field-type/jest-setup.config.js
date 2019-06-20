@@ -26,30 +26,34 @@ window.AlloyEditor = {
 
 window.AUI = () => (
 	{
-		use: (_, callback) => callback(
-			{
-				LiferayAlloyEditor: () => (
-					{
-						render: () => (
-							{
-								getHTML: () => 'test',
-								getNativeEditor: () => (
-									{
-										on: () => true,
-										setData: () => false
-									}
-								)
-							}
-						)
-					}
-				),
-				one: () => (
-					{
-						innerHTML: () => {}
-					}
-				)
-			}
-		)
+		use: (...modules) => {
+			const callback = modules[modules.length - 1];
+
+			callback(
+				{
+					LiferayAlloyEditor: () => (
+						{
+							render: () => (
+								{
+									getHTML: () => 'test',
+									getNativeEditor: () => (
+										{
+											on: () => true,
+											setData: () => false
+										}
+									)
+								}
+							)
+						}
+					),
+					one: () => (
+						{
+							innerHTML: () => {}
+						}
+					)
+				}
+			)
+		}
 	}
 );
 

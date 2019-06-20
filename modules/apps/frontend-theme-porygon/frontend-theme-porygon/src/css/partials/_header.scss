@@ -85,7 +85,7 @@ header {
 				}
 
 				@include sm {
-					width: 98%;
+					width: calc(100% - 5rem);
 				}
 
 				background-color: transparent;

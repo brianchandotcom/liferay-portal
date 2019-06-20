@@ -266,7 +266,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		if (PropsValues.MODULE_FRAMEWORK_CONCURRENT_STARTUP_ENABLED) {
 			springInitTask = new FutureTask<>(
 				() -> {
-					super.contextInitialized(servletContextEvent);
+					_initSpring(servletContextEvent);
 
 					return null;
 				});
@@ -292,7 +292,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 
 		if (springInitTask == null) {
-			super.contextInitialized(servletContextEvent);
+			_initSpring(servletContextEvent);
 		}
 		else {
 			try {
@@ -405,6 +405,10 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		servletContext.addListener(PortalSessionListener.class);
 		servletContext.addListener(PortletSessionListenerManager.class);
+	}
+
+	private void _initSpring(ServletContextEvent servletContextEvent) {
+		super.contextInitialized(servletContextEvent);
 	}
 
 	private void _logJVMArguments() {

@@ -201,7 +201,6 @@ public class SharedAssetsViewDisplayContext {
 		menu.setMessage(LanguageUtil.get(_httpServletRequest, "actions"));
 		menu.setScroll(false);
 		menu.setShowWhenSingleIcon(true);
-		menu.setTriggerCssClass("component-action");
 
 		if (!isVisible(sharingEntry)) {
 			menu.setMenuItems(Collections.emptyList());

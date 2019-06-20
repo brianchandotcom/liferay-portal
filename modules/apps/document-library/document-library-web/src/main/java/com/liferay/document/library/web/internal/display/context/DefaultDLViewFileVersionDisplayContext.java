@@ -194,7 +194,6 @@ public class DefaultDLViewFileVersionDisplayContext
 		menu.setMessage(LanguageUtil.get(_resourceBundle, "actions"));
 		menu.setScroll(false);
 		menu.setShowWhenSingleIcon(true);
-		menu.setTriggerCssClass("component-action");
 
 		return menu;
 	}

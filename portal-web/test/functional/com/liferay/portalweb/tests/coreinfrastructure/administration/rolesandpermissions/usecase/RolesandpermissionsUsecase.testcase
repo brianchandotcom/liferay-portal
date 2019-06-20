@@ -1530,9 +1530,9 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "User Groups");
 
-		Site.assignSiteRoleCP(
-			resourceName = "UG UserGroup3 Name",
-			roleTitle = "Sports Journalist Name");
+		Site.assignSiteRoleToUserGroup(
+			roleTitle = "Sports Journalist Name",
+			userGroupName = "UG UserGroup3 Name");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 

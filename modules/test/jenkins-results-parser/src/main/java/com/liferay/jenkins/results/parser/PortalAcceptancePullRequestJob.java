@@ -52,7 +52,7 @@ public class PortalAcceptancePullRequestJob
 
 		Set<String> testBatchNamesSet = getSetFromString(testBatchNames);
 
-		if (_isPortalWebOnly()) {
+		if (_isRelevantTestSuite() && _isPortalWebOnly()) {
 			String[] portalWebOnlyBatchNameMarkers = {
 				"compile-jsp", "functional", "portal-web", "source-format"
 			};
@@ -139,6 +139,10 @@ public class PortalAcceptancePullRequestJob
 		}
 
 		return true;
+	}
+
+	private boolean _isRelevantTestSuite() {
+		return _testSuiteName.equals("relevant");
 	}
 
 	private final String _testSuiteName;

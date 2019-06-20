@@ -26,12 +26,10 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
-import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
 
@@ -69,7 +67,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Keyword getKeyword(@GraphQLName("keywordId") Long keywordId)
 		throws Exception {
 
@@ -80,7 +77,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<Keyword> getSiteKeywordsPage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("search") String search,
@@ -102,7 +98,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<TaxonomyCategory>
 			getTaxonomyCategoryTaxonomyCategoriesPage(
 				@GraphQLName("parentTaxonomyCategoryId") Long
@@ -129,7 +124,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public TaxonomyCategory getTaxonomyCategory(
 			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId)
 		throws Exception {
@@ -143,7 +137,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<TaxonomyCategory>
 			getTaxonomyVocabularyTaxonomyCategoriesPage(
 				@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
@@ -169,7 +162,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<TaxonomyVocabulary>
 			getSiteTaxonomyVocabulariesPage(
 				@GraphQLName("siteId") Long siteId,
@@ -194,7 +186,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public TaxonomyVocabulary getTaxonomyVocabulary(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId)
 		throws Exception {

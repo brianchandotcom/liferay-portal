@@ -53,12 +53,10 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
-import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
 
@@ -202,7 +200,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public BlogPosting getBlogPosting(
 			@GraphQLName("blogPostingId") Long blogPostingId)
 		throws Exception {
@@ -215,7 +212,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Rating getBlogPostingMyRating(
 			@GraphQLName("blogPostingId") Long blogPostingId)
 		throws Exception {
@@ -228,7 +224,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<BlogPosting> getSiteBlogPostingsPage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("search") String search,
@@ -251,7 +246,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public BlogPostingImage getBlogPostingImage(
 			@GraphQLName("blogPostingImageId") Long blogPostingImageId)
 		throws Exception {
@@ -265,7 +259,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<BlogPostingImage> getSiteBlogPostingImagesPage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("search") String search,
@@ -288,7 +281,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<Comment> getBlogPostingCommentsPage(
 			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("search") String search,
@@ -311,7 +303,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Comment getComment(@GraphQLName("commentId") Long commentId)
 		throws Exception {
 
@@ -322,7 +313,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<Comment> getCommentCommentsPage(
 			@GraphQLName("parentCommentId") Long parentCommentId,
 			@GraphQLName("search") String search,
@@ -344,7 +334,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<Comment> getDocumentCommentsPage(
 			@GraphQLName("documentId") Long documentId,
 			@GraphQLName("search") String search,
@@ -366,7 +355,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<Comment> getStructuredContentCommentsPage(
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("search") String search,
@@ -389,7 +377,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<ContentSetElement>
 			getContentSetContentSetElementsPage(
 				@GraphQLName("contentSetId") Long contentSetId,
@@ -411,7 +398,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<ContentSetElement>
 			getSiteContentSetByKeyContentSetElementsPage(
 				@GraphQLName("siteId") Long siteId,
@@ -434,7 +420,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<ContentSetElement>
 			getSiteContentSetByUuidContentSetElementsPage(
 				@GraphQLName("siteId") Long siteId,
@@ -457,7 +442,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public ContentStructure getContentStructure(
 			@GraphQLName("contentStructureId") Long contentStructureId)
 		throws Exception {
@@ -471,7 +455,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<ContentStructure> getSiteContentStructuresPage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("search") String search,
@@ -494,7 +477,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<Document> getDocumentFolderDocumentsPage(
 			@GraphQLName("documentFolderId") Long documentFolderId,
 			@GraphQLName("search") String search,
@@ -517,7 +499,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Document getDocument(@GraphQLName("documentId") Long documentId)
 		throws Exception {
 
@@ -528,7 +509,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Rating getDocumentMyRating(
 			@GraphQLName("documentId") Long documentId)
 		throws Exception {
@@ -541,7 +521,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<Document> getSiteDocumentsPage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("flatten") Boolean flatten,
@@ -564,7 +543,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public DocumentFolder getDocumentFolder(
 			@GraphQLName("documentFolderId") Long documentFolderId)
 		throws Exception {
@@ -577,7 +555,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<DocumentFolder>
 			getDocumentFolderDocumentFoldersPage(
 				@GraphQLName("parentDocumentFolderId") Long
@@ -603,7 +580,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<DocumentFolder> getSiteDocumentFoldersPage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("flatten") Boolean flatten,
@@ -627,7 +603,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public KnowledgeBaseArticle getKnowledgeBaseArticle(
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
 		throws Exception {
@@ -641,7 +616,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Rating getKnowledgeBaseArticleMyRating(
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
 		throws Exception {
@@ -655,7 +629,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<KnowledgeBaseArticle>
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 				@GraphQLName("parentKnowledgeBaseArticleId") Long
@@ -682,7 +655,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<KnowledgeBaseArticle>
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 				@GraphQLName("knowledgeBaseFolderId") Long
@@ -710,7 +682,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<KnowledgeBaseArticle>
 			getSiteKnowledgeBaseArticlesPage(
 				@GraphQLName("siteId") Long siteId,
@@ -737,7 +708,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<KnowledgeBaseAttachment>
 			getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
 				@GraphQLName("knowledgeBaseArticleId") Long
@@ -758,7 +728,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public KnowledgeBaseAttachment getKnowledgeBaseAttachment(
 			@GraphQLName("knowledgeBaseAttachmentId") Long
 				knowledgeBaseAttachmentId)
@@ -773,7 +742,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public KnowledgeBaseFolder getKnowledgeBaseFolder(
 			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId)
 		throws Exception {
@@ -787,7 +755,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<KnowledgeBaseFolder>
 			getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
 				@GraphQLName("parentKnowledgeBaseFolderId") Long
@@ -811,7 +778,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<KnowledgeBaseFolder>
 			getSiteKnowledgeBaseFoldersPage(
 				@GraphQLName("siteId") Long siteId,
@@ -832,7 +798,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public MessageBoardAttachment getMessageBoardAttachment(
 			@GraphQLName("messageBoardAttachmentId") Long
 				messageBoardAttachmentId)
@@ -847,7 +812,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<MessageBoardAttachment>
 			getMessageBoardMessageMessageBoardAttachmentsPage(
 				@GraphQLName("messageBoardMessageId") Long
@@ -868,7 +832,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<MessageBoardAttachment>
 			getMessageBoardThreadMessageBoardAttachmentsPage(
 				@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
@@ -888,7 +851,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public MessageBoardMessage getMessageBoardMessage(
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
 		throws Exception {
@@ -902,7 +864,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Rating getMessageBoardMessageMyRating(
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
 		throws Exception {
@@ -916,7 +877,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<MessageBoardMessage>
 			getMessageBoardMessageMessageBoardMessagesPage(
 				@GraphQLName("parentMessageBoardMessageId") Long
@@ -943,7 +903,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<MessageBoardMessage>
 			getMessageBoardThreadMessageBoardMessagesPage(
 				@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
@@ -969,7 +928,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public MessageBoardSection getMessageBoardSection(
 			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId)
 		throws Exception {
@@ -983,7 +941,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<MessageBoardSection>
 			getMessageBoardSectionMessageBoardSectionsPage(
 				@GraphQLName("parentMessageBoardSectionId") Long
@@ -1010,7 +967,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<MessageBoardSection>
 			getSiteMessageBoardSectionsPage(
 				@GraphQLName("siteId") Long siteId,
@@ -1036,7 +992,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<MessageBoardThread>
 			getMessageBoardSectionMessageBoardThreadsPage(
 				@GraphQLName("messageBoardSectionId") Long
@@ -1063,7 +1018,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public MessageBoardThread getMessageBoardThread(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
@@ -1077,7 +1031,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Rating getMessageBoardThreadMyRating(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
@@ -1091,7 +1044,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<MessageBoardThread>
 			getSiteMessageBoardThreadsPage(
 				@GraphQLName("siteId") Long siteId,
@@ -1117,7 +1069,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<StructuredContent>
 			getContentStructureStructuredContentsPage(
 				@GraphQLName("contentStructureId") Long contentStructureId,
@@ -1143,7 +1094,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<StructuredContent>
 			getSiteStructuredContentsPage(
 				@GraphQLName("siteId") Long siteId,
@@ -1169,7 +1119,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public StructuredContent getSiteStructuredContentByKey(
 			@GraphQLName("siteId") Long siteId, @GraphQLName("key") String key)
 		throws Exception {
@@ -1183,7 +1132,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public StructuredContent getSiteStructuredContentByUuid(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("uuid") String uuid)
@@ -1198,7 +1146,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<StructuredContent>
 			getStructuredContentFolderStructuredContentsPage(
 				@GraphQLName("structuredContentFolderId") Long
@@ -1225,7 +1172,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public StructuredContent getStructuredContent(
 			@GraphQLName("structuredContentId") Long structuredContentId)
 		throws Exception {
@@ -1239,7 +1185,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Rating getStructuredContentMyRating(
 			@GraphQLName("structuredContentId") Long structuredContentId)
 		throws Exception {
@@ -1253,7 +1198,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public String getStructuredContentRenderedContentTemplate(
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("templateId") Long templateId)
@@ -1269,7 +1213,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<StructuredContentFolder>
 			getSiteStructuredContentFoldersPage(
 				@GraphQLName("siteId") Long siteId,
@@ -1296,7 +1239,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<StructuredContentFolder>
 			getStructuredContentFolderStructuredContentFoldersPage(
 				@GraphQLName("parentStructuredContentFolderId") Long
@@ -1323,7 +1265,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public StructuredContentFolder getStructuredContentFolder(
 			@GraphQLName("structuredContentFolderId") Long
 				structuredContentFolderId)

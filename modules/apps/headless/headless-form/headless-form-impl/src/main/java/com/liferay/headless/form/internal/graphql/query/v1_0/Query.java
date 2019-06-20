@@ -26,12 +26,10 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
-import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
 
@@ -77,7 +75,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Form getForm(@GraphQLName("formId") Long formId) throws Exception {
 		return _applyComponentServiceObjects(
 			_formResourceComponentServiceObjects,
@@ -86,7 +83,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<Form> getSiteFormsPage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("pageSize") int pageSize,
@@ -105,7 +101,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public FormDocument getFormDocument(
 			@GraphQLName("formDocumentId") Long formDocumentId)
 		throws Exception {
@@ -118,7 +113,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public FormRecord getFormRecord(
 			@GraphQLName("formRecordId") Long formRecordId)
 		throws Exception {
@@ -131,7 +125,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<FormRecord> getFormFormRecordsPage(
 			@GraphQLName("formId") Long formId,
 			@GraphQLName("pageSize") int pageSize,
@@ -150,7 +143,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public FormRecord getFormFormRecordByLatestDraft(
 			@GraphQLName("formId") Long formId)
 		throws Exception {
@@ -163,7 +155,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public FormStructure getFormStructure(
 			@GraphQLName("formStructureId") Long formStructureId)
 		throws Exception {
@@ -176,7 +167,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<FormStructure> getSiteFormStructuresPage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("pageSize") int pageSize,

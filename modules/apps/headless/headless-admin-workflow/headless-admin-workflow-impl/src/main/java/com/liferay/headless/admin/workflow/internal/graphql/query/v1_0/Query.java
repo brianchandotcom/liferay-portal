@@ -22,12 +22,10 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
-import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
 
@@ -57,7 +55,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public WorkflowLog getWorkflowLog(
 			@GraphQLName("workflowLogId") Long workflowLogId)
 		throws Exception {
@@ -70,7 +67,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<WorkflowLog> getWorkflowTaskWorkflowLogsPage(
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
 			@GraphQLName("pageSize") int pageSize,
@@ -90,7 +86,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<WorkflowTask> getRoleWorkflowTasksPage(
 			@GraphQLName("roleId") Long roleId,
 			@GraphQLName("pageSize") int pageSize,
@@ -110,7 +105,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<WorkflowTask> getWorkflowTasksAssignedToMePage(
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -129,7 +123,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<WorkflowTask>
 			getWorkflowTasksAssignedToMyRolesPage(
 				@GraphQLName("pageSize") int pageSize,
@@ -149,7 +142,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public WorkflowTask getWorkflowTask(
 			@GraphQLName("workflowTaskId") Long workflowTaskId)
 		throws Exception {

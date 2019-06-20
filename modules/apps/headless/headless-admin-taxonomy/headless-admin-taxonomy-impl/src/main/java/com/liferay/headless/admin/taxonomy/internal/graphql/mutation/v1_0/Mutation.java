@@ -24,10 +24,8 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
-import graphql.annotations.annotationTypes.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLName;
 
 import javax.annotation.Generated;
 
@@ -64,7 +62,6 @@ public class Mutation {
 			taxonomyVocabularyResourceComponentServiceObjects;
 	}
 
-	@GraphQLInvokeDetached
 	public void deleteKeyword(@GraphQLName("keywordId") Long keywordId)
 		throws Exception {
 
@@ -74,7 +71,6 @@ public class Mutation {
 			keywordResource -> keywordResource.deleteKeyword(keywordId));
 	}
 
-	@GraphQLInvokeDetached
 	public Keyword putKeyword(
 			@GraphQLName("keywordId") Long keywordId,
 			@GraphQLName("keyword") Keyword keyword)
@@ -87,7 +83,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Keyword postSiteKeyword(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("keyword") Keyword keyword)
@@ -101,7 +96,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
 			@GraphQLName("parentTaxonomyCategoryId") Long
 				parentTaxonomyCategoryId,
@@ -116,7 +110,6 @@ public class Mutation {
 					parentTaxonomyCategoryId, taxonomyCategory));
 	}
 
-	@GraphQLInvokeDetached
 	public void deleteTaxonomyCategory(
 			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId)
 		throws Exception {
@@ -129,7 +122,6 @@ public class Mutation {
 					taxonomyCategoryId));
 	}
 
-	@GraphQLInvokeDetached
 	public TaxonomyCategory patchTaxonomyCategory(
 			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId,
 			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
@@ -143,7 +135,6 @@ public class Mutation {
 					taxonomyCategoryId, taxonomyCategory));
 	}
 
-	@GraphQLInvokeDetached
 	public TaxonomyCategory putTaxonomyCategory(
 			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId,
 			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
@@ -158,7 +149,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public TaxonomyCategory postTaxonomyVocabularyTaxonomyCategory(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
 			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
@@ -173,7 +163,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public TaxonomyVocabulary postSiteTaxonomyVocabulary(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary
@@ -188,7 +177,6 @@ public class Mutation {
 					siteId, taxonomyVocabulary));
 	}
 
-	@GraphQLInvokeDetached
 	public void deleteTaxonomyVocabulary(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId)
 		throws Exception {
@@ -201,7 +189,6 @@ public class Mutation {
 					taxonomyVocabularyId));
 	}
 
-	@GraphQLInvokeDetached
 	public TaxonomyVocabulary patchTaxonomyVocabulary(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
 			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary
@@ -216,7 +203,6 @@ public class Mutation {
 					taxonomyVocabularyId, taxonomyVocabulary));
 	}
 
-	@GraphQLInvokeDetached
 	public TaxonomyVocabulary putTaxonomyVocabulary(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
 			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary

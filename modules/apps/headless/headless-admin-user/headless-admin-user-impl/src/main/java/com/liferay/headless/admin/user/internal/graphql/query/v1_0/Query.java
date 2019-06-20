@@ -38,12 +38,10 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
-import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
 
@@ -129,7 +127,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public EmailAddress getEmailAddress(
 			@GraphQLName("emailAddressId") Long emailAddressId)
 		throws Exception {
@@ -142,7 +139,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<EmailAddress> getOrganizationEmailAddressesPage(
 			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
@@ -160,7 +156,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<EmailAddress> getUserAccountEmailAddressesPage(
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
@@ -178,7 +173,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<Organization> getOrganizationsPage(
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -198,7 +192,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Organization getOrganization(
 			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
@@ -211,7 +204,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<Organization> getOrganizationOrganizationsPage(
 			@GraphQLName("parentOrganizationId") Long parentOrganizationId,
 			@GraphQLName("search") String search,
@@ -234,7 +226,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<Phone> getOrganizationPhonesPage(
 			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
@@ -251,7 +242,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Phone getPhone(@GraphQLName("phoneId") Long phoneId)
 		throws Exception {
 
@@ -262,7 +252,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<Phone> getUserAccountPhonesPage(
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
@@ -279,7 +268,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<PostalAddress>
 			getOrganizationPostalAddressesPage(
 				@GraphQLName("organizationId") Long organizationId)
@@ -298,7 +286,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public PostalAddress getPostalAddress(
 			@GraphQLName("postalAddressId") Long postalAddressId)
 		throws Exception {
@@ -311,7 +298,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<PostalAddress>
 			getUserAccountPostalAddressesPage(
 				@GraphQLName("userAccountId") Long userAccountId)
@@ -330,7 +316,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<Role> getRolesPage(
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -348,7 +333,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Role getRole(@GraphQLName("roleId") Long roleId) throws Exception {
 		return _applyComponentServiceObjects(
 			_roleResourceComponentServiceObjects,
@@ -357,7 +341,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<Segment> getSiteSegmentsPage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("pageSize") int pageSize,
@@ -376,7 +359,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<Segment> getSiteUserAccountSegmentsPage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("userAccountId") Long userAccountId)
@@ -395,7 +377,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<SegmentUser> getSegmentUserAccountsPage(
 			@GraphQLName("segmentId") Long segmentId,
 			@GraphQLName("pageSize") int pageSize,
@@ -415,7 +396,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public UserAccount getMyUserAccount() throws Exception {
 		return _applyComponentServiceObjects(
 			_userAccountResourceComponentServiceObjects,
@@ -424,7 +404,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<UserAccount> getOrganizationUserAccountsPage(
 			@GraphQLName("organizationId") Long organizationId,
 			@GraphQLName("search") String search,
@@ -447,7 +426,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<UserAccount> getUserAccountsPage(
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -467,7 +445,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public UserAccount getUserAccount(
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
@@ -480,7 +457,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<UserAccount> getWebSiteUserAccountsPage(
 			@GraphQLName("webSiteId") Long webSiteId,
 			@GraphQLName("search") String search,
@@ -503,7 +479,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<WebUrl> getOrganizationWebUrlsPage(
 			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
@@ -520,7 +495,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<WebUrl> getUserAccountWebUrlsPage(
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
@@ -537,7 +511,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public WebUrl getWebUrl(@GraphQLName("webUrlId") Long webUrlId)
 		throws Exception {
 

@@ -24,11 +24,9 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLName;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
-import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
 
@@ -66,7 +64,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public FormContext postFormEvaluateContext(
 			@GraphQLName("formId") Long formId,
 			@GraphQLName("formContext") FormContext formContext)
@@ -80,7 +77,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	@GraphQLName("postFormFormDocumentFormIdMultipartBody")
 	public FormDocument postFormFormDocument(
 			@GraphQLName("formId") Long formId,
@@ -94,7 +90,6 @@ public class Mutation {
 				formId, multipartBody));
 	}
 
-	@GraphQLInvokeDetached
 	public void deleteFormDocument(
 			@GraphQLName("formDocumentId") Long formDocumentId)
 		throws Exception {
@@ -106,7 +101,6 @@ public class Mutation {
 				formDocumentId));
 	}
 
-	@GraphQLInvokeDetached
 	public FormRecord putFormRecord(
 			@GraphQLName("formRecordId") Long formRecordId,
 			@GraphQLName("formRecord") FormRecord formRecord)
@@ -120,7 +114,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public FormRecord postFormFormRecord(
 			@GraphQLName("formId") Long formId,
 			@GraphQLName("formRecord") FormRecord formRecord)

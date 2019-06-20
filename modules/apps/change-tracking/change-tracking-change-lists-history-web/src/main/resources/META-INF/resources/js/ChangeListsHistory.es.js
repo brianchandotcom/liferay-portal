@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import 'clay-label';
 import 'clay-progress-bar';
 import 'clay-sticker';

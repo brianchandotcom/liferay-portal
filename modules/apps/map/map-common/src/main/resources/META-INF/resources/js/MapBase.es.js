@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import State, {Config} from 'metal-state';
 import {buildFragment} from 'metal-dom';
 

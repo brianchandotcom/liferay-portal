@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';

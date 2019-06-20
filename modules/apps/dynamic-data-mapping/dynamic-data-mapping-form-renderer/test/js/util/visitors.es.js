@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import mockPages from 'mock/mockPages.es';
 import {PagesVisitor} from 'source/util/visitors.es';
 

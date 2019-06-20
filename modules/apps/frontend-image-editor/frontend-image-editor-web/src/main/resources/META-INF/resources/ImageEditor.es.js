@@ -12,6 +12,9 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+/* eslint no-useless-escape: "warn" */
+
 import 'clay-dropdown';
 
 import Soy from 'metal-soy';
@@ -390,8 +393,8 @@ class ImageEditor extends PortletBase {
 		const saveFileName = this.saveFileName;
 		const saveParamName = this.saveParamName;
 
-		let promise = new Promise((resolve, reject) => {
-			let formData = new FormData();
+		const promise = new Promise((resolve, reject) => {
+			const formData = new FormData();
 
 			formData.append(saveParamName, imageBlob, saveFileName);
 

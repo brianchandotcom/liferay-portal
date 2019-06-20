@@ -1,7 +1,14 @@
+**/*.js
+!**/*.es.js
+
+!.eslintrc.js
+!.prettierrc.js
+!npmscripts.config.js
+
 **/build/**/*
 **/classes/**/*
 **/css/clay/**/*
 **/node_modules/**/*
+**/sdk/**/*
 **/zippableResources/**/*
 modules/tests/poshi-runner/**/*
-yarn-*.js

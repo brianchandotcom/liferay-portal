@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import 'clay-multi-select';
 import {Config} from 'metal-state';
 import Component from 'metal-component';

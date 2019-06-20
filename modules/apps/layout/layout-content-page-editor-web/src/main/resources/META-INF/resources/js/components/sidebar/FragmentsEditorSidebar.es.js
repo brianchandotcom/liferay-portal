@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-undef: "warn" */
+
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';

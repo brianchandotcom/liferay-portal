@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import async from 'metal/src/async/async';
 import core from 'metal/src/core';
 import dom from 'metal-dom/src/dom';

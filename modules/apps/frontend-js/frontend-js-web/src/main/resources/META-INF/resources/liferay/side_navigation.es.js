@@ -12,6 +12,10 @@
  * details.
  */
 
+/* eslint no-console: "warn" */
+/* eslint no-const-assign: "warn" */
+/* eslint no-unused-vars: "warn" */
+
 import EventEmitter from 'metal-events';
 
 /**

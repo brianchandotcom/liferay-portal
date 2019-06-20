@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {async, core} from 'metal';
@@ -257,7 +259,7 @@ class EffectsComponent extends Component {
 	 */
 	spawnWorker_(message) {
 		return new Promise((resolve, reject) => {
-			let processWorker = new Worker(
+			const processWorker = new Worker(
 				this.modulePath + '/EffectsWorker.js'
 			);
 

@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import {PortletBase, openToast} from 'frontend-js-web';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';

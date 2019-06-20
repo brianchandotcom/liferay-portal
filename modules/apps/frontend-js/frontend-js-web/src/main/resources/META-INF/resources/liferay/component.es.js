@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-console: "warn" */
+
 import {isFunction} from 'metal';
 import Uri from 'metal-uri';
 

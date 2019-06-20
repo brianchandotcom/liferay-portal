@@ -12,6 +12,11 @@
  * details.
  */
 
+/* eslint no-empty: "warn" */
+/* eslint no-for-of-loops/no-for-of-loops: "warn" */
+/* eslint no-undef: "warn" */
+/* eslint no-unused-vars: "warn" */
+
 import fetch from './../util/fetch.es';
 import {isDefAndNotNull, isFunction, isObject, isString} from 'metal';
 

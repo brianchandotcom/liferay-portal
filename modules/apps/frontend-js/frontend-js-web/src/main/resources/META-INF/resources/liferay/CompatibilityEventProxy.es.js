@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-empty: "warn" */
+
 import State from 'metal-state';
 import {core} from 'metal';
 

@@ -12,6 +12,9 @@
  * details.
  */
 
+/* eslint no-undef: "warn" */
+/* eslint no-unused-vars: "warn" */
+
 import ManagementToolbar from '../../src/main/resources/META-INF/resources/management_toolbar/ManagementToolbar.es';
 
 describe('ManagementToolbar', () => {

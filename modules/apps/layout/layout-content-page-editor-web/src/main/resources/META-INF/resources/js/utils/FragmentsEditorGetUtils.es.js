@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-for-of-loops/no-for-of-loops: "warn" */
+
 import {
 	FRAGMENTS_EDITOR_ITEM_BORDERS,
 	FRAGMENTS_EDITOR_ITEM_TYPES

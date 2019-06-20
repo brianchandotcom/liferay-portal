@@ -12,6 +12,9 @@
  * details.
  */
 
+/* eslint no-console: "warn" */
+/* eslint no-unused-vars: "warn" */
+
 import {App} from 'senna';
 import {openToast} from 'frontend-js-web';
 import core from 'metal';

@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import {Modal, PortletBase} from 'frontend-js-web';
 import Soy from 'metal-soy';
 import templates from './Flags.soy';

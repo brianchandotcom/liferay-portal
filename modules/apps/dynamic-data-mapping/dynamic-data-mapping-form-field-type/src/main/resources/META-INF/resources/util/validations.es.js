@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-useless-escape: "warn" */
+
 export const VALIDATIONS = {
 	numeric: [
 		{

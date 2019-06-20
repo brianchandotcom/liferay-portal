@@ -27,6 +27,8 @@ const FALLBACK_CONFIG = {
 	useTabs: true
 };
 
+/* eslint-disable no-console */
+
 function getConfig() {
 	let config;
 

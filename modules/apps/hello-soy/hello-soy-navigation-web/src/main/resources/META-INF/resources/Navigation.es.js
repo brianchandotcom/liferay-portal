@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import Component from 'metal-component';
 import Footer from 'hello-soy-web/Footer.soy';
 import Header from 'hello-soy-web/Header.soy';

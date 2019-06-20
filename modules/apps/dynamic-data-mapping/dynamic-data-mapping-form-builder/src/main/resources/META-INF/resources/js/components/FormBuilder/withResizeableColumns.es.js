@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import Component from 'metal-jsx';
 import Position from 'metal-position';
 import {Config} from 'metal-state';

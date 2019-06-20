@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import Component from 'metal-component';
 import {Slider} from 'frontend-js-web';
 import Soy from 'metal-soy';
@@ -96,8 +98,8 @@ class BrightnessComponent extends Component {
 	 */
 	spawnWorker_(message) {
 		return new Promise((resolve, reject) => {
-			let workerURI = this.modulePath + '/BrightnessWorker.js';
-			let processWorker = new Worker(workerURI);
+			const workerURI = this.modulePath + '/BrightnessWorker.js';
+			const processWorker = new Worker(workerURI);
 			processWorker.onmessage = event => resolve(event.data);
 			processWorker.postMessage(message);
 		});

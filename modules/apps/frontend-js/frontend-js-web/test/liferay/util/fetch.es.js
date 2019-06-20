@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-undef: "warn" */
+
 'use strict';
 
 import fetch from '../../../src/main/resources/META-INF/resources/liferay/util/fetch.es';

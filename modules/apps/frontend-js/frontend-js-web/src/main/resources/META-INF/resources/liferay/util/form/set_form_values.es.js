@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-for-of-loops/no-for-of-loops: "warn" */
+
 import {isDef, isObject} from 'metal';
 import getFormElement from './get_form_element.es';
 

@@ -26,6 +26,8 @@ import templates from './BulkStatus.soy';
  * @extends {Component}
  */
 
+/* eslint no-unused-vars: "warn" */
+
 class BulkStatus extends Component {
 	/**
 	 * @inheritDoc

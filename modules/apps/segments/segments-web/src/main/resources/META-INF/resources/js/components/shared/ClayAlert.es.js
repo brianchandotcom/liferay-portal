@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint default-case: "warn" */
+
 import getCN from 'classnames';
 import React, {Component} from 'react';
 import ThemeContext from '../../ThemeContext.es';

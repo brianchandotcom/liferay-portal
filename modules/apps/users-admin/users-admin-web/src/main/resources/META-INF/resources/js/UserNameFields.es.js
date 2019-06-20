@@ -12,6 +12,10 @@
  * details.
  */
 
+/* eslint no-console: "warn" */
+/* eslint no-for-of-loops/no-for-of-loops: "warn" */
+/* eslint no-unused-vars: "warn" */
+
 import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import {Config} from 'metal-state';

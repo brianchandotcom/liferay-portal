@@ -12,6 +12,9 @@
  * details.
  */
 
+/* eslint no-console: "warn" */
+/* eslint no-unused-vars: "warn" */
+
 'use strict';
 
 import {

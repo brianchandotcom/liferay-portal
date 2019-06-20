@@ -781,10 +781,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: [
-			'dd-plugin',
-			'liferay-calendar-util',
-			'resize-plugin'
-		]
+		requires: ['dd-plugin', 'liferay-calendar-util', 'resize-plugin']
 	}
 );

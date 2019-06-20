@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 /**
  * Image Editor History Entry
  *
@@ -45,7 +47,7 @@ class ImageEditorHistoryEntry {
 	 */
 	loadData_(imageURL) {
 		return new Promise((resolve, reject) => {
-			let bufferImage = new Image();
+			const bufferImage = new Image();
 
 			bufferImage.onload = () => {
 				const bufferCanvas = document.createElement('canvas');

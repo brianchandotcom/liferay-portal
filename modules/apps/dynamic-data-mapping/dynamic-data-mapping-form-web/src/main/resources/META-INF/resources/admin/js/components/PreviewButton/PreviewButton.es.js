@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import ClayButton from 'clay-button';
 import Component from 'metal-jsx';
 import Notifications from '../../util/Notifications.es';

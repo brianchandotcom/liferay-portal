@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import ClayNavigationBar from 'clay-navigation-bar';
 import {PortletBase, openToast} from 'frontend-js-web';
 import Soy from 'metal-soy';

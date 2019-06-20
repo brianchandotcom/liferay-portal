@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import 'clay-button';
 import 'clay-select';
 import 'clay-sticker';

@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import MapBase from '../../src/main/resources/META-INF/resources/js/MapBase.es';
 
 describe('MapBase', () => {

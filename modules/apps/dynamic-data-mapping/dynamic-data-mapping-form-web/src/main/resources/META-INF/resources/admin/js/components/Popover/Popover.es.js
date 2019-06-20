@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import Component, {Config} from 'metal-jsx';
 import dom from 'metal-dom';
 import getCN from 'classnames';

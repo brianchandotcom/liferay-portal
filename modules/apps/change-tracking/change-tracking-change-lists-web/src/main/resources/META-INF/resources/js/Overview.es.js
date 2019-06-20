@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import 'clay-icon';
 
 import Soy from 'metal-soy';

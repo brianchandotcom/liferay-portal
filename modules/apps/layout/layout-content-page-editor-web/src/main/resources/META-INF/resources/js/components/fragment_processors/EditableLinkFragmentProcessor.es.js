@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import {FLOATING_TOOLBAR_BUTTONS} from '../../utils/constants';
 import {destroy, init} from './EditableTextFragmentProcessor.es';
 

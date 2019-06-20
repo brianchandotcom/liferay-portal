@@ -12,6 +12,9 @@
  * details.
  */
 
+/* eslint no-for-of-loops/no-for-of-loops: "warn" */
+/* eslint no-unused-vars: "warn" */
+
 import core from 'metal';
 
 /**

@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-only-tests/no-only-tests: "warn" */
+
 import SuccessPage from 'source/components/SuccessPage/SuccessPage.es';
 import SucessPageSettings from 'mock/mockSuccessPage.es';
 import {dom as MetalTestUtil} from 'metal-dom';

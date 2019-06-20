@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import {
 	CREATE_SEGMENTS_EXPERIENCE,
 	DELETE_SEGMENTS_EXPERIENCE,

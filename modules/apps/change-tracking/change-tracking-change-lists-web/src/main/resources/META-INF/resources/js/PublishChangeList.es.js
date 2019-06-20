@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import 'clay-checkbox';
 
 import Component from 'metal-component';

@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import 'clay-multi-select';
 import 'clay-radio';
 import Component from 'metal-component';

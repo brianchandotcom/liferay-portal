@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 const LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS = [
 	{
 		label: Liferay.Language.get('view'),

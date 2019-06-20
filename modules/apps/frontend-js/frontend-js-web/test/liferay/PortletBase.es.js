@@ -12,6 +12,9 @@
  * details.
  */
 
+/* eslint no-undef: "warn" */
+/* eslint no-unused-vars: "warn" */
+
 'use strict';
 
 import PortletBase from '../../src/main/resources/META-INF/resources/liferay/PortletBase.es';

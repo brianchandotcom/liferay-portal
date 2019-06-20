@@ -12,6 +12,9 @@
  * details.
  */
 
+/* eslint no-undef: "warn" */
+/* eslint no-unused-vars: "warn" */
+
 import register from '../../../src/main/resources/META-INF/resources/liferay/portlet/register.es';
 
 describe('PortletHub', () => {

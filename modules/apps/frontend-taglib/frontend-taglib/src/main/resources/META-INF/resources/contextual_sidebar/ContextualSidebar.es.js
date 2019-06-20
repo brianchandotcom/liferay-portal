@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-undef: "warn" */
+
 import Component from 'metal-component';
 import {isFunction, isObject} from 'metal';
 import Soy from 'metal-soy';

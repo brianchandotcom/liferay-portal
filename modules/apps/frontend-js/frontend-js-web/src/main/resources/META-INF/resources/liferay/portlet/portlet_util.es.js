@@ -12,6 +12,10 @@
  * details.
  */
 
+/* eslint no-empty: "warn" */
+/* eslint no-for-of-loops/no-for-of-loops: "warn" */
+/* eslint no-useless-escape: "warn" */
+
 import {isDefAndNotNull, isString} from 'metal';
 
 // Constants for URL generation

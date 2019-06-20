@@ -12,6 +12,9 @@
  * details.
  */
 
+/* eslint no-unused-expressions: "warn" */
+/* eslint no-useless-escape: "warn" */
+
 import {isString} from 'metal';
 
 const NEW_LINE = '\r\n';
@@ -79,7 +82,7 @@ export default function formatXML(content, options = {}) {
 
 	let commentCounter = 0;
 	let inComment = false;
-	let items = content.split(STR_TOKEN);
+	const items = content.split(STR_TOKEN);
 	let level = 0;
 	let result = '';
 

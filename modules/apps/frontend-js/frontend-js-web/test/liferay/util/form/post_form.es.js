@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-undef: "warn" */
+
 'use strict';
 
 import dom from 'metal-dom';

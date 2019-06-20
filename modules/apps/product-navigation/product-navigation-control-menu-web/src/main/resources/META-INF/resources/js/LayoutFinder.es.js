@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import {Config} from 'metal-state';
 import Component from 'metal-component';
 import dom from 'metal-dom';

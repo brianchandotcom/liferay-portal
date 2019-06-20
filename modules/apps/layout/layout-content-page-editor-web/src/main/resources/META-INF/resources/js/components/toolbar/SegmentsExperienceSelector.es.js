@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 import getConnectedComponent from '../../store/ConnectedComponent.es';

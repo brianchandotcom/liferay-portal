@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import LayoutProvider from 'source/components/LayoutProvider/LayoutProvider.es';
 import mockPages from 'mock/mockPages.es';
 import {JSXComponent} from 'metal-jsx';

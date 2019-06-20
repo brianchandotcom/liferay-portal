@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import {dom} from 'metal-dom';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import position from 'metal-position';

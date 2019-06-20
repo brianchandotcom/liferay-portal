@@ -136,7 +136,9 @@ class JournalPortlet extends PortletBase {
 		}
 
 		if (!actionName) {
-			actionName = articleId ? '/journal/update_article' : '/journal/add_article';
+			actionName = articleId
+				? '/journal/update_article'
+				: '/journal/add_article';
 		}
 
 		this._setActionName(actionName);

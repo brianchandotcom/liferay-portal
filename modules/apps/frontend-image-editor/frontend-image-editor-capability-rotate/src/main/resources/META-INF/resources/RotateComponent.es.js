@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {core} from 'metal';
@@ -79,9 +81,9 @@ class RotateComponent extends Component {
 	 * rotated.
 	 */
 	rotate_(imageData, rotationAngle) {
-		let cancellablePromise = new Promise((resolve, reject) => {
-			let imageWidth = imageData.width;
-			let imageHeight = imageData.height;
+		const cancellablePromise = new Promise((resolve, reject) => {
+			const imageWidth = imageData.width;
+			const imageHeight = imageData.height;
 
 			const swapDimensions = (rotationAngle / 90) % 2;
 

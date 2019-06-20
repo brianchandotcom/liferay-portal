@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import BooleanInput from '../inputs/BooleanInput.es';
 import ClayAlert from '../shared/ClayAlert.es';
 import ClayButton from '../shared/ClayButton.es';

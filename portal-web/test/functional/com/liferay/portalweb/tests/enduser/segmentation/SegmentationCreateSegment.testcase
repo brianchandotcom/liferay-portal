@@ -37,14 +37,59 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can create a segment"
+	@description = "Validate if the user can create a segment with Properties User and Email Segment with Contains Option"
 	@priority = "5"
-	test AddSegment {
+	test AddSegmentUserEmailAddressContains {
 		LexiconEntry.gotoAdd();
 
 		Segmentation.addProperties(propertyOption = "Email Address");
-		Segmentation.fillTitle(titleField = "AddSegment Test");
+		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressContains Test");
 		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
+		Segmentation.fillEmailAddress(emailAddressField = "liferay");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
+	@description = "Validate if the user can create a segment with Properties User and Email Segment with Equals Option"
+	@priority = "5"
+	test AddSegmentUserEmailAddressEquals {
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Email Address");
+		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressEquals Test");
+		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Equals");
+		Segmentation.fillEmailAddress(emailAddressField = "liferay");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
+	@description = "Validate if the user can create a segment with Properties User and Email Segment with Not Contains Option"
+	@priority = "5"
+	test AddSegmentUserEmailAddressNotContains {
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Email Address");
+		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressNotContains Test");
+		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Not Contains");
+		Segmentation.fillEmailAddress(emailAddressField = "liferay");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
+	@description = "Validate if the user can create a segment with Properties User and Email Segment with Not Equals Option"
+	@priority = "5"
+	test AddSegmentUserEmailAddressNotEquals {
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Email Address");
+		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressNotEquals Test");
+		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Not Equals");
 		Segmentation.fillEmailAddress(emailAddressField = "liferay");
 
 		Button.clickSave();

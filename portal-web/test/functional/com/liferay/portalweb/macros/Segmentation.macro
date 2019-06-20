@@ -1,6 +1,6 @@
 definition {
 
-	macro _deleteSegment {
+	macro _deleteAllSegments {
 		while (IsElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
 			LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Delete");
 
@@ -32,6 +32,12 @@ definition {
 			value1 = "${criterionInputOption}");
 	}
 
+	macro editSegment {
+		while (IsElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
+			LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Edit");
+		}
+	}
+
 	macro fillEmailAddress {
 		Click(locator1 = "Segmentation#EMAIL_ADDRESS_FIELD");
 
@@ -50,7 +56,7 @@ definition {
 
 	macro tearDown {
 		while (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
-			Segmentation._deleteSegment();
+			Segmentation._deleteAllSegments();
 		}
 
 		AssertElementNotPresent(locator1 = "Segmentation#SEGMENT_LIST");

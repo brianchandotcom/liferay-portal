@@ -301,7 +301,8 @@ public class JournalArticleActionDropdownItemsProvider {
 
 		PortletURL redirectURL = _liferayPortletResponse.createRenderURL();
 
-		redirectURL.setParameter("mvcPath", "/compare_versions.jsp");
+		redirectURL.setParameter(
+			"mvcRenderCommandName", "/journal/compare_versions");
 		redirectURL.setParameter("redirect", _getRedirect());
 		redirectURL.setParameter(
 			"groupId", String.valueOf(_article.getGroupId()));

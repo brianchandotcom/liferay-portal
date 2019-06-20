@@ -382,7 +382,8 @@ public class JournalArticleAssetRenderer
 			liferayPortletRequest, JournalPortletKeys.JOURNAL,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("mvcPath", "/compare_versions.jsp");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/journal/compare_versions");
 		portletURL.setParameter(
 			"groupId", String.valueOf(_article.getGroupId()));
 		portletURL.setParameter("articleId", _article.getArticleId());

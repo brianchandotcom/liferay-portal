@@ -22,8 +22,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 long groupId = ParamUtil.getLong(request, "groupId");
 String articleId = ParamUtil.getString(request, "articleId");
 
-ActionUtil.compareVersions(renderRequest, renderResponse);
-
 Set<Locale> availableLocales = (Set<Locale>)request.getAttribute(WebKeys.AVAILABLE_LOCALES);
 String diffHtmlResults = (String)request.getAttribute(WebKeys.DIFF_HTML_RESULTS);
 String languageId = (String)request.getAttribute(WebKeys.LANGUAGE_ID);
@@ -37,7 +35,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "compare-versions"));
 %>
 
 <liferay-portlet:renderURL varImpl="portletURL">
-	<portlet:param name="mvcPath" value="/compare_versions.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/journal/compare_versions" />
 	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="articleId" value="<%= articleId %>" />

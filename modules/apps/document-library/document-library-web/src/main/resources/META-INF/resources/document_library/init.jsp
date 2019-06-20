@@ -16,6 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
+<%@ taglib uri="http://liferay.com/tld/soy" prefix="soy" %>
+
 <%@ page import="com.liferay.bulk.selection.BulkSelectionRunner" %><%@
 page import="com.liferay.document.library.configuration.DLConfiguration" %><%@
 page import="com.liferay.document.library.kernel.model.DLVersionNumberIncrease" %><%@
@@ -31,8 +33,6 @@ page import="com.liferay.staging.StagingGroupHelper" %><%@
 page import="com.liferay.staging.StagingGroupHelperUtil" %>
 
 <%@ page import="java.util.Objects" %>
-
-<%@ taglib uri="http://liferay.com/tld/soy" prefix="soy" %>
 
 <%
 DLRequestHelper dlRequestHelper = new DLRequestHelper(request);

@@ -14,10 +14,10 @@
  */
 --%>
 
-<%@ page import="com.liferay.portal.kernel.exception.UserEmailAddressException" %><%@
-page import="com.liferay.portal.security.sso.google.exception.StrangersNotAllowedException" %>
-
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+
+<%@ page import="com.liferay.portal.kernel.exception.UserEmailAddressException" %><%@
+page import="com.liferay.portal.security.sso.google.exception.StrangersNotAllowedException" %>
 
 <portlet:defineObjects />

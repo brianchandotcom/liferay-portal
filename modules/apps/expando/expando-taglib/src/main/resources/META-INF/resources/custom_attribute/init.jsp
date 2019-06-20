@@ -14,9 +14,9 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/map" prefix="liferay-map" %>
-
 <%@ include file="/init.jsp" %>
+
+<%@ taglib uri="http://liferay.com/tld/map" prefix="liferay-map" %>
 
 <%@ page import="com.liferay.expando.kernel.model.ExpandoColumnConstants" %><%@
 page import="com.liferay.expando.kernel.model.ExpandoTableConstants" %><%@

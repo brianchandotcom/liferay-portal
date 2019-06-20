@@ -14,11 +14,9 @@
  */
 --%>
 
-<%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem" %>
-
-<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %>
-
 <%@ include file="/init.jsp" %>
+
+<%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem" %>
 
 <%
 List<DropdownItem> actionDropdownItems = (List<DropdownItem>)request.getAttribute("liferay-frontend:empty-result-message:actionDropdownItems");

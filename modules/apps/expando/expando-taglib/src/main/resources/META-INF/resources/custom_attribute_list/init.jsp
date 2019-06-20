@@ -14,8 +14,8 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %>
-
 <%@ include file="/init.jsp" %>
+
+<%@ taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %>
 
 <%@ page import="com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil" %>

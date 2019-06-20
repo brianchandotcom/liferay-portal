@@ -14,10 +14,10 @@
  */
 --%>
 
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+
 <%@ page import="com.liferay.portal.kernel.json.JSONArray" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %>
-
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
 
 <%
 String dataProviderInstancesURL = (String)request.getAttribute("liferay-form:ddm-form-builder:dataProviderInstancesURL");

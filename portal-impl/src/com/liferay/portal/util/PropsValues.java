@@ -2957,6 +2957,9 @@ public class PropsValues {
 	public static final String[] SPRING_PORTLET_CONFIGS = PropsUtil.getArray(
 		PropsKeys.SPRING_PORTLET_CONFIGS);
 
+	public static final boolean SPRITE_ENABLED = GetterUtil.getBoolean(
+		PropsUtil.get(PropsKeys.SPRITE_ENABLED));
+
 	public static final String SPRITE_FILE_NAME = PropsUtil.get(
 		PropsKeys.SPRITE_FILE_NAME);
 

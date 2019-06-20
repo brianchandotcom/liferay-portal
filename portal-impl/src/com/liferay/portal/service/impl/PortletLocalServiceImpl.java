@@ -818,7 +818,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 			// Sprite images
 
-			setSpriteImages(servletContext, portletApp, "/html/icons/");
+			if (PropsValues.SPRITE_ENABLED) {
+				setSpriteImages(servletContext, portletApp, "/html/icons/");
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -926,7 +928,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 			// Sprite images
 
-			setSpriteImages(servletContext, portletApp, "/icons/");
+			if (PropsValues.SPRITE_ENABLED) {
+				setSpriteImages(servletContext, portletApp, "/icons/");
+			}
 
 			return ListUtil.fromMapValues(portletsMap);
 		}

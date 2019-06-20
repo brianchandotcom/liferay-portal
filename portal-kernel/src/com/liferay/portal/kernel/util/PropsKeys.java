@@ -3364,6 +3364,8 @@ public interface PropsKeys {
 	public static final String SPRING_PORTLET_CONFIGS =
 		"spring.portlet.configs";
 
+	public static final String SPRITE_ENABLED = "sprite.enabled";
+
 	public static final String SPRITE_FILE_NAME = "sprite.file.name";
 
 	public static final String SPRITE_PROPERTIES_FILE_NAME =

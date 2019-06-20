@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>ADD_FIELD_POSITION</td>
-	<td>//*[contains(@class, 'criteria-group-item-root')]//*[contains(@class, 'empty-drop-zone-target')]</td>
+	<td>//*[contains(@class, 'criteria-group-item-root')]//*[contains(@class, 'empty-drop-zone-root')]/div[1]</td>
 	<td></td>
 </tr>
 <tr>

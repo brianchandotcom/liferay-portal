@@ -105,6 +105,16 @@ public class DataRecordCollectionResourceTest
 
 	@Override
 	protected DataRecordCollection
+			testGetSiteDataRecordCollection_addDataRecordCollection()
+		throws Exception {
+
+		return dataRecordCollectionResource.
+			postDataDefinitionDataRecordCollection(
+				_ddmStructure.getStructureId(), randomDataRecordCollection());
+	}
+
+	@Override
+	protected DataRecordCollection
 			testGetSiteDataRecordCollectionsPage_addDataRecordCollection(
 				Long siteId, DataRecordCollection dataRecordCollection)
 		throws Exception {

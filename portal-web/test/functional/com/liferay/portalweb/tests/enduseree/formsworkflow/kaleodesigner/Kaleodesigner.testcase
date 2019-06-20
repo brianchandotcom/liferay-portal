@@ -151,7 +151,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
-			value1 = "Workflow");
+			value1 = "Process Builder");
 
 		ProductMenuHelper.closeProductMenu();
 

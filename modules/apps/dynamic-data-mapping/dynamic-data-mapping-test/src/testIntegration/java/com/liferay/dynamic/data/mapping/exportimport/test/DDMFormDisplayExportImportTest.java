@@ -98,8 +98,23 @@ public class DDMFormDisplayExportImportTest
 		DDMFormInstanceRecord ddmFormInstanceRecord =
 			_ddmFormInstanceRecordTestHelper.addDDMFormInstanceRecord();
 
+		DDMFormInstanceRecord importedDDMFormInstanceRecord =
+			DDMFormInstanceRecordLocalServiceUtil.
+				fetchDDMFormInstanceRecordByUuidAndGroupId(
+					ddmFormInstanceRecord.getUuid(),
+					importedGroup.getGroupId());
+
+		Assert.assertNull(importedDDMFormInstanceRecord);
+
 		DDMFormInstance ddmFormInstance =
 			ddmFormInstanceRecord.getFormInstance();
+
+		DDMFormInstance importedDDMFormInstance =
+			DDMFormInstanceLocalServiceUtil.
+				fetchDDMFormInstanceByUuidAndGroupId(
+					ddmFormInstance.getUuid(), importedGroup.getGroupId());
+
+		Assert.assertNotNull(importedDDMFormInstance);
 
 		Map<String, String[]> preferenceMap = new HashMap<>();
 
@@ -109,21 +124,6 @@ public class DDMFormDisplayExportImportTest
 
 		PortletPreferences importedPortletPreferences =
 			getImportedPortletPreferences(preferenceMap);
-
-		DDMFormInstanceRecord importedDDMFormInstanceRecord =
-			DDMFormInstanceRecordLocalServiceUtil.
-				fetchDDMFormInstanceRecordByUuidAndGroupId(
-					ddmFormInstanceRecord.getUuid(),
-					importedGroup.getGroupId());
-
-		Assert.assertNull(importedDDMFormInstanceRecord);
-
-		DDMFormInstance importedDDMFormInstance =
-			DDMFormInstanceLocalServiceUtil.
-				fetchDDMFormInstanceByUuidAndGroupId(
-					ddmFormInstance.getUuid(), importedGroup.getGroupId());
-
-		Assert.assertNotNull(importedDDMFormInstance);
 
 		Assert.assertEquals(
 			String.valueOf(importedDDMFormInstance.getFormInstanceId()),

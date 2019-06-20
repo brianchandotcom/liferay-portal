@@ -26,14 +26,18 @@ public interface FileVersionPreviewEventListener {
 	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 */
 	@Deprecated
-	public void deleteDLFileVersionPreviews(long fileEntryId);
+	public default void deleteDLFileVersionPreviews(long fileEntryId) {
+	}
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 */
 	@Deprecated
-	public long getDLFileVersionPreviewId(
-		long fileEntryId, long fileVersionId, int fileVersionPreviewStatus);
+	public default long getDLFileVersionPreviewId(
+		long fileEntryId, long fileVersionId, int fileVersionPreviewStatus) {
+
+		return 0;
+	}
 
 	public void onFailure(FileVersion fileVersion);
 

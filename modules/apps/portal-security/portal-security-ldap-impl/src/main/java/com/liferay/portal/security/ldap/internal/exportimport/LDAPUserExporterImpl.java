@@ -28,7 +28,6 @@ import com.liferay.portal.security.exportimport.UserExporter;
 import com.liferay.portal.security.exportimport.UserOperation;
 import com.liferay.portal.security.ldap.GroupConverterKeys;
 import com.liferay.portal.security.ldap.PortalLDAP;
-import com.liferay.portal.security.ldap.SafeLDAPContext;
 import com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration;
 import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.security.ldap.exportimport.Modifications;
@@ -186,10 +185,10 @@ public class LDAPUserExporterImpl implements UserExporter {
 		long ldapServerId = _portalLDAP.getLdapServerId(
 			companyId, user.getScreenName(), user.getEmailAddress());
 
-		SafeLDAPContext safeLDAPContext = _portalLDAP.getSafeLDAPContext(
+		LdapContext ldapContext = _portalLDAP.getSafeLDAPContext(
 			ldapServerId, companyId);
 
-		if (safeLDAPContext == null) {
+		if (ldapContext == null) {
 			return;
 		}
 
@@ -206,8 +205,8 @@ public class LDAPUserExporterImpl implements UserExporter {
 		if (userGroupBinding == null) {
 			if (userOperation == UserOperation.ADD) {
 				addGroup(
-					ldapServerId, safeLDAPContext, userGroup, user,
-					groupMappings, userMappings);
+					ldapServerId, ldapContext, userGroup, user, groupMappings,
+					userMappings);
 			}
 			else {
 				if (_log.isWarnEnabled()) {
@@ -231,8 +230,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 
 			ModificationItem[] modificationItems = modifications.getItems();
 
-			safeLDAPContext.modifyAttributes(
-				userGroupDNName, modificationItems);
+			ldapContext.modifyAttributes(userGroupDNName, modificationItems);
 		}
 		catch (SchemaViolationException sve) {
 			if (_log.isInfoEnabled()) {
@@ -243,19 +241,18 @@ public class LDAPUserExporterImpl implements UserExporter {
 			}
 
 			Attributes attributes = _portalLDAP.getGroupAttributes(
-				ldapServerId, companyId, safeLDAPContext, userGroupDNName,
-				true);
+				ldapServerId, companyId, ldapContext, userGroupDNName, true);
 
 			Attribute groupMembers = attributes.get(
 				groupMappings.getProperty(GroupConverterKeys.USER));
 
 			if ((groupMembers != null) && (groupMembers.size() == 1)) {
-				safeLDAPContext.unbind(userGroupDNName);
+				ldapContext.unbind(userGroupDNName);
 			}
 		}
 		finally {
-			if (safeLDAPContext != null) {
-				safeLDAPContext.close();
+			if (ldapContext != null) {
+				ldapContext.close();
 			}
 
 			if (_log.isDebugEnabled()) {

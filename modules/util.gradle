@@ -37,10 +37,10 @@ task printDependencyPath
 task removeHotfixQualifier
 task setUpLibs
 task setUpPortalTools
-task setUpYarn(type: ExecuteNpmTask)
+task setUpYarn
 task wrapper(type: Wrapper)
 task wrapperSubrepo(type: Wrapper)
-task yarnLock(type: ExecuteNpmTask)
+task yarnLock
 
 FileTree libDependenciesFileTree = fileTree(dir: "../lib", include: "*/dependencies.properties")
 
@@ -155,11 +155,6 @@ setUpYarn {
 		finalizedBy appendHotfixQualifier
 	}
 
-	args "install"
-	args "--frozen-lockfile"
-
-	scriptFile = new File(projectDir, "yarn-1.13.0.js")
-
 	doFirst {
 		String buildBinariesCacheDir = project.findProperty("build.binaries.cache.dir")
 
@@ -176,18 +171,6 @@ setUpYarn {
 					from fromDir
 					into intoDir
 				}
-			}
-		}
-
-		String registry = project.findProperty("nodejs.npm.ci.registry")
-
-		if (registry) {
-			File yarnLockFile = new File(rootDir, "yarn.lock")
-
-			if (yarnLockFile.exists()) {
-				logger.lifecycle "Using registry {}", registry
-
-				yarnLockFile.text = yarnLockFile.text.replaceAll("https://registry.yarnpkg.com", registry)
 			}
 		}
 	}
@@ -272,12 +255,6 @@ set DEFAULT_JVM_OPTS=%DEFAULT_JVM_OPTS% "-Dgradle.user.home=%APP_HOME%\\.gradle"
 	scriptFile = new File(wrapperDir, "gradlew")
 }
 
-yarnLock {
-	args "install"
-
-	scriptFile = new File(projectDir, "yarn-1.13.0.js")
-}
-
 tasks.withType(FormatSourceTask) {
 	baseDirName = "../"
 	group = "formatting"
@@ -286,6 +263,8 @@ tasks.withType(FormatSourceTask) {
 
 _createSetUpLibTasks(libDependenciesMap)
 _createSetUpPortalToolTasks()
+_createSetUpYarnTasks()
+_createYarnLockTasks()
 
 private String _camelCase(String dirName) {
 	String suffix = dirName.replaceAll(/\.(\w)/) {
@@ -371,5 +350,58 @@ private void _createSetUpPortalToolTasks() {
 		}
 
 		setUpPortalTools.dependsOn copyIvyDependenciesTask
+	}
+}
+
+private void _createSetUpYarnTasks() {
+	FileTree packageJSONFileTree = fileTree(dir: rootDir, includes: ["package.json", "private/package.json", "apps/*/package.json", "private/apps/*/package.json"])
+
+	packageJSONFileTree.each {
+		File packageJSONFile ->
+
+		if (packageJSONFile.text.contains("\"workspaces\":")) {
+			Task yarnTask = tasks.create(name: "setUpYarn" + _camelCase(packageJSONFile.parentFile.name), type: ExecuteNpmTask) {
+				args "install"
+				args "--frozen-lockfile"
+
+				scriptFile = new File(rootDir, "yarn-1.13.0.js")
+				workingDir = packageJSONFile.parentFile
+
+				doFirst {
+					String registry = project.findProperty("nodejs.npm.ci.registry")
+
+					if (registry) {
+						File yarnLockFile = new File(packageJSONFile.parentFile, "yarn.lock")
+
+						if (yarnLockFile.exists()) {
+							logger.lifecycle "Using registry {}", registry
+
+							yarnLockFile.text = yarnLockFile.text.replaceAll("https://registry.yarnpkg.com", registry)
+						}
+					}
+				}
+			}
+
+			setUpYarn.dependsOn yarnTask
+		}
+	}
+}
+
+private void _createYarnLockTasks() {
+	FileTree packageJSONFileTree = fileTree(dir: rootDir, includes: ["package.json", "private/package.json", "apps/*/package.json", "private/apps/*/package.json"])
+
+	packageJSONFileTree.each {
+		File packageJSONFile ->
+
+		if (packageJSONFile.text.contains("\"workspaces\":")) {
+			Task yarnTask = tasks.create(name: "yarnLock" + _camelCase(packageJSONFile.parentFile.name), type: ExecuteNpmTask) {
+				args "install"
+
+				scriptFile = new File(rootDir, "yarn-1.13.0.js")
+				workingDir = packageJSONFile.parentFile
+			}
+
+			yarnLock.dependsOn yarnTask
+		}
 	}
 }

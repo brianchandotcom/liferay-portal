@@ -74,7 +74,7 @@ class EntriesDefaultEventHandler extends DefaultEventHandler {
 				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
 			)
 		) {
-			submitForm(document.hrefFm, itemData.deleteURL);
+			submitForm(document.hrefFm, itemData.deleteEntryURL);
 		}
 	}
 }

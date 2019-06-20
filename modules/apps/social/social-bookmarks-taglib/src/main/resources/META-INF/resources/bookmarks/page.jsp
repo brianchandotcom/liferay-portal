@@ -19,6 +19,8 @@
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social_bookmarks_page") + StringPool.UNDERLINE;
 String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu";
+
+boolean isMobile = BrowserSnifferUtil.isMobile(request);
 %>
 
 <liferay-util:html-top
@@ -29,12 +31,12 @@ String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu"
 
 <div class="taglib-social-bookmarks" id="<%= randomNamespace %>socialBookmarks">
 	<c:choose>
-		<c:when test='<%= displayStyle.equals("menu") || BrowserSnifferUtil.isMobile(request) %>'>
+		<c:when test='<%= displayStyle.equals("menu") || isMobile %>'>
 			<clay:dropdown-menu
 				componentId="<%= dropdownMenuComponentId %>"
 				dropdownItems="<%= SocialBookmarksTagUtil.getDropdownItems(request.getLocale(), types, className, classPK, title, url) %>"
 				icon="share"
-				label='<%= BrowserSnifferUtil.isMobile(request) ? null : LanguageUtil.get(request, "share") %>'
+				label='<%= isMobile ? null : LanguageUtil.get(request, "share") %>'
 				style="secondary"
 				triggerCssClasses="btn-outline-borderless btn-outline-secondary btn-sm"
 			/>

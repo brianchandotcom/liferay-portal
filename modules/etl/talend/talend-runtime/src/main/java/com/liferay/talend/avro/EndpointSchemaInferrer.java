@@ -75,7 +75,7 @@ public class EndpointSchemaInferrer {
 	}
 
 	private static String _extractEndpointSchemaName(
-		String endpoint, String operation, JsonObject apiSpecJsonNode) {
+		String endpoint, String operation, JsonObject oasJsonObject) {
 
 		String schemaName = null;
 
@@ -86,13 +86,13 @@ public class EndpointSchemaInferrer {
 				"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
 
 			JsonObject schemaJsonObject = _jsonFinder.getDescendantJsonObject(
-				jsonFinderPath, apiSpecJsonNode);
+				jsonFinderPath, oasJsonObject);
 
 			schemaName = _stripSchemaName(
 				schemaJsonObject.getString(OASConstants.REF));
 
 			JsonObject schemaDefinitionJsonObject = _extractSchemaJsonObject(
-				schemaName, apiSpecJsonNode);
+				schemaName, oasJsonObject);
 
 			JsonObject itemsPropertiesJsonObject =
 				_jsonFinder.getDescendantJsonObject(
@@ -122,24 +122,24 @@ public class EndpointSchemaInferrer {
 				PATH_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,
 			"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
 
-		JsonObject schemaJsonNode = _jsonFinder.getDescendantJsonObject(
-			jsonFinderPath, apiSpecJsonNode);
+		JsonObject schemaJsonObject = _jsonFinder.getDescendantJsonObject(
+			jsonFinderPath, oasJsonObject);
 
 		schemaName = _stripSchemaName(
-			schemaJsonNode.getString(OASConstants.REF));
+			schemaJsonObject.getString(OASConstants.REF));
 
 		return schemaName;
 	}
 
 	private static JsonObject _extractSchemaJsonObject(
-		String schemaName, JsonObject apiSpecJsonNode) {
+		String schemaName, JsonObject oasJsonObject) {
 
 		String jsonFinderPath = StringUtil.replace(
 			OASConstants.PATH_COMPONENTS_SCHEMAS_PATTERN, "SCHEMA_TPL",
 			schemaName);
 
 		return _jsonFinder.getDescendantJsonObject(
-			jsonFinderPath, apiSpecJsonNode);
+			jsonFinderPath, oasJsonObject);
 	}
 
 	private static Schema _getDeleteSchema() {
@@ -325,11 +325,11 @@ public class EndpointSchemaInferrer {
 				String referenceSchemaName = _stripSchemaName(
 					propertyJsonObject.getString(OASConstants.REF));
 
-				JsonObject referenceSchemaJsonNode = _extractSchemaJsonObject(
+				JsonObject referenceSchemaJsonObject = _extractSchemaJsonObject(
 					referenceSchemaName, apiSpecJsonObject);
 
 				_processSchemaJsonObject(
-					propertyEntry.getKey(), referenceSchemaJsonNode, index,
+					propertyEntry.getKey(), referenceSchemaJsonObject, index,
 					previousFieldNames, schemaFields, apiSpecJsonObject);
 
 				continue;

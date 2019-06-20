@@ -603,22 +603,22 @@ public class DefaultPortalLDAP implements PortalLDAP {
 		String[] connectionProperties =
 			systemLDAPConfiguration.connectionProperties();
 
-		for (String connectionProperty : connectionProperties) {
-			String[] connectionPropertySplit = StringUtil.split(
-				connectionProperty, CharPool.EQUAL);
+		for (String connectionPropertyString : connectionProperties) {
+			String[] connectionProperty = StringUtil.split(
+				connectionPropertyString, CharPool.EQUAL);
 
-			if (connectionPropertySplit.length != 2) {
+			if (connectionProperty.length != 2) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Invalid LDAP connection property: " +
-							connectionProperty);
+							connectionPropertyString);
 
 					continue;
 				}
 			}
 
 			environmentProperties.put(
-				connectionPropertySplit[0], connectionPropertySplit[1]);
+				connectionProperty[0], connectionProperty[1]);
 		}
 
 		if (_log.isDebugEnabled()) {

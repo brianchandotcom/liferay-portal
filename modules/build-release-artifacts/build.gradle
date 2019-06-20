@@ -1,0 +1,295 @@
+import groovy.io.FileType
+import groovy.io.FileVisitResult
+import org.apache.maven.model.*
+import org.apache.maven.model.io.xpp3.MavenXpp3Writer
+
+apply from: "init.gradle"
+apply from: "samples.gradle"
+
+task writeBoms
+task writeCompileOnlyBom
+task writeReleaseBom
+task writeThirdPartyBom
+
+buildscript {
+	dependencies {
+		classpath group: "org.apache.maven", name: "maven-model", version: "3.6.1"
+	}
+
+	repositories {
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+task clean(type: Delete) {
+	delete "build"
+}
+
+writeBoms {
+	dependsOn writeCompileOnlyBom, writeReleaseBom, writeThirdPartyBom
+}
+
+writeCompileOnlyBom {
+	dependsOn createSamples
+
+	doLast {
+		Model model = getBaseModel(releaseCompileOnlyArtifactId)
+
+		DependencyManagement dependencyManagement = new DependencyManagement()
+
+		File samplesDir = new File("project-templates-samples")
+
+		Set<String> gradleDependencyLines = []
+
+		samplesDir.eachFile {
+			File buildGradleFile = new File(it, "build.gradle")
+
+			if (buildGradleFile.exists()) {
+				buildGradleFile.eachLine {
+					if (it ==~ /\s*compileOnly group: (?!"com\.liferay).*/) {
+						gradleDependencyLines.add(it)
+					}
+				}
+			}
+		}
+
+		Closure getTextInQuotes = {
+			it.replaceFirst(/.*"(.+)".*/, /$1/)
+		}
+
+		gradleDependencyLines.each {
+			String[] gradleDependencyLinesSplit = it.split(",")
+
+			String compileOnlyArtifactId = getTextInQuotes(gradleDependencyLinesSplit[1])
+			String compileOnlyGroupId = getTextInQuotes(gradleDependencyLinesSplit[0])
+			String compileOnlyVersion = getTextInQuotes(gradleDependencyLinesSplit[2])
+
+			Dependency dependency = new Dependency()
+
+			dependency.setArtifactId(compileOnlyArtifactId)
+			dependency.setGroupId(compileOnlyGroupId)
+			dependency.setVersion(compileOnlyVersion)
+
+			dependencyManagement.addDependency(dependency)
+		}
+
+		model.setDependencyManagement(dependencyManagement)
+
+		writeBom(model)
+	}
+}
+
+writeReleaseBom {
+	doLast {
+		Model model = getBaseModel(releaseBomArtifactId)
+
+		DependencyManagement dependencyManagement = new DependencyManagement()
+
+		modulesDir.traverse(
+			preDir: {
+				// Skip test and ignored subdirectories
+
+				File relengIgnoreMarkerFile = new File(it, ".lfrbuild-releng-ignore")
+
+				if (it.name.endsWith("-test") || relengIgnoreMarkerFile.exists()) {
+					return FileVisitResult.SKIP_SUBTREE
+				}
+
+				// Skip app subdirectories with no app.bnd, or if the app.bnd is set to bundle=false
+
+				if (it.getParentFile().name == "apps") {
+					File appBndFile = new File(it, "app.bnd")
+
+					if (appBndFile.exists()) {
+						Properties appBndProperties = new Properties()
+
+						appBndFile.withInputStream {
+							appBndProperties.load(it)
+						}
+
+						if (appBndProperties["Liferay-Releng-Bundle"] == "false") {
+							return FileVisitResult.SKIP_SUBTREE
+						}
+					}
+					else {
+						return FileVisitResult.SKIP_SUBTREE
+					}
+				}
+
+				// Skip the directory if it doesn't have a marker file, in addition to one of the three supported build files
+
+				File bndBndFile = new File(it, "bnd.bnd")
+				File buildXMLFile = new File(it, "build.xml")
+				File gulpJSFile = new File(it, "gulp.js")
+				File portalMarkerFile = new File(it, ".lfrbuild-portal")
+
+				if (!portalMarkerFile.exists() || !(buildXMLFile.exists() || gulpJSFile.exists() || bndBndFile.exists())) {
+					return FileVisitResult.CONTINUE
+				}
+
+				// Derive Maven info from artifact.properties; print a warning and skip the directory if the properties file is missing
+
+				File moduleRelengDir = new File(it.toString().replace("/modules/", "/modules/.releng/"))
+
+				File artifactPropertiesFile = new File(moduleRelengDir, "artifact.properties")
+
+				if (!artifactPropertiesFile.exists()) {
+					println "Warning: No artifact.properties file was detected for ${it.name}."
+
+					return FileVisitResult.CONTINUE
+				}
+
+				Properties artifactProperties = new Properties()
+
+				artifactPropertiesFile.withInputStream {
+					artifactProperties.load(it)
+				}
+
+				String[] artifactURLSplit = artifactProperties["artifact.url"].split("/")
+
+				String moduleArtifactId = artifactURLSplit[artifactURLSplit.length - 3]
+				String moduleGroupId = artifactURLSplit.last().endsWith(".war") ? "com.liferay.plugins" : "com.liferay"
+				String moduleVersion = artifactURLSplit[artifactURLSplit.length - 2]
+
+				// Add the Maven dependency to the dependencyManagement object
+
+				Dependency dependency = new Dependency()
+
+				dependency.setArtifactId(moduleArtifactId)
+				dependency.setGroupId(moduleGroupId)
+				dependency.setVersion(moduleVersion)
+
+				dependencyManagement.addDependency(dependency)
+			},
+			type: FileType.DIRECTORIES
+		)
+
+		// Add the base portal jars as dependencies
+
+		["portal-kernel", "portal-impl", "support-tomcat", "util-bridges", "util-java", "util-slf4j", "util-taglib"].each {
+			File portalBndFile = new File(portalDir, "${it}/bnd.bnd")
+
+			Properties portalBndProperties = new Properties()
+
+			portalBndFile.withInputStream {
+				portalBndProperties.load(it)
+			}
+
+			Dependency dependency = new Dependency()
+
+			dependency.setArtifactId("com.liferay." + it.replace("-", "."))
+			dependency.setGroupId("com.liferay.portal")
+			dependency.setVersion(portalBndProperties["Bundle-Version"])
+
+			dependencyManagement.addDependency(dependency)
+		}
+
+		model.setDependencyManagement(dependencyManagement)
+
+		writeBom(model)
+	}
+}
+
+writeThirdPartyBom {
+	doLast {
+		Model model = getBaseModel(releaseThirdPartyArtifactId)
+
+		DependencyManagement dependencyManagement = new DependencyManagement()
+
+		File dependenciesPropertiesDevelopmentFile = new File(portalDir, "lib/development/dependencies.properties")
+		File dependenciesPropertiesGlobalFile = new File(portalDir, "lib/global/dependencies.properties")
+		File dependenciesPropertiesPortalFile = new File(portalDir, "lib/portal/dependencies.properties")
+
+		Properties dependenciesProperties = new Properties()
+
+		dependenciesPropertiesDevelopmentFile.withInputStream {
+			dependenciesProperties.load(it)
+		}
+
+		dependenciesPropertiesGlobalFile.withInputStream {
+			dependenciesProperties.load(it)
+		}
+
+		dependenciesPropertiesPortalFile.withInputStream {
+			dependenciesProperties.load(it)
+		}
+
+		dependenciesProperties.each {
+			String[] dependencyInfo = it.value.split(":")
+
+			Dependency dependency = new Dependency()
+
+			dependency.setArtifactId(dependencyInfo[1])
+			dependency.setGroupId(dependencyInfo[0])
+			dependency.setVersion(dependencyInfo[2])
+
+			if (dependencyInfo.length == 4) {
+				dependency.setClassifier(dependencyInfo[3])
+			}
+
+			dependencyManagement.addDependency(dependency)
+		}
+
+		model.setDependencyManagement(dependencyManagement)
+
+		writeBom(model)
+	}
+}
+
+Model getBaseModel(String artifactId) {
+	Model model = new Model()
+
+	model.setArtifactId(artifactId)
+	model.setGroupId("com.liferay.portal")
+	model.setVersion(project.version)
+
+	Developer developer = new Developer()
+
+	developer.setName(developerName)
+	developer.setOrganization(developerOrganization)
+	developer.setOrganizationUrl(developerOrganizationUrl)
+
+	model.addDeveloper(developer)
+
+	License license = new License()
+
+	license.setName(licenseName)
+	license.setUrl(licenseUrl)
+
+	model.addLicense(license)
+
+	Repository repository = new Repository()
+
+	repository.setId(repositoryId)
+	repository.setName(repositoryName)
+	repository.setUrl(repositoryUrl)
+
+	model.addRepository(repository)
+
+	Scm scm = new Scm()
+
+	scm.setConnection(scmConnection)
+	scm.setDeveloperConnection(scmDeveloperConnection)
+	scm.setTag(scmTag)
+	scm.setUrl(scmUrl)
+
+	model.setScm(scm)
+
+	return model
+}
+
+void writeBom(Model model) {
+	File targetDir = new File("build")
+
+	targetDir.mkdir()
+
+	File bomFile = new File(targetDir, "${model.artifactId}-${model.version}.pom")
+
+	MavenXpp3Writer mavenWriter = new MavenXpp3Writer()
+
+	FileWriter fileWriter = new FileWriter(bomFile)
+
+	mavenWriter.write(fileWriter, model)
+}

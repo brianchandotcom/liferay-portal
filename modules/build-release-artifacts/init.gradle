@@ -1,0 +1,80 @@
+File releaseInfoFile = new File("/home/chas/liferay-portal/portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
+
+boolean isDxpRelease = (releaseInfoFile.text.contains(" DXP ") || releaseInfoFile.text.contains(" Digital Experience "))
+
+Closure getPortalGitID = {
+	File portalDir = new File(portalPath)
+
+	ProcessBuilder processBuilder = new ProcessBuilder("git", "rev-parse", "HEAD")
+
+	processBuilder.redirectErrorStream(true)
+	processBuilder.directory(portalDir)
+
+	Process process = processBuilder.start()
+
+	return process.inputStream.getText().trim()
+}
+
+ext {
+
+	scmTag = getPortalGitID()
+
+	portalDir = new File(portalPath)
+
+	modulesDir = new File(portalDir, "modules")
+
+	if (internalRelease.toBoolean()) {
+		repositoryId = xanaduRepositoryId
+		repositoryName = xanaduRepositoryName
+		repositoryUrl = xanaduRepositoryUrl
+	}
+	else {
+		if (isDxpRelease) {
+			if (snapshot.toBoolean()) {
+				repositoryId = liferayPrivateSnapshotsId
+				repositoryName = liferayPrivateSnapshotsName
+				repositoryUrl = liferayPrivateSnapshotsUrl
+			}
+			else {
+				repositoryId = liferayPrivateReleasesId
+				repositoryName = liferayPrivateReleasesName
+				repositoryUrl = liferayPrivateReleasesUrl
+			}
+		}
+		else {
+			if (snapshot.toBoolean()) {
+				repositoryId = liferayPublicSnapshotsId
+				repositoryName = liferayPublicSnapshotsName
+				repositoryUrl = liferayPublicSnapshotsUrl
+			}
+			else {
+				repositoryId = liferayPublicReleasesId
+				repositoryName = liferayPublicReleasesName
+				repositoryUrl = liferayPublicReleasesUrl
+			}
+		}
+	}
+
+	if (isDxpRelease) {
+		releaseApiArtifactId = releaseDxpApiArtifactId
+		releaseBomArtifactId = releaseDxpBomArtifactId
+		releaseCompileOnlyArtifactId = releaseDxpCompileOnlyArtifactId
+		releaseDistroArtifactId = releaseDxpDistroArtifactId
+		releaseThirdPartyArtifactId = releaseDxpThirdPartyArtifactId
+
+		scmConnection = scmConnectionPrivate
+		scmDeveloperConnection = scmDeveloperConnectionPrivate
+		scmUrl = scmUrlPrivate
+	}
+	else {
+		releaseApiArtifactId = releasePortalApiArtifactId
+		releaseBomArtifactId = releasePortalBomArtifactId
+		releaseCompileOnlyArtifactId = releasePortalCompileOnlyArtifactId
+		releaseDistroArtifactId = releasePortalDistroArtifactId
+		releaseThirdPartyArtifactId = releasePortalThirdPartyArtifactId
+
+		scmConnection = scmConnectionPublic
+		scmDeveloperConnection = scmDeveloperConnectionPublic
+		scmUrl = scmUrlPublic
+	}
+}

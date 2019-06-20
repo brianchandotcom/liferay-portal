@@ -22,7 +22,9 @@ import java.util.Locale;
  *
  * @author Cristina González
  * @review
+ * @deprecated As of Mueller (7.2.x)
  */
+@Deprecated
 public interface GCloudNaturalLanguageDocumentAssetAutoTagger {
 
 	/**

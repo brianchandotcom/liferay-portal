@@ -304,7 +304,8 @@ public class LDAPAuth implements Authenticator {
 				_ldapServerConfigurationProvider.getConfiguration(
 					companyId, ldapServerId);
 
-			Name baseDN = LDAPUtil.asLdapName(ldapServerConfiguration.baseDN());
+			Name baseDNName = LDAPUtil.asLdapName(
+				ldapServerConfiguration.baseDN());
 
 			//  Process LDAP auth search filter
 
@@ -336,7 +337,8 @@ public class LDAPAuth implements Authenticator {
 				SearchControls.SUBTREE_SCOPE, 1, 0,
 				new String[] {userMappingsScreenName}, false, false);
 
-			enu = safeLDAPContext.search(baseDN, ldapFilter, searchControls);
+			enu = safeLDAPContext.search(
+				baseDNName, ldapFilter, searchControls);
 
 			if (!enu.hasMoreElements()) {
 				if (_log.isDebugEnabled()) {

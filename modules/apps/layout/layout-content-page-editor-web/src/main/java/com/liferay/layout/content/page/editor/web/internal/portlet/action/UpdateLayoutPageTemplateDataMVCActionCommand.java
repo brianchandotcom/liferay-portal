@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsConstants;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.concurrent.Callable;
 
@@ -134,9 +133,6 @@ public class UpdateLayoutPageTemplateDataMVCActionCommand
 	@Reference
 	private LayoutPageTemplateStructureService
 		_layoutPageTemplateStructureService;
-
-	@Reference
-	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private class UpdateLayoutPageTemplateStructuresCallable
 		implements Callable<Void> {

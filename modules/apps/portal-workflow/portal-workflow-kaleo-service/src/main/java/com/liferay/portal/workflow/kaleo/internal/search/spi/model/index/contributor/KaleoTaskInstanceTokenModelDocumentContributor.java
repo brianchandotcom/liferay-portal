@@ -20,12 +20,12 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
@@ -118,40 +118,25 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
 
 		AssetEntry assetEntry = getAssetEntry(kaleoTaskInstanceToken);
 
-		if (assetEntry == null) {
-			return;
+		if (assetEntry != null) {
+			document.addKeyword(
+				KaleoTaskInstanceTokenField.ASSET_CLASS_NAME_ID,
+				assetEntry.getClassNameId());
+			document.addKeyword(
+				KaleoTaskInstanceTokenField.ASSET_CLASS_PK,
+				assetEntry.getClassPK());
+			document.addLocalizedText(
+				KaleoTaskInstanceTokenField.ASSET_DESCRIPTION,
+				LocalizationUtil.populateLocalizationMap(
+					assetEntry.getDescriptionMap(),
+					assetEntry.getDefaultLanguageId(),
+					assetEntry.getGroupId()));
+			document.addLocalizedText(
+				KaleoTaskInstanceTokenField.ASSET_TITLE,
+				LocalizationUtil.populateLocalizationMap(
+					assetEntry.getTitleMap(), assetEntry.getDefaultLanguageId(),
+					assetEntry.getGroupId()));
 		}
-
-		document.addKeyword(
-			KaleoTaskInstanceTokenField.ASSET_CLASS_NAME_ID,
-			assetEntry.getClassNameId());
-		document.addKeyword(
-			KaleoTaskInstanceTokenField.ASSET_CLASS_PK,
-			assetEntry.getClassPK());
-
-		Locale defaultLocale = LocaleUtil.getSiteDefault();
-
-		String siteDefaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
-
-		String[] titleLanguageIds = getLanguageIds(
-			siteDefaultLanguageId, assetEntry.getTitle());
-
-		for (String titleLanguageId : titleLanguageIds) {
-			document.addText(
-				LocalizationUtil.getLocalizedName(
-					KaleoTaskInstanceTokenField.ASSET_TITLE, titleLanguageId),
-				assetEntry.getTitle(titleLanguageId));
-		}
-
-		String[] descriptionLanguageIds = getLanguageIds(
-			siteDefaultLanguageId, assetEntry.getDescription());
-
-		for (String descriptionLanguageId : descriptionLanguageIds) {
-			document.addText(
-				LocalizationUtil.getLocalizedName(
-					KaleoTaskInstanceTokenField.ASSET_DESCRIPTION,
-					descriptionLanguageId),
-				assetEntry.getDescription(descriptionLanguageId));
 		}
 	}
 
@@ -159,20 +144,32 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
 		KaleoTaskInstanceToken kaleoTaskInstanceToken) {
 
 		try {
-			AssetRendererFactory<?> assetRendererFactory =
-				getAssetRendererFactory(kaleoTaskInstanceToken.getClassName());
+			AssetRenderer<?> assetRenderer = getAssetRenderer(
+				kaleoTaskInstanceToken.getClassName(),
+				kaleoTaskInstanceToken.getClassPK());
 
-			AssetRenderer<?> assetRenderer =
-				assetRendererFactory.getAssetRenderer(
-					kaleoTaskInstanceToken.getClassPK());
-
-			return assetEntryLocalService.getEntry(
-				assetRenderer.getClassName(), assetRenderer.getClassPK());
+			if (assetRenderer != null) {
+				return assetEntryLocalService.getEntry(
+					assetRenderer.getClassName(), assetRenderer.getClassPK());
+			}
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(pe, pe);
 			}
+		}
+
+		return null;
+	}
+
+	protected AssetRenderer<?> getAssetRenderer(String className, long classPK)
+		throws PortalException {
+
+		AssetRendererFactory<?> assetRendererFactory = getAssetRendererFactory(
+			className);
+
+		if (assetRendererFactory != null) {
+			return assetRendererFactory.getAssetRenderer(classPK);
 		}
 
 		return null;

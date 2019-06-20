@@ -1072,11 +1072,11 @@ definition {
 
 		MessageboardsThread.viewMarkAsQuestionCheckedCP(threadSubject = "Thread Subject");
 
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
 		MessageboardsThread.addPG(
 			threadBody = "Thread Body",
 			threadSubject = "Thread Subject");
-
-		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 

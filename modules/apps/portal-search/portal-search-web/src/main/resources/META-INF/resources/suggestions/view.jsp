@@ -14,14 +14,14 @@
  */
 --%>
 
-<%@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
-page import="com.liferay.portal.search.web.internal.suggestions.display.context.SuggestionDisplayContext" %><%@
-page import="com.liferay.portal.search.web.internal.suggestions.display.context.SuggestionsPortletDisplayContext" %>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+
+<%@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.portal.search.web.internal.suggestions.display.context.SuggestionDisplayContext" %><%@
+page import="com.liferay.portal.search.web.internal.suggestions.display.context.SuggestionsPortletDisplayContext" %>
 
 <%
 SuggestionsPortletDisplayContext suggestionsPortletDisplayContext = (SuggestionsPortletDisplayContext)java.util.Objects.requireNonNull(request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT));

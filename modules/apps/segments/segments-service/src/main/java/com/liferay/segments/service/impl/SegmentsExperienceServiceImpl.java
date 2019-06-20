@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.segments.constants.SegmentsActionKeys;
 import com.liferay.segments.constants.SegmentsConstants;
@@ -44,6 +45,12 @@ public class SegmentsExperienceServiceImpl
 			Map<Locale, String> nameMap, boolean active,
 			ServiceContext serviceContext)
 		throws PortalException {
+
+		if (_hasUpdateLayoutPermission(_getPublishedLayoutClassPK(classPK))) {
+			return segmentsExperienceLocalService.addSegmentsExperience(
+				segmentsEntryId, classNameId, classPK, nameMap, active,
+				serviceContext);
+		}
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
@@ -86,28 +93,54 @@ public class SegmentsExperienceServiceImpl
 
 	@Override
 	public List<SegmentsExperience> getSegmentsExperiences(
-		long groupId, long classNameId, long classPK, boolean active) {
+			long groupId, long classNameId, long classPK, boolean active)
+		throws PortalException {
+
+		long publishedLayoutClassPK = _getPublishedLayoutClassPK(classPK);
+
+		if (_hasUpdateLayoutPermission(publishedLayoutClassPK)) {
+			return segmentsExperiencePersistence.findByG_C_C_A(
+				groupId, classNameId, publishedLayoutClassPK, active);
+		}
 
 		return segmentsExperiencePersistence.filterFindByG_C_C_A(
-			groupId, classNameId, _getPublishedLayoutClassPK(classPK), active);
+			groupId, classNameId, publishedLayoutClassPK, active);
 	}
 
 	@Override
 	public List<SegmentsExperience> getSegmentsExperiences(
-		long groupId, long classNameId, long classPK, boolean active, int start,
-		int end, OrderByComparator<SegmentsExperience> orderByComparator) {
+			long groupId, long classNameId, long classPK, boolean active,
+			int start, int end,
+			OrderByComparator<SegmentsExperience> orderByComparator)
+		throws PortalException {
+
+		long publishedLayoutClassPK = _getPublishedLayoutClassPK(classPK);
+
+		if (_hasUpdateLayoutPermission(publishedLayoutClassPK)) {
+			return segmentsExperiencePersistence.findByG_C_C_A(
+				groupId, classNameId, publishedLayoutClassPK, active, start,
+				end, orderByComparator);
+		}
 
 		return segmentsExperiencePersistence.filterFindByG_C_C_A(
-			groupId, classNameId, _getPublishedLayoutClassPK(classPK), active,
-			start, end, orderByComparator);
+			groupId, classNameId, publishedLayoutClassPK, active, start, end,
+			orderByComparator);
 	}
 
 	@Override
 	public int getSegmentsExperiencesCount(
-		long groupId, long classNameId, long classPK, boolean active) {
+			long groupId, long classNameId, long classPK, boolean active)
+		throws PortalException {
+
+		long publishedLayoutClassPK = _getPublishedLayoutClassPK(classPK);
+
+		if (_hasUpdateLayoutPermission(publishedLayoutClassPK)) {
+			return segmentsExperiencePersistence.countByG_C_C_A(
+				groupId, classNameId, publishedLayoutClassPK, active);
+		}
 
 		return segmentsExperiencePersistence.filterCountByG_C_C_A(
-			groupId, classNameId, _getPublishedLayoutClassPK(classPK), active);
+			groupId, classNameId, publishedLayoutClassPK, active);
 	}
 
 	@Override
@@ -167,6 +200,21 @@ public class SegmentsExperienceServiceImpl
 		}
 
 		return classPK;
+	}
+
+	private boolean _hasUpdateLayoutPermission(long plid)
+		throws PortalException {
+
+		Layout layout = layoutLocalService.fetchLayout(plid);
+
+		if ((layout != null) &&
+			LayoutPermissionUtil.contains(
+				getPermissionChecker(), layout, ActionKeys.UPDATE)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static volatile PortletResourcePermission

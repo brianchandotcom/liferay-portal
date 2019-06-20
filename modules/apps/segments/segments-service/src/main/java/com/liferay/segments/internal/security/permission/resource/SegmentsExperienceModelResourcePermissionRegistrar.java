@@ -15,10 +15,14 @@
 package com.liferay.segments.internal.security.permission.resource;
 
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
@@ -54,9 +58,7 @@ public class SegmentsExperienceModelResourcePermissionRegistrar {
 				_segmentsExperienceLocalService::getSegmentsExperience,
 				_portletResourcePermission,
 				(modelResourcePermission, consumer) -> consumer.accept(
-					new StagedModelPermissionLogic<>(
-						_stagingPermission, SegmentsPortletKeys.SEGMENTS,
-						SegmentsExperience::getSegmentsExperienceId))),
+					new StagedModelPermissionLogic(_stagingPermission))),
 			properties);
 	}
 
@@ -77,5 +79,41 @@ public class SegmentsExperienceModelResourcePermissionRegistrar {
 
 	@Reference
 	private StagingPermission _stagingPermission;
+
+	private static class StagedModelPermissionLogic
+		implements ModelResourcePermissionLogic<SegmentsExperience> {
+
+		@Override
+		public Boolean contains(
+				PermissionChecker permissionChecker, String name,
+				SegmentsExperience segmentsExperience, String actionId)
+			throws PortalException {
+
+			if ((actionId.equals(ActionKeys.DELETE) ||
+				 actionId.equals(ActionKeys.UPDATE) ||
+				 actionId.equals(ActionKeys.VIEW)) &&
+				LayoutPermissionUtil.contains(
+					permissionChecker, segmentsExperience.getClassPK(),
+					ActionKeys.UPDATE)) {
+
+				return true;
+			}
+
+			return _stagingPermission.hasPermission(
+				permissionChecker, segmentsExperience.getGroupId(),
+				SegmentsExperience.class.getName(),
+				segmentsExperience.getSegmentsExperienceId(),
+				SegmentsPortletKeys.SEGMENTS, actionId);
+		}
+
+		private StagedModelPermissionLogic(
+			StagingPermission stagingPermission) {
+
+			_stagingPermission = stagingPermission;
+		}
+
+		private final StagingPermission _stagingPermission;
+
+	}
 
 }

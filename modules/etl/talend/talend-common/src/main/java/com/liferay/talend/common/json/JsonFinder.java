@@ -29,7 +29,7 @@ public class JsonFinder {
 		JsonValue descendantJsonValue = getDescendantJsonValue(
 			path, jsonObject);
 
-		if (descendantJsonValue.getValueType() == JsonValue.ValueType.NULL) {
+		if (_isNullJsonValue(descendantJsonValue)) {
 			return JsonValue.EMPTY_JSON_ARRAY;
 		}
 
@@ -42,6 +42,10 @@ public class JsonFinder {
 		JsonValue descendantJsonValue = getDescendantJsonValue(
 			path, jsonObject);
 
+		if (_isNullJsonValue(descendantJsonValue)) {
+			return JsonValue.EMPTY_JSON_OBJECT;
+		}
+
 		return descendantJsonValue.asJsonObject();
 	}
 
@@ -52,6 +56,8 @@ public class JsonFinder {
 			if (jsonObject.containsKey(path)) {
 				return jsonObject.get(path);
 			}
+
+			return JsonValue.NULL;
 		}
 
 		int subpathEndIdx = path.indexOf(">");
@@ -80,6 +86,14 @@ public class JsonFinder {
 			return hasPath(
 				path.substring(subpathEndIdx + 1),
 				jsonObject.getJsonObject(subpath));
+		}
+
+		return false;
+	}
+
+	private boolean _isNullJsonValue(JsonValue jsonValue) {
+		if (jsonValue.getValueType() == JsonValue.ValueType.NULL) {
+			return true;
 		}
 
 		return false;

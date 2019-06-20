@@ -32,7 +32,8 @@ public class OASConstants {
 
 	public static final String PATH_ENDPOINT_PATTERN = "paths>ENDPOINT_TPL";
 
-	public static final String PATH_PROPERTIES_ITEMS = "properties>items";
+	public static final String PATH_PROPERTIES_ITEMS_ITEMS =
+		"properties>items>items";
 
 	public static final String
 		PATH_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN =

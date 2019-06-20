@@ -120,6 +120,16 @@ public class DataRecordCollectionResourceImpl
 	}
 
 	@Override
+	public DataRecordCollection getSiteDataRecordCollection(
+			Long siteId, String dataRecordCollectionKey)
+		throws Exception {
+
+		return DataRecordCollectionUtil.toDataRecordCollection(
+			_ddlRecordSetLocalService.getRecordSet(
+				siteId, dataRecordCollectionKey));
+	}
+
+	@Override
 	public Page<DataRecordCollection> getSiteDataRecordCollectionsPage(
 			Long siteId, String keywords, Pagination pagination)
 		throws Exception {
@@ -168,7 +178,8 @@ public class DataRecordCollectionResourceImpl
 		dataRecordCollection = DataRecordCollectionUtil.toDataRecordCollection(
 			_ddlRecordSetLocalService.addRecordSet(
 				PrincipalThreadLocal.getUserId(), ddmStructure.getGroupId(),
-				dataDefinitionId, null,
+				dataDefinitionId,
+				dataRecordCollection.getDataRecordCollectionKey(),
 				LocalizedValueUtil.toLocaleStringMap(
 					dataRecordCollection.getName()),
 				LocalizedValueUtil.toLocaleStringMap(

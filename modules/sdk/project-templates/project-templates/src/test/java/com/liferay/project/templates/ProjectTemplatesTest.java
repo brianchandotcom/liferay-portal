@@ -1571,12 +1571,12 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/gradle/test/portlet/FooPortlet.java",
-			"javax.display.name=\" + Foo",
+			"javax.portlet.display-name=Foo",
 			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class FooPortlet extends MVCPortlet");
 		_testContains(
 			gradleProjectDir, "src/main/resources/content/Language.properties",
-			"javax.portlet.title.foo_FooPortlet=Foo",
+			"javax.portlet.title.gradle_test_FooPortlet=Foo",
 			"foo.caption=Hello from Foo!");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
@@ -1875,7 +1875,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/provider/test/portlet/ProviderTestPortlet.java",
-			"javax.display.name=\" + ProviderTest",
+			"javax.portlet.display-name=ProviderTest",
 			"javax.portlet.name=\" + ProviderTestPortletKeys.PROVIDERTEST",
 			"public class ProviderTestPortlet extends MVCPortlet {");
 		_testContains(
@@ -5501,7 +5501,7 @@ public class ProjectTemplatesTest {
 			"\"foo_FooPortlet\";");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/portlet/FooPortlet.java",
-			"javax.display.name=\" + Foo",
+			"javax.portlet.display-name=Foo",
 			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class FooPortlet extends " + portletClassName + " {");
 		_testContains(
@@ -5553,7 +5553,7 @@ public class ProjectTemplatesTest {
 			"public class FooPortletKeys", "public static final String FOO");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/portlet/FooPortlet.java",
-			"javax.display.name=\" + Foo",
+			"javax.portlet.display-name=Foo",
 			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class FooPortlet extends " + portletClassName + " {");
 		_testContains(
@@ -5608,7 +5608,7 @@ public class ProjectTemplatesTest {
 			"public class FooPortletKeys", "public static final String FOO");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/portlet/FooPortlet.java",
-			"javax.display.name=\" + Foo",
+			"javax.portlet.display-name=Foo",
 			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class FooPortlet extends " + portletClassName + " {");
 		_testContains(

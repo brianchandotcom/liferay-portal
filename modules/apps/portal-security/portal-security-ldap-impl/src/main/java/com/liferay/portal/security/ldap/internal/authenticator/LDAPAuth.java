@@ -313,7 +313,7 @@ public class LDAPAuth implements Authenticator {
 				LDAPServerConfiguration.class.getSimpleName() +
 					".authSearchFilter");
 
-			LDAPFilter filter = authSearchLDAPFilter.replace(
+			LDAPFilter ldapFilter = authSearchLDAPFilter.replace(
 				new String[] {
 					"@company_id@", "@email_address@", "@screen_name@",
 					"@user_id@"
@@ -336,19 +336,19 @@ public class LDAPAuth implements Authenticator {
 				SearchControls.SUBTREE_SCOPE, 1, 0,
 				new String[] {userMappingsScreenName}, false, false);
 
-			enu = safeLDAPContext.search(baseDN, filter, searchControls);
+			enu = safeLDAPContext.search(baseDN, ldapFilter, searchControls);
 
 			if (!enu.hasMoreElements()) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"No results found with search filter: " + filter);
+						"No results found with search filter: " + ldapFilter);
 				}
 
 				return DNE;
 			}
 
 			if (_log.isDebugEnabled()) {
-				_log.debug("Found results with search filter: " + filter);
+				_log.debug("Found results with search filter: " + ldapFilter);
 			}
 
 			SearchResult searchResult = enu.nextElement();

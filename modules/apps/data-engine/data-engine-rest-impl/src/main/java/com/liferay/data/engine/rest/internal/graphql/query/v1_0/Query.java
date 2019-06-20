@@ -26,12 +26,10 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
-import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
 
@@ -77,7 +75,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public DataDefinition getDataDefinition(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId)
 		throws Exception {
@@ -90,7 +87,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<DataDefinition> getSiteDataDefinitionsPage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("keywords") String keywords,
@@ -111,7 +107,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public DataDefinition getSiteDataDefinition(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("dataDefinitionKey") String dataDefinitionKey)
@@ -126,7 +121,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<DataLayout> getDataDefinitionDataLayoutsPage(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
 			@GraphQLName("keywords") String keywords,
@@ -148,7 +142,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public DataLayout getDataLayout(
 			@GraphQLName("dataLayoutId") Long dataLayoutId)
 		throws Exception {
@@ -161,7 +154,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<DataLayout> getSiteDataLayoutPage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("keywords") String keywords,
@@ -181,7 +173,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public DataLayout getSiteDataLayout(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("dataLayoutKey") String dataLayoutKey)
@@ -195,7 +186,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<DataRecord>
 			getDataRecordCollectionDataRecordsPage(
 				@GraphQLName("dataRecordCollectionId") Long
@@ -217,7 +207,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public String getDataRecordCollectionDataRecordExport(
 			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId,
 			@GraphQLName("pageSize") int pageSize,
@@ -233,7 +222,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public DataRecord getDataRecord(
 			@GraphQLName("dataRecordId") Long dataRecordId)
 		throws Exception {
@@ -246,7 +234,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<DataRecordCollection>
 			getDataDefinitionDataRecordCollectionsPage(
 				@GraphQLName("dataDefinitionId") Long dataDefinitionId,
@@ -270,7 +257,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public DataRecordCollection getDataRecordCollection(
 			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId)
 		throws Exception {
@@ -284,7 +270,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<DataRecordCollection>
 			getSiteDataRecordCollectionsPage(
 				@GraphQLName("siteId") Long siteId,

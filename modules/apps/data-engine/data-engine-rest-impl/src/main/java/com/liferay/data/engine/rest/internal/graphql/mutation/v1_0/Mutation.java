@@ -29,10 +29,8 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
-import graphql.annotations.annotationTypes.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLName;
 
 import javax.annotation.Generated;
 
@@ -77,7 +75,6 @@ public class Mutation {
 			dataRecordCollectionResourceComponentServiceObjects;
 	}
 
-	@GraphQLInvokeDetached
 	public void deleteDataDefinition(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId)
 		throws Exception {
@@ -89,7 +86,6 @@ public class Mutation {
 				dataDefinitionResource.deleteDataDefinition(dataDefinitionId));
 	}
 
-	@GraphQLInvokeDetached
 	public DataDefinition putDataDefinition(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
 			@GraphQLName("dataDefinition") DataDefinition dataDefinition)
@@ -103,7 +99,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public void postDataDefinitionDataDefinitionPermission(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
 			@GraphQLName("operation") String operation,
@@ -121,7 +116,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public void postSiteDataDefinitionPermission(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("operation") String operation,
@@ -138,7 +132,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public DataDefinition postSiteDataDefinition(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("dataDefinition") DataDefinition dataDefinition)
@@ -153,7 +146,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public DataLayout postDataDefinitionDataLayout(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
 			@GraphQLName("dataLayout") DataLayout dataLayout)
@@ -168,7 +160,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public void postDataLayoutDataLayoutPermission(
 			@GraphQLName("dataLayoutId") Long dataLayoutId,
 			@GraphQLName("operation") String operation,
@@ -184,7 +175,6 @@ public class Mutation {
 					dataLayoutId, operation, dataLayoutPermission));
 	}
 
-	@GraphQLInvokeDetached
 	public void deleteDataLayout(@GraphQLName("dataLayoutId") Long dataLayoutId)
 		throws Exception {
 
@@ -195,7 +185,6 @@ public class Mutation {
 				dataLayoutId));
 	}
 
-	@GraphQLInvokeDetached
 	public DataLayout putDataLayout(
 			@GraphQLName("dataLayoutId") Long dataLayoutId,
 			@GraphQLName("dataLayout") DataLayout dataLayout)
@@ -209,7 +198,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public void postSiteDataLayoutPermission(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("operation") String operation,
@@ -226,7 +214,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public DataRecord postDataRecordCollectionDataRecord(
 			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId,
 			@GraphQLName("dataRecord") DataRecord dataRecord)
@@ -240,7 +227,6 @@ public class Mutation {
 					dataRecordCollectionId, dataRecord));
 	}
 
-	@GraphQLInvokeDetached
 	public void deleteDataRecord(@GraphQLName("dataRecordId") Long dataRecordId)
 		throws Exception {
 
@@ -251,7 +237,6 @@ public class Mutation {
 				dataRecordId));
 	}
 
-	@GraphQLInvokeDetached
 	public DataRecord putDataRecord(
 			@GraphQLName("dataRecordId") Long dataRecordId,
 			@GraphQLName("dataRecord") DataRecord dataRecord)
@@ -265,7 +250,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public DataRecordCollection postDataDefinitionDataRecordCollection(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
 			@GraphQLName("dataRecordCollection") DataRecordCollection
@@ -281,7 +265,6 @@ public class Mutation {
 						dataDefinitionId, dataRecordCollection));
 	}
 
-	@GraphQLInvokeDetached
 	public void deleteDataRecordCollection(
 			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId)
 		throws Exception {
@@ -294,7 +277,6 @@ public class Mutation {
 					dataRecordCollectionId));
 	}
 
-	@GraphQLInvokeDetached
 	public DataRecordCollection putDataRecordCollection(
 			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId,
 			@GraphQLName("dataRecordCollection") DataRecordCollection
@@ -310,7 +292,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public void postDataRecordCollectionDataRecordCollectionPermission(
 			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId,
 			@GraphQLName("operation") String operation,
@@ -329,7 +310,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public void postSiteDataRecordCollectionPermission(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("operation") String operation,

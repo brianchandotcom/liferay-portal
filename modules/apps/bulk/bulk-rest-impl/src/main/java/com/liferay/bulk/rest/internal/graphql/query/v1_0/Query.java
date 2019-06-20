@@ -20,9 +20,7 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLField;
 
 import javax.annotation.Generated;
 
@@ -44,7 +42,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Status getStatus() throws Exception {
 		return _applyComponentServiceObjects(
 			_statusResourceComponentServiceObjects,

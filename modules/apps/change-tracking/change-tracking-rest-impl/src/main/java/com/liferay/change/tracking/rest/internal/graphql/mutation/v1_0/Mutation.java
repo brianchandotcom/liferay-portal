@@ -24,10 +24,8 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
-import graphql.annotations.annotationTypes.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLName;
 
 import javax.annotation.Generated;
 
@@ -59,7 +57,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Collection postCollection(
 			@GraphQLName("companyId") Long companyId,
 			@GraphQLName("userId") Long userId,
@@ -73,7 +70,6 @@ public class Mutation {
 				companyId, userId, collectionUpdate));
 	}
 
-	@GraphQLInvokeDetached
 	public Response deleteCollection(
 			@GraphQLName("collectionId") Long collectionId)
 		throws Exception {
@@ -86,7 +82,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Response postCollectionCheckout(
 			@GraphQLName("collectionId") Long collectionId,
 			@GraphQLName("userId") Long userId)
@@ -100,7 +95,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Response postCollectionPublish(
 			@GraphQLName("collectionId") Long collectionId,
 			@GraphQLName("ignoreCollision") Boolean ignoreCollision,
@@ -114,7 +108,6 @@ public class Mutation {
 				collectionId, ignoreCollision, userId));
 	}
 
-	@GraphQLInvokeDetached
 	public Settings putSettings(
 			@GraphQLName("companyId") Long companyId,
 			@GraphQLName("userId") Long userId,

@@ -28,11 +28,9 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotations.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Page;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
-import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
 
@@ -77,7 +75,6 @@ public class Mutation {
 			taxonomyVocabularyResourceComponentServiceObjects;
 	}
 
-	@GraphQLInvokeDetached
 	public void patchKeywordBatch(
 			@GraphQLName("keywordBulkSelection") KeywordBulkSelection
 				keywordBulkSelection)
@@ -90,7 +87,6 @@ public class Mutation {
 				keywordBulkSelection));
 	}
 
-	@GraphQLInvokeDetached
 	public void putKeywordBatch(
 			@GraphQLName("keywordBulkSelection") KeywordBulkSelection
 				keywordBulkSelection)
@@ -104,7 +100,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<Keyword> postKeywordsCommonPage(
 			@GraphQLName("documentBulkSelection") DocumentBulkSelection
 				documentBulkSelection)
@@ -122,7 +117,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Selection postBulkSelection(
 			@GraphQLName("documentBulkSelection") DocumentBulkSelection
 				documentBulkSelection)
@@ -135,7 +129,6 @@ public class Mutation {
 				documentBulkSelection));
 	}
 
-	@GraphQLInvokeDetached
 	public void patchTaxonomyCategoryBatch(
 			@GraphQLName("taxonomyCategoryBulkSelection")
 				TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
@@ -149,7 +142,6 @@ public class Mutation {
 					taxonomyCategoryBulkSelection));
 	}
 
-	@GraphQLInvokeDetached
 	public void putTaxonomyCategoryBatch(
 			@GraphQLName("taxonomyCategoryBulkSelection")
 				TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
@@ -164,7 +156,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public java.util.Collection<TaxonomyVocabulary>
 			postSiteTaxonomyVocabulariesCommonPage(
 				@GraphQLName("siteId") Long siteId,

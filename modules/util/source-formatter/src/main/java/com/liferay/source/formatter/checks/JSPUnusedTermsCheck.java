@@ -78,9 +78,8 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	}
 
 	private void _addJSPUnusedImports(
-			String fileName, List<String> importLines,
-			List<String> unneededImports)
-		throws IOException {
+		String fileName, List<String> importLines,
+		List<String> unneededImports) {
 
 		Set<String> checkedFileNames = new HashSet<>();
 		Set<String> includeFileNames = new HashSet<>();
@@ -109,9 +108,8 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	}
 
 	private void _addJSPUnusedTaglibs(
-			String fileName, List<String> taglibLines,
-			List<String> unneededTaglibs)
-		throws IOException {
+		String fileName, List<String> taglibLines,
+		List<String> unneededTaglibs) {
 
 		Set<String> checkedFileNames = new HashSet<>();
 		Set<String> includeFileNames = new HashSet<>();
@@ -145,8 +143,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	}
 
 	private List<String> _getJSPDuplicateImports(
-			String fileName, String content, List<String> importLines)
-		throws IOException {
+		String fileName, String content, List<String> importLines) {
 
 		List<String> duplicateImports = new ArrayList<>();
 
@@ -176,8 +173,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	}
 
 	private List<String> _getJSPDuplicateTaglibs(
-			String fileName, String content, List<String> taglibLines)
-		throws IOException {
+		String fileName, String content, List<String> taglibLines) {
 
 		List<String> duplicateTaglibs = new ArrayList<>();
 
@@ -250,9 +246,8 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	}
 
 	private boolean _hasUnusedPortletDefineObjectsProperty(
-			String fileName, String portletDefineObjectProperty,
-			Set<String> checkedFileNames, Set<String> includeFileNames)
-		throws IOException {
+		String fileName, String portletDefineObjectProperty,
+		Set<String> checkedFileNames, Set<String> includeFileNames) {
 
 		return _hasUnusedJSPTerm(
 			fileName, "\\W" + portletDefineObjectProperty + "\\W",
@@ -261,9 +256,8 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	}
 
 	private boolean _hasUnusedVariable(
-			String fileName, String line, Set<String> checkedFileNames,
-			Set<String> includeFileNames)
-		throws IOException {
+		String fileName, String line, Set<String> checkedFileNames,
+		Set<String> includeFileNames) {
 
 		if (line.contains(": ")) {
 			return false;
@@ -283,8 +277,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	}
 
 	private boolean _isJSPDuplicateDefineObjects(
-			String fileName, String defineObjects, boolean checkFile)
-		throws IOException {
+		String fileName, String defineObjects, boolean checkFile) {
 
 		Map<String, String> contentsMap = _getContentsMap();
 
@@ -326,8 +319,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	}
 
 	private boolean _isJSPDuplicateImport(
-			String fileName, String importLine, boolean checkFile)
-		throws IOException {
+		String fileName, String importLine, boolean checkFile) {
 
 		Map<String, String> contentsMap = _getContentsMap();
 
@@ -378,8 +370,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	}
 
 	private boolean _isJSPDuplicateTaglib(
-			String fileName, String taglibLine, boolean checkFile)
-		throws IOException {
+		String fileName, String taglibLine, boolean checkFile) {
 
 		Map<String, String> contentsMap = _getContentsMap();
 
@@ -519,8 +510,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	}
 
 	private String _removeDuplicateDefineObjects(
-			String fileName, String content)
-		throws IOException {
+		String fileName, String content) {
 
 		Matcher matcher = _defineObjectsPattern.matcher(content);
 
@@ -583,8 +573,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 	}
 
 	private String _removeUnusedPortletDefineObjects(
-			String fileName, String content)
-		throws IOException {
+		String fileName, String content) {
 
 		if (!content.contains("<portlet:defineObjects />\n")) {
 			return content;

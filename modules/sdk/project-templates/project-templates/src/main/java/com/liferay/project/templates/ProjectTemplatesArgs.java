@@ -232,7 +232,7 @@ public class ProjectTemplatesArgs {
 	private String _contributorType;
 
 	@Parameter(
-		description = "For Service Builder projects, specify the preferred dependency injection method. Default is DS",
+		description = "For Service Builder projects, specify the preferred dependency injection method (ds | spring). Default is DS",
 		names = "--dependency-injector"
 	)
 	private String _dependencyInjector = "ds";

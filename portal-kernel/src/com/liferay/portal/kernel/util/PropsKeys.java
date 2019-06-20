@@ -394,6 +394,10 @@ public interface PropsKeys {
 	public static final String BUFFERED_INCREMENT_THREADPOOL_MAX_SIZE =
 		"buffered.increment.threadpool.max.size";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String CACHE_CLEAR_ON_CONTEXT_INITIALIZATION =
 		"cache.clear.on.context.initialization";
 

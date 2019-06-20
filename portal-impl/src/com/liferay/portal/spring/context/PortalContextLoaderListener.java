@@ -25,31 +25,22 @@ import com.liferay.portal.dao.orm.hibernate.FieldInterceptionHelperUtil;
 import com.liferay.portal.deploy.hot.CustomJspBagRegistryUtil;
 import com.liferay.portal.deploy.hot.ServiceWrapperRegistry;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.cache.CacheRegistryUtil;
-import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
-import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactory;
-import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
 import com.liferay.portal.kernel.servlet.PortletSessionListenerManager;
 import com.liferay.portal.kernel.servlet.SerializableSessionAttributeListener;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
-import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.util.ClearThreadLocalUtil;
 import com.liferay.portal.kernel.util.ClearTimerThreadUtil;
-import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -63,8 +54,6 @@ import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConf
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.WebAppPool;
-import com.liferay.portlet.PortletContextBagPool;
 import com.liferay.registry.dependency.ServiceDependencyListener;
 import com.liferay.registry.dependency.ServiceDependencyManager;
 
@@ -191,13 +180,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			throw new RuntimeException(cnfe);
 		}
 
-		DBManagerUtil.reset();
-		DeployManagerUtil.reset();
-		InstancePool.reset();
-		MethodKey.resetCache();
-		PortalBeanLocatorUtil.reset();
-		PortletBagPool.reset();
-
 		FieldInterceptionHelperUtil.initialize();
 
 		final ServletContext servletContext =
@@ -320,21 +302,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 
 		InitUtil.registerSpringInitialized();
-
-		if (PropsValues.CACHE_CLEAR_ON_CONTEXT_INITIALIZATION) {
-			CacheRegistryUtil.clear();
-			PortletContextBagPool.clear();
-			WebAppPool.clear();
-
-			TemplateResourceLoaderUtil.clearCache();
-
-			ServletContextPool.clear();
-
-			PortalCacheHelperUtil.clearPortalCaches(
-				PortalCacheManagerNames.MULTI_VM);
-			PortalCacheHelperUtil.clearPortalCaches(
-				PortalCacheManagerNames.SINGLE_VM);
-		}
 
 		ServletContextPool.put(_portalServletContextName, servletContext);
 

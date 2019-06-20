@@ -675,10 +675,6 @@ public class ConfigurationPersistenceManager
 		try (Connection connection = _dataSource.getConnection();
 			PreparedStatement selectPS = connection.prepareStatement(
 				buildSQL(sql));
-			PreparedStatement updatePS = connection.prepareStatement(
-				buildSQL(
-					"update Configuration_ set dictionary = ? where " +
-						"configurationId = ?"));
 			ResultSet rs = selectPS.executeQuery()) {
 
 			while (rs.next()) {
@@ -700,11 +696,18 @@ public class ConfigurationPersistenceManager
 				ConfigurationHandler.write(
 					unsyncByteArrayOutputStream, dictionary);
 
-				updatePS.setString(1, unsyncByteArrayOutputStream.toString());
+				try (PreparedStatement updatePS = connection.prepareStatement(
+						buildSQL(
+							"update Configuration_ set dictionary = ? where " +
+								"configurationId = ?"))) {
 
-				updatePS.setString(2, pid);
+					updatePS.setString(
+						1, unsyncByteArrayOutputStream.toString());
 
-				updatePS.executeUpdate();
+					updatePS.setString(2, pid);
+
+					updatePS.executeUpdate();
+				}
 			}
 		}
 		catch (Exception e) {

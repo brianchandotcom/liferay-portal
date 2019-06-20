@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.asset.auto.tagger.opennlp.internal.extractor.external;
+package com.liferay.asset.auto.tagger.opennlp.internal.extractor;
 
-import com.liferay.asset.auto.tagger.opennlp.internal.extractor.TextExtractor;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.info.extractor.TextExtractor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;

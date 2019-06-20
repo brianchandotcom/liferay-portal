@@ -1571,8 +1571,13 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/gradle/test/portlet/FooPortlet.java",
+			"javax.display.name=\" + Foo",
 			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class FooPortlet extends MVCPortlet");
+		_testContains(
+			gradleProjectDir, "src/main/resources/content/Language.properties",
+			"javax.portlet.title.foo_FooPortlet=Foo",
+			"foo.caption=Hello from Foo!");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"panel-app", "gradle.test", "com.test", "-DclassName=Foo",
@@ -1867,6 +1872,17 @@ public class ProjectTemplatesTest {
 			"public class ProviderTestPortletKeys",
 			"public static final String PROVIDERTEST",
 			"\"provider_test_ProviderTestPortlet\";");
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/provider/test/portlet/ProviderTestPortlet.java",
+			"javax.display.name=\" + ProviderTest",
+			"javax.portlet.name=\" + ProviderTestPortletKeys.PROVIDERTEST",
+			"public class ProviderTestPortlet extends MVCPortlet {");
+		_testContains(
+			gradleProjectDir, "src/main/resources/content/Language.properties",
+			"javax.portlet.title.provider_test_ProviderTestPortlet=" +
+				"ProviderTest",
+			"providertest.caption=Hello from ProviderTest!");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"portlet-provider", "provider.test", "com.test",
@@ -5485,8 +5501,13 @@ public class ProjectTemplatesTest {
 			"\"foo_FooPortlet\";");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/portlet/FooPortlet.java",
+			"javax.display.name=\" + Foo",
 			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class FooPortlet extends " + portletClassName + " {");
+		_testContains(
+			gradleProjectDir, "src/main/resources/content/Language.properties",
+			"javax.portlet.title.foo_FooPortlet=Foo",
+			"foo.caption=Hello from Foo!");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, "foo", "com.test", "-DclassName=Foo", "-Dpackage=foo",
@@ -5532,8 +5553,13 @@ public class ProjectTemplatesTest {
 			"public class FooPortletKeys", "public static final String FOO");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/portlet/FooPortlet.java",
+			"javax.display.name=\" + Foo",
 			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class FooPortlet extends " + portletClassName + " {");
+		_testContains(
+			gradleProjectDir, "src/main/resources/content/Language.properties",
+			"javax.portlet.title.foo_FooPortlet=Foo",
+			"foo.caption=Hello from Foo!");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, "foo", "com.test", "-DclassName=Foo", "-Dpackage=foo",
@@ -5582,8 +5608,13 @@ public class ProjectTemplatesTest {
 			"public class FooPortletKeys", "public static final String FOO");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/portlet/FooPortlet.java",
+			"javax.display.name=\" + Foo",
 			"javax.portlet.name=\" + FooPortletKeys.FOO",
 			"public class FooPortlet extends " + portletClassName + " {");
+		_testContains(
+			gradleProjectDir, "src/main/resources/content/Language.properties",
+			"javax.portlet.title.foo_FooPortlet=Foo",
+			"foo.caption=Hello from Foo!");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, "foo", "com.test", "-DclassName=Foo", "-Dpackage=foo",

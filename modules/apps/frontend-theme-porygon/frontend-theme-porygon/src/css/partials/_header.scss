@@ -23,9 +23,13 @@ header {
 		}
 	}
 
-	.form-control:focus {
-		border-color: $main-header-color;
+	.form-control {
 		color: $main-header-color;
+
+		&:focus {
+			color: $main-header-color;
+			border-color: $main-header-color;
+		}
 	}
 
 	.navbar-user {

@@ -34,7 +34,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -129,7 +128,7 @@ public class SoyTestHelper {
 	}
 
 	protected PortalCache mockPortalCache() {
-		Map<HashSet<TemplateResource>, SoyTofuCacheBag> cache = new HashMap<>();
+		Map<List<TemplateResource>, SoyTofuCacheBag> cache = new HashMap<>();
 
 		return (PortalCache)ProxyUtil.newProxyInstance(
 			PortalCache.class.getClassLoader(),
@@ -145,7 +144,7 @@ public class SoyTestHelper {
 				}
 				else if (methodName.equals("put")) {
 					cache.put(
-						(HashSet<TemplateResource>)args[0],
+						(List<TemplateResource>)args[0],
 						(SoyTofuCacheBag)args[1]);
 				}
 				else if (methodName.equals("remove")) {

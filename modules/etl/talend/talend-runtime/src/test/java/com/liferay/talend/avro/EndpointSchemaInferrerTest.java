@@ -64,24 +64,7 @@ public class EndpointSchemaInferrerTest {
 
 		Schema schema = _getSchema(endpoint, HttpMethod.POST);
 
-		List<Schema.Field> fields = schema.getFields();
-
-		Assert.assertThat(fields.size(), equalTo(48));
-
-		Schema.Field field = schema.getField("active");
-
-		Schema fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
-
-		Assert.assertTrue(
-			"Boolean type was expected: ",
-			AvroUtils.isSameType(fieldSchema, AvroUtils._boolean()));
-
-		field = schema.getField("subscriptionConfiguration_enable");
-		fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
-
-		Assert.assertTrue(
-			"Boolean type was expected for nested field: ",
-			AvroUtils.isSameType(fieldSchema, AvroUtils._boolean()));
+		_assertValidProductSchema(schema);
 	}
 
 	@Test
@@ -101,6 +84,8 @@ public class EndpointSchemaInferrerTest {
 		Schema schema = _getSchema(endpoint, HttpMethod.GET);
 
 		Assert.assertFalse(AvroUtils.isSchemaEmpty(schema));
+
+		_assertValidProductSchema(schema);
 	}
 
 	@Test
@@ -217,6 +202,27 @@ public class EndpointSchemaInferrerTest {
 		Assert.assertTrue(
 			"String type was expected for arrays: ",
 			AvroUtils.isSameType(fieldSchema, AvroUtils._string()));
+	}
+
+	private void _assertValidProductSchema(Schema schema) {
+		List<Schema.Field> fields = schema.getFields();
+
+		Assert.assertThat(fields.size(), equalTo(48));
+
+		Schema.Field field = schema.getField("active");
+
+		Schema fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
+
+		Assert.assertTrue(
+			"Boolean type was expected: ",
+			AvroUtils.isSameType(fieldSchema, AvroUtils._boolean()));
+
+		field = schema.getField("subscriptionConfiguration_enable");
+		fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
+
+		Assert.assertTrue(
+			"Boolean type was expected for nested field: ",
+			AvroUtils.isSameType(fieldSchema, AvroUtils._boolean()));
 	}
 
 	private Schema _getSchema(String endpoint, String operation) {

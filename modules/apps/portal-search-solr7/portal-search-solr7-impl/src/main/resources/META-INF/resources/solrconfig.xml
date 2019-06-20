@@ -302,6 +302,9 @@
 		</highlighting>
 	</searchComponent>
 	<updateRequestProcessorChain name="replica">
+		<processor class="solr.UUIDUpdateProcessorFactory">
+			<str name="fieldName">uid</str>
+		</processor>
 		<processor class="solr.LogUpdateProcessorFactory" />
 		<processor class="solr.DistributedUpdateProcessorFactory" />
 		<processor class="solr.RunUpdateProcessorFactory" />

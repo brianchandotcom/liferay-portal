@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.delivery.client.dto.v1_0.Document;
+import com.liferay.headless.delivery.client.dto.v1_0.Rating;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
@@ -600,21 +601,6 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testGetDocumentMyRating() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPostDocumentMyRating() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPutDocumentMyRating() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testGetSiteDocumentsPage() throws Exception {
 		Page<Document> page = documentResource.getSiteDocumentsPage(
 			testGetSiteDocumentsPage_getSiteId(), null,
@@ -871,6 +857,51 @@ public abstract class BaseDocumentResourceTestCase {
 			testGetSiteDocumentsPage_getSiteId(), document, multipartFiles);
 	}
 
+	@Test
+	public void testGetDocumentMyRating() throws Exception {
+		Document postDocument = testGetDocument_addDocument();
+
+		Rating randomRating = randomRating();
+
+		Rating postRating = testGetDocumentMyRating_addRating(
+			postDocument.getId(), randomRating);
+
+		Rating getRating = documentResource.getDocumentMyRating(
+			postDocument.getId());
+
+		assertEquals(postRating, getRating);
+		assertValid(getRating);
+	}
+
+	protected Rating testGetDocumentMyRating_addRating(
+			long documentId, Rating rating)
+		throws Exception {
+
+		return documentResource.postDocumentMyRating(documentId, rating);
+	}
+
+	@Test
+	public void testPutDocumentMyRating() throws Exception {
+		Document postDocument = testPutDocument_addDocument();
+
+		testPutDocumentMyRating_addRating(postDocument.getId(), randomRating());
+
+		Rating randomRating = randomRating();
+
+		Rating putRating = documentResource.putDocumentMyRating(
+			postDocument.getId(), randomRating);
+
+		assertEquals(randomRating, putRating);
+		assertValid(putRating);
+	}
+
+	protected Rating testPutDocumentMyRating_addRating(
+			long documentId, Rating rating)
+		throws Exception {
+
+		return documentResource.postDocumentMyRating(documentId, rating);
+	}
+
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -896,6 +927,11 @@ public abstract class BaseDocumentResourceTestCase {
 
 			assertEquals(document1, document2);
 		}
+	}
+
+	protected void assertEquals(Rating rating1, Rating rating2) {
+		Assert.assertTrue(
+			rating1 + " does not equal " + rating2, equals(rating1, rating2));
 	}
 
 	protected void assertEqualsIgnoringOrder(
@@ -1110,7 +1146,69 @@ public abstract class BaseDocumentResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected void assertValid(Rating rating) {
+		boolean valid = true;
+
+		if (rating.getDateCreated() == null) {
+			valid = false;
+		}
+
+		if (rating.getDateModified() == null) {
+			valid = false;
+		}
+
+		if (rating.getId() == null) {
+			valid = false;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalRatingAssertFieldNames()) {
+
+			if (Objects.equals("bestRating", additionalAssertFieldName)) {
+				if (rating.getBestRating() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (rating.getCreator() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("ratingValue", additionalAssertFieldName)) {
+				if (rating.getRatingValue() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("worstRating", additionalAssertFieldName)) {
+				if (rating.getWorstRating() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		Assert.assertTrue(valid);
+	}
+
 	protected String[] getAdditionalAssertFieldNames() {
+		return new String[0];
+	}
+
+	protected String[] getAdditionalRatingAssertFieldNames() {
 		return new String[0];
 	}
 
@@ -1350,6 +1448,90 @@ public abstract class BaseDocumentResourceTestCase {
 		return true;
 	}
 
+	protected boolean equals(Rating rating1, Rating rating2) {
+		if (rating1 == rating2) {
+			return true;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalRatingAssertFieldNames()) {
+
+			if (Objects.equals("bestRating", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						rating1.getBestRating(), rating2.getBestRating())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						rating1.getCreator(), rating2.getCreator())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						rating1.getDateCreated(), rating2.getDateCreated())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateModified", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						rating1.getDateModified(), rating2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(rating1.getId(), rating2.getId())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("ratingValue", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						rating1.getRatingValue(), rating2.getRatingValue())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("worstRating", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						rating1.getWorstRating(), rating2.getWorstRating())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		return true;
+	}
+
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
@@ -1574,6 +1756,19 @@ public abstract class BaseDocumentResourceTestCase {
 	protected Map<String, File> getMultipartFiles() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected Rating randomRating() throws Exception {
+		return new Rating() {
+			{
+				bestRating = RandomTestUtil.randomDouble();
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				id = RandomTestUtil.randomLong();
+				ratingValue = RandomTestUtil.randomDouble();
+				worstRating = RandomTestUtil.randomDouble();
+			}
+		};
 	}
 
 	protected Document randomDocument() throws Exception {

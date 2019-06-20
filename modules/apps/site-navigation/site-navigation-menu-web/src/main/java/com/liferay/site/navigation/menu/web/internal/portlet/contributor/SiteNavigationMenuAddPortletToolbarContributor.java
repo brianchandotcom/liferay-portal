@@ -127,7 +127,8 @@ public class SiteNavigationMenuAddPortletToolbarContributor
 
 		portletURL.setParameter(
 			"mvcPath", "/select_layout_page_template_entry.jsp");
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		portletURL.setParameter(
+			"redirect", _portal.getLayoutFullURL(themeDisplay));
 		portletURL.setParameter(
 			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
 

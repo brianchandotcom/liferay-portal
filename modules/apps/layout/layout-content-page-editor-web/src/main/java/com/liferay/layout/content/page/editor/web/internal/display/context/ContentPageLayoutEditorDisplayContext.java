@@ -139,7 +139,9 @@ public class ContentPageLayoutEditorDisplayContext
 		return availableSegmentsEntriesSoyContext;
 	}
 
-	private SoyContext _getAvailableSegmentsExperiencesSoyContext() {
+	private SoyContext _getAvailableSegmentsExperiencesSoyContext()
+		throws PortalException {
+
 		SoyContext availableSegmentsExperiencesSoyContext =
 			SoyContextFactoryUtil.createSoyContext();
 

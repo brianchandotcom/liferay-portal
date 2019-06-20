@@ -16,6 +16,7 @@ package com.liferay.portal.repository.portletrepository;
 
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
+import com.liferay.portal.kernel.repository.capabilities.DynamicCapability;
 import com.liferay.portal.kernel.repository.capabilities.PortalCapabilityLocator;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.capabilities.RelatedModelCapability;
@@ -77,6 +78,11 @@ public class PortletRepositoryDefiner extends BaseRepositoryDefiner {
 			WorkflowCapability.class,
 			_portalCapabilityLocator.getWorkflowCapability(
 				documentRepository, WorkflowCapability.OperationMode.MINIMAL));
+
+		capabilityRegistry.addSupportedCapability(
+			DynamicCapability.class,
+			_portalCapabilityLocator.getDynamicCapability(
+				documentRepository, getClassName()));
 
 		capabilityRegistry.addSupportedCapability(
 			ProcessorCapability.class,

@@ -29,19 +29,20 @@ import java.util.List;
 public class AssetEntryValidatorRegistry {
 
 	public void afterPropertiesSet() {
-		_serviceTrackerMap = ServiceTrackerCollections.openMultiValueMap(
-			AssetEntryValidator.class, "model.class.name");
+		_assetEntryValidatorServiceTrackerMap =
+			ServiceTrackerCollections.openMultiValueMap(
+				AssetEntryValidator.class, "model.class.name");
 	}
 
 	public void destroy() {
-		_serviceTrackerMap.close();
+		_assetEntryValidatorServiceTrackerMap.close();
 	}
 
 	public List<AssetEntryValidator> getAssetEntryValidators(String className) {
 		List<AssetEntryValidator> assetEntryValidators = new ArrayList<>();
 
 		List<AssetEntryValidator> generalAssetEntryValidators =
-			_serviceTrackerMap.getService("*");
+			_assetEntryValidatorServiceTrackerMap.getService("*");
 
 		if (!ListUtil.isEmpty(generalAssetEntryValidators)) {
 			assetEntryValidators.addAll(generalAssetEntryValidators);
@@ -49,7 +50,7 @@ public class AssetEntryValidatorRegistry {
 
 		if (Validator.isNotNull(className)) {
 			List<AssetEntryValidator> classNameAssetEntryValidators =
-				_serviceTrackerMap.getService(className);
+				_assetEntryValidatorServiceTrackerMap.getService(className);
 
 			if (!ListUtil.isEmpty(classNameAssetEntryValidators)) {
 				assetEntryValidators.addAll(classNameAssetEntryValidators);
@@ -60,6 +61,6 @@ public class AssetEntryValidatorRegistry {
 	}
 
 	private ServiceTrackerMap<String, List<AssetEntryValidator>>
-		_serviceTrackerMap;
+		_assetEntryValidatorServiceTrackerMap;
 
 }

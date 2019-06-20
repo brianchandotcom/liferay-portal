@@ -137,7 +137,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	public void destroy() {
 		super.destroy();
 
-		_serviceTrackerMap.close();
+		_assetEntryValidatorExclusionRuleServiceTrackerMap.close();
 	}
 
 	@Override
@@ -1076,7 +1076,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		}
 
 		List<AssetEntryValidatorExclusionRule> exclusionRules =
-			_serviceTrackerMap.getService(className);
+			_assetEntryValidatorExclusionRuleServiceTrackerMap.getService(
+				className);
 
 		if (exclusionRules != null) {
 			for (AssetEntryValidatorExclusionRule exclusionRule :
@@ -1448,8 +1449,9 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	private final ServiceTrackerMap
-		<String, List<AssetEntryValidatorExclusionRule>> _serviceTrackerMap =
-			ServiceTrackerCollections.openMultiValueMap(
-				AssetEntryValidatorExclusionRule.class, "model.class.name");
+		<String, List<AssetEntryValidatorExclusionRule>>
+			_assetEntryValidatorExclusionRuleServiceTrackerMap =
+				ServiceTrackerCollections.openMultiValueMap(
+					AssetEntryValidatorExclusionRule.class, "model.class.name");
 
 }

@@ -163,17 +163,11 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 	}
 
 	@Override
-	public Results<Topic> getInterestTermsResults(
-		String userId, int cur, int delta, List<OrderByField> orderByFields) {
-
+	public Results<Topic> getInterestTermsResults(String userId) {
 		try {
 			String response = _jsonWebServiceClient.doGet(
 				StringUtil.replace(_PATH_INTERESTS_TERMS, "{userId}", userId),
-				_getParameters(
-					new FilterBuilder(),
-					FilterConstants.FIELD_NAME_CONTEXT_INDIVIDUAL, cur, delta,
-					orderByFields),
-				_headers);
+				new MultivaluedHashMap<>(), _headers);
 
 			return _interestTermsJSONObjectMapper.mapToResults(response);
 		}

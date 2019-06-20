@@ -82,13 +82,9 @@ public interface AsahFaroBackendClient {
 	 * Returns a {@link Results} of terms of interest given a user ID.
 	 *
 	 * @param  userId the ID of the user
-	 * @param  cur the current page (one-based numbering)
-	 * @param  delta the page size
-	 * @param  orderByFields the sort fields
 	 * @return a {@link Results} of terms of interest
 	 * @review
 	 */
-	public Results<Topic> getInterestTermsResults(
-		String userId, int cur, int delta, List<OrderByField> orderByFields);
+	public Results<Topic> getInterestTermsResults(String userId);
 
 }

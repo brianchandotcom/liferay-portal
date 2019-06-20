@@ -16,6 +16,7 @@ package com.liferay.portal.util;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.ConfigurationFactoryImpl;
 import com.liferay.portal.configuration.ConfigurationImpl;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.Filter;
@@ -420,9 +421,7 @@ public class PropsUtil {
 
 		// Liferay home directory
 
-		_configuration = new ConfigurationImpl(
-			PropsUtil.class.getClassLoader(), PropsFiles.PORTAL,
-			CompanyConstants.SYSTEM, null);
+		_configuration = ConfigurationFactoryImpl.PORTAL_CONFIGURATION;
 
 		String liferayHome = _configuration.get(PropsKeys.LIFERAY_HOME);
 

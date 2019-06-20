@@ -20,6 +20,7 @@ import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.ConfigurationFactoryImpl;
 import com.liferay.portal.kernel.application.type.ApplicationType;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -2701,11 +2702,11 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	}
 
 	private Configuration _getConfiguration(PortletApp portletApp) {
-		String propertyFileName = "portal";
-
-		if (portletApp.isWARFile()) {
-			propertyFileName = "portlet";
+		if (!portletApp.isWARFile()) {
+			return ConfigurationFactoryImpl.PORTAL_CONFIGURATION;
 		}
+
+		String propertyFileName = "portlet";
 
 		ServletContext servletContext = portletApp.getServletContext();
 

@@ -17,11 +17,17 @@ package com.liferay.portal.configuration;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.util.PropsFiles;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class ConfigurationFactoryImpl implements ConfigurationFactory {
+
+	public static final Configuration PORTAL_CONFIGURATION =
+		new ConfigurationImpl(
+			ConfigurationFactoryImpl.class.getClassLoader(), PropsFiles.PORTAL,
+			CompanyConstants.SYSTEM, null);
 
 	@Override
 	public Configuration getConfiguration(

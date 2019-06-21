@@ -152,6 +152,8 @@ public class TrashPortlet extends MVCPortlet {
 
 		TrashUndoUtil.addRestoreData(actionRequest, className, classPK);
 
+		hideDefaultSuccessMessage(actionRequest);
+
 		sendRedirect(actionRequest, actionResponse);
 	}
 
@@ -198,6 +200,8 @@ public class TrashPortlet extends MVCPortlet {
 
 		TrashUndoUtil.addRestoreData(actionRequest, entries);
 
+		hideDefaultSuccessMessage(actionRequest);
+
 		sendRedirect(actionRequest, actionResponse);
 	}
 
@@ -232,6 +236,8 @@ public class TrashPortlet extends MVCPortlet {
 		TrashUndoUtil.addRestoreData(
 			actionRequest, entry.getClassName(), entry.getClassPK());
 
+		hideDefaultSuccessMessage(actionRequest);
+
 		sendRedirect(actionRequest, actionResponse);
 	}
 
@@ -257,6 +263,8 @@ public class TrashPortlet extends MVCPortlet {
 
 		TrashUndoUtil.addRestoreData(
 			actionRequest, entry.getClassName(), entry.getClassPK());
+
+		hideDefaultSuccessMessage(actionRequest);
 
 		sendRedirect(actionRequest, actionResponse);
 	}

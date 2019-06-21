@@ -1137,19 +1137,11 @@ definition {
 	@description = "This is a use case for LPS-57830."
 	@priority = "4"
 	test UpdateDocumentWithCustomField {
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Documents and Media Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
@@ -1175,16 +1167,15 @@ definition {
 			resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
 			roleTitle = "Update DM Role");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
+		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Update DM Role",
+			userEmailAddress = "userea@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
@@ -1193,15 +1184,6 @@ definition {
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
-
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.assignRegularRoleCP(
-			roleTitle = "Update DM Role",
 			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(

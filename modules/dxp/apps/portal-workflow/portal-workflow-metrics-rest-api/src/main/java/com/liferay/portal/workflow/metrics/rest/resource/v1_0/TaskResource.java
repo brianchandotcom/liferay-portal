@@ -16,11 +16,14 @@ package com.liferay.portal.workflow.metrics.rest.resource.v1_0;
 
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
 
 import javax.annotation.Generated;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * To access this resource, run:
@@ -31,11 +34,16 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
+@ProviderType
 public interface TaskResource {
 
 	public Page<Task> getProcessTasksPage(
 			Long processId, Pagination pagination, Sort[] sorts)
 		throws Exception;
+
+	public default void setContextAcceptLanguage(
+		AcceptLanguage contextAcceptLanguage) {
+	}
 
 	public void setContextCompany(Company contextCompany);
 

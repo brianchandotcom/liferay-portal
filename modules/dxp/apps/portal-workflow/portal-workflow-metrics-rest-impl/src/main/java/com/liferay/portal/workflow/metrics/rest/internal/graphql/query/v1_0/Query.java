@@ -16,9 +16,11 @@ package com.liferay.portal.workflow.metrics.rest.internal.graphql.query.v1_0;
 
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Calendar;
@@ -35,12 +37,6 @@ import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TaskResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TimeRangeResource;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
-import graphql.annotations.annotationTypes.GraphQLName;
-
-import java.util.Collection;
 
 import javax.annotation.Generated;
 
@@ -110,8 +106,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<Calendar> getCalendarsPage() throws Exception {
+	public java.util.Collection<Calendar> getCalendarsPage() throws Exception {
 		return _applyComponentServiceObjects(
 			_calendarResourceComponentServiceObjects,
 			this::_populateResourceContext,
@@ -123,8 +118,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<Instance> getProcessInstancesPage(
+	public java.util.Collection<Instance> getProcessInstancesPage(
 			@GraphQLName("processId") Long processId,
 			@GraphQLName("slaStatuses") String[] slaStatuses,
 			@GraphQLName("statuses") String[] statuses,
@@ -147,7 +141,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Instance getProcessInstance(
 			@GraphQLName("processId") Long processId,
 			@GraphQLName("instanceId") Long instanceId)
@@ -161,8 +154,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<Node> getProcessNodesPage(
+	public java.util.Collection<Node> getProcessNodesPage(
 			@GraphQLName("processId") Long processId)
 		throws Exception {
 
@@ -178,8 +170,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<Process> getProcessesPage(
+	public java.util.Collection<Process> getProcessesPage(
 			@GraphQLName("title") String title,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
@@ -197,7 +188,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public Process getProcess(
 			@GraphQLName("processId") Long processId,
 			@GraphQLName("completed") Boolean completed,
@@ -212,7 +202,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public String getProcessTitle(@GraphQLName("processId") Long processId)
 		throws Exception {
 
@@ -223,8 +212,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<SLA> getProcessSLAsPage(
+	public java.util.Collection<SLA> getProcessSLAsPage(
 			@GraphQLName("processId") Long processId,
 			@GraphQLName("status") Integer status,
 			@GraphQLName("pageSize") int pageSize,
@@ -242,7 +230,6 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public SLA getSLA(@GraphQLName("slaId") Long slaId) throws Exception {
 		return _applyComponentServiceObjects(
 			_slaResourceComponentServiceObjects, this::_populateResourceContext,
@@ -250,8 +237,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<Task> getProcessTasksPage(
+	public java.util.Collection<Task> getProcessTasksPage(
 			@GraphQLName("processId") Long processId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
@@ -269,8 +255,9 @@ public class Query {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<TimeRange> getTimeRangesPage() throws Exception {
+	public java.util.Collection<TimeRange> getTimeRangesPage()
+		throws Exception {
+
 		return _applyComponentServiceObjects(
 			_timeRangeResourceComponentServiceObjects,
 			this::_populateResourceContext,
@@ -303,57 +290,50 @@ public class Query {
 	private void _populateResourceContext(CalendarResource calendarResource)
 		throws Exception {
 
-		calendarResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		calendarResource.setContextAcceptLanguage(_acceptLanguage);
+		calendarResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(InstanceResource instanceResource)
 		throws Exception {
 
-		instanceResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		instanceResource.setContextAcceptLanguage(_acceptLanguage);
+		instanceResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(NodeResource nodeResource)
 		throws Exception {
 
-		nodeResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		nodeResource.setContextAcceptLanguage(_acceptLanguage);
+		nodeResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(ProcessResource processResource)
 		throws Exception {
 
-		processResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		processResource.setContextAcceptLanguage(_acceptLanguage);
+		processResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(SLAResource slaResource)
 		throws Exception {
 
-		slaResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		slaResource.setContextAcceptLanguage(_acceptLanguage);
+		slaResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(TaskResource taskResource)
 		throws Exception {
 
-		taskResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		taskResource.setContextAcceptLanguage(_acceptLanguage);
+		taskResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(TimeRangeResource timeRangeResource)
 		throws Exception {
 
-		timeRangeResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		timeRangeResource.setContextAcceptLanguage(_acceptLanguage);
+		timeRangeResource.setContextCompany(_company);
 	}
 
 	private static ComponentServiceObjects<CalendarResource>
@@ -370,5 +350,8 @@ public class Query {
 		_taskResourceComponentServiceObjects;
 	private static ComponentServiceObjects<TimeRangeResource>
 		_timeRangeResourceComponentServiceObjects;
+
+	private AcceptLanguage _acceptLanguage;
+	private Company _company;
 
 }

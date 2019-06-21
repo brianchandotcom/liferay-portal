@@ -19,6 +19,7 @@ import com.liferay.portal.workflow.metrics.rest.client.http.HttpInvoker;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.CalendarSerDes;
 
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import javax.annotation.Generated;
@@ -28,38 +29,105 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class CalendarResource {
+public interface CalendarResource {
 
-	public static Page<Calendar> getCalendarsPage() throws Exception {
-		HttpInvoker.HttpResponse httpResponse = getCalendarsPageHttpResponse();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		return Page.of(content, CalendarSerDes::toDTO);
+	public static Builder builder() {
+		return new Builder();
 	}
 
-	public static HttpInvoker.HttpResponse getCalendarsPageHttpResponse()
-		throws Exception {
+	public Page<Calendar> getCalendarsPage() throws Exception;
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+	public HttpInvoker.HttpResponse getCalendarsPageHttpResponse()
+		throws Exception;
 
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+	public static class Builder {
 
-		httpInvoker.path(
-			"http://localhost:8080/o/portal-workflow-metrics/v1.0/calendars");
+		public Builder authentication(String login, String password) {
+			_login = login;
+			_password = password;
 
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
+			return this;
+		}
 
-		return httpInvoker.invoke();
+		public CalendarResource build() {
+			return new CalendarResourceImpl(this);
+		}
+
+		public Builder endpoint(String host, int port, String scheme) {
+			_host = host;
+			_port = port;
+			_scheme = scheme;
+
+			return this;
+		}
+
+		public Builder locale(Locale locale) {
+			_locale = locale;
+
+			return this;
+		}
+
+		private Builder() {
+		}
+
+		private String _host = "localhost";
+		private Locale _locale;
+		private String _login = "test@liferay.com";
+		private String _password = "test";
+		private int _port = 8080;
+		private String _scheme = "http";
+
 	}
 
-	private static final Logger _logger = Logger.getLogger(
-		CalendarResource.class.getName());
+	public static class CalendarResourceImpl implements CalendarResource {
+
+		public Page<Calendar> getCalendarsPage() throws Exception {
+			HttpInvoker.HttpResponse httpResponse =
+				getCalendarsPageHttpResponse();
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, CalendarSerDes::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse getCalendarsPageHttpResponse()
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/portal-workflow-metrics/v1.0/calendars");
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		private CalendarResourceImpl(Builder builder) {
+			_builder = builder;
+		}
+
+		private static final Logger _logger = Logger.getLogger(
+			CalendarResource.class.getName());
+
+		private Builder _builder;
+
+	}
 
 }

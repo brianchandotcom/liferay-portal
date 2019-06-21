@@ -50,9 +50,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -95,12 +93,17 @@ public abstract class BaseSLAResourceTestCase {
 	public void setUp() throws Exception {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
-		testLocale = LocaleUtil.getDefault();
 
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
 		_slaResource.setContextCompany(testCompany);
+
+		SLAResource.Builder builder = SLAResource.builder();
+
+		slaResource = builder.locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -185,7 +188,7 @@ public abstract class BaseSLAResourceTestCase {
 
 	@Test
 	public void testGetProcessSLAsPage() throws Exception {
-		Page<SLA> page = SLAResource.getProcessSLAsPage(
+		Page<SLA> page = slaResource.getProcessSLAsPage(
 			testGetProcessSLAsPage_getProcessId(), null, Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
@@ -198,7 +201,7 @@ public abstract class BaseSLAResourceTestCase {
 			SLA irrelevantSLA = testGetProcessSLAsPage_addSLA(
 				irrelevantProcessId, randomIrrelevantSLA());
 
-			page = SLAResource.getProcessSLAsPage(
+			page = slaResource.getProcessSLAsPage(
 				irrelevantProcessId, null, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -212,7 +215,7 @@ public abstract class BaseSLAResourceTestCase {
 
 		SLA sla2 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
 
-		page = SLAResource.getProcessSLAsPage(
+		page = slaResource.getProcessSLAsPage(
 			processId, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -232,14 +235,14 @@ public abstract class BaseSLAResourceTestCase {
 
 		SLA sla3 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
 
-		Page<SLA> page1 = SLAResource.getProcessSLAsPage(
+		Page<SLA> page1 = slaResource.getProcessSLAsPage(
 			processId, null, Pagination.of(1, 2));
 
 		List<SLA> slas1 = (List<SLA>)page1.getItems();
 
 		Assert.assertEquals(slas1.toString(), 2, slas1.size());
 
-		Page<SLA> page2 = SLAResource.getProcessSLAsPage(
+		Page<SLA> page2 = slaResource.getProcessSLAsPage(
 			processId, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -248,7 +251,7 @@ public abstract class BaseSLAResourceTestCase {
 
 		Assert.assertEquals(slas2.toString(), 1, slas2.size());
 
-		Page<SLA> page3 = SLAResource.getProcessSLAsPage(
+		Page<SLA> page3 = slaResource.getProcessSLAsPage(
 			processId, null, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
@@ -258,7 +261,7 @@ public abstract class BaseSLAResourceTestCase {
 	protected SLA testGetProcessSLAsPage_addSLA(Long processId, SLA sla)
 		throws Exception {
 
-		return SLAResource.postProcessSLA(processId, sla);
+		return slaResource.postProcessSLA(processId, sla);
 	}
 
 	protected Long testGetProcessSLAsPage_getProcessId() throws Exception {
@@ -283,7 +286,7 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	protected SLA testPostProcessSLA_addSLA(SLA sla) throws Exception {
-		return SLAResource.postProcessSLA(
+		return slaResource.postProcessSLA(
 			testGetProcessSLAsPage_getProcessId(), sla);
 	}
 
@@ -292,12 +295,12 @@ public abstract class BaseSLAResourceTestCase {
 		SLA sla = testDeleteSLA_addSLA();
 
 		assertHttpResponseStatusCode(
-			204, SLAResource.deleteSLAHttpResponse(sla.getId()));
+			204, slaResource.deleteSLAHttpResponse(sla.getId()));
 
 		assertHttpResponseStatusCode(
-			404, SLAResource.getSLAHttpResponse(sla.getId()));
+			404, slaResource.getSLAHttpResponse(sla.getId()));
 
-		assertHttpResponseStatusCode(404, SLAResource.getSLAHttpResponse(0L));
+		assertHttpResponseStatusCode(404, slaResource.getSLAHttpResponse(0L));
 	}
 
 	protected SLA testDeleteSLA_addSLA() throws Exception {
@@ -309,7 +312,7 @@ public abstract class BaseSLAResourceTestCase {
 	public void testGetSLA() throws Exception {
 		SLA postSLA = testGetSLA_addSLA();
 
-		SLA getSLA = SLAResource.getSLA(postSLA.getId());
+		SLA getSLA = slaResource.getSLA(postSLA.getId());
 
 		assertEquals(postSLA, getSLA);
 		assertValid(getSLA);
@@ -326,12 +329,12 @@ public abstract class BaseSLAResourceTestCase {
 
 		SLA randomSLA = randomSLA();
 
-		SLA putSLA = SLAResource.putSLA(postSLA.getId(), randomSLA);
+		SLA putSLA = slaResource.putSLA(postSLA.getId(), randomSLA);
 
 		assertEquals(randomSLA, putSLA);
 		assertValid(putSLA);
 
-		SLA getSLA = SLAResource.getSLA(putSLA.getId());
+		SLA getSLA = slaResource.getSLA(putSLA.getId());
 
 		assertEquals(randomSLA, getSLA);
 		assertValid(getSLA);
@@ -480,7 +483,7 @@ public abstract class BaseSLAResourceTestCase {
 	protected void assertValid(Page<SLA> page) {
 		boolean valid = false;
 
-		Collection<SLA> slas = page.getItems();
+		java.util.Collection<SLA> slas = page.getItems();
 
 		int size = slas.size();
 
@@ -622,7 +625,9 @@ public abstract class BaseSLAResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_slaResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
@@ -643,7 +648,7 @@ public abstract class BaseSLAResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 
@@ -788,11 +793,10 @@ public abstract class BaseSLAResourceTestCase {
 		return randomSLA();
 	}
 
+	protected SLAResource slaResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
-	protected Locale testLocale;
-	protected String testUserNameAndPassword = "test@liferay.com:test";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseSLAResourceTestCase.class);

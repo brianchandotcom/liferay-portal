@@ -48,9 +48,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -92,12 +90,17 @@ public abstract class BaseCalendarResourceTestCase {
 	public void setUp() throws Exception {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
-		testLocale = LocaleUtil.getDefault();
 
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
 		_calendarResource.setContextCompany(testCompany);
+
+		CalendarResource.Builder builder = CalendarResource.builder();
+
+		calendarResource = builder.locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -272,7 +275,7 @@ public abstract class BaseCalendarResourceTestCase {
 	protected void assertValid(Page<Calendar> page) {
 		boolean valid = false;
 
-		Collection<Calendar> calendars = page.getItems();
+		java.util.Collection<Calendar> calendars = page.getItems();
 
 		int size = calendars.size();
 
@@ -341,7 +344,9 @@ public abstract class BaseCalendarResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_calendarResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
@@ -362,7 +367,7 @@ public abstract class BaseCalendarResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 
@@ -434,11 +439,10 @@ public abstract class BaseCalendarResourceTestCase {
 		return randomCalendar();
 	}
 
+	protected CalendarResource calendarResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
-	protected Locale testLocale;
-	protected String testUserNameAndPassword = "test@liferay.com:test";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseCalendarResourceTestCase.class);

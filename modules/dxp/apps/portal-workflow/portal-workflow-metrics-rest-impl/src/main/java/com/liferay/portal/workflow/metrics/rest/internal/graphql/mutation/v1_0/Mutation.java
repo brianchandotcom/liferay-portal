@@ -16,14 +16,12 @@ package com.liferay.portal.workflow.metrics.rest.internal.graphql.mutation.v1_0;
 
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
-
-import graphql.annotations.annotationTypes.GraphQLField;
-import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
-import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
 
@@ -45,7 +43,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLInvokeDetached
 	public SLA postProcessSLA(
 			@GraphQLName("processId") Long processId,
 			@GraphQLName("sla") SLA sla)
@@ -56,14 +53,12 @@ public class Mutation {
 			slaResource -> slaResource.postProcessSLA(processId, sla));
 	}
 
-	@GraphQLInvokeDetached
 	public void deleteSLA(@GraphQLName("slaId") Long slaId) throws Exception {
 		_applyVoidComponentServiceObjects(
 			_slaResourceComponentServiceObjects, this::_populateResourceContext,
 			slaResource -> slaResource.deleteSLA(slaId));
 	}
 
-	@GraphQLInvokeDetached
 	public SLA putSLA(
 			@GraphQLName("slaId") Long slaId, @GraphQLName("sla") SLA sla)
 		throws Exception {
@@ -114,12 +109,14 @@ public class Mutation {
 	private void _populateResourceContext(SLAResource slaResource)
 		throws Exception {
 
-		slaResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
+		slaResource.setContextAcceptLanguage(_acceptLanguage);
+		slaResource.setContextCompany(_company);
 	}
 
 	private static ComponentServiceObjects<SLAResource>
 		_slaResourceComponentServiceObjects;
+
+	private AcceptLanguage _acceptLanguage;
+	private Company _company;
 
 }

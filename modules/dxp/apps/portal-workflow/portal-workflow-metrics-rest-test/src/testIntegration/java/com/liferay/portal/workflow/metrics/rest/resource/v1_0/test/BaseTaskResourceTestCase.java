@@ -51,10 +51,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -98,12 +96,17 @@ public abstract class BaseTaskResourceTestCase {
 	public void setUp() throws Exception {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
-		testLocale = LocaleUtil.getDefault();
 
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
 		_taskResource.setContextCompany(testCompany);
+
+		TaskResource.Builder builder = TaskResource.builder();
+
+		taskResource = builder.locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -194,7 +197,7 @@ public abstract class BaseTaskResourceTestCase {
 			Task irrelevantTask = testGetProcessTasksPage_addTask(
 				irrelevantProcessId, randomIrrelevantTask());
 
-			Page<Task> page = TaskResource.getProcessTasksPage(
+			Page<Task> page = taskResource.getProcessTasksPage(
 				irrelevantProcessId, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -208,7 +211,7 @@ public abstract class BaseTaskResourceTestCase {
 
 		Task task2 = testGetProcessTasksPage_addTask(processId, randomTask());
 
-		Page<Task> page = TaskResource.getProcessTasksPage(
+		Page<Task> page = taskResource.getProcessTasksPage(
 			processId, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -228,14 +231,14 @@ public abstract class BaseTaskResourceTestCase {
 
 		Task task3 = testGetProcessTasksPage_addTask(processId, randomTask());
 
-		Page<Task> page1 = TaskResource.getProcessTasksPage(
+		Page<Task> page1 = taskResource.getProcessTasksPage(
 			processId, Pagination.of(1, 2), null);
 
 		List<Task> tasks1 = (List<Task>)page1.getItems();
 
 		Assert.assertEquals(tasks1.toString(), 2, tasks1.size());
 
-		Page<Task> page2 = TaskResource.getProcessTasksPage(
+		Page<Task> page2 = taskResource.getProcessTasksPage(
 			processId, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -244,7 +247,7 @@ public abstract class BaseTaskResourceTestCase {
 
 		Assert.assertEquals(tasks2.toString(), 1, tasks2.size());
 
-		Page<Task> page3 = TaskResource.getProcessTasksPage(
+		Page<Task> page3 = taskResource.getProcessTasksPage(
 			processId, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
@@ -308,13 +311,13 @@ public abstract class BaseTaskResourceTestCase {
 		task2 = testGetProcessTasksPage_addTask(processId, task2);
 
 		for (EntityField entityField : entityFields) {
-			Page<Task> ascPage = TaskResource.getProcessTasksPage(
+			Page<Task> ascPage = taskResource.getProcessTasksPage(
 				processId, Pagination.of(1, 2), entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(task1, task2), (List<Task>)ascPage.getItems());
 
-			Page<Task> descPage = TaskResource.getProcessTasksPage(
+			Page<Task> descPage = taskResource.getProcessTasksPage(
 				processId, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
@@ -446,7 +449,7 @@ public abstract class BaseTaskResourceTestCase {
 	protected void assertValid(Page<Task> page) {
 		boolean valid = false;
 
-		Collection<Task> tasks = page.getItems();
+		java.util.Collection<Task> tasks = page.getItems();
 
 		int size = tasks.size();
 
@@ -536,7 +539,9 @@ public abstract class BaseTaskResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_taskResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
@@ -557,7 +562,7 @@ public abstract class BaseTaskResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 
@@ -641,11 +646,10 @@ public abstract class BaseTaskResourceTestCase {
 		return randomTask();
 	}
 
+	protected TaskResource taskResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
-	protected Locale testLocale;
-	protected String testUserNameAndPassword = "test@liferay.com:test";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseTaskResourceTestCase.class);

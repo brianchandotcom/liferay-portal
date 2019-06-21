@@ -49,9 +49,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -93,12 +91,17 @@ public abstract class BaseNodeResourceTestCase {
 	public void setUp() throws Exception {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
-		testLocale = LocaleUtil.getDefault();
 
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
 		_nodeResource.setContextCompany(testCompany);
+
+		NodeResource.Builder builder = NodeResource.builder();
+
+		nodeResource = builder.locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -189,7 +192,7 @@ public abstract class BaseNodeResourceTestCase {
 			Node irrelevantNode = testGetProcessNodesPage_addNode(
 				irrelevantProcessId, randomIrrelevantNode());
 
-			Page<Node> page = NodeResource.getProcessNodesPage(
+			Page<Node> page = nodeResource.getProcessNodesPage(
 				irrelevantProcessId);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -203,7 +206,7 @@ public abstract class BaseNodeResourceTestCase {
 
 		Node node2 = testGetProcessNodesPage_addNode(processId, randomNode());
 
-		Page<Node> page = NodeResource.getProcessNodesPage(processId);
+		Page<Node> page = nodeResource.getProcessNodesPage(processId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -327,7 +330,7 @@ public abstract class BaseNodeResourceTestCase {
 	protected void assertValid(Page<Node> page) {
 		boolean valid = false;
 
-		Collection<Node> nodes = page.getItems();
+		java.util.Collection<Node> nodes = page.getItems();
 
 		int size = nodes.size();
 
@@ -409,7 +412,9 @@ public abstract class BaseNodeResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_nodeResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
@@ -430,7 +435,7 @@ public abstract class BaseNodeResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 
@@ -514,11 +519,10 @@ public abstract class BaseNodeResourceTestCase {
 		return randomNode();
 	}
 
+	protected NodeResource nodeResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
-	protected Locale testLocale;
-	protected String testUserNameAndPassword = "test@liferay.com:test";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseNodeResourceTestCase.class);

@@ -20,6 +20,7 @@ import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.TaskSerDes;
 
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import javax.annotation.Generated;
@@ -29,54 +30,125 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class TaskResource {
+public interface TaskResource {
 
-	public static Page<Task> getProcessTasksPage(
-			Long processId, Pagination pagination, String sortString)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse = getProcessTasksPageHttpResponse(
-			processId, pagination, sortString);
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine(
-			"HTTP response status code: " + httpResponse.getStatusCode());
-
-		return Page.of(content, TaskSerDes::toDTO);
+	public static Builder builder() {
+		return new Builder();
 	}
 
-	public static HttpInvoker.HttpResponse getProcessTasksPageHttpResponse(
+	public Page<Task> getProcessTasksPage(
 			Long processId, Pagination pagination, String sortString)
-		throws Exception {
+		throws Exception;
 
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+	public HttpInvoker.HttpResponse getProcessTasksPageHttpResponse(
+			Long processId, Pagination pagination, String sortString)
+		throws Exception;
 
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+	public static class Builder {
 
-		if (pagination != null) {
-			httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
-			httpInvoker.parameter(
-				"pageSize", String.valueOf(pagination.getPageSize()));
+		public Builder authentication(String login, String password) {
+			_login = login;
+			_password = password;
+
+			return this;
 		}
 
-		if (sortString != null) {
-			httpInvoker.parameter("sort", sortString);
+		public TaskResource build() {
+			return new TaskResourceImpl(this);
 		}
 
-		httpInvoker.path(
-			"http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks",
-			processId);
+		public Builder endpoint(String host, int port, String scheme) {
+			_host = host;
+			_port = port;
+			_scheme = scheme;
 
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
+			return this;
+		}
 
-		return httpInvoker.invoke();
+		public Builder locale(Locale locale) {
+			_locale = locale;
+
+			return this;
+		}
+
+		private Builder() {
+		}
+
+		private String _host = "localhost";
+		private Locale _locale;
+		private String _login = "test@liferay.com";
+		private String _password = "test";
+		private int _port = 8080;
+		private String _scheme = "http";
+
 	}
 
-	private static final Logger _logger = Logger.getLogger(
-		TaskResource.class.getName());
+	public static class TaskResourceImpl implements TaskResource {
+
+		public Page<Task> getProcessTasksPage(
+				Long processId, Pagination pagination, String sortString)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getProcessTasksPageHttpResponse(
+					processId, pagination, sortString);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, TaskSerDes::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse getProcessTasksPageHttpResponse(
+				Long processId, Pagination pagination, String sortString)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks",
+				processId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		private TaskResourceImpl(Builder builder) {
+			_builder = builder;
+		}
+
+		private static final Logger _logger = Logger.getLogger(
+			TaskResource.class.getName());
+
+		private Builder _builder;
+
+	}
 
 }

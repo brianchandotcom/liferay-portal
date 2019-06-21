@@ -48,9 +48,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -93,12 +91,17 @@ public abstract class BaseTimeRangeResourceTestCase {
 	public void setUp() throws Exception {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
-		testLocale = LocaleUtil.getDefault();
 
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
 		_timeRangeResource.setContextCompany(testCompany);
+
+		TimeRangeResource.Builder builder = TimeRangeResource.builder();
+
+		timeRangeResource = builder.locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -283,7 +286,7 @@ public abstract class BaseTimeRangeResourceTestCase {
 	protected void assertValid(Page<TimeRange> page) {
 		boolean valid = false;
 
-		Collection<TimeRange> timeRanges = page.getItems();
+		java.util.Collection<TimeRange> timeRanges = page.getItems();
 
 		int size = timeRanges.size();
 
@@ -372,7 +375,9 @@ public abstract class BaseTimeRangeResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_timeRangeResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
@@ -393,7 +398,7 @@ public abstract class BaseTimeRangeResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 
@@ -525,11 +530,10 @@ public abstract class BaseTimeRangeResourceTestCase {
 		return randomTimeRange();
 	}
 
+	protected TimeRangeResource timeRangeResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
-	protected Locale testLocale;
-	protected String testUserNameAndPassword = "test@liferay.com:test";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseTimeRangeResourceTestCase.class);

@@ -51,10 +51,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -98,12 +96,17 @@ public abstract class BaseProcessResourceTestCase {
 	public void setUp() throws Exception {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
-		testLocale = LocaleUtil.getDefault();
 
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
 		_processResource.setContextCompany(testCompany);
+
+		ProcessResource.Builder builder = ProcessResource.builder();
+
+		processResource = builder.locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -184,7 +187,7 @@ public abstract class BaseProcessResourceTestCase {
 
 	@Test
 	public void testGetProcessesPage() throws Exception {
-		Page<Process> page = ProcessResource.getProcessesPage(
+		Page<Process> page = processResource.getProcessesPage(
 			RandomTestUtil.randomString(), Pagination.of(1, 2), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
@@ -193,7 +196,7 @@ public abstract class BaseProcessResourceTestCase {
 
 		Process process2 = testGetProcessesPage_addProcess(randomProcess());
 
-		page = ProcessResource.getProcessesPage(
+		page = processResource.getProcessesPage(
 			null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -211,14 +214,14 @@ public abstract class BaseProcessResourceTestCase {
 
 		Process process3 = testGetProcessesPage_addProcess(randomProcess());
 
-		Page<Process> page1 = ProcessResource.getProcessesPage(
+		Page<Process> page1 = processResource.getProcessesPage(
 			null, Pagination.of(1, 2), null);
 
 		List<Process> processes1 = (List<Process>)page1.getItems();
 
 		Assert.assertEquals(processes1.toString(), 2, processes1.size());
 
-		Page<Process> page2 = ProcessResource.getProcessesPage(
+		Page<Process> page2 = processResource.getProcessesPage(
 			null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -227,7 +230,7 @@ public abstract class BaseProcessResourceTestCase {
 
 		Assert.assertEquals(processes2.toString(), 1, processes2.size());
 
-		Page<Process> page3 = ProcessResource.getProcessesPage(
+		Page<Process> page3 = processResource.getProcessesPage(
 			null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
@@ -290,14 +293,14 @@ public abstract class BaseProcessResourceTestCase {
 		process2 = testGetProcessesPage_addProcess(process2);
 
 		for (EntityField entityField : entityFields) {
-			Page<Process> ascPage = ProcessResource.getProcessesPage(
+			Page<Process> ascPage = processResource.getProcessesPage(
 				null, Pagination.of(1, 2), entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(process1, process2),
 				(List<Process>)ascPage.getItems());
 
-			Page<Process> descPage = ProcessResource.getProcessesPage(
+			Page<Process> descPage = processResource.getProcessesPage(
 				null, Pagination.of(1, 2), entityField.getName() + ":desc");
 
 			assertEquals(
@@ -317,7 +320,7 @@ public abstract class BaseProcessResourceTestCase {
 	public void testGetProcess() throws Exception {
 		Process postProcess = testGetProcess_addProcess();
 
-		Process getProcess = ProcessResource.getProcess(
+		Process getProcess = processResource.getProcess(
 			postProcess.getId(), null, null);
 
 		assertEquals(postProcess, getProcess);
@@ -449,7 +452,7 @@ public abstract class BaseProcessResourceTestCase {
 	protected void assertValid(Page<Process> page) {
 		boolean valid = false;
 
-		Collection<Process> processes = page.getItems();
+		java.util.Collection<Process> processes = page.getItems();
 
 		int size = processes.size();
 
@@ -555,7 +558,9 @@ public abstract class BaseProcessResourceTestCase {
 		return true;
 	}
 
-	protected Collection<EntityField> getEntityFields() throws Exception {
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
 		if (!(_processResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
@@ -576,7 +581,7 @@ public abstract class BaseProcessResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		Collection<EntityField> entityFields = getEntityFields();
+		java.util.Collection<EntityField> entityFields = getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 
@@ -663,11 +668,10 @@ public abstract class BaseProcessResourceTestCase {
 		return randomProcess();
 	}
 
+	protected ProcessResource processResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
-	protected Locale testLocale;
-	protected String testUserNameAndPassword = "test@liferay.com:test";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseProcessResourceTestCase.class);

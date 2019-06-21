@@ -84,7 +84,8 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 	protected void updateBuildDescription() {
 		S buildData = getBuildData();
 
-		buildData.setBuildDescription(String.join(", ", _invokedTestSuiteNames));
+		buildData.setBuildDescription(
+			String.join(", ", _invokedTestSuiteNames));
 
 		super.updateBuildDescription();
 	}
@@ -172,39 +173,6 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		return latestTestSuiteStartTimes;
 	}
 
-	private String _getTestrayProjectName(String testSuite) {
-		try {
-			Properties buildProperties =
-				JenkinsResultsParserUtil.getBuildProperties();
-
-			S buildData = getBuildData();
-
-			return buildProperties.getProperty(
-				JenkinsResultsParserUtil.combine(
-					"portal.testsuite.upstream.testray.project.name[",
-					buildData.getPortalUpstreamBranchName(), "][", testSuite,
-					"]"));
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
-	}
-
-	private List<String> _getTestSuiteNames() {
-		S buildData = getBuildData();
-
-		try {
-			return JenkinsResultsParserUtil.getBuildPropertyAsList(
-				true,
-				JenkinsResultsParserUtil.combine(
-					"portal.testsuite.upstream.suites[",
-					buildData.getPortalUpstreamBranchName(), "]"));
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
-	}
-
 	private List<String> _getSelectedTestSuiteNames() {
 		if (_selectedTestSuiteNames != null) {
 			return _selectedTestSuiteNames;
@@ -244,6 +212,39 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		}
 
 		return _selectedTestSuiteNames;
+	}
+
+	private String _getTestrayProjectName(String testSuite) {
+		try {
+			Properties buildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
+
+			S buildData = getBuildData();
+
+			return buildProperties.getProperty(
+				JenkinsResultsParserUtil.combine(
+					"portal.testsuite.upstream.testray.project.name[",
+					buildData.getPortalUpstreamBranchName(), "][", testSuite,
+					"]"));
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
+	private List<String> _getTestSuiteNames() {
+		S buildData = getBuildData();
+
+		try {
+			return JenkinsResultsParserUtil.getBuildPropertyAsList(
+				true,
+				JenkinsResultsParserUtil.combine(
+					"portal.testsuite.upstream.suites[",
+					buildData.getPortalUpstreamBranchName(), "]"));
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	private void _invokeJob() {
@@ -324,7 +325,8 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 			}
 			catch (IOException ioe) {
 				System.out.println(
-					"Could not invoke job for test suite '" + testSuiteName + "'");
+					"Could not invoke job for test suite '" + testSuiteName +
+						"'");
 
 				ioe.printStackTrace();
 			}

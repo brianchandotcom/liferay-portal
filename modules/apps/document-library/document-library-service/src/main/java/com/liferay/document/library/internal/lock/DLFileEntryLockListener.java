@@ -12,25 +12,26 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.util;
+package com.liferay.document.library.internal.lock;
 
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
-import com.liferay.document.library.kernel.service.DLFileEntryServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryService;
 import com.liferay.portal.kernel.lock.BaseLockListener;
+import com.liferay.portal.kernel.lock.LockListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.PropsValues;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
- * @author Alexander Chow
- * @deprecated As of Mueller (7.2.x), replaced by {@link
- *			   com.liferay.document.library.internal.lock.
- *			   DLFileEntryLockListener}
+ * @author Shuyang Zhou
  */
-@Deprecated
+@Component(service = LockListener.class)
 public class DLFileEntryLockListener extends BaseLockListener {
 
 	@Override
@@ -44,7 +45,7 @@ public class DLFileEntryLockListener extends BaseLockListener {
 
 		try {
 			if (PropsValues.DL_FILE_ENTRY_LOCK_POLICY == 1) {
-				DLFileEntryServiceUtil.checkInFileEntry(
+				_dlFileEntryService.checkInFileEntry(
 					fileEntryId, DLVersionNumberIncrease.fromMajorVersion(true),
 					"Automatic timeout checkin", new ServiceContext());
 
@@ -53,7 +54,7 @@ public class DLFileEntryLockListener extends BaseLockListener {
 				}
 			}
 			else {
-				DLFileEntryServiceUtil.cancelCheckOut(fileEntryId);
+				_dlFileEntryService.cancelCheckOut(fileEntryId);
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
@@ -69,5 +70,8 @@ public class DLFileEntryLockListener extends BaseLockListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryLockListener.class);
+
+	@Reference
+	private DLFileEntryService _dlFileEntryService;
 
 }

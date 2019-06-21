@@ -755,7 +755,9 @@ public class GraphQLServletExtender {
 					}
 				}
 				catch (NoSuchMethodException nsme) {
+
 					// we try searching with the class instead
+
 				}
 
 				Boolean graphQLField = _isGraphQLField(clazz);

@@ -17,10 +17,10 @@ package com.liferay.asset.auto.tagger.opennlp.internal.configuration.admin.defin
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.configuration.admin.definition.ConfigurationFieldOptionsProvider;
 import com.liferay.info.extractor.InfoTextExtractorTracker;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.osgi.service.component.annotations.Component;
@@ -40,15 +40,13 @@ public class EnabledClassNamesConfigurationFieldOptionsProvider
 	implements ConfigurationFieldOptionsProvider {
 
 	public List<Option> getOptions() {
-		return _infoTextExtractorTracker.getInfoTextExtractors(
+		return AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
+			CompanyThreadLocal.getCompanyId()
 		).stream(
-		).map(
-			infoTextExtractor ->
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(
-						infoTextExtractor.getClassName())
 		).filter(
-			Objects::nonNull
+			assetRendererFactory ->
+				_infoTextExtractorTracker.getInfoTextExtractor(
+					assetRendererFactory.getClassName()) != null
 		).map(
 			assetRendererFactory -> new Option() {
 

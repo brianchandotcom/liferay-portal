@@ -8231,7 +8231,7 @@ public class JournalArticleLocalServiceImpl
 			folderName = folder.getName();
 
 			if ((folder.getFolderId() ==
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
+					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
 				Validator.isNull(folderName)) {
 
 				folderName = LanguageUtil.get(

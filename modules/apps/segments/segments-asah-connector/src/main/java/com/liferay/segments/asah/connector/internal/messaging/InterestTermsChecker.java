@@ -14,16 +14,10 @@
 
 package com.liferay.segments.asah.connector.internal.messaging;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.asah.connector.internal.cache.AsahInterestTermCache;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClient;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientFactory;
@@ -33,7 +27,6 @@ import com.liferay.segments.asah.connector.internal.client.model.Topic;
 import java.util.List;
 import java.util.Optional;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -96,24 +89,6 @@ public class InterestTermsChecker {
 		_asahInterestTermCache.putInterestTerms(userId, terms);
 	}
 
-	@Activate
-	protected void activate() throws PortalException {
-		_getServiceContext();
-	}
-
-	private void _getServiceContext() throws PortalException {
-		ServiceContext serviceContext = new ServiceContext();
-
-		Company company = _companyLocalService.getCompany(
-			_portal.getDefaultCompanyId());
-
-		serviceContext.setScopeGroupId(company.getGroupId());
-
-		User user = company.getDefaultUser();
-
-		serviceContext.setUserId(user.getUserId());
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		InterestTermsChecker.class);
 
@@ -125,13 +100,7 @@ public class InterestTermsChecker {
 	@Reference
 	private AsahInterestTermCache _asahInterestTermCache;
 
-	@Reference
-	private CompanyLocalService _companyLocalService;
-
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
-
-	@Reference
-	private Portal _portal;
 
 }

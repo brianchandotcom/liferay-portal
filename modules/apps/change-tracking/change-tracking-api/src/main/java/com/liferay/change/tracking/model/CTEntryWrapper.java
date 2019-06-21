@@ -51,6 +51,7 @@ public class CTEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("originalCTCollectionId", getOriginalCTCollectionId());
 		attributes.put("modelClassNameId", getModelClassNameId());
 		attributes.put("modelClassPK", getModelClassPK());
@@ -98,6 +99,12 @@ public class CTEntryWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		Long originalCTCollectionId = (Long)attributes.get(
@@ -183,6 +190,16 @@ public class CTEntryWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the ct collection ID of this ct entry.
+	 *
+	 * @return the ct collection ID of this ct entry
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	@Override
@@ -358,6 +375,16 @@ public class CTEntryWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the ct collection ID of this ct entry.
+	 *
+	 * @param ctCollectionId the ct collection ID of this ct entry
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
 	}
 
 	/**

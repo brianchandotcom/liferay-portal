@@ -63,15 +63,6 @@ public interface CTEntryLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CTEntryLocalServiceUtil} to access the ct entry local service. Add custom service methods to <code>com.liferay.change.tracking.service.impl.CTEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public void addCTCollectionCTEntries(
-		long ctCollectionId, List<CTEntry> ctEntries);
-
-	public void addCTCollectionCTEntries(
-		long ctCollectionId, long[] ctEntryIds);
-
-	public void addCTCollectionCTEntry(long ctCollectionId, CTEntry ctEntry);
-
-	public void addCTCollectionCTEntry(long ctCollectionId, long ctEntryId);
 
 	/**
 	 * Adds the ct entry to the database. Also notifies the appropriate model listeners.
@@ -101,8 +92,6 @@ public interface CTEntryLocalService
 	public void addCTEntryAggregateCTEntry(
 		long ctEntryAggregateId, long ctEntryId);
 
-	public void clearCTCollectionCTEntries(long ctCollectionId);
-
 	public void clearCTEntryAggregateCTEntries(long ctEntryAggregateId);
 
 	/**
@@ -113,16 +102,6 @@ public interface CTEntryLocalService
 	 */
 	@Transactional(enabled = false)
 	public CTEntry createCTEntry(long ctEntryId);
-
-	public void deleteCTCollectionCTEntries(
-		long ctCollectionId, List<CTEntry> ctEntries);
-
-	public void deleteCTCollectionCTEntries(
-		long ctCollectionId, long[] ctEntryIds);
-
-	public void deleteCTCollectionCTEntry(long ctCollectionId, CTEntry ctEntry);
-
-	public void deleteCTCollectionCTEntry(long ctCollectionId, long ctEntryId);
 
 	/**
 	 * Deletes the ct entry from the database. Also notifies the appropriate model listeners.
@@ -252,9 +231,6 @@ public interface CTEntryLocalService
 	public CTEntry fetchCTEntry(long ctEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CTEntry fetchCTEntry(long modelClassNameId, long modelClassPK);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CTEntry fetchCTEntry(
 		long ctCollectionId, long modelClassNameId, long modelClassPK);
 
@@ -272,23 +248,6 @@ public interface CTEntryLocalService
 	public List<CTEntry> getCTCollectionCTEntries(
 		long ctCollectionId, int status, int start, int end,
 		OrderByComparator<CTEntry> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CTEntry> getCTCollectionCTEntries(
-		long ctCollectionId, int start, int end,
-		OrderByComparator<CTEntry> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCTCollectionCTEntriesCount(long ctCollectionId);
-
-	/**
-	 * Returns the ctCollectionIds of the ct collections associated with the ct entry.
-	 *
-	 * @param ctEntryId the ctEntryId of the ct entry
-	 * @return long[] the ctCollectionIds of ct collections associated with the ct entry
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getCTCollectionPrimaryKeys(long ctEntryId);
 
 	/**
 	 * Returns a range of all the ct entries.
@@ -384,12 +343,6 @@ public interface CTEntryLocalService
 		long ctEntryId, QueryDefinition<CTEntry> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasCTCollectionCTEntries(long ctCollectionId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasCTCollectionCTEntry(long ctCollectionId, long ctEntryId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasCTEntryAggregateCTEntries(long ctEntryAggregateId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -417,9 +370,6 @@ public interface CTEntryLocalService
 	public int searchCount(
 		CTCollection ctCollection, String keywords,
 		QueryDefinition<CTEntry> queryDefinition);
-
-	public void setCTCollectionCTEntries(
-		long ctCollectionId, long[] ctEntryIds);
 
 	public void setCTEntryAggregateCTEntries(
 		long ctEntryAggregateId, long[] ctEntryIds);

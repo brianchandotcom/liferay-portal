@@ -17,7 +17,6 @@ package com.liferay.change.tracking.service.base;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
-import com.liferay.change.tracking.service.persistence.CTEntryAggregateFinder;
 import com.liferay.change.tracking.service.persistence.CTEntryAggregatePersistence;
 import com.liferay.change.tracking.service.persistence.CTEntryFinder;
 import com.liferay.change.tracking.service.persistence.CTEntryPersistence;
@@ -486,149 +485,6 @@ public abstract class CTEntryLocalServiceBaseImpl
 			ctEntryAggregateId, ctEntryIds);
 	}
 
-	/**
-	 */
-	@Override
-	public void addCTCollectionCTEntry(long ctCollectionId, long ctEntryId) {
-		ctCollectionPersistence.addCTEntry(ctCollectionId, ctEntryId);
-	}
-
-	/**
-	 */
-	@Override
-	public void addCTCollectionCTEntry(long ctCollectionId, CTEntry ctEntry) {
-		ctCollectionPersistence.addCTEntry(ctCollectionId, ctEntry);
-	}
-
-	/**
-	 */
-	@Override
-	public void addCTCollectionCTEntries(
-		long ctCollectionId, long[] ctEntryIds) {
-
-		ctCollectionPersistence.addCTEntries(ctCollectionId, ctEntryIds);
-	}
-
-	/**
-	 */
-	@Override
-	public void addCTCollectionCTEntries(
-		long ctCollectionId, List<CTEntry> ctEntries) {
-
-		ctCollectionPersistence.addCTEntries(ctCollectionId, ctEntries);
-	}
-
-	/**
-	 */
-	@Override
-	public void clearCTCollectionCTEntries(long ctCollectionId) {
-		ctCollectionPersistence.clearCTEntries(ctCollectionId);
-	}
-
-	/**
-	 */
-	@Override
-	public void deleteCTCollectionCTEntry(long ctCollectionId, long ctEntryId) {
-		ctCollectionPersistence.removeCTEntry(ctCollectionId, ctEntryId);
-	}
-
-	/**
-	 */
-	@Override
-	public void deleteCTCollectionCTEntry(
-		long ctCollectionId, CTEntry ctEntry) {
-
-		ctCollectionPersistence.removeCTEntry(ctCollectionId, ctEntry);
-	}
-
-	/**
-	 */
-	@Override
-	public void deleteCTCollectionCTEntries(
-		long ctCollectionId, long[] ctEntryIds) {
-
-		ctCollectionPersistence.removeCTEntries(ctCollectionId, ctEntryIds);
-	}
-
-	/**
-	 */
-	@Override
-	public void deleteCTCollectionCTEntries(
-		long ctCollectionId, List<CTEntry> ctEntries) {
-
-		ctCollectionPersistence.removeCTEntries(ctCollectionId, ctEntries);
-	}
-
-	/**
-	 * Returns the ctCollectionIds of the ct collections associated with the ct entry.
-	 *
-	 * @param ctEntryId the ctEntryId of the ct entry
-	 * @return long[] the ctCollectionIds of ct collections associated with the ct entry
-	 */
-	@Override
-	public long[] getCTCollectionPrimaryKeys(long ctEntryId) {
-		return ctEntryPersistence.getCTCollectionPrimaryKeys(ctEntryId);
-	}
-
-	/**
-	 */
-	@Override
-	public List<CTEntry> getCTCollectionCTEntries(long ctCollectionId) {
-		return ctEntryPersistence.getCTCollectionCTEntries(ctCollectionId);
-	}
-
-	/**
-	 */
-	@Override
-	public List<CTEntry> getCTCollectionCTEntries(
-		long ctCollectionId, int start, int end) {
-
-		return ctEntryPersistence.getCTCollectionCTEntries(
-			ctCollectionId, start, end);
-	}
-
-	/**
-	 */
-	@Override
-	public List<CTEntry> getCTCollectionCTEntries(
-		long ctCollectionId, int start, int end,
-		OrderByComparator<CTEntry> orderByComparator) {
-
-		return ctEntryPersistence.getCTCollectionCTEntries(
-			ctCollectionId, start, end, orderByComparator);
-	}
-
-	/**
-	 */
-	@Override
-	public int getCTCollectionCTEntriesCount(long ctCollectionId) {
-		return ctCollectionPersistence.getCTEntriesSize(ctCollectionId);
-	}
-
-	/**
-	 */
-	@Override
-	public boolean hasCTCollectionCTEntry(long ctCollectionId, long ctEntryId) {
-		return ctCollectionPersistence.containsCTEntry(
-			ctCollectionId, ctEntryId);
-	}
-
-	/**
-	 */
-	@Override
-	public boolean hasCTCollectionCTEntries(long ctCollectionId) {
-		return ctCollectionPersistence.containsCTEntries(ctCollectionId);
-	}
-
-	/**
-	 */
-	@Override
-	public void setCTCollectionCTEntries(
-		long ctCollectionId, long[] ctEntryIds) {
-
-		ctCollectionPersistence.setCTEntries(ctCollectionId, ctEntryIds);
-	}
-
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -697,9 +553,6 @@ public abstract class CTEntryLocalServiceBaseImpl
 
 	@Reference
 	protected CTEntryAggregatePersistence ctEntryAggregatePersistence;
-
-	@Reference
-	protected CTEntryAggregateFinder ctEntryAggregateFinder;
 
 	@Reference
 	protected CTProcessPersistence ctProcessPersistence;

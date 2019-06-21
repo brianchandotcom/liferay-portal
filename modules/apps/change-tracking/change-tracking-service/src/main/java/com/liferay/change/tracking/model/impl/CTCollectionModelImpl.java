@@ -129,33 +129,6 @@ public class CTCollectionModelImpl
 		_finderCacheEnabled = finderCacheEnabled;
 	}
 
-	public static final String MAPPING_TABLE_CTCOLLECTIONS_CTENTRIES_NAME =
-		"CTCollections_CTEntries";
-
-	public static final Object[][]
-		MAPPING_TABLE_CTCOLLECTIONS_CTENTRIES_COLUMNS = {
-			{"companyId", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-			{"ctEntryId", Types.BIGINT}
-		};
-
-	public static final String
-		MAPPING_TABLE_CTCOLLECTIONS_CTENTRIES_SQL_CREATE =
-			"create table CTCollections_CTEntries (companyId LONG not null,ctCollectionId LONG not null,ctEntryId LONG not null,primary key (ctCollectionId, ctEntryId))";
-
-	public static final String
-		MAPPING_TABLE_CTCOLLECTION_CTENTRYAGGREGATE_NAME =
-			"CTCollection_CTEntryAggregate";
-
-	public static final Object[][]
-		MAPPING_TABLE_CTCOLLECTION_CTENTRYAGGREGATE_COLUMNS = {
-			{"companyId", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-			{"ctEntryAggregateId", Types.BIGINT}
-		};
-
-	public static final String
-		MAPPING_TABLE_CTCOLLECTION_CTENTRYAGGREGATE_SQL_CREATE =
-			"create table CTCollection_CTEntryAggregate (companyId LONG not null,ctCollectionId LONG not null,ctEntryAggregateId LONG not null,primary key (ctCollectionId, ctEntryAggregateId))";
-
 	public CTCollectionModelImpl() {
 	}
 

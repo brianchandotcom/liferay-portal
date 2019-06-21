@@ -63,7 +63,7 @@ public class CTEntryCacheModel implements CacheModel<CTEntry>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{ctEntryId=");
 		sb.append(ctEntryId);
@@ -77,6 +77,8 @@ public class CTEntryCacheModel implements CacheModel<CTEntry>, Externalizable {
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", originalCTCollectionId=");
 		sb.append(originalCTCollectionId);
 		sb.append(", modelClassNameId=");
@@ -125,6 +127,7 @@ public class CTEntryCacheModel implements CacheModel<CTEntry>, Externalizable {
 			ctEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		ctEntryImpl.setCtCollectionId(ctCollectionId);
 		ctEntryImpl.setOriginalCTCollectionId(originalCTCollectionId);
 		ctEntryImpl.setModelClassNameId(modelClassNameId);
 		ctEntryImpl.setModelClassPK(modelClassPK);
@@ -148,6 +151,8 @@ public class CTEntryCacheModel implements CacheModel<CTEntry>, Externalizable {
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 
 		originalCTCollectionId = objectInput.readLong();
 
@@ -182,6 +187,8 @@ public class CTEntryCacheModel implements CacheModel<CTEntry>, Externalizable {
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		objectOutput.writeLong(ctCollectionId);
+
 		objectOutput.writeLong(originalCTCollectionId);
 
 		objectOutput.writeLong(modelClassNameId);
@@ -203,6 +210,7 @@ public class CTEntryCacheModel implements CacheModel<CTEntry>, Externalizable {
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long ctCollectionId;
 	public long originalCTCollectionId;
 	public long modelClassNameId;
 	public long modelClassPK;

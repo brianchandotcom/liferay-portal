@@ -25,6 +25,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="ctCollectionId" type="long" />
 		<field name="originalCTCollectionId" type="long" />
 		<field name="modelClassNameId" type="long" />
 		<field name="modelClassPK" type="long" />
@@ -40,6 +41,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="ctCollectionId" type="long" />
 		<field name="ownerCTEntryId" type="long" />
 		<field name="status" type="int" />
 	</model>

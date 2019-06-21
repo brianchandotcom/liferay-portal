@@ -1,20 +1,6 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.change.tracking.service.persistence.CTEntryAggregateFinder.findByCTCI_OCTEI">
-		<![CDATA[
-			SELECT
-				{CTEntryAggregate.*}
-			FROM
-				CTEntryAggregate
-			INNER JOIN
-				CTCollection_CTEntryAggregate ON
-					CTCollection_CTEntryAggregate.ctEntryAggregateId = CTEntryAggregate.ctEntryAggregateId
-			WHERE
-				(CTCollection_CTEntryAggregate.ctCollectionId = ?) AND
-				(CTEntryAggregate.ownerCTEntryId = ?)
-		]]>
-	</sql>
 	<sql id="com.liferay.change.tracking.service.persistence.CTEntryFinder.countByCTCollectionId">
 		<![CDATA[
 			SELECT

@@ -184,6 +184,10 @@ public class LiferayK8sConnection {
 		return pods;
 	}
 
+	public void setDebugging(boolean debugging) {
+		_apiClient.setDebugging(debugging);
+	}
+
 	private LiferayK8sConnection() {
 	}
 
@@ -196,8 +200,6 @@ public class LiferayK8sConnection {
 			_apiClient = Config.defaultClient();
 
 			Configuration.setDefaultApiClient(_apiClient);
-
-			_apiClient.setDebugging(true);
 
 			_coreV1Api = new CoreV1Api(_apiClient);
 		}

@@ -9480,9 +9480,20 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 
 							<propertycopy from="${database.type}.executable" name="database.executable" override="true" />
 
-							<exec executable="${database.executable}" failonerror="true" input="create.sql">
-								<arg line="${arg.line}" />
-							</exec>
+							<trycatch property="fail.message">
+								<try>
+									<retry retrycount="3" retrydelay="30000">
+										<exec executable="${database.executable}" failonerror="true" input="create.sql">
+											<arg line="${arg.line}" />
+										</exec>
+									</retry>
+								</try>
+								<catch>
+									<echo>${fail.message}</echo>
+
+									<fail message="Unable to create database on kubernetes database pod" />
+								</catch>
+							</trycatch>
 						</then>
 					</elseif>
 					<elseif>

@@ -15,7 +15,7 @@
 /* eslint no-unused-vars: "warn" */
 
 import BooleanInput from '../inputs/BooleanInput.es';
-import ClayAlert from '../shared/ClayAlert.es';
+import ClayAlert from '@clayui/alert';
 import ClayButton from '../shared/ClayButton.es';
 import ClayIcon from '@clayui/icon';
 import ClaySelect from '../shared/ClaySelect.es';
@@ -350,10 +350,11 @@ class CriteriaRow extends Component {
 		return (
 			<ClayAlert
 				className='bg-transparent p-1 mt-1 border-0'
-				message={message}
+				displayType='danger'
 				title={Liferay.Language.get('error')}
-				type='danger'
-			/>
+			>
+				{message}
+			</ClayAlert>
 		);
 	}
 

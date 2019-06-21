@@ -696,7 +696,7 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@clayui/alert@3.0.0-milestone.1":
+"@clayui/alert@3.0.0-milestone.1", "@clayui/alert@^3.0.0-milestone.1":
   version "3.0.0-milestone.1"
   resolved "https://registry.yarnpkg.com/@clayui/alert/-/alert-3.0.0-milestone.1.tgz#51337805d34a5020ada5878d6a833bf716fd4f40"
   integrity sha512-QL7RReKk0mWuxX3Y9qfM/Tp2N37uBFBe9aaIe7UU2hbTDgnw4WuR4+e1BycsLJgepo9vC3Y4iTFHRah+2n9G+w==
@@ -902,7 +902,7 @@
   dependencies:
     classnames "^2.2.6"
 
-"@clayui/select@3.0.0-milestone.1":
+"@clayui/select@3.0.0-milestone.1", "@clayui/select@^3.0.0-milestone.1":
   version "3.0.0-milestone.1"
   resolved "https://registry.yarnpkg.com/@clayui/select/-/select-3.0.0-milestone.1.tgz#37448d1cc77f87f39ca5f217d8352e26fff6a012"
   integrity sha512-/Z8FvMtAFI+3ahafWi0b8i7fS5DugbvwComubW1F5cjPY+YeXY7/GFJ3cBTArhbyv6jvU3wN8p5pY6XhyIu88w==

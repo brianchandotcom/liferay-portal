@@ -1204,7 +1204,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		String[] fileInstallDirs = StringUtil.split(
 			_getFelixFileInstallDir(), StringPool.COMMA);
 
-		Map<String, Long> checksums = new LinkedHashMap<>();
+		Map<String, Long> checksums = new HashMap<>();
 
 		for (String fileInstallDir : fileInstallDirs) {
 			if (fileInstallDir.equals(

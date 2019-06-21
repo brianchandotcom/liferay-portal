@@ -80,6 +80,7 @@ import org.springframework.beans.CachedIntrospectionResults;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.jdbc.datasource.DelegatingDataSource;
 import org.springframework.web.context.ConfigurableWebApplicationContext;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.ContextLoaderListener;
@@ -128,9 +129,9 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			_log.error(e, e);
 		}
 
-		closeDataSource("counterDataSourceImpl");
+		closeDataSource("counterDataSource");
 
-		closeDataSource("liferayDataSourceImpl");
+		closeDataSource("liferayDataSource");
 
 		super.contextDestroyed(servletContextEvent);
 
@@ -362,6 +363,13 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 	protected void closeDataSource(String name) {
 		DataSource dataSource = (DataSource)PortalBeanLocatorUtil.locate(name);
+
+		if (dataSource instanceof DelegatingDataSource) {
+			DelegatingDataSource delegatingDataSource =
+				(DelegatingDataSource)dataSource;
+
+			dataSource = delegatingDataSource.getTargetDataSource();
+		}
 
 		if (dataSource instanceof Closeable) {
 			try {

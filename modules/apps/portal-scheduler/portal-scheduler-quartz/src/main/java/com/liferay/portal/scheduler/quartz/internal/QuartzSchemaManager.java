@@ -43,17 +43,10 @@ public class QuartzSchemaManager {
 
 	@Activate
 	protected void activate() {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getConnection();
-
-			ps = con.prepareStatement(
+		try (Connection con = DataAccess.getConnection();
+			PreparedStatement ps = con.prepareStatement(
 				"select count(*) from QUARTZ_JOB_DETAILS");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			if (rs.next()) {
 				return;
@@ -64,20 +57,12 @@ public class QuartzSchemaManager {
 				_log.info(e, e);
 			}
 		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
 
-		try {
-			con = DataAccess.getConnection();
-
+		try (Connection con = DataAccess.getConnection()) {
 			_populateSchema(con);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
-		}
-		finally {
-			DataAccess.cleanUp(con);
 		}
 	}
 

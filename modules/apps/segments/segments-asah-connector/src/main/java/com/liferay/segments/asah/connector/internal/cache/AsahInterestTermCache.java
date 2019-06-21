@@ -33,9 +33,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	configurationPid = "com.liferay.segments.asah.connector.internal.configuration.SegmentsAsahConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	service = SegmentsInterestTermsAsahCache.class
+	service = AsahInterestTermCache.class
 )
-public class SegmentsInterestTermsAsahCache {
+public class AsahInterestTermCache {
 
 	public String[] getInterestTerms(String userId) {
 		return _portalCache.get(_generateCacheKey(userId));
@@ -62,7 +62,7 @@ public class SegmentsInterestTermsAsahCache {
 	protected void setMultiVMPool(MultiVMPool multiVMPool) {
 		_portalCache =
 			(PortalCache<String, String[]>)multiVMPool.getPortalCache(
-				SegmentsInterestTermsAsahCache.class.getName());
+				AsahInterestTermCache.class.getName());
 	}
 
 	private String _generateCacheKey(String userId) {

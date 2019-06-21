@@ -31,12 +31,12 @@ import org.mockito.runners.MockitoJUnitRunner;
  * @author David Arques
  */
 @RunWith(MockitoJUnitRunner.class)
-public class SegmentsEntryIdsAsahCacheTest {
+public class AsahSegmentsEntryCacheTest {
 
 	@Before
 	public void setUp() {
 		ReflectionTestUtil.setFieldValue(
-			_segmentsEntryIdsAsahCache, "_portalCache", _portalCache);
+			_asahSegmentsEntryCache, "_portalCache", _portalCache);
 	}
 
 	@Test
@@ -57,7 +57,7 @@ public class SegmentsEntryIdsAsahCacheTest {
 
 		Assert.assertArrayEquals(
 			segmentsEntryIds,
-			_segmentsEntryIdsAsahCache.getSegmentsEntryIds(userId));
+			_asahSegmentsEntryCache.getSegmentsEntryIds(userId));
 
 		Mockito.verify(
 			_portalCache, Mockito.times(1)
@@ -76,8 +76,7 @@ public class SegmentsEntryIdsAsahCacheTest {
 
 		String cacheKey = _generateCacheKey(userId);
 
-		_segmentsEntryIdsAsahCache.putSegmentsEntryIds(
-			userId, segmentsEntryIds);
+		_asahSegmentsEntryCache.putSegmentsEntryIds(userId, segmentsEntryIds);
 
 		Mockito.verify(
 			_portalCache, Mockito.times(1)
@@ -90,10 +89,10 @@ public class SegmentsEntryIdsAsahCacheTest {
 		return "segments-" + userId;
 	}
 
+	private final AsahSegmentsEntryCache _asahSegmentsEntryCache =
+		new AsahSegmentsEntryCache();
+
 	@Mock
 	private PortalCache<String, long[]> _portalCache;
-
-	private final SegmentsEntryIdsAsahCache _segmentsEntryIdsAsahCache =
-		new SegmentsEntryIdsAsahCache();
 
 }

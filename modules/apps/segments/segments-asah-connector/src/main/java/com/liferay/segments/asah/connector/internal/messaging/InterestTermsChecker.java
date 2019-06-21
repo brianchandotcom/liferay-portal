@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.segments.asah.connector.internal.cache.SegmentsInterestTermsAsahCache;
+import com.liferay.segments.asah.connector.internal.cache.AsahInterestTermCache;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClient;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientUtil;
 import com.liferay.segments.asah.connector.internal.client.model.Results;
@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 public class InterestTermsChecker {
 
 	public void checkInterestTerms(String userId) {
-		if (_segmentsInterestTermsAsahCache.getInterestTerms(userId) != null) {
+		if (_asahInterestTermCache.getInterestTerms(userId) != null) {
 			return;
 		}
 
@@ -67,8 +67,7 @@ public class InterestTermsChecker {
 				_log.debug("Unable to get interest terms of userId " + userId);
 			}
 
-			_segmentsInterestTermsAsahCache.putInterestTerms(
-				userId, new String[0]);
+			_asahInterestTermCache.putInterestTerms(userId, new String[0]);
 
 			return;
 		}
@@ -76,8 +75,7 @@ public class InterestTermsChecker {
 		List<Topic> topics = interestTermsResults.getItems();
 
 		if (ListUtil.isEmpty(topics)) {
-			_segmentsInterestTermsAsahCache.putInterestTerms(
-				userId, new String[0]);
+			_asahInterestTermCache.putInterestTerms(userId, new String[0]);
 
 			return;
 		}
@@ -95,7 +93,7 @@ public class InterestTermsChecker {
 			String[]::new
 		);
 
-		_segmentsInterestTermsAsahCache.putInterestTerms(userId, terms);
+		_asahInterestTermCache.putInterestTerms(userId, terms);
 	}
 
 	@Activate
@@ -125,6 +123,9 @@ public class InterestTermsChecker {
 	private AsahFaroBackendClientUtil _asahFaroBackendClientUtil;
 
 	@Reference
+	private AsahInterestTermCache _asahInterestTermCache;
+
+	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
@@ -132,8 +133,5 @@ public class InterestTermsChecker {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SegmentsInterestTermsAsahCache _segmentsInterestTermsAsahCache;
 
 }

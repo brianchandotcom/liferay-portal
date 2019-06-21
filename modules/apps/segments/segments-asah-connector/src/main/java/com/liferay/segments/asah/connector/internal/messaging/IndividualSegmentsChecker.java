@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.segments.asah.connector.internal.cache.SegmentsEntryIdsAsahCache;
+import com.liferay.segments.asah.connector.internal.cache.AsahSegmentsEntryCache;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClient;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientUtil;
 import com.liferay.segments.asah.connector.internal.client.model.Individual;
@@ -77,9 +77,7 @@ public class IndividualSegmentsChecker {
 	public void checkIndividualSegments(String individualPK)
 		throws PortalException {
 
-		if (_segmentsEntryIdsAsahCache.getSegmentsEntryIds(individualPK) !=
-				null) {
-
+		if (_asahSegmentsEntryCache.getSegmentsEntryIds(individualPK) != null) {
 			return;
 		}
 
@@ -124,7 +122,7 @@ public class IndividualSegmentsChecker {
 			SegmentsEntryModel::getSegmentsEntryId
 		).toArray();
 
-		_segmentsEntryIdsAsahCache.putSegmentsEntryIds(
+		_asahSegmentsEntryCache.putSegmentsEntryIds(
 			individualPK, segmentsEntryIds);
 	}
 
@@ -361,6 +359,9 @@ public class IndividualSegmentsChecker {
 	private AsahFaroBackendClientUtil _asahFaroBackendClientUtil;
 
 	@Reference
+	private AsahSegmentsEntryCache _asahSegmentsEntryCache;
+
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
@@ -371,9 +372,6 @@ public class IndividualSegmentsChecker {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SegmentsEntryIdsAsahCache _segmentsEntryIdsAsahCache;
 
 	@Reference
 	private SegmentsEntryLocalService _segmentsEntryLocalService;

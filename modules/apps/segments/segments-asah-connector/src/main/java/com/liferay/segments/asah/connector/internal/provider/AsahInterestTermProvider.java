@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
-import com.liferay.segments.asah.connector.internal.cache.SegmentsInterestTermsAsahCache;
+import com.liferay.segments.asah.connector.internal.cache.AsahInterestTermCache;
 import com.liferay.segments.asah.connector.internal.constants.SegmentsAsahDestinationNames;
 
 import org.osgi.service.component.annotations.Activate;
@@ -32,12 +32,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sarai Díaz
  */
-@Component(immediate = true, service = AsahInterestTermsProvider.class)
-public class AsahInterestTermsProvider {
+@Component(immediate = true, service = AsahInterestTermProvider.class)
+public class AsahInterestTermProvider {
 
 	public String[] getInterestTerms(String userId) {
-		String[] cachedInterestTerms =
-			_segmentsInterestTermsAsahCache.getInterestTerms(userId);
+		String[] cachedInterestTerms = _asahInterestTermCache.getInterestTerms(
+			userId);
 
 		if (cachedInterestTerms == null) {
 			if (_log.isDebugEnabled()) {
@@ -83,15 +83,15 @@ public class AsahInterestTermsProvider {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AsahInterestTermsProvider.class);
+		AsahInterestTermProvider.class);
+
+	@Reference
+	private AsahInterestTermCache _asahInterestTermCache;
 
 	@Reference
 	private DestinationFactory _destinationFactory;
 
 	@Reference
 	private MessageBus _messageBus;
-
-	@Reference
-	private SegmentsInterestTermsAsahCache _segmentsInterestTermsAsahCache;
 
 }

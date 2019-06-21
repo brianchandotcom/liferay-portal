@@ -18,6 +18,7 @@ import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.base.FragmentEntryServiceBaseImpl;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
@@ -55,8 +56,8 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
 		return fragmentEntryLocalService.addFragmentEntry(
-			getUserId(), groupId, fragmentCollectionId, name, type, status,
-			serviceContext);
+			getUserId(), groupId, fragmentCollectionId, name, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, type, status, serviceContext);
 	}
 
 	@Override
@@ -70,8 +71,8 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
 		return fragmentEntryLocalService.addFragmentEntry(
-			getUserId(), groupId, fragmentCollectionId, name, status,
-			serviceContext);
+			getUserId(), groupId, fragmentCollectionId, name, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, status, serviceContext);
 	}
 
 	@Override
@@ -86,7 +87,8 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 		return fragmentEntryLocalService.addFragmentEntry(
 			getUserId(), groupId, fragmentCollectionId, fragmentEntryKey, name,
-			type, status, serviceContext);
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, type, status,
+			serviceContext);
 	}
 
 	@Override
@@ -101,7 +103,8 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 		return fragmentEntryLocalService.addFragmentEntry(
 			getUserId(), groupId, fragmentCollectionId, fragmentEntryKey, name,
-			status, serviceContext);
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, status,
+			serviceContext);
 	}
 
 	@Override

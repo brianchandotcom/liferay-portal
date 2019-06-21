@@ -77,8 +77,9 @@ public class FragmentEntryLocalServiceImpl
 		throws PortalException {
 
 		return addFragmentEntry(
-			userId, groupId, fragmentCollectionId, StringPool.BLANK, name, 0,
-			type, status, serviceContext);
+			userId, groupId, fragmentCollectionId, StringPool.BLANK, name,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, type,
+			status, serviceContext);
 	}
 
 	@Override
@@ -88,7 +89,8 @@ public class FragmentEntryLocalServiceImpl
 		throws PortalException {
 
 		return addFragmentEntry(
-			userId, groupId, fragmentCollectionId, StringPool.BLANK, name, 0,
+			userId, groupId, fragmentCollectionId, StringPool.BLANK, name,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0,
 			FragmentConstants.TYPE_SECTION, status, serviceContext);
 	}
 
@@ -101,6 +103,7 @@ public class FragmentEntryLocalServiceImpl
 
 		return addFragmentEntry(
 			userId, groupId, fragmentCollectionId, StringPool.BLANK, name,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			previewFileEntryId, type, status, serviceContext);
 	}
 
@@ -112,6 +115,7 @@ public class FragmentEntryLocalServiceImpl
 
 		return addFragmentEntry(
 			userId, groupId, fragmentCollectionId, StringPool.BLANK, name,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			previewFileEntryId, FragmentConstants.TYPE_SECTION, status,
 			serviceContext);
 	}
@@ -124,8 +128,9 @@ public class FragmentEntryLocalServiceImpl
 		throws PortalException {
 
 		return addFragmentEntry(
-			userId, groupId, fragmentCollectionId, fragmentEntryKey, name, 0,
-			type, status, serviceContext);
+			userId, groupId, fragmentCollectionId, fragmentEntryKey, name,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, type,
+			status, serviceContext);
 	}
 
 	@Override
@@ -136,7 +141,8 @@ public class FragmentEntryLocalServiceImpl
 		throws PortalException {
 
 		return addFragmentEntry(
-			userId, groupId, fragmentCollectionId, fragmentEntryKey, name, 0,
+			userId, groupId, fragmentCollectionId, fragmentEntryKey, name,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0,
 			FragmentConstants.TYPE_SECTION, status, serviceContext);
 	}
 
@@ -202,6 +208,7 @@ public class FragmentEntryLocalServiceImpl
 
 		return addFragmentEntry(
 			userId, groupId, fragmentCollectionId, fragmentEntryKey, name,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			previewFileEntryId, FragmentConstants.TYPE_SECTION, status,
 			serviceContext);
 	}

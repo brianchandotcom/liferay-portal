@@ -33,7 +33,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(service = InfoTextExtractor.class)
-public class DLFileEntryInfoTextExtractor implements InfoTextExtractor<DLFileEntry> {
+public class DLFileEntryInfoTextExtractor
+	implements InfoTextExtractor<DLFileEntry> {
 
 	@Override
 	public String getClassName() {

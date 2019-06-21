@@ -26,7 +26,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(service = InfoTextExtractor.class)
-public class BlogsEntryInfoTextExtractor implements InfoTextExtractor<BlogsEntry> {
+public class BlogsEntryInfoTextExtractor
+	implements InfoTextExtractor<BlogsEntry> {
 
 	@Override
 	public String getClassName() {

@@ -68,8 +68,9 @@ public class DLFileEntryInfoTextExtractorTest {
 			RandomTestUtil.randomString(), null, null, 0, null, null,
 			new ByteArrayInputStream(bytes), bytes.length, serviceContext);
 
-		InfoTextExtractor infoTextExtractor = _infoTextExtractorTracker.getInfoTextExtractor(
-			DLFileEntryConstants.getClassName());
+		InfoTextExtractor infoTextExtractor =
+			_infoTextExtractorTracker.getInfoTextExtractor(
+				DLFileEntryConstants.getClassName());
 
 		Assert.assertEquals(
 			content + StringPool.NEW_LINE,

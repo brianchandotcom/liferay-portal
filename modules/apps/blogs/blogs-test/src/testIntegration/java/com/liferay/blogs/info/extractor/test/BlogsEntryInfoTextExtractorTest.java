@@ -56,8 +56,9 @@ public class BlogsEntryInfoTextExtractorTest {
 			TestPropsValues.getUserId(), StringUtil.randomString(),
 			StringUtil.randomString(), new Date(), serviceContext);
 
-		InfoTextExtractor infoTextExtractor = _infoTextExtractorTracker.getInfoTextExtractor(
-			BlogsEntry.class.getName());
+		InfoTextExtractor infoTextExtractor =
+			_infoTextExtractorTracker.getInfoTextExtractor(
+				BlogsEntry.class.getName());
 
 		Assert.assertEquals(
 			blogsEntry.getContent(),

@@ -101,9 +101,9 @@ public class OpenNLPDocumentAssetAutoTagProvider
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	private OpenNLPDocumentAssetAutoTagger _openNLPDocumentAssetAutoTagger;
+	private InfoTextExtractorTracker _infoTextExtractorTracker;
 
 	@Reference
-	private InfoTextExtractorTracker _infoTextExtractorTracker;
+	private OpenNLPDocumentAssetAutoTagger _openNLPDocumentAssetAutoTagger;
 
 }

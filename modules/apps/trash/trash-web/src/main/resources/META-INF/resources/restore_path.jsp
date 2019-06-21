@@ -70,12 +70,7 @@
 		</c:choose>
 	</liferay-util:buffer>
 
-	<liferay-ui:alert
-		icon="check"
-		message="<%= alertMessage %>"
-		timeout="<%= 0 %>"
-		type="success"
-	/>
+	<liferay-ui:success key="<%= portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA %>" message="<%= alertMessage %>" />
 </c:if>
 
 <portlet:actionURL name="moveEntry" var="selectContainerURL" />

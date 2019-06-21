@@ -50,8 +50,10 @@ import org.gradle.api.AntBuilder;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
+import org.gradle.api.tasks.SourceSet;
 
 /**
  * @author Andrea Di Giorgi
@@ -211,6 +213,12 @@ public class FileUtil {
 		char driveLetter = absolutePath.charAt(0);
 
 		return Character.toLowerCase(driveLetter);
+	}
+
+	public static File getJavaClassesDir(SourceSet sourceSet) {
+		SourceDirectorySet sourceDirectorySet = sourceSet.getJava();
+
+		return sourceDirectorySet.getOutputDir();
 	}
 
 	public static boolean isChild(File file, File parentFile) {

@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayButton from '../shared/ClayButton.es';
+import ClayButton from '@clayui/button';
 import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -55,12 +55,14 @@ class Conjunction extends React.Component {
 		return editing ? (
 			<ClayButton
 				className={classnames}
-				label={this._getConjunctionLabel(
+				displayType='secondary'
+				onClick={onClick}
+			>
+				{this._getConjunctionLabel(
 					conjunctionName,
 					supportedConjunctions
 				)}
-				onClick={onClick}
-			/>
+			</ClayButton>
 		) : (
 			<div className={classnames}>
 				{this._getConjunctionLabel(

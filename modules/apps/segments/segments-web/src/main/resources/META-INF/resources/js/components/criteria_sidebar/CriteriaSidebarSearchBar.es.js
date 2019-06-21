@@ -12,7 +12,8 @@
  * details.
  */
 
-import ClayButton from '../shared/ClayButton.es';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 
@@ -50,12 +51,15 @@ class CriteriaSidebarSearchBar extends Component {
 					<div className='input-group-inset-item input-group-inset-item-after'>
 						<ClayButton
 							data-testid='search-button'
-							iconName={searchValue ? 'times' : 'search'}
+							displayType='unstyled'
 							onClick={
 								searchValue ? this._handleClear : undefined
 							}
-							style='unstyled'
-						/>
+						>
+							<ClayIcon
+								symbol={searchValue ? 'times' : 'search'}
+							/>
+						</ClayButton>
 					</div>
 				</div>
 			</div>

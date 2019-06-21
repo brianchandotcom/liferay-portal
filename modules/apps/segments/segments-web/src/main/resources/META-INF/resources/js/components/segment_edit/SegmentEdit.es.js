@@ -12,7 +12,8 @@
  * details.
  */
 
-import ClayButton from '../shared/ClayButton.es';
+import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import ClayToggle from '../shared/ClayToggle.es';
 import ContributorInputs from '../criteria_builder/ContributorInputs.es';
 import ContributorsBuilder from '../criteria_builder/ContributorsBuilder.es';
@@ -394,7 +395,9 @@ class SegmentEdit extends Component {
 								onMouseOver={this._handleSourceIconMouseOver}
 								src={
 									source === SOURCES.ASAH_FARO_BACKEND.name
-										? `${assetsPath}${SOURCES.ASAH_FARO_BACKEND.icon}`
+										? `${assetsPath}${
+												SOURCES.ASAH_FARO_BACKEND.icon
+										  }`
 										: `${assetsPath}${SOURCES.DEFAULT.icon}`
 								}
 							/>
@@ -416,26 +419,28 @@ class SegmentEdit extends Component {
 
 								<div className='btn-group'>
 									<div className='btn-group-item'>
-										<ClayButton
+										<ClayLink
 											className='text-capitalize'
+											displayType='secondary'
 											href={redirect}
-											label={Liferay.Language.get(
-												'cancel'
-											)}
-											size='sm'
-										/>
+											outline
+											small
+										>
+											{Liferay.Language.get('cancel')}
+										</ClayLink>
 									</div>
 
 									<div className='btn-group-item'>
 										<ClayButton
 											className='text-capitalize'
 											disabled={disabledSaveButton}
-											label={Liferay.Language.get('save')}
+											displayType='primary'
 											onClick={this._handleValidate}
-											size='sm'
-											style='primary'
+											small
 											type='submit'
-										/>
+										>
+											{Liferay.Language.get('save')}
+										</ClayButton>
 									</div>
 								</div>
 							</div>

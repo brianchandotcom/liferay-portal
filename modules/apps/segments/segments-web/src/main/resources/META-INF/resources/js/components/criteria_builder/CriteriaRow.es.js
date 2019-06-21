@@ -16,7 +16,7 @@
 
 import BooleanInput from '../inputs/BooleanInput.es';
 import ClayAlert from '@clayui/alert';
-import ClayButton from '../shared/ClayButton.es';
+import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {ClaySelectWithOption} from '@clayui/select';
 import CollectionInput from '../inputs/CollectionInput.es';
@@ -410,25 +410,32 @@ class CriteriaRow extends Component {
 
 				{error ? (
 					<ClayButton
-						label={Liferay.Language.get('delete')}
 						onClick={this._handleDelete}
 						style='outline-danger'
-					/>
+					>
+						{Liferay.Language.get('delete')}
+					</ClayButton>
 				) : (
 					<React.Fragment>
 						<ClayButton
 							borderless
-							iconName='paste'
+							className='btn-outline-borderless'
+							displayType='secondary'
 							monospaced
 							onClick={this._handleDuplicate}
-						/>
+						>
+							<ClayIcon symbol='paste' />
+						</ClayButton>
 
 						<ClayButton
 							borderless
-							iconName='times-circle'
+							className='btn-outline-borderless'
+							displayType='secondary'
 							monospaced
 							onClick={this._handleDelete}
-						/>
+						>
+							<ClayIcon symbol='times-circle' />
+						</ClayButton>
 					</React.Fragment>
 				)}
 			</div>

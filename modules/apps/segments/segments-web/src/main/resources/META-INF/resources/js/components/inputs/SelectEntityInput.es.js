@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayButton from '../shared/ClayButton.es';
+import ClayButton from '@clayui/button';
 import propTypes from 'prop-types';
 import React from 'react';
 
@@ -117,9 +117,11 @@ class SelectEntityInput extends React.Component {
 				<span className='input-group-append input-group-item input-group-item-shrink'>
 					<ClayButton
 						disabled={disabled}
-						label={Liferay.Language.get('select')}
+						displayType='secondary'
 						onClick={this._handleSelectEntity}
-					/>
+					>
+						{Liferay.Language.get('select')}
+					</ClayButton>
 				</span>
 			</div>
 		);

@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayButton from '../shared/ClayButton.es';
+import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Conjunction from './Conjunction.es';
 import CriteriaBuilder from './CriteriaBuilder.es';
@@ -159,15 +159,17 @@ class ContributorBuilder extends React.Component {
 													)}
 
 													<ClayButton
-														label={Liferay.Language.get(
-															'view-members'
-														)}
+														displayType='secondary'
 														onClick={
 															onPreviewMembers
 														}
-														size='sm'
+														small
 														type='button'
-													/>
+													>
+														{Liferay.Language.get(
+															'view-members'
+														)}
+													</ClayButton>
 												</div>
 											</div>
 										</div>

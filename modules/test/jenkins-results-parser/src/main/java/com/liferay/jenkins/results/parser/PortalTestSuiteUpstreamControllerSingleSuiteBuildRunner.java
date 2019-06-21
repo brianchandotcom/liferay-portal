@@ -138,10 +138,10 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 		S buildData = getBuildData();
 
 		return buildData.getPortalGitHubCompareURL(
-			_getPreviousPortalBranchSHA());
+			_getPreviousBuildPortalBranchSHA());
 	}
 
-	private String _getPreviousPortalBranchSHA() {
+	private String _getPreviousBuildPortalBranchSHA() {
 		S buildData = getBuildData();
 
 		String currentPortalBranchSHA = buildData.getPortalBranchSHA();

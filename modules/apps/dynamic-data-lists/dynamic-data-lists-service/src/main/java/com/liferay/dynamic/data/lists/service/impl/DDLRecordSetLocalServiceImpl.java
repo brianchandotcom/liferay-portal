@@ -242,6 +242,18 @@ public class DDLRecordSetLocalServiceImpl
 			recordSet.getRecordSetId(), groupPermissions, guestPermissions);
 	}
 
+	@Override
+	public void deleteByDDMStructureId(long ddmStructureId)
+		throws PortalException {
+
+		List<DDLRecordSet> ddlRecordSets = getRecordSetsByDDMStructureId(
+			ddmStructureId);
+
+		for (DDLRecordSet ddlRecordSet : ddlRecordSets) {
+			deleteRecordSet(ddlRecordSet);
+		}
+	}
+
 	/**
 	 * Deletes the record set and its resources.
 	 *
@@ -410,6 +422,13 @@ public class DDLRecordSetLocalServiceImpl
 
 	public List<DDLRecordSet> getRecordSets(long groupId, int start, int end) {
 		return ddlRecordSetPersistence.filterFindByGroupId(groupId, start, end);
+	}
+
+	@Override
+	public List<DDLRecordSet> getRecordSetsByDDMStructureId(
+		long ddmStructureId) {
+
+		return ddlRecordSetPersistence.findByDDMStructureId(ddmStructureId);
 	}
 
 	/**

@@ -1139,12 +1139,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			PropsValues.MODULE_FRAMEWORK_MARKETPLACE_DIR + "/override");
 	}
 
-	private Map<String, Long> _installBundlesFromDir(Path path)
+	private void _installBundlesFromDir(Path path, Map<String, Long> checksums)
 		throws IOException {
 
 		final BundleContext bundleContext = _framework.getBundleContext();
-
-		Map<String, Long> checksums = new HashMap<>();
 
 		Files.walkFileTree(
 			path,
@@ -1196,19 +1194,15 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				}
 
 			});
-
-		return checksums;
 	}
 
 	private Map<String, Long> _installDynamicBundles() throws IOException {
 		Map<String, Long> checksums = new HashMap<>();
 
-		checksums.putAll(
-			_installBundlesFromDir(
-				Paths.get(PropsValues.MODULE_FRAMEWORK_PORTAL_DIR)));
-		checksums.putAll(
-			_installBundlesFromDir(
-				Paths.get(PropsValues.MODULE_FRAMEWORK_MODULES_DIR)));
+		_installBundlesFromDir(
+			Paths.get(PropsValues.MODULE_FRAMEWORK_PORTAL_DIR), checksums);
+		_installBundlesFromDir(
+			Paths.get(PropsValues.MODULE_FRAMEWORK_MODULES_DIR), checksums);
 
 		return checksums;
 	}

@@ -117,7 +117,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		}
 
 		Map<String, Long> candidateTestSuiteStaleDurations =
-			new LinkedHashMap();
+			new LinkedHashMap<>();
 
 		for (String testSuite : testSuites) {
 			String suiteStaleDuration = buildProperties.getProperty(
@@ -144,7 +144,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		Build currentBuild = BuildFactory.newBuild(
 			buildData.getBuildURL(), null);
 
-		Map<String, Long> latestTestSuiteStartTimes = new LinkedHashMap();
+		Map<String, Long> latestTestSuiteStartTimes = new LinkedHashMap<>();
 
 		for (Build build : builds) {
 			if (build == currentBuild) {
@@ -194,7 +194,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 			return _testSuites;
 		}
 
-		_testSuites = new ArrayList();
+		_testSuites = new ArrayList<>();
 
 		S buildData = getBuildData();
 
@@ -317,7 +317,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		updateBuildDescription();
 	}
 
-	private List<String> _invokedTestSuites = new ArrayList();
+	private List<String> _invokedTestSuites = new ArrayList<>();
 	private List<String> _testSuites;
 
 }

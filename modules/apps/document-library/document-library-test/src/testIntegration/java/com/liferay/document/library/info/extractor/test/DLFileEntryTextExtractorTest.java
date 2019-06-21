@@ -53,12 +53,12 @@ public class DLFileEntryTextExtractorTest {
 
 	@Test
 	public void testGetText() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
 		String content = RandomTestUtil.randomString();
 
 		byte[] bytes = content.getBytes();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
 
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),

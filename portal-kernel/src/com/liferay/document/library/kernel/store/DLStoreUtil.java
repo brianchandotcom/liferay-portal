@@ -14,9 +14,7 @@
 
 package com.liferay.document.library.kernel.store;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import java.io.File;
 import java.io.InputStream;
@@ -447,13 +445,6 @@ public class DLStoreUtil {
 	 * @return Returns the {@link DLStore} object
 	 */
 	public static DLStore getStore() {
-		if (_store == null) {
-			_store = (DLStore)PortalBeanLocatorUtil.locate(
-				DLStore.class.getName());
-
-			ReferenceRegistry.registerReference(DLStoreUtil.class, "_store");
-		}
-
 		return _store;
 	}
 
@@ -745,8 +736,6 @@ public class DLStoreUtil {
 	 */
 	public void setStore(DLStore store) {
 		_store = store;
-
-		ReferenceRegistry.registerReference(DLStoreUtil.class, "_store");
 	}
 
 	private static DLStore _store;

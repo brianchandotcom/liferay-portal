@@ -106,6 +106,14 @@ export const FLOATING_TOOLBAR_BUTTONS = {
 		type: 'editor'
 	},
 
+	fragmentConfiguration: {
+		icon: '',
+		id: 'fragment_configuration',
+		panelId: 'fragment_configuration',
+		title: '',
+		type: 'panel'
+	},
+
 	imageLink: {
 		icon: 'link',
 		id: 'image_properties',

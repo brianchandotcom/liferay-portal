@@ -323,8 +323,9 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 			}
 			catch (IOException ioe) {
 				System.out.println(
-					"Could not invoke job for test suite '" + testSuiteName +
-						"'");
+					JenkinsResultsParserUtil.combine(
+					"Unable to invoke a new build for test suite, '",
+					testSuiteName, "'"));
 
 				ioe.printStackTrace();
 			}

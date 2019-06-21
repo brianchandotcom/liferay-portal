@@ -81,25 +81,9 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 			return;
 		}
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setAddGroupPermissions(true);
-
-		Group group = _groupLocalService.getCompanyGroup(
-			company.getCompanyId());
-
-		serviceContext.setScopeGroupId(group.getGroupId());
-
-		long defaultUserId = _userLocalService.getDefaultUserId(
-			company.getCompanyId());
-
-		serviceContext.setUserId(defaultUserId);
-
 		_dlFileEntryTypeLocalService.getBasicDocumentDLFileEntryType();
 
-		addDLRawMetadataStructures(
-			defaultUserId, group.getGroupId(), serviceContext);
+		addDLRawMetadataStructures(company.getCompanyId());
 	}
 
 	@Activate
@@ -109,11 +93,21 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 			DLConfiguration.class, properties);
 	}
 
-	protected void addDLRawMetadataStructures(
-			long userId, long groupId, ServiceContext serviceContext)
-		throws Exception {
+	protected void addDLRawMetadataStructures(long companyId) throws Exception {
+		ServiceContext serviceContext = new ServiceContext();
 
-		Locale locale = _portal.getSiteDefaultLocale(groupId);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setAddGroupPermissions(true);
+
+		Group group = _groupLocalService.getCompanyGroup(companyId);
+
+		serviceContext.setScopeGroupId(group.getGroupId());
+
+		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
+
+		serviceContext.setUserId(defaultUserId);
+
+		Locale locale = _portal.getSiteDefaultLocale(group.getGroupId());
 
 		String xsd = buildDLRawMetadataXML(
 			RawMetadataProcessorUtil.getFields(), locale);
@@ -136,8 +130,8 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.fetchStructure(
-					groupId, _portal.getClassNameId(RawMetadataProcessor.class),
-					name);
+					group.getGroupId(),
+					_portal.getClassNameId(RawMetadataProcessor.class), name);
 
 			DDMFormDeserializerDeserializeRequest.Builder builder =
 				DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
@@ -172,7 +166,7 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 					ddmForm);
 
 				_ddmStructureLocalService.addStructure(
-					userId, groupId,
+					defaultUserId, group.getGroupId(),
 					DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 					_portal.getClassNameId(RawMetadataProcessor.class), name,
 					nameMap, descriptionMap, ddmForm, ddmFormLayout,

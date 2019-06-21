@@ -13,6 +13,7 @@ dependencies {
 	testCompile project(":core:registry-api")
 
 	testIntegrationCompile project(":apps:asset:asset-api")
+	testIntegrationCompile project(":apps:asset:asset-auto-tagger-api")
 	testIntegrationCompile project(":apps:asset:asset-test-util")
 	testIntegrationCompile project(":apps:export-import:export-import-api")
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")

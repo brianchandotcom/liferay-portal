@@ -15,12 +15,12 @@
 package com.liferay.document.library.info.extractor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.auto.tagger.extractor.TextExtractor;
+import com.liferay.asset.auto.tagger.extractor.TextExtractorTracker;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
-import com.liferay.info.extractor.InfoTextExtractor;
-import com.liferay.info.extractor.InfoTextExtractorTracker;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -44,7 +44,7 @@ import org.junit.runner.RunWith;
  * @author Alejandro Tardín
  */
 @RunWith(Arquillian.class)
-public class DLFileEntryInfoTextExtractorTest {
+public class DLFileEntryTextExtractorTest {
 
 	@ClassRule
 	@Rule
@@ -68,16 +68,15 @@ public class DLFileEntryInfoTextExtractorTest {
 			RandomTestUtil.randomString(), null, null, 0, null, null,
 			new ByteArrayInputStream(bytes), bytes.length, serviceContext);
 
-		InfoTextExtractor infoTextExtractor =
-			_infoTextExtractorTracker.getInfoTextExtractor(
-				DLFileEntryConstants.getClassName());
+		TextExtractor textExtractor = _textExtractorTracker.getTextExtractor(
+			DLFileEntryConstants.getClassName());
 
 		Assert.assertEquals(
 			content + StringPool.NEW_LINE,
-			infoTextExtractor.extract(dlFileEntry, LocaleUtil.getDefault()));
+			textExtractor.extract(dlFileEntry, LocaleUtil.getDefault()));
 	}
 
 	@Inject
-	private InfoTextExtractorTracker _infoTextExtractorTracker;
+	private TextExtractorTracker _textExtractorTracker;
 
 }

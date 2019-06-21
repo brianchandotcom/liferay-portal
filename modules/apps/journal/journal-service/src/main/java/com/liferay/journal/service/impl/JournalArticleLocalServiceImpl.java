@@ -8222,15 +8222,21 @@ public class JournalArticleLocalServiceImpl
 			"[$ARTICLE_DIFFS$]", DiffHtmlUtil.replaceStyles(articleDiffs),
 			false);
 
-		JournalFolder folder = article.getFolder();
+		String folderName = StringPool.BLANK;
 
-		String folderName = folder.getName();
+		JournalFolder folder = journalFolderPersistence.fetchByPrimaryKey(
+			article.getFolderId());
 
-		if ((folder.getFolderId() ==
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
-			Validator.isNull(folderName)) {
+		if (folder != null) {
+			folderName = folder.getName();
 
-			folderName = LanguageUtil.get(LocaleUtil.getSiteDefault(), "home");
+			if ((folder.getFolderId() ==
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
+				Validator.isNull(folderName)) {
+
+				folderName = LanguageUtil.get(
+					LocaleUtil.getSiteDefault(), "home");
+			}
 		}
 
 		String portletId = PortletProviderUtil.getPortletId(

@@ -1587,8 +1587,17 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 		}
 
+		Bundle fileInstallBundle = null;
+
 		for (Bundle bundle : bundles) {
 			if (!_isFragmentBundle(bundle)) {
+				if (Objects.equals(
+						bundle.getSymbolicName(),
+						"org.apache.felix.fileinstall")) {
+
+					fileInstallBundle = bundle;
+				}
+
 				bundle.stop();
 			}
 		}
@@ -1636,9 +1645,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			for (Bundle bundle : bundles) {
 				if (!_isFragmentBundle(bundle) &&
-					!Objects.equals(
-						bundle.getSymbolicName(),
-						"org.apache.felix.fileinstall")) {
+					(bundle != fileInstallBundle)) {
 
 					futures.add(
 						executorService.submit(
@@ -1667,9 +1674,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		else {
 			for (Bundle bundle : bundles) {
 				if (!_isFragmentBundle(bundle) &&
-					!Objects.equals(
-						bundle.getSymbolicName(),
-						"org.apache.felix.fileinstall")) {
+					(bundle != fileInstallBundle)) {
 
 					bundle.start();
 				}

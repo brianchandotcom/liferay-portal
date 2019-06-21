@@ -606,8 +606,7 @@ class Sidebar extends Component {
 			oldVisitor.findField(oldField => {
 				if (
 					excludedFields.indexOf(fieldName) === -1 &&
-					oldField.fieldName === fieldName &&
-					oldField.type === type
+					oldField.fieldName === fieldName
 				) {
 					field = oldField;
 				}
@@ -632,8 +631,12 @@ class Sidebar extends Component {
 						};
 					}
 
-					if (newField.fieldName === 'predefinedValue') {
-						delete newField.value;
+					if (newField.fieldName == 'predefinedValue') {
+						newField = this._setPredefinedValue(
+							newField,
+							previousField,
+							newVisitor
+						);
 					}
 				}
 

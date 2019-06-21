@@ -21,8 +21,8 @@ import java.util.Locale;
  */
 public interface TextExtractor<T> {
 
-	public String getClassName();
-
 	public String extract(T t, Locale locale);
+
+	public String getClassName();
 
 }

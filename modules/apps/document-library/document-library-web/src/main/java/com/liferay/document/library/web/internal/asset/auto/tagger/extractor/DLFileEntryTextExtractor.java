@@ -33,13 +33,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(service = TextExtractor.class)
-public class DLFileEntryTextExtractor
-	implements TextExtractor<DLFileEntry> {
-
-	@Override
-	public String getClassName() {
-		return DLFileEntryConstants.getClassName();
-	}
+public class DLFileEntryTextExtractor implements TextExtractor<DLFileEntry> {
 
 	@Override
 	public String extract(DLFileEntry dlFileEntry, Locale locale) {
@@ -58,6 +52,11 @@ public class DLFileEntryTextExtractor
 
 			return null;
 		}
+	}
+
+	@Override
+	public String getClassName() {
+		return DLFileEntryConstants.getClassName();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

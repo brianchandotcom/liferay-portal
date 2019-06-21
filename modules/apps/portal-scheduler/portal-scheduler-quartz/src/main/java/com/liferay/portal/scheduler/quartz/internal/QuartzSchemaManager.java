@@ -16,11 +16,9 @@ package com.liferay.portal.scheduler.quartz.internal;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.InputStream;
@@ -28,6 +26,8 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -43,7 +43,7 @@ public class QuartzSchemaManager {
 
 	@Activate
 	protected void activate() {
-		try (Connection con = DataAccess.getConnection();
+		try (Connection con = _dataSource.getConnection();
 			PreparedStatement ps = con.prepareStatement(
 				"select count(*) from QUARTZ_JOB_DETAILS");
 			ResultSet rs = ps.executeQuery()) {
@@ -58,17 +58,12 @@ public class QuartzSchemaManager {
 			}
 		}
 
-		try (Connection con = DataAccess.getConnection()) {
+		try (Connection con = _dataSource.getConnection()) {
 			_populateSchema(con);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setInfrastructureUtil(
-		InfrastructureUtil infrastructureUtil) {
 	}
 
 	private void _populateSchema(Connection con) throws Exception {
@@ -109,5 +104,8 @@ public class QuartzSchemaManager {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		QuartzSchemaManager.class);
+
+	@Reference(target = "(&(bean.id=liferayDataSource)(original.bean=true))")
+	private DataSource _dataSource;
 
 }

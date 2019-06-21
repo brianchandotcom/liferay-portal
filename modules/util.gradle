@@ -382,7 +382,9 @@ private void _createSetUpYarnTasks() {
 				}
 			}
 
-			setUpYarn.dependsOn yarnTask
+			setUpYarn.finalizedBy yarnTask
+
+			appendHotfixQualifier.mustRunAfter yarnTask
 		}
 	}
 }
@@ -401,7 +403,7 @@ private void _createYarnLockTasks() {
 				workingDir = packageJSONFile.parentFile
 			}
 
-			yarnLock.dependsOn yarnTask
+			yarnLock.finalizedBy yarnTask
 		}
 	}
 }

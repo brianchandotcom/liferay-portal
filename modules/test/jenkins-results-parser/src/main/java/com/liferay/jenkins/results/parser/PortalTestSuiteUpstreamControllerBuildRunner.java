@@ -157,13 +157,12 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 				continue;
 			}
 
-			Long buildStartTime = build.getStartTime();
-
 			for (String testSuite : buildDescription.split(",")) {
 				testSuite = testSuite.trim();
 
 				if (!latestTestSuiteStartTimes.containsKey(testSuite)) {
-					latestTestSuiteStartTimes.put(testSuite, buildStartTime);
+					latestTestSuiteStartTimes.put(
+						testSuite, build.getStartTime());
 				}
 			}
 		}

@@ -30,7 +30,7 @@ import org.junit.runner.RunWith;
  * @author Cristina González
  */
 @RunWith(Arquillian.class)
-public class ElasticsearchRegistrationTest {
+public class SearchEngineRegistrationTest {
 
 	@ClassRule
 	@Rule
@@ -39,14 +39,11 @@ public class ElasticsearchRegistrationTest {
 
 	@Test
 	public void testGetSearchEngineService() {
-		Class<? extends SearchEngine> searchEngineClass =
-			_searchEngine.getClass();
-
-		String searchEngineClassName = searchEngineClass.getName();
+		String vendor = _searchEngine.getVendor();
 
 		Assert.assertTrue(
-			"The registered search engine is " + searchEngineClassName,
-			searchEngineClassName.endsWith("ElasticsearchSearchEngine"));
+			"The registered search engine vendor is " + vendor,
+			vendor.equals("Elasticsearch") || vendor.equals("Solr"));
 	}
 
 	@Inject(filter = "search.engine.id=SYSTEM_ENGINE")

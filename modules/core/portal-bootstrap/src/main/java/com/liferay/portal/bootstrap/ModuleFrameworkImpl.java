@@ -1201,21 +1201,14 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	private Map<String, Long> _installDynamicBundles() throws IOException {
-		String[] fileInstallDirs = StringUtil.split(
-			_getFelixFileInstallDir(), StringPool.COMMA);
-
 		Map<String, Long> checksums = new HashMap<>();
 
-		for (String fileInstallDir : fileInstallDirs) {
-			if (fileInstallDir.equals(
-					PropsValues.MODULE_FRAMEWORK_MARKETPLACE_DIR) ||
-				fileInstallDir.equals(PropsValues.MODULE_FRAMEWORK_WAR_DIR)) {
-
-				continue;
-			}
-
-			checksums.putAll(_installBundlesFromDir(Paths.get(fileInstallDir)));
-		}
+		checksums.putAll(
+			_installBundlesFromDir(
+				Paths.get(PropsValues.MODULE_FRAMEWORK_PORTAL_DIR)));
+		checksums.putAll(
+			_installBundlesFromDir(
+				Paths.get(PropsValues.MODULE_FRAMEWORK_MODULES_DIR)));
 
 		return checksums;
 	}

@@ -44,7 +44,7 @@ class AssetVocabularyCategoriesSelector extends Component {
 	 * @private
 	 */
 	_handleButtonClicked(event) {
-		const sub = (str, obj)  => str.replace(/\{([^}]+)\}/g, (_, m) => obj[m]);
+		const sub = (str, obj) => str.replace(/\{([^}]+)\}/g, (_, m) => obj[m]);
 
 		const uri = sub(decodeURIComponent(this.portletURL), {
 			selectedCategories: this.selectedItems
@@ -65,14 +65,12 @@ class AssetVocabularyCategoriesSelector extends Component {
 			const selectedItems = event.selectedItem;
 
 			if (selectedItems) {
-				this.selectedItems = Object.keys(selectedItems).map(
-					itemKey => {
-						return {
-							label: selectedItems[itemKey].value,
-							value: selectedItems[itemKey].categoryId
-						};
-					}
-				);
+				this.selectedItems = Object.keys(selectedItems).map(itemKey => {
+					return {
+						label: selectedItems[itemKey].value,
+						value: selectedItems[itemKey].categoryId
+					};
+				});
 			}
 		});
 	}

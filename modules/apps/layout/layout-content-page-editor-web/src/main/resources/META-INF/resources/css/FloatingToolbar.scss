@@ -37,6 +37,7 @@
 
 	&-panel {
 		padding: 0 $fragmentsEditorSpacing;
+		z-index: $floatingToolbarPanelZIndex;
 
 		& > .popover {
 			min-width: $floatingToolbarPanelMinWidth;

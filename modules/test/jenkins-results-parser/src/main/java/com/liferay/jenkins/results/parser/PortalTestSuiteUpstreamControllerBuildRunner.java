@@ -84,7 +84,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 	protected void updateBuildDescription() {
 		S buildData = getBuildData();
 
-		buildData.setBuildDescription(String.join(", ", _invokedTestSuites));
+		buildData.setBuildDescription(String.join(", ", _invokedTestSuiteNames));
 
 		super.updateBuildDescription();
 	}
@@ -205,14 +205,12 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		}
 	}
 
-	private List<String> _getTestSuites() {
-		if (_testSuites != null) {
-			return _testSuites;
+	private List<String> _getSelectedTestSuiteNames() {
+		if (_selectedTestSuiteNames != null) {
+			return _selectedTestSuiteNames;
 		}
 
-		_testSuites = new ArrayList<>();
-
-		S buildData = getBuildData();
+		_selectedTestSuiteNames = new ArrayList<>();
 
 		Map<String, Long> candidateTestSuiteStaleDurations =
 			_getCandidateTestSuiteStaleDurations();
@@ -220,15 +218,17 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		Map<String, Long> latestTestSuiteStartTimes =
 			_getLatestTestSuiteStartTimes();
 
+		S buildData = getBuildData();
+
 		Long startTime = buildData.getStartTime();
 
 		for (Map.Entry<String, Long> entry :
 				candidateTestSuiteStaleDurations.entrySet()) {
 
-			String testSuite = entry.getKey();
+			String testSuiteName = entry.getKey();
 
-			if (!latestTestSuiteStartTimes.containsKey(testSuite)) {
-				_testSuites.add(testSuite);
+			if (!latestTestSuiteStartTimes.containsKey(testSuiteName)) {
+				_selectedTestSuiteNames.add(testSuiteName);
 
 				continue;
 			}
@@ -236,20 +236,20 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 			Long testSuiteStaleDuration = entry.getValue();
 
 			Long testSuiteduration =
-				startTime - latestTestSuiteStartTimes.get(testSuite);
+				startTime - latestTestSuiteStartTimes.get(testSuiteName);
 
 			if (testSuiteduration > testSuiteStaleDuration) {
-				_testSuites.add(testSuite);
+				_selectedTestSuiteNames.add(testSuiteName);
 			}
 		}
 
-		return _testSuites;
+		return _selectedTestSuiteNames;
 	}
 
 	private void _invokeJob() {
-		List<String> testSuites = _getTestSuites();
+		List<String> testSuiteNames = _getSelectedTestSuiteNames();
 
-		if ((testSuites == null) || testSuites.isEmpty()) {
+		if ((testSuiteNames == null) || testSuiteNames.isEmpty()) {
 			System.out.println(
 				"There are no test suites to be run at this time.");
 
@@ -271,7 +271,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 		S buildData = getBuildData();
 
-		for (String testSuite : testSuites) {
+		for (String testSuiteName : testSuiteNames) {
 			String invocationURL = getInvocationURL();
 
 			StringBuilder sb = new StringBuilder();
@@ -289,14 +289,14 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 			sb.append("&PORTAL_GITHUB_URL=");
 			sb.append(buildData.getPortalGitHubURL());
 			sb.append("&CI_TEST_SUITE=");
-			sb.append(testSuite);
+			sb.append(testSuiteName);
 
-			String testrayProjectName = _getTestrayProjectName(testSuite);
+			String testrayProjectName = _getTestrayProjectName(testSuiteName);
 
 			if (testrayProjectName != null) {
 				String testrayBuildType = JenkinsResultsParserUtil.combine(
 					"[", buildData.getPortalUpstreamBranchName(), "] ci:test:",
-					testSuite);
+					testSuiteName);
 
 				String testraybuildName = JenkinsResultsParserUtil.combine(
 					testrayBuildType, " - ",
@@ -317,14 +317,14 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 				JenkinsResultsParserUtil.toString(sb.toString());
 
 				System.out.println(
-					"Job for '" + testSuite + "' has been invoked at " +
+					"Job for '" + testSuiteName + "' has been invoked at " +
 						invocationURL);
 
-				_invokedTestSuites.add(testSuite);
+				_invokedTestSuiteNames.add(testSuiteName);
 			}
 			catch (IOException ioe) {
 				System.out.println(
-					"Could not invoke job for test suite '" + testSuite + "'");
+					"Could not invoke job for test suite '" + testSuiteName + "'");
 
 				ioe.printStackTrace();
 			}
@@ -333,7 +333,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		updateBuildDescription();
 	}
 
-	private List<String> _invokedTestSuites = new ArrayList<>();
-	private List<String> _testSuites;
+	private List<String> _invokedTestSuiteNames = new ArrayList<>();
+	private List<String> _selectedTestSuiteNames;
 
 }

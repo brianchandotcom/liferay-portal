@@ -28,6 +28,7 @@ import io.kubernetes.client.models.V1PodList;
 import io.kubernetes.client.models.V1Status;
 import io.kubernetes.client.util.Config;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class LiferayK8sConnection {
 	}
 
 	public Pod createPod(Pod configurationPod) {
-		return createPod(configurationPod, "default");
+		return createPod(configurationPod, getNamespace());
 	}
 
 	public Pod createPod(Pod configurationPod, String namespace) {
@@ -70,7 +71,7 @@ public class LiferayK8sConnection {
 	}
 
 	public boolean deletePod(Pod pod) {
-		return deletePod(pod, "default");
+		return deletePod(pod, getNamespace());
 	}
 
 	public boolean deletePod(Pod pod, String namespace) {
@@ -119,6 +120,28 @@ public class LiferayK8sConnection {
 		}
 
 		return false;
+	}
+
+	public String getNamespace() {
+		String namespace = null;
+
+		try {
+			File file = new File(
+				"/var/run/secrets/kubernetes.io/serviceaccount/namespace");
+
+			if (file.exists()) {
+				namespace = JenkinsResultsParserUtil.read(file);
+			}
+		}
+		catch (IOException ioe) {
+			System.out.println("Unable to read namespace file");
+		}
+
+		if (namespace == null) {
+			namespace = "default";
+		}
+
+		return namespace.trim();
 	}
 
 	public Pod getPod(Pod pod, String namespace) {

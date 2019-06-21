@@ -194,6 +194,8 @@ definition {
 
 	@priority = "3"
 	test ViewAnonymousPostingAllowedCheckboxConfiguration {
+		property test.name.skip.portal.instance = "CPMessageboards#ViewAnonymousPostingAllowedCheckboxConfiguration";
+
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.viewAnonymousPostingCheckboxCP();

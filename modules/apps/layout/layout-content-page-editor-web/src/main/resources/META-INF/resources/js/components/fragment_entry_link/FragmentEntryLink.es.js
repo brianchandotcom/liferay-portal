@@ -16,7 +16,9 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
+import '../floating_toolbar/fragment_configuration/FloatingToolbarFragmentConfigurationPanel.es';
 import './FragmentEntryLinkContent.es';
+import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import templates from './FragmentEntryLink.soy';
 import {
 	MOVE_FRAGMENT_ENTRY_LINK,
@@ -32,6 +34,7 @@ import {
 	itemIsInPath
 } from '../../utils/FragmentsEditorGetUtils.es';
 import {
+	FLOATING_TOOLBAR_BUTTONS,
 	FRAGMENTS_EDITOR_ITEM_TYPES,
 	FRAGMENTS_EDITOR_ROW_TYPES
 } from '../../utils/constants';
@@ -42,6 +45,14 @@ import {
 	setIn
 } from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
+
+/**
+ * Defines the list of available panels.
+ * @type {object[]}
+ */
+const FRAGMENT_FLOATING_TOOLBAR_BUTTONS = [
+	FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration
+];
 
 /**
  * FragmentEntryLink
@@ -95,6 +106,45 @@ class FragmentEntryLink extends Component {
 	 */
 	shouldUpdate(changes) {
 		return shouldUpdatePureComponent(changes);
+	}
+
+	/**
+	 * Creates a new instance of the floating toolbar.
+	 * @private
+	 */
+	_createFloatingToolbar() {
+		const config = {
+			anchorElement: this.element,
+			buttons: FRAGMENT_FLOATING_TOOLBAR_BUTTONS,
+			item: {
+				fragmentEntryLinkId: this.fragmentEntryLinkId
+			},
+			itemId: this.fragmentEntryLinkId,
+			itemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
+			portalElement: document.body,
+			store: this.store,
+			fixSelectedPanel: true,
+			selectedPanelId:
+				FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration.panelId
+		};
+
+		if (this._floatingToolbar) {
+			this._floatingToolbar.setState(config);
+		} else {
+			this._floatingToolbar = new FloatingToolbar(config);
+		}
+	}
+
+	/**
+	 * Disposes of an existing floating toolbar instance.
+	 * @private
+	 */
+	_disposeFloatingToolbar() {
+		if (this._floatingToolbar) {
+			this._floatingToolbar.dispose();
+
+			this._floatingToolbar = null;
+		}
 	}
 
 	/**
@@ -176,6 +226,15 @@ class FragmentEntryLink extends Component {
  * @type {!Object}
  */
 FragmentEntryLink.STATE = {
+	/**
+	 * Floating toolbar instance for internal use.
+	 * @default null
+	 * @instance
+	 * @memberOf FragmentEntryLink
+	 * @type {object|null}
+	 */
+	_floatingToolbar: Config.internal().value(null),
+
 	/**
 	 * FragmentEntryLink id
 	 * @default undefined

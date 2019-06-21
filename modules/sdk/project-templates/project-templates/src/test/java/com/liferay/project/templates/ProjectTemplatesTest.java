@@ -3069,30 +3069,30 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateSpringMVCPortlet70() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"spring-mvc-portlet", "foo", "--liferayVersion", "7.0");
 
-		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/init.jsp");
-		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/view.jsp");
+		File gradleProjectDir = _buildSpringMVCTemplate("gradle", "springportletmvc", "embedded", "jsp", "7.0");
 
-		_testContains(
-			gradleProjectDir, "build.gradle",
-			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.6.0\"");
-
-		_testContains(
-			gradleProjectDir,
-			"src/main/java/foo/portlet/FooPortletViewController.java",
-			"public class FooPortletViewController {");
-
-		File mavenProjectDir = _buildTemplateWithMaven(
-			"spring-mvc-portlet", "foo", "com.test", "-DclassName=Foo",
-			"-Dpackage=foo", "-DliferayVersion=7.0");
+		File mavenProjectDir = _buildSpringMVCTemplate("maven", "springportletmvc", "embedded", "jsp", "7.0");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 
 		if (_isBuildProjects()) {
 			_testSpringMVCOutputs(gradleProjectDir);
 		}
+	}
+
+	private File _buildSpringMVCTemplate(String buildType, String framework, String frameworkDependencies, String viewType, String liferayVersion) throws Exception {
+		String template = "spring-mvc-portlet";
+		String name = "sampleSpringMVCPortlet";
+
+		if (buildType.equals("maven")) {
+			String groupId = "com.test";
+			return _buildTemplateWithMaven(template, name, groupId, "-Dpackage", "com.test", "-DclassName", "Sample", "-Dframework", framework, "-DframeworkDependencies", frameworkDependencies, "-DviewType", viewType, "-DliferayVersion", liferayVersion);
+		}
+		else {
+			return _buildTemplateWithGradle(template, name, "--package-name", "com.test", "--class-name", "Sample", "--framework", framework, "--framework-dependencies", frameworkDependencies, "--viewType", viewType, "--liferayVersion", liferayVersion);
+		}
+
 	}
 
 	@Test

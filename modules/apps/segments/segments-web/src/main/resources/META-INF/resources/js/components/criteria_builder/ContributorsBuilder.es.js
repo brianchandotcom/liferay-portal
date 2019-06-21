@@ -13,7 +13,7 @@
  */
 
 import ClayButton from '../shared/ClayButton.es';
-import ClaySpinner from '../shared/ClaySpinner.es';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Conjunction from './Conjunction.es';
 import CriteriaBuilder from './CriteriaBuilder.es';
 import CriteriaSidebar from '../criteria_sidebar/CriteriaSidebar.es';
@@ -132,13 +132,12 @@ class ContributorBuilder extends React.Component {
 										<div className='criterion-string'>
 											<div className='btn-group'>
 												<div className='btn-group-item inline-item'>
-													<ClaySpinner
-														className='mr-4'
-														loading={
-															membersCountLoading
-														}
-														size='sm'
-													/>
+													{membersCountLoading && (
+														<ClayLoadingIndicator
+															className='mr-4'
+															small
+														/>
+													)}
 
 													{!membersCountLoading && (
 														<span className='mr-4'>

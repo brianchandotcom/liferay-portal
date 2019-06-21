@@ -17,7 +17,7 @@ package com.liferay.document.library.web.internal.info.extractor;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
-import com.liferay.info.extractor.TextExtractor;
+import com.liferay.info.extractor.InfoTextExtractor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -32,8 +32,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Alicia García
  * @author Alejandro Tardín
  */
-@Component(service = TextExtractor.class)
-public class DLFileEntryTextExtractor implements TextExtractor<DLFileEntry> {
+@Component(service = InfoTextExtractor.class)
+public class DLFileEntryInfoTextExtractor implements InfoTextExtractor<DLFileEntry> {
 
 	@Override
 	public String getClassName() {
@@ -60,6 +60,6 @@ public class DLFileEntryTextExtractor implements TextExtractor<DLFileEntry> {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DLFileEntryTextExtractor.class);
+		DLFileEntryInfoTextExtractor.class);
 
 }

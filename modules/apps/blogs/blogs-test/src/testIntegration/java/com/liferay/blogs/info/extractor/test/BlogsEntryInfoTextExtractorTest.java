@@ -17,8 +17,8 @@ package com.liferay.blogs.info.extractor.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.info.extractor.TextExtractor;
-import com.liferay.info.extractor.TextExtractorTracker;
+import com.liferay.info.extractor.InfoTextExtractor;
+import com.liferay.info.extractor.InfoTextExtractorTracker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -40,7 +40,7 @@ import org.junit.runner.RunWith;
  * @author Alejandro Tardín
  */
 @RunWith(Arquillian.class)
-public class BlogsEntryTextExtractorTest {
+public class BlogsEntryInfoTextExtractorTest {
 
 	@ClassRule
 	@Rule
@@ -56,15 +56,15 @@ public class BlogsEntryTextExtractorTest {
 			TestPropsValues.getUserId(), StringUtil.randomString(),
 			StringUtil.randomString(), new Date(), serviceContext);
 
-		TextExtractor textExtractor = _textExtractorTracker.getTextExtractor(
+		InfoTextExtractor infoTextExtractor = _infoTextExtractorTracker.getInfoTextExtractor(
 			BlogsEntry.class.getName());
 
 		Assert.assertEquals(
 			blogsEntry.getContent(),
-			textExtractor.getText(blogsEntry, LocaleUtil.getDefault()));
+			infoTextExtractor.getText(blogsEntry, LocaleUtil.getDefault()));
 	}
 
 	@Inject
-	private TextExtractorTracker _textExtractorTracker;
+	private InfoTextExtractorTracker _infoTextExtractorTracker;
 
 }

@@ -20,7 +20,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
-import com.liferay.info.extractor.TextExtractor;
+import com.liferay.info.extractor.InfoTextExtractor;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.StringPool;
@@ -36,9 +36,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alicia García
  * @author Alejandro Tardín
  */
-@Component(service = TextExtractor.class)
-public class JournalArticleTextExtractor
-	implements TextExtractor<JournalArticle> {
+@Component(service = InfoTextExtractor.class)
+public class JournalArticleInfoTextExtractor
+	implements InfoTextExtractor<JournalArticle> {
 
 	@Override
 	public String getClassName() {

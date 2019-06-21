@@ -15,7 +15,7 @@
 package com.liferay.blogs.web.internal.info.extractor;
 
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.info.extractor.TextExtractor;
+import com.liferay.info.extractor.InfoTextExtractor;
 
 import java.util.Locale;
 
@@ -25,8 +25,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Alicia García
  * @author Alejandro Tardín
  */
-@Component(service = TextExtractor.class)
-public class BlogsEntryTextExtractor implements TextExtractor<BlogsEntry> {
+@Component(service = InfoTextExtractor.class)
+public class BlogsEntryInfoTextExtractor implements InfoTextExtractor<BlogsEntry> {
 
 	@Override
 	public String getClassName() {

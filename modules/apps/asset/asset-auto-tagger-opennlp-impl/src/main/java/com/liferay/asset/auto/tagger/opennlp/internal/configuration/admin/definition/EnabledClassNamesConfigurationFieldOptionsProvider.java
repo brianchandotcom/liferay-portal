@@ -16,7 +16,7 @@ package com.liferay.asset.auto.tagger.opennlp.internal.configuration.admin.defin
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.configuration.admin.definition.ConfigurationFieldOptionsProvider;
-import com.liferay.info.extractor.TextExtractorTracker;
+import com.liferay.info.extractor.InfoTextExtractorTracker;
 
 import java.util.List;
 import java.util.Locale;
@@ -40,13 +40,13 @@ public class EnabledClassNamesConfigurationFieldOptionsProvider
 	implements ConfigurationFieldOptionsProvider {
 
 	public List<Option> getOptions() {
-		return _textExtractorTracker.getTextExtractors(
+		return _infoTextExtractorTracker.getInfoTextExtractors(
 		).stream(
 		).map(
-			textExtractor ->
+			infoTextExtractor ->
 				AssetRendererFactoryRegistryUtil.
 					getAssetRendererFactoryByClassName(
-						textExtractor.getClassName())
+						infoTextExtractor.getClassName())
 		).filter(
 			Objects::nonNull
 		).map(
@@ -69,6 +69,6 @@ public class EnabledClassNamesConfigurationFieldOptionsProvider
 	}
 
 	@Reference
-	private TextExtractorTracker _textExtractorTracker;
+	private InfoTextExtractorTracker _infoTextExtractorTracker;
 
 }

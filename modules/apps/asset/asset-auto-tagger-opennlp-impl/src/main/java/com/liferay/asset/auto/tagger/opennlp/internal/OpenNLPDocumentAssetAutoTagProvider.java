@@ -19,8 +19,8 @@ import com.liferay.asset.auto.tagger.opennlp.api.OpenNLPDocumentAssetAutoTagger;
 import com.liferay.asset.auto.tagger.opennlp.internal.configuration.OpenNLPDocumentAssetAutoTaggerCompanyConfiguration;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.info.extractor.TextExtractor;
-import com.liferay.info.extractor.TextExtractorTracker;
+import com.liferay.info.extractor.InfoTextExtractor;
+import com.liferay.info.extractor.InfoTextExtractorTracker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -50,17 +50,17 @@ public class OpenNLPDocumentAssetAutoTagProvider
 	public Collection<String> getTagNames(AssetEntry assetEntry) {
 		try {
 			if (_isEnabled(assetEntry)) {
-				TextExtractor textExtractor =
-					_textExtractorTracker.getTextExtractor(
+				InfoTextExtractor infoTextExtractor =
+					_infoTextExtractorTracker.getInfoTextExtractor(
 						assetEntry.getClassName());
 
-				if (textExtractor != null) {
+				if (infoTextExtractor != null) {
 					Locale locale = LocaleUtil.fromLanguageId(
 						assetEntry.getDefaultLanguageId());
 
 					return _openNLPDocumentAssetAutoTagger.getTagNames(
 						assetEntry.getCompanyId(),
-						textExtractor.getText(
+						infoTextExtractor.getText(
 							_getAssetObject(assetEntry), locale),
 						locale, ContentTypes.TEXT_PLAIN);
 				}
@@ -104,6 +104,6 @@ public class OpenNLPDocumentAssetAutoTagProvider
 	private OpenNLPDocumentAssetAutoTagger _openNLPDocumentAssetAutoTagger;
 
 	@Reference
-	private TextExtractorTracker _textExtractorTracker;
+	private InfoTextExtractorTracker _infoTextExtractorTracker;
 
 }

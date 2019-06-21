@@ -95,6 +95,9 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="groupId" />
 		</finder>
+		<finder name="DDMStructureId" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="DDMStructureId" />
+		</finder>
 		<finder name="G_R" return-type="DDLRecordSet" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="recordSetKey" />

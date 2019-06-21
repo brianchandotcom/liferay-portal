@@ -40,7 +40,7 @@ public class JSPSourceUtil {
 
 	public static List<String> addIncludedAndReferencedFileNames(
 		List<String> fileNames, Set<String> checkedFileNames,
-		Map<String, String> contentsMap) {
+		Map<String, String> contentsMap, String referencedFileNameRegex) {
 
 		Set<String> includedAndReferencedFileNames = new HashSet<>();
 
@@ -56,7 +56,7 @@ public class JSPSourceUtil {
 				getJSPIncludeFileNames(fileName, fileNames, contentsMap, true));
 			includedAndReferencedFileNames.addAll(
 				getJSPReferenceFileNames(
-					fileName, fileNames, contentsMap, false));
+					fileName, fileNames, contentsMap, referencedFileNameRegex));
 		}
 
 		if (includedAndReferencedFileNames.isEmpty()) {
@@ -73,7 +73,7 @@ public class JSPSourceUtil {
 		}
 
 		return addIncludedAndReferencedFileNames(
-			fileNames, checkedFileNames, contentsMap);
+			fileNames, checkedFileNames, contentsMap, referencedFileNameRegex);
 	}
 
 	public static String buildFullPathIncludeFileName(
@@ -236,14 +236,11 @@ public class JSPSourceUtil {
 
 	public static Set<String> getJSPReferenceFileNames(
 		String fileName, Collection<String> fileNames,
-		Map<String, String> contentsMap, boolean initOnly) {
+		Map<String, String> contentsMap, String referencedFileNameRegex) {
 
 		Set<String> referenceFileNames = new HashSet<>();
 
-		if (initOnly && !fileName.endsWith("init.jsp") &&
-			!fileName.endsWith("init.jspf") && !fileName.endsWith("init.tag") &&
-			!fileName.contains("init-ext.jsp")) {
-
+		if (!fileName.matches(referencedFileNameRegex)) {
 			return referenceFileNames;
 		}
 

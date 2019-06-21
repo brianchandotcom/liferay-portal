@@ -101,6 +101,24 @@ class FragmentEntryLink extends Component {
 
 	/**
 	 * @inheritdoc
+	 */
+	disposed() {
+		this._disposeFloatingToolbar();
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	rendered() {
+		if (this._shouldShowConfigPanel()) {
+			this._createFloatingToolbar();
+		} else {
+			this._disposeFloatingToolbar();
+		}
+	}
+
+	/**
+	 * @inheritdoc
 	 * @return {boolean}
 	 * @review
 	 */
@@ -216,6 +234,18 @@ class FragmentEntryLink extends Component {
 		removeItem(this.store, REMOVE_FRAGMENT_ENTRY_LINK, {
 			fragmentEntryLinkId: this.fragmentEntryLinkId
 		});
+	}
+
+	/**
+	 * Returns wether the config panel should be shown or not
+	 * @private
+	 * @review
+	 */
+	_shouldShowConfigPanel() {
+		return (
+			this.fragmentEntryLinkId === this.activeItemId &&
+			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+		);
 	}
 }
 

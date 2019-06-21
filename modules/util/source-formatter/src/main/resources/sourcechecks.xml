@@ -331,6 +331,7 @@
 
 		<check name="JSPLanguageKeysCheck" />
 		<check name="JSPLogParametersCheck" />
+		<check name="JSPMissingTaglibsCheck" />
 		<check name="JSPSendRedirectCheck" />
 		<check name="JSPStringMethodsCheck" />
 		<check name="LocaleUtilCheck" />

@@ -645,6 +645,51 @@ class Sidebar extends Component {
 		};
 	}
 
+	_getPredefinedOptions(visitor) {
+		let options = visitor.findField(field => {
+			return field.fieldName == 'options';
+		});
+
+		if (options) {
+			let locale = options.locale;
+			return options.value[locale];
+		}
+		return options;
+	}
+
+	_setPredefinedValue(newField, previousField, newVisitor) {
+		let newFieldOptions = this._getPredefinedOptions(newVisitor);
+
+		if (newFieldOptions) {
+			newField.options = newFieldOptions;
+		}
+
+		if (newField.predefinedValue && !previousField.predefinedValue) {
+			newField.value = [];
+		} else if (
+			Array.isArray(previousField.value) &&
+			newField.predefinedValue
+		) {
+			newField.options = previousField.options;
+		} else if (
+			Array.isArray(previousField.predefinedValue) &&
+			!newField.predefinedValue
+		) {
+			newField.value = '';
+			newField.predefinedValue = '';
+			newField.localizedValue = {
+				...newField.localizedValue,
+				[newField.locale]: ''
+			};
+		} else if (newField.predefinedValue && newField.value == '') {
+			newField.value = [];
+		} else if (newField.predefinedValue && newField.value.length > 1) {
+			newField.value = newField.value[0];
+		}
+
+		return newField;
+	}
+
 	_renderElementSets() {
 		const {fieldSets} = this.props;
 		const groups = Object.keys(fieldSets);

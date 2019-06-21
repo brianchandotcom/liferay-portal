@@ -14,18 +14,54 @@
 
 package com.liferay.jenkins.results.parser.k8s;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
 import io.kubernetes.client.models.V1ObjectMeta;
 import io.kubernetes.client.models.V1Pod;
+import io.kubernetes.client.models.V1PodStatus;
 
 /**
  * @author Kenji Heigel
  */
 public class Pod {
 
+	public String getIP() {
+		String ip = null;
+
+		int retry = 0;
+
+		while ((ip == null) && (retry < 6)) {
+			V1Pod v1Pod = getV1Pod();
+
+			V1PodStatus v1PodStatus = v1Pod.getStatus();
+
+			ip = v1PodStatus.getPodIP();
+
+			JenkinsResultsParserUtil.sleep(10000);
+
+			refreshV1Pod();
+
+			retry++;
+		}
+
+		if (ip == null) {
+			throw new RuntimeException(
+				"Unable to get ip of pod '" + getName() + "'");
+		}
+
+		return ip;
+	}
+
 	public String getName() {
 		V1ObjectMeta v1ObjectMeta = _v1Pod.getMetadata();
 
 		return v1ObjectMeta.getName();
+	}
+
+	public String getNamespace() {
+		V1ObjectMeta v1ObjectMeta = _v1Pod.getMetadata();
+
+		return v1ObjectMeta.getNamespace();
 	}
 
 	protected Pod(V1Pod v1Pod) {
@@ -36,6 +72,15 @@ public class Pod {
 		return _v1Pod;
 	}
 
-	private final V1Pod _v1Pod;
+	protected void refreshV1Pod() {
+		LiferayK8sConnection liferayK8sConnection =
+			LiferayK8sConnection.getInstance();
+
+		Pod pod = liferayK8sConnection.getPod(this, getNamespace());
+
+		_v1Pod = pod.getV1Pod();
+	}
+
+	private V1Pod _v1Pod;
 
 }

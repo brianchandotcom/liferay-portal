@@ -1349,10 +1349,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			Map<String, Long> checksums, BundleContext bundleContext)
 		throws Exception {
 
-		if (checksums.isEmpty()) {
-			return;
-		}
-
 		for (Map.Entry<String, Long> entry : checksums.entrySet()) {
 			File file = bundleContext.getDataFile(entry.getKey());
 
@@ -1804,35 +1800,40 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				continue;
 			}
 
-			BundleListener bundleListener = event -> {
-				if (event.getType() != BundleEvent.STARTING) {
-					return;
-				}
-
-				Bundle currentBundle = event.getBundle();
-
-				if (currentBundle != bundle) {
-					return;
-				}
-
-				try {
-					_registerDynamicBundles(
-						dynamicBundleChecksums,
-						currentBundle.getBundleContext());
-				}
-				catch (Exception e) {
-					_log.error(
-						"Unable to register dynamic bundle checksums", e);
-				}
-			};
-
-			bundleContext.addBundleListener(bundleListener);
-
-			try {
+			if (dynamicBundleChecksums.isEmpty()) {
 				bundle.start();
 			}
-			finally {
-				bundleContext.removeBundleListener(bundleListener);
+			else {
+				BundleListener bundleListener = event -> {
+					if (event.getType() != BundleEvent.STARTING) {
+						return;
+					}
+
+					Bundle currentBundle = event.getBundle();
+
+					if (currentBundle != bundle) {
+						return;
+					}
+
+					try {
+						_registerDynamicBundles(
+							dynamicBundleChecksums,
+							currentBundle.getBundleContext());
+					}
+					catch (Exception e) {
+						_log.error(
+							"Unable to register dynamic bundle checksums", e);
+					}
+				};
+
+				bundleContext.addBundleListener(bundleListener);
+
+				try {
+					bundle.start();
+				}
+				finally {
+					bundleContext.removeBundleListener(bundleListener);
+				}
 			}
 		}
 

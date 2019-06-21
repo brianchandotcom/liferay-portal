@@ -17,9 +17,11 @@ package com.liferay.asset.info.display.contributor.util;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorField;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -34,13 +36,17 @@ public class AssetInfoDisplayContributorFieldUtil {
 		getInfoDisplayContributorFields(String className) {
 
 		List<InfoDisplayContributorField> infoDisplayContributorFields =
-			_serviceTrackerMap.getService(className);
+			Optional.ofNullable(
+				ListUtil.copy(_serviceTrackerMap.getService(className))
+			).orElse(
+				new ArrayList<>()
+			);
 
-		if (infoDisplayContributorFields != null) {
-			return infoDisplayContributorFields;
-		}
+		infoDisplayContributorFields.addAll(
+			CustomFieldsInfoDisplayContributorFieldUtil.
+				getInfoDisplayContributorFields(className));
 
-		return Collections.emptyList();
+		return infoDisplayContributorFields;
 	}
 
 	private static final ServiceTrackerMap

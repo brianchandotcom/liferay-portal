@@ -1070,76 +1070,65 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						GradleUtil.getConvention(
 							project, MavenPluginConvention.class);
 
-					SourceSet sourceSet = GradleUtil.getSourceSet(
-						project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-					SourceSetOutput sourceSetOutput = sourceSet.getOutput();
-
 					final String artifactId = GradleUtil.getArchivesBaseName(
 						project);
 					final String groupId = String.valueOf(project.getGroup());
 
-					for (File classesDir : sourceSetOutput.getClassesDirs()) {
-						FileTree classesFileTree = project.fileTree(classesDir);
+					StringBuilder sb = new StringBuilder();
 
-						if (classesFileTree.isEmpty()) {
-							continue;
-						}
+					SourceSet sourceSet = GradleUtil.getSourceSet(
+						project, SourceSet.MAIN_SOURCE_SET_NAME);
 
-						StringBuilder sb = new StringBuilder();
+					sb.append(FileUtil.getJavaClassesDir(sourceSet));
 
-						sb.append(classesDir);
-						sb.append("/META-INF/maven/");
-						sb.append(groupId);
-						sb.append('/');
-						sb.append(artifactId);
+					sb.append("/META-INF/maven/");
+					sb.append(groupId);
+					sb.append('/');
+					sb.append(artifactId);
 
-						final String dirName = sb.toString();
+					final String dirName = sb.toString();
 
-						mavenPluginConvention.pom(
-							new Closure<MavenPom>(project) {
+					mavenPluginConvention.pom(
+						new Closure<MavenPom>(project) {
 
-								@SuppressWarnings("unused")
-								public MavenPom doCall(MavenPom mavenPom) {
-									Conf2ScopeMappingContainer
-										conf2ScopeMappingContainer =
-											mavenPom.getScopeMappings();
+							@SuppressWarnings("unused")
+							public MavenPom doCall(MavenPom mavenPom) {
+								Conf2ScopeMappingContainer
+									conf2ScopeMappingContainer =
+										mavenPom.getScopeMappings();
 
-									String compileOnlyConfigurationName =
-										JavaPlugin.
-											COMPILE_ONLY_CONFIGURATION_NAME;
+								String compileOnlyConfigurationName =
+									JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME;
 
-									Configuration configuration =
-										GradleUtil.getConfiguration(
-											project,
-											compileOnlyConfigurationName);
+								Configuration configuration =
+									GradleUtil.getConfiguration(
+										project, compileOnlyConfigurationName);
 
-									conf2ScopeMappingContainer.addMapping(
-										MavenPlugin.PROVIDED_COMPILE_PRIORITY,
-										configuration,
-										Conf2ScopeMappingContainer.PROVIDED);
+								conf2ScopeMappingContainer.addMapping(
+									MavenPlugin.PROVIDED_COMPILE_PRIORITY,
+									configuration,
+									Conf2ScopeMappingContainer.PROVIDED);
 
-									mavenPom.setArtifactId(artifactId);
-									mavenPom.setGroupId(groupId);
+								mavenPom.setArtifactId(artifactId);
+								mavenPom.setGroupId(groupId);
 
-									mavenPom.writeTo(dirName + "/pom.xml");
+								mavenPom.writeTo(dirName + "/pom.xml");
 
-									return mavenPom;
-								}
+								return mavenPom;
+							}
 
-							});
+						});
 
-						File file = new File(dirName, "pom.properties");
+					File file = new File(dirName, "pom.properties");
 
-						Properties properties = new Properties();
+					Properties properties = new Properties();
 
-						properties.setProperty("artifactId", artifactId);
-						properties.setProperty("groupId", groupId);
-						properties.setProperty(
-							"version", String.valueOf(project.getVersion()));
+					properties.setProperty("artifactId", artifactId);
+					properties.setProperty("groupId", groupId);
+					properties.setProperty(
+						"version", String.valueOf(project.getVersion()));
 
-						FileUtil.writeProperties(file, properties);
-					}
+					FileUtil.writeProperties(file, properties);
 				}
 
 			});

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.io.File;
 import java.io.InputStream;
@@ -361,12 +362,9 @@ public class PortletFileRepositoryUtil {
 			repositoryId, searchContext);
 	}
 
-	public void setPortletFileRepository(
-		PortletFileRepository portletFileRepository) {
-
-		_portletFileRepository = portletFileRepository;
-	}
-
-	private static PortletFileRepository _portletFileRepository;
+	private static volatile PortletFileRepository _portletFileRepository =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			PortletFileRepository.class, PortletFileRepositoryUtil.class,
+			"_portletFileRepository", false);
 
 }

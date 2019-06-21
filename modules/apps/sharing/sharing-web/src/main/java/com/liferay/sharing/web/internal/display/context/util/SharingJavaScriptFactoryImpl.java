@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharing.display.context.util.SharingJavaScriptFactory;
+import com.liferay.sharing.web.internal.util.SharingJavaScriptThreadLocal;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -50,6 +51,8 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 	public String createManageCollaboratorsOnClickMethod(
 		String className, long classPK, HttpServletRequest httpServletRequest) {
 
+		SharingJavaScriptThreadLocal.setSharingJavaScriptNeeded(true);
+
 		return StringBundler.concat(
 			"Liferay.Sharing.manageCollaborators(",
 			_classNameLocalService.getClassNameId(className), ", ", classPK,
@@ -59,6 +62,8 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 	@Override
 	public String createSharingOnClickMethod(
 		String className, long classPK, HttpServletRequest httpServletRequest) {
+
+		SharingJavaScriptThreadLocal.setSharingJavaScriptNeeded(true);
 
 		return StringBundler.concat(
 			"Liferay.Sharing.share(",

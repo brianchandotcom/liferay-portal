@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.configuration.SharingConfiguration;
 import com.liferay.sharing.configuration.SharingConfigurationFactory;
+import com.liferay.sharing.web.internal.util.SharingJavaScriptThreadLocal;
 
 import java.io.IOException;
 
@@ -36,13 +37,17 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class SharingTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
+public class SharingBottomJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
+
+		if (!SharingJavaScriptThreadLocal.isSharingJavaScriptNeeded()) {
+			return;
+		}
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -59,13 +64,12 @@ public class SharingTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-		dynamicIncludeRegistry.register(
-			"/html/common/themes/top_head.jsp#post");
+		dynamicIncludeRegistry.register("/html/common/themes/bottom.jsp#pre");
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/dynamic_include/top_head.jsp";
+		return "/dynamic_include/bottom.jsp";
 	}
 
 	@Override
@@ -82,7 +86,7 @@ public class SharingTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SharingTopHeadJSPDynamicInclude.class);
+		SharingBottomJSPDynamicInclude.class);
 
 	@Reference
 	private SharingConfigurationFactory _sharingConfigurationFactory;

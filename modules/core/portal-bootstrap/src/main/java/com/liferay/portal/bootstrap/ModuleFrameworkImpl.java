@@ -813,7 +813,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 	private void _calculateChecksum(long l, CRC32 crc) {
 		for (int i = 0; i < 8; i++) {
-			crc.update((int)(l & 0x000000ff));
+			crc.update((int)(l & 0xFF));
 
 			l >>= 8;
 		}

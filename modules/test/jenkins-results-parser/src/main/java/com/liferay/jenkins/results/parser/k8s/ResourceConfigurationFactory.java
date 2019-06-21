@@ -68,7 +68,7 @@ public class ResourceConfigurationFactory {
 			new ArrayList<>(
 				Arrays.asList(
 					newConfigurationEnvVar(
-						"MYSQL_ROOT_PASSWORD", "password"))));
+						"MYSQL_ALLOW_EMPTY_PASSWORD", "yes"))));
 
 		v1Container.setPorts(
 			new ArrayList<>(

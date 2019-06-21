@@ -24,13 +24,13 @@ buildscript {
 	}
 }
 
-task clean
+task clean(type: Delete)
 task writeBoms
 task writeCompileOnlyBom
 task writeReleaseBom
 task writeThirdPartyBom
 
-clean(type: Delete) {
+clean {
 	delete "build", "project-templates-samples"
 }
 

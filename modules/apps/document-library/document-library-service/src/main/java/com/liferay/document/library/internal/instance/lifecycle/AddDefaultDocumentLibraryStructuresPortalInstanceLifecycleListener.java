@@ -17,21 +17,20 @@ package com.liferay.document.library.internal.instance.lifecycle;
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.util.RawMetadataProcessor;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
-import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -45,14 +44,11 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
-
-import java.io.StringReader;
 
 import java.lang.reflect.Field;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -109,40 +105,17 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 
 		Locale locale = _portal.getSiteDefaultLocale(group.getGroupId());
 
-		String xsd = buildDLRawMetadataXML(
-			RawMetadataProcessorUtil.getFields(), locale);
+		Map<String, Field[]> fields = RawMetadataProcessorUtil.getFields();
 
-		Document document = UnsecureSAXReaderUtil.read(new StringReader(xsd));
+		for (Map.Entry<String, Field[]> entry : fields.entrySet()) {
+			String name = entry.getKey();
 
-		Element rootElement = document.getRootElement();
-
-		List<Element> structureElements = rootElement.elements("structure");
-
-		for (Element structureElement : structureElements) {
-			String name = structureElement.elementText("name");
-			String description = structureElement.elementText("description");
-
-			Element structureElementRootElement = structureElement.element(
-				"root");
-
-			String structureElementRootXML =
-				structureElementRootElement.asXML();
+			DDMForm ddmForm = _buildDDMForm(entry.getValue(), locale);
 
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.fetchStructure(
 					group.getGroupId(),
 					_portal.getClassNameId(RawMetadataProcessor.class), name);
-
-			DDMFormDeserializerDeserializeRequest.Builder builder =
-				DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
-					structureElementRootXML);
-
-			DDMFormDeserializerDeserializeResponse
-				ddmFormDeserializerDeserializeResponse =
-					_ddmFormDeserializer.deserialize(builder.build());
-
-			DDMForm ddmForm =
-				ddmFormDeserializerDeserializeResponse.getDDMForm();
 
 			if (ddmStructure != null) {
 				String definition = _serializeJSONDDMForm(ddmForm);
@@ -160,7 +133,7 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 
 				Map<Locale, String> descriptionMap = new HashMap<>();
 
-				descriptionMap.put(locale, description);
+				descriptionMap.put(locale, name);
 
 				DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(
 					ddmForm);
@@ -176,86 +149,9 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 		}
 	}
 
-	protected String buildDLRawMetadataElementXML(Field field, Locale locale) {
-		StringBundler sb = new StringBundler(14);
-
-		sb.append("<dynamic-element dataType=\"string\" indexType=\"text\" ");
-		sb.append("name=\"");
-
-		Class<?> fieldClass = field.getDeclaringClass();
-
-		sb.append(fieldClass.getSimpleName());
-
-		sb.append(StringPool.UNDERLINE);
-		sb.append(field.getName());
-		sb.append("\" localizable=\"false\" required=\"false\" ");
-		sb.append("showLabel=\"true\" type=\"text\"><meta-data locale=\"");
-		sb.append(locale);
-		sb.append("\"><entry name=\"label\"><![CDATA[metadata.");
-		sb.append(fieldClass.getSimpleName());
-		sb.append(StringPool.PERIOD);
-		sb.append(field.getName());
-		sb.append("]]></entry><entry name=\"predefinedValue\">");
-		sb.append("<![CDATA[]]></entry></meta-data></dynamic-element>");
-
-		return sb.toString();
-	}
-
-	protected String buildDLRawMetadataStructureXML(
-		String name, Field[] fields, Locale locale) {
-
-		StringBundler sb = new StringBundler(12 + fields.length);
-
-		sb.append("<structure><name><![CDATA[");
-		sb.append(name);
-		sb.append("]]></name><description><![CDATA[");
-		sb.append(name);
-		sb.append("]]></description><root available-locales=\"");
-		sb.append(locale);
-		sb.append("\" default-locale=\"");
-		sb.append(locale);
-		sb.append("\">");
-
-		for (Field field : fields) {
-			sb.append(buildDLRawMetadataElementXML(field, locale));
-		}
-
-		sb.append("</root></structure>");
-
-		return sb.toString();
-	}
-
-	protected String buildDLRawMetadataXML(
-		Map<String, Field[]> fields, Locale locale) {
-
-		StringBundler sb = new StringBundler(2 + fields.size());
-
-		sb.append("<?xml version=\"1.0\"?><root>");
-
-		for (Map.Entry<String, Field[]> entry : fields.entrySet()) {
-			sb.append(
-				buildDLRawMetadataStructureXML(
-					entry.getKey(), entry.getValue(), locale));
-		}
-
-		sb.append("</root>");
-
-		return sb.toString();
-	}
-
 	@Reference(unbind = "-")
 	protected void setDDM(DDM ddm) {
 		_ddm = ddm;
-	}
-
-	@Reference(
-		target = "(component.name=com.liferay.dynamic.data.mapping.io.internal.DDMFormXSDDeserializer)",
-		unbind = "-"
-	)
-	protected void setDDMFormDeserializer(
-		DDMFormDeserializer ddmFormDeserializer) {
-
-		_ddmFormDeserializer = ddmFormDeserializer;
 	}
 
 	@Reference(unbind = "-")
@@ -263,13 +159,6 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 		DDMStructureLocalService ddmStructureLocalService) {
 
 		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDefaultDDMStructureHelper(
-		DefaultDDMStructureHelper defaultDDMStructureHelper) {
-
-		_defaultDDMStructureHelper = defaultDDMStructureHelper;
 	}
 
 	@Reference(unbind = "-")
@@ -294,6 +183,67 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 		_userLocalService = userLocalService;
 	}
 
+	private DDMForm _buildDDMForm(Field[] fields, Locale locale) {
+		DDMForm ddmForm = new DDMForm();
+
+		ddmForm.setAvailableLocales(Collections.singleton(locale));
+		ddmForm.setDefaultLocale(locale);
+
+		List<DDMFormField> ddmFormFields = new ArrayList<>();
+
+		for (Field field : fields) {
+			Class<?> fieldClass = field.getDeclaringClass();
+
+			DDMFormField ddmFormField = new DDMFormField(
+				StringBundler.concat(
+					fieldClass.getSimpleName(), StringPool.UNDERLINE,
+					field.getName()),
+				"text");
+
+			ddmFormField.setDataType("string");
+			ddmFormField.setIndexType("text");
+			ddmFormField.setLocalizable(false);
+			ddmFormField.setMultiple(false);
+			ddmFormField.setReadOnly(false);
+			ddmFormField.setRepeatable(false);
+			ddmFormField.setRequired(false);
+			ddmFormField.setShowLabel(true);
+
+			LocalizedValue label = ddmFormField.getLabel();
+
+			label.addString(
+				locale,
+				StringBundler.concat(
+					"metadata.", fieldClass.getSimpleName(), StringPool.PERIOD,
+					field.getName()));
+			label.setDefaultLocale(locale);
+
+			LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
+
+			predefinedValue.addString(locale, StringPool.BLANK);
+			predefinedValue.setDefaultLocale(locale);
+
+			LocalizedValue style = ddmFormField.getStyle();
+
+			style.setDefaultLocale(locale);
+
+			LocalizedValue tip = ddmFormField.getTip();
+
+			tip.setDefaultLocale(locale);
+
+			DDMFormFieldOptions ddmFormFieldOptions =
+				ddmFormField.getDDMFormFieldOptions();
+
+			ddmFormFieldOptions.setDefaultLocale(locale);
+
+			ddmFormFields.add(ddmFormField);
+		}
+
+		ddmForm.setDDMFormFields(ddmFormFields);
+
+		return ddmForm;
+	}
+
 	private String _serializeJSONDDMForm(DDMForm ddmForm) {
 		DDMFormSerializer ddmFormSerializer =
 			_ddmFormSerializerTracker.getDDMFormSerializer("json");
@@ -308,13 +258,11 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 	}
 
 	private DDM _ddm;
-	private DDMFormDeserializer _ddmFormDeserializer;
 
 	@Reference
 	private DDMFormSerializerTracker _ddmFormSerializerTracker;
 
 	private DDMStructureLocalService _ddmStructureLocalService;
-	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private volatile DLConfiguration _dlConfiguration;
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 	private GroupLocalService _groupLocalService;

@@ -1,3 +1,11 @@
+import aQute.bnd.osgi.Constants
+import aQute.bnd.osgi.Jar
+import aQute.bnd.osgi.Resource
+
+import java.util.jar.Manifest
+
+task jarManifest
+
 dependencies {
 	compileInclude group: "com.fasterxml", name: "aalto-xml", version: "0.9.10"
 	compileInclude group: "com.fasterxml", name: "classmate", version: "1.4.0"
@@ -58,4 +66,40 @@ deployDependencies {
 
 	include "swagger-annotations-*.jar"
 	include "validation-api-*.jar"
+}
+
+jar {
+	finalizedBy jarManifest
+}
+
+jarManifest {
+	doLast {
+		String serviceComponent = _getServiceComponent(jar.archivePath)
+
+		ant.jar(destfile: jar.archivePath, update: true) {
+			delegate.manifest {
+				attribute(name: Constants.SERVICE_COMPONENT, value: serviceComponent)
+			}
+		}
+	}
+}
+
+private String _getServiceComponent(File jarFile) {
+	Jar jar = new Jar(jarFile)
+
+	jar.withCloseable {
+		Resource resource = jar.getResource("META-INF/MANIFEST.MF")
+
+		Manifest manifest = new Manifest(resource.openInputStream())
+
+		List<String> serviceComponents = []
+
+		manifest.getMainAttributes().getValue(Constants.SERVICE_COMPONENT).split(",").each {
+			if (!it.startsWith("OSGI-INF/graphql.")) {
+				serviceComponents.add(it)
+			}
+		}
+
+		return serviceComponents.join(",")
+	}
 }

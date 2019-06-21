@@ -11,7 +11,7 @@
 	<bean class="com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil">
 		<property name="persistedModelLocalServiceRegistry" ref="com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry" />
 	</bean>
-	<bean class="com.liferay.portal.kernel.util.InfrastructureUtil" id="com.liferay.portal.kernel.util.InfrastructureUtil">
+	<bean class="com.liferay.portal.kernel.util.InfrastructureUtil">
 		<property name="dataSource" ref="liferayDataSource" />
 		<property name="transactionManager" ref="liferayTransactionManager" />
 	</bean>

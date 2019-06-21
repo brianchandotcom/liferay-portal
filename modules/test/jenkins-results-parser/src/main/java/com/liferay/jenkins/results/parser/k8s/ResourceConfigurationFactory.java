@@ -55,6 +55,10 @@ public class ResourceConfigurationFactory {
 
 		V1ObjectMeta v1ObjectMeta = newConfigurationMetaData(hostname);
 
+		String serviceName = "database";
+
+		v1ObjectMeta.putLabelsItem("app", serviceName);
+
 		v1Pod.setMetadata(v1ObjectMeta);
 
 		V1Container v1Container = newConfigurationContainer(
@@ -74,6 +78,8 @@ public class ResourceConfigurationFactory {
 		V1PodSpec v1PodSpec = newConfigurationPodSpec(v1Container);
 
 		v1PodSpec.setHostname(hostname);
+
+		v1PodSpec.setSubdomain(serviceName);
 
 		v1PodSpec.setVolumes(
 			new ArrayList<>(

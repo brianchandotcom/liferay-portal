@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.test.integration;
 
 import com.liferay.gradle.plugins.test.integration.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.test.integration.internal.util.ReflectionUtil;
+import com.liferay.gradle.util.FileUtil;
 
 import java.io.File;
 
@@ -150,8 +151,6 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 
 		final SourceSetOutput sourceSetOutput =
 			testIntegrationSourceSet.getOutput();
-		final SourceDirectorySet javaSourceDirectorySet =
-			testIntegrationSourceSet.getJava();
 
 		final Method getClassesDirsMethod = ReflectionUtil.getMethod(
 			sourceSetOutput, "getClassesDirs");
@@ -205,7 +204,8 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 
 					@Override
 					public File call() throws Exception {
-						return javaSourceDirectorySet.getOutputDir();
+						return FileUtil.getJavaClassesDir(
+							testIntegrationSourceSet);
 					}
 
 				});

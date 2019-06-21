@@ -53,7 +53,6 @@ import org.gradle.api.Task;
 import org.gradle.api.UncheckedIOException;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.plugins.osgi.OsgiHelper;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
@@ -603,11 +602,9 @@ public class NodePlugin implements Plugin<Project> {
 			SourceSet sourceSet = GradleUtil.getSourceSet(
 				npmRunTask.getProject(), SourceSet.MAIN_SOURCE_SET_NAME);
 
-			SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
+			File javaClassesDir = FileUtil.getJavaClassesDir(sourceSet);
 
-			File classesDir = javaSourceDirectorySet.getOutputDir();
-
-			if (!classesDir.exists()) {
+			if (!javaClassesDir.exists()) {
 				TaskOutputs taskOutputs = npmRunTask.getOutputs();
 
 				taskOutputs.upToDateWhen(

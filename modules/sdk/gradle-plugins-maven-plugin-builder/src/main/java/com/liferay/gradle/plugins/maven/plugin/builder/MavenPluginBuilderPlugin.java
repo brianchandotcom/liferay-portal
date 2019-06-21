@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins.maven.plugin.builder;
 import com.liferay.gradle.plugins.maven.plugin.builder.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.maven.plugin.builder.tasks.BuildPluginDescriptorTask;
 import com.liferay.gradle.plugins.maven.plugin.builder.tasks.WriteMavenSettingsTask;
+import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -144,10 +145,7 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					SourceDirectorySet javaSourceDirectorySet =
-						sourceSet.getJava();
-
-					return javaSourceDirectorySet.getOutputDir();
+					return FileUtil.getJavaClassesDir(sourceSet);
 				}
 
 			});

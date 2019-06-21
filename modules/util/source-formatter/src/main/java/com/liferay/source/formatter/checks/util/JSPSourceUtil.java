@@ -55,7 +55,8 @@ public class JSPSourceUtil {
 			includedAndReferencedFileNames.addAll(
 				getJSPIncludeFileNames(fileName, fileNames, contentsMap, true));
 			includedAndReferencedFileNames.addAll(
-				getJSPReferenceFileNames(fileName, fileNames, contentsMap));
+				getJSPReferenceFileNames(
+					fileName, fileNames, contentsMap, false));
 		}
 
 		if (includedAndReferencedFileNames.isEmpty()) {
@@ -235,12 +236,12 @@ public class JSPSourceUtil {
 
 	public static Set<String> getJSPReferenceFileNames(
 		String fileName, Collection<String> fileNames,
-		Map<String, String> contentsMap) {
+		Map<String, String> contentsMap, boolean initOnly) {
 
 		Set<String> referenceFileNames = new HashSet<>();
 
-		if (!fileName.endsWith("init.jsp") && !fileName.endsWith("init.jspf") &&
-			!fileName.endsWith("init.tag") &&
+		if (initOnly && !fileName.endsWith("init.jsp") &&
+			!fileName.endsWith("init.jspf") && !fileName.endsWith("init.tag") &&
 			!fileName.contains("init-ext.jsp")) {
 
 			return referenceFileNames;

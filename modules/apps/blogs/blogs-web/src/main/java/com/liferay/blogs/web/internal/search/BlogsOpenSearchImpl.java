@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = OpenSearch.class)
+@Component(service = OpenSearch.class)
 public class BlogsOpenSearchImpl extends HitsOpenSearchImpl {
 
 	public static final String TITLE = "Liferay Blogs Search: ";

@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @author Wesley Gong
  */
-@Component(immediate = true, service = OpenSearch.class)
+@Component(service = OpenSearch.class)
 public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 
 	public static final String TITLE = "Liferay Journal Search: ";

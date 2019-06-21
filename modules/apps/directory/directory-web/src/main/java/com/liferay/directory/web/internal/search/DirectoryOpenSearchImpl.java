@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcellus Tavares
  * @author Ryan Park
  */
-@Component(immediate = true, service = OpenSearch.class)
+@Component(service = OpenSearch.class)
 public class DirectoryOpenSearchImpl extends HitsOpenSearchImpl {
 
 	public static final String TITLE = "Liferay Directory Search: ";

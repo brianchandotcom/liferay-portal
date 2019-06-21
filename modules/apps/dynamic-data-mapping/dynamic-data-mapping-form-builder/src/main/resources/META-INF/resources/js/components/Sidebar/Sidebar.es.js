@@ -58,6 +58,7 @@ class Sidebar extends Component {
 			fieldTypes,
 			focusedField
 		} = this.props;
+		let dispatch = this.context.dispatch;
 		const newFieldType = fieldTypes.find(({name}) => name === type);
 		const newSettingsContext = {
 			...newFieldType.settingsContext,
@@ -77,7 +78,7 @@ class Sidebar extends Component {
 			);
 		}
 
-		this.emit('focusedFieldUpdated', {
+		dispatch('focusedFieldUpdated', {
 			...focusedField,
 			...newFieldType,
 			...getFieldProperties(

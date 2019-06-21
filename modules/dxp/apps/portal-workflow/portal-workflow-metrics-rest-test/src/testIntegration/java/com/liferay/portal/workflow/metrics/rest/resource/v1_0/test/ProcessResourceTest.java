@@ -25,7 +25,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
-import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.ProcessResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
 
 import java.util.ArrayList;
@@ -102,7 +101,7 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 
 		testGetProcessesPage_addProcess(randomProcess());
 
-		Page<Process> page = ProcessResource.getProcessesPage(
+		Page<Process> page = processResource.getProcessesPage(
 			process.getTitle(), Pagination.of(1, 2), null);
 
 		assertEquals(
@@ -134,7 +133,7 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 
 		testGetProcessesPage_addProcess(process);
 
-		String title = ProcessResource.getProcessTitle(process.getId());
+		String title = processResource.getProcessTitle(process.getId());
 
 		Assert.assertEquals(process.getTitle(), title);
 	}
@@ -217,7 +216,7 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 		postProcess.setOverdueInstanceCount(0L);
 		postProcess.setUntrackedInstanceCount(1L);
 
-		Process getProcess = ProcessResource.getProcess(
+		Process getProcess = processResource.getProcess(
 			postProcess.getId(), completed, null);
 
 		unsafeTriConsumer.accept(postProcess, getProcess);

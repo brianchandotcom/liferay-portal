@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Calendar;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
-import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.CalendarResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
 import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendar;
 
@@ -70,7 +69,7 @@ public class CalendarResourceTest extends BaseCalendarResourceTestCase {
 	@Override
 	@Test
 	public void testGetCalendarsPage() throws Exception {
-		Page<Calendar> calendarsPage = CalendarResource.getCalendarsPage();
+		Page<Calendar> calendarsPage = calendarResource.getCalendarsPage();
 
 		List<Calendar> calendars = (List<Calendar>)calendarsPage.getItems();
 
@@ -114,7 +113,7 @@ public class CalendarResourceTest extends BaseCalendarResourceTestCase {
 				}
 			});
 
-		calendarsPage = CalendarResource.getCalendarsPage();
+		calendarsPage = calendarResource.getCalendarsPage();
 
 		calendars = (List<Calendar>)calendarsPage.getItems();
 

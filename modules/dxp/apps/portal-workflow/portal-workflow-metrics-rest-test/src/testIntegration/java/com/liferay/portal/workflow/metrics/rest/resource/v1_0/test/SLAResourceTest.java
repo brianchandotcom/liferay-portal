@@ -29,7 +29,6 @@ import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.StartNodeKeys;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.StopNodeKeys;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
-import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.SLAResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
 
 import java.util.ArrayList;
@@ -203,7 +202,7 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 
 	private void _deleteSLAs() throws Exception {
 		for (SLA sla : _slas) {
-			SLAResource.deleteSLA(sla.getId());
+			slaResource.deleteSLA(sla.getId());
 		}
 	}
 
@@ -220,9 +219,9 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 
 		sla2.setStatus(WorkflowConstants.STATUS_DRAFT);
 
-		sla2 = SLAResource.putSLA(sla2.getId(), sla2);
+		sla2 = slaResource.putSLA(sla2.getId(), sla2);
 
-		Page<SLA> page = SLAResource.getProcessSLAsPage(
+		Page<SLA> page = slaResource.getProcessSLAsPage(
 			_process.getId(), status, Pagination.of(1, 2));
 
 		unsafeTriConsumer.accept(sla1, sla2, page);

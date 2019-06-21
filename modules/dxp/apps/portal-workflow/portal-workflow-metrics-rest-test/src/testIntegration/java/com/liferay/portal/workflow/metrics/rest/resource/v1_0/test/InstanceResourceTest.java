@@ -24,7 +24,6 @@ import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
-import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.InstanceResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
 
 import java.util.ArrayList;
@@ -164,7 +163,7 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 		testGetProcessInstancesPage_addInstance(_process.getId(), instance2);
 
-		Page<Instance> page = InstanceResource.getProcessInstancesPage(
+		Page<Instance> page = instanceResource.getProcessInstancesPage(
 			_process.getId(), null, statuses, null, null, Pagination.of(1, 2));
 
 		unsafeTriConsumer.accept(instance1, instance2, page);

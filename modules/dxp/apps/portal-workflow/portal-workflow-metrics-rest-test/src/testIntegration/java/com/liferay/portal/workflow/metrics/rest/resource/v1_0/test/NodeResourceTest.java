@@ -21,7 +21,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Node;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
-import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.NodeResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
 
 import java.util.ArrayList;
@@ -102,7 +101,7 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 
 		node2 = _addNode(node2, _process.getId(), "2.0");
 
-		Page<Node> page = NodeResource.getProcessNodesPage(_process.getId());
+		Page<Node> page = nodeResource.getProcessNodesPage(_process.getId());
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(node1, node2), (List<Node>)page.getItems());

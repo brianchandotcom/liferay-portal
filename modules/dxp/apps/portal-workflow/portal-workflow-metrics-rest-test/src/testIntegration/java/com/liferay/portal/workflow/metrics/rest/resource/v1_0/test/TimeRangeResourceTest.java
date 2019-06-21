@@ -17,7 +17,6 @@ package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.TimeRange;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
-import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.TimeRangeResource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +34,7 @@ public class TimeRangeResourceTest extends BaseTimeRangeResourceTestCase {
 	@Override
 	@Test
 	public void testGetTimeRangesPage() throws Exception {
-		Page<TimeRange> timeRangesPage = TimeRangeResource.getTimeRangesPage();
+		Page<TimeRange> timeRangesPage = timeRangeResource.getTimeRangesPage();
 
 		List<TimeRange> timeRanges1 =
 			(List<TimeRange>)timeRangesPage.getItems();

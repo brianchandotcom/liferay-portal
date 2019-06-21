@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.segments.asah.connector.internal.cache.SegmentsInterestTermsAsahCache;
 import com.liferay.segments.asah.connector.internal.constants.SegmentsAsahDestinationNames;
-import com.liferay.segments.interest.InterestTermsProvider;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -33,10 +32,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sarai Díaz
  */
-@Component(immediate = true, service = InterestTermsProvider.class)
-public class AsahInterestTermsProvider implements InterestTermsProvider {
+@Component(immediate = true, service = AsahInterestTermsProvider.class)
+public class AsahInterestTermsProvider {
 
-	@Override
 	public String[] getInterestTerms(String userId) {
 		String[] cachedInterestTerms =
 			_segmentsInterestTermsAsahCache.getInterestTerms(userId);

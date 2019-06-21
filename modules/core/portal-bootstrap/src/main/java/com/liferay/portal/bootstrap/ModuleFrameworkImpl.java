@@ -48,9 +48,13 @@ import com.liferay.registry.collections.ServiceTrackerMapFactoryUtil;
 import com.liferay.registry.internal.RegistryImpl;
 import com.liferay.registry.internal.ServiceTrackerMapFactoryImpl;
 
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -93,6 +97,7 @@ import java.util.concurrent.Future;
 import java.util.jar.Attributes;
 import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
+import java.util.zip.CRC32;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -100,6 +105,7 @@ import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkEvent;
@@ -112,6 +118,7 @@ import org.osgi.framework.startlevel.BundleStartLevel;
 import org.osgi.framework.startlevel.FrameworkStartLevel;
 import org.osgi.framework.wiring.BundleRevision;
 import org.osgi.framework.wiring.FrameworkWiring;
+import org.osgi.util.tracker.BundleTracker;
 
 import org.springframework.beans.factory.BeanIsAbstractException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -792,6 +799,27 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		return properties;
 	}
 
+	private long _calculateChecksum(File file) {
+		CRC32 crc32 = new CRC32();
+
+		String fileName = file.getName();
+
+		crc32.update(fileName.getBytes());
+
+		_calculateChecksum(file.lastModified(), crc32);
+		_calculateChecksum(file.length(), crc32);
+
+		return crc32.getValue();
+	}
+
+	private void _calculateChecksum(long l, CRC32 crc) {
+		for (int i = 0; i < 8; i++) {
+			crc.update((int)(l & 0x000000ff));
+
+			l >>= 8;
+		}
+	}
+
 	private void _checkPermission() throws PrincipalException {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -1112,6 +1140,87 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			PropsValues.MODULE_FRAMEWORK_MARKETPLACE_DIR + "/override");
 	}
 
+	private Map<String, Long> _installBundlesFromDir(Path path)
+		throws IOException {
+
+		final BundleContext bundleContext = _framework.getBundleContext();
+
+		Map<String, Long> checksums = new HashMap<>();
+
+		Files.walkFileTree(
+			path,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					File file = path.toFile();
+
+					String fileName = file.getName();
+
+					if (!fileName.endsWith(".jar")) {
+						return FileVisitResult.CONTINUE;
+					}
+
+					URI uri = file.toURI();
+
+					uri = uri.normalize();
+
+					try (InputStream inputStream = new FileInputStream(file)) {
+						String location = uri.toString();
+
+						if (bundleContext.getBundle(location) != null) {
+							return FileVisitResult.CONTINUE;
+						}
+
+						Bundle bundle = bundleContext.installBundle(
+							uri.toString(), inputStream);
+
+						BundleStartLevel bundleStartLevel = bundle.adapt(
+							BundleStartLevel.class);
+
+						bundleStartLevel.setStartLevel(
+							PropsValues.
+								MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL);
+
+						checksums.put(
+							bundle.getBundleId() + _CHECKSUM_SUFFIX,
+							_calculateChecksum(file));
+					}
+					catch (BundleException be) {
+						_log.error("Unable to install bundle at " + path, be);
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		return checksums;
+	}
+
+	private Map<String, Long> _installDynamicBundles() throws IOException {
+		String[] fileInstallDirs = StringUtil.split(
+			_getFelixFileInstallDir(), StringPool.COMMA);
+
+		Map<String, Long> checksums = new LinkedHashMap<>();
+
+		for (String fileInstallDir : fileInstallDirs) {
+			if (fileInstallDir.equals(
+					PropsValues.MODULE_FRAMEWORK_MARKETPLACE_DIR) ||
+				fileInstallDir.equals(PropsValues.MODULE_FRAMEWORK_WAR_DIR)) {
+
+				continue;
+			}
+
+			checksums.putAll(_installBundlesFromDir(Paths.get(fileInstallDir)));
+		}
+
+		return checksums;
+	}
+
 	private Bundle _installInitialBundle(
 		String location, InputStream inputStream) {
 
@@ -1264,6 +1373,26 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		_springContextServices.put(
 			configurableApplicationContext, serviceRegistrations);
+	}
+
+	private void _registerDynamicBundles(
+			Map<String, Long> checksums, BundleContext bundleContext)
+		throws Exception {
+
+		if (checksums.isEmpty()) {
+			return;
+		}
+
+		for (Map.Entry<String, Long> entry : checksums.entrySet()) {
+			File file = bundleContext.getDataFile(entry.getKey());
+
+			try (OutputStream outputStream = new FileOutputStream(file);
+				DataOutputStream dataOutputStream = new DataOutputStream(
+					outputStream)) {
+
+				dataOutputStream.writeLong(entry.getValue());
+			}
+		}
 	}
 
 	private ServiceRegistration<?> _registerService(
@@ -1547,7 +1676,12 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 								@Override
 								public Void call() throws BundleException {
-									bundle.start();
+									if (!Objects.equals(
+											bundle.getSymbolicName(),
+											"org.apache.felix.fileinstall")) {
+
+										bundle.start();
+									}
 
 									return null;
 								}
@@ -1643,16 +1777,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 		}
 
-		if (fileInstallBundle == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to find the Apache Felix File Install bundle to " +
-						"synchronize the starting of dynamic bundles");
-			}
-		}
-		else {
-			fileInstallBundle.stop(Bundle.STOP_TRANSIENT);
-		}
+		Map<String, Long> dynamicBundleChecksums = _installDynamicBundles();
 
 		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
 			FrameworkStartLevel.class);
@@ -1721,7 +1846,42 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 
 		if (fileInstallBundle != null) {
-			fileInstallBundle.start(Bundle.START_TRANSIENT);
+			BundleTracker<Bundle> fileInstallBundleTracker =
+				new BundleTracker<Bundle>(
+					_framework.getBundleContext(), Bundle.STARTING, null) {
+
+					@Override
+					public Bundle addingBundle(
+						Bundle bundle, BundleEvent event) {
+
+						if (Objects.equals(
+								bundle.getSymbolicName(),
+								"org.apache.felix.fileinstall")) {
+
+							try {
+								_registerDynamicBundles(
+									dynamicBundleChecksums,
+									bundle.getBundleContext());
+							}
+							catch (Exception e) {
+								_log.error(
+									"Unable to register dynamic bundle " +
+										"checksums",
+									e);
+							}
+							finally {
+								close();
+							}
+						}
+
+						return null;
+					}
+
+				};
+
+			fileInstallBundleTracker.open();
+
+			fileInstallBundle.start();
 		}
 
 		if (_log.isInfoEnabled()) {
@@ -1785,6 +1945,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			_log.warn(sb.toString());
 		}
 	}
+
+	private static final String _CHECKSUM_SUFFIX = ".checksum";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ModuleFrameworkImpl.class);

@@ -18,12 +18,6 @@ definition {
 		MetalComponent.waitForMetalComponent(id = '''document.querySelector("nav.management-bar").parentNode.id''');
 	}
 
-	macro waitForReportsManagementBar {
-		AssertVisible(locator1 = "//div[contains(@class,'management-bar')]");
-
-		MetalComponent.waitForMetalComponent(id = '''document.querySelector("div.management-bar").parentNode.id''');
-	}
-
 	macro waitForMetalComponent {
 		var javaScript = '''
 var metalComponent = Liferay.component(${id});
@@ -47,6 +41,12 @@ else {
 
 			Pause(locator1 = "1000");
 		}
+	}
+
+	macro waitForReportsManagementBar {
+		AssertVisible(locator1 = "//div[contains(@class,'management-bar')]");
+
+		MetalComponent.waitForMetalComponent(id = '''document.querySelector("div.management-bar").parentNode.id''');
 	}
 
 }

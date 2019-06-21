@@ -66,11 +66,7 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 			return;
 		}
 
-		updateBuildDescription();
-
-		keepJenkinsBuild(true);
-
-		_invokeJob();
+		super.run();
 	}
 
 	protected PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner(
@@ -80,89 +76,13 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 	}
 
 	@Override
-	protected void updateBuildDescription() {
-		S buildData = getBuildData();
+	protected void invokeJob() {
+		String jobURL = getJobURL();
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("<strong>IN QUEUE</strong> - <a href=\"");
-		sb.append(JenkinsResultsParserUtil.getRemoteURL(getJobURL()));
-		sb.append("\">Invocation URL</a>");
+		sb.append(jobURL);
 
-		sb.append("<ul><li><strong>Git ID:</strong> ");
-		sb.append("<a href=\"https://github.com/");
-		sb.append(buildData.getPortalGitHubUsername());
-		sb.append("/");
-		sb.append(buildData.getPortalGitHubRepositoryName());
-		sb.append("/commit/");
-		sb.append(buildData.getPortalBranchSHA());
-		sb.append("\">");
-		sb.append(_getPortalBranchAbbreviatedSHA());
-		sb.append("</a></li>");
-
-		String portalGitHubCompareURL = _getPortalGitHubCompareURL();
-
-		if (portalGitHubCompareURL != null) {
-			sb.append("<li><strong>Git Compare:</strong> <a href=\"");
-			sb.append(_getPortalGitHubCompareURL());
-			sb.append("\">??? commits</a></li>");
-		}
-
-		sb.append("</ul>");
-
-		buildData.setBuildDescription(sb.toString());
-
-		super.updateBuildDescription();
-	}
-
-	private String _getPortalBranchAbbreviatedSHA() {
-		S buildData = getBuildData();
-
-		String portalBranchSHA = buildData.getPortalBranchSHA();
-
-		return portalBranchSHA.substring(0, 7);
-	}
-
-	private String _getPortalGitHubCompareURL() {
-		S buildData = getBuildData();
-
-		return buildData.getPortalGitHubCompareURL(
-			_getPreviousBuildPortalBranchSHA());
-	}
-
-	private String _getPreviousBuildPortalBranchSHA() {
-		S buildData = getBuildData();
-
-		String currentPortalBranchSHA = buildData.getPortalBranchSHA();
-
-		for (JSONObject previousBuildJSONObject :
-				getPreviousBuildJSONObjects()) {
-
-			String description = previousBuildJSONObject.optString(
-				"description", "");
-
-			Matcher matcher = _portalBranchSHAPattern.matcher(description);
-
-			if (!matcher.find()) {
-				continue;
-			}
-
-			String previousPortalBranchSHA = matcher.group("branchSHA");
-
-			if (currentPortalBranchSHA.equals(previousPortalBranchSHA)) {
-				continue;
-			}
-
-			return previousPortalBranchSHA;
-		}
-
-		return null;
-	}
-
-	private void _invokeJob() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(getJobURL());
 		sb.append("/buildWithParameters?");
 
 		String jenkinsAuthenticationToken;
@@ -221,6 +141,79 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
+
+		sb = new StringBuilder();
+
+		sb.append("<strong>IN QUEUE</strong> - <a href=\"");
+		sb.append(JenkinsResultsParserUtil.getRemoteURL(jobURL));
+		sb.append("\">Invocation URL</a>");
+
+		sb.append("<ul><li><strong>Git ID:</strong> ");
+		sb.append("<a href=\"https://github.com/");
+		sb.append(buildData.getPortalGitHubUsername());
+		sb.append("/");
+		sb.append(buildData.getPortalGitHubRepositoryName());
+		sb.append("/commit/");
+		sb.append(buildData.getPortalBranchSHA());
+		sb.append("\">");
+		sb.append(_getPortalBranchAbbreviatedSHA());
+		sb.append("</a></li>");
+
+		if (portalGitHubCompareURL != null) {
+			sb.append("<li><strong>Git Compare:</strong> <a href=\"");
+			sb.append(_getPortalGitHubCompareURL());
+			sb.append("\">??? commits</a></li>");
+		}
+
+		sb.append("</ul>");
+
+		buildData.setBuildDescription(sb.toString());
+
+		updateBuildDescription();
+	}
+
+	private String _getPortalBranchAbbreviatedSHA() {
+		S buildData = getBuildData();
+
+		String portalBranchSHA = buildData.getPortalBranchSHA();
+
+		return portalBranchSHA.substring(0, 7);
+	}
+
+	private String _getPortalGitHubCompareURL() {
+		S buildData = getBuildData();
+
+		return buildData.getPortalGitHubCompareURL(
+			_getPreviousBuildPortalBranchSHA());
+	}
+
+	private String _getPreviousBuildPortalBranchSHA() {
+		S buildData = getBuildData();
+
+		String currentPortalBranchSHA = buildData.getPortalBranchSHA();
+
+		for (JSONObject previousBuildJSONObject :
+				getPreviousBuildJSONObjects()) {
+
+			String description = previousBuildJSONObject.optString(
+				"description", "");
+
+			Matcher matcher = _portalBranchSHAPattern.matcher(description);
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			String previousPortalBranchSHA = matcher.group("branchSHA");
+
+			if (currentPortalBranchSHA.equals(previousPortalBranchSHA)) {
+				continue;
+			}
+
+			return previousPortalBranchSHA;
+		}
+
+		return null;
 	}
 
 	private boolean _previousBuildHasCurrentSHA() {

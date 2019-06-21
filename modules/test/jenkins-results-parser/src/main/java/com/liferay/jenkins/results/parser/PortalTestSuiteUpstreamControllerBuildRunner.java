@@ -36,7 +36,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 	public void run() {
 		keepJenkinsBuild(true);
 
-		_invokeJob();
+		invokeJob();
 	}
 
 	@Override
@@ -80,14 +80,96 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		setWorkspace(WorkspaceFactory.newSimpleWorkspace());
 	}
 
-	@Override
-	protected void updateBuildDescription() {
+	protected void invokeJob() {
+		List<String> testSuiteNames = _getSelectedTestSuiteNames();
+
+		if (testSuiteNames.isEmpty()) {
+			System.out.println(
+				"There are no test suites to be run at this time.");
+
+			return;
+		}
+
+		String jenkinsAuthenticationToken;
+
+		try {
+			Properties buildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
+
+			jenkinsAuthenticationToken = buildProperties.getProperty(
+				"jenkins.authentication.token");
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+
 		S buildData = getBuildData();
+
+		for (String testSuiteName : testSuiteNames) {
+			String jobURL = getJobURL();
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(jobURL);
+			sb.append("/buildWithParameters?");
+			sb.append("token=");
+			sb.append(jenkinsAuthenticationToken);
+			sb.append("&JENKINS_GITHUB_BRANCH_NAME=");
+			sb.append(buildData.getJenkinsGitHubBranchName());
+			sb.append("&JENKINS_GITHUB_BRANCH_USERNAME=");
+			sb.append(buildData.getJenkinsGitHubUsername());
+			sb.append("&PORTAL_GIT_COMMIT=");
+			sb.append(buildData.getPortalBranchSHA());
+			sb.append("&PORTAL_GITHUB_URL=");
+			sb.append(buildData.getPortalGitHubURL());
+			sb.append("&CI_TEST_SUITE=");
+			sb.append(testSuiteName);
+
+			String testrayProjectName = _getTestrayProjectName(testSuiteName);
+
+			if (testrayProjectName != null) {
+				String testrayBuildType = JenkinsResultsParserUtil.combine(
+					"[", buildData.getPortalUpstreamBranchName(), "] ci:test:",
+					testSuiteName);
+
+				String testraybuildName = JenkinsResultsParserUtil.combine(
+					testrayBuildType, " - ",
+					String.valueOf(buildData.getBuildNumber()), " - ",
+					JenkinsResultsParserUtil.toDateString(
+						new Date(buildData.getStartTime()),
+						"yyyy-MM-dd[HH:mm:ss]", "America/Los_Angeles"));
+
+				sb.append("&TESTRAY_BUILD_NAME=");
+				sb.append(testraybuildName);
+				sb.append("&TESTRAY_BUILD_TYPE=");
+				sb.append(testrayBuildType);
+				sb.append("&TESTRAY_PROJECT_NAME=");
+				sb.append(testrayProjectName);
+			}
+
+			try {
+				JenkinsResultsParserUtil.toString(sb.toString());
+
+				System.out.println(
+					"Job for '" + testSuiteName + "' has been invoked at " +
+						jobURL);
+
+				_invokedTestSuiteNames.add(testSuiteName);
+			}
+			catch (IOException ioe) {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Unable to invoke a new build for test suite, '",
+						testSuiteName, "'"));
+
+				ioe.printStackTrace();
+			}
+		}
 
 		buildData.setBuildDescription(
 			String.join(", ", _invokedTestSuiteNames));
 
-		super.updateBuildDescription();
+		updateBuildDescription();
 	}
 
 	private List<Build> _getBuildHistory() {
@@ -245,96 +327,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		}
 	}
 
-	private void _invokeJob() {
-		List<String> testSuiteNames = _getSelectedTestSuiteNames();
-
-		if ((testSuiteNames == null) || testSuiteNames.isEmpty()) {
-			System.out.println(
-				"There are no test suites to be run at this time.");
-
-			return;
-		}
-
-		String jenkinsAuthenticationToken;
-
-		try {
-			Properties buildProperties =
-				JenkinsResultsParserUtil.getBuildProperties();
-
-			jenkinsAuthenticationToken = buildProperties.getProperty(
-				"jenkins.authentication.token");
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
-
-		S buildData = getBuildData();
-
-		for (String testSuiteName : testSuiteNames) {
-			String jobURL = getJobURL();
-
-			StringBuilder sb = new StringBuilder();
-
-			sb.append(jobURL);
-			sb.append("/buildWithParameters?");
-			sb.append("token=");
-			sb.append(jenkinsAuthenticationToken);
-			sb.append("&JENKINS_GITHUB_BRANCH_NAME=");
-			sb.append(buildData.getJenkinsGitHubBranchName());
-			sb.append("&JENKINS_GITHUB_BRANCH_USERNAME=");
-			sb.append(buildData.getJenkinsGitHubUsername());
-			sb.append("&PORTAL_GIT_COMMIT=");
-			sb.append(buildData.getPortalBranchSHA());
-			sb.append("&PORTAL_GITHUB_URL=");
-			sb.append(buildData.getPortalGitHubURL());
-			sb.append("&CI_TEST_SUITE=");
-			sb.append(testSuiteName);
-
-			String testrayProjectName = _getTestrayProjectName(testSuiteName);
-
-			if (testrayProjectName != null) {
-				String testrayBuildType = JenkinsResultsParserUtil.combine(
-					"[", buildData.getPortalUpstreamBranchName(), "] ci:test:",
-					testSuiteName);
-
-				String testraybuildName = JenkinsResultsParserUtil.combine(
-					testrayBuildType, " - ",
-					String.valueOf(buildData.getBuildNumber()), " - ",
-					JenkinsResultsParserUtil.toDateString(
-						new Date(buildData.getStartTime()),
-						"yyyy-MM-dd[HH:mm:ss]", "America/Los_Angeles"));
-
-				sb.append("&TESTRAY_BUILD_NAME=");
-				sb.append(testraybuildName);
-				sb.append("&TESTRAY_BUILD_TYPE=");
-				sb.append(testrayBuildType);
-				sb.append("&TESTRAY_PROJECT_NAME=");
-				sb.append(testrayProjectName);
-			}
-
-			try {
-				JenkinsResultsParserUtil.toString(sb.toString());
-
-				System.out.println(
-					"Job for '" + testSuiteName + "' has been invoked at " +
-						jobURL);
-
-				_invokedTestSuiteNames.add(testSuiteName);
-			}
-			catch (IOException ioe) {
-				System.out.println(
-					JenkinsResultsParserUtil.combine(
-					"Unable to invoke a new build for test suite, '",
-					testSuiteName, "'"));
-
-				ioe.printStackTrace();
-			}
-		}
-
-		updateBuildDescription();
-	}
-
-	private List<String> _invokedTestSuiteNames = new ArrayList<>();
-	private List<String> _selectedTestSuiteNames;
+	private final List<String> _invokedTestSuiteNames = new ArrayList<>();
+	private final List<String> _selectedTestSuiteNames;
 
 }

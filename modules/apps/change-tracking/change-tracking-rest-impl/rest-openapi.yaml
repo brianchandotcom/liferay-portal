@@ -109,7 +109,11 @@ components:
                 userId:
                     format: int64
                     type: integer
+                userInitials:
+                    type: string
                 userName:
+                    type: string
+                userPortraitURL:
                     type: string
             type: object
         Settings:

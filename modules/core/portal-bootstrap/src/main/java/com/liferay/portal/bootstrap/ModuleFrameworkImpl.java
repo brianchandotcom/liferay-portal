@@ -14,6 +14,7 @@
 
 package com.liferay.portal.bootstrap;
 
+import com.liferay.petra.io.BigEndianCodec;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -48,7 +49,6 @@ import com.liferay.registry.collections.ServiceTrackerMapFactoryUtil;
 import com.liferay.registry.internal.RegistryImpl;
 import com.liferay.registry.internal.ServiceTrackerMapFactoryImpl;
 
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -1349,14 +1349,15 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			Map<String, Long> checksums, BundleContext bundleContext)
 		throws Exception {
 
+		byte[] data = new byte[8];
+
 		for (Map.Entry<String, Long> entry : checksums.entrySet()) {
 			File file = bundleContext.getDataFile(entry.getKey());
 
-			try (OutputStream outputStream = new FileOutputStream(file);
-				DataOutputStream dataOutputStream = new DataOutputStream(
-					outputStream)) {
+			try (OutputStream outputStream = new FileOutputStream(file)) {
+				BigEndianCodec.putLong(data, 0, entry.getValue());
 
-				dataOutputStream.writeLong(entry.getValue());
+				outputStream.write(data);
 			}
 		}
 	}

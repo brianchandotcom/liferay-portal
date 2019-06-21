@@ -8,7 +8,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
 	<bean class="com.liferay.portal.service.PersistedModelLocalServiceRegistryImpl" id="com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry" />
-	<bean class="com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil" id="com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil">
+	<bean class="com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil">
 		<property name="persistedModelLocalServiceRegistry" ref="com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry" />
 	</bean>
 	<bean class="com.liferay.portal.kernel.util.InfrastructureUtil" id="com.liferay.portal.kernel.util.InfrastructureUtil">

@@ -779,7 +779,8 @@ definition {
 	test EditDocument {
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title");
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

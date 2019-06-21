@@ -301,7 +301,8 @@ definition {
 
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Edit this document two times");
+			dmDocumentTitle = "Edit this document two times",
+			groupName = "Guest");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -498,7 +499,8 @@ definition {
 	test SearchForDocumentInHomeFolder {
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title");
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

@@ -82,7 +82,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -901,11 +900,11 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			});
 	}
 
-	private Map<String, Bundle> _deployStaticBundlesFromFile(
+	private Set<Bundle> _deployStaticBundlesFromFile(
 			File file, Set<String> overrideStaticFileNames)
 		throws IOException {
 
-		Map<String, Bundle> bundles = new HashMap<>();
+		Set<Bundle> bundles = new HashSet<>();
 
 		String path = _getLPKGLocation(file);
 
@@ -978,7 +977,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 						location, inputStream);
 
 					if (bundle != null) {
-						bundles.put(location, bundle);
+						bundles.add(bundle);
 					}
 				}
 			}
@@ -1426,7 +1425,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		bundleContext.registerService(
 			ThrowableCollector.class, throwableCollector, dictionary);
 
-		final Map<String, Bundle> bundles = new LinkedHashMap<>();
+		Set<Bundle> bundles = new HashSet<>();
 
 		final List<Path> jarPaths = new ArrayList<>();
 
@@ -1498,7 +1497,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 							uri.getScheme(), uri.getAuthority(), uri.getPath(),
 							null, uri.getFragment())))) {
 
-				bundles.put(bundle.getLocation(), bundle);
+				bundles.add(bundle);
 
 				continue;
 			}
@@ -1533,7 +1532,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				Bundle bundle = _installInitialBundle(location, inputStream);
 
 				if (bundle != null) {
-					bundles.put(location, bundle);
+					bundles.add(bundle);
 
 					overrideStaticFileNames.add(
 						uriString.substring(
@@ -1550,7 +1549,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			File file = new File(deployDir + StringPool.SLASH + staticFileName);
 
 			if (file.exists()) {
-				bundles.putAll(
+				bundles.addAll(
 					_deployStaticBundlesFromFile(
 						file, overrideStaticFileNames));
 			}
@@ -1588,7 +1587,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 		}
 
-		for (Bundle bundle : bundles.values()) {
+		for (Bundle bundle : bundles) {
 			if (!_isFragmentBundle(bundle)) {
 				bundle.stop();
 			}
@@ -1622,7 +1621,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		FrameworkWiring frameworkWiring = _framework.adapt(
 			FrameworkWiring.class);
 
-		frameworkWiring.resolveBundles(bundles.values());
+		frameworkWiring.resolveBundles(bundles);
 
 		if (PropsValues.MODULE_FRAMEWORK_CONCURRENT_STARTUP_ENABLED) {
 			Runtime runtime = Runtime.getRuntime();
@@ -1635,7 +1634,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			List<Future<Void>> futures = new ArrayList<>(bundles.size());
 
-			for (final Bundle bundle : bundles.values()) {
+			for (Bundle bundle : bundles) {
 				if (!_isFragmentBundle(bundle) &&
 					!Objects.equals(
 						bundle.getSymbolicName(),
@@ -1666,7 +1665,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 		}
 		else {
-			for (Bundle bundle : bundles.values()) {
+			for (Bundle bundle : bundles) {
 				if (!_isFragmentBundle(bundle) &&
 					!Objects.equals(
 						bundle.getSymbolicName(),

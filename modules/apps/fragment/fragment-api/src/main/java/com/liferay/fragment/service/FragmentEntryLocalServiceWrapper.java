@@ -49,6 +49,12 @@ public class FragmentEntryLocalServiceWrapper
 		return _fragmentEntryLocalService.addFragmentEntry(fragmentEntry);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addFragmentEntry(long, long, long, String, String, String,
+	 String, int, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.fragment.model.FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId, String name,
@@ -61,6 +67,12 @@ public class FragmentEntryLocalServiceWrapper
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addFragmentEntry(long, long, long, String, String, String,
+	 String, int, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.fragment.model.FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId, String name,
@@ -73,6 +85,12 @@ public class FragmentEntryLocalServiceWrapper
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addFragmentEntry(long, long, long, String, String, String,
+	 String, int, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.fragment.model.FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId, String name,
@@ -85,6 +103,12 @@ public class FragmentEntryLocalServiceWrapper
 			type, status, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addFragmentEntry(long, long, long, String, String, String,
+	 String, int, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.fragment.model.FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId, String name,
@@ -97,6 +121,12 @@ public class FragmentEntryLocalServiceWrapper
 			status, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addFragmentEntry(long, long, long, String, String, String,
+	 String, int, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.fragment.model.FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId,
@@ -109,6 +139,12 @@ public class FragmentEntryLocalServiceWrapper
 			status, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addFragmentEntry(long, long, long, String, String, String,
+	 String, int, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.fragment.model.FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId,
@@ -134,6 +170,12 @@ public class FragmentEntryLocalServiceWrapper
 			previewFileEntryId, type, status, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addFragmentEntry(long, long, long, String, String, String,
+	 String, int, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.fragment.model.FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId,

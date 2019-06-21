@@ -247,6 +247,7 @@ public class BlogsUtil {
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery(
 			BlogsEntry.class.getName(), searchContainer);
 
+		assetEntryQuery.setEnablePermissions(true);
 		assetEntryQuery.setExcludeZeroViewCount(false);
 		assetEntryQuery.setOrderByCol1("publishDate");
 		assetEntryQuery.setVisible(Boolean.TRUE);

@@ -23,6 +23,6 @@ public interface InfoTextExtractor<T> {
 
 	public String getClassName();
 
-	public String getText(T t, Locale locale);
+	public String extract(T t, Locale locale);
 
 }

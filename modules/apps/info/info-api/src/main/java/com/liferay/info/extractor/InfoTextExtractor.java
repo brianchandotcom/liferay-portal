@@ -19,7 +19,7 @@ import java.util.Locale;
 /**
  * @author Alejandro Tardín
  */
-public interface TextExtractor<T> {
+public interface InfoTextExtractor<T> {
 
 	public String getClassName();
 

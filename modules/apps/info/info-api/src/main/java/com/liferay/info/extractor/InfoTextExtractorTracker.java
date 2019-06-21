@@ -19,10 +19,10 @@ import java.util.List;
 /**
  * @author Alejandro Tardín
  */
-public interface TextExtractorTracker {
+public interface InfoTextExtractorTracker {
 
-	public TextExtractor getTextExtractor(String className);
+	public InfoTextExtractor getInfoTextExtractor(String className);
 
-	public List<TextExtractor> getTextExtractors();
+	public List<InfoTextExtractor> getInfoTextExtractors();
 
 }

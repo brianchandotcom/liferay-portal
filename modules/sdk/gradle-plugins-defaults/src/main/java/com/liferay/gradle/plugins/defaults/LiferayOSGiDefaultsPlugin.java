@@ -2788,8 +2788,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	private void _configureSourceSetClassesDir(
 		Project project, SourceSet sourceSet, String classesDirName) {
 
-		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
-
 		SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
 
 		if (FileUtil.isChild(
@@ -2798,6 +2796,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			File javaClassesDir = project.file(classesDirName);
 
 			javaSourceDirectorySet.setOutputDir(javaClassesDir);
+
+			SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
 			sourceSetOutput.setResourcesDir(javaClassesDir);
 		}
 	}

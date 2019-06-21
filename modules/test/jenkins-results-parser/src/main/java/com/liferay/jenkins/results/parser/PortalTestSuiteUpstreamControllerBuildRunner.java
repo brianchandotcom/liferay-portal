@@ -17,6 +17,8 @@ package com.liferay.jenkins.results.parser;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -97,6 +99,16 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		return job.getBuildHistory(build.getJenkinsMaster());
 	}
 
+	private List<String> _getBuildTestSuiteNames(Build build) {
+		String buildDescription = build.getBuildDescription();
+
+		if ((buildDescription == null) || buildDescription.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		return Arrays.asList(buildDescription.split("\\s*,\\s*"));
+	}
+
 	private Map<String, Long> _getCandidateTestSuiteStaleDurations() {
 		S buildData = getBuildData();
 
@@ -139,23 +151,20 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		Build currentBuild = BuildFactory.newBuild(
 			buildData.getBuildURL(), null);
 
+		builds.remove(currentBuild);
+
 		Map<String, Long> latestTestSuiteStartTimes = new LinkedHashMap<>();
 
-		for (Build build : builds) {
-			if (build.equals(currentBuild)) {
-				continue;
-			}
+		for (String testSuiteName : _getTestSuiteNames()) {
+			for (Build build : builds) {
+				List<String> buildTestSuiteNames = _getBuildTestSuiteNames(
+					build);
 
-			String buildDescription = build.getBuildDescription();
-
-			if (buildDescription == null) {
-				continue;
-			}
-
-			for (String testSuite : buildDescription.split("\\s*,\\s*")) {
-				if (!latestTestSuiteStartTimes.containsKey(testSuite)) {
+				if (buildTestSuiteNames.contains(testSuiteName)) {
 					latestTestSuiteStartTimes.put(
-						testSuite, build.getStartTime());
+						testSuiteName, build.getStartTime());
+
+					break;
 				}
 			}
 		}

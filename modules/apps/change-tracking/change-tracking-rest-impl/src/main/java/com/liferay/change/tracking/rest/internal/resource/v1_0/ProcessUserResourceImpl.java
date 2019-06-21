@@ -19,10 +19,10 @@ import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.rest.constant.v1_0.ProcessType;
 import com.liferay.change.tracking.rest.dto.v1_0.ProcessUser;
+import com.liferay.change.tracking.rest.internal.dto.factory.v1_0.ProcessUserFactory;
 import com.liferay.change.tracking.rest.resource.v1_0.ProcessUserResource;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -82,7 +82,7 @@ public class ProcessUserResourceImpl extends BaseProcessUserResourceImpl {
 		).filter(
 			Objects::nonNull
 		).map(
-			this::_toProcessUser
+			_processUserFactory::toProcessUser
 		).collect(
 			Collectors.toList()
 		);
@@ -118,17 +118,11 @@ public class ProcessUserResourceImpl extends BaseProcessUserResourceImpl {
 		return queryDefinition;
 	}
 
-	private ProcessUser _toProcessUser(User user) {
-		return new ProcessUser() {
-			{
-				userId = user.getUserId();
-				userName = user.getFullName();
-			}
-		};
-	}
-
 	@Reference
 	private CTEngineManager _ctEngineManager;
+
+	@Reference
+	private ProcessUserFactory _processUserFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -14,7 +14,6 @@
 
 package com.liferay.change.tracking.rest.internal.resource.v1_0;
 
-import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.engine.CTManager;
 import com.liferay.change.tracking.engine.exception.CTCollectionDescriptionCTEngineException;
@@ -24,6 +23,7 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.rest.constant.v1_0.CollectionType;
 import com.liferay.change.tracking.rest.dto.v1_0.Collection;
 import com.liferay.change.tracking.rest.dto.v1_0.CollectionUpdate;
+import com.liferay.change.tracking.rest.internal.dto.factory.v1_0.CollectionFactory;
 import com.liferay.change.tracking.rest.internal.jaxrs.exception.ChangeTrackingDisabledException;
 import com.liferay.change.tracking.rest.internal.jaxrs.exception.CollectionDescriptionTooLongException;
 import com.liferay.change.tracking.rest.internal.jaxrs.exception.CollectionNameTooLongException;
@@ -49,7 +49,6 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -100,7 +99,7 @@ public class CollectionResourceImpl
 		Optional<CTCollection> ctCollectionOptional =
 			_ctEngineManager.getCTCollectionOptional(collectionId);
 
-		return _toCollection(
+		return _collectionFactory.toCollection(
 			ctCollectionOptional.orElseThrow(
 				() -> new NoSuchModelException(
 					"Unable to get collection " + collectionId)));
@@ -158,7 +157,7 @@ public class CollectionResourceImpl
 		}
 
 		List<Collection> collections = TransformUtil.transform(
-			ctCollections, this::_toCollection);
+			ctCollections, _collectionFactory::toCollection);
 
 		return Page.of(collections, pagination, collections.size());
 	}
@@ -188,7 +187,7 @@ public class CollectionResourceImpl
 					collectionUpdate.getDescription());
 
 			return ctCollectionOptional.map(
-				this::_toCollection
+				_collectionFactory::toCollection
 			).orElseThrow(
 				() -> new CreateCollectionException(
 					"Unable to create collection")
@@ -243,28 +242,8 @@ public class CollectionResourceImpl
 		return responseBuilder.build();
 	}
 
-	private Collection _toCollection(CTCollection ctCollection) {
-		Map<Integer, Long> ctEntriesChangeTypes =
-			_ctEngineManager.getCTCollectionChangeTypeCounts(
-				ctCollection.getCtCollectionId());
-
-		return new Collection() {
-			{
-				additionCount = ctEntriesChangeTypes.getOrDefault(
-					CTConstants.CT_CHANGE_TYPE_ADDITION, 0L);
-				collectionId = ctCollection.getCtCollectionId();
-				companyId = ctCollection.getCompanyId();
-				dateStatus = ctCollection.getStatusDate();
-				deletionCount = ctEntriesChangeTypes.getOrDefault(
-					CTConstants.CT_CHANGE_TYPE_DELETION, 0L);
-				description = ctCollection.getDescription();
-				modificationCount = ctEntriesChangeTypes.getOrDefault(
-					CTConstants.CT_CHANGE_TYPE_MODIFICATION, 0L);
-				name = ctCollection.getName();
-				statusByUserName = ctCollection.getStatusByUserName();
-			}
-		};
-	}
+	@Reference
+	private CollectionFactory _collectionFactory;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

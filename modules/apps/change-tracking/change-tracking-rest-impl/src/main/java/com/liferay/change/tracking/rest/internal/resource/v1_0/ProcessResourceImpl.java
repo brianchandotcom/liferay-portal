@@ -17,10 +17,9 @@ package com.liferay.change.tracking.rest.internal.resource.v1_0;
 import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTProcess;
-import com.liferay.change.tracking.rest.dto.v1_0.Collection;
 import com.liferay.change.tracking.rest.dto.v1_0.Process;
-import com.liferay.change.tracking.rest.dto.v1_0.ProcessUser;
-import com.liferay.change.tracking.rest.internal.jaxrs.exception.ProcessCollectionNotFoundException;
+import com.liferay.change.tracking.rest.internal.dto.factory.v1_0.CollectionFactory;
+import com.liferay.change.tracking.rest.internal.dto.factory.v1_0.ProcessUserFactory;
 import com.liferay.change.tracking.rest.resource.v1_0.CollectionResource;
 import com.liferay.change.tracking.rest.resource.v1_0.ProcessResource;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
@@ -36,16 +35,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
-
-import javax.validation.constraints.NotNull;
 
 import javax.ws.rs.core.Context;
 
@@ -63,19 +57,14 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ProcessResourceImpl extends BaseProcessResourceImpl {
 
 	@Override
-	public Process getProcess(@NotNull Long processId) throws Exception {
+	public Process getProcess(Long processId) throws Exception {
 		CTProcess ctProcess = _ctProcessLocalService.fetchCTProcess(processId);
 
-		Process process;
-
 		if (ctProcess != null) {
-			process = _getProcess(ctProcess);
-		}
-		else {
-			process = new Process();
+			return _getProcess(ctProcess);
 		}
 
-		return process;
+		return new Process();
 	}
 
 	private Optional<com.liferay.portal.kernel.backgroundtask.BackgroundTask>
@@ -108,60 +97,9 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 			backgroundTaskExecutor::getBackgroundTaskDisplay);
 	}
 
-	private Integer _getPercentage(
-		BackgroundTask backgroundTask,
-		Optional<BackgroundTask> backgroundTaskOptional) {
-
-		return backgroundTaskOptional.flatMap(
-			this::_fetchPortalKernelBackgroundTaskOptional
-		).map(
-			com.liferay.portal.kernel.backgroundtask.BackgroundTask::
-				getTaskExecutorClassName
-		).map(
-			_backgroundTaskExecutorRegistry::getBackgroundTaskExecutor
-		).flatMap(
-			backgroundTaskExecutor -> _getBackgroundTaskDisplayOptional(
-				backgroundTask, backgroundTaskExecutor)
-		).map(
-			BackgroundTaskDisplay::getPercentage
-		).orElse(
-			100
-		);
-	}
-
-	private String _getPortraitURL(User user) {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (themeDisplay == null) {
-			return StringPool.BLANK;
-		}
-
-		if (user != null) {
-			return user.fetchPortraitURL(themeDisplay);
-		}
-
-		return UserConstants.getPortraitURL(
-			themeDisplay.getPathImage(), true, 0, StringPool.BLANK);
-	}
-
-	private Process _getProcess(CTProcess ctProcess) throws Exception {
+	private Process _getProcess(CTProcess ctProcess) {
 		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
 			ctProcess.getCtCollectionId());
-
-		Collection collection;
-
-		try {
-			collection = _collectionResource.getCollection(
-				ctCollection.getCtCollectionId());
-		}
-		catch (Exception e) {
-			throw new ProcessCollectionNotFoundException(
-				"Unable to get process collection " +
-					ctCollection.getCtCollectionId(),
-				e);
-		}
 
 		BackgroundTask backgroundTask =
 			_backgroundTaskLocalService.fetchBackgroundTask(
@@ -172,53 +110,40 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 
 		User user = _userLocalService.fetchUser(ctProcess.getUserId());
 
-		Optional<User> userOptional = Optional.ofNullable(user);
+		return new Process() {
+			{
+				collection = _collectionFactory.toCollection(ctCollection);
+				processId = ctProcess.getCtProcessId();
+				dateCreated = ctProcess.getCreateDate();
 
-		Process process = new Process();
+				status = backgroundTaskOptional.map(
+					BackgroundTask::getStatusLabel
+				).orElse(
+					StringPool.BLANK
+				);
 
-		process.setCollection(collection);
-		process.setCompanyId(ctProcess.getCompanyId());
-		process.setDateCreated(ctProcess.getCreateDate());
-		process.setPercentage(
-			_getPercentage(backgroundTask, backgroundTaskOptional));
-		process.setProcessId(ctProcess.getCtProcessId());
-		process.setProcessUser(_getProcessUser(userOptional));
+				percentage = backgroundTaskOptional.flatMap(
+					ProcessResourceImpl.this::
+						_fetchPortalKernelBackgroundTaskOptional
+				).map(
+					com.liferay.portal.kernel.backgroundtask.BackgroundTask::
+						getTaskExecutorClassName
+				).map(
+					_backgroundTaskExecutorRegistry::getBackgroundTaskExecutor
+				).flatMap(
+					backgroundTaskExecutor -> _getBackgroundTaskDisplayOptional(
+						backgroundTask, backgroundTaskExecutor)
+				).map(
+					BackgroundTaskDisplay::getPercentage
+				).orElse(
+					100
+				);
 
-		process.setStatus(
-			backgroundTaskOptional.map(
-				BackgroundTask::getStatusLabel
-			).orElse(
-				StringPool.BLANK
-			));
-
-		return process;
-	}
-
-	private ProcessUser _getProcessUser(Optional<User> userOptional) {
-		ProcessUser processUser = new ProcessUser();
-
-		processUser.setUserInitials(
-			userOptional.map(
-				User::getInitials
-			).orElse(
-				StringPool.BLANK
-			));
-
-		processUser.setUserName(
-			userOptional.map(
-				User::getFullName
-			).orElse(
-				StringPool.BLANK
-			));
-
-		processUser.setUserPortraitURL(
-			userOptional.map(
-				this::_getPortraitURL
-			).orElse(
-				StringPool.BLANK
-			));
-
-		return processUser;
+				if (user != null) {
+					processUser = _processUserFactory.toProcessUser(user);
+				}
+			}
+		};
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -234,6 +159,9 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 	private BackgroundTaskManager _backgroundTaskManager;
 
 	@Reference
+	private CollectionFactory _collectionFactory;
+
+	@Reference
 	private CollectionResource _collectionResource;
 
 	@Reference
@@ -247,6 +175,9 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 
 	@Context
 	private HttpServletRequest _httpServletRequest;
+
+	@Reference
+	private ProcessUserFactory _processUserFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

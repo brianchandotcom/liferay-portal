@@ -1,11 +1,24 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 
+/**
+ * Shows a dialog and handles the selected item.
+ */
 class ItemSelectorDialog extends Component {
+	/**
+	 * Close the dialog.
+	 *
+	 * @review
+	 */
 	close() {
 		Liferay.Util.getWindow(this.eventName).hide();
 	}
 
+	/**
+	 * Open the dialog.
+	 *
+	 * @review
+	 */
 	open() {
 		this._currentItem = null;
 		this._selectedItem = null;
@@ -68,6 +81,15 @@ class ItemSelectorDialog extends Component {
 		);
 	}
 
+	/**
+	 * Saves the current item that has been selected in the dialog,
+	 * and disables the Add button is is empty.
+	 *
+	 * @param {EventFacade} event
+	 *
+	 * @private
+	 * @review
+	 */
 	_onItemSelected(event) {
 		var currentItem = event.data;
 
@@ -84,16 +106,78 @@ class ItemSelectorDialog extends Component {
 	}
 }
 
+/**
+ * State definition.
+ * @review
+ * @static
+ * @type {!Object}
+ */
+
 ItemSelectorDialog.STATE = {
+	/**
+	 * Css classes to pass to the dialog.
+	 *
+	 * @instance
+	 * @review
+	 * @type {String}
+	 */
 	dialogClasses: Config.string(),
+
+	/**
+	 * Event name
+	 *
+	 * @instance
+	 * @review
+	 * @type {String}
+	 */
 	eventName: Config.string().required(),
+
+	/**
+	 * The selected item in the dialog.
+	 *
+	 * @instance
+	 * @review
+	 * @type {Object}
+	 */
 	selectedItem: Config.object(),
+
+	/**
+	 * String literals used in the dialog.
+	 *
+	 * @instance
+	 * @review
+	 * @type {Object}
+	 */
 	strings: Config.object().value({
 		add: Liferay.Language.get('add'),
 		cancel: Liferay.Language.get('cancel')
 	}),
+
+	/**
+	 * Dialog's title
+	 *
+	 * @instance
+	 * @review
+	 * @type {String}
+	 */
 	title: Config.string().value(Liferay.Language.get('select-file')),
+
+	/**
+	 * Dialog's zIndex
+	 *
+	 * @instance
+	 * @review
+	 * @type {Number}
+	 */
 	zIndex: Config.number(),
+
+	/**
+	 * Url that will open the dialog.
+	 *
+	 * @instance
+	 * @review
+	 * @type {String}
+	 */
 	url: Config.string().required()
 };
 

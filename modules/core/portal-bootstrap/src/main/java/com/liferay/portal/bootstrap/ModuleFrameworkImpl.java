@@ -88,7 +88,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -1676,15 +1675,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 					futures.add(
 						executorService.submit(
-							new Callable<Void>() {
+							() -> {
+								bundle.start();
 
-								@Override
-								public Void call() throws BundleException {
-									bundle.start();
-
-									return null;
-								}
-
+								return null;
 							}));
 				}
 			}

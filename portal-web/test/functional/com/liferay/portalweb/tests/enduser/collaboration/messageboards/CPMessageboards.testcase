@@ -42,7 +42,8 @@ definition {
 	test AddMBCategorySubcategory {
 		JSONMBMessage.addCategory(
 			categoryDescription = "MB Category Description",
-			categoryName = "MB Category Name");
+			categoryName = "MB Category Name",
+			userEmailAddress = "test@liferay.com");
 
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 

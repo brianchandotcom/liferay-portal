@@ -551,11 +551,13 @@ definition {
 	test MoveMBCategory1ThreadToCategory2 {
 		JSONMBMessage.addCategory(
 			categoryDescription = "MB Category Description",
-			categoryName = "MB Category1 Name");
+			categoryName = "MB Category1 Name",
+			userEmailAddress = "test@liferay.com");
 
 		JSONMBMessage.addCategory(
 			categoryDescription = "MB Category Description",
-			categoryName = "MB Category2 Name");
+			categoryName = "MB Category2 Name",
+			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -593,11 +595,13 @@ definition {
 	test MoveMBCategory1ThreadWithExplanationPostToCategory2 {
 		JSONMBMessage.addCategory(
 			categoryDescription = "MB Category Description",
-			categoryName = "MB Category1 Name");
+			categoryName = "MB Category1 Name",
+			userEmailAddress = "test@liferay.com");
 
 		JSONMBMessage.addCategory(
 			categoryDescription = "MB Category Description",
-			categoryName = "MB Category2 Name");
+			categoryName = "MB Category2 Name",
+			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 

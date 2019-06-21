@@ -23,9 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.extender.internal.configuration.ConfigurationUtil;
 
@@ -36,8 +34,6 @@ import java.io.Reader;
 import java.net.URL;
 
 import java.util.Dictionary;
-
-import javax.sql.DataSource;
 
 import org.apache.felix.dm.DependencyManager;
 import org.apache.felix.dm.ServiceDependency;
@@ -267,16 +263,7 @@ public class ModuleApplicationContextExtender
 	private ConfigurableApplicationContextConfigurator
 		_configurableApplicationContextConfigurator;
 
-	@Reference(target = "(&(bean.id=liferayDataSource)(original.bean=true))")
-	private DataSource _dataSource;
-
-	@Reference(target = "(original.bean=true)")
-	private InfrastructureUtil _infrastructureUtil;
-
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
-
-	@Reference(target = "(original.bean=true)")
-	private SAXReaderUtil _saxReaderUtil;
 
 }

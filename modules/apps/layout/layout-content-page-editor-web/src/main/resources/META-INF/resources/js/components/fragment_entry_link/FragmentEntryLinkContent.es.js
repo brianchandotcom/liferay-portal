@@ -240,7 +240,10 @@ class FragmentEntryLinkContent extends Component {
 	/**
 	 * Parses and renders the fragment entry link content with AUI.
 	 * @param {string} content
+	 * @param {boolean} firstRender True if component is being rendered
+	 *  for the first time
 	 * @private
+	 * @review
 	 */
 	_renderContent(content, firstRender) {
 		if (content && this.refs.content) {

@@ -157,9 +157,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 				continue;
 			}
 
-			for (String testSuite : buildDescription.split(",")) {
-				testSuite = testSuite.trim();
-
+			for (String testSuite : buildDescription.split("\\s*,\\s*")) {
 				if (!latestTestSuiteStartTimes.containsKey(testSuite)) {
 					latestTestSuiteStartTimes.put(
 						testSuite, build.getStartTime());

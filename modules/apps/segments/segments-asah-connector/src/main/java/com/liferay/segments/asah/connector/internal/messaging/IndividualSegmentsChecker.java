@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.asah.connector.internal.cache.AsahSegmentsEntryCache;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClient;
-import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientUtil;
+import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientFactory;
 import com.liferay.segments.asah.connector.internal.client.model.Individual;
 import com.liferay.segments.asah.connector.internal.client.model.IndividualSegment;
 import com.liferay.segments.asah.connector.internal.client.model.Results;
@@ -62,7 +62,7 @@ public class IndividualSegmentsChecker {
 
 	public void checkIndividualSegments() {
 		Optional<AsahFaroBackendClient> asahFaroBackendClientOptional =
-			_asahFaroBackendClientUtil.createAsahFaroBackendClient();
+			_asahFaroBackendClientFactory.createAsahFaroBackendClient();
 
 		if (!asahFaroBackendClientOptional.isPresent()) {
 			return;
@@ -83,7 +83,7 @@ public class IndividualSegmentsChecker {
 
 		if (_asahFaroBackendClient == null) {
 			Optional<AsahFaroBackendClient> asahFaroBackendClientOptional =
-				_asahFaroBackendClientUtil.createAsahFaroBackendClient();
+				_asahFaroBackendClientFactory.createAsahFaroBackendClient();
 
 			if (!asahFaroBackendClientOptional.isPresent()) {
 				return;
@@ -356,7 +356,7 @@ public class IndividualSegmentsChecker {
 	private AsahFaroBackendClient _asahFaroBackendClient;
 
 	@Reference
-	private AsahFaroBackendClientUtil _asahFaroBackendClientUtil;
+	private AsahFaroBackendClientFactory _asahFaroBackendClientFactory;
 
 	@Reference
 	private AsahSegmentsEntryCache _asahSegmentsEntryCache;

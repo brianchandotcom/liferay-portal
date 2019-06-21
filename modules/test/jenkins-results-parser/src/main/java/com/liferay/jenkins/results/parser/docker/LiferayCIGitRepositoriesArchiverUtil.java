@@ -40,14 +40,6 @@ import java.util.Map;
 public class LiferayCIGitRepositoriesArchiverUtil {
 
 	public static void init() {
-		JenkinsResultsParserUtil.regenerateSshIdRsa(
-			new File(
-				JenkinsResultsParserUtil.getEnvironmentVariable(
-					"SECRETS_VOLUME_DIR")));
-
-		JenkinsResultsParserUtil.regenerateSshKnownHosts(
-			JenkinsResultsParserUtil.getEnvironmentVariable("KNOWN_HOSTS"));
-
 		String gitRepositoryNamesString =
 			JenkinsResultsParserUtil.getEnvironmentVariable(
 				"GIT_REPOSITORY_NAMES");

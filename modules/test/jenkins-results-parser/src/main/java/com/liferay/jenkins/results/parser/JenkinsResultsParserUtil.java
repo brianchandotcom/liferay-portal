@@ -1932,90 +1932,6 @@ public class JenkinsResultsParserUtil {
 		return string;
 	}
 
-	public static void regenerateSshIdRsa(File secretsVolumeDir) {
-		if (!secretsVolumeDir.exists()) {
-			return;
-		}
-
-		File secretsVolumeIdRsaFile = new File(secretsVolumeDir, "id_rsa");
-
-		if (!secretsVolumeIdRsaFile.exists()) {
-			return;
-		}
-
-		String idRsa;
-
-		try {
-			idRsa = read(secretsVolumeIdRsaFile);
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Unable to read secrets id_rsa file", ioe);
-		}
-
-		if (idRsa.isEmpty()) {
-			return;
-		}
-
-		if (_sshIdRsaFile.exists()) {
-			_sshIdRsaFile.delete();
-		}
-
-		try {
-			write(_sshIdRsaFile, idRsa);
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to regenerate id_rsa file", ioe);
-		}
-
-		_sshIdRsaFile.setReadable(false, false);
-
-		_sshIdRsaFile.setExecutable(false, false);
-		_sshIdRsaFile.setReadable(true, true);
-		_sshIdRsaFile.setWritable(false, false);
-	}
-
-	public static void regenerateSshKnownHosts(String knownHosts) {
-		if ((knownHosts == null) || knownHosts.isEmpty()) {
-			return;
-		}
-
-		if (_sshKnownHostsFile.exists()) {
-			_sshKnownHostsFile.delete();
-		}
-
-		String command = combine(
-			"ssh-keyscan ", knownHosts.replaceAll("\\s*,\\s*", " "), " >> ",
-			getCanonicalPath(_sshKnownHostsFile));
-
-		Process process = null;
-
-		try {
-			process = executeBashCommands(command);
-		}
-		catch (IOException | TimeoutException e) {
-			throw new RuntimeException(
-				"Unable to regenerate known_hosts file for hosts " + knownHosts,
-				e);
-		}
-
-		if ((process != null) && (process.exitValue() != 0)) {
-			String errorString = null;
-
-			try {
-				errorString = readInputStream(process.getErrorStream());
-			}
-			catch (IOException ioe) {
-				ioe.printStackTrace();
-			}
-
-			throw new RuntimeException(
-				combine(
-					"Unable to regenerate known_hosts file for hosts ",
-					knownHosts, "\n", errorString));
-		}
-	}
-
 	public static List<File> removeExcludedFiles(
 		List<PathMatcher> excludesPathMatchers, List<File> files) {
 
@@ -3079,9 +2995,6 @@ public class JenkinsResultsParserUtil {
 			}
 		}
 	};
-	private static final File _sshIdRsaFile = new File(getSshDir(), "id_rsa");
-	private static final File _sshKnownHostsFile = new File(
-		getSshDir(), "known_hosts");
 	private static final Set<String> _timeStamps = new HashSet<>();
 	private static final File _userHomeDir = new File(
 		System.getProperty("user.home"));

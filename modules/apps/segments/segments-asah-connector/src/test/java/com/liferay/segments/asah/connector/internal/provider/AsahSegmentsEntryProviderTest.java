@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.segments.asah.connector.internal.cache.SegmentsEntryIdsAsahCache;
+import com.liferay.segments.asah.connector.internal.cache.AsahSegmentsEntryCache;
 import com.liferay.segments.asah.connector.internal.context.contributor.SegmentsAsahRequestContextContributor;
 import com.liferay.segments.context.Context;
 import com.liferay.segments.model.SegmentsEntryRel;
@@ -52,8 +52,8 @@ public class AsahSegmentsEntryProviderTest {
 			_asahSegmentsEntryProvider, "_messageBus", _messageBus);
 
 		ReflectionTestUtil.setFieldValue(
-			_asahSegmentsEntryProvider, "_segmentsEntryIdsAsahCache",
-			_segmentsEntryIdsAsahCache);
+			_asahSegmentsEntryProvider, "_asahSegmentsEntryCache",
+			_asahSegmentsEntryCache);
 
 		ReflectionTestUtil.setFieldValue(
 			_asahSegmentsEntryProvider, "_segmentsEntryRelLocalService",
@@ -118,7 +118,7 @@ public class AsahSegmentsEntryProviderTest {
 		};
 
 		Mockito.when(
-			_segmentsEntryIdsAsahCache.getSegmentsEntryIds(userId)
+			_asahSegmentsEntryCache.getSegmentsEntryIds(userId)
 		).thenReturn(
 			segmentsEntryIds
 		);
@@ -181,7 +181,7 @@ public class AsahSegmentsEntryProviderTest {
 		String userId = RandomTestUtil.randomString();
 
 		Mockito.when(
-			_segmentsEntryIdsAsahCache.getSegmentsEntryIds(userId)
+			_asahSegmentsEntryCache.getSegmentsEntryIds(userId)
 		).thenReturn(
 			null
 		);
@@ -217,14 +217,14 @@ public class AsahSegmentsEntryProviderTest {
 		return segmentsEntryRel;
 	}
 
+	@Mock
+	private AsahSegmentsEntryCache _asahSegmentsEntryCache;
+
 	private final AsahSegmentsEntryProvider _asahSegmentsEntryProvider =
 		new AsahSegmentsEntryProvider();
 
 	@Mock
 	private MessageBus _messageBus;
-
-	@Mock
-	private SegmentsEntryIdsAsahCache _segmentsEntryIdsAsahCache;
 
 	@Mock
 	private SegmentsEntryRelLocalService _segmentsEntryRelLocalService;

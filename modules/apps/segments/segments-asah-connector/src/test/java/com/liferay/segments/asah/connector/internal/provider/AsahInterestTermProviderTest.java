@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.segments.asah.connector.internal.cache.SegmentsInterestTermsAsahCache;
+import com.liferay.segments.asah.connector.internal.cache.AsahInterestTermCache;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -34,16 +34,16 @@ import org.mockito.runners.MockitoJUnitRunner;
  * @author Sarai Díaz
  */
 @RunWith(MockitoJUnitRunner.class)
-public class AsahInterestTermsProviderTest {
+public class AsahInterestTermProviderTest {
 
 	@Before
 	public void setUp() {
 		ReflectionTestUtil.setFieldValue(
-			_asahInterestTermsProvider, "_messageBus", _messageBus);
+			_asahInterestTermProvider, "_messageBus", _messageBus);
 
 		ReflectionTestUtil.setFieldValue(
-			_asahInterestTermsProvider, "_segmentsInterestTermsAsahCache",
-			_segmentsInterestTermsAsahCache);
+			_asahInterestTermProvider, "_asahInterestTermCache",
+			_asahInterestTermCache);
 	}
 
 	@Test
@@ -55,13 +55,13 @@ public class AsahInterestTermsProviderTest {
 		};
 
 		Mockito.when(
-			_segmentsInterestTermsAsahCache.getInterestTerms(userId)
+			_asahInterestTermCache.getInterestTerms(userId)
 		).thenReturn(
 			interestTerms
 		);
 
 		Assert.assertArrayEquals(
-			interestTerms, _asahInterestTermsProvider.getInterestTerms(userId));
+			interestTerms, _asahInterestTermProvider.getInterestTerms(userId));
 
 		Mockito.verify(
 			_messageBus, Mockito.never()
@@ -74,7 +74,7 @@ public class AsahInterestTermsProviderTest {
 	public void testGetInterestTermsWithEmptyAcClientUserId() {
 		Assert.assertArrayEquals(
 			new String[0],
-			_asahInterestTermsProvider.getInterestTerms(StringPool.BLANK));
+			_asahInterestTermProvider.getInterestTerms(StringPool.BLANK));
 	}
 
 	@Test
@@ -82,13 +82,13 @@ public class AsahInterestTermsProviderTest {
 		String userId = RandomTestUtil.randomString();
 
 		Mockito.when(
-			_segmentsInterestTermsAsahCache.getInterestTerms(userId)
+			_asahInterestTermCache.getInterestTerms(userId)
 		).thenReturn(
 			null
 		);
 
 		Assert.assertArrayEquals(
-			new String[0], _asahInterestTermsProvider.getInterestTerms(userId));
+			new String[0], _asahInterestTermProvider.getInterestTerms(userId));
 
 		Mockito.verify(
 			_messageBus, Mockito.times(1)
@@ -97,13 +97,13 @@ public class AsahInterestTermsProviderTest {
 		);
 	}
 
-	private final AsahInterestTermsProvider _asahInterestTermsProvider =
-		new AsahInterestTermsProvider();
+	@Mock
+	private AsahInterestTermCache _asahInterestTermCache;
+
+	private final AsahInterestTermProvider _asahInterestTermProvider =
+		new AsahInterestTermProvider();
 
 	@Mock
 	private MessageBus _messageBus;
-
-	@Mock
-	private SegmentsInterestTermsAsahCache _segmentsInterestTermsAsahCache;
 
 }

@@ -21,40 +21,96 @@ import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './FloatingToolbar.soy';
 
 /**
+ * @type {object}
+ */
+const ELEMENT_AVAILABLE_POSITIONS = {
+	bottom: [
+		Align.Bottom,
+		Align.BottomCenter,
+		Align.BottomLeft,
+		Align.BottomRight
+	],
+
+	left: [Align.BottomLeft, Align.Left, Align.LeftCenter, Align.TopRight],
+	right: [Align.BottomRight, Align.Right, Align.RightCenter, Align.TopRight],
+	top: [Align.Top, Align.TopCenter, Align.TopLeft, Align.TopRight]
+};
+
+/**
+ * @type {object}
+ */
+const ELEMENT_POSITION = {
+	bottom: {
+		left: Align.BottomLeft,
+		right: Align.BottomRight
+	},
+
+	top: {
+		left: Align.TopLeft,
+		right: Align.TopRight
+	}
+};
+
+/**
  * FloatingToolbar
  */
 class FloatingToolbar extends Component {
 	/**
-	 * Aligns the given element to the anchor,
-	 * defaulting to BottomRight position and moving to
-	 * TopRight if it does not fit.
+	 * Gets a suggested align of an element to an anchor, following this logic:
+	 * - Vertically, if the element fits at bottom, it's placed there, otherwise
+	 *   it is placed at top.
+	 * - Horizontally, if the element fits at right, it's placed there,
+	 *   otherwise it is placed at left. If language is RTL, this will happen
+	 *   the other way around.
 	 * @param {HTMLElement|null} element
 	 * @param {HTMLElement|null} anchor
-	 * @param {number} preferredPosition
-	 * @param {number} fallbackPosition
+	 *  and element will be placed at given position.
 	 * @private
-	 * @return {number} Selected position
+	 * @return {number} Selected align
 	 * @review
 	 */
-	static _alignElement(element, anchor, preferredPosition, fallbackPosition) {
-		let position = -1;
+	static _getElementAlign(element, anchor) {
+		const languageId = Liferay.ThemeDisplay.getLanguageId();
+		const languageDirection = Liferay.Language.direction[languageId];
+		const isRtl = languageDirection === 'rtl';
 
-		if (element && anchor) {
-			const suggestedAlign = Align.suggestAlignBestRegion(
-				element,
-				anchor,
-				preferredPosition
+		const fallbackHorizontal = isRtl ? 'right' : 'left';
+		const fallbackVertical = 'top';
+		let horizontal = isRtl ? 'left' : 'right';
+		let vertical = 'bottom';
+
+		const alignFits = (align, availableAlign) =>
+			availableAlign.includes(
+				Align.suggestAlignBestRegion(element, anchor, align).position
 			);
 
-			position =
-				suggestedAlign.position === preferredPosition
-					? preferredPosition
-					: fallbackPosition;
-
-			Align.align(element, anchor, position, false);
+		if (
+			!alignFits(
+				ELEMENT_POSITION[vertical][horizontal],
+				ELEMENT_AVAILABLE_POSITIONS[vertical]
+			) &&
+			alignFits(
+				ELEMENT_POSITION[fallbackVertical][horizontal],
+				ELEMENT_AVAILABLE_POSITIONS[fallbackVertical]
+			)
+		) {
+			vertical = fallbackVertical;
 		}
 
-		return position;
+		if (
+			!alignFits(
+				ELEMENT_POSITION[vertical][horizontal],
+				ELEMENT_AVAILABLE_POSITIONS[horizontal]
+			) &&
+			alignFits(
+				ELEMENT_POSITION[vertical][fallbackHorizontal],
+				ELEMENT_AVAILABLE_POSITIONS[fallbackHorizontal]
+			)
+		) {
+			horizontal = fallbackHorizontal;
+		}
+
+		return ELEMENT_POSITION[vertical][horizontal];
 	}
 
 	/**
@@ -178,48 +234,48 @@ class FloatingToolbar extends Component {
 	 * @review
 	 */
 	_align() {
-		let panelPosition = {
-			fallback: Align.TopRight,
-			preferred: Align.BottomRight
-		};
-
-		const languageDirection =
-			Liferay.Language.direction[Liferay.ThemeDisplay.getLanguageId()];
-
-		if (languageDirection === 'rtl') {
-			panelPosition = {
-				fallback: Align.TopLeft,
-				preferred: Align.BottomLeft
-			};
-		}
-
 		requestAnimationFrame(() => {
-			FloatingToolbar._alignElement(
-				this.refs.buttons,
-				this.anchorElement,
-				panelPosition.preferred,
-				panelPosition.fallback
-			);
+			if (this.refs.buttons && this.anchorElement) {
+				const buttonsAlign = FloatingToolbar._getElementAlign(
+					this.refs.panel || this.refs.buttons,
+					this.anchorElement
+				);
 
-			requestAnimationFrame(() => {
-				this._alignPanel(panelPosition);
-			});
+				Align.align(
+					this.refs.buttons,
+					this.anchorElement,
+					buttonsAlign,
+					false
+				);
+
+				requestAnimationFrame(() => {
+					this._alignPanel();
+				});
+			} else if (this.anchorElement) {
+				this._alignPanel();
+			}
 		});
 	}
 
 	/**
-	 * Aligns the FloatingToolbar panel to the buttons
-	 * @param {{ fallback: string, preferred: string }} panelPosition
+	 * Align FloatingToolbar panel to it's buttons or anchorElement
 	 * @private
 	 * @review
 	 */
-	_alignPanel(panelPosition) {
-		FloatingToolbar._alignElement(
-			this.refs.panel,
-			this.refs.buttons,
-			panelPosition.preferred,
-			panelPosition.fallback
-		);
+	_alignPanel() {
+		if (this.refs.panel && this.anchorElement) {
+			const panelAlign = FloatingToolbar._getElementAlign(
+				this.refs.panel,
+				this.refs.buttons || this.anchorElement
+			);
+
+			Align.align(
+				this.refs.panel,
+				this.refs.buttons || this.anchorElement,
+				panelAlign,
+				false
+			);
+		}
 	}
 }
 

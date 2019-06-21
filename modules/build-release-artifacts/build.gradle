@@ -12,11 +12,6 @@ import org.apache.maven.model.io.xpp3.MavenXpp3Writer
 apply from: "init.gradle"
 apply from: "samples.gradle"
 
-task writeBoms
-task writeCompileOnlyBom
-task writeReleaseBom
-task writeThirdPartyBom
-
 buildscript {
 	dependencies {
 		classpath group: "org.apache.maven", name: "maven-model", version: "3.6.1"
@@ -29,7 +24,13 @@ buildscript {
 	}
 }
 
-task clean(type: Delete) {
+task clean
+task writeBoms
+task writeCompileOnlyBom
+task writeReleaseBom
+task writeThirdPartyBom
+
+clean(type: Delete) {
 	delete "build", "project-templates-samples"
 }
 

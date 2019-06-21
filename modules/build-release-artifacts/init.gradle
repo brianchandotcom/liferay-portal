@@ -16,7 +16,6 @@ Closure getPortalGitID = {
 }
 
 ext {
-
 	scmTag = getPortalGitID()
 
 	portalDir = new File(portalPath)

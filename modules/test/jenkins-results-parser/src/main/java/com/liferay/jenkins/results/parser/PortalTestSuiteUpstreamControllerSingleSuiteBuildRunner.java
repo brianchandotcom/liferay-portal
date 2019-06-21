@@ -86,7 +86,7 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("<strong>IN QUEUE</strong> - <a href=\"");
-		sb.append(JenkinsResultsParserUtil.getRemoteURL(getInvocationURL()));
+		sb.append(JenkinsResultsParserUtil.getRemoteURL(getJobURL()));
 		sb.append("\">Invocation URL</a>");
 
 		sb.append("<ul><li><strong>Git ID:</strong> ");
@@ -162,7 +162,7 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 	private void _invokeJob() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(getInvocationURL());
+		sb.append(getJobURL());
 		sb.append("/buildWithParameters?");
 
 		String jenkinsAuthenticationToken;
@@ -346,4 +346,5 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 	private static final Pattern _portalGitHubCompareURLPattern =
 		Pattern.compile(
 			"<strong>Git Compare:</strong> <a href=\"[^\"]+\">[^<]+</a>");
+
 }

@@ -51,6 +51,7 @@ public class CTEntryAggregateWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("ownerCTEntryId", getOwnerCTEntryId());
 		attributes.put("status", getStatus());
 
@@ -95,6 +96,12 @@ public class CTEntryAggregateWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
+		}
+
 		Long ownerCTEntryId = (Long)attributes.get("ownerCTEntryId");
 
 		if (ownerCTEntryId != null) {
@@ -126,6 +133,16 @@ public class CTEntryAggregateWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the ct collection ID of this ct entry aggregate.
+	 *
+	 * @return the ct collection ID of this ct entry aggregate
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -236,6 +253,16 @@ public class CTEntryAggregateWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the ct collection ID of this ct entry aggregate.
+	 *
+	 * @param ctCollectionId the ct collection ID of this ct entry aggregate
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
 	}
 
 	/**

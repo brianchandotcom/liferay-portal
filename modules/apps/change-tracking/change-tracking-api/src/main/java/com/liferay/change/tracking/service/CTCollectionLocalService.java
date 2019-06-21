@@ -77,32 +77,6 @@ public interface CTCollectionLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	public void addCTEntryAggregateCTCollection(
-		long ctEntryAggregateId, CTCollection ctCollection);
-
-	public void addCTEntryAggregateCTCollection(
-		long ctEntryAggregateId, long ctCollectionId);
-
-	public void addCTEntryAggregateCTCollections(
-		long ctEntryAggregateId, List<CTCollection> ctCollections);
-
-	public void addCTEntryAggregateCTCollections(
-		long ctEntryAggregateId, long[] ctCollectionIds);
-
-	public void addCTEntryCTCollection(
-		long ctEntryId, CTCollection ctCollection);
-
-	public void addCTEntryCTCollection(long ctEntryId, long ctCollectionId);
-
-	public void addCTEntryCTCollections(
-		long ctEntryId, List<CTCollection> ctCollections);
-
-	public void addCTEntryCTCollections(long ctEntryId, long[] ctCollectionIds);
-
-	public void clearCTEntryAggregateCTCollections(long ctEntryAggregateId);
-
-	public void clearCTEntryCTCollections(long ctEntryId);
-
 	/**
 	 * Creates a new ct collection with the primary key. Does not add the ct collection to the database.
 	 *
@@ -136,29 +110,6 @@ public interface CTCollectionLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public CTCollection deleteCTCollection(long ctCollectionId)
 		throws PortalException;
-
-	public void deleteCTEntryAggregateCTCollection(
-		long ctEntryAggregateId, CTCollection ctCollection);
-
-	public void deleteCTEntryAggregateCTCollection(
-		long ctEntryAggregateId, long ctCollectionId);
-
-	public void deleteCTEntryAggregateCTCollections(
-		long ctEntryAggregateId, List<CTCollection> ctCollections);
-
-	public void deleteCTEntryAggregateCTCollections(
-		long ctEntryAggregateId, long[] ctCollectionIds);
-
-	public void deleteCTEntryCTCollection(
-		long ctEntryId, CTCollection ctCollection);
-
-	public void deleteCTEntryCTCollection(long ctEntryId, long ctCollectionId);
-
-	public void deleteCTEntryCTCollections(
-		long ctEntryId, List<CTCollection> ctCollections);
-
-	public void deleteCTEntryCTCollections(
-		long ctEntryId, long[] ctCollectionIds);
 
 	/**
 	 * @throws PortalException
@@ -285,55 +236,6 @@ public interface CTCollectionLocalService
 	public int getCTCollectionsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CTCollection> getCTEntryAggregateCTCollections(
-		long ctEntryAggregateId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CTCollection> getCTEntryAggregateCTCollections(
-		long ctEntryAggregateId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CTCollection> getCTEntryAggregateCTCollections(
-		long ctEntryAggregateId, int start, int end,
-		OrderByComparator<CTCollection> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCTEntryAggregateCTCollectionsCount(long ctEntryAggregateId);
-
-	/**
-	 * Returns the ctEntryAggregateIds of the ct entry aggregates associated with the ct collection.
-	 *
-	 * @param ctCollectionId the ctCollectionId of the ct collection
-	 * @return long[] the ctEntryAggregateIds of ct entry aggregates associated with the ct collection
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getCTEntryAggregatePrimaryKeys(long ctCollectionId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CTCollection> getCTEntryCTCollections(long ctEntryId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CTCollection> getCTEntryCTCollections(
-		long ctEntryId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CTCollection> getCTEntryCTCollections(
-		long ctEntryId, int start, int end,
-		OrderByComparator<CTCollection> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCTEntryCTCollectionsCount(long ctEntryId);
-
-	/**
-	 * Returns the ctEntryIds of the ct entries associated with the ct collection.
-	 *
-	 * @param ctCollectionId the ctCollectionId of the ct collection
-	 * @return long[] the ctEntryIds of ct entries associated with the ct collection
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getCTEntryPrimaryKeys(long ctCollectionId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
@@ -347,24 +249,6 @@ public interface CTCollectionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasCTEntryAggregateCTCollection(
-		long ctEntryAggregateId, long ctCollectionId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasCTEntryAggregateCTCollections(long ctEntryAggregateId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasCTEntryCTCollection(long ctEntryId, long ctCollectionId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasCTEntryCTCollections(long ctEntryId);
-
-	public void setCTEntryAggregateCTCollections(
-		long ctEntryAggregateId, long[] ctCollectionIds);
-
-	public void setCTEntryCTCollections(long ctEntryId, long[] ctCollectionIds);
 
 	/**
 	 * Updates the ct collection in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

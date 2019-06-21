@@ -170,6 +170,20 @@ public interface CTEntryModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the ct collection ID of this ct entry.
+	 *
+	 * @return the ct collection ID of this ct entry
+	 */
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this ct entry.
+	 *
+	 * @param ctCollectionId the ct collection ID of this ct entry
+	 */
+	public void setCtCollectionId(long ctCollectionId);
+
+	/**
 	 * Returns the original ct collection ID of this ct entry.
 	 *
 	 * @return the original ct collection ID of this ct entry

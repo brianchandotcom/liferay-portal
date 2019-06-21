@@ -34,6 +34,7 @@ create table CTEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	ctCollectionId LONG,
 	originalCTCollectionId LONG,
 	modelClassNameId LONG,
 	modelClassPK LONG,
@@ -50,6 +51,7 @@ create table CTEntryAggregate (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	ctCollectionId LONG,
 	ownerCTEntryId LONG,
 	status INTEGER
 );

@@ -133,6 +133,8 @@ public class CTEntryPersistenceTest {
 
 		newCTEntry.setModifiedDate(RandomTestUtil.nextDate());
 
+		newCTEntry.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newCTEntry.setOriginalCTCollectionId(RandomTestUtil.nextLong());
 
 		newCTEntry.setModelClassNameId(RandomTestUtil.nextLong());
@@ -167,6 +169,9 @@ public class CTEntryPersistenceTest {
 			Time.getShortTimestamp(existingCTEntry.getModifiedDate()),
 			Time.getShortTimestamp(newCTEntry.getModifiedDate()));
 		Assert.assertEquals(
+			existingCTEntry.getCtCollectionId(),
+			newCTEntry.getCtCollectionId());
+		Assert.assertEquals(
 			existingCTEntry.getOriginalCTCollectionId(),
 			newCTEntry.getOriginalCTCollectionId());
 		Assert.assertEquals(
@@ -186,10 +191,41 @@ public class CTEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCTCollectionId() throws Exception {
+		_persistence.countByCTCollectionId(RandomTestUtil.nextLong());
+
+		_persistence.countByCTCollectionId(0L);
+	}
+
+	@Test
 	public void testCountByModelClassNameId() throws Exception {
 		_persistence.countByModelClassNameId(RandomTestUtil.nextLong());
 
 		_persistence.countByModelClassNameId(0L);
+	}
+
+	@Test
+	public void testCountByC_MCNI() throws Exception {
+		_persistence.countByC_MCNI(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByC_MCNI(0L, 0L);
+	}
+
+	@Test
+	public void testCountByC_MRPK() throws Exception {
+		_persistence.countByC_MRPK(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByC_MRPK(0L, 0L);
+	}
+
+	@Test
+	public void testCountByC_S() throws Exception {
+		_persistence.countByC_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByC_S(0L, 0);
 	}
 
 	@Test
@@ -198,6 +234,33 @@ public class CTEntryPersistenceTest {
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByMCNI_MCPK(0L, 0L);
+	}
+
+	@Test
+	public void testCountByC_MCNI_MCPK() throws Exception {
+		_persistence.countByC_MCNI_MCPK(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByC_MCNI_MCPK(0L, 0L, 0L);
+	}
+
+	@Test
+	public void testCountByC_MCNI_S() throws Exception {
+		_persistence.countByC_MCNI_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_MCNI_S(0L, 0L, 0);
+	}
+
+	@Test
+	public void testCountByC_MRPK_S() throws Exception {
+		_persistence.countByC_MRPK_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_MRPK_S(0L, 0L, 0);
 	}
 
 	@Test
@@ -227,9 +290,10 @@ public class CTEntryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"CTEntry", "ctEntryId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"originalCTCollectionId", true, "modelClassNameId", true,
-			"modelClassPK", true, "modelResourcePrimKey", true, "changeType",
-			true, "collision", true, "status", true);
+			"ctCollectionId", true, "originalCTCollectionId", true,
+			"modelClassNameId", true, "modelClassPK", true,
+			"modelResourcePrimKey", true, "changeType", true, "collision", true,
+			"status", true);
 	}
 
 	@Test
@@ -445,6 +509,10 @@ public class CTEntryPersistenceTest {
 			newCTEntry.getPrimaryKey());
 
 		Assert.assertEquals(
+			Long.valueOf(existingCTEntry.getCtCollectionId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingCTEntry, "getOriginalCtCollectionId", new Class<?>[0]));
+		Assert.assertEquals(
 			Long.valueOf(existingCTEntry.getModelClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
 				existingCTEntry, "getOriginalModelClassNameId",
@@ -469,6 +537,8 @@ public class CTEntryPersistenceTest {
 		ctEntry.setCreateDate(RandomTestUtil.nextDate());
 
 		ctEntry.setModifiedDate(RandomTestUtil.nextDate());
+
+		ctEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		ctEntry.setOriginalCTCollectionId(RandomTestUtil.nextLong());
 

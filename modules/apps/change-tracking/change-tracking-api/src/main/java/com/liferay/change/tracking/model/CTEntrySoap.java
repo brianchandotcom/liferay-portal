@@ -40,6 +40,7 @@ public class CTEntrySoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setOriginalCTCollectionId(model.getOriginalCTCollectionId());
 		soapModel.setModelClassNameId(model.getModelClassNameId());
 		soapModel.setModelClassPK(model.getModelClassPK());
@@ -148,6 +149,14 @@ public class CTEntrySoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
+	}
+
 	public long getOriginalCTCollectionId() {
 		return _originalCTCollectionId;
 	}
@@ -214,6 +223,7 @@ public class CTEntrySoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _ctCollectionId;
 	private long _originalCTCollectionId;
 	private long _modelClassNameId;
 	private long _modelClassPK;

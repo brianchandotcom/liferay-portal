@@ -239,9 +239,9 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setLocale(LocaleUtil.SPAIN);
-
 		themeDisplay.setLayout(mock(Layout.class));
+
+		themeDisplay.setLocale(LocaleUtil.SPAIN);
 
 		mockRenderRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 

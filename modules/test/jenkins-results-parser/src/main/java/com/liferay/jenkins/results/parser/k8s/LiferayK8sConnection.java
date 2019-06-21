@@ -23,7 +23,6 @@ import io.kubernetes.client.ApiException;
 import io.kubernetes.client.Configuration;
 import io.kubernetes.client.apis.CoreV1Api;
 import io.kubernetes.client.models.V1DeleteOptions;
-import io.kubernetes.client.models.V1ObjectMeta;
 import io.kubernetes.client.models.V1Pod;
 import io.kubernetes.client.models.V1PodList;
 import io.kubernetes.client.models.V1Status;
@@ -153,33 +152,13 @@ public class LiferayK8sConnection {
 
 		List<V1Pod> v1Pods = v1PodList.getItems();
 
-		List<LiferayK8sConnection.Pod> pods = new ArrayList<>(v1Pods.size());
+		List<Pod> pods = new ArrayList<>(v1Pods.size());
 
 		for (V1Pod v1Pod : v1Pods) {
 			pods.add(new Pod(v1Pod));
 		}
 
 		return pods;
-	}
-
-	public static class Pod {
-
-		public String getName() {
-			V1ObjectMeta v1ObjectMeta = _v1Pod.getMetadata();
-
-			return v1ObjectMeta.getName();
-		}
-
-		protected Pod(V1Pod v1Pod) {
-			_v1Pod = v1Pod;
-		}
-
-		protected V1Pod getV1Pod() {
-			return _v1Pod;
-		}
-
-		private final V1Pod _v1Pod;
-
 	}
 
 	private LiferayK8sConnection() {

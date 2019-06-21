@@ -14,19 +14,28 @@
 
 package com.liferay.jenkins.results.parser.k8s;
 
+import io.kubernetes.client.models.V1ObjectMeta;
+import io.kubernetes.client.models.V1Pod;
+
 /**
  * @author Kenji Heigel
  */
-public class ResourceConfigurations {
+public class Pod {
 
-	public static final Pod mysql55PodConfiguration =
-		ResourceConfigurationFactory.newMySQLConfigurationPod(
-			"mysql55", "mysql:5.5.62");
-	public static final Pod mysql56PodConfiguration =
-		ResourceConfigurationFactory.newMySQLConfigurationPod(
-			"mysql56", "mysql:5.6.43");
-	public static final Pod mysql57PodConfiguration =
-		ResourceConfigurationFactory.newMySQLConfigurationPod(
-			"mysql57", "mysql:5.7.25");
+	public String getName() {
+		V1ObjectMeta v1ObjectMeta = _v1Pod.getMetadata();
+
+		return v1ObjectMeta.getName();
+	}
+
+	protected Pod(V1Pod v1Pod) {
+		_v1Pod = v1Pod;
+	}
+
+	protected V1Pod getV1Pod() {
+		return _v1Pod;
+	}
+
+	private final V1Pod _v1Pod;
 
 }

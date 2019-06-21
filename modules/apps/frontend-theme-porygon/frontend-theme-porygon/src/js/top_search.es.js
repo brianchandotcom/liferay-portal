@@ -17,25 +17,23 @@ class TopSearch extends State {
 	constructor() {
 		super();
 
-		this.search_ = dom.toElement('#search');
-		this.searchIcon_ = dom.toElement('#search + .btn-search');
-		this.searchInput_ = dom.toElement('#search .search-input');
-		this.searchOptions_ = dom.toElement('#search .dropdown-toggle');
+		this.porygonSearch_ = dom.toElement('.porygon-search');
+		this.porygonSearchButton_ = dom.toElement('.porygon-search-button');
+		this.porygonSearchInput_ = dom.toElement(
+			'.porygon-search .search-portlet-keywords-input'
+		);
 
-		if (this.searchInput_) {
-			dom.addClasses(this.searchInput_, 'visible-xs');
-
-			dom.on(this.searchIcon_, 'click', e => this.onSearchIconClick_(e));
-			dom.on(this.searchInput_, 'blur', e => this.onSearchInputBlur_(e));
-			dom.on(this.searchInput_, 'keydown', e =>
-				this.onSearchInputKeyDown_(e)
+		if (
+			this.porygonSearch_ &&
+			this.porygonSearchButton_ &&
+			this.porygonSearchInput_
+		) {
+			dom.on(this.porygonSearchButton_, 'click', e =>
+				this.onPorygonSearchButtonClick_(e)
 			);
-
-			this.on('visibleChanged', e => this.onVisibleChanged_(e));
-		} else {
-			this.searchIcon_.setAttribute('disabled', 'disabled');
-
-			dom.addClasses(this.searchIcon_, 'disabled');
+			dom.on(this.porygonSearch_, 'keydown', e =>
+				this.onPorygonSearchEsc_(e)
+			);
 		}
 	}
 
@@ -46,30 +44,9 @@ class TopSearch extends State {
 	 * @param  {MouseEvent} event
 	 * @protected
 	 */
-	onSearchIconClick_(event) {
-		this.visible = dom.hasClass(this.searchInput_, 'visible-xs');
-	}
-
-	/**
-	 * Hides the search component when the user leaves the search input
-	 *
-	 * @param  {BlurEvent} event
-	 * @protected
-	 */
-	onSearchInputBlur_(event) {
-		async.nextTick(() => {
-			const stateActiveElementBlur =
-				document.activeElement !== this.searchIcon_ &&
-				document.activeElement !== this.searchInput_ &&
-				document.activeElement !== this.searchOptions_;
-
-			if (
-				stateActiveElementBlur &&
-				(!this.searchInput_.value || this.searchInput_.value === '')
-			) {
-				this.visible = false;
-			}
-		});
+	onPorygonSearchButtonClick_(event) {
+		dom.toggleClasses(this.porygonSearch_, 'active');
+		this.porygonSearchInput_.focus();
 	}
 
 	/**
@@ -78,45 +55,11 @@ class TopSearch extends State {
 	 * @param  {KeyboardEvent} event
 	 * @protected
 	 */
-	onSearchInputKeyDown_(event) {
-		this.visible = event.keyCode !== 27;
-	}
-
-	/**
-	 * Updates the UI of the component to react to changes in the visible state
-	 *
-	 * @param  {Event} event
-	 * @protected
-	 */
-	onVisibleChanged_(event) {
-		const updateFn = this.visible ? 'addClasses' : 'removeClasses';
-
-		dom[updateFn](document.body, 'search-opened');
-		dom[updateFn](this.search_, 'focus');
-		dom[updateFn](this.searchIcon_, 'open');
-
-		dom.toggleClasses(this.searchInput_, 'visible-xs');
-
-		if (this.visible) {
-			this.searchInput_.focus();
+	onPorygonSearchEsc_(event) {
+		if (event.keyCode === 27) {
+			dom.removeClasses(this.porygonSearch_, 'active');
 		}
 	}
 }
-
-/**
- * State definition.
- * @type {!Object}
- * @static
- */
-TopSearch.STATE = {
-	/**
-	 * Indicates if the component is visible or not.
-	 * @type {Object}
-	 */
-	visible: {
-		validator: core.isBoolean,
-		value: false
-	}
-};
 
 export default TopSearch;

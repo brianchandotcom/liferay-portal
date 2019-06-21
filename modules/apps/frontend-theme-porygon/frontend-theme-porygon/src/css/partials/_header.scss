@@ -62,94 +62,68 @@ header {
 		}
 	}
 
-	#search {
-		overflow: hidden;
-		width: 100%;
-
-		&.focus {
-			overflow: visible;
-		}
-
-		.lfr-ddm-field-group {
+	.porygon-search {
+		.porygon-search-form {
 			display: none;
-		}
 
-		fieldset .form-group {
-			&::placeholder,
-			&:focus::placeholder {
-				color: $secondary-header-color;
+			.portlet {
+				margin-bottom: 0;
 			}
 
-			width: 100%;
+			.form-group {
+				display: block;
+				margin-bottom: 0;
 
-			.search-input {
-				@include media-query(null, $screen-xs-max) {
-					font-size: 12px;
-					line-height: 18px;
+				.form-control {
+					background-color: transparent;
 				}
+			}
 
-				@include sm {
-					width: calc(100% - 5rem);
-				}
-
-				background-color: transparent;
-				border-radius: 0;
-				border-width: 0 0 2px;
-				text-transform: uppercase;
+			.lfr-ddm-field-group {
+				display: none;
 			}
 		}
 
-		@include sm {
-			@include position(absolute, 0 80px 0 0);
-			@include transition(height 0.8s $ease-out-circ);
+		.porygon-search-button {
+			font-size: 1.5rem;
 
+			.lexicon-icon {
+				display: none;
+
+				&:first-child {
+					display: inline-block;
+				}
+			}
+		}
+
+		&.active {
 			background-color: $main-black-color;
-			height: 0;
+			left: 0;
+			padding: 0.75rem;
+			position: absolute;
+			right: 0;
+			top: 0;
+			z-index: 1;
 
-			.search-input {
-				margin: 12px 12px 6px;
+			.porygon-search-form {
+				display: block;
 			}
-		}
-	}
 
-	.btn-search {
-		@include size(40px, 40px);
+			.porygon-search-button {
+				.lexicon-icon {
+					&:first-child {
+						display: none;
+					}
 
-		overflow: hidden;
-		position: relative;
-
-		&:hover,
-		&:focus {
-			.lexicon-icon {
-				color: $secondary-header-color;
-				fill: $secondary-header-color;
-			}
-		}
-
-		.lexicon-icon {
-			@include position(absolute, 8px 8px null null);
-			@include size(24px, 24px);
-			@include transition(top 0.8s $ease-out-back);
-
-			color: $main-header-color;
-			fill: $main-header-color;
-
-			&:nth-of-type(2) {
-				@include transform(scale(0.6));
-
-				top: 42px;
-			}
-		}
-
-		&.open {
-			.lexicon-icon {
-				top: 42px;
-
-				&:nth-of-type(2) {
-					@include transform(scale(1));
-
-					top: 8px;
+					&:last-child {
+						display: inline-block;
+					}
 				}
+			}
+
+			@include media-breakpoint-up(md) {
+				bottom: 0;
+				z-index: 1000;
 			}
 		}
 	}

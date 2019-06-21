@@ -32,7 +32,7 @@ import java.util.List;
  * @author Peter Yoo
  * @author Michael Hashimoto
  */
-public class LiferayCIJenkinsPodInitializerUtil {
+public class LiferayCIGitRepositoriesInitializerUtil {
 
 	public static void init() {
 		String gitRepositoryNamesString =

@@ -44,6 +44,12 @@ public class JSPMissingTaglibsCheck extends JSPTermsBaseCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
+		if (absolutePath.contains("/custom_jsps/") ||
+			absolutePath.contains("-fragment/")) {
+
+			return content;
+		}
+
 		_checkMissingTaglibs(fileName, content);
 
 		return content;

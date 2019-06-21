@@ -283,7 +283,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"layout-template", "foo-bar", "--liferayVersion", "7.0");
+			"layout-template", "foo-bar", "--liferay-version", "7.0");
 
 		_testContains(
 			gradleProjectDir,
@@ -296,7 +296,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"layout-template", "foo-bar", "--liferayVersion", "7.1");
+			"layout-template", "foo-bar", "--liferay-version", "7.1");
 
 		_testContains(
 			gradleProjectDir,
@@ -309,7 +309,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"layout-template", "foo-bar", "--liferayVersion", "7.2");
+			"layout-template", "foo-bar", "--liferay-version", "7.2");
 
 		_testContains(
 			gradleProjectDir,
@@ -322,7 +322,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"service-builder", "foo-bar", "--liferayVersion", "7.0");
+			"service-builder", "foo-bar", "--liferay-version", "7.0");
 
 		_testContains(
 			gradleProjectDir, "foo-bar-service/service.xml",
@@ -334,7 +334,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"service-builder", "foo-bar", "--liferayVersion", "7.1");
+			"service-builder", "foo-bar", "--liferay-version", "7.1");
 
 		_testContains(
 			gradleProjectDir, "foo-bar-service/service.xml",
@@ -346,7 +346,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"service-builder", "foo-bar", "--liferayVersion", "7.2");
+			"service-builder", "foo-bar", "--liferay-version", "7.2");
 
 		_testContains(
 			gradleProjectDir, "foo-bar-service/service.xml",
@@ -358,7 +358,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"spring-mvc-portlet", "foo-bar", "--liferayVersion", "7.0");
+			"spring-mvc-portlet", "foo-bar", "--liferay-version", "7.0");
 
 		_testContains(
 			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
@@ -374,7 +374,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"spring-mvc-portlet", "foo-bar", "--liferayVersion", "7.1");
+			"spring-mvc-portlet", "foo-bar", "--liferay-version", "7.1");
 
 		_testContains(
 			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
@@ -390,7 +390,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"spring-mvc-portlet", "foo-bar", "--liferayVersion", "7.2");
+			"spring-mvc-portlet", "foo-bar", "--liferay-version", "7.2");
 
 		_testContains(
 			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
@@ -404,7 +404,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateContentDTDVersionWarHook70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-hook", "foo-bar", "--liferayVersion", "7.0");
+			"war-hook", "foo-bar", "--liferay-version", "7.0");
 
 		_testContains(
 			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-hook.xml",
@@ -414,7 +414,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateContentDTDVersionWarHook71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-hook", "foo-bar", "--liferayVersion", "7.1");
+			"war-hook", "foo-bar", "--liferay-version", "7.1");
 
 		_testContains(
 			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-hook.xml",
@@ -424,7 +424,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateContentDTDVersionWarHook72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-hook", "foo-bar", "--liferayVersion", "7.2");
+			"war-hook", "foo-bar", "--liferay-version", "7.2");
 
 		_testContains(
 			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-hook.xml",
@@ -436,7 +436,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-mvc-portlet", "foo-bar", "--liferayVersion", "7.0");
+			"war-mvc-portlet", "foo-bar", "--liferay-version", "7.0");
 
 		_testContains(
 			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
@@ -452,7 +452,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-mvc-portlet", "foo-bar", "--liferayVersion", "7.1");
+			"war-mvc-portlet", "foo-bar", "--liferay-version", "7.1");
 
 		_testContains(
 			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
@@ -468,7 +468,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-mvc-portlet", "foo-bar", "--liferayVersion", "7.2");
+			"war-mvc-portlet", "foo-bar", "--liferay-version", "7.2");
 
 		_testContains(
 			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
@@ -482,7 +482,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateContentTargetingReport70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"content-targeting-report", "foo-bar", "--liferayVersion", "7.0");
+			"content-targeting-report", "foo-bar", "--liferay-version", "7.0");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -500,7 +500,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateContentTargetingReport71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"content-targeting-report", "foo-bar", "--liferayVersion", "7.1");
+			"content-targeting-report", "foo-bar", "--liferay-version", "7.1");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -521,7 +521,7 @@ public class ProjectTemplatesTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testBuildTemplateContentTargetingReport72() throws Exception {
 		_buildTemplateWithGradle(
-			"content-targeting-report", "foo-bar", "--liferayVersion", "7.2");
+			"content-targeting-report", "foo-bar", "--liferay-version", "7.2");
 	}
 
 	@Test
@@ -530,14 +530,13 @@ public class ProjectTemplatesTest {
 
 		_testBuildTemplateWithWorkspace(
 			"content-targeting-report", "foo-bar",
-			"build/libs/foo.bar-1.0.0.jar", "--liferayVersion", "7.1",
-			"--dependency-management-enabled");
+			"build/libs/foo.bar-1.0.0.jar", "--liferay-version", "7.1");
 	}
 
 	@Test
 	public void testBuildTemplateContentTargetingRule70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"content-targeting-rule", "foo-bar", "--liferayVersion", "7.0");
+			"content-targeting-rule", "foo-bar", "--liferay-version", "7.0");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -553,7 +552,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateContentTargetingRule71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"content-targeting-rule", "foo-bar", "--liferayVersion", "7.1");
+			"content-targeting-rule", "foo-bar", "--liferay-version", "7.1");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -572,7 +571,7 @@ public class ProjectTemplatesTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testBuildTemplateContentTargetingRule72() throws Exception {
 		_buildTemplateWithGradle(
-			"content-targeting-rule", "foo-bar", "--liferayVersion", "7.2");
+			"content-targeting-rule", "foo-bar", "--liferay-version", "7.2");
 	}
 
 	@Test
@@ -581,7 +580,7 @@ public class ProjectTemplatesTest {
 
 		_testBuildTemplateWithWorkspace(
 			"content-targeting-rule", "foo-bar", "build/libs/foo.bar-1.0.0.jar",
-			"--liferayVersion", "7.1", "--dependency-management-enabled");
+			"--liferay-version", "7.1");
 	}
 
 	@Test
@@ -589,7 +588,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"content-targeting-tracking-action", "foo-bar", "--liferayVersion",
+			"content-targeting-tracking-action", "foo-bar", "--liferay-version",
 			"7.0");
 
 		_testContains(
@@ -608,7 +607,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"content-targeting-tracking-action", "foo-bar", "--liferayVersion",
+			"content-targeting-tracking-action", "foo-bar", "--liferay-version",
 			"7.1");
 
 		_testContains(
@@ -630,7 +629,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_buildTemplateWithGradle(
-			"content-targeting-tracking-action", "foo-bar", "--liferayVersion",
+			"content-targeting-tracking-action", "foo-bar", "--liferay-version",
 			"7.2");
 	}
 
@@ -640,14 +639,13 @@ public class ProjectTemplatesTest {
 
 		_testBuildTemplateWithWorkspace(
 			"content-targeting-tracking-action", "foo-bar",
-			"build/libs/foo.bar-1.0.0.jar", "--liferayVersion", "7.1",
-			"--dependency-management-enabled");
+			"build/libs/foo.bar-1.0.0.jar", "--liferay-version", "7.1");
 	}
 
 	@Test
 	public void testBuildTemplateControlMenuEntry70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"control-menu-entry", "foo-bar", "--liferayVersion", "7.0");
+			"control-menu-entry", "foo-bar", "--liferay-version", "7.0");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -672,7 +670,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateControlMenuEntry71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"control-menu-entry", "foo-bar", "--liferayVersion", "7.1");
+			"control-menu-entry", "foo-bar", "--liferay-version", "7.1");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -691,7 +689,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateControlMenuEntry72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"control-menu-entry", "foo-bar", "--liferayVersion", "7.2");
+			"control-menu-entry", "foo-bar", "--liferay-version", "7.2");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -719,7 +717,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateFormField70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"form-field", "foobar", "--liferayVersion", "7.0");
+			"form-field", "foobar", "--liferay-version", "7.0");
 
 		_testContains(
 			gradleProjectDir, "bnd.bnd", "Bundle-Name: foobar",
@@ -771,7 +769,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateFormField71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"form-field", "foobar", "--liferayVersion", "7.1");
+			"form-field", "foobar", "--liferay-version", "7.1");
 
 		_testContains(
 			gradleProjectDir, "bnd.bnd", "Bundle-Name: foobar",
@@ -838,7 +836,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateFormField71WithHyphen() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"form-field", "foo-bar", "--liferayVersion", "7.1");
+			"form-field", "foo-bar", "--liferay-version", "7.1");
 
 		_testContains(
 			gradleProjectDir, "bnd.bnd", "Bundle-Name: foo-bar",
@@ -905,7 +903,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateFormFieldInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"form-field", "foobar", "build/libs/foobar-1.0.0.jar",
-			"--liferayVersion", "7.1", "--dependency-management-enabled");
+			"--liferay-version", "7.1");
 	}
 
 	@Test
@@ -974,8 +972,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateWithWorkspace(
-			"freemarker-portlet", "foo", "build/libs/foo-1.0.0.jar",
-			"--dependency-management-enabled");
+			"freemarker-portlet", "foo", "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test
@@ -1099,8 +1096,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			null, "hello-world-portlet",
-			"build/libs/hello.world.portlet-1.0.0.jar",
-			"--dependency-management-enabled");
+			"build/libs/hello.world.portlet-1.0.0.jar");
 	}
 
 	@Test
@@ -1136,7 +1132,7 @@ public class ProjectTemplatesTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testBuildTemplateLiferayVersionInvalid62() throws Exception {
 		_buildTemplateWithGradle(
-			"mvc-portlet", "test", "--liferayVersion", "6.2");
+			"mvc-portlet", "test", "--liferay-version", "6.2");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -1144,25 +1140,25 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_buildTemplateWithGradle(
-			"mvc-portlet", "test", "--liferayVersion", "7.0test");
+			"mvc-portlet", "test", "--liferay-version", "7.0test");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testBuildTemplateLiferayVersionInvalid73() throws Exception {
 		_buildTemplateWithGradle(
-			"mvc-portlet", "test", "--liferayVersion", "7.3");
+			"mvc-portlet", "test", "--liferay-version", "7.3");
 	}
 
 	@Test
 	public void testBuildTemplateLiferayVersionValid70() throws Exception {
 		_buildTemplateWithGradle(
-			"mvc-portlet", "test", "--liferayVersion", "7.0");
+			"mvc-portlet", "test", "--liferay-version", "7.0");
 	}
 
 	@Test
 	public void testBuildTemplateLiferayVersionValid712() throws Exception {
 		_buildTemplateWithGradle(
-			"mvc-portlet", "test", "--liferayVersion", "7.1.2");
+			"mvc-portlet", "test", "--liferay-version", "7.1.2");
 	}
 
 	@Test
@@ -1403,7 +1399,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateNAPortletWithBOM() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"npm-angular-portlet", "angular-dependency-management",
-			"--dependency-management-enabled", "--liferayVersion", "7.1");
+			"--dependency-management-enabled", "--liferay-version", "7.1");
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
@@ -1464,7 +1460,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateNpmReactPortletWithBOM() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"npm-react-portlet", "react-portlet-dependency-management",
-			"--dependency-management-enabled", "--liferayVersion", "7.1");
+			"--dependency-management-enabled", "--liferay-version", "7.1");
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
@@ -1508,7 +1504,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateNpmVuejsPortletWithBOM() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"npm-vuejs-portlet", "vuejs-portlet-dependency-management",
-			"--dependency-management-enabled", "--liferayVersion", "7.1");
+			"--dependency-management-enabled", "--liferay-version", "7.1");
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
@@ -1545,7 +1541,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplatePanelApp70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"panel-app", "gradle.test", "--class-name", "Foo",
-			"--liferayVersion", "7.0");
+			"--liferay-version", "7.0");
 
 		_testExists(
 			gradleProjectDir,
@@ -1594,7 +1590,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplatePanelApp71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"panel-app", "gradle.test", "--class-name", "Foo",
-			"--liferayVersion", "7.1");
+			"--liferay-version", "7.1");
 
 		_testExists(
 			gradleProjectDir,
@@ -1625,7 +1621,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplatePanelApp72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"panel-app", "gradle.test", "--class-name", "Foo",
-			"--liferayVersion", "7.2");
+			"--liferay-version", "7.2");
 
 		_testExists(
 			gradleProjectDir,
@@ -1670,7 +1666,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplatePortlet70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"portlet", "foo.test", "--class-name", "Foo", "--liferayVersion",
+			"portlet", "foo.test", "--class-name", "Foo", "--liferay-version",
 			"7.0");
 
 		_testContains(
@@ -1701,7 +1697,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplatePortlet71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"portlet", "foo.test", "--class-name", "Foo", "--liferayVersion",
+			"portlet", "foo.test", "--class-name", "Foo", "--liferay-version",
 			"7.1");
 
 		_testContains(
@@ -1732,7 +1728,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplatePortlet72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"portlet", "foo.test", "--class-name", "Foo", "--liferayVersion",
+			"portlet", "foo.test", "--class-name", "Foo", "--liferay-version",
 			"7.2");
 
 		_testContains(
@@ -1764,7 +1760,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplatePortletConfigurationIcon70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet-configuration-icon", "icontest", "--package-name",
-			"blade.test", "--liferayVersion", "7.0");
+			"blade.test", "--liferay-version", "7.0");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -1791,7 +1787,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplatePortletConfigurationIcon71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet-configuration-icon", "icontest", "--package-name",
-			"blade.test", "--liferayVersion", "7.1");
+			"blade.test", "--liferay-version", "7.1");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -1813,7 +1809,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplatePortletConfigurationIcon72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet-configuration-icon", "icontest", "--package-name",
-			"blade.test", "--liferayVersion", "7.2");
+			"blade.test", "--liferay-version", "7.2");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -1851,7 +1847,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplatePortletProvider70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"portlet-provider", "provider.test", "--liferayVersion", "7.0");
+			"portlet-provider", "provider.test", "--liferay-version", "7.0");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 		_testExists(
@@ -1899,7 +1895,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplatePortletProvider71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"portlet-provider", "provider.test", "--liferayVersion", "7.1");
+			"portlet-provider", "provider.test", "--liferay-version", "7.1");
 
 		_testExists(
 			gradleProjectDir,
@@ -1930,7 +1926,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplatePortletProvider72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"portlet-provider", "provider.test", "--liferayVersion", "7.2");
+			"portlet-provider", "provider.test", "--liferay-version", "7.2");
 
 		_testExists(
 			gradleProjectDir,
@@ -1964,7 +1960,7 @@ public class ProjectTemplatesTest {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet-toolbar-contributor", "toolbartest", "--package-name",
-			"blade.test", "--liferayVersion", "7.0");
+			"blade.test", "--liferay-version", "7.0");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -1993,7 +1989,7 @@ public class ProjectTemplatesTest {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet-toolbar-contributor", "toolbartest", "--package-name",
-			"blade.test", "--liferayVersion", "7.1");
+			"blade.test", "--liferay-version", "7.1");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -2017,7 +2013,7 @@ public class ProjectTemplatesTest {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet-toolbar-contributor", "toolbartest", "--package-name",
-			"blade.test", "--liferayVersion", "7.2");
+			"blade.test", "--liferay-version", "7.2");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -2070,7 +2066,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateRest70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"rest", "my-rest", "--liferayVersion", "7.0");
+			"rest", "my-rest", "--liferay-version", "7.0");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -2118,7 +2114,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateRest71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"rest", "my-rest", "--liferayVersion", "7.1");
+			"rest", "my-rest", "--liferay-version", "7.1");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -2163,7 +2159,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateRest72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"rest", "my-rest", "--liferayVersion", "7.2");
+			"rest", "my-rest", "--liferay-version", "7.2");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -2231,7 +2227,7 @@ public class ProjectTemplatesTest {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service", "servicepreaction", "--class-name", "FooAction",
 			"--service", "com.liferay.portal.kernel.events.LifecycleAction",
-			"--liferayVersion", "7.0");
+			"--liferay-version", "7.0");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -2259,7 +2255,7 @@ public class ProjectTemplatesTest {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service", "servicepreaction", "--class-name", "FooAction",
 			"--service", "com.liferay.portal.kernel.events.LifecycleAction",
-			"--liferayVersion", "7.1");
+			"--liferay-version", "7.1");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -2285,7 +2281,7 @@ public class ProjectTemplatesTest {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service", "servicepreaction", "--class-name", "FooAction",
 			"--service", "com.liferay.portal.kernel.events.LifecycleAction",
-			"--liferayVersion", "7.2");
+			"--liferay-version", "7.2");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -2313,7 +2309,7 @@ public class ProjectTemplatesTest {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-builder", name, "--package-name", packageName,
-			"--liferayVersion", "7.0");
+			"--liferay-version", "7.0");
 
 		_testContains(
 			gradleProjectDir, name + "-api/build.gradle",
@@ -2350,7 +2346,7 @@ public class ProjectTemplatesTest {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-builder", name, "--package-name", packageName,
-			"--liferayVersion", "7.1");
+			"--liferay-version", "7.1");
 
 		_testContains(
 			gradleProjectDir, name + "-api/build.gradle",
@@ -2385,7 +2381,7 @@ public class ProjectTemplatesTest {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-builder", name, "--package-name", packageName,
-			"--liferayVersion", "7.2");
+			"--liferay-version", "7.2");
 
 		_testContains(
 			gradleProjectDir, name + "-api/build.gradle",
@@ -2472,7 +2468,7 @@ public class ProjectTemplatesTest {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-builder", name, "--package-name", packageName,
-			"--liferayVersion", "7.2");
+			"--liferay-version", "7.2");
 
 		File gradleServiceXml = new File(
 			new File(gradleProjectDir, name + "-service"), "service.xml");
@@ -2534,7 +2530,7 @@ public class ProjectTemplatesTest {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			destinationDir, "service-builder", "sample", "--package-name",
-			"com.test.sample", "--liferayVersion", "7.0");
+			"com.test.sample", "--liferay-version", "7.0");
 
 		_testContains(
 			gradleProjectDir, "sample-service/build.gradle",
@@ -2563,7 +2559,7 @@ public class ProjectTemplatesTest {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			destinationDir, "service-builder", "sample", "--package-name",
-			"com.test.sample", "--liferayVersion", "7.1");
+			"com.test.sample", "--liferay-version", "7.1");
 
 		_testContains(
 			gradleProjectDir, "sample-service/build.gradle",
@@ -2592,7 +2588,7 @@ public class ProjectTemplatesTest {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			destinationDir, "service-builder", "sample", "--package-name",
-			"com.test.sample", "--liferayVersion", "7.2");
+			"com.test.sample", "--liferay-version", "7.2");
 
 		_testContains(
 			gradleProjectDir, "sample-service/build.gradle",
@@ -2622,7 +2618,7 @@ public class ProjectTemplatesTest {
 
 		File workspaceProjectDir = _buildTemplateWithGradle(
 			modulesDir, "service-builder", "foo", "--package-name", "test",
-			"--liferayVersion", "7.0", "--dependency-management-enabled");
+			"--liferay-version", "7.0", "--dependency-management-enabled");
 
 		_testContains(
 			workspaceProjectDir, "foo-api/build.gradle",
@@ -2663,7 +2659,7 @@ public class ProjectTemplatesTest {
 
 		File workspaceProjectDir = _buildTemplateWithGradle(
 			modulesDir, "service-builder", "foo", "--package-name", "test",
-			"--liferayVersion", "7.1", "--dependency-management-enabled");
+			"--liferay-version", "7.1", "--dependency-management-enabled");
 
 		_testContains(
 			workspaceProjectDir, "foo-api/build.gradle",
@@ -2704,7 +2700,7 @@ public class ProjectTemplatesTest {
 
 		File workspaceProjectDir = _buildTemplateWithGradle(
 			modulesDir, "service-builder", "foo", "--package-name", "test",
-			"--liferayVersion", "7.2", "--dependency-management-enabled");
+			"--liferay-version", "7.2", "--dependency-management-enabled");
 
 		_testContains(
 			workspaceProjectDir, "foo-api/build.gradle",
@@ -2739,7 +2735,7 @@ public class ProjectTemplatesTest {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-builder", name, "--package-name", packageName,
-			"--liferayVersion", "7.0");
+			"--liferay-version", "7.0");
 
 		_testContains(
 			gradleProjectDir, name + "-api/build.gradle",
@@ -2766,7 +2762,7 @@ public class ProjectTemplatesTest {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-builder", name, "--package-name", packageName,
-			"--liferayVersion", "7.1");
+			"--liferay-version", "7.1");
 
 		_testContains(
 			gradleProjectDir, name + "-api/build.gradle",
@@ -2793,7 +2789,7 @@ public class ProjectTemplatesTest {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-builder", name, "--package-name", packageName,
-			"--liferayVersion", "7.2");
+			"--liferay-version", "7.2");
 
 		_testContains(
 			gradleProjectDir, name + "-api/build.gradle",
@@ -2847,7 +2843,7 @@ public class ProjectTemplatesTest {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-wrapper", "serviceoverride", "--service",
 			"com.liferay.portal.kernel.service.UserLocalServiceWrapper",
-			"--liferayVersion", "7.0");
+			"--liferay-version", "7.0");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -2879,7 +2875,7 @@ public class ProjectTemplatesTest {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-wrapper", "serviceoverride", "--service",
 			"com.liferay.portal.kernel.service.UserLocalServiceWrapper",
-			"--liferayVersion", "7.1");
+			"--liferay-version", "7.1");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -2900,7 +2896,7 @@ public class ProjectTemplatesTest {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-wrapper", "serviceoverride", "--service",
 			"com.liferay.portal.kernel.service.UserLocalServiceWrapper",
-			"--liferayVersion", "7.2");
+			"--liferay-version", "7.2");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -2946,7 +2942,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateSimulationPanelEntry70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"simulation-panel-entry", "simulator", "--package-name",
-			"test.simulator", "--liferayVersion", "7.0");
+			"test.simulator", "--liferay-version", "7.0");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -2973,7 +2969,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateSimulationPanelEntry71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"simulation-panel-entry", "simulator", "--package-name",
-			"test.simulator", "--liferayVersion", "7.1");
+			"test.simulator", "--liferay-version", "7.1");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -2994,7 +2990,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateSimulationPanelEntry72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"simulation-panel-entry", "simulator", "--package-name",
-			"test.simulator", "--liferayVersion", "7.2");
+			"test.simulator", "--liferay-version", "7.2");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -3025,14 +3021,14 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateSocialBookmark70() throws Exception {
 		_buildTemplateWithGradle(
 			"social-bookmark", "foo", "--package-name", "com.liferay.test",
-			"--liferayVersion", "7.0");
+			"--liferay-version", "7.0");
 	}
 
 	@Test
 	public void testBuildTemplateSocialBookmark71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"social-bookmark", "foo", "--package-name", "com.liferay.test",
-			"--liferayVersion", "7.1");
+			"--liferay-version", "7.1");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 		_testExists(gradleProjectDir, "build.gradle");
@@ -3087,10 +3083,10 @@ public class ProjectTemplatesTest {
 
 		if (buildType.equals("maven")) {
 			String groupId = "com.test";
-			return _buildTemplateWithMaven(template, name, groupId, "-Dpackage", "com.test", "-DclassName", "Sample", "-Dframework", framework, "-DframeworkDependencies", frameworkDependencies, "-DviewType", viewType, "-DliferayVersion", liferayVersion);
+			return _buildTemplateWithMaven(template, name, groupId, "-Dpackage=com.test", "-DclassName=Sample", "-Dframework="+ framework, "-DframeworkDependencies=" + frameworkDependencies, "-DviewType=" + viewType, "-DliferayVersion=" + liferayVersion);
 		}
 		else {
-			return _buildTemplateWithGradle(template, name, "--package-name", "com.test", "--class-name", "Sample", "--framework", framework, "--framework-dependencies", frameworkDependencies, "--viewType", viewType, "--liferayVersion", liferayVersion);
+			return _buildTemplateWithGradle(template, name, "--package-name", "com.test", "--class-name", "Sample", "--framework", framework, "--framework-dependencies", frameworkDependencies, "--view-type", viewType, "--liferay-version", liferayVersion);
 		}
 
 	}
@@ -3098,7 +3094,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateSpringMVCPortlet71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"spring-mvc-portlet", "foo", "--liferayVersion", "7.1");
+			"spring-mvc-portlet", "foo", "--liferay-version", "7.1");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -3118,7 +3114,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateSpringMVCPortlet72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"spring-mvc-portlet", "foo", "--liferayVersion", "7.2");
+			"spring-mvc-portlet", "foo", "--liferay-version", "7.2");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -3215,7 +3211,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"template-context-contributor", "blade-test", "--liferayVersion",
+			"template-context-contributor", "blade-test", "--liferay-version",
 			"7.0");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
@@ -3245,7 +3241,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"template-context-contributor", "blade-test", "--liferayVersion",
+			"template-context-contributor", "blade-test", "--liferay-version",
 			"7.1");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
@@ -3268,7 +3264,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"template-context-contributor", "blade-test", "--liferayVersion",
+			"template-context-contributor", "blade-test", "--liferay-version",
 			"7.2");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
@@ -3299,7 +3295,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateTheme70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"theme", "theme-test", "--liferayVersion", "7.0");
+			"theme", "theme-test", "--liferay-version", "7.0");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -3323,7 +3319,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateTheme71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"theme", "theme-test", "--liferayVersion", "7.1");
+			"theme", "theme-test", "--liferay-version", "7.1");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -3347,7 +3343,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateTheme72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"theme", "theme-test", "--liferayVersion", "7.2");
+			"theme", "theme-test", "--liferay-version", "7.2");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -3404,7 +3400,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateThemeContributorCustom71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"theme-contributor", "my-contributor-custom", "--contributor-type",
-			"foo-bar", "--liferayVersion", "7.1");
+			"foo-bar", "--liferay-version", "7.1");
 
 		_testContains(
 			gradleProjectDir, "bnd.bnd",
@@ -3437,7 +3433,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateThemeContributorCustom72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"theme-contributor", "my-contributor-custom", "--contributor-type",
-			"foo-bar", "--liferayVersion", "7.2");
+			"foo-bar", "--liferay-version", "7.2");
 
 		_testContains(
 			gradleProjectDir, "bnd.bnd",
@@ -3554,7 +3550,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateWarHook70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-hook", "WarHook", "--liferayVersion", "7.0");
+			"war-hook", "WarHook", "--liferay-version", "7.0");
 
 		_testExists(gradleProjectDir, "src/main/resources/portal.properties");
 		_testExists(
@@ -3587,7 +3583,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateWarHook71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-hook", "WarHook", "--liferayVersion", "7.1");
+			"war-hook", "WarHook", "--liferay-version", "7.1");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -3603,7 +3599,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateWarHook72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-hook", "WarHook", "--liferayVersion", "7.2");
+			"war-hook", "WarHook", "--liferay-version", "7.2");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -3624,7 +3620,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateWarMVCPortlet70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-mvc-portlet", "WarMVCPortlet", "--liferayVersion", "7.0");
+			"war-mvc-portlet", "WarMVCPortlet", "--liferay-version", "7.0");
 
 		_testExists(gradleProjectDir, "src/main/webapp/init.jsp");
 		_testExists(gradleProjectDir, "src/main/webapp/view.jsp");
@@ -3654,7 +3650,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateWarMVCPortlet71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-mvc-portlet", "WarMVCPortlet", "--liferayVersion", "7.1");
+			"war-mvc-portlet", "WarMVCPortlet", "--liferay-version", "7.1");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -3671,7 +3667,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateWarMVCPortlet72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-mvc-portlet", "WarMVCPortlet", "--liferayVersion", "7.2");
+			"war-mvc-portlet", "WarMVCPortlet", "--liferay-version", "7.2");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -3893,7 +3889,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateWorkspaceWith70() throws Exception {
 		File gradleWorkspaceProjectDir = _buildTemplateWithGradle(
-			WorkspaceUtil.WORKSPACE, "withportlet", "--liferayVersion", "7.0");
+			WorkspaceUtil.WORKSPACE, "withportlet", "--liferay-version", "7.0");
 
 		_testContains(
 			gradleWorkspaceProjectDir, "gradle.properties", true,
@@ -3917,7 +3913,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateWorkspaceWith71() throws Exception {
 		File gradleWorkspaceProjectDir = _buildTemplateWithGradle(
-			WorkspaceUtil.WORKSPACE, "withportlet", "--liferayVersion", "7.1");
+			WorkspaceUtil.WORKSPACE, "withportlet", "--liferay-version", "7.1");
 
 		_testContains(
 			gradleWorkspaceProjectDir, "gradle.properties", true,
@@ -3941,7 +3937,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateWorkspaceWith72() throws Exception {
 		File gradleWorkspaceProjectDir = _buildTemplateWithGradle(
-			WorkspaceUtil.WORKSPACE, "withportlet", "--liferayVersion", "7.2");
+			WorkspaceUtil.WORKSPACE, "withportlet", "--liferay-version", "7.2");
 
 		_testContains(
 			gradleWorkspaceProjectDir, "gradle.properties", true,
@@ -5330,7 +5326,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, name, "--liferayVersion", "7.0");
+			template, name, "--liferay-version", "7.0");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -5373,7 +5369,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, name, "--liferayVersion", "7.1");
+			template, name, "--liferay-version", "7.1");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -5419,7 +5415,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, name, "--liferayVersion", "7.0");
+			template, name, "--liferay-version", "7.0");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -5453,7 +5449,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, name, "--liferayVersion", "7.1");
+			template, name, "--liferay-version", "7.1");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -5507,7 +5503,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, "foo", "--liferayVersion", "7.0");
+			template, "foo", "--liferay-version", "7.0");
 
 		for (String resourceFileName : resourceFileNames) {
 			_testExists(
@@ -5560,7 +5556,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, "foo", "--liferayVersion", "7.1");
+			template, "foo", "--liferay-version", "7.1");
 
 		for (String resourceFileName : resourceFileNames) {
 			_testExists(
@@ -5615,7 +5611,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, "foo", "--liferayVersion", "7.2");
+			template, "foo", "--liferay-version", "7.2");
 
 		for (String resourceFileName : resourceFileNames) {
 			_testExists(
@@ -5714,7 +5710,7 @@ public class ProjectTemplatesTest {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			template, "foo", "--package-name", "com.liferay.test",
-			"--liferayVersion", "7.1");
+			"--liferay-version", "7.1");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 		_testExists(
@@ -5762,7 +5758,7 @@ public class ProjectTemplatesTest {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			template, "foo", "--package-name", "com.liferay.test",
-			"--liferayVersion", "7.2");
+			"--liferay-version", "7.2");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 		_testExists(
@@ -5809,7 +5805,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, "portlet", "--liferayVersion", "7.0");
+			template, "portlet", "--liferay-version", "7.0");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 		_testExists(
@@ -5859,7 +5855,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, "portlet", "--liferayVersion", "7.1");
+			template, "portlet", "--liferay-version", "7.1");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 		_testExists(
@@ -5912,7 +5908,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, "portlet", "--liferayVersion", "7.2");
+			template, "portlet", "--liferay-version", "7.2");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 		_testExists(
@@ -5965,7 +5961,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, "portlet-portlet", "--liferayVersion", "7.0");
+			template, "portlet-portlet", "--liferay-version", "7.0");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 		_testExists(
@@ -6015,7 +6011,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, "portlet-portlet", "--liferayVersion", "7.1");
+			template, "portlet-portlet", "--liferay-version", "7.1");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 		_testExists(
@@ -6068,7 +6064,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, "portlet-portlet", "--liferayVersion", "7.2");
+			template, "portlet-portlet", "--liferay-version", "7.2");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 		_testExists(

@@ -251,13 +251,13 @@ public class ProjectTemplatesArgs {
 
 	@Parameter(
 		description = "Choose the way that the framework dependencies will be configured: (embedded|provided).",
-		names = "--frameworkDependencies"
+		names = "--framework-dependencies"
 	)
 	private String _frameworkDependencies;
 
 	@Parameter(
 		description = "Choose the view technology that will be used in the generated project.",
-		names = "--viewType"
+		names = "--view-type"
 	)
 	private String _viewType;
 
@@ -330,7 +330,7 @@ public class ProjectTemplatesArgs {
 
 	@Parameter(
 		description = "The version of Liferay to target when creating the project.",
-		names = "--liferayVersion"
+		names = "--liferay-version"
 	)
 	private String _liferayVersion = "7.2";
 

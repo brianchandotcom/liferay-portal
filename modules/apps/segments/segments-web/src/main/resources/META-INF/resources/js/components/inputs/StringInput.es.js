@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClaySelect from 'components/shared/ClaySelect.es';
+import {ClaySelectWithOption} from '@clayui/select';
 import propTypes from 'prop-types';
 import React from 'react';
 
@@ -45,7 +45,7 @@ class StringInput extends React.Component {
 				value={value}
 			/>
 		) : (
-			<ClaySelect
+			<ClaySelectWithOption
 				className='criterion-input form-control'
 				data-testid='options-string'
 				disabled={disabled}
@@ -54,7 +54,7 @@ class StringInput extends React.Component {
 					label: o.label,
 					value: o.value
 				}))}
-				selected={value}
+				value={value}
 			/>
 		);
 	}

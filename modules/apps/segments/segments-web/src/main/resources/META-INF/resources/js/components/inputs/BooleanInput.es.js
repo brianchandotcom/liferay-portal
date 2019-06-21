@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClaySelect from 'components/shared/ClaySelect.es';
+import {ClaySelectWithOption} from '@clayui/select';
 import getCN from 'classnames';
 import propTypes from 'prop-types';
 import React from 'react';
@@ -36,13 +36,13 @@ class BooleanInput extends React.Component {
 		const classes = getCN('criterion-input', 'form-control', className);
 
 		return (
-			<ClaySelect
+			<ClaySelectWithOption
 				className={classes}
 				data-testid='options-boolean'
 				disabled={disabled}
 				onChange={this._handleChange}
 				options={BOOLEAN_OPTIONS}
-				selected={value}
+				value={value}
 			/>
 		);
 	}

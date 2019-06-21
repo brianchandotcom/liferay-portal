@@ -55,8 +55,8 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
 		return fragmentEntryLocalService.addFragmentEntry(
-			getUserId(), groupId, fragmentCollectionId, name, type, status,
-			serviceContext);
+			getUserId(), groupId, fragmentCollectionId, null, name, 0, type,
+			status, serviceContext);
 	}
 
 	@Override
@@ -70,8 +70,8 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
 		return fragmentEntryLocalService.addFragmentEntry(
-			getUserId(), groupId, fragmentCollectionId, name, status,
-			serviceContext);
+			getUserId(), groupId, fragmentCollectionId, null, name, 0,
+			FragmentConstants.TYPE_SECTION, status, serviceContext);
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 		return fragmentEntryLocalService.addFragmentEntry(
 			getUserId(), groupId, fragmentCollectionId, fragmentEntryKey, name,
-			type, status, serviceContext);
+			0, type, status, serviceContext);
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 		return fragmentEntryLocalService.addFragmentEntry(
 			getUserId(), groupId, fragmentCollectionId, fragmentEntryKey, name,
-			status, serviceContext);
+			0, FragmentConstants.TYPE_SECTION, status, serviceContext);
 	}
 
 	@Override

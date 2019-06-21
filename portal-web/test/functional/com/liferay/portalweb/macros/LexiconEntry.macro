@@ -61,6 +61,16 @@ definition {
 		Click(locator1 = "Button#PLUS");
 	}
 
+	macro gotoAddReport {
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "chrome") {
+			MetalComponent.waitForReportsManagementBar();
+		}
+
+		Click(locator1 = "Button#PLUS");
+	}
+
 	macro gotoAddDropdownMenuItem {
 		LexiconEntry.gotoAdd();
 

@@ -15,7 +15,6 @@
 package com.liferay.document.library.internal.instance.lifecycle;
 
 import com.liferay.document.library.configuration.DLConfiguration;
-import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.util.RawMetadataProcessor;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
@@ -96,13 +95,6 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 			company.getCompanyId());
 
 		serviceContext.setUserId(defaultUserId);
-
-		_defaultDDMStructureHelper.addDDMStructures(
-			defaultUserId, group.getGroupId(),
-			_portal.getClassNameId(DLFileEntryMetadata.class), getClassLoader(),
-			"com/liferay/document/library/events/dependencies" +
-				"/document-library-structures.xml",
-			serviceContext);
 
 		_dlFileEntryTypeLocalService.getBasicDocumentDLFileEntryType();
 

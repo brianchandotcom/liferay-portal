@@ -73,6 +73,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -395,7 +396,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		_setUpPrerequisiteFrameworkServices(_framework.getBundleContext());
 
-		Set<Bundle> initialBundles = _setUpInitialBundles();
+		Map.Entry<Bundle, Set<Bundle>> initialBundles = _setUpInitialBundles();
 
 		_startDynamicBundles(initialBundles);
 
@@ -1409,7 +1410,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
-	private Set<Bundle> _setUpInitialBundles() throws Exception {
+	private Map.Entry<Bundle, Set<Bundle>> _setUpInitialBundles()
+		throws Exception {
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Starting initial bundles");
 		}
@@ -1699,7 +1702,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			_log.info("Started initial bundles");
 		}
 
-		return new HashSet<>(Arrays.asList(initialBundles));
+		return new AbstractMap.SimpleImmutableEntry<>(
+			fileInstallBundle, new HashSet<>(Arrays.asList(initialBundles)));
 	}
 
 	private void _setUpPrerequisiteFrameworkServices(
@@ -1727,7 +1731,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
-	private void _startDynamicBundles(Set<Bundle> installedBundles)
+	private void _startDynamicBundles(
+			Map.Entry<Bundle, Set<Bundle>> installedBundles)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -1761,8 +1766,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		BundleContext bundleContext = _framework.getBundleContext();
 
+		Set<Bundle> initialBundles = installedBundles.getValue();
+
 		for (Bundle bundle : bundleContext.getBundles()) {
-			if (installedBundles.contains(bundle) ||
+			if (initialBundles.contains(bundle) ||
 				((bundle.getState() != Bundle.INSTALLED) &&
 				 (bundle.getState() != Bundle.RESOLVED))) {
 
@@ -1802,47 +1809,41 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 		}
 
-		for (Bundle bundle : installedBundles) {
-			if (!Objects.equals(
-					bundle.getSymbolicName(), "org.apache.felix.fileinstall")) {
+		Bundle fileInstallBundle = installedBundles.getKey();
 
-				continue;
-			}
+		if (dynamicBundleChecksums.isEmpty()) {
+			fileInstallBundle.start();
+		}
+		else {
+			BundleListener bundleListener = event -> {
+				if (event.getType() != BundleEvent.STARTING) {
+					return;
+				}
 
-			if (dynamicBundleChecksums.isEmpty()) {
-				bundle.start();
-			}
-			else {
-				BundleListener bundleListener = event -> {
-					if (event.getType() != BundleEvent.STARTING) {
-						return;
-					}
+				Bundle currentBundle = event.getBundle();
 
-					Bundle currentBundle = event.getBundle();
-
-					if (currentBundle != bundle) {
-						return;
-					}
-
-					try {
-						_registerDynamicBundles(
-							dynamicBundleChecksums,
-							currentBundle.getBundleContext());
-					}
-					catch (Exception e) {
-						_log.error(
-							"Unable to register dynamic bundle checksums", e);
-					}
-				};
-
-				bundleContext.addBundleListener(bundleListener);
+				if (currentBundle != fileInstallBundle) {
+					return;
+				}
 
 				try {
-					bundle.start();
+					_registerDynamicBundles(
+						dynamicBundleChecksums,
+						currentBundle.getBundleContext());
 				}
-				finally {
-					bundleContext.removeBundleListener(bundleListener);
+				catch (Exception e) {
+					_log.error(
+						"Unable to register dynamic bundle checksums", e);
 				}
+			};
+
+			bundleContext.addBundleListener(bundleListener);
+
+			try {
+				fileInstallBundle.start();
+			}
+			finally {
+				bundleContext.removeBundleListener(bundleListener);
 			}
 		}
 

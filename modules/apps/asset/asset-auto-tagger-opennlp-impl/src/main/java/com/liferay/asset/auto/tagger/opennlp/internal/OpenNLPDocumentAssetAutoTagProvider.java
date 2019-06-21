@@ -60,7 +60,7 @@ public class OpenNLPDocumentAssetAutoTagProvider
 
 					return _openNLPDocumentAssetAutoTagger.getTagNames(
 						assetEntry.getCompanyId(),
-						infoTextExtractor.getText(
+						infoTextExtractor.extract(
 							_getAssetObject(assetEntry), locale),
 						locale, ContentTypes.TEXT_PLAIN);
 				}

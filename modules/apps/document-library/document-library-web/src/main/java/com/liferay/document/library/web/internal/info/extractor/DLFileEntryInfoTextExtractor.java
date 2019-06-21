@@ -42,7 +42,7 @@ public class DLFileEntryInfoTextExtractor
 	}
 
 	@Override
-	public String getText(DLFileEntry dlFileEntry, Locale locale) {
+	public String extract(DLFileEntry dlFileEntry, Locale locale) {
 		try {
 			DLFileVersion fileVersion = dlFileEntry.getFileVersion();
 

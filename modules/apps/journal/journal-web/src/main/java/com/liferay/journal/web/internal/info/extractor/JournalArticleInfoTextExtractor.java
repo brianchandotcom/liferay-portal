@@ -46,7 +46,7 @@ public class JournalArticleInfoTextExtractor
 	}
 
 	@Override
-	public String getText(JournalArticle journalArticle, Locale locale) {
+	public String extract(JournalArticle journalArticle, Locale locale) {
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
 			_portal.getSiteGroupId(journalArticle.getGroupId()),
 			_portal.getClassNameId(JournalArticle.class),

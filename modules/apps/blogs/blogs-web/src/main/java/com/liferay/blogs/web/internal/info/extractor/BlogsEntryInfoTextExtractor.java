@@ -35,7 +35,7 @@ public class BlogsEntryInfoTextExtractor
 	}
 
 	@Override
-	public String getText(BlogsEntry blogsEntry, Locale locale) {
+	public String extract(BlogsEntry blogsEntry, Locale locale) {
 		return blogsEntry.getContent();
 	}
 

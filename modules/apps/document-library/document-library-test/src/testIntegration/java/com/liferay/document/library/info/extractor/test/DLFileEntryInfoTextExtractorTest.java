@@ -52,7 +52,7 @@ public class DLFileEntryInfoTextExtractorTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testGetText() throws Exception {
+	public void testExtract() throws Exception {
 		String content = RandomTestUtil.randomString();
 
 		byte[] bytes = content.getBytes();
@@ -74,7 +74,7 @@ public class DLFileEntryInfoTextExtractorTest {
 
 		Assert.assertEquals(
 			content + StringPool.NEW_LINE,
-			infoTextExtractor.getText(dlFileEntry, LocaleUtil.getDefault()));
+			infoTextExtractor.extract(dlFileEntry, LocaleUtil.getDefault()));
 	}
 
 	@Inject

@@ -48,7 +48,7 @@ public class BlogsEntryInfoTextExtractorTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testGetText() throws Exception {
+	public void testExtract() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
@@ -62,7 +62,7 @@ public class BlogsEntryInfoTextExtractorTest {
 
 		Assert.assertEquals(
 			blogsEntry.getContent(),
-			infoTextExtractor.getText(blogsEntry, LocaleUtil.getDefault()));
+			infoTextExtractor.extract(blogsEntry, LocaleUtil.getDefault()));
 	}
 
 	@Inject

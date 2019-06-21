@@ -336,7 +336,8 @@ class LayoutProvider extends Component {
 		visitor.mapFields(field => {
 			this._handleFieldEdited({
 				propertyName: field.fieldName,
-				propertyValue: field.value
+				propertyValue: field.value,
+				type: 'cancel'
 			});
 		});
 	}

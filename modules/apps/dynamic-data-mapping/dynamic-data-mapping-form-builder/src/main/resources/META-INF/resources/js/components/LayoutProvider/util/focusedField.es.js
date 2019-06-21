@@ -186,9 +186,19 @@ export const updateFocusedField = (
 	defaultLanguageId,
 	editingLanguageId,
 	fieldName,
-	value
+	value,
+	type
 ) => {
 	let {focusedField} = state;
+
+	if (type == 'cancel') {
+		let originalContext = focusedField.originalContext
+			? focusedField.originalContext
+			: focusedField;
+
+		if (focusedField.type != originalContext.type)
+			focusedField = focusedField.originalContext;
+	}
 
 	if (fieldName === 'dataType') {
 		focusedField = {

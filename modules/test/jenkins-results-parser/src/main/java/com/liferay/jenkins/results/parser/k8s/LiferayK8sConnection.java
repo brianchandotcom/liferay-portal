@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser.k8s;
 
+import com.google.gson.JsonSyntaxException;
+
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 import io.kubernetes.client.ApiClient;
@@ -90,11 +92,31 @@ public class LiferayK8sConnection {
 
 			return false;
 		}
+		catch (JsonSyntaxException jse) {
+			String message = jse.getMessage();
 
-		String status = v1Status.getStatus();
+			if (message == null) {
+				return false;
+			}
 
-		if (status.equals("Success")) {
-			return true;
+			if (message.contains("Expected a string but was BEGIN_OBJECT")) {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Successfully deleted pod with name '", pod.getName(),
+						"' in namespace '", namespace, "'"));
+
+				return true;
+			}
+
+			return false;
+		}
+
+		if (v1Status != null) {
+			String status = v1Status.getStatus();
+
+			if (status.equals("Success")) {
+				return true;
+			}
 		}
 
 		return false;

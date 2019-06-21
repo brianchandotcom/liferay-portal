@@ -16,14 +16,24 @@ package com.liferay.headless.admin.user.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.client.dto.v1_0.Role;
+import com.liferay.headless.admin.user.client.pagination.Page;
+import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -40,9 +50,59 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		_user = UserTestUtil.addGroupAdminUser(testGroup);
 	}
 
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		for (Role role : _roles) {
+			RoleLocalServiceUtil.deleteRole(role.getId());
+		}
+	}
+
+	@Test
+	public void testGetRolesPage() throws Exception {
+		Page<Role> page = roleResource.getRolesPage(Pagination.of(1, 100));
+
+		Collection<Role> defaultRoles = page.getItems();
+
+		long totalCount = page.getTotalCount();
+
+		_roles = new ArrayList<>();
+
+		_roles.add(_addRole(randomRole()));
+
+		_roles.add(_addRole(randomRole()));
+
+		page = roleResource.getRolesPage(
+			Pagination.of(1, (int)totalCount + _roles.size()));
+
+		Assert.assertEquals(totalCount + _roles.size(), page.getTotalCount());
+
+		List<Role> allRoles = new ArrayList<>();
+
+		allRoles.addAll(defaultRoles);
+		allRoles.addAll(_roles);
+
+		assertEqualsIgnoringOrder(allRoles, (List<Role>)page.getItems());
+
+		assertValid(page);
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"name"};
+	}
+
+	protected Role randomRole() throws Exception {
+		Role role = super.randomRole();
+
+		role.setRoleType(
+			RoleConstants.getTypeLabel(
+				RoleConstants.TYPES_ORGANIZATION_AND_REGULAR_AND_SITE
+					[RandomTestUtil.randomInt(0, 2)]));
+
+		return role;
 	}
 
 	@Override
@@ -58,8 +118,8 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 
 		com.liferay.portal.kernel.model.Role serviceBuilderRole =
 			RoleLocalServiceUtil.addRole(
-				_user.getUserId(), null, 0, role.getName(), null, null, 0, null,
-				new ServiceContext());
+				_user.getUserId(), null, 0, role.getName(), null, null,
+				_toRoleType(role.getRoleType()), null, new ServiceContext());
 
 		RoleLocalServiceUtil.addUserRole(_user.getUserId(), serviceBuilderRole);
 
@@ -75,6 +135,23 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 			}
 		};
 	}
+
+	private int _toRoleType(String roleTypeLabel) {
+		if (roleTypeLabel.equals(RoleConstants.TYPE_ORGANIZATION_LABEL)) {
+			return RoleConstants.TYPE_ORGANIZATION;
+		}
+		else if (roleTypeLabel.equals(RoleConstants.TYPE_SITE_LABEL)) {
+			return RoleConstants.TYPE_SITE;
+		}
+		else if (roleTypeLabel.equals(RoleConstants.TYPE_REGULAR_LABEL)) {
+			return RoleConstants.TYPE_REGULAR;
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid roleTypeLabel " + roleTypeLabel);
+	}
+
+	private List<Role> _roles;
 
 	@DeleteAfterTestRun
 	private User _user;

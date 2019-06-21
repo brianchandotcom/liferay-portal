@@ -1154,15 +1154,15 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			uri = uri.normalize();
 
+			String location = uri.toString();
+
+			if (bundleContext.getBundle(location) != null) {
+				continue;
+			}
+
 			try (InputStream inputStream = new FileInputStream(file)) {
-				String location = uri.toString();
-
-				if (bundleContext.getBundle(location) != null) {
-					continue;
-				}
-
 				Bundle bundle = bundleContext.installBundle(
-					uri.toString(), inputStream);
+					location, inputStream);
 
 				BundleStartLevel bundleStartLevel = bundle.adapt(
 					BundleStartLevel.class);
@@ -1175,7 +1175,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 					_calculateChecksum(file));
 			}
 			catch (BundleException be) {
-				_log.error("Unable to install bundle at " + uri, be);
+				_log.error("Unable to install bundle at " + location, be);
 			}
 		}
 	}

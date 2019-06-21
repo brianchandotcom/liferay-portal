@@ -64,7 +64,6 @@ class FloatingToolbar extends Component {
 	 *   the other way around.
 	 * @param {HTMLElement|null} element
 	 * @param {HTMLElement|null} anchor
-	 *  and element will be placed at given position.
 	 * @private
 	 * @return {number} Selected align
 	 * @review

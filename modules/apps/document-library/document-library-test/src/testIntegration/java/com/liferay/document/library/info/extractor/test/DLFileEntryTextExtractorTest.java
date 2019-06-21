@@ -52,7 +52,7 @@ public class DLFileEntryTextExtractorTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testReturnsTheContentOfATextFile() throws Exception {
+	public void testGetText() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 

@@ -48,7 +48,7 @@ public class BlogsEntryTextExtractorTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testReturnsTheBlogsEntryContent() throws Exception {
+	public void testGetText() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 

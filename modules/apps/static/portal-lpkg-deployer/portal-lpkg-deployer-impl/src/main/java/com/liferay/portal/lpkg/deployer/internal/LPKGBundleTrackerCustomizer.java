@@ -100,12 +100,12 @@ public class LPKGBundleTrackerCustomizer
 
 		Bundle bundle = bundleContext.getBundle();
 
-		File dataFile = bundle.getDataFile(_FILE_NAME_LPKG_DATA);
+		_dataFile = bundle.getDataFile(_FILE_NAME_LPKG_DATA);
 
 		_properties = new Properties();
 
-		if (dataFile.exists()) {
-			try (InputStream inputStream = new FileInputStream(dataFile)) {
+		if (_dataFile.exists()) {
+			try (InputStream inputStream = new FileInputStream(_dataFile)) {
 				_properties.load(inputStream);
 			}
 			catch (IOException ioe) {
@@ -644,11 +644,7 @@ public class LPKGBundleTrackerCustomizer
 		_properties.setProperty(
 			bundle.getSymbolicName(), StringUtil.merge(innerBundleLocations));
 
-		Bundle lpkgTrackerBundle = _bundleContext.getBundle();
-
-		File dataFile = lpkgTrackerBundle.getDataFile(_FILE_NAME_LPKG_DATA);
-
-		try (OutputStream outputStream = new FileOutputStream(dataFile)) {
+		try (OutputStream outputStream = new FileOutputStream(_dataFile)) {
 			_properties.store(outputStream, null);
 		}
 	}
@@ -871,6 +867,7 @@ public class LPKGBundleTrackerCustomizer
 		StaticLPKGResolver.getStaticLPKGBundleSymbolicNames();
 
 	private final BundleContext _bundleContext;
+	private final File _dataFile;
 	private final Set<String> _outdatedRemoteAppIds = new HashSet<>();
 	private final Set<String> _overrideFileNames;
 	private final Properties _properties;

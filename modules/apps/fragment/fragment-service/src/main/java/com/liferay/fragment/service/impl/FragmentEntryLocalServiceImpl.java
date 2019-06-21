@@ -70,6 +70,12 @@ import org.osgi.service.component.annotations.Reference;
 public class FragmentEntryLocalServiceImpl
 	extends FragmentEntryLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addFragmentEntry(long, long, long, String, String, String,
+	 *             String, int, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId, String name,
@@ -81,6 +87,12 @@ public class FragmentEntryLocalServiceImpl
 			type, status, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addFragmentEntry(long, long, long, String, String, String,
+	 *             String, int, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId, String name,
@@ -92,6 +104,12 @@ public class FragmentEntryLocalServiceImpl
 			FragmentConstants.TYPE_SECTION, status, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addFragmentEntry(long, long, long, String, String, String,
+	 *             String, int, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId, String name,
@@ -104,6 +122,12 @@ public class FragmentEntryLocalServiceImpl
 			previewFileEntryId, type, status, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addFragmentEntry(long, long, long, String, String, String,
+	 *             String, int, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId, String name,
@@ -116,6 +140,12 @@ public class FragmentEntryLocalServiceImpl
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addFragmentEntry(long, long, long, String, String, String,
+	 *             String, int, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId,
@@ -128,6 +158,12 @@ public class FragmentEntryLocalServiceImpl
 			type, status, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addFragmentEntry(long, long, long, String, String, String,
+	 *             String, int, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId,
@@ -193,6 +229,12 @@ public class FragmentEntryLocalServiceImpl
 		return fragmentEntry;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addFragmentEntry(long, long, long, String, String, String,
+	 *             String, int, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId,

@@ -93,6 +93,7 @@ definition {
 	@priority = "5"
 	test DeleteMessageboardsThread {
 		JSONMBMessage.addMessage(
+			groupName = "Guest",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
@@ -677,10 +678,12 @@ definition {
 		Portlet.addPG(portletName = "Message Boards");
 
 		JSONMBMessage.addMessage(
+			groupName = "Guest",
 			threadBody = "MB Thread Message Body 1",
 			threadSubject = "MB Thread Message Subject 1");
 
 		JSONMBMessage.addMessage(
+			groupName = "Guest",
 			threadBody = "MB Thread Message Body 2",
 			threadSubject = "MB Thread Message Subject 2");
 
@@ -779,6 +782,7 @@ definition {
 			threadPostNumber = "1");
 
 		JSONMBMessage.addMessage(
+			groupName = "Guest",
 			threadBody = "MB Thread2 Message Body",
 			threadSubject = "MB Thread2 Message Subject");
 

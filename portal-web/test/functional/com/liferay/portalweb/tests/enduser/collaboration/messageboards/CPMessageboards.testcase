@@ -156,6 +156,7 @@ definition {
 	@priority = "5"
 	test EditMBThreadSubjectAndBody {
 		JSONMBMessage.addMessage(
+			groupName = "Guest",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 

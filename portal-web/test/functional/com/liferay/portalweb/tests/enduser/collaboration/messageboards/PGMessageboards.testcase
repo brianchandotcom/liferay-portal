@@ -301,6 +301,7 @@ definition {
 	@priority = "5"
 	test AddMBThreadReply {
 		JSONMBMessage.addMessage(
+			groupName = "Guest",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
@@ -781,6 +782,7 @@ definition {
 		property custom.properties = "discussion.comments.delta.value=5";
 
 		JSONMBMessage.addMessage(
+			groupName = "Guest",
 			threadBody = "Message Boards Thread Body",
 			threadSubject = "Message Boards Thread Subject");
 

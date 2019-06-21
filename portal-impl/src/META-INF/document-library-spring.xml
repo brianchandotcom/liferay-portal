@@ -13,5 +13,4 @@
 			<bean class="com.liferay.portlet.documentlibrary.util.DLImpl" destroy-method="destroy" />
 		</property>
 	</bean>
-	<bean class="com.liferay.portlet.documentlibrary.util.DLOpenSearchImpl" id="com.liferay.portlet.documentlibrary.util.DLOpenSearchImpl" />
 </beans>

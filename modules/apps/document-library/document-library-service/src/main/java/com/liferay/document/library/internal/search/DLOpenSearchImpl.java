@@ -12,20 +12,21 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.util;
+package com.liferay.document.library.internal.search;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.HitsOpenSearchImpl;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.OpenSearch;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
- * @deprecated As of Mueller (7.2.x), replaced by {@link
- *			   com.liferay.document.library.internal.search.DLOpenSearchImpl}
+ * @author Shuyang Zhou
  */
-@Deprecated
+@Component(service = OpenSearch.class)
 public class DLOpenSearchImpl extends HitsOpenSearchImpl {
 
 	public static final String TITLE = "Liferay Documents and Media Search: ";

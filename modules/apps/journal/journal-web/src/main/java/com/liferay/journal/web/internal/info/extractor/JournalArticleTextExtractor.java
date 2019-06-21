@@ -41,11 +41,6 @@ public class JournalArticleTextExtractor
 	implements TextExtractor<JournalArticle> {
 
 	@Override
-	public String getClassName() {
-		return JournalArticle.class.getName();
-	}
-
-	@Override
 	public String extract(JournalArticle journalArticle, Locale locale) {
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
 			_portal.getSiteGroupId(journalArticle.getGroupId()),
@@ -75,6 +70,11 @@ public class JournalArticleTextExtractor
 
 		return _ddmIndexer.extractIndexableAttributes(
 			ddmStructure, ddmFormValues, locale);
+	}
+
+	@Override
+	public String getClassName() {
+		return JournalArticle.class.getName();
 	}
 
 	@Reference

@@ -26,17 +26,16 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(service = TextExtractor.class)
-public class BlogsEntryTextExtractor
-	implements TextExtractor<BlogsEntry> {
-
-	@Override
-	public String getClassName() {
-		return BlogsEntry.class.getName();
-	}
+public class BlogsEntryTextExtractor implements TextExtractor<BlogsEntry> {
 
 	@Override
 	public String extract(BlogsEntry blogsEntry, Locale locale) {
 		return blogsEntry.getContent();
+	}
+
+	@Override
+	public String getClassName() {
+		return BlogsEntry.class.getName();
 	}
 
 }

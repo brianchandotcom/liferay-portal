@@ -2795,8 +2795,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		if (FileUtil.isChild(
 				javaSourceDirectorySet.getOutputDir(), project.getBuildDir())) {
 
-			javaSourceDirectorySet.setOutputDir(new File(classesDirName));
-			sourceSetOutput.setResourcesDir(classesDirName);
+			File javaClassesDir = project.file(classesDirName);
+
+			javaSourceDirectorySet.setOutputDir(javaClassesDir);
+			sourceSetOutput.setResourcesDir(javaClassesDir);
 		}
 	}
 

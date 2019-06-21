@@ -103,14 +103,9 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		String upstreamBranchName = buildData.getPortalUpstreamBranchName();
 
 		Properties buildProperties;
-		List<String> testSuites;
 
 		try {
 			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
-
-			testSuites = JenkinsResultsParserUtil.getBuildPropertyAsList(
-				true,
-				"portal.testsuite.upstream.suites[" + upstreamBranchName + "]");
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
@@ -119,18 +114,18 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		Map<String, Long> candidateTestSuiteStaleDurations =
 			new LinkedHashMap<>();
 
-		for (String testSuite : testSuites) {
+		for (String testSuiteName : _getTestSuiteNames()) {
 			String suiteStaleDuration = buildProperties.getProperty(
 				JenkinsResultsParserUtil.combine(
 					"portal.testsuite.upstream.stale.duration[",
-					upstreamBranchName, "][", testSuite, "]"));
+					upstreamBranchName, "][", testSuiteName, "]"));
 
 			if (suiteStaleDuration == null) {
 				continue;
 			}
 
 			candidateTestSuiteStaleDurations.put(
-				testSuite, Long.parseLong(suiteStaleDuration) * 60 * 1000);
+				testSuiteName, Long.parseLong(suiteStaleDuration) * 60 * 1000);
 		}
 
 		return candidateTestSuiteStaleDurations;
@@ -180,6 +175,21 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 					"portal.testsuite.upstream.testray.project.name[",
 					buildData.getPortalUpstreamBranchName(), "][", testSuite,
 					"]"));
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
+	private List<String> _getTestSuiteNames() {
+		S buildData = getBuildData();
+
+		try {
+			return JenkinsResultsParserUtil.getBuildPropertyAsList(
+				true,
+				JenkinsResultsParserUtil.combine(
+					"portal.testsuite.upstream.suites[",
+					buildData.getPortalUpstreamBranchName(), "]"));
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);

@@ -44,10 +44,18 @@ public class ResourceConfigurationFactory {
 			throw new RuntimeException("Unable to determine hostname");
 		}
 
-		v1Pod.setMetadata(
-			newConfigurationMetaData(
-				JenkinsResultsParserUtil.combine(
-					hostname, "-", dockerBaseImageName)));
+		if (hostname.contains(".")) {
+			int index = hostname.indexOf(".");
+
+			hostname = hostname.substring(0, index);
+		}
+
+		hostname = JenkinsResultsParserUtil.combine(
+			hostname, "-", dockerBaseImageName);
+
+		V1ObjectMeta v1ObjectMeta = newConfigurationMetaData(hostname);
+
+		v1Pod.setMetadata(v1ObjectMeta);
 
 		V1Container v1Container = newConfigurationContainer(
 			dockerBaseImageName, dockerImageName);
@@ -64,6 +72,8 @@ public class ResourceConfigurationFactory {
 					newConfigurationContainerPort(dockerBaseImageName, 3306))));
 
 		V1PodSpec v1PodSpec = newConfigurationPodSpec(v1Container);
+
+		v1PodSpec.setHostname(hostname);
 
 		v1PodSpec.setVolumes(
 			new ArrayList<>(

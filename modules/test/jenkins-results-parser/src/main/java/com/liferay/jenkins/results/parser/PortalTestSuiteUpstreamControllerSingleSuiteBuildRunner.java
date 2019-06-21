@@ -33,9 +33,9 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 	public void run() {
 		retirePreviousBuilds();
 
-		if (_previousBuildHasCurrentSHA()) {
-			S buildData = getBuildData();
+		S buildData = getBuildData();
 
+		if (_previousBuildHasCurrentSHA()) {
 			buildData.setBuildDescription(
 				JenkinsResultsParserUtil.combine(
 					"<strong>SKIPPED</strong> - <a href=\"https://github.com/",
@@ -49,8 +49,6 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 		}
 
 		if (_previousBuildHasExistingInvocation()) {
-			BuildData buildData = getBuildData();
-
 			buildData.setBuildDescription(
 				"<strong>SKIPPED</strong> - Job was already invoked");
 
@@ -60,8 +58,6 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 		}
 
 		if (_previousBuildHasRunningInvocation()) {
-			BuildData buildData = getBuildData();
-
 			buildData.setBuildDescription(
 				"<strong>SKIPPED</strong> - Job is already running");
 

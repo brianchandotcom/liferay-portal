@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayIcon from '../shared/ClayIcon.es';
+import ClayIcon from '@clayui/icon';
 import Conjunction from './Conjunction.es';
 import CriteriaRow from './CriteriaRow.es';
 import DropZone from './DropZone.es';
@@ -356,7 +356,7 @@ class CriteriaGroup extends Component {
 							!root &&
 							connectDragSource(
 								<div className='criteria-group-drag-icon drag-icon'>
-									<ClayIcon iconName='drag' />
+									<ClayIcon symbol='drag' />
 								</div>
 							)}
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayIcon from './ClayIcon.es';
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import React, {Component} from 'react';
 import {PropTypes} from 'prop-types';
@@ -93,13 +93,13 @@ class ClayToggle extends Component {
 					>
 						{iconOff && (
 							<span className='button-icon button-icon-off toggle-switch-icon'>
-								<ClayIcon iconName={iconOff} />
+								<ClayIcon symbol={iconOff} />
 							</span>
 						)}
 
 						{iconOn && (
 							<span className='button-icon button-icon-on toggle-switch-icon'>
-								<ClayIcon iconName={iconOn} />
+								<ClayIcon symbol={iconOn} />
 							</span>
 						)}
 					</span>

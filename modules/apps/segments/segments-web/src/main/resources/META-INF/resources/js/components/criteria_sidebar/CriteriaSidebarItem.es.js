@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayIcon from '../shared/ClayIcon.es';
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
@@ -78,12 +78,12 @@ class CriteriaSidebarItem extends Component {
 		return connectDragSource(
 			<li className={classes}>
 				<span className='inline-item'>
-					<ClayIcon iconName='drag' />
+					<ClayIcon symbol='drag' />
 				</span>
 
 				<span className='criteria-sidebar-item-type sticker sticker-light'>
 					<span className='inline-item'>
-						<ClayIcon iconName={TYPE_ICON_MAP[type] || 'text'} />
+						<ClayIcon symbol={TYPE_ICON_MAP[type] || 'text'} />
 					</span>
 				</span>
 

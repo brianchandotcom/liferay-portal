@@ -17,7 +17,7 @@
 import BooleanInput from '../inputs/BooleanInput.es';
 import ClayAlert from '../shared/ClayAlert.es';
 import ClayButton from '../shared/ClayButton.es';
-import ClayIcon from '../shared/ClayIcon.es';
+import ClayIcon from '@clayui/icon';
 import ClaySelect from '../shared/ClaySelect.es';
 import CollectionInput from '../inputs/CollectionInput.es';
 import DateInput from '../inputs/DateInput.es';
@@ -384,7 +384,7 @@ class CriteriaRow extends Component {
 			<div className='edit-container'>
 				{connectDragSource(
 					<div className='drag-icon'>
-						<ClayIcon iconName='drag' />
+						<ClayIcon symbol='drag' />
 					</div>
 				)}
 

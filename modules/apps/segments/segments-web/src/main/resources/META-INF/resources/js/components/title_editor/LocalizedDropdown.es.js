@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayIcon from '../shared/ClayIcon.es';
+import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {ENTER} from '../../utils/key-constants.es';
@@ -99,7 +99,7 @@ class LocalizedDropdown extends React.Component {
 					type='button'
 				>
 					<span className='inline-item'>
-						<ClayIcon iconName={currentLangKey} />
+						<ClayIcon symbol={currentLangKey} />
 					</span>
 					<span className='btn-section'>{currentLangTag}</span>
 				</button>

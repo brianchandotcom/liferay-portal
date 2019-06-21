@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayIcon from '../shared/ClayIcon.es';
+import ClayIcon from '@clayui/icon';
 import CriteriaSidebarItem from './CriteriaSidebarItem.es';
 import dateFns from 'date-fns';
 import getCN from 'classnames';
@@ -113,7 +113,9 @@ class CriteriaSidebarCollapse extends Component {
 
 					return (
 						<li
-							className={`sidebar-collapse-${propertyGroup.propertyKey}`}
+							className={`sidebar-collapse-${
+								propertyGroup.propertyKey
+							}`}
 							key={key}
 						>
 							<div
@@ -125,7 +127,7 @@ class CriteriaSidebarCollapse extends Component {
 									<span className='collapse-icon'>
 										<ClayIcon
 											className={activeClasses}
-											iconName='angle-right'
+											symbol='angle-right'
 										/>
 									</span>
 								</a>

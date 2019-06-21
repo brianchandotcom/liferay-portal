@@ -1139,70 +1139,54 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			PropsValues.MODULE_FRAMEWORK_MARKETPLACE_DIR + "/override");
 	}
 
-	private void _installBundlesFromDir(Path path, Map<String, Long> checksums)
+	private void _installBundlesFromDir(
+			String dirPath, Map<String, Long> checksums)
 		throws IOException {
 
-		final BundleContext bundleContext = _framework.getBundleContext();
+		BundleContext bundleContext = _framework.getBundleContext();
 
-		Files.walkFileTree(
-			path,
-			new SimpleFileVisitor<Path>() {
+		File dir = new File(dirPath);
 
-				@Override
-				public FileVisitResult visitFile(
-						Path path, BasicFileAttributes basicFileAttributes)
-					throws IOException {
+		for (File file :
+				dir.listFiles((folder, name) -> name.endsWith(".jar"))) {
 
-					File file = path.toFile();
+			URI uri = file.toURI();
 
-					String fileName = file.getName();
+			uri = uri.normalize();
 
-					if (!fileName.endsWith(".jar")) {
-						return FileVisitResult.CONTINUE;
-					}
+			try (InputStream inputStream = new FileInputStream(file)) {
+				String location = uri.toString();
 
-					URI uri = file.toURI();
-
-					uri = uri.normalize();
-
-					try (InputStream inputStream = new FileInputStream(file)) {
-						String location = uri.toString();
-
-						if (bundleContext.getBundle(location) != null) {
-							return FileVisitResult.CONTINUE;
-						}
-
-						Bundle bundle = bundleContext.installBundle(
-							uri.toString(), inputStream);
-
-						BundleStartLevel bundleStartLevel = bundle.adapt(
-							BundleStartLevel.class);
-
-						bundleStartLevel.setStartLevel(
-							PropsValues.
-								MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL);
-
-						checksums.put(
-							bundle.getBundleId() + _CHECKSUM_SUFFIX,
-							_calculateChecksum(file));
-					}
-					catch (BundleException be) {
-						_log.error("Unable to install bundle at " + path, be);
-					}
-
-					return FileVisitResult.CONTINUE;
+				if (bundleContext.getBundle(location) != null) {
+					continue;
 				}
 
-			});
+				Bundle bundle = bundleContext.installBundle(
+					uri.toString(), inputStream);
+
+				BundleStartLevel bundleStartLevel = bundle.adapt(
+					BundleStartLevel.class);
+
+				bundleStartLevel.setStartLevel(
+					PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL);
+
+				checksums.put(
+					bundle.getBundleId() + _CHECKSUM_SUFFIX,
+					_calculateChecksum(file));
+			}
+			catch (BundleException be) {
+				_log.error("Unable to install bundle at " + uri, be);
+			}
+		}
 	}
 
 	private Map<String, Long> _installDynamicBundles() throws IOException {
 		Map<String, Long> checksums = new HashMap<>();
 
 		_installBundlesFromDir(
-			Paths.get(PropsValues.MODULE_FRAMEWORK_PORTAL_DIR), checksums);
+			PropsValues.MODULE_FRAMEWORK_PORTAL_DIR, checksums);
 		_installBundlesFromDir(
-			Paths.get(PropsValues.MODULE_FRAMEWORK_MODULES_DIR), checksums);
+			PropsValues.MODULE_FRAMEWORK_MODULES_DIR, checksums);
 
 		return checksums;
 	}

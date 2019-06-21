@@ -567,6 +567,12 @@ public class Entity implements Comparable<Entity> {
 		return _pkEntityColumns;
 	}
 
+	public String getPKMethodName() {
+		EntityColumn entityColumn = _getPKEntityColumn();
+
+		return entityColumn.getMethodName();
+	}
+
 	public String getPKVarName() {
 		if (hasCompoundPK()) {
 			return getVarName() + "PK";

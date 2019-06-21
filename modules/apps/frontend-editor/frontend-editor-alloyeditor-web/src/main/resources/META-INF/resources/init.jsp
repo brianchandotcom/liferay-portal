@@ -20,6 +20,7 @@
 taglib uri="http://liferay.com/tld/editor" prefix="liferay-editor" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.frontend.editor.alloyeditor.web.internal.constants.AlloyEditorConstants" %><%@

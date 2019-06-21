@@ -147,7 +147,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		Map<String, Long> latestTestSuiteStartTimes = new LinkedHashMap<>();
 
 		for (Build build : builds) {
-			if (build == currentBuild) {
+			if (build.equals(currentBuild)) {
 				continue;
 			}
 

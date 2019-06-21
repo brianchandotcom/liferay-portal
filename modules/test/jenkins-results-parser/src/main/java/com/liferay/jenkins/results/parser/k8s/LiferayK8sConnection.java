@@ -58,13 +58,13 @@ public class LiferayK8sConnection {
 					namespace, configurationPod.getV1Pod(), null));
 		}
 		catch (ApiException ae) {
+			System.out.println(ae.toString());
+
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"Unable to create new pod with name '",
 					configurationPod.getName(), "' in namespace '", namespace,
 					"'"));
-
-			ae.printStackTrace();
 
 			return null;
 		}

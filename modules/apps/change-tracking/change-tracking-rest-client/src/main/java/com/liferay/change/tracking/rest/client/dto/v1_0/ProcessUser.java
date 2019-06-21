@@ -49,6 +49,27 @@ public class ProcessUser {
 
 	protected Long userId;
 
+	public String getUserInitials() {
+		return userInitials;
+	}
+
+	public void setUserInitials(String userInitials) {
+		this.userInitials = userInitials;
+	}
+
+	public void setUserInitials(
+		UnsafeSupplier<String, Exception> userInitialsUnsafeSupplier) {
+
+		try {
+			userInitials = userInitialsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String userInitials;
+
 	public String getUserName() {
 		return userName;
 	}
@@ -69,6 +90,27 @@ public class ProcessUser {
 	}
 
 	protected String userName;
+
+	public String getUserPortraitURL() {
+		return userPortraitURL;
+	}
+
+	public void setUserPortraitURL(String userPortraitURL) {
+		this.userPortraitURL = userPortraitURL;
+	}
+
+	public void setUserPortraitURL(
+		UnsafeSupplier<String, Exception> userPortraitURLUnsafeSupplier) {
+
+		try {
+			userPortraitURL = userPortraitURLUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String userPortraitURL;
 
 	@Override
 	public boolean equals(Object object) {

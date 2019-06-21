@@ -73,6 +73,34 @@ public class ProcessUser {
 	protected Long userId;
 
 	@Schema
+	public String getUserInitials() {
+		return userInitials;
+	}
+
+	public void setUserInitials(String userInitials) {
+		this.userInitials = userInitials;
+	}
+
+	@JsonIgnore
+	public void setUserInitials(
+		UnsafeSupplier<String, Exception> userInitialsUnsafeSupplier) {
+
+		try {
+			userInitials = userInitialsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String userInitials;
+
+	@Schema
 	public String getUserName() {
 		return userName;
 	}
@@ -99,6 +127,34 @@ public class ProcessUser {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String userName;
+
+	@Schema
+	public String getUserPortraitURL() {
+		return userPortraitURL;
+	}
+
+	public void setUserPortraitURL(String userPortraitURL) {
+		this.userPortraitURL = userPortraitURL;
+	}
+
+	@JsonIgnore
+	public void setUserPortraitURL(
+		UnsafeSupplier<String, Exception> userPortraitURLUnsafeSupplier) {
+
+		try {
+			userPortraitURL = userPortraitURLUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String userPortraitURL;
 
 	@Override
 	public boolean equals(Object object) {
@@ -137,6 +193,20 @@ public class ProcessUser {
 			sb.append(userId);
 		}
 
+		if (userInitials != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userInitials\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(userInitials));
+
+			sb.append("\"");
+		}
+
 		if (userName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -147,6 +217,20 @@ public class ProcessUser {
 			sb.append("\"");
 
 			sb.append(_escape(userName));
+
+			sb.append("\"");
+		}
+
+		if (userPortraitURL != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userPortraitURL\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(userPortraitURL));
 
 			sb.append("\"");
 		}

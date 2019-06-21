@@ -106,11 +106,11 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleException;
-import org.osgi.framework.BundleListener;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkEvent;
 import org.osgi.framework.FrameworkListener;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.framework.SynchronousBundleListener;
 import org.osgi.framework.Version;
 import org.osgi.framework.launch.Framework;
 import org.osgi.framework.launch.FrameworkFactory;
@@ -1815,7 +1815,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			fileInstallBundle.start();
 		}
 		else {
-			BundleListener bundleListener = event -> {
+			SynchronousBundleListener synchronousBundleListener = event -> {
 				if (event.getType() != BundleEvent.STARTING) {
 					return;
 				}
@@ -1837,13 +1837,13 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				}
 			};
 
-			bundleContext.addBundleListener(bundleListener);
+			bundleContext.addBundleListener(synchronousBundleListener);
 
 			try {
 				fileInstallBundle.start();
 			}
 			finally {
-				bundleContext.removeBundleListener(bundleListener);
+				bundleContext.removeBundleListener(synchronousBundleListener);
 			}
 		}
 

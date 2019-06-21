@@ -201,12 +201,10 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 				continue;
 			}
 
-			Long testSuiteStaleDuration = entry.getValue();
-
-			Long testSuiteduration =
+			Long testSuiteIdleDuration =
 				startTime - latestTestSuiteStartTimes.get(testSuiteName);
 
-			if (testSuiteduration > testSuiteStaleDuration) {
+			if (testSuiteIdleDuration > entry.getValue()) {
 				_selectedTestSuiteNames.add(testSuiteName);
 			}
 		}

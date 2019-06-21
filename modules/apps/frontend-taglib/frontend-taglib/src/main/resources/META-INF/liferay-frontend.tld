@@ -119,6 +119,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The ServletContext object to use to resolve JS packages. The default value is to use the current portlet's ServletContext.</description>
 			<name>servletContext</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

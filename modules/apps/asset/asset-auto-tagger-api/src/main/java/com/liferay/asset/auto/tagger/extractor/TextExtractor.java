@@ -12,31 +12,17 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.info.extractor;
-
-import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.info.extractor.InfoTextExtractor;
+package com.liferay.asset.auto.tagger.extractor;
 
 import java.util.Locale;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
- * @author Alicia García
  * @author Alejandro Tardín
  */
-@Component(service = InfoTextExtractor.class)
-public class BlogsEntryInfoTextExtractor
-	implements InfoTextExtractor<BlogsEntry> {
+public interface TextExtractor<T> {
 
-	@Override
-	public String getClassName() {
-		return BlogsEntry.class.getName();
-	}
+	public String getClassName();
 
-	@Override
-	public String extract(BlogsEntry blogsEntry, Locale locale) {
-		return blogsEntry.getContent();
-	}
+	public String extract(T t, Locale locale);
 
 }

@@ -14,9 +14,9 @@
 
 package com.liferay.asset.auto.tagger.opennlp.internal.configuration.admin.definition;
 
+import com.liferay.asset.auto.tagger.extractor.TextExtractorTracker;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.configuration.admin.definition.ConfigurationFieldOptionsProvider;
-import com.liferay.info.extractor.InfoTextExtractorTracker;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 import java.util.List;
@@ -45,7 +45,7 @@ public class EnabledClassNamesConfigurationFieldOptionsProvider
 		).stream(
 		).filter(
 			assetRendererFactory ->
-				_infoTextExtractorTracker.getInfoTextExtractor(
+				_textExtractorTracker.getTextExtractor(
 					assetRendererFactory.getClassName()) != null
 		).map(
 			assetRendererFactory -> new Option() {
@@ -67,6 +67,6 @@ public class EnabledClassNamesConfigurationFieldOptionsProvider
 	}
 
 	@Reference
-	private InfoTextExtractorTracker _infoTextExtractorTracker;
+	private TextExtractorTracker _textExtractorTracker;
 
 }

@@ -12,27 +12,23 @@
  * details.
  */
 
-package com.liferay.document.library.info.extractor.test;
+package com.liferay.blogs.asset.auto.tagger.extractor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
-import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
-import com.liferay.info.extractor.InfoTextExtractor;
-import com.liferay.info.extractor.InfoTextExtractorTracker;
-import com.liferay.petra.string.StringPool;
+import com.liferay.asset.auto.tagger.extractor.TextExtractor;
+import com.liferay.asset.auto.tagger.extractor.TextExtractorTracker;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.io.ByteArrayInputStream;
+import java.util.Date;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -44,7 +40,7 @@ import org.junit.runner.RunWith;
  * @author Alejandro Tardín
  */
 @RunWith(Arquillian.class)
-public class DLFileEntryInfoTextExtractorTest {
+public class BlogsEntryTextExtractorTest {
 
 	@ClassRule
 	@Rule
@@ -53,31 +49,22 @@ public class DLFileEntryInfoTextExtractorTest {
 
 	@Test
 	public void testExtract() throws Exception {
-		String content = RandomTestUtil.randomString();
-
-		byte[] bytes = content.getBytes();
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			serviceContext.getScopeGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomString(), null, null, 0, null, null,
-			new ByteArrayInputStream(bytes), bytes.length, serviceContext);
+		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), StringUtil.randomString(),
+			StringUtil.randomString(), new Date(), serviceContext);
 
-		InfoTextExtractor infoTextExtractor =
-			_infoTextExtractorTracker.getInfoTextExtractor(
-				DLFileEntryConstants.getClassName());
+		TextExtractor textExtractor = _textExtractorTracker.getTextExtractor(
+			BlogsEntry.class.getName());
 
 		Assert.assertEquals(
-			content + StringPool.NEW_LINE,
-			infoTextExtractor.extract(dlFileEntry, LocaleUtil.getDefault()));
+			blogsEntry.getContent(),
+			textExtractor.extract(blogsEntry, LocaleUtil.getDefault()));
 	}
 
 	@Inject
-	private InfoTextExtractorTracker _infoTextExtractorTracker;
+	private TextExtractorTracker _textExtractorTracker;
 
 }

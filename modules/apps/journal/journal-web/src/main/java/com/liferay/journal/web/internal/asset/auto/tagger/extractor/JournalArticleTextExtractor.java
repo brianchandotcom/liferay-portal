@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.journal.web.internal.info.extractor;
+package com.liferay.journal.web.internal.asset.auto.tagger.extractor;
 
+import com.liferay.asset.auto.tagger.extractor.TextExtractor;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
-import com.liferay.info.extractor.InfoTextExtractor;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.StringPool;
@@ -36,9 +36,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alicia García
  * @author Alejandro Tardín
  */
-@Component(service = InfoTextExtractor.class)
-public class JournalArticleInfoTextExtractor
-	implements InfoTextExtractor<JournalArticle> {
+@Component(service = TextExtractor.class)
+public class JournalArticleTextExtractor
+	implements TextExtractor<JournalArticle> {
 
 	@Override
 	public String getClassName() {

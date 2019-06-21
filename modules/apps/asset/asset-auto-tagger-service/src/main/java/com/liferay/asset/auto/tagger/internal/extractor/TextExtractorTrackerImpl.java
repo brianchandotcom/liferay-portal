@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.info.internal.extractor;
+package com.liferay.asset.auto.tagger.internal.extractor;
 
-import com.liferay.info.extractor.InfoTextExtractor;
-import com.liferay.info.extractor.InfoTextExtractorTracker;
+import com.liferay.asset.auto.tagger.extractor.TextExtractor;
+import com.liferay.asset.auto.tagger.extractor.TextExtractorTracker;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -31,23 +31,23 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = InfoTextExtractorTracker.class)
-public class InfoTextExtractorTrackerImpl implements InfoTextExtractorTracker {
+@Component(service = TextExtractorTracker.class)
+public class TextExtractorTrackerImpl implements TextExtractorTracker {
 
-	public InfoTextExtractor getInfoTextExtractor(String className) {
+	public TextExtractor getTextExtractor(String className) {
 		return _serviceTrackerMap.getService(className);
 	}
 
-	public List<InfoTextExtractor> getInfoTextExtractors() {
+	public List<TextExtractor> getTextExtractors() {
 		return new ArrayList<>(_serviceTrackerMap.values());
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap =
-			(ServiceTrackerMap<String, InfoTextExtractor<?>>)
+			(ServiceTrackerMap<String, TextExtractor<?>>)
 				(ServiceTrackerMap)ServiceTrackerMapFactory.openSingleValueMap(
-					bundleContext, InfoTextExtractor.class, null,
+					bundleContext, TextExtractor.class, null,
 					ServiceReferenceMapperFactory.create(
 						bundleContext,
 						(infoTextExtractor, emitter) -> emitter.emit(
@@ -59,7 +59,7 @@ public class InfoTextExtractorTrackerImpl implements InfoTextExtractorTracker {
 		_serviceTrackerMap.close();
 	}
 
-	private volatile ServiceTrackerMap<String, InfoTextExtractor<?>>
+	private volatile ServiceTrackerMap<String, TextExtractor<?>>
 		_serviceTrackerMap;
 
 }

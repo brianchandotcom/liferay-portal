@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.info.extractor;
+package com.liferay.asset.auto.tagger.extractor;
 
-import java.util.Locale;
+import java.util.List;
 
 /**
  * @author Alejandro Tardín
  */
-public interface InfoTextExtractor<T> {
+public interface TextExtractorTracker {
 
-	public String getClassName();
+	public TextExtractor getTextExtractor(String className);
 
-	public String extract(T t, Locale locale);
+	public List<TextExtractor> getTextExtractors();
 
 }

@@ -106,6 +106,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleException;
+import org.osgi.framework.BundleListener;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkEvent;
 import org.osgi.framework.FrameworkListener;
@@ -117,7 +118,6 @@ import org.osgi.framework.startlevel.BundleStartLevel;
 import org.osgi.framework.startlevel.FrameworkStartLevel;
 import org.osgi.framework.wiring.BundleRevision;
 import org.osgi.framework.wiring.FrameworkWiring;
-import org.osgi.util.tracker.BundleTracker;
 
 import org.springframework.beans.factory.BeanIsAbstractException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -1810,42 +1810,37 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 
 		if (fileInstallBundle != null) {
-			BundleTracker<Bundle> fileInstallBundleTracker =
-				new BundleTracker<Bundle>(
-					_framework.getBundleContext(), Bundle.STARTING, null) {
+			final Bundle targetBundle = fileInstallBundle;
 
-					@Override
-					public Bundle addingBundle(
-						Bundle bundle, BundleEvent event) {
+			BundleListener bundleListener = event -> {
+				if (event.getType() != BundleEvent.STARTING) {
+					return;
+				}
 
-						if (Objects.equals(
-								bundle.getSymbolicName(),
-								"org.apache.felix.fileinstall")) {
+				Bundle bundle = event.getBundle();
 
-							try {
-								_registerDynamicBundles(
-									dynamicBundleChecksums,
-									bundle.getBundleContext());
-							}
-							catch (Exception e) {
-								_log.error(
-									"Unable to register dynamic bundle " +
-										"checksums",
-									e);
-							}
-							finally {
-								close();
-							}
-						}
+				if (bundle != targetBundle) {
+					return;
+				}
 
-						return null;
-					}
+				try {
+					_registerDynamicBundles(
+						dynamicBundleChecksums, bundle.getBundleContext());
+				}
+				catch (Exception e) {
+					_log.error(
+						"Unable to register dynamic bundle checksums", e);
+				}
+			};
 
-				};
+			bundleContext.addBundleListener(bundleListener);
 
-			fileInstallBundleTracker.open();
-
-			fileInstallBundle.start();
+			try {
+				fileInstallBundle.start();
+			}
+			finally {
+				bundleContext.removeBundleListener(bundleListener);
+			}
 		}
 
 		if (_log.isInfoEnabled()) {

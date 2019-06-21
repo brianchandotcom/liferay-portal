@@ -1,3 +1,8 @@
+dependencies {
+	compileOnly group: "com.liferay", name: "com.liferay.project.templates", version: "4.2.25"
+	compileOnly group: "org.apache.maven.archetype", name: "archetype-common", version: "2.4"
+}
+
 import groovy.transform.Immutable
 import groovy.transform.ToString
 

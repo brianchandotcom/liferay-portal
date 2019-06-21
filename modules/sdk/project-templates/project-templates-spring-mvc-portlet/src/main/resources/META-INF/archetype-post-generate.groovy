@@ -25,7 +25,7 @@ Path buildGradlePath = projectPath.resolve("build.gradle")
 
 Files.deleteIfExists buildGradlePath
 
-def buildDir = new File(request.outputDirectory, request.artifactId)
+def buildDir = projectPath.toFile()
 def viewsDir = new File(buildDir, "src/main/webapp/WEB-INF/views")
 def spring4JavaPkgDir = new File(buildDir, "src/main/java/" + request.properties["package"].replaceAll("[.]", "/") + "/spring4")
 

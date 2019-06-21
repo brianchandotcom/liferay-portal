@@ -41,6 +41,10 @@ definition {
 			var portletId = "com_liferay_asset_categories_navigation_web_portlet_AssetCategoriesNavigationPortlet";
 		} else if ("${widgetName}" == "Documents and Media") {
 			var portletId = "com_liferay_document_library_web_portlet_DLPortlet";
+		} else if ("${widgetName}" == "Knowledge Base Article") {
+			var portletId = "com_liferay_knowledge_base_web_portlet_ArticlePortlet";
+		} else if ("${widgetName}" == "Knowledge Base Display") {
+			var portletId = "com_liferay_knowledge_base_web_portlet_DisplayPortlet";
 		} else if ("${widgetName}" == "Language Selector") {
 			var portletId = "com_liferay_site_navigation_language_web_portlet_SiteNavigationLanguagePortlet";
 		} else if ("${widgetName}" == "Media Gallery") {

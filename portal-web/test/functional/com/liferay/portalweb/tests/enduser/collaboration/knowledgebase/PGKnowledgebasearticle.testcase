@@ -5,32 +5,23 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Knowledge Base";
-	var pageName = "Knowledge Base Article Page";
-	var portletName = "Knowledge Base Article";
 
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Knowledge Base Article Page");
 
-		SitePages.addPublicPage(
-			pageName = "${pageName}",
-			sitePageType = "Widget Page");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Knowledge Base Article Page",
+			widgetName = "Knowledge Base Article");
 
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "${pageName}",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
-
-		Navigator.gotoPage(pageName = "${pageName}");
-
-		Portlet.addPG(portletName = "${portletName}");
+		Navigator.gotoPage(pageName = "Knowledge Base Article Page");
 	}
 
 	tearDown {

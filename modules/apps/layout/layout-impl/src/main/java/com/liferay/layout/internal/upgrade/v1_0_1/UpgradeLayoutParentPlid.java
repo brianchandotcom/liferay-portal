@@ -35,12 +35,10 @@ public class UpgradeLayoutParentPlid extends UpgradeProcess {
 		runSQL("create unique index IX_TEMP on TEMP (plid)");
 
 		runSQL(
-			"update Layout set parentPlid = (select parentPlid from TEMP " +
-				"where Layout.plid = TEMP.plid)");
+			"update Layout set parentPlid = (select coalesce(parentPlid, 0) " +
+				"from TEMP where Layout.plid = TEMP.plid)");
 
 		runSQL("drop table TEMP");
-
-		runSQL("update Layout set parentPlid = 0 where parentPlid is null");
 	}
 
 }

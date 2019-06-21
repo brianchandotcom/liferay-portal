@@ -530,7 +530,8 @@ public class ProjectTemplatesTest {
 
 		_testBuildTemplateWithWorkspace(
 			"content-targeting-report", "foo-bar",
-			"build/libs/foo.bar-1.0.0.jar", "--liferay-version", "7.1");
+			"build/libs/foo.bar-1.0.0.jar", "--liferay-version", "7.1",
+			"--dependency-management-enabled");
 	}
 
 	@Test
@@ -580,7 +581,7 @@ public class ProjectTemplatesTest {
 
 		_testBuildTemplateWithWorkspace(
 			"content-targeting-rule", "foo-bar", "build/libs/foo.bar-1.0.0.jar",
-			"--liferay-version", "7.1");
+			"--liferay-version", "7.1", "--dependency-management-enabled");
 	}
 
 	@Test
@@ -639,7 +640,8 @@ public class ProjectTemplatesTest {
 
 		_testBuildTemplateWithWorkspace(
 			"content-targeting-tracking-action", "foo-bar",
-			"build/libs/foo.bar-1.0.0.jar", "--liferay-version", "7.1");
+			"build/libs/foo.bar-1.0.0.jar", "--liferay-version", "7.1",
+			"--dependency-management-enabled");
 	}
 
 	@Test
@@ -903,7 +905,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateFormFieldInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"form-field", "foobar", "build/libs/foobar-1.0.0.jar",
-			"--liferay-version", "7.1");
+			"--liferay-version", "7.1", "--dependency-management-enabled");
 	}
 
 	@Test
@@ -972,7 +974,8 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateWithWorkspace(
-			"freemarker-portlet", "foo", "build/libs/foo-1.0.0.jar");
+			"freemarker-portlet", "foo", "build/libs/foo-1.0.0.jar",
+			"--dependency-management-enabled");
 	}
 
 	@Test
@@ -982,7 +985,6 @@ public class ProjectTemplatesTest {
 		File gradleProjectDir = _testBuildTemplatePortletWithPackage70(
 			"freemarker-portlet", "FreeMarkerPortlet", "templates/init.ftl",
 			"templates/view.ftl");
-
 		_testStartsWith(
 			gradleProjectDir, "src/main/resources/templates/view.ftl",
 			_FREEMARKER_PORTLET_VIEW_FTL_PREFIX);
@@ -1096,7 +1098,8 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			null, "hello-world-portlet",
-			"build/libs/hello.world.portlet-1.0.0.jar");
+			"build/libs/hello.world.portlet-1.0.0.jar",
+			"--dependency-management-enabled");
 	}
 
 	@Test

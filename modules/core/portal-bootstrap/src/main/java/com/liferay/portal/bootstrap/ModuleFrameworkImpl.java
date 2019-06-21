@@ -1669,19 +1669,18 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			List<Future<Void>> futures = new ArrayList<>(bundles.size());
 
 			for (final Bundle bundle : bundles.values()) {
-				if (!_isFragmentBundle(bundle)) {
+				if (!_isFragmentBundle(bundle) &&
+					!Objects.equals(
+						bundle.getSymbolicName(),
+						"org.apache.felix.fileinstall")) {
+
 					futures.add(
 						executorService.submit(
 							new Callable<Void>() {
 
 								@Override
 								public Void call() throws BundleException {
-									if (!Objects.equals(
-											bundle.getSymbolicName(),
-											"org.apache.felix.fileinstall")) {
-
-										bundle.start();
-									}
+									bundle.start();
 
 									return null;
 								}

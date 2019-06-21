@@ -4,7 +4,6 @@ dependencies {
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.9.9"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	compileOnly group: "io.github.graphql-java", name: "graphql-java-annotations", version: "7.0"
 	compileOnly group: "io.swagger.core.v3", name: "swagger-annotations", version: "2.0.5"
 	compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	compileOnly group: "javax.validation", name: "validation-api", version: "2.0.1.Final"

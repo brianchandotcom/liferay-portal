@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.asah.connector.internal.cache.AsahInterestTermCache;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClient;
-import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientUtil;
+import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientFactory;
 import com.liferay.segments.asah.connector.internal.client.model.Results;
 import com.liferay.segments.asah.connector.internal.client.model.Topic;
 
@@ -50,7 +50,7 @@ public class InterestTermsChecker {
 
 		if (_asahFaroBackendClient == null) {
 			Optional<AsahFaroBackendClient> asahFaroBackendClientOptional =
-				_asahFaroBackendClientUtil.createAsahFaroBackendClient();
+				_asahFaroBackendClientFactory.createAsahFaroBackendClient();
 
 			if (!asahFaroBackendClientOptional.isPresent()) {
 				return;
@@ -120,7 +120,7 @@ public class InterestTermsChecker {
 	private AsahFaroBackendClient _asahFaroBackendClient;
 
 	@Reference
-	private AsahFaroBackendClientUtil _asahFaroBackendClientUtil;
+	private AsahFaroBackendClientFactory _asahFaroBackendClientFactory;
 
 	@Reference
 	private AsahInterestTermCache _asahInterestTermCache;

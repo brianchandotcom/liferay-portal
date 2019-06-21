@@ -34,8 +34,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sarai Díaz
  */
-@Component(immediate = true, service = AsahFaroBackendClientUtil.class)
-public class AsahFaroBackendClientUtil {
+@Component(immediate = true, service = AsahFaroBackendClientFactory.class)
+public class AsahFaroBackendClientFactory {
 
 	public Optional<AsahFaroBackendClient> createAsahFaroBackendClient() {
 		Company company = _companyLocalService.fetchCompany(
@@ -72,7 +72,7 @@ public class AsahFaroBackendClientUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AsahFaroBackendClientUtil.class);
+		AsahFaroBackendClientFactory.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

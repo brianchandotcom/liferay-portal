@@ -67,7 +67,7 @@ public class DDLServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register("1.1.0", "1.1.1", new UpgradeVersionUserId());
 
 		registry.register(
-			"1.1.0", "2.0.0",
+			"1.1.1", "2.0.0",
 			new BaseUpgradeSQLServerDatetime(
 				new Class<?>[] {
 					DDLRecordSetTable.class, DDLRecordSetVersionTable.class,

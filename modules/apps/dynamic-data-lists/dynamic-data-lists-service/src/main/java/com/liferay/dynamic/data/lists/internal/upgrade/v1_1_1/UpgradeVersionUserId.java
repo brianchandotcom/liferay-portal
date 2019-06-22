@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.lists.internal.upgrade.v1_1_1;
 
 import com.liferay.dynamic.data.lists.internal.upgrade.v1_1_1.util.DDLRecordSetTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Christopher Kian

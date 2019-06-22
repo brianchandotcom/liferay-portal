@@ -46,17 +46,6 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="update-jboss-java-opts">
-		<sequential>
-			<replace
-				dir="${app.server.jboss.dir}/bin"
-				includes="*.bat,*.conf"
-				token="-Xmx512m"
-				value="-Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=768m -XX:MetaspaceSize=768m -XX:NewSize=1536m -XX:SurvivorRatio=7"
-			/>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="update-plugins-includes-plugin">
 		<attribute name="plugins.includes.plugin.bundle" />
 		<attribute name="plugins.includes.plugin.dependent-apps" />
@@ -122,8 +111,6 @@
 		<antcall inheritAll="false" target="update-sdk-properties" />
 
 		<antcall inheritAll="false" target="unzip-jboss" />
-
-		<update-jboss-java-opts />
 
 		<delete dir="${project.dir}/portal-web/classes" />
 
@@ -865,8 +852,6 @@ this task.
 					<replacevalue><![CDATA[JAVA_OPTS="]]></replacevalue>
 				</replace>
 
-				<echo append="true" file="${app.server.jboss.bin.dir}/standalone.conf">${line.separator}<![CDATA[JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=768m -XX:MetaspaceSize=768m -XX:NewSize=1536m -XX:SurvivorRatio=7"]]></echo>
-
 				<replace
 					file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
 				>
@@ -914,8 +899,6 @@ this task.
 						<replacevalue><![CDATA[JAVA_OPTS="]]></replacevalue>
 					</replace>
 
-					<echo append="true" file="${app.server.jboss.bin.dir}/standalone.conf">${line.separator}<![CDATA[JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=768m -XX:MetaspaceSize=768m -XX:NewSize=1536m -XX:SurvivorRatio=7"]]></echo>
-
 					<replace
 						file="${app.server.jboss.instance.dir}/configuration/standalone.xml"
 					>
@@ -957,6 +940,8 @@ this task.
 			</elseif>
 		</if>
 
+		<echo append="true" file="${app.server.jboss.bin.dir}/standalone.conf">${line.separator}JAVA_OPTS=${app.server.jboss.jvm.args} ${app.server.jboss.jvm.mem}</echo>
+
 		<replace
 			file="${app.server.jboss.bin.dir}/standalone.conf.bat"
 		>
@@ -969,11 +954,7 @@ this task.
 		>
 			<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
 			<replacevalue>
-				<![CDATA[
-					set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=768m -XX:MetaspaceSize=768m -XX:NewSize=1536m -XX:SurvivorRatio=7"
-
-					:JAVA_OPTS_SET
-				]]>
+				set "JAVA_OPTS=%JAVA_OPTS% ${app.server.jboss.jvm.args} ${app.server.jboss.jvm.mem}":JAVA_OPTS_SET
 			</replacevalue>
 		</replace>
 

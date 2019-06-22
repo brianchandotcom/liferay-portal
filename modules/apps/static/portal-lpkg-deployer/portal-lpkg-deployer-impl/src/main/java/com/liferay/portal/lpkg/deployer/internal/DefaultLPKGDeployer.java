@@ -315,12 +315,17 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 			}
 		}
 
-		_lpkgBundleTracker = new BundleTracker<>(
-			bundleContext, ~Bundle.UNINSTALLED,
+		LPKGBundleTrackerCustomizer lpkgBundleTrackerCustomizer =
 			new LPKGBundleTrackerCustomizer(
-				bundleContext, _urls, _toFileNames(jarFiles, warFiles)));
+				bundleContext, _urls, _toFileNames(jarFiles, warFiles));
+
+		_lpkgBundleTracker = new BundleTracker<>(
+			bundleContext, ~Bundle.UNINSTALLED, lpkgBundleTrackerCustomizer);
 
 		_lpkgBundleTracker.open();
+
+		lpkgBundleTrackerCustomizer.cleanTrackedBundles(
+			_lpkgBundleTracker.getBundles());
 
 		List<File> lpkgFiles = _scanFiles(_deploymentDirPath, ".lpkg", false);
 

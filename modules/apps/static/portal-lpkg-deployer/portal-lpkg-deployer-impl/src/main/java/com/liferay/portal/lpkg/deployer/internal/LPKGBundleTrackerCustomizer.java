@@ -348,6 +348,32 @@ public class LPKGBundleTrackerCustomizer
 		return new ArrayList<>(bundles);
 	}
 
+	public void cleanTrackedBundles(Bundle[] bundles) throws IOException {
+		if (bundles == null) {
+			return;
+		}
+
+		Set<String> symbolicNames = new HashSet<>();
+
+		for (Bundle bundle : bundles) {
+			symbolicNames.add(bundle.getSymbolicName());
+		}
+
+		Set<String> propertyNames = _properties.stringPropertyNames();
+
+		for (String propertyName : propertyNames) {
+			if (!symbolicNames.contains(propertyName)) {
+				_properties.remove(propertyName);
+			}
+		}
+
+		if (!propertyNames.equals(_properties.stringPropertyNames())) {
+			try (OutputStream outputStream = new FileOutputStream(_dataFile)) {
+				_properties.store(outputStream, null);
+			}
+		}
+	}
+
 	@Override
 	public void modifiedBundle(
 		Bundle bundle, BundleEvent bundleEvent, List<Bundle> bundles) {

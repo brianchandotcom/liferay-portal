@@ -73,9 +73,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
-import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Dictionary;
@@ -396,9 +394,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		_setUpPrerequisiteFrameworkServices(_framework.getBundleContext());
 
-		Map.Entry<Bundle, Set<Bundle>> initialBundles = _setUpInitialBundles();
+		Bundle fileInstallBundle = _setUpInitialBundles();
 
-		_startDynamicBundles(initialBundles);
+		_startDynamicBundles(fileInstallBundle);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -1170,6 +1168,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				bundleStartLevel.setStartLevel(
 					PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL);
 
+				if (!_isFragmentBundle(bundle)) {
+					bundle.start();
+				}
+
 				checksums.put(
 					bundle.getBundleId() + _CHECKSUM_SUFFIX,
 					_calculateChecksum(file));
@@ -1410,9 +1412,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
-	private Map.Entry<Bundle, Set<Bundle>> _setUpInitialBundles()
-		throws Exception {
-
+	private Bundle _setUpInitialBundles() throws Exception {
 		if (_log.isInfoEnabled()) {
 			_log.info("Starting initial bundles");
 		}
@@ -1605,8 +1605,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 		}
 
-		Bundle[] initialBundles = bundleContext.getBundles();
-
 		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
 			FrameworkStartLevel.class);
 
@@ -1702,8 +1700,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			_log.info("Started initial bundles");
 		}
 
-		return new AbstractMap.SimpleImmutableEntry<>(
-			fileInstallBundle, new HashSet<>(Arrays.asList(initialBundles)));
+		return fileInstallBundle;
 	}
 
 	private void _setUpPrerequisiteFrameworkServices(
@@ -1731,8 +1728,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
-	private void _startDynamicBundles(
-			Map.Entry<Bundle, Set<Bundle>> installedBundles)
+	private void _startDynamicBundles(Bundle fileInstallBundle)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -1764,53 +1760,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			ReflectionUtil.throwException(frameworkEvent.getThrowable());
 		}
 
-		BundleContext bundleContext = _framework.getBundleContext();
-
-		Set<Bundle> initialBundles = installedBundles.getValue();
-
-		for (Bundle bundle : bundleContext.getBundles()) {
-			if (initialBundles.contains(bundle) ||
-				((bundle.getState() != Bundle.INSTALLED) &&
-				 (bundle.getState() != Bundle.RESOLVED))) {
-
-				continue;
-			}
-
-			BundleRevision bundleRevision = bundle.adapt(BundleRevision.class);
-
-			if ((bundleRevision.getTypes() & BundleRevision.TYPE_FRAGMENT) !=
-					0) {
-
-				continue;
-			}
-
-			BundleStartLevel bundleStartLevel = bundle.adapt(
-				BundleStartLevel.class);
-
-			if (bundleStartLevel.getStartLevel() ==
-					PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL) {
-
-				try {
-					bundle.start();
-				}
-				catch (BundleException be) {
-					String message = be.getMessage();
-
-					if (message.endsWith(
-							"Bundle was filtered by a resolver hook.\n")) {
-
-						continue;
-					}
-
-					_log.error(
-						"Unable to start bundle " + bundle.getSymbolicName(),
-						be);
-				}
-			}
-		}
-
-		Bundle fileInstallBundle = installedBundles.getKey();
-
 		if (dynamicBundleChecksums.isEmpty()) {
 			fileInstallBundle.start();
 		}
@@ -1836,6 +1785,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 						"Unable to register dynamic bundle checksums", e);
 				}
 			};
+
+			BundleContext bundleContext = _framework.getBundleContext();
 
 			bundleContext.addBundleListener(synchronousBundleListener);
 

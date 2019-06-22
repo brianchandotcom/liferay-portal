@@ -1,1 +1,0 @@
-alter table DDLRecordSet modify versionUserId LONG;

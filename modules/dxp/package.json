@@ -1,9 +1,13 @@
 {
 	"devDependencies": {
+		"jsdoc": "3.5.5",
 		"karma": "4.0.0",
 		"liferay-jest-junit-reporter": "1.0.1",
 		"liferay-karma-alloy-config": "0.0.15",
-		"liferay-karma-config": "0.0.3"
+		"liferay-karma-config": "0.0.3",
+		"liferay-npm-bundler": "2.7.1",
+		"liferay-npm-bundler-preset-standard": "2.7.1",
+		"liferay-npm-scripts": "3.1.0"
 	},
 	"private": true,
 	"scripts": {

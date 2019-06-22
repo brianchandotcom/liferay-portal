@@ -1162,6 +1162,18 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				Bundle bundle = bundleContext.installBundle(
 					location, inputStream);
 
+				checksums.put(
+					bundle.getBundleId() + _CHECKSUM_SUFFIX,
+					_calculateChecksum(file));
+
+				if ((bundle.getState() != Bundle.INSTALLED) &&
+					(bundle.getState() != Bundle.RESOLVED)) {
+
+					// Defense for bundle blacklist auto uninstall.
+
+					continue;
+				}
+
 				BundleStartLevel bundleStartLevel = bundle.adapt(
 					BundleStartLevel.class);
 
@@ -1171,10 +1183,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				if (!_isFragmentBundle(bundle)) {
 					bundle.start();
 				}
-
-				checksums.put(
-					bundle.getBundleId() + _CHECKSUM_SUFFIX,
-					_calculateChecksum(file));
 			}
 			catch (BundleException be) {
 				_log.error("Unable to install bundle at " + location, be);

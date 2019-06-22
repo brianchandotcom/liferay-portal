@@ -357,24 +357,23 @@ public class LPKGBundleTrackerCustomizer
 			return;
 		}
 
-		Set<String> symbolicNames = new HashSet<>();
+		Set<String> propertyNames = new HashSet<>(
+			_properties.stringPropertyNames());
 
 		for (Bundle bundle : bundles) {
-			symbolicNames.add(bundle.getSymbolicName());
+			propertyNames.remove(bundle.getSymbolicName());
 		}
 
-		Set<String> propertyNames = _properties.stringPropertyNames();
+		if (!propertyNames.isEmpty()) {
+			return;
+		}
 
 		for (String propertyName : propertyNames) {
-			if (!symbolicNames.contains(propertyName)) {
-				_properties.remove(propertyName);
-			}
+			_properties.remove(propertyName);
 		}
 
-		if (!propertyNames.equals(_properties.stringPropertyNames())) {
-			try (OutputStream outputStream = new FileOutputStream(_dataFile)) {
-				_properties.store(outputStream, null);
-			}
+		try (OutputStream outputStream = new FileOutputStream(_dataFile)) {
+			_properties.store(outputStream, null);
 		}
 	}
 

@@ -1162,6 +1162,14 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				Bundle bundle = bundleContext.installBundle(
 					location, inputStream);
 
+				if ((bundle.getState() != Bundle.INSTALLED) &&
+					(bundle.getState() != Bundle.RESOLVED)) {
+
+					// Defense for bundle blacklist auto uninstall.
+
+					continue;
+				}
+
 				BundleStartLevel bundleStartLevel = bundle.adapt(
 					BundleStartLevel.class);
 

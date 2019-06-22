@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import Icon from '../Icon';
 import React from 'react';
 import TabItem from './TabItem';
@@ -13,14 +12,12 @@ class Tabs extends React.Component {
 		};
 	}
 
-	@autobind
 	hideNavbar() {
 		this.setState({
 			expanded: false
 		});
 	}
 
-	@autobind
 	toggleExpanded() {
 		this.setState({
 			expanded: !this.state.expanded
@@ -53,7 +50,7 @@ class Tabs extends React.Component {
 						aria-expanded={expanded}
 						aria-label={Liferay.Language.get('toggle-navigation')}
 						className={`${togglerClassName} navbar-toggler navbar-toggler-link`}
-						onClick={this.toggleExpanded}
+						onClick={this.toggleExpanded.bind(this)}
 					>
 						{activeTab.name}
 
@@ -69,7 +66,7 @@ class Tabs extends React.Component {
 									<li
 										className='nav-item'
 										key={index}
-										onClick={this.hideNavbar}
+										onClick={this.hideNavbar.bind(this)}
 									>
 										<TabItem
 											{...tab}

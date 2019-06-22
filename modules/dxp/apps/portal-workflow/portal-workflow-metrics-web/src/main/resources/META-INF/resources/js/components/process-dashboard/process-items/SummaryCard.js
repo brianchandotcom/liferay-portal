@@ -1,6 +1,5 @@
 import {filterKeys, processStatusKeys} from '../instance-list/filterConstants';
 import {AppContext} from '../../AppContext';
-import autobind from 'autobind-decorator';
 import {ChildLink} from '../../../shared/components/router/routerWrapper';
 import {formatNumber} from '../../../shared/util/numeral';
 import {getPercentage} from '../../../shared/util/util';
@@ -51,12 +50,10 @@ class SummaryCard extends React.Component {
 		return filterParams;
 	}
 
-	@autobind
 	handleMouseOver(evt, callback) {
 		this.setState({hovered: true}, callback);
 	}
 
-	@autobind
 	handleMouseOut(evt, callback) {
 		this.setState({hovered: false}, callback);
 	}
@@ -93,8 +90,8 @@ class SummaryCard extends React.Component {
 		return (
 			<ChildLink
 				className={`${disabledClassName} process-dashboard-summary-card`}
-				onMouseOut={this.handleMouseOut}
-				onMouseOver={this.handleMouseOver}
+				onMouseOut={this.handleMouseOut.bind(this)}
+				onMouseOver={this.handleMouseOver.bind(this)}
 				query={{filters: this.getFiltersQuery(slaStatusFilter)}}
 				to={instancesListPath}
 			>

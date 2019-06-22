@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import Icon from './Icon';
 import React from 'react';
 
@@ -18,11 +17,17 @@ export default class MultiSelect extends React.Component {
 	}
 
 	componentDidMount() {
-		document.addEventListener('mousedown', this.handleClickOutside);
+		document.addEventListener(
+			'mousedown',
+			this.handleClickOutside.bind(this)
+		);
 	}
 
 	componentWillUnmount() {
-		document.removeEventListener('mousedown', this.handleClickOutside);
+		document.removeEventListener(
+			'mousedown',
+			this.handleClickOutside.bind(this)
+		);
 	}
 
 	addTag(tagId) {
@@ -42,14 +47,12 @@ export default class MultiSelect extends React.Component {
 		);
 	}
 
-	@autobind
 	cancelDropList() {
 		const event = new Event('mousedown', {bubbles: true});
 
 		this.wrapperRef.dispatchEvent(event);
 	}
 
-	@autobind
 	changeSearch(event) {
 		const {
 			target: {value: searchKey}
@@ -80,19 +83,16 @@ export default class MultiSelect extends React.Component {
 		return data.filter(node => selectedTagsId.includes(`${node[fieldId]}`));
 	}
 
-	@autobind
 	handleClickOutside(event) {
 		if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
 			this.hideDropList();
 		}
 	}
 
-	@autobind
 	hideDropList() {
 		this.setState({active: false, highlighted: false});
 	}
 
-	@autobind
 	onSearch(event) {
 		const dataFiltered = this.dataFiltered;
 		const {fieldId = 'id'} = this.props;
@@ -113,23 +113,19 @@ export default class MultiSelect extends React.Component {
 				verticalIndex < 0
 					? 0
 					: verticalIndex + 1 > dataCount
-						? dataCount - 1
-						: verticalIndex;
+					? dataCount - 1
+					: verticalIndex;
 
 			this.setState({verticalIndex});
-		}
-		else if (keyCode === keyEnter && verticalIndex > -1) {
+		} else if (keyCode === keyEnter && verticalIndex > -1) {
 			this.addTag(`${dataFiltered[verticalIndex][fieldId]}`);
-		}
-		else if (keyCode === keyEscape) {
+		} else if (keyCode === keyEscape) {
 			this.setState({active: false});
-		}
-		else if (![keyTab, keyEnter].includes(keyCode)) {
+		} else if (![keyTab, keyEnter].includes(keyCode)) {
 			this.showDropList({active: true});
 		}
 	}
 
-	@autobind
 	removeTag(event) {
 		const tagIndex = Number(
 			event.currentTarget.getAttribute('data-tag-index')
@@ -143,34 +139,28 @@ export default class MultiSelect extends React.Component {
 		}
 	}
 
-	@autobind
 	selectTag(event) {
 		this.addTag(event.currentTarget.getAttribute('data-tag-id'));
 	}
 
-	@autobind
 	setInputRef(inputRef) {
 		this.inputRef = inputRef;
 	}
 
-	@autobind
 	setWrapperRef(wrapperRef) {
 		this.wrapperRef = wrapperRef;
 	}
 
-	@autobind
 	showDropList() {
 		this.setState({active: true, highlighted: true});
 	}
 
-	@autobind
 	toggleDropList() {
 		const {active} = this.state;
 
 		if (!active) {
 			this.inputRef.focus();
-		}
-		else {
+		} else {
 			this.setState({active: !active});
 		}
 	}
@@ -204,7 +194,7 @@ export default class MultiSelect extends React.Component {
 						className='close'
 						data-tag-id={`${tagId}`}
 						data-tag-index={`${tagIndex}`}
-						onClick={this.removeTag}
+						onClick={this.removeTag.bind(this)}
 						tabIndex='-1'
 						type='button'
 					>
@@ -222,8 +212,8 @@ export default class MultiSelect extends React.Component {
 		return (
 			<div
 				className={className}
-				onFocus={this.cancelDropList}
-				ref={this.setWrapperRef}
+				onFocus={this.cancelDropList.bind(this)}
+				ref={this.setWrapperRef.bind(this)}
 			>
 				<div className='col-11 p-0 d-flex flex-wrap'>
 					{selectedTags.map((node, index) =>
@@ -232,11 +222,11 @@ export default class MultiSelect extends React.Component {
 
 					<input
 						className='form-control-inset'
-						onChange={this.changeSearch}
-						onFocus={this.showDropList}
-						onKeyUp={this.onSearch}
+						onChange={this.changeSearch.bind(this)}
+						onFocus={this.showDropList.bind(this)}
+						onKeyUp={this.onSearch.bind(this)}
 						placeholder={placeholder}
-						ref={this.setInputRef}
+						ref={this.setInputRef.bind(this)}
 						type='text'
 						value={searchKey}
 					/>
@@ -244,7 +234,7 @@ export default class MultiSelect extends React.Component {
 
 				<div
 					className='col-1 drop-icon mt-1 text-right'
-					onClick={this.toggleDropList}
+					onClick={this.toggleDropList.bind(this)}
 				>
 					<Icon iconName='caret-double' />
 				</div>
@@ -259,7 +249,7 @@ export default class MultiSelect extends React.Component {
 								<li
 									data-tag-id={`${node[fieldId]}`}
 									key={index}
-									onClick={this.selectTag}
+									onClick={this.selectTag.bind(this)}
 									tabIndex='-1'
 								>
 									<a
@@ -271,7 +261,11 @@ export default class MultiSelect extends React.Component {
 										data-senna-off
 										href='javascript:;'
 										{...(isLast(index)
-											? {onBlur: this.hideDropList}
+											? {
+													onBlur: this.hideDropList.bind(
+														this
+													)
+											  }
 											: {})}
 										tabIndex='-1'
 									>

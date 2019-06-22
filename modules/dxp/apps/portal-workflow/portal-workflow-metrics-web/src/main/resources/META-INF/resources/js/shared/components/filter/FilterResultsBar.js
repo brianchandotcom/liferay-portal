@@ -2,14 +2,12 @@ import {
 	pushToHistory,
 	removeFilters
 } from '../../../shared/components/filter/util/filterUtil';
-import autobind from 'autobind-decorator';
 import FilterResultsItem from './FilterResultsItem';
 import React from 'react';
 import {sub} from '../../../shared/util/lang';
 import {withRouter} from 'react-router-dom';
 
 class FilterResultsBar extends React.Component {
-	@autobind
 	onClearAllButtonClick() {
 		const {
 			location: {search}
@@ -75,7 +73,9 @@ class FilterResultsBar extends React.Component {
 							<div className='tbar-section text-right'>
 								<button
 									className='btn btn-unstyled component-link tbar-link'
-									onClick={this.onClearAllButtonClick}
+									onClick={this.onClearAllButtonClick.bind(
+										this
+									)}
 									type='button'
 								>
 									{Liferay.Language.get('clear-all')}

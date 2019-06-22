@@ -1,25 +1,14 @@
 {
-    "plugins": [
-        [
-            "@babel/plugin-proposal-decorators",
-            {
-                "legacy": true
-            }
-        ],
-        [
-            "module-resolver",
-            {
-                "alias": {
-                    "shared": "./shared",
-                },
-                "root": [
-                    "./src/main/resources/META-INF/resources/js"
-                ]
-            }
-        ],
-    ],
-    "presets": [
-        "@babel/preset-env",
-        "@babel/preset-react"
-    ]
+	"plugins": [
+		[
+			"module-resolver",
+			{
+				"alias": {
+					"shared": "./shared"
+				},
+				"root": ["./src/main/resources/META-INF/resources/js"]
+			}
+		]
+	],
+	"presets": ["@babel/preset-env", "@babel/preset-react"]
 }

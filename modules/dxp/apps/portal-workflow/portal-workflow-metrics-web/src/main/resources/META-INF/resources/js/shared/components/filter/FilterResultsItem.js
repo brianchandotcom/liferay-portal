@@ -2,13 +2,11 @@ import {
 	pushToHistory,
 	removeItem
 } from '../../../shared/components/filter/util/filterUtil';
-import autobind from 'autobind-decorator';
 import Icon from '../../../shared/components/Icon';
 import React from 'react';
 import {withRouter} from 'react-router-dom';
 
 class FilterResultsItem extends React.Component {
-	@autobind
 	onRemoveButtonClick() {
 		const {
 			filter,
@@ -41,7 +39,7 @@ class FilterResultsItem extends React.Component {
 							<button
 								aria-label='close'
 								className='btn close'
-								onClick={this.onRemoveButtonClick}
+								onClick={this.onRemoveButtonClick.bind(this)}
 								type='button'
 							>
 								<Icon iconName='times' />

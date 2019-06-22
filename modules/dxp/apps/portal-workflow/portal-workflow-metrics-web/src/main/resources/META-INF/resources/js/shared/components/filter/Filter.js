@@ -1,5 +1,4 @@
 import {getSelectedItemsQuery, pushToHistory} from './util/filterUtil';
-import autobind from 'autobind-decorator';
 import FilterItem from './FilterItem';
 import FilterSearch from './FilterSearch';
 import getClassName from 'classnames';
@@ -25,11 +24,14 @@ class Filter extends React.Component {
 	componentDidMount() {
 		this.selectDefaultItem(this.props);
 
-		document.addEventListener('mousedown', this.onClickOutside);
+		document.addEventListener('mousedown', this.onClickOutside.bind(this));
 	}
 
 	componentWillUnmount() {
-		document.removeEventListener('mousedown', this.onClickOutside);
+		document.removeEventListener(
+			'mousedown',
+			this.onClickOutside.bind(this)
+		);
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -68,7 +70,6 @@ class Filter extends React.Component {
 		return getSelectedItemsQuery(items, filterKey, search);
 	}
 
-	@autobind
 	onInputChange({target}) {
 		const {items} = this.state;
 		const {multiple} = this.props;
@@ -92,7 +93,6 @@ class Filter extends React.Component {
 		this.itemChanged = true;
 	}
 
-	@autobind
 	onClickOutside(event) {
 		const clickOutside =
 			this.wrapperRef && !this.wrapperRef.contains(event.target);
@@ -108,7 +108,6 @@ class Filter extends React.Component {
 		}
 	}
 
-	@autobind
 	onSearchChange({target}) {
 		this.setState({
 			searchTerm: target.value
@@ -144,7 +143,6 @@ class Filter extends React.Component {
 		});
 	}
 
-	@autobind
 	setWrapperRef(wrapperRef) {
 		this.wrapperRef = wrapperRef;
 	}
@@ -160,7 +158,10 @@ class Filter extends React.Component {
 		);
 
 		return (
-			<li className='dropdown nav-item' ref={this.setWrapperRef}>
+			<li
+				className='dropdown nav-item'
+				ref={this.setWrapperRef.bind(this)}
+			>
 				<button
 					aria-expanded={expanded}
 					aria-haspopup='true'
@@ -176,7 +177,7 @@ class Filter extends React.Component {
 				<div className={className} role='menu'>
 					<FilterSearch
 						filteredItems={this.filteredItems}
-						onChange={this.onSearchChange}
+						onChange={this.onSearchChange.bind(this)}
 						totalCount={items.length}
 					>
 						<ul className='list-unstyled'>
@@ -187,7 +188,7 @@ class Filter extends React.Component {
 									itemKey={item.key}
 									key={index}
 									multiple={multiple}
-									onChange={this.onInputChange}
+									onChange={this.onInputChange.bind(this)}
 								/>
 							))}
 						</ul>

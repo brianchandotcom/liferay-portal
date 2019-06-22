@@ -16,36 +16,6 @@
 		"string.prototype.startswith": "0.2.0",
 		"text-mask-addons": "3.8.0"
 	},
-	"devDependencies": {
-		"@babel/cli": "7.4.4",
-		"@babel/core": "7.4.5",
-		"@babel/plugin-proposal-decorators": "7.4.0",
-		"@babel/preset-env": "7.4.5",
-		"@babel/preset-react": "7.0.0",
-		"babel-jest": "24.8.0",
-		"babel-plugin-module-resolver": "3.2.0",
-		"check-source-formatting": "2.0.14",
-		"copyfiles": "2.1.0",
-		"cross-env": "5.2.0",
-		"enzyme": "3.10.0",
-		"enzyme-adapter-react-16": "1.14.0",
-		"enzyme-to-json": "3.3.5",
-		"eslint": "5.14.1",
-		"eslint-config-liferay": "3.0.0",
-		"eslint-plugin-react": "7.12.4",
-		"eslint-plugin-wyze": "3.4.0",
-		"jest": "24.8.0",
-		"jest-canvas-mock": "1.1.0",
-		"jest-extended": "0.11.1",
-		"jsdoc": "3.5.5",
-		"jsdoc-export-default-interop": "0.3.1",
-		"liferay-npm-bundler": "2.6.2",
-		"liferay-npm-bundler-preset-react": "1.8.0",
-		"prettier-eslint-cli": "4.7.1",
-		"properties": "1.2.1",
-		"react-hooks-testing-library": "^0.5.1",
-		"react-test-renderer": "16.8.6"
-	},
 	"jest": {
 		"collectCoverageFrom": [
 			"src/main/resources/META-INF/resources/js/**/components/**/*.js"
@@ -78,12 +48,11 @@
 	"main": "js/index.js",
 	"name": "portal-workflow-metrics-web",
 	"scripts": {
-		"build": "babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler",
-		"csf": "csf src/main/resources/META-INF/resources/css/**/*.scss",
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
 		"doc:code": "./node_modules/.bin/jsdoc -c ./jsdoc.json",
-		"format": "prettier-eslint --write 'src/main/resources/META-INF/resources/js/**/*.js'",
-		"lint": "eslint src/main/resources/META-INF/resources/js/ && npm run csf",
-		"test": "cross-env TZ=Etc/GMT jest --coverage"
+		"format": "liferay-npm-scripts fix",
+		"test": "liferay-npm-scripts test"
 	},
 	"version": "2.0.0"
 }

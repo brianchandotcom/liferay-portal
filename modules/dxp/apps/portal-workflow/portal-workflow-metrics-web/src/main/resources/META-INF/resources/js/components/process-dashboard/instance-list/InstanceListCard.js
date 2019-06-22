@@ -1,6 +1,5 @@
 import React, {Fragment} from 'react';
 import {AppContext} from '../../AppContext';
-import autobind from 'autobind-decorator';
 import {completionPeriodKeys} from './filterConstants';
 import {getRequestUrl} from '../../../shared/components/filter/util/filterUtil';
 import {InstanceContext} from './InstanceContext';
@@ -31,7 +30,6 @@ class InstanceListCard extends React.Component {
 		this.loadInstances(nextProps);
 	}
 
-	@autobind
 	handleRequestError() {
 		this.setState({
 			error: Liferay.Language.get(
@@ -62,7 +60,7 @@ class InstanceListCard extends React.Component {
 					totalCount
 				});
 			})
-			.catch(this.handleRequestError);
+			.catch(this.handleRequestError.bind(this));
 	}
 
 	loadProcess({processId} = this.props) {
@@ -78,7 +76,7 @@ class InstanceListCard extends React.Component {
 					`${data}: ${Liferay.Language.get('all-items')}`
 				);
 			})
-			.catch(this.handleRequestError);
+			.catch(this.handleRequestError.bind(this));
 	}
 
 	requestData(endpoint) {

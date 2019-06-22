@@ -1,9 +1,7 @@
-import autobind from 'autobind-decorator';
 import getClassName from 'classnames';
 import React from 'react';
 
 export default class FilterItem extends React.Component {
-	@autobind
 	onChange(event) {
 		const {multiple, onChange} = this.props;
 
@@ -52,7 +50,7 @@ export default class FilterItem extends React.Component {
 						checked={!!active}
 						className='custom-control-input'
 						data-key={itemKey}
-						onChange={this.onChange}
+						onChange={this.onChange.bind(this)}
 					/>
 
 					<span className='custom-control-label'>

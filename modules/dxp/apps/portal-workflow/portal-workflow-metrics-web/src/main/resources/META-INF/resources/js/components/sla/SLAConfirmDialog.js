@@ -1,14 +1,11 @@
-import autobind from 'autobind-decorator';
 import React from 'react';
 import SLAListCardContext from './SLAListCardContext';
 
 class SLAConfirmDialog extends React.Component {
-	@autobind
 	cancel() {
 		this.context.hideConfirmDialog();
 	}
 
-	@autobind
 	removeItem() {
 		const {itemToRemove} = this.props;
 
@@ -34,7 +31,7 @@ class SLAConfirmDialog extends React.Component {
 									<div className='btn-group-item'>
 										<button
 											className='btn btn-secondary'
-											onClick={this.cancel}
+											onClick={this.cancel.bind(this)}
 											type='button'
 										>
 											{Liferay.Language.get('cancel')}
@@ -45,7 +42,7 @@ class SLAConfirmDialog extends React.Component {
 										<button
 											className='btn btn-secondary'
 											id='remove_sla_button'
-											onClick={this.removeItem}
+											onClick={this.removeItem.bind(this)}
 											type='button'
 										>
 											{Liferay.Language.get('ok')}

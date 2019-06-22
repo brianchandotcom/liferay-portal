@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import getCN from 'classnames';
 import React from 'react';
 
@@ -13,12 +12,10 @@ export default class Tooltip extends React.Component {
 		};
 	}
 
-	@autobind
 	hideTooltip() {
 		this.setState({displayTooltip: false});
 	}
 
-	@autobind
 	showTooltip() {
 		this.setState({displayTooltip: true});
 	}
@@ -28,7 +25,10 @@ export default class Tooltip extends React.Component {
 		const {displayTooltip} = this.state;
 
 		return (
-			<span className={CLASSNAME} onMouseLeave={this.hideTooltip}>
+			<span
+				className={CLASSNAME}
+				onMouseLeave={this.hideTooltip.bind(this)}
+			>
 				{displayTooltip && (
 					<TooltipBase
 						position={position}
@@ -39,7 +39,7 @@ export default class Tooltip extends React.Component {
 				)}
 				<span
 					className='tooltip-trigger'
-					onMouseOver={this.showTooltip}
+					onMouseOver={this.showTooltip.bind(this)}
 				>
 					{this.props.children}
 				</span>

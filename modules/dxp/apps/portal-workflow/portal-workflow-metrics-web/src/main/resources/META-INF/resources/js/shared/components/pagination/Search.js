@@ -1,5 +1,4 @@
 import {Redirect, withRouter} from 'react-router-dom';
-import autobind from 'autobind-decorator';
 import Icon from '../Icon';
 import pathToRegexp from 'path-to-regexp';
 import React from 'react';
@@ -25,12 +24,10 @@ class Search extends React.Component {
 		}
 	}
 
-	@autobind
 	handleChange(event) {
 		this.setState({value: event.target.value});
 	}
 
-	@autobind
 	handleSubmit(event) {
 		event.preventDefault();
 
@@ -65,13 +62,17 @@ class Search extends React.Component {
 		}
 
 		return (
-			<form method='GET' onSubmit={this.handleSubmit} role='search'>
+			<form
+				method='GET'
+				onSubmit={this.handleSubmit.bind(this)}
+				role='search'
+			>
 				<div className='input-group'>
 					<div className='input-group-item'>
 						<input
 							className='form-control input-group-inset input-group-inset-after'
 							disabled={disabled}
-							onChange={this.handleChange}
+							onChange={this.handleChange.bind(this)}
 							placeholder={Liferay.Language.get('search-for')}
 							type='text'
 							value={value}

@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import {ChildLink} from '../../shared/components/router/routerWrapper';
 import {formatDuration} from '../../shared/util/duration';
 import Icon from '../../shared/components/Icon';
@@ -6,7 +5,6 @@ import React from 'react';
 import SLAListCardContext from './SLAListCardContext';
 
 class SLAListItem extends React.Component {
-	@autobind
 	showConfirmDialog() {
 		const {id} = this.props;
 
@@ -101,7 +99,7 @@ class SLAListItem extends React.Component {
 							<li>
 								<button
 									className='dropdown-item'
-									onClick={this.showConfirmDialog}
+									onClick={this.showConfirmDialog.bind(this)}
 								>
 									{Liferay.Language.get('delete')}
 								</button>

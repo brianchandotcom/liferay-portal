@@ -1,11 +1,9 @@
-import autobind from 'autobind-decorator';
 import Icon from '../../../shared/components/Icon';
 import {InstanceContext} from './InstanceContext';
 import moment from 'moment';
 import React from 'react';
 
 class InstanceListItem extends React.Component {
-	@autobind
 	updateId() {
 		const {id} = this.props;
 
@@ -77,7 +75,7 @@ class InstanceListItem extends React.Component {
 						data-target='#instanceDetailModal'
 						data-toggle='modal'
 						href='javascript:;'
-						onClick={this.updateId}
+						onClick={this.updateId.bind(this)}
 						tabIndex='-1'
 					>
 						<strong>{id}</strong>

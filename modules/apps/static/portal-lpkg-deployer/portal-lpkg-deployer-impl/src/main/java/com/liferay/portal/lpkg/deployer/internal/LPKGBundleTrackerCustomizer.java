@@ -350,6 +350,10 @@ public class LPKGBundleTrackerCustomizer
 
 	public void cleanTrackedBundles(Bundle[] bundles) throws IOException {
 		if (bundles == null) {
+			if (_dataFile.exists()) {
+				_dataFile.delete();
+			}
+
 			return;
 		}
 

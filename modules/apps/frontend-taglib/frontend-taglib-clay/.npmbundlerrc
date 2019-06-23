@@ -5,35 +5,39 @@
 				"metal": ">=2.16.5",
 				"metal-component": ">=2.16.5",
 				"metal-dom": ">=2.16.5",
-                "metal-debounce": ">=2.0.1",
+				"metal-debounce": ">=2.0.1",
 				"metal-events": ">=2.16.5",
 				"metal-position": ">=2.1.1",
 				"metal-soy": ">=2.16.5",
 				"metal-state": ">=2.16.5",
 				"metal-web-component": ">=2.16.5"
+			},
+			"frontend-js-react-web": {
+				"react": ">=16.6.3",
+				"react-dom": ">=16.6.3"
 			}
 		}
 	},
-    "exclude": {
-        "*": [
-            "src/__tests__/**/*"
-        ],
-        "core-js": true,
-        "incremental-dom": true,
-        "incremental-dom-string": true,
-        "metal": true,
-        "metal-anim": true,
-        "metal-component": true,
-        "metal-dom": true,
-        "metal-events": true,
-        "metal-incremental-dom": true,
-        "metal-position": true,
-        "metal-soy": true,
-        "metal-soy-bundle": true,
-        "metal-state": true,
-        "metal-web-component": true,
-        "xss-filters": true
-    },
-    "output": "classes/META-INF/resources/",
-    "preset": "liferay-npm-bundler-preset-standard"
+	"exclude": {
+		"*": [
+			"src/__tests__/**/*"
+		],
+		"core-js": true,
+		"incremental-dom": true,
+		"incremental-dom-string": true,
+		"metal": true,
+		"metal-anim": true,
+		"metal-component": true,
+		"metal-dom": true,
+		"metal-events": true,
+		"metal-incremental-dom": true,
+		"metal-position": true,
+		"metal-soy": true,
+		"metal-soy-bundle": true,
+		"metal-state": true,
+		"metal-web-component": true,
+		"xss-filters": true
+	},
+	"output": "classes/META-INF/resources/",
+	"preset": "liferay-npm-bundler-preset-standard"
 }

@@ -1265,6 +1265,13 @@ public class DirectoryWatcher extends Thread implements BundleListener
                 log(Logger.LOG_INFO, "Started bundle: " + bundle.getLocation(), null);
                 return true;
             }
+			catch (IllegalStateException ise) {
+				if (bundle.getState() == Bundle.UNINSTALLED) {
+					return true;
+				}
+
+				throw ise;
+			}
             catch (BundleException e)
             {
                 // Don't log this as an error, instead we start the bundle repeatedly.

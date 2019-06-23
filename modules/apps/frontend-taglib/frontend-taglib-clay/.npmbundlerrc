@@ -11,7 +11,11 @@
 				"metal-soy": ">=2.16.5",
 				"metal-state": ">=2.16.5",
 				"metal-web-component": ">=2.16.5"
-			}
+			},
+            "frontend-js-react-web": {
+                "react": ">=16.6.3",
+                "react-dom": ">=16.6.3"
+            }
 		}
 	},
     "exclude": {

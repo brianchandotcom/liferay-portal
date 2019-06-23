@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.blogs.asset.auto.tagger.extractor.test;
+package com.liferay.blogs.internal.asset.auto.tagger.text.extractor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.auto.tagger.extractor.TextExtractor;
-import com.liferay.asset.auto.tagger.extractor.TextExtractorTracker;
+import com.liferay.asset.auto.tagger.text.extractor.TextExtractor;
+import com.liferay.asset.auto.tagger.text.extractor.TextExtractorTracker;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;

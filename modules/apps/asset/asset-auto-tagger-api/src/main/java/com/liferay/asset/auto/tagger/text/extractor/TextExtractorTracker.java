@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.auto.tagger.extractor;
+package com.liferay.asset.auto.tagger.text.extractor;
 
 import java.util.List;
 

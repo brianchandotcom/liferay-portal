@@ -14,7 +14,7 @@
 
 package com.liferay.asset.auto.tagger.opennlp.internal.configuration.admin.definition;
 
-import com.liferay.asset.auto.tagger.extractor.TextExtractorTracker;
+import com.liferay.asset.auto.tagger.text.extractor.TextExtractorTracker;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.configuration.admin.definition.ConfigurationFieldOptionsProvider;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;

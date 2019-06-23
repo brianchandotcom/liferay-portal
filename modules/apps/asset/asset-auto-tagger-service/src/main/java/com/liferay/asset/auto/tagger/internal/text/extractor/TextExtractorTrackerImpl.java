@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.asset.auto.tagger.internal.extractor;
+package com.liferay.asset.auto.tagger.internal.text.extractor;
 
-import com.liferay.asset.auto.tagger.extractor.TextExtractor;
-import com.liferay.asset.auto.tagger.extractor.TextExtractorTracker;
+import com.liferay.asset.auto.tagger.text.extractor.TextExtractor;
+import com.liferay.asset.auto.tagger.text.extractor.TextExtractorTracker;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;

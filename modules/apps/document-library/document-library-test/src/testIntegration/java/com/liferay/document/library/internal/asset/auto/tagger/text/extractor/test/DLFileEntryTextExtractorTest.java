@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.document.library.asset.auto.tagger.extractor.test;
+package com.liferay.document.library.internal.asset.auto.tagger.text.extractor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.auto.tagger.extractor.TextExtractor;
-import com.liferay.asset.auto.tagger.extractor.TextExtractorTracker;
+import com.liferay.asset.auto.tagger.text.extractor.TextExtractor;
+import com.liferay.asset.auto.tagger.text.extractor.TextExtractorTracker;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;

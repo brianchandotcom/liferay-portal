@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.asset.auto.tagger.text.extractor;
+package com.liferay.blogs.internal.asset.auto.tagger.text.extractor;
 
 import com.liferay.asset.auto.tagger.text.extractor.TextExtractor;
 import com.liferay.blogs.model.BlogsEntry;

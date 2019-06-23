@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.web.internal.asset.auto.tagger.text.extractor;
+package com.liferay.document.library.internal.asset.auto.tagger.text.extractor;
 
 import com.liferay.asset.auto.tagger.text.extractor.TextExtractor;
 import com.liferay.document.library.kernel.model.DLFileEntry;

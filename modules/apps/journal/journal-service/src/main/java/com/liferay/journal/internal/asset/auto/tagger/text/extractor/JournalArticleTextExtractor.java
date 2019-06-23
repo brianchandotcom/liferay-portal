@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.web.internal.asset.auto.tagger.text.extractor;
+package com.liferay.journal.internal.asset.auto.tagger.text.extractor;
 
 import com.liferay.asset.auto.tagger.text.extractor.TextExtractor;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;

@@ -1,0 +1,18 @@
+{
+	"dependencies": {
+		"classnames": "2.2.6",
+		"formik": "1.4.3",
+		"prop-types": "15.7.2",
+		"react": "16.8.6",
+		"react-dnd": "7.0.2",
+		"react-dnd-html5-backend": "7.0.2",
+		"react-dom": "16.8.6"
+	},
+	"name": "frontend-js-react-web",
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "1.0.0"
+}

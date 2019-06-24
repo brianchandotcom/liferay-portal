@@ -105,7 +105,7 @@ describe('Liferay.Search.SearchBar', function() {
 		);
 	});
 
-	describe('.updateQueryString', function() {
+	describe.skip('.updateQueryString', function() {
 		it(
 			'should remove p_p_id, p_p_state, start and add query keyword',
 			withAlloyUI(

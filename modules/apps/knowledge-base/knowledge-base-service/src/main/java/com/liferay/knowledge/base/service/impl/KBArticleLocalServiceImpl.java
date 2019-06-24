@@ -2073,7 +2073,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	@ServiceReference(type = Portal.class)
 	protected Portal portal;
 
-	@BeanReference(type = PortletFileRepository.class)
+	@ServiceReference(type = PortletFileRepository.class)
 	protected PortletFileRepository portletFileRepository;
 
 	@ServiceReference(type = SubscriptionLocalService.class)

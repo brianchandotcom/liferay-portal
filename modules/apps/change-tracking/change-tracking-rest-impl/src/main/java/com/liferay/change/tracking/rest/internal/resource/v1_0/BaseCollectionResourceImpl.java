@@ -112,12 +112,17 @@ public abstract class BaseCollectionResourceImpl implements CollectionResource {
 	@Override
 	@DELETE
 	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "collectionId")}
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "companyId"),
+			@Parameter(in = ParameterIn.PATH, name = "collectionId")
+		}
 	)
 	@Path("/collections/{collectionId}")
 	@Produces("text/plain")
 	@Tags(value = {@Tag(name = "Collection")})
 	public Response deleteCollection(
+			@NotNull @Parameter(hidden = true) @PathParam("companyId") Long
+				companyId,
 			@NotNull @Parameter(hidden = true) @PathParam("collectionId") Long
 				collectionId)
 		throws Exception {
@@ -130,12 +135,17 @@ public abstract class BaseCollectionResourceImpl implements CollectionResource {
 	@Override
 	@GET
 	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "collectionId")}
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "companyId"),
+			@Parameter(in = ParameterIn.PATH, name = "collectionId")
+		}
 	)
 	@Path("/collections/{collectionId}")
 	@Produces({"application/json", "application/xml", "text/plain"})
 	@Tags(value = {@Tag(name = "Collection")})
 	public Collection getCollection(
+			@NotNull @Parameter(hidden = true) @PathParam("companyId") Long
+				companyId,
 			@NotNull @Parameter(hidden = true) @PathParam("collectionId") Long
 				collectionId)
 		throws Exception {

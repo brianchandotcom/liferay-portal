@@ -50,9 +50,11 @@ public interface CollectionResource {
 			Long companyId, Long userId, CollectionUpdate collectionUpdate)
 		throws Exception;
 
-	public Response deleteCollection(Long collectionId) throws Exception;
+	public Response deleteCollection(Long companyId, Long collectionId)
+		throws Exception;
 
-	public Collection getCollection(Long collectionId) throws Exception;
+	public Collection getCollection(Long companyId, Long collectionId)
+		throws Exception;
 
 	public Response postCollectionCheckout(Long collectionId, Long userId)
 		throws Exception;

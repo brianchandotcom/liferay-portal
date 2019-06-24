@@ -58,12 +58,20 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public void bind(Name name, Object obj) throws NamingException {
+		if (!(name instanceof LdapName)) {
+			warn();
+		}
+
 		_ldapContext.bind(name, obj);
 	}
 
 	@Override
 	public void bind(Name name, Object obj, Attributes attrs)
 		throws NamingException {
+
+		if (!(name instanceof LdapName)) {
+			warn();
+		}
 
 		_ldapContext.bind(name, obj, attrs);
 	}
@@ -91,6 +99,10 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public Name composeName(Name name, Name prefix) throws NamingException {
+		if (!(name instanceof LdapName) || !(prefix instanceof LdapName)) {
+			warn();
+		}
+
 		return _ldapContext.composeName(name, prefix);
 	}
 
@@ -105,12 +117,20 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public Context createSubcontext(Name name) throws NamingException {
+		if (!(name instanceof LdapName)) {
+			warn();
+		}
+
 		return _ldapContext.createSubcontext(name);
 	}
 
 	@Override
 	public DirContext createSubcontext(Name name, Attributes attrs)
 		throws NamingException {
+
+		if (!(name instanceof LdapName)) {
+			warn();
+		}
 
 		return _ldapContext.createSubcontext(name, attrs);
 	}
@@ -133,6 +153,10 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public void destroySubcontext(Name name) throws NamingException {
+		if (!(name instanceof LdapName)) {
+			warn();
+		}
+
 		_ldapContext.destroySubcontext(name);
 	}
 
@@ -152,12 +176,20 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public Attributes getAttributes(Name name) throws NamingException {
+		if (!(name instanceof LdapName)) {
+			warn();
+		}
+
 		return _ldapContext.getAttributes(name);
 	}
 
 	@Override
 	public Attributes getAttributes(Name name, String[] attrIds)
 		throws NamingException {
+
+		if (!(name instanceof LdapName)) {
+			warn();
+		}
 
 		return _ldapContext.getAttributes(name, attrIds);
 	}
@@ -195,6 +227,10 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public NameParser getNameParser(Name name) throws NamingException {
+		if (!(name instanceof LdapName)) {
+			warn();
+		}
+
 		return _ldapContext.getNameParser(name);
 	}
 
@@ -217,6 +253,10 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public DirContext getSchema(Name name) throws NamingException {
+		if (!(name instanceof LdapName)) {
+			warn();
+		}
+
 		return _ldapContext.getSchema(name);
 	}
 
@@ -230,6 +270,10 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 	@Override
 	public DirContext getSchemaClassDefinition(Name name)
 		throws NamingException {
+
+		if (!(name instanceof LdapName)) {
+			warn();
+		}
 
 		return _ldapContext.getSchemaClassDefinition(name);
 	}
@@ -247,6 +291,10 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 	public NamingEnumeration<NameClassPair> list(Name name)
 		throws NamingException {
 
+		if (!(name instanceof LdapName)) {
+			warn();
+		}
+
 		return _ldapContext.list(name);
 	}
 
@@ -263,6 +311,10 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 	public NamingEnumeration<Binding> listBindings(Name name)
 		throws NamingException {
 
+		if (!(name instanceof LdapName)) {
+			warn();
+		}
+
 		return _ldapContext.listBindings(name);
 	}
 
@@ -277,6 +329,10 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public Object lookup(Name name) throws NamingException {
+		if (!(name instanceof LdapName)) {
+			warn();
+		}
+
 		return _ldapContext.lookup(name);
 	}
 
@@ -289,6 +345,10 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public Object lookupLink(Name name) throws NamingException {
+		if (!(name instanceof LdapName)) {
+			warn();
+		}
+
 		return _ldapContext.lookupLink(name);
 	}
 
@@ -303,12 +363,20 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 	public void modifyAttributes(Name name, int modOp, Attributes attrs)
 		throws NamingException {
 
+		if (!(name instanceof LdapName)) {
+			warn();
+		}
+
 		_ldapContext.modifyAttributes(name, modOp, attrs);
 	}
 
 	@Override
 	public void modifyAttributes(Name name, ModificationItem[] mods)
 		throws NamingException {
+
+		if (!(name instanceof LdapName)) {
+			warn();
+		}
 
 		_ldapContext.modifyAttributes(name, mods);
 	}
@@ -340,12 +408,20 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public void rebind(Name name, Object obj) throws NamingException {
+		if (!(name instanceof LdapName)) {
+			warn();
+		}
+
 		_ldapContext.rebind(name, obj);
 	}
 
 	@Override
 	public void rebind(Name name, Object obj, Attributes attrs)
 		throws NamingException {
+
+		if (!(name instanceof LdapName)) {
+			warn();
+		}
 
 		_ldapContext.rebind(name, obj, attrs);
 	}
@@ -380,6 +456,10 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public void rename(Name oldName, Name newName) throws NamingException {
+		if (!(oldName instanceof LdapName) || !(newName instanceof LdapName)) {
+			warn();
+		}
+
 		_ldapContext.rename(oldName, newName);
 	}
 
@@ -407,6 +487,10 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 			Name name, Attributes matchingAttributes)
 		throws NamingException {
 
+		if (!(name instanceof LdapName)) {
+			warn();
+		}
+
 		return _ldapContext.search(name, matchingAttributes);
 	}
 
@@ -415,6 +499,10 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 			Name name, Attributes matchingAttributes,
 			String[] attributesToReturn)
 		throws NamingException {
+
+		if (!(name instanceof LdapName)) {
+			warn();
+		}
 
 		return _ldapContext.search(
 			name, matchingAttributes, attributesToReturn);
@@ -500,6 +588,10 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public void unbind(Name name) throws NamingException {
+		if (!(name instanceof LdapName)) {
+			warn();
+		}
+
 		_ldapContext.unbind(name);
 	}
 

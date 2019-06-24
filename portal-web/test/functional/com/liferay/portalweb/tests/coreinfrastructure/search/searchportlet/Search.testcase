@@ -772,6 +772,37 @@ definition {
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "&quot;name1&quot;");
 	}
 
+	test SearchBlogsScopedToPage {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsConfiguration.configureScopePG(
+			portletName = "Blogs",
+			scopeSelection = "Blogs Page (Create New)");
+
+		IFrame.closeFrame();
+
+		Blogs.addEntry(
+			entryContent = "Entry Content",
+			entryTitle = "Entry Title");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Entry Title");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Entry Title",
+			searchAssetType = "Blogs Entry",
+			searchTerm = "Entry Title");
+	}
+
 	@priority = "4"
 	test SearchDeletedWebContent {
 		JSONWebcontent.addWebContent(

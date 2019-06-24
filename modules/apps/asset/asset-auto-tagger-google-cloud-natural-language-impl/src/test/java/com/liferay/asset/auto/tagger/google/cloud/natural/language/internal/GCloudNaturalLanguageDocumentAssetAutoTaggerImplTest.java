@@ -84,6 +84,11 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImplTest {
 					}
 
 					@Override
+					public String[] enabledClassNames() {
+						return new String[0];
+					}
+
+					@Override
 					public boolean entityEndpointEnabled() {
 						return false;
 					}
@@ -130,6 +135,11 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImplTest {
 					@Override
 					public float confidence() {
 						return 0;
+					}
+
+					@Override
+					public String[] enabledClassNames() {
+						return new String[0];
 					}
 
 					@Override
@@ -182,6 +192,11 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImplTest {
 					}
 
 					@Override
+					public String[] enabledClassNames() {
+						return new String[0];
+					}
+
+					@Override
 					public boolean entityEndpointEnabled() {
 						return false;
 					}
@@ -226,6 +241,11 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImplTest {
 					@Override
 					public float confidence() {
 						return 0;
+					}
+
+					@Override
+					public String[] enabledClassNames() {
+						return new String[0];
 					}
 
 					@Override

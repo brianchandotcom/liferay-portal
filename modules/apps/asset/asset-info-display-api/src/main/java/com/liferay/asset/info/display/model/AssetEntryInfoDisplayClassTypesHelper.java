@@ -12,12 +12,9 @@
  * details.
  */
 
-package com.liferay.asset.info.display.contributor;
+package com.liferay.asset.info.display.model;
 
-import com.liferay.asset.info.display.model.util.AssetEntryInfoDisplayClassTypesHelperUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.ClassType;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayField;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -27,24 +24,14 @@ import java.util.Locale;
 /**
  * @author Jürgen Kappler
  */
-public interface AssetInfoDisplayContributor
-	extends InfoDisplayContributor<AssetEntry> {
+public interface AssetEntryInfoDisplayClassTypesHelper {
 
-	@Override
-	public default List<InfoDisplayField> getClassTypeInfoDisplayFields(
-			long classTypeId, Locale locale)
-		throws PortalException {
+	public List<InfoDisplayField> getClassTypeInfoDisplayFields(
+			String className, long classTypeId, Locale locale)
+		throws PortalException;
 
-		return AssetEntryInfoDisplayClassTypesHelperUtil.
-			getClassTypeInfoDisplayFields(getClassName(), classTypeId, locale);
-	}
-
-	@Override
-	public default List<ClassType> getClassTypes(long groupId, Locale locale)
-		throws PortalException {
-
-		return AssetEntryInfoDisplayClassTypesHelperUtil.getClassTypes(
-			groupId, getClassName(), locale);
-	}
+	public List<ClassType> getClassTypes(
+			long groupId, String className, Locale locale)
+		throws PortalException;
 
 }

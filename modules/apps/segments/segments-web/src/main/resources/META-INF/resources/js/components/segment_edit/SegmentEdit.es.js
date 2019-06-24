@@ -423,8 +423,7 @@ class SegmentEdit extends Component {
 											className='text-capitalize'
 											displayType='secondary'
 											href={redirect}
-											outline
-											small
+											outline={true}
 										>
 											{Liferay.Language.get('cancel')}
 										</ClayLink>
@@ -436,7 +435,7 @@ class SegmentEdit extends Component {
 											disabled={disabledSaveButton}
 											displayType='primary'
 											onClick={this._handleValidate}
-											small
+											small={true}
 											type='submit'
 										>
 											{Liferay.Language.get('save')}

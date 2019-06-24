@@ -48,7 +48,7 @@ definition {
 		Smoke.runSmoke();
 	}
 
-	@priority = "5"
+	@priority = "4"
 	test HypersonicWithSpecialContent {
 		property database.types = "hypersonic";
 		property test.name.skip.portal.instance = "SetupWizard#HypersonicWithSpecialContent";

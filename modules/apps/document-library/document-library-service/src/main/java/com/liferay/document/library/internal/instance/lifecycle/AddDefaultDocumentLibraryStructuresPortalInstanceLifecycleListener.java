@@ -31,6 +31,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -263,6 +264,10 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 	private DDMFormSerializerTracker _ddmFormSerializerTracker;
 
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
+
 	private volatile DLConfiguration _dlConfiguration;
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 	private GroupLocalService _groupLocalService;

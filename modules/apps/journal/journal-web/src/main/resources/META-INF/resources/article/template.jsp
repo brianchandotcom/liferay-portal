@@ -25,7 +25,6 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 %>
 
-<aui:input name="groupId" type="hidden" value="<%= journalEditArticleDisplayContext.getGroupId() %>" />
 <aui:input name="ddmTemplateKey" type="hidden" value="<%= (ddmTemplate != null) ? ddmTemplate.getTemplateKey() : StringPool.BLANK %>" />
 
 <c:choose>

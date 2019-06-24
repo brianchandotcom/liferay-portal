@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>URL</td>
-	<td>//textarea[contains(@id,'url')]</td>
+	<td>//textarea[contains(@name,'url')]</td>
 	<td></td>
 </tr>
 </tbody>

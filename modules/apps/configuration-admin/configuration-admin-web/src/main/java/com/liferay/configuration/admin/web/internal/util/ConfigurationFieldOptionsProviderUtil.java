@@ -20,7 +20,12 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -50,12 +55,21 @@ public class ConfigurationFieldOptionsProviderUtil {
 				(ServiceTrackerMap)ServiceTrackerMapFactory.openSingleValueMap(
 					bundleContext, ConfigurationFieldOptionsProvider.class,
 					null,
-					(serviceReference, emitter) -> emitter.emit(
-						_getKey(
-							(String)serviceReference.getProperty(
-								"configuration.pid"),
-							(String)serviceReference.getProperty(
-								"configuration.field.name"))));
+					(serviceReference, emitter) -> {
+						for (String configurationPid :
+								_getPropertyValues(
+									serviceReference, "configuration.pid")) {
+
+							for (String fieldName :
+									_getPropertyValues(
+										serviceReference,
+										"configuration.field.name")) {
+
+								emitter.emit(
+									_getKey(configurationPid, fieldName));
+							}
+						}
+					});
 	}
 
 	@Deactivate
@@ -66,6 +80,26 @@ public class ConfigurationFieldOptionsProviderUtil {
 	private static String _getKey(String configurationPid, String fieldName) {
 		return StringBundler.concat(
 			configurationPid, StringPool.POUND, fieldName);
+	}
+
+	private static Collection<String> _getPropertyValues(
+		ServiceReference<?> serviceReference, String name) {
+
+		Object propertyValue = serviceReference.getProperty(name);
+
+		if (propertyValue == null) {
+			return Collections.emptyList();
+		}
+
+		if (propertyValue instanceof Collection) {
+			return (Collection<String>)propertyValue;
+		}
+
+		if (propertyValue instanceof Object[]) {
+			return Arrays.asList((String[])propertyValue);
+		}
+
+		return Arrays.asList((String)propertyValue);
 	}
 
 	private static volatile ServiceTrackerMap

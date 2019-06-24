@@ -50,6 +50,7 @@ import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -80,8 +81,8 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		boolean force = GetterUtil.getBoolean(
 			serviceContext.getAttribute("force"));
 
-		CTEntry ctEntry = ctEntryPersistence.fetchByMCNI_MCPK(
-			modelClassNameId, modelClassPK);
+		CTEntry ctEntry = ctEntryPersistence.fetchByC_MCNI_MCPK(
+			ctCollectionId, modelClassNameId, modelClassPK);
 
 		_validate(ctEntry, changeType, ctCollectionId, force);
 
@@ -106,16 +107,41 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		long ctCollectionId, long modelResourcePrimKey,
 		QueryDefinition<CTEntry> queryDefinition) {
 
-		return ctEntryFinder.findByCTCI_MRPK(
-			ctCollectionId, modelResourcePrimKey, queryDefinition);
+		if (modelResourcePrimKey == 0) {
+			return fetchCTEntries(ctCollectionId, queryDefinition);
+		}
+
+		int status = queryDefinition.getStatus();
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return ctEntryPersistence.findByC_MRPK(
+				ctCollectionId, modelResourcePrimKey,
+				queryDefinition.getStart(), queryDefinition.getEnd(),
+				queryDefinition.getOrderByComparator());
+		}
+
+		return ctEntryPersistence.findByC_MRPK_S(
+			ctCollectionId, modelResourcePrimKey, status,
+			queryDefinition.getStart(), queryDefinition.getEnd(),
+			queryDefinition.getOrderByComparator());
 	}
 
 	@Override
 	public List<CTEntry> fetchCTEntries(
 		long ctCollectionId, QueryDefinition<CTEntry> queryDefinition) {
 
-		return ctEntryFinder.findByCTCI_MRPK(
-			ctCollectionId, 0, queryDefinition);
+		int status = queryDefinition.getStatus();
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return ctEntryPersistence.findByCTCollectionId(
+				ctCollectionId, queryDefinition.getStart(),
+				queryDefinition.getEnd(),
+				queryDefinition.getOrderByComparator());
+		}
+
+		return ctEntryPersistence.findByC_S(
+			ctCollectionId, status, queryDefinition.getStart(),
+			queryDefinition.getEnd(), queryDefinition.getOrderByComparator());
 	}
 
 	@Override
@@ -128,21 +154,26 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		long ctCollectionId, long modelClassNameId,
 		QueryDefinition<CTEntry> queryDefinition) {
 
-		return ctEntryFinder.findByCTCI_MCNI(
-			ctCollectionId, modelClassNameId, queryDefinition);
-	}
+		int status = queryDefinition.getStatus();
 
-	@Override
-	public CTEntry fetchCTEntry(long modelClassNameId, long modelClassPK) {
-		return ctEntryPersistence.fetchByMCNI_MCPK(
-			modelClassNameId, modelClassPK);
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return ctEntryPersistence.findByC_MCNI(
+				ctCollectionId, modelClassNameId, queryDefinition.getStart(),
+				queryDefinition.getEnd(),
+				queryDefinition.getOrderByComparator());
+		}
+
+		return ctEntryPersistence.findByC_MCNI_S(
+			ctCollectionId, modelClassNameId, status,
+			queryDefinition.getStart(), queryDefinition.getEnd(),
+			queryDefinition.getOrderByComparator());
 	}
 
 	@Override
 	public CTEntry fetchCTEntry(
 		long ctCollectionId, long modelClassNameId, long modelClassPK) {
 
-		return ctEntryFinder.findByCTCI_MCNI_MCPK(
+		return ctEntryPersistence.fetchByC_MCNI_MCPK(
 			ctCollectionId, modelClassNameId, modelClassPK);
 	}
 
@@ -167,27 +198,28 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		OrderByComparator<CTEntry> orderByComparator) {
 
 		if (_isProductionCTCollectionId(ctCollectionId)) {
-			return super.getCTCollectionCTEntries(
+			return Collections.emptyList();
+		}
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return ctEntryPersistence.findByCTCollectionId(
 				ctCollectionId, start, end, orderByComparator);
 		}
 
-		QueryDefinition<CTEntry> queryDefinition = new QueryDefinition<>();
-
-		queryDefinition.setEnd(end);
-		queryDefinition.setOrderByComparator(orderByComparator);
-		queryDefinition.setStart(start);
-		queryDefinition.setStatus(status);
-
-		return ctEntryFinder.findByCTCollectionId(
-			ctCollectionId, queryDefinition);
+		return ctEntryPersistence.findByC_S(
+			ctCollectionId, status, start, end, orderByComparator);
 	}
 
 	@Override
 	public int getCTEntriesCount(
 		long ctCollectionId, QueryDefinition<CTEntry> queryDefinition) {
 
-		return ctEntryFinder.countByCTCollectionId(
-			ctCollectionId, queryDefinition);
+		if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
+			return ctEntryPersistence.countByCTCollectionId(ctCollectionId);
+		}
+
+		return ctEntryPersistence.countByC_S(
+			ctCollectionId, queryDefinition.getStatus());
 	}
 
 	@Override
@@ -340,6 +372,7 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		ctEntry.setCreateDate(serviceContext.getCreateDate(now));
 		ctEntry.setModifiedDate(serviceContext.getModifiedDate(now));
 
+		ctEntry.setCtCollectionId(ctCollectionId);
 		ctEntry.setOriginalCTCollectionId(ctCollectionId);
 		ctEntry.setModelClassNameId(modelClassNameId);
 		ctEntry.setModelClassPK(modelClassPK);
@@ -355,8 +388,6 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		ctEntry.setStatus(status);
 
 		ctEntry = ctEntryPersistence.update(ctEntry);
-
-		ctCollectionPersistence.addCTEntry(ctCollectionId, ctEntry);
 
 		return ctEntry;
 	}

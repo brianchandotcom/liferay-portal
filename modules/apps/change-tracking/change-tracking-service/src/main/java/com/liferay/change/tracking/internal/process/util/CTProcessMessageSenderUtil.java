@@ -23,6 +23,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.messaging.Message;
 
 import java.io.Serializable;
@@ -99,8 +100,8 @@ public class CTProcessMessageSenderUtil {
 		}
 
 		int ctCollectionCTEntriesCount =
-			CTEntryLocalServiceUtil.getCTCollectionCTEntriesCount(
-				ctCollection.getCtCollectionId());
+			CTEntryLocalServiceUtil.getCTEntriesCount(
+				ctCollection.getCtCollectionId(), new QueryDefinition<>());
 
 		Map<String, Serializable> messageParameters = new HashMap<>();
 

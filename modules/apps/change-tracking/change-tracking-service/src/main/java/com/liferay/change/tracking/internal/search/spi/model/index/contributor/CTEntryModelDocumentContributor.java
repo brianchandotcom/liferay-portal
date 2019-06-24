@@ -15,11 +15,8 @@
 package com.liferay.change.tracking.internal.search.spi.model.index.contributor;
 
 import com.liferay.change.tracking.definition.CTDefinitionRegistryUtil;
-import com.liferay.change.tracking.model.CTCollection;
-import com.liferay.change.tracking.model.CTCollectionModel;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryAggregate;
-import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.Portal;
@@ -54,7 +51,7 @@ public class CTEntryModelDocumentContributor
 			"affectedByCTEntryIds", _getAffectedByCTEntryIds(ctEntry));
 		document.addKeyword("changeType", ctEntry.getChangeType());
 		document.addKeyword("collision", ctEntry.isCollision());
-		document.addKeyword("ctCollectionId", _getCTCollectionIds(ctEntry));
+		document.addKeyword("ctCollectionId", ctEntry.getCtCollectionId());
 		document.addKeyword(
 			"modelClassName",
 			_portal.getClassName(ctEntry.getModelClassNameId()));
@@ -85,20 +82,6 @@ public class CTEntryModelDocumentContributor
 		).toArray();
 	}
 
-	private long[] _getCTCollectionIds(CTEntry ctEntry) {
-		List<CTCollection> ctEntryCTCollections =
-			_ctCollectionLocalService.getCTEntryCTCollections(
-				ctEntry.getCtEntryId());
-
-		Stream<CTCollection> ctCollectionStream = ctEntryCTCollections.stream();
-
-		return ctCollectionStream.map(
-			CTCollectionModel::getCtCollectionId
-		).mapToLong(
-			Long::valueOf
-		).toArray();
-	}
-
 	private long _getGroupId(CTEntry ctEntry) {
 		return CTDefinitionRegistryUtil.getVersionEntityGroupId(
 			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
@@ -108,9 +91,6 @@ public class CTEntryModelDocumentContributor
 		return CTDefinitionRegistryUtil.getVersionEntityTitle(
 			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
 	}
-
-	@Reference
-	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
 	private Portal _portal;

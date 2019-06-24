@@ -38,6 +38,7 @@ import javax.naming.ldap.Control;
 import javax.naming.ldap.ExtendedRequest;
 import javax.naming.ldap.ExtendedResponse;
 import javax.naming.ldap.LdapContext;
+import javax.naming.ldap.LdapName;
 
 /**
  * @author Tomas Polesovsky
@@ -392,6 +393,17 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public NamingEnumeration<SearchResult> search(
+			LdapName ldapName, LDAPFilter ldapFilter,
+			SearchControls searchControls)
+		throws NamingException {
+
+		return _ldapContext.search(
+			ldapName, ldapFilter.generateFilter(), ldapFilter.getArguments(),
+			searchControls);
+	}
+
+	@Override
+	public NamingEnumeration<SearchResult> search(
 			Name name, Attributes matchingAttributes)
 		throws NamingException {
 
@@ -406,16 +418,6 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 		return _ldapContext.search(
 			name, matchingAttributes, attributesToReturn);
-	}
-
-	@Override
-	public NamingEnumeration<SearchResult> search(
-			Name name, LDAPFilter ldapFilter, SearchControls searchControls)
-		throws NamingException {
-
-		return _ldapContext.search(
-			name, ldapFilter.generateFilter(), ldapFilter.getArguments(),
-			searchControls);
 	}
 
 	@Override

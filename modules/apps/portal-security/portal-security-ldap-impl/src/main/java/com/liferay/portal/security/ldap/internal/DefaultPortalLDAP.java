@@ -49,7 +49,6 @@ import java.util.Properties;
 
 import javax.naming.Binding;
 import javax.naming.Context;
-import javax.naming.Name;
 import javax.naming.NameNotFoundException;
 import javax.naming.NamingEnumeration;
 import javax.naming.OperationNotSupportedException;
@@ -60,6 +59,7 @@ import javax.naming.directory.SearchResult;
 import javax.naming.ldap.Control;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
+import javax.naming.ldap.LdapName;
 import javax.naming.ldap.PagedResultsControl;
 import javax.naming.ldap.PagedResultsResponseControl;
 import javax.naming.ldap.Rdn;
@@ -207,17 +207,17 @@ public class DefaultPortalLDAP implements PortalLDAP {
 	@Override
 	public Attributes getGroupAttributes(
 			long ldapServerId, long companyId, LdapContext ldapContext,
-			Name userGroupDNName)
+			LdapName userGroupDNLdapName)
 		throws Exception {
 
 		return getGroupAttributes(
-			ldapServerId, companyId, ldapContext, userGroupDNName, false);
+			ldapServerId, companyId, ldapContext, userGroupDNLdapName, false);
 	}
 
 	@Override
 	public Attributes getGroupAttributes(
 			long ldapServerId, long companyId, LdapContext ldapContext,
-			Name userGroupDNName, boolean includeReferenceAttributes)
+			LdapName userGroupDNLdapName, boolean includeReferenceAttributes)
 		throws Exception {
 
 		Properties groupMappings = _ldapSettings.getGroupMappings(
@@ -233,13 +233,14 @@ public class DefaultPortalLDAP implements PortalLDAP {
 		}
 
 		Attributes attributes = _getAttributes(
-			ldapContext, userGroupDNName,
+			ldapContext, userGroupDNLdapName,
 			mappedGroupAttributeIds.toArray(new String[0]));
 
 		if (_log.isDebugEnabled()) {
 			if ((attributes == null) || (attributes.size() == 0)) {
 				_log.debug(
-					"No LDAP group attributes found for " + userGroupDNName);
+					"No LDAP group attributes found for " +
+						userGroupDNLdapName);
 			}
 			else {
 				for (String attributeId : mappedGroupAttributeIds) {
@@ -259,7 +260,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #getGroupAttributes(long, long, LdapContext, Name)}
+	 *             PortalLDAP#getGroupAttributes(long, long, LdapContext, LdapName)}
 	 */
 	@Deprecated
 	@Override
@@ -275,7 +276,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #getGroupAttributes(long, long, LdapContext, Name, boolean)}
+	 *             PortalLDAP#getGroupAttributes(long, long, LdapContext, LdapName, boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -293,31 +294,30 @@ public class DefaultPortalLDAP implements PortalLDAP {
 	@Override
 	public byte[] getGroups(
 			long companyId, LdapContext ldapContext, byte[] cookie,
-			int maxResults, Name baseDN, LDAPFilter groupFilter,
+			int maxResults, LdapName baseDNLdapName, LDAPFilter groupFilter,
 			List<SearchResult> searchResults)
 		throws Exception {
 
 		return searchLDAP(
-			companyId, ldapContext, cookie, maxResults, baseDN, groupFilter,
-			null, searchResults);
+			companyId, ldapContext, cookie, maxResults, baseDNLdapName,
+			groupFilter, null, searchResults);
 	}
 
 	@Override
 	public byte[] getGroups(
 			long companyId, LdapContext ldapContext, byte[] cookie,
-			int maxResults, Name baseDN, LDAPFilter groupFilter,
+			int maxResults, LdapName baseDNLdapName, LDAPFilter groupFilter,
 			String[] attributeIds, List<SearchResult> searchResults)
 		throws Exception {
 
 		return searchLDAP(
-			companyId, ldapContext, cookie, maxResults, baseDN, groupFilter,
-			attributeIds, searchResults);
+			companyId, ldapContext, cookie, maxResults, baseDNLdapName,
+			groupFilter, attributeIds, searchResults);
 	}
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #getGroups(long, LdapContext, byte[], int, Name, LDAPFilter,
-	 *             List)}
+	 *             PortalLDAP#getGroups(long, LdapContext, byte[], int, LdapName, LDAPFilter, List)}
 	 */
 	@Deprecated
 	@Override
@@ -335,8 +335,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #getGroups(long, LdapContext, byte[], int, Name, LDAPFilter,
-	 *             String[], List)}
+	 *             PortalLDAP#getGroups(long, LdapContext, byte[], int, LdapName, LDAPFilter, String[], List)}
 	 */
 	@Deprecated
 	@Override
@@ -363,13 +362,14 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
 
-		Name baseDNName = LDAPUtil.asLdapName(ldapServerConfiguration.baseDN());
+		LdapName baseDNLdapName = LDAPUtil.asLdapName(
+			ldapServerConfiguration.baseDN());
 		LDAPFilter ldapFilter = _ldapFilterValidator.validate(
 			ldapServerConfiguration.groupSearchFilter());
 
 		return getGroups(
-			companyId, ldapContext, cookie, maxResults, baseDNName, ldapFilter,
-			searchResults);
+			companyId, ldapContext, cookie, maxResults, baseDNLdapName,
+			ldapFilter, searchResults);
 	}
 
 	@Override
@@ -383,15 +383,17 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
 
-		Name baseDNName = LDAPUtil.asLdapName(ldapServerConfiguration.baseDN());
+		LdapName baseDNLdapName = LDAPUtil.asLdapName(
+			ldapServerConfiguration.baseDN());
+
 		LDAPFilter ldapFilter = _ldapFilterValidator.validate(
 			ldapServerConfiguration.groupSearchFilter(),
 			LDAPServerConfiguration.class.getSimpleName() +
 				".groupSearchFilter");
 
 		return getGroups(
-			companyId, ldapContext, cookie, maxResults, baseDNName, ldapFilter,
-			attributeIds, searchResults);
+			companyId, ldapContext, cookie, maxResults, baseDNLdapName,
+			ldapFilter, attributeIds, searchResults);
 	}
 
 	@Override
@@ -446,8 +448,8 @@ public class DefaultPortalLDAP implements PortalLDAP {
 
 	@Override
 	public Attribute getMultivaluedAttribute(
-			long companyId, LdapContext safeLdapContext, Name baseDN,
-			LDAPFilter ldapFilter, Attribute attribute)
+			long companyId, LdapContext safeLdapContext,
+			LdapName baseDNLdapName, LDAPFilter ldapFilter, Attribute attribute)
 		throws Exception {
 
 		if (attribute.size() > 0) {
@@ -465,8 +467,8 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			List<SearchResult> searchResults = new ArrayList<>();
 
 			searchLDAP(
-				companyId, safeLdapContext, new byte[0], 0, baseDN, ldapFilter,
-				attributeIds, searchResults);
+				companyId, safeLdapContext, new byte[0], 0, baseDNLdapName,
+				ldapFilter, attributeIds, searchResults);
 
 			if (searchResults.size() != 1) {
 				break;
@@ -518,8 +520,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #getMultivaluedAttribute(long, LdapContext, Name, LDAPFilter,
-	 *             Attribute)}
+	 *             PortalLDAP#getMultivaluedAttribute(long, LdapContext, LdapName, LDAPFilter, Attribute)}
 	 */
 	@Deprecated
 	@Override
@@ -761,7 +762,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 	@Override
 	public Attributes getUserAttributes(
 			long ldapServerId, long companyId, LdapContext ldapContext,
-			Name fullDistinguishedName)
+			LdapName fullDNLdapName)
 		throws Exception {
 
 		Properties userMappings = _ldapSettings.getUserMappings(
@@ -788,13 +789,12 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			values.toArray(new Object[userMappings.size()]));
 
 		Attributes attributes = _getAttributes(
-			ldapContext, fullDistinguishedName, mappedUserAttributeIds);
+			ldapContext, fullDNLdapName, mappedUserAttributeIds);
 
 		if (_log.isDebugEnabled()) {
 			if ((attributes == null) || (attributes.size() == 0)) {
 				_log.debug(
-					"No LDAP user attributes found for:: " +
-						fullDistinguishedName);
+					"No LDAP user attributes found for:: " + fullDNLdapName);
 			}
 			else {
 				for (String attributeId : mappedUserAttributeIds) {
@@ -832,7 +832,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #getUserAttributes(long, long, LdapContext, Name)}
+	 *             PortalLDAP#getUserAttributes(long, long, LdapContext, LdapName)}
 	 */
 	@Deprecated
 	@Override
@@ -849,31 +849,30 @@ public class DefaultPortalLDAP implements PortalLDAP {
 	@Override
 	public byte[] getUsers(
 			long companyId, LdapContext ldapContext, byte[] cookie,
-			int maxResults, Name baseDN, LDAPFilter userFilter,
+			int maxResults, LdapName baseDNLdapName, LDAPFilter userFilter,
 			List<SearchResult> searchResults)
 		throws Exception {
 
 		return searchLDAP(
-			companyId, ldapContext, cookie, maxResults, baseDN, userFilter,
-			null, searchResults);
+			companyId, ldapContext, cookie, maxResults, baseDNLdapName,
+			userFilter, null, searchResults);
 	}
 
 	@Override
 	public byte[] getUsers(
 			long companyId, LdapContext ldapContext, byte[] cookie,
-			int maxResults, Name baseDN, LDAPFilter userFilter,
+			int maxResults, LdapName baseDNLdapName, LDAPFilter userFilter,
 			String[] attributeIds, List<SearchResult> searchResults)
 		throws Exception {
 
 		return searchLDAP(
-			companyId, ldapContext, cookie, maxResults, baseDN, userFilter,
-			attributeIds, searchResults);
+			companyId, ldapContext, cookie, maxResults, baseDNLdapName,
+			userFilter, attributeIds, searchResults);
 	}
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #getUsers(long, LdapContext, byte[], int, Name, LDAPFilter,
-	 *             List)}
+	 *             PortalLDAP#getUsers(long, LdapContext, byte[], int, LdapName, LDAPFilter, List)}
 	 */
 	@Deprecated
 	@Override
@@ -891,8 +890,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #getUsers(long, LdapContext, byte[], int, Name, LDAPFilter,
-	 *             String[], List)}
+	 *             PortalLDAP#getUsers(long, LdapContext, byte[], int, LdapName, LDAPFilter, String[], List)}
 	 */
 	@Deprecated
 	@Override
@@ -919,14 +917,16 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
 
-		Name baseDN = LDAPUtil.asLdapName(ldapServerConfiguration.baseDN());
+		LdapName baseDNLdapName = LDAPUtil.asLdapName(
+			ldapServerConfiguration.baseDN());
+
 		LDAPFilter userSearchFilter = _ldapFilterValidator.validate(
 			ldapServerConfiguration.userSearchFilter(),
 			LDAPServerConfiguration.class.getSimpleName() +
 				".userSearchFilter");
 
 		return getUsers(
-			companyId, ldapContext, cookie, maxResults, baseDN,
+			companyId, ldapContext, cookie, maxResults, baseDNLdapName,
 			userSearchFilter, searchResults);
 	}
 
@@ -941,14 +941,16 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
 
-		Name baseDN = LDAPUtil.asLdapName(ldapServerConfiguration.baseDN());
+		LdapName baseDNLdapName = LDAPUtil.asLdapName(
+			ldapServerConfiguration.baseDN());
+
 		LDAPFilter userSearchFilter = _ldapFilterValidator.validate(
 			ldapServerConfiguration.userSearchFilter(),
 			LDAPServerConfiguration.class.getSimpleName() +
 				".userSearchFilter");
 
 		return getUsers(
-			companyId, ldapContext, cookie, maxResults, baseDN,
+			companyId, ldapContext, cookie, maxResults, baseDNLdapName,
 			userSearchFilter, attributeIds, searchResults);
 	}
 
@@ -980,8 +982,8 @@ public class DefaultPortalLDAP implements PortalLDAP {
 
 	@Override
 	public boolean isGroupMember(
-			long ldapServerId, long companyId, Name groupDNName,
-			Name userDNName)
+			long ldapServerId, long companyId, LdapName groupDNLdapName,
+			LdapName userDNLdapName)
 		throws Exception {
 
 		SafeLdapContext safeLdapContext = getSafeLDAPContext(
@@ -998,13 +1000,13 @@ public class DefaultPortalLDAP implements PortalLDAP {
 				ldapServerId, companyId);
 
 			LDAPFilter ldapFilter = LDAPFilter.eq(
-				groupMappings.getProperty("user"), userDNName);
+				groupMappings.getProperty("user"), userDNLdapName);
 
 			SearchControls searchControls = new SearchControls(
 				SearchControls.SUBTREE_SCOPE, 1, 0, null, false, false);
 
 			enu = safeLdapContext.search(
-				groupDNName, ldapFilter, searchControls);
+				groupDNLdapName, ldapFilter, searchControls);
 
 			if (enu.hasMoreElements()) {
 				return true;
@@ -1014,8 +1016,8 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
-						"Unable to determine if user DN ", userDNName,
-						" is a member of group DN ", groupDNName),
+						"Unable to determine if user DN ", userDNLdapName,
+						" is a member of group DN ", groupDNLdapName),
 					nnfe);
 			}
 		}
@@ -1034,7 +1036,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #isGroupMember(long, long, Name, Name)}
+	 *             PortalLDAP#isGroupMember(long, long, LdapName, LdapName)}
 	 */
 	@Deprecated
 	@Override
@@ -1049,8 +1051,8 @@ public class DefaultPortalLDAP implements PortalLDAP {
 
 	@Override
 	public boolean isUserGroupMember(
-			long ldapServerId, long companyId, Name groupDNName,
-			Name userDNName)
+			long ldapServerId, long companyId, LdapName groupDNLdapName,
+			LdapName userDNLdapName)
 		throws Exception {
 
 		SafeLdapContext safeLdapContext = getSafeLDAPContext(
@@ -1067,13 +1069,14 @@ public class DefaultPortalLDAP implements PortalLDAP {
 				ldapServerId, companyId);
 
 			LDAPFilter ldapFilter = LDAPFilter.eq(
-				userMappings.getProperty(UserConverterKeys.GROUP), groupDNName);
+				userMappings.getProperty(UserConverterKeys.GROUP),
+				groupDNLdapName);
 
 			SearchControls searchControls = new SearchControls(
 				SearchControls.SUBTREE_SCOPE, 1, 0, null, false, false);
 
 			enu = safeLdapContext.search(
-				userDNName, ldapFilter, searchControls);
+				userDNLdapName, ldapFilter, searchControls);
 
 			if (enu.hasMoreElements()) {
 				return true;
@@ -1083,8 +1086,8 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
-						"Unable to determine if group DN ", groupDNName,
-						" is a member of user DN ", userDNName),
+						"Unable to determine if group DN ", groupDNLdapName,
+						" is a member of user DN ", userDNLdapName),
 					nnfe);
 			}
 		}
@@ -1103,7 +1106,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #isUserGroupMember(long, long, Name, Name)}
+	 *             PortalLDAP#isUserGroupMember(long, long, LdapName, LdapName)}
 	 */
 	@Deprecated
 	@Override
@@ -1119,7 +1122,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 	@Override
 	public byte[] searchLDAP(
 			long companyId, LdapContext ldapContext, byte[] cookie,
-			int maxResults, Name baseDNName, LDAPFilter ldapFilter,
+			int maxResults, LdapName baseDNName, LDAPFilter ldapFilter,
 			String[] attributeIds, List<SearchResult> searchResults)
 		throws Exception {
 
@@ -1208,8 +1211,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #searchLDAP(long, LdapContext, byte[], int, Name, LDAPFilter,
-	 *             String[], List)}
+	 *             PortalLDAP#searchLDAP(long, LdapContext, byte[], int, LdapName, LDAPFilter, String[], List)}
 	 */
 	@Deprecated
 	@Override
@@ -1259,7 +1261,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 	}
 
 	private Attributes _getAttributes(
-			LdapContext ldapContext, Name fullDN, String[] attributeIds)
+			LdapContext ldapContext, LdapName fullDN, String[] attributeIds)
 		throws Exception {
 
 		Attributes attributes = null;

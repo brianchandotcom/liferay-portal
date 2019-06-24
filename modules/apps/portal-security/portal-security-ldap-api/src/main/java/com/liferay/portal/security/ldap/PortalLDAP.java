@@ -19,11 +19,11 @@ import com.liferay.portal.security.ldap.validator.LDAPFilter;
 import java.util.List;
 
 import javax.naming.Binding;
-import javax.naming.Name;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.LdapContext;
+import javax.naming.ldap.LdapName;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -66,17 +66,17 @@ public interface PortalLDAP {
 
 	public Attributes getGroupAttributes(
 			long ldapServerId, long companyId, LdapContext ldapContext,
-			Name userGroupDNName)
+			LdapName userGroupDNLdapName)
 		throws Exception;
 
 	public Attributes getGroupAttributes(
 			long ldapServerId, long companyId, LdapContext ldapContext,
-			Name userGroupDNName, boolean includeReferenceAttributes)
+			LdapName userGroupDNLdapName, boolean includeReferenceAttributes)
 		throws Exception;
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #getGroupAttributes(long, long, LdapContext, Name)}
+	 *             #getGroupAttributes(long, long, LdapContext, LdapName)}
 	 */
 	@Deprecated
 	public Attributes getGroupAttributes(
@@ -86,7 +86,7 @@ public interface PortalLDAP {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #getGroupAttributes(long, long, LdapContext, Name, boolean)}
+	 *             #getGroupAttributes(long, long, LdapContext, LdapName, boolean)}
 	 */
 	@Deprecated
 	public Attributes getGroupAttributes(
@@ -96,20 +96,19 @@ public interface PortalLDAP {
 
 	public byte[] getGroups(
 			long companyId, LdapContext ldapContext, byte[] cookie,
-			int maxResults, Name baseDN, LDAPFilter groupFilter,
+			int maxResults, LdapName baseDNLdapName, LDAPFilter groupFilter,
 			List<SearchResult> searchResults)
 		throws Exception;
 
 	public byte[] getGroups(
 			long companyId, LdapContext ldapContext, byte[] cookie,
-			int maxResults, Name baseDN, LDAPFilter groupFilter,
+			int maxResults, LdapName baseDNLdapName, LDAPFilter groupFilter,
 			String[] attributeIds, List<SearchResult> searchResults)
 		throws Exception;
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #getGroups(long, LdapContext, byte[], int, Name, LDAPFilter,
-	 *             List)}
+	 *             #getGroups(long, LdapContext, byte[], int, LdapName, LDAPFilter, List)}
 	 */
 	@Deprecated
 	public byte[] getGroups(
@@ -120,8 +119,7 @@ public interface PortalLDAP {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #getGroups(long, LdapContext, byte[], int, Name, LDAPFilter,
-	 *             String[], List)}
+	 *             #getGroups(long, LdapContext, byte[], int, LdapName, LDAPFilter, String[], List)}
 	 */
 	@Deprecated
 	public byte[] getGroups(
@@ -149,14 +147,13 @@ public interface PortalLDAP {
 		throws Exception;
 
 	public Attribute getMultivaluedAttribute(
-			long companyId, LdapContext ldapContext, Name baseDN,
+			long companyId, LdapContext ldapContext, LdapName baseDNLdapName,
 			LDAPFilter ldapFilter, Attribute attribute)
 		throws Exception;
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #getMultivaluedAttribute(long, LdapContext, Name, LDAPFilter,
-	 *             Attribute)}
+	 *             #getMultivaluedAttribute(long, LdapContext, LdapName, LDAPFilter, Attribute)}
 	 */
 	@Deprecated
 	public Attribute getMultivaluedAttribute(
@@ -191,12 +188,12 @@ public interface PortalLDAP {
 
 	public Attributes getUserAttributes(
 			long ldapServerId, long companyId, LdapContext ldapContext,
-			Name fullDistinguishedName)
+			LdapName fullDNLdapName)
 		throws Exception;
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #getUserAttributes(long, long, LdapContext, Name)}
+	 *             #getUserAttributes(long, long, LdapContext, LdapName)}
 	 */
 	@Deprecated
 	public Attributes getUserAttributes(
@@ -206,20 +203,19 @@ public interface PortalLDAP {
 
 	public byte[] getUsers(
 			long companyId, LdapContext ldapContext, byte[] cookie,
-			int maxResults, Name baseDN, LDAPFilter userFilter,
+			int maxResults, LdapName baseDNLdapName, LDAPFilter userFilter,
 			List<SearchResult> searchResults)
 		throws Exception;
 
 	public byte[] getUsers(
 			long companyId, LdapContext ldapContext, byte[] cookie,
-			int maxResults, Name baseDN, LDAPFilter userFilter,
+			int maxResults, LdapName baseDNLdapName, LDAPFilter userFilter,
 			String[] attributeIds, List<SearchResult> searchResults)
 		throws Exception;
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #getUsers(long, LdapContext, byte[], int, Name, LDAPFilter,
-	 *             List)}
+	 *             #getUsers(long, LdapContext, byte[], int, LdapName, LDAPFilter, List)}
 	 */
 	@Deprecated
 	public byte[] getUsers(
@@ -230,8 +226,7 @@ public interface PortalLDAP {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #getUsers(long, LdapContext, byte[], int, Name, LDAPFilter,
-	 *             String[], List)}
+	 *             #getUsers(long, LdapContext, byte[], int, LdapName, LDAPFilter, String[], List)}
 	 */
 	@Deprecated
 	public byte[] getUsers(
@@ -260,13 +255,13 @@ public interface PortalLDAP {
 		throws Exception;
 
 	public boolean isGroupMember(
-			long ldapServerId, long companyId, Name groupDNName,
-			Name userDNName)
+			long ldapServerId, long companyId, LdapName groupDNLdapName,
+			LdapName userDNLdapName)
 		throws Exception;
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #isGroupMember(long, long, Name, Name)}
+	 *             #isGroupMember(long, long, LdapName, LdapName)}
 	 */
 	@Deprecated
 	public boolean isGroupMember(
@@ -274,13 +269,13 @@ public interface PortalLDAP {
 		throws Exception;
 
 	public boolean isUserGroupMember(
-			long ldapServerId, long companyId, Name groupDNName,
-			Name userDNName)
+			long ldapServerId, long companyId, LdapName groupDNLdapName,
+			LdapName userDNLdapName)
 		throws Exception;
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #isUserGroupMember(long, long, Name, Name)}
+	 *             #isUserGroupMember(long, long, LdapName, LdapName)}
 	 */
 	@Deprecated
 	public boolean isUserGroupMember(
@@ -289,14 +284,13 @@ public interface PortalLDAP {
 
 	public byte[] searchLDAP(
 			long companyId, LdapContext ldapContext, byte[] cookie,
-			int maxResults, Name baseDN, LDAPFilter filter,
+			int maxResults, LdapName baseDNLdapName, LDAPFilter filter,
 			String[] attributeIds, List<SearchResult> searchResults)
 		throws Exception;
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #searchLDAP(long, LdapContext, byte[], int, Name, LDAPFilter,
-	 *             String[], List)}
+	 *             #searchLDAP(long, LdapContext, byte[], int, LdapName, LDAPFilter, String[], List)}
 	 */
 	@Deprecated
 	public byte[] searchLDAP(

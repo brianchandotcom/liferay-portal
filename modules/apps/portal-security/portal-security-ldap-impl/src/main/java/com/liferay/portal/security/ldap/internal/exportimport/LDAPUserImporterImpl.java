@@ -97,7 +97,6 @@ import java.util.Properties;
 import java.util.Set;
 
 import javax.naming.Binding;
-import javax.naming.Name;
 import javax.naming.NameNotFoundException;
 import javax.naming.NamingEnumeration;
 import javax.naming.directory.Attribute;
@@ -105,6 +104,7 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.LdapContext;
+import javax.naming.ldap.LdapName;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -833,7 +833,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	}
 
 	protected Set<Long> importGroup(
-			LDAPImportContext ldapImportContext, Name userGroupDNName,
+			LDAPImportContext ldapImportContext, LdapName userGroupDNLdapName,
 			User user, Set<Long> newUserGroupIds)
 		throws Exception {
 
@@ -852,7 +852,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			sb.append(StringPool.UNDERLINE);
 			sb.append(ldapImportContext.getCompanyId());
 			sb.append(StringPool.UNDERLINE);
-			sb.append(userGroupDNName);
+			sb.append(userGroupDNLdapName);
 
 			userGroupIdKey = sb.toString();
 
@@ -862,12 +862,13 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		if (userGroupId != null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Skipping reimport of full group DN " + userGroupDNName);
+					"Skipping reimport of full group DN " +
+						userGroupDNLdapName);
 			}
 		}
 		else {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Importing full group DN " + userGroupDNName);
+				_log.debug("Importing full group DN " + userGroupDNLdapName);
 			}
 
 			Attributes groupAttributes = null;
@@ -876,12 +877,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				groupAttributes = _portalLDAP.getGroupAttributes(
 					ldapImportContext.getLdapServerId(),
 					ldapImportContext.getCompanyId(),
-					ldapImportContext.getLdapContext(), userGroupDNName);
+					ldapImportContext.getLdapContext(), userGroupDNLdapName);
 			}
 			catch (NameNotFoundException nnfe) {
 				_log.error(
 					"LDAP group not found with full group DN " +
-						userGroupDNName,
+						userGroupDNLdapName,
 					nnfe);
 			}
 
@@ -968,11 +969,11 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 					searchResults);
 
 				for (SearchResult searchResult : searchResults) {
-					Name userGroupDNName = LDAPUtil.asLdapName(
+					LdapName userGroupDNLdapName = LDAPUtil.asLdapName(
 						searchResult.getNameInNamespace());
 
 					newUserGroupIds = importGroup(
-						ldapImportContext, userGroupDNName, user,
+						ldapImportContext, userGroupDNLdapName, user,
 						newUserGroupIds);
 				}
 			}

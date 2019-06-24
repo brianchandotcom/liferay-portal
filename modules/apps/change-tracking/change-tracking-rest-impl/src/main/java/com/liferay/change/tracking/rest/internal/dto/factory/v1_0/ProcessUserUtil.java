@@ -20,15 +20,12 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Máté Thurzó
  */
-@Component(immediate = true, service = ProcessUserFactory.class)
-public class ProcessUserFactory {
+public class ProcessUserUtil {
 
-	public ProcessUser toProcessUser(User user) {
+	public static ProcessUser toProcessUser(User user) {
 		return new ProcessUser() {
 			{
 				userId = user.getUserId();
@@ -39,7 +36,7 @@ public class ProcessUserFactory {
 		};
 	}
 
-	private String _getPortraitURL(User user) {
+	private static String _getPortraitURL(User user) {
 		Contact contact = user.fetchContact();
 
 		if (contact == null) {

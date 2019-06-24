@@ -18,8 +18,8 @@ import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.rest.dto.v1_0.Process;
-import com.liferay.change.tracking.rest.internal.dto.factory.v1_0.CollectionFactory;
-import com.liferay.change.tracking.rest.internal.dto.factory.v1_0.ProcessUserFactory;
+import com.liferay.change.tracking.rest.internal.dto.factory.v1_0.CollectionUtil;
+import com.liferay.change.tracking.rest.internal.dto.factory.v1_0.ProcessUserUtil;
 import com.liferay.change.tracking.rest.resource.v1_0.CollectionResource;
 import com.liferay.change.tracking.rest.resource.v1_0.ProcessResource;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
@@ -112,7 +112,10 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 
 		return new Process() {
 			{
-				collection = _collectionFactory.toCollection(ctCollection);
+				collection = CollectionUtil.toCollection(
+					ctCollection, _ctEngineManager);
+
+				companyId = ctProcess.getCompanyId();
 				processId = ctProcess.getCtProcessId();
 				dateCreated = ctProcess.getCreateDate();
 
@@ -140,7 +143,7 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 				);
 
 				if (user != null) {
-					processUser = _processUserFactory.toProcessUser(user);
+					processUser = ProcessUserUtil.toProcessUser(user);
 				}
 			}
 		};
@@ -159,9 +162,6 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 	private BackgroundTaskManager _backgroundTaskManager;
 
 	@Reference
-	private CollectionFactory _collectionFactory;
-
-	@Reference
 	private CollectionResource _collectionResource;
 
 	@Reference
@@ -175,9 +175,6 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 
 	@Context
 	private HttpServletRequest _httpServletRequest;
-
-	@Reference
-	private ProcessUserFactory _processUserFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

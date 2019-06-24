@@ -19,10 +19,11 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryAggregate;
 import com.liferay.change.tracking.service.base.CTEntryAggregateLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -75,6 +76,7 @@ public class CTEntryAggregateLocalServiceImpl
 		ctEntryAggregate.setCreateDate(serviceContext.getCreateDate(now));
 		ctEntryAggregate.setModifiedDate(serviceContext.getModifiedDate(now));
 
+		ctEntryAggregate.setCtCollectionId(ctCollectionId);
 		ctEntryAggregate.setOwnerCTEntryId(ownerCTEntryId);
 
 		int status = WorkflowConstants.STATUS_DRAFT;
@@ -90,34 +92,34 @@ public class CTEntryAggregateLocalServiceImpl
 		ctEntryPersistence.addCTEntryAggregate(
 			ownerCTEntryId, ctEntryAggregate);
 
-		ctCollectionPersistence.addCTEntryAggregate(
-			ctCollectionId, ctEntryAggregate);
-
 		return ctEntryAggregate;
+	}
+
+	@Override
+	public List<CTEntryAggregate> fetchCTEntryAggregates(long ctCollectionId) {
+		return ctEntryAggregatePersistence.findByCTCollectionId(ctCollectionId);
 	}
 
 	@Override
 	public List<CTEntryAggregate> fetchCTEntryAggregates(
 		long ctCollectionId, long ownerCTEntryId) {
 
-		return ctEntryAggregateFinder.findByCTCI_OCTEI(
-			ctCollectionId, ownerCTEntryId, new QueryDefinition<>());
+		return ctEntryAggregatePersistence.findByCTCID_OCEID(
+			ctCollectionId, ownerCTEntryId);
 	}
 
 	@Override
 	public CTEntryAggregate fetchLatestCTEntryAggregate(
 		long ctCollectionId, long ownerCTEntryId) {
 
-		QueryDefinition<CTEntryAggregate> queryDefinition =
-			new QueryDefinition<>();
-
-		queryDefinition.setOrderByComparator(
+		OrderByComparator<CTEntryAggregate> orderByComparator =
 			OrderByComparatorFactoryUtil.create(
-				"CTEntryAggregate", "createDate", false));
+				"CTEntryAggregate", "createDate", false);
 
 		List<CTEntryAggregate> ctEntryAggregates =
-			ctEntryAggregateFinder.findByCTCI_OCTEI(
-				ctCollectionId, ownerCTEntryId, queryDefinition);
+			ctEntryAggregatePersistence.findByCTCID_OCEID(
+				ctCollectionId, ownerCTEntryId, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, orderByComparator);
 
 		if (!ctEntryAggregates.isEmpty()) {
 			return ctEntryAggregates.get(0);

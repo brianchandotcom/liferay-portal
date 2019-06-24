@@ -357,7 +357,7 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 	@Override
 	public List<CTEntryAggregate> getCTEntryAggregates(long ctCollectionId) {
-		return _ctEntryAggregateLocalService.getCTCollectionCTEntryAggregates(
+		return _ctEntryAggregateLocalService.fetchCTEntryAggregates(
 			ctCollectionId);
 	}
 

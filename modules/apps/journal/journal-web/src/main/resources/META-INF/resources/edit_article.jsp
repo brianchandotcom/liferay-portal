@@ -41,15 +41,12 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 	<aui:input name="refererPlid" type="hidden" value="<%= journalEditArticleDisplayContext.getRefererPlid() %>" />
 	<aui:input name="referringPortletResource" type="hidden" value="<%= journalEditArticleDisplayContext.getReferringPortletResource() %>" />
 	<aui:input name="groupId" type="hidden" value="<%= journalEditArticleDisplayContext.getGroupId() %>" />
-	<aui:input name="privateLayout" type="hidden" value="<%= layout.isPrivateLayout() %>" />
 	<aui:input name="folderId" type="hidden" value="<%= journalEditArticleDisplayContext.getFolderId() %>" />
 	<aui:input name="classNameId" type="hidden" value="<%= journalEditArticleDisplayContext.getClassNameId() %>" />
 	<aui:input name="classPK" type="hidden" value="<%= journalEditArticleDisplayContext.getClassPK() %>" />
 	<aui:input name="articleId" type="hidden" value="<%= journalEditArticleDisplayContext.getArticleId() %>" />
-	<aui:input name="articleIds" type="hidden" value="<%= journalEditArticleDisplayContext.getArticleId() + JournalPortlet.VERSION_SEPARATOR + journalEditArticleDisplayContext.getVersion() %>" />
 	<aui:input name="version" type="hidden" value="<%= ((article == null) || article.isNew()) ? journalEditArticleDisplayContext.getVersion() : article.getVersion() %>" />
 	<aui:input name="articleURL" type="hidden" value="<%= editArticleRenderURL %>" />
-	<aui:input name="changeDDMStructure" type="hidden" />
 	<aui:input name="ddmStructureId" type="hidden" />
 	<aui:input name="ddmTemplateId" type="hidden" />
 	<aui:input name="languageId" type="hidden" value="<%= journalEditArticleDisplayContext.getDefaultLanguageId() %>" />

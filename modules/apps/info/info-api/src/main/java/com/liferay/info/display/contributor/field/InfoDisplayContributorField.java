@@ -16,9 +16,12 @@ package com.liferay.info.display.contributor.field;
 
 import java.util.Locale;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Jürgen Kappler
  */
+@ProviderType
 public interface InfoDisplayContributorField<T> {
 
 	public String getKey();

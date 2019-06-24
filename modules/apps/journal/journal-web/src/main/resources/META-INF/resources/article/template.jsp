@@ -106,8 +106,10 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 
 					var languageId = '<%= themeDisplay.getLanguageId() %>';
 
-					if (document.<portlet:namespace />fm1.<portlet:namespace />languageId.value != '') {
-						languageId = document.<portlet:namespace />fm1.<portlet:namespace />languageId.value;
+					var inputComponent = Liferay.component('<portlet:namespace />titleMapAsXML');
+
+					if (inputComponent) {
+						languageId = inputComponent.getSelectedLanguageId();
 					}
 
 					uri = Liferay.Util.addParams('<portlet:namespace />languageId=' + languageId, uri);

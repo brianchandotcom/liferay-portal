@@ -279,6 +279,17 @@ public class CTEngineManagerImpl implements CTEngineManager {
 				CTEntry::getChangeType, Collectors.counting()));
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getCTCollectionOptional(long, long)}
+	 */
+	@Deprecated
+	@Override
+	public Optional<CTCollection> getCTCollectionOptional(long ctCollectionId) {
+		return getCTCollectionOptional(
+			CompanyThreadLocal.getCompanyId(), ctCollectionId);
+	}
+
 	@Override
 	public Optional<CTCollection> getCTCollectionOptional(
 		long companyId, long ctCollectionId) {

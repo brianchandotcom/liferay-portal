@@ -76,8 +76,9 @@ public class AssetAutoTaggerImpl implements AssetAutoTagger {
 
 			if (assetAutoTaggerConfiguration.isEnabled() &&
 				assetEntry.isVisible() &&
-				ListUtil.isNotEmpty(
-					_getAssetAutoTagProviders(assetEntry.getClassName()))) {
+				(ListUtil.isNotEmpty(
+					_getAssetAutoTagProviders(assetEntry.getClassName())) ||
+				 ListUtil.isNotEmpty(_getAssetEntryAssetAutoTagProviders()))) {
 
 				return true;
 			}

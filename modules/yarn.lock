@@ -4662,44 +4662,7 @@ d3@5.0.0:
     d3-voronoi "1"
     d3-zoom "1"
 
-d3@^5.5.0, d3@^5.7.0:
-  version "5.8.0"
-  resolved "https://registry.yarnpkg.com/d3/-/d3-5.8.0.tgz#251f12fe46d811ef300664590ec85eb574c44896"
-  integrity sha512-0rc4LL3fbyWhAqrxOt00svoxB2qoHHo6Bgs0WGcDPZ8ELqbA09evfeCnuy0ZrYbRHc+hCvBZaTT+GW3pnn05fw==
-  dependencies:
-    d3-array "1"
-    d3-axis "1"
-    d3-brush "1"
-    d3-chord "1"
-    d3-collection "1"
-    d3-color "1"
-    d3-contour "1"
-    d3-dispatch "1"
-    d3-drag "1"
-    d3-dsv "1"
-    d3-ease "1"
-    d3-fetch "1"
-    d3-force "1"
-    d3-format "1"
-    d3-geo "1"
-    d3-hierarchy "1"
-    d3-interpolate "1"
-    d3-path "1"
-    d3-polygon "1"
-    d3-quadtree "1"
-    d3-random "1"
-    d3-scale "2"
-    d3-scale-chromatic "1"
-    d3-selection "1"
-    d3-shape "1"
-    d3-time "1"
-    d3-time-format "2"
-    d3-timer "1"
-    d3-transition "1"
-    d3-voronoi "1"
-    d3-zoom "1"
-
-d3@^5.9.2:
+d3@^5.5.0, d3@^5.7.0, d3@^5.9.2:
   version "5.9.2"
   resolved "https://registry.yarnpkg.com/d3/-/d3-5.9.2.tgz#64e8a7e9c3d96d9e6e4999d2c8a2c829767e67f5"
   integrity sha512-ydrPot6Lm3nTWH+gJ/Cxf3FcwuvesYQ5uk+j/kXEH/xbuYWYWTMAHTJQkyeuG8Y5WM5RSEYB41EctUrXQQytRQ==
@@ -9632,10 +9595,10 @@ liferay-npm-bundler-plugin-resolve-linked-dependencies@2.7.1:
     read-json-sync "^2.0.0"
     semver "^5.5.0"
 
-liferay-npm-bundler-preset-liferay-dev@1.1.7:
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-preset-liferay-dev/-/liferay-npm-bundler-preset-liferay-dev-1.1.7.tgz#2d00ae283441113077025b40ba626ad3673b2017"
-  integrity sha512-AtcI6ucb89NczU0AG1Z9SejMYMHztkoG6iOizRsU2RR22kX6tEnmAu3KChrAof97Jjttj/Hec3c5sojQc2/V+g==
+liferay-npm-bundler-preset-liferay-dev@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-preset-liferay-dev/-/liferay-npm-bundler-preset-liferay-dev-1.2.0.tgz#6838d133d665dd5527620b851d76cc6c60db9ae9"
+  integrity sha512-4kVDFoHPRBZP51yRau6wv9MhG1MadZz2D9Yl71j0zvEPgC1XveRy/UNwlLdSx8phs0EUCaNSxuD2BXpq0JVe/w==
   dependencies:
     babel-preset-liferay-standard "2.7.1"
     liferay-npm-bundler-plugin-exclude-imports "2.7.1"
@@ -9679,10 +9642,10 @@ liferay-npm-bundler@2.7.1:
     semver "^5.5.0"
     xml-js "^1.6.8"
 
-liferay-npm-scripts@3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-3.2.0.tgz#bcacb17fb2effc2ca798cc838725757a9b8e7acc"
-  integrity sha512-DU2zMg1tgTRkiPgMF1VkJwM5u0RwEzMTWzs1y5lLrasgjqFRxsfyMhO0pB4xATRIAIWGDR7z6H9Mo4RoOshdzQ==
+liferay-npm-scripts@3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-3.3.0.tgz#7f23265fca8832fa45560934484429ab7f0a5bc5"
+  integrity sha512-3zDmiFv+JKkK4lEb/Qc1uMjNOtWtVJCEPivLoiS4O2UJzX77RyqaL8S/KgT6MRf4KyXTvsDQldj3I3vx5wQXSw==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/plugin-proposal-class-properties" "7.4.4"
@@ -9701,7 +9664,7 @@ liferay-npm-scripts@3.2.0:
     liferay-jest-junit-reporter "1.0.1"
     liferay-npm-bridge-generator "2.7.1"
     liferay-npm-bundler "2.7.1"
-    liferay-npm-bundler-preset-liferay-dev "1.1.7"
+    liferay-npm-bundler-preset-liferay-dev "1.2.0"
     liferay-theme-tasks "9.1.1"
     metal-tools-soy "4.3.2"
     minimist "^1.2.0"

@@ -344,7 +344,7 @@ definition {
 			configurationName = "Token Based SSO",
 			configurationScope = "Virtual Instance Scope");
 
-		FormFields.enableCheckbox(fieldName = "enabled");
+		FormFields.enableCheckbox(fieldName = "Enabled");
 
 		PortletEntry.save();
 

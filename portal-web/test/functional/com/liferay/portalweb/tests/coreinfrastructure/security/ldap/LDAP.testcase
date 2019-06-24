@@ -196,7 +196,7 @@ definition {
 			configurationName = "Authentication",
 			configurationScope = "Virtual Instance Scope");
 
-		FormFields.viewCheckboxNotChecked(fieldName = "enabled");
+		FormFields.viewCheckboxNotChecked(fieldName = "Enabled");
 
 		PortalSettings.configureLDAPSetting(enableSettingList = "enabled");
 
@@ -210,7 +210,7 @@ definition {
 			configurationName = "Authentication",
 			configurationScope = "Virtual Instance Scope");
 
-		FormFields.viewCheckboxNotChecked(fieldName = "enabled");
+		FormFields.viewCheckboxNotChecked(fieldName = "Enabled");
 	}
 
 }

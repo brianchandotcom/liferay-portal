@@ -61,10 +61,13 @@ public class TGZUtil {
 
 		try (FileOutputStream fileOutputStream = new FileOutputStream(
 				archiveFile);
+			//
 			BufferedOutputStream bufferedOutputStream =
 				new BufferedOutputStream(fileOutputStream, _CHARS_BUFFER_SIZE);
+			//
 			GzipCompressorOutputStream gzipCompressorOutputStream =
 				new GzipCompressorOutputStream(bufferedOutputStream);
+			//
 			TarArchiveOutputStream tarArchiveOutputStream =
 				new TarArchiveOutputStream(gzipCompressorOutputStream)) {
 

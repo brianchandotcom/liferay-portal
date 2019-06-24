@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * @author Pavel Savinov
  */
-public class CustomFieldsInfoDisplayContributorFieldUtil {
+public class ExpandoInfoDisplayContributorFieldUtil {
 
 	public static List<InfoDisplayContributorField>
 		getInfoDisplayContributorFields(String className) {
@@ -43,7 +43,7 @@ public class CustomFieldsInfoDisplayContributorFieldUtil {
 			String attributeName = attributeNames.nextElement();
 
 			infoDisplayContributorFields.add(
-				new CustomFieldInfoDisplayContributorField(
+				new ExpandoInfoDisplayContributorField(
 					attributeName, expandoBridge));
 		}
 

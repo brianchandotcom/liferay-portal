@@ -38,10 +38,10 @@ import java.util.Map;
 /**
  * @author Pavel Savinov
  */
-public class CustomFieldInfoDisplayContributorField
+public class ExpandoInfoDisplayContributorField
 	implements InfoDisplayContributorField {
 
-	public CustomFieldInfoDisplayContributorField(
+	public ExpandoInfoDisplayContributorField(
 		String attributeName, ExpandoBridge expandoBridge) {
 
 		_attributeName = attributeName;
@@ -130,7 +130,7 @@ public class CustomFieldInfoDisplayContributorField
 	private static final String _CUSTOM_FIELD_PREFIX = "_CUSTOM_FIELD_";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CustomFieldInfoDisplayContributorField.class);
+		ExpandoInfoDisplayContributorField.class);
 
 	private final String _attributeName;
 	private final ExpandoBridge _expandoBridge;

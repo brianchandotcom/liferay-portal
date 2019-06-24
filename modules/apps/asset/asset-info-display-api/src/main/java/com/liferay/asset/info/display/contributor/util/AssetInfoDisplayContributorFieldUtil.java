@@ -43,7 +43,7 @@ public class AssetInfoDisplayContributorFieldUtil {
 			);
 
 		infoDisplayContributorFields.addAll(
-			CustomFieldsInfoDisplayContributorFieldUtil.
+			ExpandoInfoDisplayContributorFieldUtil.
 				getInfoDisplayContributorFields(className));
 
 		return infoDisplayContributorFields;

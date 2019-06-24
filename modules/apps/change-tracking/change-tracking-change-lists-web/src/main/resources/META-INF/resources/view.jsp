@@ -58,7 +58,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 				>
 
 					<%
-					boolean production = CTConstants.CT_COLLECTION_NAME_PRODUCTION.equals(curCTCollection.getName());
+					boolean production = curCTCollection.isProduction();
 
 					String ctCollectionName = production ? "work-on-production" : curCTCollection.getName();
 
@@ -298,7 +298,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 
 						<%
 						String confirmationMessage = changeListsDisplayContext.getConfirmationMessage(curCTCollection.getName());
-						boolean production = CTConstants.CT_COLLECTION_NAME_PRODUCTION.equals(curCTCollection.getName());
+						boolean production = curCTCollection.isProduction();
 						boolean activeChangeList = changeListsDisplayContext.isChangeListActive(curCTCollection.getCtCollectionId());
 						%>
 

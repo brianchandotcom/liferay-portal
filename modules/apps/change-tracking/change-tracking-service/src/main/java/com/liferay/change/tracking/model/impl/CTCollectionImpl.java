@@ -29,7 +29,7 @@ public class CTCollectionImpl extends CTCollectionBaseImpl {
 	}
 
 	public boolean isProduction() {
-		if (CTConstants.CT_COLLECTION_NAME_PRODUCTION.equals(getName())) {
+		if (CTConstants.CT_COLLECTION_ID_PRODUCTION == getCtCollectionId()) {
 			return true;
 		}
 

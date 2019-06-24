@@ -373,7 +373,8 @@ public class CTEngineManagerTest {
 		CTCollection ctCollection = ctCollections.get(0);
 
 		Assert.assertEquals(
-			CTConstants.CT_COLLECTION_NAME_PRODUCTION, ctCollection.getName());
+			CTConstants.CT_COLLECTION_ID_PRODUCTION,
+			ctCollection.getCtCollectionId());
 	}
 
 	@Test
@@ -653,8 +654,8 @@ public class CTEngineManagerTest {
 			productionCTCollectionOptional.get();
 
 		Assert.assertEquals(
-			CTConstants.CT_COLLECTION_NAME_PRODUCTION,
-			productionCTCollection.getName());
+			CTConstants.CT_COLLECTION_ID_PRODUCTION,
+			productionCTCollection.getCtCollectionId());
 	}
 
 	@Test

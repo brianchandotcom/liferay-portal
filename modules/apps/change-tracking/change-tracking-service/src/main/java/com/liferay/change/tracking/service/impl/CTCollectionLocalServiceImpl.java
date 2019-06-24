@@ -185,11 +185,6 @@ public class CTCollectionLocalServiceImpl
 
 		dynamicQuery.add(companyIdProperty.eq(companyId));
 
-		Property nameProperty = PropertyFactoryUtil.forName("name");
-
-		dynamicQuery.add(
-			nameProperty.ne(CTConstants.CT_COLLECTION_NAME_PRODUCTION));
-
 		boolean includeActive = GetterUtil.getBoolean(
 			queryDefinition.getAttribute("includeActive"));
 

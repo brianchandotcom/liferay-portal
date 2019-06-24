@@ -27,9 +27,6 @@ public interface CTConstants {
 
 	public static final long CT_COLLECTION_ID_PRODUCTION = -1;
 
-	public static final String CT_COLLECTION_NAME_PRODUCTION =
-		"productionCTCollectionName";
-
 	public static final int USER_FILTER_ALL = -1;
 
 }

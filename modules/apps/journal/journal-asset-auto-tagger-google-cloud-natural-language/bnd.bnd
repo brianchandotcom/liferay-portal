@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Journal Asset Auto Tagger Google Cloud Natural Language
-Bundle-SymbolicName: com.liferay.journal.asset.auto.tagger.google.cloud.natural.language
-Bundle-Version: 2.0.0
-Web-ContextPath: /journal-asset-auto-tagger-google-cloud-natural-language

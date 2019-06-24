@@ -14,7 +14,7 @@
 
 package com.liferay.portal.reports.engine.console.service.impl;
 
-import com.liferay.document.library.kernel.store.DLStore;
+import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.petra.memory.DeleteFileFinalizeAction;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -182,7 +182,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 	public void deleteAttachment(long companyId, String fileName)
 		throws PortalException {
 
-		_dlStore.deleteFile(companyId, CompanyConstants.SYSTEM, fileName);
+		DLStoreUtil.deleteFile(companyId, CompanyConstants.SYSTEM, fileName);
 	}
 
 	@Override
@@ -208,7 +208,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
 		// Attachments
 
-		_dlStore.deleteDirectory(
+		DLStoreUtil.deleteDirectory(
 			entry.getCompanyId(), CompanyConstants.SYSTEM,
 			entry.getAttachmentsDir());
 
@@ -243,7 +243,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
 		String[] existingFiles = definition.getAttachmentsFiles();
 
-		byte[] templateFile = _dlStore.getFileAsBytes(
+		byte[] templateFile = DLStoreUtil.getFileAsBytes(
 			definition.getCompanyId(), CompanyConstants.SYSTEM,
 			existingFiles[0]);
 
@@ -387,11 +387,11 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		String fileName =
 			entry.getAttachmentsDir() + StringPool.SLASH + reportName;
 
-		_dlStore.addDirectory(
+		DLStoreUtil.addDirectory(
 			entry.getCompanyId(), CompanyConstants.SYSTEM,
 			entry.getAttachmentsDir());
 
-		_dlStore.addFile(
+		DLStoreUtil.addFile(
 			entry.getCompanyId(), CompanyConstants.SYSTEM, fileName, false,
 			reportResults);
 
@@ -440,7 +440,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			return null;
 		}
 
-		try (InputStream inputStream = _dlStore.getFileAsStream(
+		try (InputStream inputStream = DLStoreUtil.getFileAsStream(
 				entry.getCompanyId(), CompanyConstants.SYSTEM, fileName)) {
 
 			if (inputStream == null) {
@@ -579,9 +579,6 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
 	@ServiceReference(type = ConfigurationProvider.class)
 	protected ConfigurationProvider configurationProvider;
-
-	@ServiceReference(type = DLStore.class)
-	private DLStore _dlStore;
 
 	@ServiceReference(type = JSONFactory.class)
 	private JSONFactory _jsonFactory;

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.reports.engine.console.service.impl;
 
-import com.liferay.document.library.kernel.store.DLStore;
+import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -32,7 +32,6 @@ import com.liferay.portal.reports.engine.console.exception.DefinitionFileExcepti
 import com.liferay.portal.reports.engine.console.exception.DefinitionNameException;
 import com.liferay.portal.reports.engine.console.model.Definition;
 import com.liferay.portal.reports.engine.console.service.base.DefinitionLocalServiceBaseImpl;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.InputStream;
 
@@ -147,7 +146,7 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 			long companyId, String attachmentsDirectory)
 		throws PortalException {
 
-		_dlStore.deleteDirectory(
+		DLStoreUtil.deleteDirectory(
 			companyId, CompanyConstants.SYSTEM, attachmentsDirectory);
 	}
 
@@ -216,7 +215,7 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 		if (Validator.isNotNull(fileName) && (inputStream != null)) {
 			long companyId = definition.getCompanyId();
 
-			_dlStore.deleteDirectory(
+			DLStoreUtil.deleteDirectory(
 				companyId, CompanyConstants.SYSTEM,
 				definition.getAttachmentsDir());
 
@@ -245,7 +244,7 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 
 		String directoryName = definition.getAttachmentsDir();
 
-		_dlStore.addDirectory(
+		DLStoreUtil.addDirectory(
 			companyId, CompanyConstants.SYSTEM, directoryName);
 
 		String fileLocation = directoryName.concat(
@@ -254,7 +253,7 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 			fileName
 		);
 
-		_dlStore.addFile(
+		DLStoreUtil.addFile(
 			companyId, CompanyConstants.SYSTEM, fileLocation, false,
 			inputStream);
 	}
@@ -270,8 +269,5 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 			throw new DefinitionNameException.NullDefinitionFileName();
 		}
 	}
-
-	@ServiceReference(type = DLStore.class)
-	private DLStore _dlStore;
 
 }

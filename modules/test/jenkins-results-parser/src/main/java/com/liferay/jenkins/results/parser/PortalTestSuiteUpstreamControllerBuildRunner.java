@@ -328,6 +328,6 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 	}
 
 	private final List<String> _invokedTestSuiteNames = new ArrayList<>();
-	private final List<String> _selectedTestSuiteNames;
+	private List<String> _selectedTestSuiteNames;
 
 }

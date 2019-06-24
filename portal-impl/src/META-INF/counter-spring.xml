@@ -10,6 +10,11 @@
 	<bean class="com.liferay.counter.service.impl.CounterLocalServiceImpl" id="com.liferay.counter.kernel.service.CounterLocalService" />
 	<bean class="com.liferay.counter.service.persistence.impl.CounterFinderFactory" factory-method="createCounterFinder" id="com.liferay.counter.kernel.service.persistence.CounterFinder">
 		<constructor-arg ref="counterDataSource" />
-		<constructor-arg ref="counterSessionFactory" />
+		<constructor-arg>
+			<bean class="com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl">
+				<property name="sessionFactoryClassLoader" value="#{T(com.liferay.portal.kernel.util.PortalClassLoaderUtil).classLoader}" />
+				<property name="sessionFactoryImplementor" ref="counterHibernateSessionFactory" />
+			</bean>
+		</constructor-arg>
 	</bean>
 </beans>

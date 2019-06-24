@@ -10,7 +10,12 @@
 >
 	<bean class="com.liferay.portal.spring.aop.DynamicProxyCreator" factory-method="getDynamicProxyCreator" />
 	<bean class="com.liferay.portal.spring.transaction.TransactionExecutorFactory" factory-method="createTransactionExecutor" id="counterTransactionExecutor">
-		<constructor-arg ref="counterTransactionManager" />
+		<constructor-arg>
+			<bean class="com.liferay.portal.spring.transaction.TransactionManagerFactory" factory-method="createTransactionManager">
+				<constructor-arg ref="counterDataSource" />
+				<constructor-arg ref="counterHibernateSessionFactory" />
+			</bean>
+		</constructor-arg>
 		<constructor-arg value="true" />
 	</bean>
 	<bean class="com.liferay.portal.transaction.TransactionLifecycleManagerInitializer">

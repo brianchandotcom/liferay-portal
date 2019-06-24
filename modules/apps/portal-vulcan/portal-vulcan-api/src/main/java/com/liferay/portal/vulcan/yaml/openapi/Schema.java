@@ -94,6 +94,10 @@ public class Schema {
 		return _type;
 	}
 
+	public boolean isDeprecated() {
+		return _deprecated;
+	}
+
 	public boolean isReadOnly() {
 		return _readOnly;
 	}
@@ -116,6 +120,10 @@ public class Schema {
 
 	public void setDefault(String d) {
 		_default = d;
+	}
+
+	public void setDeprecated(boolean deprecated) {
+		_deprecated = deprecated;
 	}
 
 	public void setDescription(String description) {
@@ -177,6 +185,7 @@ public class Schema {
 	private List<Schema> _allOfSchemas;
 	private List<Schema> _anyOfSchemas;
 	private String _default;
+	private boolean _deprecated;
 	private String _description;
 	private List<String> _enumValues;
 	private String _example;

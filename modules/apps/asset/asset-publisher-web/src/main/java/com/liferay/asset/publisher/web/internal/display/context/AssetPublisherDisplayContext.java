@@ -34,6 +34,7 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
+import com.liferay.asset.list.util.AssetListHelper;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetEntryResult;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
@@ -124,6 +125,7 @@ public class AssetPublisherDisplayContext {
 			AssetEntryActionRegistry assetEntryActionRegistry,
 			AssetHelper assetHelper,
 			AssetPublisherCustomizer assetPublisherCustomizer,
+			AssetListHelper assetListHelper,
 			AssetPublisherHelper assetPublisherHelper,
 			AssetPublisherWebConfiguration assetPublisherWebConfiguration,
 			AssetPublisherWebUtil assetPublisherWebUtil,
@@ -135,6 +137,7 @@ public class AssetPublisherDisplayContext {
 		_assetEntryActionRegistry = assetEntryActionRegistry;
 		_assetHelper = assetHelper;
 		_assetPublisherCustomizer = assetPublisherCustomizer;
+		_assetListHelper = assetListHelper;
 		_assetPublisherHelper = assetPublisherHelper;
 		_assetPublisherWebConfiguration = assetPublisherWebConfiguration;
 		_assetPublisherWebUtil = assetPublisherWebUtil;
@@ -321,8 +324,8 @@ public class AssetPublisherDisplayContext {
 		AssetListEntry assetListEntry = fetchAssetListEntry();
 
 		if (isSelectionStyleAssetList() && (assetListEntry != null)) {
-			_assetEntryQuery = assetListEntry.getAssetEntryQuery(
-				_getSegmentsEntryIds());
+			_assetEntryQuery = _assetListHelper.getAssetEntryQuery(
+				assetListEntry, _getSegmentsEntryIds());
 		}
 		else {
 			_assetEntryQuery = _assetPublisherHelper.getAssetEntryQuery(
@@ -1882,6 +1885,7 @@ public class AssetPublisherDisplayContext {
 	private final AssetHelper _assetHelper;
 	private String _assetLinkBehavior;
 	private AssetListEntry _assetListEntry;
+	private final AssetListHelper _assetListHelper;
 	private final AssetPublisherCustomizer _assetPublisherCustomizer;
 	private final AssetPublisherHelper _assetPublisherHelper;
 	private final AssetPublisherPortletInstanceConfiguration

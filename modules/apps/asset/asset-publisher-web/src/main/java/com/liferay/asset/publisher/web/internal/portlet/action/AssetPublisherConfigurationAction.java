@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.asset.kernel.exception.DuplicateQueryRuleException;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.asset.list.util.AssetListHelper;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
@@ -142,9 +143,10 @@ public class AssetPublisherConfigurationAction
 		AssetPublisherDisplayContext assetPublisherDisplayContext =
 			new AssetPublisherDisplayContext(
 				assetEntryActionRegistry, assetHelper, assetPublisherCustomizer,
-				assetPublisherHelper, assetPublisherWebConfiguration,
-				assetPublisherWebUtil, infoListProviderTracker, renderRequest,
-				renderResponse, renderRequest.getPreferences());
+				assetListHelper, assetPublisherHelper,
+				assetPublisherWebConfiguration, assetPublisherWebUtil,
+				infoListProviderTracker, renderRequest, renderResponse,
+				renderRequest.getPreferences());
 
 		httpServletRequest.setAttribute(
 			AssetPublisherWebKeys.ASSET_PUBLISHER_DISPLAY_CONTEXT,
@@ -808,6 +810,9 @@ public class AssetPublisherConfigurationAction
 
 	@Reference
 	protected AssetHelper assetHelper;
+
+	@Reference
+	protected AssetListHelper assetListHelper;
 
 	@Reference
 	protected AssetPublisherCustomizerRegistry assetPublisherCustomizerRegistry;

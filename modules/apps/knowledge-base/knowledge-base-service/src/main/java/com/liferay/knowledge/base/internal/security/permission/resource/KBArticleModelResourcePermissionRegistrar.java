@@ -72,7 +72,7 @@ public class KBArticleModelResourcePermissionRegistrar {
 				(modelResourcePermission, consumer) -> {
 					if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 						consumer.accept(
-							new KBArticleDynamicInheritancePermissionLogic(
+							new KBArticleDynamicInheritanceModelResourcePermissionLogic(
 								modelResourcePermission));
 					}
 				}),
@@ -99,7 +99,7 @@ public class KBArticleModelResourcePermissionRegistrar {
 
 	private ServiceRegistration<ModelResourcePermission> _serviceRegistration;
 
-	private class KBArticleDynamicInheritancePermissionLogic
+	private class KBArticleDynamicInheritanceModelResourcePermissionLogic
 		implements ModelResourcePermissionLogic<KBArticle> {
 
 		@Override
@@ -148,7 +148,7 @@ public class KBArticleModelResourcePermissionRegistrar {
 			return null;
 		}
 
-		private KBArticleDynamicInheritancePermissionLogic(
+		private KBArticleDynamicInheritanceModelResourcePermissionLogic(
 			ModelResourcePermission<KBArticle> modelResourcePermission) {
 
 			_kbArticleModelResourcePermission = modelResourcePermission;

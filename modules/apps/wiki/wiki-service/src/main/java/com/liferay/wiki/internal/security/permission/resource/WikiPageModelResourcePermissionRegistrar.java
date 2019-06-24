@@ -96,7 +96,8 @@ public class WikiPageModelResourcePermissionRegistrar {
 
 							return null;
 						});
-					consumer.accept(new RedirectPageDynamicInheritanceLogic());
+					consumer.accept(
+						new RedirectPageDynamicInheritanceModelResourcePermissionLogic());
 				}),
 			properties);
 	}
@@ -129,7 +130,7 @@ public class WikiPageModelResourcePermissionRegistrar {
 	@Reference
 	private WorkflowPermission _workflowPermission;
 
-	private class RedirectPageDynamicInheritanceLogic
+	private class RedirectPageDynamicInheritanceModelResourcePermissionLogic
 		implements ModelResourcePermissionLogic<WikiPage> {
 
 		@Override

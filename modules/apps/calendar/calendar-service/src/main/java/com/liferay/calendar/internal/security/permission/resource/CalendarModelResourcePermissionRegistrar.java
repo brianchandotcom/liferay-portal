@@ -55,7 +55,8 @@ public class CalendarModelResourcePermissionRegistrar {
 				Calendar.class, Calendar::getCalendarId,
 				_calendarLocalService::getCalendar, _portletResourcePermission,
 				(modelResourcePermission, consumer) -> consumer.accept(
-					new StagingPermissionCheck(_stagingPermission))),
+					new StagingModelResourcePermissionLogic(
+						_stagingPermission))),
 			properties);
 	}
 
@@ -77,7 +78,7 @@ public class CalendarModelResourcePermissionRegistrar {
 	@Reference
 	private StagingPermission _stagingPermission;
 
-	private static class StagingPermissionCheck
+	private static class StagingModelResourcePermissionLogic
 		implements ModelResourcePermissionLogic<Calendar> {
 
 		@Override
@@ -96,7 +97,9 @@ public class CalendarModelResourcePermissionRegistrar {
 				CalendarPortletKeys.CALENDAR, actionId);
 		}
 
-		private StagingPermissionCheck(StagingPermission stagingPermission) {
+		private StagingModelResourcePermissionLogic(
+			StagingPermission stagingPermission) {
+
 			_stagingPermission = stagingPermission;
 		}
 

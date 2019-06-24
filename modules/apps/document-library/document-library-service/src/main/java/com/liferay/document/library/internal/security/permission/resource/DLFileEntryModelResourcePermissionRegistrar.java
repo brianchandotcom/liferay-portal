@@ -79,7 +79,7 @@ public class DLFileEntryModelResourcePermissionRegistrar {
 							_stagingPermission, DLPortletKeys.DOCUMENT_LIBRARY,
 							DLFileEntry::getFileEntryId));
 					consumer.accept(
-						new DLFileEntryWorkflowedModelPermissionLogic(
+						new DLFileEntryWorkflowedModelResourcePermissionLogic(
 							modelResourcePermission));
 
 					if (_sharingModelResourcePermissionConfigurator != null) {
@@ -197,7 +197,7 @@ public class DLFileEntryModelResourcePermissionRegistrar {
 	@Reference
 	private WorkflowPermission _workflowPermission;
 
-	private class DLFileEntryWorkflowedModelPermissionLogic
+	private class DLFileEntryWorkflowedModelResourcePermissionLogic
 		implements ModelResourcePermissionLogic<DLFileEntry> {
 
 		@Override
@@ -239,7 +239,7 @@ public class DLFileEntryModelResourcePermissionRegistrar {
 			return null;
 		}
 
-		private DLFileEntryWorkflowedModelPermissionLogic(
+		private DLFileEntryWorkflowedModelResourcePermissionLogic(
 			ModelResourcePermission<DLFileEntry> modelResourcePermission) {
 
 			_modelResourcePermission = modelResourcePermission;

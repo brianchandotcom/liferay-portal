@@ -57,7 +57,7 @@ public class KBFolderModelResourcePermissionRegistrar {
 				(modelResourcePermission, consumer) -> {
 					if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 						consumer.accept(
-							new KBFolderDynamicInheritancePermissionLogic(
+							new KBFolderDynamicInheritanceModelResourcePermissionLogic(
 								modelResourcePermission));
 					}
 				}),
@@ -79,7 +79,7 @@ public class KBFolderModelResourcePermissionRegistrar {
 
 	private ServiceRegistration<ModelResourcePermission> _serviceRegistration;
 
-	private class KBFolderDynamicInheritancePermissionLogic
+	private class KBFolderDynamicInheritanceModelResourcePermissionLogic
 		implements ModelResourcePermissionLogic<KBFolder> {
 
 		@Override
@@ -106,7 +106,7 @@ public class KBFolderModelResourcePermissionRegistrar {
 				permissionChecker, kbFolder, actionId);
 		}
 
-		private KBFolderDynamicInheritancePermissionLogic(
+		private KBFolderDynamicInheritanceModelResourcePermissionLogic(
 			ModelResourcePermission<KBFolder> modelResourcePermission) {
 
 			_kbFolderModelResourcePermission = modelResourcePermission;

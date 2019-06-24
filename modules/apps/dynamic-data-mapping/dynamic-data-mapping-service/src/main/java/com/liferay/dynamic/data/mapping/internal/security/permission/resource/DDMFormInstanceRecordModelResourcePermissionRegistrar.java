@@ -60,9 +60,9 @@ public class DDMFormInstanceRecordModelResourcePermissionRegistrar {
 				_portletResourcePermission,
 				(modelResourcePermission, consumer) -> {
 					consumer.accept(
-						new DDMFormInstanceRecordAutosavedPermissionLogic());
+						new DDMFormInstanceRecordAutosavedModelResourcePermissionLogic());
 					consumer.accept(
-						new DDMFormInstanceRecordInheritancePermissionLogic());
+						new DDMFormInstanceRecordInheritanceModelResourcePermissionLogic());
 				}),
 			properties);
 	}
@@ -90,7 +90,7 @@ public class DDMFormInstanceRecordModelResourcePermissionRegistrar {
 	@Reference
 	private StagingPermission _stagingPermission;
 
-	private class DDMFormInstanceRecordAutosavedPermissionLogic
+	private class DDMFormInstanceRecordAutosavedModelResourcePermissionLogic
 		implements ModelResourcePermissionLogic<DDMFormInstanceRecord> {
 
 		@Override
@@ -116,7 +116,7 @@ public class DDMFormInstanceRecordModelResourcePermissionRegistrar {
 
 	}
 
-	private class DDMFormInstanceRecordInheritancePermissionLogic
+	private class DDMFormInstanceRecordInheritanceModelResourcePermissionLogic
 		implements ModelResourcePermissionLogic<DDMFormInstanceRecord> {
 
 		@Override

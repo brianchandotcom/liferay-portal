@@ -57,7 +57,7 @@ public class BackgroundTaskModelResourcePermissionRegistrar {
 				BackgroundTask.class, BackgroundTask::getBackgroundTaskId,
 				_backgroundTaskLocalService::getBackgroundTask, null,
 				(modelResourcePermission, consumer) -> consumer.accept(
-					new BackgroundTaskPermissionLogic())),
+					new BackgroundTaskModelResourcePermissionLogic())),
 			properties);
 	}
 
@@ -75,7 +75,7 @@ public class BackgroundTaskModelResourcePermissionRegistrar {
 		_backgroundTaskModelResourcePermissionLogics;
 	private ServiceRegistration<ModelResourcePermission> _serviceRegistration;
 
-	private class BackgroundTaskPermissionLogic
+	private class BackgroundTaskModelResourcePermissionLogic
 		implements ModelResourcePermissionLogic<BackgroundTask> {
 
 		@Override

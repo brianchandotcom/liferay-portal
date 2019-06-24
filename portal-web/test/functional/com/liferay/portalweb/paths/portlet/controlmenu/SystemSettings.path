@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>SECURITY_CREDENTIAL_FIELD</td>
-	<td>//div[contains(@data-field-name,'securityCredential')]//input[@type='password' and @value='TEMP_OBFUSCATION_VALUE']</td>
+	<td>//div[contains(@data-field-name,'securityCredential')]//input[@type='password']</td>
 	<td></td>
 </tr>
 <tr>

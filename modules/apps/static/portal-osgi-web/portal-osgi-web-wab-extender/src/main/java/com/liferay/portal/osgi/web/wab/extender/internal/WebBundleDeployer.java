@@ -61,12 +61,6 @@ public class WebBundleDeployer {
 	}
 
 	public ServiceRegistration<PortalProfile> doStart(Bundle bundle) {
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		if (bundleContext == null) {
-			return null;
-		}
-
 		Enumeration<URL> enumeration = bundle.findEntries(
 			"/WEB-INF", "liferay-plugin-package.properties", false);
 

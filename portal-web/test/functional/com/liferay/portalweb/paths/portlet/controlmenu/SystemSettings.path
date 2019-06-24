@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>DROPDOWN_MENU_OPTION</td>
-	<td>//a[contains(@class,'dropdown-item') and @title='${key_selectOption}']</td>
+	<td>//button[contains(@class,'dropdown-item') and @aria-label='${key_selectOption}']</td>
 	<td></td>
 </tr>
 <tr>

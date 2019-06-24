@@ -15,18 +15,18 @@ Liferay Portal and several other related open source projects. It includes
 features for end users, business professionals, system administrators, and
 enterprise developers.
 
--   Modular architecture for maximum flexibility and reliability
--   Portal features for managing users, groups, and permissions
--   Single page applications for blazingly fast performance
--   Rich web services for integrating with other systems
--   Web content management including Personalization and Content Targeting
--   Documents and rich media management
--   Mobile development platform
--   Business forms and workflow
--   Collaboration features such as blogs, wikis, and social networking
--   Consistent and powerful Lexicon user experience
--   Integrated development environment using
-    [Liferay Dev Studio](https://community.liferay.com/projects/ide)
+- Modular architecture for maximum flexibility and reliability
+- Portal features for managing users, groups, and permissions
+- Single page applications for blazingly fast performance
+- Rich web services for integrating with other systems
+- Web content management including Personalization and Content Targeting
+- Documents and rich media management
+- Mobile development platform
+- Business forms and workflow
+- Collaboration features such as blogs, wikis, and social networking
+- Consistent and powerful Lexicon user experience
+- Integrated development environment using
+    [Liferay Dev Studio](https://liferay.dev/projects/ide)
 
 For more details on these and other features, please refer to the
 [user guide](https://dev.liferay.com/discover/portal) on the

@@ -9,9 +9,8 @@ exports[`CriteriaSidebarItem should render 1`] = `
       class="inline-item"
     >
       <svg
-        aria-hidden="true"
         class="lexicon-icon lexicon-icon-drag"
-        viewBox="0 0 512 512"
+        role="presentation"
       >
         <use
           xlink:href="#drag"
@@ -25,9 +24,8 @@ exports[`CriteriaSidebarItem should render 1`] = `
         class="inline-item"
       >
         <svg
-          aria-hidden="true"
           class="lexicon-icon lexicon-icon-text"
-          viewBox="0 0 512 512"
+          role="presentation"
         >
           <use
             xlink:href="#text"

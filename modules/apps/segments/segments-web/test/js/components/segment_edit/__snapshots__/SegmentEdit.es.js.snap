@@ -56,9 +56,8 @@ exports[`SegmentEdit should render 1`] = `
                   class="inline-item"
                 >
                   <svg
-                    aria-hidden="true"
                     class="lexicon-icon lexicon-icon-en-us"
-                    viewBox="0 0 512 512"
+                    role="presentation"
                   >
                     <use
                       xlink:href="#en-us"
@@ -156,9 +155,8 @@ exports[`SegmentEdit should render with edit buttons if the user has update perm
                   class="inline-item"
                 >
                   <svg
-                    aria-hidden="true"
                     class="lexicon-icon lexicon-icon-en-us"
-                    viewBox="0 0 512 512"
+                    role="presentation"
                   >
                     <use
                       xlink:href="#en-us"
@@ -220,9 +218,8 @@ exports[`SegmentEdit should render with edit buttons if the user has update perm
                       class="button-icon button-icon-off toggle-switch-icon"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-pencil"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#pencil"
@@ -233,9 +230,8 @@ exports[`SegmentEdit should render with edit buttons if the user has update perm
                       class="button-icon button-icon-on toggle-switch-icon"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-pencil"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#pencil"
@@ -254,7 +250,7 @@ exports[`SegmentEdit should render with edit buttons if the user has update perm
               class="btn-group-item"
             >
               <a
-                class="btn btn-secondary btn-sm text-capitalize"
+                class="text-capitalize link-outline link-outline-secondary"
                 href="/test-url"
               >
                 cancel
@@ -264,7 +260,7 @@ exports[`SegmentEdit should render with edit buttons if the user has update perm
               class="btn-group-item"
             >
               <button
-                class="btn btn-primary btn-sm text-capitalize"
+                class="text-capitalize btn btn-primary btn-sm"
                 disabled=""
                 type="submit"
               >
@@ -338,9 +334,8 @@ exports[`SegmentEdit should render with given values 1`] = `
                   class="inline-item"
                 >
                   <svg
-                    aria-hidden="true"
                     class="lexicon-icon lexicon-icon-en-us"
-                    viewBox="0 0 512 512"
+                    role="presentation"
                   >
                     <use
                       xlink:href="#en-us"
@@ -402,9 +397,8 @@ exports[`SegmentEdit should render with given values 1`] = `
                       class="button-icon button-icon-off toggle-switch-icon"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-pencil"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#pencil"
@@ -415,9 +409,8 @@ exports[`SegmentEdit should render with given values 1`] = `
                       class="button-icon button-icon-on toggle-switch-icon"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-pencil"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#pencil"
@@ -436,7 +429,7 @@ exports[`SegmentEdit should render with given values 1`] = `
               class="btn-group-item"
             >
               <a
-                class="btn btn-secondary btn-sm text-capitalize"
+                class="text-capitalize link-outline link-outline-secondary"
                 href="/test-url"
               >
                 cancel
@@ -446,7 +439,7 @@ exports[`SegmentEdit should render with given values 1`] = `
               class="btn-group-item"
             >
               <button
-                class="btn btn-primary btn-sm text-capitalize"
+                class="text-capitalize btn btn-primary btn-sm"
                 type="submit"
               >
                 save
@@ -498,9 +491,8 @@ exports[`SegmentEdit should render with given values 1`] = `
                       type="button"
                     >
                       <svg
-                        aria-hidden="true"
-                        class="lexicon-icon lexicon-icon-search icon"
-                        viewBox="0 0 512 512"
+                        class="lexicon-icon lexicon-icon-search"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#search"
@@ -531,9 +523,8 @@ exports[`SegmentEdit should render with given values 1`] = `
                         class="collapse-icon"
                       >
                         <svg
-                          aria-hidden="true"
                           class="lexicon-icon lexicon-icon-angle-right active"
-                          viewBox="0 0 512 512"
+                          role="presentation"
                         >
                           <use
                             xlink:href="#angle-right"
@@ -553,9 +544,8 @@ exports[`SegmentEdit should render with given values 1`] = `
                         class="inline-item"
                       >
                         <svg
-                          aria-hidden="true"
                           class="lexicon-icon lexicon-icon-drag"
-                          viewBox="0 0 512 512"
+                          role="presentation"
                         >
                           <use
                             xlink:href="#drag"
@@ -569,9 +559,8 @@ exports[`SegmentEdit should render with given values 1`] = `
                           class="inline-item"
                         >
                           <svg
-                            aria-hidden="true"
                             class="lexicon-icon lexicon-icon-text"
-                            viewBox="0 0 512 512"
+                            role="presentation"
                           >
                             <use
                               xlink:href="#text"
@@ -671,9 +660,8 @@ exports[`SegmentEdit should render with given values 1`] = `
                               draggable="true"
                             >
                               <svg
-                                aria-hidden="true"
                                 class="lexicon-icon lexicon-icon-drag"
-                                viewBox="0 0 512 512"
+                                role="presentation"
                               >
                                 <use
                                   xlink:href="#drag"
@@ -718,13 +706,12 @@ exports[`SegmentEdit should render with given values 1`] = `
                               value="value"
                             />
                             <button
-                              class="btn btn-outline-secondary btn-monospaced btn-outline-borderless"
+                              class="btn-outline-borderless btn btn-secondary btn-monospaced"
                               type="button"
                             >
                               <svg
-                                aria-hidden="true"
-                                class="lexicon-icon lexicon-icon-paste icon"
-                                viewBox="0 0 512 512"
+                                class="lexicon-icon lexicon-icon-paste"
+                                role="presentation"
                               >
                                 <use
                                   xlink:href="#paste"
@@ -732,13 +719,12 @@ exports[`SegmentEdit should render with given values 1`] = `
                               </svg>
                             </button>
                             <button
-                              class="btn btn-outline-secondary btn-monospaced btn-outline-borderless"
+                              class="btn-outline-borderless btn btn-secondary btn-monospaced"
                               type="button"
                             >
                               <svg
-                                aria-hidden="true"
-                                class="lexicon-icon lexicon-icon-times-circle icon"
-                                viewBox="0 0 512 512"
+                                class="lexicon-icon lexicon-icon-times-circle"
+                                role="presentation"
                               >
                                 <use
                                   xlink:href="#times-circle"
@@ -840,9 +826,8 @@ exports[`SegmentEdit should render without edit buttons if the user does not hav
                   class="inline-item"
                 >
                   <svg
-                    aria-hidden="true"
                     class="lexicon-icon lexicon-icon-en-us"
-                    viewBox="0 0 512 512"
+                    role="presentation"
                   >
                     <use
                       xlink:href="#en-us"

@@ -31,6 +31,8 @@ import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 
+import graphql.GraphQLError;
+
 import graphql.annotations.directives.DirectiveWirer;
 import graphql.annotations.directives.DirectiveWiringMapRetriever;
 import graphql.annotations.processor.ProcessingElementsContainer;
@@ -81,7 +83,10 @@ import graphql.schema.GraphQLScalarType;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.GraphQLType;
 
+import graphql.servlet.DefaultGraphQLErrorHandler;
+import graphql.servlet.GenericGraphQLError;
 import graphql.servlet.GraphQLContext;
+import graphql.servlet.GraphQLObjectMapper;
 import graphql.servlet.SimpleGraphQLHttpServlet;
 
 import java.lang.annotation.Annotation;
@@ -500,6 +505,14 @@ public class GraphQLServletExtender {
 			SimpleGraphQLHttpServlet.Builder servletBuilder =
 				SimpleGraphQLHttpServlet.newBuilder(schemaBuilder.build());
 
+			GraphQLObjectMapper.Builder objectMapperBuilder =
+				GraphQLObjectMapper.newBuilder();
+
+			objectMapperBuilder.withGraphQLErrorHandler(
+				new LiferayGraphQLErrorHandler());
+
+			servletBuilder.withObjectMapper(objectMapperBuilder.build());
+
 			_servlet = servletBuilder.build();
 
 			return _servlet;
@@ -847,6 +860,30 @@ public class GraphQLServletExtender {
 
 	}
 
+	private class LiferayGraphQLErrorHandler
+		extends DefaultGraphQLErrorHandler {
+
+		@Override
+		protected List<GraphQLError> filterGraphQLErrors(
+			List<GraphQLError> graphQLErrors) {
+
+			return graphQLErrors.stream(
+			).map(
+				graphQLError -> {
+					if (!isClientError(graphQLError)) {
+						return new GenericGraphQLError(
+							graphQLError.getMessage());
+					}
+
+					return graphQLError;
+				}
+			).collect(
+				Collectors.toList()
+			);
+		}
+
+	}
+
 	private class LiferayGraphQLFieldRetriever extends GraphQLFieldRetriever {
 
 		@Override
@@ -898,6 +935,9 @@ public class GraphQLServletExtender {
 		public Object get(DataFetchingEnvironment dataFetchingEnvironment) {
 			try {
 				return _get(dataFetchingEnvironment, _method);
+			}
+			catch (InvocationTargetException ite) {
+				throw new RuntimeException(ite.getTargetException());
 			}
 			catch (Exception e) {
 				throw new RuntimeException(e);

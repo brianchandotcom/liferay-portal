@@ -99,7 +99,10 @@ class LocalizedDropdown extends React.Component {
 					type='button'
 				>
 					<span className='inline-item'>
-						<ClayIcon symbol={currentLangKey} />
+						<ClayIcon
+							key={currentLangKey}
+							symbol={currentLangKey}
+						/>
 					</span>
 					<span className='btn-section'>{currentLangTag}</span>
 				</button>

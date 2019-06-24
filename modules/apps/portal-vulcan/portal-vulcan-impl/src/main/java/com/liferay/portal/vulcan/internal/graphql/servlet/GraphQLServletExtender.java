@@ -115,6 +115,8 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 
+import javax.ws.rs.core.Response;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
@@ -970,8 +972,9 @@ public class GraphQLServletExtender {
 		public boolean canBuildType(
 			Class<?> clazz, AnnotatedType annotatedType) {
 
-			if ((clazz == Filter.class) || (clazz == MultipartBody.class) ||
-				(clazz == Object.class) || (clazz == Sort[].class)) {
+			if ((clazz == Filter.class) || (clazz == Map.class) ||
+				(clazz == MultipartBody.class) || (clazz == Object.class) ||
+				(clazz == Response.class) || (clazz == Sort[].class)) {
 
 				return true;
 			}

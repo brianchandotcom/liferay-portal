@@ -262,6 +262,12 @@ paths:
             operationId: deleteCollection
             parameters:
                 - in: path
+                  name: companyId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
                   name: collectionId
                   required: true
                   schema:
@@ -282,6 +288,12 @@ paths:
         get:
             operationId: getCollection
             parameters:
+                - in: path
+                  name: companyId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
                 - in: path
                   name: collectionId
                   required: true

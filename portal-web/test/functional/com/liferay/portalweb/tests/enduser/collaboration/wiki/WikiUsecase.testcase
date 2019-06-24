@@ -392,6 +392,11 @@ definition {
 			panel = "Site Administration",
 			portlet = "Recycle Bin");
 
+		RecycleBin.viewCP(
+			assetName = "FrontPage",
+			assetType = "Wiki Page",
+			deleteUser = "Test Test");
+
 		RecycleBin.restoreOverwriteCP(assetName = "FrontPage");
 
 		Navigator.openURL();

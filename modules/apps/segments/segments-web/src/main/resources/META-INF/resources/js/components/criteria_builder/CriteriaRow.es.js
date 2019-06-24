@@ -411,14 +411,13 @@ class CriteriaRow extends Component {
 				{error ? (
 					<ClayButton
 						onClick={this._handleDelete}
-						style='outline-danger'
+						className='btn-outline-danger'
 					>
 						{Liferay.Language.get('delete')}
 					</ClayButton>
 				) : (
 					<React.Fragment>
 						<ClayButton
-							borderless
 							className='btn-outline-borderless'
 							displayType='secondary'
 							monospaced
@@ -428,7 +427,6 @@ class CriteriaRow extends Component {
 						</ClayButton>
 
 						<ClayButton
-							borderless
 							className='btn-outline-borderless'
 							displayType='secondary'
 							monospaced

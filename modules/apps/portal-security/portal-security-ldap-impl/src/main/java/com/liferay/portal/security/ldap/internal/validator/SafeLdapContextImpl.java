@@ -823,7 +823,7 @@ public class SafeLdapContextImpl implements SafeLdapContext {
 
 	@Override
 	public String toString() {
-		return "SafeLDAPContextImpl{_ldapContext=" + _ldapContext + '}';
+		return "SafeLdapContextImpl{_ldapContext=" + _ldapContext + '}';
 	}
 
 	@Override

@@ -283,7 +283,7 @@ public class LDAPAuth implements Authenticator {
 			String screenName, long userId, String password)
 		throws Exception {
 
-		SafeLdapContext safeLdapContext = _portalLDAP.getSafeLDAPContext(
+		SafeLdapContext safeLdapContext = _portalLDAP.getSafeLdapContext(
 			ldapServerId, companyId);
 
 		if (safeLdapContext == null) {

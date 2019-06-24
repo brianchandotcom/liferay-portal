@@ -99,7 +99,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 		long ldapServerId = _portalLDAP.getLdapServerId(
 			companyId, user.getScreenName(), user.getEmailAddress());
 
-		LdapContext ldapContext = _portalLDAP.getSafeLDAPContext(
+		LdapContext ldapContext = _portalLDAP.getSafeLdapContext(
 			ldapServerId, companyId);
 
 		try {
@@ -182,7 +182,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 		long ldapServerId = _portalLDAP.getLdapServerId(
 			companyId, user.getScreenName(), user.getEmailAddress());
 
-		LdapContext ldapContext = _portalLDAP.getSafeLDAPContext(
+		LdapContext ldapContext = _portalLDAP.getSafeLdapContext(
 			ldapServerId, companyId);
 
 		if (ldapContext == null) {
@@ -283,7 +283,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 		long ldapServerId = _portalLDAP.getLdapServerId(
 			companyId, user.getScreenName(), user.getEmailAddress());
 
-		LdapContext ldapContext = _portalLDAP.getSafeLDAPContext(
+		LdapContext ldapContext = _portalLDAP.getSafeLdapContext(
 			ldapServerId, companyId);
 
 		try {

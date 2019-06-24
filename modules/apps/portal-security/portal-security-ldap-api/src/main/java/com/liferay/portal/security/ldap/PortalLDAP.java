@@ -45,7 +45,7 @@ public interface PortalLDAP {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #getSafeLDAPContext(long, long)}
+	 *             #getSafeLdapContext(long, long)}
 	 */
 	@Deprecated
 	public LdapContext getContext(long ldapServerId, long companyId)
@@ -53,7 +53,7 @@ public interface PortalLDAP {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #getSafeLDAPContext(long, String, String, String)}
+	 *             #getSafeLdapContext(long, String, String, String)}
 	 */
 	@Deprecated
 	public LdapContext getContext(
@@ -169,10 +169,10 @@ public interface PortalLDAP {
 			long ldapServerId, long companyId, Binding binding)
 		throws Exception;
 
-	public SafeLdapContext getSafeLDAPContext(
+	public SafeLdapContext getSafeLdapContext(
 		long ldapServerId, long companyId);
 
-	public SafeLdapContext getSafeLDAPContext(
+	public SafeLdapContext getSafeLdapContext(
 		long companyId, String providerURL, String principal,
 		String credentials);
 

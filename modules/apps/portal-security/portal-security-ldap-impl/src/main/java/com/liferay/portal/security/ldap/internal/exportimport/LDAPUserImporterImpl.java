@@ -174,7 +174,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				_ldapServerConfigurationProvider.getConfiguration(
 					companyId, ldapServerId);
 
-			safeLdapContext = _portalLDAP.getSafeLDAPContext(
+			safeLdapContext = _portalLDAP.getSafeLdapContext(
 				ldapServerId, companyId);
 
 			if (safeLdapContext == null) {
@@ -320,7 +320,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			return null;
 		}
 
-		LdapContext ldapContext = _portalLDAP.getSafeLDAPContext(
+		LdapContext ldapContext = _portalLDAP.getSafeLdapContext(
 			ldapServerId, companyId);
 
 		Attributes attributes = _portalLDAP.getUserAttributes(
@@ -420,7 +420,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			return;
 		}
 
-		LdapContext ldapContext = _portalLDAP.getSafeLDAPContext(
+		LdapContext ldapContext = _portalLDAP.getSafeLdapContext(
 			ldapServerId, companyId);
 
 		if (ldapContext == null) {

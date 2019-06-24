@@ -122,19 +122,19 @@ public class DefaultPortalLDAP implements PortalLDAP {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #getSafeLDAPContext(long, long)}
+	 *             #getSafeLdapContext(long, long)}
 	 */
 	@Deprecated
 	@Override
 	public LdapContext getContext(long ldapServerId, long companyId)
 		throws Exception {
 
-		return getSafeLDAPContext(ldapServerId, companyId);
+		return getSafeLdapContext(ldapServerId, companyId);
 	}
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), please use {@link
-	 *             #getSafeLDAPContext(long, String, String, String)}
+	 *             #getSafeLdapContext(long, String, String, String)}
 	 */
 	@Deprecated
 	@Override
@@ -143,7 +143,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			String credentials)
 		throws Exception {
 
-		return getSafeLDAPContext(
+		return getSafeLdapContext(
 			companyId, providerURL, principal, credentials);
 	}
 
@@ -155,7 +155,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
 
-		SafeLdapContext safeLdapContext = getSafeLDAPContext(
+		SafeLdapContext safeLdapContext = getSafeLdapContext(
 			ldapServerId, companyId);
 
 		NamingEnumeration<SearchResult> enu = null;
@@ -569,21 +569,21 @@ public class DefaultPortalLDAP implements PortalLDAP {
 	}
 
 	@Override
-	public SafeLdapContext getSafeLDAPContext(
+	public SafeLdapContext getSafeLdapContext(
 		long ldapServerId, long companyId) {
 
 		LDAPServerConfiguration ldapServerConfiguration =
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
 
-		return getSafeLDAPContext(
+		return getSafeLdapContext(
 			companyId, ldapServerConfiguration.baseProviderURL(),
 			ldapServerConfiguration.securityPrincipal(),
 			ldapServerConfiguration.securityCredential());
 	}
 
 	@Override
-	public SafeLdapContext getSafeLDAPContext(
+	public SafeLdapContext getSafeLdapContext(
 		long companyId, String providerURL, String principal,
 		String credentials) {
 
@@ -657,7 +657,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			String emailAddress, boolean checkOriginalEmail)
 		throws Exception {
 
-		SafeLdapContext safeLdapContext = getSafeLDAPContext(
+		SafeLdapContext safeLdapContext = getSafeLdapContext(
 			ldapServerId, companyId);
 
 		NamingEnumeration<SearchResult> enu = null;
@@ -986,7 +986,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			LdapName userDNLdapName)
 		throws Exception {
 
-		SafeLdapContext safeLdapContext = getSafeLDAPContext(
+		SafeLdapContext safeLdapContext = getSafeLdapContext(
 			ldapServerId, companyId);
 
 		NamingEnumeration<SearchResult> enu = null;
@@ -1055,7 +1055,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			LdapName userDNLdapName)
 		throws Exception {
 
-		SafeLdapContext safeLdapContext = getSafeLDAPContext(
+		SafeLdapContext safeLdapContext = getSafeLdapContext(
 			ldapServerId, companyId);
 
 		NamingEnumeration<SearchResult> enu = null;

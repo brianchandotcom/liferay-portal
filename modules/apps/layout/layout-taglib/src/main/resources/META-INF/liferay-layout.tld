@@ -143,6 +143,44 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a component that render a list of fragments</description>
+		<name>render-fragment-layout</name>
+		<tag-class>com.liferay.layout.taglib.servlet.taglib.RenderFragmentLayoutTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>fieldValues</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>mode</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>previewClassPK</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>previewType</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The segment experiences ids</description>
+			<name>segmentsExperienceIds</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>structureJSONArray</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.portal.kernel.json.JSONArray</type>
+		</attribute>
+	</tag>
+	<tag>
 		<description></description>
 		<name>select-layout</name>
 		<tag-class>com.liferay.layout.taglib.servlet.taglib.soy.SelectLayoutTag</tag-class>

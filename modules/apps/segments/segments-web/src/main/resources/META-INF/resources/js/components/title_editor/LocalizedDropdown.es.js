@@ -131,7 +131,7 @@ class LocalizedDropdown extends React.Component {
 									>
 										<span className='inline-item inline-item-before'>
 											<ClayIcon
-												iconName={keyLangToLanguageTag(
+												symbol={keyLangToLanguageTag(
 													key
 												)}
 											/>

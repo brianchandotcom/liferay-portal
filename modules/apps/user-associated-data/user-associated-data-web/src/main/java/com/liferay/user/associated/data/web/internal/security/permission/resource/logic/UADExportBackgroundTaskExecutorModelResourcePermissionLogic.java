@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "background.task.executor.class.name=com.liferay.user.associated.data.web.internal.export.background.task.UADExportBackgroundTaskExecutor",
 	service = ModelResourcePermissionLogic.class
 )
-public class UADExportBackgroundTaskExecutorPermissionLogic
+public class UADExportBackgroundTaskExecutorModelResourcePermissionLogic
 	implements ModelResourcePermissionLogic<BackgroundTask> {
 
 	@Override

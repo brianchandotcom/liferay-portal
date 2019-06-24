@@ -47,6 +47,21 @@ public class InfoDisplayContributorFieldTrackerImpl
 		return _itemClassInfoDisplayContributorFields.get(className);
 	}
 
+	@Override
+	public List<InfoDisplayContributorField> getInfoDisplayContributorFields(
+		String... classNames) {
+
+		List<InfoDisplayContributorField> infoDisplayContributorFields =
+			new ArrayList<>();
+
+		for (String className : classNames) {
+			infoDisplayContributorFields.addAll(
+				_itemClassInfoDisplayContributorFields.get(className));
+		}
+
+		return infoDisplayContributorFields;
+	}
+
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC

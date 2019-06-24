@@ -24,4 +24,7 @@ public interface InfoDisplayContributorFieldTracker {
 	public List<InfoDisplayContributorField> getInfoDisplayContributorFields(
 		String className);
 
+	public List<InfoDisplayContributorField> getInfoDisplayContributorFields(
+		String... classNames);
+
 }

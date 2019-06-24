@@ -16,7 +16,9 @@ package com.liferay.info.display.contributor;
 
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -32,12 +34,18 @@ public interface InfoDisplayContributor<T> {
 
 	public String getClassName();
 
-	public List<InfoDisplayField> getClassTypeInfoDisplayFields(
+	public default List<InfoDisplayField> getClassTypeInfoDisplayFields(
 			long classTypeId, Locale locale)
-		throws PortalException;
+		throws PortalException {
 
-	public List<ClassType> getClassTypes(long groupId, Locale locale)
-		throws PortalException;
+		return Collections.emptyList();
+	}
+
+	public default List<ClassType> getClassTypes(long groupId, Locale locale)
+		throws PortalException {
+
+		return Collections.emptyList();
+	}
 
 	public Set<InfoDisplayField> getInfoDisplayFields(
 			long classTypeId, Locale locale)
@@ -46,8 +54,12 @@ public interface InfoDisplayContributor<T> {
 	public Map<String, Object> getInfoDisplayFieldsValues(T t, Locale locale)
 		throws PortalException;
 
-	public Object getInfoDisplayFieldValue(T t, String fieldName, Locale locale)
-		throws PortalException;
+	public default Object getInfoDisplayFieldValue(
+			T t, String fieldName, Locale locale)
+		throws PortalException {
+
+		return null;
+	}
 
 	public InfoDisplayObjectProvider getInfoDisplayObjectProvider(long classPK)
 		throws PortalException;
@@ -58,7 +70,9 @@ public interface InfoDisplayContributor<T> {
 
 	public String getInfoURLSeparator();
 
-	public String getLabel(Locale locale);
+	public default String getLabel(Locale locale) {
+		return ResourceActionsUtil.getModelResource(locale, getClassName());
+	}
 
 	public default Map<String, Object> getVersionInfoDisplayFieldsValues(
 			T t, long versionClassPK, Locale locale)

@@ -176,7 +176,8 @@ public class Mutation {
 			structuredContentFolderResourceComponentServiceObjects;
 	}
 
-	public void deleteBlogPosting(
+	@GraphQLField
+	public boolean deleteBlogPosting(
 			@GraphQLName("blogPostingId") Long blogPostingId)
 		throws Exception {
 
@@ -185,8 +186,11 @@ public class Mutation {
 			this::_populateResourceContext,
 			blogPostingResource -> blogPostingResource.deleteBlogPosting(
 				blogPostingId));
+
+		return true;
 	}
 
+	@GraphQLField
 	public BlogPosting patchBlogPosting(
 			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("blogPosting") BlogPosting blogPosting)
@@ -199,6 +203,7 @@ public class Mutation {
 				blogPostingId, blogPosting));
 	}
 
+	@GraphQLField
 	public BlogPosting putBlogPosting(
 			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("blogPosting") BlogPosting blogPosting)
@@ -211,7 +216,8 @@ public class Mutation {
 				blogPostingId, blogPosting));
 	}
 
-	public void deleteBlogPostingMyRating(
+	@GraphQLField
+	public boolean deleteBlogPostingMyRating(
 			@GraphQLName("blogPostingId") Long blogPostingId)
 		throws Exception {
 
@@ -220,6 +226,8 @@ public class Mutation {
 			this::_populateResourceContext,
 			blogPostingResource ->
 				blogPostingResource.deleteBlogPostingMyRating(blogPostingId));
+
+		return true;
 	}
 
 	@GraphQLField
@@ -235,6 +243,7 @@ public class Mutation {
 				blogPostingId, rating));
 	}
 
+	@GraphQLField
 	public Rating putBlogPostingMyRating(
 			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("rating") Rating rating)
@@ -260,7 +269,8 @@ public class Mutation {
 				siteId, blogPosting));
 	}
 
-	public void deleteBlogPostingImage(
+	@GraphQLField
+	public boolean deleteBlogPostingImage(
 			@GraphQLName("blogPostingImageId") Long blogPostingImageId)
 		throws Exception {
 
@@ -270,6 +280,8 @@ public class Mutation {
 			blogPostingImageResource ->
 				blogPostingImageResource.deleteBlogPostingImage(
 					blogPostingImageId));
+
+		return true;
 	}
 
 	@GraphQLField
@@ -300,15 +312,19 @@ public class Mutation {
 				blogPostingId, comment));
 	}
 
-	public void deleteComment(@GraphQLName("commentId") Long commentId)
+	@GraphQLField
+	public boolean deleteComment(@GraphQLName("commentId") Long commentId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_commentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			commentResource -> commentResource.deleteComment(commentId));
+
+		return true;
 	}
 
+	@GraphQLField
 	public Comment putComment(
 			@GraphQLName("commentId") Long commentId,
 			@GraphQLName("comment") Comment comment)
@@ -373,15 +389,19 @@ public class Mutation {
 				documentFolderId, multipartBody));
 	}
 
-	public void deleteDocument(@GraphQLName("documentId") Long documentId)
+	@GraphQLField
+	public boolean deleteDocument(@GraphQLName("documentId") Long documentId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_documentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			documentResource -> documentResource.deleteDocument(documentId));
+
+		return true;
 	}
 
+	@GraphQLField
 	@GraphQLName("patchDocumentDocumentIdMultipartBody")
 	public Document patchDocument(
 			@GraphQLName("documentId") Long documentId,
@@ -395,6 +415,7 @@ public class Mutation {
 				documentId, multipartBody));
 	}
 
+	@GraphQLField
 	@GraphQLName("putDocumentDocumentIdMultipartBody")
 	public Document putDocument(
 			@GraphQLName("documentId") Long documentId,
@@ -408,7 +429,8 @@ public class Mutation {
 				documentId, multipartBody));
 	}
 
-	public void deleteDocumentMyRating(
+	@GraphQLField
+	public boolean deleteDocumentMyRating(
 			@GraphQLName("documentId") Long documentId)
 		throws Exception {
 
@@ -417,6 +439,8 @@ public class Mutation {
 			this::_populateResourceContext,
 			documentResource -> documentResource.deleteDocumentMyRating(
 				documentId));
+
+		return true;
 	}
 
 	@GraphQLField
@@ -432,6 +456,7 @@ public class Mutation {
 				documentId, rating));
 	}
 
+	@GraphQLField
 	public Rating putDocumentMyRating(
 			@GraphQLName("documentId") Long documentId,
 			@GraphQLName("rating") Rating rating)
@@ -458,7 +483,8 @@ public class Mutation {
 				siteId, multipartBody));
 	}
 
-	public void deleteDocumentFolder(
+	@GraphQLField
+	public boolean deleteDocumentFolder(
 			@GraphQLName("documentFolderId") Long documentFolderId)
 		throws Exception {
 
@@ -467,8 +493,11 @@ public class Mutation {
 			this::_populateResourceContext,
 			documentFolderResource ->
 				documentFolderResource.deleteDocumentFolder(documentFolderId));
+
+		return true;
 	}
 
+	@GraphQLField
 	public DocumentFolder patchDocumentFolder(
 			@GraphQLName("documentFolderId") Long documentFolderId,
 			@GraphQLName("documentFolder") DocumentFolder documentFolder)
@@ -482,6 +511,7 @@ public class Mutation {
 					documentFolderId, documentFolder));
 	}
 
+	@GraphQLField
 	public DocumentFolder putDocumentFolder(
 			@GraphQLName("documentFolderId") Long documentFolderId,
 			@GraphQLName("documentFolder") DocumentFolder documentFolder)
@@ -522,7 +552,8 @@ public class Mutation {
 					siteId, documentFolder));
 	}
 
-	public void deleteKnowledgeBaseArticle(
+	@GraphQLField
+	public boolean deleteKnowledgeBaseArticle(
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
 		throws Exception {
 
@@ -532,8 +563,11 @@ public class Mutation {
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.deleteKnowledgeBaseArticle(
 					knowledgeBaseArticleId));
+
+		return true;
 	}
 
+	@GraphQLField
 	public KnowledgeBaseArticle patchKnowledgeBaseArticle(
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
 			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
@@ -548,6 +582,7 @@ public class Mutation {
 					knowledgeBaseArticleId, knowledgeBaseArticle));
 	}
 
+	@GraphQLField
 	public KnowledgeBaseArticle putKnowledgeBaseArticle(
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
 			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
@@ -562,7 +597,8 @@ public class Mutation {
 					knowledgeBaseArticleId, knowledgeBaseArticle));
 	}
 
-	public void deleteKnowledgeBaseArticleMyRating(
+	@GraphQLField
+	public boolean deleteKnowledgeBaseArticleMyRating(
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
 		throws Exception {
 
@@ -572,6 +608,8 @@ public class Mutation {
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.deleteKnowledgeBaseArticleMyRating(
 					knowledgeBaseArticleId));
+
+		return true;
 	}
 
 	@GraphQLField
@@ -588,6 +626,7 @@ public class Mutation {
 					knowledgeBaseArticleId, rating));
 	}
 
+	@GraphQLField
 	public Rating putKnowledgeBaseArticleMyRating(
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
 			@GraphQLName("rating") Rating rating)
@@ -669,7 +708,8 @@ public class Mutation {
 						knowledgeBaseArticleId, multipartBody));
 	}
 
-	public void deleteKnowledgeBaseAttachment(
+	@GraphQLField
+	public boolean deleteKnowledgeBaseAttachment(
 			@GraphQLName("knowledgeBaseAttachmentId") Long
 				knowledgeBaseAttachmentId)
 		throws Exception {
@@ -680,9 +720,12 @@ public class Mutation {
 			knowledgeBaseAttachmentResource ->
 				knowledgeBaseAttachmentResource.deleteKnowledgeBaseAttachment(
 					knowledgeBaseAttachmentId));
+
+		return true;
 	}
 
-	public void deleteKnowledgeBaseFolder(
+	@GraphQLField
+	public boolean deleteKnowledgeBaseFolder(
 			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId)
 		throws Exception {
 
@@ -692,8 +735,11 @@ public class Mutation {
 			knowledgeBaseFolderResource ->
 				knowledgeBaseFolderResource.deleteKnowledgeBaseFolder(
 					knowledgeBaseFolderId));
+
+		return true;
 	}
 
+	@GraphQLField
 	public KnowledgeBaseFolder patchKnowledgeBaseFolder(
 			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
 			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
@@ -708,6 +754,7 @@ public class Mutation {
 					knowledgeBaseFolderId, knowledgeBaseFolder));
 	}
 
+	@GraphQLField
 	public KnowledgeBaseFolder putKnowledgeBaseFolder(
 			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
 			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
@@ -754,7 +801,8 @@ public class Mutation {
 					siteId, knowledgeBaseFolder));
 	}
 
-	public void deleteMessageBoardAttachment(
+	@GraphQLField
+	public boolean deleteMessageBoardAttachment(
 			@GraphQLName("messageBoardAttachmentId") Long
 				messageBoardAttachmentId)
 		throws Exception {
@@ -765,6 +813,8 @@ public class Mutation {
 			messageBoardAttachmentResource ->
 				messageBoardAttachmentResource.deleteMessageBoardAttachment(
 					messageBoardAttachmentId));
+
+		return true;
 	}
 
 	@GraphQLField
@@ -803,7 +853,8 @@ public class Mutation {
 						messageBoardThreadId, multipartBody));
 	}
 
-	public void deleteMessageBoardMessage(
+	@GraphQLField
+	public boolean deleteMessageBoardMessage(
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
 		throws Exception {
 
@@ -813,8 +864,11 @@ public class Mutation {
 			messageBoardMessageResource ->
 				messageBoardMessageResource.deleteMessageBoardMessage(
 					messageBoardMessageId));
+
+		return true;
 	}
 
+	@GraphQLField
 	public MessageBoardMessage patchMessageBoardMessage(
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
 			@GraphQLName("messageBoardMessage") MessageBoardMessage
@@ -829,6 +883,7 @@ public class Mutation {
 					messageBoardMessageId, messageBoardMessage));
 	}
 
+	@GraphQLField
 	public MessageBoardMessage putMessageBoardMessage(
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
 			@GraphQLName("messageBoardMessage") MessageBoardMessage
@@ -843,7 +898,8 @@ public class Mutation {
 					messageBoardMessageId, messageBoardMessage));
 	}
 
-	public void deleteMessageBoardMessageMyRating(
+	@GraphQLField
+	public boolean deleteMessageBoardMessageMyRating(
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
 		throws Exception {
 
@@ -853,6 +909,8 @@ public class Mutation {
 			messageBoardMessageResource ->
 				messageBoardMessageResource.deleteMessageBoardMessageMyRating(
 					messageBoardMessageId));
+
+		return true;
 	}
 
 	@GraphQLField
@@ -869,6 +927,7 @@ public class Mutation {
 					messageBoardMessageId, rating));
 	}
 
+	@GraphQLField
 	public Rating putMessageBoardMessageMyRating(
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
 			@GraphQLName("rating") Rating rating)
@@ -915,7 +974,8 @@ public class Mutation {
 						messageBoardThreadId, messageBoardMessage));
 	}
 
-	public void deleteMessageBoardSection(
+	@GraphQLField
+	public boolean deleteMessageBoardSection(
 			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId)
 		throws Exception {
 
@@ -925,8 +985,11 @@ public class Mutation {
 			messageBoardSectionResource ->
 				messageBoardSectionResource.deleteMessageBoardSection(
 					messageBoardSectionId));
+
+		return true;
 	}
 
+	@GraphQLField
 	public MessageBoardSection patchMessageBoardSection(
 			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
 			@GraphQLName("messageBoardSection") MessageBoardSection
@@ -941,6 +1004,7 @@ public class Mutation {
 					messageBoardSectionId, messageBoardSection));
 	}
 
+	@GraphQLField
 	public MessageBoardSection putMessageBoardSection(
 			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
 			@GraphQLName("messageBoardSection") MessageBoardSection
@@ -1003,7 +1067,8 @@ public class Mutation {
 						messageBoardSectionId, messageBoardThread));
 	}
 
-	public void deleteMessageBoardThread(
+	@GraphQLField
+	public boolean deleteMessageBoardThread(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
 
@@ -1013,8 +1078,11 @@ public class Mutation {
 			messageBoardThreadResource ->
 				messageBoardThreadResource.deleteMessageBoardThread(
 					messageBoardThreadId));
+
+		return true;
 	}
 
+	@GraphQLField
 	public MessageBoardThread patchMessageBoardThread(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
 			@GraphQLName("messageBoardThread") MessageBoardThread
@@ -1029,6 +1097,7 @@ public class Mutation {
 					messageBoardThreadId, messageBoardThread));
 	}
 
+	@GraphQLField
 	public MessageBoardThread putMessageBoardThread(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
 			@GraphQLName("messageBoardThread") MessageBoardThread
@@ -1043,7 +1112,8 @@ public class Mutation {
 					messageBoardThreadId, messageBoardThread));
 	}
 
-	public void deleteMessageBoardThreadMyRating(
+	@GraphQLField
+	public boolean deleteMessageBoardThreadMyRating(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
 
@@ -1053,6 +1123,8 @@ public class Mutation {
 			messageBoardThreadResource ->
 				messageBoardThreadResource.deleteMessageBoardThreadMyRating(
 					messageBoardThreadId));
+
+		return true;
 	}
 
 	@GraphQLField
@@ -1069,6 +1141,7 @@ public class Mutation {
 					messageBoardThreadId, rating));
 	}
 
+	@GraphQLField
 	public Rating putMessageBoardThreadMyRating(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
 			@GraphQLName("rating") Rating rating)
@@ -1129,7 +1202,8 @@ public class Mutation {
 						structuredContentFolderId, structuredContent));
 	}
 
-	public void deleteStructuredContent(
+	@GraphQLField
+	public boolean deleteStructuredContent(
 			@GraphQLName("structuredContentId") Long structuredContentId)
 		throws Exception {
 
@@ -1139,8 +1213,11 @@ public class Mutation {
 			structuredContentResource ->
 				structuredContentResource.deleteStructuredContent(
 					structuredContentId));
+
+		return true;
 	}
 
+	@GraphQLField
 	public StructuredContent patchStructuredContent(
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("structuredContent") StructuredContent
@@ -1155,6 +1232,7 @@ public class Mutation {
 					structuredContentId, structuredContent));
 	}
 
+	@GraphQLField
 	public StructuredContent putStructuredContent(
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("structuredContent") StructuredContent
@@ -1169,7 +1247,8 @@ public class Mutation {
 					structuredContentId, structuredContent));
 	}
 
-	public void deleteStructuredContentMyRating(
+	@GraphQLField
+	public boolean deleteStructuredContentMyRating(
 			@GraphQLName("structuredContentId") Long structuredContentId)
 		throws Exception {
 
@@ -1179,6 +1258,8 @@ public class Mutation {
 			structuredContentResource ->
 				structuredContentResource.deleteStructuredContentMyRating(
 					structuredContentId));
+
+		return true;
 	}
 
 	@GraphQLField
@@ -1195,6 +1276,7 @@ public class Mutation {
 					structuredContentId, rating));
 	}
 
+	@GraphQLField
 	public Rating putStructuredContentMyRating(
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("rating") Rating rating)
@@ -1242,7 +1324,8 @@ public class Mutation {
 						structuredContentFolder));
 	}
 
-	public void deleteStructuredContentFolder(
+	@GraphQLField
+	public boolean deleteStructuredContentFolder(
 			@GraphQLName("structuredContentFolderId") Long
 				structuredContentFolderId)
 		throws Exception {
@@ -1253,8 +1336,11 @@ public class Mutation {
 			structuredContentFolderResource ->
 				structuredContentFolderResource.deleteStructuredContentFolder(
 					structuredContentFolderId));
+
+		return true;
 	}
 
+	@GraphQLField
 	public StructuredContentFolder patchStructuredContentFolder(
 			@GraphQLName("structuredContentFolderId") Long
 				structuredContentFolderId,
@@ -1270,6 +1356,7 @@ public class Mutation {
 					structuredContentFolderId, structuredContentFolder));
 	}
 
+	@GraphQLField
 	public StructuredContentFolder putStructuredContentFolder(
 			@GraphQLName("structuredContentFolderId") Long
 				structuredContentFolderId,

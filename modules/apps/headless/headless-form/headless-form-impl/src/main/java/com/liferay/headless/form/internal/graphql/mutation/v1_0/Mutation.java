@@ -90,7 +90,8 @@ public class Mutation {
 				formId, multipartBody));
 	}
 
-	public void deleteFormDocument(
+	@GraphQLField
+	public boolean deleteFormDocument(
 			@GraphQLName("formDocumentId") Long formDocumentId)
 		throws Exception {
 
@@ -99,8 +100,11 @@ public class Mutation {
 			this::_populateResourceContext,
 			formDocumentResource -> formDocumentResource.deleteFormDocument(
 				formDocumentId));
+
+		return true;
 	}
 
+	@GraphQLField
 	public FormRecord putFormRecord(
 			@GraphQLName("formRecordId") Long formRecordId,
 			@GraphQLName("formRecord") FormRecord formRecord)

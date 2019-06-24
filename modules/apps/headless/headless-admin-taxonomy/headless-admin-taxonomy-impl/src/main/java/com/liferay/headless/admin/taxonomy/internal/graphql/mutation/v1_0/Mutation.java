@@ -62,15 +62,19 @@ public class Mutation {
 			taxonomyVocabularyResourceComponentServiceObjects;
 	}
 
-	public void deleteKeyword(@GraphQLName("keywordId") Long keywordId)
+	@GraphQLField
+	public boolean deleteKeyword(@GraphQLName("keywordId") Long keywordId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_keywordResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			keywordResource -> keywordResource.deleteKeyword(keywordId));
+
+		return true;
 	}
 
+	@GraphQLField
 	public Keyword putKeyword(
 			@GraphQLName("keywordId") Long keywordId,
 			@GraphQLName("keyword") Keyword keyword)
@@ -110,7 +114,8 @@ public class Mutation {
 					parentTaxonomyCategoryId, taxonomyCategory));
 	}
 
-	public void deleteTaxonomyCategory(
+	@GraphQLField
+	public boolean deleteTaxonomyCategory(
 			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId)
 		throws Exception {
 
@@ -120,8 +125,11 @@ public class Mutation {
 			taxonomyCategoryResource ->
 				taxonomyCategoryResource.deleteTaxonomyCategory(
 					taxonomyCategoryId));
+
+		return true;
 	}
 
+	@GraphQLField
 	public TaxonomyCategory patchTaxonomyCategory(
 			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId,
 			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
@@ -135,6 +143,7 @@ public class Mutation {
 					taxonomyCategoryId, taxonomyCategory));
 	}
 
+	@GraphQLField
 	public TaxonomyCategory putTaxonomyCategory(
 			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId,
 			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
@@ -177,7 +186,8 @@ public class Mutation {
 					siteId, taxonomyVocabulary));
 	}
 
-	public void deleteTaxonomyVocabulary(
+	@GraphQLField
+	public boolean deleteTaxonomyVocabulary(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId)
 		throws Exception {
 
@@ -187,8 +197,11 @@ public class Mutation {
 			taxonomyVocabularyResource ->
 				taxonomyVocabularyResource.deleteTaxonomyVocabulary(
 					taxonomyVocabularyId));
+
+		return true;
 	}
 
+	@GraphQLField
 	public TaxonomyVocabulary patchTaxonomyVocabulary(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
 			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary
@@ -203,6 +216,7 @@ public class Mutation {
 					taxonomyVocabularyId, taxonomyVocabulary));
 	}
 
+	@GraphQLField
 	public TaxonomyVocabulary putTaxonomyVocabulary(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
 			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary

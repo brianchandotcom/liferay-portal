@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>RESULT</td>
-	<td>//div[@class='drop-chosen']//ul//li/a[text()='${key_option}']</td>
+	<td>//div[contains(@class,'dropdown-menu')]//ul//li/button[text()='${key_option}']</td>
 	<td></td>
 </tr>
 <tr>

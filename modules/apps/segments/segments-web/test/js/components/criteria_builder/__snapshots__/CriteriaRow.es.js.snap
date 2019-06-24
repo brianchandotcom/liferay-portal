@@ -12,9 +12,8 @@ exports[`CriteriaRow should render 1`] = `
         class="drag-icon"
       >
         <svg
-          aria-hidden="true"
           class="lexicon-icon lexicon-icon-drag"
-          viewBox="0 0 512 512"
+          role="presentation"
         >
           <use
             xlink:href="#drag"
@@ -38,13 +37,12 @@ exports[`CriteriaRow should render 1`] = `
         value="test_val"
       />
       <button
-        class="btn btn-outline-secondary btn-monospaced btn-outline-borderless"
+        class="btn-outline-borderless btn btn-secondary btn-monospaced"
         type="button"
       >
         <svg
-          aria-hidden="true"
-          class="lexicon-icon lexicon-icon-paste icon"
-          viewBox="0 0 512 512"
+          class="lexicon-icon lexicon-icon-paste"
+          role="presentation"
         >
           <use
             xlink:href="#paste"
@@ -52,13 +50,12 @@ exports[`CriteriaRow should render 1`] = `
         </svg>
       </button>
       <button
-        class="btn btn-outline-secondary btn-monospaced btn-outline-borderless"
+        class="btn-outline-borderless btn btn-secondary btn-monospaced"
         type="button"
       >
         <svg
-          aria-hidden="true"
-          class="lexicon-icon lexicon-icon-times-circle icon"
-          viewBox="0 0 512 512"
+          class="lexicon-icon lexicon-icon-times-circle"
+          role="presentation"
         >
           <use
             xlink:href="#times-circle"
@@ -82,9 +79,8 @@ exports[`CriteriaRow should render and inform there is an unknown property 1`] =
         class="drag-icon"
       >
         <svg
-          aria-hidden="true"
           class="lexicon-icon lexicon-icon-drag"
-          viewBox="0 0 512 512"
+          role="presentation"
         >
           <use
             xlink:href="#drag"
@@ -110,7 +106,7 @@ exports[`CriteriaRow should render and inform there is an unknown property 1`] =
         value="test_val"
       />
       <button
-        class="btn btn-outline-danger"
+        class="outline-danger btn btn-primary"
         type="button"
       >
         delete
@@ -118,26 +114,25 @@ exports[`CriteriaRow should render and inform there is an unknown property 1`] =
     </div>
   </div>
   <div
-    class="alert alert-danger bg-transparent p-1 mt-1 border-0"
+    class="bg-transparent p-1 mt-1 border-0 alert alert-danger"
     role="alert"
   >
     <span
       class="alert-indicator"
     >
       <svg
-        class="lexicon-icon lexicon-icon-check-circle-full"
-        focusable="false"
+        class="lexicon-icon lexicon-icon-exclamation-full"
         role="presentation"
       >
         <use
-          href="#exclamation-full"
+          xlink:href="#exclamation-full"
         />
       </svg>
     </span>
     <strong
       class="lead"
     >
-      error:
+      error
     </strong>
     criteria-error-message-edit
   </div>

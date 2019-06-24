@@ -24,9 +24,8 @@ exports[`CriteriaSidebarSearchBar should render 1`] = `
           type="button"
         >
           <svg
-            aria-hidden="true"
-            class="lexicon-icon lexicon-icon-search icon"
-            viewBox="0 0 512 512"
+            class="lexicon-icon lexicon-icon-search"
+            role="presentation"
           >
             <use
               xlink:href="#search"
@@ -46,9 +45,8 @@ exports[`CriteriaSidebarSearchBar should render a button with a times icon when 
   type="button"
 >
   <svg
-    aria-hidden="true"
-    class="lexicon-icon lexicon-icon-times icon"
-    viewBox="0 0 512 512"
+    class="lexicon-icon lexicon-icon-times"
+    role="presentation"
   >
     <use
       xlink:href="#times"

@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`ClaySelect should render 1`] = `
-<DocumentFragment>
-  <select
-    class="form-control"
-  />
-</DocumentFragment>
-`;

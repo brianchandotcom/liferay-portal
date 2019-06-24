@@ -1,8 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`ClaySpinner should render 1`] = `
-<span
-  class="loading-animation"
-  data-testid="spinner"
-/>
-`;

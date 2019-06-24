@@ -35,9 +35,8 @@ exports[`CriteriaSidebar should render 1`] = `
               type="button"
             >
               <svg
-                aria-hidden="true"
-                class="lexicon-icon lexicon-icon-search icon"
-                viewBox="0 0 512 512"
+                class="lexicon-icon lexicon-icon-search"
+                role="presentation"
               >
                 <use
                   xlink:href="#search"

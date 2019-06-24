@@ -41,9 +41,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                   type="button"
                 >
                   <svg
-                    aria-hidden="true"
-                    class="lexicon-icon lexicon-icon-search icon"
-                    viewBox="0 0 512 512"
+                    class="lexicon-icon lexicon-icon-search"
+                    role="presentation"
                   >
                     <use
                       xlink:href="#search"
@@ -74,9 +73,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                     class="collapse-icon"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-angle-right active"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#angle-right"
@@ -96,9 +94,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -112,9 +109,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -132,9 +128,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -148,9 +143,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -168,9 +162,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -184,9 +177,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -204,9 +196,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -220,9 +211,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-date"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#date"
@@ -240,9 +230,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -256,9 +245,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -276,9 +264,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -292,9 +279,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -312,9 +298,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -328,9 +313,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -348,9 +332,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -364,9 +347,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -384,9 +366,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -400,9 +381,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -420,9 +400,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -436,9 +415,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -456,9 +434,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -472,9 +449,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -492,9 +468,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -508,9 +483,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -528,9 +502,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -544,9 +517,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -564,9 +536,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -580,9 +551,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -600,9 +570,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -616,9 +585,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -636,9 +604,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -652,9 +619,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -672,9 +638,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -688,9 +653,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -708,9 +672,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -724,9 +687,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -752,9 +714,8 @@ exports[`ContributorsBuilder should render builder with sidebar: initialRenderEd
                     class="collapse-icon"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-angle-right"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#angle-right"
@@ -873,9 +834,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                   type="button"
                 >
                   <svg
-                    aria-hidden="true"
-                    class="lexicon-icon lexicon-icon-search icon"
-                    viewBox="0 0 512 512"
+                    class="lexicon-icon lexicon-icon-search"
+                    role="presentation"
                   >
                     <use
                       xlink:href="#search"
@@ -906,9 +866,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                     class="collapse-icon"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-angle-right active"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#angle-right"
@@ -928,9 +887,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -944,9 +902,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -964,9 +921,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -980,9 +936,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -1000,9 +955,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -1016,9 +970,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -1036,9 +989,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -1052,9 +1004,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-date"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#date"
@@ -1072,9 +1023,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -1088,9 +1038,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -1108,9 +1057,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -1124,9 +1072,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -1144,9 +1091,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -1160,9 +1106,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -1180,9 +1125,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -1196,9 +1140,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -1216,9 +1159,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -1232,9 +1174,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -1252,9 +1193,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -1268,9 +1208,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -1288,9 +1227,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -1304,9 +1242,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -1324,9 +1261,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -1340,9 +1276,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -1360,9 +1295,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -1376,9 +1310,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -1396,9 +1329,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -1412,9 +1344,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -1432,9 +1363,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -1448,9 +1378,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -1468,9 +1397,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -1484,9 +1412,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -1504,9 +1431,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -1520,9 +1446,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -1540,9 +1465,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                     class="inline-item"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-drag"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#drag"
@@ -1556,9 +1480,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                       class="inline-item"
                     >
                       <svg
-                        aria-hidden="true"
                         class="lexicon-icon lexicon-icon-text"
-                        viewBox="0 0 512 512"
+                        role="presentation"
                       >
                         <use
                           xlink:href="#text"
@@ -1584,9 +1507,8 @@ exports[`ContributorsBuilder should render builder without sidebar: initialRende
                     class="collapse-icon"
                   >
                     <svg
-                      aria-hidden="true"
                       class="lexicon-icon lexicon-icon-angle-right"
-                      viewBox="0 0 512 512"
+                      role="presentation"
                     >
                       <use
                         xlink:href="#angle-right"

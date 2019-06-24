@@ -36,7 +36,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 	public void run() {
 		keepJenkinsBuild(true);
 
-		invokeJob();
+		invokeTestSuiteBuilds();
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		setWorkspace(WorkspaceFactory.newSimpleWorkspace());
 	}
 
-	protected void invokeJob() {
+	protected void invokeTestSuiteBuilds() {
 		List<String> testSuiteNames = _getSelectedTestSuiteNames();
 
 		if (testSuiteNames.isEmpty()) {

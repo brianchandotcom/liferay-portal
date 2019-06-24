@@ -76,7 +76,7 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 	}
 
 	@Override
-	protected void invokeJob() {
+	protected void invokeTestSuiteBuilds() {
 		String jobURL = getJobURL();
 
 		StringBuilder sb = new StringBuilder();

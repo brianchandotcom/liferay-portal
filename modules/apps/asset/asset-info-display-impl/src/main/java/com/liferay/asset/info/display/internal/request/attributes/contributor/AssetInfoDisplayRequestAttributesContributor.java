@@ -43,8 +43,14 @@ public class AssetInfoDisplayRequestAttributesContributor
 
 	@Override
 	public void addAttributes(HttpServletRequest httpServletRequest) {
-		AssetEntry assetEntry = (AssetEntry)httpServletRequest.getAttribute(
+		Object layoutAssetEntry = httpServletRequest.getAttribute(
 			WebKeys.LAYOUT_ASSET_ENTRY);
+
+		if (!(layoutAssetEntry instanceof AssetEntry)) {
+			return;
+		}
+
+		AssetEntry assetEntry = (AssetEntry)layoutAssetEntry;
 
 		if (assetEntry != null) {
 			return;

@@ -144,10 +144,9 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 
 		sb = new StringBuilder();
 
-		sb.append("<strong>IN QUEUE</strong> - <a href=\"");
+		sb.append("<a href=\"");
 		sb.append(JenkinsResultsParserUtil.getRemoteURL(jobURL));
-		sb.append("\">Invocation URL</a>");
-
+		sb.append("\"><strong>IN QUEUE</strong></a>");
 		sb.append("<ul><li><strong>Git ID:</strong> ");
 		sb.append("<a href=\"https://github.com/");
 		sb.append(buildData.getPortalGitHubUsername());

@@ -30,10 +30,10 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface CTDefinition<T extends BaseModel, U extends BaseModel> {
 
 	/**
-	 * Returns the content type human readable text for this definition. It
-	 * is a group name of the entities handled in this definition. For
-	 * example, <code>JournalArticle</code> and <code>JournalResource</code>
-	 * have the content type <code>Web Content</code>.
+	 * Returns the content type human readable text for this definition. It is a
+	 * group name of the entities handled in this definition. For example,
+	 * <code>JournalArticle</code> and <code>JournalResource</code> have the
+	 * content type <code>Web Content</code>.
 	 *
 	 * @return the content type handled in this definition
 	 */
@@ -49,16 +49,16 @@ public interface CTDefinition<T extends BaseModel, U extends BaseModel> {
 	public String getContentTypeLanguageKey();
 
 	/**
-	 * Returns the definition's function that retrieves resource entities
-	 * from the company.
+	 * Returns the definition's function that retrieves resource entities from
+	 * the company.
 	 *
 	 * @return the function that retrieves resource entities from the company
 	 */
 	public Function<Long, List<T>> getResourceEntitiesByCompanyIdFunction();
 
 	/**
-	 * Returns the definition's function that retrieves the resource entity
-	 * by its primary key.
+	 * Returns the definition's function that retrieves the resource entity by
+	 * its primary key.
 	 *
 	 * @return the function that retrieves the resource entity by its primary
 	 *         key
@@ -93,8 +93,8 @@ public interface CTDefinition<T extends BaseModel, U extends BaseModel> {
 		getResourceEntityIdFromVersionEntityFunction();
 
 	/**
-	 * Returns the definition's function that retrieves the version entities
-	 * for a given resource entity.
+	 * Returns the definition's function that retrieves the version entities for
+	 * a given resource entity.
 	 *
 	 * @return the function that retrieves the version entities for a given
 	 *         resource entity

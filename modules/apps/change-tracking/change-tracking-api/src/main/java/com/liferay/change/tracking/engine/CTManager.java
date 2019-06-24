@@ -315,10 +315,10 @@ public interface CTManager {
 	 * classNameId and classPK is retrievable considering the current change
 	 * tracking environment.
 	 *
-	 * @param companyId the company ID
-	 * @param userId the primary key of the user
-	 * @param modelClassNameId the primary key of the version model's class
-	 * @param modelClassPK the primary key of the version model
+	 * @param  companyId the company ID
+	 * @param  userId the primary key of the user
+	 * @param  modelClassNameId the primary key of the version model's class
+	 * @param  modelClassPK the primary key of the version model
 	 * @return <code>true</code> if the version entity specified by the given
 	 *         classNameId and classPK is retrievable considering the current
 	 *         change tracking environment

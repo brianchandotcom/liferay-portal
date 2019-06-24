@@ -28,8 +28,7 @@ public interface CTDefinitionRegistrar {
 	public void register(CTDefinition<?, ?> ctDefinition);
 
 	/**
-	 * Unregisters the change tracking definition object as a component
-	 * service
+	 * Unregisters the change tracking definition object as a component service
 	 *
 	 * @param ctDefinition The change tracking definition object to be
 	 *        unregistered

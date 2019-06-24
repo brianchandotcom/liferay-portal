@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.configuration.admin.definition;
+package com.liferay.asset.auto.tagger.internal.configuration.admin.definition;
 
 import com.liferay.asset.auto.tagger.text.extractor.TextExtractorTracker;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
@@ -32,7 +32,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"configuration.field.name=enabledClassNames",
-		"configuration.pid=com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration"
+		"configuration.pid=com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration",
+		"configuration.pid=com.liferay.asset.auto.tagger.opennlp.internal.configuration.OpenNLPDocumentAssetAutoTaggerCompanyConfiguration"
 	},
 	service = ConfigurationFieldOptionsProvider.class
 )

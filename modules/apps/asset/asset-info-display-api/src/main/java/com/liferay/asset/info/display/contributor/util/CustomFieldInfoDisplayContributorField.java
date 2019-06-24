@@ -87,7 +87,12 @@ public class CustomFieldInfoDisplayContributorField
 		if (attributeType == ExpandoColumnConstants.STRING_LOCALIZED) {
 			Map<Locale, String> values = (Map<Locale, String>)attributeValue;
 
-			attributeValue = values.get(locale);
+			Map<Locale, String> defaultValues =
+				(Map<Locale, String>)_expandoBridge.getAttributeDefault(
+					_attributeName);
+
+			attributeValue = values.getOrDefault(
+				locale, defaultValues.get(locale));
 		}
 		else if (attributeType ==
 					ExpandoColumnConstants.STRING_ARRAY_LOCALIZED) {
@@ -95,7 +100,12 @@ public class CustomFieldInfoDisplayContributorField
 			Map<Locale, String[]> values =
 				(Map<Locale, String[]>)attributeValue;
 
-			attributeValue = values.get(locale);
+			Map<Locale, String[]> defaultValues =
+				(Map<Locale, String[]>)_expandoBridge.getAttributeDefault(
+					_attributeName);
+
+			attributeValue = values.getOrDefault(
+				locale, defaultValues.get(locale));
 		}
 		else if (attributeType == ExpandoColumnConstants.GEOLOCATION) {
 			try {

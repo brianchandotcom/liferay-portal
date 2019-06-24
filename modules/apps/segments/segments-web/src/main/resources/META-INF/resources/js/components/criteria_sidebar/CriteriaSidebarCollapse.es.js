@@ -113,9 +113,7 @@ class CriteriaSidebarCollapse extends Component {
 
 					return (
 						<li
-							className={`sidebar-collapse-${
-								propertyGroup.propertyKey
-							}`}
+							className={`sidebar-collapse-${propertyGroup.propertyKey}`}
 							key={key}
 						>
 							<div

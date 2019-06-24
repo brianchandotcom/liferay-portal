@@ -395,9 +395,7 @@ class SegmentEdit extends Component {
 								onMouseOver={this._handleSourceIconMouseOver}
 								src={
 									source === SOURCES.ASAH_FARO_BACKEND.name
-										? `${assetsPath}${
-												SOURCES.ASAH_FARO_BACKEND.icon
-										  }`
+										? `${assetsPath}${SOURCES.ASAH_FARO_BACKEND.icon}`
 										: `${assetsPath}${SOURCES.DEFAULT.icon}`
 								}
 							/>

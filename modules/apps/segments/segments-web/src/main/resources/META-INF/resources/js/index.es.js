@@ -26,7 +26,7 @@ export default function(id, props, context) {
 					<SegmentEdit {...props} />
 				</div>
 			</ThemeContext.Provider>
-		</ ClayIconSpriteContext.Provider>,
+		</ClayIconSpriteContext.Provider>,
 		document.getElementById(id)
 	);
 }

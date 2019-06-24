@@ -207,7 +207,7 @@
 </tr>
 <tr>
 	<td>TEXT_MULTILINE_FIELD</td>
-	<td>//textarea[contains(@id,'${key_fieldName}')]</td>
+	<td>//textarea[contains(@id,'${key_fieldName}') or contains(@name,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>

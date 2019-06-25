@@ -9,9 +9,6 @@ import org.apache.maven.model.Repository
 import org.apache.maven.model.Scm
 import org.apache.maven.model.io.xpp3.MavenXpp3Writer
 
-apply from: "init.gradle"
-apply from: "samples.gradle"
-
 buildscript {
 	dependencies {
 		classpath group: "org.apache.maven", name: "maven-model", version: "3.6.1"
@@ -22,6 +19,70 @@ buildscript {
 			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
 		}
 	}
+}
+
+apply from: "samples.gradle"
+
+ext {
+	releaseInfoFile = new File("/home/chas/liferay-portal/portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
+
+	isDxpRelease = releaseInfoFile.text.contains(" DXP ") || releaseInfoFile.text.contains(" Digital Experience ")
+
+	if (internalRelease.toBoolean()) {
+		repositoryId = xanaduRepositoryId
+		repositoryName = xanaduRepositoryName
+		repositoryUrl = xanaduRepositoryUrl
+	}
+	else {
+		if (isDxpRelease) {
+			if (snapshot.toBoolean()) {
+				repositoryId = liferayPrivateSnapshotsId
+				repositoryName = liferayPrivateSnapshotsName
+				repositoryUrl = liferayPrivateSnapshotsUrl
+			}
+			else {
+				repositoryId = liferayPrivateReleasesId
+				repositoryName = liferayPrivateReleasesName
+				repositoryUrl = liferayPrivateReleasesUrl
+			}
+		}
+		else {
+			if (snapshot.toBoolean()) {
+				repositoryId = liferayPublicSnapshotsId
+				repositoryName = liferayPublicSnapshotsName
+				repositoryUrl = liferayPublicSnapshotsUrl
+			}
+			else {
+				repositoryId = liferayPublicReleasesId
+				repositoryName = liferayPublicReleasesName
+				repositoryUrl = liferayPublicReleasesUrl
+			}
+		}
+	}
+
+	if (isDxpRelease) {
+		releaseApiArtifactId = releaseDxpApiArtifactId
+		releaseBomArtifactId = releaseDxpBomArtifactId
+		releaseCompileOnlyArtifactId = releaseDxpCompileOnlyArtifactId
+		releaseDistroArtifactId = releaseDxpDistroArtifactId
+		releaseThirdPartyArtifactId = releaseDxpThirdPartyArtifactId
+
+		scmConnection = scmConnectionPrivate
+		scmDeveloperConnection = scmDeveloperConnectionPrivate
+		scmUrl = scmUrlPrivate
+	}
+	else {
+		releaseApiArtifactId = releasePortalApiArtifactId
+		releaseBomArtifactId = releasePortalBomArtifactId
+		releaseCompileOnlyArtifactId = releasePortalCompileOnlyArtifactId
+		releaseDistroArtifactId = releasePortalDistroArtifactId
+		releaseThirdPartyArtifactId = releasePortalThirdPartyArtifactId
+
+		scmConnection = scmConnectionPublic
+		scmDeveloperConnection = scmDeveloperConnectionPublic
+		scmUrl = scmUrlPublic
+	}
+
 }
 
 task clean(type: Delete)
@@ -93,6 +154,8 @@ writeReleaseBom {
 		Model model = getBaseModel(releaseBomArtifactId)
 
 		DependencyManagement dependencyManagement = new DependencyManagement()
+
+		File modulesDir = new File(portalPath, "modules")
 
 		modulesDir.traverse(
 			preDir: {
@@ -176,7 +239,7 @@ writeReleaseBom {
 		// Add the base portal jars as dependencies
 
 		["portal-kernel", "portal-impl", "support-tomcat", "util-bridges", "util-java", "util-slf4j", "util-taglib"].each {
-			File portalBndFile = new File(portalDir, "${it}/bnd.bnd")
+			File portalBndFile = new File(portalPath, "${it}/bnd.bnd")
 
 			Properties portalBndProperties = new Properties()
 
@@ -205,9 +268,9 @@ writeThirdPartyBom {
 
 		DependencyManagement dependencyManagement = new DependencyManagement()
 
-		File dependenciesPropertiesDevelopmentFile = new File(portalDir, "lib/development/dependencies.properties")
-		File dependenciesPropertiesGlobalFile = new File(portalDir, "lib/global/dependencies.properties")
-		File dependenciesPropertiesPortalFile = new File(portalDir, "lib/portal/dependencies.properties")
+		File dependenciesPropertiesDevelopmentFile = new File(portalPath, "lib/development/dependencies.properties")
+		File dependenciesPropertiesGlobalFile = new File(portalPath, "lib/global/dependencies.properties")
+		File dependenciesPropertiesPortalFile = new File(portalPath, "lib/portal/dependencies.properties")
 
 		Properties dependenciesProperties = new Properties()
 
@@ -285,6 +348,19 @@ Model getBaseModel(String artifactId) {
 	model.setScm(scm)
 
 	return model
+}
+
+String getScmTag() {
+	File portalDir = new File(portalPath)
+
+	ProcessBuilder processBuilder = new ProcessBuilder("git", "rev-parse", "HEAD")
+
+	processBuilder.redirectErrorStream(true)
+	processBuilder.directory(portalDir)
+
+	Process process = processBuilder.start()
+
+	return process.inputStream.getText().trim()
 }
 
 void writeBom(Model model) {

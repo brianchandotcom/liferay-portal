@@ -54,6 +54,10 @@ public class Modifications {
 		BasicAttribute basicAttribute = new BasicAttribute(id);
 
 		if (value != null) {
+			if (!(value instanceof String) && !(value instanceof byte[])) {
+				value = value.toString();
+			}
+
 			basicAttribute.add(value);
 		}
 

@@ -49,12 +49,6 @@ public class SoyTofuCacheHandler {
 		return _portalCache.get(templateId);
 	}
 
-	public SoyTofu getSoyTofu(String templateId) {
-		SoyTofuCacheBag soyTofuCacheBag = get(templateId);
-
-		return soyTofuCacheBag.getSoyTofu();
-	}
-
 	public void removeIfAny(List<TemplateResource> templateResources) {
 		for (TemplateResource templateResource : templateResources) {
 			String templateId = templateResource.getTemplateId();

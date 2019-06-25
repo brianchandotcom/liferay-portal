@@ -263,8 +263,7 @@ tasks.withType(FormatSourceTask) {
 
 _createSetUpLibTasks(libDependenciesMap)
 _createSetUpPortalToolTasks()
-_createSetUpYarnTasks()
-_createYarnLockTasks()
+_createYarnTasks()
 
 private String _camelCase(String dirName) {
 	String suffix = dirName.replaceAll(/\.(\w)/) {
@@ -353,7 +352,7 @@ private void _createSetUpPortalToolTasks() {
 	}
 }
 
-private void _createSetUpYarnTasks() {
+private void _createYarnTasks() {
 	FileTree packageJSONFileTree = fileTree(dir: rootDir, includes: ["package.json", "private/package.json", "apps/*/package.json", "private/apps/*/package.json"])
 
 	packageJSONFileTree.each {
@@ -382,21 +381,10 @@ private void _createSetUpYarnTasks() {
 				}
 			}
 
+			appendHotfixQualifier.mustRunAfter yarnTask
 			setUpYarn.finalizedBy yarnTask
 
-			appendHotfixQualifier.mustRunAfter yarnTask
-		}
-	}
-}
-
-private void _createYarnLockTasks() {
-	FileTree packageJSONFileTree = fileTree(dir: rootDir, includes: ["package.json", "private/package.json", "apps/*/package.json", "private/apps/*/package.json"])
-
-	packageJSONFileTree.each {
-		File packageJSONFile ->
-
-		if (packageJSONFile.text.contains("\"workspaces\":")) {
-			Task yarnTask = tasks.create(name: "yarnLock" + _camelCase(packageJSONFile.parentFile.name), type: ExecuteNpmTask) {
+			yarnTask = tasks.create(name: "yarnLock" + _camelCase(packageJSONFile.parentFile.name), type: ExecuteNpmTask) {
 				args "install"
 
 				scriptFile = new File(rootDir, "yarn-1.13.0.js")

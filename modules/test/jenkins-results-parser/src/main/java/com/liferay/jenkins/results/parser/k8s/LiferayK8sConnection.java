@@ -118,6 +118,16 @@ public class LiferayK8sConnection {
 				null);
 		}
 		catch (ApiException ae) {
+			String message = ae.getMessage();
+
+			if (message == null) {
+				message = "";
+			}
+
+			if (message.equals("Not Found")) {
+				return true;
+			}
+
 			throw new RuntimeException(ae);
 		}
 		catch (JsonSyntaxException jse) {

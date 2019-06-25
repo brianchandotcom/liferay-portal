@@ -22,6 +22,8 @@ String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName
 long assetCategoryId = ParamUtil.getLong(request, "categoryId");
 String assetTagName = ParamUtil.getString(request, "tag");
 
+boolean useAssetEntryQuery = (assetCategoryId > 0) || Validator.isNotNull(assetTagName);
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
@@ -52,7 +54,7 @@ List results = null;
 
 int notPublishedEntriesCount = BlogsEntryServiceUtil.getGroupUserEntriesCount(scopeGroupId, themeDisplay.getUserId(), new int[] {WorkflowConstants.STATUS_DRAFT, WorkflowConstants.STATUS_PENDING, WorkflowConstants.STATUS_SCHEDULED});
 
-if ((assetCategoryId != 0) || Validator.isNotNull(assetTagName)) {
+if (useAssetEntryQuery) {
 	SearchContainerResults<AssetEntry> searchContainerResults = BlogsUtil.getSearchContainerResults(searchContainer);
 
 	searchContainer.setTotal(searchContainerResults.getTotal());

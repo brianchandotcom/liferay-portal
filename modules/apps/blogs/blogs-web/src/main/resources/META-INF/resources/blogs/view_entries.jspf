@@ -14,10 +14,12 @@
  */
 --%>
 
-<liferay-asset:categorization-filter
-	assetType="entries"
-	portletURL="<%= portletURL %>"
-/>
+<c:if test="<%= useAssetEntryQuery %>">
+	<liferay-asset:categorization-filter
+		assetType="entries"
+		portletURL="<%= portletURL %>"
+	/>
+</c:if>
 
 <c:if test="<%= results.isEmpty() %>">
 	<liferay-ui:empty-result-message

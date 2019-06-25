@@ -4,6 +4,7 @@
  * FloatingToolbarFragmentConfigurationPanel
  */
 {template .render}
+	{@param? _handleRestoreButtonClick: any}
 	{@param? spritemap: string}
 
 	<div class="floating-toolbar-fragment-configuration-panel pt-3">
@@ -12,7 +13,11 @@
 		<div aria-hidden="true" class="dropdown-divider m-0" role="presentation"></div>
 
 		<div class="dropdown-section">
-			<button class="btn btn-block btn-outline-borderless btn-secondary btn-sm" type="button">
+			<button
+				class="btn btn-block btn-outline-borderless btn-secondary btn-sm"
+				data-onclick="{$_handleRestoreButtonClick}"
+				type="button"
+			>
 				<span class="inline-item inline-item-before">
 					<svg class="lexicon-icon lexicon-icon-blogs" focusable="false" role="presentation">
 						<use xlink:href="{$spritemap ?: ''}#restore"></use>

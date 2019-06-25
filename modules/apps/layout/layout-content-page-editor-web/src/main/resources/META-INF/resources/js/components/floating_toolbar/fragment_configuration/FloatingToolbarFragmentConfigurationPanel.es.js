@@ -9,7 +9,14 @@ import templates from './FloatingToolbarFragmentConfigurationPanel.soy';
 /**
  * FloatingToolbarFragmentConfigurationPanel
  */
-class FloatingToolbarFragmentConfigurationPanel extends Component {}
+class FloatingToolbarFragmentConfigurationPanel extends Component {
+	/**
+	 * Handles Restore button click
+	 * @private
+	 * @review
+	 */
+	_handleRestoreButtonClick() {}
+}
 
 /**
  * State definition.

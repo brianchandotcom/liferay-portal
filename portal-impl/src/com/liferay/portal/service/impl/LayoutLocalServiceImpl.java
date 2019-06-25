@@ -1056,6 +1056,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	public Layout fetchLayoutByFriendlyURL(
 		long groupId, boolean privateLayout, String friendlyURL) {
 
+		friendlyURL = layoutLocalServiceHelper.getFriendlyURL(friendlyURL);
+
 		return layoutPersistence.fetchByG_P_F_Head(
 			groupId, privateLayout, friendlyURL, false);
 	}

@@ -132,6 +132,16 @@ public class GradleIndentationCheck extends BaseFileCheck {
 			return tabCount;
 		}
 
+		if (text.contains(" ==~ /")) {
+			int x = text.indexOf(" ==~ /");
+
+			int y = text.indexOf("/", x + 6);
+
+			if (y != -1) {
+				text = text.substring(0, x) + text.substring(y + 1);
+			}
+		}
+
 		tabCount += getLevel(text, "([{", "}])");
 
 		text = StringUtil.removeSubstrings(text, "([{", "}])");

@@ -265,7 +265,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.configuration.admin.web.jar!org.apache.felix.fileinstall.jar</file-name>
-				<version>3.6.4.LIFERAY-PATCHED-1</version>
+				<version>3.6.4.LIFERAY-PATCHED-2</version>
 				<project-name>Apache Felix File Install</project-name>
 				<project-url>http://felix.apache.org/site/apache-felix-file-install.html</project-url>
 				<licenses>
@@ -924,18 +924,6 @@
 					<license>
 						<license-name>The BSD License</license-name>
 						<license-url>http://www.antlr.org/license.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.dynamic.data.mapping.expression.jar!commons-pool2.jar</file-name>
-				<version>2.6.0</version>
-				<project-name>Apache Commons Pool</project-name>
-				<project-url>http://commons.apache.org/proper/commons-pool/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -1721,10 +1709,11 @@
 				<file-name>com.liferay.portal.osgi.web.servlet.jsp.compiler.jar!javax.servlet.jsp.jar</file-name>
 				<version>2.3.3-b02.LIFERAY-PATCHED-8</version>
 				<project-name>JSP implementation</project-name>
-				<project-url>https://javaee.github.io/javaee-jsp-api</project-url>
+				<project-url>http://glassfish.org</project-url>
 				<licenses>
 					<license>
-						<license-name>CDDL + GPLv2 with classpath exception</license-name>
+						<license-name>http://glassfish.dev.java.net/nonav/public/CDDL+GPL.html</license-name>
+						<license-url>http://glassfish.dev.java.net/nonav/public/CDDL+GPL.html</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -1744,10 +1733,11 @@
 				<file-name>com.liferay.portal.osgi.web.wab.extender.jar!javax.servlet.jsp.jar</file-name>
 				<version>2.3.3-b02.LIFERAY-PATCHED-8</version>
 				<project-name>JSP implementation</project-name>
-				<project-url>https://javaee.github.io/javaee-jsp-api</project-url>
+				<project-url>http://glassfish.org</project-url>
 				<licenses>
 					<license>
-						<license-name>CDDL + GPLv2 with classpath exception</license-name>
+						<license-name>http://glassfish.dev.java.net/nonav/public/CDDL+GPL.html</license-name>
+						<license-url>http://glassfish.dev.java.net/nonav/public/CDDL+GPL.html</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -3491,18 +3481,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.vulcan.api.jar!graphql-java-annotations.jar</file-name>
-				<version>5.4</version>
-				<project-name>graphql-java-annotations</project-name>
-				<project-url>https://github.com/graphql-java/graphql-java-annotations</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.vulcan.api.jar!jackson-dataformat-xml.jar</file-name>
 				<version>2.9.8</version>
 				<project-name>Jackson-dataformat-XML</project-name>
@@ -3600,7 +3578,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!graphql-java-annotations.jar</file-name>
-				<version>5.4</version>
+				<version>7.0</version>
 				<project-name>graphql-java-annotations</project-name>
 				<project-url>https://github.com/graphql-java/graphql-java-annotations</project-url>
 				<licenses>
@@ -3624,7 +3602,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!graphql-java.jar</file-name>
-				<version>8.0</version>
+				<version>12.0</version>
 				<project-name>graphql-java</project-name>
 				<project-url>https://github.com/graphql-java/graphql-java</project-url>
 				<licenses>
@@ -4281,12 +4259,7 @@
 			<library>
 				<file-name>com.liferay.web.proxy.web.jar!concurrent.jar</file-name>
 				<version>1.3.4</version>
-				<project-name>Dough Lea's util.concurrent package</project-name>
-				<licenses>
-					<license>
-						<license-name>Public domain, Sun Microsoystems</license-name>
-					</license>
-				</licenses>
+				<project-name>concurrent:concurrent</project-name>
 			</library>
 			<library>
 				<file-name>com.liferay.web.proxy.web.jar!org.portletbridge.core.jar</file-name>
@@ -6179,6 +6152,30 @@
 					</license>
 				</licenses>
 				<comments>Removed org.json.* because it json-java.jar. See LPS-78517.</comments>
+			</library>
+			<library>
+				<file-name>lib/portal/jai-imageio-core.jar</file-name>
+				<version>1.4.0</version>
+				<project-name>Java Advanced Imaging Image I/O Tools API Core (standalone)</project-name>
+				<project-url>https://github.com/jai-imageio/jai-imageio-core</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD Style License</license-name>
+						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/jai-imageio-jpeg2000.jar</file-name>
+				<version>1.3.0</version>
+				<project-name>JPEG2000 support for Java Advanced Imaging Image I/O Tools API</project-name>
+				<project-url>https://github.com/jai-imageio/jai-imageio-jpeg2000</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD Style License</license-name>
+						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
+					</license>
+				</licenses>
 			</library>
 			<library>
 				<file-name>lib/portal/jai_codec.jar</file-name>

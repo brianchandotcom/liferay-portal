@@ -247,7 +247,6 @@ public class ConfigurationPersistenceManager
 	protected void createConfigurationTable() throws IOException, SQLException {
 		Connection connection = null;
 		Statement statement = null;
-		ResultSet resultSet = null;
 
 		try {
 			connection = _dataSource.getConnection();
@@ -260,7 +259,7 @@ public class ConfigurationPersistenceManager
 						"VARCHAR(255) not null primary key, dictionary TEXT)"));
 		}
 		finally {
-			cleanUp(connection, statement, resultSet);
+			cleanUp(connection, statement, null);
 		}
 	}
 
@@ -517,7 +516,6 @@ public class ConfigurationPersistenceManager
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
 
 		try {
 			connection = _dataSource.getConnection();
@@ -550,7 +548,7 @@ public class ConfigurationPersistenceManager
 			ReflectionUtil.throwException(sqle);
 		}
 		finally {
-			cleanUp(connection, preparedStatement, resultSet);
+			cleanUp(connection, preparedStatement, null);
 
 			outputStream.close();
 		}

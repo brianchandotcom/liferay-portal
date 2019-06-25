@@ -93,6 +93,10 @@ public class SoyCapabilityBundleTrackerCustomizer
 		return bundleCapabilities;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public List<TemplateResource> getAllTemplateResources() {
 		return _templateResources;
 	}

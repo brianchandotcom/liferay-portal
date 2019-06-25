@@ -58,6 +58,10 @@ public class SoyManager extends BaseTemplateManager {
 		templateContextHelper.removeHelperUtilities(classLoader);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public List<TemplateResource> getAllTemplateResources() {
 		return _soyCapabilityBundleTrackerCustomizer.getAllTemplateResources();
 	}

@@ -214,4 +214,46 @@ definition {
 		DMDocument.viewPG(dmDocumentTitle = "Document_2.doc");
 	}
 
+	@description = "This test covers LPS-89636. It saves tags without clicking Enter or adding a Comma."
+	@priority = "4"
+	test SaveTags {
+		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt");
+
+		for (var key_dmDocumentTitle : list "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt") {
+			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+		}
+
+		Click(locator1 = "Icon#EDIT_TAGS");
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "Edit Tags");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Modal#BODY",
+			value1 = "You are editing the common tags for 4 items. Select edit or replace current tags.");
+
+		Click(locator1 = "Modal#BODY");
+
+		Type(
+			locator1 = "DocumentsAndMedia#EDIT_TAGS_FIELD",
+			value1 = "tagone");
+
+		Button.clickSave();
+
+		SelectFrame(value1 = "relative=top");
+
+		Alert.viewSuccessMessageText(successMessage = "Changes saved.");
+
+		for (var key_dmDocumentTitle : list "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt") {
+			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
+
+			DMDocument.viewTag(tagName = "tagone");
+
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+		}
+	}
+
 }

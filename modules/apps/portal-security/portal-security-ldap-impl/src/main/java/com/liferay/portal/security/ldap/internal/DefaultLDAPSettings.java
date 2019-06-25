@@ -60,6 +60,10 @@ public class DefaultLDAPSettings implements LDAPSettings {
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
 
+		if (ldapServerConfiguration.ldapServerId() != ldapServerId) {
+			return null;
+		}
+
 		String filter = ldapServerConfiguration.authSearchFilter();
 
 		_ldapFilterValidator.validate(
@@ -101,6 +105,10 @@ public class DefaultLDAPSettings implements LDAPSettings {
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
 
+		if (ldapServerConfiguration.ldapServerId() != ldapServerId) {
+			return null;
+		}
+
 		Properties contactExpandoMappings = getProperties(
 			ldapServerConfiguration.contactCustomMappings());
 
@@ -116,6 +124,10 @@ public class DefaultLDAPSettings implements LDAPSettings {
 		LDAPServerConfiguration ldapServerConfiguration =
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
+
+		if (ldapServerConfiguration.ldapServerId() != ldapServerId) {
+			return null;
+		}
 
 		Properties contactMappings = getProperties(
 			ldapServerConfiguration.contactMappings());
@@ -140,6 +152,10 @@ public class DefaultLDAPSettings implements LDAPSettings {
 		LDAPServerConfiguration ldapServerConfiguration =
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
+
+		if (ldapServerConfiguration.ldapServerId() != ldapServerId) {
+			return null;
+		}
 
 		Properties groupMappings = getProperties(
 			ldapServerConfiguration.groupMappings());
@@ -174,6 +190,10 @@ public class DefaultLDAPSettings implements LDAPSettings {
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
 
+		if (ldapServerConfiguration.ldapServerId() != ldapServerId) {
+			return null;
+		}
+
 		Properties contactExpandoMappings = getProperties(
 			ldapServerConfiguration.userCustomMappings());
 
@@ -189,6 +209,10 @@ public class DefaultLDAPSettings implements LDAPSettings {
 		LDAPServerConfiguration ldapServerConfiguration =
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
+
+		if (ldapServerConfiguration.ldapServerId() != ldapServerId) {
+			return null;
+		}
 
 		Properties userMappings = getProperties(
 			ldapServerConfiguration.userMappings());

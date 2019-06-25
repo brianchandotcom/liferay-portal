@@ -155,6 +155,10 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
 
+		if (ldapServerConfiguration.ldapServerId() != ldapServerId) {
+			return null;
+		}
+
 		SafeLdapContext safeLdapContext = getSafeLdapContext(
 			ldapServerId, companyId);
 
@@ -362,6 +366,10 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
 
+		if (ldapServerConfiguration.ldapServerId() != ldapServerId) {
+			return null;
+		}
+
 		LdapName baseDNLdapName = LDAPUtil.asLdapName(
 			ldapServerConfiguration.baseDN());
 		LDAPFilter ldapFilter = _ldapFilterValidator.validate(
@@ -383,6 +391,10 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
 
+		if (ldapServerConfiguration.ldapServerId() != ldapServerId) {
+			return null;
+		}
+
 		LdapName baseDNLdapName = LDAPUtil.asLdapName(
 			ldapServerConfiguration.baseDN());
 
@@ -403,6 +415,10 @@ public class DefaultPortalLDAP implements PortalLDAP {
 		LDAPServerConfiguration ldapServerConfiguration =
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
+
+		if (ldapServerConfiguration.ldapServerId() != ldapServerId) {
+			return null;
+		}
 
 		return ldapServerConfiguration.groupsDN();
 	}
@@ -547,6 +563,10 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
 
+		if (ldapServerConfiguration.ldapServerId() != ldapServerId) {
+			return null;
+		}
+
 		String baseDN = ldapServerConfiguration.baseDN();
 
 		String name = binding.getName();
@@ -575,6 +595,10 @@ public class DefaultPortalLDAP implements PortalLDAP {
 		LDAPServerConfiguration ldapServerConfiguration =
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
+
+		if (ldapServerConfiguration.ldapServerId() != ldapServerId) {
+			return null;
+		}
 
 		return getSafeLdapContext(
 			companyId, ldapServerConfiguration.baseProviderURL(),
@@ -703,6 +727,10 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			LDAPServerConfiguration ldapServerConfiguration =
 				_ldapServerConfigurationProvider.getConfiguration(
 					companyId, ldapServerId);
+
+			if (ldapServerConfiguration.ldapServerId() != ldapServerId) {
+				return null;
+			}
 
 			LDAPFilter userSearchLDAPFilter = _ldapFilterValidator.validate(
 				ldapServerConfiguration.userSearchFilter(),
@@ -917,6 +945,10 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
 
+		if (ldapServerConfiguration.ldapServerId() != ldapServerId) {
+			return null;
+		}
+
 		LdapName baseDNLdapName = LDAPUtil.asLdapName(
 			ldapServerConfiguration.baseDN());
 
@@ -941,6 +973,10 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
 
+		if (ldapServerConfiguration.ldapServerId() != ldapServerId) {
+			return null;
+		}
+
 		LdapName baseDNLdapName = LDAPUtil.asLdapName(
 			ldapServerConfiguration.baseDN());
 
@@ -961,6 +997,10 @@ public class DefaultPortalLDAP implements PortalLDAP {
 		LDAPServerConfiguration ldapServerConfiguration =
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
+
+		if (ldapServerConfiguration.ldapServerId() != ldapServerId) {
+			return null;
+		}
 
 		return ldapServerConfiguration.usersDN();
 	}

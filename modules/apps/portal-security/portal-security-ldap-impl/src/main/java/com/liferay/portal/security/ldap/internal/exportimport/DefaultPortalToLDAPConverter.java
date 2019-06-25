@@ -138,6 +138,10 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			_ldapServerConfigurationProvider.getConfiguration(
 				userGroup.getCompanyId(), ldapServerId);
 
+		if (ldapServerConfiguration.ldapServerId() != ldapServerId) {
+			return null;
+		}
+
 		String[] defaultObjectClassNames =
 			ldapServerConfiguration.groupDefaultObjectClasses();
 
@@ -210,6 +214,10 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		LDAPServerConfiguration ldapServerConfiguration =
 			_ldapServerConfigurationProvider.getConfiguration(
 				user.getCompanyId(), ldapServerId);
+
+		if (ldapServerConfiguration.ldapServerId() != ldapServerId) {
+			return null;
+		}
 
 		String[] defaultObjectClassNames =
 			ldapServerConfiguration.userDefaultObjectClasses();

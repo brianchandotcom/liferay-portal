@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser.k8s;
 
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-
 import io.kubernetes.client.models.V1ObjectMeta;
 import io.kubernetes.client.models.V1Pod;
 import io.kubernetes.client.models.V1PodStatus;
@@ -26,23 +24,11 @@ import io.kubernetes.client.models.V1PodStatus;
 public class Pod {
 
 	public String getIP() {
-		String ip = null;
+		V1Pod v1Pod = getV1Pod();
 
-		int retry = 0;
+		V1PodStatus v1PodStatus = v1Pod.getStatus();
 
-		while ((ip == null) && (retry < 6)) {
-			V1Pod v1Pod = getV1Pod();
-
-			V1PodStatus v1PodStatus = v1Pod.getStatus();
-
-			ip = v1PodStatus.getPodIP();
-
-			JenkinsResultsParserUtil.sleep(10000);
-
-			refreshV1Pod();
-
-			retry++;
-		}
+		String ip = v1PodStatus.getPodIP();
 
 		if (ip == null) {
 			throw new RuntimeException(

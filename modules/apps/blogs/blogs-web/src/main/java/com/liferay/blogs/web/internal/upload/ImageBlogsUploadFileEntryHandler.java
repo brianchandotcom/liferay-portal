@@ -23,7 +23,7 @@ import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -98,10 +98,10 @@ public class ImageBlogsUploadFileEntryHandler
 		Folder folder = blogsLocalService.addAttachmentsFolder(
 			themeDisplay.getUserId(), themeDisplay.getScopeGroupId());
 
-		String uniqueFileName = PortletFileRepositoryUtil.getUniqueFileName(
+		String uniqueFileName = portletFileRepository.getUniqueFileName(
 			themeDisplay.getScopeGroupId(), folder.getFolderId(), fileName);
 
-		return PortletFileRepositoryUtil.addPortletFileEntry(
+		return portletFileRepository.addPortletFileEntry(
 			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 			BlogsEntry.class.getName(), 0, BlogsConstants.SERVICE_NAME,
 			folder.getFolderId(), inputStream, uniqueFileName, contentType,
@@ -110,6 +110,9 @@ public class ImageBlogsUploadFileEntryHandler
 
 	@Reference
 	protected BlogsEntryLocalService blogsLocalService;
+
+	@Reference
+	protected PortletFileRepository portletFileRepository;
 
 	@Reference(target = "(resource.name=" + BlogsConstants.RESOURCE_NAME + ")")
 	protected PortletResourcePermission portletResourcePermission;

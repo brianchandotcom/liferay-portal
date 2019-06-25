@@ -49,7 +49,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -506,7 +506,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getUserId(), entry.getGroupId(),
 				entry.getEntryId(), coverImageImageSelector);
 
-			PortletFileRepositoryUtil.deletePortletFileEntry(
+			_portletFileRepository.deletePortletFileEntry(
 				coverImageFileEntryId);
 		}
 
@@ -515,7 +515,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getUserId(), entry.getGroupId(),
 				entry.getEntryId(), smallImageImageSelector);
 
-			PortletFileRepositoryUtil.deletePortletFileEntry(
+			_portletFileRepository.deletePortletFileEntry(
 				smallImageFileEntryId);
 		}
 
@@ -606,6 +606,9 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 	@Reference
 	private TrashEntryService _trashEntryService;

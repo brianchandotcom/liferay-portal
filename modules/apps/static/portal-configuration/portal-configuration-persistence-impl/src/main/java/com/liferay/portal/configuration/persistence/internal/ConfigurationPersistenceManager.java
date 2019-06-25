@@ -15,7 +15,6 @@
 package com.liferay.portal.configuration.persistence.internal;
 
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager;
 import com.liferay.portal.configuration.persistence.internal.listener.ConfigurationModelListenerProvider;
@@ -51,7 +50,6 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import java.util.function.Consumer;
 
 import javax.sql.DataSource;
 
@@ -166,8 +164,6 @@ public class ConfigurationPersistenceManager
 			createConfigurationTable();
 		}
 		catch (IOException | SQLException e) {
-			_verifyConfigurations();
-
 			populateDictionaries();
 		}
 	}
@@ -402,9 +398,9 @@ public class ConfigurationPersistenceManager
 
 			while (resultSet.next()) {
 				String pid = resultSet.getString(1);
-				String dictionaryString = resultSet.getString(2);
 
-				_dictionaries.putIfAbsent(pid, toDictionary(dictionaryString));
+				_dictionaries.putIfAbsent(
+					pid, _verifyDictionary(pid, resultSet.getString(2)));
 			}
 		}
 		catch (IOException | SQLException e) {
@@ -464,18 +460,18 @@ public class ConfigurationPersistenceManager
 	}
 
 	@SuppressWarnings("unchecked")
-	protected Dictionary<?, ?> toDictionary(String dictionaryString)
+	protected Dictionary<String, String> toDictionary(String dictionaryString)
 		throws IOException {
 
 		if (dictionaryString == null) {
 			return new HashMapDictionary<>();
 		}
 
-		Dictionary<Object, Object> dictionary = ConfigurationHandler.read(
+		Dictionary<String, String> dictionary = ConfigurationHandler.read(
 			new UnsyncByteArrayInputStream(
 				dictionaryString.getBytes(StringPool.UTF8)));
 
-		String fileName = (String)dictionary.get(_FELIX_FILE_INSTALL_FILENAME);
+		String fileName = dictionary.get(_FELIX_FILE_INSTALL_FILENAME);
 
 		if (fileName != null) {
 			File file = new File(
@@ -507,86 +503,65 @@ public class ConfigurationPersistenceManager
 		return newDictionary;
 	}
 
-	private void _verifyConfigurations() {
-		_verifyConfigurationsBundleLocation();
-		_verifyConfigurationsFileName();
-	}
+	private Dictionary<String, String> _verifyDictionary(
+			String pid, String dictionaryString)
+		throws IOException {
 
-	private void _verifyConfigurations(
-		String sql, Consumer<Dictionary<Object, Object>> dictionaryConsumer) {
+		Dictionary<String, String> dictionary = ConfigurationHandler.read(
+			new UnsyncByteArrayInputStream(
+				dictionaryString.getBytes(StringPool.UTF8)));
 
-		try (Connection connection = _dataSource.getConnection();
-			PreparedStatement selectPS = connection.prepareStatement(
-				buildSQL(sql));
-			ResultSet rs = selectPS.executeQuery()) {
+		String felixFileInstallFileName = dictionary.get(
+			_FELIX_FILE_INSTALL_FILENAME);
 
-			while (rs.next()) {
-				String pid = rs.getString(1);
-
-				String dictionaryString = rs.getString(2);
-
-				@SuppressWarnings("unchecked")
-				Dictionary<Object, Object> dictionary =
-					ConfigurationHandler.read(
-						new UnsyncByteArrayInputStream(
-							dictionaryString.getBytes(StringPool.UTF8)));
-
-				dictionaryConsumer.accept(dictionary);
-
-				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-					new UnsyncByteArrayOutputStream();
-
-				ConfigurationHandler.write(
-					unsyncByteArrayOutputStream, dictionary);
-
-				try (PreparedStatement updatePS = connection.prepareStatement(
-						buildSQL(
-							"update Configuration_ set dictionary = ? where " +
-								"configurationId = ?"))) {
-
-					updatePS.setString(
-						1, unsyncByteArrayOutputStream.toString());
-
-					updatePS.setString(2, pid);
-
-					updatePS.executeUpdate();
-				}
-			}
+		if (felixFileInstallFileName == null) {
+			return dictionary;
 		}
-		catch (Exception e) {
-			ReflectionUtil.throwException(e);
+
+		boolean needSave = false;
+
+		if (dictionary.get(_SERVIE_BUNDLE_LOCATION) == null) {
+			dictionary.put(_SERVIE_BUNDLE_LOCATION, "?");
+
+			needSave = true;
 		}
-	}
 
-	private void _verifyConfigurationsBundleLocation() {
-		_verifyConfigurations(
-			StringBundler.concat(
-				"select configurationId, dictionary from Configuration_ where ",
-				"dictionary like '%felix.fileinstall.filename=%' and ",
-				"dictionary not like '%",
-				ConfigurationAdmin.SERVICE_BUNDLELOCATION, "=\"%'"),
-			dictionary -> dictionary.put(
-				ConfigurationAdmin.SERVICE_BUNDLELOCATION, "?"));
-	}
+		if (felixFileInstallFileName.startsWith("file:")) {
+			File file = new File(URI.create(felixFileInstallFileName));
 
-	private void _verifyConfigurationsFileName() {
-		_verifyConfigurations(
-			StringBundler.concat(
-				"select configurationId, dictionary from Configuration_ where ",
-				"dictionary like '%", _FELIX_FILE_INSTALL_FILENAME,
-				"=\"file:%'"),
-			dictionary -> {
-				String fileName = (String)dictionary.get(
-					_FELIX_FILE_INSTALL_FILENAME);
+			dictionary.put(_FELIX_FILE_INSTALL_FILENAME, file.getName());
 
-				File file = new File(URI.create(fileName));
+			storeInDatabase(pid, dictionary);
 
-				dictionary.put(_FELIX_FILE_INSTALL_FILENAME, file.getName());
-			});
+			dictionary.put(
+				_FELIX_FILE_INSTALL_FILENAME, felixFileInstallFileName);
+
+			needSave = false;
+		}
+		else {
+			File file = new File(
+				PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
+				felixFileInstallFileName);
+
+			file = file.getAbsoluteFile();
+
+			URI uri = file.toURI();
+
+			dictionary.put(_FELIX_FILE_INSTALL_FILENAME, uri.toString());
+		}
+
+		if (needSave) {
+			storeInDatabase(pid, dictionary);
+		}
+
+		return dictionary;
 	}
 
 	private static final String _FELIX_FILE_INSTALL_FILENAME =
 		"felix.fileinstall.filename";
+
+	private static final String _SERVIE_BUNDLE_LOCATION =
+		"service.bundleLocation";
 
 	private static final Dictionary<?, ?> _emptyDictionary =
 		new HashMapDictionary<>();

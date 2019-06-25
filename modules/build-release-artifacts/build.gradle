@@ -14,7 +14,7 @@ import org.apache.maven.model.io.xpp3.MavenXpp3Writer
 
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.project.templates", version: projectTemplatesVersion
+		classpath group: "com.liferay", name: "com.liferay.project.templates", version: "latest.release"
 		classpath group: "org.apache.maven", name: "maven-model", version: "3.6.1"
 	}
 
@@ -25,103 +25,38 @@ buildscript {
 	}
 }
 
-ext {
-	releaseInfoFile = new File(portalPath, "portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
+File releaseInfoJavaFile = new File("../../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
 
-	isDxpRelease = releaseInfoFile.text.contains(" DXP ") || releaseInfoFile.text.contains(" Digital Experience ")
+boolean dxp = releaseInfoJavaFile.text.contains(" DXP ") || releaseInfoJavaFile.text.contains(" Digital Experience ")
 
-	if (internalRelease.toBoolean()) {
-		repositoryId = xanaduRepositoryId
-		repositoryName = xanaduRepositoryName
-		repositoryUrl = xanaduRepositoryUrl
-	}
-	else {
-		if (isDxpRelease) {
-			if (snapshot.toBoolean()) {
-				repositoryId = liferayPrivateSnapshotsId
-				repositoryName = liferayPrivateSnapshotsName
-				repositoryUrl = liferayPrivateSnapshotsUrl
-			}
-			else {
-				repositoryId = liferayPrivateReleasesId
-				repositoryName = liferayPrivateReleasesName
-				repositoryUrl = liferayPrivateReleasesUrl
-			}
-		}
-		else {
-			if (snapshot.toBoolean()) {
-				repositoryId = liferayPublicSnapshotsId
-				repositoryName = liferayPublicSnapshotsName
-				repositoryUrl = liferayPublicSnapshotsUrl
-			}
-			else {
-				repositoryId = liferayPublicReleasesId
-				repositoryName = liferayPublicReleasesName
-				repositoryUrl = liferayPublicReleasesUrl
-			}
-		}
-	}
-
-	if (isDxpRelease) {
-		releaseApiArtifactId = releaseDxpApiArtifactId
-		releaseBomArtifactId = releaseDxpBomArtifactId
-		releaseCompileOnlyArtifactId = releaseDxpCompileOnlyArtifactId
-		releaseDistroArtifactId = releaseDxpDistroArtifactId
-		releaseThirdPartyArtifactId = releaseDxpThirdPartyArtifactId
-
-		scmConnection = scmConnectionPrivate
-		scmDeveloperConnection = scmDeveloperConnectionPrivate
-		scmUrl = scmUrlPrivate
-	}
-	else {
-		releaseApiArtifactId = releasePortalApiArtifactId
-		releaseBomArtifactId = releasePortalBomArtifactId
-		releaseCompileOnlyArtifactId = releasePortalCompileOnlyArtifactId
-		releaseDistroArtifactId = releasePortalDistroArtifactId
-		releaseThirdPartyArtifactId = releasePortalThirdPartyArtifactId
-
-		scmConnection = scmConnectionPublic
-		scmDeveloperConnection = scmDeveloperConnectionPublic
-		scmUrl = scmUrlPublic
-	}
-
-}
-
-task clean(type: Delete)
-task createSamples
-task writeBoms
-task writeCompileOnlyBom
-task writeReleaseBom
-task writeThirdPartyBom
-
-clean {
-	delete "build", "project-templates-samples"
-}
+task generatePom
+task generatePomProjectTemplates
+task generatePomRelease
+task generatePomThirdParty
 
 configurations {
-	projectTemplates
+	pomProjectTemplates
 }
 
-createSamples {
-	doLast {
-		String liferayVersionArg
+dependencies {
+	pomProjectTemplates group: "com.liferay", name: "com.liferay.project.templates", version: "latest.release"
+}
 
-		if (project.hasProperty('liferayVersion')) {
-			liferayVersionArg = liferayVersion
-		}
-		else {
-			liferayVersionArg = '7.1'
-		}
+generatePom {
+	dependsOn generatePomProjectTemplates
+	dependsOn generatePomRelease
+	dependsOn generatePomThirdParty
+}
 
-		def templateNames = ProjectTemplates.getTemplates().keySet()
+generatePomProjectTemplates {
+	doFirst {
+		File projectTemplatesDir = new File(buildDir, "releng/projectTemplates")
 
-		File samplesDir = new File("project-templates-samples")
+		delete projectTemplatesDir
 
-		delete samplesDir
+		mkdir projectTemplatesDir
 
-		samplesDir.mkdir()
-
-		templateNames.each {
+		ProjectTemplates.getTemplates().keySet().each {
 			def mainArgs = ["--template", it, "--name", "sample-${it}"]
 
 			if (it.equals("fragment")) {
@@ -140,45 +75,27 @@ createSamples {
 				mainArgs += ["--service", "com.liferay.portal.kernel.service.UserLocalServiceWrapper"]
 			}
 
-			mainArgs += ["--liferayVersion", liferayVersionArg]
+			mainArgs += ["--liferayVersion", project.property("gradle.releng.pom.project.templates.version")]
 
 			javaexec {
 				args mainArgs
-				classpath = configurations.projectTemplates
+				classpath = configurations.pomProjectTemplates
 				main = "com.liferay.project.templates.ProjectTemplates"
-				workingDir = samplesDir
+				workingDir = projectTemplatesDir
 			}
 		}
 	}
-}
-
-dependencies {
-	projectTemplates group: "com.liferay", name: "com.liferay.project.templates", version: projectTemplatesVersion
-}
-
-repositories {
-	maven {
-		url "https://repository.liferay.com/nexus/content/groups/public"
-	}
-}
-
-writeBoms {
-	dependsOn writeCompileOnlyBom, writeReleaseBom, writeThirdPartyBom
-}
-
-writeCompileOnlyBom {
-	dependsOn createSamples
 
 	doLast {
-		Model model = getBaseModel(releaseCompileOnlyArtifactId)
+		Model model = _getPomModel("release." + (dxp ? "dxp" : "portal") + ".project.templates")
 
 		DependencyManagement dependencyManagement = new DependencyManagement()
 
-		File samplesDir = new File("project-templates-samples")
+		File projectTemplatesDir = new File(buildDir, "releng/projectTemplates")
 
 		Set<String> gradleDependencyLines = []
 
-		samplesDir.eachFile {
+		projectTemplatesDir.eachFile {
 			File buildGradleFile = new File(it, "build.gradle")
 
 			if (buildGradleFile.exists()) {
@@ -195,46 +112,38 @@ writeCompileOnlyBom {
 		}
 
 		gradleDependencyLines.each {
-			String[] gradleDependencyLinesSplit = it.split(",")
-
-			String compileOnlyArtifactId = getTextInQuotes(gradleDependencyLinesSplit[1])
-			String compileOnlyGroupId = getTextInQuotes(gradleDependencyLinesSplit[0])
-			String compileOnlyVersion = getTextInQuotes(gradleDependencyLinesSplit[2])
-
 			Dependency dependency = new Dependency()
 
-			dependency.setArtifactId(compileOnlyArtifactId)
-			dependency.setGroupId(compileOnlyGroupId)
-			dependency.setVersion(compileOnlyVersion)
+			String[] gradleDependencyLinesSplit = it.split(",")
+
+			dependency.setArtifactId(getTextInQuotes(gradleDependencyLinesSplit[1]))
+			dependency.setGroupId(getTextInQuotes(gradleDependencyLinesSplit[0]))
+			dependency.setVersion(getTextInQuotes(gradleDependencyLinesSplit[2]))
 
 			dependencyManagement.addDependency(dependency)
 		}
 
 		model.setDependencyManagement(dependencyManagement)
 
-		writeBom(model)
+		_writePom(model)
 	}
 }
 
-writeReleaseBom {
+generatePomRelease {
 	doLast {
-		Model model = getBaseModel(releaseBomArtifactId)
+		Model model = _getPomModel("release." + (dxp ? "dxp" : "portal") + ".bom")
 
 		DependencyManagement dependencyManagement = new DependencyManagement()
 
-		File modulesDir = new File(portalPath, "modules")
+		File modulesDir = new File("../../modules")
 
 		modulesDir.traverse(
 			preDir: {
-				// Skip test and ignored subdirectories
-
 				File relengIgnoreMarkerFile = new File(it, ".lfrbuild-releng-ignore")
 
 				if (it.name.endsWith("-test") || relengIgnoreMarkerFile.exists()) {
 					return FileVisitResult.SKIP_SUBTREE
 				}
-
-				// Skip app subdirectories with no app.bnd, or if the app.bnd is set to bundle=false
 
 				if (it.getParentFile().name == "apps") {
 					File appBndFile = new File(it, "app.bnd")
@@ -255,8 +164,6 @@ writeReleaseBom {
 					}
 				}
 
-				// Skip the directory if it doesn't have a marker file, in addition to one of the three supported build files
-
 				File bndBndFile = new File(it, "bnd.bnd")
 				File buildXMLFile = new File(it, "build.xml")
 				File gulpJSFile = new File(it, "gulp.js")
@@ -266,15 +173,9 @@ writeReleaseBom {
 					return FileVisitResult.CONTINUE
 				}
 
-				// Derive Maven info from artifact.properties; print a warning and skip the directory if the properties file is missing
-
-				File moduleRelengDir = new File(it.toString().replace("/modules/", "/modules/.releng/"))
-
-				File artifactPropertiesFile = new File(moduleRelengDir, "artifact.properties")
+				File artifactPropertiesFile = new File(it.toString().replace("/modules/", "/modules/.releng/") + "artifact.properties")
 
 				if (!artifactPropertiesFile.exists()) {
-					println "Warning: No artifact.properties file was detected for ${it.name}."
-
 					return FileVisitResult.CONTINUE
 				}
 
@@ -284,29 +185,21 @@ writeReleaseBom {
 					artifactProperties.load(it)
 				}
 
-				String[] artifactURLSplit = artifactProperties["artifact.url"].split("/")
-
-				String moduleArtifactId = artifactURLSplit[artifactURLSplit.length - 3]
-				String moduleGroupId = artifactURLSplit.last().endsWith(".war") ? "com.liferay.plugins" : "com.liferay"
-				String moduleVersion = artifactURLSplit[artifactURLSplit.length - 2]
-
-				// Add the Maven dependency to the dependencyManagement object
-
 				Dependency dependency = new Dependency()
 
-				dependency.setArtifactId(moduleArtifactId)
-				dependency.setGroupId(moduleGroupId)
-				dependency.setVersion(moduleVersion)
+				String[] artifactURLSplit = artifactProperties["artifact.url"].split("/")
+
+				dependency.setArtifactId(artifactURLSplit[artifactURLSplit.length - 3])
+				dependency.setGroupId(artifactURLSplit.last().endsWith(".war") ? "com.liferay.plugins" : "com.liferay")
+				dependency.setVersion(artifactURLSplit[artifactURLSplit.length - 2])
 
 				dependencyManagement.addDependency(dependency)
 			},
 			type: FileType.DIRECTORIES
 		)
 
-		// Add the base portal jars as dependencies
-
 		["portal-kernel", "portal-impl", "support-tomcat", "util-bridges", "util-java", "util-slf4j", "util-taglib"].each {
-			File portalBndFile = new File(portalPath, "${it}/bnd.bnd")
+			File portalBndFile = new File("../../${it}/bnd.bnd")
 
 			Properties portalBndProperties = new Properties()
 
@@ -325,29 +218,31 @@ writeReleaseBom {
 
 		model.setDependencyManagement(dependencyManagement)
 
-		writeBom(model)
+		_writePom(model)
 	}
 }
 
-writeThirdPartyBom {
+generatePomThirdParty {
 	doLast {
-		Model model = getBaseModel(releaseThirdPartyArtifactId)
+		Model model = _getPomModel("release." + (dxp ? "dxp" : "portal") + ".third.party")
 
 		DependencyManagement dependencyManagement = new DependencyManagement()
 
-		File dependenciesPropertiesDevelopmentFile = new File(portalPath, "lib/development/dependencies.properties")
-		File dependenciesPropertiesGlobalFile = new File(portalPath, "lib/global/dependencies.properties")
-		File dependenciesPropertiesPortalFile = new File(portalPath, "lib/portal/dependencies.properties")
-
 		Properties dependenciesProperties = new Properties()
+
+		File dependenciesPropertiesDevelopmentFile = new File("../../lib/development/dependencies.properties")
 
 		dependenciesPropertiesDevelopmentFile.withInputStream {
 			dependenciesProperties.load(it)
 		}
 
+		File dependenciesPropertiesGlobalFile = new File("../../lib/global/dependencies.properties")
+
 		dependenciesPropertiesGlobalFile.withInputStream {
 			dependenciesProperties.load(it)
 		}
+
+		File dependenciesPropertiesPortalFile = new File("../../lib/portal/dependencies.properties")
 
 		dependenciesPropertiesPortalFile.withInputStream {
 			dependenciesProperties.load(it)
@@ -371,11 +266,17 @@ writeThirdPartyBom {
 
 		model.setDependencyManagement(dependencyManagement)
 
-		writeBom(model)
+		_writePom(model)
 	}
 }
 
-Model getBaseModel(String artifactId) {
+repositories {
+	maven {
+		url "https://repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+private Model _getPomModel(String artifactId) {
 	Model model = new Model()
 
 	model.setArtifactId(artifactId)
@@ -384,62 +285,69 @@ Model getBaseModel(String artifactId) {
 
 	Developer developer = new Developer()
 
-	developer.setName(developerName)
-	developer.setOrganization(developerOrganization)
-	developer.setOrganizationUrl(developerOrganizationUrl)
+	developer.setName(project.property("gradle.releng.pom.developer.name"))
+	developer.setOrganization(project.property("gradle.releng.pom.developer.organization"))
+	developer.setOrganizationUrl(project.property("gradle.releng.pom.developer.organizationUrl"))
 
 	model.addDeveloper(developer)
 
 	License license = new License()
 
-	license.setName(licenseName)
-	license.setUrl(licenseUrl)
+	license.setName(project.property("gradle.releng.pom.license.name"))
+	license.setUrl(project.property("gradle.releng.pom.license.url"))
 
 	model.addLicense(license)
 
 	Repository repository = new Repository()
 
+	String repositoryURL = project.property("gradle.releng.pom.repository.url")
+
+	repository.setUrl(repositoryURL)
+
+	String repositoryId = repositoryURL
+
+	List<String> repositoryPaths = repositoryURL.tokenize("/")
+
+	if (!repositoryPaths.isEmpty()) {
+		repositoryId = repositoryPaths.last()
+	}
+
 	repository.setId(repositoryId)
-	repository.setName(repositoryName)
-	repository.setUrl(repositoryUrl)
+
+	String repositoryName = repositoryId.replaceAll(/\-(\w)/) {
+		String s = it[1]
+
+		return " " + s.toUpperCase()
+	}
+
+	repository.setName(repositoryName.capitalize())
 
 	model.addRepository(repository)
 
 	Scm scm = new Scm()
 
-	scm.setConnection(scmConnection)
-	scm.setDeveloperConnection(scmDeveloperConnection)
-	scm.setTag(scmTag)
-	scm.setUrl(scmUrl)
+	scm.setConnection(project.property("gradle.releng.pom.scm.connection"))
+	scm.setDeveloperConnection(project.property("gradle.releng.pom.scm.developerConnection"))
+
+	ProcessBuilder processBuilder = new ProcessBuilder("git", "rev-parse", "HEAD")
+
+	processBuilder.redirectErrorStream(true)
+	processBuilder.directory(new File("../.."))
+
+	Process process = processBuilder.start()
+
+	scm.setTag(process.inputStream.getText().trim())
+	scm.setUrl(project.property("gradle.releng.pom.scm.url"))
 
 	model.setScm(scm)
 
 	return model
 }
 
-String getScmTag() {
-	File portalDir = new File(portalPath)
-
-	ProcessBuilder processBuilder = new ProcessBuilder("git", "rev-parse", "HEAD")
-
-	processBuilder.redirectErrorStream(true)
-	processBuilder.directory(portalDir)
-
-	Process process = processBuilder.start()
-
-	return process.inputStream.getText().trim()
-}
-
-void writeBom(Model model) {
-	File targetDir = new File("build")
-
-	targetDir.mkdir()
-
-	File bomFile = new File(targetDir, "${model.artifactId}-${model.version}.pom")
-
+private void _writePom(Model model) {
 	MavenXpp3Writer mavenWriter = new MavenXpp3Writer()
 
-	FileWriter fileWriter = new FileWriter(bomFile)
+	FileWriter fileWriter = new FileWriter(new File(buildDir, "${model.artifactId}-${model.version}.pom"))
 
 	mavenWriter.write(fileWriter, model)
 }

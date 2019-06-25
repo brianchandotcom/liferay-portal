@@ -29,18 +29,19 @@
 			}
 		},
 		"moduleNameMapper": {
-			"frontend-js-web/liferay/toast/commands/OpenToast.es": "<rootDir>/src/main/resources/META-INF/resources/js/test/mock/openToast.js",
-			"react-text-mask": "<rootDir>/src/main/resources/META-INF/resources/js/test/mock/reactTextMask.js"
+			"frontend-js-web/liferay/toast/commands/OpenToast.es": "<rootDir>/test/mock/openToast.js",
+			"react-text-mask": "<rootDir>/test/mock/reactTextMask.js"
 		},
 		"setupFilesAfterEnv": [
-			"<rootDir>src/main/resources/META-INF/resources/js/test/setup.js"
+			"<rootDir>/test/setup.js"
 		],
 		"snapshotSerializers": [
 			"enzyme-to-json/serializer"
 		],
 		"testMatch": [
-			"<rootDir>/src/main/resources/META-INF/resources/js/components/**/__tests__/*.js",
-			"<rootDir>/src/main/resources/META-INF/resources/js/shared/components/**/__tests__/*.js"
+			"<rootDir>/test/components/*.js",
+			"<rootDir>/test/components/**/*.js",
+			"<rootDir>/test/shared/**/*.js"
 		],
 		"testURL": "http://liferay.com",
 		"timers": "fake"

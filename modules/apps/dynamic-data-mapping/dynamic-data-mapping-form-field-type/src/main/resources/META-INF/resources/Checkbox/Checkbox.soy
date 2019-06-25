@@ -25,8 +25,8 @@
 				{param checked: $value /}
 				{param disabled: $readOnly /}
 				{param label: $label /}
+				{param name: $name /}
 				{param showAsSwitcher: $showAsSwitcher /}
-				{param showLabel: $showLabel /}
 			{/call}
 		{/param}
 		{param displayErrors: $displayErrors /}
@@ -45,6 +45,7 @@
 {/template}
 
 {template .content}
+	{@param name: string}
 	{@param? checked: bool}
 	{@param? disabled: bool}
 	{@param? handleInputChangeEvent: any}
@@ -65,7 +66,9 @@
 					disabled
 				{/if}
 
+				name="{$name}"
 				type="checkbox"
+				value="true"
 			/>
 
 			<span aria-hidden="true" class="toggle-switch-bar">

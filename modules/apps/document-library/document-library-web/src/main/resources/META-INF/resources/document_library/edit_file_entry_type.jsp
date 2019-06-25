@@ -182,12 +182,11 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 				title: '<%= UnicodeLanguageUtil.get(request, "metadata-sets") %>'
 			},
 			function(event) {
-
 				var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />ddmStructuresSearchContainer');
 
-				var containedMetadata = searchContainer.getData(false);
+				var data = searchContainer.getData(false);
 
-				if (!containedMetadata.includes(event.ddmstructureid)) {
+				if (!data.includes(event.ddmstructureid)) {
 					var ddmStructureLink = '<a class="modify-link" data-rowId="' + event.ddmstructureid + '" href="javascript:;" title="<%= LanguageUtil.get(request, "remove") %>"><%= UnicodeFormatter.toString(removeStructureIcon) %></a>';
 
 					searchContainer.addRow([event.name, ddmStructureLink], event.ddmstructureid);

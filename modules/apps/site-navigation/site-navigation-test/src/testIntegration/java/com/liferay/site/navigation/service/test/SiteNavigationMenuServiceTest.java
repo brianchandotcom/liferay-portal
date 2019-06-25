@@ -182,20 +182,6 @@ public class SiteNavigationMenuServiceTest {
 			siteNavigationMenu.getSiteNavigationMenuId());
 	}
 
-	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testFetchSiteNavigationMenuWithoutPermissions()
-		throws Exception {
-
-		SiteNavigationMenu siteNavigationMenu =
-			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-				_group, _groupUser.getUserId());
-
-		ServiceTestUtil.setUser(_groupUser);
-
-		_siteNavigationMenuService.fetchSiteNavigationMenu(
-			siteNavigationMenu.getSiteNavigationMenuId());
-	}
-
 	@Test
 	public void testFetchSiteNavigationMenuWithPermissions() throws Exception {
 		SiteNavigationMenu siteNavigationMenu =

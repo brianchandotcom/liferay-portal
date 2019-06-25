@@ -20,9 +20,9 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
-import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.internal.dynamic.data.mapping.util.DDMIndexerUtil;
@@ -43,7 +43,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -128,7 +128,7 @@ public class AssetListHelperImpl implements AssetListHelper {
 					assetListEntry.getAssetListEntryId(), segmentsEntryId);
 		}
 
-		return AssetEntryLocalServiceUtil.getEntriesCount(
+		return _assetEntryLocalService.getEntriesCount(
 			getAssetEntryQuery(assetListEntry, segmentsEntryId));
 	}
 
@@ -179,7 +179,7 @@ public class AssetListHelperImpl implements AssetListHelper {
 			assetEntryQuery.setClassNameIds(classNameIds);
 
 			for (long classNameId : classNameIds) {
-				String className = PortalUtil.getClassName(classNameId);
+				String className = _portal.getClassName(classNameId);
 
 				classTypeIds = ArrayUtil.append(
 					classTypeIds,
@@ -308,8 +308,7 @@ public class AssetListHelperImpl implements AssetListHelper {
 
 		for (long assetCategoryId : assetCategoryIds) {
 			AssetCategory category =
-				AssetCategoryLocalServiceUtil.fetchAssetCategory(
-					assetCategoryId);
+				_assetCategoryLocalService.fetchAssetCategory(assetCategoryId);
 
 			if (category == null) {
 				continue;
@@ -365,7 +364,7 @@ public class AssetListHelperImpl implements AssetListHelper {
 			try {
 				List<ClassType> classTypes =
 					classTypeReader.getAvailableClassTypes(
-						PortalUtil.getSharedContentSiteGroupIds(
+						_portal.getSharedContentSiteGroupIds(
 							assetListEntry.getCompanyId(),
 							assetListEntry.getGroupId(),
 							assetListEntry.getUserId()),
@@ -467,9 +466,8 @@ public class AssetListHelperImpl implements AssetListHelper {
 			assetListEntryAssetEntryRels.stream();
 
 		return stream.map(
-			assetListEntryAssetEntryRel ->
-				AssetEntryLocalServiceUtil.fetchEntry(
-					assetListEntryAssetEntryRel.getAssetEntryId())
+			assetListEntryAssetEntryRel -> _assetEntryLocalService.fetchEntry(
+				assetListEntryAssetEntryRel.getAssetEntryId())
 		).collect(
 			Collectors.toList()
 		);
@@ -588,11 +586,10 @@ public class AssetListHelperImpl implements AssetListHelper {
 			allAssetTagNames = overrideAllAssetTagNames;
 		}
 
-		long siteGroupId = PortalUtil.getSiteGroupId(
-			assetListEntry.getGroupId());
+		long siteGroupId = _portal.getSiteGroupId(assetListEntry.getGroupId());
 
 		for (String assetTagName : allAssetTagNames) {
-			long[] allAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
+			long[] allAssetTagIds = _assetTagLocalService.getTagIds(
 				new long[] {siteGroupId}, assetTagName);
 
 			assetEntryQuery.addAllTagIdsArray(allAssetTagIds);
@@ -600,7 +597,7 @@ public class AssetListHelperImpl implements AssetListHelper {
 
 		assetEntryQuery.setAnyCategoryIds(anyAssetCategoryIds);
 
-		long[] anyAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
+		long[] anyAssetTagIds = _assetTagLocalService.getTagIds(
 			siteGroupId, anyAssetTagNames);
 
 		assetEntryQuery.setAnyTagIds(anyAssetTagIds);
@@ -608,7 +605,7 @@ public class AssetListHelperImpl implements AssetListHelper {
 		assetEntryQuery.setNotAllCategoryIds(notAllAssetCategoryIds);
 
 		for (String assetTagName : notAllAssetTagNames) {
-			long[] notAllAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
+			long[] notAllAssetTagIds = _assetTagLocalService.getTagIds(
 				new long[] {siteGroupId}, assetTagName);
 
 			assetEntryQuery.addNotAllTagIdsArray(notAllAssetTagIds);
@@ -616,7 +613,7 @@ public class AssetListHelperImpl implements AssetListHelper {
 
 		assetEntryQuery.setNotAnyCategoryIds(notAnyAssetCategoryIds);
 
-		long[] notAnyAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
+		long[] notAnyAssetTagIds = _assetTagLocalService.getTagIds(
 			siteGroupId, notAnyAssetTagNames);
 
 		assetEntryQuery.setNotAnyTagIds(notAnyAssetTagIds);
@@ -626,6 +623,18 @@ public class AssetListHelperImpl implements AssetListHelper {
 		AssetListHelperImpl.class);
 
 	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
 	private AssetHelper _assetHelper;
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

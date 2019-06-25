@@ -27,6 +27,7 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
+import com.liferay.asset.list.util.AssetListHelper;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetEntryResult;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
@@ -327,7 +328,8 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 				portletRequest.getAttribute(
 					SegmentsWebKeys.SEGMENTS_ENTRY_IDS));
 
-			return assetListEntry.getAssetEntries(segmentsEntryIds);
+			return _assetListHelper.getAssetEntries(
+				assetListEntry, segmentsEntryIds);
 		}
 
 		List<AssetEntry> assetEntries = getAssetEntries(
@@ -1203,6 +1205,9 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 	@Reference
 	private AssetListEntryService _assetListEntryService;
+
+	@Reference
+	private AssetListHelper _assetListHelper;
 
 	private AssetPublisherWebConfiguration _assetPublisherWebConfiguration;
 

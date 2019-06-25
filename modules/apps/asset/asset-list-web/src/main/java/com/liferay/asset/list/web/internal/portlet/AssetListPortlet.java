@@ -15,8 +15,10 @@
 package com.liferay.asset.list.web.internal.portlet;
 
 import com.liferay.asset.list.constants.AssetListPortletKeys;
+import com.liferay.asset.list.constants.AssetListWebKeys;
 import com.liferay.asset.list.exception.AssetListEntryTitleException;
 import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
+import com.liferay.asset.list.util.AssetListHelper;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
@@ -41,10 +43,13 @@ import java.util.Date;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -178,6 +183,17 @@ public class AssetListPortlet extends MVCPortlet {
 	}
 
 	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			AssetListWebKeys.ASSET_LIST_HELPER, _assetListHelper);
+
+		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	@Override
 	protected boolean isSessionErrorException(Throwable cause) {
 		if (cause instanceof AssetListEntryTitleException ||
 			cause instanceof DuplicateAssetListEntryTitleException) {
@@ -187,5 +203,8 @@ public class AssetListPortlet extends MVCPortlet {
 
 		return super.isSessionErrorException(cause);
 	}
+
+	@Reference
+	private AssetListHelper _assetListHelper;
 
 }

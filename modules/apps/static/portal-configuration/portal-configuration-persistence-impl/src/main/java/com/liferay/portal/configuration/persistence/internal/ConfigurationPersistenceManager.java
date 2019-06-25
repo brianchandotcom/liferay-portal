@@ -14,10 +14,11 @@
 
 package com.liferay.portal.configuration.persistence.internal;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager;
-import com.liferay.portal.configuration.persistence.internal.listener.ConfigurationModelListenerProvider;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -57,6 +58,7 @@ import org.apache.felix.cm.NotCachablePersistenceManager;
 import org.apache.felix.cm.PersistenceManager;
 import org.apache.felix.cm.file.ConfigurationHandler;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -67,6 +69,10 @@ import org.osgi.service.cm.ConfigurationAdmin;
 public class ConfigurationPersistenceManager
 	implements NotCachablePersistenceManager, PersistenceManager,
 			   ReloadablePersistenceManager {
+
+	public ConfigurationPersistenceManager(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
 
 	@Override
 	public void delete(final String pid) throws IOException {
@@ -170,6 +176,10 @@ public class ConfigurationPersistenceManager
 
 	public void stop() {
 		_dictionaries.clear();
+
+		if (_serviceTrackerMap != null) {
+			_serviceTrackerMap.close();
+		}
 	}
 
 	@Override
@@ -250,9 +260,7 @@ public class ConfigurationPersistenceManager
 				pidKey = pid;
 			}
 
-			configurationModelListener =
-				ConfigurationModelListenerProvider.
-					getConfigurationModelListener(pidKey);
+			configurationModelListener = _getConfigurationModelListener(pidKey);
 		}
 
 		if (configurationModelListener != null) {
@@ -295,9 +303,7 @@ public class ConfigurationPersistenceManager
 				pidKey = pid;
 			}
 
-			configurationModelListener =
-				ConfigurationModelListenerProvider.
-					getConfigurationModelListener(pidKey);
+			configurationModelListener = _getConfigurationModelListener(pidKey);
 		}
 
 		if (configurationModelListener != null) {
@@ -507,6 +513,18 @@ public class ConfigurationPersistenceManager
 		return newDictionary;
 	}
 
+	private ConfigurationModelListener _getConfigurationModelListener(
+		String configurationModelClassName) {
+
+		if (_serviceTrackerMap == null) {
+			_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+				_bundleContext, ConfigurationModelListener.class,
+				"model.class.name");
+		}
+
+		return _serviceTrackerMap.getService(configurationModelClassName);
+	}
+
 	private Dictionary<String, String> _verifyDictionary(
 			String pid, String dictionaryString)
 		throws IOException {
@@ -582,10 +600,13 @@ public class ConfigurationPersistenceManager
 	private static final Dictionary<?, ?> _emptyDictionary =
 		new HashMapDictionary<>();
 
+	private final BundleContext _bundleContext;
 	private DataSource _dataSource;
 	private final ConcurrentMap<String, Dictionary<?, ?>> _dictionaries =
 		new ConcurrentHashMap<>();
 	private final ReadWriteLock _readWriteLock = new ReentrantReadWriteLock(
 		true);
+	private ServiceTrackerMap<String, ConfigurationModelListener>
+		_serviceTrackerMap;
 
 }

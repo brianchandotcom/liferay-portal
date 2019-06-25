@@ -52,7 +52,7 @@ public class ConfigurationPersistenceImplBundleActivator
 		}
 
 		_configurationPersistenceManager =
-			new ConfigurationPersistenceManager();
+			new ConfigurationPersistenceManager(bundleContext);
 
 		Iterator<ServiceReference<DataSource>> iterator =
 			serviceReferences.iterator();

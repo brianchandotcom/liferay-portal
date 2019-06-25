@@ -25,7 +25,6 @@ import io.kubernetes.client.apis.CoreV1Api;
 import io.kubernetes.client.models.V1DeleteOptions;
 import io.kubernetes.client.models.V1Pod;
 import io.kubernetes.client.models.V1PodList;
-import io.kubernetes.client.models.V1Status;
 import io.kubernetes.client.util.Config;
 
 import java.io.File;
@@ -52,22 +51,58 @@ public class LiferayK8sConnection {
 	}
 
 	public Pod createPod(Pod configurationPod, String namespace) {
+		Pod pod = null;
+
 		try {
-			return new Pod(
+			pod = new Pod(
 				_coreV1Api.createNamespacedPod(
 					namespace, configurationPod.getV1Pod(), null));
+
+			int retry = 0;
+
+			while ((pod == null) &&
+				   (retry < (_SECONDS_WAIT_TIMEOUT / _SECONDS_RETRY_PERIOD))) {
+
+				pod = getPod(configurationPod, namespace);
+
+				JenkinsResultsParserUtil.sleep(_SECONDS_RETRY_PERIOD * 1000);
+
+				retry++;
+			}
+
+			String phase = "";
+
+			while (!phase.equals("Running") &&
+				   (retry < (_SECONDS_WAIT_TIMEOUT / _SECONDS_RETRY_PERIOD))) {
+
+				phase = pod.getPhase();
+
+				JenkinsResultsParserUtil.sleep(_SECONDS_RETRY_PERIOD * 1000);
+
+				pod.refreshV1Pod();
+
+				retry++;
+			}
+
+			if (phase.equals("Running")) {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Successfully created pod with name '", pod.getName(),
+						"' in namespace '", namespace, "'"));
+			}
+			else {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Unable to start new pod with name '",
+						configurationPod.getName(), "' in namespace '",
+						namespace, "'"));
+			}
 		}
 		catch (ApiException ae) {
-			System.out.println(ae.toString());
-
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Unable to create new pod with name '",
-					configurationPod.getName(), "' in namespace '", namespace,
-					"'"));
-
-			return null;
+			throw new RuntimeException(ae);
 		}
+
+		return pod;
 	}
 
 	public boolean deletePod(Pod pod) {
@@ -75,49 +110,54 @@ public class LiferayK8sConnection {
 	}
 
 	public boolean deletePod(Pod pod, String namespace) {
-		V1Status v1Status = null;
+		String podName = pod.getName();
 
 		try {
-			v1Status = _coreV1Api.deleteNamespacedPod(
-				pod.getName(), namespace, new V1DeleteOptions(), null, 60, true,
+			_coreV1Api.deleteNamespacedPod(
+				podName, namespace, new V1DeleteOptions(), null, 60, true,
 				null);
 		}
 		catch (ApiException ae) {
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Unable to delete pod with name '", pod.getName(),
-					"' in namespace '", namespace, "'"));
-
-			ae.printStackTrace();
-
-			return false;
+			throw new RuntimeException(ae);
 		}
 		catch (JsonSyntaxException jse) {
 			String message = jse.getMessage();
 
 			if (message == null) {
-				return false;
+				message = "";
 			}
 
-			if (message.contains("Expected a string but was BEGIN_OBJECT")) {
-				System.out.println(
-					JenkinsResultsParserUtil.combine(
-						"Successfully deleted pod with name '", pod.getName(),
-						"' in namespace '", namespace, "'"));
-
-				return true;
-			}
-
-			return false;
-		}
-
-		if (v1Status != null) {
-			String status = v1Status.getStatus();
-
-			if (status.equals("Success")) {
-				return true;
+			if (!message.contains("Expected a string but was BEGIN_OBJECT")) {
+				throw jse;
 			}
 		}
+
+		pod = getPod(pod, namespace);
+		int retry = 0;
+
+		while ((pod != null) &&
+			   (retry < (_SECONDS_WAIT_TIMEOUT / _SECONDS_RETRY_PERIOD))) {
+
+			pod = getPod(pod, namespace);
+
+			JenkinsResultsParserUtil.sleep(_SECONDS_RETRY_PERIOD * 1000);
+
+			retry++;
+		}
+
+		if (pod == null) {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Successfully deleted pod with name '", podName,
+					"' in namespace '", namespace, "'"));
+
+			return true;
+		}
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Unable to delete pod with name '", podName, "' in namespace '",
+				namespace, "'"));
 
 		return false;
 	}
@@ -151,12 +191,12 @@ public class LiferayK8sConnection {
 					pod.getName(), namespace, null, true, false));
 		}
 		catch (ApiException ae) {
+			System.out.println(ae);
+
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"Unable to get pod with name '", pod.getName(),
 					"' in namespace '", namespace, "'"));
-
-			ae.printStackTrace();
 
 			return null;
 		}
@@ -190,6 +230,10 @@ public class LiferayK8sConnection {
 
 	private LiferayK8sConnection() {
 	}
+
+	private static final int _SECONDS_RETRY_PERIOD = 5;
+
+	private static final int _SECONDS_WAIT_TIMEOUT = 300;
 
 	private static final ApiClient _apiClient;
 	private static final CoreV1Api _coreV1Api;

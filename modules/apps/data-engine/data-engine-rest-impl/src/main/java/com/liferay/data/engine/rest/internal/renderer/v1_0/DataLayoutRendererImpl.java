@@ -35,6 +35,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.soy.renderer.ComponentDescriptor;
 import com.liferay.portal.template.soy.renderer.SoyComponentRenderer;
@@ -235,6 +236,10 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 			Collectors.toMap(
 				dataDefinitionField -> dataDefinitionField.getName(),
 				definitionField -> {
+					if (MapUtil.isEmpty(dataRecordValues)) {
+						return definitionField;
+					}
+
 					Map<String, Object> customProperties =
 						definitionField.getCustomProperties();
 

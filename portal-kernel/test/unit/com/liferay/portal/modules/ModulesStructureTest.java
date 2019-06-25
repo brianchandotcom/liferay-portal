@@ -859,6 +859,31 @@ public class ModulesStructureTest {
 		return _isInModulesRootDir(dirPath, "private");
 	}
 
+	private boolean _isUnusedGradleConfiguration(
+		String configuration, boolean hasSrcTestDir,
+		boolean hasSrcTestIntegrationDir) {
+
+		if (configuration.equals("testCompile") && !hasSrcTestDir &&
+			!hasSrcTestIntegrationDir) {
+
+			return true;
+		}
+
+		if (configuration.equals("testRuntime") && !hasSrcTestDir &&
+			!hasSrcTestIntegrationDir) {
+
+			return true;
+		}
+
+		if (configuration.startsWith("testIntegration") &&
+			!hasSrcTestIntegrationDir) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _shouldBecomeProjectDependency(
 			GradleDependency gradleDependency, Path dirPath)
 		throws IOException {
@@ -1333,36 +1358,51 @@ public class ModulesStructureTest {
 				sb.toString(),
 				_shouldBecomeProjectDependency(gradleDependency, dirPath));
 
-			Boolean allowed = allowedConfigurationsMap.get(
-				gradleDependency.getConfiguration());
+			String configuration = gradleDependency.getConfiguration();
+
+			Boolean allowed = allowedConfigurationsMap.get(configuration);
 
 			if ((allowed != null) && !allowed.booleanValue()) {
-				sb = new StringBundler(allowedConfigurationsMap.size() * 4 + 4);
+				if (_isUnusedGradleConfiguration(
+						configuration, hasSrcTestDir,
+						hasSrcTestIntegrationDir)) {
 
-				sb.append("Incorrect configuration of dependency {");
-				sb.append(gradleDependency);
-				sb.append("} in ");
-				sb.append(path);
-				sb.append(", use one of these instead: ");
+					sb = new StringBundler(4);
 
-				boolean first = true;
+					sb.append("Please delete the unused ");
+					sb.append(configuration);
+					sb.append(" dependencies in ");
+					sb.append(path);
+				}
+				else {
+					sb = new StringBundler(
+						allowedConfigurationsMap.size() * 4 + 4);
 
-				for (Map.Entry<String, Boolean> entry :
-						allowedConfigurationsMap.entrySet()) {
+					sb.append("Incorrect configuration of dependency {");
+					sb.append(gradleDependency);
+					sb.append("} in ");
+					sb.append(path);
+					sb.append(", use one of these instead: ");
 
-					if (!entry.getValue()) {
-						continue;
+					boolean first = true;
+
+					for (Map.Entry<String, Boolean> entry :
+							allowedConfigurationsMap.entrySet()) {
+
+						if (!entry.getValue()) {
+							continue;
+						}
+
+						if (!first) {
+							sb.append(StringPool.COMMA_AND_SPACE);
+						}
+
+						first = false;
+
+						sb.append(CharPool.QUOTE);
+						sb.append(entry.getKey());
+						sb.append(CharPool.QUOTE);
 					}
-
-					if (!first) {
-						sb.append(StringPool.COMMA_AND_SPACE);
-					}
-
-					first = false;
-
-					sb.append(CharPool.QUOTE);
-					sb.append(entry.getKey());
-					sb.append(CharPool.QUOTE);
 				}
 
 				Assert.assertFalse(sb.toString(), !allowed);

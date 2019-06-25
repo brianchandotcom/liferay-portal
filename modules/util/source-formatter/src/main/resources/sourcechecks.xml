@@ -334,6 +334,7 @@
 		<check name="JSPMissingTaglibsCheck" />
 		<check name="JSPSendRedirectCheck" />
 		<check name="JSPStringMethodsCheck" />
+		<check name="JSPUnusedJSPF" />
 		<check name="LocaleUtilCheck" />
 		<check name="ResourceBundleCheck" />
 		<check name="SubstringCheck" />

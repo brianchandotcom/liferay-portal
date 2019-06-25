@@ -77,8 +77,6 @@ public class JSPMissingTaglibsCheck extends JSPTermsBaseCheck {
 			".*\\.jspf");
 
 		if (fileName.endsWith(".jspf") && (dependentfileNames.size() == 1)) {
-			addMessage(fileName, "jpsf is not used by any other files");
-
 			return;
 		}
 

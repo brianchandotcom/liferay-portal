@@ -67,36 +67,39 @@ To get up and running quickly, follow the steps below:
 You can now use Liferay Portal!
 
 For more detailed installation instructions, refer to the
-[system administrator guide](https://dev.liferay.com/discover/deployment) on the
-Liferay Developer Network.
+[deployment guide](https://portal.liferay.dev/docs/latest/deploy).
 
-If you wish to *build* core Liferay Portal or its plugins, read the
-[CONTRIBUTING guide](CONTRIBUTING.markdown). It includes details on using the
-repositories and building the software.
+If you wish to *build* core Liferay Portal or its plugins, read
+[Building Liferay Portal from source code](https://portal.liferay.dev/participate/fix-a-bug/building-liferay-source). 
+It includes details on using the repositories and building the software.
 
-## Liferay Developer Network
+## Liferay Portal website
 
-The [Liferay Developer Network](https://dev.liferay.com) (LDN) is the best place
-to learn about Liferay. It has over 200 tutorials, guided learning, and much
-more.
+The [Liferay Portal website](https://portal.liferay.dev) is the best place
+to learn about Liferay Portal.
 
-LDN provides
-[learning paths and tutorials](https://dev.liferay.com/develop/tutorials), which
-offer great resources to learn how to develop on Liferay Portal. Learning paths
-are great for those new with Liferay development; they offer a story-like
-approach, providing a beginning-to-end process for creating something (e.g.,
-developing a Liferay web application). As you gain experience developing on
-Liferay Portal, you'll want to dive into
-[tutorials](https://dev.liferay.com/develop/tutorials) for details on leveraging
-Liferay's technologies and frameworks. If you create apps that you want to share
-or sell, you can read LDN's [Distribute](https://dev.liferay.com/distribute)
-section to learn how to publish apps to the
-[Liferay Marketplace](https://web.liferay.com/marketplace).
+It has over 200 tutorials, guided learning, and much more. Developer documentation 
+explains
 
-The Liferay Developer Network is not only your home for Liferay development, but
-it's also your place to [participate](https://dev.liferay.com/participate) in
-making Liferay better. Come check out the
-[Liferay Developer Network](https://dev.liferay.com).
+- [How to build various applications](https://portal.liferay.dev/docs/latest/appdev),
+- [How to use provided frameworks](https://portal.liferay.dev/docs/latest/frameworks)
+- [How to customize existing features](https://portal.liferay.dev/docs/latest/customization)
+- [How to solve common challenges](https://portal.liferay.dev/docs/latest/tutorials),
+
+It is also your place to learn hot to [participate](https://portal.liferay.dev/participate)
+in making Liferay Portal better:
+
+- [How to report an issue](https://portal.liferay.dev/participate/feedback/report-issues).
+- [How to request new features](https://portal.liferay.dev/participate/feedback/suggestions)
+- [How to provide feedback](https://portal.liferay.dev/participate/continuous-feedback/overview)
+- [How to help a fellow developer](https://portal.liferay.dev/participate/help-a-fellow-developer)
+- [How to help with translations](https://portal.liferay.dev/participate/translate/overview)
+
+## Liferay Marketplace Developer Portal
+
+If you create apps that you want to share or sell, you can visit 
+[Liferay Marketplace Developer Portal](https://marketplace.liferay.dev/)
+to learn how to publish apps to the [Liferay Marketplace](https://web.liferay.com/marketplace).
 
 ## Source Code
 
@@ -156,16 +159,6 @@ maintain backward compatibility, we make a strong effort to uphold the
 versioning for our software. See the
 [Semantic Versioning](https://portal.liferay.dev/docs/latest/customization/-/knowledge_base/c/semantic-versioning)
 article for more information about how Liferay versions software.
-
-## Bug Reporting and Feature Requests
-
-Did you find a bug? Please file an issue for it at
-[https://issues.liferay.com](https://issues.liferay.com) following
-[Liferay's JIRA Guidelines](http://www.liferay.com/community/wiki/-/wiki/Main/JIRA).
-
-If you'd like to suggest a new feature for Liferay, visit the
-[Contribute a New Feature or Improvement](https://dev.liferay.com/participate/contribute-a-feature)
-page to learn about contributing.
 
 ## Professional Services
 

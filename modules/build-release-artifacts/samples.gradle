@@ -25,7 +25,9 @@ repositories {
 	}
 }
 
-task createSamples {
+task createSamples
+
+createSamples {
 	doLast {
 		String liferayVersionArg
 

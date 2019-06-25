@@ -38,7 +38,7 @@ definition {
 
 	@priority = "5"
 	test AddDMDocumentRegRoleDefaultPermissions {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		Permissions.setUpRegRolePG(
 			pageName = "Documents and Media Page",
@@ -60,7 +60,7 @@ definition {
 
 	@priority = "5"
 	test AddDMDocumentRegRoleDefinePermissions {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		Permissions.setUpRegRolePG(
 			pageName = "Documents and Media Page",

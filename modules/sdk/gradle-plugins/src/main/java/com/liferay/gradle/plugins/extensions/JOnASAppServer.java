@@ -23,7 +23,9 @@ import org.gradle.api.Project;
 
 /**
  * @author Manuel de la Peña
+ * @deprecated As of Mueller (7.2.x)
  */
+@Deprecated
 public class JOnASAppServer extends AppServer {
 
 	public JOnASAppServer(Project project) {

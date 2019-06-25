@@ -162,13 +162,13 @@ public class ConfigurationPersistenceManager
 	}
 
 	public void start() {
-		if (hasConfigurationTable()) {
+		try {
+			createConfigurationTable();
+		}
+		catch (IOException | SQLException e) {
 			_verifyConfigurations();
 
 			populateDictionaries();
-		}
-		else {
-			createConfigurationTable();
 		}
 	}
 
@@ -244,7 +244,7 @@ public class ConfigurationPersistenceManager
 		}
 	}
 
-	protected void createConfigurationTable() {
+	protected void createConfigurationTable() throws IOException, SQLException {
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet resultSet = null;
@@ -258,9 +258,6 @@ public class ConfigurationPersistenceManager
 				buildSQL(
 					"create table Configuration_ (configurationId " +
 						"VARCHAR(255) not null primary key, dictionary TEXT)"));
-		}
-		catch (IOException | SQLException e) {
-			ReflectionUtil.throwException(e);
 		}
 		finally {
 			cleanUp(connection, statement, resultSet);
@@ -419,39 +416,6 @@ public class ConfigurationPersistenceManager
 		}
 		catch (SQLException sqle) {
 			return ReflectionUtil.throwException(sqle);
-		}
-		finally {
-			cleanUp(connection, preparedStatement, resultSet);
-		}
-	}
-
-	protected boolean hasConfigurationTable() {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-
-		try {
-			connection = _dataSource.getConnection();
-
-			preparedStatement = prepareStatement(
-				connection, "select count(*) from Configuration_");
-
-			resultSet = preparedStatement.executeQuery();
-
-			int count = 0;
-
-			if (resultSet.next()) {
-				count = resultSet.getInt(1);
-			}
-
-			if (count >= 0) {
-				return true;
-			}
-
-			return false;
-		}
-		catch (IOException | SQLException e) {
-			return false;
 		}
 		finally {
 			cleanUp(connection, preparedStatement, resultSet);

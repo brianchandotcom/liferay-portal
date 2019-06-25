@@ -126,7 +126,10 @@ Follow us on Twitter:
 - [@LiferayDocs](http://twitter.com/liferaydocs) tweets about new articles and
   tutorials
 - [@LiferayEng](http://twitter.com/liferayeng) tweets from the core
-  engineering team
+  engineering and Developer Relations team
+- [@liferaydesign](https://twitter.com/liferaydesign) tweets from Liferay
+  UI/UX designers
+- [@liferayfaces](https://twitter.com/liferayfaces) tweets from Liferay Faces team
 
 ### Blog
 

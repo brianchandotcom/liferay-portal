@@ -119,8 +119,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 	@Override
 	public Page<DataDefinition> getSiteDataDefinitionsPage(
-			Long siteId, String keywords, Pagination pagination)
-		throws Exception {
+		Long siteId, String keywords, Pagination pagination) {
 
 		if (pagination.getPageSize() > 250) {
 			throw new BadRequestException(

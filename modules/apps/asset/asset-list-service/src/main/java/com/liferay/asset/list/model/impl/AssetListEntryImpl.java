@@ -35,6 +35,11 @@ import org.osgi.util.tracker.ServiceTracker;
 @ProviderType
 public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             AssetListHelper#getAssetEntries(AssetListEntry, long)}
+	 */
+	@Deprecated
 	@Override
 	public List<AssetEntry> getAssetEntries(long segmentsEntryId) {
 		AssetListHelper assetListHelper = _getAssetListHelper();
@@ -42,6 +47,12 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 		return assetListHelper.getAssetEntries(this, segmentsEntryId);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             AssetListHelper#getAssetEntries(AssetListEntry, long, int,
+	 *             int)}
+	 */
+	@Deprecated
 	public List<AssetEntry> getAssetEntries(
 		long segmentsEntryId, int start, int end) {
 
@@ -51,12 +62,23 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 			this, segmentsEntryId, start, end);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             AssetListHelper#getAssetEntries(AssetListEntry, long[])}
+	 */
+	@Deprecated
 	public List<AssetEntry> getAssetEntries(long[] segmentsEntryIds) {
 		AssetListHelper assetListHelper = _getAssetListHelper();
 
 		return assetListHelper.getAssetEntries(this, segmentsEntryIds);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             AssetListHelper#getAssetEntries(AssetListEntry, long[], int,
+	 *             int)}
+	 */
+	@Deprecated
 	public List<AssetEntry> getAssetEntries(
 		long[] segmentsEntryIds, int start, int end) {
 
@@ -66,24 +88,44 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 			this, segmentsEntryIds, start, end);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             AssetListHelper#getAssetEntriesCount(AssetListEntry, long)}
+	 */
+	@Deprecated
 	public int getAssetEntriesCount(long segmentsEntryId) {
 		AssetListHelper assetListHelper = _getAssetListHelper();
 
 		return assetListHelper.getAssetEntriesCount(this, segmentsEntryId);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             AssetListHelper#getAssetEntriesCount(AssetListEntry, long[])}
+	 */
+	@Deprecated
 	public int getAssetEntriesCount(long[] segmentsEntryIds) {
 		AssetListHelper assetListHelper = _getAssetListHelper();
 
 		return assetListHelper.getAssetEntriesCount(this, segmentsEntryIds);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             AssetListHelper#getAssetEntryQuery(AssetListEntry, long)}
+	 */
+	@Deprecated
 	public AssetEntryQuery getAssetEntryQuery(long segmentsEntryId) {
 		AssetListHelper assetListHelper = _getAssetListHelper();
 
 		return assetListHelper.getAssetEntryQuery(this, segmentsEntryId);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             AssetListHelper#getAssetEntryQuery(AssetListEntry, long[])}
+	 */
+	@Deprecated
 	public AssetEntryQuery getAssetEntryQuery(long[] segmentsEntryIds) {
 		AssetListHelper assetListHelper = _getAssetListHelper();
 

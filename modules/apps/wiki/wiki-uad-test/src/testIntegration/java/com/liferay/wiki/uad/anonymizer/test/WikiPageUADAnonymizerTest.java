@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
-import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
+import com.liferay.user.associated.data.test.util.BaseHasAssetEntryUADAnonymizerTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalService;
@@ -40,7 +40,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class WikiPageUADAnonymizerTest
-	extends BaseUADAnonymizerTestCase<WikiPage>
+	extends BaseHasAssetEntryUADAnonymizerTestCase<WikiPage>
 	implements WhenHasStatusByUserIdField {
 
 	@ClassRule
@@ -109,7 +109,10 @@ public class WikiPageUADAnonymizerTest
 		if ((wikiPage.getUserId() != user.getUserId()) &&
 			!userName.equals(user.getFullName()) &&
 			(wikiPage.getStatusByUserId() != user.getUserId()) &&
-			!statusByUserName.equals(user.getFullName())) {
+			!statusByUserName.equals(user.getFullName()) &&
+			isAssetEntryAutoAnonymized(
+				WikiPage.class.getName(), wikiPage.getResourcePrimKey(),
+				user)) {
 
 			return true;
 		}

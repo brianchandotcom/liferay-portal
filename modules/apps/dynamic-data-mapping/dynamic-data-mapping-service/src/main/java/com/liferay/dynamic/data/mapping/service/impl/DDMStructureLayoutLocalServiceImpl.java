@@ -74,6 +74,8 @@ public class DDMStructureLayoutLocalServiceImpl
 		structureLayout.setCompanyId(user.getCompanyId());
 		structureLayout.setUserId(user.getUserId());
 		structureLayout.setUserName(user.getFullName());
+		structureLayout.setStructureLayoutKey(
+			String.valueOf(counterLocalService.increment()));
 		structureLayout.setStructureVersionId(structureVersionId);
 		structureLayout.setDefinition(serialize(ddmFormLayout));
 

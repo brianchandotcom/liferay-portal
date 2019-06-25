@@ -134,7 +134,7 @@ public class Query {
 			instanceResource -> {
 				Page paginationPage = instanceResource.getProcessInstancesPage(
 					processId, slaStatuses, statuses, taskKeys, timeRange,
-					Pagination.of(pageSize, page));
+					Pagination.of(page, pageSize));
 
 				return paginationPage.getItems();
 			});
@@ -181,7 +181,7 @@ public class Query {
 			this::_populateResourceContext,
 			processResource -> {
 				Page paginationPage = processResource.getProcessesPage(
-					title, Pagination.of(pageSize, page), sorts);
+					title, Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -223,7 +223,7 @@ public class Query {
 			_slaResourceComponentServiceObjects, this::_populateResourceContext,
 			slaResource -> {
 				Page paginationPage = slaResource.getProcessSLAsPage(
-					processId, status, Pagination.of(pageSize, page));
+					processId, status, Pagination.of(page, pageSize));
 
 				return paginationPage.getItems();
 			});
@@ -248,7 +248,7 @@ public class Query {
 			this::_populateResourceContext,
 			taskResource -> {
 				Page paginationPage = taskResource.getProcessTasksPage(
-					processId, Pagination.of(pageSize, page), sorts);
+					processId, Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});

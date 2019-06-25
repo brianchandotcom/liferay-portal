@@ -53,12 +53,18 @@ public class Mutation {
 			slaResource -> slaResource.postProcessSLA(processId, sla));
 	}
 
-	public void deleteSLA(@GraphQLName("slaId") Long slaId) throws Exception {
+	@GraphQLField
+	public boolean deleteSLA(@GraphQLName("slaId") Long slaId)
+		throws Exception {
+
 		_applyVoidComponentServiceObjects(
 			_slaResourceComponentServiceObjects, this::_populateResourceContext,
 			slaResource -> slaResource.deleteSLA(slaId));
+
+		return true;
 	}
 
+	@GraphQLField
 	public SLA putSLA(
 			@GraphQLName("slaId") Long slaId, @GraphQLName("sla") SLA sla)
 		throws Exception {

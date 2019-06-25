@@ -184,6 +184,11 @@ public abstract class BaseNodeResourceTestCase {
 
 	@Test
 	public void testGetProcessNodesPage() throws Exception {
+		Page<Node> page = nodeResource.getProcessNodesPage(
+			testGetProcessNodesPage_getProcessId());
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long processId = testGetProcessNodesPage_getProcessId();
 		Long irrelevantProcessId =
 			testGetProcessNodesPage_getIrrelevantProcessId();
@@ -192,8 +197,7 @@ public abstract class BaseNodeResourceTestCase {
 			Node irrelevantNode = testGetProcessNodesPage_addNode(
 				irrelevantProcessId, randomIrrelevantNode());
 
-			Page<Node> page = nodeResource.getProcessNodesPage(
-				irrelevantProcessId);
+			page = nodeResource.getProcessNodesPage(irrelevantProcessId);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -206,7 +210,7 @@ public abstract class BaseNodeResourceTestCase {
 
 		Node node2 = testGetProcessNodesPage_addNode(processId, randomNode());
 
-		Page<Node> page = nodeResource.getProcessNodesPage(processId);
+		page = nodeResource.getProcessNodesPage(processId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 

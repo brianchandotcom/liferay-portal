@@ -209,10 +209,11 @@ function handleEvent(eventName, event) {
 }
 
 /**
- * Creates a delegated event listener for `eventName` events on `element`.
+ * Creates a delegated event listener for `eventName` events on
+ * `elementOrSelector`.
  */
-function subscribe(element, eventName, handler) {
-	if (element) {
+function subscribe(elementOrSelector, eventName, handler) {
+	if (elementOrSelector) {
 		// Add only one listener per `eventName`.
 		if (!eventNamesToSelectors[eventName]) {
 			eventNamesToSelectors[eventName] = {};
@@ -223,7 +224,10 @@ function subscribe(element, eventName, handler) {
 		}
 
 		const emitters = eventNamesToSelectors[eventName];
-		const selector = getUniqueSelector(element);
+		const selector =
+			typeof elementOrSelector === 'string'
+				? elementOrSelector
+				: getUniqueSelector(elementOrSelector);
 
 		if (!emitters[selector]) {
 			emitters[selector] = new EventEmitter();
@@ -876,12 +880,9 @@ SideNavigation.prototype = {
 		const containerSelector = options.container;
 
 		if (!instance._sidenavCloseSubscription) {
-			const closeButton = document.querySelector(
-				`${containerSelector} .sidenav-close`
-			);
-
+			const closeButtonSelector = `${containerSelector} .sidenav-close`;
 			instance._sidenavCloseSubscription = subscribe(
-				closeButton,
+				closeButtonSelector,
 				'click',
 				function handleSidenavClose(event) {
 					event.preventDefault();

@@ -49,6 +49,12 @@ public class SoyTemplateResourceImpl implements SoyTemplateResource {
 
 	@Override
 	public String getTemplateId() {
+		String templateId = _templateId;
+
+		if (templateId != null) {
+			return templateId;
+		}
+
 		StringBundler sb = new StringBundler(_templateResources.size() * 2 - 1);
 
 		for (TemplateResource templateResource : _templateResources) {
@@ -59,7 +65,11 @@ public class SoyTemplateResourceImpl implements SoyTemplateResource {
 			sb.append(templateResource.getTemplateId());
 		}
 
-		return sb.toString();
+		templateId = sb.toString();
+
+		_templateId = templateId;
+
+		return templateId;
 	}
 
 	public List<TemplateResource> getTemplateResources() {
@@ -82,6 +92,7 @@ public class SoyTemplateResourceImpl implements SoyTemplateResource {
 		}
 	}
 
+	private volatile String _templateId;
 	private final List<TemplateResource> _templateResources;
 
 }

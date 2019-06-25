@@ -158,7 +158,7 @@ public class SiteNavigationMenuServiceTest {
 
 		SiteNavigationMenu siteNavigationMenu =
 			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-				_group, _groupUser.getUserId());
+				_group, _user.getUserId());
 
 		ServiceTestUtil.setUser(_groupUser);
 
@@ -505,15 +505,15 @@ public class SiteNavigationMenuServiceTest {
 	public void testUpdateSiteNavigationMenuWithoutUpdatePermissions1()
 		throws Exception {
 
+		SiteNavigationMenu siteNavigationMenu =
+			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
+				_group, _user.getUserId());
+
+		ServiceTestUtil.setUser(_groupUser);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group, _groupUser.getUserId());
-
-		SiteNavigationMenu siteNavigationMenu =
-			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-				_group, _groupUser.getUserId());
-
-		ServiceTestUtil.setUser(_groupUser);
 
 		_siteNavigationMenuService.updateSiteNavigationMenu(
 			siteNavigationMenu.getSiteNavigationMenuId(),
@@ -525,15 +525,15 @@ public class SiteNavigationMenuServiceTest {
 	public void testUpdateSiteNavigationMenuWithoutUpdatePermissions2()
 		throws Exception {
 
+		SiteNavigationMenu siteNavigationMenu =
+			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
+				_group, _user.getUserId());
+
+		ServiceTestUtil.setUser(_groupUser);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group, _groupUser.getUserId());
-
-		SiteNavigationMenu siteNavigationMenu =
-			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-				_group, _groupUser.getUserId());
-
-		ServiceTestUtil.setUser(_groupUser);
 
 		_siteNavigationMenuService.updateSiteNavigationMenu(
 			siteNavigationMenu.getSiteNavigationMenuId(),

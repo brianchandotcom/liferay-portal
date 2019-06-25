@@ -84,7 +84,8 @@ public class SiteNavigationMenuTestUtil {
 		throws PortalException {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), userId);
 
 		return SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
 			userId, group.getGroupId(), RandomTestUtil.randomString(),

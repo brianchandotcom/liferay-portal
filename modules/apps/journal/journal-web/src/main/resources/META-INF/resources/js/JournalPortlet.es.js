@@ -167,9 +167,17 @@ class JournalPortlet extends PortletBase {
 		}
 
 		if (!actionName) {
-			actionName = articleId
-				? '/journal/update_article'
-				: '/journal/add_article';
+			const classNameId = this._getInputByName('classNameId').value;
+
+			if (classNameId > 0) {
+				actionName = articleId
+					? '/journal/update_ddm_structure_default_values'
+					: '/journal/add_ddm_structure_default_values';
+			} else {
+				actionName = articleId
+					? '/journal/update_article'
+					: '/journal/add_article';
+			}
 		}
 
 		this._setActionName(actionName);

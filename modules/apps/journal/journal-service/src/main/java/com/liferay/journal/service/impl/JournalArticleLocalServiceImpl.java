@@ -5908,7 +5908,9 @@ public class JournalArticleLocalServiceImpl
 		article.setSmallImage(smallImage);
 
 		if (smallImage) {
-			if ((smallImageFile != null) && (smallImageBytes != null)) {
+			if ((smallImageFile != null) && (smallImageBytes != null) &&
+				(article.getSmallImageId() <= 0)) {
+
 				article.setSmallImageId(counterLocalService.increment());
 			}
 		}
@@ -6380,7 +6382,9 @@ public class JournalArticleLocalServiceImpl
 		article.setSmallImage(smallImage);
 
 		if (smallImage) {
-			if ((smallImageFile != null) && (smallImageBytes != null)) {
+			if ((smallImageFile != null) && (smallImageBytes != null) &&
+				(article.getSmallImageId() <= 0)) {
+
 				article.setSmallImageId(counterLocalService.increment());
 			}
 		}

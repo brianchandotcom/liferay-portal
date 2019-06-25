@@ -131,6 +131,21 @@ public class FragmentEntryLinkLocalServiceImpl
 			int position, String rendererKey, ServiceContext serviceContext)
 		throws PortalException {
 
+		return addFragmentEntryLink(
+			userId, groupId, originalFragmentEntryLinkId, fragmentEntryId,
+			classNameId, classPK, css, html, js, StringPool.BLANK,
+			editableValues, namespace, position, rendererKey, serviceContext);
+	}
+
+	@Override
+	public FragmentEntryLink addFragmentEntryLink(
+			long userId, long groupId, long originalFragmentEntryLinkId,
+			long fragmentEntryId, long classNameId, long classPK, String css,
+			String html, String js, String configuration, String editableValues,
+			String namespace, int position, String rendererKey,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		User user = userLocalService.getUser(userId);
 
 		long fragmentEntryLinkId = counterLocalService.increment();
@@ -159,6 +174,7 @@ public class FragmentEntryLinkLocalServiceImpl
 		fragmentEntryLink.setHtml(html);
 
 		fragmentEntryLink.setJs(js);
+		fragmentEntryLink.setConfiguration(configuration);
 
 		if (Validator.isNull(editableValues)) {
 			JSONObject jsonObject =

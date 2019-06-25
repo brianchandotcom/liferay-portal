@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
@@ -70,7 +70,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolver
 				StringPool.BLANK, false, false);
 		}
 		else {
-			previewURL = PortletFileRepositoryUtil.getPortletFileEntryURL(
+			previewURL = _portletFileRepository.getPortletFileEntryURL(
 				themeDisplay, fileEntry, "&imagePreview=1", false);
 		}
 
@@ -118,5 +118,8 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolver
 
 	@Reference
 	private MediaQueryProvider _mediaQueryProvider;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 }

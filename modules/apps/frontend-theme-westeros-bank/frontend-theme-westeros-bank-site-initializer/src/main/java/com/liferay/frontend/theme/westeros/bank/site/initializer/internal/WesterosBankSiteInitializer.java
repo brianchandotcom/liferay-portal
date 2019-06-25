@@ -51,7 +51,7 @@ import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -340,7 +340,7 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 
 			String fileName = FileUtil.getShortFileName(url.getPath());
 
-			PortletFileRepositoryUtil.addPortletFileEntry(
+			_portletFileRepository.addPortletFileEntry(
 				serviceContext.getScopeGroupId(), serviceContext.getUserId(),
 				FragmentCollection.class.getName(), fragmentCollectionId,
 				FragmentPortletKeys.FRAGMENT, folderId, bytes, fileName,
@@ -635,12 +635,11 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 			return 0;
 		}
 
-		Repository repository =
-			PortletFileRepositoryUtil.fetchPortletRepository(
-				serviceContext.getScopeGroupId(), portletId);
+		Repository repository = _portletFileRepository.fetchPortletRepository(
+			serviceContext.getScopeGroupId(), portletId);
 
 		if (repository == null) {
-			repository = PortletFileRepositoryUtil.addPortletRepository(
+			repository = _portletFileRepository.addPortletRepository(
 				serviceContext.getScopeGroupId(), portletId, serviceContext);
 		}
 
@@ -653,7 +652,7 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 			bytes = FileUtil.getBytes(is);
 		}
 
-		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
+		FileEntry fileEntry = _portletFileRepository.addPortletFileEntry(
 			serviceContext.getScopeGroupId(), serviceContext.getUserId(),
 			className, classPK, portletId, repository.getDlFolderId(), bytes,
 			imageFileName, MimeTypesUtil.getContentType(imageFileName), false);
@@ -782,6 +781,9 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.test.rule.Inject;
 
 import java.io.InputStream;
 
@@ -67,9 +68,8 @@ public abstract class BaseBlogsEntryImageTestCase {
 		blogsEntry = BlogsEntryLocalServiceUtil.getEntry(
 			blogsEntry.getEntryId());
 
-		FileEntry imageFileEntry =
-			PortletFileRepositoryUtil.getPortletFileEntry(
-				getImageFileEntryId(blogsEntry));
+		FileEntry imageFileEntry = _portletFileRepository.getPortletFileEntry(
+			getImageFileEntryId(blogsEntry));
 
 		Assert.assertEquals("image1.jpg", imageFileEntry.getTitle());
 	}
@@ -78,9 +78,8 @@ public abstract class BaseBlogsEntryImageTestCase {
 	public void testAddImageWhenAddingEntry() throws Exception {
 		BlogsEntry blogsEntry = addBlogsEntry("image1.jpg");
 
-		FileEntry imageFileEntry =
-			PortletFileRepositoryUtil.getPortletFileEntry(
-				getImageFileEntryId(blogsEntry));
+		FileEntry imageFileEntry = _portletFileRepository.getPortletFileEntry(
+			getImageFileEntryId(blogsEntry));
 
 		Assert.assertEquals("image1.jpg", imageFileEntry.getTitle());
 	}
@@ -89,13 +88,12 @@ public abstract class BaseBlogsEntryImageTestCase {
 	public void testImageDeletedWhenDeletingBlogsEntry() throws Exception {
 		BlogsEntry blogsEntry = addBlogsEntry("image1.jpg");
 
-		FileEntry imageFileEntry =
-			PortletFileRepositoryUtil.getPortletFileEntry(
-				getImageFileEntryId(blogsEntry));
+		FileEntry imageFileEntry = _portletFileRepository.getPortletFileEntry(
+			getImageFileEntryId(blogsEntry));
 
 		BlogsEntryLocalServiceUtil.deleteEntry(blogsEntry);
 
-		PortletFileRepositoryUtil.getPortletFileEntry(
+		_portletFileRepository.getPortletFileEntry(
 			imageFileEntry.getFileEntryId());
 	}
 
@@ -105,9 +103,8 @@ public abstract class BaseBlogsEntryImageTestCase {
 
 		BlogsEntry blogsEntry = addBlogsEntry("image1.jpg");
 
-		FileEntry imageFileEntry =
-			PortletFileRepositoryUtil.getPortletFileEntry(
-				getImageFileEntryId(blogsEntry));
+		FileEntry imageFileEntry = _portletFileRepository.getPortletFileEntry(
+			getImageFileEntryId(blogsEntry));
 
 		ImageSelector imageSelector = new ImageSelector(
 			null, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK);
@@ -116,7 +113,7 @@ public abstract class BaseBlogsEntryImageTestCase {
 
 		Assert.assertEquals(0, getImageFileEntryId(blogsEntry));
 
-		PortletFileRepositoryUtil.getPortletFileEntry(
+		_portletFileRepository.getPortletFileEntry(
 			imageFileEntry.getFileEntryId());
 	}
 
@@ -126,9 +123,8 @@ public abstract class BaseBlogsEntryImageTestCase {
 
 		BlogsEntry blogsEntry = addBlogsEntry("image1.jpg");
 
-		FileEntry imageFileEntry =
-			PortletFileRepositoryUtil.getPortletFileEntry(
-				getImageFileEntryId(blogsEntry));
+		FileEntry imageFileEntry = _portletFileRepository.getPortletFileEntry(
+			getImageFileEntryId(blogsEntry));
 
 		ImageSelector imageSelector = null;
 
@@ -137,7 +133,7 @@ public abstract class BaseBlogsEntryImageTestCase {
 		Assert.assertEquals(
 			imageFileEntry.getFileEntryId(), getImageFileEntryId(blogsEntry));
 
-		PortletFileRepositoryUtil.getPortletFileEntry(
+		_portletFileRepository.getPortletFileEntry(
 			imageFileEntry.getFileEntryId());
 	}
 
@@ -145,9 +141,8 @@ public abstract class BaseBlogsEntryImageTestCase {
 	public void testImageStoredInBlogsRepository() throws Exception {
 		BlogsEntry blogsEntry = addBlogsEntry("image1.jpg");
 
-		FileEntry imageFileEntry =
-			PortletFileRepositoryUtil.getPortletFileEntry(
-				getImageFileEntryId(blogsEntry));
+		FileEntry imageFileEntry = _portletFileRepository.getPortletFileEntry(
+			getImageFileEntryId(blogsEntry));
 
 		Repository repository = RepositoryLocalServiceUtil.getRepository(
 			imageFileEntry.getRepositoryId());
@@ -159,9 +154,8 @@ public abstract class BaseBlogsEntryImageTestCase {
 	public void testImageStoredInInvisibleImageFolder() throws Exception {
 		BlogsEntry blogsEntry = addBlogsEntry("image1.jpg");
 
-		FileEntry imageFileEntry =
-			PortletFileRepositoryUtil.getPortletFileEntry(
-				getImageFileEntryId(blogsEntry));
+		FileEntry imageFileEntry = _portletFileRepository.getPortletFileEntry(
+			getImageFileEntryId(blogsEntry));
 
 		Folder imageFolder = imageFileEntry.getFolder();
 
@@ -173,13 +167,12 @@ public abstract class BaseBlogsEntryImageTestCase {
 	public void testPreviousImageDeletedWhenUpdatingImage() throws Exception {
 		BlogsEntry blogsEntry = addBlogsEntry("image1.jpg");
 
-		FileEntry imageFileEntry =
-			PortletFileRepositoryUtil.getPortletFileEntry(
-				getImageFileEntryId(blogsEntry));
+		FileEntry imageFileEntry = _portletFileRepository.getPortletFileEntry(
+			getImageFileEntryId(blogsEntry));
 
 		updateBlogsEntry(blogsEntry.getEntryId(), "image2.jpg");
 
-		PortletFileRepositoryUtil.getPortletFileEntry(
+		_portletFileRepository.getPortletFileEntry(
 			imageFileEntry.getFileEntryId());
 	}
 
@@ -189,9 +182,8 @@ public abstract class BaseBlogsEntryImageTestCase {
 
 		blogsEntry = updateBlogsEntry(blogsEntry.getEntryId(), "image2.jpg");
 
-		FileEntry imageFileEntry =
-			PortletFileRepositoryUtil.getPortletFileEntry(
-				getImageFileEntryId(blogsEntry));
+		FileEntry imageFileEntry = _portletFileRepository.getPortletFileEntry(
+			getImageFileEntryId(blogsEntry));
 
 		Assert.assertEquals("image2.jpg", imageFileEntry.getTitle());
 	}
@@ -216,7 +208,7 @@ public abstract class BaseBlogsEntryImageTestCase {
 		InputStream inputStream = classLoader.getResourceAsStream(
 			"com/liferay/blogs/dependencies/test.jpg");
 
-		return PortletFileRepositoryUtil.addPortletFileEntry(
+		return _portletFileRepository.addPortletFileEntry(
 			serviceContext.getScopeGroupId(), userId,
 			BlogsEntry.class.getName(), 0, StringUtil.randomString(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, inputStream, title,
@@ -257,5 +249,8 @@ public abstract class BaseBlogsEntryImageTestCase {
 	protected Group group;
 
 	protected User user;
+
+	@Inject
+	private PortletFileRepository _portletFileRepository;
 
 }

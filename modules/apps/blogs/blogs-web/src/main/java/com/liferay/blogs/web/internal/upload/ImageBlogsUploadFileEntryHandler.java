@@ -23,7 +23,7 @@ import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -98,10 +98,10 @@ public class ImageBlogsUploadFileEntryHandler
 		Folder folder = blogsLocalService.addAttachmentsFolder(
 			themeDisplay.getUserId(), themeDisplay.getScopeGroupId());
 
-		String uniqueFileName = PortletFileRepositoryUtil.getUniqueFileName(
+		String uniqueFileName = _portletFileRepository.getUniqueFileName(
 			themeDisplay.getScopeGroupId(), folder.getFolderId(), fileName);
 
-		return PortletFileRepositoryUtil.addPortletFileEntry(
+		return _portletFileRepository.addPortletFileEntry(
 			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 			BlogsEntry.class.getName(), 0, BlogsConstants.SERVICE_NAME,
 			folder.getFolderId(), inputStream, uniqueFileName, contentType,
@@ -142,5 +142,8 @@ public class ImageBlogsUploadFileEntryHandler
 	private static final String _PARAMETER_NAME = "imageSelectorFileName";
 
 	private BlogsFileUploadsConfiguration _blogsFileUploadsConfiguration;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 }

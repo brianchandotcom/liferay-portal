@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -127,7 +127,7 @@ public class BlogsEntryStagedModelDataHandler
 		if (entry.isSmallImage()) {
 			if (entry.getSmallImageFileEntryId() > 0) {
 				FileEntry fileEntry =
-					PortletFileRepositoryUtil.getPortletFileEntry(
+					_portletFileRepository.getPortletFileEntry(
 						entry.getSmallImageFileEntryId());
 
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -171,7 +171,7 @@ public class BlogsEntryStagedModelDataHandler
 		}
 
 		if (entry.getCoverImageFileEntryId() != 0) {
-			FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+			FileEntry fileEntry = _portletFileRepository.getPortletFileEntry(
 				entry.getCoverImageFileEntryId());
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -291,7 +291,7 @@ public class BlogsEntryStagedModelDataHandler
 			if ((existingCoverImageFileEntryId != 0) &&
 				(entry.getCoverImageFileEntryId() == 0)) {
 
-				PortletFileRepositoryUtil.deletePortletFileEntry(
+				_portletFileRepository.deletePortletFileEntry(
 					existingCoverImageFileEntryId);
 			}
 
@@ -313,7 +313,7 @@ public class BlogsEntryStagedModelDataHandler
 				if ((existingSmallImageFileEntryId != 0) &&
 					(entry.getSmallImageFileEntryId() == 0)) {
 
-					PortletFileRepositoryUtil.deletePortletFileEntry(
+					_portletFileRepository.deletePortletFileEntry(
 						existingSmallImageFileEntryId);
 				}
 			}
@@ -399,5 +399,8 @@ public class BlogsEntryStagedModelDataHandler
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 }

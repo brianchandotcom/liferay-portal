@@ -399,8 +399,12 @@ public class ConfigurationPersistenceManager
 			while (resultSet.next()) {
 				String pid = resultSet.getString(1);
 
-				_dictionaries.putIfAbsent(
-					pid, _verifyDictionary(pid, resultSet.getString(2)));
+				Dictionary<String, String> dictionary = _verifyDictionary(
+					pid, resultSet.getString(2));
+
+				if (dictionary != null) {
+					_dictionaries.putIfAbsent(pid, dictionary);
+				}
 			}
 		}
 		catch (IOException | SQLException e) {
@@ -526,10 +530,12 @@ public class ConfigurationPersistenceManager
 			needSave = true;
 		}
 
-		if (felixFileInstallFileName.startsWith("file:")) {
-			File file = new File(URI.create(felixFileInstallFileName));
+		File configFile = null;
 
-			dictionary.put(_FELIX_FILE_INSTALL_FILENAME, file.getName());
+		if (felixFileInstallFileName.startsWith("file:")) {
+			configFile = new File(URI.create(felixFileInstallFileName));
+
+			dictionary.put(_FELIX_FILE_INSTALL_FILENAME, configFile.getName());
 
 			storeInDatabase(pid, dictionary);
 
@@ -539,19 +545,29 @@ public class ConfigurationPersistenceManager
 			needSave = false;
 		}
 		else {
-			File file = new File(
+			configFile = new File(
 				PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
 				felixFileInstallFileName);
 
-			file = file.getAbsoluteFile();
+			configFile = configFile.getAbsoluteFile();
 
-			URI uri = file.toURI();
+			URI uri = configFile.toURI();
 
 			dictionary.put(_FELIX_FILE_INSTALL_FILENAME, uri.toString());
 		}
 
 		if (needSave) {
 			storeInDatabase(pid, dictionary);
+		}
+
+		String ignore = dictionary.get("configuration.cleaner.ignore");
+
+		if (!Boolean.valueOf(ignore)) {
+			if (!configFile.exists()) {
+				deleteFromDatabase(pid);
+
+				return null;
+			}
 		}
 
 		return dictionary;

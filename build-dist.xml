@@ -945,7 +945,7 @@ this task.
 		<replace
 			file="${app.server.jboss.bin.dir}/standalone.conf.bat"
 		>
-			<replacetoken><![CDATA[set "JAVA_OPTS=-Xms1G -Xmx1G -XX:MaxPermSize=256M"]]></replacetoken>
+			<replacetoken><![CDATA[set "JAVA_OPTS=-Xms1G -Xmx1G -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m"]]></replacetoken>
 			<replacevalue></replacevalue>
 		</replace>
 
@@ -953,9 +953,7 @@ this task.
 			file="${app.server.jboss.bin.dir}/standalone.conf.bat"
 		>
 			<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
-			<replacevalue>
-				set "JAVA_OPTS=%JAVA_OPTS% ${app.server.jboss.jvm.args} ${app.server.jboss.jvm.mem}":JAVA_OPTS_SET
-			</replacevalue>
+			<replacevalue expandProperties="true"><![CDATA[set "JAVA_OPTS=%JAVA_OPTS% ${app.server.jboss.jvm.args} ${app.server.jboss.jvm.mem}":JAVA_OPTS_SET]]></replacevalue>
 		</replace>
 
 		<chmod

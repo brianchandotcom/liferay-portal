@@ -29,8 +29,8 @@ import com.liferay.asset.list.internal.dynamic.data.mapping.util.DDMIndexerUtil;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
-import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
-import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil;
+import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
+import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.asset.list.util.AssetListHelper;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.petra.string.StringPool;
@@ -123,7 +123,7 @@ public class AssetListHelperImpl implements AssetListHelper {
 				assetListEntry.getType(),
 				AssetListEntryTypeConstants.TYPE_MANUAL)) {
 
-			return AssetListEntryAssetEntryRelLocalServiceUtil.
+			return _assetListEntryAssetEntryRelLocalService.
 				getAssetListEntryAssetEntryRelsCount(
 					assetListEntry.getAssetListEntryId(), segmentsEntryId);
 		}
@@ -435,17 +435,20 @@ public class AssetListHelperImpl implements AssetListHelper {
 
 		return stream.filter(
 			segmentsEntryId -> {
+				if (segmentsEntryId ==
+						SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT) {
+
+					return false;
+				}
+
 				AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-					AssetListEntrySegmentsEntryRelLocalServiceUtil.
+					_assetListEntrySegmentsEntryRelLocalService.
 						fetchAssetListEntrySegmentsEntryRel(
 							assetListEntry.getAssetListEntryId(),
 							segmentsEntryId);
 
 				return assetListEntrySegmentsEntryRel != null;
 			}
-		).filter(
-			segmentsEntryId ->
-				segmentsEntryId != SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT
 		).findFirst(
 		).orElse(
 			SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT
@@ -457,7 +460,7 @@ public class AssetListHelperImpl implements AssetListHelper {
 		int end) {
 
 		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
-			AssetListEntryAssetEntryRelLocalServiceUtil.
+			_assetListEntryAssetEntryRelLocalService.
 				getAssetListEntryAssetEntryRels(
 					assetListEntry.getAssetListEntryId(), segmentsEntryId,
 					start, end);
@@ -630,6 +633,14 @@ public class AssetListHelperImpl implements AssetListHelper {
 
 	@Reference
 	private AssetHelper _assetHelper;
+
+	@Reference
+	private AssetListEntryAssetEntryRelLocalService
+		_assetListEntryAssetEntryRelLocalService;
+
+	@Reference
+	private AssetListEntrySegmentsEntryRelLocalService
+		_assetListEntrySegmentsEntryRelLocalService;
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;

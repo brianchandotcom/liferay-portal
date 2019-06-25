@@ -20,7 +20,7 @@ import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
@@ -72,7 +72,7 @@ public class FileEntryFileEntryItemSelectorReturnTypeResolver
 				StringPool.BLANK, false, false);
 		}
 		else {
-			previewURL = PortletFileRepositoryUtil.getPortletFileEntryURL(
+			previewURL = _portletFileRepository.getPortletFileEntryURL(
 				themeDisplay, fileEntry, "&imagePreview=1", false);
 		}
 
@@ -87,5 +87,8 @@ public class FileEntryFileEntryItemSelectorReturnTypeResolver
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 }

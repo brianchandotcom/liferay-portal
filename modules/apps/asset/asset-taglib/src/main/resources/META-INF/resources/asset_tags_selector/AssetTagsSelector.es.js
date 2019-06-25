@@ -68,9 +68,7 @@ class AssetTagsSelector extends Component {
 						? selectedItems.items.split(',')
 						: [];
 				const oldItems = this.selectedItems.slice();
-				const oldValues = oldItems.map(
-					item => item.value
-				);
+				const oldValues = oldItems.map(item => item.value);
 				const valueMapper = item => {
 					return {
 						label: item,

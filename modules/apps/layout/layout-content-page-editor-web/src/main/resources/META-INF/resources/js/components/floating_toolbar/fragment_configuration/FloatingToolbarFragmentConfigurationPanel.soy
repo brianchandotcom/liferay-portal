@@ -4,5 +4,22 @@
  * FloatingToolbarFragmentConfigurationPanel
  */
 {template .render}
-	<div class="floating-toolbar-fragment-configuration-panel"></div>
+	{@param? spritemap: string}
+
+	<div class="floating-toolbar-fragment-configuration-panel pt-3">
+		<div class="inline-scroller pb-3 pl-3 pr-3"></div>
+
+		<div aria-hidden="true" class="dropdown-divider m-0" role="presentation"></div>
+
+		<div class="dropdown-section">
+			<button class="btn btn-block btn-outline-borderless btn-secondary btn-sm" type="button">
+				<span class="inline-item inline-item-before">
+					<svg class="lexicon-icon lexicon-icon-blogs" focusable="false" role="presentation">
+						<use xlink:href="{$spritemap ?: ''}#restore"></use>
+					</svg>
+				</span>
+				{msg desc=""}restore-values{/msg}
+			</button>
+		</div>
+	</div>
 {/template}

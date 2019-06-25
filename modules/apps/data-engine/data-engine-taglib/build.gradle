@@ -6,8 +6,6 @@ buildTaglibs {
 }
 
 dependencies {
-	compileInclude project(":apps:data-engine:data-engine-rest-client")
-
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

@@ -26,7 +26,7 @@ buildscript {
 }
 
 ext {
-	releaseInfoFile = new File("/home/chas/liferay-portal/portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
+	releaseInfoFile = new File(portalPath, "portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
 
 	isDxpRelease = releaseInfoFile.text.contains(" DXP ") || releaseInfoFile.text.contains(" Digital Experience ")
 

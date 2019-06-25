@@ -40,6 +40,8 @@ task setUpPortalTools
 task setUpYarn
 task wrapper(type: Wrapper)
 task wrapperSubrepo(type: Wrapper)
+task yarnCheckFormat
+task yarnFormat
 task yarnLock
 
 FileTree libDependenciesFileTree = fileTree(dir: "../lib", include: "*/dependencies.properties")
@@ -383,6 +385,26 @@ private void _createYarnTasks() {
 
 			appendHotfixQualifier.mustRunAfter yarnTask
 			setUpYarn.finalizedBy yarnTask
+
+			yarnTask = tasks.create(name: "yarnCheckFormat" + _camelCase(packageJSONFile.parentFile.name), type: ExecuteNpmTask) {
+				args "checkFormat"
+
+				group = "formatting"
+				scriptFile = new File(rootDir, "yarn-1.13.0.js")
+				workingDir = packageJSONFile.parentFile
+			}
+
+			yarnCheckFormat.finalizedBy yarnTask
+
+			yarnTask = tasks.create(name: "yarnFormat" + _camelCase(packageJSONFile.parentFile.name), type: ExecuteNpmTask) {
+				args "format"
+
+				group = "formatting"
+				scriptFile = new File(rootDir, "yarn-1.13.0.js")
+				workingDir = packageJSONFile.parentFile
+			}
+
+			yarnFormat.finalizedBy yarnTask
 
 			yarnTask = tasks.create(name: "yarnLock" + _camelCase(packageJSONFile.parentFile.name), type: ExecuteNpmTask) {
 				args "install"

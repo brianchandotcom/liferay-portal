@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
-import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
+import com.liferay.user.associated.data.test.util.BaseHasAssetEntryUADAnonymizerTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class MBThreadUADAnonymizerTest
-	extends BaseUADAnonymizerTestCase<MBThread>
+	extends BaseHasAssetEntryUADAnonymizerTestCase<MBThread>
 	implements WhenHasStatusByUserIdField {
 
 	@ClassRule
@@ -117,7 +117,9 @@ public class MBThreadUADAnonymizerTest
 			(mbThread.getRootMessageUserId() != user.getUserId()) &&
 			(mbThread.getLastPostByUserId() != user.getUserId()) &&
 			(mbThread.getStatusByUserId() != user.getUserId()) &&
-			!statusByUserName.equals(user.getFullName())) {
+			!statusByUserName.equals(user.getFullName()) &&
+			isAssetEntryAutoAnonymized(
+				MBThread.class.getName(), mbThread.getThreadId(), user)) {
 
 			return true;
 		}

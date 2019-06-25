@@ -1,8 +1,8 @@
-import fetch from '../../../test/mock/fetch';
+import fetch from 'test/mock/fetch';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from '../../../test/mock/MockRouter';
-import SLAListCard from '../SLAListCard';
+import {MockRouter as Router} from 'test/mock/MockRouter';
+import SLAListCard from 'components/sla/SLAListCard';
 
 test('Should render component', () => {
 	const data = {

@@ -1,7 +1,7 @@
-import ProcessListItem from '../ProcessListItem';
+import ProcessListItem from 'components/process-list/ProcessListItem';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from '../../../test/mock/MockRouter';
+import {MockRouter as Router} from 'test/mock/MockRouter';
 
 test('Should render component with one list item', () => {
 	const component = renderer.create(

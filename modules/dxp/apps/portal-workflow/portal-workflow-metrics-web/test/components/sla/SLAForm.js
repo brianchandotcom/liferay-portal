@@ -1,13 +1,13 @@
-import {AppContext} from '../../AppContext';
-import {Errors} from '../store/ErrorsStore';
-import fetch from '../../../test/mock/fetch';
-import fetchFailure from '../../../test/mock/fetchFailure';
-import {PAUSE_NODE_KEYS} from '../Constants';
+import {AppContext} from 'components/AppContext';
+import {Errors} from 'components/sla/store/ErrorsStore';
+import fetch from 'test/mock/fetch';
+import fetchFailure from 'test/mock/fetchFailure';
+import {PAUSE_NODE_KEYS} from 'components/sla/Constants';
 import React from 'react';
-import {MockRouter as Router} from '../../../test/mock/MockRouter';
-import {SLA} from '../store/SLAStore';
-import SLAForm from '../SLAForm';
-import {SLANodes} from '../store/SLANodeStore';
+import {MockRouter as Router} from 'test/mock/MockRouter';
+import {SLA} from 'components/sla/store/SLAStore';
+import SLAForm from 'components/sla/SLAForm';
+import {SLANodes} from 'components/sla/store/SLANodeStore';
 
 const errorState = {
 	errors: {},

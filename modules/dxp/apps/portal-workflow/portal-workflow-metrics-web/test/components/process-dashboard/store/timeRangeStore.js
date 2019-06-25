@@ -1,5 +1,5 @@
-import client from '../../../../test/mock/fetch';
-import {TimeRangeStore} from '../timeRangeStore';
+import client from 'test/mock/fetch';
+import {TimeRangeStore} from 'components/process-dashboard/store/timeRangeStore';
 
 test('Should fetch time ranges', () => {
 	const data = {

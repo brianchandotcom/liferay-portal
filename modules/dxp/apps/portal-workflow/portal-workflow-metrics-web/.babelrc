@@ -4,7 +4,9 @@
 			"module-resolver",
 			{
 				"alias": {
-					"shared": "./shared"
+                    "components": "./src/main/resources/META-INF/resources/js/components",
+                    "shared": "./src/main/resources/META-INF/resources/js/shared",
+                    "test": "./test"
 				},
 				"root": ["./src/main/resources/META-INF/resources/js"]
 			}

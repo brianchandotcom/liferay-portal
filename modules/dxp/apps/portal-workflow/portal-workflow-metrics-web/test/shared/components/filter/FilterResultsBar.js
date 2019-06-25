@@ -1,7 +1,7 @@
-import {FilterResultsBar} from '../FilterResultsBar';
+import {FilterResultsBar} from 'shared/components/filter/FilterResultsBar';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from '../../../../test/mock/MockRouter';
+import {MockRouter as Router} from 'test/mock/MockRouter';
 
 test('Should clear filters', () => {
 	const filters = [

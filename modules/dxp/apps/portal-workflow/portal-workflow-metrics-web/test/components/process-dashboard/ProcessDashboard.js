@@ -1,11 +1,11 @@
-import fetch from '../../../test/mock/fetch';
-import fetchFailure from '../../../test/mock/fetchFailure';
-import PendingItemsCard from '../process-items/PendingItemsCard';
-import ProcessDashboard from '../ProcessDashboard';
+import fetch from 'test/mock/fetch';
+import fetchFailure from 'test/mock/fetchFailure';
+import PendingItemsCard from 'components/process-dashboard/process-items/PendingItemsCard';
+import ProcessDashboard from 'components/process-dashboard/ProcessDashboard';
 import React from 'react';
-import {MockRouter as Router} from '../../../test/mock/MockRouter';
-import {withParams} from '../../../shared/components/router/routerUtil';
-import WorkloadByStepCard from '../workload-by-step/WorkloadByStepCard';
+import {MockRouter as Router} from 'test/mock/MockRouter';
+import {withParams} from 'shared/components/router/routerUtil';
+import WorkloadByStepCard from 'components/process-dashboard/workload-by-step/WorkloadByStepCard';
 
 beforeAll(() => {
 	const vbody = document.createElement('div');

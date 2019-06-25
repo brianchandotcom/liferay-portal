@@ -1,4 +1,4 @@
-import LoadingState from '../LoadingState';
+import LoadingState from 'shared/components/loading/LoadingState';
 import React from 'react';
 
 test('Should test component render', () => {

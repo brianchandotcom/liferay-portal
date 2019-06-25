@@ -1,4 +1,4 @@
-import MultiSelect from '../MultiSelect';
+import MultiSelect from 'shared/components/MultiSelect';
 import React from 'react';
 
 const data = [

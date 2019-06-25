@@ -1,5 +1,5 @@
-import {CalendarStore} from '../calendarStore';
-import client from '../../../../test/mock/fetch';
+import {CalendarStore} from 'components/sla/store/calendarStore';
+import client from 'test/mock/fetch';
 
 test('Should fetch calendars', () => {
 	const data = {

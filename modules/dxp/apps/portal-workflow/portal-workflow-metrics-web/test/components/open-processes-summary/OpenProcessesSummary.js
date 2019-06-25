@@ -1,4 +1,4 @@
-import OpenProcessesSummary from '../OpenProcessesSummary';
+import OpenProcessesSummary from 'components/open-processes-summary/OpenProcessesSummary';
 import React from 'react';
 import renderer from 'react-test-renderer';
 

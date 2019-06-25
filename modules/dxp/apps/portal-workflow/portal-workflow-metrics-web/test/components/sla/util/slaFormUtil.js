@@ -4,7 +4,7 @@ import {
 	validateHours,
 	validateName,
 	validateNodeKeys
-} from '../slaFormUtil';
+} from 'components/sla/util/slaFormUtil';
 
 test('Should test duration', () => {
 	const invalidKey = 'a-duration-time-is-required';

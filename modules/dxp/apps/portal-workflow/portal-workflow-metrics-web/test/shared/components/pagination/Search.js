@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from '../../../../test/mock/MockRouter';
-import Search from '../Search';
+import {MockRouter as Router} from 'test/mock/MockRouter';
+import Search from 'shared/components/pagination/Search';
 
 test('Should render component', () => {
 	const component = renderer.create(

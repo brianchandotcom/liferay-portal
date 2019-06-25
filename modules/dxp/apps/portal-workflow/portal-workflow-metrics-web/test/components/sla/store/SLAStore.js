@@ -1,7 +1,7 @@
 import {act, renderHook} from 'react-hooks-testing-library';
-import {START_NODE_KEYS, STOP_NODE_KEYS} from '../../Constants';
-import client from '../../../../test/mock/fetch';
-import {useSLA} from '../SLAStore';
+import {START_NODE_KEYS, STOP_NODE_KEYS} from 'components/sla/Constants';
+import client from 'test/mock/fetch';
+import {useSLA} from 'components/sla/store/SLAStore';
 
 test('Should change SLA form values', () => {
 	const nodeKeys = [

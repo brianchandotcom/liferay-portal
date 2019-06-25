@@ -1,8 +1,8 @@
-import fetch from '../../../../test/mock/fetch';
-import InstanceItemDetail from '../InstanceItemDetail';
+import fetch from 'test/mock/fetch';
+import InstanceItemDetail from 'components/process-dashboard/instance-list/InstanceItemDetail';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from '../../../../test/mock/MockRouter';
+import {MockRouter as Router} from 'test/mock/MockRouter';
 
 test('Should render component', () => {
 	const component = renderer.create(

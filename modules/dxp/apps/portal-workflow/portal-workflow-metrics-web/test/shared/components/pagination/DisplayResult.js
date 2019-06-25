@@ -1,4 +1,4 @@
-import DisplayResult from '../DisplayResult';
+import DisplayResult from 'shared/components/pagination/DisplayResult';
 import React from 'react';
 import renderer from 'react-test-renderer';
 

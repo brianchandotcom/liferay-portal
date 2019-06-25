@@ -1,5 +1,5 @@
 import React from 'react';
-import ReloadButton from '../ReloadButton';
+import ReloadButton from 'shared/components/list/ReloadButton';
 
 test('Should component reload page', () => {
 	const component = shallow(<ReloadButton />);

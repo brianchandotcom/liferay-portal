@@ -1,7 +1,7 @@
-import {Filter} from '../Filter';
+import {Filter} from 'shared/components/filter/Filter';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from '../../../../test/mock/MockRouter';
+import {MockRouter as Router} from 'test/mock/MockRouter';
 
 function mockItems(count) {
 	const items = [];

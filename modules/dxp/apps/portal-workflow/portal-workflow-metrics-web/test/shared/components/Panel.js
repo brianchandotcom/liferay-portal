@@ -1,4 +1,4 @@
-import Panel from '../Panel';
+import Panel from 'shared/components/Panel';
 import React from 'react';
 
 describe('Panel', () => {

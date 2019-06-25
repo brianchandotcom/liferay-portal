@@ -1,4 +1,4 @@
-import PortalComponent from '../PortalComponent';
+import PortalComponent from 'shared/components/header-controller/PortalComponent';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';

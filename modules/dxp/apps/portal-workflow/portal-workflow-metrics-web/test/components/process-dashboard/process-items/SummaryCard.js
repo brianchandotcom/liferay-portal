@@ -1,6 +1,6 @@
 import React from 'react';
-import {MockRouter as Router} from '../../../../test/mock/MockRouter';
-import SummaryCard from '../SummaryCard';
+import {MockRouter as Router} from 'test/mock/MockRouter';
+import SummaryCard from 'components/process-dashboard/process-items/SummaryCard';
 
 test('Should format percentage', () => {
 	const props = {

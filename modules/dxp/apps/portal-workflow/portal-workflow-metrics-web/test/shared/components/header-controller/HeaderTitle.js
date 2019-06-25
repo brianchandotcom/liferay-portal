@@ -1,4 +1,4 @@
-import HeaderTitle from '../HeaderTitle';
+import HeaderTitle from 'shared/components/header-controller/HeaderTitle';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';

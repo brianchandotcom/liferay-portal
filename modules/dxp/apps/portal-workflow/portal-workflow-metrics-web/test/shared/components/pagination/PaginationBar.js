@@ -1,9 +1,9 @@
-import PaginationBar from '../PaginationBar';
+import PaginationBar from 'shared/components/pagination/PaginationBar';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from '../../../../test/mock/MockRouter';
+import {MockRouter as Router} from 'test/mock/MockRouter';
 
-jest.mock('../../../../components/AppContext');
+jest.mock('components/AppContext');
 
 test('Should render component', () => {
 	const component = renderer.create(

@@ -23,6 +23,11 @@ import templates from './FloatingToolbar.soy';
 /**
  * @type {object}
  */
+const FIXED_PANEL_CLASS = 'fragments-editor__floating-toolbar-panel--fixed';
+
+/**
+ * @type {object}
+ */
 const ELEMENT_AVAILABLE_POSITIONS = {
 	bottom: [
 		Align.Bottom,
@@ -164,6 +169,7 @@ class FloatingToolbar extends Component {
 
 		requestAnimationFrame(() => {
 			this._align();
+			this._setFixedPanelClass();
 		});
 	}
 
@@ -274,6 +280,17 @@ class FloatingToolbar extends Component {
 				panelAlign,
 				false
 			);
+		}
+	}
+
+	/**
+	 * Add fixed CSS class to panel if buttons are not shown
+	 * @private
+	 * @review
+	 */
+	_setFixedPanelClass() {
+		if (this.refs.panel && !this.refs.buttons) {
+			this.refs.panel.classList.add(FIXED_PANEL_CLASS);
 		}
 	}
 }

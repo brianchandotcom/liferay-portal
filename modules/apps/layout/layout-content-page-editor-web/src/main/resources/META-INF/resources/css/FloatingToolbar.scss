@@ -45,6 +45,10 @@
 			position: static;
 		}
 
+		&--fixed {
+			padding: $fragmentsEditorSpacing;
+		}
+
 		.btn,
 		.form-group,
 		.form-group-autofit {

@@ -270,9 +270,9 @@ public class ConfigurationPersistenceManager
 		try {
 			connection = _dataSource.getConnection();
 
-			preparedStatement = prepareStatement(
-				connection,
-				"delete from Configuration_ where configurationId = ?");
+			preparedStatement = connection.prepareStatement(
+				buildSQL(
+					"delete from Configuration_ where configurationId = ?"));
 
 			preparedStatement.setString(1, pid);
 
@@ -398,10 +398,10 @@ public class ConfigurationPersistenceManager
 		try {
 			connection = _dataSource.getConnection();
 
-			preparedStatement = prepareStatement(
-				connection,
-				"select dictionary from Configuration_ where configurationId " +
-					"= ?");
+			preparedStatement = connection.prepareStatement(
+				buildSQL(
+					"select dictionary from Configuration_ where " +
+						"configurationId = ?"));
 
 			preparedStatement.setString(1, pid);
 
@@ -429,10 +429,10 @@ public class ConfigurationPersistenceManager
 		try {
 			connection = _dataSource.getConnection();
 
-			preparedStatement = prepareStatement(
-				connection,
-				"select count(*) from Configuration_ where configurationId = " +
-					"?");
+			preparedStatement = connection.prepareStatement(
+				buildSQL(
+					"select count(*) from Configuration_ where " +
+						"configurationId = ?"));
 
 			preparedStatement.setString(1, pid);
 
@@ -489,13 +489,6 @@ public class ConfigurationPersistenceManager
 		}
 	}
 
-	protected PreparedStatement prepareStatement(
-			Connection connection, String sql)
-		throws IOException, SQLException {
-
-		return connection.prepareStatement(buildSQL(sql));
-	}
-
 	protected void store(ResultSet resultSet, Dictionary<?, ?> dictionary)
 		throws IOException, SQLException {
 
@@ -531,10 +524,10 @@ public class ConfigurationPersistenceManager
 			preparedStatement.setString(2, pid);
 
 			if (preparedStatement.executeUpdate() == 0) {
-				preparedStatement = prepareStatement(
-					connection,
-					"insert into Configuration_ (configurationId, " +
-						"dictionary) values (?, ?)");
+				preparedStatement = connection.prepareStatement(
+					buildSQL(
+						"insert into Configuration_ (configurationId, " +
+							"dictionary) values (?, ?)"));
 
 				preparedStatement.setString(1, pid);
 				preparedStatement.setString(2, outputStream.toString());

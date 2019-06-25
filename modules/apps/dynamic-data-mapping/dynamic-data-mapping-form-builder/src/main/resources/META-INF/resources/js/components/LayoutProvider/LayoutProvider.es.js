@@ -189,12 +189,6 @@ class LayoutProvider extends Component {
 		const {defaultLanguageId, editingLanguageId} = this.props;
 		let {pages} = this.state;
 
-		pages = pages.filter(
-			page => {
-				return page.contentRenderer != 'success';
-			}
-		);
-
 		const visitor = new PagesVisitor(pages);
 
 		pages = visitor.mapFields(field => {
@@ -216,12 +210,6 @@ class LayoutProvider extends Component {
 		});
 
 		visitor.setPages(pages);
-
-		this.setState(
-			{
-				pages
-			}
-		);
 
 		return visitor.mapPages(page => {
 			let {description, title} = page;
@@ -664,6 +652,12 @@ class LayoutProvider extends Component {
 		};
 	}
 
+	_setPages(pages) {
+		return pages.filter(({contentRenderer}) => {
+			return contentRenderer !== 'success';
+		});
+	}
+
 	_successPageSettingsValueFn() {
 		return this.props.initialSuccessPageSettings;
 	}
@@ -781,7 +775,9 @@ LayoutProvider.STATE = {
 	 * @type {?array}
 	 */
 
-	pages: Config.arrayOf(pageStructure).valueFn('_pagesValueFn'),
+	pages: Config.arrayOf(pageStructure)
+		.setter('_setPages')
+		.valueFn('_pagesValueFn'),
 
 	/**
 	 * @instance

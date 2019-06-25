@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>VERTICAL_ELLIPSIS_REPLY_CARD</td>
-	<td>//div[contains(@class,'message-container')]/div[contains(@class,'message-container')]/div[contains(@class,'group-card')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td>//div[contains(@class,'message-container')]/div[contains(@class,'message-container')]/div[contains(@class,'card panel')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>

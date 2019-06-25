@@ -94,7 +94,7 @@ public class Query {
 			this::_populateResourceContext,
 			formResource -> {
 				Page paginationPage = formResource.getSiteFormsPage(
-					siteId, Pagination.of(pageSize, page));
+					siteId, Pagination.of(page, pageSize));
 
 				return paginationPage.getItems();
 			});
@@ -136,7 +136,7 @@ public class Query {
 			this::_populateResourceContext,
 			formRecordResource -> {
 				Page paginationPage = formRecordResource.getFormFormRecordsPage(
-					formId, Pagination.of(pageSize, page));
+					formId, Pagination.of(page, pageSize));
 
 				return paginationPage.getItems();
 			});
@@ -179,7 +179,7 @@ public class Query {
 			formStructureResource -> {
 				Page paginationPage =
 					formStructureResource.getSiteFormStructuresPage(
-						siteId, Pagination.of(pageSize, page));
+						siteId, Pagination.of(page, pageSize));
 
 				return paginationPage.getItems();
 			});

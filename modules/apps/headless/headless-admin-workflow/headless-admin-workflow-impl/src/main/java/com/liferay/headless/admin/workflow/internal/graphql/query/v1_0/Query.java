@@ -79,7 +79,7 @@ public class Query {
 			workflowLogResource -> {
 				Page paginationPage =
 					workflowLogResource.getWorkflowTaskWorkflowLogsPage(
-						workflowTaskId, Pagination.of(pageSize, page));
+						workflowTaskId, Pagination.of(page, pageSize));
 
 				return paginationPage.getItems();
 			});
@@ -98,7 +98,7 @@ public class Query {
 			workflowTaskResource -> {
 				Page paginationPage =
 					workflowTaskResource.getRoleWorkflowTasksPage(
-						roleId, Pagination.of(pageSize, page));
+						roleId, Pagination.of(page, pageSize));
 
 				return paginationPage.getItems();
 			});
@@ -116,7 +116,7 @@ public class Query {
 			workflowTaskResource -> {
 				Page paginationPage =
 					workflowTaskResource.getWorkflowTasksAssignedToMePage(
-						Pagination.of(pageSize, page));
+						Pagination.of(page, pageSize));
 
 				return paginationPage.getItems();
 			});
@@ -135,7 +135,7 @@ public class Query {
 			workflowTaskResource -> {
 				Page paginationPage =
 					workflowTaskResource.getWorkflowTasksAssignedToMyRolesPage(
-						Pagination.of(pageSize, page));
+						Pagination.of(page, pageSize));
 
 				return paginationPage.getItems();
 			});

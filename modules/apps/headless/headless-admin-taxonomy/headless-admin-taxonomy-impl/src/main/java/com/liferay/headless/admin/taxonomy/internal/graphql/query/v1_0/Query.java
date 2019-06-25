@@ -90,7 +90,7 @@ public class Query {
 			this::_populateResourceContext,
 			keywordResource -> {
 				Page paginationPage = keywordResource.getSiteKeywordsPage(
-					siteId, search, filter, Pagination.of(pageSize, page),
+					siteId, search, filter, Pagination.of(page, pageSize),
 					sorts);
 
 				return paginationPage.getItems();
@@ -117,7 +117,7 @@ public class Query {
 					taxonomyCategoryResource.
 						getTaxonomyCategoryTaxonomyCategoriesPage(
 							parentTaxonomyCategoryId, search, filter,
-							Pagination.of(pageSize, page), sorts);
+							Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -155,7 +155,7 @@ public class Query {
 					taxonomyCategoryResource.
 						getTaxonomyVocabularyTaxonomyCategoriesPage(
 							taxonomyVocabularyId, search, filter,
-							Pagination.of(pageSize, page), sorts);
+							Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -178,7 +178,7 @@ public class Query {
 			taxonomyVocabularyResource -> {
 				Page paginationPage =
 					taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-						siteId, search, filter, Pagination.of(pageSize, page),
+						siteId, search, filter, Pagination.of(page, pageSize),
 						sorts);
 
 				return paginationPage.getItems();

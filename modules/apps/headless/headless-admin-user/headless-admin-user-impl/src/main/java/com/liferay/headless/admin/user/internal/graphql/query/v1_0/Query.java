@@ -185,7 +185,7 @@ public class Query {
 			this::_populateResourceContext,
 			organizationResource -> {
 				Page paginationPage = organizationResource.getOrganizationsPage(
-					search, filter, Pagination.of(pageSize, page), sorts);
+					search, filter, Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -219,7 +219,7 @@ public class Query {
 				Page paginationPage =
 					organizationResource.getOrganizationOrganizationsPage(
 						parentOrganizationId, search, filter,
-						Pagination.of(pageSize, page), sorts);
+						Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -326,7 +326,7 @@ public class Query {
 			this::_populateResourceContext,
 			roleResource -> {
 				Page paginationPage = roleResource.getRolesPage(
-					Pagination.of(pageSize, page));
+					Pagination.of(page, pageSize));
 
 				return paginationPage.getItems();
 			});
@@ -352,7 +352,7 @@ public class Query {
 			this::_populateResourceContext,
 			segmentResource -> {
 				Page paginationPage = segmentResource.getSiteSegmentsPage(
-					siteId, Pagination.of(pageSize, page));
+					siteId, Pagination.of(page, pageSize));
 
 				return paginationPage.getItems();
 			});
@@ -389,7 +389,7 @@ public class Query {
 			segmentUserResource -> {
 				Page paginationPage =
 					segmentUserResource.getSegmentUserAccountsPage(
-						segmentId, Pagination.of(pageSize, page));
+						segmentId, Pagination.of(page, pageSize));
 
 				return paginationPage.getItems();
 			});
@@ -419,7 +419,7 @@ public class Query {
 				Page paginationPage =
 					userAccountResource.getOrganizationUserAccountsPage(
 						organizationId, search, filter,
-						Pagination.of(pageSize, page), sorts);
+						Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -438,7 +438,7 @@ public class Query {
 			this::_populateResourceContext,
 			userAccountResource -> {
 				Page paginationPage = userAccountResource.getUserAccountsPage(
-					search, filter, Pagination.of(pageSize, page), sorts);
+					search, filter, Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -472,7 +472,7 @@ public class Query {
 				Page paginationPage =
 					userAccountResource.getWebSiteUserAccountsPage(
 						webSiteId, search, filter,
-						Pagination.of(pageSize, page), sorts);
+						Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});

@@ -238,7 +238,7 @@ public class Query {
 			blogPostingResource -> {
 				Page paginationPage =
 					blogPostingResource.getSiteBlogPostingsPage(
-						siteId, search, filter, Pagination.of(pageSize, page),
+						siteId, search, filter, Pagination.of(page, pageSize),
 						sorts);
 
 				return paginationPage.getItems();
@@ -273,7 +273,7 @@ public class Query {
 			blogPostingImageResource -> {
 				Page paginationPage =
 					blogPostingImageResource.getSiteBlogPostingImagesPage(
-						siteId, search, filter, Pagination.of(pageSize, page),
+						siteId, search, filter, Pagination.of(page, pageSize),
 						sorts);
 
 				return paginationPage.getItems();
@@ -296,7 +296,7 @@ public class Query {
 				Page paginationPage =
 					commentResource.getBlogPostingCommentsPage(
 						blogPostingId, search, filter,
-						Pagination.of(pageSize, page), sorts);
+						Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -327,7 +327,7 @@ public class Query {
 			commentResource -> {
 				Page paginationPage = commentResource.getCommentCommentsPage(
 					parentCommentId, search, filter,
-					Pagination.of(pageSize, page), sorts);
+					Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -347,7 +347,7 @@ public class Query {
 			this::_populateResourceContext,
 			commentResource -> {
 				Page paginationPage = commentResource.getDocumentCommentsPage(
-					documentId, search, filter, Pagination.of(pageSize, page),
+					documentId, search, filter, Pagination.of(page, pageSize),
 					sorts);
 
 				return paginationPage.getItems();
@@ -370,7 +370,7 @@ public class Query {
 				Page paginationPage =
 					commentResource.getStructuredContentCommentsPage(
 						structuredContentId, search, filter,
-						Pagination.of(pageSize, page), sorts);
+						Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -391,7 +391,7 @@ public class Query {
 				Page paginationPage =
 					contentSetElementResource.
 						getContentSetContentSetElementsPage(
-							contentSetId, Pagination.of(pageSize, page));
+							contentSetId, Pagination.of(page, pageSize));
 
 				return paginationPage.getItems();
 			});
@@ -413,7 +413,7 @@ public class Query {
 				Page paginationPage =
 					contentSetElementResource.
 						getSiteContentSetByKeyContentSetElementsPage(
-							siteId, key, Pagination.of(pageSize, page));
+							siteId, key, Pagination.of(page, pageSize));
 
 				return paginationPage.getItems();
 			});
@@ -435,7 +435,7 @@ public class Query {
 				Page paginationPage =
 					contentSetElementResource.
 						getSiteContentSetByUuidContentSetElementsPage(
-							siteId, uuid, Pagination.of(pageSize, page));
+							siteId, uuid, Pagination.of(page, pageSize));
 
 				return paginationPage.getItems();
 			});
@@ -469,7 +469,7 @@ public class Query {
 			contentStructureResource -> {
 				Page paginationPage =
 					contentStructureResource.getSiteContentStructuresPage(
-						siteId, search, filter, Pagination.of(pageSize, page),
+						siteId, search, filter, Pagination.of(page, pageSize),
 						sorts);
 
 				return paginationPage.getItems();
@@ -492,7 +492,7 @@ public class Query {
 				Page paginationPage =
 					documentResource.getDocumentFolderDocumentsPage(
 						documentFolderId, search, filter,
-						Pagination.of(pageSize, page), sorts);
+						Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -536,7 +536,7 @@ public class Query {
 			documentResource -> {
 				Page paginationPage = documentResource.getSiteDocumentsPage(
 					siteId, flatten, search, filter,
-					Pagination.of(pageSize, page), sorts);
+					Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -573,7 +573,7 @@ public class Query {
 				Page paginationPage =
 					documentFolderResource.getDocumentFolderDocumentFoldersPage(
 						parentDocumentFolderId, search, filter,
-						Pagination.of(pageSize, page), sorts);
+						Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -596,7 +596,7 @@ public class Query {
 				Page paginationPage =
 					documentFolderResource.getSiteDocumentFoldersPage(
 						siteId, flatten, search, filter,
-						Pagination.of(pageSize, page), sorts);
+						Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -648,7 +648,7 @@ public class Query {
 					knowledgeBaseArticleResource.
 						getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 							parentKnowledgeBaseArticleId, search, filter,
-							Pagination.of(pageSize, page), sorts);
+							Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -675,7 +675,7 @@ public class Query {
 					knowledgeBaseArticleResource.
 						getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 							knowledgeBaseFolderId, flatten, search, filter,
-							Pagination.of(pageSize, page), sorts);
+							Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -701,7 +701,7 @@ public class Query {
 					knowledgeBaseArticleResource.
 						getSiteKnowledgeBaseArticlesPage(
 							siteId, flatten, search, filter,
-							Pagination.of(pageSize, page), sorts);
+							Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -771,7 +771,7 @@ public class Query {
 					knowledgeBaseFolderResource.
 						getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
 							parentKnowledgeBaseFolderId,
-							Pagination.of(pageSize, page));
+							Pagination.of(page, pageSize));
 
 				return paginationPage.getItems();
 			});
@@ -791,7 +791,7 @@ public class Query {
 			knowledgeBaseFolderResource -> {
 				Page paginationPage =
 					knowledgeBaseFolderResource.getSiteKnowledgeBaseFoldersPage(
-						siteId, Pagination.of(pageSize, page));
+						siteId, Pagination.of(page, pageSize));
 
 				return paginationPage.getItems();
 			});
@@ -896,7 +896,7 @@ public class Query {
 					messageBoardMessageResource.
 						getMessageBoardMessageMessageBoardMessagesPage(
 							parentMessageBoardMessageId, search, filter,
-							Pagination.of(pageSize, page), sorts);
+							Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -921,7 +921,7 @@ public class Query {
 					messageBoardMessageResource.
 						getMessageBoardThreadMessageBoardMessagesPage(
 							messageBoardThreadId, search, filter,
-							Pagination.of(pageSize, page), sorts);
+							Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -960,7 +960,7 @@ public class Query {
 					messageBoardSectionResource.
 						getMessageBoardSectionMessageBoardSectionsPage(
 							parentMessageBoardSectionId, search, filter,
-							Pagination.of(pageSize, page), sorts);
+							Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -985,7 +985,7 @@ public class Query {
 				Page paginationPage =
 					messageBoardSectionResource.getSiteMessageBoardSectionsPage(
 						siteId, flatten, search, filter,
-						Pagination.of(pageSize, page), sorts);
+						Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -1011,7 +1011,7 @@ public class Query {
 					messageBoardThreadResource.
 						getMessageBoardSectionMessageBoardThreadsPage(
 							messageBoardSectionId, search, filter,
-							Pagination.of(pageSize, page), sorts);
+							Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -1062,7 +1062,7 @@ public class Query {
 				Page paginationPage =
 					messageBoardThreadResource.getSiteMessageBoardThreadsPage(
 						siteId, flatten, search, filter,
-						Pagination.of(pageSize, page), sorts);
+						Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -1087,7 +1087,7 @@ public class Query {
 					structuredContentResource.
 						getContentStructureStructuredContentsPage(
 							contentStructureId, search, filter,
-							Pagination.of(pageSize, page), sorts);
+							Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -1112,7 +1112,7 @@ public class Query {
 				Page paginationPage =
 					structuredContentResource.getSiteStructuredContentsPage(
 						siteId, flatten, search, filter,
-						Pagination.of(pageSize, page), sorts);
+						Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -1165,7 +1165,7 @@ public class Query {
 					structuredContentResource.
 						getStructuredContentFolderStructuredContentsPage(
 							structuredContentFolderId, search, filter,
-							Pagination.of(pageSize, page), sorts);
+							Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -1232,7 +1232,7 @@ public class Query {
 					structuredContentFolderResource.
 						getSiteStructuredContentFoldersPage(
 							siteId, flatten, search, filter,
-							Pagination.of(pageSize, page), sorts);
+							Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});
@@ -1258,7 +1258,7 @@ public class Query {
 					structuredContentFolderResource.
 						getStructuredContentFolderStructuredContentFoldersPage(
 							parentStructuredContentFolderId, search, filter,
-							Pagination.of(pageSize, page), sorts);
+							Pagination.of(page, pageSize), sorts);
 
 				return paginationPage.getItems();
 			});

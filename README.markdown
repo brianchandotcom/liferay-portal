@@ -1,12 +1,12 @@
 # Liferay Portal
 
-[Liferay Portal](https://community.liferay.com/projects/portal) is an
+[Liferay Portal](https://portal.liferay.dev) is an
 open source enterprise web platform for building business solutions that deliver
 immediate results and long-term value. Liferay Portal started out as a personal
 development project in 2000 and was open sourced in 2001.
 
-To get started, check out the project's community homepage at
-[community.liferay.com](https://community.liferay.com)!
+To get started, check out the project's homepage at
+[portal.liferay.dev](https://portal.liferay.dev)!
 
 ## Latest Release Details
 
@@ -29,14 +29,14 @@ enterprise developers.
     [Liferay Dev Studio](https://liferay.dev/projects/ide)
 
 For more details on these and other features, please refer to the
-[user guide](https://dev.liferay.com/discover/portal) on the
-[Liferay Developer Network](https://dev.liferay.com).
+[user guide](https://portal.liferay.dev/docs/latest/user) or
+[developer guide](https://portal.liferay.dev/docs/latest/dev)
 
 ## Quick Start
 
 To get up and running quickly, follow the steps below:
 
-1. Download a [pre-built Liferay Portal release](http://liferay.com/downloads).
+1. Download a [pre-built Liferay Portal release](https://portal.liferay.dev/download).
    For starters, it's recommended to choose Liferay Portal bundled with Tomcat.
 
 2. Download and install
@@ -105,7 +105,8 @@ Liferay's main source code resides in the
 maintains [many other repositories](https://github.com/liferay) related to
 features and supporting documentation.
 
-Liferay Portal *releases* are built from the liferay-portal repository. You can
+Liferay Portal *releases* are built from the 
+[liferay-portal](https://github.com/liferay/liferay-portal) repository. You can
 build Liferay Portal, its modules, and/or any of the other supporting
 technologies from their respective folders/repositories.
 
@@ -127,12 +128,12 @@ Follow us on Twitter:
 ### Blog
 
 Read our announcements, engage in discussions, and learn more by following
-[Liferay's Blog Stream](http://www.liferay.com/community/blogs).
+[Liferay's Blog Stream](https://liferay.dev/blogs).
 
 ### Forum
 
 Do you have questions? Ask them on our very active
-[forums](http://www.liferay.com/community/forums)!
+[forums](https://liferay.dev/forums)!
 
 ### Chat
 
@@ -153,7 +154,7 @@ submitting your contributions.
 For transparency and insight into Liferay's release cycle, and for striving to
 maintain backward compatibility, we make a strong effort to uphold the
 versioning for our software. See the
-[Semantic Versioning](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-1/semantic-versioning)
+[Semantic Versioning](https://portal.liferay.dev/docs/latest/customization/-/knowledge_base/c/semantic-versioning)
 article for more information about how Liferay versions software.
 
 ## Bug Reporting and Feature Requests

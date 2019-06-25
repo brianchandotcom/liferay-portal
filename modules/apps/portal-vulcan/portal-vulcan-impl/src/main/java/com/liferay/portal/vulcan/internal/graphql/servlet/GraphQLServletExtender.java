@@ -90,6 +90,7 @@ import graphql.servlet.GraphQLObjectMapper;
 import graphql.servlet.SimpleGraphQLHttpServlet;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.Field;
@@ -862,6 +863,29 @@ public class GraphQLServletExtender {
 
 	}
 
+	private class LiferayDeprecateBuilder extends DeprecateBuilder {
+
+		public LiferayDeprecateBuilder(AccessibleObject accessibleObject) {
+			super(accessibleObject);
+
+			_accessibleObject = accessibleObject;
+		}
+
+		public String build() {
+			Deprecated deprecated = _accessibleObject.getAnnotation(
+				Deprecated.class);
+
+			if (deprecated != null) {
+				return "Deprecated";
+			}
+
+			return null;
+		}
+
+		private final AccessibleObject _accessibleObject;
+
+	}
+
 	private class LiferayGraphQLErrorHandler
 		extends DefaultGraphQLErrorHandler {
 
@@ -911,7 +935,8 @@ public class GraphQLServletExtender {
 
 			builder.dataFetcher(new LiferayMethodDataFetcher(method));
 
-			DeprecateBuilder deprecateBuilder = new DeprecateBuilder(method);
+			DeprecateBuilder deprecateBuilder = new LiferayDeprecateBuilder(
+				method);
 
 			builder.deprecate(deprecateBuilder.build());
 

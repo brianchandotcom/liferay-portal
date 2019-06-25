@@ -50,6 +50,12 @@ public class Pod {
 		return v1ObjectMeta.getNamespace();
 	}
 
+	public String getPhase() {
+		V1PodStatus v1PodStatus = _v1Pod.getStatus();
+
+		return v1PodStatus.getPhase();
+	}
+
 	protected Pod(V1Pod v1Pod) {
 		_v1Pod = v1Pod;
 	}

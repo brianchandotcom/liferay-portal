@@ -331,6 +331,10 @@ public class ModulesStructureTest {
 
 					String dirName = String.valueOf(dirPath.getFileName());
 
+					if (_excludedDirNames.contains(dirName)) {
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
 					if (dirName.equals("archetype-resources") ||
 						dirName.equals("gradleTest")) {
 

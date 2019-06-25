@@ -18,6 +18,8 @@
 	{@param? visible: bool}
 	{@param? valid: bool}
 
+	{let $_showLabel: $showAsSwitcher ? $showLabel : false /}
+
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
 			{call .content}
@@ -36,7 +38,7 @@
 		{param name: $name /}
 		{param repeatable: $repeatable /}
 		{param required: $required /}
-		{param showLabel: not $showAsSwitcher and $showLabel /}
+		{param showLabel: $_showLabel /}
 		{param spritemap: $spritemap /}
 		{param tip: $tip /}
 		{param valid: $valid /}

@@ -50,7 +50,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -287,7 +287,7 @@ public class OAuth2ApplicationLocalServiceImpl
 
 		if (inputStream == null) {
 			if (oldIconFileEntryId > 0) {
-				PortletFileRepositoryUtil.deletePortletFileEntry(
+				_portletFileRepository.deletePortletFileEntry(
 					oldIconFileEntryId);
 
 				oAuth2Application.setIconFileEntryId(-1);
@@ -305,11 +305,11 @@ public class OAuth2ApplicationLocalServiceImpl
 
 		serviceContext.setAddGuestPermissions(true);
 
-		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
+		Repository repository = _portletFileRepository.addPortletRepository(
 			group.getGroupId(), OAuth2ProviderConstants.SERVICE_NAME,
 			serviceContext);
 
-		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
+		Folder folder = _portletFileRepository.addPortletFolder(
 			userLocalService.getDefaultUserId(oAuth2Application.getCompanyId()),
 			repository.getRepositoryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "icons",
@@ -336,11 +336,11 @@ public class OAuth2ApplicationLocalServiceImpl
 			throw new PortalException(ioe);
 		}
 
-		String fileName = PortletFileRepositoryUtil.getUniqueFileName(
+		String fileName = _portletFileRepository.getUniqueFileName(
 			group.getGroupId(), folder.getFolderId(),
 			oAuth2Application.getClientId());
 
-		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
+		FileEntry fileEntry = _portletFileRepository.addPortletFileEntry(
 			group.getGroupId(), oAuth2Application.getUserId(),
 			OAuth2Application.class.getName(),
 			oAuth2Application.getOAuth2ApplicationId(),
@@ -354,8 +354,7 @@ public class OAuth2ApplicationLocalServiceImpl
 		oAuth2Application = updateOAuth2Application(oAuth2Application);
 
 		if (oldIconFileEntryId > 0) {
-			PortletFileRepositoryUtil.deletePortletFileEntry(
-				oldIconFileEntryId);
+			_portletFileRepository.deletePortletFileEntry(oldIconFileEntryId);
 		}
 
 		return oAuth2Application;
@@ -691,6 +690,9 @@ public class OAuth2ApplicationLocalServiceImpl
 
 	@Reference
 	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 	@Reference(
 		target = "(class.name=com.liferay.portal.repository.portletrepository.PortletRepository)"

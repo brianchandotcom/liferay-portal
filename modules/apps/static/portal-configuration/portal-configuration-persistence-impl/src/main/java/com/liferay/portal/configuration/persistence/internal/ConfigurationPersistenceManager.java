@@ -211,68 +211,22 @@ public class ConfigurationPersistenceManager
 		return db.buildSQL(sql);
 	}
 
-	protected void cleanUp(
-		Connection connection, Statement statement, ResultSet resultSet) {
-
-		try {
-			if (resultSet != null) {
-				resultSet.close();
-			}
-		}
-		catch (SQLException sqle) {
-			ReflectionUtil.throwException(sqle);
-		}
-		finally {
-			try {
-				if (statement != null) {
-					statement.close();
-				}
-			}
-			catch (SQLException sqle) {
-				ReflectionUtil.throwException(sqle);
-			}
-			finally {
-				try {
-					if (connection != null) {
-						connection.close();
-					}
-				}
-				catch (SQLException sqle) {
-					ReflectionUtil.throwException(sqle);
-				}
-			}
-		}
-	}
-
 	protected void createConfigurationTable() throws IOException, SQLException {
-		Connection connection = null;
-		Statement statement = null;
-
-		try {
-			connection = _dataSource.getConnection();
-
-			statement = connection.createStatement();
+		try (Connection connection = _dataSource.getConnection();
+			Statement statement = connection.createStatement()) {
 
 			statement.executeUpdate(
 				buildSQL(
 					"create table Configuration_ (configurationId " +
 						"VARCHAR(255) not null primary key, dictionary TEXT)"));
 		}
-		finally {
-			cleanUp(connection, statement, null);
-		}
 	}
 
 	protected void deleteFromDatabase(String pid) throws IOException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-
-		try {
-			connection = _dataSource.getConnection();
-
-			preparedStatement = connection.prepareStatement(
+		try (Connection connection = _dataSource.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
 				buildSQL(
-					"delete from Configuration_ where configurationId = ?"));
+					"delete from Configuration_ where configurationId = ?"))) {
 
 			preparedStatement.setString(1, pid);
 
@@ -280,9 +234,6 @@ public class ConfigurationPersistenceManager
 		}
 		catch (SQLException sqle) {
 			throw new IOException(sqle);
-		}
-		finally {
-			cleanUp(connection, preparedStatement, null);
 		}
 	}
 
@@ -391,24 +342,18 @@ public class ConfigurationPersistenceManager
 	}
 
 	protected Dictionary<?, ?> getDictionary(String pid) throws IOException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-
-		try {
-			connection = _dataSource.getConnection();
-
-			preparedStatement = connection.prepareStatement(
+		try (Connection connection = _dataSource.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
 				buildSQL(
 					"select dictionary from Configuration_ where " +
-						"configurationId = ?"));
+						"configurationId = ?"))) {
 
 			preparedStatement.setString(1, pid);
 
-			resultSet = preparedStatement.executeQuery();
-
-			if (resultSet.next()) {
-				return toDictionary(resultSet.getString(1));
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return toDictionary(resultSet.getString(1));
+				}
 			}
 
 			return _emptyDictionary;
@@ -416,36 +361,27 @@ public class ConfigurationPersistenceManager
 		catch (SQLException sqle) {
 			return ReflectionUtil.throwException(sqle);
 		}
-		finally {
-			cleanUp(connection, preparedStatement, resultSet);
-		}
 	}
 
 	protected boolean hasPid(String pid) {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-
-		try {
-			connection = _dataSource.getConnection();
-
-			preparedStatement = connection.prepareStatement(
+		try (Connection connection = _dataSource.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
 				buildSQL(
 					"select count(*) from Configuration_ where " +
-						"configurationId = ?"));
+						"configurationId = ?"))) {
 
 			preparedStatement.setString(1, pid);
 
-			resultSet = preparedStatement.executeQuery();
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				int count = 0;
 
-			int count = 0;
+				if (resultSet.next()) {
+					count = resultSet.getInt(1);
+				}
 
-			if (resultSet.next()) {
-				count = resultSet.getInt(1);
-			}
-
-			if (count > 0) {
-				return true;
+				if (count > 0) {
+					return true;
+				}
 			}
 
 			return false;
@@ -453,26 +389,16 @@ public class ConfigurationPersistenceManager
 		catch (IOException | SQLException e) {
 			return ReflectionUtil.throwException(e);
 		}
-		finally {
-			cleanUp(connection, preparedStatement, resultSet);
-		}
 	}
 
 	protected void populateDictionaries() {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-
-		try {
-			connection = _dataSource.getConnection();
-
-			preparedStatement = connection.prepareStatement(
+		try (Connection connection = _dataSource.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
 				buildSQL(
 					"select configurationId, dictionary from Configuration_ " +
 						"ORDER BY configurationId ASC"),
 				ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-
-			resultSet = preparedStatement.executeQuery();
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
 				String pid = resultSet.getString(1);
@@ -483,9 +409,6 @@ public class ConfigurationPersistenceManager
 		}
 		catch (IOException | SQLException e) {
 			ReflectionUtil.throwException(e);
-		}
-		finally {
-			cleanUp(connection, preparedStatement, resultSet);
 		}
 	}
 
@@ -507,43 +430,36 @@ public class ConfigurationPersistenceManager
 
 		ConfigurationHandler.write(outputStream, dictionary);
 
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-
-		try {
-			connection = _dataSource.getConnection();
-
+		try (Connection connection = _dataSource.getConnection()) {
 			connection.setAutoCommit(false);
 
-			preparedStatement = connection.prepareStatement(
-				buildSQL(
-					"update Configuration_ set dictionary = ? where " +
-						"configurationId = ?"));
-
-			preparedStatement.setString(1, outputStream.toString());
-			preparedStatement.setString(2, pid);
-
-			if (preparedStatement.executeUpdate() == 0) {
-				preparedStatement = connection.prepareStatement(
+			try (PreparedStatement ps1 = connection.prepareStatement(
 					buildSQL(
-						"insert into Configuration_ (configurationId, " +
-							"dictionary) values (?, ?)"));
+						"update Configuration_ set dictionary = ? where " +
+							"configurationId = ?"))) {
 
-				preparedStatement.setString(1, pid);
-				preparedStatement.setString(2, outputStream.toString());
+				ps1.setString(1, outputStream.toString());
+				ps1.setString(2, pid);
 
-				preparedStatement.executeUpdate();
+				if (ps1.executeUpdate() == 0) {
+					try (PreparedStatement ps2 = connection.prepareStatement(
+							buildSQL(
+								"insert into Configuration_ (" +
+									"configurationId, dictionary) values (?, " +
+										"?)"))) {
+
+						ps2.setString(1, pid);
+						ps2.setString(2, outputStream.toString());
+
+						ps2.executeUpdate();
+					}
+				}
 			}
 
 			connection.commit();
 		}
 		catch (SQLException sqle) {
 			ReflectionUtil.throwException(sqle);
-		}
-		finally {
-			cleanUp(connection, preparedStatement, null);
-
-			outputStream.close();
 		}
 	}
 

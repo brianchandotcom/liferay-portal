@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>CONFIGURATION</td>
-	<td>//div[${key_counter}]//textarea[contains(@id,'configuration')]</td>
+	<td>//div[${key_counter}]//textarea[contains(@name,'configuration')]</td>
 	<td></td>
 </tr>
 <tr>

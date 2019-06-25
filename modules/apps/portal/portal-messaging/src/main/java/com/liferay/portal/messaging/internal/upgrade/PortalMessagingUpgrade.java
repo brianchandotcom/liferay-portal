@@ -32,7 +32,7 @@ public class PortalMessagingUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"0.0.0", "1.0.0",
 			_configurationUpgradeStepFactory.createUpgradeStep(
-				"com.liferay.portal.messaging.internal.configuration." +
+				"com.liferay.portal.messaging.configuration." +
 					"DestinationWorkerConfiguration",
 				DestinationWorkerConfiguration.class.getName()));
 	}

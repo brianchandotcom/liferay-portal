@@ -945,6 +945,10 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 		portletContentJSP = "/portal/portlet_not_ready.jsp";
 	}
 
+	if (portlet.isUndeployedPortlet()) {
+		portletContentJSP = "/portal/undeployed_portlet.jsp";
+	}
+
 	if (portletException) {
 		portletContentJSP = "/portal/portlet_error.jsp";
 	}

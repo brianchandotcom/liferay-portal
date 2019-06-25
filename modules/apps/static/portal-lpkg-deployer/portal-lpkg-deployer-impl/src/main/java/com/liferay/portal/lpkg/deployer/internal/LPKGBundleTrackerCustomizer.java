@@ -326,6 +326,8 @@ public class LPKGBundleTrackerCustomizer
 			List<String> trackedBundleLocations = _reloadTrackedBundles(
 				symbolicName, bundle, bundles);
 
+			innerBundleLocations.sort(null);
+
 			if (!trackedBundleLocations.equals(innerBundleLocations)) {
 				_recordTrackedBundles(bundle, innerBundleLocations);
 			}

@@ -713,6 +713,34 @@ Please run the following command from ${source.formatter.modules.dir.absolute.pa
 
 		<delete file="ServiceBuilder.temp" />
 
+		<if>
+			<resourcecount count="0" when="greater">
+				<fileset
+					dir="${project.dir}/modules"
+					excludes="**/.gradle/,**/bin/,**/build/,**/classes/,**/node_modules/,**/tmp/"
+					includes="**/yarn-*.js"
+				/>
+			</resourcecount>
+			<then>
+				<if>
+					<and>
+						<isset property="source.auto.fix" />
+						<isfalse value="${source.auto.fix}" />
+					</and>
+					<then>
+						<gradle-execute dir="${project.dir}/modules" task="yarnCheckFormat">
+							<arg value="--build-file=${project.dir}/modules/util.gradle" />
+						</gradle-execute>
+					</then>
+					<else>
+						<gradle-execute dir="${project.dir}/modules" task="yarnFormat">
+							<arg value="--build-file=${project.dir}/modules/util.gradle" />
+						</gradle-execute>
+					</else>
+				</if>
+			</then>
+		</if>
+
 		<var name="source.formatter.npm.script" value="format" />
 		<var name="source.formatter.npm.task" value="npmRunFormat" />
 

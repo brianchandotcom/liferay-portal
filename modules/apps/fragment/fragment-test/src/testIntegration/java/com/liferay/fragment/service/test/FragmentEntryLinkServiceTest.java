@@ -19,7 +19,6 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkService;
-import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.service.persistence.FragmentEntryLinkPersistence;
 import com.liferay.fragment.service.persistence.impl.constants.FragmentPersistenceConstants;
 import com.liferay.fragment.util.FragmentEntryTestUtil;
@@ -35,7 +34,6 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -58,7 +56,6 @@ import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -97,14 +94,6 @@ public class FragmentEntryLinkServiceTest {
 			_fragmentCollection.getFragmentCollectionId());
 
 		_layout = LayoutTestUtil.addLayout(_group);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_resourcePermissionLocalService.deleteResourcePermissions(
-			TestPropsValues.getCompanyId(),
-			"com.liferay.portal.kernel.model.Layout",
-			ResourceConstants.SCOPE_GROUP, _group.getGroupId());
 	}
 
 	@Test
@@ -341,9 +330,6 @@ public class FragmentEntryLinkServiceTest {
 	@Inject
 	private FragmentEntryLinkService _fragmentEntryLinkService;
 
-	@Inject
-	private FragmentEntryLocalService _fragmentEntryLocalService;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -351,9 +337,6 @@ public class FragmentEntryLinkServiceTest {
 	private User _groupUser;
 
 	private Layout _layout;
-
-	@Inject
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

@@ -162,42 +162,14 @@ public class ConfigurationPersistenceManager
 	}
 
 	public void start() {
-		Lock readLock = _readWriteLock.readLock();
-		Lock writeLock = _readWriteLock.writeLock();
-
-		try {
-			readLock.lock();
-
-			if (hasConfigurationTable()) {
-				readLock.unlock();
-				writeLock.lock();
-
-				try {
-					_verifyConfigurations();
-				}
-				finally {
-					readLock.lock();
-					writeLock.unlock();
-				}
-			}
-			else {
-				readLock.unlock();
-				writeLock.lock();
-
-				try {
-					createConfigurationTable();
-				}
-				finally {
-					readLock.lock();
-					writeLock.unlock();
-				}
-			}
-
-			populateDictionaries();
+		if (hasConfigurationTable()) {
+			_verifyConfigurations();
 		}
-		finally {
-			readLock.unlock();
+		else {
+			createConfigurationTable();
 		}
+
+		populateDictionaries();
 	}
 
 	public void stop() {

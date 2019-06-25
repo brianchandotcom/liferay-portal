@@ -147,6 +147,8 @@
 /portal/im4java.jar
 /portal/isoparser.jar
 /portal/jabsorb.jar
+/portal/jai-imageio-core.jar
+/portal/jai-imageio-jpeg2000.jar
 /portal/jackson-annotations.jar
 /portal/jackson-core.jar
 /portal/jackson-databind.jar

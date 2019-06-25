@@ -164,12 +164,12 @@ public class ConfigurationPersistenceManager
 	public void start() {
 		if (hasConfigurationTable()) {
 			_verifyConfigurations();
+
+			populateDictionaries();
 		}
 		else {
 			createConfigurationTable();
 		}
-
-		populateDictionaries();
 	}
 
 	public void stop() {

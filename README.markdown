@@ -10,7 +10,7 @@ To get started, check out the project's homepage at
 
 ## Latest Release Details
 
-The latest release, Liferay Portal version 7.1, is built from the source code of
+The latest release, Liferay Portal version 7.2, is built from the source code of
 Liferay Portal and several other related open source projects. It includes
 features for end users, business professionals, system administrators, and
 enterprise developers.
@@ -103,7 +103,7 @@ to learn how to publish apps to the [Liferay Marketplace](https://web.liferay.co
 
 ## Source Code
 
-Liferay's main source code resides in the
+Liferay Portal's main source code resides in the
 [liferay-portal](https://github.com/liferay/liferay-portal) repository. Liferay
 maintains [many other repositories](https://github.com/liferay) related to
 features and supporting documentation.
@@ -115,7 +115,7 @@ technologies from their respective folders/repositories.
 
 ## Stay Connected
 
-There are many ways for you to learn what's new in Liferay, get answers to
+There are many ways for you to learn what's new in Liferay Portal, get answers to
 questions, and connect with other Liferay community members.
 
 ### Twitter

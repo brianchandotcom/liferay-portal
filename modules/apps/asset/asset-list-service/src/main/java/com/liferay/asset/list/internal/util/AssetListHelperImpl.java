@@ -444,6 +444,9 @@ public class AssetListHelperImpl implements AssetListHelper {
 
 				return assetListEntrySegmentsEntryRel != null;
 			}
+		).filter(
+			segmentsEntryId ->
+				segmentsEntryId != SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT
 		).findFirst(
 		).orElse(
 			SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT

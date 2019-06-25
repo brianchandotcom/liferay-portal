@@ -20,10 +20,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.template.soy.SoyTemplateResource;
+import com.liferay.portal.template.soy.SoyTemplateResourceFactory;
 import com.liferay.portal.template.soy.internal.util.SoyTemplateResourcesCollector;
 import com.liferay.portal.template.soy.internal.util.SoyTemplateUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -45,12 +48,13 @@ public class SoyCapabilityBundleTrackerCustomizer
 
 	public SoyCapabilityBundleTrackerCustomizer(
 		SoyTofuCacheHandler soyTofuCacheHandler,
-		SoyProviderCapabilityBundleRegister
-			soyProviderCapabilityBundleRegister) {
+		SoyProviderCapabilityBundleRegister soyProviderCapabilityBundleRegister,
+		SoyTemplateResourceFactory soyTemplateResourceFactory) {
 
 		_soyTofuCacheHandler = soyTofuCacheHandler;
 		_soyProviderCapabilityBundleRegister =
 			soyProviderCapabilityBundleRegister;
+		_soyTemplateResourceFactory = soyTemplateResourceFactory;
 	}
 
 	@Override
@@ -84,11 +88,27 @@ public class SoyCapabilityBundleTrackerCustomizer
 
 		_addTemplateResourcesToList(bundle);
 
+		_soyTemplateResource = null;
+
 		return bundleCapabilities;
 	}
 
 	public List<TemplateResource> getAllTemplateResources() {
 		return _templateResources;
+	}
+
+	public SoyTemplateResource getSoyTemplateResource() {
+		SoyTemplateResource soyTemplateResource = _soyTemplateResource;
+
+		if (soyTemplateResource == null) {
+			soyTemplateResource =
+				_soyTemplateResourceFactory.createSoyTemplateResource(
+					Collections.unmodifiableList(_templateResources));
+		}
+
+		_soyTemplateResource = soyTemplateResource;
+
+		return soyTemplateResource;
 	}
 
 	@Override
@@ -113,6 +133,8 @@ public class SoyCapabilityBundleTrackerCustomizer
 
 		List<TemplateResource> removedTemplateResources =
 			_removeBundleTemplateResourcesFromList(bundle);
+
+		_soyTemplateResource = null;
 
 		_soyTofuCacheHandler.removeIfAny(removedTemplateResources);
 
@@ -180,6 +202,8 @@ public class SoyCapabilityBundleTrackerCustomizer
 
 	private final SoyProviderCapabilityBundleRegister
 		_soyProviderCapabilityBundleRegister;
+	private volatile SoyTemplateResource _soyTemplateResource;
+	private final SoyTemplateResourceFactory _soyTemplateResourceFactory;
 	private final SoyTofuCacheHandler _soyTofuCacheHandler;
 
 }

@@ -53,12 +53,17 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -303,7 +308,27 @@ public class CTEngineManagerTest {
 
 		CTCollection ctCollection = ctCollectionOptional.get();
 
-		_ctEngineManager.deleteCTCollection(ctCollection.getCtCollectionId());
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"com.liferay.change.tracking.internal.engine." +
+						"CTEngineManagerImpl",
+					Level.ERROR)) {
+
+			_ctEngineManager.deleteCTCollection(
+				ctCollection.getCtCollectionId());
+
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			Assert.assertEquals(
+				loggingEvents.toString(), 1, loggingEvents.size());
+
+			LoggingEvent loggingEvent = loggingEvents.get(0);
+
+			Assert.assertEquals(
+				"Unable to delete change tracking collection 0",
+				loggingEvent.getMessage());
+		}
 
 		ctCollectionOptional =
 			_ctEngineManager.getProductionCTCollectionOptional(

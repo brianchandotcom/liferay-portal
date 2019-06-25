@@ -57,6 +57,17 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testMissingTaglibs() throws Exception {
+		test(
+			"MissingTaglibs.testjsp",
+			new String[] {
+				"Missing taglib for tag with prefix 'aui'",
+				"Missing taglib for tag with prefix 'liferay-portlet'",
+				"Missing taglib for tag with prefix 'liferay-ui'"
+			});
+	}
+
+	@Test
 	public void testSortTagAttributes() throws Exception {
 		test("SortTagAttributes.testjsp");
 	}

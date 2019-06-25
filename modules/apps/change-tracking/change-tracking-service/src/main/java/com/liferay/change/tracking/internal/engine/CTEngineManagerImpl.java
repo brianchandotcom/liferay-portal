@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -61,17 +60,15 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -79,15 +76,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = CTEngineManager.class)
 public class CTEngineManagerImpl implements CTEngineManager {
-
-	@Activate
-	public void activate() {
-		List<Company> companies = _companyLocalService.getCompanies();
-
-		companies.forEach(
-			company -> _productionCTCollections.put(
-				company.getCompanyId(), _createProductionCTCollection()));
-	}
 
 	@Override
 	public void checkoutCTCollection(long userId, long ctCollectionId) {
@@ -155,11 +143,6 @@ public class CTEngineManagerImpl implements CTEngineManager {
 		}
 
 		return _createCTCollection(userId, name, description);
-	}
-
-	@Deactivate
-	public void deactivate() {
-		_productionCTCollections.clear();
 	}
 
 	@Override
@@ -295,7 +278,7 @@ public class CTEngineManagerImpl implements CTEngineManager {
 		long companyId, long ctCollectionId) {
 
 		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
-			return Optional.ofNullable(_productionCTCollections.get(companyId));
+			return getProductionCTCollectionOptional(companyId);
 		}
 
 		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
@@ -414,12 +397,26 @@ public class CTEngineManagerImpl implements CTEngineManager {
 			companyId);
 
 		if (productionCTCollection == null) {
-			productionCTCollection = _createProductionCTCollection();
+			productionCTCollection = new CTCollectionImpl();
+
+			productionCTCollection.setCtCollectionId(
+				CTConstants.CT_COLLECTION_ID_PRODUCTION);
+			productionCTCollection.setCompanyId(companyId);
+
+			try {
+				productionCTCollection.setUserId(
+					_userLocalService.getDefaultUserId(companyId));
+			}
+			catch (PortalException pe) {
+				throw new RuntimeException(pe);
+			}
+
+			productionCTCollection.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 			_productionCTCollections.put(companyId, productionCTCollection);
 		}
 
-		return Optional.ofNullable(productionCTCollection);
+		return Optional.of(productionCTCollection);
 	}
 
 	@Override
@@ -558,27 +555,13 @@ public class CTEngineManagerImpl implements CTEngineManager {
 		return Optional.ofNullable(ctCollection);
 	}
 
-	private CTCollection _createProductionCTCollection() {
-		CTCollection productionCTCollection = new CTCollectionImpl();
-
-		productionCTCollection.setCtCollectionId(
-			CTConstants.CT_COLLECTION_ID_PRODUCTION);
-
-		return productionCTCollection;
-	}
-
 	private void _enableChangeTracking(long userId) {
-		CTCollection productionCTCollection = _createProductionCTCollection();
-
 		long companyId = _getCompanyId(userId);
-
-		_productionCTCollections.put(companyId, productionCTCollection);
 
 		_ctSettingsManager.setGlobalCTSetting(
 			companyId, _CHANGE_TRACKING_ENABLED, String.valueOf(Boolean.TRUE));
 
-		checkoutCTCollection(
-			userId, productionCTCollection.getCtCollectionId());
+		checkoutCTCollection(userId, CTConstants.CT_COLLECTION_ID_PRODUCTION);
 	}
 
 	private long _getCompanyId(long userId) {
@@ -672,7 +655,7 @@ public class CTEngineManagerImpl implements CTEngineManager {
 	private Portal _portal;
 
 	private final Map<Long, CTCollection> _productionCTCollections =
-		new HashMap<>();
+		new ConcurrentHashMap<>();
 	private final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});

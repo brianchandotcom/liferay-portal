@@ -927,6 +927,17 @@ public class JenkinsResultsParserUtil {
 		return globs.toArray(new String[0]);
 	}
 
+	public static String getHostIPAddress() {
+		try {
+			InetAddress inetAddress = InetAddress.getLocalHost();
+
+			return inetAddress.getHostAddress();
+		}
+		catch (UnknownHostException uhe) {
+			return "127.0.0.1";
+		}
+	}
+
 	public static String getHostName(String defaultHostName) {
 		try {
 			InetAddress inetAddress = InetAddress.getLocalHost();

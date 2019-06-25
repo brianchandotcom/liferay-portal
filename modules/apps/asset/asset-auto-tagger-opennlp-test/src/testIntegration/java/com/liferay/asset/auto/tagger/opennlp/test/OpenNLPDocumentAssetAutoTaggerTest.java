@@ -145,6 +145,49 @@ public class OpenNLPDocumentAssetAutoTaggerTest {
 	}
 
 	@Test
+	public void testAutoTagsAnAssetWithATextExtractorInNoEnglishLanguage()
+		throws Exception {
+
+		String className = RandomTestUtil.randomString();
+
+		_registerAssetRendererFactory(
+			new TestAssetRendererFactory(
+				TestPropsValues.getGroupId(), className,
+				new String(
+					FileUtil.getBytes(
+						getClass(), "dependencies/" + _FILE_NAME_NO_ENGLISH))));
+
+		_registerTextExtractor(
+			new TextExtractor<String>() {
+
+				@Override
+				public String extract(String text, Locale locale) {
+					return text;
+				}
+
+				@Override
+				public String getClassName() {
+					return className;
+				}
+
+			});
+
+		_testWithOpenNLPDocumentAssetAutoTagProviderEnabled(
+			className,
+			() -> {
+				AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
+					TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+					className, RandomTestUtil.randomLong(), new long[0],
+					new String[0]);
+
+				Collection<String> tagNames = Arrays.asList(
+					assetEntry.getTagNames());
+
+				Assert.assertEquals(tagNames.toString(), 0, tagNames.size());
+			});
+	}
+
+	@Test
 	public void testDoesNotAutoTagAnAssetWithNoTextExtractor()
 		throws Exception {
 
@@ -204,6 +247,8 @@ public class OpenNLPDocumentAssetAutoTaggerTest {
 
 	private static final String _FILE_NAME =
 		"Alice's Adventures in Wonderland, by Lewis Carroll.txt";
+
+	private static final String _FILE_NAME_NO_ENGLISH = "25328-0.txt";
 
 	private static final String _OPEN_NLP_AUTO_TAG_CONFIGURATION_PID =
 		"com.liferay.asset.auto.tagger.opennlp.internal.configuration." +

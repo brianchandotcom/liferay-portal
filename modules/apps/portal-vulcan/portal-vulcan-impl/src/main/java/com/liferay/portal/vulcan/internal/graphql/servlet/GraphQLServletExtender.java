@@ -120,6 +120,9 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 
+import javax.validation.ValidationException;
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.core.Response;
 
 import org.osgi.framework.BundleContext;
@@ -381,9 +384,9 @@ public class GraphQLServletExtender {
 
 		Map<String, Object> arguments = dataFetchingEnvironment.getArguments();
 
-		Object[] args = new Object[arguments.size()];
+		Object[] args = new Object[parameters.length];
 
-		for (int i = 0; i < args.length; i++) {
+		for (int i = 0; i < parameters.length; i++) {
 			Parameter parameter = parameters[i];
 
 			String parameterName = null;
@@ -397,7 +400,16 @@ public class GraphQLServletExtender {
 				parameterName = NamingKit.toGraphqlName(graphQLName);
 			}
 
-			args[i] = arguments.get(parameterName);
+			Object argument = arguments.get(parameterName);
+
+			if ((argument == null) &&
+				parameter.isAnnotationPresent(NotNull.class)) {
+
+				throw new ValidationException(
+					parameterName + "can not be null");
+			}
+
+			args[i] = argument;
 		}
 
 		return method.invoke(instance, args);

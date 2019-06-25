@@ -243,6 +243,7 @@ class FragmentEntryLink extends Component {
 	 */
 	_shouldShowConfigPanel() {
 		return (
+			this._fragmentEntryLinkConfig &&
 			this.fragmentEntryLinkId === this.activeItemId &&
 			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 		);

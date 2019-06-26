@@ -286,13 +286,7 @@ public class CTEngineManagerImpl implements CTEngineManager {
 	}
 
 	@Override
-	public Optional<CTCollection> getCTCollectionOptional(
-		long companyId, long ctCollectionId) {
-
-		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
-			return Optional.ofNullable(_productionCTCollections.get(companyId));
-		}
-
+	public Optional<CTCollection> getCTCollectionOptional(long ctCollectionId) {
 		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
 			ctCollectionId);
 
@@ -416,7 +410,6 @@ public class CTEngineManagerImpl implements CTEngineManager {
 	@Override
 	public long getRecentCTCollectionId(long userId) {
 		Optional<CTCollection> ctCollectionOptional = getCTCollectionOptional(
-			_getCompanyId(userId),
 			GetterUtil.getLong(
 				_ctSettingsManager.getUserCTSetting(
 					userId, _RECENT_CT_COLLECTION_ID)));

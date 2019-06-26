@@ -105,12 +105,10 @@ public interface CTEngineManager {
 	/**
 	 * Returns the change tracking collection with the primary key.
 	 *
-	 * @param  companyId the primary key of the company
 	 * @param  ctCollectionId the primary key of the change collection
 	 * @return the change tracking collection
 	 */
-	public Optional<CTCollection> getCTCollectionOptional(
-		long companyId, long ctCollectionId);
+	public Optional<CTCollection> getCTCollectionOptional(long ctCollectionId);
 
 	/**
 	 * Returns all the change tracking collections associated with the given

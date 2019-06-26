@@ -70,8 +70,8 @@ public class EditCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			if (ctCollectionId > 0) {
 				_updateCTCollection(
-					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-					ctCollectionId, name, description);
+					themeDisplay.getUserId(), ctCollectionId, name,
+					description);
 			}
 			else {
 				CTCollection ctCollection =
@@ -117,12 +117,11 @@ public class EditCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _updateCTCollection(
-			long companyId, long userId, long ctCollectionId, String name,
-			String description)
+			long userId, long ctCollectionId, String name, String description)
 		throws PortalException {
 
 		Optional<CTCollection> ctCollectionOptional =
-			_ctEngineManager.getCTCollectionOptional(companyId, ctCollectionId);
+			_ctEngineManager.getCTCollectionOptional(ctCollectionId);
 
 		CTCollection ctCollection = ctCollectionOptional.orElseThrow(
 			NoSuchCollectionException::new);

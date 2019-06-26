@@ -178,13 +178,19 @@ public class CTManagerImpl implements CTManager {
 			userId);
 
 		if (recentCTCollectionId == 0L) {
-			recentCTCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
+			Optional<CTCollection> productionCTCollectionOptional =
+				_ctEngineManager.getProductionCTCollectionOptional(companyId);
+
+			recentCTCollectionId = productionCTCollectionOptional.map(
+				CTCollection::getCtCollectionId
+			).orElse(
+				0L
+			);
 
 			_ctEngineManager.checkoutCTCollection(userId, recentCTCollectionId);
 		}
 
-		return _ctEngineManager.getCTCollectionOptional(
-			companyId, recentCTCollectionId);
+		return _ctEngineManager.getCTCollectionOptional(recentCTCollectionId);
 	}
 
 	@Override

@@ -18,9 +18,7 @@ import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Optional;
 
@@ -50,15 +48,11 @@ public class EditCTCollectionMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long ctCollectionId = ParamUtil.getLong(
 			renderRequest, "ctCollectionId");
 
 		Optional<CTCollection> ctCollectionOptional =
-			_ctEngineManager.getCTCollectionOptional(
-				themeDisplay.getCompanyId(), ctCollectionId);
+			_ctEngineManager.getCTCollectionOptional(ctCollectionId);
 
 		ctCollectionOptional.ifPresent(
 			ctCollection -> renderRequest.setAttribute(

@@ -94,7 +94,7 @@ public class LiferayCIGitRepositoriesInitializerUtil {
 
 						gitWorkingDirectory.status();
 
-						return;
+						continue;
 					}
 					catch (Exception e) {
 						e.printStackTrace();

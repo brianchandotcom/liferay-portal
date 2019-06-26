@@ -14,11 +14,10 @@
 
 package com.liferay.portal.configuration;
 
-import com.germinus.easyconf.ComponentProperties;
-
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.easyconf.ClassLoaderAggregateProperties;
+import com.liferay.portal.configuration.easyconf.ComponentProperties;
 import com.liferay.portal.configuration.easyconf.ComponentPropertiesUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;

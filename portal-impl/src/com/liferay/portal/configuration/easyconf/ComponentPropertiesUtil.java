@@ -14,8 +14,6 @@
 
 package com.liferay.portal.configuration.easyconf;
 
-import com.germinus.easyconf.AggregatedProperties;
-import com.germinus.easyconf.ComponentProperties;
 import com.germinus.easyconf.Conventions;
 
 import com.liferay.petra.string.CharPool;
@@ -26,7 +24,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
@@ -65,15 +62,7 @@ public class ComponentPropertiesUtil {
 
 		_loadEnvOverrides(classLoaderAggregateProperties);
 
-		try {
-			return _CONSTRUCTOR.newInstance(
-				new Object[] {classLoaderAggregateProperties});
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return null;
+		return new ComponentProperties(classLoaderAggregateProperties);
 	}
 
 	private static String _decode(String s) {
@@ -152,8 +141,6 @@ public class ComponentPropertiesUtil {
 		}
 	}
 
-	private static final Constructor<ComponentProperties> _CONSTRUCTOR;
-
 	private static final String _ENV_OVERRIDE_PREFIX = "LIFERAY_";
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -162,14 +149,7 @@ public class ComponentPropertiesUtil {
 	private static final Map<String, Character> _charPoolChars;
 
 	static {
-		Constructor<ComponentProperties> constructor = null;
-
 		try {
-			constructor = ComponentProperties.class.getDeclaredConstructor(
-				AggregatedProperties.class);
-
-			constructor.setAccessible(true);
-
 			_charPoolChars = new HashMap<>();
 
 			for (Field field : CharPool.class.getFields()) {
@@ -186,8 +166,6 @@ public class ComponentPropertiesUtil {
 		catch (Exception e) {
 			throw new ExceptionInInitializerError(e);
 		}
-
-		_CONSTRUCTOR = constructor;
 	}
 
 }

@@ -432,6 +432,8 @@ public class LPKGBundleTrackerCustomizer
 				bundleLocations.add(installedBundle.getLocation());
 			}
 
+			bundleLocations.sort(null);
+
 			if (!bundleLocations.equals(
 					_properties.getProperty(bundle.getSymbolicName()))) {
 

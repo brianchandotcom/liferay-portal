@@ -44,7 +44,7 @@ definition {
 			AssertElementNotPresent(locator1 = "Button#SUBSCRIBE");
 		}
 
-		task("Enable the subscribe button") {
+		task ("Enable the subscribe button") {
 			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Subscribe");
 		}
 
@@ -60,7 +60,7 @@ definition {
 	@description = "This is a test for LPS-86192. The default asset link behavior should be 'View in Context'."
 	@priority = "4"
 	test ViewDefaultAssetLinkBehavior {
-		task("## Navigate to Asset Publisher widget display settings.") {
+		task ("## Navigate to Asset Publisher widget display settings.") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
 				siteName = "Test Site Name");
@@ -70,7 +70,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Display Settings");
 		}
 
-		task("## Assert the default asset link behavior is 'View in Context'."){
+		task ("## Assert the default asset link behavior is 'View in Context'.") {
 			AssertSelectedLabel(
 				locator1 = "APConfigurationDisplaysettings#ASSET_LINK_BEHAVIOR_SELECT",
 				value1 = "View in Context");

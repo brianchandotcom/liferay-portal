@@ -6,17 +6,17 @@ definition {
 	property testray.main.component.name = "Site Pages Administration";
 
 	setUp {
-		task("Default setup") {
+		task ("Default setup") {
 			TestCase.setUpPortalInstance();
 
 			User.firstLoginPG();
 		}
 
-		task("Create a Site for the user") {
+		task ("Create a Site for the user") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
 
-		task("Add layouts of various types for the pages finder") {
+		task ("Add layouts of various types for the pages finder") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Portlet Page",
@@ -84,7 +84,7 @@ definition {
 			PagesFinder.inputPageSearch(keyword = "Test");
 		}
 
-		task ("Assert that we find all 11 pages within Pages Administration"){
+		task ("Assert that we find all 11 pages within Pages Administration") {
 			PagesFinder.viewInPagesAdministration();
 
 			AssertTextEquals(

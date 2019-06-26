@@ -130,7 +130,8 @@ definition {
 	macro _getGroupId {
 		if (isSet(groupName)) {
 			var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
-		} else {
+		}
+		else {
 			echo("Using ThemeDisplay to retrieve groupId since groupName is not set");
 
 			var groupId = JSONUtil2._getScopeGroupId();

@@ -74,7 +74,7 @@ definition {
 		if (isSet(searchTerm)) {
 			Search.searchCP(searchTerm = "${searchTerm}");
 		}
-		else{
+		else {
 			Search.searchCP(searchTerm = "${appName}");
 		}
 

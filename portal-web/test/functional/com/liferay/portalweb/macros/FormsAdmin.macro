@@ -136,7 +136,7 @@ definition {
 
 		var key_formDescription = "${formDescription}";
 
-		if(IsVisible(locator1 = "FormsAdmin#FORMS_TABLE_DESCRIPTION")){
+		if (IsVisible(locator1 = "FormsAdmin#FORMS_TABLE_DESCRIPTION")) {
 			AssertTextEquals(
 				locator1 = "FormsAdmin#FORMS_TABLE_DESCRIPTION",
 				value1 = "${formDescription}");

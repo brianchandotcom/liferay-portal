@@ -45,7 +45,8 @@ definition {
 
 		if ("${enabled}" == "true") {
 			FormFields.enableCheckbox(fieldName = "enabled");
-		} else if ("${enabled}" == "false") {
+		}
+		else if ("${enabled}" == "false") {
 			FormFields.disableCheckbox(fieldName = "enabled");
 		}
 

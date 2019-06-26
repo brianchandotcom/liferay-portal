@@ -22,7 +22,8 @@ definition {
 		}
 		else if (isSet(description)) {
 			var descriptionMap = '''{"en_US":"${description}"}''';
-		} else {
+		}
+		else {
 			var descriptionMap = "{}";
 		}
 
@@ -70,7 +71,8 @@ definition {
 		}
 		else if (isSet(description)) {
 			var descriptionMap = '''{"en_US":"${description}"}''';
-		} else {
+		}
+		else {
 			var descriptionMap = "{}";
 		}
 

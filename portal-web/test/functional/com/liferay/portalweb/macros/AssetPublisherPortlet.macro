@@ -269,7 +269,7 @@ definition {
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
-		if (isSet(enableSocialBookmarkSites)){
+		if (isSet(enableSocialBookmarkSites)) {
 			for (var socialBookmarkSite : list "${enableSocialBookmarkSites}") {
 				AddSelection(
 					locator1 = "SocialBookmarks#ENABLE_SOCIAL_BOOKMARK_AVAILABLE_SELECT",

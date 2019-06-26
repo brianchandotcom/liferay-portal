@@ -766,9 +766,10 @@ definition {
 				value1 = "Draft");
 		}
 		else {
-			if("${changeListEnabled}" == "true") {
+			if ("${changeListEnabled}" == "true") {
 				Button.clickPublishToChangeList();
-			} else {
+			}
+			else {
 				PortletEntry.publish();
 			}
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");

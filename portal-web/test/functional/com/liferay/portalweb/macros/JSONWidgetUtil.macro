@@ -15,7 +15,8 @@ definition {
 
 		if (contains("${typeSettings}","column-${column}=")) {
 			var typeSettings = StringUtil.regexReplaceFirst("${typeSettings}","(column-${column}=[^\\]*)","$1,${widget}");
-		} else {
+		}
+		else {
 			var typeSettings = '''${typeSettings}column-${column}''';
 			var typeSettings = '''${typeSettings}=${widget}''';
 		}
@@ -31,47 +32,68 @@ definition {
 
 		if ("${widgetName}" == "Asset Publisher") {
 			var portletId = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet";
-		} else if ("${widgetName}" == "Blogs") {
+		}
+		else if ("${widgetName}" == "Blogs") {
 			var portletId = "com_liferay_blogs_web_portlet_BlogsPortlet";
-		} else if ("${widgetName}" == "Bookmarks") {
+		}
+		else if ("${widgetName}" == "Bookmarks") {
 			var portletId = "com_liferay_bookmarks_web_portlet_BookmarksPortlet";
-		} else if ("${widgetName}" == "Breadcrumb") {
+		}
+		else if ("${widgetName}" == "Breadcrumb") {
 			var portletId = "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet";
-		} else if ("${widgetName}" == "Categories Navigation") {
+		}
+		else if ("${widgetName}" == "Categories Navigation") {
 			var portletId = "com_liferay_asset_categories_navigation_web_portlet_AssetCategoriesNavigationPortlet";
-		} else if ("${widgetName}" == "Documents and Media") {
+		}
+		else if ("${widgetName}" == "Documents and Media") {
 			var portletId = "com_liferay_document_library_web_portlet_DLPortlet";
-		} else if ("${widgetName}" == "Knowledge Base Article") {
+		}
+		else if ("${widgetName}" == "Knowledge Base Article") {
 			var portletId = "com_liferay_knowledge_base_web_portlet_ArticlePortlet";
-		} else if ("${widgetName}" == "Knowledge Base Display") {
+		}
+		else if ("${widgetName}" == "Knowledge Base Display") {
 			var portletId = "com_liferay_knowledge_base_web_portlet_DisplayPortlet";
-		} else if ("${widgetName}" == "Language Selector") {
+		}
+		else if ("${widgetName}" == "Language Selector") {
 			var portletId = "com_liferay_site_navigation_language_web_portlet_SiteNavigationLanguagePortlet";
-		} else if ("${widgetName}" == "Media Gallery") {
+		}
+		else if ("${widgetName}" == "Media Gallery") {
 			var portletId = "com_liferay_document_library_web_portlet_IGDisplayPortlet";
-		} else if ("${widgetName}" == "Message Boards") {
+		}
+		else if ("${widgetName}" == "Message Boards") {
 			var portletId = "com_liferay_message_boards_web_portlet_MBPortlet";
-		} else if ("${widgetName}" == "My Sites") {
+		}
+		else if ("${widgetName}" == "My Sites") {
 			var portletId = "com_liferay_site_my_sites_web_portlet_MySitesPortlet";
-		} else if ("${widgetName}" == "Navigation Menu") {
+		}
+		else if ("${widgetName}" == "Navigation Menu") {
 			var portletId = "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet";
-		} else if ("${widgetName}" == "Related Assets") {
+		}
+		else if ("${widgetName}" == "Related Assets") {
 			var portletId = "com_liferay_asset_publisher_web_portlet_RelatedAssetsPortlet_INSTANCE";
-		}else if ("${widgetName}" == "Search Results") {
+		}
+		else if ("${widgetName}" == "Search Results") {
 			var portletId = "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet";
-		} else if ("${widgetName}" == "Site Map") {
+		}
+		else if ("${widgetName}" == "Site Map") {
 			var portletId = "com_liferay_site_navigation_site_map_web_portlet_SiteNavigationSiteMapPortlet";
-		} else if ("${widgetName}" == "Sites Directory") {
+		}
+		else if ("${widgetName}" == "Sites Directory") {
 			var portletId = "com_liferay_site_navigation_directory_web_portlet_SitesDirectoryPortlet";
-		} else if ("${widgetName}" == "Tags Navigation") {
+		}
+		else if ("${widgetName}" == "Tags Navigation") {
 			var portletId = "com_liferay_asset_tags_navigation_web_portlet_AssetTagsNavigationPortlet";
-		} else if ("${widgetName}" == "Type Facet") {
+		}
+		else if ("${widgetName}" == "Type Facet") {
 			var portletId = "com_liferay_portal_search_web_type_facet_portlet_TypeFacetPortlet";
-		} else if ("${widgetName}" == "Web Content Display") {
+		}
+		else if ("${widgetName}" == "Web Content Display") {
 			var portletId = "com_liferay_journal_content_web_portlet_JournalContentPortlet";
-		} else if ("${widgetName}" == "Wiki") {
+		}
+		else if ("${widgetName}" == "Wiki") {
 			var portletId = "com_liferay_wiki_web_portlet_WikiPortlet";
-		} else {
+		}
+		else {
 			fail("'widgetName' is either invalid or its 'portletId' is not yet set.");
 		}
 
@@ -81,7 +103,8 @@ definition {
 
 		if (contains("${nonRepeatableWidgets}", "${widgetName}")) {
 			var widget = "${portletId}";
-		} else {
+		}
+		else {
 			var widget = "${portletId}_INSTANCE_${instanceId}";
 		}
 

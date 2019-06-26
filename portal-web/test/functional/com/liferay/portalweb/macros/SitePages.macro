@@ -145,7 +145,8 @@ definition {
 		}
 		else if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
 			SitePages.gotoAddFirstPage(pageType = "Private Page");
-		} else {
+		}
+		else {
 			AssertClick(
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
 				value1 = "Pages");

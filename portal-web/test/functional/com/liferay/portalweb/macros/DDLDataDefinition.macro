@@ -178,7 +178,7 @@ definition {
 	}
 
 	macro save {
-		if("${changeListEnabled}" == "true") {
+		if ("${changeListEnabled}" == "true") {
 			Button.clickPublishToChangeList();
 		}
 		else {
@@ -211,7 +211,7 @@ definition {
 
 		SelectFrameTop();
 
-		while(IsElementNotPresent(locator1 = "IFrame#DIALOG")){
+		while (IsElementNotPresent(locator1 = "IFrame#DIALOG")) {
 			Pause(locator1 = "1000");
 		}
 

@@ -25,8 +25,6 @@ public interface CTConstants {
 
 	public static final int CT_CHANGE_TYPE_MODIFICATION = 2;
 
-	public static final long CT_COLLECTION_ID_PRODUCTION = -1;
-
 	public static final String CT_COLLECTION_NAME_PRODUCTION =
 		"productionCTCollectionName";
 

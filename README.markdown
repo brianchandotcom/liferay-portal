@@ -36,8 +36,8 @@ For more details on these and other features, please refer to the
 
 To get up and running quickly, follow the steps below:
 
-1. Download a [pre-built Liferay Portal release](https://portal.liferay.dev/download).
-   For starters, it's recommended to choose Liferay Portal bundled with Tomcat.
+1. Download a [pre-built Liferay Portal release](https://portal.liferay.dev/download)
+    bundled with Tomcat.
 
 2. Download and install
    [Java (JDK) 8](http://www.oracle.com/technetwork/java/javase/downloads/index.html)

@@ -168,7 +168,7 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 
 		try {
 			FileConfiguration newFileConfiguration =
-				new PropertiesConfiguration(fileName) {
+				new PropertiesConfiguration(url) {
 
 					@Override
 					public String getEncoding() {

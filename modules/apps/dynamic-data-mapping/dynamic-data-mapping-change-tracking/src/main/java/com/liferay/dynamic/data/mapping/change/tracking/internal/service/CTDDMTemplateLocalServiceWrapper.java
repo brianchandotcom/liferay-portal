@@ -171,6 +171,12 @@ public class CTDDMTemplateLocalServiceWrapper
 	private Optional<DDMTemplateVersion> _getRetrievableVersionOptional(
 		DDMTemplate ddmTemplate) {
 
+		if (!_ctEngineManager.isChangeTrackingEnabled(
+				ddmTemplate.getCompanyId())) {
+
+			return Optional.empty();
+		}
+
 		List<DDMTemplateVersion> ddmTemplateVersions =
 			_ddmTemplateVersionLocalService.getTemplateVersions(
 				ddmTemplate.getTemplateId(), QueryUtil.ALL_POS,

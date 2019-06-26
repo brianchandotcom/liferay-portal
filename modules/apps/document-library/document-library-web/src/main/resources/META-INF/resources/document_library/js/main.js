@@ -241,38 +241,40 @@ AUI.add(
 					var itemData = event.data.item.data;
 
 					if (itemData.action === 'openDocumentTypesSelector') {
-						var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-							{
-								eventName: instance.ns('selectFileEntryType'),
-								on: {
-									selectedItemChange: function(event) {
-										var selectedItem = event.newVal;
+						Liferay.Loader.require(
+							'frontend-js-web/liferay/ItemSelectorDialog.es',
+							function(ItemSelectorDialog) {
 
-										if (selectedItem) {
-											var uri = instance.get(
-												'viewFileEntryTypeURL'
-											);
+								var itemSelectorDialog = new ItemSelectorDialog.default({
+									buttonAddLabel: Liferay.Language.get('select'),
+									eventName: instance.ns('selectFileEntryType'),
+									title: Liferay.Language.get('select-document-type'),
+									url: instance.get('selectFileEntryTypeURL')
+								});
 
-											uri = Liferay.Util.addParams(
-												instance.ns(
-													'fileEntryTypeId='
-												) + selectedItem,
-												uri
-											);
+								itemSelectorDialog.open();
 
-											location.href = uri;
-										}
+								itemSelectorDialog.on('selectedItemChange', event => {
+									var selectedItem = event.selectedItem;
+
+									if (selectedItem) {
+										var uri = instance.get(
+											'viewFileEntryTypeURL'
+										);
+
+										uri = Liferay.Util.addParams(
+											instance.ns(
+												'fileEntryTypeId='
+											) + selectedItem,
+											uri
+										);
+
+										location.href = uri;
 									}
-								},
-								'strings.add': Liferay.Language.get('select'),
-								title: Liferay.Language.get(
-									'select-document-type'
-								),
-								url: instance.get('selectFileEntryTypeURL')
+								})
+
 							}
 						);
-
-						itemSelectorDialog.open();
 					}
 				},
 
@@ -559,7 +561,6 @@ AUI.add(
 		requires: [
 			'document-library-checkin',
 			'document-library-upload',
-			'liferay-item-selector-dialog',
 			'liferay-message',
 			'liferay-portlet-base'
 		]

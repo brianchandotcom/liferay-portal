@@ -21,9 +21,6 @@
 		"svg4everybody": "^2.1.8",
 		"uuid": "^3.3.2"
 	},
-	"devDependencies": {
-		"babel-loader": "^8.0.5"
-	},
 	"jest": {
 		"globals": {
 			"Liferay": {}

@@ -118,8 +118,6 @@
 		<!-- Temporary suppressions for frontend build setup (Chema) -->
 
 		<suppress checks="JSONPackageJSONCheck" files="modules/apps/analytics/analytics-client-js/package\.json" />
-		<suppress checks="JSONPackageJSONCheck" files="modules/apps/frontend-js/frontend-js-node-shims/package\.json" />
-		<suppress checks="JSONPackageJSONCheck" files="modules/apps/frontend-js/frontend-js-web/package\.json" />
 		<suppress checks="JSONPackageJSONCheck" files="modules/apps/segments/segments-web/package\.json" />
 	</source-check>
 </suppressions>

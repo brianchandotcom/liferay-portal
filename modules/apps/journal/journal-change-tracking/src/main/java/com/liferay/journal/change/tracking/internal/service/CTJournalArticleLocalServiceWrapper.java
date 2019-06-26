@@ -1884,20 +1884,6 @@ public class CTJournalArticleLocalServiceWrapper
 			return true;
 		}
 
-		if (!_ctManager.isDraftChange(
-				_portal.getClassNameId(JournalArticle.class.getName()),
-				journalArticle.getId())) {
-
-			return true;
-		}
-
-		if (_ctManager.isProductionCheckedOut(
-				journalArticle.getCompanyId(),
-				PrincipalThreadLocal.getUserId())) {
-
-			return false;
-		}
-
 		Optional<CTEntry> ctEntryOptional =
 			_ctManager.getActiveCTCollectionCTEntryOptional(
 				journalArticle.getCompanyId(), PrincipalThreadLocal.getUserId(),

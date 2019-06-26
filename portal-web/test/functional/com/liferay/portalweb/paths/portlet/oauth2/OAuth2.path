@@ -95,6 +95,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADMIN_RESOURCE_SCOPE_ALIASE</td>
+	<td>//a[contains(.,'${key_resourcePanel}')]//following-sibling::div//label[contains(@for,'scopeAlias')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADMIN_RESOURCE_SCOPE_CHECKBOX</td>
 	<td>//input[@value='${key_scopeName}']</td>
 	<td></td>
@@ -102,6 +107,11 @@
 <tr>
 	<td>ADMIN_RESOURCE_SCOPE_CHECKED</td>
 	<td>xpath=(//div[contains(@aria-labelledby,'navResourceScopesTab')]//input[@type='checkbox'][@checked=''])[${key_matchCount}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_RESOURCE_SCOPE_NAME</td>
+	<td>//span[contains(@class,'badge-item') and contains(.,'${key_scopeName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -210,18 +210,12 @@ public class ConfigurationPersistenceManager
 		}
 	}
 
-	protected String buildSQL(String sql) throws IOException {
-		DB db = DBManagerUtil.getDB();
-
-		return db.buildSQL(sql);
-	}
-
 	protected void createConfigurationTable() throws IOException, SQLException {
 		try (Connection connection = _dataSource.getConnection();
 			Statement statement = connection.createStatement()) {
 
 			statement.executeUpdate(
-				buildSQL(
+				_db.buildSQL(
 					"create table Configuration_ (configurationId " +
 						"VARCHAR(255) not null primary key, dictionary TEXT)"));
 		}
@@ -230,7 +224,7 @@ public class ConfigurationPersistenceManager
 	protected void deleteFromDatabase(String pid) throws IOException {
 		try (Connection connection = _dataSource.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				buildSQL(
+				_db.buildSQL(
 					"delete from Configuration_ where configurationId = ?"))) {
 
 			preparedStatement.setString(1, pid);
@@ -345,7 +339,7 @@ public class ConfigurationPersistenceManager
 	protected Dictionary<?, ?> getDictionary(String pid) throws IOException {
 		try (Connection connection = _dataSource.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				buildSQL(
+				_db.buildSQL(
 					"select dictionary from Configuration_ where " +
 						"configurationId = ?"))) {
 
@@ -367,7 +361,7 @@ public class ConfigurationPersistenceManager
 	protected boolean hasPid(String pid) {
 		try (Connection connection = _dataSource.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				buildSQL(
+				_db.buildSQL(
 					"select count(*) from Configuration_ where " +
 						"configurationId = ?"))) {
 
@@ -395,7 +389,7 @@ public class ConfigurationPersistenceManager
 	protected void populateDictionaries() {
 		try (Connection connection = _dataSource.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				buildSQL(
+				_db.buildSQL(
 					"select configurationId, dictionary from Configuration_ " +
 						"ORDER BY configurationId ASC"),
 				ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
@@ -439,7 +433,7 @@ public class ConfigurationPersistenceManager
 			connection.setAutoCommit(false);
 
 			try (PreparedStatement ps1 = connection.prepareStatement(
-					buildSQL(
+					_db.buildSQL(
 						"update Configuration_ set dictionary = ? where " +
 							"configurationId = ?"))) {
 
@@ -448,7 +442,7 @@ public class ConfigurationPersistenceManager
 
 				if (ps1.executeUpdate() == 0) {
 					try (PreparedStatement ps2 = connection.prepareStatement(
-							buildSQL(
+							_db.buildSQL(
 								"insert into Configuration_ (" +
 									"configurationId, dictionary) values (?, " +
 										"?)"))) {
@@ -601,6 +595,7 @@ public class ConfigurationPersistenceManager
 
 	private final BundleContext _bundleContext;
 	private final DataSource _dataSource;
+	private DB _db = DBManagerUtil.getDB();
 	private final ConcurrentMap<String, Dictionary<?, ?>> _dictionaries =
 		new ConcurrentHashMap<>();
 	private final ReadWriteLock _readWriteLock = new ReentrantReadWriteLock(

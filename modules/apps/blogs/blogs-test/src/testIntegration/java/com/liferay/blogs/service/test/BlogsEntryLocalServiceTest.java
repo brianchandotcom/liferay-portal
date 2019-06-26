@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.subscription.service.SubscriptionLocalServiceUtil;
 
@@ -244,7 +245,7 @@ public class BlogsEntryLocalServiceTest {
 
 		Assert.assertEquals(
 			2,
-			PortletFileRepositoryUtil.getPortletFileEntriesCount(
+			_portletFileRepository.getPortletFileEntriesCount(
 				fileEntry2.getGroupId(), fileEntry2.getFolderId()));
 	}
 
@@ -420,9 +421,8 @@ public class BlogsEntryLocalServiceTest {
 				_user.getUserId(), _group.getGroupId(), blogsEntry.getEntryId(),
 				imageSelector);
 
-		FileEntry portletFileEntry =
-			PortletFileRepositoryUtil.getPortletFileEntry(
-				originalImageFileEntryId);
+		FileEntry portletFileEntry = _portletFileRepository.getPortletFileEntry(
+			originalImageFileEntryId);
 
 		DLFileEntry dlFileEntry = (DLFileEntry)portletFileEntry.getModel();
 
@@ -1356,6 +1356,9 @@ public class BlogsEntryLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private User _organizationUser;
+
+	@Inject
+	private PortletFileRepository _portletFileRepository;
 
 	private final QueryDefinition<BlogsEntry> _statusAnyQueryDefinition =
 		new QueryDefinition<>(

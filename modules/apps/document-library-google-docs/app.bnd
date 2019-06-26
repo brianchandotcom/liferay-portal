@@ -1,4 +1,4 @@
-Liferay-Releng-App-Description: The Liferay Plugin for Google Drive&trade; lets users create shortcuts to Google Drive&trade; files in their Documents and Media repositories. These documents can be viewed and managed from Documents and Media. Once deployed, you can configure this app from the Control Panel.
+Liferay-Releng-App-Description: %liferay-releng-app-description
 Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Plugin for Google Drive
 Liferay-Releng-Bundle: false
 Liferay-Releng-Category: Productivity

@@ -85,11 +85,13 @@ public interface DataDefinitionResource {
 		throws Exception;
 
 	public Page<DataDefinition> getSiteDataDefinitionsPage(
-			Long siteId, String keywords, Pagination pagination)
+			Long siteId, String keywords, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSiteDataDefinitionsPageHttpResponse(
-			Long siteId, String keywords, Pagination pagination)
+			Long siteId, String keywords, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public DataDefinition postSiteDataDefinition(
@@ -404,12 +406,13 @@ public interface DataDefinitionResource {
 		}
 
 		public Page<DataDefinition> getSiteDataDefinitionsPage(
-				Long siteId, String keywords, Pagination pagination)
+				Long siteId, String keywords, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getSiteDataDefinitionsPageHttpResponse(
-					siteId, keywords, pagination);
+					siteId, keywords, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -423,7 +426,8 @@ public interface DataDefinitionResource {
 		}
 
 		public HttpInvoker.HttpResponse getSiteDataDefinitionsPageHttpResponse(
-				Long siteId, String keywords, Pagination pagination)
+				Long siteId, String keywords, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -444,6 +448,10 @@ public interface DataDefinitionResource {
 					"page", String.valueOf(pagination.getPage()));
 				httpInvoker.parameter(
 					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
 			}
 
 			httpInvoker.path(

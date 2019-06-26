@@ -979,7 +979,7 @@ this task.
 					file="${app.server.tcserver.bin.dir}/setenv.bat"
 				>
 					<replacetoken><![CDATA[set JVM_OPTS=-Xmx512M -Xss256K]]></replacetoken>
-					<replacevalue><![CDATA[set JVM_OPTS=-Dfile.encoding=UTF-8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=768m -XX:MetaspaceSize=768m -XX:NewSize=1536m -XX:SurvivorRatio=7]]></replacevalue>
+					<replacevalue expandProperties="true"><![CDATA[set JVM_OPTS=${app.server.tcserver.jvm.args} ${app.server.tcserver.jvm.mem}]]></replacevalue>
 				</replace>
 			</then>
 			<else>
@@ -987,7 +987,7 @@ this task.
 					file="${app.server.tcserver.bin.dir}/setenv.sh"
 				>
 					<replacetoken><![CDATA[JVM_OPTS="-Xmx512M -Xss256K"]]></replacetoken>
-					<replacevalue><![CDATA[JVM_OPTS="-Dfile.encoding=UTF-8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=768m -XX:MetaspaceSize=768m -XX:NewSize=1536m -XX:SurvivorRatio=7"]]></replacevalue>
+					<replacevalue expandProperties="true"><![CDATA[JVM_OPTS="${app.server.tcserver.jvm.args} ${app.server.tcserver.jvm.mem}"]]></replacevalue>
 				</replace>
 			</else>
 		</if>
@@ -1333,7 +1333,7 @@ closeTemplate()
 							@echo off
 
 							set "MW_HOME=${app.server.weblogic.dir.windows}"
-							set "USER_MEM_ARGS=-Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=768m -XX:MetaspaceSize=768m -XX:NewSize=1536m -XX:SurvivorRatio=7"
+							set "USER_MEM_ARGS=${app.server.weblogic.jvm.mem}"
 							set "WL_HOME=${app.server.weblogic.wlserver.dir.windows}"
 
 							call %MW_HOME%/oracle_common/common/bin/commEnv.cmd
@@ -1355,7 +1355,7 @@ closeTemplate()
 							@echo off
 
 							set "MW_HOME=${app.server.weblogic.dir.windows}"
-							set "USER_MEM_ARGS=-Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=768m -XX:MetaspaceSize=768m -XX:NewSize=1536m -XX:SurvivorRatio=7"
+							set "USER_MEM_ARGS=${app.server.weblogic.jvm.mem}"
 							set "WL_HOME=${app.server.weblogic.wlserver.dir.windows}"
 
 							call %WL_HOME%/common/bin/commEnv.cmd
@@ -1376,14 +1376,14 @@ closeTemplate()
 					file="${app.server.weblogic.instance.dir}/startWebLogic.cmd"
 				>
 					<replacetoken><![CDATA[SETLOCAL]]></replacetoken>
-					<replacevalue>
+					<replacevalue expandProperties="true">
 						<![CDATA[
 							SETLOCAL
 
 							set DERBY_FLAG="false"
 							set "JAVA_OPTIONS=%JAVA_OPTIONS% -Dfile.encoding=UTF-8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -da:org.apache.lucene... -da:org.aspectj..."
 							set "MW_HOME=${app.server.weblogic.dir.windows}"
-							set "USER_MEM_ARGS=-Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=768m -XX:MetaspaceSize=768m -XX:NewSize=1536m -XX:SurvivorRatio=7"
+							set "USER_MEM_ARGS=${app.server.weblogic.jvm.mem}"
 						]]>
 					</replacevalue>
 				</replace>
@@ -1510,7 +1510,7 @@ closeTemplate()
 							#!/bin/sh
 
 							export MW_HOME="${app.server.weblogic.dir}"
-							export USER_MEM_ARGS="-Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=768m -XX:MetaspaceSize=768m -XX:NewSize=1536m -XX:SurvivorRatio=7"
+							export USER_MEM_ARGS="${app.server.weblogic.jvm.mem}"
 							export WL_HOME="${app.server.weblogic.wlserver.dir}"
 
 							${source.command} ${MW_HOME}/oracle_common/common/bin/commEnv.sh
@@ -1525,7 +1525,7 @@ closeTemplate()
 							#!/bin/sh
 
 							export MW_HOME="${app.server.weblogic.dir}"
-							export USER_MEM_ARGS="-Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=768m -XX:MetaspaceSize=768m -XX:NewSize=1536m -XX:SurvivorRatio=7"
+							export USER_MEM_ARGS="${app.server.weblogic.jvm.mem}"
 							export WL_HOME="${app.server.weblogic.wlserver.dir}"
 
 							${source.command} ${WL_HOME}/common/bin/commEnv.sh
@@ -1550,14 +1550,14 @@ closeTemplate()
 					file="${app.server.weblogic.instance.dir}/startWebLogic.sh"
 				>
 					<replacetoken><![CDATA[# Any changes to this script may be lost when adding extensions to this configuration.]]></replacetoken>
-					<replacevalue>
+					<replacevalue expandProperties="true">
 						<![CDATA[
 							# Any changes to this script may be lost when adding extensions to this configuration.
 
 							export DERBY_FLAG="false"
-							export JAVA_OPTIONS="${JAVA_OPTIONS} -Dfile.encoding=UTF-8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -da:org.apache.lucene... -da:org.aspectj... "
+							export JAVA_OPTIONS="${JAVA_OPTIONS} ${app.server.weblogic.jvm.args} -da:org.apache.lucene... -da:org.aspectj... "
 							export MW_HOME="${app.server.weblogic.dir}"
-							export USER_MEM_ARGS="-Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=768m -XX:MetaspaceSize=768m -XX:NewSize=1536m -XX:SurvivorRatio=7"
+							export USER_MEM_ARGS="${app.server.weblogic.jvm.mem}"
 						]]>
 					</replacevalue>
 				</replace>
@@ -1677,7 +1677,7 @@ this task.
 					file="${app.server.weblogic.instance.dir}/startWebLogic.sh"
 				>
 					<replacetoken><![CDATA[-Xmx1024m]]></replacetoken>
-					<replacevalue><![CDATA[-Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=768m -XX:MetaspaceSize=768m -XX:NewSize=1536m -XX:SurvivorRatio=7]]></replacevalue>
+					<replacevalue expandProperties="true"><![CDATA[${app.server.weblogic.jvm.args} ${app.server.weblogic.jvm.mem}]]></replacevalue>
 				</replace>
 			</then>
 			<elseif>
@@ -2468,7 +2468,7 @@ this task.
 
 		<echo append="true" file="${app.server.wildfly.bin.dir}/standalone.conf">
 			<![CDATA[
-				JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=768m -XX:MetaspaceSize=768m -XX:NewSize=1536m -XX:SurvivorRatio=7"
+				JAVA_OPTS="$JAVA_OPTS ${app.server.wildfly.jvm.args} ${app.server.wildfly.jvm.mem}"
 			]]>
 		</echo>
 
@@ -2483,9 +2483,9 @@ this task.
 			file="${app.server.wildfly.bin.dir}/standalone.conf.bat"
 		>
 			<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
-			<replacevalue>
+			<replacevalue expandProperties="true">
 				<![CDATA[
-					set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xms2560m -Xmx2560m -XX:MaxNewSize=1536m -XX:MaxMetaspaceSize=768m -XX:MetaspaceSize=768m -XX:NewSize=1536m -XX:SurvivorRatio=7"
+					set "JAVA_OPTS=%JAVA_OPTS% ${app.server.wildfly.jvm.args} ${app.server.wildfly.jvm.mem}"
 
 					:JAVA_OPTS_SET
 				]]>

@@ -20,12 +20,8 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -105,12 +101,6 @@ public class DeletionSystemEventImporter {
 		}
 
 		try {
-			String className = stagedModelType.getClassName();
-
-			if (className.equals(Layout.class.getName())) {
-				_replacePrivateLayoutExtraData(element, portletDataContext);
-			}
-
 			StagedModelDataHandlerUtil.deleteStagedModel(
 				portletDataContext, element);
 		}
@@ -129,36 +119,6 @@ public class DeletionSystemEventImporter {
 	}
 
 	private DeletionSystemEventImporter() {
-	}
-
-	private void _replacePrivateLayoutExtraData(
-			Element element, PortletDataContext portletDataContext)
-		throws JSONException {
-
-		String layoutImportMode = MapUtil.getString(
-			portletDataContext.getParameterMap(),
-			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE);
-
-		if (!layoutImportMode.equals(
-				PortletDataHandlerKeys.
-					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
-
-			return;
-		}
-
-		String extraData = element.attributeValue("extra-data");
-
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
-			extraData);
-
-		boolean privateLayout = extraDataJSONObject.getBoolean("privateLayout");
-
-		if (privateLayout != portletDataContext.isPrivateLayout()) {
-			extraDataJSONObject.put(
-				"privateLayout", portletDataContext.isPrivateLayout());
-
-			element.addAttribute("extra-data", extraDataJSONObject.toString());
-		}
 	}
 
 	private boolean _shouldImportDeletionSystemEvent(

@@ -30,16 +30,7 @@ import java.util.List;
 public class CTEntryCollisionUtil {
 
 	public static void checkCollidingCTEntries(CTEntry ctEntry) {
-		checkCollidingCTEntries(
-			ctEntry.getCompanyId(), ctEntry.getModelClassPK(),
-			ctEntry.getModelResourcePrimKey());
-	}
-
-	public static void checkCollidingCTEntries(
-		long companyId, long modelClassPK, long modelResourcePrimKey) {
-
-		List<CTEntry> collidingCTEntries = _getCollidingCTEntries(
-			companyId, modelClassPK, modelResourcePrimKey);
+		List<CTEntry> collidingCTEntries = _getCollidingCTEntries(ctEntry);
 
 		if (ListUtil.isEmpty(collidingCTEntries)) {
 			return;
@@ -50,24 +41,23 @@ public class CTEntryCollisionUtil {
 				collidingCTEntry.getCtEntryId(), true));
 	}
 
-	private static List<CTEntry> _getCollidingCTEntries(
-		long companyId, long modelClassPK, long modelResourcePrimKey) {
-
+	private static List<CTEntry> _getCollidingCTEntries(CTEntry ctEntry) {
 		DynamicQuery dynamicQuery = CTEntryLocalServiceUtil.dynamicQuery();
 
 		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
 
-		dynamicQuery.add(companyIdProperty.eq(companyId));
+		dynamicQuery.add(companyIdProperty.eq(ctEntry.getCompanyId()));
 
 		Property modelClassPKProperty = PropertyFactoryUtil.forName(
 			"modelClassPK");
 
-		dynamicQuery.add(modelClassPKProperty.lt(modelClassPK));
+		dynamicQuery.add(modelClassPKProperty.lt(ctEntry.getModelClassPK()));
 
 		Property modelResourcePrimKeyProperty = PropertyFactoryUtil.forName(
 			"modelResourcePrimKey");
 
-		dynamicQuery.add(modelResourcePrimKeyProperty.eq(modelResourcePrimKey));
+		dynamicQuery.add(
+			modelResourcePrimKeyProperty.eq(ctEntry.getModelResourcePrimKey()));
 
 		Property statusProperty = PropertyFactoryUtil.forName("status");
 

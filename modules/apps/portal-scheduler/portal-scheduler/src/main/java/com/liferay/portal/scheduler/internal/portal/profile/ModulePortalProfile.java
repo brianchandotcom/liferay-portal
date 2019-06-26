@@ -30,6 +30,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -62,7 +64,7 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 			bundleContext.registerService(
 				SchedulerEngineHelper.class,
 				ProxyFactory.newDummyInstance(SchedulerEngineHelper.class),
-				new HashMapDictionary<String, Object>());
+				new HashMapDictionary<>());
 		}
 
 		init(
@@ -73,10 +75,11 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 	}
 
 	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		_props = props;
-	}
-
 	private Props _props;
+
+	@Reference(
+		target = "(&(original.bean=true)(bean.id=javax.servlet.ServletContext))"
+	)
+	private ServletContext _servletContext;
 
 }

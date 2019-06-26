@@ -651,6 +651,18 @@ release was successful.</echo>
 
 	</target>
 
+	<target name="generate-tomcat-setenv">
+		<echo file="tools/servers/tomcat/bin/setenv.sh">CATALINA_OPTS="$CATALINA_OPTS ${app.server.tomcat.jvm.args} ${app.server.tomcat.jvm.mem}"</echo>
+
+		<chmod
+			file="tools/servers/tomcat/bin/setenv.sh"
+			perm="a+x"
+		/>
+
+		<echo file="tools/servers/tomcat/bin/setenv.bat">set "CATALINA_OPTS=%CATALINA_OPTS% ${app.server.tomcat.jvm.args} ${app.server.tomcat.jvm.mem}"</echo>
+	</target>
+
+
 	<target name="prepare-generated-files">
 		<antcall target="clean" />
 		<antcall target="start" />

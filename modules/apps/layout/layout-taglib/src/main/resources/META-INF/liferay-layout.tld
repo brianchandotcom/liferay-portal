@@ -168,12 +168,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>previewClassPK</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>previewType</name>
+			<name>showPreview</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

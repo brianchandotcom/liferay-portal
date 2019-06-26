@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsConstants;
@@ -54,12 +55,8 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		return _plid;
 	}
 
-	public long getPreviewClassPK() {
-		return _previewClassPK;
-	}
-
-	public int getPreviewType() {
-		return _previewType;
+	public boolean getShowPreview() {
+		return _showPreview;
 	}
 
 	public void setFieldValues(Map<String, Object> fieldValues) {
@@ -85,12 +82,8 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		_plid = plid;
 	}
 
-	public void setPreviewClassPK(long previewClassPK) {
-		_previewClassPK = previewClassPK;
-	}
-
-	public void setPreviewType(int previewType) {
-		_previewType = previewType;
+	public void setShowPreview(boolean showPreview) {
+		_showPreview = showPreview;
 	}
 
 	@Override
@@ -101,8 +94,7 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		_groupId = 0;
 		_mode = null;
 		_plid = 0;
-		_previewClassPK = 0;
-		_previewType = 0;
+		_showPreview = false;
 	}
 
 	@Override
@@ -120,15 +112,32 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			"liferay-layout:render-fragment-layout:mode", _mode);
 		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:previewClassPK",
-			_previewClassPK);
+			_getPreviewClassPK());
 		httpServletRequest.setAttribute(
-			"liferay-layout:render-fragment-layout:previewType", _previewType);
+			"liferay-layout:render-fragment-layout:previewType",
+			_getPreviewType());
 		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:segmentsExperienceIds",
 			_getSegmentsExperienceIds());
 		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:structureJSONArray",
 			_getStructureJSONArray());
+	}
+
+	private long _getPreviewClassPK() {
+		if (!_showPreview) {
+			return 0;
+		}
+
+		return ParamUtil.getLong(request, "previewAssetEntryId");
+	}
+
+	private long _getPreviewType() {
+		if (!_showPreview) {
+			return 0;
+		}
+
+		return ParamUtil.getInteger(request, "previewAssetEntryType");
 	}
 
 	private long[] _getSegmentsExperienceIds() {
@@ -173,7 +182,6 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 	private long _groupId;
 	private String _mode;
 	private long _plid;
-	private long _previewClassPK;
-	private int _previewType;
+	private boolean _showPreview;
 
 }

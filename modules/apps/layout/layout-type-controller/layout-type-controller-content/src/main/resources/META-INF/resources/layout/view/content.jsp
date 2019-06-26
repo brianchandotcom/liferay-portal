@@ -18,8 +18,6 @@
 
 <%
 String ppid = ParamUtil.getString(request, "p_p_id");
-long previewAssetEntryId = ParamUtil.getLong(request, "previewAssetEntryId");
-int previewAssetEntryType = ParamUtil.getInteger(request, "previewAssetEntryType");
 %>
 
 <liferay-ui:success key="layoutPublished" message="the-page-was-published-succesfully" />
@@ -56,8 +54,7 @@ int previewAssetEntryType = ParamUtil.getInteger(request, "previewAssetEntryType
 			groupId="<%= layout.getGroupId() %>"
 			mode="<%= FragmentEntryLinkConstants.VIEW %>"
 			plid="<%= layout.getPlid() %>"
-			previewClassPK="<%= previewAssetEntryId %>"
-			previewType="<%= previewAssetEntryType %>"
+			showPreview="<%= true %>"
 		/>
 	</c:otherwise>
 </c:choose>

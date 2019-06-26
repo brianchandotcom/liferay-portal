@@ -10,7 +10,7 @@ To get started, check out the project's homepage at
 
 ## Product Details
 
-Liferay Portal is built from the source code found in 
+Liferay Portal is built from the source code found in
 [liferay-portal](https://github.com/liferay/liferay-portal) repository
 and several other related open source projects. It includes
 features for end users, business professionals, system administrators, and
@@ -71,7 +71,7 @@ For more detailed installation instructions, refer to the
 [deployment guide](https://portal.liferay.dev/docs/latest/deploy).
 
 If you wish to *build* core Liferay Portal or its plugins, read
-[Building Liferay Portal from source code](https://portal.liferay.dev/participate/fix-a-bug/building-liferay-source). 
+[Building Liferay Portal from source code](https://portal.liferay.dev/participate/fix-a-bug/building-liferay-source).
 It includes details on using the repositories and building the software.
 
 ## Liferay Portal website
@@ -79,7 +79,7 @@ It includes details on using the repositories and building the software.
 The [Liferay Portal website](https://portal.liferay.dev) is the best place
 to learn about Liferay Portal.
 
-It has over 200 tutorials, guided learning, and much more. Developer documentation 
+It has over 200 tutorials, guided learning, and much more. Developer documentation
 explains
 
 - [How to build various applications](https://portal.liferay.dev/docs/latest/appdev),
@@ -98,7 +98,7 @@ in making Liferay Portal better:
 
 ## Liferay Marketplace Developer Portal
 
-If you create apps that you want to share or sell, you can visit 
+If you create apps that you want to share or sell, you can visit
 [Liferay Marketplace Developer Portal](https://marketplace.liferay.dev/)
 to learn how to publish apps to the [Liferay Marketplace](https://web.liferay.com/marketplace).
 
@@ -109,7 +109,7 @@ Liferay Portal's main source code resides in the
 maintains [many other repositories](https://github.com/liferay) related to
 features and supporting documentation.
 
-Liferay Portal *releases* are built from the 
+Liferay Portal *releases* are built from the
 [liferay-portal](https://github.com/liferay/liferay-portal) repository. You can
 build Liferay Portal, its modules, and/or any of the other supporting
 technologies from their respective folders/repositories.

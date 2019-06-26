@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.math.BigDecimal;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -302,8 +304,12 @@ public class DDMFormContextToDDMForm
 		ddmFormFieldValue.setValue(new UnlocalizedValue(serializedValue));
 
 		if (ddmFormFieldValueAccessor != null) {
-			return ddmFormFieldValueAccessor.getValue(
+			Object value = ddmFormFieldValueAccessor.getValue(
 				ddmFormFieldValue, defaultLocale);
+
+			if (!(value instanceof BigDecimal)) {
+				return value;
+			}
 		}
 
 		return serializedValue;

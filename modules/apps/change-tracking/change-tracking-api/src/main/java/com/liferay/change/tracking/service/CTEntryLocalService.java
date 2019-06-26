@@ -365,6 +365,24 @@ public interface CTEntryLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getRelatedOwnerCTEntries(long, QueryDefinition)}
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTEntry> getRelatedOwnerCTEntries(long ctEntryId);
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getRelatedOwnerCTEntries(long, QueryDefinition)}
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTEntry> getRelatedOwnerCTEntries(
+		long ctEntryId, int start, int end,
+		OrderByComparator<CTEntry> orderByComparator);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTEntry> getRelatedOwnerCTEntries(
 		long companyId, long ctCollectionId, long ctEntryId, String keywords,
@@ -373,6 +391,14 @@ public interface CTEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTEntry> getRelatedOwnerCTEntries(
 		long ctEntryId, QueryDefinition<CTEntry> queryDefinition);
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getRelatedOwnerCTEntriesCount(long, QueryDefinition)}
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRelatedOwnerCTEntriesCount(long ctEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getRelatedOwnerCTEntriesCount(

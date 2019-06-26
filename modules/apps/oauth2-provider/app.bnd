@@ -1,4 +1,4 @@
-Liferay-Releng-App-Description: Liferay Plugin for OAuth 2.0 is an industry-standard authorization protocol. Users can seamlessly share select credentials from another website to log into yours. It works by authorizing password-less access to portions of user-owned resources (such as an email address, a user profile picture, or something else from your account) and other permissioned resources.
+Liferay-Releng-App-Description: %liferay-releng-app-description
 Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Plugin for OAuth 2.0
 Liferay-Releng-Bundle: true
 Liferay-Releng-Category: Security

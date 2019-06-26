@@ -70,8 +70,11 @@ public class ConfigurationPersistenceManager
 	implements NotCachablePersistenceManager, PersistenceManager,
 			   ReloadablePersistenceManager {
 
-	public ConfigurationPersistenceManager(BundleContext bundleContext) {
+	public ConfigurationPersistenceManager(
+		BundleContext bundleContext, DataSource dataSource) {
+
 		_bundleContext = bundleContext;
+		_dataSource = dataSource;
 	}
 
 	@Override
@@ -159,10 +162,6 @@ public class ConfigurationPersistenceManager
 		finally {
 			lock.unlock();
 		}
-	}
-
-	public void setDataSource(DataSource dataSource) {
-		_dataSource = dataSource;
 	}
 
 	public void start() {
@@ -601,7 +600,7 @@ public class ConfigurationPersistenceManager
 		new HashMapDictionary<>();
 
 	private final BundleContext _bundleContext;
-	private DataSource _dataSource;
+	private final DataSource _dataSource;
 	private final ConcurrentMap<String, Dictionary<?, ?>> _dictionaries =
 		new ConcurrentHashMap<>();
 	private final ReadWriteLock _readWriteLock = new ReentrantReadWriteLock(

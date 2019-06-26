@@ -51,16 +51,13 @@ public class ConfigurationPersistenceImplBundleActivator
 				"Liferay data source is not available");
 		}
 
-		_configurationPersistenceManager = new ConfigurationPersistenceManager(
-			bundleContext);
-
 		Iterator<ServiceReference<DataSource>> iterator =
 			serviceReferences.iterator();
 
 		_serviceReference = iterator.next();
 
-		_configurationPersistenceManager.setDataSource(
-			bundleContext.getService(_serviceReference));
+		_configurationPersistenceManager = new ConfigurationPersistenceManager(
+			bundleContext, bundleContext.getService(_serviceReference));
 
 		_configurationPersistenceManager.start();
 

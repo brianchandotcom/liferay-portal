@@ -307,7 +307,6 @@ public interface CTManager {
 	 * @param  userId the primary key of the user
 	 * @return <code>true</code> if there is no active change collection
 	 *         currently and the changes take place directly on production
-	 * @review
 	 */
 	public boolean isProductionCheckedOut(long companyId, long userId);
 
@@ -323,7 +322,6 @@ public interface CTManager {
 	 * @return <code>true</code> if the version entity specified by the given
 	 *         classNameId and classPK is retrievable considering the current
 	 *         change tracking environment
-	 * @review
 	 */
 	public boolean isRetrievableVersion(
 		long companyId, long userId, long modelClassNameId, long modelClassPK);

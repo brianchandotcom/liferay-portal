@@ -168,12 +168,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The segment experiences ids</description>
-			<name>segmentsExperienceIds</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>structureJSONArray</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

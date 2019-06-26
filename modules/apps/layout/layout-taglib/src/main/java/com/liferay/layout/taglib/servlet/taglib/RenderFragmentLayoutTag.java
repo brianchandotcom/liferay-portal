@@ -16,6 +16,9 @@ package com.liferay.layout.taglib.servlet.taglib;
 
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.Map;
@@ -42,10 +45,6 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 
 	public int getPreviewType() {
 		return _previewType;
-	}
-
-	public long[] getSegmentsExperienceIds() {
-		return _segmentsExperienceIds;
 	}
 
 	public JSONArray getStructureJSONArray() {
@@ -75,10 +74,6 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		_previewType = previewType;
 	}
 
-	public void setSegmentsExperienceIds(long[] segmentsExperienceIds) {
-		_segmentsExperienceIds = segmentsExperienceIds;
-	}
-
 	public void setStructureJSONArray(JSONArray structureJSONArray) {
 		_structureJSONArray = structureJSONArray;
 	}
@@ -91,7 +86,6 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		_mode = null;
 		_previewClassPK = 0;
 		_previewType = 0;
-		_segmentsExperienceIds = null;
 		_structureJSONArray = null;
 	}
 
@@ -115,10 +109,16 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			"liferay-layout:render-fragment-layout:previewType", _previewType);
 		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:segmentsExperienceIds",
-			_segmentsExperienceIds);
+			_getSegmentsExperienceIds());
 		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:structureJSONArray",
 			_structureJSONArray);
+	}
+
+	private long[] _getSegmentsExperienceIds() {
+		return GetterUtil.getLongValues(
+			request.getAttribute(SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
+			new long[] {SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT});
 	}
 
 	private static final String _PAGE = "/render_fragment_layout/page.jsp";
@@ -127,7 +127,6 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 	private String _mode;
 	private long _previewClassPK;
 	private int _previewType;
-	private long[] _segmentsExperienceIds;
 	private JSONArray _structureJSONArray;
 
 }

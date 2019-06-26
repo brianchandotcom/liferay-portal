@@ -190,6 +190,42 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 			ctCollectionId, queryDefinition);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getRelatedOwnerCTEntries(long, QueryDefinition)}
+	 */
+	@Deprecated
+	@Override
+	public List<CTEntry> getRelatedOwnerCTEntries(long ctEntryId) {
+		QueryDefinition<CTEntry> queryDefinition = new QueryDefinition<>();
+
+		queryDefinition.setEnd(QueryUtil.ALL_POS);
+		queryDefinition.setStart(QueryUtil.ALL_POS);
+		queryDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+		return getRelatedOwnerCTEntries(ctEntryId, queryDefinition);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getRelatedOwnerCTEntries(long, QueryDefinition)}
+	 */
+	@Deprecated
+	@Override
+	public List<CTEntry> getRelatedOwnerCTEntries(
+		long ctEntryId, int start, int end,
+		OrderByComparator<CTEntry> orderByComparator) {
+
+		QueryDefinition<CTEntry> queryDefinition = new QueryDefinition<>();
+
+		queryDefinition.setEnd(end);
+		queryDefinition.setOrderByComparator(orderByComparator);
+		queryDefinition.setStart(start);
+		queryDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+		return getRelatedOwnerCTEntries(ctEntryId, queryDefinition);
+	}
+
 	@Override
 	public List<CTEntry> getRelatedOwnerCTEntries(
 		long companyId, long ctCollectionId, long ctEntryId, String keywords,
@@ -210,6 +246,20 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		long ctEntryId, QueryDefinition<CTEntry> queryDefinition) {
 
 		return ctEntryFinder.findByRelatedCTEntries(ctEntryId, queryDefinition);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getRelatedOwnerCTEntriesCount(long, QueryDefinition)}
+	 */
+	@Deprecated
+	@Override
+	public int getRelatedOwnerCTEntriesCount(long ctEntryId) {
+		QueryDefinition<CTEntry> queryDefinition = new QueryDefinition<>();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+		return getRelatedOwnerCTEntriesCount(ctEntryId, queryDefinition);
 	}
 
 	@Override

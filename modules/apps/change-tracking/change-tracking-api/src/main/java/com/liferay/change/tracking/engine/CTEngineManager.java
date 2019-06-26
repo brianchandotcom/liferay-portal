@@ -105,6 +105,17 @@ public interface CTEngineManager {
 	/**
 	 * Returns the change tracking collection with the primary key.
 	 *
+	 * @param      ctCollectionId the primary key of the change collection
+	 * @return     the change tracking collection
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getCTCollectionOptional(long, long)}
+	 */
+	@Deprecated
+	public Optional<CTCollection> getCTCollectionOptional(long ctCollectionId);
+
+	/**
+	 * Returns the change tracking collection with the primary key.
+	 *
 	 * @param  companyId the primary key of the company
 	 * @param  ctCollectionId the primary key of the change collection
 	 * @return the change tracking collection

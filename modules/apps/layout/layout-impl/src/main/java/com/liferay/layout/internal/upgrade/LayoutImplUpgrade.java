@@ -15,7 +15,6 @@
 package com.liferay.layout.internal.upgrade;
 
 import com.liferay.layout.internal.upgrade.v1_0_0.UpgradeLayoutPermissions;
-import com.liferay.portal.upgrade.v7_2_x.UpgradeLayoutParentPlid;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;

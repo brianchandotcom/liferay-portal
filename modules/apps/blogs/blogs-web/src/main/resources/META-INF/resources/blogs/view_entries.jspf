@@ -29,6 +29,9 @@
 Map<String, Object> contextObjects = new HashMap<>();
 
 contextObjects.put("blogsPortletInstanceConfiguration", blogsPortletInstanceConfiguration);
+
+BlogsPortletInstanceSettingsHelper blogsPortletInstanceSettingsHelper = new BlogsPortletInstanceSettingsHelper(request, blogsPortletInstanceConfiguration);
+
 contextObjects.put("blogsPortletInstanceSettingsHelper", blogsPortletInstanceSettingsHelper);
 
 List<BlogsEntry> blogsEntries = _convertToBlogEntries(results);

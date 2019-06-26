@@ -85,9 +85,20 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	moveEntries() {
-		Liferay.fire(this.ns('editEntry'), {
-			action: '/journal/move_entries'
+		let moveEntriesURL = this.moveEntriesURL;
+
+		const entrySelectorNodes = document.querySelectorAll('.entry-selector');
+
+		entrySelectorNodes.forEach(node => {
+			if (node.checked) {
+				moveEntriesURL = Liferay.Util.addParams(
+					`${node.name}=${node.value}`,
+					moveEntriesURL
+				);
+			}
 		});
+
+		Liferay.Util.navigate(moveEntriesURL);
 	}
 
 	openDDMStructuresSelector() {
@@ -117,6 +128,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 ManagementToolbarDefaultEventHandler.STATE = {
 	addArticleURL: Config.string(),
 	folderId: Config.string(),
+	moveEntriesURL: Config.string(),
 	namespace: Config.string(),
 	openViewMoreStructuresURL: Config.string(),
 	selectEntityURL: Config.string(),

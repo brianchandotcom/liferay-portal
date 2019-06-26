@@ -24,7 +24,6 @@ class ItemSelectorDialog extends Component {
 		this._selectedItem = null;
 
 		const eventName = this.eventName;
-		const strings = this.strings;
 		const zIndex = this.zIndex;
 
 		Liferay.Util.selectEntity(
@@ -49,7 +48,7 @@ class ItemSelectorDialog extends Component {
 						{
 							cssClass: 'btn-link close-modal',
 							id: 'cancelButton',
-							label: strings.cancel,
+							label: this.buttonCancelLabel,
 							on: {
 								click: () => {
 									this.close();
@@ -60,7 +59,7 @@ class ItemSelectorDialog extends Component {
 							cssClass: 'btn-primary',
 							disabled: true,
 							id: 'addButton',
-							label: strings.add,
+							label: this.buttonAddLabel,
 							on: {
 								click: () => {
 									this._selectedItem = this._currentItem;
@@ -114,6 +113,25 @@ class ItemSelectorDialog extends Component {
  */
 
 ItemSelectorDialog.STATE = {
+
+	/**
+	 * Label for the Add button
+	 *
+	 * @instance
+	 * @review
+	 * @type {String}
+	 */
+	buttonAddLabel: Config.string().value(Liferay.Language.get('add')),
+
+	/**
+	 * Label for the Cancel button
+	 *
+	 * @instance
+	 * @review
+	 * @type {String}
+	 */
+	buttonCancelLabel: Config.string().value(Liferay.Language.get('cancel')),
+
 	/**
 	 * Css classes to pass to the dialog.
 	 *
@@ -140,18 +158,6 @@ ItemSelectorDialog.STATE = {
 	 * @type {Object}
 	 */
 	selectedItem: Config.object(),
-
-	/**
-	 * String literals used in the dialog.
-	 *
-	 * @instance
-	 * @review
-	 * @type {Object}
-	 */
-	strings: Config.object().value({
-		add: Liferay.Language.get('add'),
-		cancel: Liferay.Language.get('cancel')
-	}),
 
 	/**
 	 * Dialog's title

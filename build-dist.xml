@@ -842,103 +842,50 @@ this task.
 			</replace-elements>
 		</replace-multilines>
 
-		<if>
-			<equals arg1="${app.server.jboss.version}" arg2="6.4.0" />
-			<then>
-				<replace
-					file="${app.server.jboss.bin.dir}/standalone.conf"
-				>
-					<replacetoken><![CDATA[JAVA_OPTS="-Xms1303m -Xmx1303m -XX:MaxPermSize=256m ]]></replacetoken>
-					<replacevalue><![CDATA[JAVA_OPTS="]]></replacevalue>
-				</replace>
+		<replace
+			file="${app.server.jboss.bin.dir}/standalone.conf"
+		>
+			<replacetoken><![CDATA[JAVA_OPTS="-Xms1303m -Xmx1303m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m ]]></replacetoken>
+			<replacevalue><![CDATA[JAVA_OPTS="]]></replacevalue>
+		</replace>
 
-				<replace
-					file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
-				>
-					<replacetoken><![CDATA[<security-domains>]]></replacetoken>
-					<replacevalue>
-						<![CDATA[
-							<security-domains>
-								<security-domain name="PortalRealm">
-									<authentication>
-										<login-module code="com.liferay.portal.security.jaas.PortalLoginModule" flag="required" />
-									</authentication>
-								</security-domain>
-						]]>
-					</replacevalue>
-				</replace>
+		<replace
+			file="${app.server.jboss.instance.dir}/configuration/standalone.xml"
+		>
+			<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:security:2.0">
+<security-domains>]]></replacetoken>
+			<replacevalue><![CDATA[<subsystem xmlns="urn:jboss:domain:security:2.0">
+<security-domains>
+				<security-domain name="PortalRealm">
+					<authentication>
+						<login-module code="com.liferay.portal.security.jaas.PortalLoginModule" flag="required" />
+					</authentication>
+				</security-domain>]]>
+			</replacevalue>
+		</replace>
 
-				<replace
-					file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
-				>
-					<replacetoken><![CDATA[enable-welcome-root="true"]]></replacetoken>
-					<replacevalue><![CDATA[enable-welcome-root="false"]]></replacevalue>
-				</replace>
+		<replace
+			file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
+		>
+			<replacetoken><![CDATA[<location name="/" handler="welcome-content"/>]]></replacetoken>
+			<replacevalue><![CDATA[<!--<location name="/" handler="welcome-content"/>-->]]></replacevalue>
+		</replace>
 
-				<replace
-					file="${app.server.jboss.instance.dir}/configuration/standalone.xml"
-				>
-					<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:web:2.2" default-virtual-server="default-host" native="false">]]></replacetoken>
-					<replacevalue>
-						<![CDATA[
-							<subsystem xmlns="urn:jboss:domain:web:2.2" default-virtual-server="default-host" native="false">
-								<configuration>
-									<jsp-configuration development="true" source-vm="1.8" target-vm="1.8" />
-								</configuration>
-						]]>
-					</replacevalue>
-				</replace>
-			</then>
-			<elseif>
-				<equals arg1="${app.server.jboss.version}" arg2="7.1.0" />
-				<then>
-					<replace
-						file="${app.server.jboss.bin.dir}/standalone.conf"
-					>
-						<replacetoken><![CDATA[JAVA_OPTS="-Xms1303m -Xmx1303m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m ]]></replacetoken>
-						<replacevalue><![CDATA[JAVA_OPTS="]]></replacevalue>
-					</replace>
+		<replace
+			file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
+		>
+			<replacetoken><![CDATA[<file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>]]></replacetoken>
+			<replacevalue><![CDATA[<!--<file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>-->]]></replacevalue>
+		</replace>
 
-					<replace
-						file="${app.server.jboss.instance.dir}/configuration/standalone.xml"
-					>
-						<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:security:2.0">
-            <security-domains>]]></replacetoken>
-						<replacevalue><![CDATA[<subsystem xmlns="urn:jboss:domain:security:2.0">
-            <security-domains>
-							<security-domain name="PortalRealm">
-								<authentication>
-									<login-module code="com.liferay.portal.security.jaas.PortalLoginModule" flag="required" />
-								</authentication>
-							</security-domain>]]>
-						</replacevalue>
-					</replace>
-
-					<replace
-						file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
-					>
-						<replacetoken><![CDATA[<location name="/" handler="welcome-content"/>]]></replacetoken>
-						<replacevalue><![CDATA[<!--<location name="/" handler="welcome-content"/>-->]]></replacevalue>
-					</replace>
-
-					<replace
-						file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
-					>
-						<replacetoken><![CDATA[<file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>]]></replacetoken>
-						<replacevalue><![CDATA[<!--<file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>-->]]></replacevalue>
-					</replace>
-
-					<replace
-						file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
-					>
-						<replacetoken><![CDATA[<jsp-config/>]]></replacetoken>
-						<replacevalue>
-							<![CDATA[<jsp-config development="true" source-vm="1.8" target-vm="1.8" />]]>
-						</replacevalue>
-					</replace>
-				</then>
-			</elseif>
-		</if>
+		<replace
+			file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
+		>
+			<replacetoken><![CDATA[<jsp-config/>]]></replacetoken>
+			<replacevalue>
+				<![CDATA[<jsp-config development="true" source-vm="1.8" target-vm="1.8" />]]>
+			</replacevalue>
+		</replace>
 
 		<echo append="true" file="${app.server.jboss.bin.dir}/standalone.conf">${line.separator}JAVA_OPTS=${app.server.jboss.jvm.args} ${app.server.jboss.jvm.mem}</echo>
 

@@ -713,18 +713,40 @@ Please run the following command from ${source.formatter.modules.dir.absolute.pa
 
 		<delete file="ServiceBuilder.temp" />
 
-		<var name="source.formatter.npm.script" value="format" />
-		<var name="source.formatter.npm.task" value="npmRunFormat" />
+		<var name="source.formatter.js.script" value="format" />
+		<var name="source.formatter.js.task" value="npmRunFormat" />
 
 		<if>
-			<and>
-				<isset property="source.auto.fix" />
-				<isfalse value="${source.auto.fix}" />
-			</and>
+			<resourcecount count="0" when="greater">
+				<fileset
+					dir="${project.dir}/modules"
+					excludes="**/.gradle/,**/bin/,**/build/,**/classes/,**/node_modules/,**/tmp/"
+					includes="**/yarn-*.js"
+				/>
+			</resourcecount>
 			<then>
-				<var name="source.formatter.npm.script" value="checkFormat" />
-				<var name="source.formatter.npm.task" value="npmRunCheckFormat" />
+				<var name="source.formatter.js.task" value="yarnFormat" />
+
+				<if>
+					<and>
+						<isset property="source.auto.fix" />
+						<isfalse value="${source.auto.fix}" />
+					</and>
+					<then>
+						<var name="source.formatter.js.task" value="yarnCheckFormat" />
+					</then>
+				</if>
 			</then>
+			<elseif>
+				<and>
+					<isset property="source.auto.fix" />
+					<isfalse value="${source.auto.fix}" />
+				</and>
+				<then>
+					<var name="source.formatter.js.script" value="checkFormat" />
+					<var name="source.formatter.js.task" value="npmRunCheckFormat" />
+				</then>
+			</elseif>
 		</if>
 
 		<if>
@@ -734,11 +756,17 @@ Please run the following command from ${source.formatter.modules.dir.absolute.pa
 				<istrue value="${format.local.changes}" />
 			</or>
 			<then>
-				<echo>
-This target does not format .es.js files. Please run the following command from ${source.formatter.modules.dir.absolute.path} to do so:
+				<echo>This target does not format .es.js files. Please run the following command from ${source.formatter.modules.dir.absolute.path} to do so:</echo>
 
-../gradlew ${source.formatter.npm.task}
-				</echo>
+				<if>
+					<matches pattern="yarn" string="${source.formatter.js.task}" />
+					<then>
+						<echo>../gradlew -b util.gradle ${source.formatter.js.task}</echo>
+					</then>
+					<else>
+						<echo>../gradlew ${source.formatter.js.task}</echo>
+					</else>
+				</if>
 			</then>
 			<elseif>
 				<and>
@@ -749,18 +777,30 @@ This target does not format .es.js files. Please run the following command from 
 							<isset property="source.files" />
 						</or>
 					</not>
-					<resourcecount count="0" when="greater">
-						<fileset
-							dir="${project.dir}/modules"
-							excludes="**/.gradle/,**/bin/,**/build/,**/classes/,**/node_modules/,**/tmp/"
-							includes="**/package.json"
-						>
-							<contains text="&quot;${source.formatter.npm.script}&quot;:" />
-						</fileset>
-					</resourcecount>
 				</and>
 				<then>
-					<gradle-execute dir="${project.dir}/modules" task="${source.formatter.npm.task}" />
+					<if>
+						<matches pattern="yarn" string="${source.formatter.js.task}" />
+						<then>
+							<gradle-execute dir="${project.dir}/modules" task="${source.formatter.js.task}">
+								<arg value="--build-file=${project.dir}/modules/util.gradle" />
+							</gradle-execute>
+						</then>
+						<elseif>
+							<resourcecount count="0" when="greater">
+								<fileset
+									dir="${project.dir}/modules"
+									excludes="**/.gradle/,**/bin/,**/build/,**/classes/,**/node_modules/,**/tmp/"
+									includes="**/package.json"
+								>
+									<contains text="&quot;${source.formatter.js.script}&quot;:" />
+								</fileset>
+							</resourcecount>
+							<then>
+								<gradle-execute dir="${project.dir}/modules" task="${source.formatter.js.task}" />
+							</then>
+						</elseif>
+					</if>
 				</then>
 			</elseif>
 		</if>

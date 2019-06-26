@@ -57,14 +57,18 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -150,7 +154,9 @@ public class CTEngineManagerImpl implements CTEngineManager {
 			return Optional.empty();
 		}
 
-		if (!isChangeTrackingEnabled(companyId)) {
+		if (CTConstants.CT_COLLECTION_NAME_PRODUCTION.equals(name) ||
+			!isChangeTrackingEnabled(companyId)) {
+
 			return Optional.empty();
 		}
 
@@ -548,6 +554,8 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 		productionCTCollection.setCtCollectionId(
 			CTConstants.CT_COLLECTION_ID_PRODUCTION);
+		productionCTCollection.setName(
+			CTConstants.CT_COLLECTION_NAME_PRODUCTION);
 
 		return productionCTCollection;
 	}
@@ -593,6 +601,9 @@ public class CTEngineManagerImpl implements CTEngineManager {
 		DynamicQuery dynamicQuery = _ctCollectionLocalService.dynamicQuery();
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("companyId", companyId));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.ne(
+				"name", CTConstants.CT_COLLECTION_NAME_PRODUCTION));
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.ne(
 				"status", WorkflowConstants.STATUS_APPROVED));

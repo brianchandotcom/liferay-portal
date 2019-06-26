@@ -242,6 +242,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.OperatorOrderCheck">
 			<message key="left.argument.literal.or.num" value="''{0}'' should be on the right hand side of the operator" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.OperatorOperandCheck">
+			<message key="readability.improve" value="Create a new variable for the {0} hand side operand of the ''{1}'' operator for better readability" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.ParsePrimitiveTypeCheck">
 			<message key="getter.util.method.use" value="Use ''GetterUtil.{0}'' or properly catch ''NumberFormatException'' when calling ''{1}.{2}''" />
 		</module>

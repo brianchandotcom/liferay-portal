@@ -72,22 +72,6 @@ public class DeprecatedModulesUpgrade implements UpgradeStepRegistrator {
 			}
 
 			if (_deprecatedModulesUpgradeConfiguration.
-					removeShoppingModuleData()) {
-
-				Release release = _releaseLocalService.fetchRelease(
-					"com.liferay.shopping.service");
-
-				if (release != null) {
-					UpgradeShopping upgradeShopping = new UpgradeShopping(
-						_imageLocalService);
-
-					upgradeShopping.upgrade();
-
-					CacheRegistryUtil.clear();
-				}
-			}
-
-			if (_deprecatedModulesUpgradeConfiguration.
 					removePrivateMessagingModuleData()) {
 
 				Release release = _releaseLocalService.fetchRelease(
@@ -98,6 +82,22 @@ public class DeprecatedModulesUpgrade implements UpgradeStepRegistrator {
 						new UpgradePrivateMessaging(_mbThreadLocalService);
 
 					upgradePrivateMessaging.upgrade();
+
+					CacheRegistryUtil.clear();
+				}
+			}
+
+			if (_deprecatedModulesUpgradeConfiguration.
+					removeShoppingModuleData()) {
+
+				Release release = _releaseLocalService.fetchRelease(
+					"com.liferay.shopping.service");
+
+				if (release != null) {
+					UpgradeShopping upgradeShopping = new UpgradeShopping(
+						_imageLocalService);
+
+					upgradeShopping.upgrade();
 
 					CacheRegistryUtil.clear();
 				}

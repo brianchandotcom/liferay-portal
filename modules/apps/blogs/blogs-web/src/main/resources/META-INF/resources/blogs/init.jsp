@@ -20,15 +20,6 @@
 page import="com.liferay.document.library.kernel.util.DLValidatorUtil" %>
 
 <%
-String portletResource = ParamUtil.getString(request, "portletResource");
-
-String portletId = portletDisplay.getId();
-
-if (Validator.isNotNull(portletResource)) {
-	portletId = portletResource;
-	portletName = portletResource;
-}
-
 BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = ConfigurationProviderUtil.getConfiguration(BlogsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getId()));
 
 BlogsPortletInstanceSettingsHelper blogsPortletInstanceSettingsHelper = new BlogsPortletInstanceSettingsHelper(request, blogsPortletInstanceConfiguration);

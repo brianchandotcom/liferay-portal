@@ -18,7 +18,7 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
@@ -56,11 +56,14 @@ public class FileEntryURLItemSelectorReturnTypeResolver
 				StringPool.BLANK, false, false);
 		}
 
-		return PortletFileRepositoryUtil.getPortletFileEntryURL(
+		return _portletFileRepository.getPortletFileEntryURL(
 			themeDisplay, fileEntry, StringPool.BLANK, false);
 	}
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 }

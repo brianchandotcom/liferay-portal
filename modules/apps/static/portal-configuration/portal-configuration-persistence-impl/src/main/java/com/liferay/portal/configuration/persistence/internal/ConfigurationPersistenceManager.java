@@ -33,10 +33,6 @@ import java.io.OutputStream;
 
 import java.net.URI;
 
-import java.security.AccessController;
-import java.security.PrivilegedActionException;
-import java.security.PrivilegedExceptionAction;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -79,27 +75,7 @@ public class ConfigurationPersistenceManager
 
 	@Override
 	public void delete(final String pid) throws IOException {
-		if (System.getSecurityManager() != null) {
-			try {
-				AccessController.doPrivileged(
-					new PrivilegedExceptionAction<Void>() {
-
-						@Override
-						public Void run() throws Exception {
-							doDelete(pid);
-
-							return null;
-						}
-
-					});
-			}
-			catch (PrivilegedActionException pae) {
-				throw (IOException)pae.getException();
-			}
-		}
-		else {
-			doDelete(pid);
-		}
+		doDelete(pid);
 	}
 
 	@Override
@@ -187,27 +163,7 @@ public class ConfigurationPersistenceManager
 			@SuppressWarnings("rawtypes") final Dictionary dictionary)
 		throws IOException {
 
-		if (System.getSecurityManager() != null) {
-			try {
-				AccessController.doPrivileged(
-					new PrivilegedExceptionAction<Void>() {
-
-						@Override
-						public Void run() throws Exception {
-							doStore(pid, dictionary);
-
-							return null;
-						}
-
-					});
-			}
-			catch (PrivilegedActionException pae) {
-				throw (IOException)pae.getException();
-			}
-		}
-		else {
-			doStore(pid, dictionary);
-		}
+		doStore(pid, dictionary);
 	}
 
 	protected void createConfigurationTable() throws IOException, SQLException {

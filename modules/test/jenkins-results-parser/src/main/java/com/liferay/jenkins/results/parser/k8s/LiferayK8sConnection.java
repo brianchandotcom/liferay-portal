@@ -158,25 +158,21 @@ public class LiferayK8sConnection {
 	}
 
 	public String getNamespace() {
-		String namespace = null;
-
 		try {
 			File file = new File(
 				"/var/run/secrets/kubernetes.io/serviceaccount/namespace");
 
 			if (file.exists()) {
-				namespace = JenkinsResultsParserUtil.read(file);
+				String contents = JenkinsResultsParserUtil.read(file);
+
+				return contents.trim();
 			}
 		}
 		catch (IOException ioe) {
 			System.out.println("Unable to read namespace file");
 		}
 
-		if (namespace == null) {
-			namespace = "default";
-		}
-
-		return namespace.trim();
+		return "default";
 	}
 
 	public Pod getPod(Pod pod, String namespace) {

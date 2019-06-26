@@ -137,25 +137,23 @@ public class LangBuilderPlugin implements Plugin<Project> {
 	private void _configureTaskBuildLang(BuildLangTask buildLangTask) {
 		Project project = buildLangTask.getProject();
 
-		Project parentProject = project.getParent();
+		Project appProject = GradleUtil.getAppProject(project);
 
-		if (parentProject != null) {
+		if (appProject != null) {
 			File appLangFile = new File(
-				parentProject.getProjectDir(),
+				appProject.getProjectDir(),
 				"app.bnd-localization/bundle.properties");
 
 			if (appLangFile.exists()) {
 				BuildLangTask appBuildLangTask = null;
 
-				if (GradleUtil.hasTask(
-						parentProject, APP_BUILD_LANG_TASK_NAME)) {
-
+				if (GradleUtil.hasTask(appProject, APP_BUILD_LANG_TASK_NAME)) {
 					appBuildLangTask = (BuildLangTask)GradleUtil.getTask(
-						project.getParent(), APP_BUILD_LANG_TASK_NAME);
+						appProject, APP_BUILD_LANG_TASK_NAME);
 				}
 				else {
 					appBuildLangTask = _addTaskAppBuildLang(
-						parentProject, appLangFile);
+						appProject, appLangFile);
 				}
 
 				buildLangTask.dependsOn(appBuildLangTask);
@@ -170,11 +168,13 @@ public class LangBuilderPlugin implements Plugin<Project> {
 
 		Project project = buildLangTask.getProject();
 
-		if ((project.getParent() != null) &&
-			GradleUtil.hasTask(project.getParent(), APP_BUILD_LANG_TASK_NAME)) {
+		Project appProject = GradleUtil.getAppProject(project);
+
+		if ((appProject != null) &&
+			GradleUtil.hasTask(appProject, APP_BUILD_LANG_TASK_NAME)) {
 
 			BuildLangTask appBuildLangTask = (BuildLangTask)GradleUtil.getTask(
-				project.getParent(), APP_BUILD_LANG_TASK_NAME);
+				appProject, APP_BUILD_LANG_TASK_NAME);
 
 			appBuildLangTask.setClasspath(fileCollection);
 		}

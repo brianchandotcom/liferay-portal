@@ -95,7 +95,9 @@ public class FragmentTestUtil {
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(), 0,
 			fragmentEntry.getFragmentEntryId(), classNameId, classPK,
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), StringPool.BLANK, 1, serviceContext);
+			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+			StringPool.BLANK, StringPool.BLANK, 1, StringPool.BLANK,
+			serviceContext);
 	}
 
 	public static FragmentEntryLink fetchFragmentEntryLink(

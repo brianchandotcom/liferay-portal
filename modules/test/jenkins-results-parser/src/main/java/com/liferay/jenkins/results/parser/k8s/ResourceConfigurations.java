@@ -28,5 +28,8 @@ public class ResourceConfigurations {
 	public static final Pod mysql57PodConfiguration =
 		ResourceConfigurationFactory.newMySQLConfigurationPod(
 			"mysql57", "mysql:5.7.25");
+	public static final Pod postgresql10PodConfiguration =
+		ResourceConfigurationFactory.newPostgreSQLConfigurationPod(
+			"postgresql10", "postgres:10.9");
 
 }

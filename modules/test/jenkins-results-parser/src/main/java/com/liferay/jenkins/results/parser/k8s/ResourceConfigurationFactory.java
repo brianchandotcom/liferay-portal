@@ -93,6 +93,20 @@ public class ResourceConfigurationFactory {
 			dockerBaseImageName, dockerImageName, v1ContainerPorts, v1EnvVars);
 	}
 
+	public static Pod newPostgreSQLConfigurationPod(
+		String dockerBaseImageName, String dockerImageName) {
+
+		List<V1ContainerPort> v1ContainerPorts = new ArrayList<>(
+			Arrays.asList(
+				newConfigurationContainerPort(dockerBaseImageName, 5432)));
+
+		List<V1EnvVar> v1EnvVars = new ArrayList<>(
+			Arrays.asList(newConfigurationEnvVar("POSTGRES_USER", "root")));
+
+		return newDatabaseConfigurationPod(
+			dockerBaseImageName, dockerImageName, v1ContainerPorts, v1EnvVars);
+	}
+
 	protected static V1Container newConfigurationContainer(
 		String dockerBaseImageName, String dockerImageName) {
 

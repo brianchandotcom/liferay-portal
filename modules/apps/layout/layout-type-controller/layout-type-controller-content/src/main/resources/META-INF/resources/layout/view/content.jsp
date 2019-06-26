@@ -65,16 +65,13 @@ int previewAssetEntryType = ParamUtil.getInteger(request, "previewAssetEntryType
 
 			<%
 			JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
-
-			JSONArray structureJSONArray = dataJSONObject.getJSONArray("structure");
 			%>
 
 			<liferay-layout:render-fragment-layout
 				mode="<%= FragmentEntryLinkConstants.VIEW %>"
 				previewClassPK="<%= previewAssetEntryId %>"
 				previewType="<%= previewAssetEntryType %>"
-				segmentsExperienceIds="<%= segmentsExperienceIds %>"
-				structureJSONArray="<%= structureJSONArray %>"
+				structureJSONArray='<%= dataJSONObject.getJSONArray("structure") %>'
 			/>
 		</c:if>
 	</c:otherwise>

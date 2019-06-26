@@ -610,6 +610,7 @@ public class FragmentEntryLocalServiceImpl
 
 		return updateFragmentEntry(
 			userId, fragmentEntryId, name, css, html, js,
+			fragmentEntry.getConfiguration(),
 			fragmentEntry.getPreviewFileEntryId(), status);
 	}
 
@@ -619,9 +620,12 @@ public class FragmentEntryLocalServiceImpl
 			String html, String js, long previewFileEntryId, int status)
 		throws PortalException {
 
+		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
+			fragmentEntryId);
+
 		return updateFragmentEntry(
-			userId, fragmentEntryId, name, css, html, js, null,
-			previewFileEntryId, status);
+			userId, fragmentEntryId, name, css, html, js,
+			fragmentEntry.getConfiguration(), previewFileEntryId, status);
 	}
 
 	@Override

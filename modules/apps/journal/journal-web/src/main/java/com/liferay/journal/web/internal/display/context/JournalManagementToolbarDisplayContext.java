@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -216,6 +217,21 @@ public class JournalManagementToolbarDisplayContext
 		componentContext.put(
 			"folderId",
 			String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+
+		PortletURL moveEntriesURL = liferayPortletResponse.createRenderURL();
+
+		String redirect = ParamUtil.getString(
+			liferayPortletRequest, "redirect", _themeDisplay.getURLCurrent());
+
+		String referringPortletResource = ParamUtil.getString(
+			liferayPortletRequest, "referringPortletResource");
+
+		moveEntriesURL.setParameter("mvcPath", "/move_entries.jsp");
+		moveEntriesURL.setParameter("redirect", redirect);
+		moveEntriesURL.setParameter(
+			"referringPortletResource", referringPortletResource);
+
+		componentContext.put("moveEntriesURL", moveEntriesURL.toString());
 
 		PortletURL openViewMoreStructuresURL =
 			liferayPortletResponse.createRenderURL();

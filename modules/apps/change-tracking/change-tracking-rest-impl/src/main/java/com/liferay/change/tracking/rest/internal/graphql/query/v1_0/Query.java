@@ -140,7 +140,6 @@ public class Query {
 
 	@GraphQLField
 	public Collection getCollection(
-			@GraphQLName("companyId") Long companyId,
 			@GraphQLName("collectionId") Long collectionId)
 		throws Exception {
 
@@ -148,7 +147,7 @@ public class Query {
 			_collectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			collectionResource -> collectionResource.getCollection(
-				companyId, collectionId));
+				collectionId));
 	}
 
 	@GraphQLField

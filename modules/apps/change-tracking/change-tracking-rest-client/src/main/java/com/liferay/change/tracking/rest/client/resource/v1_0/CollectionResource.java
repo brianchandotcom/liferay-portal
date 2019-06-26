@@ -60,18 +60,15 @@ public interface CollectionResource {
 				collectionUpdate)
 		throws Exception;
 
-	public void deleteCollection(Long companyId, Long collectionId)
-		throws Exception;
+	public void deleteCollection(Long collectionId) throws Exception;
 
 	public HttpInvoker.HttpResponse deleteCollectionHttpResponse(
-			Long companyId, Long collectionId)
+			Long collectionId)
 		throws Exception;
 
-	public Collection getCollection(Long companyId, Long collectionId)
-		throws Exception;
+	public Collection getCollection(Long collectionId) throws Exception;
 
-	public HttpInvoker.HttpResponse getCollectionHttpResponse(
-			Long companyId, Long collectionId)
+	public HttpInvoker.HttpResponse getCollectionHttpResponse(Long collectionId)
 		throws Exception;
 
 	public void postCollectionCheckout(Long collectionId, Long userId)
@@ -261,11 +258,9 @@ public interface CollectionResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteCollection(Long companyId, Long collectionId)
-			throws Exception {
-
+		public void deleteCollection(Long collectionId) throws Exception {
 			HttpInvoker.HttpResponse httpResponse =
-				deleteCollectionHttpResponse(companyId, collectionId);
+				deleteCollectionHttpResponse(collectionId);
 
 			String content = httpResponse.getContent();
 
@@ -277,7 +272,7 @@ public interface CollectionResource {
 		}
 
 		public HttpInvoker.HttpResponse deleteCollectionHttpResponse(
-				Long companyId, Long collectionId)
+				Long collectionId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -293,7 +288,7 @@ public interface CollectionResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/change-tracking/v1.0/collections/{collectionId}",
-				companyId, collectionId);
+				collectionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -301,11 +296,9 @@ public interface CollectionResource {
 			return httpInvoker.invoke();
 		}
 
-		public Collection getCollection(Long companyId, Long collectionId)
-			throws Exception {
-
+		public Collection getCollection(Long collectionId) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = getCollectionHttpResponse(
-				companyId, collectionId);
+				collectionId);
 
 			String content = httpResponse.getContent();
 
@@ -328,7 +321,7 @@ public interface CollectionResource {
 		}
 
 		public HttpInvoker.HttpResponse getCollectionHttpResponse(
-				Long companyId, Long collectionId)
+				Long collectionId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -344,7 +337,7 @@ public interface CollectionResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/change-tracking/v1.0/collections/{collectionId}",
-				companyId, collectionId);
+				collectionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

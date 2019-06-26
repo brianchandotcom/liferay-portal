@@ -72,7 +72,6 @@ public class Mutation {
 
 	@GraphQLField
 	public Response deleteCollection(
-			@GraphQLName("companyId") Long companyId,
 			@GraphQLName("collectionId") Long collectionId)
 		throws Exception {
 
@@ -80,7 +79,7 @@ public class Mutation {
 			_collectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			collectionResource -> collectionResource.deleteCollection(
-				companyId, collectionId));
+				collectionId));
 	}
 
 	@GraphQLField

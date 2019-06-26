@@ -82,7 +82,7 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Organizations");
 
-		Organization.deleteCP(orgName = "Organization Name");
+		Organization.deletePG(orgName = "Organization Name");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Organizations");
 

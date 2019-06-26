@@ -13,12 +13,11 @@
 	"dump-report": false,
 	"exclude": {
 		"*": [
-			"**/__tests__/**",
-			"**/test/**",
 			"demo/**",
 			"example/**",
 			"rollup.*.js",
-			"src/**"
+			"src/**",
+			"test/**"
 		],	
 		"commander": true,
 		"fbjs": [
@@ -34,8 +33,7 @@
 		]
 	},
 	"ignore": [
-		"**/__tests__/**",
-		"**/test/**"
+		"test/**"
 	],
 	"output": "classes/META-INF/resources"
 }

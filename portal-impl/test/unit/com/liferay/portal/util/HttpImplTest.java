@@ -531,9 +531,8 @@ public class HttpImplTest {
 		// Remove redirect three deep and keep _returnToFullPageURL two deep
 
 		String encodedURL4 = URLCodec.encodeURL(
-			"www.liferay.com?key1=value1&_returnToFullPageURL=test" +
-				"&redirect=" +
-					URLCodec.encodeURL("www.liferay.com?key1=value1"));
+			"www.liferay.com?key1=value1&_returnToFullPageURL=test&redirect=" +
+				URLCodec.encodeURL("www.liferay.com?key1=value1"));
 
 		String encodedURL5 = URLCodec.encodeURL(
 			"www.liferay.com?_returnToFullPageURL=test&key1=value1&redirect=" +

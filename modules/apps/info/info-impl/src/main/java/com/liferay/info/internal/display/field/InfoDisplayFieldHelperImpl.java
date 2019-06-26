@@ -19,6 +19,7 @@ import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorField;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldTracker;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldType;
+import com.liferay.info.display.contributor.util.ExpandoInfoDisplayContributorFieldUtil;
 import com.liferay.info.display.field.InfoDisplayFieldHelper;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -61,6 +62,27 @@ public class InfoDisplayFieldHelperImpl implements InfoDisplayFieldHelper {
 					infoDisplayContributorFieldType.getValue()));
 		}
 
+		for (String className : classNames) {
+			List<InfoDisplayContributorField>
+				expandoInfoDisplayContributorFields =
+					ExpandoInfoDisplayContributorFieldUtil.
+						getInfoDisplayContributorFields(className);
+
+			for (InfoDisplayContributorField infoDisplayContributorField :
+					expandoInfoDisplayContributorFields) {
+
+				InfoDisplayContributorFieldType
+					infoDisplayContributorFieldType =
+						infoDisplayContributorField.getType();
+
+				infoDisplayFields.add(
+					new InfoDisplayField(
+						infoDisplayContributorField.getKey(),
+						infoDisplayContributorField.getLabel(locale),
+						infoDisplayContributorFieldType.getValue()));
+			}
+		}
+
 		return infoDisplayFields;
 	}
 
@@ -77,6 +99,22 @@ public class InfoDisplayFieldHelperImpl implements InfoDisplayFieldHelper {
 
 		for (InfoDisplayContributorField infoDisplayContributorField :
 				infoDisplayContributorFields) {
+
+			Object fieldValue = infoDisplayContributorField.getValue(
+				infoDisplayObjectProvider.getDisplayObject(), locale);
+
+			infoDisplayFieldsValues.putIfAbsent(
+				infoDisplayContributorField.getKey(), fieldValue);
+		}
+
+		List<InfoDisplayContributorField> expandoInfoDisplayContributorFields =
+			ExpandoInfoDisplayContributorFieldUtil.
+				getInfoDisplayContributorFields(
+					_portal.getClassName(
+						infoDisplayObjectProvider.getClassNameId()));
+
+		for (InfoDisplayContributorField infoDisplayContributorField :
+				expandoInfoDisplayContributorFields) {
 
 			Object fieldValue = infoDisplayContributorField.getValue(
 				infoDisplayObjectProvider.getDisplayObject(), locale);

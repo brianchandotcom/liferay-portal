@@ -22,9 +22,11 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import java.util.Map;
+import java.util.function.Supplier;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -42,97 +44,35 @@ public class DeprecatedModulesUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		try {
-			if (_deprecatedModulesUpgradeConfiguration.removeChatModuleData()) {
-				Release release = _releaseLocalService.fetchRelease(
-					"com.liferay.chat.service");
+			_removeModuleData(
+				_deprecatedModulesUpgradeConfiguration::removeChatModuleData,
+				"com.liferay.chat.service", UpgradeChat::new);
 
-				if (release != null) {
-					UpgradeChat upgradeChat = new UpgradeChat();
+			_removeModuleData(
+				_deprecatedModulesUpgradeConfiguration::
+					removeInvitationModuleData,
+				"com.liferay.invitation.web", UpgradeInvitation::new);
 
-					upgradeChat.upgrade();
+			_removeModuleData(
+				_deprecatedModulesUpgradeConfiguration::
+					removeMailReaderModuleData,
+				"com.liferay.mail.reader.service", UpgradeMailReader::new);
 
-					CacheRegistryUtil.clear();
-				}
-			}
+			_removeModuleData(
+				_deprecatedModulesUpgradeConfiguration::
+					removePrivateMessagingModuleData,
+				"com.liferay.social.privatemessaging.service",
+				() -> new UpgradePrivateMessaging(_mbThreadLocalService));
 
-			if (_deprecatedModulesUpgradeConfiguration.
-					removeInvitationModuleData()) {
+			_removeModuleData(
+				_deprecatedModulesUpgradeConfiguration::
+					removeShoppingModuleData,
+				"com.liferay.shopping.service",
+				() -> new UpgradeShopping(_imageLocalService));
 
-				Release release = _releaseLocalService.fetchRelease(
-					"com.liferay.invitation.web");
-
-				if (release != null) {
-					UpgradeInvitation upgradeInvitation =
-						new UpgradeInvitation();
-
-					upgradeInvitation.upgrade();
-
-					CacheRegistryUtil.clear();
-				}
-			}
-
-			if (_deprecatedModulesUpgradeConfiguration.
-					removeMailReaderModuleData()) {
-
-				Release release = _releaseLocalService.fetchRelease(
-					"com.liferay.mail.reader.service");
-
-				if (release != null) {
-					UpgradeMailReader upgradeMailReader =
-						new UpgradeMailReader();
-
-					upgradeMailReader.upgrade();
-
-					CacheRegistryUtil.clear();
-				}
-			}
-
-			if (_deprecatedModulesUpgradeConfiguration.
-					removePrivateMessagingModuleData()) {
-
-				Release release = _releaseLocalService.fetchRelease(
-					"com.liferay.social.privatemessaging.service");
-
-				if (release != null) {
-					UpgradePrivateMessaging upgradePrivateMessaging =
-						new UpgradePrivateMessaging(_mbThreadLocalService);
-
-					upgradePrivateMessaging.upgrade();
-
-					CacheRegistryUtil.clear();
-				}
-			}
-
-			if (_deprecatedModulesUpgradeConfiguration.
-					removeShoppingModuleData()) {
-
-				Release release = _releaseLocalService.fetchRelease(
-					"com.liferay.shopping.service");
-
-				if (release != null) {
-					UpgradeShopping upgradeShopping = new UpgradeShopping(
-						_imageLocalService);
-
-					upgradeShopping.upgrade();
-
-					CacheRegistryUtil.clear();
-				}
-			}
-
-			if (_deprecatedModulesUpgradeConfiguration.
-					removeTwitterModuleData()) {
-
-				Release release = _releaseLocalService.fetchRelease(
-					"com.liferay.twitter.service");
-
-				if (release != null) {
-					UpgradeTwitter upgradeTwitter = new UpgradeTwitter();
-
-					upgradeTwitter.upgrade();
-
-					CacheRegistryUtil.clear();
-				}
-			}
+			_removeModuleData(
+				_deprecatedModulesUpgradeConfiguration::removeTwitterModuleData,
+				"com.liferay.twitter.service", UpgradeTwitter::new);
 		}
 		catch (UpgradeException ue) {
 			ReflectionUtil.throwException(ue);
@@ -144,6 +84,25 @@ public class DeprecatedModulesUpgrade implements UpgradeStepRegistrator {
 		_deprecatedModulesUpgradeConfiguration =
 			ConfigurableUtil.createConfigurable(
 				DeprecatedModulesUpgradeConfiguration.class, properties);
+	}
+
+	private void _removeModuleData(
+			Supplier<Boolean> booleanSupplier, String servletContextName,
+			Supplier<UpgradeProcess> upgradeProcessSupplier)
+		throws UpgradeException {
+
+		if (booleanSupplier.get()) {
+			Release release = _releaseLocalService.fetchRelease(
+				servletContextName);
+
+			if (release != null) {
+				UpgradeProcess upgradeProcess = upgradeProcessSupplier.get();
+
+				upgradeProcess.upgrade();
+
+				CacheRegistryUtil.clear();
+			}
+		}
 	}
 
 	private DeprecatedModulesUpgradeConfiguration

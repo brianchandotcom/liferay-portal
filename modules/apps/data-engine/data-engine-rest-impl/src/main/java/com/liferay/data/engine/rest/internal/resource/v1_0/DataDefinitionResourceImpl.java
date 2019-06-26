@@ -75,9 +75,10 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
 			dataDefinitionId);
 
-		if (_ddlRecordSetLocalService.getRecordSetsCount(
-				ddmStructure.getGroupId(), dataDefinitionId, false) > 0) {
+		int count = _ddlRecordSetLocalService.getRecordSetsCount(
+			ddmStructure.getGroupId(), dataDefinitionId, false);
 
+		if (count > 0) {
 			throw new RequiredStructureException.
 				MustNotDeleteStructureReferencedByStructureLinks(
 					dataDefinitionId);

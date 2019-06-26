@@ -176,9 +176,10 @@ public class JabberImpl implements Jabber {
 				jabberBuddy[8] = user.getUserId();
 				jabberBuddy[9] = user.getUserUuid();
 
-				if (Collections.binarySearch(
-						jabberBuddies, jabberBuddy, buddyComparator) < 0) {
+				int count = Collections.binarySearch(
+					jabberBuddies, jabberBuddy, buddyComparator);
 
+				if (count < 0) {
 					jabberBuddies.add(jabberBuddy);
 				}
 			}

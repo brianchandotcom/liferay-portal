@@ -101,9 +101,10 @@ public class DefaultBuddyFinderImpl implements BuddyFinder {
 			BuddyComparator buddyComparator = new BuddyComparator(true);
 
 			for (Object[] socialBuddy : socialBuddies) {
-				if (Collections.binarySearch(
-						groupBuddies, socialBuddy, buddyComparator) < 0) {
+				int count = Collections.binarySearch(
+					groupBuddies, socialBuddy, buddyComparator);
 
+				if (count < 0) {
 					buddies.add(socialBuddy);
 				}
 			}

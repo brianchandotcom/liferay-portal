@@ -56,25 +56,67 @@ public interface AssetListEntry extends AssetListEntryModel, PersistedModel {
 
 		};
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 AssetListHelper#getAssetEntries(AssetListEntry, long)}
+	 */
+	@Deprecated
 	public java.util.List<com.liferay.asset.kernel.model.AssetEntry>
 		getAssetEntries(long segmentsEntryId);
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 AssetListHelper#getAssetEntries(AssetListEntry, long, int,
+	 int)}
+	 */
+	@Deprecated
 	public java.util.List<com.liferay.asset.kernel.model.AssetEntry>
 		getAssetEntries(long segmentsEntryId, int start, int end);
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 AssetListHelper#getAssetEntries(AssetListEntry, long[])}
+	 */
+	@Deprecated
 	public java.util.List<com.liferay.asset.kernel.model.AssetEntry>
 		getAssetEntries(long[] segmentsEntryIds);
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 AssetListHelper#getAssetEntries(AssetListEntry, long[], int,
+	 int)}
+	 */
+	@Deprecated
 	public java.util.List<com.liferay.asset.kernel.model.AssetEntry>
 		getAssetEntries(long[] segmentsEntryIds, int start, int end);
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 AssetListHelper#getAssetEntriesCount(AssetListEntry, long)}
+	 */
+	@Deprecated
 	public int getAssetEntriesCount(long segmentsEntryId);
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 AssetListHelper#getAssetEntriesCount(AssetListEntry, long[])}
+	 */
+	@Deprecated
 	public int getAssetEntriesCount(long[] segmentsEntryIds);
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 AssetListHelper#getAssetEntryQuery(AssetListEntry, long)}
+	 */
+	@Deprecated
 	public com.liferay.asset.kernel.service.persistence.AssetEntryQuery
 		getAssetEntryQuery(long segmentsEntryId);
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 AssetListHelper#getAssetEntryQuery(AssetListEntry, long[])}
+	 */
+	@Deprecated
 	public com.liferay.asset.kernel.service.persistence.AssetEntryQuery
 		getAssetEntryQuery(long[] segmentsEntryIds);
 

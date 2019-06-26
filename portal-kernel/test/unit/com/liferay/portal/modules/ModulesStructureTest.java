@@ -1318,6 +1318,12 @@ public class ModulesStructureTest {
 
 		boolean mainConfigurationsAllowed = false;
 
+		if ((_branchName.startsWith("7.1") || _branchName.startsWith("7.0")) &&
+			content.contains("copyLibs {\n\tenabled = true")) {
+
+			mainConfigurationsAllowed = true;
+		}
+
 		if (hasSrcMainDir ||
 			(!hasSrcMainDir && !hasSrcTestDir && !hasSrcTestIntegrationDir)) {
 

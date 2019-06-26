@@ -270,6 +270,31 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro addSitePG {
+		Organization.editOrganizationPG(orgName = "${orgName}");
+
+		UsersAndOrganizationsNavigator.gotoMenuBarOrganizationSite();
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Create Site",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		if (("${organizationSite}" == "Community Site") || ("${organizationSite}" == "Intranet Site")) {
+			Select(
+				locator1 = "UserGroupsEditUserGroup#PUBLIC_PAGES_SELECT",
+				value1 = "${organizationSite}");
+
+			if ("${checkEnablePropagationCheckbox}" == "true") {
+				AssertChecked(locator1 = "UserGroupsEditUserGroup#ENABLE_PROPAGATION_PUBLIC_PAGE_CHECKBOX");
+			}
+			else {
+				Uncheck(locator1 = "UserGroupsEditUserGroup#ENABLE_PROPAGATION_PUBLIC_PAGE_CHECKBOX");
+			}
+		}
+
+		PortletEntry.save();
+	}
+
 	macro addWithLocalizedCountryCP {
 		Navigator.gotoNavItem(navItem = "${navItem}");
 
@@ -390,6 +415,22 @@ definition {
 		var key_orgName = "${orgName}";
 
 		MenuItem.click(menuItem = "Edit");
+	}
+
+	macro editOrganizationPG {
+		var key_orgName = "${orgName}";
+
+		Search.searchPG(
+			portletName = "My Organizations",
+			searchTerm = "${orgName}");
+
+		AssertTextEquals(
+			locator1 = "UsersAndOrganizations#ORGANIZATION_TABLE_NAME",
+			value1 = "${orgName}");
+
+		LexiconEntry.openEntryMenu(rowEntry = "${orgName}");
+
+		MenuItem.clickNoError(menuItem = "Edit");
 	}
 
 	macro editSiteCP {

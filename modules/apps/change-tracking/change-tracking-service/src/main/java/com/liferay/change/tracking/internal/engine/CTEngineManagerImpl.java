@@ -406,10 +406,6 @@ public class CTEngineManagerImpl implements CTEngineManager {
 	public Optional<CTCollection> getProductionCTCollectionOptional(
 		long companyId) {
 
-		if (!isChangeTrackingEnabled(companyId)) {
-			return Optional.empty();
-		}
-
 		CTCollection productionCTCollection = _productionCTCollections.get(
 			companyId);
 

@@ -1539,10 +1539,10 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public boolean isFileEntryCheckedOut(long fileEntryId) {
-		if (dlFileVersionPersistence.countByF_V(
-				fileEntryId,
-				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION) > 0) {
+		int count = dlFileVersionPersistence.countByF_V(
+			fileEntryId, DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
 
+		if (count > 0) {
 			return true;
 		}
 
@@ -1966,10 +1966,10 @@ public class DLFileEntryLocalServiceImpl
 			dlFileVersion.getFileEntryId());
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
-			if (DLUtil.compareVersions(
-					dlFileEntry.getVersion(), dlFileVersion.getVersion()) <=
-						0) {
+			int compare = DLUtil.compareVersions(
+				dlFileEntry.getVersion(), dlFileVersion.getVersion());
 
+			if (compare <= 0) {
 				dlFileEntry.setModifiedDate(dlFileVersion.getModifiedDate());
 				dlFileEntry.setFileName(dlFileVersion.getFileName());
 				dlFileEntry.setExtension(dlFileVersion.getExtension());
@@ -2246,11 +2246,13 @@ public class DLFileEntryLocalServiceImpl
 
 		int status = dlFileVersion.getStatus();
 
-		if ((status == WorkflowConstants.STATUS_APPROVED) &&
-			(DLUtil.compareVersions(
-				dlFileEntry.getVersion(), dlFileVersion.getVersion()) <= 0)) {
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			int compare = DLUtil.compareVersions(
+				dlFileEntry.getVersion(), dlFileVersion.getVersion());
 
-			reindex(dlFileEntry);
+			if (compare <= 0) {
+				reindex(dlFileEntry);
+			}
 		}
 	}
 

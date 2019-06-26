@@ -335,11 +335,11 @@ public class SocialRequestLocalServiceImpl
 	public boolean hasRequest(
 		long userId, String className, long classPK, int type, int status) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
+		int count = socialRequestPersistence.countByU_C_C_T_S(
+			userId, classNameLocalService.getClassNameId(className), classPK,
+			type, status);
 
-		if (socialRequestPersistence.countByU_C_C_T_S(
-				userId, classNameId, classPK, type, status) <= 0) {
-
+		if (count <= 0) {
 			return false;
 		}
 

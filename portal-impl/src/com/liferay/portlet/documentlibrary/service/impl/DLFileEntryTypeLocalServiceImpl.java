@@ -224,9 +224,10 @@ public class DLFileEntryTypeLocalServiceImpl
 	public void deleteFileEntryType(DLFileEntryType dlFileEntryType)
 		throws PortalException {
 
-		if (dlFileEntryPersistence.countByFileEntryTypeId(
-				dlFileEntryType.getFileEntryTypeId()) > 0) {
+		int count = dlFileEntryPersistence.countByFileEntryTypeId(
+			dlFileEntryType.getFileEntryTypeId());
 
+		if (count > 0) {
 			throw new RequiredFileEntryTypeException(
 				"There are file entries of file entry type " +
 					dlFileEntryType.getFileEntryTypeId());

@@ -517,30 +517,32 @@ public class HttpImplTest {
 		// Remove redirect three deep
 
 		String encodedURL2 = URLCodec.encodeURL(
+			"www.liferay.com?key1=value1&redirect=" +
+				URLCodec.encodeURL("www.liferay.com?key1=value1"));
+
+		String encodedURL3 = URLCodec.encodeURL(
 			"www.liferay.com?key1=value1&redirect=" + encodedURL);
 
 		Assert.assertEquals(
-			"www.liferay.com?key1=value1&redirect=" +
-				URLCodec.encodeURL(
-					"www.liferay.com?key1=value1&redirect=" +
-						URLCodec.encodeURL("www.liferay.com?key1=value1")),
+			"www.liferay.com?key1=value1&redirect=" + encodedURL2,
 			_httpImpl.shortenURL(
-				"www.liferay.com?redirect=" + encodedURL2 + "&key1=value1"));
+				"www.liferay.com?redirect=" + encodedURL3 + "&key1=value1"));
 
 		// Remove redirect three deep and keep _returnToFullPageURL two deep
 
-		String encodedURL3 = URLCodec.encodeURL(
+		String encodedURL4 = URLCodec.encodeURL(
+			"www.liferay.com?key1=value1&_returnToFullPageURL=test" +
+				"&redirect=" +
+					URLCodec.encodeURL("www.liferay.com?key1=value1"));
+
+		String encodedURL5 = URLCodec.encodeURL(
 			"www.liferay.com?_returnToFullPageURL=test&key1=value1&redirect=" +
 				encodedURL);
 
 		Assert.assertEquals(
-			"www.liferay.com?key1=value1&redirect=" +
-				URLCodec.encodeURL(
-					"www.liferay.com?key1=value1&_returnToFullPageURL=test" +
-						"&redirect=" +
-							URLCodec.encodeURL("www.liferay.com?key1=value1")),
+			"www.liferay.com?key1=value1&redirect=" + encodedURL4,
 			_httpImpl.shortenURL(
-				"www.liferay.com?redirect=" + encodedURL3 + "&key1=value1"));
+				"www.liferay.com?redirect=" + encodedURL5 + "&key1=value1"));
 	}
 
 	protected void testDecodeURLWithInvalidURLEncoding(String url) {

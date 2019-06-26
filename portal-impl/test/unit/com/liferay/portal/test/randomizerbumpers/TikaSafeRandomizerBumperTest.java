@@ -144,11 +144,11 @@ public class TikaSafeRandomizerBumperTest {
 
 					LogRecord logRecord = logRecords.get(0);
 
+					String s = TikaSafeRandomizerBumper.byteArrayToString(
+						byteArray);
+
 					Assert.assertEquals(
-						"Accepted: " +
-							TikaSafeRandomizerBumper.byteArrayToString(
-								byteArray),
-						logRecord.getMessage());
+						"Accepted: " + s, logRecord.getMessage());
 				}
 				else {
 					Assert.assertTrue(

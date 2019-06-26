@@ -770,9 +770,10 @@ public abstract class LiferayConverter {
 			return inputIVideoPicture;
 		}
 
-		if (iVideoResampler.resample(
-				resampledIVideoPicture, inputIVideoPicture) < 0) {
+		int result = iVideoResampler.resample(
+			resampledIVideoPicture, inputIVideoPicture);
 
+		if (result < 0) {
 			throw new RuntimeException("Unable to resample video");
 		}
 

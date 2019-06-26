@@ -132,7 +132,7 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		return ParamUtil.getLong(request, "previewAssetEntryId");
 	}
 
-	private long _getPreviewType() {
+	private int _getPreviewType() {
 		if (!_showPreview) {
 			return 0;
 		}

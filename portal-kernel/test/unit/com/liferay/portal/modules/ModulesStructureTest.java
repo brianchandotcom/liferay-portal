@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.modules.util.GradleDependency;
 import com.liferay.portal.modules.util.ModulesStructureTestUtil;
 
@@ -548,7 +547,7 @@ public class ModulesStructureTest {
 			gradleDependency.getConfiguration());
 		String moduleGroup = gradleDependency.getModuleGroup();
 		String moduleName = gradleDependency.getModuleName();
-		Version moduleVersion = gradleDependency.getModuleVersion();
+		String moduleVersion = gradleDependency.getModuleVersion();
 
 		for (GradleDependency curGradleDependency : gradleDependencies) {
 			if (!moduleGroup.equals(curGradleDependency.getModuleGroup()) ||
@@ -562,8 +561,8 @@ public class ModulesStructureTest {
 			int curConfigurationPos = _gradleConfigurations.indexOf(
 				curGradleDependency.getConfiguration());
 
-			int value = moduleVersion.compareTo(
-				curGradleDependency.getModuleVersion());
+			int value = ModulesStructureTestUtil.compare(
+				moduleVersion, curGradleDependency.getModuleVersion());
 
 			if (((curConfigurationPos == configurationPos) && (value < 0)) ||
 				((curConfigurationPos < configurationPos) && (value <= 0))) {

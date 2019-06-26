@@ -14,7 +14,8 @@
 
 package com.liferay.portal.modules.util;
 
-import com.liferay.portal.kernel.version.Version;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 
 /**
  * @author Andrea Di Giorgi
@@ -31,16 +32,22 @@ public class GradleDependency {
 		_moduleName = moduleName;
 
 		if (moduleVersion.equals(_VERSION_DEFAULT)) {
-			_moduleVersion = new Version(
-				Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
+			StringBundler sb = new StringBundler(5);
 
-			projectDependency = true;
+			sb.append(Integer.MAX_VALUE);
+			sb.append(StringPool.PERIOD);
+			sb.append(Integer.MAX_VALUE);
+			sb.append(StringPool.PERIOD);
+			sb.append(Integer.MAX_VALUE);
+
+			_moduleVersion = sb.toString();
+
+			_projectDependency = true;
 		}
 		else {
-			_moduleVersion = Version.parseVersion(moduleVersion);
+			_moduleVersion = moduleVersion;
+			_projectDependency = projectDependency;
 		}
-
-		_projectDependency = projectDependency;
 	}
 
 	public String getConfiguration() {
@@ -55,7 +62,7 @@ public class GradleDependency {
 		return _moduleName;
 	}
 
-	public Version getModuleVersion() {
+	public String getModuleVersion() {
 		return _moduleVersion;
 	}
 
@@ -74,7 +81,7 @@ public class GradleDependency {
 	private final String _dependency;
 	private final String _moduleGroup;
 	private final String _moduleName;
-	private final Version _moduleVersion;
+	private final String _moduleVersion;
 	private final boolean _projectDependency;
 
 }

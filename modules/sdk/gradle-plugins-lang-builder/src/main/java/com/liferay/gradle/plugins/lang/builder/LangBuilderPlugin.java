@@ -63,8 +63,6 @@ public class LangBuilderPlugin implements Plugin<Project> {
 
 		_configureTaskBuildLang(buildLangTask);
 
-		_configureTaskProcessResources(project);
-
 		_configureTasksBuildLang(project, langBuilderConfiguration);
 	}
 
@@ -194,6 +192,8 @@ public class LangBuilderPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		_configureTaskProcessResources(buildLangTask.getProject());
 	}
 
 	@SuppressWarnings("serial")

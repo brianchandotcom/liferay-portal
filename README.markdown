@@ -8,10 +8,11 @@ development project in 2000 and was open sourced in 2001.
 To get started, check out the project's homepage at
 [portal.liferay.dev](https://portal.liferay.dev)!
 
-## Latest Release Details
+## Product Details
 
-The latest release, Liferay Portal version 7.2, is built from the source code of
-Liferay Portal and several other related open source projects. It includes
+Liferay Portal is built from the source code found in 
+[liferay-portal](https://github.com/liferay/liferay-portal) repository
+and several other related open source projects. It includes
 features for end users, business professionals, system administrators, and
 enterprise developers.
 

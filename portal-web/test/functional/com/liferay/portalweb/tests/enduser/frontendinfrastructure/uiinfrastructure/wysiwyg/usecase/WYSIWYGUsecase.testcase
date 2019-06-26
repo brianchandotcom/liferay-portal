@@ -98,10 +98,6 @@ definition {
 			imageSourceURL = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg",
 			navTab = "URL");
 
-		WebContent.selectTemplateCP(
-			structureName = "Basic Web Content",
-			templateName = "Basic Web Content");
-
 		PortletEntry.publish();
 
 		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "Web Content Title");

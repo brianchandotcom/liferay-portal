@@ -47,7 +47,7 @@
 
 			{if $selectedPanelId}
 				<div class="fragments-editor__floating-toolbar-panel" ref="panel">
-					<div class="popover">
+					<div class="dropdown-menu position-relative p-0 show">
 						{delcall com.liferay.layout.content.page.editor.web.FloatingToolbarPanel variant="$selectedPanelId"}
 							{param item: $item /}
 							{param itemId: $itemId /}

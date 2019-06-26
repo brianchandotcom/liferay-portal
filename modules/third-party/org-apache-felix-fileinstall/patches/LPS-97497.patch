@@ -1,0 +1,45 @@
+diff --git a/org/apache/felix/fileinstall/internal/ConfigInstaller.java b/org/apache/felix/fileinstall/internal/ConfigInstaller.java
+index 5128ff6..3325db9 100644
+--- a/org/apache/felix/fileinstall/internal/ConfigInstaller.java
++++ b/org/apache/felix/fileinstall/internal/ConfigInstaller.java
+@@ -294,7 +294,7 @@ public class ConfigInstaller implements ArtifactInstaller, ConfigurationListener
+         	old.remove( ConfigurationAdmin.SERVICE_FACTORYPID );
+         }
+ 
+-        if( !ht.equals( old ) )
++        if(!_equals(ht, old))
+         {
+             ht.put(DirectoryWatcher.FILENAME, toConfigKey(f));
+             if (old == null) {
+@@ -313,6 +313,25 @@ public class ConfigInstaller implements ArtifactInstaller, ConfigurationListener
+         }
+     }
+ 
++	private static boolean _equals(Hashtable<String, Object> newTable, Hashtable<String, Object> oldTable) {
++		if (oldTable == null) {
++			return false;
++		}
++
++		for (Map.Entry<String, Object> entry : newTable.entrySet()) {
++			Object newValue = entry.getValue();
++			Object oldValue = oldTable.remove(entry.getKey());
++
++			if (!Objects.equals(newValue, oldValue) &&
++					!Objects.deepEquals(newValue, oldValue)) {
++
++				return false;
++			}
++		}
++
++		return oldTable.isEmpty();
++	}
++
+     /**
+      * Remove the configuration.
+      *
+@@ -416,3 +435,4 @@ public class ConfigInstaller implements ArtifactInstaller, ConfigurationListener
+     }
+ 
+ }
++/* @generated */
+\ No newline at end of file

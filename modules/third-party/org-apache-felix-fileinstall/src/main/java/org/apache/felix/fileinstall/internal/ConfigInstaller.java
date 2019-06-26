@@ -294,7 +294,7 @@ public class ConfigInstaller implements ArtifactInstaller, ConfigurationListener
         	old.remove( ConfigurationAdmin.SERVICE_FACTORYPID );
         }
 
-        if( !ht.equals( old ) )
+        if(!_equals(ht, old))
         {
             ht.put(DirectoryWatcher.FILENAME, toConfigKey(f));
             if (old == null) {
@@ -312,6 +312,25 @@ public class ConfigInstaller implements ArtifactInstaller, ConfigurationListener
             return false;
         }
     }
+
+	private static boolean _equals(Hashtable<String, Object> newTable, Hashtable<String, Object> oldTable) {
+		if (oldTable == null) {
+			return false;
+		}
+
+		for (Map.Entry<String, Object> entry : newTable.entrySet()) {
+			Object newValue = entry.getValue();
+			Object oldValue = oldTable.remove(entry.getKey());
+
+			if (!Objects.equals(newValue, oldValue) &&
+					!Objects.deepEquals(newValue, oldValue)) {
+
+				return false;
+			}
+		}
+
+		return oldTable.isEmpty();
+	}
 
     /**
      * Remove the configuration.
@@ -416,3 +435,4 @@ public class ConfigInstaller implements ArtifactInstaller, ConfigurationListener
     }
 
 }
+/* @generated */

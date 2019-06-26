@@ -90,7 +90,8 @@ public class FragmentEntryStagedModelDataHandlerTest
 				PortalUtil.getClassNameId(Layout.class),
 				stagingGroup.getDefaultPublicPlid(), fragmentEntry.getCss(),
 				fragmentEntry.getHtml(), fragmentEntry.getJs(),
-				StringPool.BLANK, 0, serviceContext);
+				fragmentEntry.getConfiguration(), StringPool.BLANK,
+				StringPool.BLANK, 0, StringPool.BLANK, serviceContext);
 
 		stagedModel = FragmentEntryLocalServiceUtil.updateFragmentEntry(
 			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),

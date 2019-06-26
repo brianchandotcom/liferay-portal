@@ -75,12 +75,12 @@ public class JournalFragmentEntryProcessorEditableTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				RandomTestUtil.randomLong(),
 				_portal.getClassNameId(Layout.class), TestPropsValues.getPlid(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, 0,
-				ServiceContextTestUtil.getServiceContext());
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0,
+				StringPool.BLANK, ServiceContextTestUtil.getServiceContext());
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName());

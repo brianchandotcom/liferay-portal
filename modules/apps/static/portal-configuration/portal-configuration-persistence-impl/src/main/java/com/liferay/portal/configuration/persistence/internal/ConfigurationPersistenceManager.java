@@ -74,8 +74,48 @@ public class ConfigurationPersistenceManager
 	}
 
 	@Override
-	public void delete(final String pid) throws IOException {
-		doDelete(pid);
+	public void delete(String pid) throws IOException {
+		ConfigurationModelListener configurationModelListener = null;
+
+		if (!pid.endsWith("factory") && hasPid(pid)) {
+			Dictionary dictionary = getDictionary(pid);
+
+			String pidKey = (String)dictionary.get(
+				ConfigurationAdmin.SERVICE_FACTORYPID);
+
+			if (pidKey == null) {
+				pidKey = (String)dictionary.get(Constants.SERVICE_PID);
+			}
+
+			if (pidKey == null) {
+				pidKey = pid;
+			}
+
+			configurationModelListener = _getConfigurationModelListener(pidKey);
+		}
+
+		if (configurationModelListener != null) {
+			configurationModelListener.onBeforeDelete(pid);
+		}
+
+		Lock lock = _readWriteLock.writeLock();
+
+		try {
+			lock.lock();
+
+			Dictionary<?, ?> dictionary = _dictionaries.remove(pid);
+
+			if ((dictionary != null) && hasPid(pid)) {
+				deleteFromDatabase(pid);
+			}
+		}
+		finally {
+			lock.unlock();
+		}
+
+		if (configurationModelListener != null) {
+			configurationModelListener.onAfterDelete(pid);
+		}
 	}
 
 	@Override
@@ -159,84 +199,6 @@ public class ConfigurationPersistenceManager
 
 	@Override
 	public void store(
-			final String pid,
-			@SuppressWarnings("rawtypes") final Dictionary dictionary)
-		throws IOException {
-
-		doStore(pid, dictionary);
-	}
-
-	protected void createConfigurationTable() throws IOException, SQLException {
-		try (Connection connection = _dataSource.getConnection();
-			Statement statement = connection.createStatement()) {
-
-			statement.executeUpdate(
-				_db.buildSQL(
-					"create table Configuration_ (configurationId " +
-						"VARCHAR(255) not null primary key, dictionary TEXT)"));
-		}
-	}
-
-	protected void deleteFromDatabase(String pid) throws IOException {
-		try (Connection connection = _dataSource.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				_db.buildSQL(
-					"delete from Configuration_ where configurationId = ?"))) {
-
-			preparedStatement.setString(1, pid);
-
-			preparedStatement.executeUpdate();
-		}
-		catch (SQLException sqle) {
-			throw new IOException(sqle);
-		}
-	}
-
-	protected void doDelete(String pid) throws IOException {
-		ConfigurationModelListener configurationModelListener = null;
-
-		if (!pid.endsWith("factory") && hasPid(pid)) {
-			Dictionary dictionary = getDictionary(pid);
-
-			String pidKey = (String)dictionary.get(
-				ConfigurationAdmin.SERVICE_FACTORYPID);
-
-			if (pidKey == null) {
-				pidKey = (String)dictionary.get(Constants.SERVICE_PID);
-			}
-
-			if (pidKey == null) {
-				pidKey = pid;
-			}
-
-			configurationModelListener = _getConfigurationModelListener(pidKey);
-		}
-
-		if (configurationModelListener != null) {
-			configurationModelListener.onBeforeDelete(pid);
-		}
-
-		Lock lock = _readWriteLock.writeLock();
-
-		try {
-			lock.lock();
-
-			Dictionary<?, ?> dictionary = _dictionaries.remove(pid);
-
-			if ((dictionary != null) && hasPid(pid)) {
-				deleteFromDatabase(pid);
-			}
-		}
-		finally {
-			lock.unlock();
-		}
-
-		if (configurationModelListener != null) {
-			configurationModelListener.onAfterDelete(pid);
-		}
-	}
-
-	protected void doStore(
 			String pid, @SuppressWarnings("rawtypes") Dictionary dictionary)
 		throws IOException {
 
@@ -289,6 +251,32 @@ public class ConfigurationPersistenceManager
 
 		if (configurationModelListener != null) {
 			configurationModelListener.onAfterSave(pid, dictionary);
+		}
+	}
+
+	protected void createConfigurationTable() throws IOException, SQLException {
+		try (Connection connection = _dataSource.getConnection();
+			Statement statement = connection.createStatement()) {
+
+			statement.executeUpdate(
+				_db.buildSQL(
+					"create table Configuration_ (configurationId " +
+						"VARCHAR(255) not null primary key, dictionary TEXT)"));
+		}
+	}
+
+	protected void deleteFromDatabase(String pid) throws IOException {
+		try (Connection connection = _dataSource.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				_db.buildSQL(
+					"delete from Configuration_ where configurationId = ?"))) {
+
+			preparedStatement.setString(1, pid);
+
+			preparedStatement.executeUpdate();
+		}
+		catch (SQLException sqle) {
+			throw new IOException(sqle);
 		}
 	}
 

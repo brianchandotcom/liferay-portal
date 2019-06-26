@@ -200,32 +200,6 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		super(upstreamBranchName, workingDirectoryPath, gitRepositoryName);
 	}
 
-	@Override
-	protected void setUpstreamGitRemoteToPrivateGitRepository() {
-		GitRemote upstreamGitRemote = getUpstreamGitRemote();
-
-		String remoteURL = upstreamGitRemote.getRemoteURL();
-
-		if (!remoteURL.contains("-ee")) {
-			remoteURL = remoteURL.replace(".git", "-ee.git");
-		}
-
-		addGitRemote(true, "upstream-temp", remoteURL);
-	}
-
-	@Override
-	protected void setUpstreamGitRemoteToPublicGitRepository() {
-		GitRemote upstreamGitRemote = getUpstreamGitRemote();
-
-		String remoteURL = upstreamGitRemote.getRemoteURL();
-
-		if (remoteURL.contains("-ee")) {
-			remoteURL = remoteURL.replace("-ee", "");
-		}
-
-		addGitRemote(true, "upstream-temp", remoteURL);
-	}
-
 	private boolean _isNPMTestModuleDir(File moduleDir) {
 		List<File> packageJSONFiles = JenkinsResultsParserUtil.findFiles(
 			moduleDir, "package\\.json");

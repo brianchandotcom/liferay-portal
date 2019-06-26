@@ -2344,9 +2344,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		long groupId, long folderId, String fileName) {
 
 		try {
-			if (_portletFileRepository.getPortletFileEntry(
-					groupId, folderId, fileName) != null) {
+			FileEntry fileEntry = _portletFileRepository.getPortletFileEntry(
+				groupId, folderId, fileName);
 
+			if (fileEntry != null) {
 				return true;
 			}
 

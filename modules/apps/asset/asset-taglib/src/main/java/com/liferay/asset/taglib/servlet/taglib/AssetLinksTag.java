@@ -222,10 +222,12 @@ public class AssetLinksTag extends IncludeTag {
 
 			if (assetRendererFactory == null) {
 				if (_log.isWarnEnabled()) {
+					String className = PortalUtil.getClassName(
+						assetLinkEntry.getClassNameId());
+
 					_log.warn(
 						"No asset renderer factory found for class " +
-							PortalUtil.getClassName(
-								assetLinkEntry.getClassNameId()));
+							className);
 				}
 
 				continue;

@@ -43,9 +43,10 @@ public class BlogsEntrySharingUtil {
 		try {
 			long classNameId = PortalUtil.getClassNameId(BlogsEntry.class);
 
-			if (_sharingEntryLocalService.getSharingEntriesCount(
-					classNameId, blogsEntry.getEntryId()) == 0) {
+			int count = _sharingEntryLocalService.getSharingEntriesCount(
+				classNameId, blogsEntry.getEntryId());
 
+			if (count == 0) {
 				return false;
 			}
 

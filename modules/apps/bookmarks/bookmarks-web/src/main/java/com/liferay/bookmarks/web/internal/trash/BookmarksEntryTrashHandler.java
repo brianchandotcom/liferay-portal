@@ -127,11 +127,14 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 	public boolean isRestorable(long classPK) throws PortalException {
 		BookmarksEntry entry = _bookmarksEntryLocalService.getEntry(classPK);
 
-		if ((entry.getFolderId() > 0) &&
-			(_bookmarksFolderLocalService.fetchBookmarksFolder(
-				entry.getFolderId()) == null)) {
+		if (entry.getFolderId() > 0) {
+			BookmarksFolder bookmarksFolder =
+				_bookmarksFolderLocalService.fetchBookmarksFolder(
+					entry.getFolderId());
 
-			return false;
+			if (bookmarksFolder == null) {
+				return false;
+			}
 		}
 
 		return !entry.isInTrashContainer();

@@ -93,9 +93,11 @@ public class AnnouncementsEntryUADAnonymizerTest
 
 	@Override
 	protected boolean isBaseModelDeleted(long baseModelPK) {
-		if (_announcementsEntryLocalService.fetchAnnouncementsEntry(
-				baseModelPK) == null) {
+		AnnouncementsEntry announcementsEntry =
+			_announcementsEntryLocalService.fetchAnnouncementsEntry(
+				baseModelPK);
 
+		if (announcementsEntry == null) {
 			return true;
 		}
 

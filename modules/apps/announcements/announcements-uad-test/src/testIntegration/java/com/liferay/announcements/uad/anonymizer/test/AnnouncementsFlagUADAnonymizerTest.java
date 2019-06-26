@@ -88,9 +88,10 @@ public class AnnouncementsFlagUADAnonymizerTest
 
 	@Override
 	protected boolean isBaseModelDeleted(long baseModelPK) {
-		if (_announcementsFlagLocalService.fetchAnnouncementsFlag(
-				baseModelPK) == null) {
+		AnnouncementsFlag announcementsFlag =
+			_announcementsFlagLocalService.fetchAnnouncementsFlag(baseModelPK);
 
+		if (announcementsFlag == null) {
 			return true;
 		}
 

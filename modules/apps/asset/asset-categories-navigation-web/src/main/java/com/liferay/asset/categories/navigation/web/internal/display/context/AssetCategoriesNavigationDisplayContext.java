@@ -105,14 +105,16 @@ public class AssetCategoriesNavigationDisplayContext {
 
 		_assetVocabularyIds = getAvailableAssetVocabularyIds();
 
+		String[] assetVocabularyIdsArray =
+			_assetCategoriesNavigationPortletInstanceConfiguration.
+				assetVocabularyIds();
+
 		if (!_assetCategoriesNavigationPortletInstanceConfiguration.
 				allAssetVocabularies() &&
-			(_assetCategoriesNavigationPortletInstanceConfiguration.
-				assetVocabularyIds() != null)) {
+			(assetVocabularyIdsArray != null)) {
 
 			String assetVocabularyIds = StringUtil.merge(
-				_assetCategoriesNavigationPortletInstanceConfiguration.
-					assetVocabularyIds());
+				assetVocabularyIdsArray);
 
 			long[] configuredAssetVocabularyIds = StringUtil.split(
 				assetVocabularyIds, 0L);

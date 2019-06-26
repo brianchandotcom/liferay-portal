@@ -504,6 +504,65 @@ definition {
 			scopeNameList = "everything,everything.read,everything.write");
 	}
 
+	test ConfigureScopePrefixes {
+		property liferay.dependency.jars = "com.liferay.oauth2.provider.scope.sample.qa.jar";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "OAuth 2 Administration");
+
+		OAuth2.addApplication(
+			applicationName = "OAuth Application",
+			checkboxUncheckList = "Authorization Code");
+
+		Navigator.gotoBack();
+
+		OAuth2.viewScopesMappings(
+			applicationName = "OAuth Application",
+			resourcePanels = "Portal Services,Sample QA app",
+			scopeNameList = "liferay-json-web-services/everything,liferay-oauth2-scope-sample-qa-app/example-scope-1");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "OAuth 2",
+			configurationName = "Bundle PrefixHandlerFactory",
+			configurationScope = "System Scope");
+
+		SystemSettings.gotoConfigurationEntry(configurationEntry = "Default");
+
+		SystemSettings.deleteConfiguration();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "OAuth 2 Administration");
+
+		OAuth2.viewScopesMappings(
+			applicationName = "OAuth Application",
+			resourcePanels = "Portal Services,Sample QA app",
+			scopeNameList = "everything,example-scope-1");
+
+		OAuth2.addPrefixHandlerInSystemSettings(
+			excludedScopesName = "example-scope-1",
+			osgiJaxrsName = "liferay-oauth2-scope-sample-qa-app",
+			serviceProperties = "osgi.jaxrs.application.base");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "OAuth 2 Administration");
+
+		OAuth2.viewScopesMappings(
+			applicationName = "OAuth Application",
+			resourcePanels = "Portal Services,Sample QA app",
+			scopeNameList = "everything,example-scope-1,com.liferay.oauth2.provider.scope.sample.qa//sample-qa-app/example-scope-2");
+	}
+
 	test EditApplicationScopesAndViewLanguageKeys {
 		property liferay.dependency.jars = "com.liferay.oauth2.provider.scope.sample.qa.jar";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration-default.config";

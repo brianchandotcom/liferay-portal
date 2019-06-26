@@ -145,9 +145,10 @@ public class InvokerFilterHelper {
 			}
 
 			if (newFilterMappings.length == 1) {
-				if (_filterMappingsMap.putIfAbsent(
-						filterName, newFilterMappings) == null) {
+				FilterMapping[] filterMappings = _filterMappingsMap.putIfAbsent(
+					filterName, newFilterMappings);
 
+				if (filterMappings == null) {
 					int index = _filterNames.indexOf(positionFilterName);
 
 					if (index == -1) {

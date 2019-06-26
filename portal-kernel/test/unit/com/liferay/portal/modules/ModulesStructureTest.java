@@ -794,12 +794,10 @@ public class ModulesStructureTest {
 		String projectPathPrefix = String.valueOf(
 			_modulesDirPath.relativize(dirPath));
 
-		projectPathPrefix =
-			":" +
-				StringUtil.replace(
-					projectPathPrefix, File.separatorChar, CharPool.COLON);
+		projectPathPrefix = StringUtil.replace(
+			projectPathPrefix, File.separatorChar, CharPool.COLON);
 
-		return projectPathPrefix;
+		return ":" + projectPathPrefix;
 	}
 
 	private boolean _isEmptyGitRepo(Path dirPath) {

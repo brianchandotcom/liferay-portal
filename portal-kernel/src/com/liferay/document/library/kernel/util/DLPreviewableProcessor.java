@@ -1156,25 +1156,25 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 			return true;
 		}
-		else if ((index == THUMBNAIL_INDEX_CUSTOM_1) &&
-				 ((PrefsPropsUtil.getInteger(
-					 PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_HEIGHT) >
-						 0) ||
-				  (PrefsPropsUtil.getInteger(
-					  PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_WIDTH) >
-						  0))) {
+		else if (index == THUMBNAIL_INDEX_CUSTOM_1) {
+			int maxHeight = PrefsPropsUtil.getInteger(
+				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_HEIGHT);
+			int maxWidth = PrefsPropsUtil.getInteger(
+				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_WIDTH);
 
-			return true;
+			if ((maxHeight > 0) || (maxWidth > 0)) {
+				return true;
+			}
 		}
-		else if ((index == THUMBNAIL_INDEX_CUSTOM_2) &&
-				 ((PrefsPropsUtil.getInteger(
-					 PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_HEIGHT) >
-						 0) ||
-				  (PrefsPropsUtil.getInteger(
-					  PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_WIDTH) >
-						  0))) {
+		else if (index == THUMBNAIL_INDEX_CUSTOM_2) {
+			int maxHeight = PrefsPropsUtil.getInteger(
+				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_HEIGHT);
+			int maxWidth = PrefsPropsUtil.getInteger(
+				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_WIDTH);
 
-			return true;
+			if ((maxHeight > 0) || (maxWidth > 0)) {
+				return true;
+			}
 		}
 
 		return false;

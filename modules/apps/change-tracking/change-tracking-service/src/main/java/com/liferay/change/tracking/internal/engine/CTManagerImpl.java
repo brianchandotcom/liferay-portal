@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.internal.engine;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.definition.CTDefinition;
 import com.liferay.change.tracking.definition.CTDefinitionRegistry;
 import com.liferay.change.tracking.engine.CTEngineManager;
@@ -178,7 +179,11 @@ public class CTManagerImpl implements CTManager {
 		long recentCTCollectionId = _ctEngineManager.getRecentCTCollectionId(
 			userId);
 
-		_ctEngineManager.checkoutCTCollection(userId, recentCTCollectionId);
+		if (recentCTCollectionId == 0L) {
+			recentCTCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
+
+			_ctEngineManager.checkoutCTCollection(userId, recentCTCollectionId);
+		}
 
 		return _ctEngineManager.getCTCollectionOptional(
 			companyId, recentCTCollectionId);

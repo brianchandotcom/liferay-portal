@@ -116,9 +116,11 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 				uri: this.selectEntityURL
 			},
 			function(event) {
-				location.href = Liferay.Util.addParams(
-					namespace + 'ddmStructureKey=' + event.ddmstructurekey,
-					uri
+				Liferay.Util.navigate(
+					Liferay.Util.addParams(
+						namespace + 'ddmStructureKey=' + event.ddmstructurekey,
+						uri
+					)
 				);
 			}
 		);

@@ -17,6 +17,38 @@ definition {
 			value1 = "${applicationName}");
 	}
 
+	macro addPrefixHandlerInSystemSettings {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "OAuth 2",
+			configurationName = "Bundle PrefixHandlerFactory",
+			configurationScope = "System Scope");
+
+		Click(locator1 = "Button#ADD");
+
+		FormFields.editTextMultiline(
+			fieldName = "osgi.jaxrs.name",
+			fieldValue = "${osgiJaxrsName}");
+
+		if ("${symbolicName}" == "false") {
+			FormFields.disableCheckbox(fieldName = "Include Bundle Symbolic Name");
+		}
+
+		FormFields.editTextMultiline(
+			fieldName = "excluded.scopes",
+			fieldValue = "${excludedScopesName}");
+
+		FormFields.editTextMultiline(
+			fieldName = "service.properties",
+			fieldValue = "${serviceProperties}");
+
+		PortletEntry.save();
+	}
+
 	macro deleteApplication {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete",

@@ -1872,14 +1872,39 @@ public class CTJournalArticleLocalServiceWrapper
 			return false;
 		}
 
+		if (!_ctEngineManager.isChangeTrackingEnabled(
+				journalArticle.getCompanyId()) ||
+			!_ctEngineManager.isChangeTrackingSupported(
+				journalArticle.getCompanyId(), JournalArticle.class)) {
+
+			return true;
+		}
+
 		if (_ctManager.isModelUpdateInProgress()) {
 			return true;
 		}
 
-		return _ctManager.isRetrievableVersion(
-			journalArticle.getCompanyId(), PrincipalThreadLocal.getUserId(),
-			_portal.getClassNameId(JournalArticle.class.getName()),
-			journalArticle.getId());
+		if (!_ctManager.isDraftChange(
+				_portal.getClassNameId(JournalArticle.class.getName()),
+				journalArticle.getId())) {
+
+			return true;
+		}
+
+		if (_ctManager.isProductionCheckedOut(
+				journalArticle.getCompanyId(),
+				PrincipalThreadLocal.getUserId())) {
+
+			return false;
+		}
+
+		Optional<CTEntry> ctEntryOptional =
+			_ctManager.getActiveCTCollectionCTEntryOptional(
+				journalArticle.getCompanyId(), PrincipalThreadLocal.getUserId(),
+				_portal.getClassNameId(JournalArticle.class.getName()),
+				journalArticle.getId());
+
+		return ctEntryOptional.isPresent();
 	}
 
 	private void _registerChange(JournalArticle journalArticle, int changeType)

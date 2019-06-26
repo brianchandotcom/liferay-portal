@@ -16,6 +16,7 @@ package com.liferay.journal.change.tracking.internal.service;
 
 import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.engine.CTManager;
+import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalFolderService;
 import com.liferay.journal.service.JournalFolderServiceWrapper;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -154,16 +156,41 @@ public class CTJournalFolderServiceWrapper extends JournalFolderServiceWrapper {
 			return true;
 		}
 
+		JournalArticle journalArticle = (JournalArticle)object;
+
+		if (!_ctEngineManager.isChangeTrackingEnabled(
+				journalArticle.getCompanyId()) ||
+			!_ctEngineManager.isChangeTrackingSupported(
+				journalArticle.getCompanyId(), JournalArticle.class)) {
+
+			return true;
+		}
+
 		if (_ctManager.isModelUpdateInProgress()) {
 			return true;
 		}
 
-		JournalArticle journalArticle = (JournalArticle)object;
+		if (!_ctManager.isDraftChange(
+				_portal.getClassNameId(JournalArticle.class.getName()),
+				journalArticle.getId())) {
 
-		return _ctManager.isRetrievableVersion(
-			journalArticle.getCompanyId(), PrincipalThreadLocal.getUserId(),
-			_portal.getClassNameId(JournalArticle.class.getName()),
-			journalArticle.getId());
+			return true;
+		}
+
+		if (_ctManager.isProductionCheckedOut(
+				journalArticle.getCompanyId(),
+				PrincipalThreadLocal.getUserId())) {
+
+			return false;
+		}
+
+		Optional<CTEntry> ctEntryOptional =
+			_ctManager.getActiveCTCollectionCTEntryOptional(
+				journalArticle.getCompanyId(), PrincipalThreadLocal.getUserId(),
+				_portal.getClassNameId(JournalArticle.class.getName()),
+				journalArticle.getId());
+
+		return ctEntryOptional.isPresent();
 	}
 
 	@Reference

@@ -133,6 +133,21 @@ public class DeprecatedModulesUpgrade implements UpgradeStepRegistrator {
 					CacheRegistryUtil.clear();
 				}
 			}
+
+			if (_deprecatedModulesUpgradeConfiguration.
+					removeWYSIWYGModuleData()) {
+
+				Release release = _releaseLocalService.fetchRelease(
+					"com.liferay.wysiwyg.web");
+
+				if (release != null) {
+					UpgradeWYSIWYG upgradeWYSIWYG = new UpgradeWYSIWYG();
+
+					upgradeWYSIWYG.upgrade();
+
+					CacheRegistryUtil.clear();
+				}
+			}
 		}
 		catch (UpgradeException ue) {
 			ReflectionUtil.throwException(ue);

@@ -16,7 +16,4 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.blogs.configuration.BlogsFileUploadsConfiguration" %><%@
-page import="com.liferay.document.library.kernel.util.DLValidatorUtil" %>
-
 <%@ include file="/blogs/init-ext.jsp" %>

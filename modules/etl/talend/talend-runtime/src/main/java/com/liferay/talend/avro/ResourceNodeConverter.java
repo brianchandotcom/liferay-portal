@@ -55,11 +55,10 @@ public class ResourceNodeConverter
 				JsonNode fieldJsonNode = _getFieldJsonNode(
 					resourceJsonNode, name);
 
-				if (fieldJsonNode.isMissingNode() && _log.isDebugEnabled()) {
-					_log.debug(
-						"{} field is not present in the response. It will be " +
-							"ignored.",
-						name);
+				if (fieldJsonNode.isMissingNode()) {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Ignoring response's absent field {}", name);
+					}
 
 					return;
 				}

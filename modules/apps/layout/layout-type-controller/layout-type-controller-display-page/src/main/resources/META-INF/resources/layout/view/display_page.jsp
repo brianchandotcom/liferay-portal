@@ -71,25 +71,18 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 					</div>
 				</div>
 			</c:when>
-			<c:when test="<%= displayPageLayoutTypeControllerDisplayContext.getStructureJSONArray() != null %>">
+			<c:when test="<%= infoDisplayObjectProvider != null %>">
+
+				<%
+				LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.getLayoutPageTemplateEntry(displayPageLayoutTypeControllerDisplayContext.getLayoutPageTemplateEntryId());
+				%>
+
 				<liferay-layout:render-fragment-layout
 					fieldValues="<%= displayPageLayoutTypeControllerDisplayContext.getInfoDisplayFieldsValues() %>"
+					groupId="<%= infoDisplayObjectProvider.getGroupId() %>"
 					mode="<%= FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE %>"
-					structureJSONArray="<%= displayPageLayoutTypeControllerDisplayContext.getStructureJSONArray() %>"
+					plid="<%= layoutPageTemplateEntry.getPlid() %>"
 				/>
-			</c:when>
-			<c:when test="<%= infoDisplayObjectProvider != null %>">
-				<div class="sheet">
-					<div class="sheet-header">
-						<h2 class="sheet-title">
-							<%= infoDisplayObjectProvider.getTitle(locale) %>
-						</h2>
-
-						<div class="sheet-text">
-							<%= infoDisplayObjectProvider.getDescription(locale) %>
-						</div>
-					</div>
-				</div>
 			</c:when>
 		</c:choose>
 	</c:otherwise>

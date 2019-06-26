@@ -153,7 +153,17 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>groupId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>mode</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>plid</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -166,12 +176,6 @@
 			<name>previewType</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>structureJSONArray</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>com.liferay.portal.kernel.json.JSONArray</type>
 		</attribute>
 	</tag>
 	<tag>

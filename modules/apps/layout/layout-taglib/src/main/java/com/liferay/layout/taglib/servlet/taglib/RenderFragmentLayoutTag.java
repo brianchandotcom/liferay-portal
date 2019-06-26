@@ -14,9 +14,16 @@
 
 package com.liferay.layout.taglib.servlet.taglib;
 
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.taglib.util.IncludeTag;
@@ -35,8 +42,16 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		return _fieldValues;
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
 	public String getMode() {
 		return _mode;
+	}
+
+	public long getPlid() {
+		return _plid;
 	}
 
 	public long getPreviewClassPK() {
@@ -47,12 +62,12 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		return _previewType;
 	}
 
-	public JSONArray getStructureJSONArray() {
-		return _structureJSONArray;
-	}
-
 	public void setFieldValues(Map<String, Object> fieldValues) {
 		_fieldValues = fieldValues;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
 	}
 
 	public void setMode(String mode) {
@@ -66,6 +81,10 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
+	public void setPlid(long plid) {
+		_plid = plid;
+	}
+
 	public void setPreviewClassPK(long previewClassPK) {
 		_previewClassPK = previewClassPK;
 	}
@@ -74,19 +93,16 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		_previewType = previewType;
 	}
 
-	public void setStructureJSONArray(JSONArray structureJSONArray) {
-		_structureJSONArray = structureJSONArray;
-	}
-
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
 		_fieldValues = null;
+		_groupId = 0;
 		_mode = null;
+		_plid = 0;
 		_previewClassPK = 0;
 		_previewType = 0;
-		_structureJSONArray = null;
 	}
 
 	@Override
@@ -112,7 +128,7 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			_getSegmentsExperienceIds());
 		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:structureJSONArray",
-			_structureJSONArray);
+			_getStructureJSONArray());
 	}
 
 	private long[] _getSegmentsExperienceIds() {
@@ -121,12 +137,43 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			new long[] {SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT});
 	}
 
+	private JSONArray _getStructureJSONArray() {
+		try {
+			LayoutPageTemplateStructure layoutPageTemplateStructure =
+				LayoutPageTemplateStructureLocalServiceUtil.
+					fetchLayoutPageTemplateStructure(
+						_groupId,
+						PortalUtil.getClassNameId(Layout.class.getName()),
+						_plid, true);
+
+			long[] segmentsExperienceIds = GetterUtil.getLongValues(
+				request.getAttribute(SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
+				new long[] {SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT});
+
+			String data = layoutPageTemplateStructure.getData(
+				segmentsExperienceIds);
+
+			if (Validator.isNull(data)) {
+				return null;
+			}
+
+			JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
+
+			return dataJSONObject.getJSONArray("structure");
+		}
+		catch (Exception e) {
+		}
+
+		return null;
+	}
+
 	private static final String _PAGE = "/render_fragment_layout/page.jsp";
 
 	private Map<String, Object> _fieldValues;
+	private long _groupId;
 	private String _mode;
+	private long _plid;
 	private long _previewClassPK;
 	private int _previewType;
-	private JSONArray _structureJSONArray;
 
 }

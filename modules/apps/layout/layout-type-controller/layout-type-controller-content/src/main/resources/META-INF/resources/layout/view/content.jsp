@@ -52,28 +52,13 @@ int previewAssetEntryType = ParamUtil.getInteger(request, "previewAssetEntryType
 
 	</c:when>
 	<c:otherwise>
-
-		<%
-		LayoutPageTemplateStructure layoutPageTemplateStructure = LayoutPageTemplateStructureLocalServiceUtil.fetchLayoutPageTemplateStructure(layout.getGroupId(), PortalUtil.getClassNameId(Layout.class.getName()), layout.getPlid(), true);
-
-		long[] segmentsExperienceIds = GetterUtil.getLongValues(request.getAttribute(SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS), new long[] {SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT});
-
-		String data = layoutPageTemplateStructure.getData(segmentsExperienceIds);
-		%>
-
-		<c:if test="<%= Validator.isNotNull(data) %>">
-
-			<%
-			JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
-			%>
-
-			<liferay-layout:render-fragment-layout
-				mode="<%= FragmentEntryLinkConstants.VIEW %>"
-				previewClassPK="<%= previewAssetEntryId %>"
-				previewType="<%= previewAssetEntryType %>"
-				structureJSONArray='<%= dataJSONObject.getJSONArray("structure") %>'
-			/>
-		</c:if>
+		<liferay-layout:render-fragment-layout
+			groupId="<%= layout.getGroupId() %>"
+			mode="<%= FragmentEntryLinkConstants.VIEW %>"
+			plid="<%= layout.getPlid() %>"
+			previewClassPK="<%= previewAssetEntryId %>"
+			previewType="<%= previewAssetEntryType %>"
+		/>
 	</c:otherwise>
 </c:choose>
 

@@ -91,11 +91,11 @@ class ItemSelectorDialog extends Component {
 	 * @review
 	 */
 	_onItemSelected(event) {
-		var currentItem = event.data;
+		const currentItem = event.data;
 
-		var dialog = Liferay.Util.getWindow(this.eventName);
+		const dialog = Liferay.Util.getWindow(this.eventName);
 
-		var addButton = dialog
+		const addButton = dialog
 			.getToolbar('footer')
 			.get('boundingBox')
 			.one('#addButton');

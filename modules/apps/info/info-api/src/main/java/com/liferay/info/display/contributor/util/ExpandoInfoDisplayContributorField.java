@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.info.display.contributor.util;
+package com.liferay.info.display.contributor.util;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;

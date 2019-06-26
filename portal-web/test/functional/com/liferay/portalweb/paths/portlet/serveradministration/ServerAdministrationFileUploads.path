@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>GENERAL_OVERALL_MAX_FILE_SIZE_FIELD</td>
-	<td>//input[contains(@id,'maxSize')]</td>
+	<td>//input[contains(@name,'maxSize')]</td>
 	<td></td>
 </tr>
 <tr>

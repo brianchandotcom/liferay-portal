@@ -18,8 +18,6 @@ import com.germinus.easyconf.AggregatedProperties;
 import com.germinus.easyconf.ConfigurationException;
 import com.germinus.easyconf.ConfigurationNotFoundException;
 import com.germinus.easyconf.Conventions;
-import com.germinus.easyconf.DatasourceURL;
-import com.germinus.easyconf.JndiURL;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
@@ -147,14 +145,6 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 		return _loadedSources;
 	}
 
-	private Configuration _addDatasourceProperties(String datasourcePath) {
-		DatasourceURL datasourceURL = new DatasourceURL(
-			datasourcePath, _companyId, _componentName,
-			DatasourceURL.PROPERTIES_TABLE);
-
-		return datasourceURL.getConfiguration();
-	}
-
 	private Configuration _addFileProperties(
 			String fileName,
 			CompositeConfiguration loadedCompositeConfiguration)
@@ -232,12 +222,6 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 		}
 	}
 
-	private Configuration _addJNDIProperties(String sourcePath) {
-		JndiURL jndiURL = new JndiURL(sourcePath, _companyId, _componentName);
-
-		return jndiURL.getConfiguration();
-	}
-
 	private Configuration _addPropertiesSource(
 		String sourceName, URL url,
 		CompositeConfiguration loadedCompositeConfiguration) {
@@ -245,13 +229,7 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 		try {
 			Configuration newConfiguration = null;
 
-			if (DatasourceURL.isDatasource(sourceName)) {
-				newConfiguration = _addDatasourceProperties(sourceName);
-			}
-			else if (JndiURL.isJndi(sourceName)) {
-				newConfiguration = _addJNDIProperties(sourceName);
-			}
-			else if (url != null) {
+			if (url != null) {
 				newConfiguration = _addURLProperties(
 					url, loadedCompositeConfiguration);
 			}

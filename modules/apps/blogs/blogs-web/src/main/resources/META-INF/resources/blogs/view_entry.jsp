@@ -148,7 +148,7 @@ PortalUtil.setPageTitle(BlogsEntryUtil.getDisplayTitle(resourceBundle, entry), r
 String description = entry.getDescription();
 
 if (Validator.isNull(description)) {
-	description = HtmlUtil.stripHtml(StringUtil.shorten(entry.getContent(), pageAbstractLength));
+	description = HtmlUtil.stripHtml(StringUtil.shorten(entry.getContent(), PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH));
 }
 
 PortalUtil.setPageDescription(description, request);

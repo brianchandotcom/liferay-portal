@@ -97,7 +97,7 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Organizations");
 
-		Organization.addSiteCP(orgName = "Organization Name");
+		Organization.addSitePG(orgName = "Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",

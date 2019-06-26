@@ -44,14 +44,8 @@ public class ResourceConfigurationFactory {
 			throw new RuntimeException("Unable to determine hostname");
 		}
 
-		if (hostname.contains(".")) {
-			int index = hostname.indexOf(".");
-
-			hostname = hostname.substring(0, index);
-		}
-
 		hostname = JenkinsResultsParserUtil.combine(
-			hostname, "-", dockerBaseImageName);
+			hostname.replaceFirst("\\..*", ""), "-", dockerBaseImageName);
 
 		V1ObjectMeta v1ObjectMeta = newConfigurationMetaData(hostname);
 

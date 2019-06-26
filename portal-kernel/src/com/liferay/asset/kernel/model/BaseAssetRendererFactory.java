@@ -328,8 +328,12 @@ public abstract class BaseAssetRendererFactory<T>
 			return true;
 		}
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+		Portlet portlet = PortletLocalServiceUtil.fetchPortletById(
 			companyId, getPortletId());
+
+		if (portlet == null) {
+			return true;
+		}
 
 		return portlet.isActive();
 	}

@@ -19,7 +19,6 @@ import com.germinus.easyconf.ConfigurationException;
 import com.germinus.easyconf.ConfigurationNotFoundException;
 import com.germinus.easyconf.Conventions;
 import com.germinus.easyconf.DatasourceURL;
-import com.germinus.easyconf.FileConfigurationChangedReloadingStrategy;
 import com.germinus.easyconf.JndiURL;
 
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -50,7 +49,6 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.configuration.PropertiesConfigurationLayout;
 import org.apache.commons.configuration.SubsetConfiguration;
 import org.apache.commons.configuration.SystemConfiguration;
-import org.apache.commons.configuration.reloading.FileChangedReloadingStrategy;
 
 /**
  * @author Raymond Augé
@@ -178,32 +176,6 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 					}
 
 				};
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Adding file " + url);
-			}
-
-			Long delay = _getReloadDelay(
-				loadedCompositeConfiguration, newFileConfiguration);
-
-			if (delay != null) {
-				FileChangedReloadingStrategy fileChangedReloadingStrategy =
-					new FileConfigurationChangedReloadingStrategy();
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"File ", url, " will be reloaded every ", delay,
-							" seconds"));
-				}
-
-				long milliseconds = delay.longValue() * 1000;
-
-				fileChangedReloadingStrategy.setRefreshDelay(milliseconds);
-
-				newFileConfiguration.setReloadingStrategy(
-					fileChangedReloadingStrategy);
-			}
 
 			_addIncludedPropertiesSources(
 				newFileConfiguration, loadedCompositeConfiguration);
@@ -363,28 +335,6 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 				_log.debug("Adding resource " + url);
 			}
 
-			Long delay = _getReloadDelay(
-				loadedCompositeConfiguration, propertiesConfiguration);
-
-			if (delay != null) {
-				FileChangedReloadingStrategy fileChangedReloadingStrategy =
-					new FileConfigurationChangedReloadingStrategy();
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"Resource ", url, " will be reloaded every ", delay,
-							" seconds"));
-				}
-
-				long milliseconds = delay.longValue() * 1000;
-
-				fileChangedReloadingStrategy.setRefreshDelay(milliseconds);
-
-				propertiesConfiguration.setReloadingStrategy(
-					fileChangedReloadingStrategy);
-			}
-
 			_addIncludedPropertiesSources(
 				propertiesConfiguration, loadedCompositeConfiguration);
 
@@ -401,21 +351,6 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 
 	private String _getPrefix() {
 		return _componentName.concat(Conventions.PREFIX_SEPARATOR);
-	}
-
-	private Long _getReloadDelay(
-		CompositeConfiguration loadedCompositeConfiguration,
-		FileConfiguration newFileConfiguration) {
-
-		Long delay = newFileConfiguration.getLong(
-			Conventions.RELOAD_DELAY_PROPERTY, null);
-
-		if (delay == null) {
-			delay = loadedCompositeConfiguration.getLong(
-				Conventions.RELOAD_DELAY_PROPERTY, null);
-		}
-
-		return delay;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

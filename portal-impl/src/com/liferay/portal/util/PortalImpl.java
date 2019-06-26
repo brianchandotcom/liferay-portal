@@ -4491,6 +4491,10 @@ public class PortalImpl implements Portal {
 		if (Validator.isNotNull(friendlyURL)) {
 			layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
 				groupId, privateLayout, friendlyURL);
+
+			if (Validator.isNotNull(layout.getSourcePrototypeLayoutUuid())) {
+				layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
+			}
 		}
 		else {
 			long defaultPlid = LayoutLocalServiceUtil.getDefaultPlid(

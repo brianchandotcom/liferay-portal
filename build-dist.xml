@@ -97,7 +97,7 @@
 			>
 				<replacefilter
 					token="-Xquickstart -Dfile.encoding=UTF-8 -Duser.timezone=GMT"
-					value="-Dfile.encoding=UTF-8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xquickstart -XX:MaxNewSize=1536m -XX:NewSize=1536m -XX:SurvivorRatio=7"
+					value="${app.server.websphere.jvm.args} -Xquickstart ${app.server.websphere.jvm.mem}"
 				/>
 			</replace>
 		</sequential>
@@ -2072,7 +2072,7 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 			file="${app.server.websphere.instance.dir}/config/cells/liferay-cell/nodes/liferay-node/servers/server1/server.xml"
 		>
 			<replacetoken><![CDATA[genericJvmArguments="-Xquickstart"]]></replacetoken>
-			<replacevalue><![CDATA[genericJvmArguments="-Xquickstart -Dfile.encoding=UTF-8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT"]]></replacevalue>
+			<replacevalue><![CDATA[genericJvmArguments="-Xquickstart ${app.server.websphere.jvm.args}"]]></replacevalue>
 		</replace>
 
 		<echo>Installing fix pack. This may take a few minutes.</echo>

@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>ANY</td>
-	<td>//textarea[contains(@id,'${key_text}')]</td>
+	<td>//textarea[contains(@name,'${key_text}')]</td>
 	<td></td>
 </tr>
 <tr>

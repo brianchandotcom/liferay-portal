@@ -54,34 +54,32 @@ public class LiferayK8sConnection {
 		Pod pod = null;
 
 		try {
+			long timeout =
+				System.currentTimeMillis() + (_SECONDS_RETRY_TIMEOUT * 1000);
+
 			pod = new Pod(
 				_coreV1Api.createNamespacedPod(
 					namespace, configurationPod.getV1Pod(), null));
 
-			int retry = 0;
-
-			while ((pod == null) &&
-				   (retry < (_SECONDS_WAIT_TIMEOUT / _SECONDS_RETRY_PERIOD))) {
-
+			while ((pod == null) && (System.currentTimeMillis() < timeout)) {
 				pod = getPod(configurationPod, namespace);
 
 				JenkinsResultsParserUtil.sleep(_SECONDS_RETRY_PERIOD * 1000);
-
-				retry++;
 			}
+
+			timeout =
+				System.currentTimeMillis() + (_SECONDS_RETRY_TIMEOUT * 1000);
 
 			String phase = "";
 
 			while (!phase.equals("Running") &&
-				   (retry < (_SECONDS_WAIT_TIMEOUT / _SECONDS_RETRY_PERIOD))) {
+				   (System.currentTimeMillis() < timeout)) {
 
 				phase = pod.getPhase();
 
 				JenkinsResultsParserUtil.sleep(_SECONDS_RETRY_PERIOD * 1000);
 
 				pod.refreshV1Pod();
-
-				retry++;
 			}
 
 			if (phase.equals("Running")) {
@@ -142,17 +140,15 @@ public class LiferayK8sConnection {
 			}
 		}
 
+		long timeout =
+			System.currentTimeMillis() + (_SECONDS_RETRY_TIMEOUT * 1000);
+
 		pod = getPod(pod, namespace);
-		int retry = 0;
 
-		while ((pod != null) &&
-			   (retry < (_SECONDS_WAIT_TIMEOUT / _SECONDS_RETRY_PERIOD))) {
-
+		while ((pod != null) && (System.currentTimeMillis() < timeout)) {
 			pod = getPod(pod, namespace);
 
 			JenkinsResultsParserUtil.sleep(_SECONDS_RETRY_PERIOD * 1000);
-
-			retry++;
 		}
 
 		if (pod == null) {
@@ -243,7 +239,7 @@ public class LiferayK8sConnection {
 
 	private static final int _SECONDS_RETRY_PERIOD = 5;
 
-	private static final int _SECONDS_WAIT_TIMEOUT = 300;
+	private static final int _SECONDS_RETRY_TIMEOUT = 300;
 
 	private static final ApiClient _apiClient;
 	private static final CoreV1Api _coreV1Api;

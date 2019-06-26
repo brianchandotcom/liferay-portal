@@ -287,7 +287,8 @@ public class LiferaySourceOrSink
 
 		String jsonFinderPath = StringUtil.replace(
 			OASConstants.PATH_ENDPOINT_OPERATION_PARAMETERS_PATTERN,
-			"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
+			"ENDPOINT_TPL", endpoint, "OPERATION_TPL",
+			StringUtil.toLowerCase(operation));
 
 		JsonArray parametersJsonArray = _jsonFinder.getDescendantJsonArray(
 			jsonFinderPath, oasJsonObject);
@@ -508,7 +509,7 @@ public class LiferaySourceOrSink
 
 		oasParameter.setName(jsonObject.getString("name"));
 
-		if (!jsonObject.isNull("required")) {
+		if (jsonObject.containsKey("required")) {
 			oasParameter.setRequired(jsonObject.getBoolean("required"));
 		}
 

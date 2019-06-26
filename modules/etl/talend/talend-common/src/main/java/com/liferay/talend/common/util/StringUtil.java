@@ -46,6 +46,10 @@ public class StringUtil {
 		return replaced;
 	}
 
+	public static String toLowerCase(String value) {
+		return value.toLowerCase(Locale.getDefault());
+	}
+
 	public static String toUpperCase(String value) {
 		return value.toUpperCase(Locale.getDefault());
 	}

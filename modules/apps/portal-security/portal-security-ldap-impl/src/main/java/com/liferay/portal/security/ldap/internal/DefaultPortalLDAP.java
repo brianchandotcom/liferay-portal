@@ -722,8 +722,6 @@ public class DefaultPortalLDAP implements PortalLDAP {
 				login = emailAddress;
 			}
 
-			LDAPFilter ldapFilter = LDAPFilter.eq(loginMapping, login);
-
 			LDAPServerConfiguration ldapServerConfiguration =
 				_ldapServerConfigurationProvider.getConfiguration(
 					companyId, ldapServerId);
@@ -731,6 +729,8 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			if (ldapServerConfiguration.ldapServerId() != ldapServerId) {
 				return null;
 			}
+
+			LDAPFilter ldapFilter = LDAPFilter.eq(loginMapping, login);
 
 			LDAPFilter userSearchLDAPFilter = _ldapFilterValidator.validate(
 				ldapServerConfiguration.userSearchFilter(),

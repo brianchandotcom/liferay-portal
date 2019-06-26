@@ -183,6 +183,14 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				return null;
 			}
 
+			LDAPServerConfiguration ldapServerConfiguration =
+				_ldapServerConfigurationProvider.getConfiguration(
+					companyId, ldapServerId);
+
+			if (ldapServerConfiguration.ldapServerId() != ldapServerId) {
+				return null;
+			}
+
 			Properties userMappings = _ldapSettings.getUserMappings(
 				ldapServerId, companyId);
 
@@ -195,14 +203,6 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			SearchControls searchControls = new SearchControls(
 				SearchControls.SUBTREE_SCOPE, 1, 0,
 				new String[] {userMappingsScreenName}, false, false);
-
-			LDAPServerConfiguration ldapServerConfiguration =
-				_ldapServerConfigurationProvider.getConfiguration(
-					companyId, ldapServerId);
-
-			if (ldapServerConfiguration.ldapServerId() != ldapServerId) {
-				return null;
-			}
 
 			LDAPFilter authSearchLDAPFilter = _ldapFilterValidator.validate(
 				ldapServerConfiguration.authSearchFilter(),
@@ -705,7 +705,9 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				ldapImportContext.getCompanyId(),
 				ldapImportContext.getLdapServerId());
 
-		if (ldapServerConfiguration.ldapServerId() != ldapImportContext.getLdapServerId()) {
+		if (ldapServerConfiguration.ldapServerId() !=
+				ldapImportContext.getLdapServerId()) {
+
 			return null;
 		}
 
@@ -933,20 +935,22 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			User user)
 		throws Exception {
 
-		Properties groupMappings = ldapImportContext.getGroupMappings();
-
-		String groupMappingsUser = groupMappings.getProperty("user");
-
-		Set<Long> newUserGroupIds = new LinkedHashSet<>();
-
 		LDAPServerConfiguration ldapServerConfiguration =
 			_ldapServerConfigurationProvider.getConfiguration(
 				ldapImportContext.getCompanyId(),
 				ldapImportContext.getLdapServerId());
 
-		if (ldapServerConfiguration.ldapServerId() != ldapImportContext.getLdapServerId()) {
+		if (ldapServerConfiguration.ldapServerId() !=
+				ldapImportContext.getLdapServerId()) {
+
 			return;
 		}
+
+		Properties groupMappings = ldapImportContext.getGroupMappings();
+
+		String groupMappingsUser = groupMappings.getProperty("user");
+
+		Set<Long> newUserGroupIds = new LinkedHashSet<>();
 
 		if (Validator.isNotNull(groupMappingsUser) &&
 			ldapServerConfiguration.groupSearchFilterEnabled()) {

@@ -2077,7 +2077,7 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 			file="${app.server.websphere.instance.dir}/config/cells/liferay-cell/nodes/liferay-node/servers/server1/server.xml"
 		>
 			<replacetoken><![CDATA[disableJIT="false">]]></replacetoken>
-			<replacevalue><![CDATA[disableJIT="false" maximumHeapSize="1024">]]></replacevalue>
+			<replacevalue><![CDATA[disableJIT="false" maximumHeapSize="6144">]]></replacevalue>
 		</replace>
 
 		<replace

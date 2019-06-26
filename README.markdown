@@ -145,7 +145,7 @@ Do you have questions? Ask them on our very active
 
 Join the conversation on Liferay's Community Chat.
 
-- Get your invite: [community-chat.liferay.com](https://community-chat.liferay.com)
+- Get your invite: [https://liferay.dev/chat](https://liferay.dev/chat)
 - Enter the chat: [liferay-community.slack.com](https://liferay-community.slack.com)
 - Channel: `#portal`
 

@@ -384,10 +384,11 @@ public class ToolsUtil {
 						continue;
 					}
 
+					int z = importPackageAndClassName.lastIndexOf(
+						StringPool.PERIOD);
+
 					String importClassName =
-						importPackageAndClassName.substring(
-							importPackageAndClassName.lastIndexOf(
-								StringPool.PERIOD) + 1);
+						importPackageAndClassName.substring(z + 1);
 
 					afterImportsContent = StringUtil.replaceFirst(
 						afterImportsContent, importPackageAndClassName,

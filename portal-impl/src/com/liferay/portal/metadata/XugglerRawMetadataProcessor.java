@@ -79,9 +79,10 @@ public class XugglerRawMetadataProcessor extends BaseRawMetadataProcessor {
 		try {
 			Metadata metadata = new Metadata();
 
-			if (container.open(
-					file.getCanonicalPath(), IContainer.Type.READ, null) < 0) {
+			int result = container.open(
+				file.getCanonicalPath(), IContainer.Type.READ, null);
 
+			if (result < 0) {
 				throw new IllegalArgumentException("Could not open stream");
 			}
 

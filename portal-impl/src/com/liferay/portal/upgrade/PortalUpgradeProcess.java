@@ -104,9 +104,10 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 
 		Version requiredSchemaVersion = getRequiredSchemaVersion();
 
-		if (requiredSchemaVersion.compareTo(
-				getCurrentSchemaVersion(connection)) <= 0) {
+		int result = requiredSchemaVersion.compareTo(
+			getCurrentSchemaVersion(connection));
 
+		if (result <= 0) {
 			return true;
 		}
 

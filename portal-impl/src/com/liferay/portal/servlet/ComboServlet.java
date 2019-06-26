@@ -320,12 +320,14 @@ public class ComboServlet extends HttpServlet {
 				System.currentTimeMillis() - fileContentBag._lastModified;
 
 			if ((requestDispatcher != null) &&
-				(elapsedTime <= PropsValues.COMBO_CHECK_TIMESTAMP_INTERVAL) &&
-				(RequestDispatcherUtil.getLastModifiedTime(
-					requestDispatcher, httpServletRequest,
-					httpServletResponse) == fileContentBag._lastModified)) {
+				(elapsedTime <= PropsValues.COMBO_CHECK_TIMESTAMP_INTERVAL)) {
 
-				return fileContentBag._fileContent;
+				long lastModified = RequestDispatcherUtil.getLastModifiedTime(
+					requestDispatcher, httpServletRequest, httpServletResponse);
+
+				if (lastModified == fileContentBag._lastModified) {
+					return fileContentBag._fileContent;
+				}
 			}
 
 			_fileContentBagPortalCache.remove(fileContentKey);

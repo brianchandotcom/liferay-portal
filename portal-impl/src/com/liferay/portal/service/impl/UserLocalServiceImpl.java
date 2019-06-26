@@ -5476,9 +5476,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		emailAddress = StringUtil.toLowerCase(StringUtil.trim(emailAddress));
 
 		if (!emailAddress.equals(user.getEmailAddress())) {
-			if (userPersistence.fetchByC_EA(
-					user.getCompanyId(), emailAddress) != null) {
+			User userWithSameEmailAddress = userPersistence.fetchByC_EA(
+				user.getCompanyId(), emailAddress);
 
+			if (userWithSameEmailAddress != null) {
 				throw new UserEmailAddressException.MustNotBeDuplicate(
 					user.getCompanyId(), user.getUserId(), emailAddress);
 			}
@@ -6653,9 +6654,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		Arrays.sort(validGroupIds);
 
 		for (UserGroupRole userGroupRole : userGroupRoles) {
-			if (Arrays.binarySearch(
-					validGroupIds, userGroupRole.getGroupId()) >= 0) {
+			int count = Arrays.binarySearch(
+				validGroupIds, userGroupRole.getGroupId());
 
+			if (count >= 0) {
 				userGroupRoleLocalService.addUserGroupRole(userGroupRole);
 			}
 		}
@@ -6732,9 +6734,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				!StringUtil.equalsIgnoreCase(
 					user.getEmailAddress(), emailAddress)) {
 
-				if (userPersistence.fetchByC_EA(
-						user.getCompanyId(), emailAddress) != null) {
+				User userWithSameEmailAddress = userPersistence.fetchByC_EA(
+					user.getCompanyId(), emailAddress);
 
+				if (userWithSameEmailAddress != null) {
 					throw new UserEmailAddressException.MustNotBeDuplicate(
 						user.getCompanyId(), userId, emailAddress);
 				}
@@ -6820,9 +6823,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		if (!StringUtil.equalsIgnoreCase(
 				emailAddress1, user.getEmailAddress())) {
 
-			if (userPersistence.fetchByC_EA(
-					user.getCompanyId(), emailAddress1) != null) {
+			User userWithSameEmailAddress = userPersistence.fetchByC_EA(
+				user.getCompanyId(), emailAddress1);
 
+			if (userWithSameEmailAddress != null) {
 				throw new UserEmailAddressException.MustNotBeDuplicate(
 					user.getCompanyId(), user.getUserId(), emailAddress1);
 			}

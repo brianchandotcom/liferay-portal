@@ -106,9 +106,11 @@ public class PortalInstances {
 
 			if (cookieCompanyId > 0) {
 				try {
-					if (CompanyLocalServiceUtil.fetchCompanyById(
-							cookieCompanyId) == null) {
+					Company cookieCompany =
+						CompanyLocalServiceUtil.fetchCompanyById(
+							cookieCompanyId);
 
+					if (cookieCompany == null) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"Company id from cookie " + cookieCompanyId +

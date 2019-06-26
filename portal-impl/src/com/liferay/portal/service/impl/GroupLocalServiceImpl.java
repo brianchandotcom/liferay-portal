@@ -825,9 +825,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					group.getGroupId());
 			}
 
-			if (groupPersistence.countByC_P_S(
-					group.getCompanyId(), group.getGroupId(), true) > 0) {
+			int count = groupPersistence.countByC_P_S(
+				group.getCompanyId(), group.getGroupId(), true);
 
+			if (count > 0) {
 				throw new RequiredGroupException.MustNotDeleteGroupThatHasChild(
 					group.getGroupId());
 			}

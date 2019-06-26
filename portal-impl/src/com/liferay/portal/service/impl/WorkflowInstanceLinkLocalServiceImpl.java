@@ -188,9 +188,10 @@ public class WorkflowInstanceLinkLocalServiceImpl
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
-		if (workflowInstanceLinkPersistence.countByG_C_C(
-				groupId, companyId, classNameId) == 0) {
+		int count = workflowInstanceLinkPersistence.countByG_C_C(
+			groupId, companyId, classNameId);
 
+		if (count == 0) {
 			return Collections.emptyList();
 		}
 

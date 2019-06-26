@@ -413,9 +413,11 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 			boolean updateLayoutSet, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (SystemEventHierarchyEntryThreadLocal.push(
-				Layout.class, layout.getPlid()) == null) {
+		SystemEventHierarchyEntry systemEventHierarchyEntry =
+			SystemEventHierarchyEntryThreadLocal.push(
+				Layout.class, layout.getPlid());
 
+		if (systemEventHierarchyEntry == null) {
 			layoutLocalService.deleteLayout(
 				layout, updateLayoutSet, serviceContext);
 		}
@@ -424,7 +426,7 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 				layoutLocalService.deleteLayout(
 					layout, updateLayoutSet, serviceContext);
 
-				SystemEventHierarchyEntry systemEventHierarchyEntry =
+				systemEventHierarchyEntry =
 					SystemEventHierarchyEntryThreadLocal.peek();
 
 				SystemEventLocalServiceUtil.addSystemEvent(

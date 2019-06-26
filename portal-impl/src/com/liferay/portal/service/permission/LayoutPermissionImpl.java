@@ -575,10 +575,10 @@ public class LayoutPermissionImpl
 						permissionChecker.getUserId(), group.getClassPK());
 				}
 
-				if (Arrays.binarySearch(
-						userBag.getUserUserGroupsIds(), group.getClassPK()) >=
-							0) {
+				int count = Arrays.binarySearch(
+					userBag.getUserUserGroupsIds(), group.getClassPK());
 
+				if (count >= 0) {
 					return true;
 				}
 

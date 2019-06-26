@@ -3733,10 +3733,10 @@ public class PortalImpl implements Portal {
 		String localizedFriendlyURL = contextPath;
 
 		if (appendI18nPath) {
-			String i18nPath =
-				StringPool.SLASH +
-					getI18nPathLanguageId(
-						locale, LocaleUtil.toLanguageId(locale));
+			String i18nPathLanguageId = getI18nPathLanguageId(
+				locale, LocaleUtil.toLanguageId(locale));
+
+			String i18nPath = StringPool.SLASH + i18nPathLanguageId;
 
 			localizedFriendlyURL += i18nPath;
 		}

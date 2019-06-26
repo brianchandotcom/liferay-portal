@@ -585,9 +585,10 @@ public class MainServlet extends HttpServlet {
 			return;
 		}
 
-		if (httpServletRequest.getAttribute(
-				AbsoluteRedirectsResponse.class.getName()) != null) {
+		Object classNameAttribute = httpServletRequest.getAttribute(
+			AbsoluteRedirectsResponse.class.getName());
 
+		if (classNameAttribute != null) {
 			if (_log.isDebugEnabled()) {
 				String currentURL = PortalUtil.getCurrentURL(
 					httpServletRequest);

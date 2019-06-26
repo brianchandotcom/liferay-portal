@@ -293,9 +293,10 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 		}
 
 		if (!layoutTypeController.isParentable()) {
-			if (layoutPersistence.countByG_P_P_Head(
-					groupId, privateLayout, layoutId, false) > 0) {
+			int count = layoutPersistence.countByG_P_P_Head(
+				groupId, privateLayout, layoutId, false);
 
+			if (count > 0) {
 				throw new LayoutTypeException(
 					LayoutTypeException.NOT_PARENTABLE);
 			}

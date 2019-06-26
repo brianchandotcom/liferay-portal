@@ -46,12 +46,7 @@
 				<aui:input label="enable-ratings-for-comments" name="preferences--enableCommentRatings--" type="checkbox" value="<%= wikiPortletInstanceSettingsHelper.isEnableCommentRatings() %>" />
 
 				<aui:input name="preferences--enableHighlighting--" type="checkbox" value="<%= wikiPortletInstanceSettingsHelper.isEnableHighlighting() %>" />
-			</liferay-frontend:fieldset>
 
-			<liferay-frontend:fieldset
-				collapsible="<%= true %>"
-				label="templates"
-			>
 				<div class="display-template">
 					<liferay-ddm:template-selector
 						className="<%= WikiPage.class.getName() %>"

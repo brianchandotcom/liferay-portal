@@ -511,7 +511,10 @@ AUI.add(
 						'an-unexpected-error-occurred-while-uploading-your-file'
 					);
 
-					if (errorType === STATUS_CODE.SC_FILE_ANTIVIRUS_EXCEPTION) {
+					if (
+						errorType === STATUS_CODE.SC_FILE_ANTIVIRUS_EXCEPTION ||
+						errorType === STATUS_CODE.SC_FILE_CUSTOM_EXCEPTION
+					) {
 						message = error.message;
 					} else if (
 						errorType === STATUS_CODE.SC_FILE_EXTENSION_EXCEPTION

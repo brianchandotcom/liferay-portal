@@ -56,6 +56,22 @@ public class DeprecatedModulesUpgrade implements UpgradeStepRegistrator {
 			}
 
 			if (_deprecatedModulesUpgradeConfiguration.
+					removeInvitationModuleData()) {
+
+				Release release = _releaseLocalService.fetchRelease(
+					"com.liferay.invitation.web");
+
+				if (release != null) {
+					UpgradeInvitation upgradeInvitation =
+						new UpgradeInvitation();
+
+					upgradeInvitation.upgrade();
+
+					CacheRegistryUtil.clear();
+				}
+			}
+
+			if (_deprecatedModulesUpgradeConfiguration.
 					removeMailReaderModuleData()) {
 
 				Release release = _releaseLocalService.fetchRelease(

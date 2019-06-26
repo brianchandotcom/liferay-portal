@@ -34,6 +34,12 @@ public interface DeprecatedModulesUpgradeConfiguration {
 	public boolean removeChatModuleData();
 
 	@Meta.AD(
+		deflt = "false", name = "remove-invitation-module-data",
+		required = false
+	)
+	public boolean removeInvitationModuleData();
+
+	@Meta.AD(
 		deflt = "false", name = "remove-mail-reader-module-data",
 		required = false
 	)

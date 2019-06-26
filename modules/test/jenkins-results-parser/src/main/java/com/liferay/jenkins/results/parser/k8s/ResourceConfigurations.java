@@ -35,4 +35,36 @@ public class ResourceConfigurations {
 		ResourceConfigurationFactory.newPostgreSQLConfigurationPod(
 			"postgresql10", "postgres:10.9");
 
+	public static Pod getPodConfiguration(String name) {
+		if (name.equals("mariadb102")) {
+			return mariadb102PodConfiguration;
+		}
+		else if (name.equals("mysql55")) {
+			return mysql55PodConfiguration;
+		}
+		else if (name.equals("mysql56")) {
+			return mysql56PodConfiguration;
+		}
+		else if (name.equals("mysql57")) {
+			return mysql57PodConfiguration;
+		}
+		else if (name.equals("postgresql10")) {
+			return postgresql10PodConfiguration;
+		}
+
+		throw new IllegalArgumentException("Invalid pod configuration name");
+	}
+
+	public static Pod getPodConfiguration(
+		String databaseName, String databaseVersion) {
+
+		String name = databaseName + databaseVersion;
+
+		name = name.toLowerCase();
+
+		name = name.replace(".", "");
+
+		return getPodConfiguration(name);
+	}
+
 }

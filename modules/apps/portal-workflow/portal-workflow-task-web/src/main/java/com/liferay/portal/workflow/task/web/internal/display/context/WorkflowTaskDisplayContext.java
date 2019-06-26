@@ -405,29 +405,12 @@ public class WorkflowTaskDisplayContext {
 	public String getTaglibEditURL(WorkflowTask workflowTask)
 		throws PortalException, PortletException {
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append("javascript:Liferay.Util.openWindow({dialog: ");
-		sb.append("{destroyOnHide: true}, id: '");
-		sb.append(_liferayPortletResponse.getNamespace());
-		sb.append("editAsset', title: '");
-
-		AssetRenderer<?> assetRenderer = getAssetRenderer(workflowTask);
-
-		String assetTitle = HtmlUtil.escape(
-			assetRenderer.getTitle(getTaskContentLocale()));
-
-		sb.append(
-			LanguageUtil.format(
-				_workflowTaskRequestHelper.getRequest(), "edit-x", assetTitle));
-
-		sb.append("', uri:'");
-
 		PortletURL editPortletURL = _getEditPortletURL(workflowTask);
 
 		ThemeDisplay themeDisplay =
 			_workflowTaskRequestHelper.getThemeDisplay();
 
+		editPortletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 		editPortletURL.setParameter(
 			"refererPlid", String.valueOf(themeDisplay.getPlid()));
 
@@ -435,13 +418,9 @@ public class WorkflowTaskDisplayContext {
 			"workflowTaskId", String.valueOf(workflowTask.getWorkflowTaskId()));
 
 		editPortletURL.setPortletMode(PortletMode.VIEW);
-		editPortletURL.setWindowState(LiferayWindowState.POP_UP);
+		editPortletURL.setWindowState(LiferayWindowState.NORMAL);
 
-		sb.append(HtmlUtil.escapeJS(editPortletURL.toString()));
-
-		sb.append("'});");
-
-		return sb.toString();
+		return editPortletURL.toString();
 	}
 
 	public String getTaglibViewDiffsURL(WorkflowTask workflowTask)

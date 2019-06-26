@@ -45,16 +45,16 @@ public interface DeprecatedModulesUpgradeConfiguration {
 	)
 	public boolean removeMailReaderModuleData();
 
-	@Meta.AD(deflt = "false", name = "remove-shopping-module", required = false)
+	@Meta.AD(deflt = "false", name = "remove-shopping-module-data", required = false)
 	public boolean removeShoppingModuleData();
 
 	@Meta.AD(
-		deflt = "false", name = "remove-private-messaging-module",
+		deflt = "false", name = "remove-private-messaging-module-data",
 		required = false
 	)
 	public boolean removePrivateMessagingModuleData();
 
-	@Meta.AD(deflt = "false", name = "remove-twitter-module", required = false)
+	@Meta.AD(deflt = "false", name = "remove-twitter-module-data", required = false)
 	public boolean removeTwitterModuleData();
 
 }

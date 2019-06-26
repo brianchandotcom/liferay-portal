@@ -51,23 +51,12 @@ public class LiferayK8sConnection {
 	}
 
 	public Pod createPod(Pod configurationPod, String namespace) {
-		Pod pod = null;
-
 		try {
-			long timeout =
-				System.currentTimeMillis() + (_SECONDS_RETRY_TIMEOUT * 1000);
-
-			pod = new Pod(
+			Pod pod = new Pod(
 				_coreV1Api.createNamespacedPod(
 					namespace, configurationPod.getV1Pod(), null));
 
-			while ((pod == null) && (System.currentTimeMillis() < timeout)) {
-				pod = getPod(configurationPod, namespace);
-
-				JenkinsResultsParserUtil.sleep(_SECONDS_RETRY_PERIOD * 1000);
-			}
-
-			timeout =
+			long timeout =
 				System.currentTimeMillis() + (_SECONDS_RETRY_TIMEOUT * 1000);
 
 			String phase = "";
@@ -95,12 +84,12 @@ public class LiferayK8sConnection {
 						configurationPod.getName(), "' in namespace '",
 						namespace, "'"));
 			}
+
+			return pod;
 		}
 		catch (ApiException ae) {
 			throw new RuntimeException(ae);
 		}
-
-		return pod;
 	}
 
 	public boolean deletePod(Pod pod) {

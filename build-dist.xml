@@ -1381,7 +1381,7 @@ closeTemplate()
 							SETLOCAL
 
 							set DERBY_FLAG="false"
-							set "JAVA_OPTIONS=%JAVA_OPTIONS% -Dfile.encoding=UTF-8 -Djava.locale.providers=JRE,COMPAT,CLDR -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -da:org.apache.lucene... -da:org.aspectj..."
+							set "JAVA_OPTIONS=%JAVA_OPTIONS% ${app.server.weblogic.jvm.args} -da:org.apache.lucene... -da:org.aspectj..."
 							set "MW_HOME=${app.server.weblogic.dir.windows}"
 							set "USER_MEM_ARGS=${app.server.weblogic.jvm.mem}"
 						]]>

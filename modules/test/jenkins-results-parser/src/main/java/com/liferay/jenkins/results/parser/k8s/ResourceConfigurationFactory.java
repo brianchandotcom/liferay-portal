@@ -27,14 +27,16 @@ import io.kubernetes.client.models.V1Volume;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Kenji Heigel
  */
 public class ResourceConfigurationFactory {
 
-	public static Pod newMySQLConfigurationPod(
-		String dockerBaseImageName, String dockerImageName) {
+	public static Pod newDatabaseConfigurationPod(
+		String dockerBaseImageName, String dockerImageName,
+		List<V1ContainerPort> v1ContainerPorts, List<V1EnvVar> v1EnvVars) {
 
 		V1Pod v1Pod = new V1Pod();
 
@@ -58,16 +60,9 @@ public class ResourceConfigurationFactory {
 		V1Container v1Container = newConfigurationContainer(
 			dockerBaseImageName, dockerImageName);
 
-		v1Container.setEnv(
-			new ArrayList<>(
-				Arrays.asList(
-					newConfigurationEnvVar(
-						"MYSQL_ALLOW_EMPTY_PASSWORD", "yes"))));
+		v1Container.setEnv(v1EnvVars);
 
-		v1Container.setPorts(
-			new ArrayList<>(
-				Arrays.asList(
-					newConfigurationContainerPort(dockerBaseImageName, 3306))));
+		v1Container.setPorts(v1ContainerPorts);
 
 		V1PodSpec v1PodSpec = newConfigurationPodSpec(v1Container);
 
@@ -81,6 +76,21 @@ public class ResourceConfigurationFactory {
 		v1Pod.setSpec(v1PodSpec);
 
 		return new Pod(v1Pod);
+	}
+
+	public static Pod newMySQLConfigurationPod(
+		String dockerBaseImageName, String dockerImageName) {
+
+		List<V1ContainerPort> v1ContainerPorts = new ArrayList<>(
+			Arrays.asList(
+				newConfigurationContainerPort(dockerBaseImageName, 3306)));
+
+		List<V1EnvVar> v1EnvVars = new ArrayList<>(
+			Arrays.asList(
+				newConfigurationEnvVar("MYSQL_ALLOW_EMPTY_PASSWORD", "yes")));
+
+		return newDatabaseConfigurationPod(
+			dockerBaseImageName, dockerImageName, v1ContainerPorts, v1EnvVars);
 	}
 
 	protected static V1Container newConfigurationContainer(

@@ -15,6 +15,7 @@
 package com.liferay.asset.info.display.contributor.util;
 
 import com.liferay.info.display.contributor.field.InfoDisplayContributorField;
+import com.liferay.info.display.contributor.util.ExpandoInfoDisplayContributorFieldUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.ListUtil;

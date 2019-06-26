@@ -20,7 +20,11 @@ import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.impl.UserImpl;
+import com.liferay.portal.service.impl.UserLocalServiceImpl;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -32,13 +36,6 @@ import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockServletContext;
@@ -46,8 +43,6 @@ import org.springframework.mock.web.MockServletContext;
 /**
  * @author Peter Fellwock
  */
-@PrepareForTest(UserLocalServiceUtil.class)
-@RunWith(PowerMockRunner.class)
 public class AuthVerifierPipelineTest {
 
 	@Test
@@ -56,21 +51,20 @@ public class AuthVerifierPipelineTest {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		User user = Mockito.mock(User.class);
+		ReflectionTestUtil.setFieldValue(
+			UserLocalServiceUtil.class, "_service",
+			new UserLocalServiceImpl() {
 
-		Mockito.when(
-			user.isActive()
-		).thenReturn(
-			true
-		);
+				@Override
+				public User fetchUser(long userId) {
+					User user = new UserImpl();
 
-		PowerMockito.mockStatic(UserLocalServiceUtil.class);
+					user.setStatus(WorkflowConstants.STATUS_APPROVED);
 
-		Mockito.when(
-			UserLocalServiceUtil.fetchUser(Mockito.anyLong())
-		).thenReturn(
-			user
-		);
+					return user;
+				}
+
+			});
 
 		AuthVerifierResult authVerifierResult = new AuthVerifierResult();
 

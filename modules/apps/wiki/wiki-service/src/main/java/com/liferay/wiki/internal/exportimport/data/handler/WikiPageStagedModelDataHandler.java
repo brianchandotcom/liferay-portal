@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -287,7 +287,7 @@ public class WikiPageStagedModelDataHandler
 				for (FileEntry attachmentFileEntry :
 						existingPage.getAttachmentsFileEntries()) {
 
-					PortletFileRepositoryUtil.deletePortletFileEntry(
+					_portletFileRepository.deletePortletFileEntry(
 						attachmentFileEntry.getFileEntryId());
 				}
 			}
@@ -386,6 +386,9 @@ public class WikiPageStagedModelDataHandler
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiPageStagedModelDataHandler.class);
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 	@Reference
 	private WikiPageExportImportContentProcessor

@@ -19,7 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -82,7 +82,7 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 				long fileEntryId = GetterUtil.getLong(
 					activity.getExtraDataValue("fileEntryId"));
 
-				fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+				fileEntry = _portletFileRepository.getPortletFileEntry(
 					fileEntryId);
 			}
 			catch (NoSuchModelException nsme) {
@@ -272,6 +272,9 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiActivityInterpreter.class);
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -271,7 +271,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		long folderId = node.getAttachmentsFolderId();
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			PortletFileRepositoryUtil.deletePortletFolder(folderId);
+			_portletFileRepository.deletePortletFolder(folderId);
 		}
 
 		// Subscriptions
@@ -304,7 +304,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			wikiNodeLocalService.deleteNode(node);
 		}
 
-		PortletFileRepositoryUtil.deletePortletRepository(
+		_portletFileRepository.deletePortletRepository(
 			groupId, WikiConstants.SERVICE_NAME);
 	}
 
@@ -675,6 +675,10 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		WikiNodeLocalServiceImpl.class);
 
 	private PortalCache<?, ?> _portalCache;
+
+	@ServiceReference(type = PortletFileRepository.class)
+	private PortletFileRepository _portletFileRepository;
+
 	private ServiceTrackerMap<String, WikiImporter>
 		_wikiImporterServiceTrackerMap;
 

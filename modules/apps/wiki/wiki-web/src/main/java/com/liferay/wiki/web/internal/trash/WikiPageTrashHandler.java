@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -312,7 +312,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 			return;
 		}
 
-		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+		FileEntry fileEntry = _portletFileRepository.getPortletFileEntry(
 			classPK);
 
 		WikiPage page = WikiPageAttachmentsUtil.getPage(classPK);
@@ -441,6 +441,9 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 	@Reference
 	private TrashHelper _trashHelper;

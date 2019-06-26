@@ -18,7 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.ProgressTrackerThreadLocal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
@@ -134,12 +135,12 @@ public class WikiNodeLocalServiceTest {
 		String linkLabel = "Download link";
 
 		FileEntry attachmentFileEntry =
-			PortletFileRepositoryUtil.getPortletFileEntry(
+			_portletFileRepository.getPortletFileEntry(
 				_node.getGroupId(), sharedImagesPageAttachmentsFolderId,
 				testFileName);
 
 		String attachmentFileEntryURL =
-			PortletFileRepositoryUtil.getPortletFileEntryURL(
+			_portletFileRepository.getPortletFileEntryURL(
 				themeDisplay, attachmentFileEntry, StringPool.BLANK);
 
 		String linkTag = StringBundler.concat(
@@ -154,5 +155,8 @@ public class WikiNodeLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private WikiNode _node;
+
+	@Inject
+	private PortletFileRepository _portletFileRepository;
 
 }

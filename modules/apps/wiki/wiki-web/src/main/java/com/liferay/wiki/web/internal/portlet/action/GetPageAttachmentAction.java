@@ -19,7 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.flash.FlashMagicBytesUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
@@ -107,7 +107,7 @@ public class GetPageAttachmentAction implements StrutsAction {
 
 		WikiPage wikiPage = _wikiPageService.getPage(nodeId, title);
 
-		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+		FileEntry fileEntry = _portletFileRepository.getPortletFileEntry(
 			wikiPage.getGroupId(), wikiPage.getAttachmentsFolderId(), fileName);
 
 		if ((status != WorkflowConstants.STATUS_IN_TRASH) &&
@@ -146,6 +146,9 @@ public class GetPageAttachmentAction implements StrutsAction {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 	@Reference
 	private TrashHelper _trashHelper;

@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -307,10 +307,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		Folder folder = page.addAttachmentsFolder();
 
-		fileName = PortletFileRepositoryUtil.getUniqueFileName(
+		fileName = portletFileRepository.getUniqueFileName(
 			page.getGroupId(), folder.getFolderId(), fileName);
 
-		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
+		FileEntry fileEntry = portletFileRepository.addPortletFileEntry(
 			page.getGroupId(), userId, WikiPage.class.getName(),
 			page.getResourcePrimKey(), WikiConstants.SERVICE_NAME,
 			folder.getFolderId(), file, fileName, mimeType, true);
@@ -346,10 +346,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		Folder folder = page.addAttachmentsFolder();
 
-		fileName = PortletFileRepositoryUtil.getUniqueFileName(
+		fileName = portletFileRepository.getUniqueFileName(
 			page.getGroupId(), folder.getFolderId(), fileName);
 
-		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
+		FileEntry fileEntry = portletFileRepository.addPortletFileEntry(
 			page.getGroupId(), userId, WikiPage.class.getName(),
 			page.getResourcePrimKey(), WikiConstants.SERVICE_NAME,
 			folder.getFolderId(), inputStream, fileName, mimeType, true);
@@ -659,7 +659,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		long folderId = page.getAttachmentsFolderId();
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			PortletFileRepositoryUtil.deletePortletFolder(folderId);
+			portletFileRepository.deletePortletFolder(folderId);
 		}
 
 		// Subscriptions
@@ -760,7 +760,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			return;
 		}
 
-		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+		FileEntry fileEntry = portletFileRepository.getPortletFileEntry(
 			page.getGroupId(), folderId, fileName);
 
 		_deletePageAttachment(fileEntry.getFileEntryId());
@@ -778,7 +778,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			return;
 		}
 
-		PortletFileRepositoryUtil.deletePortletFileEntries(
+		portletFileRepository.deletePortletFileEntries(
 			page.getGroupId(), folderId);
 	}
 
@@ -820,7 +820,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			return;
 		}
 
-		PortletFileRepositoryUtil.deletePortletFileEntries(
+		portletFileRepository.deletePortletFileEntries(
 			page.getGroupId(), folderId, WorkflowConstants.STATUS_IN_TRASH);
 	}
 
@@ -1614,10 +1614,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WikiPage page = getPage(nodeId, title);
 
-		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+		FileEntry fileEntry = portletFileRepository.getPortletFileEntry(
 			page.getGroupId(), page.getAttachmentsFolderId(), fileName);
 
-		fileEntry = PortletFileRepositoryUtil.movePortletFileEntryToTrash(
+		fileEntry = portletFileRepository.movePortletFileEntryToTrash(
 			userId, fileEntry.getFileEntryId());
 
 		JSONObject extraDataJSONObject = JSONUtil.put(
@@ -1785,7 +1785,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Attachments
 
 		for (FileEntry fileEntry : page.getAttachmentsFileEntries()) {
-			PortletFileRepositoryUtil.movePortletFileEntryToTrash(
+			portletFileRepository.movePortletFileEntryToTrash(
 				userId, fileEntry.getFileEntryId());
 		}
 
@@ -1924,7 +1924,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WikiPage page = getPage(nodeId, title);
 
-		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+		FileEntry fileEntry = portletFileRepository.getPortletFileEntry(
 			page.getGroupId(), page.getAttachmentsFolderId(), fileName);
 
 		JSONObject extraDataJSONObject = JSONUtil.put(
@@ -1937,7 +1937,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			"version", page.getVersion()
 		);
 
-		PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
+		portletFileRepository.restorePortletFileEntryFromTrash(
 			userId, fileEntry.getFileEntryId());
 
 		SocialActivityManagerUtil.addActivity(
@@ -2325,6 +2325,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	@ServiceReference(type = MultiVMPool.class)
 	protected MultiVMPool multiVMPool;
 
+	@ServiceReference(type = PortletFileRepository.class)
+	protected PortletFileRepository portletFileRepository;
+
 	@ServiceReference(type = SubscriptionLocalService.class)
 	protected SubscriptionLocalService subscriptionLocalService;
 
@@ -2346,7 +2349,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	private void _deletePageAttachment(long fileEntryId)
 		throws PortalException {
 
-		PortletFileRepositoryUtil.deletePortletFileEntry(fileEntryId);
+		portletFileRepository.deletePortletFileEntry(fileEntryId);
 	}
 
 	private String _encodeKey(long nodeId, String title, String postfix) {
@@ -2666,7 +2669,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		WikiNode node = page.getNode();
 
 		for (FileEntry fileEntry : page.getAttachmentsFileEntries()) {
-			PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
+			portletFileRepository.restorePortletFileEntryFromTrash(
 				node.getStatusByUserId(), fileEntry.getFileEntryId());
 		}
 
@@ -2818,7 +2821,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		WikiNode node = page.getNode();
 
 		for (FileEntry fileEntry : page.getAttachmentsFileEntries()) {
-			PortletFileRepositoryUtil.movePortletFileEntryToTrash(
+			portletFileRepository.movePortletFileEntryToTrash(
 				node.getStatusByUserId(), fileEntry.getFileEntryId());
 		}
 
@@ -2927,7 +2930,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Attachments
 
 		for (FileEntry fileEntry : page.getDeletedAttachmentsFileEntries()) {
-			PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
+			portletFileRepository.restorePortletFileEntryFromTrash(
 				userId, fileEntry.getFileEntryId());
 		}
 

@@ -36,13 +36,12 @@ public class UserJSONTransformer extends ObjectTransformer {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if ((permissionChecker != null) && !user.isDefaultUser()) {
-			if ((user.getUserId() == permissionChecker.getUserId()) ||
-				UserPermissionUtil.contains(
-					permissionChecker, user.getUserId(), ActionKeys.VIEW)) {
+		if ((permissionChecker != null) && !user.isDefaultUser() &&
+			((user.getUserId() == permissionChecker.getUserId()) ||
+			 UserPermissionUtil.contains(
+				 permissionChecker, user.getUserId(), ActionKeys.VIEW))) {
 
-				hidePrivateUserData = false;
-			}
+			hidePrivateUserData = false;
 		}
 
 		if (hidePrivateUserData) {

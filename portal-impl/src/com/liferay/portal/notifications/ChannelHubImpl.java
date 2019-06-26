@@ -176,10 +176,8 @@ public class ChannelHubImpl implements ChannelHub {
 			synchronized (_channels) {
 				channel = _channels.get(userId);
 
-				if (channel == null) {
-					if (createIfAbsent) {
-						channel = createChannel(userId);
-					}
+				if ((channel == null) && createIfAbsent) {
+					channel = createChannel(userId);
 				}
 			}
 		}

@@ -92,15 +92,13 @@ public class ColorSchemeImpl implements ColorScheme {
 
 			int pos = _cssClass.indexOf(CharPool.SPACE);
 
-			if (pos > 0) {
-				if (_colorSchemeImagesPath.endsWith(
-						_cssClass.substring(0, pos))) {
+			if ((pos > 0) &&
+				_colorSchemeImagesPath.endsWith(_cssClass.substring(0, pos))) {
 
-					String subclassPath = StringUtil.replace(
-						_cssClass, CharPool.SPACE, CharPool.SLASH);
+				String subclassPath = StringUtil.replace(
+					_cssClass, CharPool.SPACE, CharPool.SLASH);
 
-					return _colorSchemeImagesPath + subclassPath.substring(pos);
-				}
+				return _colorSchemeImagesPath + subclassPath.substring(pos);
 			}
 		}
 

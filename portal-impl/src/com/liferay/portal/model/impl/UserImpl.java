@@ -841,12 +841,11 @@ public class UserImpl extends UserBaseImpl {
 			return true;
 		}
 
-		if (PropsValues.USERS_REMINDER_QUERIES_ENABLED) {
-			if (Validator.isNull(getReminderQueryQuestion()) ||
-				Validator.isNull(getReminderQueryAnswer())) {
+		if (PropsValues.USERS_REMINDER_QUERIES_ENABLED &&
+			(Validator.isNull(getReminderQueryQuestion()) ||
+			 Validator.isNull(getReminderQueryAnswer()))) {
 
-				return false;
-			}
+			return false;
 		}
 
 		return true;

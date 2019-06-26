@@ -69,13 +69,12 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 
 		boolean forkProcess = false;
 
-		if (PropsValues.TEXT_EXTRACTION_FORK_PROCESS_ENABLED) {
-			if (ArrayUtil.contains(
-					PropsValues.TEXT_EXTRACTION_FORK_PROCESS_MIME_TYPES,
-					mimeType)) {
+		if (PropsValues.TEXT_EXTRACTION_FORK_PROCESS_ENABLED &&
+			ArrayUtil.contains(
+				PropsValues.TEXT_EXTRACTION_FORK_PROCESS_MIME_TYPES,
+				mimeType)) {
 
-				forkProcess = true;
-			}
+			forkProcess = true;
 		}
 
 		if (forkProcess) {

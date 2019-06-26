@@ -892,11 +892,10 @@ public class ServicePreAction extends Action {
 
 		Long realUserId = (Long)session.getAttribute(WebKeys.USER_ID);
 
-		if (realUserId != null) {
-			if (user.getUserId() != realUserId.longValue()) {
-				realUser = UserLocalServiceUtil.getUserById(
-					realUserId.longValue());
-			}
+		if ((realUserId != null) &&
+			(user.getUserId() != realUserId.longValue())) {
+
+			realUser = UserLocalServiceUtil.getUserById(realUserId.longValue());
 		}
 
 		String doAsUserId = ParamUtil.getString(
@@ -1369,12 +1368,11 @@ public class ServicePreAction extends Action {
 
 		boolean themeJsBarebone = PropsValues.JAVASCRIPT_BAREBONE_ENABLED;
 
-		if (themeJsBarebone) {
-			if (signedIn ||
-				PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED) {
+		if (themeJsBarebone &&
+			(signedIn ||
+			 PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED)) {
 
-				themeJsBarebone = false;
-			}
+			themeJsBarebone = false;
 		}
 
 		boolean themeJsFastLoad = SessionParamUtil.getBoolean(

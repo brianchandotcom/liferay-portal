@@ -331,14 +331,6 @@ public abstract class BaseAssetRendererFactory<T>
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			companyId, getPortletId());
 
-		if (portlet == null) {
-			portlet = PortletLocalServiceUtil.getPortletById(getPortletId());
-		}
-
-		if (portlet == null) {
-			return false;
-		}
-
 		return portlet.isActive();
 	}
 

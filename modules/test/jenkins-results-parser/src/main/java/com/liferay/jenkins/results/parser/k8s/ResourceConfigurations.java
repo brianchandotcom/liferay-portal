@@ -19,6 +19,9 @@ package com.liferay.jenkins.results.parser.k8s;
  */
 public class ResourceConfigurations {
 
+	public static final Pod mariadb102PodConfiguration =
+		ResourceConfigurationFactory.newMySQLConfigurationPod(
+			"mariadb102", "mariadb:10.2.25");
 	public static final Pod mysql55PodConfiguration =
 		ResourceConfigurationFactory.newMySQLConfigurationPod(
 			"mysql55", "mysql:5.5.62");

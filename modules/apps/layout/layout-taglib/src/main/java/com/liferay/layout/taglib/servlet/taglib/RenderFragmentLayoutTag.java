@@ -20,6 +20,8 @@ import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -171,12 +173,16 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			return dataJSONObject.getJSONArray("structure");
 		}
 		catch (Exception e) {
-		}
+			_log.error("Unable to get fragments structure", e);
 
-		return null;
+			return null;
+		}
 	}
 
 	private static final String _PAGE = "/render_fragment_layout/page.jsp";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RenderFragmentLayoutTag.class);
 
 	private Map<String, Object> _fieldValues;
 	private long _groupId;

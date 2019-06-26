@@ -20,6 +20,8 @@
 String redirect = ParamUtil.getString(request, "redirect");
 
 BlogsEntry blogsEntry = (BlogsEntry)request.getAttribute("view_entry_related.jsp-blogs_entry");
+
+BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortletInstanceConfigurationUtil.getBlogsPortletInstanceConfiguration(themeDisplay);
 %>
 
 <c:if test="<%= blogsEntry != null %>">

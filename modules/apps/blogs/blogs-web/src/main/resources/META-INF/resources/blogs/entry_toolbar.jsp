@@ -23,6 +23,8 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 
 boolean showFlags = ParamUtil.getBoolean(request, "showFlags");
 boolean showOnlyIcons = ParamUtil.getBoolean(request, "showOnlyIcons");
+
+BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortletInstanceConfigurationUtil.getBlogsPortletInstanceConfiguration(themeDisplay);
 %>
 
 <div class="autofit-float autofit-row autofit-row-center widget-toolbar">

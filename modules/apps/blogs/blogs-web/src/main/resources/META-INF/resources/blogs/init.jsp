@@ -19,8 +19,4 @@
 <%@ page import="com.liferay.blogs.configuration.BlogsFileUploadsConfiguration" %><%@
 page import="com.liferay.document.library.kernel.util.DLValidatorUtil" %>
 
-<%
-BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = ConfigurationProviderUtil.getConfiguration(BlogsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getId()));
-%>
-
 <%@ include file="/blogs/init-ext.jsp" %>

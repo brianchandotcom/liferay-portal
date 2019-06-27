@@ -19,6 +19,7 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -46,20 +47,49 @@ public class Query {
 		}
 	</#list>
 
+	<#list schemaNames as schemaName>
+		@GraphQLName("${schemaName}Page")
+		public class ${schemaName}Page {
+
+			public ${schemaName}Page(Page ${freeMarkerTool.getSchemaVarName(schemaName)}Page) {
+				items = ${freeMarkerTool.getSchemaVarName(schemaName)}Page.getItems();
+				page = ${freeMarkerTool.getSchemaVarName(schemaName)}Page.getPage();
+				pageSize = ${freeMarkerTool.getSchemaVarName(schemaName)}Page.getPageSize();
+				totalCount = ${freeMarkerTool.getSchemaVarName(schemaName)}Page.getTotalCount();
+			}
+
+			@GraphQLField
+			protected Collection<${schemaName}> items;
+			@GraphQLField
+			protected long page;
+			@GraphQLField
+			protected long pageSize;
+			@GraphQLField
+			protected long totalCount;
+		}
+	</#list>
+
 	<#list javaMethodSignatures as javaMethodSignature>
 		${freeMarkerTool.getGraphQLMethodAnnotations(javaMethodSignature)}
-		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)}) throws Exception {
+		public
+
+		<#if javaMethodSignature.returnType?contains("Collection<")>
+			${javaMethodSignature.schemaName}Page
+		<#else>
+			${javaMethodSignature.returnType}
+		</#if>
+
+		${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)}) throws Exception {
 			<#assign arguments = freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters) />
 
 			<#if javaMethodSignature.returnType?contains("Collection<")>
 				return _applyComponentServiceObjects(
 					_${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}ResourceComponentServiceObjects,
 					this::_populateResourceContext,
-					${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource -> {
-						Page paginationPage = ${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource.${javaMethodSignature.methodName}(${arguments?replace("pageSize,page", "Pagination.of(page, pageSize)")});
-
-						return paginationPage.getItems();
-					});
+					${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource ->
+						new ${javaMethodSignature.schemaName}Page(
+							${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource.${javaMethodSignature.methodName}(${arguments?replace("pageSize,page", "Pagination.of(page, pageSize)")}))
+					);
 			<#else>
 				return _applyComponentServiceObjects(_${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}ResourceComponentServiceObjects, this::_populateResourceContext, ${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource -> ${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource.${javaMethodSignature.methodName}(${arguments?replace("pageSize,page", "Pagination.of(page, pageSize)")}));
 			</#if>

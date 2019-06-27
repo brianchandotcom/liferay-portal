@@ -67,8 +67,6 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 
 		setThrowExceptionOnMissing(false);
 
-		_addGlobalFileName("global-configuration.properties");
-
 		_addBaseFileName(componentName.concat(".properties"));
 	}
 
@@ -224,12 +222,6 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 
 			return null;
 		}
-	}
-
-	private void _addGlobalFileName(String fileName) {
-		URL url = _classLoader.getResource(fileName);
-
-		_addPropertiesSource(fileName, url, _globalCompositeConfiguration);
 	}
 
 	private void _addIncludedPropertiesSources(

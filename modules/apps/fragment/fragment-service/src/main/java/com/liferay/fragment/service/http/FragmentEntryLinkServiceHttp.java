@@ -102,6 +102,53 @@ public class FragmentEntryLinkServiceHttp {
 	}
 
 	public static com.liferay.fragment.model.FragmentEntryLink
+			addFragmentEntryLink(
+				HttpPrincipal httpPrincipal, long groupId,
+				long originalFragmentEntryLinkId, long fragmentEntryId,
+				long classNameId, long classPK, String css, String html,
+				String js, String configuration, String editableValues,
+				String namespace, int position, String rendererKey,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				FragmentEntryLinkServiceUtil.class, "addFragmentEntryLink",
+				_addFragmentEntryLinkParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, originalFragmentEntryLinkId,
+				fragmentEntryId, classNameId, classPK, css, html, js,
+				configuration, editableValues, namespace, position, rendererKey,
+				serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.fragment.model.FragmentEntryLink)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.fragment.model.FragmentEntryLink
 			deleteFragmentEntryLink(
 				HttpPrincipal httpPrincipal, long fragmentEntryLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -109,7 +156,7 @@ public class FragmentEntryLinkServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				FragmentEntryLinkServiceUtil.class, "deleteFragmentEntryLink",
-				_deleteFragmentEntryLinkParameterTypes1);
+				_deleteFragmentEntryLinkParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fragmentEntryLinkId);
@@ -149,7 +196,7 @@ public class FragmentEntryLinkServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				FragmentEntryLinkServiceUtil.class, "updateFragmentEntryLink",
-				_updateFragmentEntryLinkParameterTypes2);
+				_updateFragmentEntryLinkParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fragmentEntryLinkId, editableValues);
@@ -189,7 +236,7 @@ public class FragmentEntryLinkServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				FragmentEntryLinkServiceUtil.class, "updateFragmentEntryLinks",
-				_updateFragmentEntryLinksParameterTypes3);
+				_updateFragmentEntryLinksParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, classNameId, classPK, fragmentEntryIds,
@@ -227,11 +274,18 @@ public class FragmentEntryLinkServiceHttp {
 			String.class, int.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deleteFragmentEntryLinkParameterTypes1 =
+	private static final Class<?>[] _addFragmentEntryLinkParameterTypes1 =
+		new Class[] {
+			long.class, long.class, long.class, long.class, long.class,
+			String.class, String.class, String.class, String.class,
+			String.class, String.class, int.class, String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _deleteFragmentEntryLinkParameterTypes2 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateFragmentEntryLinkParameterTypes2 =
+	private static final Class<?>[] _updateFragmentEntryLinkParameterTypes3 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _updateFragmentEntryLinksParameterTypes3 =
+	private static final Class<?>[] _updateFragmentEntryLinksParameterTypes4 =
 		new Class[] {
 			long.class, long.class, long.class, long[].class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

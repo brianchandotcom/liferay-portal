@@ -39,6 +39,7 @@ import java.util.Properties;
 import org.apache.commons.configuration.AbstractFileConfiguration;
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.ConfigurationUtils;
 import org.apache.commons.configuration.DefaultFileSystem;
 import org.apache.commons.configuration.FileConfiguration;
@@ -203,7 +204,7 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 
 			return newFileConfiguration;
 		}
-		catch (org.apache.commons.configuration.ConfigurationException ce) {
+		catch (ConfigurationException ce) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Configuration source " + fileName + " ignored");
 			}
@@ -344,7 +345,7 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 
 			return propertiesConfiguration;
 		}
-		catch (org.apache.commons.configuration.ConfigurationException ce) {
+		catch (ConfigurationException ce) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Configuration source " + url + " ignored");
 			}

@@ -107,6 +107,28 @@ public class ClassLoaderAggregatePropertiesUtil {
 		return sb.toString();
 	}
 
+	private static Map<String, Character> _getCharPoolChars() {
+		try {
+			Map<String, Character> charPoolChars = new HashMap<>();
+
+			for (Field field : CharPool.class.getFields()) {
+				if (Modifier.isStatic(field.getModifiers()) &&
+					(field.getType() == char.class)) {
+
+					_charPoolChars.put(
+						StringUtil.removeChar(
+							field.getName(), CharPool.UNDERLINE),
+						field.getChar(null));
+				}
+			}
+
+			return charPoolChars;
+		}
+		catch (Exception e) {
+			throw new ExceptionInInitializerError(e);
+		}
+	}
+
 	private static void _loadEnvOverrides(Configuration configuration) {
 		Map<String, String> env = System.getenv();
 
@@ -137,26 +159,7 @@ public class ClassLoaderAggregatePropertiesUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClassLoaderAggregatePropertiesUtil.class);
 
-	private static final Map<String, Character> _charPoolChars;
-
-	static {
-		try {
-			_charPoolChars = new HashMap<>();
-
-			for (Field field : CharPool.class.getFields()) {
-				if (Modifier.isStatic(field.getModifiers()) &&
-					(field.getType() == char.class)) {
-
-					_charPoolChars.put(
-						StringUtil.removeChar(
-							field.getName(), CharPool.UNDERLINE),
-						field.getChar(null));
-				}
-			}
-		}
-		catch (Exception e) {
-			throw new ExceptionInInitializerError(e);
-		}
-	}
+	private static final Map<String, Character> _charPoolChars =
+		_getCharPoolChars();
 
 }

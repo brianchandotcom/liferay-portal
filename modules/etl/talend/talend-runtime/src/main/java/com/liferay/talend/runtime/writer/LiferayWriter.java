@@ -14,6 +14,8 @@
 
 package com.liferay.talend.runtime.writer;
 
+import com.liferay.talend.common.schema.SchemaUtils;
+import com.liferay.talend.common.schema.constants.SchemaConstants;
 import com.liferay.talend.runtime.LiferaySink;
 import com.liferay.talend.tliferayoutput.Action;
 import com.liferay.talend.tliferayoutput.TLiferayOutputProperties;
@@ -72,7 +74,7 @@ public class LiferayWriter
 		_dieOnError = tLiferayOutputProperties.dieOnError.getValue();
 		_liferaySink = writeOperation.getSink();
 		_rejectWrites = new ArrayList<>();
-		_rejectSchema = TLiferayOutputProperties.createRejectSchema(
+		_rejectSchema = SchemaUtils.createRejectSchema(
 			tLiferayOutputProperties.resource.main.schema.getValue());
 		_successWrites = new ArrayList<>();
 	}
@@ -153,7 +155,8 @@ public class LiferayWriter
 		IndexedRecord indexedRecord = (IndexedRecord)indexedRecordDatum;
 		cleanWrites();
 
-		Action action = _tLiferayOutputProperties.operations.getValue();
+		Action action =
+			_tLiferayOutputProperties.resource.operations.getValue();
 
 		try {
 			if (Action.Delete == action) {
@@ -343,7 +346,7 @@ public class LiferayWriter
 		}
 
 		Schema.Field errorField = _rejectSchema.getField(
-			TLiferayOutputProperties.FIELD_ERROR_MESSAGE);
+			SchemaConstants.FIELD_ERROR_MESSAGE);
 
 		errorIndexedRecord.put(
 			errorField.pos(),

@@ -69,26 +69,9 @@ public class TLiferayOutputProperties
 
 	public static final String ADD_QUOTES = "ADD_QUOTES";
 
-	public static final String FIELD_ERROR_MESSAGE = "_errorMessage";
-
 	public static final List<String> rejectSchemaFieldNames = Arrays.asList(
-		FIELD_ERROR_MESSAGE);
-
-	public static Schema createRejectSchema(Schema inputSchema) {
-		final List<Schema.Field> rejectFields = new ArrayList<>();
-
-		Schema.Field field = new Schema.Field(
-			FIELD_ERROR_MESSAGE, AvroUtils.wrapAsNullable(AvroUtils._string()),
-			null, (Object)null);
-
-		field.addProp(SchemaConstants.TALEND_COLUMN_DB_LENGTH, "255");
-		field.addProp(SchemaConstants.TALEND_FIELD_GENERATED, "true");
-		field.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
-
-		rejectFields.add(field);
-
-		return SchemaUtils.newSchema(inputSchema, "rejectOutput", rejectFields);
-	}
+		com.liferay.talend.common.schema.constants.SchemaConstants.
+			FIELD_ERROR_MESSAGE);
 
 	public TLiferayOutputProperties(String name) {
 		super(name);

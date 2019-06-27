@@ -25,6 +25,7 @@ import org.apache.avro.Schema;
 
 import org.talend.components.api.component.Connector;
 import org.talend.components.api.properties.ComponentProperties;
+import org.talend.daikon.avro.AvroUtils;
 import org.talend.daikon.avro.SchemaConstants;
 import org.talend.daikon.exception.TalendRuntimeException;
 import org.talend.daikon.exception.TalendRuntimeException.TalendRuntimeExceptionBuilder;
@@ -32,6 +33,7 @@ import org.talend.daikon.exception.error.CommonErrorCodes;
 
 /**
  * @author Zoltán Takács
+ * @author Ivica Cardic
  */
 public class SchemaUtils {
 
@@ -61,6 +63,23 @@ public class SchemaUtils {
 		_copyFieldProperties(schema.getObjectProps(), newSchema);
 
 		return newSchema;
+	}
+
+	public static Schema createRejectSchema(Schema inputSchema) {
+		final List<Schema.Field> rejectFields = new ArrayList<>();
+
+		Schema.Field field = new Schema.Field(
+			com.liferay.talend.common.schema.constants.SchemaConstants.
+				FIELD_ERROR_MESSAGE,
+			AvroUtils.wrapAsNullable(AvroUtils._string()), null, (Object)null);
+
+		field.addProp(SchemaConstants.TALEND_COLUMN_DB_LENGTH, "255");
+		field.addProp(SchemaConstants.TALEND_FIELD_GENERATED, "true");
+		field.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
+
+		rejectFields.add(field);
+
+		return newSchema(inputSchema, "rejectOutput", rejectFields);
 	}
 
 	/**

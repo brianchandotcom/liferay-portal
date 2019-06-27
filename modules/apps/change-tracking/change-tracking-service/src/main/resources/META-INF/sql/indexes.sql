@@ -12,6 +12,9 @@ create index IX_49B471E1 on CTEntryAggregate (ownerCTEntryId);
 create index IX_5C08EBAD on CTEntryAggregates_CTEntries (companyId);
 create index IX_4E879A48 on CTEntryAggregates_CTEntries (ctEntryAggregateId);
 
+create unique index IX_516E5375 on CTPreferences (companyId, userId);
+create index IX_3FECC82B on CTPreferences (ctCollectionId);
+
 create index IX_7523B0A4 on CTProcess (companyId);
 create index IX_B4859762 on CTProcess (ctCollectionId);
 create index IX_5F9B5D3E on CTProcess (userId);

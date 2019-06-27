@@ -1,0 +1,250 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.change.tracking.model;
+
+import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.osgi.annotation.versioning.ProviderType;
+
+/**
+ * <p>
+ * This class is a wrapper for {@link CTPreferences}.
+ * </p>
+ *
+ * @author Brian Wing Shun Chan
+ * @see CTPreferences
+ * @generated
+ */
+@ProviderType
+public class CTPreferencesWrapper
+	extends BaseModelWrapper<CTPreferences>
+	implements CTPreferences, ModelWrapper<CTPreferences> {
+
+	public CTPreferencesWrapper(CTPreferences ctPreferences) {
+		super(ctPreferences);
+	}
+
+	@Override
+	public Map<String, Object> getModelAttributes() {
+		Map<String, Object> attributes = new HashMap<String, Object>();
+
+		attributes.put("ctPreferencesId", getCtPreferencesId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("ctCollectionId", getCtCollectionId());
+		attributes.put("confirmationEnabled", isConfirmationEnabled());
+
+		return attributes;
+	}
+
+	@Override
+	public void setModelAttributes(Map<String, Object> attributes) {
+		Long ctPreferencesId = (Long)attributes.get("ctPreferencesId");
+
+		if (ctPreferencesId != null) {
+			setCtPreferencesId(ctPreferencesId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
+		}
+
+		Boolean confirmationEnabled = (Boolean)attributes.get(
+			"confirmationEnabled");
+
+		if (confirmationEnabled != null) {
+			setConfirmationEnabled(confirmationEnabled);
+		}
+	}
+
+	/**
+	 * Returns the company ID of this ct preferences.
+	 *
+	 * @return the company ID of this ct preferences
+	 */
+	@Override
+	public long getCompanyId() {
+		return model.getCompanyId();
+	}
+
+	/**
+	 * Returns the confirmation enabled of this ct preferences.
+	 *
+	 * @return the confirmation enabled of this ct preferences
+	 */
+	@Override
+	public boolean getConfirmationEnabled() {
+		return model.getConfirmationEnabled();
+	}
+
+	/**
+	 * Returns the ct collection ID of this ct preferences.
+	 *
+	 * @return the ct collection ID of this ct preferences
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
+	}
+
+	/**
+	 * Returns the ct preferences ID of this ct preferences.
+	 *
+	 * @return the ct preferences ID of this ct preferences
+	 */
+	@Override
+	public long getCtPreferencesId() {
+		return model.getCtPreferencesId();
+	}
+
+	/**
+	 * Returns the primary key of this ct preferences.
+	 *
+	 * @return the primary key of this ct preferences
+	 */
+	@Override
+	public long getPrimaryKey() {
+		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the user ID of this ct preferences.
+	 *
+	 * @return the user ID of this ct preferences
+	 */
+	@Override
+	public long getUserId() {
+		return model.getUserId();
+	}
+
+	/**
+	 * Returns the user uuid of this ct preferences.
+	 *
+	 * @return the user uuid of this ct preferences
+	 */
+	@Override
+	public String getUserUuid() {
+		return model.getUserUuid();
+	}
+
+	/**
+	 * Returns <code>true</code> if this ct preferences is confirmation enabled.
+	 *
+	 * @return <code>true</code> if this ct preferences is confirmation enabled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isConfirmationEnabled() {
+		return model.isConfirmationEnabled();
+	}
+
+	@Override
+	public void persist() {
+		model.persist();
+	}
+
+	/**
+	 * Sets the company ID of this ct preferences.
+	 *
+	 * @param companyId the company ID of this ct preferences
+	 */
+	@Override
+	public void setCompanyId(long companyId) {
+		model.setCompanyId(companyId);
+	}
+
+	/**
+	 * Sets whether this ct preferences is confirmation enabled.
+	 *
+	 * @param confirmationEnabled the confirmation enabled of this ct preferences
+	 */
+	@Override
+	public void setConfirmationEnabled(boolean confirmationEnabled) {
+		model.setConfirmationEnabled(confirmationEnabled);
+	}
+
+	/**
+	 * Sets the ct collection ID of this ct preferences.
+	 *
+	 * @param ctCollectionId the ct collection ID of this ct preferences
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
+	 * Sets the ct preferences ID of this ct preferences.
+	 *
+	 * @param ctPreferencesId the ct preferences ID of this ct preferences
+	 */
+	@Override
+	public void setCtPreferencesId(long ctPreferencesId) {
+		model.setCtPreferencesId(ctPreferencesId);
+	}
+
+	/**
+	 * Sets the primary key of this ct preferences.
+	 *
+	 * @param primaryKey the primary key of this ct preferences
+	 */
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the user ID of this ct preferences.
+	 *
+	 * @param userId the user ID of this ct preferences
+	 */
+	@Override
+	public void setUserId(long userId) {
+		model.setUserId(userId);
+	}
+
+	/**
+	 * Sets the user uuid of this ct preferences.
+	 *
+	 * @param userUuid the user uuid of this ct preferences
+	 */
+	@Override
+	public void setUserUuid(String userUuid) {
+		model.setUserUuid(userUuid);
+	}
+
+	@Override
+	protected CTPreferencesWrapper wrap(CTPreferences ctPreferences) {
+		return new CTPreferencesWrapper(ctPreferences);
+	}
+
+}

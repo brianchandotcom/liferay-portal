@@ -14,6 +14,7 @@
 
 package com.liferay.portal.osgi.web.wab.extender.internal;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -244,9 +245,10 @@ public class WabBundleProcessor {
 		String classResource, Bundle bundle, Class<?>[] handledTypesArray,
 		Set<Class<?>> annotatedClasses) {
 
-		String className = classResource.replaceAll("\\.class$", "");
+		String className = classResource.substring(
+			0, classResource.length() - 6);
 
-		className = className.replaceAll("/", ".");
+		className = className.replace(CharPool.SLASH, CharPool.PERIOD);
 
 		Class<?> annotatedClass = null;
 

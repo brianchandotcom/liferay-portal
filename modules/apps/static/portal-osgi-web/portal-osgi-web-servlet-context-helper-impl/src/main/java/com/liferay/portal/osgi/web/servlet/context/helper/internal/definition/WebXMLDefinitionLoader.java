@@ -956,8 +956,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			className = classResource.substring(0, classResource.length() - 6);
 		}
 
-		className = StringUtil.replace(
-			className, CharPool.SLASH, CharPool.PERIOD);
+		className = className.replace(CharPool.SLASH, CharPool.PERIOD);
 
 		Class<?> clazz = null;
 

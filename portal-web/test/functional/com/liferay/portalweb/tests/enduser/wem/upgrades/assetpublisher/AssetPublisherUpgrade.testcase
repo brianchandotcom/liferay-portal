@@ -21,6 +21,7 @@ definition {
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 	}
 
+	@description = "This is a use case for LPS-78284."
 	@priority = "5"
 	test ViewAssetPublisherArchive625 {
 		property data.archive.type = "data-archive-asset-publisher";
@@ -47,6 +48,7 @@ definition {
 		Upgrade.viewAssetPublisher();
 	}
 
+	@description = "This is a use case for LPS-78284."
 	@priority = "5"
 	test ViewAssetPublisherArchive621021 {
 		property data.archive.type = "data-archive-asset-publisher";

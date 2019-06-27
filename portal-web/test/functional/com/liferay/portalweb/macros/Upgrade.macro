@@ -1296,6 +1296,19 @@ definition {
 		if (isSet(categoryName)) {
 			AssetPublisherPortlet.viewAssetMetadataPG(categoryName = "${categoryName}");
 		}
+
+		if (IsElementPresent(locator1 = "Home#PAGE_4")) {
+			Click(locator1 = "Home#PAGE_4");
+
+			AssertTextEquals(
+				key_portletName = "Asset Publisher",
+				locator1 = "Portlet#TITLE",
+				value1 = "Asset Publisher");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Web Content Content",
+				assetTitle = "Web Content Title");
+		}
 	}
 
 	macro viewCalendar {

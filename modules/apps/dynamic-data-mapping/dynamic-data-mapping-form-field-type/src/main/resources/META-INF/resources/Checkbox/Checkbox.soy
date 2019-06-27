@@ -18,17 +18,18 @@
 	{@param? visible: bool}
 	{@param? valid: bool}
 
-	{let $_showLabel: $showAsSwitcher ? $showLabel : false /}
-
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
 			{call .content}
-				{param handleInputChangeEvent: $handleInputChangeEvent /}
 				{param checked: $value /}
 				{param disabled: $readOnly /}
+				{param handleInputChangeEvent: $handleInputChangeEvent /}
 				{param label: $label /}
 				{param name: $name /}
+				{param required: $required /}
 				{param showAsSwitcher: $showAsSwitcher /}
+				{param showLabel: $showLabel /}
+				{param spritemap: $spritemap /}
 			{/call}
 		{/param}
 		{param displayErrors: $displayErrors /}
@@ -38,7 +39,7 @@
 		{param name: $name /}
 		{param repeatable: $repeatable /}
 		{param required: $required /}
-		{param showLabel: $_showLabel /}
+		{param showLabel: false /}
 		{param spritemap: $spritemap /}
 		{param tip: $tip /}
 		{param valid: $valid /}
@@ -52,7 +53,10 @@
 	{@param? disabled: bool}
 	{@param? handleInputChangeEvent: any}
 	{@param? label: string}
+	{@param? required: bool}
 	{@param? showAsSwitcher: bool}
+	{@param? showLabel: bool}
+	{@param? spritemap: string}
 
 	{if $showAsSwitcher}
 		<label class="ddm-toggle-switch toggle-switch">
@@ -75,13 +79,56 @@
 
 			<span aria-hidden="true" class="toggle-switch-bar">
 				<span class="toggle-switch-handle"></span>
-				<span class="toggle-switch-text toggle-switch-text-right">{$label}</span>
+
+				{if $showLabel or $required}
+					<span class="toggle-switch-text toggle-switch-text-right">
+						{if $showLabel}
+							{$label}{sp}
+						{/if}
+
+						{if $required}
+							<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
+								<use xlink:href="{$spritemap}#asterisk" />
+							</svg>
+						{/if}
+					</span>
+				{/if}
 			</span>
 		</label>
 	{else}
-		{call ClayCheckbox.render}
-			{param disabled: $disabled /}
-			{param checked: $checked /}
-		{/call}
+		<label>
+			{let $inputAttributes kind="attributes"}
+				{if $checked}
+					checked="checked"
+				{/if}
+
+				class="custom-control-input"
+				data-onchange="{$handleInputChangeEvent}"
+
+				{if $disabled}
+					disabled="disabled"
+				{/if}
+
+				name="{$name}"
+				type="checkbox"
+				value="true"
+			{/let}
+
+			<input {$inputAttributes} />
+
+			{if $showLabel}
+				<span class="custom-control-label">
+					<span class="custom-control-label-text">
+						{$label}{sp}
+					</span>
+				</span>
+
+				{if $required}
+					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
+						<use xlink:href="{$spritemap}#asterisk" />
+					</svg>
+				{/if}
+			{/if}
+		</label>
 	{/if}
 {/template}

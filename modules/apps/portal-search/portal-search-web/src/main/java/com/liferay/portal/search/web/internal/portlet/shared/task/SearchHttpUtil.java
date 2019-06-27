@@ -39,9 +39,10 @@ public class SearchHttpUtil {
 
 		boolean forwarded = false;
 
-		if (httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI) != null) {
+		Object requestURLObject = httpServletRequest.getAttribute(
+			JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI);
 
+		if (requestURLObject != null) {
 			forwarded = true;
 		}
 

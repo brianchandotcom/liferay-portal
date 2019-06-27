@@ -340,11 +340,13 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 	public boolean isRestorable(long classPK) throws PortalException {
 		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
-		if ((category.getParentCategoryId() > 0) &&
-			(_mbCategoryLocalService.fetchMBCategory(
-				category.getParentCategoryId()) == null)) {
+		if (category.getParentCategoryId() > 0) {
+			MBCategory parentCategory = _mbCategoryLocalService.fetchMBCategory(
+				category.getParentCategoryId());
 
-			return false;
+			if (parentCategory == null) {
+				return false;
+			}
 		}
 
 		return !category.isInTrashContainer();

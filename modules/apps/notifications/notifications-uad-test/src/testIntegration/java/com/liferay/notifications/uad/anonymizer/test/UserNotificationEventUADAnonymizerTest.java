@@ -85,9 +85,11 @@ public class UserNotificationEventUADAnonymizerTest
 
 	@Override
 	protected boolean isBaseModelDeleted(long baseModelPK) {
-		if (_userNotificationEventLocalService.fetchUserNotificationEvent(
-				baseModelPK) == null) {
+		UserNotificationEvent userNotificationEvent =
+			_userNotificationEventLocalService.fetchUserNotificationEvent(
+				baseModelPK);
 
+		if (userNotificationEvent == null) {
 			return true;
 		}
 

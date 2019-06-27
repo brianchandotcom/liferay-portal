@@ -311,11 +311,12 @@ public class MBMessageFinderImpl
 					StringPool.BLANK);
 			}
 			else {
+				String mergedCategoryIds = StringUtil.merge(
+					categoryIds, " OR currentMessage.categoryId = ");
+
 				sql = StringUtil.replace(
 					sql, "currentMessage.categoryId = ?",
-					"currentMessage.categoryId = " +
-						StringUtil.merge(
-							categoryIds, " OR currentMessage.categoryId = "));
+					"currentMessage.categoryId = " + mergedCategoryIds);
 			}
 
 			if (status != WorkflowConstants.STATUS_ANY) {
@@ -382,11 +383,12 @@ public class MBMessageFinderImpl
 					StringPool.BLANK);
 			}
 			else {
+				String mergedCategoryIds = StringUtil.merge(
+					categoryIds, " OR currentMessage.categoryId = ");
+
 				sql = StringUtil.replace(
 					sql, "currentMessage.categoryId = ?",
-					"currentMessage.categoryId = " +
-						StringUtil.merge(
-							categoryIds, " OR currentMessage.categoryId = "));
+					"currentMessage.categoryId = " + mergedCategoryIds);
 			}
 
 			if (status != WorkflowConstants.STATUS_ANY) {
@@ -464,11 +466,12 @@ public class MBMessageFinderImpl
 					StringPool.BLANK);
 			}
 			else {
+				String mergedCategoryIds = StringUtil.merge(
+					categoryIds, " OR currentMessage.categoryId = ");
+
 				sql = StringUtil.replace(
 					sql, "currentMessage.categoryId = ?",
-					"currentMessage.categoryId = " +
-						StringUtil.merge(
-							categoryIds, " OR currentMessage.categoryId = "));
+					"currentMessage.categoryId = " + mergedCategoryIds);
 			}
 
 			if (status != WorkflowConstants.STATUS_ANY) {
@@ -546,11 +549,12 @@ public class MBMessageFinderImpl
 					StringPool.BLANK);
 			}
 			else {
+				String mergedCategoryIds = StringUtil.merge(
+					categoryIds, " OR currentMessage.categoryId = ");
+
 				sql = StringUtil.replace(
 					sql, "currentMessage.categoryId = ?",
-					"currentMessage.categoryId = " +
-						StringUtil.merge(
-							categoryIds, " OR currentMessage.categoryId = "));
+					"currentMessage.categoryId = " + mergedCategoryIds);
 			}
 
 			if (status != WorkflowConstants.STATUS_ANY) {
@@ -607,11 +611,12 @@ public class MBMessageFinderImpl
 					StringPool.BLANK);
 			}
 			else {
+				String mergedCategoryIds = StringUtil.merge(
+					categoryIds, " OR currentMessage.categoryId = ");
+
 				sql = StringUtil.replace(
 					sql, "currentMessage.categoryId = ?",
-					"currentMessage.categoryId = " +
-						StringUtil.merge(
-							categoryIds, " OR currentMessage.categoryId = "));
+					"currentMessage.categoryId = " + mergedCategoryIds);
 			}
 
 			if (status != WorkflowConstants.STATUS_ANY) {
@@ -680,11 +685,12 @@ public class MBMessageFinderImpl
 					StringPool.BLANK);
 			}
 			else {
+				String mergedCategoryIds = StringUtil.merge(
+					categoryIds, " OR currentMessage.categoryId = ");
+
 				sql = StringUtil.replace(
 					sql, "currentMessage.categoryId = ?",
-					"currentMessage.categoryId = " +
-						StringUtil.merge(
-							categoryIds, " OR currentMessage.categoryId = "));
+					"currentMessage.categoryId = " + mergedCategoryIds);
 			}
 
 			if (status != WorkflowConstants.STATUS_ANY) {

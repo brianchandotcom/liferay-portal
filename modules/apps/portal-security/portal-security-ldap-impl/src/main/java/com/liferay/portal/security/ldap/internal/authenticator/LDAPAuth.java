@@ -597,11 +597,13 @@ public class LDAPAuth implements Authenticator {
 		// Make exceptions for omniadmins so that if they break the LDAP
 		// configuration, they can still login to fix the problem
 
-		if (allowOmniadmin &&
-			(authenticateOmniadmin(
-				companyId, emailAddress, screenName, userId) == SUCCESS)) {
+		if (allowOmniadmin) {
+			int code = authenticateOmniadmin(
+				companyId, emailAddress, screenName, userId);
 
-			return SUCCESS;
+			if (code == SUCCESS) {
+				return SUCCESS;
+			}
 		}
 
 		LDAPAuthConfiguration ldapAuthConfiguration =

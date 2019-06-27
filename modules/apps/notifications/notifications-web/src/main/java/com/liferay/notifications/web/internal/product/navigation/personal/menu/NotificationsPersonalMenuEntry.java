@@ -50,12 +50,13 @@ public class NotificationsPersonalMenuEntry extends BasePersonalMenuEntry {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (_userNotificationEventLocalService.
+		int count =
+			_userNotificationEventLocalService.
 				getArchivedUserNotificationEventsCount(
 					themeDisplay.getUserId(),
-					UserNotificationDeliveryConstants.TYPE_WEBSITE, false) >
-						0) {
+					UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
 
+		if (count > 0) {
 			return "simple-circle";
 		}
 

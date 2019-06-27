@@ -168,11 +168,12 @@ public class MBThreadFinderImpl
 					sql, "(MBThread.categoryId = ?) AND", StringPool.BLANK);
 			}
 			else {
+				String mergedCategoryIds = StringUtil.merge(
+					categoryIds, " OR MBThread.categoryId = ");
+
 				sql = StringUtil.replace(
 					sql, "MBThread.categoryId = ?",
-					"MBThread.categoryId = " +
-						StringUtil.merge(
-							categoryIds, " OR MBThread.categoryId = "));
+					"MBThread.categoryId = " + mergedCategoryIds);
 			}
 
 			sql = updateSQL(sql, queryDefinition);
@@ -291,11 +292,12 @@ public class MBThreadFinderImpl
 					sql, "(MBThread.categoryId = ?) AND", StringPool.BLANK);
 			}
 			else {
+				String mergedCategoryIds = StringUtil.merge(
+					categoryIds, " OR MBThread.categoryId = ");
+
 				sql = StringUtil.replace(
 					sql, "MBThread.categoryId = ?",
-					"MBThread.categoryId = " +
-						StringUtil.merge(
-							categoryIds, " OR MBThread.categoryId = "));
+					"MBThread.categoryId = " + mergedCategoryIds);
 			}
 
 			sql = updateSQL(sql, queryDefinition);
@@ -631,11 +633,12 @@ public class MBThreadFinderImpl
 					sql, "(MBThread.categoryId = ?) AND", StringPool.BLANK);
 			}
 			else {
+				String mergedCategoryIds = StringUtil.merge(
+					categoryIds, " OR MBThread.categoryId = ");
+
 				sql = StringUtil.replace(
 					sql, "MBThread.categoryId = ?",
-					"MBThread.categoryId = " +
-						StringUtil.merge(
-							categoryIds, " OR MBThread.categoryId = "));
+					"MBThread.categoryId = " + mergedCategoryIds);
 			}
 
 			sql = updateSQL(sql, queryDefinition);
@@ -770,11 +773,12 @@ public class MBThreadFinderImpl
 					sql, "(MBThread.categoryId = ?) AND", StringPool.BLANK);
 			}
 			else {
+				String mergedCategoryIds = StringUtil.merge(
+					categoryIds, " OR MBThread.categoryId = ");
+
 				sql = StringUtil.replace(
 					sql, "MBThread.categoryId = ?",
-					"MBThread.categoryId = " +
-						StringUtil.merge(
-							categoryIds, " OR MBThread.categoryId = "));
+					"MBThread.categoryId = " + mergedCategoryIds);
 			}
 
 			sql = updateSQL(sql, queryDefinition);
@@ -1000,11 +1004,12 @@ public class MBThreadFinderImpl
 					sql, "(MBThread.categoryId = ?) AND", StringPool.BLANK);
 			}
 			else {
+				String mergedCategoryIds = StringUtil.merge(
+					categoryIds, " OR MBThread.categoryId = ");
+
 				sql = StringUtil.replace(
 					sql, "MBThread.categoryId = ?",
-					"MBThread.categoryId = " +
-						StringUtil.merge(
-							categoryIds, " OR MBThread.categoryId = "));
+					"MBThread.categoryId = " + mergedCategoryIds);
 			}
 
 			sql = updateSQL(sql, queryDefinition);
@@ -1136,11 +1141,12 @@ public class MBThreadFinderImpl
 					sql, "(MBThread.categoryId = ?) AND", StringPool.BLANK);
 			}
 			else {
+				String mergedCategoryIds = StringUtil.merge(
+					categoryIds, " OR MBThread.categoryId = ");
+
 				sql = StringUtil.replace(
 					sql, "MBThread.categoryId = ?",
-					"MBThread.categoryId = " +
-						StringUtil.merge(
-							categoryIds, " OR MBThread.categoryId = "));
+					"MBThread.categoryId = " + mergedCategoryIds);
 			}
 
 			sql = updateSQL(sql, queryDefinition);

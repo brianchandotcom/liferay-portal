@@ -260,12 +260,12 @@ public class MBCategoryFinderImpl
 					StringPool.BLANK);
 			}
 			else {
+				String mergedParentCategoryIds = StringUtil.merge(
+					parentCategoryIds, " OR MBCategory.parentCategoryId = ");
+
 				sql = StringUtil.replace(
 					sql, "MBCategory.parentCategoryId = ?",
-					"MBCategory.parentCategoryId = " +
-						StringUtil.merge(
-							parentCategoryIds,
-							" OR MBCategory.parentCategoryId = "));
+					"MBCategory.parentCategoryId = " + mergedParentCategoryIds);
 			}
 
 			sql = updateSQL(sql, queryDefinition);
@@ -519,12 +519,12 @@ public class MBCategoryFinderImpl
 					StringPool.BLANK);
 			}
 			else {
+				String mergedParentCategoryIds = StringUtil.merge(
+					parentCategoryIds, " OR MBCategory.parentCategoryId = ");
+
 				sql = StringUtil.replace(
 					sql, "MBCategory.parentCategoryId = ?",
-					"MBCategory.parentCategoryId = " +
-						StringUtil.merge(
-							parentCategoryIds,
-							" OR MBCategory.parentCategoryId = "));
+					"MBCategory.parentCategoryId = " + mergedParentCategoryIds);
 			}
 
 			sql = updateSQL(sql, queryDefinition);

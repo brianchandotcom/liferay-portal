@@ -85,9 +85,11 @@ public class UserNotificationDeliveryUADAnonymizerTest
 
 	@Override
 	protected boolean isBaseModelDeleted(long baseModelPK) {
-		if (_userNotificationDeliveryLocalService.fetchUserNotificationDelivery(
-				baseModelPK) == null) {
+		UserNotificationDelivery userNotificationDelivery =
+			_userNotificationDeliveryLocalService.fetchUserNotificationDelivery(
+				baseModelPK);
 
+		if (userNotificationDelivery == null) {
 			return true;
 		}
 

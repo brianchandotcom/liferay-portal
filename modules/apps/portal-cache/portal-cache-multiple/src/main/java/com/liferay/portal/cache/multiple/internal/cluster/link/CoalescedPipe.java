@@ -150,9 +150,10 @@ public class CoalescedPipe<E> {
 
 				if (_comparator != null) {
 					while (currentElementLink != null) {
-						if (_comparator.compare(
-								currentElementLink._element, e) == 0) {
+						int compare = _comparator.compare(
+							currentElementLink._element, e);
 
+						if (compare == 0) {
 							_coalescedCount.incrementAndGet();
 
 							return true;

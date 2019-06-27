@@ -102,9 +102,10 @@ public class CreoleWikiEngine extends BaseWikiEngine {
 
 				boolean existingLink = false;
 
-				if (_wikiPageLocalService.getPagesCount(
-						page.getNodeId(), title, true) > 0) {
+				int count = _wikiPageLocalService.getPagesCount(
+					page.getNodeId(), title, true);
 
+				if (count > 0) {
 					existingLink = true;
 				}
 

@@ -283,9 +283,10 @@ public class MediaWikiImporter implements WikiImporter {
 			frontPageTitle = _wikiPageTitleValidator.normalize(frontPageTitle);
 
 			try {
-				if (_wikiPageLocalService.getPagesCount(
-						node.getNodeId(), frontPageTitle, true) > 0) {
+				int count = _wikiPageLocalService.getPagesCount(
+					node.getNodeId(), frontPageTitle, true);
 
+				if (count > 0) {
 					ServiceContext serviceContext = new ServiceContext();
 
 					serviceContext.setAddGroupPermissions(true);

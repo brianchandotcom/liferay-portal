@@ -869,12 +869,17 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 					}
 
 					try (ZipFile zipFile = new ZipFile(file)) {
-						if ((zipFile.getEntry(
-								"liferay-marketplace.properties") != null) ||
-							(zipFile.getEntry(
-								"WEB-INF/liferay-plugin-package.properties") !=
-									null)) {
+						ZipEntry zipEntry = zipFile.getEntry(
+							"liferay-marketplace.properties");
 
+						if (zipEntry != null) {
+							return FileVisitResult.CONTINUE;
+						}
+
+						zipEntry = zipFile.getEntry(
+							"WEB-INF/liferay-plugin-package.properties");
+
+						if (zipEntry != null) {
 							return FileVisitResult.CONTINUE;
 						}
 

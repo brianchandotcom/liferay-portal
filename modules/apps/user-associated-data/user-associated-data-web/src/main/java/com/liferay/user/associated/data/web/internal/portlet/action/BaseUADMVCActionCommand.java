@@ -64,12 +64,16 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 
 		long selectedUserId = getSelectedUserId(actionRequest);
 
-		if (uadApplicationSummaryHelper.getTotalNonreviewableUADEntitiesCount(
-				selectedUserId) == 0) {
+		int totalNonreviewableUADEntitiesCount =
+			uadApplicationSummaryHelper.getTotalNonreviewableUADEntitiesCount(
+				selectedUserId);
 
-			if (uadApplicationSummaryHelper.getTotalReviewableUADEntitiesCount(
-					selectedUserId) == 0) {
+		if (totalNonreviewableUADEntitiesCount == 0) {
+			int totalReviewableUADEntitiesCount =
+				uadApplicationSummaryHelper.getTotalReviewableUADEntitiesCount(
+					selectedUserId);
 
+			if (totalReviewableUADEntitiesCount == 0) {
 				mvcRenderCommandName = "/completed_data_erasure";
 			}
 			else {
@@ -102,13 +106,16 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 
 		long selectedUserId = getSelectedUserId(actionRequest);
 
-		if (uadApplicationSummaryHelper.getTotalReviewableUADEntitiesCount(
-				selectedUserId) == 0) {
+		int totalReviewableUADEntitiesCount =
+			uadApplicationSummaryHelper.getTotalReviewableUADEntitiesCount(
+				selectedUserId);
 
-			if (uadApplicationSummaryHelper.
-					getTotalNonreviewableUADEntitiesCount(selectedUserId) ==
-						0) {
+		if (totalReviewableUADEntitiesCount == 0) {
+			int totalNonreviewableUADEntitiesCount =
+				uadApplicationSummaryHelper.
+					getTotalNonreviewableUADEntitiesCount(selectedUserId);
 
+			if (totalNonreviewableUADEntitiesCount == 0) {
 				mvcRenderCommandName = "/completed_data_erasure";
 			}
 			else {

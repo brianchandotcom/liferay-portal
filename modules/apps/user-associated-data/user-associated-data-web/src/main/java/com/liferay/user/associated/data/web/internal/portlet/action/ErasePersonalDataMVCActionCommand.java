@@ -89,13 +89,17 @@ public class ErasePersonalDataMVCActionCommand
 
 		String mvcRenderCommandName = "/review_uad_data";
 
-		if (_uadApplicationSummaryHelper.getTotalReviewableUADEntitiesCount(
-				selectedUser.getUserId()) == 0) {
+		int totalReviewableUADEntitiesCount =
+			_uadApplicationSummaryHelper.getTotalReviewableUADEntitiesCount(
+				selectedUser.getUserId());
 
-			if (_uadApplicationSummaryHelper.
+		if (totalReviewableUADEntitiesCount == 0) {
+			int totalNonreviewableUADEntitiesCount =
+				_uadApplicationSummaryHelper.
 					getTotalNonreviewableUADEntitiesCount(
-						selectedUser.getUserId()) == 0) {
+						selectedUser.getUserId());
 
+			if (totalNonreviewableUADEntitiesCount == 0) {
 				mvcRenderCommandName = "/completed_data_erasure";
 			}
 			else {

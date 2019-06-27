@@ -252,10 +252,11 @@ public abstract class BaseModelUADDisplay<T extends BaseModel>
 
 			for (String searchableField : searchableFields) {
 				try {
+					String formattedSearchableField = TextFormatter.format(
+						searchableField, TextFormatter.G);
+
 					Method method = clazz.getMethod(
-						"get" +
-							TextFormatter.format(
-								searchableField, TextFormatter.G));
+						"get" + formattedSearchableField);
 
 					if (method.getReturnType() == String.class) {
 						disjunction.add(

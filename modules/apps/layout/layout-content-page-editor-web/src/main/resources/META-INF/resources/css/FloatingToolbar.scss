@@ -47,6 +47,19 @@
 
 		&--fixed {
 			padding: $fragmentsEditorSpacing;
+
+			.dropdown-menu {
+				max-width: none;
+				width: 312px;
+
+				&:after {
+					padding: 0;
+				}
+
+				.inline-scroller {
+					max-height: 320px;
+				}
+			}
 		}
 
 		.btn,

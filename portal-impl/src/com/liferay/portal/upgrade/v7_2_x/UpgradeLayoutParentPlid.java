@@ -25,16 +25,15 @@ public class UpgradeLayoutParentPlid extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		runSQL(
-			"create table TEMP (plid plid LONG NOT NULL PRIMARY KEY, " +
-			   "parentPlid LONG)");
+			"create table TEMP (plid LONG NOT NULL PRIMARY KEY, parentPlid " +
+				"LONG)");
 
-		String sql = StringBundler.concat(
-			"insert into TEMP select l1.plid as plid, l2.plid as parentPlid ",
-			"from Layout l1 left join Layout l2 on l1.groupId = l2.groupId ",
-			"and l1.privateLayout = l2.privateLayout and l1.parentLayoutId = ",
-			"l2.layoutId");
-
-		runSQL(sql);
+		runSQL(
+			StringBundler.concat(
+				"insert into TEMP select l1.plid as plid, l2.plid as ",
+				"parentPlid from Layout l1 left join Layout l2 on l1.groupId ",
+				"= l2.groupId and l1.privateLayout = l2.privateLayout and ",
+				"l1.parentLayoutId = l2.layoutId"));
 
 		runSQL(
 			"update Layout set parentPlid = (select coalesce(parentPlid, 0) " +

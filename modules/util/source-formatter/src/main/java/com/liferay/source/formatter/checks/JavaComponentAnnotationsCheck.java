@@ -182,9 +182,10 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 				String previousParameterProperty =
 					parameterPropertiesArray[i - 1];
 
-				if (comparator.compare(
-						previousParameterProperty, parameterProperty) > 0) {
+				int compare = comparator.compare(
+					previousParameterProperty, parameterProperty);
 
+				if (compare > 0) {
 					annotation = StringUtil.replaceFirst(
 						annotation, previousParameterProperty,
 						parameterProperty);

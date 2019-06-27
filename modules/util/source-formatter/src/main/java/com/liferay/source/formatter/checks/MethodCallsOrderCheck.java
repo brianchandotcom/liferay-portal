@@ -130,22 +130,23 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 
 				String putOrSetParameterName = parametersList.get(0);
 
-				if ((previousPutOrSetParameterName != null) &&
-					(putOrSetParameterNameComparator.compare(
-						previousPutOrSetParameterName, putOrSetParameterName) >
-							0)) {
+				if (previousPutOrSetParameterName != null) {
+					int compare = putOrSetParameterNameComparator.compare(
+						previousPutOrSetParameterName, putOrSetParameterName);
 
-					String codeBlock = content.substring(
-						matcher.start(), y + 1);
+					if (compare > 0) {
+						String codeBlock = content.substring(
+							matcher.start(), y + 1);
 
-					String newCodeBlock = StringUtil.replaceFirst(
-						codeBlock, previousParameters, parameters);
+						String newCodeBlock = StringUtil.replaceFirst(
+							codeBlock, previousParameters, parameters);
 
-					newCodeBlock = StringUtil.replaceLast(
-						newCodeBlock, parameters, previousParameters);
+						newCodeBlock = StringUtil.replaceLast(
+							newCodeBlock, parameters, previousParameters);
 
-					return StringUtil.replaceFirst(
-						content, codeBlock, newCodeBlock, matcher.start());
+						return StringUtil.replaceFirst(
+							content, codeBlock, newCodeBlock, matcher.start());
+					}
 				}
 
 				String s = StringUtil.trim(content.substring(y + 1));
@@ -207,18 +208,20 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 
 				String putOrSetParameterName = parametersList.get(0);
 
-				if ((previousPutOrSetParameterName != null) &&
-					(putOrSetParameterNameComparator.compare(
-						previousPutOrSetParameterName, putOrSetParameterName) >
-							0)) {
+				if (previousPutOrSetParameterName != null) {
+					int compare = putOrSetParameterNameComparator.compare(
+						previousPutOrSetParameterName, putOrSetParameterName);
 
-					String newCodeBlock = StringUtil.replaceFirst(
-						codeBlock, previousParameters, parameters);
+					if (compare > 0) {
+						String newCodeBlock = StringUtil.replaceFirst(
+							codeBlock, previousParameters, parameters);
 
-					newCodeBlock = StringUtil.replaceLast(
-						newCodeBlock, parameters, previousParameters);
+						newCodeBlock = StringUtil.replaceLast(
+							newCodeBlock, parameters, previousParameters);
 
-					return StringUtil.replace(content, codeBlock, newCodeBlock);
+						return StringUtil.replace(
+							content, codeBlock, newCodeBlock);
+					}
 				}
 
 				previousParameters = parameters;

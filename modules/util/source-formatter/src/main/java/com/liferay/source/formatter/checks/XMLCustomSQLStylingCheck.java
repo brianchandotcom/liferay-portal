@@ -170,11 +170,11 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 			char c = content.charAt(endPos - 1);
 
 			if (c != CharPool.TAB) {
+				String s = StringUtil.trim(
+					content.substring(endLineStartPos, endPos));
+
 				addMessage(
-					fileName,
-					"There should be a line break after '" +
-						StringUtil.trim(
-							content.substring(endLineStartPos, endPos)),
+					fileName, "There should be a line break after '" + s,
 					endLineNumber);
 
 				continue;

@@ -140,10 +140,11 @@ public class VideoDLPreviewRendererProvider
 				for (String dlFileEntryPreviewVideoContainer :
 						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS) {
 
-					if (VideoProcessorUtil.getPreviewFileSize(
-							fileVersion, dlFileEntryPreviewVideoContainer) >
-								0) {
+					long previewFileSize =
+						VideoProcessorUtil.getPreviewFileSize(
+							fileVersion, dlFileEntryPreviewVideoContainer);
 
+					if (previewFileSize > 0) {
 						previewFileURLs.add(
 							_dlURLHelper.getPreviewURL(
 								fileVersion.getFileEntry(), fileVersion,

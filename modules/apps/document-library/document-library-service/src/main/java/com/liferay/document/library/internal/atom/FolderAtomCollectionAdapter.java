@@ -97,8 +97,11 @@ public class FolderAtomCollectionAdapter
 		String portletId = PortletProviderUtil.getPortletId(
 			Folder.class.getName(), PortletProvider.Action.VIEW);
 
-		return AtomUtil.createFeedTitleFromPortletName(
-			atomRequestContext, portletId) + " folders";
+		String feedTitleFromPortletName =
+			AtomUtil.createFeedTitleFromPortletName(
+				atomRequestContext, portletId);
+
+		return feedTitleFromPortletName + " folders";
 	}
 
 	@Override

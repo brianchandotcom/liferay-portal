@@ -86,9 +86,11 @@ public class DLOpenerFileEntryReferenceUADAnonymizerTest
 
 	@Override
 	protected boolean isBaseModelDeleted(long baseModelPK) {
-		if (_dlOpenerFileEntryReferenceLocalService.
-				fetchDLOpenerFileEntryReference(baseModelPK) == null) {
+		DLOpenerFileEntryReference dlOpenerFileEntryReference =
+			_dlOpenerFileEntryReferenceLocalService.
+				fetchDLOpenerFileEntryReference(baseModelPK);
 
+		if (dlOpenerFileEntryReference == null) {
 			return true;
 		}
 

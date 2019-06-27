@@ -1238,7 +1238,11 @@ public abstract class BaseBuild implements Build {
 	public int hashCode() {
 		String key = getBuildURL();
 
-		return key.hashCode();
+		if (key != null) {
+			return key.hashCode();
+		}
+
+		return super.hashCode();
 	}
 
 	@Override

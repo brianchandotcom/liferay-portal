@@ -131,9 +131,10 @@ public class AudioDLPreviewRendererProvider
 			for (String dlFileEntryPreviewAudioContainer :
 					PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS) {
 
-				if (AudioProcessorUtil.getPreviewFileSize(
-						fileVersion, dlFileEntryPreviewAudioContainer) > 0) {
+				long previewFileSize = AudioProcessorUtil.getPreviewFileSize(
+					fileVersion, dlFileEntryPreviewAudioContainer);
 
+				if (previewFileSize > 0) {
 					previewFileURLs.add(
 						_dlURLHelper.getPreviewURL(
 							fileVersion.getFileEntry(), fileVersion,

@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -338,9 +339,12 @@ public class EditAssetListDisplayContext {
 
 		_availableClassNameIds = ArrayUtil.filter(
 			_availableClassNameIds,
-			availableClassNameId ->
-				IndexerRegistryUtil.getIndexer(
-					PortalUtil.getClassName(availableClassNameId)) != null);
+			availableClassNameId -> {
+				Indexer indexer = IndexerRegistryUtil.getIndexer(
+					PortalUtil.getClassName(availableClassNameId));
+
+				return indexer != null;
+			});
 
 		return _availableClassNameIds;
 	}

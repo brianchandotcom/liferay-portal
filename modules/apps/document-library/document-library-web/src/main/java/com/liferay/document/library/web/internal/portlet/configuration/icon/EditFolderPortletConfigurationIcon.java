@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil;
+import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 
 import javax.portlet.PortletRequest;
@@ -131,10 +132,15 @@ public class EditFolderPortletConfigurationIcon
 			Folder folder = ActionUtil.getFolder(portletRequest);
 
 			if (folder == null) {
-				if (!WorkflowEngineManagerUtil.isDeployed() ||
-					(WorkflowHandlerRegistryUtil.getWorkflowHandler(
-						DLFileEntry.class.getName()) == null)) {
+				if (!WorkflowEngineManagerUtil.isDeployed()) {
+					return false;
+				}
 
+				WorkflowHandler<?> workflowHandler =
+					WorkflowHandlerRegistryUtil.getWorkflowHandler(
+						DLFileEntry.class.getName());
+
+				if (workflowHandler == null) {
 					return false;
 				}
 			}

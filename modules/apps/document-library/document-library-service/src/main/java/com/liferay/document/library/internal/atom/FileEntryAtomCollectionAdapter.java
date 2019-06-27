@@ -108,8 +108,11 @@ public class FileEntryAtomCollectionAdapter
 		String portletId = PortletProviderUtil.getPortletId(
 			FileEntry.class.getName(), PortletProvider.Action.VIEW);
 
-		return AtomUtil.createFeedTitleFromPortletName(
-			atomRequestContext, portletId) + " files";
+		String feedTitleFromPortletName =
+			AtomUtil.createFeedTitleFromPortletName(
+				atomRequestContext, portletId);
+
+		return feedTitleFromPortletName + " files";
 	}
 
 	@Override

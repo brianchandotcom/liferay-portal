@@ -88,9 +88,11 @@ public class DLFileEntryUADTestUtil {
 		throws Exception {
 
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
-			if (dlFileEntryLocalService.fetchDLFileEntry(
-					dlFileEntry.getFileEntryId()) != null) {
+			DLFileEntry existingDLFileEntry =
+				dlFileEntryLocalService.fetchDLFileEntry(
+					dlFileEntry.getFileEntryId());
 
+			if (existingDLFileEntry != null) {
 				dlAppLocalService.deleteFileEntry(dlFileEntry.getFileEntryId());
 			}
 

@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -594,9 +595,12 @@ public class AssetPublisherDisplayContext {
 
 		_availableClassNameIds = ArrayUtil.filter(
 			availableClassNameIds,
-			availableClassNameId ->
-				IndexerRegistryUtil.getIndexer(
-					PortalUtil.getClassName(availableClassNameId)) != null);
+			availableClassNameId -> {
+				Indexer indexer = IndexerRegistryUtil.getIndexer(
+					PortalUtil.getClassName(availableClassNameId));
+
+				return indexer != null;
+			});
 
 		return _availableClassNameIds;
 	}

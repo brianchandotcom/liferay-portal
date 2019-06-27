@@ -98,7 +98,8 @@ public class LayoutCopyHelperTest {
 				sourceLayout.getUserId(), sourceLayout.getGroupId(), 0, 0,
 				_portal.getClassNameId(Layout.class), sourceLayout.getPlid(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK, 0, null, _serviceContext);
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+				0, null, _serviceContext);
 
 		fragmentEntryLinks.add(fragmentEntryLink1);
 
@@ -107,7 +108,8 @@ public class LayoutCopyHelperTest {
 				sourceLayout.getUserId(), sourceLayout.getGroupId(), 0, 0,
 				_portal.getClassNameId(Layout.class), sourceLayout.getPlid(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK, 0, null, _serviceContext);
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+				0, null, _serviceContext);
 
 		fragmentEntryLinks.add(fragmentEntryLink2);
 

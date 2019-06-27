@@ -14,14 +14,13 @@
 
 package com.liferay.portal.configuration.easyconf;
 
-import com.germinus.easyconf.ConfigurationException;
-import com.germinus.easyconf.ConfigurationNotFoundException;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -172,8 +171,8 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 			fileName, url, _baseCompositeConfiguration);
 
 		if (configuration == null) {
-			throw new ConfigurationNotFoundException(
-				_componentName, "The base properties file was not found");
+			throw new SystemException(
+				"The base properties file was not found for " + _componentName);
 		}
 		else if (configuration.isEmpty() && _log.isDebugEnabled()) {
 			_log.debug("Empty configuration " + fileName);
@@ -181,9 +180,7 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 	}
 
 	private Configuration _addFileProperties(
-			String fileName,
-			CompositeConfiguration loadedCompositeConfiguration)
-		throws ConfigurationException {
+		String fileName, CompositeConfiguration loadedCompositeConfiguration) {
 
 		URL url = ConfigurationUtils.locate(_fileSystem, null, fileName);
 
@@ -305,8 +302,7 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 	}
 
 	private Configuration _addURLProperties(
-			URL url, CompositeConfiguration loadedCompositeConfiguration)
-		throws ConfigurationException {
+		URL url, CompositeConfiguration loadedCompositeConfiguration) {
 
 		try {
 			PropertiesConfiguration propertiesConfiguration =

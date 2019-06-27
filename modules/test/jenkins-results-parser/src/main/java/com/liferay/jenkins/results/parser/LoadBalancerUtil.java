@@ -172,10 +172,12 @@ public class LoadBalancerUtil {
 			}
 			finally {
 				if (verbose) {
+					String durationString =
+						JenkinsResultsParserUtil.toDurationString(
+							System.currentTimeMillis() - start);
+
 					System.out.println(
-						"Got most available master URL in " +
-							JenkinsResultsParserUtil.toDurationString(
-								System.currentTimeMillis() - start));
+						"Got most available master URL in " + durationString);
 				}
 			}
 		}

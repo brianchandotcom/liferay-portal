@@ -29,10 +29,11 @@ public class Distance {
 		lat2 = (Math.PI * lat2) / 180;
 		lon2 = (Math.PI * lon2) / 180;
 
-		return 3963.4 *
-			Math.acos(
-				(Math.sin(lat1) * Math.sin(lat2)) +
-					(Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon1 - lon2)));
+		double acos = Math.acos(
+			(Math.sin(lat1) * Math.sin(lat2)) +
+				(Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon1 - lon2)));
+
+		return 3963.4 * acos;
 	}
 
 	public static double kmToMiles(double km) {

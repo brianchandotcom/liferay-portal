@@ -784,10 +784,10 @@ public class GitWorkingDirectory {
 					executionResult.getStandardError()));
 		}
 
-		System.out.println(
-			"Fetch completed in " +
-				JenkinsResultsParserUtil.toDurationString(
-					System.currentTimeMillis() - start));
+		String durationString = JenkinsResultsParserUtil.toDurationString(
+			System.currentTimeMillis() - start);
+
+		System.out.println("Fetch completed in " + durationString);
 
 		return createLocalGitBranch(
 			localGitBranch.getName(), true, localGitBranch.getSHA());

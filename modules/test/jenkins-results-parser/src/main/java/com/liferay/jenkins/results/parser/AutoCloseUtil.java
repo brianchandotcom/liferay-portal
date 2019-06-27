@@ -624,10 +624,10 @@ public class AutoCloseUtil {
 			if (ruleDataArray[1].endsWith("%")) {
 				String percentageRule = ruleDataArray[1];
 
-				maxFailPercentage =
-					Integer.parseInt(
-						percentageRule.substring(
-							0, percentageRule.length() - 1)) / 100;
+				int i = Integer.parseInt(
+					percentageRule.substring(0, percentageRule.length() - 1));
+
+				maxFailPercentage = i / 100;
 			}
 			else {
 				maxFailCount = Integer.parseInt(ruleDataArray[1]);

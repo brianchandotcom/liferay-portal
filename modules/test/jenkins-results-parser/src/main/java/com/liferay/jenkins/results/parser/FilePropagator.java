@@ -272,9 +272,10 @@ public class FilePropagator {
 			}
 
 			try {
-				_successful =
-					_filePropagator._executeBashCommands(
-						commands, _targetSlave) == 0;
+				int value = _filePropagator._executeBashCommands(
+					commands, _targetSlave);
+
+				_successful = value == 0;
 			}
 			catch (Exception e) {
 				_successful = false;

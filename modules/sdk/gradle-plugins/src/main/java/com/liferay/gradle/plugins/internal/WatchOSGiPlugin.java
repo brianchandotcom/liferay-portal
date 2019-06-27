@@ -119,8 +119,10 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 
 				@Override
 				public String call() throws Exception {
-					return BndBuilderUtil.getInstruction(
-						project, Constants.BUNDLE_NAME) + " Libs";
+					String instruction = BndBuilderUtil.getInstruction(
+						project, Constants.BUNDLE_NAME);
+
+					return instruction + " Libs";
 				}
 
 			});
@@ -131,8 +133,10 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 
 				@Override
 				public String call() throws Exception {
-					return BndBuilderUtil.getInstruction(
-						project, Constants.BUNDLE_SYMBOLICNAME) + ".libs";
+					String instruction = BndBuilderUtil.getInstruction(
+						project, Constants.BUNDLE_SYMBOLICNAME);
+
+					return instruction + ".libs";
 				}
 
 			});

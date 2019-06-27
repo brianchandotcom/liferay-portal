@@ -164,10 +164,10 @@ public class ModuleConfigurationLocalizationTest {
 			extendedMetaTypeInformation.getObjectClassDefinition(
 				pid, locale.getLanguage());
 
-		if (ResourceBundleUtil.getString(
-				resourceBundle, extendedObjectClassDefinition.getName()) ==
-					null) {
+		String extendedObjectClassDefinitionName = ResourceBundleUtil.getString(
+			resourceBundle, extendedObjectClassDefinition.getName());
 
+		if (extendedObjectClassDefinitionName == null) {
 			sb.append("\n\t\tMissing localization for configuration pid: ");
 			sb.append(extendedObjectClassDefinition.getID());
 		}
@@ -178,10 +178,11 @@ public class ModuleConfigurationLocalizationTest {
 				extendedObjectClassDefinition.getAttributeDefinitions(
 					ExtendedObjectClassDefinition.ALL)) {
 
-			if (ResourceBundleUtil.getString(
-					resourceBundle, extendedAttributeDefinition.getName()) ==
-						null) {
+			String extendedAttributeDefinitionName =
+				ResourceBundleUtil.getString(
+					resourceBundle, extendedAttributeDefinition.getName());
 
+			if (extendedAttributeDefinitionName == null) {
 				missingAttributeNames.add(extendedAttributeDefinition.getID());
 			}
 		}

@@ -1529,11 +1529,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					sb.append(") ");
 					sb.append(Pattern.quote(_getProjectDependency(project)));
 
-					return content.replaceAll(
-						sb.toString(),
-						"$1 " +
-							Matcher.quoteReplacement(
-								_getModuleDependency(project, true)));
+					String replament = Matcher.quoteReplacement(
+						_getModuleDependency(project, true));
+
+					return content.replaceAll(sb.toString(), "$1 " + replament);
 				}
 
 			});

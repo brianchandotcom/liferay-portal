@@ -267,10 +267,10 @@ public class PatchTask extends DefaultTask {
 							execSpec.args("--binary");
 						}
 
-						execSpec.args(
-							"--input=" +
-								FileUtil.relativize(
-									patchFile, srcTemporaryDir));
+						String relativizePath = FileUtil.relativize(
+							patchFile, srcTemporaryDir);
+
+						execSpec.args("--input=" + relativizePath);
 
 						execSpec.setExecutable("patch");
 						execSpec.setIgnoreExitValue(true);

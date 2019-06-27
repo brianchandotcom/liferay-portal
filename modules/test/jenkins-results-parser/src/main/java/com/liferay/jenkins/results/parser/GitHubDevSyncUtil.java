@@ -1163,10 +1163,12 @@ public class GitHubDevSyncUtil {
 				}
 			}
 
+			String durationString = JenkinsResultsParserUtil.toDurationString(
+				System.currentTimeMillis() - start);
+
 			System.out.println(
 				"Synchronization with local Git completed in " +
-					JenkinsResultsParserUtil.toDurationString(
-						System.currentTimeMillis() - start));
+					durationString);
 		}
 	}
 

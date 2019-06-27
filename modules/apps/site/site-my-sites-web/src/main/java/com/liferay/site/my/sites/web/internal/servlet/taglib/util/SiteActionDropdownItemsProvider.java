@@ -63,15 +63,17 @@ public class SiteActionDropdownItemsProvider {
 		return new DropdownItemList() {
 			{
 				if (Objects.equals(_tabs1, "my-sites")) {
-					if (LayoutServiceUtil.getLayoutsCount(
-							_group.getGroupId(), false) > 0) {
+					int count = LayoutServiceUtil.getLayoutsCount(
+						_group.getGroupId(), false);
 
+					if (count > 0) {
 						add(_getViewSitePublicPagesActionUnsafeConsumer());
 					}
 
-					if (LayoutServiceUtil.getLayoutsCount(
-							_group.getGroupId(), true) > 0) {
+					count = LayoutServiceUtil.getLayoutsCount(
+						_group.getGroupId(), true);
 
+					if (count > 0) {
 						add(_getViewSitePrivatePagesActionUnsafeConsumer());
 					}
 

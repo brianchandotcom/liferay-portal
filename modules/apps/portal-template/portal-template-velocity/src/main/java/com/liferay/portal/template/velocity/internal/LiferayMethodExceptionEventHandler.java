@@ -77,9 +77,10 @@ public class LiferayMethodExceptionEventHandler
 			proxyInterfaceClassNames.add(interfaceClass.getName());
 		}
 
-		return "proxyInterfaceClassNames=" +
-			StringUtil.merge(
-				proxyInterfaceClassNames, StringPool.COMMA_AND_SPACE);
+		String mergedProxyInterfaceClassNames = StringUtil.merge(
+			proxyInterfaceClassNames, StringPool.COMMA_AND_SPACE);
+
+		return "proxyInterfaceClassNames=" + mergedProxyInterfaceClassNames;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

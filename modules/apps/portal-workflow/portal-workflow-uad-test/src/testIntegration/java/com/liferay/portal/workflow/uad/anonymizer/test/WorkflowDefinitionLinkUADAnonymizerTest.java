@@ -97,9 +97,11 @@ public class WorkflowDefinitionLinkUADAnonymizerTest
 
 	@Override
 	protected boolean isBaseModelDeleted(long baseModelPK) {
-		if (_workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
-				baseModelPK) == null) {
+		WorkflowDefinitionLink workflowDefinitionLink =
+			_workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
+				baseModelPK);
 
+		if (workflowDefinitionLink == null) {
 			return true;
 		}
 

@@ -162,9 +162,10 @@ public class SegmentsEntryLocalServiceImpl
 		// Segments entry
 
 		if (!GroupThreadLocal.isDeleteInProcess()) {
-			if (segmentsExperiencePersistence.countBySegmentsEntryId(
-					segmentsEntry.getSegmentsEntryId()) > 0) {
+			int count = segmentsExperiencePersistence.countBySegmentsEntryId(
+				segmentsEntry.getSegmentsEntryId());
 
+			if (count > 0) {
 				throw new RequiredSegmentsEntryException.
 					MustNotDeleteSegmentsEntryReferencedBySegmentsExperiences(
 						segmentsEntry.getSegmentsEntryId());

@@ -139,9 +139,11 @@ public class SharingEntryLocalServiceImpl
 
 		_validateExpirationDate(expirationDate);
 
-		if (sharingEntryPersistence.fetchByTU_C_C(
-				toUserId, classNameId, classPK) != null) {
+		SharingEntry existingSharingEntry =
+			sharingEntryPersistence.fetchByTU_C_C(
+				toUserId, classNameId, classPK);
 
+		if (existingSharingEntry != null) {
 			throw new DuplicateSharingEntryException(
 				StringBundler.concat(
 					"A sharing entry already exists for user ", toUserId,

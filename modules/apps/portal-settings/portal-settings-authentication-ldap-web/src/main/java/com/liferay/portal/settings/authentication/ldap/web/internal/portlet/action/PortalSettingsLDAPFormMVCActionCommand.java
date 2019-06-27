@@ -194,10 +194,12 @@ public class PortalSettingsLDAPFormMVCActionCommand
 			Stream<Dictionary<String, Object>> stream = dictionaries.stream();
 
 			stream.filter(
-				dictionary ->
-					GetterUtil.getLong(
-						dictionary.get(LDAPConstants.LDAP_SERVER_ID)) ==
-							ldapServerId
+				dictionary -> {
+					long dictionaryLDAPServerId = GetterUtil.getLong(
+						dictionary.get(LDAPConstants.LDAP_SERVER_ID));
+
+					return dictionaryLDAPServerId == ldapServerId;
+				}
 			).findFirst(
 			).ifPresent(
 				dictionary -> {

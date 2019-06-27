@@ -463,10 +463,11 @@ public class GroupServiceTest {
 
 		long companyId = group1.getCompanyId();
 
-		String defaultNewGroupFriendlyURL =
-			StringPool.SLASH +
-				_friendlyURLNormalizer.normalize(
-					group1.getName(LocaleUtil.getDefault()));
+		String defaultNewGroupFriendlyURL = _friendlyURLNormalizer.normalize(
+			group1.getName(LocaleUtil.getDefault()));
+
+		defaultNewGroupFriendlyURL =
+			StringPool.SLASH + defaultNewGroupFriendlyURL;
 
 		Assert.assertNotNull(
 			_groupLocalService.fetchFriendlyURLGroup(

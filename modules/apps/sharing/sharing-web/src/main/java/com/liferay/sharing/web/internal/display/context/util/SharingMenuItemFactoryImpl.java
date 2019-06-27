@@ -57,11 +57,12 @@ public class SharingMenuItemFactoryImpl
 
 		DropdownItem dropdownItem = new DropdownItem();
 
-		dropdownItem.setHref(
-			"javascript:" +
-				_sharingJavaScriptFactory.
-					createManageCollaboratorsOnClickMethod(
-						className, classPK, httpServletRequest));
+		String manageCollaboratorsOnClickMethod =
+			_sharingJavaScriptFactory.createManageCollaboratorsOnClickMethod(
+				className, classPK, httpServletRequest);
+
+		dropdownItem.setHref("javascript:" + manageCollaboratorsOnClickMethod);
+
 		dropdownItem.setLabel(
 			_getManageCollaboratorsLabel(httpServletRequest.getLocale()));
 
@@ -113,10 +114,12 @@ public class SharingMenuItemFactoryImpl
 
 		DropdownItem dropdownItem = new DropdownItem();
 
-		dropdownItem.setHref(
-			"javascript:" +
-				_sharingJavaScriptFactory.createSharingOnClickMethod(
-					className, classPK, httpServletRequest));
+		String sharingOnClickMethod =
+			_sharingJavaScriptFactory.createSharingOnClickMethod(
+				className, classPK, httpServletRequest);
+
+		dropdownItem.setHref("javascript:" + sharingOnClickMethod);
+
 		dropdownItem.setLabel(_getSharingLabel(httpServletRequest.getLocale()));
 
 		return dropdownItem;

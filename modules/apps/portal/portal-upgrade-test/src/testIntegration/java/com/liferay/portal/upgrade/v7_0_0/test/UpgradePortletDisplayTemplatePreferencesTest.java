@@ -69,11 +69,12 @@ public class UpgradePortletDisplayTemplatePreferencesTest {
 
 		_layout = LayoutTestUtil.addLayout(_group);
 
+		String displayStylePrefix62 = ReflectionTestUtil.getFieldValue(
+			UpgradePortletDisplayTemplatePreferences.class,
+			"DISPLAY_STYLE_PREFIX_6_2");
+
 		setPortletDisplayStyle(
-			"portlet1",
-			ReflectionTestUtil.getFieldValue(
-				UpgradePortletDisplayTemplatePreferences.class,
-				"DISPLAY_STYLE_PREFIX_6_2") + ddmTemplate.getUuid());
+			"portlet1", displayStylePrefix62 + ddmTemplate.getUuid());
 
 		setPortletDisplayStyle("portlet2", "testDisplayStyle");
 

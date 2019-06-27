@@ -65,38 +65,12 @@ public class ProjectTemplatesSpringPortletMVCTest {
 	public static Iterable<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{"springportletmvc", "embedded", "jsp", "7.0"},
 				{"springportletmvc", "embedded", "jsp", "7.1"},
 				{"springportletmvc", "embedded", "jsp", "7.2"},
-				{"springportletmvc", "embedded", "jsp", "7.3"},
-				{"springportletmvc", "provided", "jsp", "7.0"},
-				{"springportletmvc", "provided", "jsp", "7.1"},
-				{"springportletmvc", "provided", "jsp", "7.2"},
-				{"springportletmvc", "provided", "jsp", "7.3"},
-				{"springportletmvc", "embedded", "thymeleaf", "7.0"},
-				{"springportletmvc", "embedded", "thymeleaf", "7.1"},
-				{"springportletmvc", "embedded", "thymeleaf", "7.2"},
-				{"springportletmvc", "embedded", "thymeleaf", "7.3"},
-				{"springportletmvc", "provided", "thymeleaf", "7.0"},
-				{"springportletmvc", "provided", "thymeleaf", "7.1"},
-				{"springportletmvc", "provided", "thymeleaf", "7.2"},
-				{"springportletmvc", "provided", "thymeleaf", "7.3"},
-				{"portletmvc4spring", "embedded", "jsp", "7.0"},
 				{"portletmvc4spring", "embedded", "jsp", "7.1"},
 				{"portletmvc4spring", "embedded", "jsp", "7.2"},
-				{"portletmvc4spring", "embedded", "jsp", "7.3"},
-				{"portletmvc4spring", "provided", "jsp", "7.0"},
-				{"portletmvc4spring", "provided", "jsp", "7.1"},
-				{"portletmvc4spring", "provided", "jsp", "7.2"},
-				{"portletmvc4spring", "provided", "jsp", "7.3"},
-				{"portletmvc4spring", "embedded", "thymeleaf", "7.0"},
 				{"portletmvc4spring", "embedded", "thymeleaf", "7.1"},
-				{"portletmvc4spring", "embedded", "thymeleaf", "7.2"},
-				{"portletmvc4spring", "embedded", "thymeleaf", "7.3"},
-				{"portletmvc4spring", "provided", "thymeleaf", "7.0"},
-				{"portletmvc4spring", "provided", "thymeleaf", "7.1"},
-				{"portletmvc4spring", "provided", "thymeleaf", "7.2"},
-				{"portletmvc4spring", "provided", "thymeleaf", "7.3"}
+				{"portletmvc4spring", "embedded", "thymeleaf", "7.2"}
 			});
 	}
 
@@ -149,19 +123,21 @@ public class ProjectTemplatesSpringPortletMVCTest {
 			gradleProjectDir,
 			"src/main/java/com/test/controller/UserController.java");
 
-		if (_framework.equals("springportletmvc")) {
-			ProjectTemplatesTestUtil.testContains(
-				gradleProjectDir,
-				"src/main/webapp/WEB-INF/spring-context" +
-					"/portlet-application-context.xml",
-				"org.springframework.web.servlet.view.JstlView");
-		}
-		else if (_framework.equals("portletmvc4spring")) {
-			ProjectTemplatesTestUtil.testContains(
-				gradleProjectDir,
-				"src/main/webapp/WEB-INF/spring-context" +
-					"/portlet-application-context.xml",
-				"com.liferay.portletmvc4spring.PortletJstlView");
+		if (_viewType.equals("jsp")) {
+			if ( _framework.equals("springportletmvc")) {
+				ProjectTemplatesTestUtil.testContains(
+					gradleProjectDir,
+					"src/main/webapp/WEB-INF/spring-context" +
+						"/portlet-application-context.xml",
+					"org.springframework.web.servlet.view.JstlView");
+			}
+			else {
+				ProjectTemplatesTestUtil.testContains(
+					gradleProjectDir,
+					"src/main/webapp/WEB-INF/spring-context" +
+						"/portlet-application-context.xml",
+					"com.liferay.portletmvc4spring.PortletJstlView");
+			}
 		}
 
 		if (_viewType.equals("jsp")) {

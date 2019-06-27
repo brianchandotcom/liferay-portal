@@ -60,6 +60,7 @@ public interface CTPreferencesLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CTPreferencesLocalServiceUtil} to access the ct preferences local service. Add custom service methods to <code>com.liferay.change.tracking.service.impl.CTPreferencesLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CTPreferences addCTPreference(long companyId, long userId);
 
 	/**
 	 * Adds the ct preferences to the database. Also notifies the appropriate model listeners.
@@ -176,6 +177,9 @@ public interface CTPreferencesLocalService
 	public CTPreferences fetchCTPreferences(long ctPreferencesId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CTPreferences fetchCTPreferences(long companyId, long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -188,6 +192,9 @@ public interface CTPreferencesLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CTPreferences getCTPreferences(long ctPreferencesId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CTPreferences getCTPreferences(long companyId, long userId);
 
 	/**
 	 * Returns a range of all the ct preferenceses.

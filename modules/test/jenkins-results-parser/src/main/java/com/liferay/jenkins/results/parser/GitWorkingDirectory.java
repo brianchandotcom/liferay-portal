@@ -2131,8 +2131,7 @@ public class GitWorkingDirectory {
 
 		RemoteGitRepository remoteGitRepository =
 			GitRepositoryFactory.getRemoteGitRepository(
-				"github.com", publicGitRepositoryName,
-				gitRemote.getUsername());
+				"github.com", publicGitRepositoryName, gitRemote.getUsername());
 
 		addGitRemote(true, "upstream-temp", remoteGitRepository.getRemoteURL());
 	}

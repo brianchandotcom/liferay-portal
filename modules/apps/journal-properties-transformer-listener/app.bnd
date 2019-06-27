@@ -1,4 +1,4 @@
-Liferay-Releng-App-Description: The Journal Properties Transformer Listener app is an example of a journal transformer listener app.
+Liferay-Releng-App-Description: %liferay-releng-app-description
 Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Journal Properties Transformer Listener
 Liferay-Releng-Bundle: false
 Liferay-Releng-Category: Utility

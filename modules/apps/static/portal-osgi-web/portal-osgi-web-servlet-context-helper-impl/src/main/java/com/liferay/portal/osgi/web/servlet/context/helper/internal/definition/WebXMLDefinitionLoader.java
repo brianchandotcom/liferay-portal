@@ -485,12 +485,14 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 		Collection<String> classResources = bundleWiring.listResources(
 			"/", "*.class", BundleWiring.LISTRESOURCES_RECURSE);
 
+		ClassLoader classLoader = bundleWiring.getClassLoader();
+
 		if (classResources == null) {
 			classResources = new ArrayList<>(0);
 		}
 
 		_collectAnnotatedClasses(
-			annotationWebXMLDefinition, _bundle, classResources);
+			annotationWebXMLDefinition, classLoader, classResources);
 
 		webXMLDefinitions.add(annotationWebXMLDefinition);
 
@@ -930,25 +932,20 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 	}
 
 	private void _collectAnnotatedClasses(
-			WebXMLDefinition webXMLDefinition, Bundle bundle,
+			WebXMLDefinition webXMLDefinition, ClassLoader classLoader,
 			Collection<String> classResources)
 		throws Exception {
 
 		for (String classResource : classResources) {
-			_collectAnnotatedClasses(webXMLDefinition, bundle, classResource);
+			_collectAnnotatedClasses(
+				webXMLDefinition, classLoader, classResource);
 		}
 	}
 
 	private void _collectAnnotatedClasses(
-			WebXMLDefinition webXMLDefinition, Bundle bundle,
+			WebXMLDefinition webXMLDefinition, ClassLoader classLoader,
 			String classResource)
 		throws Exception {
-
-		URL url = _bundle.getResource(classResource);
-
-		if (url == null) {
-			return;
-		}
 
 		String className = classResource.substring(
 			0, classResource.length() - 6);
@@ -958,7 +955,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 		Class<?> clazz = null;
 
 		try {
-			clazz = bundle.loadClass(className);
+			clazz = classLoader.loadClass(className);
 		}
 		catch (Throwable t) {
 			if (_log.isDebugEnabled()) {

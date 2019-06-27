@@ -242,8 +242,8 @@ public class WabBundleProcessor {
 	}
 
 	protected void collectAnnotatedClasses(
-		String classResource, Bundle bundle, Class<?>[] handledTypesArray,
-		Set<Class<?>> annotatedClasses) {
+		String classResource, ClassLoader classLoader,
+		Class<?>[] handledTypesArray, Set<Class<?>> annotatedClasses) {
 
 		String className = classResource.substring(
 			0, classResource.length() - 6);
@@ -253,7 +253,7 @@ public class WabBundleProcessor {
 		Class<?> annotatedClass = null;
 
 		try {
-			annotatedClass = bundle.loadClass(className);
+			annotatedClass = classLoader.loadClass(className);
 		}
 		catch (Throwable t) {
 			if (_log.isDebugEnabled()) {
@@ -796,6 +796,8 @@ public class WabBundleProcessor {
 		Collection<String> classResources = bundleWiring.listResources(
 			"/", "*.class", BundleWiring.LISTRESOURCES_RECURSE);
 
+		ClassLoader classLoader = bundleWiring.getClassLoader();
+
 		if (classResources == null) {
 			classResources = new ArrayList<>(0);
 		}
@@ -803,14 +805,9 @@ public class WabBundleProcessor {
 		Set<Class<?>> annotatedClasses = new HashSet<>();
 
 		for (String classResource : classResources) {
-			URL urlClassResource = bundle.getResource(classResource);
-
-			if (urlClassResource == null) {
-				continue;
-			}
-
 			collectAnnotatedClasses(
-				classResource, bundle, handledTypesArray, annotatedClasses);
+				classResource, classLoader, handledTypesArray,
+				annotatedClasses);
 		}
 
 		if (annotatedClasses.isEmpty()) {

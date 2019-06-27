@@ -75,10 +75,10 @@ public class CheckstyleLogger extends DefaultLogger {
 		Path relativizedPath = baseDirPath.relativize(
 			_getAbsoluteNormalizedPath(auditEvent.getFileName()));
 
-		return _baseDirName +
-			StringUtil.replace(
-				relativizedPath.toString(), CharPool.BACK_SLASH,
-				CharPool.SLASH);
+		String relativizedPathString = StringUtil.replace(
+			relativizedPath.toString(), CharPool.BACK_SLASH, CharPool.SLASH);
+
+		return _baseDirName + relativizedPathString;
 	}
 
 	private Path _getAbsoluteNormalizedPath(String pathName) {

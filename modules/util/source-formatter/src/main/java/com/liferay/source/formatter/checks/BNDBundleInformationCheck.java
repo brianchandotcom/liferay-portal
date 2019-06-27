@@ -97,10 +97,10 @@ public class BNDBundleInformationCheck extends BaseFileCheck {
 			content, "Bundle-SymbolicName");
 
 		if (bundleSymbolicName != null) {
-			String expectedBundleSymbolicName =
-				"com.liferay." +
-					StringUtil.replace(
-						moduleName, CharPool.DASH, CharPool.PERIOD);
+			moduleName = StringUtil.replace(
+				moduleName, CharPool.DASH, CharPool.PERIOD);
+
+			String expectedBundleSymbolicName = "com.liferay." + moduleName;
 
 			if (!bundleSymbolicName.equals(expectedBundleSymbolicName)) {
 				addMessage(

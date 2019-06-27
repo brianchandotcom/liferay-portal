@@ -156,9 +156,10 @@ public class JavaClassParser {
 					return null;
 				}
 
-				if (ToolsUtil.getLevel(
-						content.substring(start, x + 1), "<", ">") == 0) {
+				int level = ToolsUtil.getLevel(
+					content.substring(start, x + 1), "<", ">");
 
+				if (level == 0) {
 					break;
 				}
 			}

@@ -14,7 +14,7 @@
 
 package com.liferay.talend.connection;
 
-import com.liferay.talend.resource.LiferayResourceProperties;
+import com.liferay.talend.resource.BaseLiferayResourceProperties;
 
 import org.apache.avro.Schema;
 
@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
 import org.talend.components.api.component.Connector;
 import org.talend.components.api.component.PropertyPathConnector;
 import org.talend.components.common.FixedConnectorsComponentProperties;
-import org.talend.components.common.SchemaProperties;
 import org.talend.daikon.properties.presentation.Form;
 
 /**
@@ -135,12 +134,10 @@ public abstract class LiferayConnectionResourceBaseProperties
 
 	public LiferayConnectionProperties connection =
 		new LiferayConnectionProperties("connection");
-	public LiferayResourceProperties resource;
+	public BaseLiferayResourceProperties resource;
 
 	protected transient PropertyPathConnector mainConnector =
 		new PropertyPathConnector(Connector.MAIN_NAME, "resource.main");
-	protected transient Schema temporaryMainSchema =
-		SchemaProperties.EMPTY_SCHEMA;
 
 	private static final Logger _log = LoggerFactory.getLogger(
 		LiferayConnectionResourceBaseProperties.class);

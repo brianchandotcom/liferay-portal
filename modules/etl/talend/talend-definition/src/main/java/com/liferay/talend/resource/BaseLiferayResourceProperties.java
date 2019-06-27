@@ -14,17 +14,13 @@
 
 package com.liferay.talend.resource;
 
-import static org.talend.daikon.properties.presentation.Widget.widget;
-
 import com.liferay.talend.LiferayBaseComponentDefinition;
 import com.liferay.talend.common.oas.OASParameter;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
-import com.liferay.talend.properties.ExceptionUtils;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
-
-import java.io.IOException;
+import com.liferay.talend.tliferayoutput.Action;
 
 import java.net.URI;
 
@@ -32,14 +28,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.UriBuilder;
-
-import org.apache.avro.Schema;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,26 +39,22 @@ import org.slf4j.LoggerFactory;
 import org.talend.components.api.component.ISchemaListener;
 import org.talend.components.api.properties.ComponentPropertiesImpl;
 import org.talend.components.common.SchemaProperties;
-import org.talend.daikon.NamedThing;
-import org.talend.daikon.SimpleNamedThing;
-import org.talend.daikon.exception.TalendRuntimeException;
-import org.talend.daikon.i18n.GlobalI18N;
-import org.talend.daikon.i18n.I18nMessageProvider;
-import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.ValidationResultMutable;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
+import org.talend.daikon.properties.property.Property;
+import org.talend.daikon.properties.property.PropertyFactory;
 import org.talend.daikon.properties.property.StringProperty;
 
 /**
- * @author Zoltán Takács
+ * @author Ivica Cardic
  */
-public class LiferayResourceProperties
+public abstract class BaseLiferayResourceProperties
 	extends ComponentPropertiesImpl
 	implements LiferayConnectionPropertiesProvider {
 
-	public LiferayResourceProperties(String name) {
+	public BaseLiferayResourceProperties(String name) {
 		super(name);
 	}
 
@@ -91,84 +79,8 @@ public class LiferayResourceProperties
 		LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
 			validatedSoSSandboxRuntime.getLiferaySourceOrSinkRuntime();
 
-		try {
-			Schema endpointSchema =
-				liferaySourceOrSinkRuntime.getEndpointSchema(
-					endpoint.getValue(), HttpMethod.GET);
-
-			main.schema.setValue(endpointSchema);
-		}
-		catch (IOException | TalendRuntimeException e) {
-			validationResultMutable.setMessage(
-				i18nMessages.getMessage("error.validation.schema"));
-			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
-
-			_log.error("Unable to generate schema", e);
-		}
-
-		if (validationResultMutable.getStatus() ==
-				ValidationResult.Result.ERROR) {
-
-			endpoint.setValue(null);
-		}
-
-		populateParametersTable(liferaySourceOrSinkRuntime);
-
-		refreshLayout(getForm(Form.REFERENCE));
-
-		return validationResultMutable;
-	}
-
-	public void afterParametersTable() {
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Parameters: " + parametersTable.valueColumnName.getValue());
-		}
-	}
-
-	public ValidationResult beforeEndpoint() throws Exception {
-		ValidatedSoSSandboxRuntime validatedSoSSandboxRuntime =
-			LiferayBaseComponentDefinition.initializeSandboxedRuntime(
-				getEffectiveLiferayConnectionProperties());
-
-		ValidationResultMutable validationResultMutable =
-			validatedSoSSandboxRuntime.getValidationResultMutable();
-
-		if (validationResultMutable.getStatus() ==
-				ValidationResult.Result.ERROR) {
-
-			return validationResultMutable;
-		}
-
-		LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
-			validatedSoSSandboxRuntime.getLiferaySourceOrSinkRuntime();
-
-		try {
-			Set<String> endpoints = liferaySourceOrSinkRuntime.getEndpointList(
-				HttpMethod.GET);
-
-			if (endpoints.isEmpty()) {
-				validationResultMutable.setMessage(
-					i18nMessages.getMessage("error.validation.resources"));
-				validationResultMutable.setStatus(
-					ValidationResult.Result.ERROR);
-
-				return validationResultMutable;
-			}
-
-			List<NamedThing> endpointsNamedThing = new ArrayList<>();
-
-			endpoints.forEach(
-				endpoint -> endpointsNamedThing.add(
-					new SimpleNamedThing(endpoint, endpoint)));
-
-			endpoint.setPossibleNamedThingValues(endpointsNamedThing);
-		}
-		catch (Exception e) {
-			return ExceptionUtils.exceptionToValidationResult(e);
-		}
-
-		return null;
+		return doAfterEndpoint(
+			liferaySourceOrSinkRuntime, validationResultMutable);
 	}
 
 	public URI getEndpointURI() {
@@ -261,9 +173,15 @@ public class LiferayResourceProperties
 
 	};
 
+	public Property<Action> operations = PropertyFactory.newEnum(
+		"operations", Action.class);
 	public ParametersTable parametersTable = new ParametersTable(
 		"parametersTable");
 	public ISchemaListener schemaListener;
+
+	protected abstract ValidationResult doAfterEndpoint(
+		LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime,
+		ValidationResultMutable validationResultMutable);
 
 	protected LiferayConnectionProperties
 		getEffectiveLiferayConnectionProperties() {
@@ -303,8 +221,8 @@ public class LiferayResourceProperties
 	}
 
 	protected void populateParametersTable(
-			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime)
-		throws IOException {
+		LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime,
+		String httpMethod) {
 
 		List<String> parameterNames = new ArrayList<>();
 		List<String> parameterValues = new ArrayList<>();
@@ -312,7 +230,7 @@ public class LiferayResourceProperties
 
 		List<OASParameter> oasParameters =
 			liferaySourceOrSinkRuntime.getParameters(
-				endpoint.getValue(), HttpMethod.GET);
+				endpoint.getValue(), httpMethod);
 
 		if (oasParameters.isEmpty()) {
 			parametersTable.columnName.setValue(Collections.emptyList());
@@ -354,16 +272,6 @@ public class LiferayResourceProperties
 		}
 	}
 
-	protected static final I18nMessages i18nMessages;
-
-	static {
-		I18nMessageProvider i18nMessageProvider =
-			GlobalI18N.getI18nMessageProvider();
-
-		i18nMessages = i18nMessageProvider.getI18nMessages(
-			LiferayResourceProperties.class);
-	}
-
 	private void _setupReferenceForm() {
 		Form referenceForm = Form.create(this, Form.REFERENCE);
 
@@ -378,17 +286,13 @@ public class LiferayResourceProperties
 
 		referenceForm.addRow(main.getForm(Form.REFERENCE));
 
-		Widget parametersTableWidget = widget(parametersTable);
+		Widget parametersTableWidget = Widget.widget(parametersTable);
 
 		referenceForm.addRow(
 			parametersTableWidget.setWidgetType(Widget.TABLE_WIDGET_TYPE));
-
-		refreshLayout(referenceForm);
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(
-		LiferayResourceProperties.class);
-
-	private static final long serialVersionUID = 6834821457406101745L;
+		BaseLiferayResourceProperties.class);
 
 }

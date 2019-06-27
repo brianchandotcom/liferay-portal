@@ -1,4 +1,4 @@
-Liferay-Releng-App-Description: The ${liferay.releng.app.title.prefix} Connector to X-Pack Monitoring [Elastic Stack 6.x] monitors your Elasticsearch cluster in real time by providing a view of the Kibana Monitoring UI through a Liferay DXP instance.<br />According to Elastic's website, "From the Kibana Monitoring UI, you can spot issues at a glance and delve into the system behavior over time to diagnose operational issues."<br />You must install Kibana before using the Liferay X-pack Monitoring Integration plugin. You can find more information about Monitoring Elasticsearch at https://www.elastic.co/guide/en/elastic-stack-overview/6.5/xpack-monitoring.html.
+Liferay-Releng-App-Description: %liferay-releng-app-description
 Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Connector to X-Pack Monitoring [Elastic Stack 6.x]
 Liferay-Releng-Bundle: false
 Liferay-Releng-Category: Utility

@@ -52,9 +52,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
@@ -221,16 +218,7 @@ public class CTEngineManagerImpl implements CTEngineManager {
 		try {
 			ChangeTrackingThreadLocal.setModelUpdateInProgress(true);
 
-			TransactionInvokerUtil.invoke(
-				_transactionConfig,
-				() -> {
-					_enableChangeTracking(userId);
-
-					return null;
-				});
-		}
-		catch (Throwable t) {
-			_log.error("Unable to enable change tracking", t);
+			_ctPreferencesLocalService.getCTPreferences(companyId, 0);
 		}
 		finally {
 			ChangeTrackingThreadLocal.setModelUpdateInProgress(false);
@@ -536,10 +524,8 @@ public class CTEngineManagerImpl implements CTEngineManager {
 		CTCollection ctCollection = null;
 
 		try {
-			ctCollection = TransactionInvokerUtil.invoke(
-				_transactionConfig,
-				() -> _ctCollectionLocalService.addCTCollection(
-					userId, name, description, new ServiceContext()));
+			ctCollection = _ctCollectionLocalService.addCTCollection(
+				userId, name, description, new ServiceContext());
 		}
 		catch (CTCollectionDescriptionException ctcde) {
 			throw new CTCollectionDescriptionCTEngineException(
@@ -556,14 +542,6 @@ public class CTEngineManagerImpl implements CTEngineManager {
 		}
 
 		return Optional.ofNullable(ctCollection);
-	}
-
-	private void _enableChangeTracking(long userId) {
-		long companyId = _getCompanyId(userId);
-
-		_ctPreferencesLocalService.getCTPreferences(companyId, 0);
-
-		checkoutCTCollection(userId, CTConstants.CT_COLLECTION_ID_PRODUCTION);
 	}
 
 	private long _getCompanyId(long userId) {
@@ -649,9 +627,6 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 	private final Map<Long, CTCollection> _productionCTCollections =
 		new ConcurrentHashMap<>();
-	private final TransactionConfig _transactionConfig =
-		TransactionConfig.Factory.create(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private UserLocalService _userLocalService;

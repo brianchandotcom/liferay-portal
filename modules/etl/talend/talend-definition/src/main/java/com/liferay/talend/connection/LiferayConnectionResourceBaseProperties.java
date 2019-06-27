@@ -28,6 +28,7 @@ import org.talend.daikon.properties.presentation.Form;
 
 /**
  * @author Zoltán Takács
+ * @author Ivica Cardic
  */
 public abstract class LiferayConnectionResourceBaseProperties
 	extends FixedConnectorsComponentProperties
@@ -119,17 +120,6 @@ public abstract class LiferayConnectionResourceBaseProperties
 		advancedForm.addRow(connection.getForm(Form.ADVANCED));
 
 		refreshLayout(mainForm);
-	}
-
-	@Override
-	public void setupProperties() {
-		super.setupProperties();
-
-		resource = new LiferayResourceProperties("resource");
-
-		resource.connection = connection;
-
-		resource.setupProperties();
 	}
 
 	public LiferayConnectionProperties connection =

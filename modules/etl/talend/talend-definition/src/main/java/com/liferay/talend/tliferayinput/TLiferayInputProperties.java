@@ -15,6 +15,7 @@
 package com.liferay.talend.tliferayinput;
 
 import com.liferay.talend.connection.LiferayConnectionResourceBaseProperties;
+import com.liferay.talend.resource.LiferayInputResourceProperties;
 
 import java.util.Collections;
 import java.util.Set;
@@ -23,12 +24,24 @@ import org.talend.components.api.component.PropertyPathConnector;
 
 /**
  * @author Zoltán Takács
+ * @author Ivica Cardic
  */
 public class TLiferayInputProperties
 	extends LiferayConnectionResourceBaseProperties {
 
 	public TLiferayInputProperties(String name) {
 		super(name);
+	}
+
+	@Override
+	public void setupProperties() {
+		super.setupProperties();
+
+		resource = new LiferayInputResourceProperties("resource");
+
+		resource.connection = connection;
+
+		resource.setupProperties();
 	}
 
 	@Override

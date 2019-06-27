@@ -118,7 +118,7 @@ class DocumentLibrary extends Component {
 		return portletURL.toString();
 	}
 
-	_handleClearButtonClicked(event) {
+	_handleClearButtonClicked() {
 		this.setState({
 			value: ''
 		});
@@ -145,7 +145,7 @@ class DocumentLibrary extends Component {
 		}
 	}
 
-	_handleSelectButtonClicked(event) {
+	_handleSelectButtonClicked() {
 		var {A, portletNamespace} = this;
 
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog({

@@ -19,7 +19,8 @@ package com.liferay.asset.list.constants;
  */
 public class AssetListWebKeys {
 
-	public static final String ASSET_LIST_HELPER = "ASSET_LIST_HELPER";
+	public static final String ASSET_LIST_ASSET_ENTRY_PROVIDER =
+		"ASSET_LIST_ASSET_ENTRY_PROVIDER";
 
 	public static final String DDM_INDEXER = "DDM_INDEXER";
 

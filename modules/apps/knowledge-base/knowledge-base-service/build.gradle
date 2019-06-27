@@ -29,7 +29,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":core:registry-api")
 
-	testCompile group: "easyconf", name: "easyconf", version: "0.9.5"
 	testCompile group: "org.apache.tika", name: "tika-core", version: "1.14"
 	testCompile group: "org.mockito", name: "mockito-core", version: "1.10.8"
 	testCompile group: "org.pegdown", name: "pegdown", version: "1.1.0"

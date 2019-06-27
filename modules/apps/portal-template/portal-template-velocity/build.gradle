@@ -18,7 +18,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 
 	testCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
-	testCompile group: "easyconf", name: "easyconf", version: "0.9.5"
 	testCompile group: "org.apache.tika", name: "tika-core", version: "1.14"
 	testCompile project(":core:petra:petra-concurrent")
 	testCompile project(":core:petra:petra-memory")

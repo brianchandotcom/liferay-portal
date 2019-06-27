@@ -902,7 +902,7 @@ definition {
 	macro selectAllCP {
 		PortletEntry.selectAll();
 
-		AssertElementPresent(locator1 = "Button#DELETE");
+		AssertElementPresent(locator1 = "Icon#DELETE");
 	}
 
 	macro selectArticleCP {

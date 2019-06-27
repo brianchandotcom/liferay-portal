@@ -14,6 +14,7 @@
 
 package com.liferay.portal.osgi.web.servlet.context.helper.internal;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -26,8 +27,12 @@ import com.liferay.portal.osgi.web.servlet.context.helper.internal.definition.We
 
 import java.net.URL;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.Servlet;
@@ -40,6 +45,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 
@@ -66,9 +72,37 @@ public class ServletContextHelperRegistrationImpl
 		if (url != null) {
 			_wabShapedBundle = true;
 
+			BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
+
+			Collection<String> classResources = bundleWiring.listResources(
+				"/", "*.class", BundleWiring.LISTRESOURCES_RECURSE);
+
+			if (classResources == null) {
+				_classes = Collections.emptyList();
+			}
+			else {
+				ClassLoader classLoader = bundleWiring.getClassLoader();
+
+				_classes = new ArrayList<>();
+
+				for (String classResource : classResources) {
+					String className = classResource.substring(
+						0, classResource.length() - 6);
+
+					className = className.replace(
+						CharPool.SLASH, CharPool.PERIOD);
+
+					try {
+						_classes.add(classLoader.loadClass(className));
+					}
+					catch (Throwable t) {
+					}
+				}
+			}
+
 			WebXMLDefinitionLoader webXMLDefinitionLoader =
 				new WebXMLDefinitionLoader(
-					_bundle, _jspServletFactory, saxParserFactory);
+					_bundle, _jspServletFactory, saxParserFactory, _classes);
 
 			WebXMLDefinition webXMLDefinition = null;
 
@@ -87,6 +121,8 @@ public class ServletContextHelperRegistrationImpl
 			_wabShapedBundle = false;
 
 			_webXMLDefinition = new WebXMLDefinition();
+
+			_classes = Collections.emptyList();
 		}
 
 		_bundleContext = _bundle.getBundleContext();
@@ -166,6 +202,11 @@ public class ServletContextHelperRegistrationImpl
 
 			}
 		}
+	}
+
+	@Override
+	public List<Class<?>> getClasses() {
+		return _classes;
 	}
 
 	@Override
@@ -405,6 +446,7 @@ public class ServletContextHelperRegistrationImpl
 
 	private final Bundle _bundle;
 	private final BundleContext _bundleContext;
+	private final List<Class<?>> _classes;
 	private final CustomServletContextHelper _customServletContextHelper;
 	private final ServiceRegistration<?> _defaultServletServiceRegistration;
 	private final JSPServletFactory _jspServletFactory;

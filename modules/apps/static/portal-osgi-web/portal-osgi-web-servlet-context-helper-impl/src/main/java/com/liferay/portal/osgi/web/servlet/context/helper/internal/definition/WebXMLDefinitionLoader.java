@@ -14,7 +14,6 @@
 
 package com.liferay.portal.osgi.web.servlet.context.helper.internal.definition;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,7 +38,6 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.EnumMap;
 import java.util.Enumeration;
 import java.util.EventListener;
@@ -61,7 +59,6 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.wiring.BundleWiring;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -77,13 +74,14 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 	public WebXMLDefinitionLoader(
 		Bundle bundle, JSPServletFactory jspServletFactory,
-		SAXParserFactory saxParserFactory) {
+		SAXParserFactory saxParserFactory, List<Class<?>> classes) {
 
 		_bundle = bundle;
 		_jspServletFactory = jspServletFactory;
 		_saxParserFactory = saxParserFactory;
 
 		_webXMLDefinition = new WebXMLDefinition();
+		_classes = classes;
 	}
 
 	@Override
@@ -471,28 +469,17 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 				WebXMLDefinitionLoader webXMLDefinitionLoader =
 					new WebXMLDefinitionLoader(
-						_bundle, _jspServletFactory, _saxParserFactory);
+						_bundle, _jspServletFactory, _saxParserFactory,
+						_classes);
 
 				webXMLDefinitions.add(
 					webXMLDefinitionLoader.loadWebXMLDefinition(url));
 			}
 		}
 
-		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
-
 		WebXMLDefinition annotationWebXMLDefinition = new WebXMLDefinition();
 
-		Collection<String> classResources = bundleWiring.listResources(
-			"/", "*.class", BundleWiring.LISTRESOURCES_RECURSE);
-
-		ClassLoader classLoader = bundleWiring.getClassLoader();
-
-		if (classResources == null) {
-			classResources = new ArrayList<>(0);
-		}
-
-		_collectAnnotatedClasses(
-			annotationWebXMLDefinition, classLoader, classResources);
+		_collectAnnotatedClasses(annotationWebXMLDefinition);
 
 		webXMLDefinitions.add(annotationWebXMLDefinition);
 
@@ -931,39 +918,14 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 		return assembledWebXMLDefinition;
 	}
 
-	private void _collectAnnotatedClasses(
-			WebXMLDefinition webXMLDefinition, ClassLoader classLoader,
-			Collection<String> classResources)
-		throws Exception {
-
-		for (String classResource : classResources) {
-			_collectAnnotatedClasses(
-				webXMLDefinition, classLoader, classResource);
+	private void _collectAnnotatedClasses(WebXMLDefinition webXMLDefinition) {
+		for (Class<?> clazz : _classes) {
+			_collectAnnotatedClasses(webXMLDefinition, clazz);
 		}
 	}
 
 	private void _collectAnnotatedClasses(
-			WebXMLDefinition webXMLDefinition, ClassLoader classLoader,
-			String classResource)
-		throws Exception {
-
-		String className = classResource.substring(
-			0, classResource.length() - 6);
-
-		className = className.replace(CharPool.SLASH, CharPool.PERIOD);
-
-		Class<?> clazz = null;
-
-		try {
-			clazz = classLoader.loadClass(className);
-		}
-		catch (Throwable t) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(t.getMessage());
-			}
-
-			return;
-		}
+		WebXMLDefinition webXMLDefinition, Class<?> clazz) {
 
 		WebServlet webServlet = null;
 
@@ -1174,6 +1136,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 	private boolean _before;
 	private String _beforeName;
 	private final Bundle _bundle;
+	private final List<Class<?>> _classes;
 	private FilterDefinition _filterDefinition;
 	private FilterMapping _filterMapping;
 	private JSPConfig _jspConfig;

@@ -14,7 +14,7 @@
 
 package com.liferay.asset.info.display.contributor;
 
-import com.liferay.asset.info.display.model.util.AssetEntryInfoDisplayClassTypesHelperUtil;
+import com.liferay.asset.info.display.model.util.AssetEntryClassTypesInfoDisplayFieldsProviderUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
@@ -35,7 +35,7 @@ public interface AssetInfoDisplayContributor
 			long classTypeId, Locale locale)
 		throws PortalException {
 
-		return AssetEntryInfoDisplayClassTypesHelperUtil.
+		return AssetEntryClassTypesInfoDisplayFieldsProviderUtil.
 			getClassTypeInfoDisplayFields(getClassName(), classTypeId, locale);
 	}
 
@@ -43,7 +43,7 @@ public interface AssetInfoDisplayContributor
 	public default List<ClassType> getClassTypes(long groupId, Locale locale)
 		throws PortalException {
 
-		return AssetEntryInfoDisplayClassTypesHelperUtil.getClassTypes(
+		return AssetEntryClassTypesInfoDisplayFieldsProviderUtil.getClassTypes(
 			groupId, getClassName(), locale);
 	}
 

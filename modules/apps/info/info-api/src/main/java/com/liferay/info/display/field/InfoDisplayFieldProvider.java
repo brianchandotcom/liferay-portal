@@ -27,7 +27,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Jürgen Kappler
  */
 @ProviderType
-public interface InfoDisplayFieldHelper {
+public interface InfoDisplayFieldProvider {
 
 	public Set<InfoDisplayField> getContributorInfoDisplayFields(
 		Locale locale, String... classNames);

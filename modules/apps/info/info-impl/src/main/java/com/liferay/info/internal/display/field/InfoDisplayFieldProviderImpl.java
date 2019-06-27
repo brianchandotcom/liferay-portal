@@ -20,7 +20,7 @@ import com.liferay.info.display.contributor.field.InfoDisplayContributorField;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldTracker;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldType;
 import com.liferay.info.display.contributor.util.ExpandoInfoDisplayContributorFieldUtil;
-import com.liferay.info.display.field.InfoDisplayFieldHelper;
+import com.liferay.info.display.field.InfoDisplayFieldProvider;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.HashMap;
@@ -36,8 +36,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = InfoDisplayFieldHelper.class)
-public class InfoDisplayFieldHelperImpl implements InfoDisplayFieldHelper {
+@Component(immediate = true, service = InfoDisplayFieldProvider.class)
+public class InfoDisplayFieldProviderImpl implements InfoDisplayFieldProvider {
 
 	@Override
 	public Set<InfoDisplayField> getContributorInfoDisplayFields(

@@ -14,7 +14,7 @@
 
 package com.liferay.asset.info.display.internal.field;
 
-import com.liferay.asset.info.display.field.AssetEntryInfoDisplayFieldHelper;
+import com.liferay.asset.info.display.field.AssetEntryClassTypesInfoDisplayFieldsProvider;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
@@ -33,9 +33,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = AssetEntryInfoDisplayFieldHelper.class)
-public class AssetEntryInfoDisplayFieldHelperImpl
-	implements AssetEntryInfoDisplayFieldHelper {
+@Component(
+	immediate = true,
+	service = AssetEntryClassTypesInfoDisplayFieldsProvider.class
+)
+public class AssetEntryClassTypesInfoDisplayFieldsProviderImpl
+	implements AssetEntryClassTypesInfoDisplayFieldsProvider {
 
 	public Map<String, Object> getAssetEntryInfoDisplayFieldsValues(
 			String className, long classPK, Locale locale)

@@ -24,7 +24,7 @@ import java.util.Locale;
 /**
  * @author Jürgen Kappler
  */
-public interface AssetEntryInfoDisplayClassTypesHelper {
+public interface AssetEntryClassTypesInfoDisplayFieldsProvider {
 
 	public List<InfoDisplayField> getClassTypeInfoDisplayFields(
 			String className, long classTypeId, Locale locale)

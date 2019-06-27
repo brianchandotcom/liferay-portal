@@ -25,7 +25,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Jürgen Kappler
  */
 @ProviderType
-public interface AssetEntryInfoDisplayFieldHelper {
+public interface AssetEntryClassTypesInfoDisplayFieldsProvider {
 
 	public Map<String, Object> getAssetEntryInfoDisplayFieldsValues(
 			String className, long classPK, Locale locale)

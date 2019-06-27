@@ -14,14 +14,14 @@
 
 package com.liferay.blogs.web.internal.info.display.contributor;
 
-import com.liferay.asset.info.display.field.AssetEntryInfoDisplayFieldHelper;
+import com.liferay.asset.info.display.field.AssetEntryClassTypesInfoDisplayFieldsProvider;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayField;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
-import com.liferay.info.display.field.InfoDisplayFieldHelper;
+import com.liferay.info.display.field.InfoDisplayFieldProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.HashMap;
@@ -105,12 +105,13 @@ public class BlogsEntryInfoDisplayContributor
 	}
 
 	@Reference
-	private AssetEntryInfoDisplayFieldHelper _assetEntryInfoDisplayFieldHelper;
+	private AssetEntryClassTypesInfoDisplayFieldsProvider
+		_assetEntryInfoDisplayFieldHelper;
 
 	@Reference
 	private BlogsEntryService _blogsEntryService;
 
 	@Reference
-	private InfoDisplayFieldHelper _infoDisplayFieldHelper;
+	private InfoDisplayFieldProvider _infoDisplayFieldHelper;
 
 }

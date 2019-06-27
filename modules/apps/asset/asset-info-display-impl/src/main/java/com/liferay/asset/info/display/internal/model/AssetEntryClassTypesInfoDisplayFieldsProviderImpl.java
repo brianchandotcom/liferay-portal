@@ -14,7 +14,7 @@
 
 package com.liferay.asset.info.display.internal.model;
 
-import com.liferay.asset.info.display.model.AssetEntryInfoDisplayClassTypesHelper;
+import com.liferay.asset.info.display.model.AssetEntryClassTypesInfoDisplayFieldsProvider;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
@@ -37,10 +37,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(
-	immediate = true, service = AssetEntryInfoDisplayClassTypesHelper.class
+	immediate = true,
+	service = AssetEntryClassTypesInfoDisplayFieldsProvider.class
 )
-public class AssetEntryInfoDisplayClassTypesHelperImpl
-	implements AssetEntryInfoDisplayClassTypesHelper {
+public class AssetEntryClassTypesInfoDisplayFieldsProviderImpl
+	implements AssetEntryClassTypesInfoDisplayFieldsProvider {
 
 	@Override
 	public List<InfoDisplayField> getClassTypeInfoDisplayFields(

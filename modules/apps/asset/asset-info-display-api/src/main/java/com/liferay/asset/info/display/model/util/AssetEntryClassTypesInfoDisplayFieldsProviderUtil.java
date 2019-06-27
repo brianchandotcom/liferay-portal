@@ -14,7 +14,7 @@
 
 package com.liferay.asset.info.display.model.util;
 
-import com.liferay.asset.info.display.model.AssetEntryInfoDisplayClassTypesHelper;
+import com.liferay.asset.info.display.model.AssetEntryClassTypesInfoDisplayFieldsProvider;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.service.persistence.AssetEntryUsagePersistence;
 import com.liferay.info.display.contributor.InfoDisplayField;
@@ -30,7 +30,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Jürgen Kappler
  */
-public class AssetEntryInfoDisplayClassTypesHelperUtil {
+public class AssetEntryClassTypesInfoDisplayFieldsProviderUtil {
 
 	public static List<InfoDisplayField> getClassTypeInfoDisplayFields(
 			String className, long classTypeId, Locale locale)
@@ -47,24 +47,24 @@ public class AssetEntryInfoDisplayClassTypesHelperUtil {
 		return getService().getClassTypes(groupId, className, locale);
 	}
 
-	public static AssetEntryInfoDisplayClassTypesHelper getService() {
+	public static AssetEntryClassTypesInfoDisplayFieldsProvider getService() {
 		return _serviceTracker.getService();
 	}
 
 	private static final ServiceTracker
-		<AssetEntryInfoDisplayClassTypesHelper,
-		 AssetEntryInfoDisplayClassTypesHelper> _serviceTracker;
+		<AssetEntryClassTypesInfoDisplayFieldsProvider,
+		 AssetEntryClassTypesInfoDisplayFieldsProvider> _serviceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(
 			AssetEntryUsagePersistence.class);
 
 		ServiceTracker
-			<AssetEntryInfoDisplayClassTypesHelper,
-			 AssetEntryInfoDisplayClassTypesHelper> serviceTracker =
+			<AssetEntryClassTypesInfoDisplayFieldsProvider,
+			 AssetEntryClassTypesInfoDisplayFieldsProvider> serviceTracker =
 				new ServiceTracker<>(
 					bundle.getBundleContext(),
-					AssetEntryInfoDisplayClassTypesHelper.class, null);
+					AssetEntryClassTypesInfoDisplayFieldsProvider.class, null);
 
 		serviceTracker.open();
 

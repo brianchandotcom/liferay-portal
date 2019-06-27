@@ -55,16 +55,11 @@ public class SolrQueryTranslator
 	public String translate(Query query, SearchContext searchContext) {
 		org.apache.lucene.search.Query luceneQuery = query.accept(this);
 
-		String queryString = null;
-
 		if (luceneQuery != null) {
-			queryString = luceneQuery.toString();
-		}
-		else {
-			queryString = _postProcess(query.toString(), searchContext);
+			return luceneQuery.toString();
 		}
 
-		return queryString;
+		return null;
 	}
 
 	@Override
@@ -221,15 +216,6 @@ public class SolrQueryTranslator
 		WildcardQueryTranslator wildcardQueryTranslator) {
 
 		_wildcardQueryTranslator = wildcardQueryTranslator;
-	}
-
-	private String _postProcess(
-		String queryString, SearchContext searchContext) {
-
-		SolrPostProcesor solrPostProcesor = new SolrPostProcesor(
-			queryString, searchContext.getKeywords());
-
-		return solrPostProcesor.postProcess();
 	}
 
 	private BooleanQueryTranslator _booleanQueryTranslator;

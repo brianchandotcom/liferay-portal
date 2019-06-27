@@ -16,7 +16,6 @@ package com.liferay.change.tracking.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.definition.CTDefinition;
 import com.liferay.change.tracking.definition.CTDefinitionRegistrar;
 import com.liferay.change.tracking.definition.builder.CTDefinitionBuilder;
@@ -24,9 +23,11 @@ import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.engine.CTManager;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.service.test.model.TestResourceModelClass;
 import com.liferay.change.tracking.service.test.model.TestVersionModelClass;
@@ -36,8 +37,6 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -47,7 +46,6 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
@@ -169,29 +167,23 @@ public class CTEngineManagerTest {
 			TestPropsValues.getUserId(), "Test Change Tracking Collection",
 			StringPool.BLANK, new ServiceContext());
 
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				_user.getUserId(), !_user.isDefaultUser());
-
-		String recentCTCollectionId = portalPreferences.getValue(
-			CTPortletKeys.CHANGE_LISTS, "recentCTCollectionId");
+		CTPreferences ctPreferences =
+			_ctPreferencesLocalService.fetchCTPreferences(
+				TestPropsValues.getCompanyId(), _user.getUserId());
 
 		Assert.assertNull(
 			"Users's recent change tracking collection must be null",
-			recentCTCollectionId);
+			ctPreferences);
 
 		_ctEngineManager.checkoutCTCollection(
 			_user.getUserId(), ctCollection.getCtCollectionId());
 
-		portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			_user.getUserId(), !_user.isDefaultUser());
-
-		recentCTCollectionId = portalPreferences.getValue(
-			CTPortletKeys.CHANGE_LISTS, "recentCTCollectionId");
+		ctPreferences = _ctPreferencesLocalService.fetchCTPreferences(
+			TestPropsValues.getCompanyId(), _user.getUserId());
 
 		Assert.assertEquals(
 			"Users's recent change tracking collection must be properly set",
-			GetterUtil.getLong(recentCTCollectionId),
+			ctPreferences.getCtCollectionId(),
 			ctCollection.getCtCollectionId());
 	}
 
@@ -203,12 +195,11 @@ public class CTEngineManagerTest {
 			_ctEngineManager.isChangeTrackingEnabled(
 				TestPropsValues.getCompanyId()));
 
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				_user.getUserId(), !_user.isDefaultUser());
+		CTPreferences ctPreferences =
+			_ctPreferencesLocalService.getCTPreferences(
+				TestPropsValues.getCompanyId(), _user.getUserId());
 
-		String originalRecentCTCollectionId = portalPreferences.getValue(
-			CTPortletKeys.CHANGE_LISTS, "recentCTCollectionId");
+		long originalRecentCTCollectionId = ctPreferences.getCtCollectionId();
 
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
 			TestPropsValues.getUserId(), "Test Change Tracking Collection",
@@ -217,11 +208,10 @@ public class CTEngineManagerTest {
 		_ctEngineManager.checkoutCTCollection(
 			_user.getUserId(), ctCollection.getCtCollectionId());
 
-		portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			_user.getUserId(), !_user.isDefaultUser());
+		ctPreferences = _ctPreferencesLocalService.fetchCTPreferences(
+			TestPropsValues.getCompanyId(), _user.getUserId());
 
-		String recentCTCollectionId = portalPreferences.getValue(
-			CTPortletKeys.CHANGE_LISTS, "recentCTCollectionId");
+		long recentCTCollectionId = ctPreferences.getCtCollectionId();
 
 		Assert.assertEquals(
 			"Recent change tracking collection must not be changed",
@@ -444,18 +434,18 @@ public class CTEngineManagerTest {
 				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString());
 
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				_user.getUserId(), !_user.isDefaultUser());
+		CTPreferences ctPreferences =
+			_ctPreferencesLocalService.getCTPreferences(
+				TestPropsValues.getCompanyId(), _user.getUserId());
 
-		portalPreferences.setValue(
-			CTPortletKeys.CHANGE_LISTS, "recentCTCollectionId",
-			String.valueOf(
-				ctCollectionOptional.map(
-					CTCollection::getCtCollectionId
-				).orElse(
-					0L
-				)));
+		ctPreferences.setCtCollectionId(
+			ctCollectionOptional.map(
+				CTCollection::getCtCollectionId
+			).orElse(
+				0L
+			));
+
+		_ctPreferencesLocalService.updateCTPreferences(ctPreferences);
 
 		Optional<CTCollection> activeCTCollectionOptional =
 			_ctManager.getActiveCTCollectionOptional(
@@ -475,13 +465,13 @@ public class CTEngineManagerTest {
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), new ServiceContext());
 
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				_user.getUserId(), !_user.isDefaultUser());
+		CTPreferences ctPreferences =
+			_ctPreferencesLocalService.getCTPreferences(
+				TestPropsValues.getCompanyId(), _user.getUserId());
 
-		portalPreferences.setValue(
-			CTPortletKeys.CHANGE_LISTS, "recentCTCollectionId",
-			String.valueOf(ctCollection.getCtCollectionId()));
+		ctPreferences.setCtCollectionId(ctCollection.getCtCollectionId());
+
+		_ctPreferencesLocalService.updateCTPreferences(ctPreferences);
 
 		Optional<CTCollection> activeCTCollectionOptional =
 			_ctManager.getActiveCTCollectionOptional(
@@ -709,25 +699,6 @@ public class CTEngineManagerTest {
 		throws Exception {
 
 		Assert.assertFalse(
-			_ctEngineManager.isChangeTrackingEnabled(
-				TestPropsValues.getCompanyId()));
-
-		_ctEngineManager.enableChangeTracking(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
-
-		Assert.assertTrue(
-			_ctEngineManager.isChangeTrackingEnabled(
-				TestPropsValues.getCompanyId()));
-	}
-
-	@Test
-	public void testIsChangeTrackingEnabledWhenChangeTrackingIsEnabled()
-		throws Exception {
-
-		_ctEngineManager.enableChangeTracking(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
-
-		Assert.assertTrue(
 			_ctEngineManager.isChangeTrackingEnabled(
 				TestPropsValues.getCompanyId()));
 
@@ -969,6 +940,9 @@ public class CTEngineManagerTest {
 
 	@Inject
 	private CTManager _ctManager;
+
+	@Inject
+	private CTPreferencesLocalService _ctPreferencesLocalService;
 
 	@Inject
 	private CTProcessLocalService _ctProcessLocalService;

@@ -67,7 +67,9 @@ public interface MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration {
 	 * Enables auto tagging of images using the Microsoft Cognitive Services
 	 * API.
 	 */
-	@Meta.AD(name = "enabled", required = false)
+	@Meta.AD(
+		description = "enabled-description", name = "enabled", required = false
+	)
 	public boolean enabled();
 
 }

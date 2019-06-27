@@ -18,6 +18,7 @@ import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -297,6 +298,10 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
+	public void setContextUser(User contextUser) {
+		this.contextUser = contextUser;
+	}
+
 	protected void preparePatch(
 		KnowledgeBaseFolder knowledgeBaseFolder,
 		KnowledgeBaseFolder existingKnowledgeBaseFolder) {
@@ -338,5 +343,8 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 
 	@Context
 	protected UriInfo contextUriInfo;
+
+	@Context
+	protected User contextUser;
 
 }

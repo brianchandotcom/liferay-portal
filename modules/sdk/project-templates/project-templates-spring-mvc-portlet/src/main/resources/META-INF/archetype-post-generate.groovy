@@ -42,8 +42,5 @@ else {
 
 if (request.properties["viewType"].equals("jsp") ||
 	request.properties["framework"].equals("portletmvc4spring")) {
-	spring4JavaPkgDir.eachFileMatch FileType.FILES, ~/.*\.java/, {
-		File javaFile -> javaFile.delete()
-	}
-	spring4JavaPkgDir.delete()
+	spring4JavaPkgDir.deleteDir()
 }

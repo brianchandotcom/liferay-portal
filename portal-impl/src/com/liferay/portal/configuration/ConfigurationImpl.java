@@ -16,8 +16,6 @@ package com.liferay.portal.configuration;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.configuration.easyconf.ClassLoaderAggregateProperties;
-import com.liferay.portal.configuration.easyconf.ClassLoaderAggregatePropertiesUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

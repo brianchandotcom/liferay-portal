@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.configuration.easyconf;
+package com.liferay.portal.configuration;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;

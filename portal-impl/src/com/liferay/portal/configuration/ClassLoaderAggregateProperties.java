@@ -12,8 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.configuration.easyconf;
-
+package com.liferay.portal.configuration;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;

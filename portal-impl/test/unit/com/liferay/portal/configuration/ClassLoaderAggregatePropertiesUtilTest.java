@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.configuration.easyconf;
+package com.liferay.portal.configuration;
 
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;

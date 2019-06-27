@@ -43,6 +43,8 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.Collection;
+
 import javax.annotation.Generated;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -126,6 +128,222 @@ public class Query {
 			webUrlResourceComponentServiceObjects;
 	}
 
+	@GraphQLName("EmailAddressPage")
+	public class EmailAddressPage {
+
+		public EmailAddressPage(Page emailAddressPage) {
+			items = emailAddressPage.getItems();
+			page = emailAddressPage.getPage();
+			pageSize = emailAddressPage.getPageSize();
+			totalCount = emailAddressPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Collection<EmailAddress> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("OrganizationPage")
+	public class OrganizationPage {
+
+		public OrganizationPage(Page organizationPage) {
+			items = organizationPage.getItems();
+			page = organizationPage.getPage();
+			pageSize = organizationPage.getPageSize();
+			totalCount = organizationPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Collection<Organization> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("PhonePage")
+	public class PhonePage {
+
+		public PhonePage(Page phonePage) {
+			items = phonePage.getItems();
+			page = phonePage.getPage();
+			pageSize = phonePage.getPageSize();
+			totalCount = phonePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Collection<Phone> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("PostalAddressPage")
+	public class PostalAddressPage {
+
+		public PostalAddressPage(Page postalAddressPage) {
+			items = postalAddressPage.getItems();
+			page = postalAddressPage.getPage();
+			pageSize = postalAddressPage.getPageSize();
+			totalCount = postalAddressPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Collection<PostalAddress> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("RolePage")
+	public class RolePage {
+
+		public RolePage(Page rolePage) {
+			items = rolePage.getItems();
+			page = rolePage.getPage();
+			pageSize = rolePage.getPageSize();
+			totalCount = rolePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Collection<Role> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("SegmentPage")
+	public class SegmentPage {
+
+		public SegmentPage(Page segmentPage) {
+			items = segmentPage.getItems();
+			page = segmentPage.getPage();
+			pageSize = segmentPage.getPageSize();
+			totalCount = segmentPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Collection<Segment> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("SegmentUserPage")
+	public class SegmentUserPage {
+
+		public SegmentUserPage(Page segmentUserPage) {
+			items = segmentUserPage.getItems();
+			page = segmentUserPage.getPage();
+			pageSize = segmentUserPage.getPageSize();
+			totalCount = segmentUserPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Collection<SegmentUser> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("UserAccountPage")
+	public class UserAccountPage {
+
+		public UserAccountPage(Page userAccountPage) {
+			items = userAccountPage.getItems();
+			page = userAccountPage.getPage();
+			pageSize = userAccountPage.getPageSize();
+			totalCount = userAccountPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Collection<UserAccount> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("WebUrlPage")
+	public class WebUrlPage {
+
+		public WebUrlPage(Page webUrlPage) {
+			items = webUrlPage.getItems();
+			page = webUrlPage.getPage();
+			pageSize = webUrlPage.getPageSize();
+			totalCount = webUrlPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Collection<WebUrl> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLField
 	public EmailAddress getEmailAddress(
 			@GraphQLName("emailAddressId") Long emailAddressId)
@@ -139,41 +357,33 @@ public class Query {
 	}
 
 	@GraphQLField
-	public java.util.Collection<EmailAddress> getOrganizationEmailAddressesPage(
+	public EmailAddressPage getOrganizationEmailAddressesPage(
 			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_emailAddressResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			emailAddressResource -> {
-				Page paginationPage =
-					emailAddressResource.getOrganizationEmailAddressesPage(
-						organizationId);
-
-				return paginationPage.getItems();
-			});
+			emailAddressResource -> new EmailAddressPage(
+				emailAddressResource.getOrganizationEmailAddressesPage(
+					organizationId)));
 	}
 
 	@GraphQLField
-	public java.util.Collection<EmailAddress> getUserAccountEmailAddressesPage(
+	public EmailAddressPage getUserAccountEmailAddressesPage(
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_emailAddressResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			emailAddressResource -> {
-				Page paginationPage =
-					emailAddressResource.getUserAccountEmailAddressesPage(
-						userAccountId);
-
-				return paginationPage.getItems();
-			});
+			emailAddressResource -> new EmailAddressPage(
+				emailAddressResource.getUserAccountEmailAddressesPage(
+					userAccountId)));
 	}
 
 	@GraphQLField
-	public java.util.Collection<Organization> getOrganizationsPage(
+	public OrganizationPage getOrganizationsPage(
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
@@ -183,12 +393,9 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_organizationResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			organizationResource -> {
-				Page paginationPage = organizationResource.getOrganizationsPage(
-					search, filter, Pagination.of(page, pageSize), sorts);
-
-				return paginationPage.getItems();
-			});
+			organizationResource -> new OrganizationPage(
+				organizationResource.getOrganizationsPage(
+					search, filter, Pagination.of(page, pageSize), sorts)));
 	}
 
 	@GraphQLField
@@ -204,7 +411,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public java.util.Collection<Organization> getOrganizationOrganizationsPage(
+	public OrganizationPage getOrganizationOrganizationsPage(
 			@GraphQLName("parentOrganizationId") Long parentOrganizationId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -215,30 +422,22 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_organizationResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			organizationResource -> {
-				Page paginationPage =
-					organizationResource.getOrganizationOrganizationsPage(
-						parentOrganizationId, search, filter,
-						Pagination.of(page, pageSize), sorts);
-
-				return paginationPage.getItems();
-			});
+			organizationResource -> new OrganizationPage(
+				organizationResource.getOrganizationOrganizationsPage(
+					parentOrganizationId, search, filter,
+					Pagination.of(page, pageSize), sorts)));
 	}
 
 	@GraphQLField
-	public java.util.Collection<Phone> getOrganizationPhonesPage(
+	public PhonePage getOrganizationPhonesPage(
 			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_phoneResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			phoneResource -> {
-				Page paginationPage = phoneResource.getOrganizationPhonesPage(
-					organizationId);
-
-				return paginationPage.getItems();
-			});
+			phoneResource -> new PhonePage(
+				phoneResource.getOrganizationPhonesPage(organizationId)));
 	}
 
 	@GraphQLField
@@ -252,37 +451,28 @@ public class Query {
 	}
 
 	@GraphQLField
-	public java.util.Collection<Phone> getUserAccountPhonesPage(
+	public PhonePage getUserAccountPhonesPage(
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_phoneResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			phoneResource -> {
-				Page paginationPage = phoneResource.getUserAccountPhonesPage(
-					userAccountId);
-
-				return paginationPage.getItems();
-			});
+			phoneResource -> new PhonePage(
+				phoneResource.getUserAccountPhonesPage(userAccountId)));
 	}
 
 	@GraphQLField
-	public java.util.Collection<PostalAddress>
-			getOrganizationPostalAddressesPage(
-				@GraphQLName("organizationId") Long organizationId)
+	public PostalAddressPage getOrganizationPostalAddressesPage(
+			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_postalAddressResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			postalAddressResource -> {
-				Page paginationPage =
-					postalAddressResource.getOrganizationPostalAddressesPage(
-						organizationId);
-
-				return paginationPage.getItems();
-			});
+			postalAddressResource -> new PostalAddressPage(
+				postalAddressResource.getOrganizationPostalAddressesPage(
+					organizationId)));
 	}
 
 	@GraphQLField
@@ -298,25 +488,20 @@ public class Query {
 	}
 
 	@GraphQLField
-	public java.util.Collection<PostalAddress>
-			getUserAccountPostalAddressesPage(
-				@GraphQLName("userAccountId") Long userAccountId)
+	public PostalAddressPage getUserAccountPostalAddressesPage(
+			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_postalAddressResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			postalAddressResource -> {
-				Page paginationPage =
-					postalAddressResource.getUserAccountPostalAddressesPage(
-						userAccountId);
-
-				return paginationPage.getItems();
-			});
+			postalAddressResource -> new PostalAddressPage(
+				postalAddressResource.getUserAccountPostalAddressesPage(
+					userAccountId)));
 	}
 
 	@GraphQLField
-	public java.util.Collection<Role> getRolesPage(
+	public RolePage getRolesPage(
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -324,12 +509,8 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_roleResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			roleResource -> {
-				Page paginationPage = roleResource.getRolesPage(
-					Pagination.of(page, pageSize));
-
-				return paginationPage.getItems();
-			});
+			roleResource -> new RolePage(
+				roleResource.getRolesPage(Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
@@ -341,7 +522,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public java.util.Collection<Segment> getSiteSegmentsPage(
+	public SegmentPage getSiteSegmentsPage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -350,16 +531,13 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_segmentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			segmentResource -> {
-				Page paginationPage = segmentResource.getSiteSegmentsPage(
-					siteId, Pagination.of(page, pageSize));
-
-				return paginationPage.getItems();
-			});
+			segmentResource -> new SegmentPage(
+				segmentResource.getSiteSegmentsPage(
+					siteId, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
-	public java.util.Collection<Segment> getSiteUserAccountSegmentsPage(
+	public SegmentPage getSiteUserAccountSegmentsPage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
@@ -367,17 +545,13 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_segmentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			segmentResource -> {
-				Page paginationPage =
-					segmentResource.getSiteUserAccountSegmentsPage(
-						siteId, userAccountId);
-
-				return paginationPage.getItems();
-			});
+			segmentResource -> new SegmentPage(
+				segmentResource.getSiteUserAccountSegmentsPage(
+					siteId, userAccountId)));
 	}
 
 	@GraphQLField
-	public java.util.Collection<SegmentUser> getSegmentUserAccountsPage(
+	public SegmentUserPage getSegmentUserAccountsPage(
 			@GraphQLName("segmentId") Long segmentId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -386,13 +560,9 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_segmentUserResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			segmentUserResource -> {
-				Page paginationPage =
-					segmentUserResource.getSegmentUserAccountsPage(
-						segmentId, Pagination.of(page, pageSize));
-
-				return paginationPage.getItems();
-			});
+			segmentUserResource -> new SegmentUserPage(
+				segmentUserResource.getSegmentUserAccountsPage(
+					segmentId, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLField
@@ -404,7 +574,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public java.util.Collection<UserAccount> getOrganizationUserAccountsPage(
+	public UserAccountPage getOrganizationUserAccountsPage(
 			@GraphQLName("organizationId") Long organizationId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -415,18 +585,14 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_userAccountResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			userAccountResource -> {
-				Page paginationPage =
-					userAccountResource.getOrganizationUserAccountsPage(
-						organizationId, search, filter,
-						Pagination.of(page, pageSize), sorts);
-
-				return paginationPage.getItems();
-			});
+			userAccountResource -> new UserAccountPage(
+				userAccountResource.getOrganizationUserAccountsPage(
+					organizationId, search, filter,
+					Pagination.of(page, pageSize), sorts)));
 	}
 
 	@GraphQLField
-	public java.util.Collection<UserAccount> getUserAccountsPage(
+	public UserAccountPage getUserAccountsPage(
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
@@ -436,12 +602,9 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_userAccountResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			userAccountResource -> {
-				Page paginationPage = userAccountResource.getUserAccountsPage(
-					search, filter, Pagination.of(page, pageSize), sorts);
-
-				return paginationPage.getItems();
-			});
+			userAccountResource -> new UserAccountPage(
+				userAccountResource.getUserAccountsPage(
+					search, filter, Pagination.of(page, pageSize), sorts)));
 	}
 
 	@GraphQLField
@@ -457,7 +620,7 @@ public class Query {
 	}
 
 	@GraphQLField
-	public java.util.Collection<UserAccount> getWebSiteUserAccountsPage(
+	public UserAccountPage getWebSiteUserAccountsPage(
 			@GraphQLName("webSiteId") Long webSiteId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") Filter filter,
@@ -468,46 +631,34 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_userAccountResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			userAccountResource -> {
-				Page paginationPage =
-					userAccountResource.getWebSiteUserAccountsPage(
-						webSiteId, search, filter,
-						Pagination.of(page, pageSize), sorts);
-
-				return paginationPage.getItems();
-			});
+			userAccountResource -> new UserAccountPage(
+				userAccountResource.getWebSiteUserAccountsPage(
+					webSiteId, search, filter, Pagination.of(page, pageSize),
+					sorts)));
 	}
 
 	@GraphQLField
-	public java.util.Collection<WebUrl> getOrganizationWebUrlsPage(
+	public WebUrlPage getOrganizationWebUrlsPage(
 			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_webUrlResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			webUrlResource -> {
-				Page paginationPage = webUrlResource.getOrganizationWebUrlsPage(
-					organizationId);
-
-				return paginationPage.getItems();
-			});
+			webUrlResource -> new WebUrlPage(
+				webUrlResource.getOrganizationWebUrlsPage(organizationId)));
 	}
 
 	@GraphQLField
-	public java.util.Collection<WebUrl> getUserAccountWebUrlsPage(
+	public WebUrlPage getUserAccountWebUrlsPage(
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_webUrlResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			webUrlResource -> {
-				Page paginationPage = webUrlResource.getUserAccountWebUrlsPage(
-					userAccountId);
-
-				return paginationPage.getItems();
-			});
+			webUrlResource -> new WebUrlPage(
+				webUrlResource.getUserAccountWebUrlsPage(userAccountId)));
 	}
 
 	@GraphQLField

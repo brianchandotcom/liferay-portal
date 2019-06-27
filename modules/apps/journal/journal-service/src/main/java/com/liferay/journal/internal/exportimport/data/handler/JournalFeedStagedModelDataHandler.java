@@ -187,11 +187,16 @@ public class JournalFeedStagedModelDataHandler
 
 		boolean autoFeedId = false;
 
-		if (Validator.isNumber(feedId) ||
-			(_journalFeedLocalService.fetchFeed(
-				portletDataContext.getScopeGroupId(), feedId) != null)) {
-
+		if (Validator.isNumber(feedId)) {
 			autoFeedId = true;
+		}
+		else {
+			JournalFeed existingFeed = _journalFeedLocalService.fetchFeed(
+				portletDataContext.getScopeGroupId(), feedId);
+
+			if (existingFeed != null) {
+				autoFeedId = true;
+			}
 		}
 
 		Map<String, String> ddmStructureKeys =

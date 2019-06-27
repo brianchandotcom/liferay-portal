@@ -80,10 +80,10 @@ public class LayoutFixture {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		String friendlyURL =
-			StringPool.SLASH +
-				FriendlyURLNormalizerUtil.normalize(
-					RandomTestUtil.randomString());
+		String randomString = FriendlyURLNormalizerUtil.normalize(
+			RandomTestUtil.randomString());
+
+		String friendlyURL = StringPool.SLASH + randomString;
 
 		Layout layout = LayoutLocalServiceUtil.addLayout(
 			TestPropsValues.getUserId(), _group.getGroupId(), false,

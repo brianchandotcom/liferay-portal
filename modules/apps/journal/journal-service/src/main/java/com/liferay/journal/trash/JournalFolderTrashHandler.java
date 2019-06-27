@@ -186,11 +186,13 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 	public boolean isRestorable(long classPK) throws PortalException {
 		JournalFolder folder = getJournalFolder(classPK);
 
-		if ((folder.getParentFolderId() > 0) &&
-			(_journalFolderLocalService.fetchFolder(
-				folder.getParentFolderId()) == null)) {
+		if (folder.getParentFolderId() > 0) {
+			JournalFolder parentFolder = _journalFolderLocalService.fetchFolder(
+				folder.getParentFolderId());
 
-			return false;
+			if (parentFolder == null) {
+				return false;
+			}
 		}
 
 		return !folder.isInTrashContainer();

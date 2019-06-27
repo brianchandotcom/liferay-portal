@@ -110,12 +110,16 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 			if (portlet.isInstanceable()) {
 				instanceId = PortletIdCodec.generateInstanceId();
 			}
-			else if (_portletPreferencesLocalService.getPortletPreferencesCount(
+			else {
+				long count =
+					_portletPreferencesLocalService.getPortletPreferencesCount(
 						PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
-						portletId) > 0) {
+						portletId);
 
-				throw new PortletIdException(
-					"Cannot add non-instanceable portlet more than once");
+				if (count > 0) {
+					throw new PortletIdException(
+						"Cannot add non-instanceable portlet more than once");
+				}
 			}
 
 			String html = _getPortletFragmentEntryLinkHTML(

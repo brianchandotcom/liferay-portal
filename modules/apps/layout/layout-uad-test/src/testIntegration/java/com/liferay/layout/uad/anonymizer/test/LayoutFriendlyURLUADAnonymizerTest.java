@@ -107,9 +107,10 @@ public class LayoutFriendlyURLUADAnonymizerTest
 
 	@Override
 	protected boolean isBaseModelDeleted(long baseModelPK) {
-		if (_layoutFriendlyURLLocalService.fetchLayoutFriendlyURL(
-				baseModelPK) == null) {
+		LayoutFriendlyURL layoutFriendlyURL =
+			_layoutFriendlyURLLocalService.fetchLayoutFriendlyURL(baseModelPK);
 
+		if (layoutFriendlyURL == null) {
 			return true;
 		}
 

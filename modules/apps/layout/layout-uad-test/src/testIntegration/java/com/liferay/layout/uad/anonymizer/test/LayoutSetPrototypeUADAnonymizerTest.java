@@ -97,9 +97,11 @@ public class LayoutSetPrototypeUADAnonymizerTest
 
 	@Override
 	protected boolean isBaseModelDeleted(long baseModelPK) {
-		if (_layoutSetPrototypeLocalService.fetchLayoutSetPrototype(
-				baseModelPK) == null) {
+		LayoutSetPrototype layoutSetPrototype =
+			_layoutSetPrototypeLocalService.fetchLayoutSetPrototype(
+				baseModelPK);
 
+		if (layoutSetPrototype == null) {
 			return true;
 		}
 

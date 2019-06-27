@@ -504,11 +504,14 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		Group group = layout.getGroup();
 
 		if (group.isGuest() && !layout.isPrivateLayout() &&
-			layout.isRootLayout() &&
-			(_layoutLocalService.getLayoutsCount(
-				group, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) == 1)) {
+			layout.isRootLayout()) {
 
-			return false;
+			int count = _layoutLocalService.getLayoutsCount(
+				group, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+			if (count == 1) {
+				return false;
+			}
 		}
 
 		if (layoutSetBranch != null) {

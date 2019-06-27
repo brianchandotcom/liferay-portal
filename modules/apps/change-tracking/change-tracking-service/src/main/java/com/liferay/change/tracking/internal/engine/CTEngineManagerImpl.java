@@ -27,13 +27,14 @@ import com.liferay.change.tracking.internal.util.ChangeTrackingThreadLocal;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryAggregate;
+import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.model.impl.CTCollectionImpl;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryAggregateLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
-import com.liferay.change.tracking.settings.CTSettingsManager;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
@@ -88,34 +89,27 @@ public class CTEngineManagerImpl implements CTEngineManager {
 			return;
 		}
 
-		if (ctCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION) {
-			CTCollection ctCollection =
-				_ctCollectionLocalService.fetchCTCollection(ctCollectionId);
-
-			if (ctCollection == null) {
-				_log.error(
-					"Unable to checkout change tracking collection " +
-						ctCollectionId);
-
-				return;
-			}
+		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+			return;
 		}
 
-		try {
-			TransactionInvokerUtil.invoke(
-				_transactionConfig,
-				() -> {
-					_ctSettingsManager.setUserCTSetting(
-						userId, _RECENT_CT_COLLECTION_ID,
-						String.valueOf(ctCollectionId));
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
+			ctCollectionId);
 
-					return null;
-				});
-		}
-		catch (Throwable t) {
+		if (ctCollection == null) {
 			_log.error(
-				"Unable to update user's recent change tracking collection", t);
+				"Unable to checkout change tracking collection " +
+					ctCollectionId);
+
+			return;
 		}
+
+		CTPreferences ctPreferences =
+			_ctPreferencesLocalService.getCTPreferences(companyId, userId);
+
+		ctPreferences.setCtCollectionId(ctCollectionId);
+
+		_ctPreferencesLocalService.updateCTPreferences(ctPreferences);
 	}
 
 	@Override
@@ -184,23 +178,12 @@ public class CTEngineManagerImpl implements CTEngineManager {
 		}
 
 		try {
-			TransactionInvokerUtil.invoke(
-				_transactionConfig,
-				() -> {
-					_ctCollectionLocalService.deleteCompanyCTCollections(
-						companyId);
+			_ctCollectionLocalService.deleteCompanyCTCollections(companyId);
 
-					_productionCTCollections.remove(companyId);
-
-					_ctSettingsManager.setGlobalCTSetting(
-						companyId, _CHANGE_TRACKING_ENABLED,
-						String.valueOf(Boolean.FALSE));
-
-					return null;
-				});
+			_productionCTCollections.remove(companyId);
 		}
-		catch (Throwable t) {
-			_log.error("Unable to disable change tracking", t);
+		catch (PortalException pe) {
+			_log.error("Unable to disable change tracking", pe);
 		}
 	}
 
@@ -409,11 +392,19 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 	@Override
 	public long getRecentCTCollectionId(long userId) {
+		long companyId = _getCompanyId(userId);
+
+		long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
+
+		CTPreferences ctPreferences =
+			_ctPreferencesLocalService.fetchCTPreferences(companyId, userId);
+
+		if (ctPreferences != null) {
+			ctCollectionId = ctPreferences.getCtCollectionId();
+		}
+
 		Optional<CTCollection> ctCollectionOptional = getCTCollectionOptional(
-			_getCompanyId(userId),
-			GetterUtil.getLong(
-				_ctSettingsManager.getUserCTSetting(
-					userId, _RECENT_CT_COLLECTION_ID)));
+			companyId, ctCollectionId);
 
 		return ctCollectionOptional.map(
 			CTCollection::getCtCollectionId
@@ -441,9 +432,14 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 	@Override
 	public boolean isChangeTrackingEnabled(long companyId) {
-		return GetterUtil.getBoolean(
-			_ctSettingsManager.getGlobalCTSetting(
-				companyId, _CHANGE_TRACKING_ENABLED));
+		CTPreferences preferences =
+			_ctPreferencesLocalService.fetchCTPreferences(companyId, 0);
+
+		if (preferences == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -546,8 +542,7 @@ public class CTEngineManagerImpl implements CTEngineManager {
 	private void _enableChangeTracking(long userId) {
 		long companyId = _getCompanyId(userId);
 
-		_ctSettingsManager.setGlobalCTSetting(
-			companyId, _CHANGE_TRACKING_ENABLED, String.valueOf(Boolean.TRUE));
+		_ctPreferencesLocalService.getCTPreferences(companyId, 0);
 
 		checkoutCTCollection(userId, CTConstants.CT_COLLECTION_ID_PRODUCTION);
 	}
@@ -606,12 +601,6 @@ public class CTEngineManagerImpl implements CTEngineManager {
 		return CharPool.PERCENT + value + CharPool.PERCENT;
 	}
 
-	private static final String _CHANGE_TRACKING_ENABLED =
-		"changeTrackingEnabled";
-
-	private static final String _RECENT_CT_COLLECTION_ID =
-		"recentCTCollectionId";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTEngineManagerImpl.class);
 
@@ -628,10 +617,10 @@ public class CTEngineManagerImpl implements CTEngineManager {
 	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference
-	private CTProcessLocalService _ctProcessLocalService;
+	private CTPreferencesLocalService _ctPreferencesLocalService;
 
 	@Reference
-	private CTSettingsManager _ctSettingsManager;
+	private CTProcessLocalService _ctProcessLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

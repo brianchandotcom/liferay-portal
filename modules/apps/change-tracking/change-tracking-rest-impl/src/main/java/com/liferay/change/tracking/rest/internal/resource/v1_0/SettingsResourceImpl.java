@@ -14,19 +14,18 @@
 
 package com.liferay.change.tracking.rest.internal.resource.v1_0;
 
-import com.liferay.change.tracking.constants.CTSettingsKeys;
 import com.liferay.change.tracking.definition.CTDefinition;
 import com.liferay.change.tracking.engine.CTEngineManager;
+import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.rest.dto.v1_0.Settings;
 import com.liferay.change.tracking.rest.dto.v1_0.SettingsUpdate;
 import com.liferay.change.tracking.rest.resource.v1_0.SettingsResource;
-import com.liferay.change.tracking.settings.CTSettingsManager;
+import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -82,12 +81,13 @@ public class SettingsResourceImpl extends BaseSettingsResourceImpl {
 		try {
 			User user = _userLocalService.getUser(userId);
 
-			_ctSettingsManager.setUserCTSetting(
-				user.getUserId(),
-				CTSettingsKeys.CHECKOUT_CT_COLLECTION_CONFIRMATION_ENABLED,
-				Boolean.toString(
-					settingsUpdate.
-						getCheckoutCTCollectionConfirmationEnabled()));
+			CTPreferences ctPreferences =
+				_ctPreferencesLocalService.getCTPreferences(companyId, userId);
+
+			ctPreferences.setConfirmationEnabled(
+				settingsUpdate.getCheckoutCTCollectionConfirmationEnabled());
+
+			_ctPreferencesLocalService.updateCTPreferences(ctPreferences);
 
 			return _getUserSettings(companyId, user.getUserId());
 		}
@@ -143,12 +143,17 @@ public class SettingsResourceImpl extends BaseSettingsResourceImpl {
 	private Settings _getUserSettings(Long companyId, Long userId) {
 		Settings settings = new Settings();
 
+		CTPreferences ctPreferences =
+			_ctPreferencesLocalService.fetchCTPreferences(companyId, userId);
+
+		boolean confirmationEnabled = true;
+
+		if (ctPreferences != null) {
+			confirmationEnabled = ctPreferences.isConfirmationEnabled();
+		}
+
 		settings.setCheckoutCTCollectionConfirmationEnabled(
-			GetterUtil.getBoolean(
-				_ctSettingsManager.getUserCTSetting(
-					userId,
-					CTSettingsKeys.CHECKOUT_CT_COLLECTION_CONFIRMATION_ENABLED,
-					"true")));
+			confirmationEnabled);
 		settings.setCompanyId(companyId);
 		settings.setUserId(userId);
 
@@ -165,7 +170,7 @@ public class SettingsResourceImpl extends BaseSettingsResourceImpl {
 	private CTEngineManager _ctEngineManager;
 
 	@Reference
-	private CTSettingsManager _ctSettingsManager;
+	private CTPreferencesLocalService _ctPreferencesLocalService;
 
 	@Context
 	private User _user;

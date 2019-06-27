@@ -1,3 +1,5 @@
+# Generated files.
+**/*.soy.js
 **/build/**/*
 **/classes/**/*
 **/css/clay/**/*

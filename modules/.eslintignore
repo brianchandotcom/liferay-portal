@@ -5,10 +5,14 @@
 !.prettierrc.js
 !npmscripts.config.js
 
+# Generated files.
+**/*.soy.js
 **/build/**/*
 **/classes/**/*
 **/css/clay/**/*
 **/node_modules/**/*
 **/sdk/**/*
 **/zippableResources/**/*
+
+# Restricted paths.
 modules/tests/poshi-runner/**/*

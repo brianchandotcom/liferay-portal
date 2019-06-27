@@ -111,6 +111,8 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 				FragmentExportImportConstants.FILE_NAME_FRAGMENT_CONFIG,
 			jsonObject.toString());
 
+		zipWriter.addEntry(
+			path + "/fragment-configuration.json", getConfiguration());
 		zipWriter.addEntry(path + "/index.css", getCss());
 		zipWriter.addEntry(path + "/index.js", getJs());
 		zipWriter.addEntry(path + "/index.html", getHtml());

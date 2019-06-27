@@ -419,12 +419,7 @@ public class DLFileEntryLocalServiceTest {
 		List<DLFileEntry> dlFileEntries =
 			DLFileEntryLocalServiceUtil.getNoAssetFileEntries();
 
-		Assert.assertEquals(dlFileEntries.toString(), 1, dlFileEntries.size());
-
-		DLFileEntry dlFileEntry = dlFileEntries.get(0);
-
-		Assert.assertEquals(
-			fileEntry.getFileEntryId(), dlFileEntry.getFileEntryId());
+		Assert.assertTrue(dlFileEntries.contains(fileEntry.getModel()));
 	}
 
 	@Test

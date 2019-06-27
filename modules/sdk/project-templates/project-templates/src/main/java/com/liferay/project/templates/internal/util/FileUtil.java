@@ -47,6 +47,8 @@ import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Andrea Di Giorgi
@@ -123,6 +125,34 @@ public class FileUtil {
 
 					for (String fileName : fileNames) {
 						Files.deleteIfExists(dirPath.resolve(fileName));
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+	}
+
+	public static void deleteFilesByPattern(Path dirPath, Pattern pattern)
+		throws IOException {
+
+		Files.walkFileTree(
+			dirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Path fileNamePath = path.getFileName();
+
+					String fileName = fileNamePath.toString();
+
+					Matcher matcher = pattern.matcher(fileName);
+
+					if (matcher.matches()) {
+						Files.deleteIfExists(path);
 					}
 
 					return FileVisitResult.CONTINUE;

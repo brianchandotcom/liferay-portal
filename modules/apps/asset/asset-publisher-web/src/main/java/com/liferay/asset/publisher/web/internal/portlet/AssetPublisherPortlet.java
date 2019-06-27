@@ -15,7 +15,7 @@
 package com.liferay.asset.publisher.web.internal.portlet;
 
 import com.liferay.asset.constants.AssetWebKeys;
-import com.liferay.asset.list.util.AssetListHelper;
+import com.liferay.asset.list.util.AssetListAssetEntryProvider;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
@@ -239,7 +239,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 			AssetPublisherDisplayContext assetPublisherDisplayContext =
 				new AssetPublisherDisplayContext(
 					assetEntryActionRegistry, assetHelper,
-					assetPublisherCustomizer, assetListHelper,
+					assetPublisherCustomizer, assetListAssetEntryProvider,
 					assetPublisherHelper, assetPublisherWebConfiguration,
 					assetPublisherWebUtil, infoListProviderTracker,
 					resourceRequest, resourceResponse,
@@ -339,7 +339,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 			AssetPublisherDisplayContext assetPublisherDisplayContext =
 				new AssetPublisherDisplayContext(
 					assetEntryActionRegistry, assetHelper,
-					assetPublisherCustomizer, assetListHelper,
+					assetPublisherCustomizer, assetListAssetEntryProvider,
 					assetPublisherHelper, assetPublisherWebConfiguration,
 					assetPublisherWebUtil, infoListProviderTracker,
 					renderRequest, renderResponse,
@@ -390,7 +390,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 	protected AssetHelper assetHelper;
 
 	@Reference
-	protected AssetListHelper assetListHelper;
+	protected AssetListAssetEntryProvider assetListAssetEntryProvider;
 
 	@Reference
 	protected AssetPublisherCustomizerRegistry assetPublisherCustomizerRegistry;

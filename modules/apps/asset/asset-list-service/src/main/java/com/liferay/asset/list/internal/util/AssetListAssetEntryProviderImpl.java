@@ -31,7 +31,7 @@ import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
-import com.liferay.asset.list.util.AssetListHelper;
+import com.liferay.asset.list.util.AssetListAssetEntryProvider;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -66,8 +66,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sarai Díaz
  */
-@Component(immediate = true, service = AssetListHelper.class)
-public class AssetListHelperImpl implements AssetListHelper {
+@Component(immediate = true, service = AssetListAssetEntryProvider.class)
+public class AssetListAssetEntryProviderImpl
+	implements AssetListAssetEntryProvider {
 
 	@Override
 	public List<AssetEntry> getAssetEntries(
@@ -623,7 +624,7 @@ public class AssetListHelperImpl implements AssetListHelper {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AssetListHelperImpl.class);
+		AssetListAssetEntryProviderImpl.class);
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil;
-import com.liferay.asset.list.util.AssetListHelper;
+import com.liferay.asset.list.util.AssetListAssetEntryProvider;
 import com.liferay.asset.util.AssetHelper;
 
 import java.util.List;
@@ -37,99 +37,119 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             AssetListHelper#getAssetEntries(AssetListEntry, long)}
+	 *             AssetListAssetEntryProvider#getAssetEntries(AssetListEntry,
+	 *             long)}
 	 */
 	@Deprecated
 	@Override
 	public List<AssetEntry> getAssetEntries(long segmentsEntryId) {
-		AssetListHelper assetListHelper = _getAssetListHelper();
+		AssetListAssetEntryProvider assetListAssetEntryProvider =
+			_getAssetListAssetEntryProvider();
 
-		return assetListHelper.getAssetEntries(this, segmentsEntryId);
+		return assetListAssetEntryProvider.getAssetEntries(
+			this, segmentsEntryId);
 	}
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             AssetListHelper#getAssetEntries(AssetListEntry, long, int,
-	 *             int)}
+	 *             AssetListAssetEntryProvider#getAssetEntries(AssetListEntry,
+	 *             long, int, int)}
 	 */
 	@Deprecated
 	public List<AssetEntry> getAssetEntries(
 		long segmentsEntryId, int start, int end) {
 
-		AssetListHelper assetListHelper = _getAssetListHelper();
+		AssetListAssetEntryProvider assetListAssetEntryProvider =
+			_getAssetListAssetEntryProvider();
 
-		return assetListHelper.getAssetEntries(
+		return assetListAssetEntryProvider.getAssetEntries(
 			this, segmentsEntryId, start, end);
 	}
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             AssetListHelper#getAssetEntries(AssetListEntry, long[])}
+	 *             AssetListAssetEntryProvider#getAssetEntries(AssetListEntry,
+	 *             long[])}
 	 */
 	@Deprecated
 	public List<AssetEntry> getAssetEntries(long[] segmentsEntryIds) {
-		AssetListHelper assetListHelper = _getAssetListHelper();
+		AssetListAssetEntryProvider assetListAssetEntryProvider =
+			_getAssetListAssetEntryProvider();
 
-		return assetListHelper.getAssetEntries(this, segmentsEntryIds);
+		return assetListAssetEntryProvider.getAssetEntries(
+			this, segmentsEntryIds);
 	}
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             AssetListHelper#getAssetEntries(AssetListEntry, long[], int,
-	 *             int)}
+	 *             AssetListAssetEntryProvider#getAssetEntries(AssetListEntry,
+	 *             long[], int, int)}
 	 */
 	@Deprecated
 	public List<AssetEntry> getAssetEntries(
 		long[] segmentsEntryIds, int start, int end) {
 
-		AssetListHelper assetListHelper = _getAssetListHelper();
+		AssetListAssetEntryProvider assetListAssetEntryProvider =
+			_getAssetListAssetEntryProvider();
 
-		return assetListHelper.getAssetEntries(
+		return assetListAssetEntryProvider.getAssetEntries(
 			this, segmentsEntryIds, start, end);
 	}
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             AssetListHelper#getAssetEntriesCount(AssetListEntry, long)}
+	 *             AssetListAssetEntryProvider#getAssetEntriesCount(
+	 *             AssetListEntry, long)}
 	 */
 	@Deprecated
 	public int getAssetEntriesCount(long segmentsEntryId) {
-		AssetListHelper assetListHelper = _getAssetListHelper();
+		AssetListAssetEntryProvider assetListAssetEntryProvider =
+			_getAssetListAssetEntryProvider();
 
-		return assetListHelper.getAssetEntriesCount(this, segmentsEntryId);
+		return assetListAssetEntryProvider.getAssetEntriesCount(
+			this, segmentsEntryId);
 	}
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             AssetListHelper#getAssetEntriesCount(AssetListEntry, long[])}
+	 *             AssetListAssetEntryProvider#getAssetEntriesCount(
+	 *             AssetListEntry, long[])}
 	 */
 	@Deprecated
 	public int getAssetEntriesCount(long[] segmentsEntryIds) {
-		AssetListHelper assetListHelper = _getAssetListHelper();
+		AssetListAssetEntryProvider assetListAssetEntryProvider =
+			_getAssetListAssetEntryProvider();
 
-		return assetListHelper.getAssetEntriesCount(this, segmentsEntryIds);
+		return assetListAssetEntryProvider.getAssetEntriesCount(
+			this, segmentsEntryIds);
 	}
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             AssetListHelper#getAssetEntryQuery(AssetListEntry, long)}
+	 *             AssetListAssetEntryProvider#getAssetEntryQuery(
+	 *             AssetListEntry, long)}
 	 */
 	@Deprecated
 	public AssetEntryQuery getAssetEntryQuery(long segmentsEntryId) {
-		AssetListHelper assetListHelper = _getAssetListHelper();
+		AssetListAssetEntryProvider assetListAssetEntryProvider =
+			_getAssetListAssetEntryProvider();
 
-		return assetListHelper.getAssetEntryQuery(this, segmentsEntryId);
+		return assetListAssetEntryProvider.getAssetEntryQuery(
+			this, segmentsEntryId);
 	}
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             AssetListHelper#getAssetEntryQuery(AssetListEntry, long[])}
+	 *             AssetListAssetEntryProvider#getAssetEntryQuery(
+	 *             AssetListEntry, long[])}
 	 */
 	@Deprecated
 	public AssetEntryQuery getAssetEntryQuery(long[] segmentsEntryIds) {
-		AssetListHelper assetListHelper = _getAssetListHelper();
+		AssetListAssetEntryProvider assetListAssetEntryProvider =
+			_getAssetListAssetEntryProvider();
 
-		return assetListHelper.getAssetEntryQuery(this, segmentsEntryIds);
+		return assetListAssetEntryProvider.getAssetEntryQuery(
+			this, segmentsEntryIds);
 	}
 
 	@Override
@@ -151,19 +171,21 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 		return null;
 	}
 
-	private AssetListHelper _getAssetListHelper() {
+	private AssetListAssetEntryProvider _getAssetListAssetEntryProvider() {
 		return _serviceTracker.getService();
 	}
 
-	private static final ServiceTracker<AssetListHelper, AssetListHelper>
-		_serviceTracker;
+	private static final ServiceTracker
+		<AssetListAssetEntryProvider, AssetListAssetEntryProvider>
+			_serviceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(AssetHelper.class);
 
-		ServiceTracker<AssetListHelper, AssetListHelper> serviceTracker =
-			new ServiceTracker<>(
-				bundle.getBundleContext(), AssetListHelper.class, null);
+		ServiceTracker<AssetListAssetEntryProvider, AssetListAssetEntryProvider>
+			serviceTracker = new ServiceTracker<>(
+				bundle.getBundleContext(), AssetListAssetEntryProvider.class,
+				null);
 
 		serviceTracker.open();
 

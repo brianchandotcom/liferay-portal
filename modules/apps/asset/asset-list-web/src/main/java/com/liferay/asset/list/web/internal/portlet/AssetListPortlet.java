@@ -18,7 +18,7 @@ import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.constants.AssetListWebKeys;
 import com.liferay.asset.list.exception.AssetListEntryTitleException;
 import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
-import com.liferay.asset.list.util.AssetListHelper;
+import com.liferay.asset.list.util.AssetListAssetEntryProvider;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
@@ -188,7 +188,8 @@ public class AssetListPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(
-			AssetListWebKeys.ASSET_LIST_HELPER, _assetListHelper);
+			AssetListWebKeys.ASSET_LIST_ASSET_ENTRY_PROVIDER,
+			_assetListAssetEntryProvider);
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
@@ -205,6 +206,6 @@ public class AssetListPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	private AssetListHelper _assetListHelper;
+	private AssetListAssetEntryProvider _assetListAssetEntryProvider;
 
 }

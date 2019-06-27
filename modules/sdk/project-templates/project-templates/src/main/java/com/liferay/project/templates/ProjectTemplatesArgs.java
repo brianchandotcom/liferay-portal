@@ -40,18 +40,6 @@ public class ProjectTemplatesArgs {
 		return _author;
 	}
 
-	public String getFrameworkDependencies() {
-		return _frameworkDependencies;
-	}
-
-	public String getFramework() {
-		return _framework;
-	}
-
-	public String getViewType() {
-		return _viewType;
-	}
-
 	public String getClassName() {
 		return _className;
 	}
@@ -66,6 +54,14 @@ public class ProjectTemplatesArgs {
 
 	public File getDestinationDir() {
 		return _destinationDir;
+	}
+
+	public String getFramework() {
+		return _framework;
+	}
+
+	public String getFrameworkDependencies() {
+		return _frameworkDependencies;
 	}
 
 	public String getGroupId() {
@@ -112,6 +108,10 @@ public class ProjectTemplatesArgs {
 		return _templateVersion;
 	}
 
+	public String getViewType() {
+		return _viewType;
+	}
+
 	public boolean isDependencyManagementEnabled() {
 		return _dependencyManagementEnabled;
 	}
@@ -134,18 +134,6 @@ public class ProjectTemplatesArgs {
 
 	public void setAuthor(String author) {
 		_author = author;
-	}
-
-	public void setFramework(String framework) {
-		_framework = framework;
-	}
-
-	public void setFrameworkDependencies(String frameworkDependencies) {
-		_frameworkDependencies = frameworkDependencies;
-	}
-
-	public void setViewType(String viewType) {
-		_viewType = viewType;
 	}
 
 	public void setClassName(String className) {
@@ -172,6 +160,14 @@ public class ProjectTemplatesArgs {
 
 	public void setForce(boolean force) {
 		_force = force;
+	}
+
+	public void setFramework(String framework) {
+		_framework = framework;
+	}
+
+	public void setFrameworkDependencies(String frameworkDependencies) {
+		_frameworkDependencies = frameworkDependencies;
 	}
 
 	public void setGradle(boolean gradle) {
@@ -226,6 +222,10 @@ public class ProjectTemplatesArgs {
 		_templateVersion = templateVersion;
 	}
 
+	public void setViewType(String viewType) {
+		_viewType = viewType;
+	}
+
 	protected boolean isHelp() {
 		return _help;
 	}
@@ -242,24 +242,6 @@ public class ProjectTemplatesArgs {
 		names = "--author"
 	)
 	private String _author;
-
-	@Parameter(
-		description = "The name of the framework to use in the generated project.",
-		names = "--framework"
-	)
-	private String _framework;
-
-	@Parameter(
-		description = "Choose the way that the framework dependencies will be configured: (embedded|provided).",
-		names = "--framework-dependencies"
-	)
-	private String _frameworkDependencies;
-
-	@Parameter(
-		description = "Choose the view technology that will be used in the generated project.",
-		names = "--view-type"
-	)
-	private String _viewType;
 
 	@Parameter(
 		description = "If a class is generated, provide the name of the class to be generated. If not provided, defaults to the project name.",
@@ -296,6 +278,18 @@ public class ProjectTemplatesArgs {
 		names = "--force"
 	)
 	private boolean _force;
+
+	@Parameter(
+		description = "The name of the framework to use in the generated project.",
+		names = "--framework"
+	)
+	private String _framework;
+
+	@Parameter(
+		description = "Choose the way that the framework dependencies will be configured: (embedded|provided).",
+		names = "--framework-dependencies"
+	)
+	private String _frameworkDependencies;
 
 	@Parameter(
 		arity = 1,
@@ -384,5 +378,11 @@ public class ProjectTemplatesArgs {
 
 	@Parameter(hidden = true, names = "--template-version")
 	private String _templateVersion;
+
+	@Parameter(
+		description = "Choose the view technology that will be used in the generated project.",
+		names = "--view-type"
+	)
+	private String _viewType;
 
 }

@@ -68,7 +68,8 @@ public class ProjectGenerator {
 		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
 		String packageName = projectTemplatesArgs.getPackageName();
 		String framework = projectTemplatesArgs.getFramework();
-		String frameworkDependencies = projectTemplatesArgs.getFrameworkDependencies();
+		String frameworkDependencies =
+			projectTemplatesArgs.getFrameworkDependencies();
 		String viewType = projectTemplatesArgs.getViewType();
 
 		String template = projectTemplatesArgs.getTemplate();
@@ -149,7 +150,8 @@ public class ProjectGenerator {
 			properties, "dependencyManagementEnabled",
 			String.valueOf(dependencyManagementEnabled));
 		_setProperty(properties, "framework", framework);
-		_setProperty(properties, "frameworkDependencies", frameworkDependencies);
+		_setProperty(
+			properties, "frameworkDependencies", frameworkDependencies);
 		_setProperty(properties, "liferayVersion", liferayVersion);
 		_setProperty(properties, "package", packageName);
 		_setProperty(properties, "projectType", projectType);

@@ -91,6 +91,34 @@ public class FragmentEntryLinkServiceSoap {
 	}
 
 	public static com.liferay.fragment.model.FragmentEntryLinkSoap
+			addFragmentEntryLink(
+				long groupId, long originalFragmentEntryLinkId,
+				long fragmentEntryId, long classNameId, long classPK,
+				String css, String html, String js, String configuration,
+				String editableValues, String namespace, int position,
+				String rendererKey,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.fragment.model.FragmentEntryLink returnValue =
+				FragmentEntryLinkServiceUtil.addFragmentEntryLink(
+					groupId, originalFragmentEntryLinkId, fragmentEntryId,
+					classNameId, classPK, css, html, js, configuration,
+					editableValues, namespace, position, rendererKey,
+					serviceContext);
+
+			return com.liferay.fragment.model.FragmentEntryLinkSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.fragment.model.FragmentEntryLinkSoap
 			deleteFragmentEntryLink(long fragmentEntryLinkId)
 		throws RemoteException {
 

@@ -55,6 +55,22 @@ public class FragmentEntryLinkServiceUtil {
 	}
 
 	public static com.liferay.fragment.model.FragmentEntryLink
+			addFragmentEntryLink(
+				long groupId, long originalFragmentEntryLinkId,
+				long fragmentEntryId, long classNameId, long classPK,
+				String css, String html, String js, String configuration,
+				String editableValues, String namespace, int position,
+				String rendererKey,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addFragmentEntryLink(
+			groupId, originalFragmentEntryLinkId, fragmentEntryId, classNameId,
+			classPK, css, html, js, configuration, editableValues, namespace,
+			position, rendererKey, serviceContext);
+	}
+
+	public static com.liferay.fragment.model.FragmentEntryLink
 			deleteFragmentEntryLink(long fragmentEntryLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

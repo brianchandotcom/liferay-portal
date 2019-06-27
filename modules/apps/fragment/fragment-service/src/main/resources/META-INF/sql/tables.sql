@@ -54,7 +54,7 @@ create table FragmentEntryLink (
 	css TEXT null,
 	html TEXT null,
 	js TEXT null,
-	configuration VARCHAR(75) null,
+	configuration TEXT null,
 	editableValues TEXT null,
 	namespace VARCHAR(75) null,
 	position INTEGER,

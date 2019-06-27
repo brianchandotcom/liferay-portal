@@ -77,6 +77,14 @@ public class DeprecatedModulesUpgradeTest {
 	}
 
 	@Test
+	public void testDeprecatedModulesInvitation() throws Exception {
+		_testDeprecatedModulesUpgrade(
+			"removeInvitationModuleData", "com.liferay.invitation.web",
+			"dependencies/invitation-tables.sql",
+			"com_liferay_invitation_web_portlet_InvitationPortlet");
+	}
+
+	@Test
 	public void testDeprecatedModulesUpgradeChat() throws Exception {
 		_testDeprecatedModulesUpgrade(
 			"removeChatModuleData", "com.liferay.chat.service",
@@ -204,8 +212,8 @@ public class DeprecatedModulesUpgradeTest {
 			"DeprecatedModulesUpgradeConfiguration";
 
 	private static final String[] _SERVLET_CONTEXT_NAMES = {
-		"com.liferay.chat.service", "com.liferay.mail.reader.service",
-		"com.liferay.shopping.service",
+		"com.liferay.chat.service", "com.liferay.invitation.web",
+		"com.liferay.mail.reader.service", "com.liferay.shopping.service",
 		"com.liferay.social.privatemessaging.service",
 		"com.liferay.twitter.service"
 	};

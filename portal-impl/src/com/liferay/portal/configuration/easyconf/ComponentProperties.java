@@ -64,16 +64,12 @@ public class ComponentProperties {
 
 	public String getString(String key) {
 		Object value = _aggregatedProperties.getProperty(key);
-		String result;
 
 		if (value instanceof List) {
-			result = StringUtil.merge((List)value);
-		}
-		else {
-			result = _aggregatedProperties.getString(key);
+			return StringUtil.merge((List)value);
 		}
 
-		return result;
+		return _aggregatedProperties.getString(key);
 	}
 
 	public String getString(String key, Filter filter) {

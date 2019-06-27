@@ -40,10 +40,6 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.germinus.easyconf">
-		<priority value="ERROR" />
-	</category>
-
 	<category name="com.liferay">
 		<priority value="ERROR" />
 	</category>

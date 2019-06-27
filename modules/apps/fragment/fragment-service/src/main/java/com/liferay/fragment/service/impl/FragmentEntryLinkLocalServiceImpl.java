@@ -487,6 +487,7 @@ public class FragmentEntryLinkLocalServiceImpl
 		fragmentEntryLink.setCss(css);
 		fragmentEntryLink.setHtml(html);
 		fragmentEntryLink.setJs(js);
+		fragmentEntryLink.setConfiguration(configuration);
 		fragmentEntryLink.setEditableValues(editableValues);
 
 		if (Validator.isNotNull(namespace)) {

@@ -14,15 +14,21 @@
 
 package com.liferay.seo.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.seo.SEO;
 import com.liferay.portal.kernel.seo.SEOLink;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.seo.impl.configuration.SEOCompanyConfiguration;
+import com.liferay.seo.impl.configuration.SEOConfigurationConstants;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
@@ -37,8 +43,26 @@ public class SEOImpl implements SEO {
 
 	@Override
 	public List<SEOLink> getLocalizedSEOLinks(
-		long companyId, String canonicalURL,
-		Map<Locale, String> alternateURLs) {
+			long companyId, String canonicalURL,
+			Map<Locale, String> alternateURLs)
+		throws PortalException {
+
+		SEOCompanyConfiguration seoCompanyConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				SEOCompanyConfiguration.class, companyId);
+
+		if (Objects.equals(
+				seoCompanyConfiguration.configuration(),
+				SEOConfigurationConstants.CLASSIC)) {
+
+			return getClassicLocalizedSEOLinks(canonicalURL, alternateURLs);
+		}
+
+		return getDefaultLocalizedSEOLinks(canonicalURL, alternateURLs);
+	}
+
+	protected List<SEOLink> getClassicLocalizedSEOLinks(
+		String canonicalURL, Map<Locale, String> alternateURLs) {
 
 		List<SEOLink> seoLinks = new ArrayList<>();
 
@@ -65,6 +89,15 @@ public class SEOImpl implements SEO {
 
 		return seoLinks;
 	}
+
+	protected List<SEOLink> getDefaultLocalizedSEOLinks(
+		String canonicalURL, Map<Locale, String> alternateURLs) {
+
+		return Collections.emptyList();
+	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Html _html;

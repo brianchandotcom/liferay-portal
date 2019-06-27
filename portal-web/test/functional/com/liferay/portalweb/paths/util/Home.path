@@ -307,6 +307,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_4</td>
+	<td>//div[contains(@id,'navbar')]/ul/li[4]/a</td>
+	<td>4th Page</td>
+</tr>
+<tr>
 	<td>PAGE_TEMPLATE_3</td>
 	<td>xpath=((//div[@id='navigationCollapse'] | //div[contains(@id,'navbar')])/ul/li/a)[3]</td>
 	<td></td>

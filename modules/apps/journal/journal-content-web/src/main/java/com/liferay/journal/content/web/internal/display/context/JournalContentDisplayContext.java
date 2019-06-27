@@ -404,7 +404,9 @@ public class JournalContentDisplayContext {
 		if (Validator.isBlank(_ddmTemplateKey) ||
 			_ddmTemplateKey.equals(article.getDDMTemplateKey())) {
 
-			return article.getDDMTemplateKey();
+			_ddmTemplateKey = article.getDDMTemplateKey();
+
+			return _ddmTemplateKey;
 		}
 
 		List<DDMTemplate> ddmTemplates = getDDMTemplates();

@@ -83,6 +83,8 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 		JSONObject jsonObject = JSONUtil.put(
 			"cssPath", "index.css"
 		).put(
+			"fragmentConfigurationPath", "fragment-configuration.json"
+		).put(
 			"htmlPath", "index.html"
 		).put(
 			"jsPath", "index.js"

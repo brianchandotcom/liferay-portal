@@ -1917,6 +1917,8 @@ private String _setSystemProperty(String key, String value) {
 private void _writePom(Model model) {
 	MavenXpp3Writer mavenWriter = new MavenXpp3Writer()
 
+	mkdir(buildDir)
+
 	FileWriter fileWriter = new FileWriter(new File(buildDir, "${model.artifactId}-${model.version}.pom"))
 
 	mavenWriter.write(fileWriter, model)

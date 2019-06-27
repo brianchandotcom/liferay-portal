@@ -15,10 +15,7 @@
 package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.configuration.icon;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -29,8 +26,9 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.workflow.configuration.WorkflowDefinitionConfiguration;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerActionKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys;
-import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDefinitionVersionPermission;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDesignerPermission;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
 import java.util.Map;
@@ -90,7 +88,7 @@ public class DuplicateDefinitionPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		if (!checkPermissions()) {
+		if (!canPublishWorkflowDefinition()) {
 			return false;
 		}
 
@@ -104,18 +102,10 @@ public class DuplicateDefinitionPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		try {
-			return KaleoDefinitionVersionPermission.hasViewPermission(
-				themeDisplay.getPermissionChecker(), kaleoDefinitionVersion,
-				themeDisplay.getCompanyGroupId());
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-		}
-
-		return false;
+		return KaleoDesignerPermission.contains(
+			themeDisplay.getPermissionChecker(),
+			themeDisplay.getCompanyGroupId(),
+			KaleoDesignerActionKeys.ADD_NEW_WORKFLOW);
 	}
 
 	@Activate
@@ -129,7 +119,7 @@ public class DuplicateDefinitionPortletConfigurationIcon
 			workflowDefinitionConfiguration.companyAdministratorCanPublish();
 	}
 
-	protected boolean checkPermissions() {
+	protected boolean canPublishWorkflowDefinition() {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
@@ -152,9 +142,6 @@ public class DuplicateDefinitionPortletConfigurationIcon
 		return (KaleoDefinitionVersion)portletRequest.getAttribute(
 			KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DuplicateDefinitionPortletConfigurationIcon.class);
 
 	private boolean _companyAdministratorCanPublish;
 

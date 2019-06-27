@@ -14,8 +14,6 @@
 
 package com.liferay.portal.configuration.easyconf;
 
-import com.germinus.easyconf.Conventions;
-
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
@@ -45,13 +43,6 @@ public class ClassLoaderAggregatePropertiesUtil {
 		ClassLoaderAggregateProperties classLoaderAggregateProperties =
 			new ClassLoaderAggregateProperties(
 				classLoader, companyId, componentName);
-
-		classLoaderAggregateProperties.addGlobalFileName(
-			Conventions.GLOBAL_CONFIGURATION_FILE +
-				Conventions.PROPERTIES_EXTENSION);
-
-		classLoaderAggregateProperties.addBaseFileName(
-			componentName.concat(Conventions.PROPERTIES_EXTENSION));
 
 		if (_log.isInfoEnabled()) {
 			_log.info(

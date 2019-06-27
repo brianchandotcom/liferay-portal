@@ -67,27 +67,13 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 			_systemConfiguration, _getPrefix(), null);
 
 		setThrowExceptionOnMissing(false);
-	}
 
-	public void addBaseFileName(String fileName) {
-		URL url = _classLoader.getResource(fileName);
+		_addGlobalFileName(
+			Conventions.GLOBAL_CONFIGURATION_FILE +
+				Conventions.PROPERTIES_EXTENSION);
 
-		Configuration configuration = _addPropertiesSource(
-			fileName, url, _baseCompositeConfiguration);
-
-		if (configuration == null) {
-			throw new ConfigurationNotFoundException(
-				_componentName, "The base properties file was not found");
-		}
-		else if (configuration.isEmpty() && _log.isDebugEnabled()) {
-			_log.debug("Empty configuration " + fileName);
-		}
-	}
-
-	public void addGlobalFileName(String fileName) {
-		URL url = _classLoader.getResource(fileName);
-
-		_addPropertiesSource(fileName, url, _globalCompositeConfiguration);
+		_addBaseFileName(
+			componentName.concat(Conventions.PROPERTIES_EXTENSION));
 	}
 
 	public CompositeConfiguration getBaseConfiguration() {
@@ -199,6 +185,21 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 		return _loadedSources;
 	}
 
+	private void _addBaseFileName(String fileName) {
+		URL url = _classLoader.getResource(fileName);
+
+		Configuration configuration = _addPropertiesSource(
+			fileName, url, _baseCompositeConfiguration);
+
+		if (configuration == null) {
+			throw new ConfigurationNotFoundException(
+				_componentName, "The base properties file was not found");
+		}
+		else if (configuration.isEmpty() && _log.isDebugEnabled()) {
+			_log.debug("Empty configuration " + fileName);
+		}
+	}
+
 	private Configuration _addFileProperties(
 			String fileName,
 			CompositeConfiguration loadedCompositeConfiguration)
@@ -233,6 +234,12 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 
 			return null;
 		}
+	}
+
+	private void _addGlobalFileName(String fileName) {
+		URL url = _classLoader.getResource(fileName);
+
+		_addPropertiesSource(fileName, url, _globalCompositeConfiguration);
 	}
 
 	private void _addIncludedPropertiesSources(

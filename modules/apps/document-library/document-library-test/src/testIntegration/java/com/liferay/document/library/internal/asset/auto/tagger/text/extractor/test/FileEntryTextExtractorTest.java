@@ -17,11 +17,11 @@ package com.liferay.document.library.internal.asset.auto.tagger.text.extractor.t
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.auto.tagger.text.extractor.TextExtractor;
 import com.liferay.asset.auto.tagger.text.extractor.TextExtractorTracker;
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -44,7 +44,7 @@ import org.junit.runner.RunWith;
  * @author Alejandro Tardín
  */
 @RunWith(Arquillian.class)
-public class DLFileEntryTextExtractorTest {
+public class FileEntryTextExtractorTest {
 
 	@ClassRule
 	@Rule
@@ -60,12 +60,11 @@ public class DLFileEntryTextExtractorTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			serviceContext.getScopeGroupId(),
+		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomString(), null, null, 0, null, null,
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			new ByteArrayInputStream(bytes), bytes.length, serviceContext);
 
 		TextExtractor textExtractor = _textExtractorTracker.getTextExtractor(
@@ -73,7 +72,7 @@ public class DLFileEntryTextExtractorTest {
 
 		Assert.assertEquals(
 			content + StringPool.NEW_LINE,
-			textExtractor.extract(dlFileEntry, LocaleUtil.getDefault()));
+			textExtractor.extract(fileEntry, LocaleUtil.getDefault()));
 	}
 
 	@Inject

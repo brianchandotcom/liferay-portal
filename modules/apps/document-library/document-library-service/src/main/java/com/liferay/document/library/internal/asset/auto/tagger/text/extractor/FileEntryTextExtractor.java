@@ -15,11 +15,11 @@
 package com.liferay.document.library.internal.asset.auto.tagger.text.extractor;
 
 import com.liferay.asset.auto.tagger.text.extractor.TextExtractor;
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
-import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 
 import java.io.InputStream;
@@ -33,12 +33,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(service = TextExtractor.class)
-public class DLFileEntryTextExtractor implements TextExtractor<DLFileEntry> {
+public class FileEntryTextExtractor implements TextExtractor<FileEntry> {
 
 	@Override
-	public String extract(DLFileEntry dlFileEntry, Locale locale) {
+	public String extract(FileEntry fileEntry, Locale locale) {
 		try {
-			DLFileVersion fileVersion = dlFileEntry.getFileVersion();
+			FileVersion fileVersion = fileEntry.getFileVersion();
 
 			try (InputStream inputStream = fileVersion.getContentStream(
 					false)) {
@@ -60,6 +60,6 @@ public class DLFileEntryTextExtractor implements TextExtractor<DLFileEntry> {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DLFileEntryTextExtractor.class);
+		FileEntryTextExtractor.class);
 
 }

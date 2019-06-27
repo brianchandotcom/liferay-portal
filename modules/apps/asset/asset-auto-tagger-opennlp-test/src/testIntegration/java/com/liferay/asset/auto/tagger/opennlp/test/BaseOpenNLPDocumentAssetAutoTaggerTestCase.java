@@ -102,9 +102,42 @@ public abstract class BaseOpenNLPDocumentAssetAutoTaggerTestCase {
 			});
 	}
 
+	@Test
+	public void testDoesNotAutoTagAnAssetWhenNotEnabled() throws Exception {
+		testWithOpenNLPDocumentAssetAutoTagProviderDisabled(
+			() -> {
+				AssetEntry assetEntry = getAssetEntry(
+					new String(
+						FileUtil.getBytes(
+							getClass(), "dependencies/" + _FILE_NAME)));
+
+				Collection<String> tagNames = Arrays.asList(
+					assetEntry.getTagNames());
+
+				Assert.assertEquals(tagNames.toString(), 0, tagNames.size());
+			});
+	}
+
 	protected abstract AssetEntry getAssetEntry(String text) throws Exception;
 
 	protected abstract String getClassName();
+
+	protected void testWithOpenNLPDocumentAssetAutoTagProviderDisabled(
+			UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					_OPEN_NLP_AUTO_TAG_CONFIGURATION_PID,
+					new HashMapDictionary<String, Object>() {
+						{
+							put("enabledClassNames", new String[0]);
+						}
+					})) {
+
+			unsafeRunnable.run();
+		}
+	}
 
 	protected void testWithOpenNLPDocumentAssetAutoTagProviderEnabled(
 			String className, UnsafeRunnable<Exception> unsafeRunnable)

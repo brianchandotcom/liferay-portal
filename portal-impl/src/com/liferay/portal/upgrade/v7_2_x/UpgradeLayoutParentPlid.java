@@ -24,7 +24,9 @@ public class UpgradeLayoutParentPlid extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL("create table TEMP (plid integer, parentPlid integer)");
+		runSQL(
+			"create table TEMP (plid plid LONG NOT NULL PRIMARY KEY, " +
+			   "parentPlid LONG)");
 
 		String sql = StringBundler.concat(
 			"insert into TEMP select l1.plid as plid, l2.plid as parentPlid ",
@@ -33,8 +35,6 @@ public class UpgradeLayoutParentPlid extends UpgradeProcess {
 			"l2.layoutId");
 
 		runSQL(sql);
-
-		runSQL("create unique index IX_TEMP on TEMP (plid)");
 
 		runSQL(
 			"update Layout set parentPlid = (select coalesce(parentPlid, 0) " +

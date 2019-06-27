@@ -17,6 +17,7 @@ package com.liferay.portal.vulcan.internal.graphql.servlet;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -378,6 +379,13 @@ public class GraphQLServletExtender {
 					instance,
 					_companyLocalService.getCompany(
 						CompanyThreadLocal.getCompanyId()));
+			}
+			else if (fieldType.isAssignableFrom(User.class)) {
+				field.setAccessible(true);
+
+				field.set(
+					instance,
+					_portal.getUser(httpServletRequestOptional.orElse(null)));
 			}
 		}
 

@@ -37,7 +37,17 @@ public interface FragmentEntryProcessor {
 		return null;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
 	public default JSONObject getDefaultEditableValuesJSONObject(String html) {
+		return null;
+	}
+
+	public default JSONObject getDefaultEditableValuesJSONObject(
+		String html, String configuration) {
+
 		return null;
 	}
 

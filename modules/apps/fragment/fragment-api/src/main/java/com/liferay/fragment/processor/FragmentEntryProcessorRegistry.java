@@ -36,7 +36,16 @@ public interface FragmentEntryProcessorRegistry {
 		return null;
 	}
 
-	public JSONObject getDefaultEditableValuesJSONObject(String html);
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
+	public default JSONObject getDefaultEditableValuesJSONObject(String html) {
+		return null;
+	}
+
+	public JSONObject getDefaultEditableValuesJSONObject(
+		String html, String configuration);
 
 	public default String processFragmentEntryLinkCSS(
 			FragmentEntryLink fragmentEntryLink,

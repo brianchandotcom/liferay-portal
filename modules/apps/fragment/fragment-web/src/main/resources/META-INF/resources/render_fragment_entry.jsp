@@ -24,12 +24,14 @@ FragmentEntry fragmentEntry = FragmentEntryLocalServiceUtil.fetchFragmentEntry(f
 String css = BeanParamUtil.getString(fragmentEntry, request, "css");
 String html = BeanParamUtil.getString(fragmentEntry, request, "html");
 String js = BeanParamUtil.getString(fragmentEntry, request, "js");
+String configuration = BeanParamUtil.getString(fragmentEntry, request, "configuration");
 
 FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.createFragmentEntryLink(0);
 
 fragmentEntryLink.setCss(css);
 fragmentEntryLink.setHtml(html);
 fragmentEntryLink.setJs(js);
+fragmentEntryLink.setConfiguration(configuration);
 fragmentEntryLink.setFragmentEntryId(fragmentEntryId);
 
 DefaultFragmentRendererContext defaultFragmentRendererContext = new DefaultFragmentRendererContext(fragmentEntryLink);

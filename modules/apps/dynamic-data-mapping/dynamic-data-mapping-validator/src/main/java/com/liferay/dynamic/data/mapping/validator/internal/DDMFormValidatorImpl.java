@@ -234,10 +234,6 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 				ddmFormDefaultLocale);
 
 			validateOptionalDDMFormFieldLocalizedProperty(
-				ddmFormField, "predefinedValue", ddmFormAvailableLocales,
-				ddmFormDefaultLocale);
-
-			validateOptionalDDMFormFieldLocalizedProperty(
 				ddmFormField, "tip", ddmFormAvailableLocales,
 				ddmFormDefaultLocale);
 

@@ -53,12 +53,12 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		JSONLayout.addPublicLayout(
-			groupName = "Guest",
+			groupName = "Site Name",
 			layoutName = "Staging Test Page");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
-			groupName = "Guest",
+			groupName = "Site Name",
 			layoutName = "Staging Test Page",
 			widgetName = "Wiki");
 

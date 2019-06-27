@@ -127,22 +127,22 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		JSONLayout.addPublicLayout(
-			groupName = "Guest",
+			groupName = "Site Name",
 			layoutName = "Site Page 1");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
-			groupName = "Guest",
+			groupName = "Site Name",
 			layoutName = "Site Page 1",
 			widgetName = "Blogs");
 
 		JSONLayout.addPublicLayout(
-			groupName = "Guest",
+			groupName = "Site Name",
 			layoutName = "Site Page 2");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
-			groupName = "Guest",
+			groupName = "Site Name",
 			layoutName = "Site Page 2",
 			widgetName = "Blogs");
 

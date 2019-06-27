@@ -23,9 +23,11 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.Field;
 
@@ -33,8 +35,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.commons.configuration.AbstractFileConfiguration;
 import org.apache.commons.configuration.CompositeConfiguration;
@@ -100,6 +104,22 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 		return _componentName;
 	}
 
+	public Properties getProperties() {
+		Properties properties = new Properties();
+
+		Iterator<String> keyIterator = getKeys();
+
+		while (keyIterator.hasNext()) {
+			String key = keyIterator.next();
+
+			List<Object> list = getList(key);
+
+			properties.setProperty(key, StringUtil.merge(list));
+		}
+
+		return properties;
+	}
+
 	@Override
 	public Object getProperty(String key) {
 		Object value = null;
@@ -140,6 +160,45 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 		}
 
 		return value;
+	}
+
+	@Override
+	public String getString(String key) {
+		Object value = getProperty(key);
+
+		if (value instanceof List) {
+			return StringUtil.merge((List)value);
+		}
+
+		return super.getString(key);
+	}
+
+	public String getString(String key, Filter filter) {
+		Iterator<String> iterator = filter.filterKeyIterator(key);
+
+		while (iterator.hasNext()) {
+			String value = super.getString(iterator.next(), null);
+
+			if (value != null) {
+				return value;
+			}
+		}
+
+		return null;
+	}
+
+	public String[] getStringArray(String key, Filter filter) {
+		Iterator<String> iterator = filter.filterKeyIterator(key);
+
+		while (iterator.hasNext()) {
+			List<?> value = getList(iterator.next(), null);
+
+			if (value != null) {
+				return value.toArray(new String[0]);
+			}
+		}
+
+		return StringPool.EMPTY_ARRAY;
 	}
 
 	@Override

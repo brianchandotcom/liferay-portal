@@ -17,8 +17,7 @@ package com.liferay.portal.configuration;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.easyconf.ClassLoaderAggregateProperties;
-import com.liferay.portal.configuration.easyconf.ComponentProperties;
-import com.liferay.portal.configuration.easyconf.ComponentPropertiesUtil;
+import com.liferay.portal.configuration.easyconf.ClassLoaderAggregatePropertiesUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -77,9 +76,8 @@ public class ConfigurationImpl
 	public ConfigurationImpl(
 		ClassLoader classLoader, String name, long companyId, String webId) {
 
-		_componentProperties =
-			ComponentPropertiesUtil.createComponentProperties(
-				classLoader, webId, name);
+		_classLoaderAggregateProperties =
+			ClassLoaderAggregatePropertiesUtil.create(classLoader, webId, name);
 
 		printSources(companyId, webId);
 	}
@@ -87,10 +85,6 @@ public class ConfigurationImpl
 	@Override
 	public void addProperties(Properties properties) {
 		try {
-			ClassLoaderAggregateProperties classLoaderAggregateProperties =
-				(ClassLoaderAggregateProperties)
-					_componentProperties.toConfiguration();
-
 			Field field1 = CompositeConfiguration.class.getDeclaredField(
 				"configList");
 
@@ -99,7 +93,8 @@ public class ConfigurationImpl
 			// Add to configList of base conf
 
 			List<Configuration> configurations =
-				(List<Configuration>)field1.get(classLoaderAggregateProperties);
+				(List<Configuration>)field1.get(
+					_classLoaderAggregateProperties);
 
 			MapConfiguration newConfiguration = new MapConfiguration(
 				_castPropertiesToMap(properties));
@@ -111,7 +106,7 @@ public class ConfigurationImpl
 			// Add to configList of AggregatedProperties itself
 
 			CompositeConfiguration compositeConfiguration =
-				classLoaderAggregateProperties.getBaseConfiguration();
+				_classLoaderAggregateProperties.getBaseConfiguration();
 
 			configurations = (List<Configuration>)field1.get(
 				compositeConfiguration);
@@ -142,7 +137,7 @@ public class ConfigurationImpl
 		Object value = _configurationCache.get(key);
 
 		if (value == null) {
-			value = _componentProperties.getProperty(key);
+			value = _classLoaderAggregateProperties.getProperty(key);
 
 			if (value == null) {
 				value = _nullValue;
@@ -163,7 +158,7 @@ public class ConfigurationImpl
 		Object value = _configurationCache.get(key);
 
 		if (value == null) {
-			value = _componentProperties.getString(key);
+			value = _classLoaderAggregateProperties.getString(key);
 
 			if (value == null) {
 				value = _nullValue;
@@ -193,7 +188,7 @@ public class ConfigurationImpl
 		}
 
 		if (value == null) {
-			value = _componentProperties.getString(key, filter);
+			value = _classLoaderAggregateProperties.getString(key, filter);
 
 			if (filterCacheKey != null) {
 				if (value == null) {
@@ -216,7 +211,8 @@ public class ConfigurationImpl
 		Object value = _configurationArrayCache.get(key);
 
 		if (value == null) {
-			String[] array = _componentProperties.getStringArray(key);
+			String[] array = _classLoaderAggregateProperties.getStringArray(
+				key);
 
 			value = _fixArrayValue(array);
 
@@ -241,7 +237,8 @@ public class ConfigurationImpl
 		}
 
 		if (value == null) {
-			String[] array = _componentProperties.getStringArray(key, filter);
+			String[] array = _classLoaderAggregateProperties.getStringArray(
+				key, filter);
 
 			value = _fixArrayValue(array);
 
@@ -274,10 +271,11 @@ public class ConfigurationImpl
 		Properties properties = new Properties();
 
 		Properties componentPropertiesProperties =
-			_componentProperties.getProperties();
+			_classLoaderAggregateProperties.getProperties();
 
 		for (String key : componentPropertiesProperties.stringPropertyNames()) {
-			properties.setProperty(key, _componentProperties.getString(key));
+			properties.setProperty(
+				key, _classLoaderAggregateProperties.getString(key));
 		}
 
 		_properties = properties;
@@ -295,12 +293,8 @@ public class ConfigurationImpl
 	@Override
 	public void removeProperties(Properties properties) {
 		try {
-			ClassLoaderAggregateProperties classLoaderAggregateProperties =
-				(ClassLoaderAggregateProperties)
-					_componentProperties.toConfiguration();
-
 			CompositeConfiguration compositeConfiguration =
-				classLoaderAggregateProperties.getBaseConfiguration();
+				_classLoaderAggregateProperties.getBaseConfiguration();
 
 			Field field2 = CompositeConfiguration.class.getDeclaredField(
 				"configList");
@@ -326,7 +320,7 @@ public class ConfigurationImpl
 				if (mapConfiguration.getMap() == (Map<?, ?>)properties) {
 					itr.remove();
 
-					classLoaderAggregateProperties.removeConfiguration(
+					_classLoaderAggregateProperties.removeConfiguration(
 						configuration);
 				}
 			}
@@ -342,13 +336,13 @@ public class ConfigurationImpl
 
 	@Override
 	public void set(String key, String value) {
-		_componentProperties.setProperty(key, value);
+		_classLoaderAggregateProperties.setProperty(key, value);
 
 		clearCache();
 	}
 
 	protected void printSources(long companyId, String webId) {
-		List<String> sources = _componentProperties.getLoadedSources();
+		List<String> sources = _classLoaderAggregateProperties.loadedSources();
 
 		for (int i = sources.size() - 1; i >= 0; i--) {
 			String source = sources.get(i);
@@ -432,7 +426,8 @@ public class ConfigurationImpl
 
 	private static final Object _nullValue = new Object();
 
-	private final ComponentProperties _componentProperties;
+	private final ClassLoaderAggregateProperties
+		_classLoaderAggregateProperties;
 	private final Map<String, Object> _configurationArrayCache =
 		new ConcurrentHashMap<>();
 	private final Map<String, Object> _configurationCache =

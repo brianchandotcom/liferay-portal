@@ -35,9 +35,9 @@ import org.apache.commons.configuration.Configuration;
 /**
  * @author Shuyang Zhou
  */
-public class ComponentPropertiesUtil {
+public class ClassLoaderAggregatePropertiesUtil {
 
-	public static ComponentProperties createComponentProperties(
+	public static ClassLoaderAggregateProperties create(
 		ClassLoader classLoader, String companyId, String componentName) {
 
 		SystemProperties.set("base.path", ".");
@@ -62,7 +62,7 @@ public class ComponentPropertiesUtil {
 
 		_loadEnvOverrides(classLoaderAggregateProperties);
 
-		return new ComponentProperties(classLoaderAggregateProperties);
+		return classLoaderAggregateProperties;
 	}
 
 	private static String _decode(String s) {
@@ -144,7 +144,7 @@ public class ComponentPropertiesUtil {
 	private static final String _ENV_OVERRIDE_PREFIX = "LIFERAY_";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ComponentPropertiesUtil.class);
+		ClassLoaderAggregatePropertiesUtil.class);
 
 	private static final Map<String, Character> _charPoolChars;
 

@@ -50,6 +50,7 @@ import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -1303,6 +1304,8 @@ public class Query {
 
 		blogPostingResource.setContextAcceptLanguage(_acceptLanguage);
 		blogPostingResource.setContextCompany(_company);
+
+		blogPostingResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
@@ -1311,12 +1314,16 @@ public class Query {
 
 		blogPostingImageResource.setContextAcceptLanguage(_acceptLanguage);
 		blogPostingImageResource.setContextCompany(_company);
+
+		blogPostingImageResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(CommentResource commentResource)
 		throws Exception {
 
 		commentResource.setContextAcceptLanguage(_acceptLanguage);
+		commentResource.setContextCompany(_company);
+
 		commentResource.setContextCompany(_company);
 	}
 
@@ -1326,6 +1333,8 @@ public class Query {
 
 		contentSetElementResource.setContextAcceptLanguage(_acceptLanguage);
 		contentSetElementResource.setContextCompany(_company);
+
+		contentSetElementResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
@@ -1334,12 +1343,16 @@ public class Query {
 
 		contentStructureResource.setContextAcceptLanguage(_acceptLanguage);
 		contentStructureResource.setContextCompany(_company);
+
+		contentStructureResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(DocumentResource documentResource)
 		throws Exception {
 
 		documentResource.setContextAcceptLanguage(_acceptLanguage);
+		documentResource.setContextCompany(_company);
+
 		documentResource.setContextCompany(_company);
 	}
 
@@ -1349,6 +1362,8 @@ public class Query {
 
 		documentFolderResource.setContextAcceptLanguage(_acceptLanguage);
 		documentFolderResource.setContextCompany(_company);
+
+		documentFolderResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
@@ -1356,6 +1371,8 @@ public class Query {
 		throws Exception {
 
 		knowledgeBaseArticleResource.setContextAcceptLanguage(_acceptLanguage);
+		knowledgeBaseArticleResource.setContextCompany(_company);
+
 		knowledgeBaseArticleResource.setContextCompany(_company);
 	}
 
@@ -1366,6 +1383,8 @@ public class Query {
 		knowledgeBaseAttachmentResource.setContextAcceptLanguage(
 			_acceptLanguage);
 		knowledgeBaseAttachmentResource.setContextCompany(_company);
+
+		knowledgeBaseAttachmentResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
@@ -1373,6 +1392,8 @@ public class Query {
 		throws Exception {
 
 		knowledgeBaseFolderResource.setContextAcceptLanguage(_acceptLanguage);
+		knowledgeBaseFolderResource.setContextCompany(_company);
+
 		knowledgeBaseFolderResource.setContextCompany(_company);
 	}
 
@@ -1383,6 +1404,8 @@ public class Query {
 		messageBoardAttachmentResource.setContextAcceptLanguage(
 			_acceptLanguage);
 		messageBoardAttachmentResource.setContextCompany(_company);
+
+		messageBoardAttachmentResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
@@ -1390,6 +1413,8 @@ public class Query {
 		throws Exception {
 
 		messageBoardMessageResource.setContextAcceptLanguage(_acceptLanguage);
+		messageBoardMessageResource.setContextCompany(_company);
+
 		messageBoardMessageResource.setContextCompany(_company);
 	}
 
@@ -1399,6 +1424,8 @@ public class Query {
 
 		messageBoardSectionResource.setContextAcceptLanguage(_acceptLanguage);
 		messageBoardSectionResource.setContextCompany(_company);
+
+		messageBoardSectionResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
@@ -1406,6 +1433,8 @@ public class Query {
 		throws Exception {
 
 		messageBoardThreadResource.setContextAcceptLanguage(_acceptLanguage);
+		messageBoardThreadResource.setContextCompany(_company);
+
 		messageBoardThreadResource.setContextCompany(_company);
 	}
 
@@ -1415,6 +1444,8 @@ public class Query {
 
 		structuredContentResource.setContextAcceptLanguage(_acceptLanguage);
 		structuredContentResource.setContextCompany(_company);
+
+		structuredContentResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
@@ -1423,6 +1454,8 @@ public class Query {
 
 		structuredContentFolderResource.setContextAcceptLanguage(
 			_acceptLanguage);
+		structuredContentFolderResource.setContextCompany(_company);
+
 		structuredContentFolderResource.setContextCompany(_company);
 	}
 
@@ -1461,5 +1494,6 @@ public class Query {
 
 	private AcceptLanguage _acceptLanguage;
 	private Company _company;
+	private User _user;
 
 }

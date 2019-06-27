@@ -18,6 +18,7 @@ import com.liferay.headless.admin.user.dto.v1_0.Segment;
 import com.liferay.headless.admin.user.resource.v1_0.SegmentResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -102,6 +103,10 @@ public abstract class BaseSegmentResourceImpl implements SegmentResource {
 		this.contextCompany = contextCompany;
 	}
 
+	public void setContextUser(User contextUser) {
+		this.contextUser = contextUser;
+	}
+
 	protected void preparePatch(Segment segment, Segment existingSegment) {
 	}
 
@@ -141,5 +146,8 @@ public abstract class BaseSegmentResourceImpl implements SegmentResource {
 
 	@Context
 	protected UriInfo contextUriInfo;
+
+	@Context
+	protected User contextUser;
 
 }

@@ -252,6 +252,13 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 	public void testGetMessageBoardMessageMessageBoardAttachmentsPage()
 		throws Exception {
 
+		Page<MessageBoardAttachment> page =
+			messageBoardAttachmentResource.
+				getMessageBoardMessageMessageBoardAttachmentsPage(
+					testGetMessageBoardMessageMessageBoardAttachmentsPage_getMessageBoardMessageId());
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long messageBoardMessageId =
 			testGetMessageBoardMessageMessageBoardAttachmentsPage_getMessageBoardMessageId();
 		Long irrelevantMessageBoardMessageId =
@@ -263,7 +270,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 					irrelevantMessageBoardMessageId,
 					randomIrrelevantMessageBoardAttachment());
 
-			Page<MessageBoardAttachment> page =
+			page =
 				messageBoardAttachmentResource.
 					getMessageBoardMessageMessageBoardAttachmentsPage(
 						irrelevantMessageBoardMessageId);
@@ -284,7 +291,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 			testGetMessageBoardMessageMessageBoardAttachmentsPage_addMessageBoardAttachment(
 				messageBoardMessageId, randomMessageBoardAttachment());
 
-		Page<MessageBoardAttachment> page =
+		page =
 			messageBoardAttachmentResource.
 				getMessageBoardMessageMessageBoardAttachmentsPage(
 					messageBoardMessageId);
@@ -359,6 +366,13 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 	public void testGetMessageBoardThreadMessageBoardAttachmentsPage()
 		throws Exception {
 
+		Page<MessageBoardAttachment> page =
+			messageBoardAttachmentResource.
+				getMessageBoardThreadMessageBoardAttachmentsPage(
+					testGetMessageBoardThreadMessageBoardAttachmentsPage_getMessageBoardThreadId());
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long messageBoardThreadId =
 			testGetMessageBoardThreadMessageBoardAttachmentsPage_getMessageBoardThreadId();
 		Long irrelevantMessageBoardThreadId =
@@ -370,7 +384,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 					irrelevantMessageBoardThreadId,
 					randomIrrelevantMessageBoardAttachment());
 
-			Page<MessageBoardAttachment> page =
+			page =
 				messageBoardAttachmentResource.
 					getMessageBoardThreadMessageBoardAttachmentsPage(
 						irrelevantMessageBoardThreadId);
@@ -391,7 +405,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 			testGetMessageBoardThreadMessageBoardAttachmentsPage_addMessageBoardAttachment(
 				messageBoardThreadId, randomMessageBoardAttachment());
 
-		Page<MessageBoardAttachment> page =
+		page =
 			messageBoardAttachmentResource.
 				getMessageBoardThreadMessageBoardAttachmentsPage(
 					messageBoardThreadId);

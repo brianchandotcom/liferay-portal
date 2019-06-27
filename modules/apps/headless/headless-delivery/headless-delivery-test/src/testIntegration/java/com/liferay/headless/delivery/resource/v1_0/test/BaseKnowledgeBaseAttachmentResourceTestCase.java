@@ -200,6 +200,13 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 	public void testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage()
 		throws Exception {
 
+		Page<KnowledgeBaseAttachment> page =
+			knowledgeBaseAttachmentResource.
+				getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
+					testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getKnowledgeBaseArticleId());
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long knowledgeBaseArticleId =
 			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getKnowledgeBaseArticleId();
 		Long irrelevantKnowledgeBaseArticleId =
@@ -211,7 +218,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 					irrelevantKnowledgeBaseArticleId,
 					randomIrrelevantKnowledgeBaseAttachment());
 
-			Page<KnowledgeBaseAttachment> page =
+			page =
 				knowledgeBaseAttachmentResource.
 					getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
 						irrelevantKnowledgeBaseArticleId);
@@ -232,7 +239,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_addKnowledgeBaseAttachment(
 				knowledgeBaseArticleId, randomKnowledgeBaseAttachment());
 
-		Page<KnowledgeBaseAttachment> page =
+		page =
 			knowledgeBaseAttachmentResource.
 				getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
 					knowledgeBaseArticleId);

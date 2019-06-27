@@ -187,6 +187,13 @@ public abstract class BaseContentSetElementResourceTestCase {
 
 	@Test
 	public void testGetContentSetContentSetElementsPage() throws Exception {
+		Page<ContentSetElement> page =
+			contentSetElementResource.getContentSetContentSetElementsPage(
+				testGetContentSetContentSetElementsPage_getContentSetId(),
+				Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long contentSetId =
 			testGetContentSetContentSetElementsPage_getContentSetId();
 		Long irrelevantContentSetId =
@@ -198,7 +205,7 @@ public abstract class BaseContentSetElementResourceTestCase {
 					irrelevantContentSetId,
 					randomIrrelevantContentSetElement());
 
-			Page<ContentSetElement> page =
+			page =
 				contentSetElementResource.getContentSetContentSetElementsPage(
 					irrelevantContentSetId, Pagination.of(1, 2));
 
@@ -218,9 +225,8 @@ public abstract class BaseContentSetElementResourceTestCase {
 			testGetContentSetContentSetElementsPage_addContentSetElement(
 				contentSetId, randomContentSetElement());
 
-		Page<ContentSetElement> page =
-			contentSetElementResource.getContentSetContentSetElementsPage(
-				contentSetId, Pagination.of(1, 2));
+		page = contentSetElementResource.getContentSetContentSetElementsPage(
+			contentSetId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -308,6 +314,15 @@ public abstract class BaseContentSetElementResourceTestCase {
 	public void testGetSiteContentSetByKeyContentSetElementsPage()
 		throws Exception {
 
+		Page<ContentSetElement> page =
+			contentSetElementResource.
+				getSiteContentSetByKeyContentSetElementsPage(
+					testGetSiteContentSetByKeyContentSetElementsPage_getSiteId(),
+					testGetSiteContentSetByKeyContentSetElementsPage_getKey(),
+					Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long siteId =
 			testGetSiteContentSetByKeyContentSetElementsPage_getSiteId();
 		Long irrelevantSiteId =
@@ -322,7 +337,7 @@ public abstract class BaseContentSetElementResourceTestCase {
 					irrelevantSiteId, irrelevantKey,
 					randomIrrelevantContentSetElement());
 
-			Page<ContentSetElement> page =
+			page =
 				contentSetElementResource.
 					getSiteContentSetByKeyContentSetElementsPage(
 						irrelevantSiteId, irrelevantKey, Pagination.of(1, 2));
@@ -343,7 +358,7 @@ public abstract class BaseContentSetElementResourceTestCase {
 			testGetSiteContentSetByKeyContentSetElementsPage_addContentSetElement(
 				siteId, key, randomContentSetElement());
 
-		Page<ContentSetElement> page =
+		page =
 			contentSetElementResource.
 				getSiteContentSetByKeyContentSetElementsPage(
 					siteId, key, Pagination.of(1, 2));
@@ -451,6 +466,15 @@ public abstract class BaseContentSetElementResourceTestCase {
 	public void testGetSiteContentSetByUuidContentSetElementsPage()
 		throws Exception {
 
+		Page<ContentSetElement> page =
+			contentSetElementResource.
+				getSiteContentSetByUuidContentSetElementsPage(
+					testGetSiteContentSetByUuidContentSetElementsPage_getSiteId(),
+					testGetSiteContentSetByUuidContentSetElementsPage_getUuid(),
+					Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long siteId =
 			testGetSiteContentSetByUuidContentSetElementsPage_getSiteId();
 		Long irrelevantSiteId =
@@ -466,7 +490,7 @@ public abstract class BaseContentSetElementResourceTestCase {
 					irrelevantSiteId, irrelevantUuid,
 					randomIrrelevantContentSetElement());
 
-			Page<ContentSetElement> page =
+			page =
 				contentSetElementResource.
 					getSiteContentSetByUuidContentSetElementsPage(
 						irrelevantSiteId, irrelevantUuid, Pagination.of(1, 2));
@@ -487,7 +511,7 @@ public abstract class BaseContentSetElementResourceTestCase {
 			testGetSiteContentSetByUuidContentSetElementsPage_addContentSetElement(
 				siteId, uuid, randomContentSetElement());
 
-		Page<ContentSetElement> page =
+		page =
 			contentSetElementResource.
 				getSiteContentSetByUuidContentSetElementsPage(
 					siteId, uuid, Pagination.of(1, 2));

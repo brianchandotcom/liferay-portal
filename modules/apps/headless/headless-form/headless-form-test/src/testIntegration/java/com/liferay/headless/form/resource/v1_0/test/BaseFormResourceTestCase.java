@@ -213,6 +213,11 @@ public abstract class BaseFormResourceTestCase {
 
 	@Test
 	public void testGetSiteFormsPage() throws Exception {
+		Page<Form> page = formResource.getSiteFormsPage(
+			testGetSiteFormsPage_getSiteId(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long siteId = testGetSiteFormsPage_getSiteId();
 		Long irrelevantSiteId = testGetSiteFormsPage_getIrrelevantSiteId();
 
@@ -220,7 +225,7 @@ public abstract class BaseFormResourceTestCase {
 			Form irrelevantForm = testGetSiteFormsPage_addForm(
 				irrelevantSiteId, randomIrrelevantForm());
 
-			Page<Form> page = formResource.getSiteFormsPage(
+			page = formResource.getSiteFormsPage(
 				irrelevantSiteId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -234,8 +239,7 @@ public abstract class BaseFormResourceTestCase {
 
 		Form form2 = testGetSiteFormsPage_addForm(siteId, randomForm());
 
-		Page<Form> page = formResource.getSiteFormsPage(
-			siteId, Pagination.of(1, 2));
+		page = formResource.getSiteFormsPage(siteId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 

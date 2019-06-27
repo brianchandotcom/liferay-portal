@@ -18,6 +18,7 @@ import com.liferay.bulk.rest.dto.v1_0.Status;
 import com.liferay.bulk.rest.resource.v1_0.StatusResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -59,6 +60,10 @@ public abstract class BaseStatusResourceImpl implements StatusResource {
 		this.contextCompany = contextCompany;
 	}
 
+	public void setContextUser(User contextUser) {
+		this.contextUser = contextUser;
+	}
+
 	protected void preparePatch(Status status, Status existingStatus) {
 	}
 
@@ -98,5 +103,8 @@ public abstract class BaseStatusResourceImpl implements StatusResource {
 
 	@Context
 	protected UriInfo contextUriInfo;
+
+	@Context
+	protected User contextUser;
 
 }

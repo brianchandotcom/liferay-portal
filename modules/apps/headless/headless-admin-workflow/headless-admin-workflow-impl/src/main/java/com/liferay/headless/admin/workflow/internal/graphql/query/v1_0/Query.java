@@ -21,6 +21,7 @@ import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowTaskResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -178,6 +179,8 @@ public class Query {
 
 		workflowLogResource.setContextAcceptLanguage(_acceptLanguage);
 		workflowLogResource.setContextCompany(_company);
+
+		workflowLogResource.setContextCompany(_company);
 	}
 
 	private void _populateResourceContext(
@@ -185,6 +188,8 @@ public class Query {
 		throws Exception {
 
 		workflowTaskResource.setContextAcceptLanguage(_acceptLanguage);
+		workflowTaskResource.setContextCompany(_company);
+
 		workflowTaskResource.setContextCompany(_company);
 	}
 
@@ -195,5 +200,6 @@ public class Query {
 
 	private AcceptLanguage _acceptLanguage;
 	private Company _company;
+	private User _user;
 
 }

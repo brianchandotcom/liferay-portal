@@ -202,6 +202,12 @@ public abstract class BaseEmailAddressResourceTestCase {
 
 	@Test
 	public void testGetOrganizationEmailAddressesPage() throws Exception {
+		Page<EmailAddress> page =
+			emailAddressResource.getOrganizationEmailAddressesPage(
+				testGetOrganizationEmailAddressesPage_getOrganizationId());
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long organizationId =
 			testGetOrganizationEmailAddressesPage_getOrganizationId();
 		Long irrelevantOrganizationId =
@@ -212,9 +218,8 @@ public abstract class BaseEmailAddressResourceTestCase {
 				testGetOrganizationEmailAddressesPage_addEmailAddress(
 					irrelevantOrganizationId, randomIrrelevantEmailAddress());
 
-			Page<EmailAddress> page =
-				emailAddressResource.getOrganizationEmailAddressesPage(
-					irrelevantOrganizationId);
+			page = emailAddressResource.getOrganizationEmailAddressesPage(
+				irrelevantOrganizationId);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -232,9 +237,8 @@ public abstract class BaseEmailAddressResourceTestCase {
 			testGetOrganizationEmailAddressesPage_addEmailAddress(
 				organizationId, randomEmailAddress());
 
-		Page<EmailAddress> page =
-			emailAddressResource.getOrganizationEmailAddressesPage(
-				organizationId);
+		page = emailAddressResource.getOrganizationEmailAddressesPage(
+			organizationId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -269,6 +273,12 @@ public abstract class BaseEmailAddressResourceTestCase {
 
 	@Test
 	public void testGetUserAccountEmailAddressesPage() throws Exception {
+		Page<EmailAddress> page =
+			emailAddressResource.getUserAccountEmailAddressesPage(
+				testGetUserAccountEmailAddressesPage_getUserAccountId());
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long userAccountId =
 			testGetUserAccountEmailAddressesPage_getUserAccountId();
 		Long irrelevantUserAccountId =
@@ -279,9 +289,8 @@ public abstract class BaseEmailAddressResourceTestCase {
 				testGetUserAccountEmailAddressesPage_addEmailAddress(
 					irrelevantUserAccountId, randomIrrelevantEmailAddress());
 
-			Page<EmailAddress> page =
-				emailAddressResource.getUserAccountEmailAddressesPage(
-					irrelevantUserAccountId);
+			page = emailAddressResource.getUserAccountEmailAddressesPage(
+				irrelevantUserAccountId);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -299,9 +308,8 @@ public abstract class BaseEmailAddressResourceTestCase {
 			testGetUserAccountEmailAddressesPage_addEmailAddress(
 				userAccountId, randomEmailAddress());
 
-		Page<EmailAddress> page =
-			emailAddressResource.getUserAccountEmailAddressesPage(
-				userAccountId);
+		page = emailAddressResource.getUserAccountEmailAddressesPage(
+			userAccountId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 

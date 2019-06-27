@@ -19,6 +19,7 @@ import com.liferay.bulk.rest.dto.v1_0.Selection;
 import com.liferay.bulk.rest.resource.v1_0.SelectionResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -65,6 +66,10 @@ public abstract class BaseSelectionResourceImpl implements SelectionResource {
 		this.contextCompany = contextCompany;
 	}
 
+	public void setContextUser(User contextUser) {
+		this.contextUser = contextUser;
+	}
+
 	protected void preparePatch(
 		Selection selection, Selection existingSelection) {
 	}
@@ -105,5 +110,8 @@ public abstract class BaseSelectionResourceImpl implements SelectionResource {
 
 	@Context
 	protected UriInfo contextUriInfo;
+
+	@Context
+	protected User contextUser;
 
 }

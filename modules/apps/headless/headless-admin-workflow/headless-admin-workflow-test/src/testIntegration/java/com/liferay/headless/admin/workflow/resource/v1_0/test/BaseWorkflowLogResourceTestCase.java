@@ -206,6 +206,13 @@ public abstract class BaseWorkflowLogResourceTestCase {
 
 	@Test
 	public void testGetWorkflowTaskWorkflowLogsPage() throws Exception {
+		Page<WorkflowLog> page =
+			workflowLogResource.getWorkflowTaskWorkflowLogsPage(
+				testGetWorkflowTaskWorkflowLogsPage_getWorkflowTaskId(),
+				Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
 		Long workflowTaskId =
 			testGetWorkflowTaskWorkflowLogsPage_getWorkflowTaskId();
 		Long irrelevantWorkflowTaskId =
@@ -216,9 +223,8 @@ public abstract class BaseWorkflowLogResourceTestCase {
 				testGetWorkflowTaskWorkflowLogsPage_addWorkflowLog(
 					irrelevantWorkflowTaskId, randomIrrelevantWorkflowLog());
 
-			Page<WorkflowLog> page =
-				workflowLogResource.getWorkflowTaskWorkflowLogsPage(
-					irrelevantWorkflowTaskId, Pagination.of(1, 2));
+			page = workflowLogResource.getWorkflowTaskWorkflowLogsPage(
+				irrelevantWorkflowTaskId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -236,9 +242,8 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			testGetWorkflowTaskWorkflowLogsPage_addWorkflowLog(
 				workflowTaskId, randomWorkflowLog());
 
-		Page<WorkflowLog> page =
-			workflowLogResource.getWorkflowTaskWorkflowLogsPage(
-				workflowTaskId, Pagination.of(1, 2));
+		page = workflowLogResource.getWorkflowTaskWorkflowLogsPage(
+			workflowTaskId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 

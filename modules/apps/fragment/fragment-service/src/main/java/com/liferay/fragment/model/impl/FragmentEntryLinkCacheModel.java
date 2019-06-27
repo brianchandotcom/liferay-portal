@@ -67,7 +67,7 @@ public class FragmentEntryLinkCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -99,6 +99,8 @@ public class FragmentEntryLinkCacheModel
 		sb.append(html);
 		sb.append(", js=");
 		sb.append(js);
+		sb.append(", configuration=");
+		sb.append(configuration);
 		sb.append(", editableValues=");
 		sb.append(editableValues);
 		sb.append(", namespace=");
@@ -181,6 +183,13 @@ public class FragmentEntryLinkCacheModel
 			fragmentEntryLinkImpl.setJs(js);
 		}
 
+		if (configuration == null) {
+			fragmentEntryLinkImpl.setConfiguration("");
+		}
+		else {
+			fragmentEntryLinkImpl.setConfiguration(configuration);
+		}
+
 		if (editableValues == null) {
 			fragmentEntryLinkImpl.setEditableValues("");
 		}
@@ -249,6 +258,7 @@ public class FragmentEntryLinkCacheModel
 		css = objectInput.readUTF();
 		html = objectInput.readUTF();
 		js = objectInput.readUTF();
+		configuration = objectInput.readUTF();
 		editableValues = objectInput.readUTF();
 		namespace = objectInput.readUTF();
 
@@ -314,6 +324,13 @@ public class FragmentEntryLinkCacheModel
 			objectOutput.writeUTF(js);
 		}
 
+		if (configuration == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(configuration);
+		}
+
 		if (editableValues == null) {
 			objectOutput.writeUTF("");
 		}
@@ -356,6 +373,7 @@ public class FragmentEntryLinkCacheModel
 	public String css;
 	public String html;
 	public String js;
+	public String configuration;
 	public String editableValues;
 	public String namespace;
 	public int position;

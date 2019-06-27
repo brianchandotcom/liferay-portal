@@ -321,6 +321,21 @@ public interface FragmentEntryLinkModel
 	public void setJs(String js);
 
 	/**
+	 * Returns the configuration of this fragment entry link.
+	 *
+	 * @return the configuration of this fragment entry link
+	 */
+	@AutoEscape
+	public String getConfiguration();
+
+	/**
+	 * Sets the configuration of this fragment entry link.
+	 *
+	 * @param configuration the configuration of this fragment entry link
+	 */
+	public void setConfiguration(String configuration);
+
+	/**
 	 * Returns the editable values of this fragment entry link.
 	 *
 	 * @return the editable values of this fragment entry link

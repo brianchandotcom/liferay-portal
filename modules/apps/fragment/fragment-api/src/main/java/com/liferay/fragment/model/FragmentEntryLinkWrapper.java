@@ -62,6 +62,7 @@ public class FragmentEntryLinkWrapper
 		attributes.put("css", getCss());
 		attributes.put("html", getHtml());
 		attributes.put("js", getJs());
+		attributes.put("configuration", getConfiguration());
 		attributes.put("editableValues", getEditableValues());
 		attributes.put("namespace", getNamespace());
 		attributes.put("position", getPosition());
@@ -165,6 +166,12 @@ public class FragmentEntryLinkWrapper
 			setJs(js);
 		}
 
+		String configuration = (String)attributes.get("configuration");
+
+		if (configuration != null) {
+			setConfiguration(configuration);
+		}
+
 		String editableValues = (String)attributes.get("editableValues");
 
 		if (editableValues != null) {
@@ -240,6 +247,16 @@ public class FragmentEntryLinkWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
+	}
+
+	/**
+	 * Returns the configuration of this fragment entry link.
+	 *
+	 * @return the configuration of this fragment entry link
+	 */
+	@Override
+	public String getConfiguration() {
+		return model.getConfiguration();
 	}
 
 	/**
@@ -487,6 +504,16 @@ public class FragmentEntryLinkWrapper
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
+	}
+
+	/**
+	 * Sets the configuration of this fragment entry link.
+	 *
+	 * @param configuration the configuration of this fragment entry link
+	 */
+	@Override
+	public void setConfiguration(String configuration) {
+		model.setConfiguration(configuration);
 	}
 
 	/**

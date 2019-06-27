@@ -75,6 +75,7 @@
 		<field name="js" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="configuration" type="String" />
 		<field name="editableValues" type="String">
 			<hint-collection name="CLOB" />
 		</field>

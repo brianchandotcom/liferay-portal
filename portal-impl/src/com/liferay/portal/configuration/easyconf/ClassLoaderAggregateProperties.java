@@ -80,10 +80,6 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 		return _baseCompositeConfiguration;
 	}
 
-	public String getComponentName() {
-		return _componentName;
-	}
-
 	public Properties getProperties() {
 		Properties properties = new Properties();
 

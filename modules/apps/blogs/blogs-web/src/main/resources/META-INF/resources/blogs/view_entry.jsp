@@ -35,7 +35,7 @@ long entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
 
 String entryTitle = BlogsEntryUtil.getDisplayTitle(resourceBundle, entry);
 
-AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(BlogsEntry.class.getName(), entry.getEntryId());
+AssetEntry assetEntry = BlogsEntryAssetEntryUtil.getAssetEntry(request, entry);
 
 AssetEntryServiceUtil.incrementViewCounter(assetEntry);
 

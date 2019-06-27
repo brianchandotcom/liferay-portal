@@ -98,7 +98,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 								<c:if test="<%= blogsPortletInstanceConfiguration.enableViewCount() %>">
 
 									<%
-									AssetEntry assetEntry = _getAssetEntry(request, entry);
+									AssetEntry assetEntry = BlogsEntryAssetEntryUtil.getAssetEntry(request, entry);
 									%>
 
 									- <liferay-ui:message arguments="<%= assetEntry.getViewCount() %>" key='<%= (assetEntry.getViewCount() == 1) ? "x-view" : "x-views" %>' />
@@ -166,7 +166,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 					<div class="entry-links">
 
 						<%
-						AssetEntry assetEntry = _getAssetEntry(request, entry);
+						AssetEntry assetEntry = BlogsEntryAssetEntryUtil.getAssetEntry(request, entry);
 						%>
 
 						<liferay-asset:asset-links
@@ -202,17 +202,3 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 
 	</c:otherwise>
 </c:choose>
-
-<%!
-private AssetEntry _getAssetEntry(HttpServletRequest request, BlogsEntry entry) throws PortalException, SystemException {
-	AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp-assetEntry");
-
-	if (assetEntry == null) {
-		assetEntry = AssetEntryLocalServiceUtil.getEntry(BlogsEntry.class.getName(), entry.getEntryId());
-
-		request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
-	}
-
-	return assetEntry;
-}
-%>

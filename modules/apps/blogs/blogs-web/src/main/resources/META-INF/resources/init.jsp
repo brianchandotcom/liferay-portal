@@ -77,6 +77,7 @@ page import="com.liferay.blogs.web.internal.servlet.taglib.clay.BlogsEntryVertic
 page import="com.liferay.blogs.web.internal.servlet.taglib.util.BlogsEntryActionDropdownItemsProvider" %><%@
 page import="com.liferay.blogs.web.internal.servlet.taglib.util.BlogsEntryImageActionDropdownItemsProvider" %><%@
 page import="com.liferay.blogs.web.internal.social.SocialBookmarksUtil" %><%@
+page import="com.liferay.blogs.web.internal.util.BlogsEntryAssetEntryUtil" %><%@
 page import="com.liferay.blogs.web.internal.util.BlogsEntryUtil" %><%@
 page import="com.liferay.blogs.web.internal.util.BlogsPortletInstanceConfigurationUtil" %><%@
 page import="com.liferay.blogs.web.internal.util.BlogsUtil" %><%@

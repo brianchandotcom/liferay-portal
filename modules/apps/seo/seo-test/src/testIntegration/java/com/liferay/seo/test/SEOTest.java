@@ -15,10 +15,13 @@
 package com.liferay.seo.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.seo.SEO;
 import com.liferay.portal.kernel.seo.SEOLink;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -48,16 +51,22 @@ public class SEOTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testGetLocalizedSEOLinks() throws Exception {
-		List<SEOLink> seoLinks = _seo.getLocalizedSEOLinks(
-			TestPropsValues.getCompanyId(), _CANONICAL_URL, _alternateURLs);
+	public void testGetClassicLocalizedSEOLinks() throws Exception {
+		_testWithSEOCompanyConfiguration(
+			"classic",
+			() -> {
+				List<SEOLink> seoLinks = _seo.getLocalizedSEOLinks(
+					TestPropsValues.getCompanyId(), _CANONICAL_URL,
+					_alternateURLs);
 
-		Assert.assertEquals(
-			seoLinks.toString(), _alternateURLs.size() + 2, seoLinks.size());
+				Assert.assertEquals(
+					seoLinks.toString(), _alternateURLs.size() + 2,
+					seoLinks.size());
 
-		_assertCanonicalSEOLink(seoLinks, _CANONICAL_URL);
+				_assertCanonicalSEOLink(seoLinks, _CANONICAL_URL);
 
-		_assertAlternateSEOLinks(seoLinks, _alternateURLs);
+				_assertAlternateSEOLinks(seoLinks, _alternateURLs);
+			});
 	}
 
 	private void _assertAlternateSEOLink(
@@ -179,7 +188,27 @@ public class SEOTest {
 		return null;
 	}
 
+	private void _testWithSEOCompanyConfiguration(
+			String configuration, UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					_SEO_CONFIGURATION_PID,
+					new HashMapDictionary<String, Object>() {
+						{
+							put("configuration", configuration);
+						}
+					})) {
+
+			unsafeRunnable.run();
+		}
+	}
+
 	private static final String _CANONICAL_URL = "canonicalURL";
+
+	private static final String _SEO_CONFIGURATION_PID =
+		"com.liferay.seo.impl.configuration.SEOCompanyConfiguration";
 
 	private final Map<Locale, String> _alternateURLs =
 		new HashMap<Locale, String>() {

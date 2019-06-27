@@ -19,7 +19,6 @@ import com.liferay.oauth2.provider.scope.liferay.ScopeDescriptorLocator;
 import com.liferay.oauth2.provider.scope.spi.scope.descriptor.ScopeDescriptor;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.util.GetterUtil;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -37,12 +36,6 @@ public class ScopeDescriptorLocatorImpl implements ScopeDescriptorLocator {
 	public ScopeDescriptor getScopeDescriptor(String applicationName) {
 		ScopeDescriptor scopeDescriptor =
 			_scopeDescriptorsByApplicationName.getService(applicationName);
-
-		if ((_defaultScopeDescriptor != null) && (scopeDescriptor != null)) {
-			return (scope, locale) -> GetterUtil.getString(
-				scopeDescriptor.describeScope(scope, locale),
-				_defaultScopeDescriptor.describeScope(scope, locale));
-		}
 
 		if (scopeDescriptor == null) {
 			return _defaultScopeDescriptor;

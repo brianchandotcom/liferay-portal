@@ -199,8 +199,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 
 	private FragmentEntry _addFragmentEntry(
 			long fragmentCollectionId, String fragmentEntryKey, String name,
-			String css, String html, String js, String typeLabel,
-			boolean overwrite)
+			String css, String html, String js, String configuration,
+			String typeLabel, boolean overwrite)
 		throws Exception {
 
 		FragmentCollection fragmentCollection =
@@ -239,12 +239,13 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 
 			return _fragmentEntryService.addFragmentEntry(
 				fragmentCollection.getGroupId(), fragmentCollectionId,
-				fragmentEntryKey, name, css, html, js, type, status,
-				serviceContext);
+				fragmentEntryKey, name, css, html, js, configuration, 0, type,
+				status, serviceContext);
 		}
 
 		return _fragmentEntryService.updateFragmentEntry(
-			fragmentEntry.getFragmentEntryId(), name, css, html, js, status);
+			fragmentEntry.getFragmentEntryId(), name, css, html, js,
+			configuration, fragmentEntry.getPreviewFileEntryId(), status);
 	}
 
 	private String _getContent(ZipFile zipFile, String fileName)
@@ -494,6 +495,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 		for (Map.Entry<String, String> entry : fragmentEntries.entrySet()) {
 			String name = entry.getKey();
 			String css = StringPool.BLANK;
+			String fragmentConfiguration = StringPool.BLANK;
 			String html = StringPool.BLANK;
 			String js = StringPool.BLANK;
 			String typeLabel = StringPool.BLANK;
@@ -507,6 +509,9 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				name = jsonObject.getString("name");
 				css = _getFragmentEntryContent(
 					zipFile, entry.getValue(), jsonObject.getString("cssPath"));
+				fragmentConfiguration = _getFragmentEntryContent(
+					zipFile, entry.getValue(),
+					jsonObject.getString("fragmentConfigurationPath"));
 				html = _getFragmentEntryContent(
 					zipFile, entry.getValue(),
 					jsonObject.getString("htmlPath"));
@@ -517,7 +522,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 
 			FragmentEntry fragmentEntry = _addFragmentEntry(
 				fragmentCollectionId, entry.getKey(), name, css, html, js,
-				typeLabel, overwrite);
+				fragmentConfiguration, typeLabel, overwrite);
 
 			if (Validator.isNotNull(fragmentJSON)) {
 				if (fragmentEntry.getPreviewFileEntryId() > 0) {
@@ -589,6 +594,9 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 					return Arrays.stream(
 						new String[] {
 							path + "fragment.json",
+							path +
+								jsonObject.getString(
+									"fragmentConfigurationPath"),
 							path + jsonObject.getString("cssPath"),
 							path + jsonObject.getString("htmlPath"),
 							path + jsonObject.getString("jsPath"),

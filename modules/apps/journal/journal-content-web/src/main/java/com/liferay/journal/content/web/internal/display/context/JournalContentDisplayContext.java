@@ -385,11 +385,9 @@ public class JournalContentDisplayContext {
 			return _ddmTemplateKey;
 		}
 
-		_ddmTemplateKey =
-			_journalContentPortletInstanceConfiguration.ddmTemplateKey();
-
 		String ddmTemplateKey = ParamUtil.getString(
-			_portletRequest, "ddmTemplateKey");
+			_portletRequest, "ddmTemplateKey",
+			_journalContentPortletInstanceConfiguration.ddmTemplateKey());
 
 		if (Validator.isNotNull(ddmTemplateKey)) {
 			_ddmTemplateKey = ddmTemplateKey;

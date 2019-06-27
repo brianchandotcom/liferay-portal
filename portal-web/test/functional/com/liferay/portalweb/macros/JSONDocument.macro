@@ -36,9 +36,7 @@ definition {
 	macro addFolder {
 		var portalURL = JSONCompany.getPortalURL();
 
-		if (!(isSet(repositoryId))) {
-			var repositoryId = "20123";
-		}
+		var repositoryId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
 
 		if (!(isSet(parentFolderId))) {
 			var parentFolderId = "0";

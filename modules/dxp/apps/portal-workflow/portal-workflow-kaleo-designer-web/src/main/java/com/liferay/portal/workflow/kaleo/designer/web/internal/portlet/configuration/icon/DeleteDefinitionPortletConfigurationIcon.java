@@ -94,14 +94,14 @@ public class DeleteDefinitionPortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			portletRequest, KaleoDesignerPortletKeys.KALEO_DESIGNER,
+			portletRequest, KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW,
 			PortletRequest.ACTION_PHASE);
 
 		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "deleteKaleoDefinitionVersion");
+			ActionRequest.ACTION_NAME, "deleteWorkflowDefinition");
 		portletURL.setParameter("name", portletRequest.getParameter("name"));
 		portletURL.setParameter(
-			"draftVersion", portletRequest.getParameter("draftVersion"));
+			"version", portletRequest.getParameter("draftVersion"));
 
 		return portletURL.toString();
 	}

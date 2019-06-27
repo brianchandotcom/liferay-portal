@@ -12,6 +12,7 @@
  * details.
  */
 
+import {ItemSelectorDialog} from 'frontend-js-web';
 import {PortletBase} from 'frontend-js-web';
 
 class SharedAssets extends PortletBase {
@@ -23,39 +24,35 @@ class SharedAssets extends PortletBase {
 	}
 
 	handleFilterItemClicked(event) {
+		const itemData = event.data.item.data;
 		const namespace = this.namespace;
 		const viewAssetTypeURL = this._viewAssetTypeURL;
 
-		AUI().use('liferay-item-selector-dialog', A => {
-			var itemData = event.data.item.data;
+		if (itemData.action === 'openAssetTypesSelector') {
+			const itemSelectorDialog = new ItemSelectorDialog({
+				buttonAddLabel: Liferay.Language.get('select'),
+				eventName: namespace + 'selectAssetType',
+				title: Liferay.Language.get('select-asset-type'),
+				url: this._selectAssetTypeURL
+			});
 
-			if (itemData.action === 'openAssetTypesSelector') {
-				var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-					eventName: namespace + 'selectAssetType',
-					on: {
-						selectedItemChange(event) {
-							var selectedItem = event.newVal;
+			itemSelectorDialog.open();
 
-							if (selectedItem) {
-								var uri = viewAssetTypeURL;
+			itemSelectorDialog.on('selectedItemChange', event => {
+				const selectedItem = event.selectedItem;
 
-								uri = Liferay.Util.addParams(
-									namespace + 'className=' + selectedItem,
-									uri
-								);
+				if (selectedItem) {
+					let uri = viewAssetTypeURL;
 
-								location.href = uri;
-							}
-						}
-					},
-					'strings.add': Liferay.Language.get('select'),
-					title: Liferay.Language.get('select-asset-type'),
-					url: this._selectAssetTypeURL
-				});
+					uri = Liferay.Util.addParams(
+						namespace + 'className=' + selectedItem,
+						uri
+					);
 
-				itemSelectorDialog.open();
-			}
-		});
+					location.href = uri;
+				}
+			});
+		}
 	}
 }
 

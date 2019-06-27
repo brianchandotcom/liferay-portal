@@ -67,7 +67,8 @@ public class SAPEntryScopeDescriptorFinderRegistrator {
 			List<SAPEntryScope> sapEntryScopes = loadSAPEntryScopes(companyId);
 
 			SAPEntryScopeDescriptorFinder sapEntryScopeDescriptorFinder =
-				new SAPEntryScopeDescriptorFinder(sapEntryScopes);
+				new SAPEntryScopeDescriptorFinder(
+					sapEntryScopes, _defaultScopeDescriptor);
 
 			_scopeDescriptorServiceRegistrations.compute(
 				companyId,
@@ -240,6 +241,10 @@ public class SAPEntryScopeDescriptorFinderRegistrator {
 		SAPEntryScopeDescriptorFinderRegistrator.class);
 
 	private BundleContext _bundleContext;
+
+	@Reference(target = "(default=true)")
+	private ScopeDescriptor _defaultScopeDescriptor;
+
 	private final Set<String> _jaxRsApplicationNames =
 		Collections.newSetFromMap(new ConcurrentHashMap<>());
 	private final Map<Long, List<SAPEntryScope>> _registeredSAPEntryScopes =

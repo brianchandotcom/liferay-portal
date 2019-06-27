@@ -34,7 +34,12 @@ import java.util.Set;
 public class SAPEntryScopeDescriptorFinder
 	implements ScopeDescriptor, ScopeFinder {
 
-	public SAPEntryScopeDescriptorFinder(List<SAPEntryScope> sapEntryScopes) {
+	public SAPEntryScopeDescriptorFinder(
+		List<SAPEntryScope> sapEntryScopes,
+		ScopeDescriptor defaultScopeDescriptor) {
+
+		_defaultScopeDescriptor = defaultScopeDescriptor;
+
 		for (SAPEntryScope sapEntryScope : sapEntryScopes) {
 			SAPEntry sapEntry = sapEntryScope.getSapEntry();
 
@@ -55,7 +60,7 @@ public class SAPEntryScopeDescriptorFinder
 				_log.debug("Unable to get SAP entry scope " + scope);
 			}
 
-			return null;
+			return _defaultScopeDescriptor.describeScope(scope, locale);
 		}
 
 		return sapEntryScope.getTitle(locale);
@@ -69,6 +74,7 @@ public class SAPEntryScopeDescriptorFinder
 	private static final Log _log = LogFactoryUtil.getLog(
 		SAPEntryScopeDescriptorFinder.class);
 
+	private final ScopeDescriptor _defaultScopeDescriptor;
 	private final Map<String, SAPEntryScope> _sapEntryScopes = new HashMap<>();
 	private final Set<String> _scopes = new HashSet<>();
 

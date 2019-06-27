@@ -14,7 +14,6 @@
 
 package com.liferay.portal.configuration.easyconf;
 
-import com.germinus.easyconf.AggregatedProperties;
 import com.germinus.easyconf.ConfigurationException;
 import com.germinus.easyconf.ConfigurationNotFoundException;
 import com.germinus.easyconf.Conventions;

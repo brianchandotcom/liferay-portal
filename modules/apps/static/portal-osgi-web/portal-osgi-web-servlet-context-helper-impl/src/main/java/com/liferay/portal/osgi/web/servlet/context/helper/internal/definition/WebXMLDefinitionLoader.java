@@ -950,11 +950,8 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			return;
 		}
 
-		String className = classResource;
-
-		if (classResource.endsWith(".class")) {
-			className = classResource.substring(0, classResource.length() - 6);
-		}
+		String className = classResource.substring(
+			0, classResource.length() - 6);
 
 		className = className.replace(CharPool.SLASH, CharPool.PERIOD);
 

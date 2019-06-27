@@ -193,8 +193,7 @@ public class ConfigurationImpl
 		}
 
 		if (value == null) {
-			value = _componentProperties.getString(
-				key, getEasyConfFilter(filter));
+			value = _componentProperties.getString(key, filter);
 
 			if (filterCacheKey != null) {
 				if (value == null) {
@@ -242,8 +241,7 @@ public class ConfigurationImpl
 		}
 
 		if (value == null) {
-			String[] array = _componentProperties.getStringArray(
-				key, getEasyConfFilter(filter));
+			String[] array = _componentProperties.getStringArray(key, filter);
 
 			value = _fixArrayValue(array);
 
@@ -347,17 +345,6 @@ public class ConfigurationImpl
 		_componentProperties.setProperty(key, value);
 
 		clearCache();
-	}
-
-	protected com.germinus.easyconf.Filter getEasyConfFilter(Filter filter) {
-		com.germinus.easyconf.Filter easyConfFilter =
-			com.germinus.easyconf.Filter.by(filter.getSelectors());
-
-		if (filter.getVariables() != null) {
-			easyConfFilter.setVariables(filter.getVariables());
-		}
-
-		return easyConfFilter;
 	}
 
 	protected void printSources(long companyId, String webId) {

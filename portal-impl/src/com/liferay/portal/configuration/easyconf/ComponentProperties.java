@@ -16,9 +16,9 @@
 package com.liferay.portal.configuration.easyconf;
 
 import com.germinus.easyconf.AggregatedProperties;
-import com.germinus.easyconf.Filter;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Iterator;
@@ -77,9 +77,11 @@ public class ComponentProperties {
 	}
 
 	public String getString(String key, Filter filter) {
-		for (int i = filter.numOfSelectors(); i >= 0; i--) {
+		Iterator<String> iterator = filter.filterKeyIterator(key);
+
+		while (iterator.hasNext()) {
 			String value = _aggregatedProperties.getString(
-				key + filter.getFilterSuffix(i), null);
+				iterator.next(), null);
 
 			if (value != null) {
 				return value;
@@ -94,12 +96,14 @@ public class ComponentProperties {
 	}
 
 	public String[] getStringArray(String key, Filter filter) {
-		for (int i = filter.numOfSelectors(); i >= 0; i--) {
-			List value = _aggregatedProperties.getList(
-				key + filter.getFilterSuffix(i), null);
+		Iterator<String> iterator = filter.filterKeyIterator(key);
+
+		while (iterator.hasNext()) {
+			List<?> value = _aggregatedProperties.getList(
+				iterator.next(), null);
 
 			if (value != null) {
-				return (String[])value.toArray(new String[0]);
+				return value.toArray(new String[0]);
 			}
 		}
 

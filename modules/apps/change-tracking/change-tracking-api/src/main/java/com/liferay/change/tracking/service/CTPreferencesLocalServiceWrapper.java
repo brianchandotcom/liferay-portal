@@ -36,6 +36,13 @@ public class CTPreferencesLocalServiceWrapper
 		_ctPreferencesLocalService = ctPreferencesLocalService;
 	}
 
+	@Override
+	public com.liferay.change.tracking.model.CTPreferences addCTPreference(
+		long companyId, long userId) {
+
+		return _ctPreferencesLocalService.addCTPreference(companyId, userId);
+	}
+
 	/**
 	 * Adds the ct preferences to the database. Also notifies the appropriate model listeners.
 	 *
@@ -200,6 +207,13 @@ public class CTPreferencesLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.change.tracking.model.CTPreferences fetchCTPreferences(
+		long companyId, long userId) {
+
+		return _ctPreferencesLocalService.fetchCTPreferences(companyId, userId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -219,6 +233,13 @@ public class CTPreferencesLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctPreferencesLocalService.getCTPreferences(ctPreferencesId);
+	}
+
+	@Override
+	public com.liferay.change.tracking.model.CTPreferences getCTPreferences(
+		long companyId, long userId) {
+
+		return _ctPreferencesLocalService.getCTPreferences(companyId, userId);
 	}
 
 	/**

@@ -127,6 +127,14 @@ public class DeprecatedModulesUpgradeTest {
 			"com_liferay_twitter_web_portlet_TwitterPortlet");
 	}
 
+	@Test
+	public void testDeprecatedModulesUpgradeWYSIWYG() throws Exception {
+		_testDeprecatedModulesUpgrade(
+			"removeWYSIWYGModuleData", "com.liferay.wysiwyg.web",
+			"dependencies/wysiwyg-tables.sql",
+			"com_liferay_wysiwyg_web_portlet_WYSIWYGPortlet");
+	}
+
 	private void _testDeprecatedModulesUpgrade(
 			String propertyKey, String servletContextName, String sqlFilePath,
 			String portletPreferencePortletId)
@@ -215,7 +223,7 @@ public class DeprecatedModulesUpgradeTest {
 		"com.liferay.chat.service", "com.liferay.invitation.web",
 		"com.liferay.mail.reader.service", "com.liferay.shopping.service",
 		"com.liferay.social.privatemessaging.service",
-		"com.liferay.twitter.service"
+		"com.liferay.twitter.service", "com.liferay.wysiwyg.web"
 	};
 
 	@Inject

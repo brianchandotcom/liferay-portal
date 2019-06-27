@@ -201,12 +201,12 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
-			layoutName = "Knowledge Base Page");
+			layoutName = "Knowledge Base Display Page");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
 			groupName = "Guest",
-			layoutName = "Knowledge Base Page",
+			layoutName = "Knowledge Base Display Page",
 			widgetName = "Knowledge Base Display");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -460,12 +460,12 @@ definition {
 	test SearchKBArticleInFolderViaSearchPortlet {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
-			layoutName = "Knowledge Base Page");
+			layoutName = "Knowledge Base Display Page");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
 			groupName = "Guest",
-			layoutName = "Knowledge Base Page",
+			layoutName = "Knowledge Base Display Page",
 			widgetName = "Knowledge Base Display");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");

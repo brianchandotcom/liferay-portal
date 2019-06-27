@@ -28,7 +28,7 @@ import org.junit.Test;
 /**
  * @author Shuyang Zhou
  */
-public class ComponentPropertiesUtilTest {
+public class ClassLoaderAggregatePropertiesUtilTest {
 
 	@Test
 	public void testDecode() {
@@ -58,7 +58,8 @@ public class ComponentPropertiesUtilTest {
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
-					ComponentPropertiesUtil.class.getName(), Level.WARNING)) {
+					ClassLoaderAggregatePropertiesUtil.class.getName(),
+					Level.WARNING)) {
 
 			String s = "abc_xyz_D_-1__DEF__GH";
 
@@ -93,7 +94,7 @@ public class ComponentPropertiesUtilTest {
 
 	private static String _decode(String s) {
 		return ReflectionTestUtil.invoke(
-			ComponentPropertiesUtil.class, "_decode",
+			ClassLoaderAggregatePropertiesUtil.class, "_decode",
 			new Class<?>[] {String.class}, s);
 	}
 

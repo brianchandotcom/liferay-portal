@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.service.impl;
 
+import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.base.CTPreferencesLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 
@@ -28,4 +29,37 @@ import org.osgi.service.component.annotations.Component;
 )
 public class CTPreferencesLocalServiceImpl
 	extends CTPreferencesLocalServiceBaseImpl {
+
+	@Override
+	public CTPreferences addCTPreference(long companyId, long userId) {
+		long ctPreferencesId = counterLocalService.increment(
+			CTPreferences.class.getName());
+
+		CTPreferences ctPreferences = ctPreferencesPersistence.create(
+			ctPreferencesId);
+
+		ctPreferences.setCompanyId(companyId);
+		ctPreferences.setUserId(userId);
+
+		return ctPreferencesPersistence.update(ctPreferences);
+	}
+
+	@Override
+	public CTPreferences fetchCTPreferences(long companyId, long userId) {
+		return ctPreferencesPersistence.fetchByC_U(companyId, userId);
+	}
+
+	@Override
+	public CTPreferences getCTPreferences(long companyId, long userId) {
+		CTPreferences ctPreferences = ctPreferencesPersistence.fetchByC_U(
+			companyId, userId);
+
+		if (ctPreferences == null) {
+			ctPreferences = ctPreferencesLocalService.addCTPreference(
+				companyId, userId);
+		}
+
+		return ctPreferences;
+	}
+
 }

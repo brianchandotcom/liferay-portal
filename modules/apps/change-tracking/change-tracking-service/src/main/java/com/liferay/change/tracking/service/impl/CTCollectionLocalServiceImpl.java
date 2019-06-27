@@ -110,6 +110,9 @@ public class CTCollectionLocalServiceImpl
 		ctEntryAggregatePersistence.removeByCTCollectionId(
 			ctCollection.getCtCollectionId());
 
+		ctPreferencesPersistence.removeByCollectionId(
+			ctCollection.getCtCollectionId());
+
 		List<CTProcess> ctProcesses = ctProcessPersistence.findByCollectionId(
 			ctCollection.getCtCollectionId());
 

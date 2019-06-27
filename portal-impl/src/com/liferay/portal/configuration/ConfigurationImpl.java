@@ -184,7 +184,7 @@ public class ConfigurationImpl
 
 	@Override
 	public String get(String key, Filter filter) {
-		FilterCacheKey filterCacheKey = _buildFilterCacheKey(key, filter);
+		FilterCacheKey filterCacheKey = new FilterCacheKey(key, filter);
 
 		Object value = null;
 
@@ -233,7 +233,7 @@ public class ConfigurationImpl
 
 	@Override
 	public String[] getArray(String key, Filter filter) {
-		FilterCacheKey filterCacheKey = _buildFilterCacheKey(key, filter);
+		FilterCacheKey filterCacheKey = new FilterCacheKey(key, filter);
 
 		Object value = null;
 
@@ -408,14 +408,6 @@ public class ConfigurationImpl
 		}
 
 		return null;
-	}
-
-	private FilterCacheKey _buildFilterCacheKey(String key, Filter filter) {
-		if (filter.getVariables() != null) {
-			return null;
-		}
-
-		return new FilterCacheKey(key, filter);
 	}
 
 	private Object _fixArrayValue(String[] array) {

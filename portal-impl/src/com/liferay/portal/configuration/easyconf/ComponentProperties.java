@@ -25,9 +25,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.MapConfiguration;
 
 /**
  * @author Shuyang Zhou
@@ -79,26 +77,9 @@ public class ComponentProperties {
 	}
 
 	public String getString(String key, Filter filter) {
-		CompositeConfiguration compositeConfiguration = _aggregatedProperties;
-
 		for (int i = filter.numOfSelectors(); i >= 0; i--) {
-			MapConfiguration mapConfiguration = null;
-
-			if (filter.hasVariables()) {
-				mapConfiguration = new MapConfiguration(filter.getVariables());
-
-				compositeConfiguration = new CompositeConfiguration();
-
-				compositeConfiguration.addConfiguration(mapConfiguration);
-				compositeConfiguration.addConfiguration(_aggregatedProperties);
-			}
-
-			String value = compositeConfiguration.getString(
+			String value = _aggregatedProperties.getString(
 				key + filter.getFilterSuffix(i), null);
-
-			if (mapConfiguration != null) {
-				_aggregatedProperties.removeConfiguration(mapConfiguration);
-			}
 
 			if (value != null) {
 				return value;
@@ -113,26 +94,9 @@ public class ComponentProperties {
 	}
 
 	public String[] getStringArray(String key, Filter filter) {
-		CompositeConfiguration compositeConfiguration = _aggregatedProperties;
-
 		for (int i = filter.numOfSelectors(); i >= 0; i--) {
-			MapConfiguration mapConfiguration = null;
-
-			if (filter.hasVariables()) {
-				mapConfiguration = new MapConfiguration(filter.getVariables());
-
-				compositeConfiguration = new CompositeConfiguration();
-
-				compositeConfiguration.addConfiguration(mapConfiguration);
-				compositeConfiguration.addConfiguration(_aggregatedProperties);
-			}
-
-			List value = compositeConfiguration.getList(
+			List value = _aggregatedProperties.getList(
 				key + filter.getFilterSuffix(i), null);
-
-			if (mapConfiguration != null) {
-				_aggregatedProperties.removeConfiguration(mapConfiguration);
-			}
 
 			if (value != null) {
 				return (String[])value.toArray(new String[0]);

@@ -599,8 +599,11 @@ definition {
 			locale = "en_US",
 			textIcon = "english-United States");
 
-		WebContent.openWebContentAdmin(
-			siteURLKey = "test-site-name",
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
 			structureDescription = "WC Structure1 Description",
 			structureName = "WC Structure1 Name");
 

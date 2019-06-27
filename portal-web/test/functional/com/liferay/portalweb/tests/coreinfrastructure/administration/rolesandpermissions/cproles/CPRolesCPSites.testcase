@@ -541,7 +541,7 @@ definition {
 
 		var key_site = "${siteName}";
 
-		AssertClick.assertPartialTextClickAt(
+		AssertTextEquals.assertPartialText(
 			locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
 			value1 = "${siteName}");
 
@@ -558,7 +558,7 @@ definition {
 
 		var key_site = "Site Name";
 
-		AssertClick.assertPartialTextClickAt(
+		AssertTextEquals.assertPartialText(
 			locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
 			value1 = "Site Name");
 

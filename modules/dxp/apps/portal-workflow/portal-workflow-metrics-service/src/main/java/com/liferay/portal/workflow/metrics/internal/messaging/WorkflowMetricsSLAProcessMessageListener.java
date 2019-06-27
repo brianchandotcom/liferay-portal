@@ -100,13 +100,14 @@ public class WorkflowMetricsSLAProcessMessageListener
 			});
 		actionableDynamicQuery.setPerformActionMethod(
 			(WorkflowMetricsSLADefinition workflowMetricsSLADefinition) -> {
-				if (_backgroundTaskLocalService.getBackgroundTasksCount(
-						workflowMetricsSLADefinition.getGroupId(),
-						_getBackgroundTaskName(workflowMetricsSLADefinition),
-						WorkflowMetricsSLAProcessBackgroundTaskExecutor.class.
-							getName(),
-						false) > 0) {
+				int count = _backgroundTaskLocalService.getBackgroundTasksCount(
+					workflowMetricsSLADefinition.getGroupId(),
+					_getBackgroundTaskName(workflowMetricsSLADefinition),
+					WorkflowMetricsSLAProcessBackgroundTaskExecutor.class.
+						getName(),
+					false);
 
+				if (count > 0) {
 					return;
 				}
 

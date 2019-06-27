@@ -150,9 +150,10 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 
-			if (httpServletRequest.getAttribute(
-					SamlWebKeys.SAML_SP_IDP_CONNECTION) != null) {
+			Object samlSpIdpConnection = httpServletRequest.getAttribute(
+				SamlWebKeys.SAML_SP_IDP_CONNECTION);
 
+			if (samlSpIdpConnection != null) {
 				try {
 					login(httpServletRequest, httpServletResponse);
 				}
@@ -168,8 +169,10 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 					_samlProviderConfigurationHelper.
 						getSamlProviderConfiguration();
 
-				if ((httpServletRequest.getAttribute(
-						SamlWebKeys.SAML_SSO_LOGIN_CONTEXT) == null) &&
+				Object samlSsologinContext = httpServletRequest.getAttribute(
+					SamlWebKeys.SAML_SSO_LOGIN_CONTEXT);
+
+				if ((samlSsologinContext == null) &&
 					samlProviderConfiguration.allowShowingTheLoginPortlet()) {
 
 					filterChain.doFilter(

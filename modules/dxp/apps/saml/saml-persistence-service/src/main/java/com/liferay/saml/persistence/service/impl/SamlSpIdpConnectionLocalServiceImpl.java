@@ -57,9 +57,11 @@ public class SamlSpIdpConnectionLocalServiceImpl
 				"SAML IDP entity ID is null");
 		}
 
-		if (samlSpIdpConnectionPersistence.fetchByC_SIEI(
-				serviceContext.getCompanyId(), samlIdpEntityId) != null) {
+		SamlSpIdpConnection existingSamlSpIdpConnection =
+			samlSpIdpConnectionPersistence.fetchByC_SIEI(
+				serviceContext.getCompanyId(), samlIdpEntityId);
 
+		if (existingSamlSpIdpConnection != null) {
 			throw new DuplicateSamlSpIdpConnectionSamlIdpEntityIdException(
 				"Duplicate SAML SP IDP connection for " + samlIdpEntityId);
 		}
@@ -224,9 +226,11 @@ public class SamlSpIdpConnectionLocalServiceImpl
 				samlSpIdpConnectionId);
 
 		if (!samlIdpEntityId.equals(samlSpIdpConnection.getSamlIdpEntityId())) {
-			if (samlSpIdpConnectionPersistence.fetchByC_SIEI(
-					serviceContext.getCompanyId(), samlIdpEntityId) != null) {
+			SamlSpIdpConnection existingSamlSpIdpConnection =
+				samlSpIdpConnectionPersistence.fetchByC_SIEI(
+					serviceContext.getCompanyId(), samlIdpEntityId);
 
+			if (existingSamlSpIdpConnection != null) {
 				throw new DuplicateSamlSpIdpConnectionSamlIdpEntityIdException(
 					"Duplicate SAML SP IDP connection for " + samlIdpEntityId);
 			}

@@ -16,14 +16,11 @@ package com.liferay.project.templates.spring.mvc.portlet.internal;
 
 import com.liferay.project.templates.ProjectTemplateCustomizer;
 import com.liferay.project.templates.ProjectTemplatesArgs;
+import com.liferay.project.templates.internal.util.FileUtil;
 
 import java.io.File;
-
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import java.util.Properties;
+import java.util.regex.Pattern;
 
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
 import org.apache.maven.archetype.ArchetypeGenerationResult;
@@ -40,6 +37,45 @@ public class SpringMVCPortletProjectTemplateCustomizer
 			ProjectTemplatesArgs projectTemplatesArgs, File destinationDir,
 			ArchetypeGenerationResult archetypeGenerationResult)
 		throws Exception {
+
+		Path destinationDirPath = destinationDir.toPath();
+
+		String name = projectTemplatesArgs.getName();
+
+		Path projectPath = destinationDirPath.resolve(name);
+
+		File buildDir = projectPath.toFile();
+
+		File viewsDir = new File(buildDir, "src/main/webapp/WEB-INF/views");
+
+		String packageName = projectTemplatesArgs.getPackageName();
+
+		File spring4JavaPkgDir = new File(
+			buildDir,
+			"src/main/java/" + packageName.replaceAll("[.]", "/") +
+				"/spring4");
+
+		String viewType = projectTemplatesArgs.getViewType();
+
+		if (viewType.equals("jsp")) {
+			Pattern pattern = Pattern.compile(".*.html");
+
+			FileUtil.deleteFilesByPattern(viewsDir.toPath(), pattern);
+
+		}
+		else {
+			Pattern pattern = Pattern.compile(".*.jspx");
+
+			FileUtil.deleteFilesByPattern(viewsDir.toPath(), pattern);
+		}
+
+		String framework = projectTemplatesArgs.getFramework();
+
+		if (viewType.equals("jsp") ||
+			framework.equals("portletmvc4spring")) {
+
+			FileUtil.deleteDir(spring4JavaPkgDir.toPath());
+		}
 	}
 
 	@Override
@@ -47,66 +83,6 @@ public class SpringMVCPortletProjectTemplateCustomizer
 			ProjectTemplatesArgs projectTemplatesArgs,
 			ArchetypeGenerationRequest archetypeGenerationRequest)
 		throws Exception {
-
-		Path projectPath = Paths.get(
-			archetypeGenerationRequest.getOutputDirectory(),
-			archetypeGenerationRequest.getArtifactId());
-
-		Path buildGradlePath = projectPath.resolve("build.gradle");
-
-		Files.deleteIfExists(buildGradlePath);
-
-		File buildDir = projectPath.toFile();
-
-		File viewsDir = new File(buildDir, "src/main/webapp/WEB-INF/views");
-
-		Properties properties = archetypeGenerationRequest.getProperties();
-
-		String packageProperty = properties.getProperty("package");
-
-		File spring4JavaPkgDir = new File(
-			buildDir,
-			"src/main/java/" + packageProperty.replaceAll("[.]", "/") +
-				"/spring4");
-
-		String viewTypeProperty = properties.getProperty("viewType");
-
-		File[] viewFiles = viewsDir.listFiles();
-
-		if (viewTypeProperty.equals("jsp")) {
-			for (File viewFile : viewFiles) {
-				String viewFileName = viewFile.getName();
-
-				if (viewFileName.endsWith(".html")) {
-					viewFile.delete();
-				}
-			}
-		}
-		else {
-			for (File viewFile : viewFiles) {
-				String viewFileName = viewFile.getName();
-
-				if (viewFileName.endsWith(".jspx")) {
-					viewFile.delete();
-				}
-			}
-		}
-
-		String frameWorkProperty = properties.getProperty("framework");
-
-		File[] spring4JavaPkgFiles = spring4JavaPkgDir.listFiles();
-
-		if (viewTypeProperty.equals("jsp") ||
-			frameWorkProperty.equals("portletmvc4spring")) {
-
-			for (File spring4JavaPkgFile : spring4JavaPkgFiles) {
-				String spring4JavaPkgFileName = spring4JavaPkgDir.getName();
-
-				if (spring4JavaPkgFileName.endsWith(".java")) {
-					spring4JavaPkgFile.delete();
-				}
-			}
-		}
 	}
 
 }

@@ -1682,9 +1682,14 @@ definition {
 
 		ProductMenu.gotoSite(site = "Site Name 1");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name 1",
-			layoutName = "Search Page");
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(
+			pageName = "Search Page",
+			pageTemplateName = "Search");
 
 		Navigator.gotoSitePage(
 			pageName = "Search Page",

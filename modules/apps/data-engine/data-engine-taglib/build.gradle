@@ -15,6 +15,7 @@ dependencies {
 	compileOnly group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.1"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly project(":apps:data-engine:data-engine-rest-api")
+	compileOnly project(":apps:data-engine:data-engine-rest-client")
 	compileOnly project(":apps:data-engine:data-engine-spi")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":apps:frontend-js:frontend-js-loader-modules-extender-api")

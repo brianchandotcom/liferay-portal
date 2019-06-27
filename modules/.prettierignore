@@ -1,34 +1,57 @@
-#
-# Generated files.
-#
+##
+## Generated files
+##
 
+#
+# For the most part, these are artifacts of our installation and build
+# processes and exist only as untracked files. A small number are committed
+# to the repository, but as they are generated files the linter should
+# not touch them.
+#
 **/*.soy.js
 **/build/**/*
 **/classes/**/*
 **/css/clay/**/*
 
-#
-# Template file that needs trailing blank line.
-#
+##
+## Template files
+##
 
+#
+# This file defines the copyright headers the linter should add to any file
+# that does not have them. In order to produce the desired result when
+# prepended, it must have a trailing blank line. Prettier would remove the blank
+# line if we did not ignore it here.
+#
 /copyright.js
 
-#
-# Restricted paths.
-#
+##
+## Restricted paths
+##
 
+#
+# Any pull request that touches files under this path will be immediately closed
+# by the bot.
+#
 /modules/tests/poshi-runner/**/*
 
-#
-# Sample files.
-#
+##
+## Sample files
+##
 
+#
+# These files are empty, apart from copyright headers, which means that we need
+# to ignore them to prevent Prettier from stripping off the trailing blank line.
+#
 apps/portal-portlet-bridge/portal-portlet-bridge-soy-impl/src/test/resources/com/liferay/portal/portlet/bridge/soy/internal/dependencies/**/*.js
 apps/fragment/fragment-demo-data-creator-impl/src/main/resources/com/liferay/fragment/demo/data/creator/internal/dependencies/**/*.js
 apps/fragment/fragment-test/src/testIntegration/resources/com/liferay/fragment/dependencies/**/*.js
 
-#
-# Third-party.
-#
+##
+## Third-party
+##
 
+#
+# This is a generated third-party file, not intended for editing or inspection.
+#
 /yarn-*.js

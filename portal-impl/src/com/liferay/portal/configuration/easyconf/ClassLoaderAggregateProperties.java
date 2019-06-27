@@ -16,7 +16,6 @@ package com.liferay.portal.configuration.easyconf;
 
 import com.germinus.easyconf.ConfigurationException;
 import com.germinus.easyconf.ConfigurationNotFoundException;
-import com.germinus.easyconf.Conventions;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
@@ -68,12 +67,9 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 
 		setThrowExceptionOnMissing(false);
 
-		_addGlobalFileName(
-			Conventions.GLOBAL_CONFIGURATION_FILE +
-				Conventions.PROPERTIES_EXTENSION);
+		_addGlobalFileName("global-configuration.properties");
 
-		_addBaseFileName(
-			componentName.concat(Conventions.PROPERTIES_EXTENSION));
+		_addBaseFileName(componentName.concat(".properties"));
 	}
 
 	public CompositeConfiguration getBaseConfiguration() {
@@ -125,13 +121,11 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 			value = System.getProperty(key);
 		}
 
-		if ((value == null) && key.equals(Conventions.COMPANY_ID_PROPERTY)) {
+		if ((value == null) && key.equals("easyconf:companyId")) {
 			value = _companyId;
 		}
 
-		if ((value == null) &&
-			key.equals(Conventions.COMPONENT_NAME_PROPERTY)) {
-
+		if ((value == null) && key.equals("easyconf:componentName")) {
 			value = _componentName;
 		}
 
@@ -250,12 +244,12 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 		tempCompositeConfiguration.addConfiguration(newConfiguration);
 		tempCompositeConfiguration.addConfiguration(_systemConfiguration);
 		tempCompositeConfiguration.addProperty(
-			Conventions.COMPANY_ID_PROPERTY, _companyId);
+			"easyconf:companyId", _companyId);
 		tempCompositeConfiguration.addProperty(
-			Conventions.COMPONENT_NAME_PROPERTY, _componentName);
+			"easyconf:componentName", _componentName);
 
 		String[] fileNames = tempCompositeConfiguration.getStringArray(
-			Conventions.INCLUDE_PROPERTY);
+			"include-and-override");
 
 		ArrayUtil.reverse(fileNames);
 
@@ -385,7 +379,7 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 	}
 
 	private String _getPrefix() {
-		return _componentName.concat(Conventions.PREFIX_SEPARATOR);
+		return _componentName.concat(":");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

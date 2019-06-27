@@ -109,13 +109,6 @@ public class DDMFormDisplayExportImportTest
 		DDMFormInstance ddmFormInstance =
 			ddmFormInstanceRecord.getFormInstance();
 
-		DDMFormInstance importedDDMFormInstance =
-			DDMFormInstanceLocalServiceUtil.
-				fetchDDMFormInstanceByUuidAndGroupId(
-					ddmFormInstance.getUuid(), importedGroup.getGroupId());
-
-		Assert.assertNotNull(importedDDMFormInstance);
-
 		Map<String, String[]> preferenceMap = new HashMap<>();
 
 		preferenceMap.put(
@@ -124,6 +117,13 @@ public class DDMFormDisplayExportImportTest
 
 		PortletPreferences importedPortletPreferences =
 			getImportedPortletPreferences(preferenceMap);
+
+		DDMFormInstance importedDDMFormInstance =
+			DDMFormInstanceLocalServiceUtil.
+				fetchDDMFormInstanceByUuidAndGroupId(
+					ddmFormInstance.getUuid(), importedGroup.getGroupId());
+
+		Assert.assertNotNull(importedDDMFormInstance);
 
 		Assert.assertEquals(
 			String.valueOf(importedDDMFormInstance.getFormInstanceId()),

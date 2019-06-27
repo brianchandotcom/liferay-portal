@@ -167,46 +167,20 @@ JournalMoveEntriesDisplayContext journalMovesEntriesDisplayContext = new Journal
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script use="liferay-item-selector-dialog">
-	var selectFolderButton = document.getElementById('<portlet:namespace />selectFolderButton');
+<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcPath" value="/select_folder.jsp" />
+	<portlet:param name="folderId" value="<%= String.valueOf(journalMovesEntriesDisplayContext.getNewFolderId()) %>" />
+</portlet:renderURL>
 
-	if (selectFolderButton) {
-		selectFolderButton.addEventListener(
-			'click',
-			function(event) {
-				var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-					{
-						eventName: '<portlet:namespace />selectFolder',
-						on: {
-							selectedItemChange: function(event) {
-								var selectedItem = event.newVal;
+<%
+Map<String, Object> context = new HashMap<>();
 
-								if (selectedItem) {
-									var folderData = {
-										idString: 'newFolderId',
-										idValue: selectedItem.folderId,
-										nameString: 'folderName',
-										nameValue: selectedItem.folderName
-									};
+context.put("selectFolderButtonId", "selectFolderButton");
+context.put("selectFolderEventName", "selectFolder");
+context.put("selectFolderURL", selectFolderURL);
+%>
 
-									Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
-								}
-							}
-						},
-						'strings.add': '<liferay-ui:message key="done" />',
-						title: '<liferay-ui:message arguments="folder" key="select-x" />',
-
-						<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-							<portlet:param name="mvcPath" value="/select_folder.jsp" />
-							<portlet:param name="folderId" value="<%= String.valueOf(journalMovesEntriesDisplayContext.getNewFolderId()) %>" />
-						</portlet:renderURL>
-
-						url: '<%= selectFolderURL %>'
-					}
-				);
-
-				itemSelectorDialog.open();
-			}
-		);
-	}
-</aui:script>
+<liferay-frontend:component
+	context="<%= context %>"
+	module="js/MoveEntries.es"
+/>

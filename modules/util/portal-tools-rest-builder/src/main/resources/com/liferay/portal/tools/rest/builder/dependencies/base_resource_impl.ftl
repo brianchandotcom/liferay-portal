@@ -9,6 +9,7 @@ import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Reso
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -105,6 +106,10 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 		this.contextCompany = contextCompany;
 	}
 
+	public void setContextUser(User contextUser) {
+		this.contextUser = contextUser;
+	}
+
 	protected void preparePatch(${schemaName} ${schemaVarName}, ${schemaName} existing${schemaVarName?cap_first}) {
 	}
 
@@ -132,5 +137,8 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 
 	@Context
 	protected UriInfo contextUriInfo;
+
+	@Context
+	protected User contextUser;
 
 }

@@ -29,35 +29,32 @@ if (!themeDisplay.isSignedIn() && layout.isPublicLayout()) {
 	String completeURL = PortalUtil.getCurrentCompleteURL(request);
 
 	String canonicalURL = PortalUtil.getCanonicalURL(completeURL, themeDisplay, layout, false, false);
-%>
 
-	<link data-senna-track="temporary" href="<%= HtmlUtil.escapeAttribute(canonicalURL) %>" rel="canonical" />
-
-	<%
 	Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
+	Map<Locale, String> alternateURLs = Collections.emptyMap();
+
 	if (availableLocales.size() > 1) {
-		Map<Locale, String> alternateURLs = PortalUtil.getAlternateURLs(canonicalURL, themeDisplay, layout);
-
-		Locale defaultLocale = LocaleUtil.getDefault();
-
-		for (Map.Entry<Locale, String> entry : alternateURLs.entrySet()) {
-			Locale availableLocale = entry.getKey();
-			String alternateURL = entry.getValue();
-	%>
-
-			<c:if test="<%= availableLocale.equals(defaultLocale) %>">
-				<link data-senna-track="temporary" href="<%= HtmlUtil.escapeAttribute(canonicalURL) %>" hreflang="x-default" rel="alternate" />
-			</c:if>
-
-			<link data-senna-track="temporary" href="<%= HtmlUtil.escapeAttribute(alternateURL) %>" hreflang="<%= LocaleUtil.toW3cLanguageId(availableLocale) %>" rel="alternate" />
-
-	<%
-		}
+		alternateURLs = PortalUtil.getAlternateURLs(canonicalURL, themeDisplay, layout);
 	}
-	%>
+
+	List<SEOLink> seoLinks = SEOUtil.getLocalizedSEOLinks(canonicalURL, alternateURLs);
+
+	for (SEOLink seoLink : seoLinks) {
+		Optional<String> hrefLangOptional = seoLink.getHrefLang();
+%>
+
+		<c:choose>
+			<c:when test="<%= hrefLangOptional.isPresent() %>">
+				<link data-senna-track="<%= seoLink.getSEOLinkDataSennaTrack() %>" href="<%= seoLink.getHref() %>" hreflang="<%= hrefLangOptional.get() %>" rel="<%= seoLink.getSeoLinkRel() %>" />
+			</c:when>
+			<c:otherwise>
+				<link data-senna-track="<%= seoLink.getSEOLinkDataSennaTrack() %>" href="<%= seoLink.getHref() %>" rel="<%= seoLink.getSeoLinkRel() %>" />
+			</c:otherwise>
+		</c:choose>
 
 <%
+	}
 }
 %>
 

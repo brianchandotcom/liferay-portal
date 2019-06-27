@@ -42,7 +42,8 @@ public interface SEOCompanyConfiguration {
 		optionLabels = {"default", "classic"},
 		optionValues = {
 			SEOConfigurationConstants.DEFAULT, SEOConfigurationConstants.CLASSIC
-		}
+		},
+		required = false
 	)
 	public String configuration();
 

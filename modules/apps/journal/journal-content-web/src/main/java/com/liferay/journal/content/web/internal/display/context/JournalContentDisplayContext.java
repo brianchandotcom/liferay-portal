@@ -399,7 +399,7 @@ public class JournalContentDisplayContext {
 			return _ddmTemplateKey;
 		}
 
-		if (Validator.isBlank(_ddmTemplateKey) ||
+		if (Validator.isNull(_ddmTemplateKey) ||
 			_ddmTemplateKey.equals(article.getDDMTemplateKey())) {
 
 			_ddmTemplateKey = article.getDDMTemplateKey();

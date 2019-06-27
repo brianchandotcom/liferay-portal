@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * @author Sarai Díaz
  */
-public interface AssetListHelper {
+public interface AssetListAssetEntryProvider {
 
 	public List<AssetEntry> getAssetEntries(
 		AssetListEntry assetListEntry, long segmentsEntryId);

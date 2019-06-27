@@ -40,7 +40,7 @@ public class ScopeDescriptorImpl implements ScopeDescriptor {
 			_resourceBundleLoader.loadResourceBundle(locale);
 
 		return GetterUtil.getString(
-			ResourceBundleUtil.getString(resourceBundle, key), key);
+			ResourceBundleUtil.getString(resourceBundle, key), scope);
 	}
 
 	@Reference(

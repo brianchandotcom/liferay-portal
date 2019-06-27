@@ -213,11 +213,11 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 
 		printWriter.write("<link data-senna-track=\"permanent\" href=\"");
 
-		printWriter.write(
-			portalURL +
-				_portal.getStaticResourceURL(
-					httpServletRequest, _comboContextPath, "minifierType=css",
-					themeLastModified));
+		String staticResourceURL = _portal.getStaticResourceURL(
+			httpServletRequest, _comboContextPath, "minifierType=css",
+			themeLastModified);
+
+		printWriter.write(portalURL + staticResourceURL);
 
 		printWriter.write(_mergedCSSResourceURLs);
 	}
@@ -228,11 +228,11 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 
 		printWriter.write("<script data-senna-track=\"permanent\" src=\"");
 
-		printWriter.write(
-			portalURL +
-				_portal.getStaticResourceURL(
-					httpServletRequest, _comboContextPath, "minifierType=js",
-					themeLastModified));
+		String staticResourceURL = _portal.getStaticResourceURL(
+			httpServletRequest, _comboContextPath, "minifierType=js",
+			themeLastModified);
+
+		printWriter.write(portalURL + staticResourceURL);
 
 		printWriter.write(_mergedJSResourceURLs);
 	}

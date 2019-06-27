@@ -84,11 +84,11 @@ public abstract class BaseAlloyEditorConfigContributor
 			inputEditorTaglibAttributes.get(
 				AlloyEditorConstants.ATTRIBUTE_NAMESPACE + ":namespace"));
 
-		String name =
-			namespace +
-				GetterUtil.getString(
-					inputEditorTaglibAttributes.get(
-						AlloyEditorConstants.ATTRIBUTE_NAMESPACE + ":name"));
+		String name = GetterUtil.getString(
+			inputEditorTaglibAttributes.get(
+				AlloyEditorConstants.ATTRIBUTE_NAMESPACE + ":name"));
+
+		name = namespace + name;
 
 		jsonObject.put("srcNode", name);
 

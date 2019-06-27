@@ -1698,11 +1698,14 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		if (importPortletConfigurationAll) {
 			boolean importCurPortletConfiguration = true;
 
-			if ((manifestSummary != null) &&
-				(manifestSummary.getConfigurationPortletOptions(
-					rootPortletId) == null)) {
+			if (manifestSummary != null) {
+				String[] configurationPortletOptions =
+					manifestSummary.getConfigurationPortletOptions(
+						rootPortletId);
 
-				importCurPortletConfiguration = false;
+				if (configurationPortletOptions == null) {
+					importCurPortletConfiguration = false;
+				}
 			}
 
 			importPortletSetupControlsMap = _createAllPortletSetupControlsMap(

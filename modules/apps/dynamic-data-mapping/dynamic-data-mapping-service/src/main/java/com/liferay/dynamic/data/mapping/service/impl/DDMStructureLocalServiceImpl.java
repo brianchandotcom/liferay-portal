@@ -542,25 +542,28 @@ public class DDMStructureLocalServiceImpl
 		throws PortalException {
 
 		if (!GroupThreadLocal.isDeleteInProcess()) {
-			if (ddmStructureLinkPersistence.countByStructureId(
-					structure.getStructureId()) > 0) {
+			int count = ddmStructureLinkPersistence.countByStructureId(
+				structure.getStructureId());
 
+			if (count > 0) {
 				throw new RequiredStructureException.
 					MustNotDeleteStructureReferencedByStructureLinks(
 						structure.getStructureId());
 			}
 
-			if (ddmStructurePersistence.countByParentStructureId(
-					structure.getStructureId()) > 0) {
+			count = ddmStructurePersistence.countByParentStructureId(
+				structure.getStructureId());
 
+			if (count > 0) {
 				throw new RequiredStructureException.
 					MustNotDeleteStructureThatHasChild(
 						structure.getStructureId());
 			}
 
-			if (ddmTemplatePersistence.countByClassPK(
-					structure.getStructureId()) > 0) {
+			count = ddmTemplatePersistence.countByClassPK(
+				structure.getStructureId());
 
+			if (count > 0) {
 				throw new RequiredStructureException.
 					MustNotDeleteStructureReferencedByTemplates(
 						structure.getStructureId());

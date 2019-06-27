@@ -102,10 +102,12 @@ public class DDMDataProviderInstanceLocalServiceImpl
 		throws PortalException {
 
 		if (!GroupThreadLocal.isDeleteInProcess()) {
-			if (ddmDataProviderInstanceLinkPersistence.
+			int count =
+				ddmDataProviderInstanceLinkPersistence.
 					countByDataProviderInstanceId(
-						dataProviderInstance.getDataProviderInstanceId()) > 0) {
+						dataProviderInstance.getDataProviderInstanceId());
 
+			if (count > 0) {
 				throw new RequiredDataProviderInstanceException.
 					MustNotDeleteDataProviderInstanceReferencedByDataProviderInstanceLinks(
 						dataProviderInstance.getDataProviderInstanceId());

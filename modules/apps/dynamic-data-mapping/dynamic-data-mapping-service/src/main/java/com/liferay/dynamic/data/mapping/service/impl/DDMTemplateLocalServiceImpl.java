@@ -417,13 +417,15 @@ public class DDMTemplateLocalServiceImpl
 
 		// Template
 
-		if (!CompanyThreadLocal.isDeleteInProcess() &&
-			(ddmTemplateLinkPersistence.countByTemplateId(
-				template.getTemplateId()) > 0)) {
+		if (!CompanyThreadLocal.isDeleteInProcess()) {
+			int count = ddmTemplateLinkPersistence.countByTemplateId(
+				template.getTemplateId());
 
-			throw new RequiredTemplateException.
-				MustNotDeleteTemplateReferencedByTemplateLinks(
-					template.getTemplateId());
+			if (count > 0) {
+				throw new RequiredTemplateException.
+					MustNotDeleteTemplateReferencedByTemplateLinks(
+						template.getTemplateId());
+			}
 		}
 
 		ddmTemplatePersistence.remove(template);

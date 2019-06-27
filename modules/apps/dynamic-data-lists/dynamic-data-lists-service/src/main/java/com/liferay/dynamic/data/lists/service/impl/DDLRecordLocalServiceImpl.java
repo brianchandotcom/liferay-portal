@@ -1160,9 +1160,10 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			recordVersion.getRecordId());
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
-			if (DLUtil.compareVersions(
-					record.getVersion(), recordVersion.getVersion()) <= 0) {
+			int compare = DLUtil.compareVersions(
+				record.getVersion(), recordVersion.getVersion());
 
+			if (compare <= 0) {
 				record.setDDMStorageId(recordVersion.getDDMStorageId());
 				record.setVersion(recordVersion.getVersion());
 				record.setRecordSetId(recordVersion.getRecordSetId());

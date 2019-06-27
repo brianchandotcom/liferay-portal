@@ -103,10 +103,10 @@ public class ExportImportUserNotificationHandler
 				"the-process-referenced-by-this-notification-does-not-exist");
 		}
 
-		String message =
-			"x-" +
-				ExportImportConfigurationConstants.getTypeLabel(
-					exportImportConfiguration.getType());
+		String typeLabel = ExportImportConfigurationConstants.getTypeLabel(
+			exportImportConfiguration.getType());
+
+		String message = "x-" + typeLabel;
 
 		int status = jsonObject.getInt("status");
 

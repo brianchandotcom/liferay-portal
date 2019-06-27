@@ -45,6 +45,7 @@
 		<!-- References -->
 
 		<reference entity="CTEntry" package-path="com.liferay.change.tracking" />
+		<reference entity="CTPreferences" package-path="com.liferay.change.tracking" />
 	</entity>
 	<entity local-service="true" name="CTEntry" remote-service="false" trash-enabled="false" uuid="false">
 
@@ -160,6 +161,32 @@
 		<!-- References -->
 
 		<reference entity="CTEntry" package-path="com.liferay.change.tracking" />
+	</entity>
+	<entity local-service="true" name="CTPreferences" remote-service="false" trash-enabled="false" uuid="false">
+
+		<!-- PK fields -->
+
+		<column name="ctPreferencesId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="ctCollectionId" type="long" />
+		<column name="confirmationEnabled" type="boolean" />
+
+		<!-- Finder methods -->
+
+		<finder name="CollectionId" return-type="Collection">
+			<finder-column name="ctCollectionId" />
+		</finder>
+		<finder name="C_U" return-type="CTPreferences" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="userId" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="CTProcess" remote-service="false" trash-enabled="false" uuid="false">
 

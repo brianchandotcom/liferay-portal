@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -79,8 +80,7 @@ public class DeprecatedModulesUpgradeTest {
 	@Test
 	public void testDeprecatedModulesInvitation() throws Exception {
 		_testDeprecatedModulesUpgrade(
-			"removeInvitationModuleData", "com.liferay.invitation.web",
-			"dependencies/invitation-tables.sql",
+			"removeInvitationModuleData", "com.liferay.invitation.web", null,
 			"com_liferay_invitation_web_portlet_InvitationPortlet");
 	}
 
@@ -132,13 +132,16 @@ public class DeprecatedModulesUpgradeTest {
 			String portletPreferencePortletId)
 		throws Exception {
 
-		try (InputStream inputStream =
-				DeprecatedModulesUpgradeTest.class.getResourceAsStream(
-					sqlFilePath)) {
+		if (Validator.isNotNull(sqlFilePath)) {
+			try (InputStream inputStream =
+					DeprecatedModulesUpgradeTest.class.getResourceAsStream(
+						sqlFilePath)) {
 
-			DB db = DBManagerUtil.getDB();
+				DB db = DBManagerUtil.getDB();
 
-			db.runSQLTemplateString(StringUtil.read(inputStream), true, true);
+				db.runSQLTemplateString(
+					StringUtil.read(inputStream), true, true);
+			}
 		}
 
 		if (portletPreferencePortletId != null) {

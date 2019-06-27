@@ -15,12 +15,12 @@
 package com.liferay.change.tracking.change.lists.web.internal.display.context;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.constants.CTSettingsKeys;
 import com.liferay.change.tracking.definition.CTDefinitionRegistryUtil;
 import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
-import com.liferay.change.tracking.settings.CTSettingsManager;
+import com.liferay.change.tracking.model.CTPreferences;
+import com.liferay.change.tracking.service.CTPreferencesLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -76,7 +75,6 @@ public class ChangeListsDisplayContext {
 		_renderResponse = renderResponse;
 
 		_ctEngineManager = _ctEngineManagerServiceTracker.getService();
-		_ctSettingsManager = _ctSettingsManagerServiceTracker.getService();
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -390,11 +388,15 @@ public class ChangeListsDisplayContext {
 	}
 
 	public boolean isCheckoutCtCollectionConfirmationEnabled() {
-		return GetterUtil.getBoolean(
-			_ctSettingsManager.getUserCTSetting(
-				_themeDisplay.getUserId(),
-				CTSettingsKeys.CHECKOUT_CT_COLLECTION_CONFIRMATION_ENABLED,
-				"true"));
+		CTPreferences ctPreferences =
+			CTPreferencesLocalServiceUtil.fetchCTPreferences(
+				_themeDisplay.getCompanyId(), _themeDisplay.getUserId());
+
+		if (ctPreferences == null) {
+			return true;
+		}
+
+		return ctPreferences.isConfirmationEnabled();
 	}
 
 	private String _getFilterByStatus() {
@@ -527,8 +529,6 @@ public class ChangeListsDisplayContext {
 
 	private static ServiceTracker<CTEngineManager, CTEngineManager>
 		_ctEngineManagerServiceTracker;
-	private static ServiceTracker<CTSettingsManager, CTSettingsManager>
-		_ctSettingsManagerServiceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(CTEngineManager.class);
@@ -540,18 +540,9 @@ public class ChangeListsDisplayContext {
 		ctEngineManagerServiceTracker.open();
 
 		_ctEngineManagerServiceTracker = ctEngineManagerServiceTracker;
-
-		ServiceTracker<CTSettingsManager, CTSettingsManager>
-			ctSettingsManagerServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), CTSettingsManager.class, null);
-
-		ctSettingsManagerServiceTracker.open();
-
-		_ctSettingsManagerServiceTracker = ctSettingsManagerServiceTracker;
 	}
 
 	private final CTEngineManager _ctEngineManager;
-	private final CTSettingsManager _ctSettingsManager;
 	private String _displayStyle;
 	private String _filterByStatus;
 	private final HttpServletRequest _httpServletRequest;

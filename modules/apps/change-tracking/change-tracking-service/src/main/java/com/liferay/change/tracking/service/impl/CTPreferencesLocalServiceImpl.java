@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.service.impl;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.base.CTPreferencesLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -40,6 +41,8 @@ public class CTPreferencesLocalServiceImpl
 
 		ctPreferences.setCompanyId(companyId);
 		ctPreferences.setUserId(userId);
+		ctPreferences.setCtCollectionId(
+			CTConstants.CT_COLLECTION_ID_PRODUCTION);
 
 		return ctPreferencesPersistence.update(ctPreferences);
 	}

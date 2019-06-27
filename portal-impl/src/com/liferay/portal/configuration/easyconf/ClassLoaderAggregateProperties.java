@@ -54,12 +54,10 @@ import org.apache.commons.configuration.SystemConfiguration;
 /**
  * @author Raymond Augé
  */
-public class ClassLoaderAggregateProperties extends AggregatedProperties {
+public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 
 	public ClassLoaderAggregateProperties(
 		ClassLoader classLoader, String companyId, String componentName) {
-
-		super(companyId, componentName);
 
 		_classLoader = classLoader;
 		_companyId = companyId;
@@ -71,7 +69,6 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 		setThrowExceptionOnMissing(false);
 	}
 
-	@Override
 	public void addBaseFileName(String fileName) {
 		URL url = _classLoader.getResource(fileName);
 
@@ -87,7 +84,6 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 		}
 	}
 
-	@Override
 	public void addGlobalFileName(String fileName) {
 		URL url = _classLoader.getResource(fileName);
 
@@ -98,7 +94,6 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 		return _baseCompositeConfiguration;
 	}
 
-	@Override
 	public String getComponentName() {
 		return _componentName;
 	}
@@ -200,7 +195,6 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 		return StringPool.EMPTY_ARRAY;
 	}
 
-	@Override
 	public List<String> loadedSources() {
 		return _loadedSources;
 	}

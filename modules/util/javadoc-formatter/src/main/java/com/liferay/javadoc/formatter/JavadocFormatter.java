@@ -365,6 +365,10 @@ public class JavadocFormatter {
 
 		int lineNumber = _getJavaModelLineNumber(javaClass, content);
 
+		if (lineNumber == -1) {
+			return commentsMap;
+		}
+
 		String indent = _getIndent(lines, lineNumber);
 
 		String javaClassComment = _getJavaClassComment(
@@ -1745,6 +1749,10 @@ public class JavadocFormatter {
 	}
 
 	private int _getJavaModelLineNumber(JavaModel javaModel, String content) {
+		if (javaModel.getLineNumber() == 0) {
+			return -1;
+		}
+
 		String[] lines = StringUtil.splitLines(content);
 
 		if (javaModel instanceof JavaClass) {

@@ -547,9 +547,7 @@ definition {
 
 		var key_siteName = "${siteName}";
 
-		AssertElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME");
-
-		Navigator.openURL();
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
@@ -563,8 +561,6 @@ definition {
 			value1 = "Site Name");
 
 		var key_siteName = "Site Name";
-
-		AssertElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME");
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "VIEW",

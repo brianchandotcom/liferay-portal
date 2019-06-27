@@ -82,6 +82,10 @@ public class CTDDMTemplateLocalServiceWrapper
 				script, cacheable, smallImage, smallImageURL, smallImageFile,
 				serviceContext));
 
+		if (!_isChangeTrackingEnabled(ddmTemplate)) {
+			return ddmTemplate;
+		}
+
 		if (!_isClassNameChangeTracked(classNameId)) {
 			return ddmTemplate;
 		}
@@ -99,6 +103,10 @@ public class CTDDMTemplateLocalServiceWrapper
 	public DDMTemplate fetchDDMTemplate(long templateId) {
 		DDMTemplate ddmTemplate = super.fetchDDMTemplate(templateId);
 
+		if (!_isChangeTrackingEnabled(ddmTemplate)) {
+			return ddmTemplate;
+		}
+
 		if (_isRetrievable(ddmTemplate)) {
 			return _populateDDMTemplate(ddmTemplate);
 		}
@@ -109,6 +117,10 @@ public class CTDDMTemplateLocalServiceWrapper
 	@Override
 	public DDMTemplate fetchTemplate(long templateId) {
 		DDMTemplate ddmTemplate = super.fetchTemplate(templateId);
+
+		if (!_isChangeTrackingEnabled(ddmTemplate)) {
+			return ddmTemplate;
+		}
 
 		if (_isRetrievable(ddmTemplate)) {
 			return _populateDDMTemplate(ddmTemplate);
@@ -124,6 +136,10 @@ public class CTDDMTemplateLocalServiceWrapper
 
 		DDMTemplate ddmTemplate = super.fetchTemplate(
 			groupId, classNameId, templateKey, includeAncestorTemplates);
+
+		if (!_isChangeTrackingEnabled(ddmTemplate)) {
+			return ddmTemplate;
+		}
 
 		if (_isRetrievable(ddmTemplate)) {
 			return _populateDDMTemplate(ddmTemplate);
@@ -146,6 +162,10 @@ public class CTDDMTemplateLocalServiceWrapper
 				userId, templateId, classPK, nameMap, descriptionMap, type,
 				mode, language, script, cacheable, smallImage, smallImageURL,
 				smallImageFile, serviceContext));
+
+		if (!_isChangeTrackingEnabled(ddmTemplate)) {
+			return ddmTemplate;
+		}
 
 		if (!_isClassNameChangeTracked(ddmTemplate.getClassNameId())) {
 			return ddmTemplate;
@@ -192,6 +212,20 @@ public class CTDDMTemplateLocalServiceWrapper
 
 	private boolean _isBasicWebContent(DDMTemplate ddmTemplate) {
 		if (Objects.equals(ddmTemplate.getTemplateKey(), "BASIC-WEB-CONTENT")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isChangeTrackingEnabled(DDMTemplate ddmTemplate) {
+		if (ddmTemplate == null) {
+			return false;
+		}
+
+		if (_ctEngineManager.isChangeTrackingEnabled(
+				ddmTemplate.getCompanyId())) {
+
 			return true;
 		}
 

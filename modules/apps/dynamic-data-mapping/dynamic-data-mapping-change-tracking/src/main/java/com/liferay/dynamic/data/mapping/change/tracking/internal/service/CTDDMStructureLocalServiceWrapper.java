@@ -83,6 +83,10 @@ public class CTDDMStructureLocalServiceWrapper
 				nameMap, descriptionMap, ddmForm, ddmFormLayout, storageType,
 				type, serviceContext));
 
+		if (!_isChangeTrackingEnabled(ddmStructure)) {
+			return ddmStructure;
+		}
+
 		if (!_isClassNameChangeTracked(classNameId)) {
 			return ddmStructure;
 		}
@@ -100,6 +104,10 @@ public class CTDDMStructureLocalServiceWrapper
 	public DDMStructure fetchStructure(long structureId) {
 		DDMStructure ddmStructure = super.fetchStructure(structureId);
 
+		if (!_isChangeTrackingEnabled(ddmStructure)) {
+			return ddmStructure;
+		}
+
 		if (_isRetrievable(ddmStructure)) {
 			return _populateDDMStructure(ddmStructure);
 		}
@@ -114,6 +122,10 @@ public class CTDDMStructureLocalServiceWrapper
 
 		DDMStructure ddmStructure = super.fetchStructure(
 			groupId, classNameId, structureKey, includeAncestorStructures);
+
+		if (!_isChangeTrackingEnabled(ddmStructure)) {
+			return ddmStructure;
+		}
 
 		if (_isRetrievable(ddmStructure)) {
 			return _populateDDMStructure(ddmStructure);
@@ -190,6 +202,10 @@ public class CTDDMStructureLocalServiceWrapper
 				userId, structureId, parentStructureId, nameMap, descriptionMap,
 				ddmForm, ddmFormLayout, serviceContext));
 
+		if (!_isChangeTrackingEnabled(ddmStructure)) {
+			return ddmStructure;
+		}
+
 		if (!_isClassNameChangeTracked(ddmStructure.getClassNameId())) {
 			return ddmStructure;
 		}
@@ -239,6 +255,20 @@ public class CTDDMStructureLocalServiceWrapper
 		if ((ddmStructure.getClassNameId() == journalClassNameId) &&
 			Objects.equals(
 				ddmStructure.getStructureKey(), "BASIC-WEB-CONTENT")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isChangeTrackingEnabled(DDMStructure ddmStructure) {
+		if (ddmStructure == null) {
+			return false;
+		}
+
+		if (_ctEngineManager.isChangeTrackingEnabled(
+				ddmStructure.getCompanyId())) {
 
 			return true;
 		}

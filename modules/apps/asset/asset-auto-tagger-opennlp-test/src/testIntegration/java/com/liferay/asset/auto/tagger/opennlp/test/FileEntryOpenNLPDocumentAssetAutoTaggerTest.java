@@ -16,34 +16,18 @@ package com.liferay.asset.auto.tagger.opennlp.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.ByteArrayInputStream;
 
-import java.util.Arrays;
-import java.util.Collection;
-
-import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -51,92 +35,28 @@ import org.junit.runner.RunWith;
  * @author Alejandro Tardín
  */
 @RunWith(Arquillian.class)
-public class FileEntryOpenNLPDocumentAssetAutoTaggerTest {
+public class FileEntryOpenNLPDocumentAssetAutoTaggerTest
+	extends BaseOpenNLPDocumentAssetAutoTaggerTestCase {
 
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+	@Override
+	protected AssetEntry getAssetEntry(String text) throws Exception {
+		byte[] bytes = text.getBytes();
 
-	@Test
-	public void testAutoTagsATextFileEntryAsset() throws Exception {
-		_testWithOpenNLPDocumentAssetAutoTagProviderEnabled(
-			DLFileEntryConstants.getClassName(),
-			() -> {
-				ServiceContext serviceContext =
-					ServiceContextTestUtil.getServiceContext();
+		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			new ByteArrayInputStream(bytes), bytes.length,
+			ServiceContextTestUtil.getServiceContext());
 
-				byte[] bytes = FileUtil.getBytes(
-					getClass(), "dependencies/" + _FILE_NAME);
-
-				FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-					TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-					RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
-					RandomTestUtil.randomString(), StringPool.BLANK,
-					StringPool.BLANK, new ByteArrayInputStream(bytes),
-					bytes.length, serviceContext);
-
-				AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-					DLFileEntryConstants.getClassName(),
-					fileEntry.getFileEntryId());
-
-				Collection<String> actualTagNames = Arrays.asList(
-					assetEntry.getTagNames());
-
-				Collection<String> expectedTagNames = Arrays.asList(
-					"adventures", "at all.", "ah", "alice", "alice .",
-					"archive foundation", "australia", "beau--ootiful", "bill",
-					"chapter", "cheshire cat",
-					"dr. gregory b. newby chief executive", "edgar atheling",
-					"foundation", "general information about project",
-					"general terms", "geography", "herald", "i", "if", "irs",
-					"internal revenue service", "king", "latitude", "laughing",
-					"lewis carroll", "lewis carroll posting date",
-					"lewis carroll this", "lizard", "london", "mine", "ma !",
-					"mary ann", "michael hart", "michael s. hart",
-					"mississippi", "not", "new zealand", "paris", "pat",
-					"pat !", "pepper", "pray",
-					"project gutenberg literary archive foundation",
-					"project gutenberg literary archive foundation project " +
-						"gutenberg-tm",
-					"project gutenberg-tm", "public domain", "queen", "queens",
-					"rabbit", "rome", "salt lake city", "shakespeare", "shark",
-					"soup", "there", "the", "united states", "very", "would",
-					"white rabbit", "whoever", "william", "you.--come", "your");
-
-				Assert.assertEquals(
-					actualTagNames.toString(), expectedTagNames.size(),
-					actualTagNames.size());
-				Assert.assertTrue(actualTagNames.containsAll(expectedTagNames));
-			});
+		return assetEntryLocalService.fetchEntry(
+			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 	}
 
-	private void _testWithOpenNLPDocumentAssetAutoTagProviderEnabled(
-			String className, UnsafeRunnable<Exception> unsafeRunnable)
-		throws Exception {
-
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					_OPEN_NLP_AUTO_TAG_CONFIGURATION_PID,
-					new HashMapDictionary<String, Object>() {
-						{
-							put("enabledClassNames", new String[] {className});
-						}
-					})) {
-
-			unsafeRunnable.run();
-		}
+	@Override
+	protected String getClassName() {
+		return DLFileEntryConstants.getClassName();
 	}
-
-	private static final String _FILE_NAME =
-		"Alice's Adventures in Wonderland, by Lewis Carroll.txt";
-
-	private static final String _OPEN_NLP_AUTO_TAG_CONFIGURATION_PID =
-		"com.liferay.asset.auto.tagger.opennlp.internal.configuration." +
-			"OpenNLPDocumentAssetAutoTaggerCompanyConfiguration";
-
-	@Inject
-	private AssetEntryLocalService _assetEntryLocalService;
 
 }

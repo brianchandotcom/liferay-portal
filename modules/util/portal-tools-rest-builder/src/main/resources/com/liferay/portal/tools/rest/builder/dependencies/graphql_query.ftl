@@ -8,6 +8,7 @@ package ${configYAML.apiPackagePath}.internal.graphql.query.${escapedVersion};
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -116,6 +117,7 @@ public class Query {
 		private void _populateResourceContext(${schemaName}Resource ${freeMarkerTool.getSchemaVarName(schemaName)}Resource) throws Exception {
 			${freeMarkerTool.getSchemaVarName(schemaName)}Resource.setContextAcceptLanguage(_acceptLanguage);
 			${freeMarkerTool.getSchemaVarName(schemaName)}Resource.setContextCompany(_company);
+			${freeMarkerTool.getSchemaVarName(schemaName)}Resource.setContextUser(_user);
 		}
 	</#list>
 
@@ -125,5 +127,6 @@ public class Query {
 
 	private AcceptLanguage _acceptLanguage;
 	private Company _company;
+	private User _user;
 
 }

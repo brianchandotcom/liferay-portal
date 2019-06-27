@@ -14,13 +14,12 @@
 
 package com.liferay.change.tracking.rest.internal.resource;
 
-import com.liferay.change.tracking.constants.CTSettingsKeys;
+import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.rest.internal.exception.JaxRsCTEngineException;
 import com.liferay.change.tracking.rest.internal.model.configuration.CTUserConfigurationModel;
 import com.liferay.change.tracking.rest.internal.model.configuration.CTUserConfigurationUpdateModel;
 import com.liferay.change.tracking.rest.internal.util.CTJaxRsUtil;
-import com.liferay.change.tracking.settings.CTSettingsManager;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.change.tracking.service.CTPreferencesLocalService;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -77,7 +76,7 @@ public class CTUserConfigurationResource {
 		CTJaxRsUtil.getUser(userId);
 
 		_updateCheckoutCTCollectionConfirmationEnabled(
-			userId, ctUserConfigurationUpdateModel);
+			companyId, userId, ctUserConfigurationUpdateModel);
 
 		return _getCTUserConfigurationModel(companyId, userId);
 	}
@@ -88,27 +87,35 @@ public class CTUserConfigurationResource {
 		CTUserConfigurationModel.Builder builder =
 			CTUserConfigurationModel.forCompanyAndUser(companyId, userId);
 
+		CTPreferences ctPreferences =
+			_ctPreferencesLocalService.fetchCTPreferences(companyId, userId);
+
+		boolean confirmationEnabled = true;
+
+		if (ctPreferences == null) {
+			confirmationEnabled = ctPreferences.isConfirmationEnabled();
+		}
+
 		return builder.setCheckoutCTCollectionConfirmationEnabled(
-			GetterUtil.getBoolean(
-				_ctSettingsManager.getUserCTSetting(
-					userId,
-					CTSettingsKeys.CHECKOUT_CT_COLLECTION_CONFIRMATION_ENABLED,
-					"true"))
+			confirmationEnabled
 		).build();
 	}
 
 	private void _updateCheckoutCTCollectionConfirmationEnabled(
-		long userId,
+		long companyId, long userId,
 		CTUserConfigurationUpdateModel ctUserConfigurationUpdateModel) {
 
-		_ctSettingsManager.setUserCTSetting(
-			userId, CTSettingsKeys.CHECKOUT_CT_COLLECTION_CONFIRMATION_ENABLED,
-			Boolean.toString(
-				ctUserConfigurationUpdateModel.
-					isCheckoutCTCollectionConfirmationEnabled()));
+		CTPreferences ctPreferences =
+			_ctPreferencesLocalService.getCTPreferences(companyId, userId);
+
+		ctPreferences.setConfirmationEnabled(
+			ctUserConfigurationUpdateModel.
+				isCheckoutCTCollectionConfirmationEnabled());
+
+		_ctPreferencesLocalService.updateCTPreferences(ctPreferences);
 	}
 
 	@Reference
-	private CTSettingsManager _ctSettingsManager;
+	private CTPreferencesLocalService _ctPreferencesLocalService;
 
 }

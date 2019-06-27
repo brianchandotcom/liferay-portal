@@ -13,5 +13,4 @@ Export-Package:\
 	com.liferay.change.tracking.model,\
 	com.liferay.change.tracking.service,\
 	com.liferay.change.tracking.service.persistence,\
-	com.liferay.change.tracking.settings,\
 	com.liferay.change.tracking.util.comparator

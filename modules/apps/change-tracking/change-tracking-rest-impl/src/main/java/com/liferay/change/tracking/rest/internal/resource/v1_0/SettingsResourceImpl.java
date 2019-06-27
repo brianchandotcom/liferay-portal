@@ -14,26 +14,27 @@
 
 package com.liferay.change.tracking.rest.internal.resource.v1_0;
 
-import com.liferay.change.tracking.constants.CTSettingsKeys;
 import com.liferay.change.tracking.definition.CTDefinition;
 import com.liferay.change.tracking.engine.CTEngineManager;
+import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.rest.dto.v1_0.Settings;
 import com.liferay.change.tracking.rest.dto.v1_0.SettingsUpdate;
 import com.liferay.change.tracking.rest.resource.v1_0.SettingsResource;
-import com.liferay.change.tracking.settings.CTSettingsManager;
+import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.ws.rs.core.Context;
 
@@ -61,18 +62,18 @@ public class SettingsResourceImpl extends BaseSettingsResourceImpl {
 
 			return Page.of(
 				Collections.singleton(
-					_toUserSettings(companyId, user.getUserId())));
+					_getUserSettings(companyId, user.getUserId())));
 		}
 		catch (NoSuchUserException | NullPointerException e) {
 			return Page.of(
 				Collections.singleton(
-					_toSettings(companyId, _user.getLocale())));
+					_getSettings(companyId, _user.getLocale())));
 		}
 	}
 
 	@Override
 	public Settings putSettings(
-			Long companyId, Long userId, SettingsUpdate settingsUpdate)
+		Long companyId, Long userId, SettingsUpdate settingsUpdate)
 		throws Exception {
 
 		_companyLocalService.getCompany(companyId);
@@ -80,14 +81,15 @@ public class SettingsResourceImpl extends BaseSettingsResourceImpl {
 		try {
 			User user = _userLocalService.getUser(userId);
 
-			_ctSettingsManager.setUserCTSetting(
-				user.getUserId(),
-				CTSettingsKeys.CHECKOUT_CT_COLLECTION_CONFIRMATION_ENABLED,
-				Boolean.toString(
-					settingsUpdate.
-						getCheckoutCTCollectionConfirmationEnabled()));
+			CTPreferences ctPreferences =
+				_ctPreferencesLocalService.getCTPreferences(companyId, userId);
 
-			return _toUserSettings(companyId, user.getUserId());
+			ctPreferences.setConfirmationEnabled(
+				settingsUpdate.getCheckoutCTCollectionConfirmationEnabled());
+
+			_ctPreferencesLocalService.updateCTPreferences(ctPreferences);
+
+			return _getUserSettings(companyId, user.getUserId());
 		}
 		catch (NoSuchUserException | NullPointerException e) {
 			if (_ctEngineManager.isChangeTrackingEnabled(companyId)) {
@@ -102,50 +104,60 @@ public class SettingsResourceImpl extends BaseSettingsResourceImpl {
 				}
 			}
 
-			return _toSettings(companyId, _user.getLocale());
+			return _getSettings(companyId, _user.getLocale());
 		}
 	}
 
-	private Settings _toSettings(Long companyId, Locale locale) {
+	private Settings _getSettings(Long companyId, Locale locale) {
+		Set<String> supportedContentTypeLanguageKeys = new HashSet<>();
+		Set<String> supportedContentTypes = new HashSet<>();
+
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return new Settings() {
-			{
-				changeTrackingAllowed =
-					_ctEngineManager.isChangeTrackingAllowed(companyId);
-				changeTrackingEnabled =
-					_ctEngineManager.isChangeTrackingEnabled(companyId);
-				supportedContentTypeLanguageKeys = transformToArray(
-					_ctDefinitions,
-					ctDefinition -> ctDefinition.getContentTypeLanguageKey(),
-					String.class);
-				supportedContentTypes = transformToArray(
-					_ctDefinitions,
-					ctDefinition -> LanguageUtil.get(
-						resourceBundle,
-						ctDefinition.getContentTypeLanguageKey()),
-					String.class);
+		for (CTDefinition<?, ?> ctDefinition : _ctDefinitions) {
+			supportedContentTypeLanguageKeys.add(
+				ctDefinition.getContentTypeLanguageKey());
 
-				setCompanyId(companyId);
-			}
-		};
+			String contentType = LanguageUtil.get(
+				resourceBundle, ctDefinition.getContentTypeLanguageKey());
+
+			supportedContentTypes.add(contentType);
+		}
+
+		Settings settings = new Settings();
+
+		settings.setChangeTrackingAllowed(
+			_ctEngineManager.isChangeTrackingAllowed(companyId));
+		settings.setChangeTrackingEnabled(
+			_ctEngineManager.isChangeTrackingEnabled(companyId));
+		settings.setCompanyId(companyId);
+		settings.setSupportedContentTypeLanguageKeys(
+			supportedContentTypeLanguageKeys.toArray(new String[0]));
+		settings.setSupportedContentTypes(
+			supportedContentTypes.toArray(new String[0]));
+
+		return settings;
 	}
 
-	private Settings _toUserSettings(Long companyId, Long userId) {
-		return new Settings() {
-			{
-				checkoutCTCollectionConfirmationEnabled = GetterUtil.getBoolean(
-					_ctSettingsManager.getUserCTSetting(
-						userId,
-						CTSettingsKeys.
-							CHECKOUT_CT_COLLECTION_CONFIRMATION_ENABLED,
-						"true"));
+	private Settings _getUserSettings(Long companyId, Long userId) {
+		Settings settings = new Settings();
 
-				setCompanyId(companyId);
-				setUserId(userId);
-			}
-		};
+		CTPreferences ctPreferences =
+			_ctPreferencesLocalService.fetchCTPreferences(companyId, userId);
+
+		boolean confirmationEnabled = true;
+
+		if (ctPreferences != null) {
+			confirmationEnabled = ctPreferences.isConfirmationEnabled();
+		}
+
+		settings.setCheckoutCTCollectionConfirmationEnabled(
+			confirmationEnabled);
+		settings.setCompanyId(companyId);
+		settings.setUserId(userId);
+
+		return settings;
 	}
 
 	@Reference
@@ -158,7 +170,7 @@ public class SettingsResourceImpl extends BaseSettingsResourceImpl {
 	private CTEngineManager _ctEngineManager;
 
 	@Reference
-	private CTSettingsManager _ctSettingsManager;
+	private CTPreferencesLocalService _ctPreferencesLocalService;
 
 	@Context
 	private User _user;

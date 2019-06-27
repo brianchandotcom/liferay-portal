@@ -34,8 +34,6 @@ public class ComponentProperties {
 
 	public ComponentProperties(AggregatedProperties aggregatedProperties) {
 		_aggregatedProperties = aggregatedProperties;
-
-		_aggregatedProperties.setThrowExceptionOnMissing(false);
 	}
 
 	public List getLoadedSources() {

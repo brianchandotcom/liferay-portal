@@ -64,6 +64,8 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 
 		_prefixedSystemConfiguration = new SubsetConfiguration(
 			_systemConfiguration, _getPrefix(), null);
+
+		setThrowExceptionOnMissing(false);
 	}
 
 	@Override

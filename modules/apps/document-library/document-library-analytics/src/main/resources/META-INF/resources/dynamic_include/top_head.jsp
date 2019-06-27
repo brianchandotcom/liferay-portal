@@ -52,29 +52,17 @@
 					var groupId = match[1];
 					var fileEntryUUID = match[4];
 
-					fetch(
-						'<%= PortalUtil.getPortalURL(request) %><%= Portal.PATH_MODULE %><%= DocumentLibraryAnalyticsConstants.PATH_RESOLVE_FILE_ENTRY %>?groupId=' + encodeURIComponent(groupId) + '&uuid=' + encodeURIComponent(fileEntryUUID),
+					Analytics.send(
+						'documentDownloaded',
+						'Document',
 						{
-							credentials: 'include',
-							method: 'GET'
+							groupId: groupId,
+							fileEntryId: getParameterValue('fileEntryId'),
+							preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
+							title: decodeURIComponent(match[3].replace(/\+/ig, ' ')),
+							version: getParameterValue('version')
 						}
-					).then(function(response) {
-						return response.json();
-					}).then(function(response) {
-						Analytics.send(
-							'documentDownloaded',
-							'Document',
-							{
-								groupId: groupId,
-								fileEntryId: response.fileEntryId,
-								preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
-								title: decodeURIComponent(match[3].replace(/\+/ig, ' ')),
-								version: getParameterValue('version')
-							}
-						);
-					}).catch(function() {
-						return;
-					});
+					);
 			}
 		}
 	}

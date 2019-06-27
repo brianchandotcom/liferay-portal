@@ -5,6 +5,7 @@
 	<import class="com.liferay.change.tracking.model.CTCollection" />
 	<import class="com.liferay.change.tracking.model.CTEntry" />
 	<import class="com.liferay.change.tracking.model.CTEntryAggregate" />
+	<import class="com.liferay.change.tracking.model.CTPreferences" />
 	<import class="com.liferay.change.tracking.model.CTProcess" />
 	<class name="com.liferay.change.tracking.model.impl.CTCollectionImpl" table="CTCollection">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="ctCollectionId" type="long">
@@ -52,6 +53,15 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="ctCollectionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="ownerCTEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class name="com.liferay.change.tracking.model.impl.CTPreferencesImpl" table="CTPreferences">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="ctPreferencesId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="ctCollectionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="confirmationEnabled" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.change.tracking.model.impl.CTProcessImpl" table="CTProcess">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="ctProcessId" type="long">

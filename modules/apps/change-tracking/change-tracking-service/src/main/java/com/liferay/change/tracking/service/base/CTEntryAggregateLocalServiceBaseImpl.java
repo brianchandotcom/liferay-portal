@@ -20,6 +20,7 @@ import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
 import com.liferay.change.tracking.service.persistence.CTEntryAggregatePersistence;
 import com.liferay.change.tracking.service.persistence.CTEntryFinder;
 import com.liferay.change.tracking.service.persistence.CTEntryPersistence;
+import com.liferay.change.tracking.service.persistence.CTPreferencesPersistence;
 import com.liferay.change.tracking.service.persistence.CTProcessFinder;
 import com.liferay.change.tracking.service.persistence.CTProcessPersistence;
 import com.liferay.portal.aop.AopService;
@@ -567,6 +568,9 @@ public abstract class CTEntryAggregateLocalServiceBaseImpl
 
 	@Reference
 	protected CTEntryAggregatePersistence ctEntryAggregatePersistence;
+
+	@Reference
+	protected CTPreferencesPersistence ctPreferencesPersistence;
 
 	@Reference
 	protected CTProcessPersistence ctProcessPersistence;

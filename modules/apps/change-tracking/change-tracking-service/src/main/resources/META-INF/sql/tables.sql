@@ -63,6 +63,14 @@ create table CTEntryAggregates_CTEntries (
 	primary key (ctEntryId, ctEntryAggregateId)
 );
 
+create table CTPreferences (
+	ctPreferencesId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	ctCollectionId LONG,
+	confirmationEnabled BOOLEAN
+);
+
 create table CTProcess (
 	ctProcessId LONG not null primary key,
 	companyId LONG,

@@ -5929,19 +5929,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/easyconf.jar</file-name>
-				<version>0.9.5</version>
-				<project-name>EasyConf</project-name>
-				<project-url>http://easyconf.sourceforge.net</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-						<copyright-notice>Copyright (c) 2004-2005 Germinus XXI</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/eclipse-core-runtime.jar</file-name>
 				<version>20070801</version>
 				<project-name>Eclipse Core Runtime</project-name>

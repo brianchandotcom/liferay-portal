@@ -165,7 +165,6 @@
 	<classpathentry kind="lib" path="lib/portal/daisydiff.jar"/>
 	<classpathentry kind="lib" path="lib/portal/displaytag.jar"/>
 	<classpathentry kind="lib" path="lib/portal/dom4j.jar"/>
-	<classpathentry kind="lib" path="lib/portal/easyconf.jar"/>
 	<classpathentry kind="lib" path="lib/portal/eclipse-core-runtime.jar"/>
 	<classpathentry kind="lib" path="lib/portal/ecs.jar"/>
 	<classpathentry kind="lib" path="lib/portal/fontbox.jar"/>

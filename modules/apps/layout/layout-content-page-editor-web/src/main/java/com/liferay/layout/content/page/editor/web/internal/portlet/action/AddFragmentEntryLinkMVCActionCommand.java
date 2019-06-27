@@ -103,15 +103,15 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 				serviceContext.getScopeGroupId(), 0,
 				fragmentEntry.getFragmentEntryId(), classNameId, classPK,
 				fragmentEntry.getCss(), fragmentEntry.getHtml(),
-				fragmentEntry.getJs(), null, StringPool.BLANK, 0,
-				contributedRendererKey, serviceContext);
+				fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
+				StringPool.BLANK, 0, contributedRendererKey, serviceContext);
 		}
 		else {
 			fragmentEntryLink = _fragmentEntryLinkService.addFragmentEntryLink(
 				serviceContext.getScopeGroupId(), 0, 0, classNameId, classPK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK, 0, fragmentEntryKey,
-				serviceContext);
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0,
+				fragmentEntryKey, serviceContext);
 		}
 
 		long segmentsExperienceId = ParamUtil.getLong(

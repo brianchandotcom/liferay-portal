@@ -26,8 +26,8 @@
 	var pathnameRegexp = /\/documents\/(\d+)\/(\d+)\/(.+?)\/([^&]+)/;
 
 	function handleDownloadClick(event) {
-		if (event.target.nodeName.toLowerCase() === 'a') {
-			if (window.Analytics) {
+		if (event.target.nodeName.toLowerCase() === 'a' && window.Analytics) {
+			
 				var anchor = event.target;
 				var match = pathnameRegexp.exec(anchor.pathname);
 
@@ -75,7 +75,6 @@
 					}).catch(function() {
 						return;
 					});
-				}
 			}
 		}
 	}

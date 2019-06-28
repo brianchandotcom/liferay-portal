@@ -33,8 +33,7 @@ export default function SearchContainer(props) {
 					pageSize
 				}
 			})
-			.then(response => formatter(response.data.items))
-			.then(items => setState({items}));
+			.then(({data: {items}}) => setState({items: formatter(items)}));
 	}, [props]);
 
 	return <Table columns={props.columns} rows={state.items} />;

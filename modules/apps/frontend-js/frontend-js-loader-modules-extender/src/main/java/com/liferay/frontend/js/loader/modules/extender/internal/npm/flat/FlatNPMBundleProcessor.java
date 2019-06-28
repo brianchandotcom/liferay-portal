@@ -75,7 +75,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			_log.info("Processing NPM bundle: " + flatJSBundle);
 		}
 
-		_processRootPackage(flatJSBundle);
+		_processPackage(flatJSBundle, "META-INF/resources", true);
 
 		_processNodePackages(flatJSBundle);
 
@@ -516,20 +516,6 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		}
 
 		flatJSBundle.addJSPackage(flatJSPackage);
-	}
-
-	/**
-	 * Processes the root package (i.e., the package located in the bundle's
-	 * <code>META-INF/resources</code> folder, as opposed to the
-	 * <code>node_modules</code> folder) of a bundle and adds it to its {@link
-	 * FlatJSBundle} descriptor.
-	 *
-	 * @param flatJSBundle the bundle containing the root package
-	 */
-	private void _processRootPackage(FlatJSBundle flatJSBundle) {
-		String location = "META-INF/resources";
-
-		_processPackage(flatJSBundle, location, true);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

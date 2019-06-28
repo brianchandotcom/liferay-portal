@@ -14,6 +14,9 @@
 
 package com.liferay.jenkins.results.parser.k8s;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -21,41 +24,13 @@ import org.apache.commons.lang.StringUtils;
  */
 public class ResourceConfigurations {
 
-	public static final Pod mariadb102PodConfiguration =
-		ResourceConfigurationFactory.newMySQLConfigurationPod(
-			"mariadb102", "mariadb:10.2.25");
-	public static final Pod mysql55PodConfiguration =
-		ResourceConfigurationFactory.newMySQLConfigurationPod(
-			"mysql55", "mysql:5.5.62");
-	public static final Pod mysql56PodConfiguration =
-		ResourceConfigurationFactory.newMySQLConfigurationPod(
-			"mysql56", "mysql:5.6.43");
-	public static final Pod mysql57PodConfiguration =
-		ResourceConfigurationFactory.newMySQLConfigurationPod(
-			"mysql57", "mysql:5.7.25");
-	public static final Pod postgresql10PodConfiguration =
-		ResourceConfigurationFactory.newPostgreSQLConfigurationPod(
-			"postgresql10", "postgres:10.9");
-
 	public static Pod getPodConfiguration(String name) {
-		if (name.equals("mariadb102")) {
-			return mariadb102PodConfiguration;
-		}
-		else if (name.equals("mysql55")) {
-			return mysql55PodConfiguration;
-		}
-		else if (name.equals("mysql56")) {
-			return mysql56PodConfiguration;
-		}
-		else if (name.equals("mysql57")) {
-			return mysql57PodConfiguration;
-		}
-		else if (name.equals("postgresql10")) {
-			return postgresql10PodConfiguration;
+		if (!_resourceConfigurationsMap.containsKey(name)) {
+			throw new IllegalArgumentException(
+				"Invalid pod configuration name: " + name);
 		}
 
-		throw new IllegalArgumentException(
-			"Invalid pod configuration name: " + name);
+		return _resourceConfigurationsMap.get(name);
 	}
 
 	public static Pod getPodConfiguration(
@@ -82,5 +57,31 @@ public class ResourceConfigurations {
 
 		return databaseConfigurationName;
 	}
+
+	private static final Map<String, Pod> _resourceConfigurationsMap =
+		new HashMap<String, Pod>() {
+			{
+				put(
+					"mariadb102",
+					ResourceConfigurationFactory.newMySQLConfigurationPod(
+						"mariadb102", "mariadb:10.2.25"));
+				put(
+					"mysql55",
+					ResourceConfigurationFactory.newMySQLConfigurationPod(
+						"mysql55", "mysql:5.5.62"));
+				put(
+					"mysql56",
+					ResourceConfigurationFactory.newMySQLConfigurationPod(
+						"mysql56", "mysql:5.6.43"));
+				put(
+					"mysql57",
+					ResourceConfigurationFactory.newMySQLConfigurationPod(
+						"mysql57", "mysql:5.7.25"));
+				put(
+					"postgresql10",
+					ResourceConfigurationFactory.newPostgreSQLConfigurationPod(
+						"postgresql10", "postgres:10.9"));
+			}
+		};
 
 }

@@ -28,6 +28,7 @@ import com.liferay.portal.osgi.web.servlet.context.helper.order.Order;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.EventListener;
 import java.util.List;
@@ -138,9 +139,11 @@ public class WebXMLDefinitionLoaderTest {
 	public void testLoadWebXML() throws Exception {
 		Bundle bundle = new MockBundle();
 
+		List<Class<?>> classes = Collections.emptyList();
+
 		WebXMLDefinitionLoader webXMLDefinitionLoader =
 			new WebXMLDefinitionLoader(
-				bundle, null, SAXParserFactory.newInstance());
+				bundle, null, SAXParserFactory.newInstance(), classes);
 
 		WebXMLDefinition webXMLDefinition =
 			webXMLDefinitionLoader.loadWebXMLDefinition(
@@ -399,9 +402,11 @@ public class WebXMLDefinitionLoaderTest {
 
 		TestBundle testBundle = new TestBundle(path);
 
+		List<Class<?>> classes = Collections.emptyList();
+
 		WebXMLDefinitionLoader webXMLDefinitionLoader =
 			new WebXMLDefinitionLoader(
-				testBundle, null, SAXParserFactory.newInstance());
+				testBundle, null, SAXParserFactory.newInstance(), classes);
 
 		return webXMLDefinitionLoader.loadWebXMLDefinition(testBundle.getURL());
 	}

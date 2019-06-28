@@ -283,7 +283,10 @@ public class SourceFormatterCheckUtil {
 					cacheValues = false;
 				}
 
-				if (!absolutePath.startsWith(fileLocation)) {
+				if (!absolutePath.startsWith(fileLocation) &&
+					!absolutePath.contains(
+						SourceFormatterUtil.SOURCE_FORMATTER_TEST_PATH)) {
+
 					continue;
 				}
 			}

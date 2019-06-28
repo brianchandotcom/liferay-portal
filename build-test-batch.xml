@@ -340,9 +340,17 @@ mariadb.executable=${mariadb.executable}]]></echo>
 
 			<database-test-action database.type="@{database.type}">
 				<action>
-					<exec executable="${database.service.executable}">
-						<arg line="${database.service.cmd.stop}" />
-					</exec>
+					<if>
+						<isset property="env.KUBERNETES_SERVICE_HOST" />
+						<then>
+							<stop-k8s-database database.type="@{database.type}" database.version="@{database.version}" />
+						</then>
+						<else>
+							<exec executable="${database.service.executable}">
+								<arg line="${database.service.cmd.stop}" />
+							</exec>
+						</else>
+					</if>
 				</action>
 			</database-test-action>
 
@@ -352,9 +360,19 @@ mariadb.executable=${mariadb.executable}]]></echo>
 
 					<set-portal-impl-system-ext-properties />
 
-					<exec executable="${database.service.executable}" resultproperty="exec.result">
-						<arg line="${database.service.cmd.start}" />
-					</exec>
+					<if>
+						<isset property="env.KUBERNETES_SERVICE_HOST" />
+						<then>
+							<get-database-property property.name="database.port" />
+
+							<start-k8s-database database.port="${database.port}" database.type="@{database.type}" database.version="@{database.version}" />
+						</then>
+						<else>
+							<exec executable="${database.service.executable}" resultproperty="exec.result">
+								<arg line="${database.service.cmd.start}" />
+							</exec>
+						</else>
+					</if>
 
 					<diagnose-database-start database.type="@{database.type}" exec.result="${exec.result}" />
 
@@ -387,9 +405,17 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						</then>
 					</if>
 
-					<exec executable="${database.service.executable}" failonerror="true">
-						<arg line="${database.service.cmd.stop}" />
-					</exec>
+					<if>
+						<isset property="env.KUBERNETES_SERVICE_HOST" />
+						<then>
+							<stop-k8s-database database.type="@{database.type}" database.version="@{database.version}" />
+						</then>
+						<else>
+							<exec executable="${database.service.executable}" failonerror="true">
+								<arg line="${database.service.cmd.stop}" />
+							</exec>
+						</else>
+					</if>
 				</action>
 			</database-test-action>
 		</sequential>

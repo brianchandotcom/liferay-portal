@@ -43,6 +43,7 @@ page import="com.liferay.asset.kernel.exception.AssetCategoryNameException" %><%
 page import="com.liferay.asset.kernel.exception.DuplicateCategoryException" %><%@
 page import="com.liferay.asset.kernel.exception.DuplicateCategoryPropertyException" %><%@
 page import="com.liferay.asset.kernel.exception.DuplicateVocabularyException" %><%@
+page import="com.liferay.asset.kernel.exception.InvalidAssetCategoryException" %><%@
 page import="com.liferay.asset.kernel.exception.NoSuchCategoryException" %><%@
 page import="com.liferay.asset.kernel.exception.NoSuchVocabularyException" %><%@
 page import="com.liferay.asset.kernel.exception.VocabularyNameException" %><%@

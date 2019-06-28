@@ -34,7 +34,7 @@ import java.util.List;
  */
 public class ResourceConfigurationFactory {
 
-	public static Pod newDatabaseConfigurationPod(
+	private static Pod _newDatabaseConfigurationPod(
 		String dockerBaseImageName, String dockerImageName,
 		List<V1ContainerPort> v1ContainerPorts, List<V1EnvVar> v1EnvVars) {
 
@@ -49,7 +49,7 @@ public class ResourceConfigurationFactory {
 		hostname = JenkinsResultsParserUtil.combine(
 			hostname.replaceFirst("\\..*", ""), "-", dockerBaseImageName);
 
-		V1ObjectMeta v1ObjectMeta = newConfigurationMetaData(hostname);
+		V1ObjectMeta v1ObjectMeta = _newConfigurationMetaData(hostname);
 
 		String serviceName = "database";
 
@@ -57,21 +57,21 @@ public class ResourceConfigurationFactory {
 
 		v1Pod.setMetadata(v1ObjectMeta);
 
-		V1Container v1Container = newConfigurationContainer(
+		V1Container v1Container = _newConfigurationContainer(
 			dockerBaseImageName, dockerImageName);
 
 		v1Container.setEnv(v1EnvVars);
 
 		v1Container.setPorts(v1ContainerPorts);
 
-		V1PodSpec v1PodSpec = newConfigurationPodSpec(v1Container);
+		V1PodSpec v1PodSpec = _newConfigurationPodSpec(v1Container);
 
 		v1PodSpec.setHostname(hostname);
 		v1PodSpec.setSubdomain(serviceName);
 		v1PodSpec.setVolumes(
 			new ArrayList<>(
 				Arrays.asList(
-					newEmptyDirConfigurationVolume(dockerBaseImageName))));
+					_newEmptyDirConfigurationVolume(dockerBaseImageName))));
 
 		v1Pod.setSpec(v1PodSpec);
 
@@ -83,13 +83,13 @@ public class ResourceConfigurationFactory {
 
 		List<V1ContainerPort> v1ContainerPorts = new ArrayList<>(
 			Arrays.asList(
-				newConfigurationContainerPort(dockerBaseImageName, 3306)));
+				_newConfigurationContainerPort(dockerBaseImageName, 3306)));
 
 		List<V1EnvVar> v1EnvVars = new ArrayList<>(
 			Arrays.asList(
-				newConfigurationEnvVar("MYSQL_ALLOW_EMPTY_PASSWORD", "yes")));
+				_newConfigurationEnvVar("MYSQL_ALLOW_EMPTY_PASSWORD", "yes")));
 
-		return newDatabaseConfigurationPod(
+		return _newDatabaseConfigurationPod(
 			dockerBaseImageName, dockerImageName, v1ContainerPorts, v1EnvVars);
 	}
 
@@ -98,16 +98,16 @@ public class ResourceConfigurationFactory {
 
 		List<V1ContainerPort> v1ContainerPorts = new ArrayList<>(
 			Arrays.asList(
-				newConfigurationContainerPort(dockerBaseImageName, 5432)));
+				_newConfigurationContainerPort(dockerBaseImageName, 5432)));
 
 		List<V1EnvVar> v1EnvVars = new ArrayList<>(
-			Arrays.asList(newConfigurationEnvVar("POSTGRES_USER", "root")));
+			Arrays.asList(_newConfigurationEnvVar("POSTGRES_USER", "root")));
 
-		return newDatabaseConfigurationPod(
+		return _newDatabaseConfigurationPod(
 			dockerBaseImageName, dockerImageName, v1ContainerPorts, v1EnvVars);
 	}
 
-	protected static V1Container newConfigurationContainer(
+	private static V1Container _newConfigurationContainer(
 		String dockerBaseImageName, String dockerImageName) {
 
 		V1Container v1Container = new V1Container();
@@ -118,7 +118,7 @@ public class ResourceConfigurationFactory {
 		return v1Container;
 	}
 
-	protected static V1ContainerPort newConfigurationContainerPort(
+	private static V1ContainerPort _newConfigurationContainerPort(
 		String dockerBaseImageName, int containerPort) {
 
 		V1ContainerPort v1ContainerPort = new V1ContainerPort();
@@ -129,7 +129,7 @@ public class ResourceConfigurationFactory {
 		return v1ContainerPort;
 	}
 
-	protected static V1EnvVar newConfigurationEnvVar(
+	private static V1EnvVar _newConfigurationEnvVar(
 		String variableName, String variableValue) {
 
 		V1EnvVar v1EnvVar = new V1EnvVar();
@@ -140,7 +140,7 @@ public class ResourceConfigurationFactory {
 		return v1EnvVar;
 	}
 
-	protected static V1ObjectMeta newConfigurationMetaData(
+	private static V1ObjectMeta _newConfigurationMetaData(
 		String metaDataName) {
 
 		V1ObjectMeta v1ObjectMeta = new V1ObjectMeta();
@@ -150,7 +150,7 @@ public class ResourceConfigurationFactory {
 		return v1ObjectMeta;
 	}
 
-	protected static V1PodSpec newConfigurationPodSpec(
+	private static V1PodSpec _newConfigurationPodSpec(
 		V1Container v1Container) {
 
 		V1PodSpec v1PodSpec = new V1PodSpec();
@@ -160,7 +160,7 @@ public class ResourceConfigurationFactory {
 		return v1PodSpec;
 	}
 
-	protected static V1Volume newEmptyDirConfigurationVolume(
+	private static V1Volume _newEmptyDirConfigurationVolume(
 		String dockerImageName) {
 
 		V1Volume v1Volume = new V1Volume();

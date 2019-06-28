@@ -161,20 +161,6 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		}
 	}
 
-	private JSONObject _getJSONObject(URL url) {
-		JSONObject jsonObject = null;
-
-		try {
-			jsonObject = _jsonFactory.createJSONObject(
-				StringUtil.read(url.openStream()));
-		}
-		catch (Exception e) {
-			_log.error("Unable to parse " + url.getPath(), e);
-		}
-
-		return jsonObject;
-	}
-
 	private String _normalizeModuleContent(String moduleContent) {
 		moduleContent = StringUtil.replace(moduleContent, '\n', ' ');
 
@@ -284,9 +270,15 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 				continue;
 			}
 
-			JSONObject jsonObject = _getJSONObject(url);
+			JSONObject jsonObject = null;
 
-			if (jsonObject == null) {
+			try {
+				jsonObject = _jsonFactory.createJSONObject(
+					StringUtil.read(url.openStream()));
+			}
+			catch (Exception e) {
+				_log.error("Unable to parse " + url.getPath(), e);
+
 				continue;
 			}
 

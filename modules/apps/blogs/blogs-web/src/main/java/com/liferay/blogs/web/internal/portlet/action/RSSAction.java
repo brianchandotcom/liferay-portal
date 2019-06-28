@@ -19,9 +19,13 @@ import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.struts.StrutsAction;
@@ -34,6 +38,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.rss.util.RSSUtil;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -55,7 +60,9 @@ public class RSSAction implements StrutsAction {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		if (!isRSSFeedsEnabled(httpServletRequest)) {
+		if (!isRSSFeedsEnabled(httpServletRequest) ||
+			!_canUserSeeRSS(httpServletRequest)) {
+
 			_portal.sendRSSFeedsDisabledError(
 				httpServletRequest, httpServletResponse);
 
@@ -169,11 +176,43 @@ public class RSSAction implements StrutsAction {
 		return blogsGroupServiceOverriddenConfiguration.enableRss();
 	}
 
+	private boolean _canUserSeeRSS(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
+
+		boolean userMemberOfGroup = false;
+		User currentUser = _portal.getUser(httpServletRequest);
+
+		if (currentUser != null) {
+			List<Group> userGroups = currentUser.getGroups();
+
+			for (Group group : userGroups) {
+				long currentGroupId = group.getGroupId();
+
+				if (currentGroupId == groupId) {
+					userMemberOfGroup = true;
+
+					break;
+				}
+			}
+		}
+
+		if (!userMemberOfGroup || (currentUser == null)) {
+			return false;
+		}
+
+		return true;
+	}
+
 	@Reference
 	private BlogsEntryService _blogsEntryService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private GroupService _groupService;
 
 	@Reference
 	private Portal _portal;

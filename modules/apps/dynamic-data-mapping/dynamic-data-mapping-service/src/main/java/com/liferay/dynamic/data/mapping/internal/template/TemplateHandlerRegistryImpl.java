@@ -268,9 +268,21 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 					continue;
 				}
 
-				ResourceBundleLoader resourceBundleLoader = null;
-
 				Class<?> clazz = _templateHandler.getClass();
+
+				String scriptFileName = templateElement.elementText(
+					"script-file");
+
+				String script = StringUtil.read(
+					clazz.getClassLoader(), scriptFileName);
+
+				if ((ddmTemplate != null) &&
+					StringUtil.equals(script, ddmTemplate.getScript())) {
+
+					continue;
+				}
+
+				ResourceBundleLoader resourceBundleLoader = null;
 
 				Bundle bundle = FrameworkUtil.getBundle(clazz);
 
@@ -301,12 +313,6 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 
 				String language = templateElement.elementText("language");
 
-				String scriptFileName = templateElement.elementText(
-					"script-file");
-
-				String script = StringUtil.read(
-					clazz.getClassLoader(), scriptFileName);
-
 				boolean cacheable = GetterUtil.getBoolean(
 					templateElement.elementText("cacheable"));
 
@@ -319,7 +325,7 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 						language, script, cacheable, false, null, null,
 						serviceContext);
 				}
-				else if (!StringUtil.equals(script, ddmTemplate.getScript())) {
+				else {
 					_ddmTemplateLocalService.updateTemplate(
 						userId, ddmTemplate.getTemplateId(), 0, nameMap,
 						descriptionMap, type, null, language, script, cacheable,

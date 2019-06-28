@@ -67,7 +67,8 @@ public class DLFileEntryUADDisplayTest
 		assertParentContainerId(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		_dlFolder = DLFolderUADTestUtil.addDLFolder(
-			_dlFolderLocalService, TestPropsValues.getUserId());
+			_dlAppLocalService, _dlFolderLocalService,
+			TestPropsValues.getUserId());
 
 		assertParentContainerId(_dlFolder.getFolderId());
 	}

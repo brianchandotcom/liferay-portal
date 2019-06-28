@@ -16,6 +16,7 @@ package com.liferay.document.library.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.uad.test.DLFolderUADTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -52,7 +53,7 @@ public class DLFolderUADExporterTest
 		throws Exception {
 
 		DLFolder dlFolder = DLFolderUADTestUtil.addDLFolderWithStatusByUserId(
-			_dlFolderLocalService, userId, statusByUserId);
+			_dlAppLocalService, _dlFolderLocalService, userId, statusByUserId);
 
 		_dlFolders.add(dlFolder);
 
@@ -62,7 +63,7 @@ public class DLFolderUADExporterTest
 	@Override
 	protected DLFolder addBaseModel(long userId) throws Exception {
 		DLFolder dlFolder = DLFolderUADTestUtil.addDLFolder(
-			_dlFolderLocalService, userId);
+			_dlAppLocalService, _dlFolderLocalService, userId);
 
 		_dlFolders.add(dlFolder);
 
@@ -78,6 +79,9 @@ public class DLFolderUADExporterTest
 	protected UADExporter getUADExporter() {
 		return _uadExporter;
 	}
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
 
 	@Inject
 	private DLFolderLocalService _dlFolderLocalService;

@@ -264,118 +264,6 @@ definition {
 			value1 = "_explanation");
 	}
 
-	test ModifyCustomRanges {
-		JSONWebcontent.addWebContent(
-			content = "WC Content",
-			groupName = "Guest",
-			title = "WC Title");
-
-		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
-
-		Portlet.gotoPortletOptions(
-			portletName = "Modified Facet",
-			portletOption = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-		Click(locator1 = "Button#ADD_ROW");
-
-		Type(
-			key_fieldLabel = "Label",
-			key_position = "2",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT_2",
-			value1 = "Past 23 Hours");
-
-		Type(
-			key_fieldLabel = "Range",
-			key_position = "2",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT_2",
-			value1 = "[past-24-hours TO past-hour]");
-
-		PortletEntry.save();
-
-		IFrame.closeFrame();
-
-		Refresh();
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Search#MODIFIED_FACET_RANGE",
-			rangeName = "Past 23 Hours",
-			value1 = "Past 23 Hours");
-
-		Click(
-			locator1 = "Search#MODIFIED_FACET_RANGE",
-			rangeName = "Past 23 Hours");
-
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "WC Title");
-
-		Portlet.gotoPortletOptions(
-			portletName = "Modified Facet",
-			portletOption = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-		Click(
-			key_rowIndexNumber = "2",
-			locator1 = "Button#DELETE_ROW_N");
-
-		PortletEntry.save();
-
-		IFrame.closeFrame();
-
-		Refresh();
-
-		AssertElementNotPresent(
-			locator1 = "Search#MODIFIED_FACET_RANGE",
-			rangeName = "Past 23 Hours");
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "WC Title",
-			searchAssetType = "Web Content Article",
-			searchTerm = "WC Title");
-
-		Click(
-			locator1 = "Search#MODIFIED_FACET_RANGE",
-			rangeName = "Custom Range");
-
-		Click(locator1 = "Search#CUSTOM_RANGE_FROM");
-
-		Click(locator1 = "YUICalendarWidget#NEXT_MONTH_ARROW");
-
-		Click(
-			key_day = "1",
-			locator1 = "YUICalendarWidget#DATEPICKER_SPECIFIC_DAY");
-
-		Click(locator1 = "Button#SEARCH");
-
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "WC Title");
-
-		// Workaround for LPS-82584
-
-		Click(locator1 = "Link#CLEAR");
-
-		Click(
-			locator1 = "Search#MODIFIED_FACET_RANGE",
-			rangeName = "Custom Range");
-
-		Click(locator1 = "Search#CUSTOM_RANGE_FROM");
-
-		Click(locator1 = "YUICalendarWidget#PREVIOUS_MONTH_ARROW");
-
-		Click(locator1 = "YUICalendarWidget#PREVIOUS_MONTH_ARROW");
-
-		Click(
-			key_day = "1",
-			locator1 = "YUICalendarWidget#DATEPICKER_SPECIFIC_DAY");
-
-		Click(locator1 = "Button#SEARCH");
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "WC Title",
-			searchAssetType = "Web Content Article",
-			searchTerm = "WC Title");
-	}
-
 	@description = "This is a use case for LPS-90078."
 	@priority = "4"
 	test ModifyPaginationPortalProperties {
@@ -1588,6 +1476,118 @@ definition {
 			searchAssetSummary = "Wiki Page Content",
 			searchAssetTitle = "Wiki Page Title",
 			searchAssetType = "Wiki Page");
+	}
+
+	test SearchWithModifiedFacet {
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "WC Title");
+
+		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Modified Facet",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		Click(locator1 = "Button#ADD_ROW");
+
+		Type(
+			key_fieldLabel = "Label",
+			key_position = "2",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT_2",
+			value1 = "Past 23 Hours");
+
+		Type(
+			key_fieldLabel = "Range",
+			key_position = "2",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT_2",
+			value1 = "[past-24-hours TO past-hour]");
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+
+		Refresh();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Search#MODIFIED_FACET_RANGE",
+			rangeName = "Past 23 Hours",
+			value1 = "Past 23 Hours");
+
+		Click(
+			locator1 = "Search#MODIFIED_FACET_RANGE",
+			rangeName = "Past 23 Hours");
+
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "WC Title");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Modified Facet",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		Click(
+			key_rowIndexNumber = "2",
+			locator1 = "Button#DELETE_ROW_N");
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+
+		Refresh();
+
+		AssertElementNotPresent(
+			locator1 = "Search#MODIFIED_FACET_RANGE",
+			rangeName = "Past 23 Hours");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC Title",
+			searchAssetType = "Web Content Article",
+			searchTerm = "WC Title");
+
+		Click(
+			locator1 = "Search#MODIFIED_FACET_RANGE",
+			rangeName = "Custom Range");
+
+		Click(locator1 = "Search#CUSTOM_RANGE_FROM");
+
+		Click(locator1 = "YUICalendarWidget#NEXT_MONTH_ARROW");
+
+		Click(
+			key_day = "1",
+			locator1 = "YUICalendarWidget#DATEPICKER_SPECIFIC_DAY");
+
+		Click(locator1 = "Button#SEARCH");
+
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "WC Title");
+
+		// Workaround for LPS-82584
+
+		Click(locator1 = "Link#CLEAR");
+
+		Click(
+			locator1 = "Search#MODIFIED_FACET_RANGE",
+			rangeName = "Custom Range");
+
+		Click(locator1 = "Search#CUSTOM_RANGE_FROM");
+
+		Click(locator1 = "YUICalendarWidget#PREVIOUS_MONTH_ARROW");
+
+		Click(locator1 = "YUICalendarWidget#PREVIOUS_MONTH_ARROW");
+
+		Click(
+			key_day = "1",
+			locator1 = "YUICalendarWidget#DATEPICKER_SPECIFIC_DAY");
+
+		Click(locator1 = "Button#SEARCH");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC Title",
+			searchAssetType = "Web Content Article",
+			searchTerm = "WC Title");
 	}
 
 	test SearchWithNonLiferayIndex {

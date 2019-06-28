@@ -17,7 +17,6 @@ package com.liferay.portal.osgi.web.wab.extender.internal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -244,7 +243,7 @@ public class WabBundleProcessor {
 
 	protected void collectAnnotatedClasses(
 		Class<?> annotatedClass, Class<?>[] handledTypesArray,
-		Set<Class<?>> annotatedClasses) {
+		Set<Class<?>> annotationHandledTyps, Set<Class<?>> annotatedClasses) {
 
 		// Class extends/implements
 
@@ -256,6 +255,10 @@ public class WabBundleProcessor {
 
 				return;
 			}
+		}
+
+		if (annotationHandledTyps == null) {
+			return;
 		}
 
 		// Class annotation
@@ -272,8 +275,8 @@ public class WabBundleProcessor {
 		}
 
 		for (Annotation classAnnotation : classAnnotations) {
-			if (ArrayUtil.contains(
-					handledTypesArray, classAnnotation.annotationType())) {
+			if (annotationHandledTyps.contains(
+					classAnnotation.annotationType())) {
 
 				annotatedClasses.add(annotatedClass);
 
@@ -307,8 +310,8 @@ public class WabBundleProcessor {
 			}
 
 			for (Annotation methodAnnotation : methodAnnotations) {
-				if (ArrayUtil.contains(
-						handledTypesArray, methodAnnotation.annotationType())) {
+				if (annotationHandledTyps.contains(
+						methodAnnotation.annotationType())) {
 
 					annotatedClasses.add(annotatedClass);
 
@@ -343,8 +346,8 @@ public class WabBundleProcessor {
 			}
 
 			for (Annotation fieldAnnotation : fieldAnnotations) {
-				if (ArrayUtil.contains(
-						handledTypesArray, fieldAnnotation.annotationType())) {
+				if (annotationHandledTyps.contains(
+						fieldAnnotation.annotationType())) {
 
 					annotatedClasses.add(annotatedClass);
 
@@ -774,11 +777,24 @@ public class WabBundleProcessor {
 			Class<?>[] handledTypesArray = handledTypes.value();
 
 			if (handledTypesArray != null) {
+				Set<Class<?>> annotationHandledTyps = null;
+
+				for (Class<?> handledType : handledTypesArray) {
+					if (handledType.isAnnotation()) {
+						if (annotationHandledTyps == null) {
+							annotationHandledTyps = new HashSet<>();
+						}
+
+						annotationHandledTyps.add(handledType);
+					}
+				}
+
 				annotatedClasses = new HashSet<>();
 
 				for (Class<?> clazz : classes) {
 					collectAnnotatedClasses(
-						clazz, handledTypesArray, annotatedClasses);
+						clazz, handledTypesArray, annotationHandledTyps,
+						annotatedClasses);
 				}
 
 				if (annotatedClasses.isEmpty()) {

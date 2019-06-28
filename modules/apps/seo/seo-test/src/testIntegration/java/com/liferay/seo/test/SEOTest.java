@@ -51,12 +51,35 @@ public class SEOTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testGetClassicLocalizedSEOLinks() throws Exception {
+	public void testGetClassicLocalizedSEOLinksWithDefaultLocale()
+		throws Exception {
+
 		_testWithSEOCompanyConfiguration(
 			"classic",
 			() -> {
 				List<SEOLink> seoLinks = _seo.getLocalizedSEOLinks(
 					TestPropsValues.getCompanyId(), LocaleUtil.US,
+					_CANONICAL_URL, _alternateURLs);
+
+				Assert.assertEquals(
+					seoLinks.toString(), _alternateURLs.size() + 2,
+					seoLinks.size());
+
+				_assertCanonicalSEOLink(seoLinks, _CANONICAL_URL);
+
+				_assertAlternateSEOLinks(seoLinks, _alternateURLs);
+			});
+	}
+
+	@Test
+	public void testGetClassicLocalizedSEOLinksWithNoDefaultLocale()
+		throws Exception {
+
+		_testWithSEOCompanyConfiguration(
+			"classic",
+			() -> {
+				List<SEOLink> seoLinks = _seo.getLocalizedSEOLinks(
+					TestPropsValues.getCompanyId(), LocaleUtil.SPAIN,
 					_CANONICAL_URL, _alternateURLs);
 
 				Assert.assertEquals(

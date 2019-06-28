@@ -18,6 +18,7 @@ import aQute.bnd.cdi.Discover;
 import aQute.bnd.component.DSAnnotations;
 import aQute.bnd.header.Attrs;
 import aQute.bnd.header.Parameters;
+import aQute.bnd.make.component.ServiceComponent;
 import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Builder;
 import aQute.bnd.osgi.Constants;
@@ -1148,7 +1149,9 @@ public class WabProcessor {
 		List<Object> disabledPlugins = new ArrayList<>();
 
 		for (Object plugin : plugins) {
-			if (plugin instanceof DSAnnotations) {
+			if (plugin instanceof DSAnnotations ||
+				plugin instanceof ServiceComponent) {
+
 				disabledPlugins.add(plugin);
 
 				continue;

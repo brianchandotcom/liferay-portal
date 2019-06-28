@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.seo.SEO;
 import com.liferay.portal.kernel.seo.SEOLink;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -49,7 +50,7 @@ public class SEOTest {
 	@Test
 	public void testGetLocalizedSEOLinks() throws Exception {
 		List<SEOLink> seoLinks = _seo.getLocalizedSEOLinks(
-			_CANONICAL_URL, _alternateURLs);
+			TestPropsValues.getCompanyId(), _CANONICAL_URL, _alternateURLs);
 
 		Assert.assertEquals(
 			seoLinks.toString(), _alternateURLs.size() + 2, seoLinks.size());

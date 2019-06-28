@@ -19,7 +19,9 @@ import com.liferay.project.templates.ProjectTemplatesArgs;
 import com.liferay.project.templates.internal.util.FileUtil;
 
 import java.io.File;
+
 import java.nio.file.Path;
+
 import java.util.regex.Pattern;
 
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
@@ -52,8 +54,7 @@ public class SpringMVCPortletProjectTemplateCustomizer
 
 		File spring4JavaPkgDir = new File(
 			buildDir,
-			"src/main/java/" + packageName.replaceAll("[.]", "/") +
-				"/spring4");
+			"src/main/java/" + packageName.replaceAll("[.]", "/") + "/spring4");
 
 		String viewType = projectTemplatesArgs.getViewType();
 
@@ -61,7 +62,6 @@ public class SpringMVCPortletProjectTemplateCustomizer
 			Pattern pattern = Pattern.compile(".*.html");
 
 			FileUtil.deleteFilesByPattern(viewsDir.toPath(), pattern);
-
 		}
 		else {
 			Pattern pattern = Pattern.compile(".*.jspx");
@@ -71,9 +71,7 @@ public class SpringMVCPortletProjectTemplateCustomizer
 
 		String framework = projectTemplatesArgs.getFramework();
 
-		if (viewType.equals("jsp") ||
-			framework.equals("portletmvc4spring")) {
-
+		if (viewType.equals("jsp") || framework.equals("portletmvc4spring")) {
 			FileUtil.deleteDir(spring4JavaPkgDir.toPath());
 		}
 	}

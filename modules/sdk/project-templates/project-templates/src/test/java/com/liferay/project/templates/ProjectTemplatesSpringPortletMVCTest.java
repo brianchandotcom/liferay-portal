@@ -124,7 +124,7 @@ public class ProjectTemplatesSpringPortletMVCTest {
 			"src/main/java/com/test/controller/UserController.java");
 
 		if (_viewType.equals("jsp")) {
-			if ( _framework.equals("springportletmvc")) {
+			if (_framework.equals("springportletmvc")) {
 				ProjectTemplatesTestUtil.testContains(
 					gradleProjectDir,
 					"src/main/webapp/WEB-INF/spring-context" +

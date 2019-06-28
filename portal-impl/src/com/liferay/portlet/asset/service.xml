@@ -463,6 +463,7 @@
 		<exception>DuplicateQueryRule</exception>
 		<exception>DuplicateTag</exception>
 		<exception>DuplicateVocabulary</exception>
+		<exception>InvalidAssetCategory</exception>
 		<exception>VocabularyName</exception>
 	</exceptions>
 </service-builder>

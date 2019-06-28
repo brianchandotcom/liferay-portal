@@ -39,8 +39,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MODIFIED_FACET_RANGE</td>
-	<td>//li[contains(@name,'ModifiedFacet')]//span[contains(.,'${rangeName}')]</td>
+	<td>MODIFIED_FACET_CONFIG_EMPTY_FIELD</td>
+	<td>//div[contains(@class,'form-row')][2]//div[label[contains(.,'${key_fieldLabel}')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODIFIED_FACET_SELECTION</td>
+	<td>//li[contains(@name,'ModifiedFacet')]//span[contains(.,'${range}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1496,30 +1496,30 @@ definition {
 
 		Type(
 			key_fieldLabel = "Label",
-			key_position = "2",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT_2",
+			locator1 = "Search#MODIFIED_FACET_CONFIG_EMPTY_FIELD",
 			value1 = "Past 23 Hours");
 
 		Type(
 			key_fieldLabel = "Range",
-			key_position = "2",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT_2",
+			locator1 = "Search#MODIFIED_FACET_CONFIG_EMPTY_FIELD",
 			value1 = "[past-24-hours TO past-hour]");
 
 		PortletEntry.save();
 
 		IFrame.closeFrame();
 
+		// Workaround for LPS-97383
+
 		Refresh();
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "Search#MODIFIED_FACET_RANGE",
-			rangeName = "Past 23 Hours",
+			locator1 = "Search#MODIFIED_FACET_SELECTION",
+			range = "Past 23 Hours",
 			value1 = "Past 23 Hours");
 
 		Click(
-			locator1 = "Search#MODIFIED_FACET_RANGE",
-			rangeName = "Past 23 Hours");
+			locator1 = "Search#MODIFIED_FACET_SELECTION",
+			range = "Past 23 Hours");
 
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "WC Title");
 
@@ -1537,11 +1537,13 @@ definition {
 
 		IFrame.closeFrame();
 
+		// Workaround for LPS-97383
+
 		Refresh();
 
 		AssertElementNotPresent(
-			locator1 = "Search#MODIFIED_FACET_RANGE",
-			rangeName = "Past 23 Hours");
+			locator1 = "Search#MODIFIED_FACET_SELECTION",
+			range = "Past 23 Hours");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WC Title",
@@ -1549,8 +1551,8 @@ definition {
 			searchTerm = "WC Title");
 
 		Click(
-			locator1 = "Search#MODIFIED_FACET_RANGE",
-			rangeName = "Custom Range");
+			locator1 = "Search#MODIFIED_FACET_SELECTION",
+			range = "Custom Range");
 
 		Click(locator1 = "Search#CUSTOM_RANGE_FROM");
 
@@ -1569,8 +1571,8 @@ definition {
 		Click(locator1 = "Link#CLEAR");
 
 		Click(
-			locator1 = "Search#MODIFIED_FACET_RANGE",
-			rangeName = "Custom Range");
+			locator1 = "Search#MODIFIED_FACET_SELECTION",
+			range = "Custom Range");
 
 		Click(locator1 = "Search#CUSTOM_RANGE_FROM");
 

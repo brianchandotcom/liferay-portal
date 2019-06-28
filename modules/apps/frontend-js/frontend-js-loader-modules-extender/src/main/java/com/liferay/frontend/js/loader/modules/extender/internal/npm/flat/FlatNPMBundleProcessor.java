@@ -75,7 +75,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			_log.info("Processing NPM bundle: " + flatJSBundle);
 		}
 
-		_processPackage(flatJSBundle, "META-INF/resources", true);
+		_processPackage(flatJSBundle, url, "META-INF/resources", true);
 
 		_processNodePackages(flatJSBundle);
 
@@ -161,23 +161,18 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		}
 	}
 
-	private JSONObject _getJSONObject(
-		FlatJSBundle flatJSBundle, String location) {
-
+	private JSONObject _getJSONObject(URL url) {
 		JSONObject jsonObject = null;
 
 		try {
-			String content = _getResourceContent(flatJSBundle, location);
+			String content = _getResourceContent(url);
 
 			if (content != null) {
 				jsonObject = _jsonFactory.createJSONObject(content);
 			}
 		}
 		catch (Exception e) {
-			_log.error(
-				StringBundler.concat(
-					"Unable to parse ", flatJSBundle, ": ", location),
-				e);
+			_log.error("Unable to parse " + url.getPath(), e);
 		}
 
 		return jsonObject;
@@ -190,15 +185,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 	 * @param  location the resource's path
 	 * @return the contents of the resource as a String
 	 */
-	private String _getResourceContent(
-		FlatJSBundle flatJSBundle, String location) {
-
-		URL url = flatJSBundle.getResourceURL(location);
-
-		if (url == null) {
-			return null;
-		}
-
+	private String _getResourceContent(URL url) {
 		try {
 			return StringUtil.read(url.openStream());
 		}
@@ -316,7 +303,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 				continue;
 			}
 
-			JSONObject jsonObject = _getJSONObject(flatJSBundle, url.getPath());
+			JSONObject jsonObject = _getJSONObject(url);
 
 			if (jsonObject == null) {
 				continue;
@@ -450,7 +437,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			String lastFolderPath = parts[parts.length - 2];
 
 			if (lastFolderPath.equals("node_modules")) {
-				_processPackage(flatJSBundle, location, false);
+				_processPackage(flatJSBundle, url, location, false);
 			}
 		}
 	}
@@ -464,13 +451,13 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 	 *        file
 	 */
 	private void _processPackage(
-		FlatJSBundle flatJSBundle, String location, boolean root) {
+		FlatJSBundle flatJSBundle, URL url, String location, boolean root) {
 
 		JSONObject jsonObject = null;
 
 		try {
 			jsonObject = _jsonFactory.createJSONObject(
-				_getResourceContent(flatJSBundle, location + "/package.json"));
+				_getResourceContent(url));
 		}
 		catch (Exception e) {
 			_log.error(

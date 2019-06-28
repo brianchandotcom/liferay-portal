@@ -537,7 +537,7 @@ paths:
                   name: type
                   required: false
                   schema:
-                      $ref: "#/components/schemas/CollectionType"
+                      $ref: "#/components/schemas/ProcessType"
                 - in: query
                   name: userId
                   required: false

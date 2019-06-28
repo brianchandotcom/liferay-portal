@@ -15,12 +15,24 @@
 package com.liferay.asset.entry.rel.internal.upgrade.v1_0_0;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * @author Eudaldo Alonso
@@ -28,31 +40,42 @@ import java.sql.ResultSet;
 public class UpgradeAssetEntryAssetCategoryRel extends UpgradeProcess {
 
 	protected void addAssetEntryAssetCategoryRels() throws Exception {
-		StringBundler sb = new StringBundler(3);
-
-		sb.append("insert into AssetEntryAssetCategoryRel (");
-		sb.append("assetEntryAssetCategoryRelId, assetEntryId, ");
-		sb.append("assetCategoryId) values (?, ?, ?)");
-
-		try (PreparedStatement ps1 = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select * from AssetEntries_AssetCategories");
-			PreparedStatement ps2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection, sb.toString());
-			ResultSet rs = ps1.executeQuery()) {
+			ResultSet rs = ps.executeQuery()) {
+
+			List<InsertAssetEntryAssetCategoryRelCallable>
+				insertAssetEntryAssetCategoryRelCallables = new ArrayList<>();
 
 			while (rs.next()) {
 				long assetEntryId = rs.getLong("entryId");
 				long assetCategoryId = rs.getLong("categoryId");
 
-				ps2.setLong(1, increment());
-				ps2.setLong(2, assetEntryId);
-				ps2.setLong(3, assetCategoryId);
+				InsertAssetEntryAssetCategoryRelCallable
+					insertAssetEntryAssetCategoryRelCallable =
+						new InsertAssetEntryAssetCategoryRelCallable(
+							assetEntryId, assetCategoryId);
 
-				ps2.executeUpdate();
+				insertAssetEntryAssetCategoryRelCallables.add(
+					insertAssetEntryAssetCategoryRelCallable);
 			}
 
-			ps2.executeBatch();
+			ExecutorService executorService = Executors.newWorkStealingPool();
+
+			List<Future<Boolean>> futures = executorService.invokeAll(
+				insertAssetEntryAssetCategoryRelCallables);
+
+			executorService.shutdown();
+
+			for (Future<Boolean> future : futures) {
+				boolean success = GetterUtil.get(future.get(), true);
+
+				if (!success) {
+					throw new UpgradeException(
+						"Unable to add relationships between asset entries " +
+							"and asset categories");
+				}
+			}
 		}
 	}
 
@@ -69,6 +92,55 @@ public class UpgradeAssetEntryAssetCategoryRel extends UpgradeProcess {
 				"dependencies/update.sql"));
 
 		runSQLTemplateString(template, false, false);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeAssetEntryAssetCategoryRel.class);
+
+	private class InsertAssetEntryAssetCategoryRelCallable
+		implements Callable<Boolean> {
+
+		public InsertAssetEntryAssetCategoryRelCallable(
+			long assetEntryId, long assetCategoryId) {
+
+			_assetEntryId = assetEntryId;
+			_assetCategoryId = assetCategoryId;
+		}
+
+		@Override
+		public Boolean call() throws Exception {
+			try (Connection connection = DataAccess.getConnection()) {
+				StringBundler sb = new StringBundler(9);
+
+				sb.append("insert into AssetEntryAssetCategoryRel (");
+				sb.append("assetEntryAssetCategoryRelId, assetEntryId, ");
+				sb.append("assetCategoryId) values (");
+				sb.append(increment());
+				sb.append(", ");
+				sb.append(_assetEntryId);
+				sb.append(", ");
+				sb.append(_assetCategoryId);
+				sb.append(")");
+
+				runSQL(connection, sb.toString());
+			}
+			catch (Exception e) {
+				_log.error(
+					StringBundler.concat(
+						"Unable to add relationship for asset entry ",
+						_assetEntryId, " and asset category ",
+						_assetCategoryId),
+					e);
+
+				return false;
+			}
+
+			return true;
+		}
+
+		private final long _assetCategoryId;
+		private final long _assetEntryId;
+
 	}
 
 }

@@ -816,7 +816,7 @@ public class ProjectTemplateFilesTest {
 
 		String pathString = archetypeResourcesDirPath.toString();
 
-		if (!pathString.contains("ext")) {
+		if (!pathString.contains("ext") & !pathString.contains("spring-mvc")) {
 			_testPomXml(archetypeResourcesDirPath, documentBuilder);
 		}
 

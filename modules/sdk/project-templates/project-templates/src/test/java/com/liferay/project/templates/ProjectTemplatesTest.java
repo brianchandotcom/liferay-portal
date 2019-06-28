@@ -2195,21 +2195,21 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateRestInWorkspace70() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"rest", "my-rest", "build/libs/my.rest-1.0.0.jar",
-			"--dependency-management-enabled", "--liferayVersion", "7.0");
+			"--dependency-management-enabled", "--liferay-version", "7.0");
 	}
 
 	@Test
 	public void testBuildTemplateRestInWorkspace71() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"rest", "my-rest", "build/libs/my.rest-1.0.0.jar",
-			"--dependency-management-enabled", "--liferayVersion", "7.1");
+			"--dependency-management-enabled", "--liferay-version", "7.1");
 	}
 
 	@Test
 	public void testBuildTemplateRestInWorkspace72() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"rest", "my-rest", "build/libs/my.rest-1.0.0.jar",
-			"--dependency-management-enabled", "--liferayVersion", "7.2");
+			"--dependency-management-enabled", "--liferay-version", "7.2");
 	}
 
 	@Test
@@ -2416,7 +2416,7 @@ public class ProjectTemplatesTest {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-builder", name, "--package-name", packageName,
-			"--liferayVersion", "7.2", "--dependency-injector", "spring");
+			"--liferay-version", "7.2", "--dependency-injector", "spring");
 
 		ProjectTemplatesTestUtil.testNotContains(
 			gradleProjectDir, name + "-api/build.gradle", "biz.aQute.bnd",

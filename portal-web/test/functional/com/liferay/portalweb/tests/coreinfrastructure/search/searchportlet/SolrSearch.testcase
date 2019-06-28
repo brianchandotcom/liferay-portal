@@ -1854,6 +1854,8 @@ definition {
 
 	@priority = "4"
 	test ViewStagedAndLiveContentInSearchResults {
+		property portal.suite.search.engine = "disable";
+
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",

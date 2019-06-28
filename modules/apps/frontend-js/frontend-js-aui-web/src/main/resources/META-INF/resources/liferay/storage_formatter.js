@@ -17,10 +17,6 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var STR_SPACE = ' ';
-
-		var STR_SUFFIX_KB = 'suffixKB';
-
 		var StorageFormatter = function() {};
 
 		StorageFormatter.NAME = 'storageformatter';
@@ -61,45 +57,21 @@ AUI.add(
 			formatStorage: function(size) {
 				var instance = this;
 
-				var suffix = instance.get(STR_SUFFIX_KB);
-
+				var addSpaceBeforeSuffix = instance.get('addSpaceBeforeSuffix');
+				var decimalSeparator = instance.get('decimalSeparator');
 				var denominator = instance.get('denominator');
+				var suffixGB = instance.get('suffixGB');
+				var suffixKB = instance.get('suffixKB');
+				var suffixMB = instance.get('suffixMB');
 
-				size /= denominator;
-
-				if (size >= denominator) {
-					suffix = instance.get('suffixMB');
-
-					size /= denominator;
-				}
-
-				if (size >= denominator) {
-					suffix = instance.get('suffixGB');
-
-					size /= denominator;
-				}
-
-				return A.Number.format(size, {
-					decimalPlaces: instance._getDecimalPlaces(size, suffix),
-					decimalSeparator: instance.get('decimalSeparator'),
-					suffix: instance.get('addSpaceBeforeSuffix')
-						? STR_SPACE + suffix
-						: suffix
+				return Liferay.Util.formatStorage(size, {
+					addSpaceBeforeSuffix,
+					decimalSeparator,
+					denominator,
+					suffixGB,
+					suffixKB,
+					suffixMB
 				});
-			},
-
-			_getDecimalPlaces: function(size, suffix) {
-				var instance = this;
-
-				var decimalPlaces = 1;
-
-				var suffixKB = instance.get(STR_SUFFIX_KB);
-
-				if (suffix === suffixKB) {
-					decimalPlaces = 0;
-				}
-
-				return decimalPlaces;
 			}
 		};
 

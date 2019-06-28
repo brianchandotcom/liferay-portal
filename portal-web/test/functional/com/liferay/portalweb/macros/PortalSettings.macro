@@ -461,7 +461,15 @@ definition {
 			fieldName = "Personal Applications Look and Feel",
 			selectOption = "${selectOption}");
 
-		PortletEntry.update();
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			PortletEntry.update();
+		}
+
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
+			PortletEntry.save();
+		}
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro editConfigurationUsersPersonalMenuShowInControlMenu {
@@ -469,7 +477,15 @@ definition {
 			key_toggleSwitchLabel = "${toggleSwitchLabel}",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		PortletEntry.update();
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			PortletEntry.update();
+		}
+
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
+			PortletEntry.save();
+		}
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro editDefaultLandingPageCP {

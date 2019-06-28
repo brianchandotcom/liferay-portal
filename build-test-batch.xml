@@ -2855,6 +2855,13 @@ log.sanitizer.enabled=false</echo>
 					LiferayK8sConnection liferayK8sConnection = LiferayK8sConnection.getInstance();
 
 					Pod pod = liferayK8sConnection.createPod(ResourceConfigurationFactory.getConfigurationPod("@{database.type}", "@{database.version}"));
+
+					String databaseIP = pod.getIP();
+					String hostIP = JenkinsResultsParserUtil.getHostIPAddress();
+
+					String[] commands = {"iptables -A OUTPUT -t nat -o lo -p tcp -m tcp --dport @{database.port} -j DNAT --to-destination " + databaseIP + ":@{database.port} && iptables -A POSTROUTING -t nat -p tcp -d " + databaseIP + " --dport @{database.port} -j SNAT --to-source " + hostIP};
+
+					JenkinsResultsParserUtil.executeBashCommands(commands);
 				]]>
 			</beanshell>
 		</sequential>
@@ -2874,6 +2881,10 @@ log.sanitizer.enabled=false</echo>
 					LiferayK8sConnection liferayK8sConnection = LiferayK8sConnection.getInstance();
 
 					liferayK8sConnection.deletePod(ResourceConfigurationFactory.getConfigurationPod("@{database.type}", "@{database.version}"));
+
+					String[] commands = {"iptables -t nat -F"};
+
+					JenkinsResultsParserUtil.executeBashCommands(commands);
 				]]>
 			</beanshell>
 		</sequential>

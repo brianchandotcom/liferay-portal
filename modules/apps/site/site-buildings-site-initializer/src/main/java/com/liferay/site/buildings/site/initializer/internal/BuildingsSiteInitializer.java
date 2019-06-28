@@ -24,9 +24,12 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -94,6 +97,8 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 			_addImages();
 
 			_addFragments();
+
+			_addLayouts();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -154,6 +159,55 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private Layout _addLayout(long parentLayoutId, String name)
+		throws Exception {
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(LocaleUtil.getSiteDefault(), name);
+
+		return _layoutLocalService.addLayout(
+			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+			false, parentLayoutId, nameMap, new HashMap<>(), new HashMap<>(),
+			new HashMap<>(), new HashMap<>(), LayoutConstants.TYPE_CONTENT,
+			null, false, false, new HashMap<>(), _serviceContext);
+	}
+
+	private void _addLayouts() throws Exception {
+		_addLayout(LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Home");
+
+		Layout productsLayout = _addLayout(
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Products");
+
+		Layout digitalExperiencePlatformLayout = _addLayout(
+			productsLayout.getLayoutId(), "Digital Experience Platform");
+
+		_addLayout(digitalExperiencePlatformLayout.getLayoutId(), "Overview");
+
+		_addLayout(digitalExperiencePlatformLayout.getLayoutId(), "Features");
+
+		_addLayout(
+			digitalExperiencePlatformLayout.getLayoutId(), "Key Benefits");
+
+		_addLayout(
+			digitalExperiencePlatformLayout.getLayoutId(), "What is New");
+
+		Layout commerceLayout = _addLayout(
+			productsLayout.getLayoutId(), "Commerce");
+
+		_addLayout(commerceLayout.getLayoutId(), "Commerce Demo");
+
+		_addLayout(commerceLayout.getLayoutId(), "Features");
+
+		_addLayout(commerceLayout.getLayoutId(), "News");
+
+		_addLayout(productsLayout.getLayoutId(), "Analytics Cloud");
+
+		_addLayout(LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Solutions");
+
+		_addLayout(LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "News");
+	}
+
 	private void _createServiceContext(long groupId) throws PortalException {
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -194,6 +248,9 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private FragmentsImporter _fragmentsImporter;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	private ServiceContext _serviceContext;
 

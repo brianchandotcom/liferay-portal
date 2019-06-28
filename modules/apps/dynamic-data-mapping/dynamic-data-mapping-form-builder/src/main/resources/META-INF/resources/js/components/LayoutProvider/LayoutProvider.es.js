@@ -124,22 +124,6 @@ class LayoutProvider extends Component {
 				),
 				settingsContext
 			};
-
-			if (focusedField.originalContext) {
-				focusedField = {
-					...focusedField,
-					originalContext: {
-						...focusedField.originalContext,
-						settingsContext: {
-							...focusedField.originalContext.settingsContext,
-							pages: this.getLocalizedPages(
-								focusedField.originalContext.settingsContext
-									.pages
-							)
-						}
-					}
-				};
-			}
 		}
 
 		return focusedField;
@@ -327,18 +311,32 @@ class LayoutProvider extends Component {
 	}
 
 	_handleFieldChangesCanceled() {
-		const {
-			focusedField: {originalContext}
-		} = this.state;
-		const {settingsContext} = originalContext;
+		const {focusedField, pages, previousFocusedField} = this.state;
+		const {settingsContext} = previousFocusedField;
+
 		const visitor = new PagesVisitor(settingsContext.pages);
 
-		visitor.mapFields(field => {
+		visitor.mapFields(({fieldName, value}) => {
 			this._handleFieldEdited({
-				propertyName: field.fieldName,
-				propertyValue: field.value,
-				type: 'cancel'
+				propertyName: fieldName,
+				propertyValue: value
 			});
+		});
+
+		visitor.setPages(pages);
+
+		this.setState({
+			focusedField: previousFocusedField,
+			pages: visitor.mapFields(field => {
+				if (field.fieldName === focusedField.fieldName) {
+					return {
+						...field,
+						settingsContext
+					};
+				}
+
+				return field;
+			})
 		});
 	}
 
@@ -753,7 +751,7 @@ LayoutProvider.STATE = {
 	activePage: Config.number().value(0),
 
 	/**
-	 * @default undefined
+	 * @default {}
 	 * @instance
 	 * @memberof LayoutProvider
 	 * @type {?object}
@@ -787,6 +785,23 @@ LayoutProvider.STATE = {
 	 */
 
 	paginationMode: Config.string().valueFn('_paginationModeValueFn'),
+
+	/**
+	 * @default {}
+	 * @instance
+	 * @memberof LayoutProvider
+	 * @type {?object}
+	 */
+
+	previousFocusedField: Config.shapeOf({
+		columnIndex: Config.oneOfType([
+			Config.bool().value(false),
+			Config.number()
+		]).required(),
+		pageIndex: Config.number().required(),
+		rowIndex: Config.number().required(),
+		type: Config.string().required()
+	}).value({}),
 
 	/**
 	 * @default undefined

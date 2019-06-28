@@ -89,8 +89,6 @@ class Sidebar extends Component {
 			settingsContext,
 			type: newFieldType.name
 		});
-
-		this.refs.evaluableForm.evaluate();
 	}
 
 	close() {
@@ -598,15 +596,16 @@ class Sidebar extends Component {
 		const newVisitor = new PagesVisitor(newSettingsContext.pages);
 		const oldVisitor = new PagesVisitor(oldSettingsContext.pages);
 
-		const excludedFields = ['indexType', 'type', 'validation'];
+		const excludedFields = ['indexType', 'readOnly', 'type', 'validation'];
 
-		const getPreviousField = ({fieldName}) => {
+		const getPreviousField = ({fieldName, type}) => {
 			let field;
 
 			oldVisitor.findField(oldField => {
 				if (
 					excludedFields.indexOf(fieldName) === -1 &&
-					oldField.fieldName === fieldName
+					oldField.fieldName === fieldName &&
+					oldField.type === type
 				) {
 					field = oldField;
 				}
@@ -630,11 +629,15 @@ class Sidebar extends Component {
 							...previousField.localizedValue
 						};
 					}
+				}
 
-					if (newField.fieldName == 'predefinedValue') {
-						newField = this._setPredefinedValue(
-							newField,
-							previousField,
+				if (newField.fieldName == 'predefinedValue') {
+					delete newField.value;
+
+					newField.localizedValue = {};
+
+					if (newField.options) {
+						newField.options = this._getPredefinedOptions(
 							newVisitor
 						);
 					}
@@ -652,8 +655,10 @@ class Sidebar extends Component {
 
 		if (options) {
 			const locale = options.locale;
+
 			return options.value[locale];
 		}
+
 		return options;
 	}
 
@@ -1004,39 +1009,6 @@ class Sidebar extends Component {
 				</li>
 			</ul>
 		);
-	}
-
-	_setPredefinedValue(newField, previousField, newVisitor) {
-		const newFieldOptions = this._getPredefinedOptions(newVisitor);
-
-		if (newFieldOptions) {
-			newField.options = newFieldOptions;
-		}
-
-		if (newField.predefinedValue && !previousField.predefinedValue) {
-			newField.value = [];
-		} else if (
-			Array.isArray(previousField.value) &&
-			newField.predefinedValue
-		) {
-			newField.options = previousField.options;
-		} else if (
-			Array.isArray(previousField.predefinedValue) &&
-			!newField.predefinedValue
-		) {
-			newField.value = '';
-			newField.predefinedValue = '';
-			newField.localizedValue = {
-				...newField.localizedValue,
-				[newField.locale]: ''
-			};
-		} else if (newField.predefinedValue && newField.value == '') {
-			newField.value = [];
-		} else if (newField.predefinedValue && newField.value.length > 1) {
-			newField.value = newField.value[0];
-		}
-
-		return newField;
 	}
 }
 

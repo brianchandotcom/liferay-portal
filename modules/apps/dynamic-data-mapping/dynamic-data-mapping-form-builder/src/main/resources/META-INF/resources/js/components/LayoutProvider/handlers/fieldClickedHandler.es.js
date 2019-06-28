@@ -61,10 +61,10 @@ const handleFieldClicked = (state, event) => {
 		focusedField: {
 			...focusedField,
 			columnIndex,
-			originalContext: focusedField,
 			pageIndex,
 			rowIndex
-		}
+		},
+		previousFocusedField: focusedField
 	};
 };
 

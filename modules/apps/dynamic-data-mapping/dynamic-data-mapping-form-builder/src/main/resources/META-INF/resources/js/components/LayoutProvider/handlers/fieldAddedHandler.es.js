@@ -50,7 +50,6 @@ const handleFieldAdded = (props, state, event) => {
 		focusedField: {
 			...fieldProperties,
 			columnIndex,
-			originalContext: fieldProperties,
 			pageIndex,
 			rowIndex
 		},
@@ -60,7 +59,8 @@ const handleFieldAdded = (props, state, event) => {
 			rowIndex,
 			columnIndex,
 			fieldProperties
-		)
+		),
+		previousFocusedField: fieldProperties
 	};
 };
 

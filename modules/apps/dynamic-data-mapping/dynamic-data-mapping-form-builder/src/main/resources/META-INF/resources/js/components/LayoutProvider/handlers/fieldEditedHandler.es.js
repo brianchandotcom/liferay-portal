@@ -34,8 +34,7 @@ export const updateField = (
 	defaultLanguageId,
 	editingLanguageId,
 	fieldName,
-	fieldValue,
-	type
+	fieldValue
 ) => {
 	const {focusedField, pages, rules} = state;
 	const updatedFocusedField = updateFocusedField(
@@ -43,8 +42,7 @@ export const updateField = (
 		defaultLanguageId,
 		editingLanguageId,
 		fieldName,
-		fieldValue,
-		type
+		fieldValue
 	);
 
 	return {
@@ -60,7 +58,7 @@ export const handleFieldEdited = (
 	editingLanguageId,
 	event
 ) => {
-	const {propertyName, propertyValue, type} = event;
+	const {propertyName, propertyValue} = event;
 	let newState = {};
 
 	if (propertyName !== 'name' || propertyValue !== '') {
@@ -69,8 +67,7 @@ export const handleFieldEdited = (
 			defaultLanguageId,
 			editingLanguageId,
 			propertyName,
-			propertyValue,
-			type
+			propertyValue
 		);
 	}
 

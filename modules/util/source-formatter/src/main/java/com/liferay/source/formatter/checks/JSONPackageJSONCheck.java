@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.util.FileUtil;
@@ -23,6 +24,7 @@ import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -52,7 +54,8 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 
 		JSONObject jsonObject = new JSONObject(content);
 
-		content = _fixDependencyVersions(absolutePath, content, jsonObject);
+		content = _fixDependencyVersions(
+			fileName, absolutePath, content, jsonObject);
 
 		String dirName = absolutePath.substring(0, absolutePath.length() - 12);
 
@@ -124,7 +127,8 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 	}
 
 	private String _fixDependencyVersions(
-			String absolutePath, String content, JSONObject jsonObject)
+			String fileName, String absolutePath, String content,
+			JSONObject jsonObject)
 		throws IOException {
 
 		if (jsonObject.isNull("dependencies")) {
@@ -156,6 +160,24 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 						"\"", dependencyName, "\": \"", actualVersion, "\""),
 					StringBundler.concat(
 						"\"", dependencyName, "\": \"", expectedVersion, "\""));
+			}
+
+			List<String> enforceCompatibleVersionArtifacts = getAttributeValues(
+				_ENFORCE_COMPATIBLE_VERSION_ARTIFACTS_KEY, absolutePath);
+
+			for (String artifact : enforceCompatibleVersionArtifacts) {
+				String[] artifactParts = StringUtil.split(
+					artifact, StringPool.COLON);
+
+				if (dependencyName.equals(artifactParts[0]) &&
+					!actualVersion.startsWith(artifactParts[1])) {
+
+					addMessage(
+						fileName,
+						StringBundler.concat(
+							"Version for '", dependencyName,
+							"' should start with '", artifactParts[1], "'"));
+				}
 			}
 		}
 
@@ -220,6 +242,9 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 
 		return _expectedDependencyVersionsMap;
 	}
+
+	private static final String _ENFORCE_COMPATIBLE_VERSION_ARTIFACTS_KEY =
+		"enforceCompatibleVersionArtifacts";
 
 	private Map<String, String> _expectedDependencyVersionsMap;
 

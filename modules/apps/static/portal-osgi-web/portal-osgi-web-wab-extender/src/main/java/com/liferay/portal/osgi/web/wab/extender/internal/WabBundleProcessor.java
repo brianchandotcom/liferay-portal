@@ -768,24 +768,23 @@ public class WabBundleProcessor {
 		HandlesTypes handledTypes = initializerClass.getAnnotation(
 			HandlesTypes.class);
 
-		if (handledTypes == null) {
-			handledTypes = _NULL_HANDLES_TYPES;
-		}
+		Set<Class<?>> annotatedClasses = null;
 
-		Class<?>[] handledTypesArray = handledTypes.value();
+		if (handledTypes != null) {
+			Class<?>[] handledTypesArray = handledTypes.value();
 
-		if (handledTypesArray == null) {
-			handledTypesArray = new Class<?>[0];
-		}
+			if (handledTypesArray != null) {
+				annotatedClasses = new HashSet<>();
 
-		Set<Class<?>> annotatedClasses = new HashSet<>();
+				for (Class<?> clazz : classes) {
+					collectAnnotatedClasses(
+						clazz, handledTypesArray, annotatedClasses);
+				}
 
-		for (Class<?> clazz : classes) {
-			collectAnnotatedClasses(clazz, handledTypesArray, annotatedClasses);
-		}
-
-		if (annotatedClasses.isEmpty()) {
-			annotatedClasses = null;
+				if (annotatedClasses.isEmpty()) {
+					annotatedClasses = null;
+				}
+			}
 		}
 
 		try {
@@ -830,20 +829,6 @@ public class WabBundleProcessor {
 			}
 		}
 	}
-
-	private static final HandlesTypes _NULL_HANDLES_TYPES = new HandlesTypes() {
-
-		@Override
-		public Class<? extends Annotation> annotationType() {
-			return null;
-		}
-
-		@Override
-		public Class<?>[] value() {
-			return new Class<?>[0];
-		}
-
-	};
 
 	private static final String _VENDOR = "Liferay, Inc.";
 

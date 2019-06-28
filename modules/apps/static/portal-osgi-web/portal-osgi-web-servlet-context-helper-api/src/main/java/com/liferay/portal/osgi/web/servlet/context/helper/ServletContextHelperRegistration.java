@@ -16,8 +16,8 @@ package com.liferay.portal.osgi.web.servlet.context.helper;
 
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 
@@ -31,7 +31,9 @@ public interface ServletContextHelperRegistration {
 
 	public void close();
 
-	public List<Class<?>> getClasses();
+	public Set<Class<?>> getAnnotatedClasses();
+
+	public Set<Class<?>> getClasses();
 
 	public ServletContext getServletContext();
 

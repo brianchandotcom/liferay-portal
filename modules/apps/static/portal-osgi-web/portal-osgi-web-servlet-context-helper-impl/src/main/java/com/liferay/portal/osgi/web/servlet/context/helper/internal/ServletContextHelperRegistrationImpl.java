@@ -19,21 +19,28 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.web.servlet.JSPServletFactory;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.internal.definition.WebXMLDefinitionLoader;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 import java.net.URL;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Dictionary;
+import java.util.HashSet;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
@@ -70,39 +77,14 @@ public class ServletContextHelperRegistrationImpl
 		URL url = _bundle.getEntry("WEB-INF/");
 
 		if (url != null) {
-			BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
-
-			Collection<String> classResources = bundleWiring.listResources(
-				"/", "*.class", BundleWiring.LISTRESOURCES_RECURSE);
-
-			if (classResources == null) {
-				_classes = Collections.emptyList();
-			}
-			else {
-				ClassLoader classLoader = bundleWiring.getClassLoader();
-
-				_classes = new ArrayList<>();
-
-				for (String classResource : classResources) {
-					String className = classResource.substring(
-						0, classResource.length() - 6);
-
-					className = className.replace(
-						CharPool.SLASH, CharPool.PERIOD);
-
-					try {
-						_classes.add(classLoader.loadClass(className));
-					}
-					catch (Throwable t) {
-					}
-				}
-			}
-
+			_annotatedClasses = new HashSet<>();
+			_classes = _loadClasses(bundle);
 			_wabShapedBundle = true;
 
 			WebXMLDefinitionLoader webXMLDefinitionLoader =
 				new WebXMLDefinitionLoader(
-					_bundle, _jspServletFactory, saxParserFactory, _classes);
+					_bundle, _jspServletFactory, saxParserFactory, _classes,
+					_annotatedClasses);
 
 			WebXMLDefinition webXMLDefinition = null;
 
@@ -118,7 +100,8 @@ public class ServletContextHelperRegistrationImpl
 			_webXMLDefinition = webXMLDefinition;
 		}
 		else {
-			_classes = Collections.emptyList();
+			_annotatedClasses = Collections.emptySet();
+			_classes = Collections.emptySet();
 			_wabShapedBundle = false;
 			_webXMLDefinition = new WebXMLDefinition();
 		}
@@ -203,7 +186,12 @@ public class ServletContextHelperRegistrationImpl
 	}
 
 	@Override
-	public List<Class<?>> getClasses() {
+	public Set<Class<?>> getAnnotatedClasses() {
+		return _annotatedClasses;
+	}
+
+	@Override
+	public Set<Class<?>> getClasses() {
 		return _classes;
 	}
 
@@ -436,15 +424,84 @@ public class ServletContextHelperRegistrationImpl
 			ServletContext.class, servletContext, properties);
 	}
 
+	private Set<Class<?>> _loadClasses(Bundle bundle) {
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+		ClassLoader classLoader = bundleWiring.getClassLoader();
+
+		Set<Class<?>> classes = new HashSet<>();
+
+		File annotatedClassesFile = _bundle.getDataFile("annotated.classes");
+
+		if (annotatedClassesFile.exists()) {
+			Properties properties = new Properties();
+
+			try (InputStream inputStream = new FileInputStream(
+					annotatedClassesFile)) {
+
+				properties.load(inputStream);
+			}
+			catch (IOException ioe) {
+			}
+
+			if (_bundle.getLastModified() == GetterUtil.getLong(
+					properties.get("last.modified"))) {
+
+				boolean failed = false;
+
+				for (String className :
+						StringUtil.split(
+							properties.getProperty("annotated.classes"))) {
+
+					try {
+						classes.add(classLoader.loadClass(className));
+					}
+					catch (ClassNotFoundException cnfe) {
+						failed = true;
+
+						break;
+					}
+				}
+
+				if (!failed) {
+					return classes;
+				}
+			}
+		}
+
+		Collection<String> classResources = bundleWiring.listResources(
+			"/", "*.class", BundleWiring.LISTRESOURCES_RECURSE);
+
+		if (classResources == null) {
+			return Collections.emptySet();
+		}
+
+		for (String classResource : classResources) {
+			String className = classResource.substring(
+				0, classResource.length() - 6);
+
+			className = className.replace(CharPool.SLASH, CharPool.PERIOD);
+
+			try {
+				classes.add(classLoader.loadClass(className));
+			}
+			catch (Throwable t) {
+			}
+		}
+
+		return classes;
+	}
+
 	private static final String _JSP_SERVLET_INIT_PARAM_PREFIX =
 		"jsp.servlet.init.param.";
 
 	private static final String _SERVLET_INIT_PARAM_PREFIX =
 		HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX;
 
+	private final Set<Class<?>> _annotatedClasses;
 	private final Bundle _bundle;
 	private final BundleContext _bundleContext;
-	private final List<Class<?>> _classes;
+	private final Set<Class<?>> _classes;
 	private final CustomServletContextHelper _customServletContextHelper;
 	private final ServiceRegistration<?> _defaultServletServiceRegistration;
 	private final JSPServletFactory _jspServletFactory;

@@ -45,6 +45,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.Stack;
 
 import javax.servlet.DispatcherType;
@@ -74,12 +75,14 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 	public WebXMLDefinitionLoader(
 		Bundle bundle, JSPServletFactory jspServletFactory,
-		SAXParserFactory saxParserFactory, List<Class<?>> classes) {
+		SAXParserFactory saxParserFactory, Set<Class<?>> classes,
+		Set<Class<?>> annotatedClasses) {
 
 		_bundle = bundle;
 		_jspServletFactory = jspServletFactory;
 		_saxParserFactory = saxParserFactory;
 		_classes = classes;
+		_annotatedClasses = annotatedClasses;
 
 		_webXMLDefinition = new WebXMLDefinition();
 	}
@@ -470,7 +473,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 				WebXMLDefinitionLoader webXMLDefinitionLoader =
 					new WebXMLDefinitionLoader(
 						_bundle, _jspServletFactory, _saxParserFactory,
-						_classes);
+						_classes, _annotatedClasses);
 
 				webXMLDefinitions.add(
 					webXMLDefinitionLoader.loadWebXMLDefinition(url));
@@ -952,7 +955,11 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			return;
 		}
 
+		boolean annotated = false;
+
 		if (webServlet != null) {
+			annotated = true;
+
 			ServletDefinition servletDefinition = new ServletDefinition();
 
 			servletDefinition.setAsyncSupported(webServlet.asyncSupported());
@@ -982,6 +989,8 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 		WebFilter webFilter = clazz.getAnnotation(WebFilter.class);
 
 		if (webFilter != null) {
+			annotated = true;
+
 			FilterDefinition filterDefinition = new FilterDefinition();
 
 			filterDefinition.setAsyncSupported(webFilter.asyncSupported());
@@ -1026,11 +1035,17 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 		WebListener webListener = clazz.getAnnotation(WebListener.class);
 
 		if (webListener != null) {
+			annotated = true;
+
 			ListenerDefinition listenerDefinition = new ListenerDefinition();
 
 			_setEventListener(listenerDefinition, clazz.getCanonicalName());
 
 			webXMLDefinition.addListenerDefinition(listenerDefinition);
+		}
+
+		if (annotated) {
+			_annotatedClasses.add(clazz);
 		}
 	}
 
@@ -1133,10 +1148,11 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 	private List<String> _absoluteOrderingNames;
 	private boolean _after;
 	private String _afterName;
+	private final Set<Class<?>> _annotatedClasses;
 	private boolean _before;
 	private String _beforeName;
 	private final Bundle _bundle;
-	private final List<Class<?>> _classes;
+	private final Set<Class<?>> _classes;
 	private FilterDefinition _filterDefinition;
 	private FilterMapping _filterMapping;
 	private JSPConfig _jspConfig;

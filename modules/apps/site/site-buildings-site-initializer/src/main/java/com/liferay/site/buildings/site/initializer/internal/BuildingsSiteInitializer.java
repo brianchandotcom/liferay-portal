@@ -28,10 +28,13 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -110,6 +113,8 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 			_addDDMStructures();
 			_addWebContent();
 
+			_addLayouts();
+
 			_updateLookAndFeel();
 		}
 		catch (Exception e) {
@@ -163,6 +168,76 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 		_fileEntries = _imagesImporter.importFile(
 			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
 			file);
+	}
+
+	private Layout _addLayout(long parentLayoutId, String name, String type)
+		throws Exception {
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(LocaleUtil.getSiteDefault(), name);
+
+		return _layoutLocalService.addLayout(
+			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+			false, parentLayoutId, nameMap, new HashMap<>(), new HashMap<>(),
+			new HashMap<>(), new HashMap<>(), type, null, false, false,
+			new HashMap<>(), _serviceContext);
+	}
+
+	private void _addLayouts() throws Exception {
+		_addLayout(
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Home",
+			LayoutConstants.TYPE_CONTENT);
+
+		Layout productsLayout = _addLayout(
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Products", "node");
+
+		Layout digitalExperiencePlatformLayout = _addLayout(
+			productsLayout.getLayoutId(), "Digital Experience Platform",
+			LayoutConstants.TYPE_CONTENT);
+
+		_addLayout(
+			digitalExperiencePlatformLayout.getLayoutId(), "Overview",
+			LayoutConstants.TYPE_CONTENT);
+
+		_addLayout(
+			digitalExperiencePlatformLayout.getLayoutId(), "Features",
+			LayoutConstants.TYPE_CONTENT);
+
+		_addLayout(
+			digitalExperiencePlatformLayout.getLayoutId(), "Key Benefits",
+			LayoutConstants.TYPE_CONTENT);
+
+		_addLayout(
+			digitalExperiencePlatformLayout.getLayoutId(), "What is New",
+			LayoutConstants.TYPE_CONTENT);
+
+		Layout commerceLayout = _addLayout(
+			productsLayout.getLayoutId(), "Commerce",
+			LayoutConstants.TYPE_CONTENT);
+
+		_addLayout(
+			commerceLayout.getLayoutId(), "Commerce Demo",
+			LayoutConstants.TYPE_CONTENT);
+
+		_addLayout(
+			commerceLayout.getLayoutId(), "Features",
+			LayoutConstants.TYPE_CONTENT);
+
+		_addLayout(
+			commerceLayout.getLayoutId(), "News", LayoutConstants.TYPE_CONTENT);
+
+		_addLayout(
+			productsLayout.getLayoutId(), "Analytics Cloud",
+			LayoutConstants.TYPE_CONTENT);
+
+		_addLayout(
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Solutions",
+			LayoutConstants.TYPE_CONTENT);
+
+		_addLayout(
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "News",
+			LayoutConstants.TYPE_CONTENT);
 	}
 
 	private void _addWebContent() throws Exception {
@@ -285,6 +360,9 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;

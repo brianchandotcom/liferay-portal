@@ -554,6 +554,14 @@ public class ProjectTemplatesTestUtil {
 		FileUtil.deleteFileInPath(
 			"settings.gradle", archetyperProjectDir.toPath());
 
+		if (template.equals("service-builder")) {
+			File apiDir = new File (archetyperProjectDir, name + "-api");
+			File serviceDir = new File(archetyperProjectDir, name + "-service");
+
+			FileUtil.deleteFileInPath("build.gradle", apiDir.toPath());
+			FileUtil.deleteFileInPath("build.gradle", serviceDir.toPath());
+		}
+
 		DirectoryComparator directoryComparator = new DirectoryComparator(
 			projectDir, archetyperProjectDir);
 

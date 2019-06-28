@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser.k8s;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * @author Kenji Heigel
  */
@@ -52,19 +54,33 @@ public class ResourceConfigurations {
 			return postgresql10PodConfiguration;
 		}
 
-		throw new IllegalArgumentException("Invalid pod configuration name");
+		throw new IllegalArgumentException(
+			"Invalid pod configuration name: " + name);
 	}
 
 	public static Pod getPodConfiguration(
 		String databaseName, String databaseVersion) {
 
-		String name = databaseName + databaseVersion;
+		return getPodConfiguration(
+			_getDatabaseConfigurationName(databaseName, databaseVersion));
+	}
 
-		name = name.toLowerCase();
+	private static String _getDatabaseConfigurationName(
+		String databaseName, String databaseVersion) {
 
-		name = name.replace(".", "");
+		if (StringUtils.countMatches(databaseVersion, ".") > 1) {
+			int index = databaseVersion.lastIndexOf(".");
 
-		return getPodConfiguration(name);
+			databaseVersion = databaseVersion.substring(0, index);
+		}
+
+		String databaseConfigurationName = databaseName + databaseVersion;
+
+		databaseConfigurationName = databaseConfigurationName.toLowerCase();
+
+		databaseConfigurationName = databaseConfigurationName.replace(".", "");
+
+		return databaseConfigurationName;
 	}
 
 }

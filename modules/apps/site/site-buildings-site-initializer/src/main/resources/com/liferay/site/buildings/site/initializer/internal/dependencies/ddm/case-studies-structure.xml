@@ -1,0 +1,210 @@
+<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>case-studies-structure</name>
+		<description>case-studies-structure</description>
+		<definition>
+			<![CDATA[
+				{
+					"availableLanguageIds": [
+						"en_US"
+					],
+					"defaultLanguageId": "en_US",
+					"fields": [
+						{
+							"label": {
+								"en_US": "Case Image"
+							},
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"style": {
+								"en_US": ""
+							},
+							"tip": {
+								"en_US": ""
+							},
+							"dataType": "image",
+							"fieldNamespace": "ddm",
+							"indexType": "text",
+							"localizable": true,
+							"name": "CaseImage",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "ddm-image"
+						},
+						{
+							"label": {
+								"en_US": "Case Title"
+							},
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"style": {
+								"en_US": ""
+							},
+							"tip": {
+								"en_US": ""
+							},
+							"dataType": "string",
+							"indexType": "keyword",
+							"localizable": true,
+							"name": "CaseTitle",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "text"
+						},
+						{
+							"label": {
+								"en_US": "Case Intro"
+							},
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"style": {
+								"en_US": ""
+							},
+							"tip": {
+								"en_US": ""
+							},
+							"dataType": "string",
+							"indexType": "keyword",
+							"localizable": true,
+							"name": "CaseIntro",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "text"
+						},
+						{
+							"label": {
+								"en_US": "Case Body"
+							},
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"style": {
+								"en_US": ""
+							},
+							"tip": {
+								"en_US": ""
+							},
+							"dataType": "html",
+							"fieldNamespace": "ddm",
+							"indexType": "text",
+							"localizable": true,
+							"name": "CaseBody",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "ddm-text-html"
+						},
+						{
+							"label": {
+								"en_US": "Case Side Details"
+							},
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"style": {
+								"en_US": ""
+							},
+							"tip": {
+								"en_US": ""
+							},
+							"dataType": "html",
+							"fieldNamespace": "ddm",
+							"indexType": "text",
+							"localizable": true,
+							"name": "CaseSideDetails",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "ddm-text-html"
+						},
+						{
+							"label": {
+								"en_US": "Case Side Info"
+							},
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"style": {
+								"en_US": ""
+							},
+							"tip": {
+								"en_US": ""
+							},
+							"dataType": "html",
+							"fieldNamespace": "ddm",
+							"indexType": "text",
+							"localizable": true,
+							"name": "CaseSideInfo",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "ddm-text-html"
+						},
+						{
+							"label": {
+								"en_US": "Case Logo"
+							},
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"style": {
+								"en_US": ""
+							},
+							"tip": {
+								"en_US": ""
+							},
+							"dataType": "image",
+							"fieldNamespace": "ddm",
+							"indexType": "text",
+							"localizable": true,
+							"name": "CaseLogo",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "ddm-image"
+						}
+					]
+				}
+			]]>
+		</definition>
+		<layout>
+			<![CDATA[
+				{
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
+					"pages": [
+						{
+							"rows": [
+								{
+									"columns": [
+										{
+											"fieldNames": ["content"],
+											"size": 12
+										}
+									]
+								}
+							],
+							"title": {
+								"[$LOCALE_DEFAULT$]": "Case Studies Structure"
+							}
+						}
+					]
+				}
+			]]>
+		</layout>
+	</structure>
+</root>

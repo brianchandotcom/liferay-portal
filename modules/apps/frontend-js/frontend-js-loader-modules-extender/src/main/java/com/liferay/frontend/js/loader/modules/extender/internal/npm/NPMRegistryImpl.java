@@ -244,7 +244,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	}
 
 	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
+		cardinality = ReferenceCardinality.AT_LEAST_ONE,
 		policy = ReferencePolicy.DYNAMIC
 	)
 	protected synchronized void bindBundleProcessor(

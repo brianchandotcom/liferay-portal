@@ -54,7 +54,7 @@ public class ResourceConfigurationFactory {
 			_getDatabaseConfigurationName(databaseName, databaseVersion));
 	}
 
-	public static Pod newMySQLConfigurationPod(
+	private static Pod _newMySQLConfigurationPod(
 		String dockerBaseImageName, String dockerImageName) {
 
 		List<V1ContainerPort> v1ContainerPorts = new ArrayList<>(
@@ -69,7 +69,7 @@ public class ResourceConfigurationFactory {
 			dockerBaseImageName, dockerImageName, v1ContainerPorts, v1EnvVars);
 	}
 
-	public static Pod newPostgreSQLConfigurationPod(
+	private static Pod _newPostgreSQLConfigurationPod(
 		String dockerBaseImageName, String dockerImageName) {
 
 		List<V1ContainerPort> v1ContainerPorts = new ArrayList<>(
@@ -210,23 +210,23 @@ public class ResourceConfigurationFactory {
 			{
 				put(
 					"mariadb102",
-					ResourceConfigurationFactory.newMySQLConfigurationPod(
+					ResourceConfigurationFactory._newMySQLConfigurationPod(
 						"mariadb102", "mariadb:10.2.25"));
 				put(
 					"mysql55",
-					ResourceConfigurationFactory.newMySQLConfigurationPod(
+					ResourceConfigurationFactory._newMySQLConfigurationPod(
 						"mysql55", "mysql:5.5.62"));
 				put(
 					"mysql56",
-					ResourceConfigurationFactory.newMySQLConfigurationPod(
+					ResourceConfigurationFactory._newMySQLConfigurationPod(
 						"mysql56", "mysql:5.6.43"));
 				put(
 					"mysql57",
-					ResourceConfigurationFactory.newMySQLConfigurationPod(
+					ResourceConfigurationFactory._newMySQLConfigurationPod(
 						"mysql57", "mysql:5.7.25"));
 				put(
 					"postgresql10",
-					ResourceConfigurationFactory.newPostgreSQLConfigurationPod(
+					ResourceConfigurationFactory._newPostgreSQLConfigurationPod(
 						"postgresql10", "postgres:10.9"));
 			}
 		};

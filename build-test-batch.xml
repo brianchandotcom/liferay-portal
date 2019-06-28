@@ -2845,6 +2845,8 @@ log.sanitizer.enabled=false</echo>
 		<attribute name="database.version" />
 
 		<sequential>
+			<fail message="Please set the property ${env.KUBERNETES_SERVICE_HOST}. Note that this script should only be run from a Kubernetes pod." unless="env.KUBERNETES_SERVICE_HOST" />
+
 			<beanshell>
 				<![CDATA[
 					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
@@ -2872,6 +2874,8 @@ log.sanitizer.enabled=false</echo>
 		<attribute name="database.version" />
 
 		<sequential>
+			<fail message="Please set the property ${env.KUBERNETES_SERVICE_HOST}. Note that this script should only be run from a Kubernetes pod." unless="env.KUBERNETES_SERVICE_HOST" />
+
 			<beanshell>
 				<![CDATA[
 					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;

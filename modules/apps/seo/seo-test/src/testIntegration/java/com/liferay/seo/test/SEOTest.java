@@ -92,6 +92,49 @@ public class SEOTest {
 			});
 	}
 
+	@Test
+	public void testGetDefaultLocalizedSEOLinksWithDefaultLocale()
+		throws Exception {
+
+		_testWithSEOCompanyConfiguration(
+			"default",
+			() -> {
+				List<SEOLink> seoLinks = _seo.getLocalizedSEOLinks(
+					TestPropsValues.getCompanyId(), LocaleUtil.US,
+					_CANONICAL_URL, _alternateURLs);
+
+				Assert.assertEquals(
+					seoLinks.toString(), _alternateURLs.size() + 2,
+					seoLinks.size());
+
+				_assertCanonicalSEOLink(seoLinks, _CANONICAL_URL);
+
+				_assertAlternateSEOLinks(seoLinks, _alternateURLs);
+			});
+	}
+
+	@Test
+	public void testGetDefaultLocalizedSEOLinksWithNoDefaultLocale()
+		throws Exception {
+
+		_testWithSEOCompanyConfiguration(
+			"default",
+			() -> {
+				List<SEOLink> seoLinks = _seo.getLocalizedSEOLinks(
+					TestPropsValues.getCompanyId(), LocaleUtil.SPAIN,
+					_CANONICAL_URL, _alternateURLs);
+
+				Assert.assertEquals(
+					seoLinks.toString(), _alternateURLs.size() + 2,
+					seoLinks.size());
+
+				_assertCanonicalSEOLink(
+					seoLinks, _alternateURLs.get(LocaleUtil.SPAIN));
+
+				_assertAlternateSEOLinks(seoLinks, _alternateURLs);
+			});
+	}
+
 	private void _assertAlternateSEOLink(
 		Locale locale, List<SEOLink> seoLinks,
 		Map<Locale, String> alternateURLs) {

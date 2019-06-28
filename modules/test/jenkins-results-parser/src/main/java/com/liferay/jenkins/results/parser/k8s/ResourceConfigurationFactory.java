@@ -27,12 +27,32 @@ import io.kubernetes.client.models.V1Volume;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * @author Kenji Heigel
  */
 public class ResourceConfigurationFactory {
+
+	public static Pod getPodConfiguration(String name) {
+		if (!podConfigurationsMap.containsKey(name)) {
+			throw new IllegalArgumentException(
+				"Invalid pod configuration name: " + name);
+		}
+
+		return podConfigurationsMap.get(name);
+	}
+
+	public static Pod getPodConfiguration(
+		String databaseName, String databaseVersion) {
+
+		return getPodConfiguration(
+			_getDatabaseConfigurationName(databaseName, databaseVersion));
+	}
 
 	public static Pod newMySQLConfigurationPod(
 		String dockerBaseImageName, String dockerImageName) {
@@ -61,6 +81,24 @@ public class ResourceConfigurationFactory {
 
 		return _newDatabaseConfigurationPod(
 			dockerBaseImageName, dockerImageName, v1ContainerPorts, v1EnvVars);
+	}
+
+	private static String _getDatabaseConfigurationName(
+		String databaseName, String databaseVersion) {
+
+		if (StringUtils.countMatches(databaseVersion, ".") > 1) {
+			int index = databaseVersion.lastIndexOf(".");
+
+			databaseVersion = databaseVersion.substring(0, index);
+		}
+
+		String databaseConfigurationName = databaseName + databaseVersion;
+
+		databaseConfigurationName = databaseConfigurationName.toLowerCase();
+
+		databaseConfigurationName = databaseConfigurationName.replace(".", "");
+
+		return databaseConfigurationName;
 	}
 
 	private static V1Container _newConfigurationContainer(
@@ -166,5 +204,31 @@ public class ResourceConfigurationFactory {
 
 		return v1Volume;
 	}
+
+	private static final Map<String, Pod> podConfigurationsMap =
+		new HashMap<String, Pod>() {
+			{
+				put(
+					"mariadb102",
+					ResourceConfigurationFactory.newMySQLConfigurationPod(
+						"mariadb102", "mariadb:10.2.25"));
+				put(
+					"mysql55",
+					ResourceConfigurationFactory.newMySQLConfigurationPod(
+						"mysql55", "mysql:5.5.62"));
+				put(
+					"mysql56",
+					ResourceConfigurationFactory.newMySQLConfigurationPod(
+						"mysql56", "mysql:5.6.43"));
+				put(
+					"mysql57",
+					ResourceConfigurationFactory.newMySQLConfigurationPod(
+						"mysql57", "mysql:5.7.25"));
+				put(
+					"postgresql10",
+					ResourceConfigurationFactory.newPostgreSQLConfigurationPod(
+						"postgresql10", "postgres:10.9"));
+			}
+		};
 
 }

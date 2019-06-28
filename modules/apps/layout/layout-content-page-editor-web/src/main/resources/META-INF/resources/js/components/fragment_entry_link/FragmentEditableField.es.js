@@ -381,7 +381,10 @@ class FragmentEditableField extends PortletBase {
 	 * @review
 	 */
 	_handleEditableClick() {
-		if (this._preventEditableClick) {
+		if (
+			this._preventEditableClick &&
+			this._getItemId() !== this.activeItemId
+		) {
 			this._preventEditableClick = false;
 		} else {
 			this.store.dispatch({

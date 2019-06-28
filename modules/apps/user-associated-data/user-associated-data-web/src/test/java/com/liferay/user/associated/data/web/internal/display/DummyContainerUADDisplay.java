@@ -16,6 +16,8 @@ package com.liferay.user.associated.data.web.internal.display;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationTargetException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,6 +76,13 @@ public class DummyContainerUADDisplay extends DummyUADDisplay<DummyContainer> {
 	@Override
 	public Class<DummyContainer> getTypeClass() {
 		return DummyContainer.class;
+	}
+
+	@Override
+	public boolean isInTrash(DummyContainer dummyContainer)
+		throws IllegalAccessException, InvocationTargetException {
+
+		return false;
 	}
 
 	@Override

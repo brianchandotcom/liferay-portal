@@ -20,7 +20,6 @@ import com.liferay.change.tracking.rest.dto.v1_0.Entry;
 import com.liferay.change.tracking.rest.resource.v1_0.EntryResource;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
-import com.liferay.portal.kernel.util.GetterUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,17 +36,14 @@ public class EntryResourceImpl extends BaseEntryResourceImpl {
 
 	@Override
 	public Entry getEntry(Long entryId) throws Exception {
-		CTEntry ctEntry = _ctEntryLocalService.getCTEntry(
-			GetterUtil.getLong(entryId));
-
-		if (ctEntry == null) {
-			return new Entry();
-		}
-
-		return _toEntry(ctEntry);
+		return _toEntry(_ctEntryLocalService.getCTEntry(entryId));
 	}
 
 	private Entry _toEntry(CTEntry ctEntry) {
+		if (ctEntry == null) {
+			return null;
+		}
+
 		return new Entry() {
 			{
 				affectedByEntriesCount =
@@ -57,24 +53,18 @@ public class EntryResourceImpl extends BaseEntryResourceImpl {
 				classNameId = ctEntry.getModelClassNameId();
 				classPK = ctEntry.getModelClassPK();
 				collision = ctEntry.isCollision();
-
 				contentType =
 					CTDefinitionRegistryUtil.
 						getVersionEntityContentTypeLanguageKey(
 							ctEntry.getModelClassNameId());
-
 				dateModified = ctEntry.getModifiedDate();
 				entryId = ctEntry.getCtEntryId();
 				key = ctEntry.getModelResourcePrimKey();
-
 				siteName = CTDefinitionRegistryUtil.getVersionEntitySiteName(
 					ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
-
 				title = CTDefinitionRegistryUtil.getVersionEntityTitle(
 					ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
-
 				userName = ctEntry.getUserName();
-
 				version = String.valueOf(
 					CTDefinitionRegistryUtil.getVersionEntityVersion(
 						ctEntry.getModelClassNameId(),

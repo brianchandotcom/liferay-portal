@@ -711,7 +711,7 @@ definition {
 		}
 		else {
 			AssertTextEquals(
-				locator1 = "Staging#PROCESS_SUCCESSFUL",
+				locator1 = "Staging#PROCESS_RESULT",
 				value1 = "Successful");
 		}
 	}

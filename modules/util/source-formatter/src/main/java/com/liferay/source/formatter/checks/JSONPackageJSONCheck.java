@@ -44,7 +44,8 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 		throws IOException {
 
 		if (!absolutePath.endsWith("/package.json") ||
-			!absolutePath.contains("/modules/apps/")) {
+			(!absolutePath.contains("/modules/apps/") &&
+			 !absolutePath.contains("/modules/private/apps/"))) {
 
 			return content;
 		}

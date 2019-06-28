@@ -155,7 +155,7 @@ public class DLFolderUADDisplayTest extends BaseUADDisplayTestCase<DLFolder> {
 	@Override
 	protected DLFolder addBaseModel(long userId) throws Exception {
 		DLFolder dlFolder = DLFolderUADTestUtil.addDLFolder(
-			_dlFolderLocalService, userId);
+			_dlAppLocalService, _dlFolderLocalService, userId);
 
 		_dlFolders.add(dlFolder);
 
@@ -164,7 +164,8 @@ public class DLFolderUADDisplayTest extends BaseUADDisplayTestCase<DLFolder> {
 
 	protected void assertParentContainerId(long dlFolderId) throws Exception {
 		DLFolder dlFolder = DLFolderUADTestUtil.addDLFolder(
-			_dlFolderLocalService, TestPropsValues.getUserId(), dlFolderId);
+			_dlAppLocalService, _dlFolderLocalService,
+			TestPropsValues.getUserId(), dlFolderId);
 
 		_dlFolders.add(dlFolder);
 
@@ -191,7 +192,8 @@ public class DLFolderUADDisplayTest extends BaseUADDisplayTestCase<DLFolder> {
 
 	private DLFolder _addFolder(long parentFolderId) throws Exception {
 		DLFolder dlFolder = DLFolderUADTestUtil.addDLFolder(
-			_dlFolderLocalService, TestPropsValues.getUserId(), parentFolderId);
+			_dlAppLocalService, _dlFolderLocalService,
+			TestPropsValues.getUserId(), parentFolderId);
 
 		_dlFolders.add(dlFolder);
 

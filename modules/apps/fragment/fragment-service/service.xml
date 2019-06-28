@@ -229,6 +229,7 @@
 		<exception>DuplicateFragmentEntry</exception>
 		<exception>DuplicateFragmentEntryKey</exception>
 		<exception>FragmentCollectionName</exception>
+		<exception>FragmentEntryConfiguration</exception>
 		<exception>FragmentEntryContent</exception>
 		<exception>FragmentEntryName</exception>
 		<exception>InvalidFile</exception>

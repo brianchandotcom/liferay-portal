@@ -18,6 +18,10 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.fragment.importer.FragmentsImporter;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -35,6 +39,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 
@@ -99,6 +104,8 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 			_addFragments();
 
 			_addLayouts();
+
+			_addLayoutPageTemplateEntry();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -171,6 +178,21 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 			false, parentLayoutId, nameMap, new HashMap<>(), new HashMap<>(),
 			new HashMap<>(), new HashMap<>(), LayoutConstants.TYPE_CONTENT,
 			null, false, false, new HashMap<>(), _serviceContext);
+	}
+
+	private void _addLayoutPageTemplateEntry() throws PortalException {
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					_serviceContext.getUserId(),
+					_serviceContext.getScopeGroupId(), "Liferay",
+					StringPool.BLANK, _serviceContext);
+
+		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
+			"Main Template", LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
+			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 	}
 
 	private void _addLayouts() throws Exception {
@@ -251,6 +273,14 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateCollectionLocalService
+		_layoutPageTemplateCollectionLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	private ServiceContext _serviceContext;
 

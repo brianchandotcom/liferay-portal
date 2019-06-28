@@ -27,7 +27,7 @@ dependencies {
 #if (${frameworkDependencies.equals("provided")})
 	compile group: "com.liferay.portletmvc4spring", name: "com.liferay.portletmvc4spring.thin", transitive: false
 #end
-#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")} )
+#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")})
 	compile group: "javax.validation", name: "validation-api"
 #end
 	compile (group: "org.hibernate.validator", name: "hibernate-validator") {
@@ -54,25 +54,25 @@ dependencies {
 	compile group: "org.springframework.security", name: "spring-security-web"
 #end
 #if (${viewType.equals("thymeleaf")})
-	compile (group: "org.thymeleaf", name: "thymeleaf" ) {
+	compile (group: "org.thymeleaf", name: "thymeleaf") {
 		exclude group: "ognl", module: "ognl"
 		exclude group: "org.slf4j", module: "slf4j-api"
 	}
 #end
 
 #if (${viewType.equals("thymeleaf")} && ${framework.equals("portletmvc4spring")})
-	compile (group: "org.thymeleaf", name: "thymeleaf-spring5" ) {
+	compile (group: "org.thymeleaf", name: "thymeleaf-spring5") {
 		exclude group: "org.slf4j", module: "slf4j-api"
 	}
 #elseif (${viewType.equals("thymeleaf")} && ${framework.equals("springportletmvc")})
-	compile (group: "org.thymeleaf", name: "thymeleaf-spring4" ) {
+	compile (group: "org.thymeleaf", name: "thymeleaf-spring4") {
 		exclude group: "org.slf4j", module: "slf4j-api"
 	}
 #end
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 	compileOnly group: "javax.portlet", name: "portlet-api"
 	compileOnly group: "javax.servlet", name: "javax.servlet-api"
-#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")} )
+#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
 	compileOnly group: "javax.validation", name: "validation-api"
 #end
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
@@ -104,7 +104,7 @@ dependencies {
 #if (${framework.equals("springportletmvc")} && ${frameworkDependencies.equals("provided")})
 	compile group: "com.liferay.portletmvc4spring", name: "com.liferay.portletmvc4spring.thin", version: "4.1.9", transitive: false
 #end
-#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")} )
+#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")})
 	compile group: "javax.validation", name: "validation-api", version: "2.0.1.Final"
 #end
 	compile (group: "org.hibernate.validator", name: "hibernate-validator", version: "6.0.14.Final") {
@@ -135,17 +135,17 @@ dependencies {
 	compile group: "org.springframework.security", name: "spring-security-web", version: "5.1.4.RELEASE"
 #end
 #if (${viewType.equals("thymeleaf")})
-	compile (group: "org.thymeleaf", name: "thymeleaf", version: "3.0.11.RELEASE" ) {
+	compile (group: "org.thymeleaf", name: "thymeleaf", version: "3.0.11.RELEASE") {
 		exclude group: "ognl", module: "ognl"
 		exclude group: "org.slf4j", module: "slf4j-api"
 	}
 #end
 #if (${viewType.equals("thymeleaf")} && ${framework.equals("portletmvc4spring")})
-	compile (group: "org.thymeleaf", name: "thymeleaf-spring5", version: "3.0.11.RELEASE" ) {
+	compile (group: "org.thymeleaf", name: "thymeleaf-spring5", version: "3.0.11.RELEASE") {
 		exclude group: "org.slf4j", module: "slf4j-api"
 	}
 #elseif (${viewType.equals("thymeleaf")} && ${framework.equals("springportletmvc")})
-	compile (group: "org.thymeleaf", name: "thymeleaf-spring4", version: "3.0.11.RELEASE" ) {
+	compile (group: "org.thymeleaf", name: "thymeleaf-spring4", version: "3.0.11.RELEASE") {
 		exclude group: "org.slf4j", module: "slf4j-api"
 	}
 #end
@@ -171,7 +171,7 @@ dependencies {
 #else
 	compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.1.0"
 #end
-#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")} )
+#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
 	compileOnly group: "javax.validation", name: "validation-api", version: "2.0.1.Final"
 #end
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"

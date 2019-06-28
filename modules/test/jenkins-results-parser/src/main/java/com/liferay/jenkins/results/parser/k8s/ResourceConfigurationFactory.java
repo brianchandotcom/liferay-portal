@@ -39,12 +39,12 @@ import org.apache.commons.lang.StringUtils;
 public class ResourceConfigurationFactory {
 
 	public static Pod getPodConfiguration(String name) {
-		if (!podConfigurationsMap.containsKey(name)) {
+		if (!_podConfigurationsMap.containsKey(name)) {
 			throw new IllegalArgumentException(
 				"Invalid pod configuration name: " + name);
 		}
 
-		return podConfigurationsMap.get(name);
+		return _podConfigurationsMap.get(name);
 	}
 
 	public static Pod getPodConfiguration(
@@ -52,35 +52,6 @@ public class ResourceConfigurationFactory {
 
 		return getPodConfiguration(
 			_getDatabaseConfigurationName(databaseName, databaseVersion));
-	}
-
-	private static Pod _newMySQLConfigurationPod(
-		String dockerBaseImageName, String dockerImageName) {
-
-		List<V1ContainerPort> v1ContainerPorts = new ArrayList<>(
-			Arrays.asList(
-				_newConfigurationContainerPort(dockerBaseImageName, 3306)));
-
-		List<V1EnvVar> v1EnvVars = new ArrayList<>(
-			Arrays.asList(
-				_newConfigurationEnvVar("MYSQL_ALLOW_EMPTY_PASSWORD", "yes")));
-
-		return _newDatabaseConfigurationPod(
-			dockerBaseImageName, dockerImageName, v1ContainerPorts, v1EnvVars);
-	}
-
-	private static Pod _newPostgreSQLConfigurationPod(
-		String dockerBaseImageName, String dockerImageName) {
-
-		List<V1ContainerPort> v1ContainerPorts = new ArrayList<>(
-			Arrays.asList(
-				_newConfigurationContainerPort(dockerBaseImageName, 5432)));
-
-		List<V1EnvVar> v1EnvVars = new ArrayList<>(
-			Arrays.asList(_newConfigurationEnvVar("POSTGRES_USER", "root")));
-
-		return _newDatabaseConfigurationPod(
-			dockerBaseImageName, dockerImageName, v1ContainerPorts, v1EnvVars);
 	}
 
 	private static String _getDatabaseConfigurationName(
@@ -205,7 +176,36 @@ public class ResourceConfigurationFactory {
 		return v1Volume;
 	}
 
-	private static final Map<String, Pod> podConfigurationsMap =
+	private static Pod _newMySQLConfigurationPod(
+		String dockerBaseImageName, String dockerImageName) {
+
+		List<V1ContainerPort> v1ContainerPorts = new ArrayList<>(
+			Arrays.asList(
+				_newConfigurationContainerPort(dockerBaseImageName, 3306)));
+
+		List<V1EnvVar> v1EnvVars = new ArrayList<>(
+			Arrays.asList(
+				_newConfigurationEnvVar("MYSQL_ALLOW_EMPTY_PASSWORD", "yes")));
+
+		return _newDatabaseConfigurationPod(
+			dockerBaseImageName, dockerImageName, v1ContainerPorts, v1EnvVars);
+	}
+
+	private static Pod _newPostgreSQLConfigurationPod(
+		String dockerBaseImageName, String dockerImageName) {
+
+		List<V1ContainerPort> v1ContainerPorts = new ArrayList<>(
+			Arrays.asList(
+				_newConfigurationContainerPort(dockerBaseImageName, 5432)));
+
+		List<V1EnvVar> v1EnvVars = new ArrayList<>(
+			Arrays.asList(_newConfigurationEnvVar("POSTGRES_USER", "root")));
+
+		return _newDatabaseConfigurationPod(
+			dockerBaseImageName, dockerImageName, v1ContainerPorts, v1EnvVars);
+	}
+
+	private static final Map<String, Pod> _podConfigurationsMap =
 		new HashMap<String, Pod>() {
 			{
 				put(

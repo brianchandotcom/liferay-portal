@@ -25,12 +25,12 @@ import org.apache.commons.lang.StringUtils;
 public class ResourceConfigurations {
 
 	public static Pod getPodConfiguration(String name) {
-		if (!_resourceConfigurationsMap.containsKey(name)) {
+		if (!podConfigurationsMap.containsKey(name)) {
 			throw new IllegalArgumentException(
 				"Invalid pod configuration name: " + name);
 		}
 
-		return _resourceConfigurationsMap.get(name);
+		return podConfigurationsMap.get(name);
 	}
 
 	public static Pod getPodConfiguration(
@@ -58,7 +58,7 @@ public class ResourceConfigurations {
 		return databaseConfigurationName;
 	}
 
-	private static final Map<String, Pod> _resourceConfigurationsMap =
+	private static final Map<String, Pod> podConfigurationsMap =
 		new HashMap<String, Pod>() {
 			{
 				put(

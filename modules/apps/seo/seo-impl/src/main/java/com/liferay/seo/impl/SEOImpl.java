@@ -37,7 +37,8 @@ public class SEOImpl implements SEO {
 
 	@Override
 	public List<SEOLink> getLocalizedSEOLinks(
-		String canonicalURL, Map<Locale, String> alternateURLs) {
+		long companyId, String canonicalURL,
+		Map<Locale, String> alternateURLs) {
 
 		List<SEOLink> seoLinks = new ArrayList<>();
 

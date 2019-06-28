@@ -99,7 +99,7 @@ class Calculator extends Component {
 		return {
 			...state,
 			...this.getStateBasedOnExpression(expression),
-			expression: expression.replace(/[\[\]]/g, '')
+			expression: expression.replace(/[[\]]/g, '')
 		};
 	}
 

@@ -224,7 +224,7 @@ class RuleBuilder extends Component {
 		this._showRuleList();
 	}
 
-	_handleRuleCanceled(event) {
+	_handleRuleCanceled() {
 		const {index} = this.state;
 		const rules = this.state.rules.map((rule, ruleIndex) => {
 			return index === ruleIndex ? this.state.originalRule : rule;

@@ -192,7 +192,7 @@ export const updateFocusedField = (
 	let {focusedField} = state;
 
 	if (type == 'cancel') {
-		let originalContext = focusedField.originalContext
+		const originalContext = focusedField.originalContext
 			? focusedField.originalContext
 			: focusedField;
 

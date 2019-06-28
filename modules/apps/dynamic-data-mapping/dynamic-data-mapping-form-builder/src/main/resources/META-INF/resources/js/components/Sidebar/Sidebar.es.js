@@ -58,7 +58,7 @@ class Sidebar extends Component {
 			fieldTypes,
 			focusedField
 		} = this.props;
-		let dispatch = this.context.dispatch;
+		const {dispatch} = this.context;
 		const newFieldType = fieldTypes.find(({name}) => name === type);
 		const newSettingsContext = {
 			...newFieldType.settingsContext,
@@ -600,7 +600,7 @@ class Sidebar extends Component {
 
 		const excludedFields = ['indexType', 'type', 'validation'];
 
-		const getPreviousField = ({fieldName, type}) => {
+		const getPreviousField = ({fieldName}) => {
 			let field;
 
 			oldVisitor.findField(oldField => {
@@ -646,48 +646,15 @@ class Sidebar extends Component {
 	}
 
 	_getPredefinedOptions(visitor) {
-		let options = visitor.findField(field => {
+		const options = visitor.findField(field => {
 			return field.fieldName == 'options';
 		});
 
 		if (options) {
-			let locale = options.locale;
+			const locale = options.locale;
 			return options.value[locale];
 		}
 		return options;
-	}
-
-	_setPredefinedValue(newField, previousField, newVisitor) {
-		let newFieldOptions = this._getPredefinedOptions(newVisitor);
-
-		if (newFieldOptions) {
-			newField.options = newFieldOptions;
-		}
-
-		if (newField.predefinedValue && !previousField.predefinedValue) {
-			newField.value = [];
-		} else if (
-			Array.isArray(previousField.value) &&
-			newField.predefinedValue
-		) {
-			newField.options = previousField.options;
-		} else if (
-			Array.isArray(previousField.predefinedValue) &&
-			!newField.predefinedValue
-		) {
-			newField.value = '';
-			newField.predefinedValue = '';
-			newField.localizedValue = {
-				...newField.localizedValue,
-				[newField.locale]: ''
-			};
-		} else if (newField.predefinedValue && newField.value == '') {
-			newField.value = [];
-		} else if (newField.predefinedValue && newField.value.length > 1) {
-			newField.value = newField.value[0];
-		}
-
-		return newField;
 	}
 
 	_renderElementSets() {
@@ -1037,6 +1004,39 @@ class Sidebar extends Component {
 				</li>
 			</ul>
 		);
+	}
+
+	_setPredefinedValue(newField, previousField, newVisitor) {
+		const newFieldOptions = this._getPredefinedOptions(newVisitor);
+
+		if (newFieldOptions) {
+			newField.options = newFieldOptions;
+		}
+
+		if (newField.predefinedValue && !previousField.predefinedValue) {
+			newField.value = [];
+		} else if (
+			Array.isArray(previousField.value) &&
+			newField.predefinedValue
+		) {
+			newField.options = previousField.options;
+		} else if (
+			Array.isArray(previousField.predefinedValue) &&
+			!newField.predefinedValue
+		) {
+			newField.value = '';
+			newField.predefinedValue = '';
+			newField.localizedValue = {
+				...newField.localizedValue,
+				[newField.locale]: ''
+			};
+		} else if (newField.predefinedValue && newField.value == '') {
+			newField.value = [];
+		} else if (newField.predefinedValue && newField.value.length > 1) {
+			newField.value = newField.value[0];
+		}
+
+		return newField;
 	}
 }
 

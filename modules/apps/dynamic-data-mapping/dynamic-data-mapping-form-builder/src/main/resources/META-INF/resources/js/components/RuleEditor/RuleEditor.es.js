@@ -95,7 +95,7 @@ class RuleEditor extends Component {
 
 	formatDataProviderParameter(actionParameters, parameters) {
 		return parameters.reduce(
-			(result, {name, value}, index) => ({
+			(result, {name, value}) => ({
 				...result,
 				[name]:
 					Object.keys(actionParameters).indexOf(name) !== -1
@@ -475,7 +475,7 @@ class RuleEditor extends Component {
 		return conditions;
 	}
 
-	_clearSelectedSecondOperand(secondOperandSelectedList, index) {
+	_clearSelectedSecondOperand(secondOperandSelectedList) {
 		return secondOperandSelectedList;
 	}
 
@@ -708,7 +708,7 @@ class RuleEditor extends Component {
 		});
 	}
 
-	_handleCancelRule(event) {
+	_handleCancelRule() {
 		this.emit('ruleCancel', {});
 	}
 
@@ -938,7 +938,7 @@ class RuleEditor extends Component {
 		});
 	}
 
-	_handleRuleAdded(event) {
+	_handleRuleAdded() {
 		const actions = this._removeActionInternalProperties();
 		const conditions = this._removeConditionInternalProperties();
 		const {ruleEditedIndex} = this;
@@ -1323,7 +1323,7 @@ class RuleEditor extends Component {
 
 		const visitor = new PagesVisitor(pages);
 
-		actions.forEach((action, index) => {
+		actions.forEach(action => {
 			let targetFieldExists = false;
 
 			visitor.mapFields(({fieldName}) => {
@@ -1455,29 +1455,22 @@ class RuleEditor extends Component {
 	_validateConditionsFilling() {
 		const {conditions} = this;
 
-		let allFieldsFilled = true;
-
-		for (const condition of conditions) {
+		for (let i = 0; i < conditions.length; i++) {
+			const condition = conditions[i];
 			const {operands, operator} = condition;
 
-			if (operands[0].value == '') {
-				allFieldsFilled = false;
-				break;
-			} else if (!operator) {
-				allFieldsFilled = false;
-				break;
-			} else if (operator && this._isBinary(operator)) {
-				allFieldsFilled =
-					operands[1] &&
-					!!operands[1].value &&
-					operands[1].value != '';
-				if (!allFieldsFilled) {
-					break;
-				}
+			if (operands[0].value == '' || !operator) {
+				return false;
+			} else if (
+				operator &&
+				this._isBinary(operator) &&
+				!(operands[1] && !!operands[1].value && operands[1].value != '')
+			) {
+				return false;
 			}
 		}
 
-		return allFieldsFilled;
+		return true;
 	}
 
 	_validateInputOutputs(autofillActions) {

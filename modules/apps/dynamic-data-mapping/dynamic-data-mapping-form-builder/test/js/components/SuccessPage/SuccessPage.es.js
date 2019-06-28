@@ -21,7 +21,7 @@ import {dom as MetalTestUtil} from 'metal-dom';
 let component;
 let successPageSettings;
 
-describe.only('SuccessPage', () => {
+describe('SuccessPage', () => {
 	beforeEach(() => {
 		successPageSettings = JSON.parse(JSON.stringify(SucessPageSettings));
 

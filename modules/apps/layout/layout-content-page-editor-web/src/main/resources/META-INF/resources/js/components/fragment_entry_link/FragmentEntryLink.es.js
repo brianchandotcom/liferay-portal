@@ -146,6 +146,7 @@ class FragmentEntryLink extends Component {
 			anchorElement: this.element,
 			buttons: FRAGMENT_FLOATING_TOOLBAR_BUTTONS,
 			item: {
+				configuration: this._configuration,
 				fragmentEntryLinkId: this.fragmentEntryLinkId
 			},
 			itemId: this.fragmentEntryLinkId,

@@ -127,6 +127,17 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
+	 * @inheritDoc
+	 * @review
+	 */
+	syncFragmentEntryLinks(fragmentEntryLinks) {
+		if (fragmentEntryLinks[this.fragmentEntryLinkId]) {
+			this._configuration =
+				fragmentEntryLinks[this.fragmentEntryLinkId].configuration;
+		}
+	}
+
+	/**
 	 * Creates a new instance of the floating toolbar.
 	 * @private
 	 */
@@ -258,6 +269,14 @@ class FragmentEntryLink extends Component {
  */
 FragmentEntryLink.STATE = {
 	/**
+	 * Fragment Entry Configuration
+	 * @instance
+	 * @memberOf FragmentEntryLink
+	 * @type {object}
+	 */
+	_configuration: Config.object().internal(),
+
+	/**
 	 * Floating toolbar instance for internal use.
 	 * @default null
 	 * @instance
@@ -324,6 +343,7 @@ const ConnectedFragmentEntryLink = getConnectedComponent(FragmentEntryLink, [
 	'dropTargetItemType',
 	'dropTargetBorder',
 	'fragmentEditorEnabled',
+	'fragmentEntryLinks',
 	'hoveredItemId',
 	'hoveredItemType',
 	'imageSelectorURL',

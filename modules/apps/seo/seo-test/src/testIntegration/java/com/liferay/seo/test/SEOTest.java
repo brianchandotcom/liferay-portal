@@ -56,8 +56,8 @@ public class SEOTest {
 			"classic",
 			() -> {
 				List<SEOLink> seoLinks = _seo.getLocalizedSEOLinks(
-					TestPropsValues.getCompanyId(), _CANONICAL_URL,
-					_alternateURLs);
+					TestPropsValues.getCompanyId(), LocaleUtil.US,
+					_CANONICAL_URL, _alternateURLs);
 
 				Assert.assertEquals(
 					seoLinks.toString(), _alternateURLs.size() + 2,

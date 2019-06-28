@@ -22,17 +22,17 @@
 <!--PROCESSES-->
 <tr>
 	<td>PROCESS_SUCCESSFUL</td>
-	<td>//*[@data-qa-id='processResult'][contains(.,'Successful')]</td>
+	<td>//*[@data-qa-id='processResult'][contains(.,'Successful')] | //h6[contains(.,'Successful')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PROCESS_FAILED</td>
-	<td>//*[@data-qa-id='processResult'][contains(.,'Failed')]</td>
+	<td>//*[@data-qa-id='processResult'][contains(.,'Failed')] | //h6[contains(.,'Successful')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PROCESS_RESULT</td>
-	<td>//*[@data-qa-id='processResult']</td>
+	<td>//*[@data-qa-id='processResult'] | //h6[contains(@class,'background-task-status-row')]</td>
 	<td></td>
 </tr>
 <tr>

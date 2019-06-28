@@ -24,11 +24,14 @@ import com.liferay.seo.impl.configuration.SEOCompanyConfiguration;
 import com.liferay.seo.impl.configuration.SEOConfigurationConstants;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
@@ -64,63 +67,60 @@ public class SEOImpl implements SEO {
 	protected List<SEOLink> getClassicLocalizedSEOLinks(
 		String canonicalURL, Map<Locale, String> alternateURLs) {
 
-		List<SEOLink> seoLinks = new ArrayList<>();
-
-		seoLinks.add(
-			new SEOLink.CanonicalSEOLink(_html.escapeAttribute(canonicalURL)));
-
-		Locale defaultLocale = LocaleUtil.getDefault();
-
-		for (Map.Entry<Locale, String> entry : alternateURLs.entrySet()) {
-			Locale availableLocale = entry.getKey();
-			String alternateURL = entry.getValue();
-
-			if (availableLocale.equals(defaultLocale)) {
-				seoLinks.add(
-					new SEOLink.XDefaultAlternateSEOLink(
+		return new ArrayList() {
+			{
+				add(
+					new SEOLink.CanonicalSEOLink(
 						_html.escapeAttribute(canonicalURL)));
+				addAll(_getAlternateSEOLinks(alternateURLs));
 			}
-
-			seoLinks.add(
-				new SEOLink.AlternateSEOLink(
-					_html.escapeAttribute(alternateURL),
-					LocaleUtil.toW3cLanguageId(availableLocale)));
-		}
-
-		return seoLinks;
+		};
 	}
 
 	protected List<SEOLink> getDefaultLocalizedSEOLinks(
 		Locale locale, String canonicalURL, Map<Locale, String> alternateURLs) {
 
-		List<SEOLink> seoLinks = new ArrayList<>();
-
 		String localizedCanonicalURL = alternateURLs.getOrDefault(
 			locale, canonicalURL);
 
-		seoLinks.add(
-			new SEOLink.CanonicalSEOLink(
-				_html.escapeAttribute(localizedCanonicalURL)));
-
-		Locale defaultLocale = LocaleUtil.getDefault();
-
-		for (Map.Entry<Locale, String> entry : alternateURLs.entrySet()) {
-			Locale availableLocale = entry.getKey();
-			String alternateURL = entry.getValue();
-
-			if (availableLocale.equals(defaultLocale)) {
-				seoLinks.add(
-					new SEOLink.AlternateSEOLink(
-						_html.escapeAttribute(canonicalURL), "x-default"));
+		return new ArrayList() {
+			{
+				add(
+					new SEOLink.CanonicalSEOLink(
+						_html.escapeAttribute(localizedCanonicalURL)));
+				addAll(_getAlternateSEOLinks(alternateURLs));
 			}
+		};
+	}
 
-			seoLinks.add(
-				new SEOLink.AlternateSEOLink(
-					_html.escapeAttribute(alternateURL),
-					LocaleUtil.toW3cLanguageId(availableLocale)));
-		}
+	private List<SEOLink> _getAlternateSEOLinks(
+		Map<Locale, String> alternateURLs) {
 
-		return seoLinks;
+		Set<Map.Entry<Locale, String>> entries = alternateURLs.entrySet();
+
+		Stream<Map.Entry<Locale, String>> stream = entries.stream();
+
+		return Stream.concat(
+			stream.map(
+				entry -> new SEOLink.AlternateSEOLink(
+					_html.escapeAttribute(entry.getValue()),
+					LocaleUtil.toW3cLanguageId(entry.getKey()))),
+			Stream.of(
+				Optional.ofNullable(
+					alternateURLs.get(LocaleUtil.getDefault())
+				).map(
+					alternateXDefaultURL ->
+						new SEOLink.XDefaultAlternateSEOLink(
+							_html.escapeAttribute(alternateXDefaultURL))
+				)
+			).filter(
+				Optional::isPresent
+			).map(
+				Optional::get
+			)
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	@Reference

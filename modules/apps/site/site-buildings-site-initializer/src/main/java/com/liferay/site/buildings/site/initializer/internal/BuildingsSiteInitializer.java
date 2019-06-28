@@ -74,14 +74,7 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 	@Override
 	public void initialize(long groupId) throws InitializationException {
 		try {
-			Group group = _groupLocalService.getGroup(groupId);
-
-			URL url = _bundle.getEntry("/fragments.zip");
-
-			File file = FileUtil.createTempFile(url.openStream());
-
-			_fragmentsImporter.importFile(
-				group.getCreatorUserId(), groupId, 0, file, false);
+			_addFragments(groupId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -98,6 +91,17 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundle = bundleContext.getBundle();
+	}
+
+	private void _addFragments(long groupId) throws Exception {
+		Group group = _groupLocalService.getGroup(groupId);
+
+		URL url = _bundle.getEntry("/fragments.zip");
+
+		File file = FileUtil.createTempFile(url.openStream());
+
+		_fragmentsImporter.importFile(
+			group.getCreatorUserId(), groupId, 0, file, false);
 	}
 
 	private static final String _NAME = "Buildings";

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal;
 
+import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.search.BaseSearchEngineConfigurator;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
@@ -26,7 +27,9 @@ import com.liferay.portal.search.elasticsearch6.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
 
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -86,20 +89,32 @@ public class ElasticsearchEngineConfigurator
 
 	@Override
 	protected void initialize() {
+		DefaultNoticeableFuture<Void> defaultNoticeableFuture =
+			new DefaultNoticeableFuture<Void>(
+				new Callable<Void>() {
+
+					@Override
+					public Void call() {
+						_elasticsearchConnectionManager.connect();
+
+						return null;
+					}
+
+				});
+
 		Thread thread = new Thread(
-			() -> _elasticsearchConnectionManager.connect(),
-			"Elasticsearch initialization thread");
+			defaultNoticeableFuture, "Elasticsearch initialization thread");
 
 		thread.setDaemon(true);
 
 		thread.start();
 
 		try {
-			thread.join();
+			defaultNoticeableFuture.get();
 		}
-		catch (InterruptedException ie) {
+		catch (ExecutionException | InterruptedException e) {
 			throw new RuntimeException(
-				"Unable to initialize Elasticsearch engine", ie);
+				"Unable to initialize Elasticsearch engine", e);
 		}
 
 		super.initialize();

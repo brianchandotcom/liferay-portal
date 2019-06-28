@@ -475,6 +475,10 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 	protected boolean isICalDateOnly(DateProperty dateProperty) {
 		Parameter valueParameter = dateProperty.getParameter(Parameter.VALUE);
 
+		if (valueParameter == null) {
+			return false;
+		}
+
 		return Objects.equals(valueParameter.getValue(), "DATE");
 	}
 

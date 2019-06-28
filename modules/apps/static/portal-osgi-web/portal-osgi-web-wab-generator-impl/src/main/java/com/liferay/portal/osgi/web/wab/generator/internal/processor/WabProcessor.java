@@ -1141,23 +1141,35 @@ public class WabProcessor {
 		analyzer.setProperty("-jsp", "*.jsp,*.jspf");
 		analyzer.setProperty("Web-ContextPath", getWebContextPath());
 
+		Properties pluginPackageProperties = getPluginPackageProperties();
+
 		Set<Object> plugins = analyzer.getPlugins();
 
-		Object dsAnnotationsPlugin = null;
+		List<Object> disabledPlugins = new ArrayList<>();
 
 		for (Object plugin : plugins) {
 			if (plugin instanceof DSAnnotations) {
-				dsAnnotationsPlugin = plugin;
+				disabledPlugins.add(plugin);
+
+				continue;
+			}
+
+			Class<?> clazz = plugin.getClass();
+
+			String name = clazz.getName();
+
+			if (!GetterUtil.getBoolean(
+					pluginPackageProperties.getProperty(
+						"bnd.plugin." + name + ".enabled"),
+					true)) {
+
+				disabledPlugins.add(plugin);
 			}
 		}
 
-		if (dsAnnotationsPlugin != null) {
-			plugins.remove(dsAnnotationsPlugin);
-		}
+		plugins.removeAll(disabledPlugins);
 
 		plugins.add(new JspAnalyzerPlugin());
-
-		Properties pluginPackageProperties = getPluginPackageProperties();
 
 		if (pluginPackageProperties.containsKey("portal-dependency-jars") &&
 			_log.isWarnEnabled()) {

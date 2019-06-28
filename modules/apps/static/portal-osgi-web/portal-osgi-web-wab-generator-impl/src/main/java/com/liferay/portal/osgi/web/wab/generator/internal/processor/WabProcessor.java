@@ -14,6 +14,7 @@
 
 package com.liferay.portal.osgi.web.wab.generator.internal.processor;
 
+import aQute.bnd.build.model.clauses.ServiceComponent;
 import aQute.bnd.cdi.Discover;
 import aQute.bnd.component.DSAnnotations;
 import aQute.bnd.header.Attrs;
@@ -1149,7 +1150,9 @@ public class WabProcessor {
 		List<Object> disabledPlugins = new ArrayList<>();
 
 		for (Object plugin : plugins) {
-			if (plugin instanceof DSAnnotations) {
+			if (plugin instanceof DSAnnotations ||
+				plugin instanceof ServiceComponent) {
+
 				disabledPlugins.add(plugin);
 
 				continue;

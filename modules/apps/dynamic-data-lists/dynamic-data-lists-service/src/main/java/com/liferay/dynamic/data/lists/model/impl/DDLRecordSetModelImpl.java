@@ -139,15 +139,17 @@ public class DDLRecordSetModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+	public static final long DDMSTRUCTUREID_COLUMN_BITMASK = 1L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
-	public static final long RECORDSETKEY_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
 
-	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long RECORDSETKEY_COLUMN_BITMASK = 8L;
 
-	public static final long RECORDSETID_COLUMN_BITMASK = 16L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
+
+	public static final long RECORDSETID_COLUMN_BITMASK = 32L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -649,7 +651,19 @@ public class DDLRecordSetModelImpl
 
 	@Override
 	public void setDDMStructureId(long DDMStructureId) {
+		_columnBitmask |= DDMSTRUCTUREID_COLUMN_BITMASK;
+
+		if (!_setOriginalDDMStructureId) {
+			_setOriginalDDMStructureId = true;
+
+			_originalDDMStructureId = _DDMStructureId;
+		}
+
 		_DDMStructureId = DDMStructureId;
+	}
+
+	public long getOriginalDDMStructureId() {
+		return _originalDDMStructureId;
 	}
 
 	@JSON
@@ -1189,6 +1203,11 @@ public class DDLRecordSetModelImpl
 
 		ddlRecordSetModelImpl._setModifiedDate = false;
 
+		ddlRecordSetModelImpl._originalDDMStructureId =
+			ddlRecordSetModelImpl._DDMStructureId;
+
+		ddlRecordSetModelImpl._setOriginalDDMStructureId = false;
+
 		ddlRecordSetModelImpl._originalRecordSetKey =
 			ddlRecordSetModelImpl._recordSetKey;
 
@@ -1407,6 +1426,8 @@ public class DDLRecordSetModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _DDMStructureId;
+	private long _originalDDMStructureId;
+	private boolean _setOriginalDDMStructureId;
 	private String _recordSetKey;
 	private String _originalRecordSetKey;
 	private String _version;

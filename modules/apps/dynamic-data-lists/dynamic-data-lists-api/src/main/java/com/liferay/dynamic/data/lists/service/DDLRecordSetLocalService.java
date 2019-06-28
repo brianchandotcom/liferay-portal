@@ -159,6 +159,9 @@ public interface DDLRecordSetLocalService
 	@Transactional(enabled = false)
 	public DDLRecordSet createDDLRecordSet(long recordSetId);
 
+	public void deleteByDDMStructureId(long ddmStructureId)
+		throws PortalException;
+
 	/**
 	 * Deletes the ddl record set from the database. Also notifies the appropriate model listeners.
 	 *
@@ -460,6 +463,10 @@ public interface DDLRecordSetLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDLRecordSet> getRecordSets(long groupId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDLRecordSet> getRecordSetsByDDMStructureId(
+		long ddmStructureId);
 
 	/**
 	 * Returns the number of all the record sets belonging the group.

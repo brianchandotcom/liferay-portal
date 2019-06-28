@@ -2827,6 +2827,791 @@ public class DDLRecordSetPersistenceImpl
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_7 =
 		"ddlRecordSet.groupId IN (";
 
+	private FinderPath _finderPathWithPaginationFindByDDMStructureId;
+	private FinderPath _finderPathWithoutPaginationFindByDDMStructureId;
+	private FinderPath _finderPathCountByDDMStructureId;
+	private FinderPath _finderPathWithPaginationCountByDDMStructureId;
+
+	/**
+	 * Returns all the ddl record sets where DDMStructureId = &#63;.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @return the matching ddl record sets
+	 */
+	@Override
+	public List<DDLRecordSet> findByDDMStructureId(long DDMStructureId) {
+		return findByDDMStructureId(
+			DDMStructureId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the ddl record sets where DDMStructureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDLRecordSetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param start the lower bound of the range of ddl record sets
+	 * @param end the upper bound of the range of ddl record sets (not inclusive)
+	 * @return the range of matching ddl record sets
+	 */
+	@Override
+	public List<DDLRecordSet> findByDDMStructureId(
+		long DDMStructureId, int start, int end) {
+
+		return findByDDMStructureId(DDMStructureId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddl record sets where DDMStructureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDLRecordSetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param start the lower bound of the range of ddl record sets
+	 * @param end the upper bound of the range of ddl record sets (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddl record sets
+	 */
+	@Override
+	public List<DDLRecordSet> findByDDMStructureId(
+		long DDMStructureId, int start, int end,
+		OrderByComparator<DDLRecordSet> orderByComparator) {
+
+		return findByDDMStructureId(
+			DDMStructureId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddl record sets where DDMStructureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDLRecordSetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param start the lower bound of the range of ddl record sets
+	 * @param end the upper bound of the range of ddl record sets (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching ddl record sets
+	 */
+	@Override
+	public List<DDLRecordSet> findByDDMStructureId(
+		long DDMStructureId, int start, int end,
+		OrderByComparator<DDLRecordSet> orderByComparator,
+		boolean retrieveFromCache) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByDDMStructureId;
+			finderArgs = new Object[] {DDMStructureId};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByDDMStructureId;
+			finderArgs = new Object[] {
+				DDMStructureId, start, end, orderByComparator
+			};
+		}
+
+		List<DDLRecordSet> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<DDLRecordSet>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (DDLRecordSet ddlRecordSet : list) {
+					if ((DDMStructureId != ddlRecordSet.getDDMStructureId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_DDLRECORDSET_WHERE);
+
+			query.append(_FINDER_COLUMN_DDMSTRUCTUREID_DDMSTRUCTUREID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(DDLRecordSetModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(DDMStructureId);
+
+				if (!pagination) {
+					list = (List<DDLRecordSet>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DDLRecordSet>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first ddl record set in the ordered set where DDMStructureId = &#63;.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ddl record set
+	 * @throws NoSuchRecordSetException if a matching ddl record set could not be found
+	 */
+	@Override
+	public DDLRecordSet findByDDMStructureId_First(
+			long DDMStructureId,
+			OrderByComparator<DDLRecordSet> orderByComparator)
+		throws NoSuchRecordSetException {
+
+		DDLRecordSet ddlRecordSet = fetchByDDMStructureId_First(
+			DDMStructureId, orderByComparator);
+
+		if (ddlRecordSet != null) {
+			return ddlRecordSet;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("DDMStructureId=");
+		msg.append(DDMStructureId);
+
+		msg.append("}");
+
+		throw new NoSuchRecordSetException(msg.toString());
+	}
+
+	/**
+	 * Returns the first ddl record set in the ordered set where DDMStructureId = &#63;.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ddl record set, or <code>null</code> if a matching ddl record set could not be found
+	 */
+	@Override
+	public DDLRecordSet fetchByDDMStructureId_First(
+		long DDMStructureId,
+		OrderByComparator<DDLRecordSet> orderByComparator) {
+
+		List<DDLRecordSet> list = findByDDMStructureId(
+			DDMStructureId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last ddl record set in the ordered set where DDMStructureId = &#63;.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ddl record set
+	 * @throws NoSuchRecordSetException if a matching ddl record set could not be found
+	 */
+	@Override
+	public DDLRecordSet findByDDMStructureId_Last(
+			long DDMStructureId,
+			OrderByComparator<DDLRecordSet> orderByComparator)
+		throws NoSuchRecordSetException {
+
+		DDLRecordSet ddlRecordSet = fetchByDDMStructureId_Last(
+			DDMStructureId, orderByComparator);
+
+		if (ddlRecordSet != null) {
+			return ddlRecordSet;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("DDMStructureId=");
+		msg.append(DDMStructureId);
+
+		msg.append("}");
+
+		throw new NoSuchRecordSetException(msg.toString());
+	}
+
+	/**
+	 * Returns the last ddl record set in the ordered set where DDMStructureId = &#63;.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ddl record set, or <code>null</code> if a matching ddl record set could not be found
+	 */
+	@Override
+	public DDLRecordSet fetchByDDMStructureId_Last(
+		long DDMStructureId,
+		OrderByComparator<DDLRecordSet> orderByComparator) {
+
+		int count = countByDDMStructureId(DDMStructureId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<DDLRecordSet> list = findByDDMStructureId(
+			DDMStructureId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the ddl record sets before and after the current ddl record set in the ordered set where DDMStructureId = &#63;.
+	 *
+	 * @param recordSetId the primary key of the current ddl record set
+	 * @param DDMStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next ddl record set
+	 * @throws NoSuchRecordSetException if a ddl record set with the primary key could not be found
+	 */
+	@Override
+	public DDLRecordSet[] findByDDMStructureId_PrevAndNext(
+			long recordSetId, long DDMStructureId,
+			OrderByComparator<DDLRecordSet> orderByComparator)
+		throws NoSuchRecordSetException {
+
+		DDLRecordSet ddlRecordSet = findByPrimaryKey(recordSetId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DDLRecordSet[] array = new DDLRecordSetImpl[3];
+
+			array[0] = getByDDMStructureId_PrevAndNext(
+				session, ddlRecordSet, DDMStructureId, orderByComparator, true);
+
+			array[1] = ddlRecordSet;
+
+			array[2] = getByDDMStructureId_PrevAndNext(
+				session, ddlRecordSet, DDMStructureId, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected DDLRecordSet getByDDMStructureId_PrevAndNext(
+		Session session, DDLRecordSet ddlRecordSet, long DDMStructureId,
+		OrderByComparator<DDLRecordSet> orderByComparator, boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_DDLRECORDSET_WHERE);
+
+		query.append(_FINDER_COLUMN_DDMSTRUCTUREID_DDMSTRUCTUREID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(DDLRecordSetModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(DDMStructureId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(ddlRecordSet)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<DDLRecordSet> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the ddl record sets where DDMStructureId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDLRecordSetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param DDMStructureIds the ddm structure IDs
+	 * @return the matching ddl record sets
+	 */
+	@Override
+	public List<DDLRecordSet> findByDDMStructureId(long[] DDMStructureIds) {
+		return findByDDMStructureId(
+			DDMStructureIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the ddl record sets where DDMStructureId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDLRecordSetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param DDMStructureIds the ddm structure IDs
+	 * @param start the lower bound of the range of ddl record sets
+	 * @param end the upper bound of the range of ddl record sets (not inclusive)
+	 * @return the range of matching ddl record sets
+	 */
+	@Override
+	public List<DDLRecordSet> findByDDMStructureId(
+		long[] DDMStructureIds, int start, int end) {
+
+		return findByDDMStructureId(DDMStructureIds, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddl record sets where DDMStructureId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDLRecordSetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param DDMStructureIds the ddm structure IDs
+	 * @param start the lower bound of the range of ddl record sets
+	 * @param end the upper bound of the range of ddl record sets (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddl record sets
+	 */
+	@Override
+	public List<DDLRecordSet> findByDDMStructureId(
+		long[] DDMStructureIds, int start, int end,
+		OrderByComparator<DDLRecordSet> orderByComparator) {
+
+		return findByDDMStructureId(
+			DDMStructureIds, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddl record sets where DDMStructureId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDLRecordSetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param start the lower bound of the range of ddl record sets
+	 * @param end the upper bound of the range of ddl record sets (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching ddl record sets
+	 */
+	@Override
+	public List<DDLRecordSet> findByDDMStructureId(
+		long[] DDMStructureIds, int start, int end,
+		OrderByComparator<DDLRecordSet> orderByComparator,
+		boolean retrieveFromCache) {
+
+		if (DDMStructureIds == null) {
+			DDMStructureIds = new long[0];
+		}
+		else if (DDMStructureIds.length > 1) {
+			DDMStructureIds = ArrayUtil.sortedUnique(DDMStructureIds);
+		}
+
+		if (DDMStructureIds.length == 1) {
+			return findByDDMStructureId(
+				DDMStructureIds[0], start, end, orderByComparator);
+		}
+
+		boolean pagination = true;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderArgs = new Object[] {StringUtil.merge(DDMStructureIds)};
+		}
+		else {
+			finderArgs = new Object[] {
+				StringUtil.merge(DDMStructureIds), start, end, orderByComparator
+			};
+		}
+
+		List<DDLRecordSet> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<DDLRecordSet>)finderCache.getResult(
+				_finderPathWithPaginationFindByDDMStructureId, finderArgs,
+				this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (DDLRecordSet ddlRecordSet : list) {
+					if (!ArrayUtil.contains(
+							DDMStructureIds,
+							ddlRecordSet.getDDMStructureId())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_SELECT_DDLRECORDSET_WHERE);
+
+			if (DDMStructureIds.length > 0) {
+				query.append("(");
+
+				query.append(_FINDER_COLUMN_DDMSTRUCTUREID_DDMSTRUCTUREID_7);
+
+				query.append(StringUtil.merge(DDMStructureIds));
+
+				query.append(")");
+
+				query.append(")");
+			}
+
+			query.setStringAt(
+				removeConjunction(query.stringAt(query.index() - 1)),
+				query.index() - 1);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(DDLRecordSetModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				if (!pagination) {
+					list = (List<DDLRecordSet>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DDLRecordSet>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(
+					_finderPathWithPaginationFindByDDMStructureId, finderArgs,
+					list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(
+					_finderPathWithPaginationFindByDDMStructureId, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Removes all the ddl record sets where DDMStructureId = &#63; from the database.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 */
+	@Override
+	public void removeByDDMStructureId(long DDMStructureId) {
+		for (DDLRecordSet ddlRecordSet :
+				findByDDMStructureId(
+					DDMStructureId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(ddlRecordSet);
+		}
+	}
+
+	/**
+	 * Returns the number of ddl record sets where DDMStructureId = &#63;.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @return the number of matching ddl record sets
+	 */
+	@Override
+	public int countByDDMStructureId(long DDMStructureId) {
+		FinderPath finderPath = _finderPathCountByDDMStructureId;
+
+		Object[] finderArgs = new Object[] {DDMStructureId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_DDLRECORDSET_WHERE);
+
+			query.append(_FINDER_COLUMN_DDMSTRUCTUREID_DDMSTRUCTUREID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(DDMStructureId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of ddl record sets where DDMStructureId = any &#63;.
+	 *
+	 * @param DDMStructureIds the ddm structure IDs
+	 * @return the number of matching ddl record sets
+	 */
+	@Override
+	public int countByDDMStructureId(long[] DDMStructureIds) {
+		if (DDMStructureIds == null) {
+			DDMStructureIds = new long[0];
+		}
+		else if (DDMStructureIds.length > 1) {
+			DDMStructureIds = ArrayUtil.sortedUnique(DDMStructureIds);
+		}
+
+		Object[] finderArgs = new Object[] {StringUtil.merge(DDMStructureIds)};
+
+		Long count = (Long)finderCache.getResult(
+			_finderPathWithPaginationCountByDDMStructureId, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_COUNT_DDLRECORDSET_WHERE);
+
+			if (DDMStructureIds.length > 0) {
+				query.append("(");
+
+				query.append(_FINDER_COLUMN_DDMSTRUCTUREID_DDMSTRUCTUREID_7);
+
+				query.append(StringUtil.merge(DDMStructureIds));
+
+				query.append(")");
+
+				query.append(")");
+			}
+
+			query.setStringAt(
+				removeConjunction(query.stringAt(query.index() - 1)),
+				query.index() - 1);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(
+					_finderPathWithPaginationCountByDDMStructureId, finderArgs,
+					count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(
+					_finderPathWithPaginationCountByDDMStructureId, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_DDMSTRUCTUREID_DDMSTRUCTUREID_2 =
+		"ddlRecordSet.DDMStructureId = ?";
+
+	private static final String _FINDER_COLUMN_DDMSTRUCTUREID_DDMSTRUCTUREID_7 =
+		"ddlRecordSet.DDMStructureId IN (";
+
 	private FinderPath _finderPathFetchByG_R;
 	private FinderPath _finderPathCountByG_R;
 
@@ -3462,6 +4247,12 @@ public class DDLRecordSetPersistenceImpl
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindByGroupId, args);
 
+			args = new Object[] {ddlRecordSetModelImpl.getDDMStructureId()};
+
+			finderCache.removeResult(_finderPathCountByDDMStructureId, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByDDMStructureId, args);
+
 			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
@@ -3526,6 +4317,27 @@ public class DDLRecordSetPersistenceImpl
 				finderCache.removeResult(_finderPathCountByGroupId, args);
 				finderCache.removeResult(
 					_finderPathWithoutPaginationFindByGroupId, args);
+			}
+
+			if ((ddlRecordSetModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByDDMStructureId.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					ddlRecordSetModelImpl.getOriginalDDMStructureId()
+				};
+
+				finderCache.removeResult(
+					_finderPathCountByDDMStructureId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByDDMStructureId, args);
+
+				args = new Object[] {ddlRecordSetModelImpl.getDDMStructureId()};
+
+				finderCache.removeResult(
+					_finderPathCountByDDMStructureId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByDDMStructureId, args);
 			}
 		}
 
@@ -3906,6 +4718,30 @@ public class DDLRecordSetPersistenceImpl
 		_finderPathWithPaginationCountByGroupId = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGroupId",
+			new String[] {Long.class.getName()});
+
+		_finderPathWithPaginationFindByDDMStructureId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, DDLRecordSetImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDDMStructureId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByDDMStructureId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, DDLRecordSetImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByDDMStructureId",
+			new String[] {Long.class.getName()},
+			DDLRecordSetModelImpl.DDMSTRUCTUREID_COLUMN_BITMASK);
+
+		_finderPathCountByDDMStructureId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDDMStructureId",
+			new String[] {Long.class.getName()});
+
+		_finderPathWithPaginationCountByDDMStructureId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByDDMStructureId",
 			new String[] {Long.class.getName()});
 
 		_finderPathFetchByG_R = new FinderPath(

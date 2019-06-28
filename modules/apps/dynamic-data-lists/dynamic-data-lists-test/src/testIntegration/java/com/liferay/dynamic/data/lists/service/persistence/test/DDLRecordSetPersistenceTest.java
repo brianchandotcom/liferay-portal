@@ -262,6 +262,19 @@ public class DDLRecordSetPersistenceTest {
 	}
 
 	@Test
+	public void testCountByDDMStructureId() throws Exception {
+		_persistence.countByDDMStructureId(RandomTestUtil.nextLong());
+
+		_persistence.countByDDMStructureId(0L);
+	}
+
+	@Test
+	public void testCountByDDMStructureIdArrayable() throws Exception {
+		_persistence.countByDDMStructureId(
+			new long[] {RandomTestUtil.nextLong(), 0L});
+	}
+
+	@Test
 	public void testCountByG_R() throws Exception {
 		_persistence.countByG_R(RandomTestUtil.nextLong(), "");
 

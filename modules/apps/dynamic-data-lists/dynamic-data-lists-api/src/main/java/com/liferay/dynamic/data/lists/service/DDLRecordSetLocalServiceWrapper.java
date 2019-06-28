@@ -157,6 +157,13 @@ public class DDLRecordSetLocalServiceWrapper
 		return _ddlRecordSetLocalService.createDDLRecordSet(recordSetId);
 	}
 
+	@Override
+	public void deleteByDDMStructureId(long ddmStructureId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_ddlRecordSetLocalService.deleteByDDMStructureId(ddmStructureId);
+	}
+
 	/**
 	 * Deletes the ddl record set from the database. Also notifies the appropriate model listeners.
 	 *
@@ -591,6 +598,14 @@ public class DDLRecordSetLocalServiceWrapper
 		getRecordSets(long groupId, int start, int end) {
 
 		return _ddlRecordSetLocalService.getRecordSets(groupId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet>
+		getRecordSetsByDDMStructureId(long ddmStructureId) {
+
+		return _ddlRecordSetLocalService.getRecordSetsByDDMStructureId(
+			ddmStructureId);
 	}
 
 	/**

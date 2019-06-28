@@ -157,6 +157,12 @@ public class DDLRecordSetLocalServiceUtil {
 		return getService().createDDLRecordSet(recordSetId);
 	}
 
+	public static void deleteByDDMStructureId(long ddmStructureId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteByDDMStructureId(ddmStructureId);
+	}
+
 	/**
 	 * Deletes the ddl record set from the database. Also notifies the appropriate model listeners.
 	 *
@@ -563,6 +569,13 @@ public class DDLRecordSetLocalServiceUtil {
 			long groupId, int start, int end) {
 
 		return getService().getRecordSets(groupId, start, end);
+	}
+
+	public static java.util.List
+		<com.liferay.dynamic.data.lists.model.DDLRecordSet>
+			getRecordSetsByDDMStructureId(long ddmStructureId) {
+
+		return getService().getRecordSetsByDDMStructureId(ddmStructureId);
 	}
 
 	/**

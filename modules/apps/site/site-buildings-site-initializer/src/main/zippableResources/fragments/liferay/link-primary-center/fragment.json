@@ -1,0 +1,9 @@
+{
+	"configurationPath": "index.json",
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Link Primary Center",
+	"thumbnailPath": "thumbnail.png",
+	"type": "component"
+}

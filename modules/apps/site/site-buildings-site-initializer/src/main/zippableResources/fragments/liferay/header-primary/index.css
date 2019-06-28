@@ -1,0 +1,13 @@
+.header-primary .section-header-logo {
+	height: 36px;
+}
+
+.header-primary .portlet {
+	margin: 0;
+}
+
+.header-primary .navbar-nav .nav-link {
+	color: #B3CDFF;
+	font-weight: 600;
+	padding: 0 1rem;
+}

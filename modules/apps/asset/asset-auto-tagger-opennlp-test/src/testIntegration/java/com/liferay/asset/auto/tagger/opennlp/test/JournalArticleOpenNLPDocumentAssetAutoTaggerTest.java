@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 
 import org.junit.runner.RunWith;
 
@@ -34,7 +33,7 @@ public class JournalArticleOpenNLPDocumentAssetAutoTaggerTest
 	@Override
 	protected AssetEntry getAssetEntry(String text) throws Exception {
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			TestPropsValues.getGroupId(), RandomTestUtil.randomString(), text);
+			group.getGroupId(), RandomTestUtil.randomString(), text);
 
 		return assetEntryLocalService.fetchEntry(
 			JournalArticle.class.getName(),

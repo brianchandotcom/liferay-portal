@@ -18,7 +18,10 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.test.rule.Inject;
@@ -28,6 +31,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -42,6 +46,11 @@ public abstract class BaseOpenNLPDocumentAssetAutoTaggerTestCase {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		group = GroupTestUtil.addGroup();
+	}
 
 	@Test
 	public void testAutoTagsAnAsset() throws Exception {
@@ -158,6 +167,9 @@ public abstract class BaseOpenNLPDocumentAssetAutoTaggerTestCase {
 
 	@Inject
 	protected AssetEntryLocalService assetEntryLocalService;
+
+	@DeleteAfterTestRun
+	protected Group group;
 
 	private static final String _FILE_NAME =
 		"Alice's Adventures in Wonderland, by Lewis Carroll.txt";

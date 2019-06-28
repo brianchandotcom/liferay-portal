@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -36,9 +37,14 @@ public class BlogsEntryOpenNLPDocumentAssetAutoTaggerTest
 
 	@Override
 	protected AssetEntry getAssetEntry(String text) throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setScopeGroupId(group.getGroupId());
+
 		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), StringUtil.randomString(), text,
-			new Date(), ServiceContextTestUtil.getServiceContext());
+			new Date(), serviceContext);
 
 		return assetEntryLocalService.fetchEntry(
 			BlogsEntry.class.getName(), blogsEntry.getEntryId());

@@ -72,16 +72,14 @@ public class OpenNLPDocumentAssetAutoTaggerTest
 		String className = RandomTestUtil.randomString();
 
 		_registerAssetRendererFactory(
-			new TestAssetRendererFactory(
-				TestPropsValues.getGroupId(), className, null));
+			new TestAssetRendererFactory(group.getGroupId(), className, null));
 
 		testWithOpenNLPDocumentAssetAutoTagProviderEnabled(
 			className,
 			() -> {
 				AssetEntry assetEntry = assetEntryLocalService.updateEntry(
-					TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-					className, RandomTestUtil.randomLong(), new long[0],
-					new String[0]);
+					TestPropsValues.getUserId(), group.getGroupId(), className,
+					RandomTestUtil.randomLong(), new long[0], new String[0]);
 
 				Collection<String> tagNames = Arrays.asList(
 					assetEntry.getTagNames());
@@ -94,7 +92,7 @@ public class OpenNLPDocumentAssetAutoTaggerTest
 	protected AssetEntry getAssetEntry(String text) throws Exception {
 		_registerAssetRendererFactory(
 			new TestAssetRendererFactory(
-				TestPropsValues.getGroupId(), getClassName(), text));
+				group.getGroupId(), getClassName(), text));
 
 		_registerTextExtractor(
 			new TextExtractor<String>() {
@@ -113,9 +111,8 @@ public class OpenNLPDocumentAssetAutoTaggerTest
 			});
 
 		return assetEntryLocalService.updateEntry(
-			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-			getClassName(), RandomTestUtil.randomLong(), new long[0],
-			new String[0]);
+			TestPropsValues.getUserId(), group.getGroupId(), getClassName(),
+			RandomTestUtil.randomLong(), new long[0], new String[0]);
 	}
 
 	@Override

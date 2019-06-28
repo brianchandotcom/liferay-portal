@@ -356,7 +356,8 @@
 }
 
 .table-sort-liner {
-	height: auto;
+	height: auto;	
+	word-break: keep-all;
 }
 
 .tall-editor {

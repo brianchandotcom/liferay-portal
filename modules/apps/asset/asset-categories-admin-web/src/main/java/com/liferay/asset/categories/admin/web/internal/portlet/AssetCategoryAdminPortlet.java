@@ -27,6 +27,7 @@ import com.liferay.asset.kernel.exception.CategoryPropertyValueException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryPropertyException;
 import com.liferay.asset.kernel.exception.DuplicateVocabularyException;
+import com.liferay.asset.kernel.exception.InvalidAssetCategoryException;
 import com.liferay.asset.kernel.exception.NoSuchCategoryException;
 import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
@@ -410,6 +411,7 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 			cause instanceof DuplicateCategoryException ||
 			cause instanceof DuplicateCategoryPropertyException ||
 			cause instanceof DuplicateVocabularyException ||
+			cause instanceof InvalidAssetCategoryException ||
 			cause instanceof NoSuchCategoryException ||
 			cause instanceof NoSuchClassTypeException ||
 			cause instanceof NoSuchEntryException ||

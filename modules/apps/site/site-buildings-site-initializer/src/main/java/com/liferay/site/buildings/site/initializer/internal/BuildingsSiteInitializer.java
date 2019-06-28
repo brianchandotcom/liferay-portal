@@ -14,7 +14,9 @@
 
 package com.liferay.site.buildings.site.initializer.internal;
 
+import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.fragment.importer.FragmentsImporter;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.buildings.site.initializer.internal.util.ImagesImporter;
@@ -40,6 +43,7 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 
@@ -92,6 +96,8 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 			_addFragments();
 			_addImages();
 
+			_addDDMStructures();
+
 			_updateLookAndFeel();
 		}
 		catch (Exception e) {
@@ -109,6 +115,22 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundle = bundleContext.getBundle();
+	}
+
+	private void _addDDMStructures() throws Exception {
+		Enumeration<URL> urls = _bundle.findEntries(
+			_PATH + "/ddm", StringPool.STAR, false);
+
+		while (urls.hasMoreElements()) {
+			URL url = urls.nextElement();
+
+			Class<?> clazz = getClass();
+
+			_defaultDDMStructureHelper.addDDMStructures(
+				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+				_portal.getClassNameId(JournalArticle.class),
+				clazz.getClassLoader(), url.getPath(), _serviceContext);
+		}
 	}
 
 	private void _addFragments() throws Exception {
@@ -188,6 +210,10 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 		BuildingsSiteInitializer.class);
 
 	private Bundle _bundle;
+
+	@Reference
+	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
+
 	private List<FileEntry> _fileEntries;
 
 	@Reference
@@ -198,6 +224,9 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	private ServiceContext _serviceContext;
 

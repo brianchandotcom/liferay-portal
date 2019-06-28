@@ -27,6 +27,14 @@ class FloatingToolbarFragmentConfigurationPanel extends Component {
 FloatingToolbarFragmentConfigurationPanel.STATE = {
 	/**
 	 * @default undefined
+	 * @memberof FloatingToolbarLinkPanel
+	 * @review
+	 * @type {object}
+	 */
+	item: Config.object().value(null),
+
+	/**
+	 * @default undefined
 	 * @memberof FloatingToolbarFragmentConfigurationPanel
 	 * @review
 	 * @type {!string}

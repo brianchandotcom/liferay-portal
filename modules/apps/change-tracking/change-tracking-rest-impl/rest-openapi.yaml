@@ -266,13 +266,13 @@ paths:
             operationId: deleteCollection
             parameters:
                 - in: path
-                  name: companyId
+                  name: collectionId
                   required: true
                   schema:
                       format: int64
                       type: integer
-                - in: path
-                  name: collectionId
+                - in: query
+                  name: companyId
                   required: true
                   schema:
                       format: int64
@@ -293,13 +293,13 @@ paths:
             operationId: getCollection
             parameters:
                 - in: path
-                  name: companyId
+                  name: collectionId
                   required: true
                   schema:
                       format: int64
                       type: integer
-                - in: path
-                  name: collectionId
+                - in: query
+                  name: companyId
                   required: true
                   schema:
                       format: int64

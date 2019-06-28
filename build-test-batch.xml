@@ -2839,6 +2839,46 @@ log.sanitizer.enabled=false</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="start-k8s-database">
+		<attribute name="database.port" />
+		<attribute name="database.type" />
+		<attribute name="database.version" />
+
+		<sequential>
+			<beanshell>
+				<![CDATA[
+					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+					import com.liferay.jenkins.results.parser.k8s.LiferayK8sConnection;
+					import com.liferay.jenkins.results.parser.k8s.Pod;
+					import com.liferay.jenkins.results.parser.k8s.ResourceConfigurationFactory;
+
+					LiferayK8sConnection liferayK8sConnection = LiferayK8sConnection.getInstance();
+
+					Pod pod = liferayK8sConnection.createPod(ResourceConfigurationFactory.getConfigurationPod("@{database.type}", "@{database.version}"));
+				]]>
+			</beanshell>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-k8s-database">
+		<attribute name="database.type" />
+		<attribute name="database.version" />
+
+		<sequential>
+			<beanshell>
+				<![CDATA[
+					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+					import com.liferay.jenkins.results.parser.k8s.LiferayK8sConnection;
+					import com.liferay.jenkins.results.parser.k8s.ResourceConfigurationFactory;
+
+					LiferayK8sConnection liferayK8sConnection = LiferayK8sConnection.getInstance();
+
+					liferayK8sConnection.deletePod(ResourceConfigurationFactory.getConfigurationPod("@{database.type}", "@{database.version}"));
+				]]>
+			</beanshell>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="stop-suite-search-engine">
 		<sequential>
 			<if>

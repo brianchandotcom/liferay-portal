@@ -21,7 +21,6 @@ import com.liferay.change.tracking.rest.constant.v1_0.ProcessType;
 import com.liferay.change.tracking.rest.dto.v1_0.Process;
 import com.liferay.change.tracking.rest.internal.dto.v1_0.util.CollectionUtil;
 import com.liferay.change.tracking.rest.internal.dto.v1_0.util.ProcessUserUtil;
-import com.liferay.change.tracking.rest.resource.v1_0.CollectionResource;
 import com.liferay.change.tracking.rest.resource.v1_0.ProcessResource;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
@@ -40,7 +39,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -49,8 +47,6 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -70,26 +66,19 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ProcessResourceImpl extends BaseProcessResourceImpl {
 
 	@Override
-	public Process getProcess(Long processId) throws Exception {
-		CTProcess ctProcess = _ctProcessLocalService.fetchCTProcess(processId);
-
-		if (ctProcess != null) {
-			return _toProcess(ctProcess);
-		}
-
-		return new Process();
+	public Process getProcess(Long processId) {
+		return _toProcess(_ctProcessLocalService.fetchCTProcess(processId));
 	}
 
 	@Override
 	public Page<Process> getProcessesPage(
-			Long companyId, String keywords, ProcessType type, Long userId,
-			Pagination pagination, Sort[] sorts)
-		throws Exception {
+		Long companyId, String keywords, ProcessType type, Long userId,
+		Pagination pagination, Sort[] sorts) {
 
-		List<Process> processes = _getProcesses(
+		List<Process> processes = transform(
 			_getCTProcesses(
-				companyId, GetterUtil.getLong(userId), keywords, type,
-				pagination, sorts));
+				companyId, userId, keywords, type, pagination, sorts),
+			this::_toProcess);
 
 		return Page.of(processes, pagination, processes.size());
 	}
@@ -110,42 +99,24 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 		long companyId, long userId, String keywords, ProcessType type,
 		Pagination pagination, Sort[] sorts) {
 
-		List<CTProcess> ctProcesses = null;
-
 		if (ProcessType.PUBLISHED_LATEST.equals(type)) {
 			Optional<CTProcess> latestCTProcessOptional =
 				_ctEngineManager.getLatestCTProcessOptional(companyId);
 
-			ctProcesses = latestCTProcessOptional.map(
+			return latestCTProcessOptional.map(
 				Collections::singletonList
 			).orElse(
 				Collections.emptyList()
 			);
 		}
-		else {
-			int status = _getStatus(type);
 
-			QueryDefinition<CTProcess> queryDefinition =
-				SearchUtil.getQueryDefinition(
-					CTProcess.class, pagination, sorts);
+		QueryDefinition<CTProcess> queryDefinition =
+			SearchUtil.getQueryDefinition(CTProcess.class, pagination, sorts);
 
-			queryDefinition.setStatus(status);
+		queryDefinition.setStatus(_getStatus(type));
 
-			ctProcesses = _ctEngineManager.getCTProcesses(
-				companyId, userId, keywords, queryDefinition);
-		}
-
-		return ctProcesses;
-	}
-
-	private List<Process> _getProcesses(List<CTProcess> ctProcesses) {
-		Stream<CTProcess> stream = ctProcesses.stream();
-
-		return stream.map(
-			this::_toProcess
-		).collect(
-			Collectors.toList()
-		);
+		return _ctEngineManager.getCTProcesses(
+			companyId, userId, keywords, queryDefinition);
 	}
 
 	private Optional<com.liferay.portal.kernel.backgroundtask.BackgroundTask>
@@ -186,6 +157,10 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 	}
 
 	private Process _toProcess(CTProcess ctProcess) {
+		if (ctProcess == null) {
+			return null;
+		}
+
 		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
 			ctProcess.getCtCollectionId());
 
@@ -245,9 +220,6 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 
 	@Reference
 	private BackgroundTaskManager _backgroundTaskManager;
-
-	@Reference
-	private CollectionResource _collectionResource;
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;

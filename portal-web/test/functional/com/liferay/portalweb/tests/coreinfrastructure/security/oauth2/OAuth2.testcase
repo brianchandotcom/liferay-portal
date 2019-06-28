@@ -253,6 +253,53 @@ definition {
 			applicationName = "OAuth Application",
 			callbackURI = "http://www.liferay.com");
 
+		Navigator.gotoNavItem(navItem = "Scopes");
+
+		for (var resourcePanel : list "Analytics,Portal Services") {
+			var key_panel = "${resourcePanel}";
+
+			AssertElementPresent(locator1 = "OAuth2#ADMIN_RESOURCE_PANEL_COLLAPSED");
+		}
+
+		User.logoutPG();
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "OAuth 2 Administration");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "OAuth Application");
+
+		Navigator.gotoNavItem(navItem = "Scopes");
+
+		for (var resourcePanel : list "Analytics,Portal Services") {
+			var key_panel = "${resourcePanel}";
+
+			AssertElementPresent(locator1 = "OAuth2#ADMIN_RESOURCE_PANEL_COLLAPSED");
+		}
+
+		User.logoutPG(nodePort = "9080");
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "OAuth 2 Administration");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "OAuth Application");
+
 		OAuth2.inputApplicationValues(
 			clientId = "abc123",
 			clientSecret = "abc123");

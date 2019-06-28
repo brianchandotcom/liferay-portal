@@ -93,7 +93,34 @@ public class SEOImpl implements SEO {
 	protected List<SEOLink> getDefaultLocalizedSEOLinks(
 		Locale locale, String canonicalURL, Map<Locale, String> alternateURLs) {
 
-		return Collections.emptyList();
+		List<SEOLink> seoLinks = new ArrayList<>();
+
+		String localizedCanonicalURL = alternateURLs.getOrDefault(
+			locale, canonicalURL);
+
+		seoLinks.add(
+			new SEOLink.CanonicalSEOLink(
+				_html.escapeAttribute(localizedCanonicalURL)));
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		for (Map.Entry<Locale, String> entry : alternateURLs.entrySet()) {
+			Locale availableLocale = entry.getKey();
+			String alternateURL = entry.getValue();
+
+			if (availableLocale.equals(defaultLocale)) {
+				seoLinks.add(
+					new SEOLink.AlternateSEOLink(
+						_html.escapeAttribute(canonicalURL), "x-default"));
+			}
+
+			seoLinks.add(
+				new SEOLink.AlternateSEOLink(
+					_html.escapeAttribute(alternateURL),
+					LocaleUtil.toW3cLanguageId(availableLocale)));
+		}
+
+		return seoLinks;
 	}
 
 	@Reference

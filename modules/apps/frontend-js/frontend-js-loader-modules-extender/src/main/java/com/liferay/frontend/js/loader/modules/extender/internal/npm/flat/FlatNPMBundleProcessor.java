@@ -165,33 +165,14 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		JSONObject jsonObject = null;
 
 		try {
-			String content = _getResourceContent(url);
-
-			if (content != null) {
-				jsonObject = _jsonFactory.createJSONObject(content);
-			}
+			jsonObject = _jsonFactory.createJSONObject(
+				StringUtil.read(url.openStream()));
 		}
 		catch (Exception e) {
 			_log.error("Unable to parse " + url.getPath(), e);
 		}
 
 		return jsonObject;
-	}
-
-	/**
-	 * Returns the contents of a resource inside a {@link FlatJSBundle}.
-	 *
-	 * @param  flatJSBundle the bundle
-	 * @param  location the resource's path
-	 * @return the contents of the resource as a String
-	 */
-	private String _getResourceContent(URL url) {
-		try {
-			return StringUtil.read(url.openStream());
-		}
-		catch (IOException ioe) {
-			return null;
-		}
 	}
 
 	private String _normalizeModuleContent(String moduleContent) {
@@ -457,7 +438,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 		try {
 			jsonObject = _jsonFactory.createJSONObject(
-				_getResourceContent(url));
+				StringUtil.read(url.openStream()));
 		}
 		catch (Exception e) {
 			_log.error(

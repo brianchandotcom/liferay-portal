@@ -594,6 +594,22 @@ message.
 			</then>
 		</if>
 
+		<if>
+			<resourcecount count="0" when="greater">
+				<fileset
+					dir="${project.dir}/modules"
+					excludes="**/.gradle/,**/bin/,**/build/,**/classes/,**/node_modules/,**/tmp/"
+					includes="**/.lfrbuild-portal-post-clean"
+				/>
+			</resourcecount>
+			<then>
+				<gradle-execute dir="${project.dir}/modules" task="clean">
+					<arg value="--parallel" />
+					<arg value="-Dbuild.profile=portal-post-clean" />
+				</gradle-execute>
+			</then>
+		</if>
+
 		<stopwatch action="elapsed" name="modules.stopwatch" />
 
 		<if>

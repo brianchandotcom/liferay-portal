@@ -86,6 +86,7 @@ File Name | Description
 `.lfrbuild-deploy-wsdd` | Deploys the WSDD fragment JAR file when deploying the OSGi module.
 `.lfrbuild-lowest-major-version` | Declares the lowest major version of the released artifact to use in the semantic versioning check.
 `.lfrbuild-portal-deprecated` | Marks the module as deprecated and skip deployment during the `ant all` execution. `-test` modules never have this file.
+`.lfrbuild-portal-post-clean` | Cleans the module after the `ant all` execution. This allows the module to be included in the build without deploying it.
 `.lfrbuild-portal-pre` | Builds the module during the `ant compile` execution in the `tmp/lib-pre` directory before building `portal-kernel`, `portal-impl`, etc.
 `.lfrbuild-portal-private` | Deploys the module during the `ant all` execution in a private branch. `-test` modules never have this file.
 `.lfrbuild-portal-public` | Deploys the module during the `ant all` execution in a public branch. `-test` modules never have this file.

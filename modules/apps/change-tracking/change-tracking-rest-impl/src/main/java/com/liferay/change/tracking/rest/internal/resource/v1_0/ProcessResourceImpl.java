@@ -17,6 +17,7 @@ package com.liferay.change.tracking.rest.internal.resource.v1_0;
 import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTProcess;
+import com.liferay.change.tracking.rest.constant.v1_0.ProcessType;
 import com.liferay.change.tracking.rest.dto.v1_0.Process;
 import com.liferay.change.tracking.rest.internal.dto.v1_0.util.CollectionUtil;
 import com.liferay.change.tracking.rest.internal.dto.v1_0.util.ProcessUserUtil;
@@ -27,17 +28,29 @@ import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutorRegistry;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -67,6 +80,20 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 		return new Process();
 	}
 
+	@Override
+	public Page<Process> getProcessesPage(
+			Long companyId, String keywords, ProcessType type, Long userId,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		List<Process> processes = _getProcesses(
+			_getCTProcesses(
+				companyId, GetterUtil.getLong(userId), keywords, type,
+				pagination, sorts));
+
+		return Page.of(processes, pagination, processes.size());
+	}
+
 	private Optional<BackgroundTaskDisplay> _getBackgroundTaskDisplayOptional(
 		BackgroundTask backgroundTask,
 		BackgroundTaskExecutor backgroundTaskExecutor) {
@@ -77,6 +104,48 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 
 		return serviceBuilderBackgroundTaskOptional.map(
 			backgroundTaskExecutor::getBackgroundTaskDisplay);
+	}
+
+	private List<CTProcess> _getCTProcesses(
+		long companyId, long userId, String keywords, ProcessType type,
+		Pagination pagination, Sort[] sorts) {
+
+		List<CTProcess> ctProcesses = null;
+
+		if (ProcessType.PUBLISHED_LATEST.equals(type)) {
+			Optional<CTProcess> latestCTProcessOptional =
+				_ctEngineManager.getLatestCTProcessOptional(companyId);
+
+			ctProcesses = latestCTProcessOptional.map(
+				Collections::singletonList
+			).orElse(
+				Collections.emptyList()
+			);
+		}
+		else {
+			int status = _getStatus(type);
+
+			QueryDefinition<CTProcess> queryDefinition =
+				SearchUtil.getQueryDefinition(
+					CTProcess.class, pagination, sorts);
+
+			queryDefinition.setStatus(status);
+
+			ctProcesses = _ctEngineManager.getCTProcesses(
+				companyId, userId, keywords, queryDefinition);
+		}
+
+		return ctProcesses;
+	}
+
+	private List<Process> _getProcesses(List<CTProcess> ctProcesses) {
+		Stream<CTProcess> stream = ctProcesses.stream();
+
+		return stream.map(
+			this::_toProcess
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private Optional<com.liferay.portal.kernel.backgroundtask.BackgroundTask>
@@ -95,6 +164,25 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 
 			return Optional.empty();
 		}
+	}
+
+	private int _getStatus(ProcessType type) {
+		int status = 0;
+
+		if (ProcessType.ALL.equals(type)) {
+			status = WorkflowConstants.STATUS_ANY;
+		}
+		else if (ProcessType.FAILED.equals(type)) {
+			status = BackgroundTaskConstants.STATUS_FAILED;
+		}
+		else if (ProcessType.IN_PROGRESS.equals(type)) {
+			status = BackgroundTaskConstants.STATUS_IN_PROGRESS;
+		}
+		else if (ProcessType.PUBLISHED.equals(type)) {
+			status = BackgroundTaskConstants.STATUS_SUCCESSFUL;
+		}
+
+		return status;
 	}
 
 	private Process _toProcess(CTProcess ctProcess) {

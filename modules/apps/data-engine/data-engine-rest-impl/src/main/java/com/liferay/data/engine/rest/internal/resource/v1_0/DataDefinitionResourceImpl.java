@@ -28,7 +28,6 @@ import com.liferay.data.engine.rest.internal.resource.spi.SPIDataRecordCollectio
 import com.liferay.data.engine.rest.internal.resource.v1_0.util.DataEnginePermissionUtil;
 import com.liferay.data.engine.rest.resource.v1_0.DataDefinitionResource;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
-import com.liferay.dynamic.data.mapping.exception.RequiredStructureException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
@@ -79,17 +78,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			PermissionThreadLocal.getPermissionChecker(), dataDefinitionId,
 			ActionKeys.DELETE);
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
-			dataDefinitionId);
-
-		int count = _ddlRecordSetLocalService.getRecordSetsCount(
-			ddmStructure.getGroupId(), dataDefinitionId, false);
-
-		if (count > 0) {
-			throw new RequiredStructureException.
-				MustNotDeleteStructureReferencedByStructureLinks(
-					dataDefinitionId);
-		}
+		_ddlRecordSetLocalService.deleteByDDMStructureId(dataDefinitionId);
 
 		List<DDMStructureVersion> ddmStructureVersions =
 			_ddmStructureVersionLocalService.getStructureVersions(

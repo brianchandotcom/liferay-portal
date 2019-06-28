@@ -34,50 +34,6 @@ import java.util.List;
  */
 public class ResourceConfigurationFactory {
 
-	private static Pod _newDatabaseConfigurationPod(
-		String dockerBaseImageName, String dockerImageName,
-		List<V1ContainerPort> v1ContainerPorts, List<V1EnvVar> v1EnvVars) {
-
-		V1Pod v1Pod = new V1Pod();
-
-		String hostname = JenkinsResultsParserUtil.getHostName(null);
-
-		if (hostname == null) {
-			throw new RuntimeException("Unable to determine hostname");
-		}
-
-		hostname = JenkinsResultsParserUtil.combine(
-			hostname.replaceFirst("\\..*", ""), "-", dockerBaseImageName);
-
-		V1ObjectMeta v1ObjectMeta = _newConfigurationMetaData(hostname);
-
-		String serviceName = "database";
-
-		v1ObjectMeta.putLabelsItem("app", serviceName);
-
-		v1Pod.setMetadata(v1ObjectMeta);
-
-		V1Container v1Container = _newConfigurationContainer(
-			dockerBaseImageName, dockerImageName);
-
-		v1Container.setEnv(v1EnvVars);
-
-		v1Container.setPorts(v1ContainerPorts);
-
-		V1PodSpec v1PodSpec = _newConfigurationPodSpec(v1Container);
-
-		v1PodSpec.setHostname(hostname);
-		v1PodSpec.setSubdomain(serviceName);
-		v1PodSpec.setVolumes(
-			new ArrayList<>(
-				Arrays.asList(
-					_newEmptyDirConfigurationVolume(dockerBaseImageName))));
-
-		v1Pod.setSpec(v1PodSpec);
-
-		return new Pod(v1Pod);
-	}
-
 	public static Pod newMySQLConfigurationPod(
 		String dockerBaseImageName, String dockerImageName) {
 
@@ -140,9 +96,7 @@ public class ResourceConfigurationFactory {
 		return v1EnvVar;
 	}
 
-	private static V1ObjectMeta _newConfigurationMetaData(
-		String metaDataName) {
-
+	private static V1ObjectMeta _newConfigurationMetaData(String metaDataName) {
 		V1ObjectMeta v1ObjectMeta = new V1ObjectMeta();
 
 		v1ObjectMeta.setName(metaDataName);
@@ -150,14 +104,56 @@ public class ResourceConfigurationFactory {
 		return v1ObjectMeta;
 	}
 
-	private static V1PodSpec _newConfigurationPodSpec(
-		V1Container v1Container) {
-
+	private static V1PodSpec _newConfigurationPodSpec(V1Container v1Container) {
 		V1PodSpec v1PodSpec = new V1PodSpec();
 
 		v1PodSpec.addContainersItem(v1Container);
 
 		return v1PodSpec;
+	}
+
+	private static Pod _newDatabaseConfigurationPod(
+		String dockerBaseImageName, String dockerImageName,
+		List<V1ContainerPort> v1ContainerPorts, List<V1EnvVar> v1EnvVars) {
+
+		V1Pod v1Pod = new V1Pod();
+
+		String hostname = JenkinsResultsParserUtil.getHostName(null);
+
+		if (hostname == null) {
+			throw new RuntimeException("Unable to determine hostname");
+		}
+
+		hostname = JenkinsResultsParserUtil.combine(
+			hostname.replaceFirst("\\..*", ""), "-", dockerBaseImageName);
+
+		V1ObjectMeta v1ObjectMeta = _newConfigurationMetaData(hostname);
+
+		String serviceName = "database";
+
+		v1ObjectMeta.putLabelsItem("app", serviceName);
+
+		v1Pod.setMetadata(v1ObjectMeta);
+
+		V1Container v1Container = _newConfigurationContainer(
+			dockerBaseImageName, dockerImageName);
+
+		v1Container.setEnv(v1EnvVars);
+
+		v1Container.setPorts(v1ContainerPorts);
+
+		V1PodSpec v1PodSpec = _newConfigurationPodSpec(v1Container);
+
+		v1PodSpec.setHostname(hostname);
+		v1PodSpec.setSubdomain(serviceName);
+		v1PodSpec.setVolumes(
+			new ArrayList<>(
+				Arrays.asList(
+					_newEmptyDirConfigurationVolume(dockerBaseImageName))));
+
+		v1Pod.setSpec(v1PodSpec);
+
+		return new Pod(v1Pod);
 	}
 
 	private static V1Volume _newEmptyDirConfigurationVolume(

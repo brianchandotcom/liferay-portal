@@ -16,6 +16,7 @@ package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.asset.kernel.exception.AssetCategoryNameException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryException;
+import com.liferay.asset.kernel.exception.InvalidAssetCategoryException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.petra.string.StringBundler;
@@ -537,8 +538,20 @@ public class AssetCategoryLocalServiceImpl
 		validate(
 			categoryId, parentCategoryId, category.getName(), vocabularyId);
 
+		if (categoryId == parentCategoryId) {
+			throw new InvalidAssetCategoryException(parentCategoryId, 2);
+		}
+
 		if (parentCategoryId > 0) {
-			assetCategoryPersistence.findByPrimaryKey(parentCategoryId);
+			AssetCategory parentCategory =
+				assetCategoryPersistence.findByPrimaryKey(parentCategoryId);
+
+			List<AssetCategory> childrenCategories =
+				_getNestedChildrenCategories(categoryId);
+
+			if (childrenCategories.contains(parentCategory)) {
+				throw new InvalidAssetCategoryException(categoryId, 1);
+			}
 		}
 
 		if (vocabularyId != category.getVocabularyId()) {
@@ -782,6 +795,28 @@ public class AssetCategoryLocalServiceImpl
 
 			throw new DuplicateCategoryException(sb.toString());
 		}
+	}
+
+	private List<AssetCategory> _getNestedChildrenCategories(long categoryId) {
+		List<AssetCategory> categories = new ArrayList<>();
+
+		List<AssetCategory> childrenCategories =
+			assetCategoryPersistence.findByParentCategoryId(categoryId);
+
+		if (!childrenCategories.isEmpty()) {
+			for (AssetCategory childCategory : childrenCategories) {
+				categories.add(childCategory);
+
+				List<AssetCategory> nestedChildrenCategories =
+					_getNestedChildrenCategories(childCategory.getCategoryId());
+
+				if (!nestedChildrenCategories.isEmpty()) {
+					categories.addAll(nestedChildrenCategories);
+				}
+			}
+		}
+
+		return categories;
 	}
 
 }

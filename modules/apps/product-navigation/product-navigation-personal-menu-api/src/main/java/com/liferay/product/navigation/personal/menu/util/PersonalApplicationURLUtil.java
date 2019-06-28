@@ -26,10 +26,12 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -97,6 +99,17 @@ public class PersonalApplicationURLUtil {
 			layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
 				group.getGroupId(), privateLayout,
 				PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
+
+			if (!LayoutPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), layout, true,
+					ActionKeys.VIEW)) {
+
+				privateLayout = false;
+
+				layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
+					group.getGroupId(), privateLayout,
+					PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
+			}
 		}
 		catch (NoSuchLayoutException nsle) {
 

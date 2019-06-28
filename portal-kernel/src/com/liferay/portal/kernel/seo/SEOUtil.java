@@ -27,10 +27,12 @@ import java.util.Map;
 public class SEOUtil {
 
 	public static List<SEOLink> getLocalizedSEOLinks(
-			String canonicalURL, Map<Locale, String> alternateURLs)
+			long companyId, String canonicalURL,
+			Map<Locale, String> alternateURLs)
 		throws PortalException {
 
-		return _seo.getLocalizedSEOLinks(canonicalURL, alternateURLs);
+		return _seo.getLocalizedSEOLinks(
+			companyId, canonicalURL, alternateURLs);
 	}
 
 	private static volatile SEO _seo =

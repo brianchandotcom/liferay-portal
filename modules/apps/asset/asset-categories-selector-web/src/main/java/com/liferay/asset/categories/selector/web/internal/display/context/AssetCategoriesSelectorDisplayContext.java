@@ -226,8 +226,7 @@ public class AssetCategoriesSelectorDisplayContext {
 	private JSONArray _getVocabulariesJSONArray() throws Exception {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		boolean allowedSelectVocabularies = ParamUtil.getBoolean(
-			_httpServletRequest, "allowedSelectVocabularies");
+		boolean allowedSelectVocabularies = isAllowedSelectVocabularies();
 
 		for (long vocabularyId : getVocabularyIds()) {
 			JSONObject jsonObject = JSONUtil.put(

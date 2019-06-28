@@ -132,7 +132,7 @@ Checkbox.STATE = {
 	 * @type {?bool}
 	 */
 
-	showLabel: Config.bool().value(false),
+	showLabel: Config.bool().value(true),
 
 	/**
 	 * @default undefined

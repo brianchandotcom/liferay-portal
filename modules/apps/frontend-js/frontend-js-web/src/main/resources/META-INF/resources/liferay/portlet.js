@@ -370,7 +370,7 @@
 			}
 
 			Liferay.Util.fetch(url, {
-				body: Liferay.Util.objectToFormData(data),
+				body: Liferay.Util.objectToURLSearchParams(data),
 				method: 'POST'
 			})
 				.then(response => {

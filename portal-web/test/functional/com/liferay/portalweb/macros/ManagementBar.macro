@@ -56,6 +56,8 @@ definition {
 	macro toggleViewOrder {
 		if (IsElementNotPresent(locator1 = "ManagementBar#ORDER_ICON_SPECIFIC", key_order = "${order}")) {
 			Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+
+			MouseOver(locator1 = "ManagementBar#FILTER_AND_ORDER");
 		}
 
 		AssertElementPresent(

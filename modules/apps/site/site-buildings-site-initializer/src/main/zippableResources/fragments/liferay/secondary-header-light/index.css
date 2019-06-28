@@ -1,0 +1,12 @@
+.secondary-header-light .section-header-logo {
+	height: 20px;
+}
+
+.secondary-header-light .portlet {
+	margin: 0;
+}
+
+.secondary-header-light .navbar-nav .nav-link {
+	font-weight: 600;
+	padding: 0 1rem;
+}

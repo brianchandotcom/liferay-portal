@@ -1,0 +1,17 @@
+.secondary-header {
+  background-color: #004AD7;
+}
+
+.secondary-header .section-header-logo {
+	height: 20px;
+}
+
+.secondary-header .portlet {
+	margin: 0;
+}
+
+.secondary-header .navbar-nav .nav-link {
+	color: #B3CDFF;
+	font-weight: 600;
+	padding: 0 1rem;
+}

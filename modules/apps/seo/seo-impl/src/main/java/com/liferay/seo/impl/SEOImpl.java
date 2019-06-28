@@ -43,7 +43,7 @@ public class SEOImpl implements SEO {
 
 	@Override
 	public List<SEOLink> getLocalizedSEOLinks(
-			long companyId, String canonicalURL,
+			long companyId, Locale locale, String canonicalURL,
 			Map<Locale, String> alternateURLs)
 		throws PortalException {
 
@@ -58,7 +58,7 @@ public class SEOImpl implements SEO {
 			return getClassicLocalizedSEOLinks(canonicalURL, alternateURLs);
 		}
 
-		return getDefaultLocalizedSEOLinks(canonicalURL, alternateURLs);
+		return getDefaultLocalizedSEOLinks(locale, canonicalURL, alternateURLs);
 	}
 
 	protected List<SEOLink> getClassicLocalizedSEOLinks(
@@ -91,7 +91,7 @@ public class SEOImpl implements SEO {
 	}
 
 	protected List<SEOLink> getDefaultLocalizedSEOLinks(
-		String canonicalURL, Map<Locale, String> alternateURLs) {
+		Locale locale, String canonicalURL, Map<Locale, String> alternateURLs) {
 
 		return Collections.emptyList();
 	}

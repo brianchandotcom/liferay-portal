@@ -26,7 +26,7 @@ import java.util.Map;
 public interface SEO {
 
 	public List<SEOLink> getLocalizedSEOLinks(
-			long companyId, String canonicalURL,
+			long companyId, Locale locale, String canonicalURL,
 			Map<Locale, String> alternateURLs)
 		throws PortalException;
 

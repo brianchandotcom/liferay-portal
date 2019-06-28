@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
-import com.liferay.journal.content.web.internal.constants.JournalContentWebKeys;
 import com.liferay.journal.content.web.internal.display.context.JournalContentDisplayContext;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalContent;
@@ -94,15 +93,10 @@ public class JournalContentConfigurationAction
 			JournalWebKeys.JOURNAL_CONTENT, _journalContent);
 
 		try {
-			JournalContentDisplayContext journalContentDisplayContext =
-				JournalContentDisplayContext.create(
-					portletRequest, portletResponse,
-					themeDisplay.getPortletDisplay(), _CLASS_NAME_ID,
-					_ddmTemplateModelResourcePermission);
-
-			httpServletRequest.setAttribute(
-				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT,
-				journalContentDisplayContext);
+			JournalContentDisplayContext.create(
+				portletRequest, portletResponse,
+				themeDisplay.getPortletDisplay(), _CLASS_NAME_ID,
+				_ddmTemplateModelResourcePermission);
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {

@@ -188,15 +188,9 @@ public class JournalContentPortlet extends MVCPortlet {
 			JournalWebKeys.JOURNAL_CONTENT, _journalContent);
 
 		try {
-			JournalContentDisplayContext journalContentDisplayContext =
-				JournalContentDisplayContext.create(
-					renderRequest, renderResponse,
-					themeDisplay.getPortletDisplay(), _CLASS_NAME_ID,
-					_ddmTemplateModelResourcePermission);
-
-			renderRequest.setAttribute(
-				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT,
-				journalContentDisplayContext);
+			JournalContentDisplayContext.create(
+				renderRequest, renderResponse, themeDisplay.getPortletDisplay(),
+				_CLASS_NAME_ID, _ddmTemplateModelResourcePermission);
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
@@ -255,15 +249,10 @@ public class JournalContentPortlet extends MVCPortlet {
 				JournalWebKeys.JOURNAL_CONTENT, _journalContent);
 
 			try {
-				JournalContentDisplayContext journalContentDisplayContext =
-					JournalContentDisplayContext.create(
-						resourceRequest, resourceResponse,
-						themeDisplay.getPortletDisplay(), _CLASS_NAME_ID,
-						_ddmTemplateModelResourcePermission);
-
-				resourceRequest.setAttribute(
-					JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT,
-					journalContentDisplayContext);
+				JournalContentDisplayContext.create(
+					resourceRequest, resourceResponse,
+					themeDisplay.getPortletDisplay(), _CLASS_NAME_ID,
+					_ddmTemplateModelResourcePermission);
 			}
 			catch (PortalException pe) {
 				if (_log.isDebugEnabled()) {

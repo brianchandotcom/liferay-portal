@@ -316,15 +316,23 @@ mariadb.executable=${mariadb.executable}]]></echo>
 								</else>
 							</if>
 
-							<echo></echo>
-							<echo>##</echo>
-							<echo>## ${database.executable} ${database.version.cmd}</echo>
-							<echo>##</echo>
-							<echo></echo>
+							<if>
+								<isset property="env.KUBERNETES_SERVICE_HOST" />
+								<then>
+									<echo>Using kubernetes for ${database.type}</echo>
+								</then>
+								<else>
+									<echo></echo>
+									<echo>##</echo>
+									<echo>## ${database.executable} ${database.version.cmd}</echo>
+									<echo>##</echo>
+									<echo></echo>
 
-							<exec executable="${database.executable}">
-								<arg line="${database.version.cmd}" />
-							</exec>
+									<exec executable="${database.executable}">
+										<arg line="${database.version.cmd}" />
+									</exec>
+								</else>
+							</if>
 						</else>
 					</if>
 				</action>

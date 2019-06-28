@@ -91,16 +91,6 @@ public class AssetCategoriesSelectorDisplayContext {
 		return JSONUtil.put(jsonObject);
 	}
 
-	public long getCategoryId() {
-		if (_categoryId != 0) {
-			return _categoryId;
-		}
-
-		_categoryId = ParamUtil.getLong(_httpServletRequest, "categoryId");
-
-		return _categoryId;
-	}
-
 	public String getEventName() {
 		if (Validator.isNotNull(_eventName)) {
 			return _eventName;
@@ -122,26 +112,6 @@ public class AssetCategoriesSelectorDisplayContext {
 			_httpServletRequest, "selectedCategories");
 
 		return _selectedCategories;
-	}
-
-	public String getType() {
-		if (_type != null) {
-			return _type;
-		}
-
-		if (!isAllowedSelectVocabularies()) {
-			_type = "io";
-
-			return _type;
-		}
-
-		_type = "check";
-
-		if (isSingleSelect()) {
-			_type = "radio";
-		}
-
-		return _type;
 	}
 
 	public long[] getVocabularyIds() {
@@ -281,14 +251,12 @@ public class AssetCategoriesSelectorDisplayContext {
 	}
 
 	private Boolean _allowedSelectVocabularies;
-	private long _categoryId;
 	private String _eventName;
 	private final HttpServletRequest _httpServletRequest;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private String _selectedCategories;
 	private Boolean _singleSelect;
-	private String _type;
 	private long[] _vocabularyIds;
 
 }

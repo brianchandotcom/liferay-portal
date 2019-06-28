@@ -76,8 +76,7 @@ public abstract class BaseProcessResourceImpl implements ProcessResource {
 				companyId,
 			@Parameter(hidden = true) @QueryParam("keywords") String keywords,
 			@DefaultValue("all") @Parameter(hidden = true) @QueryParam("type")
-				com.liferay.change.tracking.rest.constant.v1_0.CollectionType
-					type,
+				com.liferay.change.tracking.rest.constant.v1_0.ProcessType type,
 			@Parameter(hidden = true) @QueryParam("userId") Long userId,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {

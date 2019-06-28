@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.rest.client.resource.v1_0;
 
-import com.liferay.change.tracking.rest.client.constant.v1_0.CollectionType;
+import com.liferay.change.tracking.rest.client.constant.v1_0.ProcessType;
 import com.liferay.change.tracking.rest.client.dto.v1_0.Process;
 import com.liferay.change.tracking.rest.client.http.HttpInvoker;
 import com.liferay.change.tracking.rest.client.pagination.Page;
@@ -39,12 +39,12 @@ public interface ProcessResource {
 	}
 
 	public Page<Process> getProcessesPage(
-			Long companyId, String keywords, CollectionType type, Long userId,
+			Long companyId, String keywords, ProcessType type, Long userId,
 			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getProcessesPageHttpResponse(
-			Long companyId, String keywords, CollectionType type, Long userId,
+			Long companyId, String keywords, ProcessType type, Long userId,
 			Pagination pagination, String sortString)
 		throws Exception;
 
@@ -95,8 +95,8 @@ public interface ProcessResource {
 	public static class ProcessResourceImpl implements ProcessResource {
 
 		public Page<Process> getProcessesPage(
-				Long companyId, String keywords, CollectionType type,
-				Long userId, Pagination pagination, String sortString)
+				Long companyId, String keywords, ProcessType type, Long userId,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -115,8 +115,8 @@ public interface ProcessResource {
 		}
 
 		public HttpInvoker.HttpResponse getProcessesPageHttpResponse(
-				Long companyId, String keywords, CollectionType type,
-				Long userId, Pagination pagination, String sortString)
+				Long companyId, String keywords, ProcessType type, Long userId,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

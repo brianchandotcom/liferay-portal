@@ -133,15 +133,15 @@ public class Query {
 
 	@GraphQLField
 	public Collection getCollection(
-			@GraphQLName("companyId") Long companyId,
-			@GraphQLName("collectionId") Long collectionId)
+			@GraphQLName("collectionId") Long collectionId,
+			@GraphQLName("companyId") Long companyId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_collectionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			collectionResource -> collectionResource.getCollection(
-				companyId, collectionId));
+				collectionId, companyId));
 	}
 
 	@GraphQLField
@@ -182,8 +182,7 @@ public class Query {
 			@GraphQLName("companyId") Long companyId,
 			@GraphQLName("keywords") String keywords,
 			@GraphQLName("type")
-				com.liferay.change.tracking.rest.constant.v1_0.CollectionType
-					type,
+				com.liferay.change.tracking.rest.constant.v1_0.ProcessType type,
 			@GraphQLName("userId") Long userId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)

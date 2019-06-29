@@ -1592,9 +1592,6 @@ private Model _getPomModel(String artifactId) {
 
 	scm.setConnection(project.property("gradle.releng.pom.scm.connection"))
 	scm.setDeveloperConnection(project.property("gradle.releng.pom.scm.developerConnection"))
-
-	Process process = processBuilder.start()
-
 	scm.setTag(_getRevCommit("HEAD").getName())
 	scm.setUrl(project.property("gradle.releng.pom.scm.url"))
 

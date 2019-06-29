@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.util.FileUtil;
@@ -141,6 +140,9 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 		JSONObject dependenciesJSONObject = jsonObject.getJSONObject(
 			"dependencies");
 
+		List<String> enforceMinorReleaseRangePackageNames = getAttributeValues(
+			_ENFORCE_MINOR_RELEASE_RANGE_DEPENDENCY_NAMES, absolutePath);
+
 		Iterator<String> keys = dependenciesJSONObject.keys();
 
 		while (keys.hasNext()) {
@@ -162,22 +164,12 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 						"\"", dependencyName, "\": \"", expectedVersion, "\""));
 			}
 
-			List<String> enforceCompatibleVersionArtifacts = getAttributeValues(
-				_ENFORCE_COMPATIBLE_VERSION_ARTIFACTS_KEY, absolutePath);
-
-			for (String artifact : enforceCompatibleVersionArtifacts) {
-				String[] artifactParts = StringUtil.split(
-					artifact, StringPool.COLON);
-
-				if (dependencyName.equals(artifactParts[0]) &&
-					!actualVersion.startsWith(artifactParts[1])) {
-
-					addMessage(
-						fileName,
-						StringBundler.concat(
-							"Version for '", dependencyName,
-							"' should start with '", artifactParts[1], "'"));
-				}
+			if (enforceMinorReleaseRangePackageNames.contains(dependencyName)) {
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Version for '", dependencyName,
+						"' should start with '^'"));
 			}
 		}
 
@@ -243,8 +235,8 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 		return _expectedDependencyVersionsMap;
 	}
 
-	private static final String _ENFORCE_COMPATIBLE_VERSION_ARTIFACTS_KEY =
-		"enforceCompatibleVersionArtifacts";
+	private static final String _ENFORCE_MINOR_RELEASE_RANGE_DEPENDENCY_NAMES =
+		"enforceMinorReleaseRangeDependencyNames";
 
 	private Map<String, String> _expectedDependencyVersionsMap;
 

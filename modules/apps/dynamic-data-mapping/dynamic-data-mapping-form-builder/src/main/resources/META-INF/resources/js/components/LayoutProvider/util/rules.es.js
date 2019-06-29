@@ -16,6 +16,22 @@ import Token from '../../../expressions/Token.es';
 import Tokenizer from '../../../expressions/Tokenizer.es';
 import {RulesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 
+export const isEqualLengthOptions = (options1, options2) => {
+	return options1.length === options2.length;
+};
+
+export const isFieldValueOperand = operands => {
+	return (
+		operands.length == 2 &&
+		operands[0].type === 'field' &&
+		operands[1].type == 'string'
+	);
+};
+
+export const isOptionReferencedByOperand = (options, operandValue) => {
+	return options.some(({value}) => operandValue === value);
+};
+
 export const renameFieldInsideExpression = (
 	expression,
 	fieldName,
@@ -34,22 +50,25 @@ export const renameFieldInsideExpression = (
 	);
 };
 
-export const updateRulesFieldName = (rules, fieldName, newFieldName) => {
+export const updateRulesReferences = (rules, oldProperties, newProperties) => {
+	const oldFieldName = oldProperties.fieldName;
+	const newFieldName = newProperties.fieldName;
 	const visitor = new RulesVisitor(rules);
 
 	rules = visitor.mapActions(action => {
-		if (action.target === fieldName) {
+		if (action.target === oldFieldName) {
 			action = {
 				...action,
 				target: newFieldName
 			};
 		}
+
 		if (action.action === 'calculate') {
 			action = {
 				...action,
 				expression: renameFieldInsideExpression(
 					action.expression,
-					fieldName,
+					oldFieldName,
 					newFieldName
 				)
 			};
@@ -63,12 +82,36 @@ export const updateRulesFieldName = (rules, fieldName, newFieldName) => {
 	return visitor.mapConditions(condition => {
 		return {
 			...condition,
-			operands: condition.operands.map(operand => {
-				if (operand.type === 'field' && operand.value === fieldName) {
-					operand = {
+			operands: condition.operands.map((operand, index) => {
+				const oldOptions = oldProperties.options;
+				const newOptions = newProperties.options;
+
+				if (
+					operand.type === 'field' &&
+					operand.value === oldFieldName
+				) {
+					return {
 						...operand,
 						value: newFieldName
 					};
+				} else if (
+					index === 1 &&
+					isFieldValueOperand(condition.operands) &&
+					isEqualLengthOptions(oldOptions, newOptions) &&
+					isOptionReferencedByOperand(oldOptions, operand.value)
+				) {
+					const changedOption = newOptions.find(({value}) => {
+						return !oldOptions.some(
+							option => option.value == value
+						);
+					});
+
+					if (changedOption) {
+						return {
+							...operand,
+							value: changedOption.value
+						};
+					}
 				}
 
 				return operand;

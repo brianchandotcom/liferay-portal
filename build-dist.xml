@@ -899,7 +899,9 @@ this task.
 			</replacevalue>
 		</replace>
 
-		<echo append="true" file="${app.server.jboss.bin.dir}/standalone.conf">${line.separator}JAVA_OPTS=${app.server.jboss.jvm.args} ${app.server.jboss.jvm.mem}</echo>
+		<echo append="true" file="${app.server.jboss.bin.dir}/standalone.conf">
+			<![CDATA[${line.separator}JAVA_OPTS="$JAVA_OPTS ${app.server.jboss.jvm.args} ${app.server.jboss.jvm.mem}"]]>
+		</echo>
 
 		<replace
 			file="${app.server.jboss.bin.dir}/standalone.conf.bat"
@@ -2479,9 +2481,7 @@ this task.
 		</replace>
 
 		<echo append="true" file="${app.server.wildfly.bin.dir}/standalone.conf">
-			<![CDATA[
-				JAVA_OPTS="$JAVA_OPTS ${app.server.wildfly.jvm.args} ${app.server.wildfly.jvm.mem}"
-			]]>
+			<![CDATA[${line.separator}JAVA_OPTS="$JAVA_OPTS ${app.server.wildfly.jvm.args} ${app.server.wildfly.jvm.mem}"]]>
 		</echo>
 
 		<replace
@@ -2496,11 +2496,7 @@ this task.
 		>
 			<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
 			<replacevalue expandProperties="true">
-				<![CDATA[
-					set "JAVA_OPTS=%JAVA_OPTS% ${app.server.wildfly.jvm.args} ${app.server.wildfly.jvm.mem}"
-
-					:JAVA_OPTS_SET
-				]]>
+				<![CDATA[set "JAVA_OPTS=%JAVA_OPTS% ${app.server.wildfly.jvm.args} ${app.server.wildfly.jvm.mem}":JAVA_OPTS_SET]]>
 			</replacevalue>
 		</replace>
 

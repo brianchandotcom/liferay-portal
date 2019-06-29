@@ -2285,6 +2285,10 @@ public interface PropsKeys {
 		MODULE_FRAMEWORK_WEB_GENERATOR_JSP_COMPILER_DEPENDENCIES =
 			"module.framework.web.generator.jsp.compiler.dependencies";
 
+	public static final String
+		MODULE_FRAMEWORK_WEB_SERVLET_ANNOTATION_SCANNING_PACKAGE_BLACKLIST =
+			"module.framework.web.servlet.annotation.scanning.package.blacklist";
+
 	public static final String MULTI_VALUE_MAP = "multi.value.map.";
 
 	public static final String MY_SITES_DIRECTORY_SITE_EXCLUDES =

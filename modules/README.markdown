@@ -89,6 +89,7 @@ File Name | Description
 `.lfrbuild-portal-pre` | Builds the module during the `ant compile` execution in the `tmp/lib-pre` directory before building `portal-kernel`, `portal-impl`, etc.
 `.lfrbuild-portal-private` | Deploys the module during the `ant all` execution in a private branch. `-test` modules never have this file.
 `.lfrbuild-portal-public` | Deploys the module during the `ant all` execution in a public branch. `-test` modules never have this file.
+`.lfrbuild-portal-skip-deploy` | Skip deploying the module during the `ant all` execution.
 `.lfrbuild-portal` | Deploys the module during the `ant all` execution. `-test` modules never have this file.
 `.lfrbuild-slim-private` | Deploys the module during the `ant all` execution if building a Liferay Slim Runtime in a private branch.
 `.lfrbuild-slim-public` | Deploys the module during the `ant all` execution if building a Liferay Slim Runtime in a public branch.

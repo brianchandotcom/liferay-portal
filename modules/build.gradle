@@ -400,6 +400,12 @@ gradle.taskGraph.useFilter {
 		}
 	}
 	else if (task.name == "deploy") {
+		String buildProfile = System.getProperty("build.profile")
+
+		if ((buildProfile != null) && FileUtil.exists(task.project, ".lfrbuild-portal-skip-deploy")) {
+			return false
+		}
+
 		String deployOnlyProfile = System.properties["deploy.only.profile"]
 
 		if (deployOnlyProfile && !FileUtil.exists(task.project, ".lfrbuild-${deployOnlyProfile}")) {

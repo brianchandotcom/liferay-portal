@@ -34,6 +34,7 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -41,9 +42,12 @@ import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
@@ -67,11 +71,13 @@ public class ServletContextHelperRegistrationImpl
 
 	public ServletContextHelperRegistrationImpl(
 		Bundle bundle, JSPServletFactory jspServletFactory,
-		SAXParserFactory saxParserFactory, Map<String, Object> properties) {
+		SAXParserFactory saxParserFactory, Map<String, Object> properties,
+		ExecutorService executorService) {
 
 		_bundle = bundle;
 		_jspServletFactory = jspServletFactory;
 		_properties = properties;
+		_executorService = executorService;
 
 		String contextPath = getContextPath();
 
@@ -497,16 +503,27 @@ public class ServletContextHelperRegistrationImpl
 			return Collections.emptySet();
 		}
 
+		List<Future<Class<?>>> futures = new ArrayList<>();
+
 		for (String classResource : classResources) {
-			String className = classResource.substring(
-				0, classResource.length() - 6);
+			futures.add(
+				_executorService.submit(
+					() -> {
+						String className = classResource.substring(
+							0, classResource.length() - 6);
 
-			className = className.replace(CharPool.SLASH, CharPool.PERIOD);
+						className = className.replace(
+							CharPool.SLASH, CharPool.PERIOD);
 
+						return classLoader.loadClass(className);
+					}));
+		}
+
+		for (Future<Class<?>> future : futures) {
 			try {
-				classes.add(classLoader.loadClass(className));
+				classes.add(future.get());
 			}
-			catch (Throwable t) {
+			catch (Exception e) {
 			}
 		}
 
@@ -539,6 +556,7 @@ public class ServletContextHelperRegistrationImpl
 	private final Set<Class<?>> _classes;
 	private final CustomServletContextHelper _customServletContextHelper;
 	private final ServiceRegistration<?> _defaultServletServiceRegistration;
+	private final ExecutorService _executorService;
 	private final JSPServletFactory _jspServletFactory;
 	private final ServiceRegistration<Servlet> _jspServletServiceRegistration;
 	private final ServiceRegistration<Servlet>

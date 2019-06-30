@@ -14,11 +14,11 @@
 
 package com.liferay.portal.osgi.web.wab.generator.internal.processor;
 
-import aQute.bnd.build.model.clauses.ServiceComponent;
 import aQute.bnd.cdi.Discover;
 import aQute.bnd.component.DSAnnotations;
 import aQute.bnd.header.Attrs;
 import aQute.bnd.header.Parameters;
+import aQute.bnd.make.component.ServiceComponent;
 import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Builder;
 import aQute.bnd.osgi.Constants;

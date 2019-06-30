@@ -25,6 +25,7 @@ import com.liferay.portal.osgi.web.servlet.JSPServletFactory;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.internal.definition.WebXMLDefinitionLoader;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,11 +34,13 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -472,6 +475,24 @@ public class ServletContextHelperRegistrationImpl
 		Collection<String> classResources = bundleWiring.listResources(
 			"/", "*.class", BundleWiring.LISTRESOURCES_RECURSE);
 
+		Iterator<String> iterator = classResources.iterator();
+
+		while (iterator.hasNext()) {
+			String classResource = iterator.next();
+
+			int index = Arrays.binarySearch(_BLACKLIST, classResource);
+
+			if (index >= -1) {
+				continue;
+			}
+
+			String blackListPackage = _BLACKLIST[-index - 2];
+
+			if (classResource.startsWith(blackListPackage)) {
+				iterator.remove();
+			}
+		}
+
 		if (classResources == null) {
 			return Collections.emptySet();
 		}
@@ -492,11 +513,25 @@ public class ServletContextHelperRegistrationImpl
 		return classes;
 	}
 
+	private static final String[] _BLACKLIST;
+
 	private static final String _JSP_SERVLET_INIT_PARAM_PREFIX =
 		"jsp.servlet.init.param.";
 
 	private static final String _SERVLET_INIT_PARAM_PREFIX =
 		HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX;
+
+	static {
+		String[] blackList =
+			PropsValues.
+				MODULE_FRAMEWORK_WEB_SERVLET_ANNOTATION_SCANNING_PACKAGE_BLACKLIST;
+
+		blackList = Arrays.copyOf(blackList, blackList.length);
+
+		Arrays.sort(blackList);
+
+		_BLACKLIST = blackList;
+	}
 
 	private final Set<Class<?>> _annotatedClasses;
 	private final Bundle _bundle;

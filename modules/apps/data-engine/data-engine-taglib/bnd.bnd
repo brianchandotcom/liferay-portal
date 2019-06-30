@@ -10,4 +10,3 @@ Provide-Capability:\
 		uri="http://liferay.com/tld/data-engine";\
 		version:Version="${Bundle-Version}"
 Web-ContextPath: /data-engine-taglib
--includeresource: com.liferay.data.engine.rest.client.jar=com.liferay.data.engine.rest.client-[0-9]*.jar;lib:=true

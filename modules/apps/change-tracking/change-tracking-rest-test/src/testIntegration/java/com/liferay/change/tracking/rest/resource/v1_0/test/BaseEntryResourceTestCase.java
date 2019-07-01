@@ -197,10 +197,8 @@ public abstract class BaseEntryResourceTestCase {
 	@Test
 	public void testGetCollectionEntriesPage() throws Exception {
 		Page<Entry> page = entryResource.getCollectionEntriesPage(
-			testGetCollectionEntriesPage_getCollectionId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
-			Pagination.of(1, 2), null);
+			null, null, null, testGetCollectionEntriesPage_getCollectionId(),
+			null, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -213,7 +211,7 @@ public abstract class BaseEntryResourceTestCase {
 				irrelevantCollectionId, randomIrrelevantEntry());
 
 			page = entryResource.getCollectionEntriesPage(
-				irrelevantCollectionId, null, null, null, null, null, null,
+				null, null, null, irrelevantCollectionId, null, null, null,
 				Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -230,7 +228,7 @@ public abstract class BaseEntryResourceTestCase {
 			collectionId, randomEntry());
 
 		page = entryResource.getCollectionEntriesPage(
-			collectionId, null, null, null, null, null, null,
+			null, null, null, collectionId, null, null, null,
 			Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -254,7 +252,7 @@ public abstract class BaseEntryResourceTestCase {
 			collectionId, randomEntry());
 
 		Page<Entry> page1 = entryResource.getCollectionEntriesPage(
-			collectionId, null, null, null, null, null, null,
+			null, null, null, collectionId, null, null, null,
 			Pagination.of(1, 2), null);
 
 		List<Entry> entries1 = (List<Entry>)page1.getItems();
@@ -262,7 +260,7 @@ public abstract class BaseEntryResourceTestCase {
 		Assert.assertEquals(entries1.toString(), 2, entries1.size());
 
 		Page<Entry> page2 = entryResource.getCollectionEntriesPage(
-			collectionId, null, null, null, null, null, null,
+			null, null, null, collectionId, null, null, null,
 			Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -272,7 +270,7 @@ public abstract class BaseEntryResourceTestCase {
 		Assert.assertEquals(entries2.toString(), 1, entries2.size());
 
 		Page<Entry> page3 = entryResource.getCollectionEntriesPage(
-			collectionId, null, null, null, null, null, null,
+			null, null, null, collectionId, null, null, null,
 			Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
@@ -340,14 +338,14 @@ public abstract class BaseEntryResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Entry> ascPage = entryResource.getCollectionEntriesPage(
-				collectionId, null, null, null, null, null, null,
+				null, null, null, collectionId, null, null, null,
 				Pagination.of(1, 2), entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(entry1, entry2), (List<Entry>)ascPage.getItems());
 
 			Page<Entry> descPage = entryResource.getCollectionEntriesPage(
-				collectionId, null, null, null, null, null, null,
+				null, null, null, collectionId, null, null, null,
 				Pagination.of(1, 2), entityField.getName() + ":desc");
 
 			assertEquals(

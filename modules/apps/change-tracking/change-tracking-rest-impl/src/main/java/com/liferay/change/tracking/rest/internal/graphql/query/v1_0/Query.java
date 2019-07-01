@@ -147,13 +147,13 @@ public class Query {
 
 	@GraphQLField
 	public EntryPage getCollectionEntriesPage(
+			@GraphQLName("changeTypesFilter") String[] changeTypesFilter,
+			@GraphQLName("classNameIdsFilter") String[] classNameIdsFilter,
+			@GraphQLName("groupIdsFilter") String[] groupIdsFilter,
 			@GraphQLName("collectionId") Long collectionId,
-			@GraphQLName("changeTypesFilter") String changeTypesFilter,
-			@GraphQLName("classNameIdsFilter") String classNameIdsFilter,
 			@GraphQLName("collision") Boolean collision,
-			@GraphQLName("groupIdsFilter") String groupIdsFilter,
 			@GraphQLName("status") Integer status,
-			@GraphQLName("userIdsFilter") String userIdsFilter,
+			@GraphQLName("userIdsFilter") String[] userIdsFilter,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
@@ -163,8 +163,8 @@ public class Query {
 			this::_populateResourceContext,
 			entryResource -> new EntryPage(
 				entryResource.getCollectionEntriesPage(
-					collectionId, changeTypesFilter, classNameIdsFilter,
-					collision, groupIdsFilter, status, userIdsFilter,
+					changeTypesFilter, classNameIdsFilter, groupIdsFilter,
+					collectionId, collision, status, userIdsFilter,
 					Pagination.of(page, pageSize), sorts)));
 	}
 

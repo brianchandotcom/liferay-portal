@@ -38,16 +38,16 @@ public interface EntryResource {
 	}
 
 	public Page<Entry> getCollectionEntriesPage(
-			Long collectionId, String changeTypesFilter,
-			String classNameIdsFilter, Boolean collision, String groupIdsFilter,
-			Integer status, String userIdsFilter, Pagination pagination,
+			String[] changeTypesFilter, String[] classNameIdsFilter,
+			String[] groupIdsFilter, Long collectionId, Boolean collision,
+			Integer status, String[] userIdsFilter, Pagination pagination,
 			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getCollectionEntriesPageHttpResponse(
-			Long collectionId, String changeTypesFilter,
-			String classNameIdsFilter, Boolean collision, String groupIdsFilter,
-			Integer status, String userIdsFilter, Pagination pagination,
+			String[] changeTypesFilter, String[] classNameIdsFilter,
+			String[] groupIdsFilter, Long collectionId, Boolean collision,
+			Integer status, String[] userIdsFilter, Pagination pagination,
 			String sortString)
 		throws Exception;
 
@@ -98,17 +98,17 @@ public interface EntryResource {
 	public static class EntryResourceImpl implements EntryResource {
 
 		public Page<Entry> getCollectionEntriesPage(
-				Long collectionId, String changeTypesFilter,
-				String classNameIdsFilter, Boolean collision,
-				String groupIdsFilter, Integer status, String userIdsFilter,
-				Pagination pagination, String sortString)
+				String[] changeTypesFilter, String[] classNameIdsFilter,
+				String[] groupIdsFilter, Long collectionId, Boolean collision,
+				Integer status, String[] userIdsFilter, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getCollectionEntriesPageHttpResponse(
-					collectionId, changeTypesFilter, classNameIdsFilter,
-					collision, groupIdsFilter, status, userIdsFilter,
-					pagination, sortString);
+					changeTypesFilter, classNameIdsFilter, groupIdsFilter,
+					collectionId, collision, status, userIdsFilter, pagination,
+					sortString);
 
 			String content = httpResponse.getContent();
 
@@ -122,10 +122,10 @@ public interface EntryResource {
 		}
 
 		public HttpInvoker.HttpResponse getCollectionEntriesPageHttpResponse(
-				Long collectionId, String changeTypesFilter,
-				String classNameIdsFilter, Boolean collision,
-				String groupIdsFilter, Integer status, String userIdsFilter,
-				Pagination pagination, String sortString)
+				String[] changeTypesFilter, String[] classNameIdsFilter,
+				String[] groupIdsFilter, Long collectionId, Boolean collision,
+				Integer status, String[] userIdsFilter, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -138,22 +138,30 @@ public interface EntryResource {
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (changeTypesFilter != null) {
-				httpInvoker.parameter(
-					"changeTypesFilter", String.valueOf(changeTypesFilter));
+				for (int i = 0; i < changeTypesFilter.length; i++) {
+					httpInvoker.parameter(
+						"changeTypesFilter",
+						String.valueOf(changeTypesFilter[i]));
+				}
 			}
 
 			if (classNameIdsFilter != null) {
-				httpInvoker.parameter(
-					"classNameIdsFilter", String.valueOf(classNameIdsFilter));
+				for (int i = 0; i < classNameIdsFilter.length; i++) {
+					httpInvoker.parameter(
+						"classNameIdsFilter",
+						String.valueOf(classNameIdsFilter[i]));
+				}
+			}
+
+			if (groupIdsFilter != null) {
+				for (int i = 0; i < groupIdsFilter.length; i++) {
+					httpInvoker.parameter(
+						"groupIdsFilter", String.valueOf(groupIdsFilter[i]));
+				}
 			}
 
 			if (collision != null) {
 				httpInvoker.parameter("collision", String.valueOf(collision));
-			}
-
-			if (groupIdsFilter != null) {
-				httpInvoker.parameter(
-					"groupIdsFilter", String.valueOf(groupIdsFilter));
 			}
 
 			if (status != null) {
@@ -161,8 +169,10 @@ public interface EntryResource {
 			}
 
 			if (userIdsFilter != null) {
-				httpInvoker.parameter(
-					"userIdsFilter", String.valueOf(userIdsFilter));
+				for (int i = 0; i < userIdsFilter.length; i++) {
+					httpInvoker.parameter(
+						"userIdsFilter", String.valueOf(userIdsFilter[i]));
+				}
 			}
 
 			if (pagination != null) {

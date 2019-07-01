@@ -50,6 +50,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
+import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
+import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.io.File;
 import java.io.InputStream;
@@ -233,30 +239,64 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 		Layout digitalExperiencePlatformLayout = _addLayout(
 			productsLayout.getLayoutId(), "Digital Experience Platform");
 
-		_addLayout(digitalExperiencePlatformLayout.getLayoutId(), "Overview");
+		Layout overviewLayout = _addLayout(
+			digitalExperiencePlatformLayout.getLayoutId(), "Overview");
 
-		_addLayout(digitalExperiencePlatformLayout.getLayoutId(), "Features");
+		Layout featuresLayout = _addLayout(
+			digitalExperiencePlatformLayout.getLayoutId(), "Features");
 
-		_addLayout(
+		Layout keyBenefitsLayout = _addLayout(
 			digitalExperiencePlatformLayout.getLayoutId(), "Key Benefits");
 
-		_addLayout(
+		Layout whatIsNewLayout = _addLayout(
 			digitalExperiencePlatformLayout.getLayoutId(), "What is New");
+
+		_addNavigationMenus(
+			"DXP Secondary", overviewLayout, featuresLayout, keyBenefitsLayout,
+			whatIsNewLayout);
 
 		Layout commerceLayout = _addLayout(
 			productsLayout.getLayoutId(), "Commerce");
 
-		_addLayout(commerceLayout.getLayoutId(), "Commerce Demo");
+		Layout commerceDemoLayout = _addLayout(
+			commerceLayout.getLayoutId(), "Commerce Demo");
 
-		_addLayout(commerceLayout.getLayoutId(), "Features");
+		featuresLayout = _addLayout(commerceLayout.getLayoutId(), "Features");
 
-		_addLayout(commerceLayout.getLayoutId(), "News");
+		Layout newsLayout = _addLayout(commerceLayout.getLayoutId(), "News");
 
-		_addLayout(productsLayout.getLayoutId(), "Analytics Cloud");
+		Layout analyticsCloudLayout = _addLayout(
+			productsLayout.getLayoutId(), "Analytics Cloud");
+
+		_addNavigationMenus(
+			"Commerce Secondary", commerceDemoLayout, featuresLayout,
+			newsLayout, analyticsCloudLayout);
 
 		_addLayout(LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Solutions");
 
 		_addLayout(LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "News");
+	}
+
+	private void _addNavigationMenus(String name, Layout... layouts)
+		throws PortalException {
+
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuLocalService.addSiteNavigationMenu(
+				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+				name, _serviceContext);
+
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				SiteNavigationMenuItemTypeConstants.LAYOUT);
+
+		for (Layout layout : layouts) {
+			_siteSiteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+				siteNavigationMenu.getSiteNavigationMenuId(), 0,
+				SiteNavigationMenuItemTypeConstants.LAYOUT,
+				siteNavigationMenuItemType.getTypeSettingsFromLayout(layout),
+				_serviceContext);
+		}
 	}
 
 	private void _addWebContent() throws Exception {
@@ -360,6 +400,17 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 		target = "(osgi.web.symbolicname=com.liferay.site.buildings.site.initializer)"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private SiteNavigationMenuItemTypeRegistry
+		_siteNavigationMenuItemTypeRegistry;
+
+	@Reference
+	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
+
+	@Reference
+	private SiteNavigationMenuItemLocalService
+		_siteSiteNavigationMenuItemLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

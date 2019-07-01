@@ -29,12 +29,12 @@ public class SEOLinkImpl implements SEOLink {
 
 		if (Validator.isNull(href)) {
 			throw new IllegalArgumentException(
-				"unable to create a new SEOLink with a null href");
+				"Null or empty string is not a valid SEOLink href");
 		}
 
 		if (seoLinkRel == null) {
 			throw new IllegalArgumentException(
-				"unable to create a new SEOLink with a null seoLinkRel");
+				"Null is not a valid SEOLink seoLinkRel");
 		}
 
 		_href = href;

@@ -50,7 +50,6 @@ public class SEOImpl implements SEO {
 
 		seoLinks.add(
 			new SEOLinkImpl(
-				SEOLink.SEOLinkDataSennaTrack.TEMPORARY,
 				_html.escapeAttribute(
 					_getCanonicalURL(
 						companyId, locale, canonicalURL, alternateURLs)),
@@ -59,7 +58,6 @@ public class SEOImpl implements SEO {
 		alternateURLs.forEach(
 			(locale1, url) -> seoLinks.add(
 				new SEOLinkImpl(
-					SEOLink.SEOLinkDataSennaTrack.TEMPORARY,
 					_html.escapeAttribute(url),
 					LocaleUtil.toW3cLanguageId(locale1),
 					SEOLink.SEOLinkRel.ALTERNATE)));
@@ -72,7 +70,6 @@ public class SEOImpl implements SEO {
 
 		seoLinks.add(
 			new SEOLinkImpl(
-				SEOLink.SEOLinkDataSennaTrack.TEMPORARY,
 				_html.escapeAttribute(defaultLocaleURL), "x-default",
 				SEOLink.SEOLinkRel.ALTERNATE));
 

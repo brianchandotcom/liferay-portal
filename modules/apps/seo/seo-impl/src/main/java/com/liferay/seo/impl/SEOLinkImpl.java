@@ -25,14 +25,7 @@ import java.util.Optional;
 public class SEOLinkImpl implements SEOLink {
 
 	public SEOLinkImpl(
-		SEOLink.SEOLinkDataSennaTrack seoLinkDataSennaTrack, String href,
-		String hrefLang, SEOLink.SEOLinkRel seoLinkRel) {
-
-		if (seoLinkDataSennaTrack == null) {
-			throw new IllegalArgumentException(
-				"unable to create a new SEOLink with a null " +
-					"seoLinkDataSennaTrack");
-		}
+		String href, String hrefLang, SEOLink.SEOLinkRel seoLinkRel) {
 
 		if (Validator.isNull(href)) {
 			throw new IllegalArgumentException(
@@ -44,7 +37,6 @@ public class SEOLinkImpl implements SEOLink {
 				"unable to create a new SEOLink with a null seoLinkRel");
 		}
 
-		_seoLinkDataSennaTrack = seoLinkDataSennaTrack;
 		_href = href;
 		_hrefLang = hrefLang;
 		_seoLinkRel = seoLinkRel;
@@ -58,17 +50,12 @@ public class SEOLinkImpl implements SEOLink {
 		return Optional.ofNullable(_hrefLang);
 	}
 
-	public SEOLink.SEOLinkDataSennaTrack getSEOLinkDataSennaTrack() {
-		return _seoLinkDataSennaTrack;
-	}
-
 	public SEOLink.SEOLinkRel getSeoLinkRel() {
 		return _seoLinkRel;
 	}
 
 	private final String _href;
 	private final String _hrefLang;
-	private final SEOLink.SEOLinkDataSennaTrack _seoLinkDataSennaTrack;
 	private final SEOLink.SEOLinkRel _seoLinkRel;
 
 }

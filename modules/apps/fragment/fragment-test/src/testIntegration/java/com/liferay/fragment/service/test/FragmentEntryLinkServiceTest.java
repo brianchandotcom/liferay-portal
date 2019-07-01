@@ -104,6 +104,8 @@ public class FragmentEntryLinkServiceTest {
 
 		String js = "alert(\"test\");";
 
+		String configuration = "{fieldSets:[]}";
+
 		long classPK = _layout.getPlid();
 
 		_addSiteMemberUpdatePermission();
@@ -118,7 +120,8 @@ public class FragmentEntryLinkServiceTest {
 			_fragmentEntryLinkService.addFragmentEntryLink(
 				_group.getGroupId(), 0, _fragmentEntry.getFragmentEntryId(),
 				PortalUtil.getClassNameId(Layout.class), classPK, css, html, js,
-				StringPool.BLANK, StringPool.BLANK, 0, null, serviceContext);
+				configuration, StringPool.BLANK, StringPool.BLANK, 0, null,
+				serviceContext);
 
 		FragmentEntryLink persistedFragmentEntryLink =
 			_fragmentEntryLinkPersistence.findByPrimaryKey(
@@ -128,6 +131,8 @@ public class FragmentEntryLinkServiceTest {
 		Assert.assertEquals(css, persistedFragmentEntryLink.getCss());
 		Assert.assertEquals(html, persistedFragmentEntryLink.getHtml());
 		Assert.assertEquals(js, persistedFragmentEntryLink.getJs());
+		Assert.assertEquals(
+			configuration, persistedFragmentEntryLink.getConfiguration());
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
@@ -142,7 +147,8 @@ public class FragmentEntryLinkServiceTest {
 			_group.getGroupId(), 0, _fragmentEntry.getFragmentEntryId(),
 			PortalUtil.getClassNameId(Layout.class),
 			RandomTestUtil.randomLong(), _fragmentEntry.getCss(),
-			_fragmentEntry.getHtml(), _fragmentEntry.getJs(), StringPool.BLANK,
+			_fragmentEntry.getHtml(), _fragmentEntry.getJs(),
+			_fragmentEntry.getConfiguration(), StringPool.BLANK,
 			StringPool.BLANK, 0, null, serviceContext);
 	}
 

@@ -36,12 +36,15 @@ public interface AffectedEntryResource {
 		return new Builder();
 	}
 
-	public Page<AffectedEntry> getEntryAffectedEntriesPage(
-			Long entryId, String keywords, Pagination pagination)
+	public Page<AffectedEntry> getCollectionEntryAffectedEntriesPage(
+			Long collectionId, Long entryId, String keywords,
+			Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getEntryAffectedEntriesPageHttpResponse(
-			Long entryId, String keywords, Pagination pagination)
+	public HttpInvoker.HttpResponse
+			getCollectionEntryAffectedEntriesPageHttpResponse(
+				Long collectionId, Long entryId, String keywords,
+				Pagination pagination)
 		throws Exception;
 
 	public static class Builder {
@@ -86,13 +89,14 @@ public interface AffectedEntryResource {
 	public static class AffectedEntryResourceImpl
 		implements AffectedEntryResource {
 
-		public Page<AffectedEntry> getEntryAffectedEntriesPage(
-				Long entryId, String keywords, Pagination pagination)
+		public Page<AffectedEntry> getCollectionEntryAffectedEntriesPage(
+				Long collectionId, Long entryId, String keywords,
+				Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getEntryAffectedEntriesPageHttpResponse(
-					entryId, keywords, pagination);
+				getCollectionEntryAffectedEntriesPageHttpResponse(
+					collectionId, entryId, keywords, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -105,8 +109,10 @@ public interface AffectedEntryResource {
 			return Page.of(content, AffectedEntrySerDes::toDTO);
 		}
 
-		public HttpInvoker.HttpResponse getEntryAffectedEntriesPageHttpResponse(
-				Long entryId, String keywords, Pagination pagination)
+		public HttpInvoker.HttpResponse
+				getCollectionEntryAffectedEntriesPageHttpResponse(
+					Long collectionId, Long entryId, String keywords,
+					Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -132,8 +138,8 @@ public interface AffectedEntryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/change-tracking/v1.0/entries/{entryId}/affected-entries",
-				entryId);
+						"/o/change-tracking/v1.0/collections/{collectionId}/entries/{entryId}/affected-entries",
+				collectionId, entryId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

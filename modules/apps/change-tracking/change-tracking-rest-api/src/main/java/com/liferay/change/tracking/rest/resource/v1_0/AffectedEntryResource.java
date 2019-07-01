@@ -37,8 +37,9 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AffectedEntryResource {
 
-	public Page<AffectedEntry> getEntryAffectedEntriesPage(
-			Long entryId, String keywords, Pagination pagination)
+	public Page<AffectedEntry> getCollectionEntryAffectedEntriesPage(
+			Long collectionId, Long entryId, String keywords,
+			Pagination pagination)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

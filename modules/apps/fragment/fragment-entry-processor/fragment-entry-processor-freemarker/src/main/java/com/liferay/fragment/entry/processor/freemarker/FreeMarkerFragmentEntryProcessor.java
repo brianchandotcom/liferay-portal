@@ -77,7 +77,7 @@ public class FreeMarkerFragmentEntryProcessor
 		return JSONUtil.put(
 			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX +
 				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT,
-			_getConfigDefaultValuesJSONObject(configuration));
+			_getConfigurationDefaultValuesJSONObject(configuration));
 	}
 
 	@Override
@@ -130,7 +130,7 @@ public class FreeMarkerFragmentEntryProcessor
 
 		Map<String, Object> contextObjects = new HashMap<>();
 
-		JSONObject fragmentConfigurationJSONObject = null;
+		JSONObject configurationJSONObject = null;
 
 		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
 			fragmentEntryLink.getEditableValues());
@@ -142,7 +142,7 @@ public class FreeMarkerFragmentEntryProcessor
 		if ((editableValuesJSONObject == null) ||
 			(editableValuesJSONObject.get(className) == null)) {
 
-			fragmentConfigurationJSONObject = _getConfigDefaultValuesJSONObject(
+			configurationJSONObject = _getConfigurationDefaultValuesJSONObject(
 				fragmentEntryLink.getConfiguration());
 		}
 		else {
@@ -159,14 +159,13 @@ public class FreeMarkerFragmentEntryProcessor
 				segmentsExperienceId = segmentsExperienceIds[0];
 			}
 
-			fragmentConfigurationJSONObject =
+			configurationJSONObject =
 				configurationValuesJSONObject.getJSONObject(
 					SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX +
 						segmentsExperienceId);
 		}
 
-		contextObjects.put(
-			"fragmentConfiguration", fragmentConfigurationJSONObject);
+		contextObjects.put("configuration", configurationJSONObject);
 
 		templateManager.addContextObjects(template, contextObjects);
 
@@ -265,21 +264,26 @@ public class FreeMarkerFragmentEntryProcessor
 		}
 	}
 
-	private JSONObject _getConfigDefaultValuesJSONObject(String config) {
+	private JSONObject _getConfigurationDefaultValuesJSONObject(
+		String configuration) {
+
 		JSONObject defaultValuesJSONObject = JSONFactoryUtil.createJSONObject();
 
-		JSONObject configJSONObject = null;
+		JSONObject configurationJSONObject = null;
 
 		try {
-			configJSONObject = JSONFactoryUtil.createJSONObject(config);
+			configurationJSONObject = JSONFactoryUtil.createJSONObject(
+				configuration);
 		}
 		catch (JSONException jsone) {
-			_log.error("Unable to parse config JSON object: " + config, jsone);
+			_log.error(
+				"Unable to parse configuration JSON object: " + configuration,
+				jsone);
 
 			return null;
 		}
 
-		JSONArray fieldSetsJSONArray = configJSONObject.getJSONArray(
+		JSONArray fieldSetsJSONArray = configurationJSONObject.getJSONArray(
 			"fieldSets");
 
 		if (fieldSetsJSONArray == null) {
@@ -287,30 +291,33 @@ public class FreeMarkerFragmentEntryProcessor
 		}
 
 		for (int i = 0; i < fieldSetsJSONArray.length(); i++) {
-			JSONObject configFieldSetJSONObject =
+			JSONObject configurationFieldSetJSONObject =
 				fieldSetsJSONArray.getJSONObject(i);
 
 			JSONObject defaultValuesFieldSetJSONObject =
 				JSONFactoryUtil.createJSONObject();
 
-			JSONArray configFieldSetFieldsJSONArray =
-				configFieldSetJSONObject.getJSONArray("fields");
+			JSONArray configurationFieldSetFieldsJSONArray =
+				configurationFieldSetJSONObject.getJSONArray("fields");
 
-			for (int j = 0; j < configFieldSetFieldsJSONArray.length(); j++) {
-				JSONObject configFieldSetFieldJSONObject =
-					configFieldSetFieldsJSONArray.getJSONObject(j);
+			for (int j = 0; j < configurationFieldSetFieldsJSONArray.length();
+				 j++) {
+
+				JSONObject configurationFieldSetFieldJSONObject =
+					configurationFieldSetFieldsJSONArray.getJSONObject(j);
 
 				Object fieldDefaultValue = _getFieldValue(
-					configFieldSetFieldJSONObject.getString("dataType"),
-					configFieldSetFieldJSONObject.getString("defaultValue"));
+					configurationFieldSetFieldJSONObject.getString("dataType"),
+					configurationFieldSetFieldJSONObject.getString(
+						"defaultValue"));
 
 				defaultValuesFieldSetJSONObject.put(
-					configFieldSetFieldJSONObject.getString("name"),
+					configurationFieldSetFieldJSONObject.getString("name"),
 					fieldDefaultValue);
 			}
 
 			defaultValuesJSONObject.put(
-				configFieldSetJSONObject.getString("name"),
+				configurationFieldSetJSONObject.getString("name"),
 				defaultValuesFieldSetJSONObject);
 		}
 

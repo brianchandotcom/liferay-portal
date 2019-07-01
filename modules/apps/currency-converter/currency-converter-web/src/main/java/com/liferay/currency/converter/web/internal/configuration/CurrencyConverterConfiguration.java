@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.currency.converter.web.configuration;
+package com.liferay.currency.converter.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "localization")
 @Meta.OCD(
-	id = "com.liferay.currency.converter.web.configuration.CurrencyConverterConfiguration",
+	id = "com.liferay.currency.converter.web.internal.configuration.CurrencyConverterConfiguration",
 	localization = "content/Language",
 	name = "currency-converter-configuration-name"
 )

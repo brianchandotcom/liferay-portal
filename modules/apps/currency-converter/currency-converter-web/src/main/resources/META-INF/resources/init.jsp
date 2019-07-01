@@ -25,7 +25,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.currency.converter.model.CurrencyConverter" %><%@
 page import="com.liferay.currency.converter.util.CurrencyConverterUtil" %><%@
-page import="com.liferay.currency.converter.web.configuration.CurrencyConverterConfiguration" %><%@
+page import="com.liferay.currency.converter.web.internal.configuration.CurrencyConverterConfiguration" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@

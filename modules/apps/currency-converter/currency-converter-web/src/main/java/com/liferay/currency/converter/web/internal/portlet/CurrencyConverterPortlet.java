@@ -14,7 +14,7 @@
 
 package com.liferay.currency.converter.web.internal.portlet;
 
-import com.liferay.currency.converter.web.configuration.CurrencyConverterConfiguration;
+import com.liferay.currency.converter.web.internal.configuration.CurrencyConverterConfiguration;
 import com.liferay.currency.converter.web.internal.constants.CurrencyConverterPortletKeys;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Release;
@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(
-	configurationPid = "com.liferay.currency.converter.web.configuration.CurrencyConverterConfiguration",
+	configurationPid = "com.liferay.currency.converter.web.internal.configuration.CurrencyConverterConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-currency-converter",

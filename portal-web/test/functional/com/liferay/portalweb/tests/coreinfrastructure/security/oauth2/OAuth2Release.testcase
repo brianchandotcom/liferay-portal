@@ -191,11 +191,6 @@ definition {
 			resourceCheckList = "everything.read.userprofile",
 			resourcePanels = "Portal Services");
 
-		AssertTextEquals.assertPartialText(
-			key_tableName = "OAuth Application",
-			locator1 = "OAuth2#ADMIN_TABLE_APP_SCOPES_COUNT",
-			value1 = "1");
-
 		OAuth2.viewScopes(
 			applicationName = "OAuth Application",
 			resourceCheckedList = "everything.read.userprofile",
@@ -204,18 +199,6 @@ definition {
 		OAuth2.editScopes(
 			applicationName = "OAuth Application",
 			checkGlobalScope = "Everything");
-
-		/*
-
-		Workaround for OAUTH2-272
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "OAuth2#ADMIN_TABLE_APP_SCOPES_COUNT",
-			value1 = "7",
-			key_tableName = "OAuth Application"
-		);
-
-		*/
 
 		OAuth2.viewScopes(
 			applicationName = "OAuth Application",
@@ -228,11 +211,6 @@ definition {
 			resourcePanels = "Portal Services,Sample QA app",
 			uncheckAllResourceScopes = "true",
 			uncheckGlobalScope = "Everything");
-
-		AssertTextEquals.assertPartialText(
-			key_tableName = "OAuth Application",
-			locator1 = "OAuth2#ADMIN_TABLE_APP_SCOPES_COUNT",
-			value1 = "0");
 
 		OAuth2.viewScopes(
 			allResourceScopesUnchecked = "true",

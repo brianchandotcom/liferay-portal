@@ -223,22 +223,24 @@ public class EtcdUtil {
 
 				retryCount++;
 
-				if (retryCount > _MAX_RETRIES) {
+				if (retryCount > _RETRIES_SIZE_MAX_DEFAULT) {
 					throw new RuntimeException(
 						"Could not find " + getKey() + " from " +
 							getEtcdServerURL());
 				}
 
 				System.out.println(
-					"Retrying node refresh in " + _RETRY_PERIOD + " seconds");
+					"Retrying node refresh in " +
+						_SECONDS_RETRY_PERIOD_DEFAULT + " seconds");
 
-				JenkinsResultsParserUtil.sleep(1000 * _RETRY_PERIOD);
+				JenkinsResultsParserUtil.sleep(
+					1000 * _SECONDS_RETRY_PERIOD_DEFAULT);
 			}
 		}
 
-		private static final int _MAX_RETRIES = 3;
+		private static final int _RETRIES_SIZE_MAX_DEFAULT = 3;
 
-		private static final int _RETRY_PERIOD = 5;
+		private static final int _SECONDS_RETRY_PERIOD_DEFAULT = 5;
 
 		private EtcdKeysResponse.EtcdNode _etcdNode;
 		private final String _etcdServerURL;

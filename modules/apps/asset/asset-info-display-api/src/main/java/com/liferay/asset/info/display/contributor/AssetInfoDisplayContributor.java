@@ -14,20 +14,13 @@
 
 package com.liferay.asset.info.display.contributor;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.info.display.field.util.ClassTypesInfoDisplayFieldProviderUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
-import com.liferay.asset.kernel.model.ClassTypeField;
-import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayField;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -42,61 +35,16 @@ public interface AssetInfoDisplayContributor
 			long classTypeId, Locale locale)
 		throws PortalException {
 
-		if (classTypeId == 0) {
-			return Collections.emptyList();
-		}
-
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				getClassName());
-
-		if ((assetRendererFactory == null) ||
-			!assetRendererFactory.isSupportsClassTypes()) {
-
-			return Collections.emptyList();
-		}
-
-		ClassTypeReader classTypeReader =
-			assetRendererFactory.getClassTypeReader();
-
-		ClassType classType = classTypeReader.getClassType(classTypeId, locale);
-
-		if (classType == null) {
-			return Collections.emptyList();
-		}
-
-		List<InfoDisplayField> classTypeInfoDisplayFields = new ArrayList<>();
-
-		for (ClassTypeField classTypeField : classType.getClassTypeFields()) {
-			classTypeInfoDisplayFields.add(
-				new InfoDisplayField(
-					classTypeField.getName(),
-					LanguageUtil.get(locale, classTypeField.getLabel()),
-					classTypeField.getType()));
-		}
-
-		return classTypeInfoDisplayFields;
+		return ClassTypesInfoDisplayFieldProviderUtil.
+			getClassTypeInfoDisplayFields(getClassName(), classTypeId, locale);
 	}
 
 	@Override
 	public default List<ClassType> getClassTypes(long groupId, Locale locale)
 		throws PortalException {
 
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				getClassName());
-
-		if ((assetRendererFactory == null) ||
-			!assetRendererFactory.isSupportsClassTypes()) {
-
-			return Collections.emptyList();
-		}
-
-		ClassTypeReader classTypeReader =
-			assetRendererFactory.getClassTypeReader();
-
-		return classTypeReader.getAvailableClassTypes(
-			PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), locale);
+		return ClassTypesInfoDisplayFieldProviderUtil.getClassTypes(
+			groupId, getClassName(), locale);
 	}
 
 }

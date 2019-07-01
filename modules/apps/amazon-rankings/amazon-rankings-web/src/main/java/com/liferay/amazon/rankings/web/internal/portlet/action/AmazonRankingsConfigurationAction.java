@@ -14,7 +14,7 @@
 
 package com.liferay.amazon.rankings.web.internal.portlet.action;
 
-import com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration;
+import com.liferay.amazon.rankings.web.internal.configuration.AmazonRankingsConfiguration;
 import com.liferay.amazon.rankings.web.internal.constants.AmazonRankingsPortletKeys;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	configurationPid = "com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration",
+	configurationPid = "com.liferay.amazon.rankings.web.internal.configuration.AmazonRankingsConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = "javax.portlet.name=" + AmazonRankingsPortletKeys.AMAZON_RANKINGS,
 	service = ConfigurationAction.class

@@ -14,7 +14,7 @@
 
 package com.liferay.amazon.rankings.web.internal.portlet.validator;
 
-import com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration;
+import com.liferay.amazon.rankings.web.internal.configuration.AmazonRankingsConfiguration;
 import com.liferay.amazon.rankings.web.internal.constants.AmazonRankingsPortletKeys;
 import com.liferay.amazon.rankings.web.internal.model.AmazonRankings;
 import com.liferay.amazon.rankings.web.internal.util.AmazonRankingsUtil;
@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	configurationPid = "com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration",
+	configurationPid = "com.liferay.amazon.rankings.web.internal.configuration.AmazonRankingsConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = "javax.portlet.name=" + AmazonRankingsPortletKeys.AMAZON_RANKINGS,
 	service = PreferencesValidator.class

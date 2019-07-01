@@ -24,7 +24,7 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration" %><%@
+<%@ page import="com.liferay.amazon.rankings.web.internal.configuration.AmazonRankingsConfiguration" %><%@
 page import="com.liferay.amazon.rankings.web.internal.model.AmazonRankings" %><%@
 page import="com.liferay.amazon.rankings.web.internal.util.AmazonRankingsUtil" %><%@
 page import="com.liferay.petra.string.CharPool" %><%@

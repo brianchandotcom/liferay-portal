@@ -14,7 +14,7 @@
 
 package com.liferay.amazon.rankings.web.internal.util;
 
-import com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration;
+import com.liferay.amazon.rankings.web.internal.configuration.AmazonRankingsConfiguration;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;

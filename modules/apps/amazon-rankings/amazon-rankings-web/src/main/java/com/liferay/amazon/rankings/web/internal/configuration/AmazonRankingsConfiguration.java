@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.amazon.rankings.web.configuration;
+package com.liferay.amazon.rankings.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "third-party")
 @Meta.OCD(
-	id = "com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration",
+	id = "com.liferay.amazon.rankings.web.internal.configuration.AmazonRankingsConfiguration",
 	localization = "content/Language",
 	name = "amazon-rankings-configuration-name"
 )

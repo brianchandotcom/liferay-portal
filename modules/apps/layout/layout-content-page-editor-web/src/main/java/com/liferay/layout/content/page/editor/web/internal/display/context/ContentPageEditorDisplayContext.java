@@ -784,9 +784,7 @@ public class ContentPageEditorDisplayContext {
 				}
 
 				soyContext.put(
-					"configuration",
-					JSONFactoryUtil.createJSONObject(
-						fragmentEntryLink.getConfiguration())
+					"configuration", fragmentEntryLink.getConfiguration()
 				).putHTML(
 					"content", content
 				).put(

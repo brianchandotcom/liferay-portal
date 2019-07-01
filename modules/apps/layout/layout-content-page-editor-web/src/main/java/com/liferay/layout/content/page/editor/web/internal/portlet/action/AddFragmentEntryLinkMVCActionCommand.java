@@ -145,9 +145,7 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 				_transactionConfig, callable);
 
 			jsonObject.put(
-				"configuration",
-				JSONFactoryUtil.createJSONObject(
-					fragmentEntryLink.getConfiguration())
+				"configuration", fragmentEntryLink.getConfiguration()
 			).put(
 				"editableValues", fragmentEntryLink.getEditableValues()
 			).put(

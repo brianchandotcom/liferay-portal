@@ -45,7 +45,7 @@ public class SEOLinkImpl implements SEOLink {
 		SEOLink.SEOLinkDataSennaTrack seoLinkDataSennaTrack, String href,
 		String hrefLang, SEOLink.SEOLinkRel seoLinkRel) {
 
-		if (Objects.isNull(seoLinkDataSennaTrack)) {
+		if (seoLinkDataSennaTrack == null) {
 			throw new IllegalArgumentException(
 				"unable to create a new SEOLink with a null " +
 					"seoLinkDataSennaTrack");
@@ -56,7 +56,7 @@ public class SEOLinkImpl implements SEOLink {
 				"unable to create a new SEOLink with a null href");
 		}
 
-		if (Objects.isNull(seoLinkRel)) {
+		if (seoLinkRel == null) {
 			throw new IllegalArgumentException(
 				"unable to create a new SEOLink with a null seoLinkRel");
 		}

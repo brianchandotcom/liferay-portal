@@ -69,7 +69,7 @@ public class SEOLinkImpl implements SEOLink {
 
 	}
 
-	protected SEOLinkImpl(
+	public SEOLinkImpl(
 		SEOLink.SEOLinkDataSennaTrack seoLinkDataSennaTrack, String href,
 		String hrefLang, SEOLink.SEOLinkRel seoLinkRel) {
 

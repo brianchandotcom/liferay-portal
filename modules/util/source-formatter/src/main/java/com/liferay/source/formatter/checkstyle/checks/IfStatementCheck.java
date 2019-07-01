@@ -40,9 +40,10 @@ public class IfStatementCheck extends BaseCheck {
 			return;
 		}
 
-		int closingCurlyBracePos = _getClosingCurlyBracePos(detailAST);
+		int closingCurlyBraceLineNumber = _getClosingCurlyBraceLineNumber(
+			detailAST);
 
-		if (closingCurlyBracePos == -1) {
+		if (closingCurlyBraceLineNumber == -1) {
 			return;
 		}
 
@@ -74,17 +75,17 @@ public class IfStatementCheck extends BaseCheck {
 			}
 		}
 
-		int closingCurlyBraceInnerIfStatementPos = _getClosingCurlyBracePos(
-			firstChildDetailAST);
+		int closingCurlyBraceInnerIfStatementLineNumber =
+			_getClosingCurlyBraceLineNumber(firstChildDetailAST);
 
-		if ((closingCurlyBracePos - 1) ==
-				closingCurlyBraceInnerIfStatementPos) {
+		if ((closingCurlyBraceLineNumber - 1) ==
+				closingCurlyBraceInnerIfStatementLineNumber) {
 
 			log(detailAST, _MSG_COMBINE_IF_STATEMENTS);
 		}
 	}
 
-	private int _getClosingCurlyBracePos(DetailAST literalIfDetailAST) {
+	private int _getClosingCurlyBraceLineNumber(DetailAST literalIfDetailAST) {
 		DetailAST lastChildDetailAST = literalIfDetailAST.getLastChild();
 
 		if (lastChildDetailAST.getType() != TokenTypes.SLIST) {

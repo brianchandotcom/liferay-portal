@@ -1,0 +1,24 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+apply plugin: "nebula.optional-base"
+
+task patch(type: PatchTask)
+
+dependencies {
+	compileOnly group: "com.liferay", name: "biz.aQute.bndlib", version: "4.2.0-20190219.175746-114-LIFERAY-CACHED"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly group: "org.slf4j", name: "slf4j-api", version: "1.7.25"
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "aQute/bnd/classfile/ConstantPool.java"
+	fileNames "aQute/bnd/osgi/Analyzer.java"
+
+	originalLibModuleName = "biz.aQute.bndlib"
+	originalLibSrcBaseUrl = "https://repository-cdn.liferay.com/nexus/content/groups/public/com/liferay/"
+}

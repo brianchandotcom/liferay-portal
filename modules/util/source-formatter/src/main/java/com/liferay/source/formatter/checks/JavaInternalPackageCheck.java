@@ -48,6 +48,10 @@ public class JavaInternalPackageCheck extends BaseJavaTermCheck {
 
 		JavaClass javaClass = (JavaClass)javaTerm;
 
+		if (javaClass.hasAnnotation("Deprecated")) {
+			return javaClass.getContent();
+		}
+
 		String packageName = javaClass.getPackageName();
 
 		if ((packageName == null) || packageName.contains(".internal.") ||

@@ -115,8 +115,16 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 				<div class="sidebar-section">
 					<div class="btn-group sidebar-panel">
 						<div class="btn-group-item">
+
+							<%
+							Map<String, String> data = new HashMap<>(1);
+
+							data.put("analytics-file-entry-id", String.valueOf(fileEntry.getFileEntryId()));
+							%>
+
 							<clay:link
 								buttonStyle="primary"
+								data="<%= data %>"
 								elementClasses='<%= "btn-sm" %>'
 								href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true) %>"
 								label='<%= LanguageUtil.get(resourceBundle, "download") %>'

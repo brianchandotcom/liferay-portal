@@ -30,7 +30,7 @@
 			var anchor = event.target;
 			var match = pathnameRegexp.exec(anchor.pathname);
 
-			if (match) {
+			if (anchor.dataset.analyticsFileEntryId && match) {
 				var getParameterValue = function(parameterName) {
 					var result = null;
 
@@ -51,15 +51,12 @@
 					return result;
 				}
 
-				var groupId = match[1];
-				var fileEntryUUID = match[4];
-
 				Analytics.send(
 					'documentDownloaded',
 					'Document',
 					{
-						groupId: groupId,
-						fileEntryId: getParameterValue('fileEntryId'),
+						groupId: match[1],
+						fileEntryId: anchor.dataset.analyticsFileEntryId,
 						preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
 						title: decodeURIComponent(match[3].replace(/\+/ig, ' ')),
 						version: getParameterValue('version')

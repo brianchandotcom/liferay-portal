@@ -187,7 +187,7 @@ public class DLURLHelperImpl implements DLURLHelper {
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
 		String queryString, boolean appendVersion, boolean absoluteURL) {
 
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(15);
 
 		if ((themeDisplay != null) && absoluteURL) {
 			sb.append(themeDisplay.getPortalURL());
@@ -224,9 +224,6 @@ public class DLURLHelperImpl implements DLURLHelper {
 
 		sb.append(modifiedDate.getTime());
 
-		sb.append("?fileEntryId=");
-		sb.append(fileEntry.getFileEntryId());
-		
 		sb.append(queryString);
 
 		String previewURL = sb.toString();

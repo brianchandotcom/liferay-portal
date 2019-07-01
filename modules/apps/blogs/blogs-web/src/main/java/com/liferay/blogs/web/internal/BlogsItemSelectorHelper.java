@@ -19,6 +19,7 @@ import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.criteria.DownloadFileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
@@ -67,7 +68,7 @@ public class BlogsItemSelectorHelper {
 			new ImageItemSelectorCriterion();
 
 		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new FileEntryItemSelectorReturnType());
+			new DownloadFileEntryItemSelectorReturnType());
 
 		PortletURL uploadURL = requestBackedPortletURLFactory.createActionURL(
 			BlogsPortletKeys.BLOGS);
@@ -83,7 +84,7 @@ public class BlogsItemSelectorHelper {
 				_blogsFileUploadsConfiguration.imageExtensions());
 
 		uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new FileEntryItemSelectorReturnType());
+			new DownloadFileEntryItemSelectorReturnType());
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, itemSelectedEventName,

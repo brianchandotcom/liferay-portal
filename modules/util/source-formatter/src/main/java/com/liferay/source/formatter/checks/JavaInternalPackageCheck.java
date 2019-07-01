@@ -15,7 +15,8 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.source.formatter.BNDSettings;
-import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.io.IOException;
 
@@ -24,7 +25,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class JavaInternalPackageCheck extends BaseFileCheck {
+public class JavaInternalPackageCheck extends BaseJavaTermCheck {
 
 	@Override
 	public boolean isLiferaySourceCheck() {
@@ -33,7 +34,8 @@ public class JavaInternalPackageCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
+			String fileName, String absolutePath, JavaTerm javaTerm,
+			String fileContent)
 		throws IOException {
 
 		if (!absolutePath.contains("/modules/apps/") ||
@@ -41,21 +43,23 @@ public class JavaInternalPackageCheck extends BaseFileCheck {
 			absolutePath.contains("/test/") ||
 			absolutePath.contains("/testIntegration/")) {
 
-			return content;
+			return javaTerm.getContent();
 		}
 
-		String packageName = JavaSourceUtil.getPackageName(content);
+		JavaClass javaClass = (JavaClass)javaTerm;
 
-		if (packageName.contains(".internal.") ||
+		String packageName = javaClass.getPackageName();
+
+		if ((packageName == null) || packageName.contains(".internal.") ||
 			packageName.endsWith(".internal")) {
 
-			return content;
+			return javaClass.getContent();
 		}
 
 		BNDSettings bndSettings = getBNDSettings(fileName);
 
 		if (bndSettings == null) {
-			return content;
+			return javaClass.getContent();
 		}
 
 		List<String> exportPackageNames = bndSettings.getExportPackageNames();
@@ -67,7 +71,12 @@ public class JavaInternalPackageCheck extends BaseFileCheck {
 					"package");
 		}
 
-		return content;
+		return javaClass.getContent();
+	}
+
+	@Override
+	protected String[] getCheckableJavaTermNames() {
+		return new String[] {JAVA_CLASS};
 	}
 
 }

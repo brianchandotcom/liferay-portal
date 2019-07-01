@@ -8,3 +8,4 @@ Provide-Capability:\
 Require-Capability:\
 	liferay.resource.bundle;\
 		filter:="(bundle.symbolic.name=com.liferay.segments.lang)"
+Web-ContextPath: /segments-asah-connector

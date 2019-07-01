@@ -4,4 +4,5 @@ Bundle-Version: 3.0.0
 Export-Package:\
 	com.liferay.asset.info.display.contributor,\
 	com.liferay.asset.info.display.contributor.util,\
+	com.liferay.asset.info.display.field,\
 	com.liferay.asset.info.display.url.provider

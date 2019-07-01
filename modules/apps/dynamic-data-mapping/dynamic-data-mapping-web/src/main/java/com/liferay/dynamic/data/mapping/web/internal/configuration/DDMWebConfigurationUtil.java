@@ -12,14 +12,23 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.web.configuration;
+package com.liferay.dynamic.data.mapping.web.internal.configuration;
+
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.configuration.Filter;
 
 /**
  * @author Rafael Praxedes
  */
-public class DDMWebConfigurationKeys {
+public class DDMWebConfigurationUtil {
 
-	public static final String DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_CONTENT =
-		"dynamic.data.mapping.template.language.content";
+	public static String get(String key, Filter filter) {
+		return _configuration.get(key, filter);
+	}
+
+	private static final Configuration _configuration =
+		ConfigurationFactoryUtil.getConfiguration(
+			DDMWebConfigurationUtil.class.getClassLoader(), "portlet");
 
 }

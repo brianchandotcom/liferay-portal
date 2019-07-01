@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.web;
+package com.liferay.dynamic.data.mapping.form.web.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
 

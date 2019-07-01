@@ -70,8 +70,10 @@ public class SEOImpl implements SEO {
 		return new ArrayList() {
 			{
 				add(
-					new SEOLinkImpl.CanonicalSEOLink(
-						_html.escapeAttribute(canonicalURL)));
+					new SEOLinkImpl(
+						SEOLink.SEOLinkDataSennaTrack.TEMPORARY,
+						_html.escapeAttribute(canonicalURL), null,
+						SEOLink.SEOLinkRel.CANONICAL));
 				addAll(_getAlternateSEOLinks(alternateURLs));
 			}
 		};
@@ -86,8 +88,10 @@ public class SEOImpl implements SEO {
 		return new ArrayList() {
 			{
 				add(
-					new SEOLinkImpl.CanonicalSEOLink(
-						_html.escapeAttribute(localizedCanonicalURL)));
+					new SEOLinkImpl(
+						SEOLink.SEOLinkDataSennaTrack.TEMPORARY,
+						_html.escapeAttribute(localizedCanonicalURL), null,
+						SEOLink.SEOLinkRel.CANONICAL));
 				addAll(_getAlternateSEOLinks(alternateURLs));
 			}
 		};
@@ -102,16 +106,20 @@ public class SEOImpl implements SEO {
 
 		return Stream.concat(
 			stream.map(
-				entry -> new SEOLinkImpl.AlternateSEOLink(
+				entry -> new SEOLinkImpl(
+					SEOLink.SEOLinkDataSennaTrack.TEMPORARY,
 					_html.escapeAttribute(entry.getValue()),
-					LocaleUtil.toW3cLanguageId(entry.getKey()))),
+					LocaleUtil.toW3cLanguageId(entry.getKey()),
+					SEOLink.SEOLinkRel.ALTERNATE)),
 			Stream.of(
 				Optional.ofNullable(
 					alternateURLs.get(LocaleUtil.getDefault())
 				).map(
 					alternateXDefaultURL ->
-						new SEOLinkImpl.XDefaultAlternateSEOLink(
-							_html.escapeAttribute(alternateXDefaultURL))
+						new SEOLinkImpl(
+							SEOLink.SEOLinkDataSennaTrack.TEMPORARY
+							_html.escapeAttribute(alternateXDefaultURL),
+							"x-default", SEOLink.SEOLinkRel.ALTERNATE)
 				)
 			).filter(
 				Optional::isPresent

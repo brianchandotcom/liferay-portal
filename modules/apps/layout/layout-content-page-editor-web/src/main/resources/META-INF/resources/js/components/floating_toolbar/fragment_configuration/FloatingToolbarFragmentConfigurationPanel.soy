@@ -4,11 +4,32 @@
  * FloatingToolbarFragmentConfigurationPanel
  */
 {template .render}
+	{@param item: [
+		configuration: [
+			fieldSets: list<[
+				label: string,
+				fields: list<[
+					label: string,
+					type: string,
+					typeOptions: [
+						validValues: list<string>
+					]
+				]>
+			]>
+		],
+		fragmentEntryLinkId: string
+	]}
 	{@param? _handleRestoreButtonClick: any}
 	{@param? spritemap: string}
 
 	<div class="floating-toolbar-fragment-configuration-panel pt-3">
-		<div class="inline-scroller pb-3 pl-3 pr-3"></div>
+		<div class="inline-scroller pb-3 pl-3 pr-3">
+			{foreach $fieldSet in $item.configuration.fieldSets}
+				{call .fieldSet}
+					{param fieldSet: $fieldSet /}
+				{/call}
+			{/foreach}
+		</div>
 
 		<div aria-hidden="true" class="dropdown-divider m-0" role="presentation"></div>
 
@@ -26,6 +47,50 @@
 				{msg desc=""}restore-values{/msg}
 			</button>
 		</div>
+	</div>
+{/template}
+
+/**
+ * FieldSet
+ */
+{template .fieldSet}
+	{@param fieldSet: [
+		label: string,
+		fields: list<[
+			label: string,
+			type: string,
+			typeOptions: [
+				validValues: list<string>
+			]
+		]>
+	]}
+
+	<p class="mb-3 sheet-subtitle">{$fieldSet.label}</p>
+		{foreach $field in $fieldSet.fields}
+			{call .field}
+				{param field: $field /}
+			{/call}
+		{/foreach}
+{/template}
+
+/**
+ * Field
+ */
+{template .field}
+	{@param field: [
+		label: string,
+		type: string,
+		typeOptions: [
+			validValues: list<string>
+		]
+	]}
+
+	<div class="form-group">
+		<label for="regularSelectElement">{$field.label}</label>
+
+		{delcall com.liferay.layout.content.page.editor.web.fieldType variant="$field.type"}
+			{param options: $field.typeOptions.validValues /}
+		{/delcall}
 	</div>
 {/template}
 

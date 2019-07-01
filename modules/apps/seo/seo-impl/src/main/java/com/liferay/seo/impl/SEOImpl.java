@@ -30,6 +30,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -67,16 +68,17 @@ public class SEOImpl implements SEO {
 	private List<SEOLink> _getClassicLocalizedSEOLinks(
 		String canonicalURL, Map<Locale, String> alternateURLs) {
 
-		return new ArrayList() {
-			{
-				add(
-					new SEOLinkImpl(
-						SEOLink.SEOLinkDataSennaTrack.TEMPORARY,
-						_html.escapeAttribute(canonicalURL), null,
-						SEOLink.SEOLinkRel.CANONICAL));
-				addAll(_getAlternateSEOLinks(alternateURLs));
-			}
-		};
+		List<SEOLink> seoLinks = new ArrayList<>();
+
+		seoLinks.add(
+			new SEOLinkImpl(
+				SEOLink.SEOLinkDataSennaTrack.TEMPORARY,
+				_html.escapeAttribute(canonicalURL), null,
+				SEOLink.SEOLinkRel.CANONICAL));
+
+		_addAlternateSEOLinks(alternateURLs, seoLinks::add);
+
+		return seoLinks;
 	}
 
 	private List<SEOLink> _getDefaultLocalizedSEOLinks(
@@ -85,50 +87,42 @@ public class SEOImpl implements SEO {
 		String localizedCanonicalURL = alternateURLs.getOrDefault(
 			locale, canonicalURL);
 
-		return new ArrayList() {
-			{
-				add(
-					new SEOLinkImpl(
-						SEOLink.SEOLinkDataSennaTrack.TEMPORARY,
-						_html.escapeAttribute(localizedCanonicalURL), null,
-						SEOLink.SEOLinkRel.CANONICAL));
-				addAll(_getAlternateSEOLinks(alternateURLs));
-			}
-		};
+		List<SEOLink> seoLinks = new ArrayList<>();
+
+		seoLinks.add(
+			new SEOLinkImpl(
+				SEOLink.SEOLinkDataSennaTrack.TEMPORARY,
+				_html.escapeAttribute(localizedCanonicalURL), null,
+				SEOLink.SEOLinkRel.CANONICAL));
+
+		_addAlternateSEOLinks(alternateURLs, seoLinks::add);
+
+		return seoLinks;
 	}
 
-	private List<SEOLink> _getAlternateSEOLinks(
-		Map<Locale, String> alternateURLs) {
+	private void _addAlternateSEOLinks(
+		Map<Locale, String> alternateURLs, Consumer<SEOLink> consumer) {
 
-		Set<Map.Entry<Locale, String>> entries = alternateURLs.entrySet();
+		alternateURLs.forEach(
+			(locale, url) ->
+				consumer.accept(
+					new SEOLinkImpl(
+						SEOLink.SEOLinkDataSennaTrack.TEMPORARY,
+						_html.escapeAttribute(url),
+						LocaleUtil.toW3cLanguageId(locale),
+						SEOLink.SEOLinkRel.ALTERNATE)));
 
-		Stream<Map.Entry<Locale, String>> stream = entries.stream();
+		String defaultLocaleUrl = alternateURLs.get(LocaleUtil.getDefault());
 
-		return Stream.concat(
-			stream.map(
-				entry -> new SEOLinkImpl(
-					SEOLink.SEOLinkDataSennaTrack.TEMPORARY,
-					_html.escapeAttribute(entry.getValue()),
-					LocaleUtil.toW3cLanguageId(entry.getKey()),
-					SEOLink.SEOLinkRel.ALTERNATE)),
-			Stream.of(
-				Optional.ofNullable(
-					alternateURLs.get(LocaleUtil.getDefault())
-				).map(
-					alternateXDefaultURL ->
-						new SEOLinkImpl(
-							SEOLink.SEOLinkDataSennaTrack.TEMPORARY
-							_html.escapeAttribute(alternateXDefaultURL),
-							"x-default", SEOLink.SEOLinkRel.ALTERNATE)
-				)
-			).filter(
-				Optional::isPresent
-			).map(
-				Optional::get
-			)
-		).collect(
-			Collectors.toList()
-		);
+		if (defaultLocaleUrl == null) {
+			return;
+		}
+
+		consumer.accept(
+			new SEOLinkImpl(
+				SEOLink.SEOLinkDataSennaTrack.TEMPORARY,
+				_html.escapeAttribute(defaultLocaleUrl), "x-default",
+				SEOLink.SEOLinkRel.ALTERNATE));
 	}
 
 	@Reference

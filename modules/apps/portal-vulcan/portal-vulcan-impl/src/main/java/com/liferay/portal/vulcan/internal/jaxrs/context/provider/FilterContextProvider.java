@@ -114,12 +114,10 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 
 			AcceptLanguage acceptLanguage = new AcceptLanguageImpl(
 				httpServletRequest, _language, _portal);
-
-			String filterString = ParamUtil.getString(
-				httpServletRequest, "filter");
-
 			EntityModel entityModel = ContextProviderUtil.getEntityModel(
 				message);
+			String filterString = ParamUtil.getString(
+				httpServletRequest, "filter");
 
 			return createContext(acceptLanguage, entityModel, filterString);
 		}

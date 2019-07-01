@@ -99,7 +99,7 @@ definition {
 
 		var instanceId = StringUtil.randomString("12");
 
-		var nonRepeatableWidgets = "Blogs,Bookmarks,Language Selector,Message Boards,My Sites,Wiki";
+		var nonRepeatableWidgets = "Blogs,Bookmarks,Knowledge Base Display,Language Selector,Message Boards,My Sites,Wiki";
 
 		if (contains("${nonRepeatableWidgets}", "${widgetName}")) {
 			var widget = "${portletId}";

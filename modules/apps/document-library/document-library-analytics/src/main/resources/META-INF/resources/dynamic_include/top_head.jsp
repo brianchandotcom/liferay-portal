@@ -27,42 +27,42 @@
 
 	function handleDownloadClick(event) {
 		if (event.target.nodeName.toLowerCase() === 'a' && window.Analytics) {
-			
-				var anchor = event.target;
-				var match = pathnameRegexp.exec(anchor.pathname);
+			var anchor = event.target;
+			var match = pathnameRegexp.exec(anchor.pathname);
 
-				if (match) {
-					var getParameterValue = function(parameterName) {
-						var result = null;
-						var tmp = [];
+			if (match) {
+				var getParameterValue = function(parameterName) {
+					var result = null;
+					var tmp = [];
 
-						anchor
-							.search
-							.substr(1)
-							.split("&")
-							.forEach(
-								function(item) {
-									tmp = item.split("=");
-									if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
-								}
-							);
-						return result;
+					anchor
+						.search
+						.substr(1)
+						.split("&")
+						.forEach(
+							function(item) {
+								tmp = item.split("=");
+								if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+							}
+						);
+
+					return result;
+				}
+
+				var groupId = match[1];
+				var fileEntryUUID = match[4];
+
+				Analytics.send(
+					'documentDownloaded',
+					'Document',
+					{
+						groupId: groupId,
+						fileEntryId: getParameterValue('fileEntryId'),
+						preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
+						title: decodeURIComponent(match[3].replace(/\+/ig, ' ')),
+						version: getParameterValue('version')
 					}
-
-					var groupId = match[1];
-					var fileEntryUUID = match[4];
-
-					Analytics.send(
-						'documentDownloaded',
-						'Document',
-						{
-							groupId: groupId,
-							fileEntryId: getParameterValue('fileEntryId'),
-							preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
-							title: decodeURIComponent(match[3].replace(/\+/ig, ' ')),
-							version: getParameterValue('version')
-						}
-					);
+				);
 			}
 		}
 	}

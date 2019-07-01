@@ -307,11 +307,11 @@ public class FreeMarkerFragmentEntryProcessor
 				defaultValuesFieldSetJSONObject.put(
 					configFieldSetFieldJSONObject.getString("name"),
 					fieldDefaultValue);
-
-				defaultValuesJSONObject.put(
-					configFieldSetJSONObject.getString("name"),
-					defaultValuesFieldSetJSONObject);
 			}
+
+			defaultValuesJSONObject.put(
+				configFieldSetJSONObject.getString("name"),
+				defaultValuesFieldSetJSONObject);
 		}
 
 		return defaultValuesJSONObject;

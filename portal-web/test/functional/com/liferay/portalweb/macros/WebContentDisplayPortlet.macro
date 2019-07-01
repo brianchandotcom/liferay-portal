@@ -170,7 +170,7 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame.selectSecondFrame(locator1 = "IFrame#DIALOG");
 
 		var searchTerm = "${webContentTitle}";
 

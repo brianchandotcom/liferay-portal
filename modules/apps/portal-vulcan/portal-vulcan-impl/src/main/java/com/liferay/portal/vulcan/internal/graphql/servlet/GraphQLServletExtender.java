@@ -24,12 +24,20 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.filter.ExpressionConvert;
+import com.liferay.portal.odata.filter.FilterParserProvider;
+import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
+import com.liferay.portal.vulcan.internal.jaxrs.context.provider.ContextProviderUtil;
+import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextProvider;
+import com.liferay.portal.vulcan.internal.jaxrs.context.provider.SortContextProvider;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import graphql.GraphQLError;
 
@@ -114,6 +122,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -124,6 +133,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.ValidationException;
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.Response;
 
 import org.osgi.framework.BundleContext;
@@ -353,6 +363,12 @@ public class GraphQLServletExtender {
 		Optional<HttpServletRequest> httpServletRequestOptional =
 			graphQLContext.getHttpServletRequest();
 
+		HttpServletRequest httpServletRequest =
+			httpServletRequestOptional.orElse(null);
+
+		AcceptLanguage acceptLanguage = new AcceptLanguageImpl(
+			httpServletRequest, _language, _portal);
+
 		for (Field field : clazz.getDeclaredFields()) {
 			if (Modifier.isStatic(field.getModifiers()) ||
 				Modifier.isFinal(field.getModifiers())) {
@@ -362,14 +378,12 @@ public class GraphQLServletExtender {
 
 			Class<?> fieldType = field.getType();
 
+			String fieldName = field.getName();
+
 			if (fieldType.isAssignableFrom(AcceptLanguage.class)) {
 				field.setAccessible(true);
 
-				field.set(
-					instance,
-					new AcceptLanguageImpl(
-						httpServletRequestOptional.orElse(null), _language,
-						_portal));
+				field.set(instance, acceptLanguage);
 			}
 			else if (fieldType.isAssignableFrom(Company.class)) {
 				field.setAccessible(true);
@@ -378,6 +392,55 @@ public class GraphQLServletExtender {
 					instance,
 					_companyLocalService.getCompany(
 						CompanyThreadLocal.getCompanyId()));
+			}
+			else if (fieldName.equals("_filterBiFunction")) {
+				field.setAccessible(true);
+
+				BiFunction<Object, String, Filter> filterBiFunction =
+					(resource, filter) -> {
+						try {
+							FilterContextProvider filterContextProvider =
+								new FilterContextProvider(
+									_expressionConvert, _filterParserProvider,
+									_language, _portal);
+
+							return filterContextProvider.createContext(
+								acceptLanguage,
+								_getEntityModel(
+									resource,
+									httpServletRequest.getParameterMap()),
+								filter);
+						}
+						catch (Exception e) {
+							throw new BadRequestException(e);
+						}
+					};
+
+				field.set(instance, filterBiFunction);
+			}
+			else if (fieldName.equals("_sortBiFunction")) {
+				field.setAccessible(true);
+
+				BiFunction<Object, String, Sort[]> sortBiFunction =
+					(resource, sorts) -> {
+						try {
+							SortContextProvider sortContextProvider =
+								new SortContextProvider(
+									_language, _portal, _sortParserProvider);
+
+							return sortContextProvider.createContext(
+								acceptLanguage,
+								_getEntityModel(
+									resource,
+									httpServletRequest.getParameterMap()),
+								sorts);
+						}
+						catch (Exception e) {
+							throw new BadRequestException(e);
+						}
+					};
+
+				field.set(instance, sortBiFunction);
 			}
 		}
 
@@ -438,6 +501,16 @@ public class GraphQLServletExtender {
 		}
 
 		return null;
+	}
+
+	private EntityModel _getEntityModel(
+			Object resource, Map<String, String[]> parameters)
+		throws Exception {
+
+		EntityModelResource entityModelResource = (EntityModelResource)resource;
+
+		return entityModelResource.getEntityModel(
+			ContextProviderUtil.getMultivaluedHashMap(parameters));
 	}
 
 	private Boolean _getGraphQLFieldValue(AnnotatedElement annotatedElement) {
@@ -692,6 +765,15 @@ public class GraphQLServletExtender {
 	private CompanyLocalService _companyLocalService;
 
 	private DefaultTypeFunction _defaultTypeFunction;
+
+	@Reference(
+		target = "(result.class.name=com.liferay.portal.kernel.search.filter.Filter)"
+	)
+	private ExpressionConvert<Filter> _expressionConvert;
+
+	@Reference
+	private FilterParserProvider _filterParserProvider;
+
 	private GraphQLFieldRetriever _graphQLFieldRetriever;
 
 	@Reference
@@ -706,6 +788,9 @@ public class GraphQLServletExtender {
 	private final List<ServletData> _servletDataList = new ArrayList<>();
 	private ServiceTracker<ServletData, ServletData> _servletDataServiceTracker;
 	private ServiceRegistration<Servlet> _servletServiceRegistration;
+
+	@Reference
+	private SortParserProvider _sortParserProvider;
 
 	private class DateTypeFunction implements TypeFunction {
 
@@ -1048,9 +1133,8 @@ public class GraphQLServletExtender {
 		public boolean canBuildType(
 			Class<?> clazz, AnnotatedType annotatedType) {
 
-			if ((clazz == Filter.class) || (clazz == Map.class) ||
-				(clazz == MultipartBody.class) || (clazz == Object.class) ||
-				(clazz == Response.class) || (clazz == Sort[].class)) {
+			if ((clazz == Map.class) || (clazz == MultipartBody.class) ||
+				(clazz == Object.class) || (clazz == Response.class)) {
 
 				return true;
 			}

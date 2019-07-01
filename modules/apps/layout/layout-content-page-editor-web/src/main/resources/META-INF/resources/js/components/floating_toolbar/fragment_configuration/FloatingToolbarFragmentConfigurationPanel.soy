@@ -28,3 +28,25 @@
 		</div>
 	</div>
 {/template}
+
+/**
+ * Field Type
+ */
+{deltemplate com.liferay.layout.content.page.editor.web.fieldType}
+	{@param options: list<string>}
+
+	<div></div>
+{/deltemplate}
+
+/**
+ * Field Type Select variation
+ */
+{deltemplate com.liferay.layout.content.page.editor.web.fieldType variant="'select'"}
+	{@param options: list<string>}
+
+	<select class="form-control form-control-sm" id="regularSelectElement">
+		{foreach $option in $options}
+			<option>{$option}</option>
+		{/foreach}
+	</select>
+{/deltemplate}

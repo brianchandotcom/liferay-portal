@@ -200,12 +200,6 @@ dependencies {
 }
 
 generatePom {
-	ext {
-		File releaseInfoJavaFile = new File("../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
-
-		dxp = releaseInfoJavaFile.text.contains(" DXP ") || releaseInfoJavaFile.text.contains(" Digital Experience ")
-	}
-
 	dependsOn generatePomCompileOnly
 	dependsOn generatePomRelease
 	dependsOn generatePomThirdParty
@@ -250,7 +244,11 @@ generatePomCompileOnly {
 	}
 
 	doLast {
-		Model model = _getPomModel("release." + (generatePom.dxp ? "dxp" : "portal") + ".compile.only")
+		File releaseInfoJavaFile = new File("../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
+
+		boolean dxp = releaseInfoJavaFile.text.contains(" DXP ") || releaseInfoJavaFile.text.contains(" Digital Experience ")
+
+		Model model = _getPomModel("release." + (dxp ? "dxp" : "portal") + ".compile.only")
 
 		DependencyManagement dependencyManagement = new DependencyManagement()
 
@@ -294,7 +292,11 @@ generatePomCompileOnly {
 
 generatePomRelease {
 	doLast {
-		Model model = _getPomModel("release." + (generatePom.dxp ? "dxp" : "portal") + ".bom")
+		File releaseInfoJavaFile = new File("../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
+
+		boolean dxp = releaseInfoJavaFile.text.contains(" DXP ") || releaseInfoJavaFile.text.contains(" Digital Experience ")
+
+		Model model = _getPomModel("release." + (dxp ? "dxp" : "portal") + ".bom")
 
 		DependencyManagement dependencyManagement = new DependencyManagement()
 
@@ -387,7 +389,11 @@ generatePomRelease {
 
 generatePomThirdParty {
 	doLast {
-		Model model = _getPomModel("release." + (generatePom.dxp ? "dxp" : "portal") + ".third.party")
+		File releaseInfoJavaFile = new File("../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
+
+		boolean dxp = releaseInfoJavaFile.text.contains(" DXP ") || releaseInfoJavaFile.text.contains(" Digital Experience ")
+
+		Model model = _getPomModel("release." + (dxp ? "dxp" : "portal") + ".third.party")
 
 		DependencyManagement dependencyManagement = new DependencyManagement()
 

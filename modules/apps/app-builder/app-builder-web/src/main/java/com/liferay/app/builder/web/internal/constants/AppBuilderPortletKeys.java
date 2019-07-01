@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.app.builder.web.constants;
+package com.liferay.app.builder.web.internal.constants;
 
 /**
  * @author Bruno Farache

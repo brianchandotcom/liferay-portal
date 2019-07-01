@@ -139,22 +139,15 @@ public class SEOTest {
 		Locale locale, List<SEOLink> seoLinks,
 		Map<Locale, String> alternateURLs) {
 
-		SEOLink.AlternateSEOLink spainAlternateSEOLink = _getAlternateSEOLink(
-			locale, seoLinks);
+		SEOLink seoLink = _getAlternateSEOLink(locale, seoLinks);
 
-		Assert.assertNotNull(spainAlternateSEOLink);
-
-		Assert.assertEquals(
-			alternateURLs.get(locale), spainAlternateSEOLink.getHref());
-		Assert.assertEquals(
-			spainAlternateSEOLink.getSEOLinkDataSennaTrack(),
-			SEOLink.SEOLinkDataSennaTrack.TEMPORARY);
+		Assert.assertNotNull(seoLink);
+		Assert.assertEquals(alternateURLs.get(locale), seoLink.getHref());
 		Assert.assertEquals(
 			Optional.of(LocaleUtil.toW3cLanguageId(locale)),
-			spainAlternateSEOLink.getHrefLang());
+			seoLink.getHrefLang());
 		Assert.assertEquals(
-			spainAlternateSEOLink.getSeoLinkRel(),
-			SEOLink.SEOLinkRel.ALTERNATE);
+			seoLink.getSeoLinkRel(), SEOLink.SEOLinkRel.ALTERNATE);
 	}
 
 	private void _assertAlternateSEOLinks(
@@ -170,84 +163,65 @@ public class SEOTest {
 	private void _assertCanonicalSEOLink(
 		List<SEOLink> seoLinks, String canonicalURL) {
 
-		SEOLink.CanonicalSEOLink canonicalSEOLink = _getCanonicalSEOLink(
-			seoLinks);
+		SEOLink seoLink = _getCanonicalSEOLink(seoLinks);
 
 		Assert.assertNotNull(canonicalURL);
-
-		Assert.assertEquals(canonicalURL, canonicalSEOLink.getHref());
+		Assert.assertEquals(canonicalURL, seoLink.getHref());
+		Assert.assertEquals(seoLink.getHrefLang(), Optional.empty());
 		Assert.assertEquals(
-			canonicalSEOLink.getSEOLinkDataSennaTrack(),
-			SEOLink.SEOLinkDataSennaTrack.TEMPORARY);
-		Assert.assertEquals(canonicalSEOLink.getHrefLang(), Optional.empty());
-		Assert.assertEquals(
-			canonicalSEOLink.getSeoLinkRel(), SEOLink.SEOLinkRel.CANONICAL);
+			seoLink.getSeoLinkRel(), SEOLink.SEOLinkRel.CANONICAL);
 	}
 
 	private void _assertXDefaultAlternateSEOLink(
 		List<SEOLink> seoLinks, Map<Locale, String> alternateURLs) {
 
-		SEOLink.XDefaultAlternateSEOLink xDefaultAlternateSEOLink =
-			_getXDefaultAlternateSEOLink(seoLinks);
+		SEOLink seoLink = _getXDefaultAlternateSEOLink(seoLinks);
 
-		Assert.assertNotNull(xDefaultAlternateSEOLink);
-
+		Assert.assertNotNull(seoLink);
 		Assert.assertEquals(
-			alternateURLs.get(LocaleUtil.getDefault()),
-			xDefaultAlternateSEOLink.getHref());
+			alternateURLs.get(LocaleUtil.getDefault()), seoLink.getHref());
+		Assert.assertEquals(seoLink.getHrefLang(), Optional.of("x-default"));
 		Assert.assertEquals(
-			xDefaultAlternateSEOLink.getSEOLinkDataSennaTrack(),
-			SEOLink.SEOLinkDataSennaTrack.TEMPORARY);
-		Assert.assertEquals(
-			xDefaultAlternateSEOLink.getHrefLang(), Optional.of("x-default"));
-		Assert.assertEquals(
-			xDefaultAlternateSEOLink.getSeoLinkRel(),
-			SEOLink.SEOLinkRel.ALTERNATE);
+			seoLink.getSeoLinkRel(), SEOLink.SEOLinkRel.ALTERNATE);
 	}
 
-	private SEOLink.AlternateSEOLink _getAlternateSEOLink(
+	private SEOLink _getAlternateSEOLink(
 		Locale locale, List<SEOLink> seoLinks) {
 
 		for (SEOLink seoLink : seoLinks) {
 			Optional<String> hrefLangOptional = seoLink.getHrefLang();
 
-			if (!hrefLangOptional.isPresent()) {
-				continue;
-			}
-
-			if (seoLink.getSeoLinkRel() != SEOLink.SEOLinkRel.ALTERNATE) {
-				continue;
-			}
-
-			if (Objects.equals(
+			if ((seoLink.getSeoLinkRel() == SEOLink.SEOLinkRel.ALTERNATE) &&
+				hrefLangOptional.isPresent() &&
+				Objects.equals(
 					hrefLangOptional.get(),
 					LocaleUtil.toW3cLanguageId(locale))) {
 
-				return (SEOLink.AlternateSEOLink)seoLink;
+				return seoLink;
 			}
 		}
 
 		return null;
 	}
 
-	private SEOLink.CanonicalSEOLink _getCanonicalSEOLink(
-		List<SEOLink> seoLinks) {
-
+	private SEOLink _getCanonicalSEOLink(List<SEOLink> seoLinks) {
 		for (SEOLink seoLink : seoLinks) {
 			if (seoLink.getSeoLinkRel() == SEOLink.SEOLinkRel.CANONICAL) {
-				return (SEOLink.CanonicalSEOLink)seoLink;
+				return seoLink;
 			}
 		}
 
 		return null;
 	}
 
-	private SEOLink.XDefaultAlternateSEOLink _getXDefaultAlternateSEOLink(
-		List<SEOLink> seoLinks) {
-
+	private SEOLink _getXDefaultAlternateSEOLink(List<SEOLink> seoLinks) {
 		for (SEOLink seoLink : seoLinks) {
-			if (seoLink instanceof SEOLink.XDefaultAlternateSEOLink) {
-				return (SEOLink.XDefaultAlternateSEOLink)seoLink;
+			Optional<String> hrefLang = seoLink.getHrefLang();
+
+			if (hrefLang.isPresent() &&
+				Objects.equals(hrefLang.get(), "x-default")) {
+
+				return seoLink;
 			}
 		}
 

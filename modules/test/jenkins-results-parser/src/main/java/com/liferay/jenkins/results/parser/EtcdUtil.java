@@ -140,7 +140,7 @@ public class EtcdUtil {
 		}
 
 		public boolean exists() {
-			_refreshEtcdNode();
+			_refreshEtcdNode(true);
 
 			if (_etcdNode != null) {
 				return true;
@@ -208,8 +208,37 @@ public class EtcdUtil {
 		}
 
 		private synchronized void _refreshEtcdNode() {
-			_etcdNode = _getEtcdNode(_etcdServerURL, getKey());
+			_refreshEtcdNode(false);
 		}
+
+		private synchronized void _refreshEtcdNode(boolean nullValueAllowed) {
+			int retryCount = 0;
+
+			while (true) {
+				_etcdNode = _getEtcdNode(_etcdServerURL, getKey());
+
+				if (nullValueAllowed || (_etcdNode != null)) {
+					return;
+				}
+
+				retryCount++;
+
+				if (retryCount > _MAX_RETRIES) {
+					throw new RuntimeException(
+						"Could not find " + getKey() + " from " +
+							getEtcdServerURL());
+				}
+
+				System.out.println(
+					"Retrying node refresh in " + _RETRY_PERIOD + " seconds");
+
+				JenkinsResultsParserUtil.sleep(1000 * _RETRY_PERIOD);
+			}
+		}
+
+		private static final int _MAX_RETRIES = 3;
+
+		private static final int _RETRY_PERIOD = 5;
 
 		private EtcdKeysResponse.EtcdNode _etcdNode;
 		private final String _etcdServerURL;

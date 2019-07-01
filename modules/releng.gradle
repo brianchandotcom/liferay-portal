@@ -85,7 +85,7 @@ task cherryPickArtifacts
 task cleanReleng
 task cleanVersionOverride
 task generatePom
-task generatePomProjectTemplates
+task generatePomCompileOnly
 task generatePomRelease
 task generatePomThirdParty
 task lockDependencyVersion
@@ -206,12 +206,12 @@ generatePom {
 		dxp = releaseInfoJavaFile.text.contains(" DXP ") || releaseInfoJavaFile.text.contains(" Digital Experience ")
 	}
 
-	dependsOn generatePomProjectTemplates
+	dependsOn generatePomCompileOnly
 	dependsOn generatePomRelease
 	dependsOn generatePomThirdParty
 }
 
-generatePomProjectTemplates {
+generatePomCompileOnly {
 	doFirst {
 		File projectTemplatesDir = new File(buildDir, "releng/projectTemplates")
 
@@ -250,7 +250,7 @@ generatePomProjectTemplates {
 	}
 
 	doLast {
-		Model model = _getPomModel("release." + (generatePom.dxp ? "dxp" : "portal") + ".project.templates")
+		Model model = _getPomModel("release." + (generatePom.dxp ? "dxp" : "portal") + ".compile.only")
 
 		DependencyManagement dependencyManagement = new DependencyManagement()
 

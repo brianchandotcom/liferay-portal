@@ -70,7 +70,7 @@ public class SEOImpl implements SEO {
 		return new ArrayList() {
 			{
 				add(
-					new SEOLink.CanonicalSEOLink(
+					new SEOLinkImpl.CanonicalSEOLink(
 						_html.escapeAttribute(canonicalURL)));
 				addAll(_getAlternateSEOLinks(alternateURLs));
 			}
@@ -86,7 +86,7 @@ public class SEOImpl implements SEO {
 		return new ArrayList() {
 			{
 				add(
-					new SEOLink.CanonicalSEOLink(
+					new SEOLinkImpl.CanonicalSEOLink(
 						_html.escapeAttribute(localizedCanonicalURL)));
 				addAll(_getAlternateSEOLinks(alternateURLs));
 			}
@@ -102,7 +102,7 @@ public class SEOImpl implements SEO {
 
 		return Stream.concat(
 			stream.map(
-				entry -> new SEOLink.AlternateSEOLink(
+				entry -> new SEOLinkImpl.AlternateSEOLink(
 					_html.escapeAttribute(entry.getValue()),
 					LocaleUtil.toW3cLanguageId(entry.getKey()))),
 			Stream.of(
@@ -110,7 +110,7 @@ public class SEOImpl implements SEO {
 					alternateURLs.get(LocaleUtil.getDefault())
 				).map(
 					alternateXDefaultURL ->
-						new SEOLink.XDefaultAlternateSEOLink(
+						new SEOLinkImpl.XDefaultAlternateSEOLink(
 							_html.escapeAttribute(alternateXDefaultURL))
 				)
 			).filter(

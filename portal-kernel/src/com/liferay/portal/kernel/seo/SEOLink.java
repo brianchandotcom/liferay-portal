@@ -14,59 +14,20 @@
 
 package com.liferay.portal.kernel.seo;
 
-import com.liferay.portal.kernel.util.Validator;
-
-import java.util.Objects;
 import java.util.Optional;
 
 /**
  * @author Cristina González
  */
-public class SEOLink {
+public interface SEOLink {
 
-	public String getHref() {
-		return _href;
-	}
+	public String getHref();
 
-	public Optional<String> getHrefLang() {
-		return Optional.ofNullable(_hrefLang);
-	}
+	public Optional<String> getHrefLang();
 
-	public SEOLinkDataSennaTrack getSEOLinkDataSennaTrack() {
-		return _seoLinkDataSennaTrack;
-	}
+	public SEOLinkDataSennaTrack getSEOLinkDataSennaTrack();
 
-	public SEOLinkRel getSeoLinkRel() {
-		return _seoLinkRel;
-	}
-
-	public static class AlternateSEOLink extends SEOLink {
-
-		public AlternateSEOLink(String href, String hrefLang) {
-			super(
-				SEOLinkDataSennaTrack.TEMPORARY, href, hrefLang,
-				SEOLinkRel.ALTERNATE);
-		}
-
-	}
-
-	public static class CanonicalSEOLink extends SEOLink {
-
-		public CanonicalSEOLink(String href) {
-			super(
-				SEOLinkDataSennaTrack.TEMPORARY, href, null,
-				SEOLinkRel.CANONICAL);
-		}
-
-	}
-
-	public static class XDefaultAlternateSEOLink extends AlternateSEOLink {
-
-		public XDefaultAlternateSEOLink(String href) {
-			super(href, "x-default");
-		}
-
-	}
+	public SEOLinkRel getSeoLinkRel();
 
 	public enum SEOLinkDataSennaTrack {
 
@@ -98,36 +59,5 @@ public class SEOLink {
 		}
 
 	}
-
-	protected SEOLink(
-		SEOLinkDataSennaTrack seoLinkDataSennaTrack, String href,
-		String hrefLang, SEOLinkRel seoLinkRel) {
-
-		if (Objects.isNull(seoLinkDataSennaTrack)) {
-			throw new IllegalArgumentException(
-				"unable to create a new SEOLink with a null " +
-					"seoLinkDataSennaTrack");
-		}
-
-		if (Validator.isNull(href)) {
-			throw new IllegalArgumentException(
-				"unable to create a new SEOLink with a null href");
-		}
-
-		if (Objects.isNull(seoLinkRel)) {
-			throw new IllegalArgumentException(
-				"unable to create a new SEOLink with a null seoLinkRel");
-		}
-
-		_seoLinkDataSennaTrack = seoLinkDataSennaTrack;
-		_href = href;
-		_hrefLang = hrefLang;
-		_seoLinkRel = seoLinkRel;
-	}
-
-	private final String _href;
-	private final String _hrefLang;
-	private final SEOLinkDataSennaTrack _seoLinkDataSennaTrack;
-	private final SEOLinkRel _seoLinkRel;
 
 }

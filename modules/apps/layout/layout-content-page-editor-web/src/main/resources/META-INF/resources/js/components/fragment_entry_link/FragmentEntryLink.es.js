@@ -254,11 +254,16 @@ class FragmentEntryLink extends Component {
 	 * @review
 	 */
 	_shouldShowConfigPanel() {
-		return (
-			this._fragmentEntryLinkConfig &&
+		const fieldSetsExist =
+			this._configuration &&
+			Array.isArray(this._configuration.fieldSets) &&
+			this._configuration.fieldSets.length > 0;
+
+		const fragmentIsActive =
 			this.fragmentEntryLinkId === this.activeItemId &&
-			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
-		);
+			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment;
+
+		return this._config && fieldSetsExist && fragmentIsActive;
 	}
 }
 

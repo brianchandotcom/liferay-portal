@@ -12,6 +12,7 @@
  * details.
  */
 
+import React from 'react';
 import {Config} from 'metal-state';
 
 import {connect, disconnect, Store} from './store.es';
@@ -88,5 +89,53 @@ const getConnectedComponent = (Component, properties) => {
 	return ConnectedComponent;
 };
 
-export {getConnectedComponent};
+/**
+ * Second order function to produce a Connected Component Wrapper
+ *
+ * @param {Function} mapStateToProps - Recieves the state and returns mapped version of it ready for consumption by the Wrapped Component
+ * @param {Function} mapDispatchToProps - Recieves the dispatch and returns a set of component props that use it to call the modify the state tree
+ * @param {Store} store
+ * @returns
+ */
+function getConnectedReactComponent(
+	mapStateToProps,
+	mapDispatchToProps,
+	store
+) {
+	/**
+	 *
+	 * @param {React.Component} WrappedComponent - The Component to connect to the store
+	 * @returns {React.Component} - Wrapper Connected Component that propagates every store change mapped to the component
+	 */
+	return function _getConnectedWrapperComponent(WrappedComponent) {
+		return class extends React.Component {
+			render() {
+				return (
+					<WrappedComponent
+						{...this.props}
+						{...mapStateToProps(store.getState(), this.props)}
+						{...mapDispatchToProps(store.dispatch, this.props)}
+					/>
+				);
+			}
+
+			componentDidMount() {
+				this._subscriber = store.on(
+					'change',
+					this.handleChange.bind(this)
+				);
+			}
+
+			componentWillUnmount() {
+				this._subscriber.removeListener();
+			}
+
+			handleChange() {
+				this.forceUpdate();
+			}
+		};
+	};
+}
+
+export {getConnectedComponent, getConnectedReactComponent};
 export default getConnectedComponent;

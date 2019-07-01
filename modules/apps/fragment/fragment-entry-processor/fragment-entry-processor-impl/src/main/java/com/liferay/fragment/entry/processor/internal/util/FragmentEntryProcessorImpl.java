@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.constants.SegmentsConstants;
 
 import java.util.Iterator;
 import java.util.Locale;
@@ -211,7 +212,7 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 		JSONObject jsonObject, Locale locale, Long segmentsExperienceId) {
 
 		JSONObject segmentsExperienceJSONObject = jsonObject.getJSONObject(
-			_EDITABLE_VALUES_SEGMENTS_EXPERIENCE_ID_PREFIX +
+			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX +
 				segmentsExperienceId);
 
 		if (segmentsExperienceJSONObject == null) {
@@ -242,7 +243,7 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 			String key = keys.next();
 
 			if (key.startsWith(
-					_EDITABLE_VALUES_SEGMENTS_EXPERIENCE_ID_PREFIX)) {
+					SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX)) {
 
 				return true;
 			}
@@ -250,9 +251,6 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 
 		return false;
 	}
-
-	private static final String _EDITABLE_VALUES_SEGMENTS_EXPERIENCE_ID_PREFIX =
-		"segments-experience-id-";
 
 	@Reference
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;

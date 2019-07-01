@@ -335,15 +335,18 @@ public class FragmentEntryLinkExportImportContentProcessor
 
 		Iterator<String> editableKeysIterator = editableJSONObject.keys();
 
+		String segmentsExperienceIdPrefix =
+			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX;
+
 		while (editableKeysIterator.hasNext()) {
 			String editableKey = editableKeysIterator.next();
 
-			if (!editableKey.startsWith(_SEGMENTS_EXPERIENCE_ID)) {
+			if (!editableKey.startsWith(segmentsExperienceIdPrefix)) {
 				continue;
 			}
 
 			long segmentsExperienceId = GetterUtil.getLong(
-				editableKey.substring(_SEGMENTS_EXPERIENCE_ID.length()));
+				editableKey.substring(segmentsExperienceIdPrefix.length()));
 
 			if (segmentsExperienceId ==
 					SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT) {
@@ -370,13 +373,16 @@ public class FragmentEntryLinkExportImportContentProcessor
 
 		editableKeysIterator.forEachRemaining(editableKeys::add);
 
+		String segmentsExperienceIdPrefix =
+			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX;
+
 		for (String editableKey : editableKeys) {
-			if (!editableKey.startsWith(_SEGMENTS_EXPERIENCE_ID)) {
+			if (!editableKey.startsWith(segmentsExperienceIdPrefix)) {
 				continue;
 			}
 
 			long segmentsExperienceId = GetterUtil.getLong(
-				editableKey.substring(_SEGMENTS_EXPERIENCE_ID.length()));
+				editableKey.substring(segmentsExperienceIdPrefix.length()));
 
 			Map<Long, Long> segmentsExperienceIds =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -392,15 +398,12 @@ public class FragmentEntryLinkExportImportContentProcessor
 			editableJSONObject.remove(editableKey);
 
 			editableJSONObject.put(
-				_SEGMENTS_EXPERIENCE_ID + importedSegmentsExperienceId,
+				segmentsExperienceIdPrefix + importedSegmentsExperienceId,
 				segmentsExperienceJSONObject);
 		}
 	}
 
 	private static final String _DDM_TEMPLATE = "ddmTemplate_";
-
-	private static final String _SEGMENTS_EXPERIENCE_ID =
-		"segments-experience-id-";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryLinkExportImportContentProcessor.class);

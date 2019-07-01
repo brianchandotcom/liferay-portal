@@ -54,6 +54,7 @@ import {
 	updateDropTargetReducer,
 	updateHoveredItemReducer
 } from './placeholders.es';
+import {createSegmentsExperimentsReducer} from './segmentsExperiments.es';
 
 /**
  * List of reducers
@@ -91,7 +92,8 @@ const reducers = [
 	updateRowColumnsNumberReducer,
 	updateRowColumnsReducer,
 	updateRowConfigReducer,
-	updateSelectedSidebarPanelId
+	updateSelectedSidebarPanelId,
+	createSegmentsExperimentsReducer
 ];
 
 export {reducers};

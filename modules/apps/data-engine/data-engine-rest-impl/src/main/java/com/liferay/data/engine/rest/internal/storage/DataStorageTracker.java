@@ -14,7 +14,7 @@
 
 package com.liferay.data.engine.rest.internal.storage;
 
-import com.liferay.data.engine.spi.storage.DataStorage;
+import com.liferay.data.engine.api.storage.DataStorage;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Map;

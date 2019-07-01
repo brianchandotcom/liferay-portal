@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.data.engine.spi.storage;
+package com.liferay.data.engine.api.storage;
 
 import java.util.Map;
 

@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.util.FileUtil;
@@ -164,7 +165,9 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 						"\"", dependencyName, "\": \"", expectedVersion, "\""));
 			}
 
-			if (enforceMinorReleaseRangePackageNames.contains(dependencyName)) {
+			if (!actualVersion.startsWith(StringPool.CARET) &&
+				enforceMinorReleaseRangePackageNames.contains(dependencyName)) {
+
 				addMessage(
 					fileName,
 					StringBundler.concat(

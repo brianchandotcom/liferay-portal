@@ -46,10 +46,10 @@ if (!themeDisplay.isSignedIn() && layout.isPublicLayout()) {
 
 		<c:choose>
 			<c:when test="<%= hrefLangOptional.isPresent() %>">
-				<link data-senna-track="<%= seoLink.getSEOLinkDataSennaTrack() %>" href="<%= seoLink.getHref() %>" hreflang="<%= hrefLangOptional.get() %>" rel="<%= seoLink.getSeoLinkRel() %>" />
+				<link data-senna-track="temporary" href="<%= seoLink.getHref() %>" hreflang="<%= hrefLangOptional.get() %>" rel="<%= seoLink.getSeoLinkRel() %>" />
 			</c:when>
 			<c:otherwise>
-				<link data-senna-track="<%= seoLink.getSEOLinkDataSennaTrack() %>" href="<%= seoLink.getHref() %>" rel="<%= seoLink.getSeoLinkRel() %>" />
+				<link data-senna-track="temporary" href="<%= seoLink.getHref() %>" rel="<%= seoLink.getSeoLinkRel() %>" />
 			</c:otherwise>
 		</c:choose>
 

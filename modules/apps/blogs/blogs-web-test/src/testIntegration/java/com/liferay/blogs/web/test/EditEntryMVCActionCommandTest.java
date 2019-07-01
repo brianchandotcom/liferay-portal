@@ -123,7 +123,7 @@ public class EditEntryMVCActionCommandTest {
 		BlogsEntry blogsEntry = _addBlogEntry(RandomTestUtil.randomString());
 
 		_deleteEntries(
-			new MyMockLiferayPortletRequest(
+			new MockActionRequest(
 				_getMockHttpServletRequest(), blogsEntry.getEntryId()),
 			false);
 
@@ -135,7 +135,7 @@ public class EditEntryMVCActionCommandTest {
 		BlogsEntry blogsEntry = _addBlogEntry(RandomTestUtil.randomString());
 
 		_deleteEntries(
-			new MyMockLiferayPortletRequest(
+			new MockActionRequest(
 				_getMockHttpServletRequest(), blogsEntry.getEntryId()),
 			true);
 
@@ -212,10 +212,10 @@ public class EditEntryMVCActionCommandTest {
 	@Inject
 	private TrashEntryLocalService _trashEntryLocalService;
 
-	private static class MyMockLiferayPortletRequest
+	private static class MockActionRequest
 		extends MockLiferayPortletRequest implements ActionRequest {
 
-		public MyMockLiferayPortletRequest(
+		public MockActionRequest(
 			HttpServletRequest httpServletRequest, long entryId) {
 
 			this.httpServletRequest = httpServletRequest;

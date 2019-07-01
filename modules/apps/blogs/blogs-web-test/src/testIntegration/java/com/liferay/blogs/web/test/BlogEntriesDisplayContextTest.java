@@ -251,15 +251,14 @@ public class BlogEntriesDisplayContextTest {
 
 		MVCRenderCommand mvcRenderCommand = _serviceTracker.getService();
 
-		MyMockLiferayPortletRequest mockLiferayPortletRequest =
-			new MyMockLiferayPortletRequest(httpServletRequest);
+		MockRenderRequest mockRenderRequest = new MockRenderRequest(
+			httpServletRequest);
 
 		mvcRenderCommand.render(
-			mockLiferayPortletRequest, new MockLiferayPortletResponse());
+			mockRenderRequest, new MockLiferayPortletResponse());
 
-		Object blogEntriesDisplayContext =
-			mockLiferayPortletRequest.getAttribute(
-				"BLOG_ENTRIES_DISPLAY_CONTEXT");
+		Object blogEntriesDisplayContext = mockRenderRequest.getAttribute(
+			"BLOG_ENTRIES_DISPLAY_CONTEXT");
 
 		return ReflectionTestUtil.invoke(
 			blogEntriesDisplayContext, "getSearchContainer", new Class<?>[0],
@@ -1066,12 +1065,10 @@ public class BlogEntriesDisplayContextTest {
 
 	}
 
-	private static class MyMockLiferayPortletRequest
+	private static class MockRenderRequest
 		extends MockLiferayPortletRequest implements RenderRequest {
 
-		public MyMockLiferayPortletRequest(
-			HttpServletRequest httpServletRequest) {
-
+		public MockRenderRequest(HttpServletRequest httpServletRequest) {
 			this.httpServletRequest = httpServletRequest;
 		}
 

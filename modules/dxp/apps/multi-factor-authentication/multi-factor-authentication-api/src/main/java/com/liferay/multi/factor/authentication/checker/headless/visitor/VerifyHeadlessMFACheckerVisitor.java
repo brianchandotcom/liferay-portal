@@ -64,10 +64,10 @@ public class VerifyHeadlessMFACheckerVisitor
 				return false;
 			}
 
-			if (mfaChecker.accept(_supportsSetupMFACheckerVisitor)) {
-				if (!mfaChecker.accept(_isUserSetupCompleteMFACheckerVisitor)) {
-					return false;
-				}
+			if (mfaChecker.accept(_supportsSetupMFACheckerVisitor) &&
+				!mfaChecker.accept(_isUserSetupCompleteMFACheckerVisitor)) {
+
+				return false;
 			}
 
 			if (mfaChecker.accept(_isHeadlessVerifiedMFACheckerVisitor)) {
@@ -110,10 +110,10 @@ public class VerifyHeadlessMFACheckerVisitor
 				continue;
 			}
 
-			if (mfaChecker.accept(_supportsSetupMFACheckerVisitor)) {
-				if (!mfaChecker.accept(_isUserSetupCompleteMFACheckerVisitor)) {
-					continue;
-				}
+			if (mfaChecker.accept(_supportsSetupMFACheckerVisitor) &&
+				!mfaChecker.accept(_isUserSetupCompleteMFACheckerVisitor)) {
+
+				continue;
 			}
 
 			if (mfaChecker.accept(_isHeadlessVerifiedMFACheckerVisitor)) {

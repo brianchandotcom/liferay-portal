@@ -112,18 +112,17 @@ public class SearchLdapHandler extends BaseLdapHandler {
 
 		SearchScope searchScope = searchRequest.getScope();
 
-		if (searchScope.equals(SearchScope.OBJECT) ||
-			searchScope.equals(SearchScope.SUBTREE)) {
+		if ((searchScope.equals(SearchScope.OBJECT) ||
+			 searchScope.equals(SearchScope.SUBTREE)) &&
+			isMatch(directory, searchRequest.getFilter())) {
 
-			if (isMatch(directory, searchRequest.getFilter())) {
-				StopWatch stopWatch = new StopWatch();
+			StopWatch stopWatch = new StopWatch();
 
-				stopWatch.start();
+			stopWatch.start();
 
-				addObjectEntry(searchRequest, responses, directory, stopWatch);
+			addObjectEntry(searchRequest, responses, directory, stopWatch);
 
-				searchBase.setSizeLimit(searchBase.getSizeLimit() - 1);
-			}
+			searchBase.setSizeLimit(searchBase.getSizeLimit() - 1);
 		}
 
 		if (searchScope.equals(SearchScope.ONELEVEL) ||

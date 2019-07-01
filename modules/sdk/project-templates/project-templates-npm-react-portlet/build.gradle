@@ -4,7 +4,7 @@ dependencies {
 }
 
 generateSampleProject {
-	args "--liferayVersion", "7.1", "--name", "npm-react-portlet"
+	args "--liferay-version", "7.1", "--name", "npm-react-portlet"
 
 	doFirst {
 		delete "${buildDir}"

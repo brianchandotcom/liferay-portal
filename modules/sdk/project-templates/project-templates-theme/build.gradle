@@ -4,7 +4,7 @@ dependencies {
 }
 
 generateSampleProject {
-	args "--liferayVersion", "7.1", "--name", "sampletheme"
+	args "--liferay-version", "7.2", "--name", "sampletheme"
 
 	doFirst {
 		delete "${buildDir}/sampletheme"

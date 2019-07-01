@@ -4,7 +4,7 @@ dependencies {
 }
 
 generateSampleProject {
-	args "--class-name", "Foo", "--liferayVersion", "7.1", "--name", "foo"
+	args "--class-name", "Foo", "--liferay-version", "7.1", "--name", "foo"
 
 	doFirst {
 		delete "${buildDir}/foo"

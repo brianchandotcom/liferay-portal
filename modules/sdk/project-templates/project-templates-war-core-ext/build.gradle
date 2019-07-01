@@ -1,5 +1,5 @@
 generateSampleProject {
-	args "--liferayVersion", "7.1", "--name", "sample-core-ext"
+	args "--liferay-version", "7.1", "--name", "sample-core-ext"
 
 	doFirst {
 		delete "${buildDir}/sample-core-ext"

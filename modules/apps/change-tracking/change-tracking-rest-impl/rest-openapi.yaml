@@ -345,6 +345,42 @@ paths:
         get:
             operationId: getCollectionEntriesPage
             parameters:
+                - explode: true
+                  in: query
+                  name: changeTypesFilter
+                  required: false
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                  style: form
+                - explode: true
+                  in: query
+                  name: classNameIdsFilter
+                  required: false
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                  style: form
+                - explode: true
+                  in: query
+                  name: groupIdsFilter
+                  required: false
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                  style: form
+                - explode: true
+                  in: query
+                  name: userIdsFilter
+                  required: false
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                  style: form
                 - in: path
                   name: collectionId
                   required: true
@@ -352,25 +388,12 @@ paths:
                       format: int64
                       type: integer
                 - in: query
-                  name: changeTypesFilter
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: classNameIdsFilter
-                  required: false
-                  schema:
-                      type: string
-                - in: query
                   name: collision
                   required: false
                   schema:
+                      default: false
                       type: boolean
-                - in: query
-                  name: groupIdsFilter
-                  required: false
-                  schema:
-                      type: string
+                  style: form
                 - in: query
                   name: page
                   required: false
@@ -390,12 +413,8 @@ paths:
                   name: status
                   required: false
                   schema:
+                      default: 2
                       type: integer
-                - in: query
-                  name: userIdsFilter
-                  required: false
-                  schema:
-                      type: string
             responses:
                 200:
                     content:

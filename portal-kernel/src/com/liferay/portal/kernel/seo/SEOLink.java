@@ -25,21 +25,7 @@ public interface SEOLink {
 
 	public Optional<String> getHrefLang();
 
-	public SEOLinkDataSennaTrack getSEOLinkDataSennaTrack();
-
 	public SEOLinkRel getSeoLinkRel();
-
-	public enum SEOLinkDataSennaTrack {
-
-		TEMPORARY {
-
-			public String toString() {
-				return "temporary";
-			}
-
-		}
-
-	}
 
 	public enum SEOLinkRel {
 

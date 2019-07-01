@@ -64,6 +64,13 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public class FragmentEntryLinkServiceSoap {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addFragmentEntryLink(long, long, long, long, long, String,
+	 String, String, String, String, String, int, String,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.fragment.model.FragmentEntryLinkSoap
 			addFragmentEntryLink(
 				long groupId, long originalFragmentEntryLinkId,

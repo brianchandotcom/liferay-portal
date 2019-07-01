@@ -957,16 +957,22 @@ public class ProjectTemplateFilesTest {
 				text.contains("* @author ${author}"));
 		}
 
-		if (extension.equals("xml") && Validator.isNotNull(text)) {
-			String xmlDeclaration = _xmlDeclarations.get(fileName);
+		String pathString = path.toString();
 
-			if (xmlDeclaration == null) {
-				xmlDeclaration = _xmlDeclarations.get(null);
+		if (!pathString.contains("spring-mvc-portlet") &&
+			!fileName.equals("portlet")) {
+
+			if (extension.equals("xml") && Validator.isNotNull(text)) {
+				String xmlDeclaration = _xmlDeclarations.get(fileName);
+
+				if (xmlDeclaration == null) {
+					xmlDeclaration = _xmlDeclarations.get(null);
+				}
+
+				Assert.assertTrue(
+					"Incorrect XML declaration in " + path,
+					text.startsWith(xmlDeclaration));
 			}
-
-			Assert.assertTrue(
-				"Incorrect XML declaration in " + path,
-				text.startsWith(xmlDeclaration));
 		}
 
 		if (!fileName.endsWith(".js")) {

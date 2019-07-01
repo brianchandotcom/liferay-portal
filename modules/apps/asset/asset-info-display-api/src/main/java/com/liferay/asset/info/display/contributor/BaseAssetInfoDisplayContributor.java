@@ -15,6 +15,7 @@
 package com.liferay.asset.info.display.contributor;
 
 import com.liferay.asset.info.display.contributor.util.AssetInfoDisplayContributorFieldUtil;
+import com.liferay.asset.info.display.field.util.AssetEntryInfoDisplayFieldProviderUtil;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.model.AssetEntry;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -53,13 +53,9 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 			long classTypeId, Locale locale)
 		throws PortalException {
 
-		Set<InfoDisplayField> infoDisplayFields = _getInfoDisplayFields(
-			AssetEntry.class.getName(), locale);
-
-		Set<InfoDisplayField> assetTypeInfoDisplayFields =
-			_getInfoDisplayFields(getClassName(), locale);
-
-		infoDisplayFields.addAll(assetTypeInfoDisplayFields);
+		Set<InfoDisplayField> infoDisplayFields =
+			AssetEntryInfoDisplayFieldProviderUtil.getInfoDisplayFields(
+				locale, AssetEntry.class.getName(), getClassName());
 
 		List<InfoDisplayField> classTypeInfoDisplayFields =
 			getClassTypeInfoDisplayFields(classTypeId, locale);
@@ -217,27 +213,6 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 
 		return AssetInfoDisplayContributorFieldUtil.
 			getInfoDisplayContributorFields(className);
-	}
-
-	private Set<InfoDisplayField> _getInfoDisplayFields(
-		String className, Locale locale) {
-
-		Set<InfoDisplayField> infoDisplayFields = new LinkedHashSet<>();
-
-		for (InfoDisplayContributorField infoDisplayContributorField :
-				_getInfoDisplayContributorFields(className)) {
-
-			InfoDisplayContributorFieldType infoDisplayContributorFieldType =
-				infoDisplayContributorField.getType();
-
-			infoDisplayFields.add(
-				new InfoDisplayField(
-					infoDisplayContributorField.getKey(),
-					infoDisplayContributorField.getLabel(locale),
-					infoDisplayContributorFieldType.getValue()));
-		}
-
-		return infoDisplayFields;
 	}
 
 	private <T> Object _getInfoDisplayFieldValue(

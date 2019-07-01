@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.function.Consumer;
 
 import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
@@ -58,13 +57,12 @@ public class SEOImpl implements SEO {
 				null, SEOLink.SEOLinkRel.CANONICAL));
 
 		alternateURLs.forEach(
-			(locale1, url) ->
-				seoLinks.add(
-					new SEOLinkImpl(
-						SEOLink.SEOLinkDataSennaTrack.TEMPORARY,
-						_html.escapeAttribute(url),
-						LocaleUtil.toW3cLanguageId(locale1),
-						SEOLink.SEOLinkRel.ALTERNATE)));
+			(locale1, url) -> seoLinks.add(
+				new SEOLinkImpl(
+					SEOLink.SEOLinkDataSennaTrack.TEMPORARY,
+					_html.escapeAttribute(url),
+					LocaleUtil.toW3cLanguageId(locale1),
+					SEOLink.SEOLinkRel.ALTERNATE)));
 
 		String defaultLocaleURL = alternateURLs.get(LocaleUtil.getDefault());
 

@@ -11,9 +11,9 @@ create index IX_E1165342 on SegmentsEntryRel (classNameId, classPK);
 create index IX_5FBA8532 on SegmentsEntryRel (groupId, classNameId, classPK);
 create unique index IX_55B38A5 on SegmentsEntryRel (segmentsEntryId, classNameId, classPK);
 
-create index IX_6465BC65 on SegmentsExperience (groupId, classNameId, classPK, active_, approved);
+create index IX_50DD7CFA on SegmentsExperience (groupId, classNameId, classPK, active_);
 create unique index IX_8B4A6BC7 on SegmentsExperience (groupId, classNameId, classPK, priority);
-create index IX_817D041C on SegmentsExperience (groupId, segmentsEntryId, classNameId, classPK, active_, approved);
+create index IX_5B21AD71 on SegmentsExperience (groupId, segmentsEntryId, classNameId, classPK, active_);
 create unique index IX_B8F358EB on SegmentsExperience (groupId, segmentsExperienceKey[$COLUMN_LENGTH:75$]);
 create index IX_E90B4ACD on SegmentsExperience (segmentsEntryId);
 create index IX_15CA0884 on SegmentsExperience (uuid_[$COLUMN_LENGTH:75$], companyId);

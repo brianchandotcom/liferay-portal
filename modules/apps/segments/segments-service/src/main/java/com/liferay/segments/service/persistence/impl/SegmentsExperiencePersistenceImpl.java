@@ -2897,6 +2897,260 @@ public class SegmentsExperiencePersistenceImpl
 		_FINDER_COLUMN_SEGMENTSENTRYID_SEGMENTSENTRYID_2 =
 			"segmentsExperience.segmentsEntryId = ?";
 
+	private FinderPath _finderPathFetchByG_S;
+	private FinderPath _finderPathCountByG_S;
+
+	/**
+	 * Returns the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; or throws a <code>NoSuchExperienceException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceKey the segments experience key
+	 * @return the matching segments experience
+	 * @throws NoSuchExperienceException if a matching segments experience could not be found
+	 */
+	@Override
+	public SegmentsExperience findByG_S(
+			long groupId, String segmentsExperienceKey)
+		throws NoSuchExperienceException {
+
+		SegmentsExperience segmentsExperience = fetchByG_S(
+			groupId, segmentsExperienceKey);
+
+		if (segmentsExperience == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append(", segmentsExperienceKey=");
+			msg.append(segmentsExperienceKey);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchExperienceException(msg.toString());
+		}
+
+		return segmentsExperience;
+	}
+
+	/**
+	 * Returns the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceKey the segments experience key
+	 * @return the matching segments experience, or <code>null</code> if a matching segments experience could not be found
+	 */
+	@Override
+	public SegmentsExperience fetchByG_S(
+		long groupId, String segmentsExperienceKey) {
+
+		return fetchByG_S(groupId, segmentsExperienceKey, true);
+	}
+
+	/**
+	 * Returns the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceKey the segments experience key
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching segments experience, or <code>null</code> if a matching segments experience could not be found
+	 */
+	@Override
+	public SegmentsExperience fetchByG_S(
+		long groupId, String segmentsExperienceKey, boolean retrieveFromCache) {
+
+		segmentsExperienceKey = Objects.toString(segmentsExperienceKey, "");
+
+		Object[] finderArgs = new Object[] {groupId, segmentsExperienceKey};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByG_S, finderArgs, this);
+		}
+
+		if (result instanceof SegmentsExperience) {
+			SegmentsExperience segmentsExperience = (SegmentsExperience)result;
+
+			if ((groupId != segmentsExperience.getGroupId()) ||
+				!Objects.equals(
+					segmentsExperienceKey,
+					segmentsExperience.getSegmentsExperienceKey())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
+
+			query.append(_FINDER_COLUMN_G_S_GROUPID_2);
+
+			boolean bindSegmentsExperienceKey = false;
+
+			if (segmentsExperienceKey.isEmpty()) {
+				query.append(_FINDER_COLUMN_G_S_SEGMENTSEXPERIENCEKEY_3);
+			}
+			else {
+				bindSegmentsExperienceKey = true;
+
+				query.append(_FINDER_COLUMN_G_S_SEGMENTSEXPERIENCEKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindSegmentsExperienceKey) {
+					qPos.add(segmentsExperienceKey);
+				}
+
+				List<SegmentsExperience> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(
+						_finderPathFetchByG_S, finderArgs, list);
+				}
+				else {
+					SegmentsExperience segmentsExperience = list.get(0);
+
+					result = segmentsExperience;
+
+					cacheResult(segmentsExperience);
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(_finderPathFetchByG_S, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (SegmentsExperience)result;
+		}
+	}
+
+	/**
+	 * Removes the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceKey the segments experience key
+	 * @return the segments experience that was removed
+	 */
+	@Override
+	public SegmentsExperience removeByG_S(
+			long groupId, String segmentsExperienceKey)
+		throws NoSuchExperienceException {
+
+		SegmentsExperience segmentsExperience = findByG_S(
+			groupId, segmentsExperienceKey);
+
+		return remove(segmentsExperience);
+	}
+
+	/**
+	 * Returns the number of segments experiences where groupId = &#63; and segmentsExperienceKey = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceKey the segments experience key
+	 * @return the number of matching segments experiences
+	 */
+	@Override
+	public int countByG_S(long groupId, String segmentsExperienceKey) {
+		segmentsExperienceKey = Objects.toString(segmentsExperienceKey, "");
+
+		FinderPath finderPath = _finderPathCountByG_S;
+
+		Object[] finderArgs = new Object[] {groupId, segmentsExperienceKey};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
+
+			query.append(_FINDER_COLUMN_G_S_GROUPID_2);
+
+			boolean bindSegmentsExperienceKey = false;
+
+			if (segmentsExperienceKey.isEmpty()) {
+				query.append(_FINDER_COLUMN_G_S_SEGMENTSEXPERIENCEKEY_3);
+			}
+			else {
+				bindSegmentsExperienceKey = true;
+
+				query.append(_FINDER_COLUMN_G_S_SEGMENTSEXPERIENCEKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindSegmentsExperienceKey) {
+					qPos.add(segmentsExperienceKey);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_S_GROUPID_2 =
+		"segmentsExperience.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_S_SEGMENTSEXPERIENCEKEY_2 =
+		"segmentsExperience.segmentsExperienceKey = ?";
+
+	private static final String _FINDER_COLUMN_G_S_SEGMENTSEXPERIENCEKEY_3 =
+		"(segmentsExperience.segmentsExperienceKey IS NULL OR segmentsExperience.segmentsExperienceKey = '')";
+
 	private FinderPath _finderPathWithPaginationFindByG_C_C;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_C;
 	private FinderPath _finderPathCountByG_C_C;
@@ -7422,1409 +7676,6 @@ public class SegmentsExperiencePersistenceImpl
 	private static final String _FINDER_COLUMN_G_C_C_A_ACTIVE_2_SQL =
 		"segmentsExperience.active_ = ?";
 
-	private FinderPath _finderPathWithPaginationFindByG_C_C_A_A;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_C_A_A;
-	private FinderPath _finderPathCountByG_C_C_A_A;
-
-	/**
-	 * Returns all the segments experiences where groupId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @return the matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_C_C_A_A(
-		long groupId, long classNameId, long classPK, boolean active,
-		boolean approved) {
-
-		return findByG_C_C_A_A(
-			groupId, classNameId, classPK, active, approved, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences where groupId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_C_C_A_A(
-		long groupId, long classNameId, long classPK, boolean active,
-		boolean approved, int start, int end) {
-
-		return findByG_C_C_A_A(
-			groupId, classNameId, classPK, active, approved, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiences where groupId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_C_C_A_A(
-		long groupId, long classNameId, long classPK, boolean active,
-		boolean approved, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
-
-		return findByG_C_C_A_A(
-			groupId, classNameId, classPK, active, approved, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiences where groupId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_C_C_A_A(
-		long groupId, long classNameId, long classPK, boolean active,
-		boolean approved, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator,
-		boolean retrieveFromCache) {
-
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_C_C_A_A;
-			finderArgs = new Object[] {
-				groupId, classNameId, classPK, active, approved
-			};
-		}
-		else {
-			finderPath = _finderPathWithPaginationFindByG_C_C_A_A;
-			finderArgs = new Object[] {
-				groupId, classNameId, classPK, active, approved, start, end,
-				orderByComparator
-			};
-		}
-
-		List<SegmentsExperience> list = null;
-
-		if (retrieveFromCache) {
-			list = (List<SegmentsExperience>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (SegmentsExperience segmentsExperience : list) {
-					if ((groupId != segmentsExperience.getGroupId()) ||
-						(classNameId != segmentsExperience.getClassNameId()) ||
-						(classPK != segmentsExperience.getClassPK()) ||
-						(active != segmentsExperience.isActive()) ||
-						(approved != segmentsExperience.isApproved())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(
-					7 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				query = new StringBundler(7);
-			}
-
-			query.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
-
-			query.append(_FINDER_COLUMN_G_C_C_A_A_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_A_A_CLASSNAMEID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_A_A_CLASSPK_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_A_A_ACTIVE_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_A_A_APPROVED_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else if (pagination) {
-				query.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(classNameId);
-
-				qPos.add(classPK);
-
-				qPos.add(active);
-
-				qPos.add(approved);
-
-				if (!pagination) {
-					list = (List<SegmentsExperience>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SegmentsExperience>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
-
-				cacheResult(list);
-
-				finderCache.putResult(finderPath, finderArgs, list);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first segments experience in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching segments experience
-	 * @throws NoSuchExperienceException if a matching segments experience could not be found
-	 */
-	@Override
-	public SegmentsExperience findByG_C_C_A_A_First(
-			long groupId, long classNameId, long classPK, boolean active,
-			boolean approved,
-			OrderByComparator<SegmentsExperience> orderByComparator)
-		throws NoSuchExperienceException {
-
-		SegmentsExperience segmentsExperience = fetchByG_C_C_A_A_First(
-			groupId, classNameId, classPK, active, approved, orderByComparator);
-
-		if (segmentsExperience != null) {
-			return segmentsExperience;
-		}
-
-		StringBundler msg = new StringBundler(12);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("groupId=");
-		msg.append(groupId);
-
-		msg.append(", classNameId=");
-		msg.append(classNameId);
-
-		msg.append(", classPK=");
-		msg.append(classPK);
-
-		msg.append(", active=");
-		msg.append(active);
-
-		msg.append(", approved=");
-		msg.append(approved);
-
-		msg.append("}");
-
-		throw new NoSuchExperienceException(msg.toString());
-	}
-
-	/**
-	 * Returns the first segments experience in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	@Override
-	public SegmentsExperience fetchByG_C_C_A_A_First(
-		long groupId, long classNameId, long classPK, boolean active,
-		boolean approved,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
-
-		List<SegmentsExperience> list = findByG_C_C_A_A(
-			groupId, classNameId, classPK, active, approved, 0, 1,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last segments experience in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience
-	 * @throws NoSuchExperienceException if a matching segments experience could not be found
-	 */
-	@Override
-	public SegmentsExperience findByG_C_C_A_A_Last(
-			long groupId, long classNameId, long classPK, boolean active,
-			boolean approved,
-			OrderByComparator<SegmentsExperience> orderByComparator)
-		throws NoSuchExperienceException {
-
-		SegmentsExperience segmentsExperience = fetchByG_C_C_A_A_Last(
-			groupId, classNameId, classPK, active, approved, orderByComparator);
-
-		if (segmentsExperience != null) {
-			return segmentsExperience;
-		}
-
-		StringBundler msg = new StringBundler(12);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("groupId=");
-		msg.append(groupId);
-
-		msg.append(", classNameId=");
-		msg.append(classNameId);
-
-		msg.append(", classPK=");
-		msg.append(classPK);
-
-		msg.append(", active=");
-		msg.append(active);
-
-		msg.append(", approved=");
-		msg.append(approved);
-
-		msg.append("}");
-
-		throw new NoSuchExperienceException(msg.toString());
-	}
-
-	/**
-	 * Returns the last segments experience in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	@Override
-	public SegmentsExperience fetchByG_C_C_A_A_Last(
-		long groupId, long classNameId, long classPK, boolean active,
-		boolean approved,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
-
-		int count = countByG_C_C_A_A(
-			groupId, classNameId, classPK, active, approved);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SegmentsExperience> list = findByG_C_C_A_A(
-			groupId, classNameId, classPK, active, approved, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the segments experiences before and after the current segments experience in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * @param segmentsExperienceId the primary key of the current segments experience
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next segments experience
-	 * @throws NoSuchExperienceException if a segments experience with the primary key could not be found
-	 */
-	@Override
-	public SegmentsExperience[] findByG_C_C_A_A_PrevAndNext(
-			long segmentsExperienceId, long groupId, long classNameId,
-			long classPK, boolean active, boolean approved,
-			OrderByComparator<SegmentsExperience> orderByComparator)
-		throws NoSuchExperienceException {
-
-		SegmentsExperience segmentsExperience = findByPrimaryKey(
-			segmentsExperienceId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SegmentsExperience[] array = new SegmentsExperienceImpl[3];
-
-			array[0] = getByG_C_C_A_A_PrevAndNext(
-				session, segmentsExperience, groupId, classNameId, classPK,
-				active, approved, orderByComparator, true);
-
-			array[1] = segmentsExperience;
-
-			array[2] = getByG_C_C_A_A_PrevAndNext(
-				session, segmentsExperience, groupId, classNameId, classPK,
-				active, approved, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected SegmentsExperience getByG_C_C_A_A_PrevAndNext(
-		Session session, SegmentsExperience segmentsExperience, long groupId,
-		long classNameId, long classPK, boolean active, boolean approved,
-		OrderByComparator<SegmentsExperience> orderByComparator,
-		boolean previous) {
-
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(
-				8 + (orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			query = new StringBundler(7);
-		}
-
-		query.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
-
-		query.append(_FINDER_COLUMN_G_C_C_A_A_GROUPID_2);
-
-		query.append(_FINDER_COLUMN_G_C_C_A_A_CLASSNAMEID_2);
-
-		query.append(_FINDER_COLUMN_G_C_C_A_A_CLASSPK_2);
-
-		query.append(_FINDER_COLUMN_G_C_C_A_A_ACTIVE_2);
-
-		query.append(_FINDER_COLUMN_G_C_C_A_A_APPROVED_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(groupId);
-
-		qPos.add(classNameId);
-
-		qPos.add(classPK);
-
-		qPos.add(active);
-
-		qPos.add(approved);
-
-		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(
-						segmentsExperience)) {
-
-				qPos.add(orderByConditionValue);
-			}
-		}
-
-		List<SegmentsExperience> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Returns all the segments experiences that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @return the matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_C_C_A_A(
-		long groupId, long classNameId, long classPK, boolean active,
-		boolean approved) {
-
-		return filterFindByG_C_C_A_A(
-			groupId, classNameId, classPK, active, approved, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_C_C_A_A(
-		long groupId, long classNameId, long classPK, boolean active,
-		boolean approved, int start, int end) {
-
-		return filterFindByG_C_C_A_A(
-			groupId, classNameId, classPK, active, approved, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiences that the user has permissions to view where groupId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_C_C_A_A(
-		long groupId, long classNameId, long classPK, boolean active,
-		boolean approved, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
-
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_C_C_A_A(
-				groupId, classNameId, classPK, active, approved, start, end,
-				orderByComparator);
-		}
-
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(
-				7 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			query = new StringBundler(8);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
-		}
-		else {
-			query.append(
-				_FILTER_SQL_SELECT_SEGMENTSEXPERIENCE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		query.append(_FINDER_COLUMN_G_C_C_A_A_GROUPID_2);
-
-		query.append(_FINDER_COLUMN_G_C_C_A_A_CLASSNAMEID_2);
-
-		query.append(_FINDER_COLUMN_G_C_C_A_A_CLASSPK_2);
-
-		query.append(_FINDER_COLUMN_G_C_C_A_A_ACTIVE_2_SQL);
-
-		query.append(_FINDER_COLUMN_G_C_C_A_A_APPROVED_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			query.append(
-				_FILTER_SQL_SELECT_SEGMENTSEXPERIENCE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				query.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				query.append(SegmentsExperienceModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			query.toString(), SegmentsExperience.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				q.addEntity(_FILTER_ENTITY_ALIAS, SegmentsExperienceImpl.class);
-			}
-			else {
-				q.addEntity(_FILTER_ENTITY_TABLE, SegmentsExperienceImpl.class);
-			}
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-
-			qPos.add(classNameId);
-
-			qPos.add(classPK);
-
-			qPos.add(active);
-
-			qPos.add(approved);
-
-			return (List<SegmentsExperience>)QueryUtil.list(
-				q, getDialect(), start, end);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	/**
-	 * Returns the segments experiences before and after the current segments experience in the ordered set of segments experiences that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * @param segmentsExperienceId the primary key of the current segments experience
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next segments experience
-	 * @throws NoSuchExperienceException if a segments experience with the primary key could not be found
-	 */
-	@Override
-	public SegmentsExperience[] filterFindByG_C_C_A_A_PrevAndNext(
-			long segmentsExperienceId, long groupId, long classNameId,
-			long classPK, boolean active, boolean approved,
-			OrderByComparator<SegmentsExperience> orderByComparator)
-		throws NoSuchExperienceException {
-
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_C_C_A_A_PrevAndNext(
-				segmentsExperienceId, groupId, classNameId, classPK, active,
-				approved, orderByComparator);
-		}
-
-		SegmentsExperience segmentsExperience = findByPrimaryKey(
-			segmentsExperienceId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SegmentsExperience[] array = new SegmentsExperienceImpl[3];
-
-			array[0] = filterGetByG_C_C_A_A_PrevAndNext(
-				session, segmentsExperience, groupId, classNameId, classPK,
-				active, approved, orderByComparator, true);
-
-			array[1] = segmentsExperience;
-
-			array[2] = filterGetByG_C_C_A_A_PrevAndNext(
-				session, segmentsExperience, groupId, classNameId, classPK,
-				active, approved, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected SegmentsExperience filterGetByG_C_C_A_A_PrevAndNext(
-		Session session, SegmentsExperience segmentsExperience, long groupId,
-		long classNameId, long classPK, boolean active, boolean approved,
-		OrderByComparator<SegmentsExperience> orderByComparator,
-		boolean previous) {
-
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(
-				9 + (orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			query = new StringBundler(8);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
-		}
-		else {
-			query.append(
-				_FILTER_SQL_SELECT_SEGMENTSEXPERIENCE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		query.append(_FINDER_COLUMN_G_C_C_A_A_GROUPID_2);
-
-		query.append(_FINDER_COLUMN_G_C_C_A_A_CLASSNAMEID_2);
-
-		query.append(_FINDER_COLUMN_G_C_C_A_A_CLASSPK_2);
-
-		query.append(_FINDER_COLUMN_G_C_C_A_A_ACTIVE_2_SQL);
-
-		query.append(_FINDER_COLUMN_G_C_C_A_A_APPROVED_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			query.append(
-				_FILTER_SQL_SELECT_SEGMENTSEXPERIENCE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
-							true));
-				}
-				else {
-					query.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
-							true));
-				}
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
-				}
-				else {
-					query.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
-				}
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				query.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				query.append(SegmentsExperienceModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			query.toString(), SegmentsExperience.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		if (getDB().isSupportsInlineDistinct()) {
-			q.addEntity(_FILTER_ENTITY_ALIAS, SegmentsExperienceImpl.class);
-		}
-		else {
-			q.addEntity(_FILTER_ENTITY_TABLE, SegmentsExperienceImpl.class);
-		}
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(groupId);
-
-		qPos.add(classNameId);
-
-		qPos.add(classPK);
-
-		qPos.add(active);
-
-		qPos.add(approved);
-
-		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(
-						segmentsExperience)) {
-
-				qPos.add(orderByConditionValue);
-			}
-		}
-
-		List<SegmentsExperience> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the segments experiences where groupId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 */
-	@Override
-	public void removeByG_C_C_A_A(
-		long groupId, long classNameId, long classPK, boolean active,
-		boolean approved) {
-
-		for (SegmentsExperience segmentsExperience :
-				findByG_C_C_A_A(
-					groupId, classNameId, classPK, active, approved,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(segmentsExperience);
-		}
-	}
-
-	/**
-	 * Returns the number of segments experiences where groupId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @return the number of matching segments experiences
-	 */
-	@Override
-	public int countByG_C_C_A_A(
-		long groupId, long classNameId, long classPK, boolean active,
-		boolean approved) {
-
-		FinderPath finderPath = _finderPathCountByG_C_C_A_A;
-
-		Object[] finderArgs = new Object[] {
-			groupId, classNameId, classPK, active, approved
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(6);
-
-			query.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
-
-			query.append(_FINDER_COLUMN_G_C_C_A_A_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_A_A_CLASSNAMEID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_A_A_CLASSPK_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_A_A_ACTIVE_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_A_A_APPROVED_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(classNameId);
-
-				qPos.add(classPK);
-
-				qPos.add(active);
-
-				qPos.add(approved);
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of segments experiences that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @return the number of matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public int filterCountByG_C_C_A_A(
-		long groupId, long classNameId, long classPK, boolean active,
-		boolean approved) {
-
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_C_C_A_A(
-				groupId, classNameId, classPK, active, approved);
-		}
-
-		StringBundler query = new StringBundler(6);
-
-		query.append(_FILTER_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
-
-		query.append(_FINDER_COLUMN_G_C_C_A_A_GROUPID_2);
-
-		query.append(_FINDER_COLUMN_G_C_C_A_A_CLASSNAMEID_2);
-
-		query.append(_FINDER_COLUMN_G_C_C_A_A_CLASSPK_2);
-
-		query.append(_FINDER_COLUMN_G_C_C_A_A_ACTIVE_2_SQL);
-
-		query.append(_FINDER_COLUMN_G_C_C_A_A_APPROVED_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			query.toString(), SegmentsExperience.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-
-			qPos.add(classNameId);
-
-			qPos.add(classPK);
-
-			qPos.add(active);
-
-			qPos.add(approved);
-
-			Long count = (Long)q.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	private static final String _FINDER_COLUMN_G_C_C_A_A_GROUPID_2 =
-		"segmentsExperience.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_A_A_CLASSNAMEID_2 =
-		"segmentsExperience.classNameId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_A_A_CLASSPK_2 =
-		"segmentsExperience.classPK = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_A_A_ACTIVE_2 =
-		"segmentsExperience.active = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_A_A_ACTIVE_2_SQL =
-		"segmentsExperience.active_ = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_A_A_APPROVED_2 =
-		"segmentsExperience.approved = ?";
-
-	private FinderPath _finderPathFetchByG_S;
-	private FinderPath _finderPathCountByG_S;
-
-	/**
-	 * Returns the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; or throws a <code>NoSuchExperienceException</code> if it could not be found.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceKey the segments experience key
-	 * @return the matching segments experience
-	 * @throws NoSuchExperienceException if a matching segments experience could not be found
-	 */
-	@Override
-	public SegmentsExperience findByG_S(
-			long groupId, String segmentsExperienceKey)
-		throws NoSuchExperienceException {
-
-		SegmentsExperience segmentsExperience = fetchByG_S(
-			groupId, segmentsExperienceKey);
-
-		if (segmentsExperience == null) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", segmentsExperienceKey=");
-			msg.append(segmentsExperienceKey);
-
-			msg.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(msg.toString());
-			}
-
-			throw new NoSuchExperienceException(msg.toString());
-		}
-
-		return segmentsExperience;
-	}
-
-	/**
-	 * Returns the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceKey the segments experience key
-	 * @return the matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	@Override
-	public SegmentsExperience fetchByG_S(
-		long groupId, String segmentsExperienceKey) {
-
-		return fetchByG_S(groupId, segmentsExperienceKey, true);
-	}
-
-	/**
-	 * Returns the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceKey the segments experience key
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	@Override
-	public SegmentsExperience fetchByG_S(
-		long groupId, String segmentsExperienceKey, boolean retrieveFromCache) {
-
-		segmentsExperienceKey = Objects.toString(segmentsExperienceKey, "");
-
-		Object[] finderArgs = new Object[] {groupId, segmentsExperienceKey};
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByG_S, finderArgs, this);
-		}
-
-		if (result instanceof SegmentsExperience) {
-			SegmentsExperience segmentsExperience = (SegmentsExperience)result;
-
-			if ((groupId != segmentsExperience.getGroupId()) ||
-				!Objects.equals(
-					segmentsExperienceKey,
-					segmentsExperience.getSegmentsExperienceKey())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(4);
-
-			query.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
-
-			query.append(_FINDER_COLUMN_G_S_GROUPID_2);
-
-			boolean bindSegmentsExperienceKey = false;
-
-			if (segmentsExperienceKey.isEmpty()) {
-				query.append(_FINDER_COLUMN_G_S_SEGMENTSEXPERIENCEKEY_3);
-			}
-			else {
-				bindSegmentsExperienceKey = true;
-
-				query.append(_FINDER_COLUMN_G_S_SEGMENTSEXPERIENCEKEY_2);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				if (bindSegmentsExperienceKey) {
-					qPos.add(segmentsExperienceKey);
-				}
-
-				List<SegmentsExperience> list = q.list();
-
-				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByG_S, finderArgs, list);
-				}
-				else {
-					SegmentsExperience segmentsExperience = list.get(0);
-
-					result = segmentsExperience;
-
-					cacheResult(segmentsExperience);
-				}
-			}
-			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByG_S, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (SegmentsExperience)result;
-		}
-	}
-
-	/**
-	 * Removes the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceKey the segments experience key
-	 * @return the segments experience that was removed
-	 */
-	@Override
-	public SegmentsExperience removeByG_S(
-			long groupId, String segmentsExperienceKey)
-		throws NoSuchExperienceException {
-
-		SegmentsExperience segmentsExperience = findByG_S(
-			groupId, segmentsExperienceKey);
-
-		return remove(segmentsExperience);
-	}
-
-	/**
-	 * Returns the number of segments experiences where groupId = &#63; and segmentsExperienceKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceKey the segments experience key
-	 * @return the number of matching segments experiences
-	 */
-	@Override
-	public int countByG_S(long groupId, String segmentsExperienceKey) {
-		segmentsExperienceKey = Objects.toString(segmentsExperienceKey, "");
-
-		FinderPath finderPath = _finderPathCountByG_S;
-
-		Object[] finderArgs = new Object[] {groupId, segmentsExperienceKey};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
-
-			query.append(_FINDER_COLUMN_G_S_GROUPID_2);
-
-			boolean bindSegmentsExperienceKey = false;
-
-			if (segmentsExperienceKey.isEmpty()) {
-				query.append(_FINDER_COLUMN_G_S_SEGMENTSEXPERIENCEKEY_3);
-			}
-			else {
-				bindSegmentsExperienceKey = true;
-
-				query.append(_FINDER_COLUMN_G_S_SEGMENTSEXPERIENCEKEY_2);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				if (bindSegmentsExperienceKey) {
-					qPos.add(segmentsExperienceKey);
-				}
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_G_S_GROUPID_2 =
-		"segmentsExperience.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_S_SEGMENTSEXPERIENCEKEY_2 =
-		"segmentsExperience.segmentsExperienceKey = ?";
-
-	private static final String _FINDER_COLUMN_G_S_SEGMENTSEXPERIENCEKEY_3 =
-		"(segmentsExperience.segmentsExperienceKey IS NULL OR segmentsExperience.segmentsExperienceKey = '')";
-
 	private FinderPath _finderPathWithPaginationFindByG_S_C_C_A;
 	private FinderPath _finderPathWithoutPaginationFindByG_S_C_C_A;
 	private FinderPath _finderPathCountByG_S_C_C_A;
@@ -10606,1873 +9457,6 @@ public class SegmentsExperiencePersistenceImpl
 	private static final String _FINDER_COLUMN_G_S_C_C_A_ACTIVE_2_SQL =
 		"segmentsExperience.active_ = ?";
 
-	private FinderPath _finderPathWithPaginationFindByG_S_C_C_A_A;
-	private FinderPath _finderPathWithoutPaginationFindByG_S_C_C_A_A;
-	private FinderPath _finderPathCountByG_S_C_C_A_A;
-	private FinderPath _finderPathWithPaginationCountByG_S_C_C_A_A;
-
-	/**
-	 * Returns all the segments experiences where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @return the matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_S_C_C_A_A(
-		long groupId, long segmentsEntryId, long classNameId, long classPK,
-		boolean active, boolean approved) {
-
-		return findByG_S_C_C_A_A(
-			groupId, segmentsEntryId, classNameId, classPK, active, approved,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_S_C_C_A_A(
-		long groupId, long segmentsEntryId, long classNameId, long classPK,
-		boolean active, boolean approved, int start, int end) {
-
-		return findByG_S_C_C_A_A(
-			groupId, segmentsEntryId, classNameId, classPK, active, approved,
-			start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiences where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_S_C_C_A_A(
-		long groupId, long segmentsEntryId, long classNameId, long classPK,
-		boolean active, boolean approved, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
-
-		return findByG_S_C_C_A_A(
-			groupId, segmentsEntryId, classNameId, classPK, active, approved,
-			start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiences where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_S_C_C_A_A(
-		long groupId, long segmentsEntryId, long classNameId, long classPK,
-		boolean active, boolean approved, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator,
-		boolean retrieveFromCache) {
-
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_S_C_C_A_A;
-			finderArgs = new Object[] {
-				groupId, segmentsEntryId, classNameId, classPK, active, approved
-			};
-		}
-		else {
-			finderPath = _finderPathWithPaginationFindByG_S_C_C_A_A;
-			finderArgs = new Object[] {
-				groupId, segmentsEntryId, classNameId, classPK, active,
-				approved, start, end, orderByComparator
-			};
-		}
-
-		List<SegmentsExperience> list = null;
-
-		if (retrieveFromCache) {
-			list = (List<SegmentsExperience>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (SegmentsExperience segmentsExperience : list) {
-					if ((groupId != segmentsExperience.getGroupId()) ||
-						(segmentsEntryId !=
-							segmentsExperience.getSegmentsEntryId()) ||
-						(classNameId != segmentsExperience.getClassNameId()) ||
-						(classPK != segmentsExperience.getClassPK()) ||
-						(active != segmentsExperience.isActive()) ||
-						(approved != segmentsExperience.isApproved())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(
-					8 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				query = new StringBundler(8);
-			}
-
-			query.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
-
-			query.append(_FINDER_COLUMN_G_S_C_C_A_A_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_S_C_C_A_A_SEGMENTSENTRYID_2);
-
-			query.append(_FINDER_COLUMN_G_S_C_C_A_A_CLASSNAMEID_2);
-
-			query.append(_FINDER_COLUMN_G_S_C_C_A_A_CLASSPK_2);
-
-			query.append(_FINDER_COLUMN_G_S_C_C_A_A_ACTIVE_2);
-
-			query.append(_FINDER_COLUMN_G_S_C_C_A_A_APPROVED_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else if (pagination) {
-				query.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(segmentsEntryId);
-
-				qPos.add(classNameId);
-
-				qPos.add(classPK);
-
-				qPos.add(active);
-
-				qPos.add(approved);
-
-				if (!pagination) {
-					list = (List<SegmentsExperience>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SegmentsExperience>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
-
-				cacheResult(list);
-
-				finderCache.putResult(finderPath, finderArgs, list);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first segments experience in the ordered set where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching segments experience
-	 * @throws NoSuchExperienceException if a matching segments experience could not be found
-	 */
-	@Override
-	public SegmentsExperience findByG_S_C_C_A_A_First(
-			long groupId, long segmentsEntryId, long classNameId, long classPK,
-			boolean active, boolean approved,
-			OrderByComparator<SegmentsExperience> orderByComparator)
-		throws NoSuchExperienceException {
-
-		SegmentsExperience segmentsExperience = fetchByG_S_C_C_A_A_First(
-			groupId, segmentsEntryId, classNameId, classPK, active, approved,
-			orderByComparator);
-
-		if (segmentsExperience != null) {
-			return segmentsExperience;
-		}
-
-		StringBundler msg = new StringBundler(14);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("groupId=");
-		msg.append(groupId);
-
-		msg.append(", segmentsEntryId=");
-		msg.append(segmentsEntryId);
-
-		msg.append(", classNameId=");
-		msg.append(classNameId);
-
-		msg.append(", classPK=");
-		msg.append(classPK);
-
-		msg.append(", active=");
-		msg.append(active);
-
-		msg.append(", approved=");
-		msg.append(approved);
-
-		msg.append("}");
-
-		throw new NoSuchExperienceException(msg.toString());
-	}
-
-	/**
-	 * Returns the first segments experience in the ordered set where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	@Override
-	public SegmentsExperience fetchByG_S_C_C_A_A_First(
-		long groupId, long segmentsEntryId, long classNameId, long classPK,
-		boolean active, boolean approved,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
-
-		List<SegmentsExperience> list = findByG_S_C_C_A_A(
-			groupId, segmentsEntryId, classNameId, classPK, active, approved, 0,
-			1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last segments experience in the ordered set where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience
-	 * @throws NoSuchExperienceException if a matching segments experience could not be found
-	 */
-	@Override
-	public SegmentsExperience findByG_S_C_C_A_A_Last(
-			long groupId, long segmentsEntryId, long classNameId, long classPK,
-			boolean active, boolean approved,
-			OrderByComparator<SegmentsExperience> orderByComparator)
-		throws NoSuchExperienceException {
-
-		SegmentsExperience segmentsExperience = fetchByG_S_C_C_A_A_Last(
-			groupId, segmentsEntryId, classNameId, classPK, active, approved,
-			orderByComparator);
-
-		if (segmentsExperience != null) {
-			return segmentsExperience;
-		}
-
-		StringBundler msg = new StringBundler(14);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("groupId=");
-		msg.append(groupId);
-
-		msg.append(", segmentsEntryId=");
-		msg.append(segmentsEntryId);
-
-		msg.append(", classNameId=");
-		msg.append(classNameId);
-
-		msg.append(", classPK=");
-		msg.append(classPK);
-
-		msg.append(", active=");
-		msg.append(active);
-
-		msg.append(", approved=");
-		msg.append(approved);
-
-		msg.append("}");
-
-		throw new NoSuchExperienceException(msg.toString());
-	}
-
-	/**
-	 * Returns the last segments experience in the ordered set where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	@Override
-	public SegmentsExperience fetchByG_S_C_C_A_A_Last(
-		long groupId, long segmentsEntryId, long classNameId, long classPK,
-		boolean active, boolean approved,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
-
-		int count = countByG_S_C_C_A_A(
-			groupId, segmentsEntryId, classNameId, classPK, active, approved);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<SegmentsExperience> list = findByG_S_C_C_A_A(
-			groupId, segmentsEntryId, classNameId, classPK, active, approved,
-			count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the segments experiences before and after the current segments experience in the ordered set where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * @param segmentsExperienceId the primary key of the current segments experience
-	 * @param groupId the group ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next segments experience
-	 * @throws NoSuchExperienceException if a segments experience with the primary key could not be found
-	 */
-	@Override
-	public SegmentsExperience[] findByG_S_C_C_A_A_PrevAndNext(
-			long segmentsExperienceId, long groupId, long segmentsEntryId,
-			long classNameId, long classPK, boolean active, boolean approved,
-			OrderByComparator<SegmentsExperience> orderByComparator)
-		throws NoSuchExperienceException {
-
-		SegmentsExperience segmentsExperience = findByPrimaryKey(
-			segmentsExperienceId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SegmentsExperience[] array = new SegmentsExperienceImpl[3];
-
-			array[0] = getByG_S_C_C_A_A_PrevAndNext(
-				session, segmentsExperience, groupId, segmentsEntryId,
-				classNameId, classPK, active, approved, orderByComparator,
-				true);
-
-			array[1] = segmentsExperience;
-
-			array[2] = getByG_S_C_C_A_A_PrevAndNext(
-				session, segmentsExperience, groupId, segmentsEntryId,
-				classNameId, classPK, active, approved, orderByComparator,
-				false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected SegmentsExperience getByG_S_C_C_A_A_PrevAndNext(
-		Session session, SegmentsExperience segmentsExperience, long groupId,
-		long segmentsEntryId, long classNameId, long classPK, boolean active,
-		boolean approved,
-		OrderByComparator<SegmentsExperience> orderByComparator,
-		boolean previous) {
-
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(
-				9 + (orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			query = new StringBundler(8);
-		}
-
-		query.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_GROUPID_2);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_SEGMENTSENTRYID_2);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_CLASSNAMEID_2);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_CLASSPK_2);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_ACTIVE_2);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_APPROVED_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(groupId);
-
-		qPos.add(segmentsEntryId);
-
-		qPos.add(classNameId);
-
-		qPos.add(classPK);
-
-		qPos.add(active);
-
-		qPos.add(approved);
-
-		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(
-						segmentsExperience)) {
-
-				qPos.add(orderByConditionValue);
-			}
-		}
-
-		List<SegmentsExperience> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Returns all the segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @return the matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_S_C_C_A_A(
-		long groupId, long segmentsEntryId, long classNameId, long classPK,
-		boolean active, boolean approved) {
-
-		return filterFindByG_S_C_C_A_A(
-			groupId, segmentsEntryId, classNameId, classPK, active, approved,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_S_C_C_A_A(
-		long groupId, long segmentsEntryId, long classNameId, long classPK,
-		boolean active, boolean approved, int start, int end) {
-
-		return filterFindByG_S_C_C_A_A(
-			groupId, segmentsEntryId, classNameId, classPK, active, approved,
-			start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiences that the user has permissions to view where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_S_C_C_A_A(
-		long groupId, long segmentsEntryId, long classNameId, long classPK,
-		boolean active, boolean approved, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
-
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_S_C_C_A_A(
-				groupId, segmentsEntryId, classNameId, classPK, active,
-				approved, start, end, orderByComparator);
-		}
-
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(
-				8 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			query = new StringBundler(9);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
-		}
-		else {
-			query.append(
-				_FILTER_SQL_SELECT_SEGMENTSEXPERIENCE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_GROUPID_2);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_SEGMENTSENTRYID_2);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_CLASSNAMEID_2);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_CLASSPK_2);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_ACTIVE_2_SQL);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_APPROVED_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			query.append(
-				_FILTER_SQL_SELECT_SEGMENTSEXPERIENCE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				query.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				query.append(SegmentsExperienceModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			query.toString(), SegmentsExperience.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				q.addEntity(_FILTER_ENTITY_ALIAS, SegmentsExperienceImpl.class);
-			}
-			else {
-				q.addEntity(_FILTER_ENTITY_TABLE, SegmentsExperienceImpl.class);
-			}
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-
-			qPos.add(segmentsEntryId);
-
-			qPos.add(classNameId);
-
-			qPos.add(classPK);
-
-			qPos.add(active);
-
-			qPos.add(approved);
-
-			return (List<SegmentsExperience>)QueryUtil.list(
-				q, getDialect(), start, end);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	/**
-	 * Returns the segments experiences before and after the current segments experience in the ordered set of segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * @param segmentsExperienceId the primary key of the current segments experience
-	 * @param groupId the group ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next segments experience
-	 * @throws NoSuchExperienceException if a segments experience with the primary key could not be found
-	 */
-	@Override
-	public SegmentsExperience[] filterFindByG_S_C_C_A_A_PrevAndNext(
-			long segmentsExperienceId, long groupId, long segmentsEntryId,
-			long classNameId, long classPK, boolean active, boolean approved,
-			OrderByComparator<SegmentsExperience> orderByComparator)
-		throws NoSuchExperienceException {
-
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_S_C_C_A_A_PrevAndNext(
-				segmentsExperienceId, groupId, segmentsEntryId, classNameId,
-				classPK, active, approved, orderByComparator);
-		}
-
-		SegmentsExperience segmentsExperience = findByPrimaryKey(
-			segmentsExperienceId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SegmentsExperience[] array = new SegmentsExperienceImpl[3];
-
-			array[0] = filterGetByG_S_C_C_A_A_PrevAndNext(
-				session, segmentsExperience, groupId, segmentsEntryId,
-				classNameId, classPK, active, approved, orderByComparator,
-				true);
-
-			array[1] = segmentsExperience;
-
-			array[2] = filterGetByG_S_C_C_A_A_PrevAndNext(
-				session, segmentsExperience, groupId, segmentsEntryId,
-				classNameId, classPK, active, approved, orderByComparator,
-				false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected SegmentsExperience filterGetByG_S_C_C_A_A_PrevAndNext(
-		Session session, SegmentsExperience segmentsExperience, long groupId,
-		long segmentsEntryId, long classNameId, long classPK, boolean active,
-		boolean approved,
-		OrderByComparator<SegmentsExperience> orderByComparator,
-		boolean previous) {
-
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(
-				10 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
-						(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			query = new StringBundler(9);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
-		}
-		else {
-			query.append(
-				_FILTER_SQL_SELECT_SEGMENTSEXPERIENCE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_GROUPID_2);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_SEGMENTSENTRYID_2);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_CLASSNAMEID_2);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_CLASSPK_2);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_ACTIVE_2_SQL);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_APPROVED_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			query.append(
-				_FILTER_SQL_SELECT_SEGMENTSEXPERIENCE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
-							true));
-				}
-				else {
-					query.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
-							true));
-				}
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
-				}
-				else {
-					query.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
-				}
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				query.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				query.append(SegmentsExperienceModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			query.toString(), SegmentsExperience.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		if (getDB().isSupportsInlineDistinct()) {
-			q.addEntity(_FILTER_ENTITY_ALIAS, SegmentsExperienceImpl.class);
-		}
-		else {
-			q.addEntity(_FILTER_ENTITY_TABLE, SegmentsExperienceImpl.class);
-		}
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(groupId);
-
-		qPos.add(segmentsEntryId);
-
-		qPos.add(classNameId);
-
-		qPos.add(classPK);
-
-		qPos.add(active);
-
-		qPos.add(approved);
-
-		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(
-						segmentsExperience)) {
-
-				qPos.add(orderByConditionValue);
-			}
-		}
-
-		List<SegmentsExperience> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Returns all the segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryId = any &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryIds the segments entry IDs
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @return the matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_S_C_C_A_A(
-		long groupId, long[] segmentsEntryIds, long classNameId, long classPK,
-		boolean active, boolean approved) {
-
-		return filterFindByG_S_C_C_A_A(
-			groupId, segmentsEntryIds, classNameId, classPK, active, approved,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryId = any &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryIds the segments entry IDs
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_S_C_C_A_A(
-		long groupId, long[] segmentsEntryIds, long classNameId, long classPK,
-		boolean active, boolean approved, int start, int end) {
-
-		return filterFindByG_S_C_C_A_A(
-			groupId, segmentsEntryIds, classNameId, classPK, active, approved,
-			start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryId = any &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryIds the segments entry IDs
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_S_C_C_A_A(
-		long groupId, long[] segmentsEntryIds, long classNameId, long classPK,
-		boolean active, boolean approved, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
-
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_S_C_C_A_A(
-				groupId, segmentsEntryIds, classNameId, classPK, active,
-				approved, start, end, orderByComparator);
-		}
-
-		if (segmentsEntryIds == null) {
-			segmentsEntryIds = new long[0];
-		}
-		else if (segmentsEntryIds.length > 1) {
-			segmentsEntryIds = ArrayUtil.sortedUnique(segmentsEntryIds);
-		}
-
-		StringBundler query = new StringBundler();
-
-		if (getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
-		}
-		else {
-			query.append(
-				_FILTER_SQL_SELECT_SEGMENTSEXPERIENCE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_GROUPID_2);
-
-		if (segmentsEntryIds.length > 0) {
-			query.append("(");
-
-			query.append(_FINDER_COLUMN_G_S_C_C_A_A_SEGMENTSENTRYID_7);
-
-			query.append(StringUtil.merge(segmentsEntryIds));
-
-			query.append(")");
-
-			query.append(")");
-
-			query.append(WHERE_AND);
-		}
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_CLASSNAMEID_2);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_CLASSPK_2);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_ACTIVE_2_SQL);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_APPROVED_2);
-
-		query.setStringAt(
-			removeConjunction(query.stringAt(query.index() - 1)),
-			query.index() - 1);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			query.append(
-				_FILTER_SQL_SELECT_SEGMENTSEXPERIENCE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				query.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				query.append(SegmentsExperienceModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			query.toString(), SegmentsExperience.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				q.addEntity(_FILTER_ENTITY_ALIAS, SegmentsExperienceImpl.class);
-			}
-			else {
-				q.addEntity(_FILTER_ENTITY_TABLE, SegmentsExperienceImpl.class);
-			}
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-
-			qPos.add(classNameId);
-
-			qPos.add(classPK);
-
-			qPos.add(active);
-
-			qPos.add(approved);
-
-			return (List<SegmentsExperience>)QueryUtil.list(
-				q, getDialect(), start, end);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	/**
-	 * Returns all the segments experiences where groupId = &#63; and segmentsEntryId = any &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryIds the segments entry IDs
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @return the matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_S_C_C_A_A(
-		long groupId, long[] segmentsEntryIds, long classNameId, long classPK,
-		boolean active, boolean approved) {
-
-		return findByG_S_C_C_A_A(
-			groupId, segmentsEntryIds, classNameId, classPK, active, approved,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences where groupId = &#63; and segmentsEntryId = any &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryIds the segments entry IDs
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_S_C_C_A_A(
-		long groupId, long[] segmentsEntryIds, long classNameId, long classPK,
-		boolean active, boolean approved, int start, int end) {
-
-		return findByG_S_C_C_A_A(
-			groupId, segmentsEntryIds, classNameId, classPK, active, approved,
-			start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiences where groupId = &#63; and segmentsEntryId = any &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryIds the segments entry IDs
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_S_C_C_A_A(
-		long groupId, long[] segmentsEntryIds, long classNameId, long classPK,
-		boolean active, boolean approved, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
-
-		return findByG_S_C_C_A_A(
-			groupId, segmentsEntryIds, classNameId, classPK, active, approved,
-			start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiences where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_S_C_C_A_A(
-		long groupId, long[] segmentsEntryIds, long classNameId, long classPK,
-		boolean active, boolean approved, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator,
-		boolean retrieveFromCache) {
-
-		if (segmentsEntryIds == null) {
-			segmentsEntryIds = new long[0];
-		}
-		else if (segmentsEntryIds.length > 1) {
-			segmentsEntryIds = ArrayUtil.sortedUnique(segmentsEntryIds);
-		}
-
-		if (segmentsEntryIds.length == 1) {
-			return findByG_S_C_C_A_A(
-				groupId, segmentsEntryIds[0], classNameId, classPK, active,
-				approved, start, end, orderByComparator);
-		}
-
-		boolean pagination = true;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			pagination = false;
-			finderArgs = new Object[] {
-				groupId, StringUtil.merge(segmentsEntryIds), classNameId,
-				classPK, active, approved
-			};
-		}
-		else {
-			finderArgs = new Object[] {
-				groupId, StringUtil.merge(segmentsEntryIds), classNameId,
-				classPK, active, approved, start, end, orderByComparator
-			};
-		}
-
-		List<SegmentsExperience> list = null;
-
-		if (retrieveFromCache) {
-			list = (List<SegmentsExperience>)finderCache.getResult(
-				_finderPathWithPaginationFindByG_S_C_C_A_A, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (SegmentsExperience segmentsExperience : list) {
-					if ((groupId != segmentsExperience.getGroupId()) ||
-						!ArrayUtil.contains(
-							segmentsEntryIds,
-							segmentsExperience.getSegmentsEntryId()) ||
-						(classNameId != segmentsExperience.getClassNameId()) ||
-						(classPK != segmentsExperience.getClassPK()) ||
-						(active != segmentsExperience.isActive()) ||
-						(approved != segmentsExperience.isApproved())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE);
-
-			query.append(_FINDER_COLUMN_G_S_C_C_A_A_GROUPID_2);
-
-			if (segmentsEntryIds.length > 0) {
-				query.append("(");
-
-				query.append(_FINDER_COLUMN_G_S_C_C_A_A_SEGMENTSENTRYID_7);
-
-				query.append(StringUtil.merge(segmentsEntryIds));
-
-				query.append(")");
-
-				query.append(")");
-
-				query.append(WHERE_AND);
-			}
-
-			query.append(_FINDER_COLUMN_G_S_C_C_A_A_CLASSNAMEID_2);
-
-			query.append(_FINDER_COLUMN_G_S_C_C_A_A_CLASSPK_2);
-
-			query.append(_FINDER_COLUMN_G_S_C_C_A_A_ACTIVE_2);
-
-			query.append(_FINDER_COLUMN_G_S_C_C_A_A_APPROVED_2);
-
-			query.setStringAt(
-				removeConjunction(query.stringAt(query.index() - 1)),
-				query.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else if (pagination) {
-				query.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(classNameId);
-
-				qPos.add(classPK);
-
-				qPos.add(active);
-
-				qPos.add(approved);
-
-				if (!pagination) {
-					list = (List<SegmentsExperience>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SegmentsExperience>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
-
-				cacheResult(list);
-
-				finderCache.putResult(
-					_finderPathWithPaginationFindByG_S_C_C_A_A, finderArgs,
-					list);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationFindByG_S_C_C_A_A, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Removes all the segments experiences where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 */
-	@Override
-	public void removeByG_S_C_C_A_A(
-		long groupId, long segmentsEntryId, long classNameId, long classPK,
-		boolean active, boolean approved) {
-
-		for (SegmentsExperience segmentsExperience :
-				findByG_S_C_C_A_A(
-					groupId, segmentsEntryId, classNameId, classPK, active,
-					approved, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(segmentsExperience);
-		}
-	}
-
-	/**
-	 * Returns the number of segments experiences where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @return the number of matching segments experiences
-	 */
-	@Override
-	public int countByG_S_C_C_A_A(
-		long groupId, long segmentsEntryId, long classNameId, long classPK,
-		boolean active, boolean approved) {
-
-		FinderPath finderPath = _finderPathCountByG_S_C_C_A_A;
-
-		Object[] finderArgs = new Object[] {
-			groupId, segmentsEntryId, classNameId, classPK, active, approved
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(7);
-
-			query.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
-
-			query.append(_FINDER_COLUMN_G_S_C_C_A_A_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_S_C_C_A_A_SEGMENTSENTRYID_2);
-
-			query.append(_FINDER_COLUMN_G_S_C_C_A_A_CLASSNAMEID_2);
-
-			query.append(_FINDER_COLUMN_G_S_C_C_A_A_CLASSPK_2);
-
-			query.append(_FINDER_COLUMN_G_S_C_C_A_A_ACTIVE_2);
-
-			query.append(_FINDER_COLUMN_G_S_C_C_A_A_APPROVED_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(segmentsEntryId);
-
-				qPos.add(classNameId);
-
-				qPos.add(classPK);
-
-				qPos.add(active);
-
-				qPos.add(approved);
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of segments experiences where groupId = &#63; and segmentsEntryId = any &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryIds the segments entry IDs
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @return the number of matching segments experiences
-	 */
-	@Override
-	public int countByG_S_C_C_A_A(
-		long groupId, long[] segmentsEntryIds, long classNameId, long classPK,
-		boolean active, boolean approved) {
-
-		if (segmentsEntryIds == null) {
-			segmentsEntryIds = new long[0];
-		}
-		else if (segmentsEntryIds.length > 1) {
-			segmentsEntryIds = ArrayUtil.sortedUnique(segmentsEntryIds);
-		}
-
-		Object[] finderArgs = new Object[] {
-			groupId, StringUtil.merge(segmentsEntryIds), classNameId, classPK,
-			active, approved
-		};
-
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByG_S_C_C_A_A, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
-
-			query.append(_FINDER_COLUMN_G_S_C_C_A_A_GROUPID_2);
-
-			if (segmentsEntryIds.length > 0) {
-				query.append("(");
-
-				query.append(_FINDER_COLUMN_G_S_C_C_A_A_SEGMENTSENTRYID_7);
-
-				query.append(StringUtil.merge(segmentsEntryIds));
-
-				query.append(")");
-
-				query.append(")");
-
-				query.append(WHERE_AND);
-			}
-
-			query.append(_FINDER_COLUMN_G_S_C_C_A_A_CLASSNAMEID_2);
-
-			query.append(_FINDER_COLUMN_G_S_C_C_A_A_CLASSPK_2);
-
-			query.append(_FINDER_COLUMN_G_S_C_C_A_A_ACTIVE_2);
-
-			query.append(_FINDER_COLUMN_G_S_C_C_A_A_APPROVED_2);
-
-			query.setStringAt(
-				removeConjunction(query.stringAt(query.index() - 1)),
-				query.index() - 1);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(classNameId);
-
-				qPos.add(classPK);
-
-				qPos.add(active);
-
-				qPos.add(approved);
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathWithPaginationCountByG_S_C_C_A_A, finderArgs,
-					count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByG_S_C_C_A_A, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @return the number of matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public int filterCountByG_S_C_C_A_A(
-		long groupId, long segmentsEntryId, long classNameId, long classPK,
-		boolean active, boolean approved) {
-
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_S_C_C_A_A(
-				groupId, segmentsEntryId, classNameId, classPK, active,
-				approved);
-		}
-
-		StringBundler query = new StringBundler(7);
-
-		query.append(_FILTER_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_GROUPID_2);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_SEGMENTSENTRYID_2);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_CLASSNAMEID_2);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_CLASSPK_2);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_ACTIVE_2_SQL);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_APPROVED_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			query.toString(), SegmentsExperience.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-
-			qPos.add(segmentsEntryId);
-
-			qPos.add(classNameId);
-
-			qPos.add(classPK);
-
-			qPos.add(active);
-
-			qPos.add(approved);
-
-			Long count = (Long)q.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	/**
-	 * Returns the number of segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryId = any &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; and approved = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryIds the segments entry IDs
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param approved the approved
-	 * @return the number of matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public int filterCountByG_S_C_C_A_A(
-		long groupId, long[] segmentsEntryIds, long classNameId, long classPK,
-		boolean active, boolean approved) {
-
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_S_C_C_A_A(
-				groupId, segmentsEntryIds, classNameId, classPK, active,
-				approved);
-		}
-
-		if (segmentsEntryIds == null) {
-			segmentsEntryIds = new long[0];
-		}
-		else if (segmentsEntryIds.length > 1) {
-			segmentsEntryIds = ArrayUtil.sortedUnique(segmentsEntryIds);
-		}
-
-		StringBundler query = new StringBundler();
-
-		query.append(_FILTER_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_GROUPID_2);
-
-		if (segmentsEntryIds.length > 0) {
-			query.append("(");
-
-			query.append(_FINDER_COLUMN_G_S_C_C_A_A_SEGMENTSENTRYID_7);
-
-			query.append(StringUtil.merge(segmentsEntryIds));
-
-			query.append(")");
-
-			query.append(")");
-
-			query.append(WHERE_AND);
-		}
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_CLASSNAMEID_2);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_CLASSPK_2);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_ACTIVE_2_SQL);
-
-		query.append(_FINDER_COLUMN_G_S_C_C_A_A_APPROVED_2);
-
-		query.setStringAt(
-			removeConjunction(query.stringAt(query.index() - 1)),
-			query.index() - 1);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			query.toString(), SegmentsExperience.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-
-			qPos.add(classNameId);
-
-			qPos.add(classPK);
-
-			qPos.add(active);
-
-			qPos.add(approved);
-
-			Long count = (Long)q.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	private static final String _FINDER_COLUMN_G_S_C_C_A_A_GROUPID_2 =
-		"segmentsExperience.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_S_C_C_A_A_SEGMENTSENTRYID_2 =
-		"segmentsExperience.segmentsEntryId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_S_C_C_A_A_SEGMENTSENTRYID_7 =
-		"segmentsExperience.segmentsEntryId IN (";
-
-	private static final String _FINDER_COLUMN_G_S_C_C_A_A_CLASSNAMEID_2 =
-		"segmentsExperience.classNameId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_S_C_C_A_A_CLASSPK_2 =
-		"segmentsExperience.classPK = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_S_C_C_A_A_ACTIVE_2 =
-		"segmentsExperience.active = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_S_C_C_A_A_ACTIVE_2_SQL =
-		"segmentsExperience.active_ = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_S_C_C_A_A_APPROVED_2 =
-		"segmentsExperience.approved = ?";
-
 	public SegmentsExperiencePersistenceImpl() {
 		setModelClass(SegmentsExperience.class);
 
@@ -12508,20 +9492,20 @@ public class SegmentsExperiencePersistenceImpl
 			segmentsExperience);
 
 		finderCache.putResult(
+			_finderPathFetchByG_S,
+			new Object[] {
+				segmentsExperience.getGroupId(),
+				segmentsExperience.getSegmentsExperienceKey()
+			},
+			segmentsExperience);
+
+		finderCache.putResult(
 			_finderPathFetchByG_C_C_P,
 			new Object[] {
 				segmentsExperience.getGroupId(),
 				segmentsExperience.getClassNameId(),
 				segmentsExperience.getClassPK(),
 				segmentsExperience.getPriority()
-			},
-			segmentsExperience);
-
-		finderCache.putResult(
-			_finderPathFetchByG_S,
-			new Object[] {
-				segmentsExperience.getGroupId(),
-				segmentsExperience.getSegmentsExperienceKey()
 			},
 			segmentsExperience);
 
@@ -12616,6 +9600,16 @@ public class SegmentsExperiencePersistenceImpl
 
 		args = new Object[] {
 			segmentsExperienceModelImpl.getGroupId(),
+			segmentsExperienceModelImpl.getSegmentsExperienceKey()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByG_S, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByG_S, args, segmentsExperienceModelImpl, false);
+
+		args = new Object[] {
+			segmentsExperienceModelImpl.getGroupId(),
 			segmentsExperienceModelImpl.getClassNameId(),
 			segmentsExperienceModelImpl.getClassPK(),
 			segmentsExperienceModelImpl.getPriority()
@@ -12626,16 +9620,6 @@ public class SegmentsExperiencePersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByG_C_C_P, args, segmentsExperienceModelImpl,
 			false);
-
-		args = new Object[] {
-			segmentsExperienceModelImpl.getGroupId(),
-			segmentsExperienceModelImpl.getSegmentsExperienceKey()
-		};
-
-		finderCache.putResult(
-			_finderPathCountByG_S, args, Long.valueOf(1), false);
-		finderCache.putResult(
-			_finderPathFetchByG_S, args, segmentsExperienceModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -12667,6 +9651,28 @@ public class SegmentsExperiencePersistenceImpl
 		if (clearCurrent) {
 			Object[] args = new Object[] {
 				segmentsExperienceModelImpl.getGroupId(),
+				segmentsExperienceModelImpl.getSegmentsExperienceKey()
+			};
+
+			finderCache.removeResult(_finderPathCountByG_S, args);
+			finderCache.removeResult(_finderPathFetchByG_S, args);
+		}
+
+		if ((segmentsExperienceModelImpl.getColumnBitmask() &
+			 _finderPathFetchByG_S.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				segmentsExperienceModelImpl.getOriginalGroupId(),
+				segmentsExperienceModelImpl.getOriginalSegmentsExperienceKey()
+			};
+
+			finderCache.removeResult(_finderPathCountByG_S, args);
+			finderCache.removeResult(_finderPathFetchByG_S, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+				segmentsExperienceModelImpl.getGroupId(),
 				segmentsExperienceModelImpl.getClassNameId(),
 				segmentsExperienceModelImpl.getClassPK(),
 				segmentsExperienceModelImpl.getPriority()
@@ -12688,28 +9694,6 @@ public class SegmentsExperiencePersistenceImpl
 
 			finderCache.removeResult(_finderPathCountByG_C_C_P, args);
 			finderCache.removeResult(_finderPathFetchByG_C_C_P, args);
-		}
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-				segmentsExperienceModelImpl.getGroupId(),
-				segmentsExperienceModelImpl.getSegmentsExperienceKey()
-			};
-
-			finderCache.removeResult(_finderPathCountByG_S, args);
-			finderCache.removeResult(_finderPathFetchByG_S, args);
-		}
-
-		if ((segmentsExperienceModelImpl.getColumnBitmask() &
-			 _finderPathFetchByG_S.getColumnBitmask()) != 0) {
-
-			Object[] args = new Object[] {
-				segmentsExperienceModelImpl.getOriginalGroupId(),
-				segmentsExperienceModelImpl.getOriginalSegmentsExperienceKey()
-			};
-
-			finderCache.removeResult(_finderPathCountByG_S, args);
-			finderCache.removeResult(_finderPathFetchByG_S, args);
 		}
 	}
 
@@ -12974,18 +9958,6 @@ public class SegmentsExperiencePersistenceImpl
 
 			args = new Object[] {
 				segmentsExperienceModelImpl.getGroupId(),
-				segmentsExperienceModelImpl.getClassNameId(),
-				segmentsExperienceModelImpl.getClassPK(),
-				segmentsExperienceModelImpl.isActive(),
-				segmentsExperienceModelImpl.isApproved()
-			};
-
-			finderCache.removeResult(_finderPathCountByG_C_C_A_A, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByG_C_C_A_A, args);
-
-			args = new Object[] {
-				segmentsExperienceModelImpl.getGroupId(),
 				segmentsExperienceModelImpl.getSegmentsEntryId(),
 				segmentsExperienceModelImpl.getClassNameId(),
 				segmentsExperienceModelImpl.getClassPK(),
@@ -12995,19 +9967,6 @@ public class SegmentsExperiencePersistenceImpl
 			finderCache.removeResult(_finderPathCountByG_S_C_C_A, args);
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindByG_S_C_C_A, args);
-
-			args = new Object[] {
-				segmentsExperienceModelImpl.getGroupId(),
-				segmentsExperienceModelImpl.getSegmentsEntryId(),
-				segmentsExperienceModelImpl.getClassNameId(),
-				segmentsExperienceModelImpl.getClassPK(),
-				segmentsExperienceModelImpl.isActive(),
-				segmentsExperienceModelImpl.isApproved()
-			};
-
-			finderCache.removeResult(_finderPathCountByG_S_C_C_A_A, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByG_S_C_C_A_A, args);
 
 			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(
@@ -13178,35 +10137,6 @@ public class SegmentsExperiencePersistenceImpl
 			}
 
 			if ((segmentsExperienceModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByG_C_C_A_A.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					segmentsExperienceModelImpl.getOriginalGroupId(),
-					segmentsExperienceModelImpl.getOriginalClassNameId(),
-					segmentsExperienceModelImpl.getOriginalClassPK(),
-					segmentsExperienceModelImpl.getOriginalActive(),
-					segmentsExperienceModelImpl.getOriginalApproved()
-				};
-
-				finderCache.removeResult(_finderPathCountByG_C_C_A_A, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByG_C_C_A_A, args);
-
-				args = new Object[] {
-					segmentsExperienceModelImpl.getGroupId(),
-					segmentsExperienceModelImpl.getClassNameId(),
-					segmentsExperienceModelImpl.getClassPK(),
-					segmentsExperienceModelImpl.isActive(),
-					segmentsExperienceModelImpl.isApproved()
-				};
-
-				finderCache.removeResult(_finderPathCountByG_C_C_A_A, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByG_C_C_A_A, args);
-			}
-
-			if ((segmentsExperienceModelImpl.getColumnBitmask() &
 				 _finderPathWithoutPaginationFindByG_S_C_C_A.
 					 getColumnBitmask()) != 0) {
 
@@ -13233,37 +10163,6 @@ public class SegmentsExperiencePersistenceImpl
 				finderCache.removeResult(_finderPathCountByG_S_C_C_A, args);
 				finderCache.removeResult(
 					_finderPathWithoutPaginationFindByG_S_C_C_A, args);
-			}
-
-			if ((segmentsExperienceModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByG_S_C_C_A_A.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					segmentsExperienceModelImpl.getOriginalGroupId(),
-					segmentsExperienceModelImpl.getOriginalSegmentsEntryId(),
-					segmentsExperienceModelImpl.getOriginalClassNameId(),
-					segmentsExperienceModelImpl.getOriginalClassPK(),
-					segmentsExperienceModelImpl.getOriginalActive(),
-					segmentsExperienceModelImpl.getOriginalApproved()
-				};
-
-				finderCache.removeResult(_finderPathCountByG_S_C_C_A_A, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByG_S_C_C_A_A, args);
-
-				args = new Object[] {
-					segmentsExperienceModelImpl.getGroupId(),
-					segmentsExperienceModelImpl.getSegmentsEntryId(),
-					segmentsExperienceModelImpl.getClassNameId(),
-					segmentsExperienceModelImpl.getClassPK(),
-					segmentsExperienceModelImpl.isActive(),
-					segmentsExperienceModelImpl.isApproved()
-				};
-
-				finderCache.removeResult(_finderPathCountByG_S_C_C_A_A, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByG_S_C_C_A_A, args);
 			}
 		}
 
@@ -13691,6 +10590,21 @@ public class SegmentsExperiencePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySegmentsEntryId",
 			new String[] {Long.class.getName()});
 
+		_finderPathFetchByG_S = new FinderPath(
+			SegmentsExperienceModelImpl.ENTITY_CACHE_ENABLED,
+			SegmentsExperienceModelImpl.FINDER_CACHE_ENABLED,
+			SegmentsExperienceImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByG_S",
+			new String[] {Long.class.getName(), String.class.getName()},
+			SegmentsExperienceModelImpl.GROUPID_COLUMN_BITMASK |
+			SegmentsExperienceModelImpl.SEGMENTSEXPERIENCEKEY_COLUMN_BITMASK);
+
+		_finderPathCountByG_S = new FinderPath(
+			SegmentsExperienceModelImpl.ENTITY_CACHE_ENABLED,
+			SegmentsExperienceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
+			new String[] {Long.class.getName(), String.class.getName()});
+
 		_finderPathWithPaginationFindByG_C_C = new FinderPath(
 			SegmentsExperienceModelImpl.ENTITY_CACHE_ENABLED,
 			SegmentsExperienceModelImpl.FINDER_CACHE_ENABLED,
@@ -13839,60 +10753,6 @@ public class SegmentsExperiencePersistenceImpl
 				Long.class.getName(), Boolean.class.getName()
 			});
 
-		_finderPathWithPaginationFindByG_C_C_A_A = new FinderPath(
-			SegmentsExperienceModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsExperienceModelImpl.FINDER_CACHE_ENABLED,
-			SegmentsExperienceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_A_A",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			});
-
-		_finderPathWithoutPaginationFindByG_C_C_A_A = new FinderPath(
-			SegmentsExperienceModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsExperienceModelImpl.FINDER_CACHE_ENABLED,
-			SegmentsExperienceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_A_A",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName()
-			},
-			SegmentsExperienceModelImpl.GROUPID_COLUMN_BITMASK |
-			SegmentsExperienceModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			SegmentsExperienceModelImpl.CLASSPK_COLUMN_BITMASK |
-			SegmentsExperienceModelImpl.ACTIVE_COLUMN_BITMASK |
-			SegmentsExperienceModelImpl.APPROVED_COLUMN_BITMASK |
-			SegmentsExperienceModelImpl.PRIORITY_COLUMN_BITMASK);
-
-		_finderPathCountByG_C_C_A_A = new FinderPath(
-			SegmentsExperienceModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsExperienceModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_A_A",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName()
-			});
-
-		_finderPathFetchByG_S = new FinderPath(
-			SegmentsExperienceModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsExperienceModelImpl.FINDER_CACHE_ENABLED,
-			SegmentsExperienceImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByG_S",
-			new String[] {Long.class.getName(), String.class.getName()},
-			SegmentsExperienceModelImpl.GROUPID_COLUMN_BITMASK |
-			SegmentsExperienceModelImpl.SEGMENTSEXPERIENCEKEY_COLUMN_BITMASK);
-
-		_finderPathCountByG_S = new FinderPath(
-			SegmentsExperienceModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsExperienceModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
-			new String[] {Long.class.getName(), String.class.getName()});
-
 		_finderPathWithPaginationFindByG_S_C_C_A = new FinderPath(
 			SegmentsExperienceModelImpl.ENTITY_CACHE_ENABLED,
 			SegmentsExperienceModelImpl.FINDER_CACHE_ENABLED,
@@ -13940,57 +10800,6 @@ public class SegmentsExperiencePersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Long.class.getName(),
 				Boolean.class.getName()
-			});
-
-		_finderPathWithPaginationFindByG_S_C_C_A_A = new FinderPath(
-			SegmentsExperienceModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsExperienceModelImpl.FINDER_CACHE_ENABLED,
-			SegmentsExperienceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S_C_C_A_A",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-
-		_finderPathWithoutPaginationFindByG_S_C_C_A_A = new FinderPath(
-			SegmentsExperienceModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsExperienceModelImpl.FINDER_CACHE_ENABLED,
-			SegmentsExperienceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S_C_C_A_A",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName()
-			},
-			SegmentsExperienceModelImpl.GROUPID_COLUMN_BITMASK |
-			SegmentsExperienceModelImpl.SEGMENTSENTRYID_COLUMN_BITMASK |
-			SegmentsExperienceModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			SegmentsExperienceModelImpl.CLASSPK_COLUMN_BITMASK |
-			SegmentsExperienceModelImpl.ACTIVE_COLUMN_BITMASK |
-			SegmentsExperienceModelImpl.APPROVED_COLUMN_BITMASK |
-			SegmentsExperienceModelImpl.PRIORITY_COLUMN_BITMASK);
-
-		_finderPathCountByG_S_C_C_A_A = new FinderPath(
-			SegmentsExperienceModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsExperienceModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S_C_C_A_A",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName()
-			});
-
-		_finderPathWithPaginationCountByG_S_C_C_A_A = new FinderPath(
-			SegmentsExperienceModelImpl.ENTITY_CACHE_ENABLED,
-			SegmentsExperienceModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_S_C_C_A_A",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName()
 			});
 	}
 

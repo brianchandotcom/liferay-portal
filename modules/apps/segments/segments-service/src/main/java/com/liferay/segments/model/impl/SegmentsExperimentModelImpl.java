@@ -87,7 +87,7 @@ public class SegmentsExperimentModelImpl
 		{"segmentsExperienceId", Types.BIGINT},
 		{"segmentsEntryId", Types.BIGINT}, {"name", Types.VARCHAR},
 		{"description", Types.VARCHAR}, {"status", Types.INTEGER},
-		{"typeSettings", Types.VARCHAR}
+		{"typeSettings", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -108,11 +108,11 @@ public class SegmentsExperimentModelImpl
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("typeSettings", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SegmentsExperiment (uuid_ VARCHAR(75) null,segmentsExperimentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsExperimentKey VARCHAR(75) null,segmentsExperienceId LONG,segmentsEntryId LONG,name VARCHAR(75) null,description VARCHAR(75) null,status INTEGER,typeSettings VARCHAR(75) null)";
+		"create table SegmentsExperiment (uuid_ VARCHAR(75) null,segmentsExperimentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsExperimentKey VARCHAR(75) null,segmentsExperienceId LONG,segmentsEntryId LONG,name VARCHAR(75) null,description VARCHAR(75) null,status INTEGER,typeSettings TEXT null)";
 
 	public static final String TABLE_SQL_DROP = "drop table SegmentsExperiment";
 

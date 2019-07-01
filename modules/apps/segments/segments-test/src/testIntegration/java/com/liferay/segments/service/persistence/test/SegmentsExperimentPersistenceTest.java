@@ -290,7 +290,7 @@ public class SegmentsExperimentPersistenceTest {
 			true, "createDate", true, "modifiedDate", true,
 			"segmentsExperimentKey", true, "segmentsExperienceId", true,
 			"segmentsEntryId", true, "name", true, "description", true,
-			"status", true, "typeSettings", true);
+			"status", true);
 	}
 
 	@Test

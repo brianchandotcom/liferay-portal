@@ -46,7 +46,6 @@ create table SegmentsExperience (
 	name STRING null,
 	priority INTEGER,
 	active_ BOOLEAN,
-	approved BOOLEAN,
 	lastPublishDate DATE null
 );
 
@@ -65,7 +64,7 @@ create table SegmentsExperiment (
 	name VARCHAR(75) null,
 	description VARCHAR(75) null,
 	status INTEGER,
-	typeSettings VARCHAR(75) null
+	typeSettings TEXT null
 );
 
 create table SegmentsExperimentRel (

@@ -49,7 +49,6 @@ public class SegmentsExperienceSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setPriority(model.getPriority());
 		soapModel.setActive(model.isActive());
-		soapModel.setApproved(model.isApproved());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
@@ -237,18 +236,6 @@ public class SegmentsExperienceSoap implements Serializable {
 		_active = active;
 	}
 
-	public boolean getApproved() {
-		return _approved;
-	}
-
-	public boolean isApproved() {
-		return _approved;
-	}
-
-	public void setApproved(boolean approved) {
-		_approved = approved;
-	}
-
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -272,7 +259,6 @@ public class SegmentsExperienceSoap implements Serializable {
 	private String _name;
 	private int _priority;
 	private boolean _active;
-	private boolean _approved;
 	private Date _lastPublishDate;
 
 }

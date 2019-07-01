@@ -67,7 +67,7 @@ public class SegmentsExperienceCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -99,8 +99,6 @@ public class SegmentsExperienceCacheModel
 		sb.append(priority);
 		sb.append(", active=");
 		sb.append(active);
-		sb.append(", approved=");
-		sb.append(approved);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -167,7 +165,6 @@ public class SegmentsExperienceCacheModel
 
 		segmentsExperienceImpl.setPriority(priority);
 		segmentsExperienceImpl.setActive(active);
-		segmentsExperienceImpl.setApproved(approved);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			segmentsExperienceImpl.setLastPublishDate(null);
@@ -208,8 +205,6 @@ public class SegmentsExperienceCacheModel
 		priority = objectInput.readInt();
 
 		active = objectInput.readBoolean();
-
-		approved = objectInput.readBoolean();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -263,8 +258,6 @@ public class SegmentsExperienceCacheModel
 		objectOutput.writeInt(priority);
 
 		objectOutput.writeBoolean(active);
-
-		objectOutput.writeBoolean(approved);
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -283,7 +276,6 @@ public class SegmentsExperienceCacheModel
 	public String name;
 	public int priority;
 	public boolean active;
-	public boolean approved;
 	public long lastPublishDate;
 
 }

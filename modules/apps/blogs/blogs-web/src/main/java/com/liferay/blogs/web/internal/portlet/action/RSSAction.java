@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.rss.util.RSSUtil;
 
+import java.nio.charset.StandardCharsets;
+
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -153,7 +155,7 @@ public class RSSAction implements StrutsAction {
 				feedURL, entryURL, themeDisplay);
 		}
 
-		return rss.getBytes(StringPool.UTF8);
+		return rss.getBytes(StandardCharsets.UTF_8);
 	}
 
 	private boolean _hasGroupViewPermission(

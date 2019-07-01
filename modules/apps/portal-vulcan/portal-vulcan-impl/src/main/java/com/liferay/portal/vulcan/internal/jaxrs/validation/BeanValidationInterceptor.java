@@ -117,7 +117,7 @@ public class BeanValidationInterceptor
 
 	@Override
 	protected void handleValidation(
-		Message message, Object resourceInstance, Method method,
+		Message message, Object resource, Method method,
 		List<Object> arguments) {
 
 		if (ListUtil.isEmpty(arguments)) {
@@ -130,7 +130,7 @@ public class BeanValidationInterceptor
 
 		Set<ConstraintViolation<Object>> constraintViolations =
 			executableValidator.validateParameters(
-				resourceInstance, method, arguments.toArray());
+				resource, method, arguments.toArray());
 
 		if (!constraintViolations.isEmpty()) {
 			throw new ConstraintViolationException(constraintViolations);

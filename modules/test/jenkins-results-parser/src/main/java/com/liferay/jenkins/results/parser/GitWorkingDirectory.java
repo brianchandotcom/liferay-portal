@@ -1854,7 +1854,7 @@ public class GitWorkingDirectory {
 		String command = "git reset " + options;
 
 		GitUtil.ExecutionResult executionResult = executeBashCommands(
-			2, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 2, command);
+			2, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 5, command);
 
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(

@@ -26,7 +26,7 @@ export default function objectToURLSearchParams(obj) {
 		throw new TypeError('Parameter obj must be an object');
 	}
 
-	let urlSearchParams = new URLSearchParams();
+	const urlSearchParams = new URLSearchParams();
 
 	Object.entries(obj).forEach(([key, value]) => {
 		urlSearchParams.append(key, value);

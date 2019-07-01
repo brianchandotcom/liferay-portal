@@ -42,7 +42,10 @@ import java.util.Map;
 
 /**
  * @author Pavel Savinov
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ *			 com.liferay.info.display.contributor.field.ExpandoInfoDisplayContributorField}
  */
+@Deprecated
 public class ExpandoInfoDisplayContributorField
 	implements InfoDisplayContributorField {
 

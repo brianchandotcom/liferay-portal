@@ -14,6 +14,7 @@
 
 package com.liferay.asset.info.display.contributor;
 
+import com.liferay.asset.info.display.contributor.field.util.ExpandoInfoDisplayFieldProviderUtil;
 import com.liferay.asset.info.display.contributor.util.AssetInfoDisplayContributorFieldUtil;
 import com.liferay.asset.info.display.field.util.AssetEntryInfoDisplayFieldProviderUtil;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
@@ -61,6 +62,12 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 			getClassTypeInfoDisplayFields(classTypeId, locale);
 
 		infoDisplayFields.addAll(classTypeInfoDisplayFields);
+
+		List<InfoDisplayField> expandoInfoDisplayFields =
+			ExpandoInfoDisplayFieldProviderUtil.getExpandoInfoDisplayFields(
+				getClassName(), locale);
+
+		infoDisplayFields.addAll(expandoInfoDisplayFields);
 
 		return infoDisplayFields;
 	}

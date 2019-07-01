@@ -16,6 +16,7 @@ package com.liferay.asset.info.display.contributor.util;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.info.display.contributor.field.ExpandoInfoDisplayContributorField;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorField;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 

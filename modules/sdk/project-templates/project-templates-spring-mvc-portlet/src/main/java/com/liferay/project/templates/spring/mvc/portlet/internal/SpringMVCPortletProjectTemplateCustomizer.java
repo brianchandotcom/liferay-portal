@@ -16,7 +16,7 @@ package com.liferay.project.templates.spring.mvc.portlet.internal;
 
 import com.liferay.project.templates.ProjectTemplateCustomizer;
 import com.liferay.project.templates.ProjectTemplatesArgs;
-import com.liferay.project.templates.internal.util.FileUtil;
+import com.liferay.project.templates.FileUtil;
 
 import java.io.File;
 
@@ -59,14 +59,10 @@ public class SpringMVCPortletProjectTemplateCustomizer
 		String viewType = projectTemplatesArgs.getViewType();
 
 		if (viewType.equals("jsp")) {
-			Pattern pattern = Pattern.compile(".*.html");
-
-			FileUtil.deleteFilesByPattern(viewsDir.toPath(), pattern);
+			FileUtil.deleteFilesByPattern(viewsDir.toPath(), _jspPattern);
 		}
 		else {
-			Pattern pattern = Pattern.compile(".*.jspx");
-
-			FileUtil.deleteFilesByPattern(viewsDir.toPath(), pattern);
+			FileUtil.deleteFilesByPattern(viewsDir.toPath(), _thymeleafPattern);
 		}
 
 		String framework = projectTemplatesArgs.getFramework();
@@ -82,5 +78,9 @@ public class SpringMVCPortletProjectTemplateCustomizer
 			ArchetypeGenerationRequest archetypeGenerationRequest)
 		throws Exception {
 	}
+
+	private Pattern _jspPattern = Pattern.compile(".*.html");
+
+	private Pattern _thymeleafPattern = Pattern.compile(".*.jspx");
 
 }

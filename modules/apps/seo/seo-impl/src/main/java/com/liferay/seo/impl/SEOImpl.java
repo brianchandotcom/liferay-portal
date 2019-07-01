@@ -58,13 +58,13 @@ public class SEOImpl implements SEO {
 				seoCompanyConfiguration.configuration(),
 				SEOConfigurationConstants.CLASSIC)) {
 
-			return getClassicLocalizedSEOLinks(canonicalURL, alternateURLs);
+			return _getClassicLocalizedSEOLinks(canonicalURL, alternateURLs);
 		}
 
-		return getDefaultLocalizedSEOLinks(locale, canonicalURL, alternateURLs);
+		return _getDefaultLocalizedSEOLinks(locale, canonicalURL, alternateURLs);
 	}
 
-	protected List<SEOLink> getClassicLocalizedSEOLinks(
+	private List<SEOLink> _getClassicLocalizedSEOLinks(
 		String canonicalURL, Map<Locale, String> alternateURLs) {
 
 		return new ArrayList() {
@@ -77,7 +77,7 @@ public class SEOImpl implements SEO {
 		};
 	}
 
-	protected List<SEOLink> getDefaultLocalizedSEOLinks(
+	private List<SEOLink> _getDefaultLocalizedSEOLinks(
 		Locale locale, String canonicalURL, Map<Locale, String> alternateURLs) {
 
 		String localizedCanonicalURL = alternateURLs.getOrDefault(

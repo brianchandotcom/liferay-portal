@@ -321,6 +321,7 @@ const INITIAL_STATE = {
 	fragmentEntryLinks: Config.objectOf(
 		Config.shapeOf({
 			config: Config.object().value({}),
+			configuration: Config.object().value({}),
 			content: Config.any().value(''),
 			editableValues: Config.shapeOf({
 				[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: Config.objectOf(

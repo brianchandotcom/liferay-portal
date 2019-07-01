@@ -286,6 +286,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	public static final String PORTAL_TEST_CONFIGURATION_NAME = "portalTest";
 
+	public static final String PORTAL_TEST_SNAPSHOT_CONFIGURATION_NAME =
+		"portalTestSnapshot";
+
 	public static final String RELEASE_PORTAL_ROOT_DIR_PROPERTY_NAME =
 		"release.versions.test.other.dir";
 
@@ -372,9 +375,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				project, LiferayBasePlugin.PORTAL_CONFIGURATION_NAME);
 			Configuration portalTestConfiguration = _addConfigurationPortalTest(
 				project);
+			Configuration portalTestSnapshotConfiguration =
+				_addConfigurationPortalTestSnapshot(project);
 
 			_addDependenciesPortalTest(project);
+			_addDependenciesPortalTestSnapshot(project);
 			_addDependenciesTestCompile(project);
+
 			_configureConfigurationTest(
 				project, JavaPlugin.TEST_COMPILE_CLASSPATH_CONFIGURATION_NAME);
 			_configureConfigurationTest(
@@ -382,7 +389,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			_configureEclipse(project, portalTestConfiguration);
 			_configureIdea(project, portalTestConfiguration);
 			_configureSourceSetTest(
-				project, portalConfiguration, portalTestConfiguration);
+				project, portalConfiguration, portalTestConfiguration,
+				portalTestSnapshotConfiguration);
 			_configureSourceSetTestIntegration(
 				project, portalConfiguration, portalTestConfiguration);
 
@@ -619,6 +627,18 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
+	private Configuration _addConfigurationPortalTestSnapshot(Project project) {
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, PORTAL_TEST_SNAPSHOT_CONFIGURATION_NAME);
+
+		configuration.setDescription(
+			"Configures Liferay portal test snapshot artifacts for this " +
+				"project.");
+		configuration.setVisible(false);
+
+		return configuration;
+	}
+
 	private void _addDependenciesPmd(Project project) {
 		String version = PortalTools.getVersion(project, _PMD_PORTAL_TOOL_NAME);
 
@@ -636,6 +656,15 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, PORTAL_TEST_CONFIGURATION_NAME, _GROUP_PORTAL,
 			"com.liferay.portal.test.integration", "default");
+	}
+
+	private void _addDependenciesPortalTestSnapshot(Project project) {
+		GradleUtil.addDependency(
+			project, PORTAL_TEST_SNAPSHOT_CONFIGURATION_NAME, _GROUP_PORTAL,
+			"com.liferay.portal.impl", "default");
+		GradleUtil.addDependency(
+			project, PORTAL_TEST_SNAPSHOT_CONFIGURATION_NAME, _GROUP_PORTAL,
+			"com.liferay.portal.kernel", "default");
 	}
 
 	private void _addDependenciesTestCompile(Project project) {
@@ -2800,7 +2829,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private void _configureSourceSetTest(
 		Project project, Configuration portalConfiguration,
-		Configuration portalTestConfiguration) {
+		Configuration portalTestConfiguration,
+		Configuration portalTestSnapshotConfiguration) {
 
 		SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.TEST_SOURCE_SET_NAME);
@@ -2818,8 +2848,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		sourceSet.setRuntimeClasspath(
 			FileUtil.join(
-				compileClasspathConfiguration, portalConfiguration,
-				sourceSet.getRuntimeClasspath(), portalTestConfiguration));
+				portalTestSnapshotConfiguration, portalConfiguration,
+				compileClasspathConfiguration, sourceSet.getRuntimeClasspath(),
+				portalTestConfiguration));
 	}
 
 	private void _configureSourceSetTestIntegration(

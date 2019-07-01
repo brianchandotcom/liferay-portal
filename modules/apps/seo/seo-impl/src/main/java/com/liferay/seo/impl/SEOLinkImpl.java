@@ -41,34 +41,6 @@ public class SEOLinkImpl implements SEOLink {
 		return _seoLinkRel;
 	}
 
-	public static class AlternateSEOLink extends SEOLinkImpl {
-
-		public AlternateSEOLink(String href, String hrefLang) {
-			super(
-				SEOLinkDataSennaTrack.TEMPORARY, href, hrefLang,
-				SEOLinkRel.ALTERNATE);
-		}
-
-	}
-
-	public static class CanonicalSEOLink extends SEOLinkImpl {
-
-		public CanonicalSEOLink(String href) {
-			super(
-				SEOLinkDataSennaTrack.TEMPORARY, href, null,
-				SEOLinkRel.CANONICAL);
-		}
-
-	}
-
-	public static class XDefaultAlternateSEOLink extends AlternateSEOLink {
-
-		public XDefaultAlternateSEOLink(String href) {
-			super(href, "x-default");
-		}
-
-	}
-
 	public SEOLinkImpl(
 		SEOLink.SEOLinkDataSennaTrack seoLinkDataSennaTrack, String href,
 		String hrefLang, SEOLink.SEOLinkRel seoLinkRel) {

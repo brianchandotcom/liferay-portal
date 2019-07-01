@@ -19,6 +19,9 @@ package com.liferay.segments.constants;
  */
 public class SegmentsWebKeys {
 
+	public static final String SEGMENTS_ANONYMOUS_USER_ID =
+		"SEGMENTS_ANONYMOUS_USER_ID";
+
 	public static final String SEGMENTS_ENTRY_IDS = "SEGMENTS_ENTRY_IDS";
 
 	public static final String SEGMENTS_EXPERIENCE_IDS =

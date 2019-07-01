@@ -135,11 +135,6 @@ String displayStyle = oAuth2ApplicationsManagementToolbarDisplayContext.getDispl
 							value="<%= String.valueOf(oAuth2AdminPortletDisplayContext.getOAuth2AuthorizationsCount(oAuth2Application)) %>"
 						/>
 
-						<liferay-ui:search-container-column-text
-							name="scopes"
-							value="<%= String.valueOf(oAuth2AdminPortletDisplayContext.getScopeAliasesSize(oAuth2Application)) %>"
-						/>
-
 						<liferay-ui:search-container-column-jsp
 							align="right"
 							path="/admin/application_actions.jsp"

@@ -115,16 +115,6 @@ public class OAuth2AdminPortletDisplayContext
 			portletPreferences.getValue("oAuth2Features", StringPool.BLANK));
 	}
 
-	public int getScopeAliasesSize(OAuth2Application oAuth2Application)
-		throws PortalException {
-
-		List<String> scopeAliasesList =
-			oAuth2ApplicationScopeAliasesLocalService.getScopeAliasesList(
-				oAuth2Application.getOAuth2ApplicationScopeAliasesId());
-
-		return scopeAliasesList.size();
-	}
-
 	public ClientProfile[] getSortedClientProfiles() {
 		ClientProfile[] clientProfiles = ClientProfile.values();
 

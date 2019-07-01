@@ -50,7 +50,9 @@ public class IfStatementCheck extends BaseCheck {
 
 		DetailAST firstChildDetailAST = lastChildDetailAST.getFirstChild();
 
-		if (firstChildDetailAST.getType() != TokenTypes.LITERAL_IF) {
+		if ((firstChildDetailAST.getType() != TokenTypes.LITERAL_IF) ||
+			(firstChildDetailAST.getHiddenBefore() != null)) {
+
 			return;
 		}
 

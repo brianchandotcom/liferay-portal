@@ -783,7 +783,11 @@ public class ContentPageEditorDisplayContext {
 					SessionErrors.clear(request);
 				}
 
-				soyContext.putHTML(
+				soyContext.put(
+					"configuration",
+					JSONFactoryUtil.createJSONObject(
+						fragmentEntryLink.getConfiguration())
+				).putHTML(
 					"content", content
 				).put(
 					"editableValues", editableValuesJSONObject

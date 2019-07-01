@@ -17,6 +17,7 @@ package com.liferay.asset.list.util;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.petra.string.StringPool;
 
 import java.util.List;
 
@@ -39,16 +40,44 @@ public interface AssetListAssetEntryProvider {
 		AssetListEntry assetListEntry, long[] segmentsEntryIds, int start,
 		int end);
 
+	public default List<AssetEntry> getAssetEntries(
+		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId) {
+
+		return getAssetEntries(
+			assetListEntry, segmentsEntryIds, StringPool.BLANK);
+	}
+
+	public default List<AssetEntry> getAssetEntries(
+		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId,
+		int start, int end) {
+
+		return getAssetEntries(
+			assetListEntry, segmentsEntryIds, StringPool.BLANK, start, end);
+	}
+
 	public int getAssetEntriesCount(
 		AssetListEntry assetListEntry, long segmentsEntryId);
 
 	public int getAssetEntriesCount(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds);
 
+	public default int getAssetEntriesCount(
+		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId) {
+
+		return getAssetEntriesCount(
+			assetListEntry, segmentsEntryIds, StringPool.BLANK);
+	}
+
 	public AssetEntryQuery getAssetEntryQuery(
 		AssetListEntry assetListEntry, long segmentsEntryId);
 
 	public AssetEntryQuery getAssetEntryQuery(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds);
+
+	public default AssetEntryQuery getAssetEntryQuery(
+		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId) {
+
+		return getAssetEntryQuery(assetListEntry, segmentsEntryIds, userId);
+	}
 
 }

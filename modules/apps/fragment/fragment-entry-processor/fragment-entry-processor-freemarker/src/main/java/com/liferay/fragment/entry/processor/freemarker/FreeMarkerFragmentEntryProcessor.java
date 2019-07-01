@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.segments.constants.SegmentsConstants;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -73,7 +74,8 @@ public class FreeMarkerFragmentEntryProcessor
 		}
 
 		return JSONUtil.put(
-			"segment-experience-id-0",
+			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX +
+				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT,
 			_getConfigDefaultValuesJSONObject(configuration));
 	}
 
@@ -155,12 +157,14 @@ public class FreeMarkerFragmentEntryProcessor
 				segmentsExperienceId = segmentsExperienceIds[0];
 			}
 			else {
-				segmentsExperienceId = 0;
+				segmentsExperienceId =
+					SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT;
 			}
 
 			fragmentConfigurationJSONObject =
 				(JSONObject)configurationValuesJSONObject.get(
-					"segment-experience-id-" + segmentsExperienceId);
+					SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX +
+						segmentsExperienceId);
 		}
 
 		contextObjects.put(

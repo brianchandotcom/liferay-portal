@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>PROCESS_FAILED</td>
-	<td>//*[@data-qa-id='processResult'][contains(.,'Failed')] | //h6[contains(.,'Successful')]</td>
+	<td>//*[@data-qa-id='processResult'][contains(.,'Failed')] | //h6[contains(.,'Failed')]</td>
 	<td></td>
 </tr>
 <tr>

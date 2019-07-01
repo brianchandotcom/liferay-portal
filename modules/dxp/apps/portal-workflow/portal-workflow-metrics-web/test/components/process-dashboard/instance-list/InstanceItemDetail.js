@@ -180,7 +180,7 @@ test('Should test fetchData', () => {
 
 	const instance = component.find(InstanceItemDetail).instance();
 
-	instance.fetchData().then(data => {
+	return instance.fetchData().then(data => {
 		expect(data).toEqual(data);
 	});
 });

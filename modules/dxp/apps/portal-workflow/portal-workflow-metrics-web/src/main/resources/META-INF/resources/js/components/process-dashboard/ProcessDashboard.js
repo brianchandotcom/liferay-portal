@@ -5,6 +5,7 @@ import {ChildLink} from '../../shared/components/router/routerWrapper';
 import CompletedItemsCard from './process-items/CompletedItemsCard';
 import DropDownHeader from './DropDownHeader';
 import {getPathname} from '../../shared/components/tabs/TabItem';
+import {openErrorToast} from '../../shared/util/toast';
 import PendingItemsCard from './process-items/PendingItemsCard';
 import React from 'react';
 import {sub} from '../../shared/util/lang';
@@ -19,26 +20,35 @@ class ProcessDashboard extends React.Component {
 	}
 
 	componentDidMount() {
-		Promise.all([this.loadBlockedSLACount(), this.loadSLACount()]).then(
-			([blockedSLACount, slaCount]) =>
+		Promise.all([this.loadBlockedSLACount(), this.loadSLACount()])
+			.then(([blockedSLACount, slaCount]) =>
 				this.setState({blockedSLACount, slaCount})
-		);
+			)
+			.catch(this.showLoadingError);
 	}
 
 	loadBlockedSLACount() {
 		return this.context.client
 			.get(
-				`/processes/${
-					this.props.processId
-				}/slas?page=1&pageSize=1&status=2`
+				`/processes/${this.props.processId}/slas?page=1&pageSize=1&status=2`
 			)
-			.then(({data: {totalCount}}) => totalCount);
+			.then(({data: {totalCount}}) => totalCount)
+			.catch(this.showLoadingError);
 	}
 
 	loadSLACount() {
 		return this.context.client
 			.get(`/processes/${this.props.processId}/slas?page=1&pageSize=1`)
-			.then(({data: {totalCount}}) => totalCount);
+			.then(({data: {totalCount}}) => totalCount)
+			.catch(this.showLoadingError);
+	}
+
+	showLoadingError() {
+		openErrorToast({
+			message: Liferay.Language.get(
+				'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
+			)
+		});
 	}
 
 	render() {

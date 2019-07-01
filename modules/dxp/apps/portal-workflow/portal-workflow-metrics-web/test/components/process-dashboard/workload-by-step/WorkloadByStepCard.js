@@ -48,7 +48,7 @@ test('Should component set error state after request fails', () => {
 		loading: false
 	});
 
-	instance.loadData().catch(() => {
+	return instance.loadData().catch(() => {
 		expect(instance.state.errors).toEqual(
 			'There was a problem retrieving data. Please try reloading the page.'
 		);

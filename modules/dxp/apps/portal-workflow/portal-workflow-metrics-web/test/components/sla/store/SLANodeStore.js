@@ -64,7 +64,7 @@ test('Should test fetch', () => {
 
 	act(() => result.current.fetchNodes('123'));
 
-	waitForNextUpdate().then(() => {
+	return waitForNextUpdate().then(() => {
 		const {
 			getPauseNodes,
 			getStartNodes,
@@ -159,7 +159,7 @@ test('Should test fetch data', () => {
 
 	act(() => result.current.fetchNodes('123'));
 
-	waitForNextUpdate().then(() => {
+	return waitForNextUpdate().then(() => {
 		const {
 			getPauseNodes,
 			getStartNodes,
@@ -208,7 +208,7 @@ test('Should test initial state', () => {
 
 	act(() => result.current.fetchNodes('123'));
 
-	waitForNextUpdate().then(() => {
+	return waitForNextUpdate().then(() => {
 		const defaultData = {
 			nodes: []
 		};

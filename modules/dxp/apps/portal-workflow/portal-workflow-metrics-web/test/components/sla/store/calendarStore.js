@@ -14,7 +14,7 @@ test('Should fetch calendars', () => {
 
 	const calendarStore = new CalendarStore(client(data));
 
-	calendarStore.fetchCalendars().then(() => {
+	return calendarStore.fetchCalendars().then(() => {
 		expect(calendarStore.getState().calendars).toMatchObject(data.items);
 	});
 });

@@ -17,7 +17,7 @@ test('Should fetch process tasks', () => {
 
 	const processTaskStore = new ProcessTaskStore(client(data));
 
-	processTaskStore.fetchProcessTasks().then(() => {
+	return processTaskStore.fetchProcessTasks().then(() => {
 		processTaskStore
 			.getState()
 			.processTasks.forEach((processTask, index) =>

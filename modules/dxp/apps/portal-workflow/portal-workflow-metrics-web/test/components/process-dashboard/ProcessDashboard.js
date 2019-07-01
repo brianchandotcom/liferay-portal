@@ -33,14 +33,14 @@ test('Should render component with completed tab activated', () => {
 test('Should render component with default tab activated', () => {
 	const data = {
 		id: 35315,
-		instanceCount: 1,
+		totalCount: 1,
 		onTimeInstanceCount: 1,
 		overdueInstanceCount: 0,
 		title: 'Single Approver'
 	};
 
 	const component = mount(
-		<Router client={fetch(data)} initialPath='/dashboard/35315'>
+		<Router client={fetch({data})} initialPath='/dashboard/35315'>
 			<ProcessDashboard processId={35315} />
 		</Router>
 	);
@@ -63,7 +63,7 @@ test('Should render component with failure state', () => {
 
 test('Should render dashboard route children', () => {
 	const component = mount(
-		<Router client={fetch({})}>
+		<Router client={fetch({data: {}})}>
 			{withParams(PendingItemsCard, WorkloadByStepCard)({
 				location: {
 					search: ''

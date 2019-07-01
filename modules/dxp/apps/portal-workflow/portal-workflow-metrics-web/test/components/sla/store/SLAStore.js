@@ -98,7 +98,7 @@ test('Should test fetch data', () => {
 
 	act(() => result.current.fetchSLA('1'));
 
-	waitForNextUpdate().then(() => {
+	return waitForNextUpdate().then(() => {
 		expect(result.current.sla).toMatchObject(data);
 	});
 });
@@ -117,7 +117,7 @@ test('Should test fetch data without some parts', () => {
 
 	act(() => result.current.fetchSLA('1'));
 
-	waitForNextUpdate().then(() => {
+	return waitForNextUpdate().then(() => {
 		expect(result.current.sla).toMatchObject({
 			calendarKey: undefined,
 			days: null,
@@ -157,7 +157,7 @@ test('Should test initial state', () => {
 
 	act(() => result.current.fetchSLA('1'));
 
-	waitForNextUpdate().then(() => {
+	return waitForNextUpdate().then(() => {
 		expect(result.current.sla).toMatchObject(defaultData);
 	});
 });
@@ -181,7 +181,7 @@ test('Should test reset', () => {
 
 	act(() => result.current.resetNodes());
 
-	waitForNextUpdate().then(() => {
+	return waitForNextUpdate().then(() => {
 		expect(result.current.sla).toMatchObject(defaultData);
 	});
 });
@@ -205,7 +205,7 @@ test('Should test save data', () => {
 
 	act(() => result.current.saveSLA('1', null, null));
 
-	waitForNextUpdate().then(() => {
+	return waitForNextUpdate().then(() => {
 		expect(result.current.sla).toMatchObject(defaultData);
 	});
 });
@@ -229,7 +229,7 @@ test('Should test update data', () => {
 
 	act(() => result.current.saveSLA('1', '1', null));
 
-	waitForNextUpdate().then(() => {
+	return waitForNextUpdate().then(() => {
 		expect(result.current.sla).toMatchObject(defaultData);
 	});
 });

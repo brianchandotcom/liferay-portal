@@ -73,7 +73,7 @@ test('Should component load process instances', () => {
 
 	instance.state.loading = false;
 
-	instance.loadInstances().then(data => {
+	return instance.loadInstances().then(data => {
 		expect(data).toEqual(data);
 	});
 });
@@ -129,7 +129,7 @@ test('Should component set error state after request fails', () => {
 
 	instance.state.loading = false;
 
-	instance.loadInstances().catch(() => {
+	return instance.loadInstances().catch(() => {
 		expect(instance.state.errors).toEqual(
 			'There was a problem retrieving data. Please try reloading the page.'
 		);

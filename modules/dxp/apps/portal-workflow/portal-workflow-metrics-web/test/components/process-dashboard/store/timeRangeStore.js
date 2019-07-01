@@ -1,4 +1,5 @@
 import client from 'test/mock/fetch';
+import {completionPeriodKeys} from 'components/process-dashboard/instance-list/filterConstants';
 import {TimeRangeStore} from 'components/process-dashboard/store/timeRangeStore';
 
 test('Should fetch time ranges', () => {
@@ -13,19 +14,25 @@ test('Should fetch time ranges', () => {
 				name: 'Today'
 			},
 			{
+				dateEnd: new Date(2019, 4, 10),
+				dateStart: new Date(2019, 1, 10),
 				defaultTimeRange: false,
-				key: 'all-time',
-				name: 'All Time'
+				id: 1,
+				key: 'four-months',
+				name: 'Four Months'
 			}
 		]
 	};
 
 	const timeRangeStore = new TimeRangeStore(client(data));
 
-	timeRangeStore.fetchTimeRanges().then(() => {
+	return timeRangeStore.fetchTimeRanges().then(() => {
 		timeRangeStore
 			.getState()
-			.timeRanges.forEach((timeRange, index) =>
+			.timeRanges.filter(
+				timeRange => timeRange.key !== completionPeriodKeys.allTime
+			)
+			.forEach((timeRange, index) =>
 				expect(timeRange.name).toEqual(data.items[index].name)
 			);
 	});
@@ -57,11 +64,6 @@ test('Should format time range description', () => {
 				id: 2,
 				key: 'today',
 				name: 'Today'
-			},
-			{
-				defaultTimeRange: false,
-				key: 'all-time',
-				name: 'All Time'
 			}
 		]
 	};
@@ -78,7 +80,10 @@ test('Should format time range description', () => {
 	timeRangeStore.fetchTimeRanges().then(() => {
 		timeRangeStore
 			.getState()
-			.timeRanges.forEach((timeRange, index) =>
+			.timeRanges.filter(
+				timeRange => timeRange.key !== completionPeriodKeys.allTime
+			)
+			.forEach((timeRange, index) =>
 				expect(timeRange.description).toEqual(
 					timeRangeDescriptions[index]
 				)

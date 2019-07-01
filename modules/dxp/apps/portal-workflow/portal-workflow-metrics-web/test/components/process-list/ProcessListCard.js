@@ -149,7 +149,7 @@ test('Should search', () => {
 	);
 	const instance = component.find(ProcessListCard).instance();
 
-	instance
+	return instance
 		.requestData({
 			page: 1,
 			pageSize: 20,

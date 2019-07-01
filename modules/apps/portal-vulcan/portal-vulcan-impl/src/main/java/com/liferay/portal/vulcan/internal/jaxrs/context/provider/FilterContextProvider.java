@@ -112,14 +112,10 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 			HttpServletRequest httpServletRequest =
 				ContextProviderUtil.getHttpServletRequest(message);
 
-			AcceptLanguage acceptLanguage = new AcceptLanguageImpl(
-				httpServletRequest, _language, _portal);
-			EntityModel entityModel = ContextProviderUtil.getEntityModel(
-				message);
-			String filterString = ParamUtil.getString(
-				httpServletRequest, "filter");
-
-			return createContext(acceptLanguage, entityModel, filterString);
+			return createContext(
+				new AcceptLanguageImpl(httpServletRequest, _language, _portal),
+				ContextProviderUtil.getEntityModel(message),
+				ParamUtil.getString(httpServletRequest, "filter"));
 		}
 		catch (ExpressionVisitException eve) {
 			throw new BadRequestException(eve.getMessage(), eve);

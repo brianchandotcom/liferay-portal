@@ -17,8 +17,10 @@ package com.liferay.asset.info.display.field.util;
 import com.liferay.asset.info.display.contributor.util.AssetInfoDisplayContributorFieldUtil;
 import com.liferay.info.display.contributor.InfoDisplayField;
 import com.liferay.info.display.field.InfoDisplayFieldProvider;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import org.osgi.framework.Bundle;
@@ -34,6 +36,14 @@ public class AssetEntryInfoDisplayFieldProviderUtil {
 		Locale locale, String... className) {
 
 		return getService().getContributorInfoDisplayFields(locale, className);
+	}
+
+	public static Map<String, Object> getInfoDisplayFields(
+			String className, Object displayObject, Locale locale)
+		throws PortalException {
+
+		return getService().getContributorInfoDisplayFieldsValues(
+			className, displayObject, locale);
 	}
 
 	public static InfoDisplayFieldProvider getService() {

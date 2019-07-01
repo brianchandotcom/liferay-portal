@@ -16,6 +16,7 @@ package com.liferay.segments.asah.connector.internal.context.contributor;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.context.Context;
 import com.liferay.segments.context.contributor.RequestContextContributor;
 
@@ -47,7 +48,12 @@ public class SegmentsAsahRequestContextContributor
 	public void contribute(
 		Context context, HttpServletRequest httpServletRequest) {
 
-		context.put(AC_CLIENT_USER_ID, _getACClientUserId(httpServletRequest));
+		String acClientUserId = _getACClientUserId(httpServletRequest);
+
+		httpServletRequest.setAttribute(
+			SegmentsWebKeys.SEGMENTS_ANONYMOUS_USER_ID, acClientUserId);
+
+		context.put(AC_CLIENT_USER_ID, acClientUserId);
 	}
 
 	private String _getACClientUserId(HttpServletRequest httpServletRequest) {

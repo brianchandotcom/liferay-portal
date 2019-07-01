@@ -47,6 +47,8 @@ function updateRowColumnsNumberAction(numberOfColumns, rowId) {
 		const rowIndex = getRowIndex(state.layoutData.structure, rowId);
 
 		const columns = state.layoutData.structure[rowIndex].columns;
+
+		let fragmentEntryLinkIdsToRemove = [];
 		let nextData;
 
 		if (numberOfColumns > columns.length) {
@@ -65,9 +67,11 @@ function updateRowColumnsNumberAction(numberOfColumns, rowId) {
 			);
 		}
 
-		const fragmentEntryLinkIdsToRemove = getRowFragmentEntryLinkIds({
-			columns: columns.slice(numberOfColumns - columns.length)
-		});
+		if (columns.length > numberOfColumns) {
+			fragmentEntryLinkIdsToRemove = getRowFragmentEntryLinkIds({
+				columns: columns.slice(numberOfColumns - columns.length)
+			});
+		}
 
 		dispatch(updateRowColumnsNumberLoadingAction());
 		dispatch(enableSavingChangesStatusAction());

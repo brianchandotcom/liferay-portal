@@ -1558,6 +1558,8 @@ definition {
 
 		Click(locator1 = "YUICalendarWidget#NEXT_MONTH_ARROW");
 
+		Click(locator1 = "YUICalendarWidget#NEXT_MONTH_ARROW");
+
 		Click(
 			key_day = "1",
 			locator1 = "YUICalendarWidget#DATEPICKER_SPECIFIC_DAY");

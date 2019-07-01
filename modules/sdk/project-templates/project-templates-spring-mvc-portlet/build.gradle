@@ -1,5 +1,5 @@
 dependencies {
-	compileOnly group: "com.liferay", name: "com.liferay.project.templates", version: "4.2.25"
+	compileOnly group: "com.liferay", name: "com.liferay.project.templates", version: "4.4.0"
 	compileOnly group: "org.apache.maven.archetype", name: "archetype-common", version: "2.4"
 }
 
@@ -25,16 +25,10 @@ def generateOptions = [
 	[framework: "springportletmvc", frameworkDependencies: "embedded", viewType: "thymeleaf", liferayVersion: "7.2"],
 	[framework: "springportletmvc", frameworkDependencies: "provided", viewType: "jsp", liferayVersion: "7.2"],
 	[framework: "springportletmvc", frameworkDependencies: "provided", viewType: "thymeleaf", liferayVersion: "7.2"],
-	[framework: "springportletmvc", frameworkDependencies: "embedded", viewType: "jsp", liferayVersion: "7.3"],
-	[framework: "springportletmvc", frameworkDependencies: "embedded", viewType: "thymeleaf", liferayVersion: "7.3"],
 	[framework: "portletmvc4spring", frameworkDependencies: "embedded", viewType: "jsp", liferayVersion: "7.1"],
 	[framework: "portletmvc4spring", frameworkDependencies: "embedded", viewType: "thymeleaf", liferayVersion: "7.1"],
 	[framework: "portletmvc4spring", frameworkDependencies: "embedded", viewType: "jsp", liferayVersion: "7.2"],
 	[framework: "portletmvc4spring", frameworkDependencies: "embedded", viewType: "thymeleaf", liferayVersion: "7.2"],
-	[framework: "portletmvc4spring", frameworkDependencies: "embedded", viewType: "jsp", liferayVersion: "7.3"],
-	[framework: "portletmvc4spring", frameworkDependencies: "embedded", viewType: "thymeleaf", liferayVersion: "7.3"],
-	[framework: "portletmvc4spring", frameworkDependencies: "provided", viewType: "jsp", liferayVersion: "7.3"],
-	[framework: "portletmvc4spring", frameworkDependencies: "provided", viewType: "thymeleaf", liferayVersion: "7.3"],
 ]
 
 generateOptions.each { options ->

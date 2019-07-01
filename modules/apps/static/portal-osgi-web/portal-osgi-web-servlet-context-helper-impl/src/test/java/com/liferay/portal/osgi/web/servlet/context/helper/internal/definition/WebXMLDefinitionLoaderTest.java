@@ -33,6 +33,7 @@ import java.util.EnumMap;
 import java.util.EventListener;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
@@ -139,11 +140,11 @@ public class WebXMLDefinitionLoaderTest {
 	public void testLoadWebXML() throws Exception {
 		Bundle bundle = new MockBundle();
 
-		List<Class<?>> classes = Collections.emptyList();
+		Set<Class<?>> classes = Collections.emptySet();
 
 		WebXMLDefinitionLoader webXMLDefinitionLoader =
 			new WebXMLDefinitionLoader(
-				bundle, null, SAXParserFactory.newInstance(), classes);
+				bundle, null, SAXParserFactory.newInstance(), classes, classes);
 
 		WebXMLDefinition webXMLDefinition =
 			webXMLDefinitionLoader.loadWebXMLDefinition(
@@ -402,11 +403,12 @@ public class WebXMLDefinitionLoaderTest {
 
 		TestBundle testBundle = new TestBundle(path);
 
-		List<Class<?>> classes = Collections.emptyList();
+		Set<Class<?>> classes = Collections.emptySet();
 
 		WebXMLDefinitionLoader webXMLDefinitionLoader =
 			new WebXMLDefinitionLoader(
-				testBundle, null, SAXParserFactory.newInstance(), classes);
+				testBundle, null, SAXParserFactory.newInstance(), classes,
+				classes);
 
 		return webXMLDefinitionLoader.loadWebXMLDefinition(testBundle.getURL());
 	}

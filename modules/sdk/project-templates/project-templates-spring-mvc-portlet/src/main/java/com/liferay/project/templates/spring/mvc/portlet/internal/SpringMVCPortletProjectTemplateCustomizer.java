@@ -14,9 +14,9 @@
 
 package com.liferay.project.templates.spring.mvc.portlet.internal;
 
+import com.liferay.project.templates.FileUtil;
 import com.liferay.project.templates.ProjectTemplateCustomizer;
 import com.liferay.project.templates.ProjectTemplatesArgs;
-import com.liferay.project.templates.FileUtil;
 
 import java.io.File;
 
@@ -79,8 +79,7 @@ public class SpringMVCPortletProjectTemplateCustomizer
 		throws Exception {
 	}
 
-	private Pattern _jspPattern = Pattern.compile(".*.html");
-
-	private Pattern _thymeleafPattern = Pattern.compile(".*.jspx");
+	private static final Pattern _jspPattern = Pattern.compile(".*.html");
+	private static final Pattern _thymeleafPattern = Pattern.compile(".*.jspx");
 
 }

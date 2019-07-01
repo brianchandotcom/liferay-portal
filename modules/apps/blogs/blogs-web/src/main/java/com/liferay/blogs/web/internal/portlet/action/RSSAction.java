@@ -156,24 +156,6 @@ public class RSSAction implements StrutsAction {
 		return rss.getBytes(StringPool.UTF8);
 	}
 
-	private boolean _isRSSFeedsEnabled(HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		BlogsGroupServiceOverriddenConfiguration
-			blogsGroupServiceOverriddenConfiguration =
-				_configurationProvider.getConfiguration(
-					BlogsGroupServiceOverriddenConfiguration.class,
-					new GroupServiceSettingsLocator(
-						themeDisplay.getSiteGroupId(),
-						BlogsConstants.SERVICE_NAME));
-
-		return blogsGroupServiceOverriddenConfiguration.enableRss();
-	}
-
 	private boolean _hasGroupViewPermission(
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
@@ -192,6 +174,24 @@ public class RSSAction implements StrutsAction {
 		}
 
 		return false;
+	}
+
+	private boolean _isRSSFeedsEnabled(HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		BlogsGroupServiceOverriddenConfiguration
+			blogsGroupServiceOverriddenConfiguration =
+				_configurationProvider.getConfiguration(
+					BlogsGroupServiceOverriddenConfiguration.class,
+					new GroupServiceSettingsLocator(
+						themeDisplay.getSiteGroupId(),
+						BlogsConstants.SERVICE_NAME));
+
+		return blogsGroupServiceOverriddenConfiguration.enableRss();
 	}
 
 	@Reference

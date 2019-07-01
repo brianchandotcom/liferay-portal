@@ -17,10 +17,14 @@ package com.liferay.data.engine.rest.internal.resource.v1_0;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionPermission;
+import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollection;
 import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
 import com.liferay.data.engine.rest.internal.constants.DataDefinitionConstants;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataDefinitionUtil;
+import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataRecordCollectionUtil;
 import com.liferay.data.engine.rest.internal.model.InternalDataDefinition;
+import com.liferay.data.engine.rest.internal.model.InternalDataRecordCollection;
+import com.liferay.data.engine.rest.internal.resource.spi.SPIDataRecordCollectionResource;
 import com.liferay.data.engine.rest.internal.resource.v1_0.util.DataEnginePermissionUtil;
 import com.liferay.data.engine.rest.resource.v1_0.DataDefinitionResource;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
@@ -53,7 +57,10 @@ import java.util.List;
 
 import javax.ws.rs.BadRequestException;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
@@ -207,6 +214,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			InternalDataDefinition.class.getName(), dataDefinition.getId(),
 			serviceContext.getModelPermissions());
 
+		_addDefaultDataRecordCollection(dataDefinition);
+
 		return dataDefinition;
 	}
 
@@ -263,6 +272,23 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				new ServiceContext()));
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_spiDataRecordCollectionResource =
+			new SPIDataRecordCollectionResource<>(
+				_ddlRecordSetLocalService, _ddmStructureLocalService,
+				_groupLocalService,
+				_dataRecordCollectionModelResourcePermission,
+				_resourceLocalService, _resourcePermissionLocalService,
+				_roleLocalService,
+				DataRecordCollectionUtil::toDataRecordCollection);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_spiDataRecordCollectionResource = null;
+	}
+
 	@Reference(
 		target = "(model.class.name=com.liferay.data.engine.rest.internal.model.InternalDataDefinition)",
 		unbind = "-"
@@ -274,9 +300,35 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		_modelResourcePermission = modelResourcePermission;
 	}
 
+	private void _addDefaultDataRecordCollection(DataDefinition dataDefinition)
+		throws Exception {
+
+		DataRecordCollection dataRecordCollection = new DataRecordCollection() {
+			{
+				setDataRecordCollectionKey(
+					dataDefinition.getDataDefinitionKey());
+				setDescription(dataDefinition.getDescription());
+				setName(dataDefinition.getName());
+				setSiteId(dataDefinition.getSiteId());
+			}
+		};
+
+		_spiDataRecordCollectionResource.postDataDefinitionDataRecordCollection(
+			contextCompany, dataDefinition.getId(),
+			dataRecordCollection.getDataRecordCollectionKey(),
+			dataRecordCollection.getDescription(),
+			dataRecordCollection.getName());
+	}
+
 	private long _getClassNameId() {
 		return _portal.getClassNameId(InternalDataDefinition.class);
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.data.engine.rest.internal.model.InternalDataRecordCollection)"
+	)
+	private ModelResourcePermission<InternalDataRecordCollection>
+		_dataRecordCollectionModelResourcePermission;
 
 	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
@@ -307,5 +359,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	private SPIDataRecordCollectionResource<DataRecordCollection>
+		_spiDataRecordCollectionResource;
 
 }

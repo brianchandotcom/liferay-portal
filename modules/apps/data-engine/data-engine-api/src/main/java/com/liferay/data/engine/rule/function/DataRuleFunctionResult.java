@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.data.engine.spi.rule.function;
+package com.liferay.data.engine.rule.function;
 
 import com.liferay.data.engine.spi.dto.SPIDataDefinitionField;
 

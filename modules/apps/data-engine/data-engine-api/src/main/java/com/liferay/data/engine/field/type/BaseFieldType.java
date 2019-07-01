@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.data.engine.spi.field.type;
+package com.liferay.data.engine.field.type;
 
+import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.spi.dto.SPIDataDefinitionField;
-import com.liferay.data.engine.spi.field.type.util.LocalizedValueUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;

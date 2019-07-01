@@ -12,20 +12,16 @@
  * details.
  */
 
-package com.liferay.data.engine.spi.field.type;
+package com.liferay.data.engine.rule.function;
 
-import java.util.Collection;
-import java.util.Map;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Leonardo Barros
+ * @author Jeyvison Nascimento
  */
-public interface FieldTypeTracker {
+@ProviderType
+public interface DataRuleFunctionTracker {
 
-	public FieldType getFieldType(String type);
-
-	public Map<String, Object> getFieldTypeProperties(String type);
-
-	public Collection<FieldType> getFieldTypes();
+	public DataRuleFunction getDataRuleFunction(String name);
 
 }

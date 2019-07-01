@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.data.engine.spi.field.type.util;
+package com.liferay.data.engine.field.type.util;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

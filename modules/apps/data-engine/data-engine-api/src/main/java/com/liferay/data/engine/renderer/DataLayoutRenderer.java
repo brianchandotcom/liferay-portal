@@ -12,10 +12,7 @@
  * details.
  */
 
-package com.liferay.data.engine.spi.field.type;
-
-import com.liferay.data.engine.spi.dto.SPIDataDefinitionField;
-import com.liferay.portal.kernel.json.JSONObject;
+package com.liferay.data.engine.renderer;
 
 import java.util.Map;
 
@@ -23,22 +20,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Marcela Cunha
+ * @author Gabriel Albuquerque
  */
-public interface FieldType {
+public interface DataLayoutRenderer {
 
-	public SPIDataDefinitionField deserialize(JSONObject jsonObject)
-		throws Exception;
-
-	public String getName();
-
-	public Map<String, Object> includeContext(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse,
-		SPIDataDefinitionField spiDataDefinitionField);
-
-	public JSONObject toJSONObject(
-			SPIDataDefinitionField spiDataDefinitionField)
+	public String render(
+			Long dataLayoutId, Map<String, Object> dataRecordValues,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception;
 
 }

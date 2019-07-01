@@ -14,10 +14,10 @@
 
 package com.liferay.chat.web.internal.portal.profile;
 
+import com.liferay.chat.web.internal.portlet.ChatPortlet;
+import com.liferay.chat.web.internal.portlet.route.ChatFriendlyURLMapper;
+import com.liferay.chat.web.internal.upgrade.ChatWebUpgrade;
 import com.liferay.chat.web.internal.util.BuddyFinderUtil;
-import com.liferay.chat.web.portlet.ChatPortlet;
-import com.liferay.chat.web.portlet.route.ChatFriendlyURLMapper;
-import com.liferay.chat.web.upgrade.ChatWebUpgrade;
 import com.liferay.portal.profile.BaseDSModulePortalProfile;
 import com.liferay.portal.profile.PortalProfile;
 

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.chat.web.upgrade;
+package com.liferay.chat.web.internal.upgrade;
 
-import com.liferay.chat.web.upgrade.v1_0_0.UpgradePortletId;
+import com.liferay.chat.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;

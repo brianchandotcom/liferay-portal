@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.chat.web.portlet;
+package com.liferay.chat.web.internal.portlet;
 
 import com.liferay.chat.constants.ChatPortletKeys;
 import com.liferay.portal.kernel.model.Release;

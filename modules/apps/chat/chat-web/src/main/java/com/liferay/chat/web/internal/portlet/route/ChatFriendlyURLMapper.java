@@ -12,19 +12,33 @@
  * details.
  */
 
-package com.liferay.chat.web.upgrade.v1_0_0;
+package com.liferay.chat.web.internal.portlet.route;
 
 import com.liferay.chat.constants.ChatPortletKeys;
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
+import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
+import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
+ * @author Juergen Kappler
  * @author Peter Fellwock
  */
-public class UpgradePortletId extends BaseUpgradePortletId {
+@Component(
+	enabled = false,
+	property = {
+		"com.liferay.portlet.friendly-url-routes=META-INF/friendly-url-routes/routes.xml",
+		"javax.portlet.name=" + ChatPortletKeys.CHAT
+	},
+	service = FriendlyURLMapper.class
+)
+public class ChatFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
 	@Override
-	protected String[][] getRenamePortletIdsArray() {
-		return new String[][] {{"1_WAR_chatportlet", ChatPortletKeys.CHAT}};
+	public String getMapping() {
+		return _MAPPING;
 	}
+
+	private static final String _MAPPING = "chat";
 
 }

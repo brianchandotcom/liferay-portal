@@ -146,7 +146,7 @@ public class FreeMarkerFragmentEntryProcessor
 		}
 		else {
 			JSONObject configurationValuesJSONObject =
-				(JSONObject)editableValuesJSONObject.get(className);
+				editableValuesJSONObject.getJSONObject(className);
 
 			long[] segmentsExperienceIds =
 				fragmentEntryProcessorContext.getSegmentsExperienceIds();
@@ -159,7 +159,7 @@ public class FreeMarkerFragmentEntryProcessor
 			}
 
 			fragmentConfigurationJSONObject =
-				(JSONObject)configurationValuesJSONObject.get(
+				configurationValuesJSONObject.getJSONObject(
 					SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX +
 						segmentsExperienceId);
 		}
@@ -278,7 +278,7 @@ public class FreeMarkerFragmentEntryProcessor
 			return null;
 		}
 
-		JSONArray fieldSetsJSONArray = (JSONArray)configJSONObject.get(
+		JSONArray fieldSetsJSONArray = configJSONObject.getJSONArray(
 			"fieldSets");
 
 		if (fieldSetsJSONArray == null) {
@@ -287,17 +287,17 @@ public class FreeMarkerFragmentEntryProcessor
 
 		for (int i = 0; i < fieldSetsJSONArray.length(); i++) {
 			JSONObject configFieldSetJSONObject =
-				(JSONObject)fieldSetsJSONArray.get(i);
+				fieldSetsJSONArray.getJSONObject(i);
 
 			JSONObject defaultValuesFieldSetJSONObject =
 				JSONFactoryUtil.createJSONObject();
 
 			JSONArray configFieldSetFieldsJSONArray =
-				(JSONArray)configFieldSetJSONObject.get("fields");
+				configFieldSetJSONObject.getJSONArray("fields");
 
 			for (int j = 0; j < configFieldSetFieldsJSONArray.length(); j++) {
 				JSONObject configFieldSetFieldJSONObject =
-					(JSONObject)configFieldSetFieldsJSONArray.get(j);
+					configFieldSetFieldsJSONArray.getJSONObject(j);
 
 				Object fieldDefaultValue = _getFieldValue(
 					configFieldSetFieldJSONObject.getString("dataType"),

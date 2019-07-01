@@ -15,6 +15,7 @@
 package com.liferay.seo.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.seo.SEO;
 import com.liferay.portal.kernel.seo.SEOLink;
@@ -27,12 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
@@ -51,78 +47,56 @@ public class SEOImpl implements SEO {
 			Map<Locale, String> alternateURLs)
 		throws PortalException {
 
+		List<SEOLink> seoLinks = new ArrayList<>(alternateURLs.size() + 2);
+
+		seoLinks.add(
+			new SEOLinkImpl(
+				SEOLink.SEOLinkDataSennaTrack.TEMPORARY,
+				_html.escapeAttribute(
+					_getCanonicalURL(
+						companyId, locale, canonicalURL, alternateURLs)),
+				null, SEOLink.SEOLinkRel.CANONICAL));
+
+		alternateURLs.forEach(
+			(locale1, url) ->
+				seoLinks.add(
+					new SEOLinkImpl(
+						SEOLink.SEOLinkDataSennaTrack.TEMPORARY,
+						_html.escapeAttribute(url),
+						LocaleUtil.toW3cLanguageId(locale1),
+						SEOLink.SEOLinkRel.ALTERNATE)));
+
+		String defaultLocaleURL = alternateURLs.get(LocaleUtil.getDefault());
+
+		if (defaultLocaleURL == null) {
+			return seoLinks;
+		}
+
+		seoLinks.add(
+			new SEOLinkImpl(
+				SEOLink.SEOLinkDataSennaTrack.TEMPORARY,
+				_html.escapeAttribute(defaultLocaleURL), "x-default",
+				SEOLink.SEOLinkRel.ALTERNATE));
+
+		return seoLinks;
+	}
+
+	private String _getCanonicalURL(
+			long companyId, Locale locale, String canonicalURL,
+			Map<Locale, String> alternateURLs)
+		throws ConfigurationException {
+
 		SEOCompanyConfiguration seoCompanyConfiguration =
 			_configurationProvider.getCompanyConfiguration(
 				SEOCompanyConfiguration.class, companyId);
 
-		if (Objects.equals(
-				seoCompanyConfiguration.configuration(),
-				SEOConfigurationConstants.CLASSIC)) {
+		if (SEOConfigurationConstants.CLASSIC.equals(
+				seoCompanyConfiguration.configuration())) {
 
-			return _getClassicLocalizedSEOLinks(canonicalURL, alternateURLs);
+			return canonicalURL;
 		}
 
-		return _getDefaultLocalizedSEOLinks(locale, canonicalURL, alternateURLs);
-	}
-
-	private List<SEOLink> _getClassicLocalizedSEOLinks(
-		String canonicalURL, Map<Locale, String> alternateURLs) {
-
-		List<SEOLink> seoLinks = new ArrayList<>();
-
-		seoLinks.add(
-			new SEOLinkImpl(
-				SEOLink.SEOLinkDataSennaTrack.TEMPORARY,
-				_html.escapeAttribute(canonicalURL), null,
-				SEOLink.SEOLinkRel.CANONICAL));
-
-		_addAlternateSEOLinks(alternateURLs, seoLinks::add);
-
-		return seoLinks;
-	}
-
-	private List<SEOLink> _getDefaultLocalizedSEOLinks(
-		Locale locale, String canonicalURL, Map<Locale, String> alternateURLs) {
-
-		String localizedCanonicalURL = alternateURLs.getOrDefault(
-			locale, canonicalURL);
-
-		List<SEOLink> seoLinks = new ArrayList<>();
-
-		seoLinks.add(
-			new SEOLinkImpl(
-				SEOLink.SEOLinkDataSennaTrack.TEMPORARY,
-				_html.escapeAttribute(localizedCanonicalURL), null,
-				SEOLink.SEOLinkRel.CANONICAL));
-
-		_addAlternateSEOLinks(alternateURLs, seoLinks::add);
-
-		return seoLinks;
-	}
-
-	private void _addAlternateSEOLinks(
-		Map<Locale, String> alternateURLs, Consumer<SEOLink> consumer) {
-
-		alternateURLs.forEach(
-			(locale, url) ->
-				consumer.accept(
-					new SEOLinkImpl(
-						SEOLink.SEOLinkDataSennaTrack.TEMPORARY,
-						_html.escapeAttribute(url),
-						LocaleUtil.toW3cLanguageId(locale),
-						SEOLink.SEOLinkRel.ALTERNATE)));
-
-		String defaultLocaleUrl = alternateURLs.get(LocaleUtil.getDefault());
-
-		if (defaultLocaleUrl == null) {
-			return;
-		}
-
-		consumer.accept(
-			new SEOLinkImpl(
-				SEOLink.SEOLinkDataSennaTrack.TEMPORARY,
-				_html.escapeAttribute(defaultLocaleUrl), "x-default",
-				SEOLink.SEOLinkRel.ALTERNATE));
+		return alternateURLs.getOrDefault(locale, canonicalURL);
 	}
 
 	@Reference

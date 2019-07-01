@@ -17,6 +17,7 @@ package com.liferay.fragment.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.exception.FragmentEntryConfigurationException;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.exception.FragmentEntryNameException;
 import com.liferay.fragment.model.FragmentCollection;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -174,6 +176,21 @@ public class FragmentEntryServiceTest {
 			serviceContext);
 	}
 
+	@Test(expected = FragmentEntryConfigurationException.class)
+	public void testAddFragmentEntryUsingInvalidConfiguration()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		_fragmentEntryService.addFragmentEntry(
+			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString(), null, "Text only fragment", null,
+			_getFileContent("configuration-invalid-missing-field-sets.json"), 0,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+	}
+
 	@Test(expected = FragmentEntryContentException.class)
 	public void testAddFragmentEntryUsingInvalidHTML() throws Exception {
 		ServiceContext serviceContext =
@@ -239,6 +256,25 @@ public class FragmentEntryServiceTest {
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
 			RandomTestUtil.randomString(), null, "Text only fragment", null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
+	}
+
+	@Test
+	public void testAddFragmentEntryUsingValidConfiguration() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
+			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString(), null, "Text only fragment", null,
+			_getFileContent("configuration-valid-complete.json"), 0,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		FragmentEntry persistedFragmentEntry =
+			_fragmentEntryPersistence.fetchByPrimaryKey(
+				fragmentEntry.getFragmentEntryId());
+
+		Assert.assertEquals("Fragment Entry", persistedFragmentEntry.getName());
 	}
 
 	@Test
@@ -1616,6 +1652,11 @@ public class FragmentEntryServiceTest {
 
 		Assert.assertEquals(
 			fragmentEntry.getType(), copyFragmentEntry.getType());
+	}
+
+	private String _getFileContent(String fileName) throws Exception {
+		return new String(
+			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
 
 	private void _setRolePermissions(String permissionType) throws Exception {

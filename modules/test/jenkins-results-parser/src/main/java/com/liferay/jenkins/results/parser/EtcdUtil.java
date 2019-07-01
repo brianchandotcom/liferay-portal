@@ -211,13 +211,13 @@ public class EtcdUtil {
 			_refreshEtcdNode(false);
 		}
 
-		private synchronized void _refreshEtcdNode(boolean nullValueAllowed) {
+		private synchronized void _refreshEtcdNode(boolean exceptionOnFail) {
 			int retryCount = 0;
 
 			while (true) {
 				_etcdNode = _getEtcdNode(_etcdServerURL, getKey());
 
-				if (nullValueAllowed || (_etcdNode != null)) {
+				if (!exceptionOnFail || (_etcdNode != null)) {
 					return;
 				}
 

@@ -14,7 +14,7 @@
 
 package com.liferay.data.engine.web.internal.portlet;
 
-import com.liferay.data.engine.web.constants.DataEnginePortletKeys;
+import com.liferay.data.engine.web.internal.constants.DataEnginePortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;

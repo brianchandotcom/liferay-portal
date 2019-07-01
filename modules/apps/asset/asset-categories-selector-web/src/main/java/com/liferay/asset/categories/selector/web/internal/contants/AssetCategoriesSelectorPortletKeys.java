@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.categories.selector.web.contants;
+package com.liferay.asset.categories.selector.web.internal.contants;
 
 /**
  * @author Eudaldo Alonso

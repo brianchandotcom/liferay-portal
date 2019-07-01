@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.categories.selector.web.display.context;
+package com.liferay.asset.categories.selector.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;

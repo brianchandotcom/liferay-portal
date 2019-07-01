@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.categories.selector.web.update;
+package com.liferay.asset.categories.selector.web.internal.update;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.asset.categories.navigation.web.configuration.definition;
+package com.liferay.asset.categories.navigation.web.internal.configuration.definition;
 
-import com.liferay.asset.categories.navigation.web.configuration.AssetCategoriesNavigationPortletInstanceConfiguration;
+import com.liferay.asset.categories.navigation.web.internal.configuration.AssetCategoriesNavigationPortletInstanceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;

@@ -103,8 +103,8 @@ public class ExpandoInfoDisplayContributorField
 				StringPool.COMMA_AND_SPACE);
 		}
 		else if (attributeType == ExpandoColumnConstants.DATE) {
-			DateFormat dateFormat = DateFormat.getDateInstance(
-				DateFormat.FULL, locale);
+			DateFormat dateFormat = DateFormat.getDateTimeInstance(
+				DateFormat.FULL, DateFormat.FULL, locale);
 
 			return dateFormat.format((Date)attributeValue);
 		}

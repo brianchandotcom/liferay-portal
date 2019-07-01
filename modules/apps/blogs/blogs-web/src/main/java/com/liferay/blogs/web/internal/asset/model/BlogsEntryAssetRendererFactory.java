@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.web.asset.model;
+package com.liferay.blogs.web.internal.asset.model;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetRenderer;

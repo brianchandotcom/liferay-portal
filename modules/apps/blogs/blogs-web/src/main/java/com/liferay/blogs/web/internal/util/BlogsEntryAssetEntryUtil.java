@@ -17,7 +17,7 @@ package com.liferay.blogs.web.internal.util;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.web.constants.BlogsWebConstants;
+import com.liferay.blogs.web.internal.constants.BlogsWebConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import javax.servlet.http.HttpServletRequest;

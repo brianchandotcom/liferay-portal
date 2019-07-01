@@ -15,7 +15,7 @@
 package com.liferay.blogs.web.internal.portlet.action;
 
 import com.liferay.blogs.constants.BlogsPortletKeys;
-import com.liferay.blogs.web.constants.BlogsWebKeys;
+import com.liferay.blogs.web.internal.constants.BlogsWebKeys;
 import com.liferay.blogs.web.internal.display.context.BlogEntriesDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.Portal;

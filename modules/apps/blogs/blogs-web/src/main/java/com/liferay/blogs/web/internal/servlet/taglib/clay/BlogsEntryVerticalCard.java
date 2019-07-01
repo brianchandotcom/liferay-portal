@@ -15,7 +15,7 @@
 package com.liferay.blogs.web.internal.servlet.taglib.clay;
 
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.web.constants.BlogsWebConstants;
+import com.liferay.blogs.web.internal.constants.BlogsWebConstants;
 import com.liferay.blogs.web.internal.security.permission.resource.BlogsEntryPermission;
 import com.liferay.blogs.web.internal.servlet.taglib.util.BlogsEntryActionDropdownItemsProvider;
 import com.liferay.blogs.web.internal.util.BlogsEntryUtil;

@@ -14,8 +14,8 @@
 
 package com.liferay.blogs.web.internal.util;
 
-import com.liferay.blogs.web.constants.BlogsWebConstants;
 import com.liferay.blogs.web.internal.configuration.BlogsPortletInstanceConfiguration;
+import com.liferay.blogs.web.internal.constants.BlogsWebConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;

@@ -353,12 +353,14 @@ if (portletTitleBasedNavigation) {
 		selectedFileNameContainer.innerHTML = buffer.join('');
 	};
 
-	form.addEventListener('submit', function() {
-		document.getElementById('<portlet:namespace />content').value = window.<portlet:namespace />contentEditor.getHTML();
-		document.getElementById('<portlet:namespace />title').value = window.<portlet:namespace />titleEditor.getText();
-
-		updateMultipleKBArticleAttachments();
-	});
+	form.addEventListener(
+		'submit',
+		function() {
+			document.getElementById('<portlet:namespace />content').value = window.<portlet:namespace />contentEditor.getHTML();
+			document.getElementById('<portlet:namespace />title').value = window.<portlet:namespace />titleEditor.getText();
+			updateMultipleKBArticleAttachments();
+		}
+	);
 </aui:script>
 
 <%!

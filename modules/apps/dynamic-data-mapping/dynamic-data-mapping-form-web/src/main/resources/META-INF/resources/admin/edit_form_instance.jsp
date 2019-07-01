@@ -292,8 +292,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 							}
 						}
 					],
-					width: 720,
-					zIndex: 900
+					width: 720
 				},
 				id: '<portlet:namespace />settingsModal',
 				stack: false,

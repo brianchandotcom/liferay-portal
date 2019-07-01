@@ -17,6 +17,7 @@ package com.liferay.blogs.web.internal.portlet.action;
 import com.liferay.blogs.configuration.BlogsGroupServiceOverriddenConfiguration;
 import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.service.BlogsEntryService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -83,6 +84,21 @@ public class RSSAction implements StrutsAction {
 		}
 	}
 
+	private String _getFindEntryURL(long plid, ThemeDisplay themeDisplay) {
+		if (plid == 0) {
+			return themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
+				"/blogs/find_entry?";
+		}
+
+		return StringBundler.concat(
+			themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+			"/blogs/find_entry?p_l_id=", plid);
+	}
+
+	private String _getFindEntryURL(ThemeDisplay themeDisplay) {
+		return _getFindEntryURL(0, themeDisplay);
+	}
+
 	private byte[] _getRSS(HttpServletRequest httpServletRequest)
 		throws Exception {
 
@@ -112,47 +128,35 @@ public class RSSAction implements StrutsAction {
 		String displayStyle = ParamUtil.getString(
 			httpServletRequest, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
 
-		String feedURL =
-			themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-				"/blogs/find_entry?";
-
-		String entryURL = feedURL;
-
 		String rss = StringPool.BLANK;
 
 		if (companyId > 0) {
-			feedURL = StringPool.BLANK;
+			String entryURL = _getFindEntryURL(themeDisplay);
 
 			rss = _blogsEntryService.getCompanyEntriesRSS(
 				companyId, new Date(), status, max, type, version, displayStyle,
-				feedURL, entryURL, themeDisplay);
+				StringPool.BLANK, entryURL, themeDisplay);
 		}
 		else if (groupId > 0) {
-			feedURL += "p_l_id=" + plid;
-
-			entryURL = feedURL;
+			String feedURL = _getFindEntryURL(plid, themeDisplay);
 
 			rss = _blogsEntryService.getGroupEntriesRSS(
 				groupId, new Date(), status, max, type, version, displayStyle,
-				feedURL, entryURL, themeDisplay);
+				feedURL, feedURL, themeDisplay);
 		}
 		else if (organizationId > 0) {
-			feedURL = StringPool.BLANK;
+			String entryURL = _getFindEntryURL(themeDisplay);
 
 			rss = _blogsEntryService.getOrganizationEntriesRSS(
 				organizationId, new Date(), status, max, type, version,
-				displayStyle, feedURL, entryURL, themeDisplay);
+				displayStyle, StringPool.BLANK, entryURL, themeDisplay);
 		}
 		else if (layout != null) {
-			groupId = themeDisplay.getScopeGroupId();
-
-			feedURL = themeDisplay.getPathMain() + "/blogs/rss";
-
-			entryURL = feedURL;
+			String feedURL = themeDisplay.getPathMain() + "/blogs/rss";
 
 			rss = _blogsEntryService.getGroupEntriesRSS(
-				groupId, new Date(), status, max, type, version, displayStyle,
-				feedURL, entryURL, themeDisplay);
+				themeDisplay.getScopeGroupId(), new Date(), status, max, type,
+				version, displayStyle, feedURL, feedURL, themeDisplay);
 		}
 
 		return rss.getBytes(StandardCharsets.UTF_8);

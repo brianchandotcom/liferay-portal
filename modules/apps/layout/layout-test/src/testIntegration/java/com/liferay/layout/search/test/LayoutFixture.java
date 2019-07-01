@@ -56,11 +56,10 @@ public class LayoutFixture {
 
 		LocalizedValuesMap friendlyUrlMap = new LocalizedValuesMap() {
 			{
-				put(
-					LocaleUtil.US,
-					StringPool.SLASH +
-						FriendlyURLNormalizerUtil.normalize(
-							RandomTestUtil.randomString()));
+				String randomString = FriendlyURLNormalizerUtil.normalize(
+					RandomTestUtil.randomString());
+
+				put(LocaleUtil.US, StringPool.SLASH + randomString);
 			}
 		};
 

@@ -195,8 +195,12 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 
 		Map<String, Object> infoDisplayFieldsValues = new HashMap<>();
 
+		List<InfoDisplayContributorField> infoDisplayContributorFields =
+			AssetInfoDisplayContributorFieldUtil.
+				getInfoDisplayContributorFields(AssetEntry.class.getName());
+
 		for (InfoDisplayContributorField infoDisplayContributorField :
-				_getInfoDisplayContributorFields(AssetEntry.class.getName())) {
+				infoDisplayContributorFields) {
 
 			infoDisplayFieldsValues.putIfAbsent(
 				infoDisplayContributorField.getKey(),
@@ -206,13 +210,6 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 		}
 
 		return infoDisplayFieldsValues;
-	}
-
-	private List<InfoDisplayContributorField> _getInfoDisplayContributorFields(
-		String className) {
-
-		return AssetInfoDisplayContributorFieldUtil.
-			getInfoDisplayContributorFields(className);
 	}
 
 	private <T> Object _getInfoDisplayFieldValue(

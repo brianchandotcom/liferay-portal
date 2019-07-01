@@ -569,20 +569,16 @@ public class LDAPAuth implements Authenticator {
 			User user = _userLocalService.fetchUserByEmailAddress(
 				companyId, emailAddress);
 
-			if (user != null) {
-				if (_omniadmin.isOmniadmin(user)) {
-					return SUCCESS;
-				}
+			if ((user != null) && _omniadmin.isOmniadmin(user)) {
+				return SUCCESS;
 			}
 		}
 		else if (Validator.isNotNull(screenName)) {
 			User user = _userLocalService.fetchUserByScreenName(
 				companyId, screenName);
 
-			if (user != null) {
-				if (_omniadmin.isOmniadmin(user)) {
-					return SUCCESS;
-				}
+			if ((user != null) && _omniadmin.isOmniadmin(user)) {
+				return SUCCESS;
 			}
 		}
 

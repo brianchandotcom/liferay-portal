@@ -108,12 +108,12 @@ public class ModulesCompileBatchTestClassGroup
 
 							buildFile = new File(currentDirectory, "build.xml");
 
-							if (directoryName.endsWith("-hook")) {
-								if (buildFile.exists()) {
-									modulesProjectDirs.add(currentDirectory);
+							if (directoryName.endsWith("-hook") &&
+								buildFile.exists()) {
 
-									return FileVisitResult.SKIP_SUBTREE;
-								}
+								modulesProjectDirs.add(currentDirectory);
+
+								return FileVisitResult.SKIP_SUBTREE;
 							}
 
 							if (directoryName.endsWith("-portlet")) {

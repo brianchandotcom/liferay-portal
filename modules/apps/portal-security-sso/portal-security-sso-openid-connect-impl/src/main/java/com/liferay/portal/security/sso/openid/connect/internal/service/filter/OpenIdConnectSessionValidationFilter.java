@@ -113,15 +113,13 @@ public class OpenIdConnectSessionValidationFilter extends BaseFilter {
 
 		HttpSession httpSession = httpServletRequest.getSession(false);
 
-		if (httpSession != null) {
-			if (checkEndSession(httpSession)) {
-				httpSession.invalidate();
+		if ((httpSession != null) && checkEndSession(httpSession)) {
+			httpSession.invalidate();
 
-				httpServletResponse.sendRedirect(
-					_portal.getHomeURL(httpServletRequest));
+			httpServletResponse.sendRedirect(
+				_portal.getHomeURL(httpServletRequest));
 
-				return;
-			}
+			return;
 		}
 
 		processFilter(

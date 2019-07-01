@@ -200,10 +200,10 @@ public class SharingEntrySearchPermissionCheckerTest {
 
 		@Override
 		public Void visit(TermsFilter termsFilter) {
-			if (_field.equals(termsFilter.getField())) {
-				if (ArrayUtil.contains(termsFilter.getValues(), _value)) {
-					_found = true;
-				}
+			if (_field.equals(termsFilter.getField()) &&
+				ArrayUtil.contains(termsFilter.getValues(), _value)) {
+
+				_found = true;
 			}
 
 			return null;

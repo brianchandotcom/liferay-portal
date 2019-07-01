@@ -162,10 +162,8 @@ public abstract class DoulosServlet extends HttpServlet {
 
 		String pathInfo = httpServletRequest.getPathInfo();
 
-		if (pathInfo.length() > 1) {
-			if (pathInfo.endsWith("/")) {
-				pathInfo = pathInfo.substring(0, pathInfo.length() - 1);
-			}
+		if ((pathInfo.length() > 1) && pathInfo.endsWith("/")) {
+			pathInfo = pathInfo.substring(0, pathInfo.length() - 1);
 		}
 
 		for (Map.Entry<String, DoulosRequestProcessor> entry :

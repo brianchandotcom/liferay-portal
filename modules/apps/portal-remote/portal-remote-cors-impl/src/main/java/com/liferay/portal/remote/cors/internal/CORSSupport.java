@@ -111,13 +111,12 @@ public class CORSSupport {
 		String accessControlAllowedMethods = _corsHeaders.get(
 			ACCESS_CONTROL_ALLOW_METHODS);
 
-		if (!StringUtil.equals(accessControlAllowedMethods, StringPool.STAR)) {
-			if (!ArrayUtil.contains(
-					StringUtil.split(accessControlAllowedMethods),
-					accessControlRequestMethod)) {
+		if (!StringUtil.equals(accessControlAllowedMethods, StringPool.STAR) &&
+			!ArrayUtil.contains(
+				StringUtil.split(accessControlAllowedMethods),
+				accessControlRequestMethod)) {
 
-				return false;
-			}
+			return false;
 		}
 
 		return true;
@@ -133,13 +132,11 @@ public class CORSSupport {
 		String accessControlAllowedMethods = _corsHeaders.get(
 			ACCESS_CONTROL_ALLOW_METHODS);
 
-		if (!StringUtil.equals(accessControlAllowedMethods, StringPool.STAR)) {
-			if (!ArrayUtil.contains(
-					StringUtil.split(accessControlAllowedMethods),
-					httpMethod)) {
+		if (!StringUtil.equals(accessControlAllowedMethods, StringPool.STAR) &&
+			!ArrayUtil.contains(
+				StringUtil.split(accessControlAllowedMethods), httpMethod)) {
 
-				return false;
-			}
+			return false;
 		}
 
 		return true;

@@ -30,14 +30,12 @@ public class SocialActivityCounterImpl extends SocialActivityCounterBaseImpl {
 			return true;
 		}
 
-		if (periodLength !=
-				SocialActivityCounterConstants.PERIOD_LENGTH_SYSTEM) {
+		if ((periodLength !=
+				SocialActivityCounterConstants.PERIOD_LENGTH_SYSTEM) &&
+			((getStartPeriod() + periodLength) >
+				SocialCounterPeriodUtil.getActivityDay())) {
 
-			if ((getStartPeriod() + periodLength) >
-					SocialCounterPeriodUtil.getActivityDay()) {
-
-				return true;
-			}
+			return true;
 		}
 
 		if ((getStartPeriod() == SocialCounterPeriodUtil.getStartPeriod()) &&

@@ -466,16 +466,16 @@ public class MapUtil {
 
 			String keyString = String.valueOf(key);
 
-			if (hideIncludesRegex != null) {
-				if (!keyString.matches(hideIncludesRegex)) {
-					value = "********";
-				}
+			if ((hideIncludesRegex != null) &&
+				!keyString.matches(hideIncludesRegex)) {
+
+				value = "********";
 			}
 
-			if (hideExcludesRegex != null) {
-				if (keyString.matches(hideExcludesRegex)) {
-					value = "********";
-				}
+			if ((hideExcludesRegex != null) &&
+				keyString.matches(hideExcludesRegex)) {
+
+				value = "********";
 			}
 
 			sb.append(keyString);

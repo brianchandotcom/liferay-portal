@@ -156,26 +156,24 @@ public class NotificationTemplateContextFactory {
 		NotificationTemplateContext notificationTemplateContext = getInstance(
 			notificationType, notificationTemplateType, calendarBooking, user);
 
-		if (serviceContext != null) {
-			if (Validator.isNotNull(
-					serviceContext.getAttribute("instanceStartTime"))) {
+		if ((serviceContext != null) &&
+			Validator.isNotNull(
+				serviceContext.getAttribute("instanceStartTime"))) {
 
-				long instanceStartTime = (long)serviceContext.getAttribute(
-					"instanceStartTime");
+			long instanceStartTime = (long)serviceContext.getAttribute(
+				"instanceStartTime");
 
-				Format userDateTimeFormat = _getUserDateTimeFormat(
-					calendarBooking, user);
+			Format userDateTimeFormat = _getUserDateTimeFormat(
+				calendarBooking, user);
 
-				String userTimezoneDisplayName = _getUserTimezoneDisplayName(
-					user);
+			String userTimezoneDisplayName = _getUserTimezoneDisplayName(user);
 
-				String instanceStartTimeFormatted =
-					userDateTimeFormat.format(instanceStartTime) +
-						StringPool.SPACE + userTimezoneDisplayName;
+			String instanceStartTimeFormatted =
+				userDateTimeFormat.format(instanceStartTime) +
+					StringPool.SPACE + userTimezoneDisplayName;
 
-				notificationTemplateContext.setAttribute(
-					"instanceStartTime", instanceStartTimeFormatted);
-			}
+			notificationTemplateContext.setAttribute(
+				"instanceStartTime", instanceStartTimeFormatted);
 		}
 
 		return notificationTemplateContext;

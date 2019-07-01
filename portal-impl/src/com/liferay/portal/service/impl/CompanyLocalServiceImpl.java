@@ -828,10 +828,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		virtualHostname = StringUtil.toLowerCase(
 			StringUtil.trim(virtualHostname));
 
-		if (!active) {
-			if (companyId == PortalInstances.getDefaultCompanyId()) {
-				active = true;
-			}
+		if (!active && (companyId == PortalInstances.getDefaultCompanyId())) {
+			active = true;
 		}
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);

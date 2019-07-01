@@ -53,16 +53,16 @@ public class AutoDeployDir {
 
 		AutoDeployListener autoDeployListener = _serviceTracker.getService();
 
-		if (autoDeployListener != null) {
-			if (autoDeployListener.isDeployable(autoDeploymentContext)) {
-				autoDeployListener.deploy(autoDeploymentContext);
+		if ((autoDeployListener != null) &&
+			autoDeployListener.isDeployable(autoDeploymentContext)) {
 
-				File file = autoDeploymentContext.getFile();
+			autoDeployListener.deploy(autoDeploymentContext);
 
-				file.delete();
+			File file = autoDeploymentContext.getFile();
 
-				return;
-			}
+			file.delete();
+
+			return;
 		}
 
 		String[] dirNames = PropsUtil.getArray(

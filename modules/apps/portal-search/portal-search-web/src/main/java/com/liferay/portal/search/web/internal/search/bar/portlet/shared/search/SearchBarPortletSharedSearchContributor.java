@@ -246,13 +246,11 @@ public class SearchBarPortletSharedSearchContributor
 	}
 
 	protected boolean isTopSearchBar(Portlet portlet) {
-		if (portlet.isStatic()) {
-			if (Objects.equals(
-					portlet.getPortletName(),
-					SearchBarPortletKeys.SEARCH_BAR)) {
+		if (portlet.isStatic() &&
+			Objects.equals(
+				portlet.getPortletName(), SearchBarPortletKeys.SEARCH_BAR)) {
 
-				return true;
-			}
+			return true;
 		}
 
 		return false;

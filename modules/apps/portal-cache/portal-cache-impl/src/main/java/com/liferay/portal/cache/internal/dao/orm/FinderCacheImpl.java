@@ -135,10 +135,8 @@ public class FinderCacheImpl
 			primaryKey = portalCache.get(
 				finderPath.encodeCacheKey(encodedArguments));
 
-			if (primaryKey != null) {
-				if (localCache != null) {
-					localCache.put(localCacheKey, primaryKey);
-				}
+			if ((primaryKey != null) && (localCache != null)) {
+				localCache.put(localCacheKey, primaryKey);
 			}
 		}
 

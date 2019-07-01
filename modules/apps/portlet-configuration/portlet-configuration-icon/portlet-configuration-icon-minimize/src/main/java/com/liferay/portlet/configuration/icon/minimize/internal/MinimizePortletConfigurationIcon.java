@@ -141,13 +141,12 @@ public class MinimizePortletConfigurationIcon
 
 		Group group = themeDisplay.getScopeGroup();
 
-		if (!themeDisplay.isSignedIn() ||
-			(group.hasStagingGroup() && !group.isStagingGroup()) ||
-			!hasUpdateLayoutPermission(themeDisplay)) {
+		if ((!themeDisplay.isSignedIn() ||
+			 (group.hasStagingGroup() && !group.isStagingGroup()) ||
+			 !hasUpdateLayoutPermission(themeDisplay)) &&
+			!PropsValues.LAYOUT_GUEST_SHOW_MIN_ICON) {
 
-			if (!PropsValues.LAYOUT_GUEST_SHOW_MIN_ICON) {
-				return false;
-			}
+			return false;
 		}
 
 		return true;

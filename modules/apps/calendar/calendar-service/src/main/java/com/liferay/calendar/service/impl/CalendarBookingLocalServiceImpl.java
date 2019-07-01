@@ -1682,23 +1682,23 @@ public class CalendarBookingLocalServiceImpl
 				calendarBooking.getCalendarBookingId());
 		}
 
-		if (status == WorkflowConstants.STATUS_IN_TRASH) {
-			if (calendarBooking.isMasterRecurringBooking()) {
-				if (calendarBooking.isMasterBooking()) {
-					trashEntryLocalService.addTrashEntry(
-						userId, calendarBooking.getGroupId(),
-						CalendarBooking.class.getName(),
-						calendarBooking.getCalendarBookingId(),
-						calendarBooking.getUuid(), null, oldStatus, null, null);
-				}
-				else {
-					trashEntryLocalService.addTrashEntry(
-						userId, calendarBooking.getGroupId(),
-						CalendarBooking.class.getName(),
-						calendarBooking.getCalendarBookingId(),
-						calendarBooking.getUuid(), null,
-						WorkflowConstants.STATUS_PENDING, null, null);
-				}
+		if ((status == WorkflowConstants.STATUS_IN_TRASH) &&
+			calendarBooking.isMasterRecurringBooking()) {
+
+			if (calendarBooking.isMasterBooking()) {
+				trashEntryLocalService.addTrashEntry(
+					userId, calendarBooking.getGroupId(),
+					CalendarBooking.class.getName(),
+					calendarBooking.getCalendarBookingId(),
+					calendarBooking.getUuid(), null, oldStatus, null, null);
+			}
+			else {
+				trashEntryLocalService.addTrashEntry(
+					userId, calendarBooking.getGroupId(),
+					CalendarBooking.class.getName(),
+					calendarBooking.getCalendarBookingId(),
+					calendarBooking.getUuid(), null,
+					WorkflowConstants.STATUS_PENDING, null, null);
 			}
 		}
 

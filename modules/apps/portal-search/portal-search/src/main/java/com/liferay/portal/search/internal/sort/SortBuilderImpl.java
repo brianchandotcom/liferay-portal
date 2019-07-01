@@ -85,14 +85,12 @@ public class SortBuilderImpl implements SortBuilder {
 	}
 
 	protected String getSortableField() {
-		if (_locale != null) {
-			if (_field.equals(Field.TITLE)) {
-				return "localized_".concat(
-					getLocalizedName(_field, _locale)
-				).concat(
-					"_sortable"
-				);
-			}
+		if ((_locale != null) && _field.equals(Field.TITLE)) {
+			return "localized_".concat(
+				getLocalizedName(_field, _locale)
+			).concat(
+				"_sortable"
+			);
 		}
 
 		return _field;

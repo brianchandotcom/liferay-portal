@@ -260,10 +260,10 @@ public class PluginsGitSvnSyncer {
 				ignores.set(i, ignore);
 			}
 
-			if (dirName.endsWith("/docroot/WEB-INF/")) {
-				if (!ignores.contains("classes")) {
-					ignores.add("classes");
-				}
+			if (dirName.endsWith("/docroot/WEB-INF/") &&
+				!ignores.contains("classes")) {
+
+				ignores.add("classes");
 			}
 		}
 

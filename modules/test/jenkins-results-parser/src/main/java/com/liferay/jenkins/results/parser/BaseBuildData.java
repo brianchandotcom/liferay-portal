@@ -319,10 +319,10 @@ public abstract class BaseBuildData implements BuildData {
 			return false;
 		}
 
-		if (jsonObject.has("type")) {
-			if (type.equals(jsonObject.getString("type"))) {
-				return true;
-			}
+		if (jsonObject.has("type") &&
+			type.equals(jsonObject.getString("type"))) {
+
+			return true;
 		}
 
 		return false;

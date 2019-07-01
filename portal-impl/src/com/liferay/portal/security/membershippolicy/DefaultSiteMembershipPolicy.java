@@ -59,12 +59,11 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 		try {
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-			if (group.isLimitedToParentSiteMembers()) {
-				if (!GroupLocalServiceUtil.hasUserGroup(
-						userId, group.getParentGroupId(), false)) {
+			if (group.isLimitedToParentSiteMembers() &&
+				!GroupLocalServiceUtil.hasUserGroup(
+					userId, group.getParentGroupId(), false)) {
 
-					return false;
-				}
+				return false;
 			}
 		}
 		catch (Exception e) {

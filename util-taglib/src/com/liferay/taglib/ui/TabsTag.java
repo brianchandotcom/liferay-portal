@@ -173,11 +173,8 @@ public class TabsTag extends IncludeTag {
 
 			request.setAttribute("liferay-ui:tabs:urls", _urls);
 
-			if (_value == null) {
-				if (_tabsValues.length > 0) {
-					_value = ParamUtil.getString(
-						request, _param, _tabsValues[0]);
-				}
+			if ((_value == null) && (_tabsValues.length > 0)) {
+				_value = ParamUtil.getString(request, _param, _tabsValues[0]);
 			}
 
 			if (Validator.isNull(_value)) {

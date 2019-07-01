@@ -471,15 +471,14 @@ public abstract class BaseIntraband implements Intraband {
 				EnumSet<CompletionHandler.CompletionType> completionTypes =
 					datagram.completionTypes;
 
-				if (completionTypes != null) {
-					if (completionTypes.contains(
-							CompletionHandler.CompletionType.SUBMITTED)) {
+				if ((completionTypes != null) &&
+					completionTypes.contains(
+						CompletionHandler.CompletionType.SUBMITTED)) {
 
-						CompletionHandler<Object> completeHandler =
-							datagram.completionHandler;
+					CompletionHandler<Object> completeHandler =
+						datagram.completionHandler;
 
-						completeHandler.submitted(datagram.attachment);
-					}
+					completeHandler.submitted(datagram.attachment);
 				}
 
 				return true;

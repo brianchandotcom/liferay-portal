@@ -2456,14 +2456,12 @@ public class OrganizationLocalServiceImpl
 			companyId, name);
 
 		if ((organization != null) &&
-			StringUtil.equalsIgnoreCase(organization.getName(), name)) {
+			StringUtil.equalsIgnoreCase(organization.getName(), name) &&
+			((organizationId <= 0) ||
+			 (organization.getOrganizationId() != organizationId))) {
 
-			if ((organizationId <= 0) ||
-				(organization.getOrganizationId() != organizationId)) {
-
-				throw new DuplicateOrganizationException(
-					"There is another organization named " + name);
-			}
+			throw new DuplicateOrganizationException(
+				"There is another organization named " + name);
 		}
 
 		boolean countryRequired = _organizationTypesSettings.isCountryRequired(

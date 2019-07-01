@@ -128,10 +128,8 @@ public class StagingPermissionChecker implements PermissionChecker {
 
 		Group liveGroup = StagingUtil.getLiveGroup(group);
 
-		if (liveGroup != group) {
-			if (primKey == group.getGroupId()) {
-				primKey = liveGroup.getGroupId();
-			}
+		if ((liveGroup != group) && (primKey == group.getGroupId())) {
+			primKey = liveGroup.getGroupId();
 		}
 
 		if (_isStagingFolder(name, actionId)) {
@@ -148,10 +146,10 @@ public class StagingPermissionChecker implements PermissionChecker {
 
 		Group liveGroup = StagingUtil.getLiveGroup(group);
 
-		if (liveGroup != group) {
-			if (primKey.equals(String.valueOf(group.getGroupId()))) {
-				primKey = String.valueOf(liveGroup.getGroupId());
-			}
+		if ((liveGroup != group) &&
+			primKey.equals(String.valueOf(group.getGroupId()))) {
+
+			primKey = String.valueOf(liveGroup.getGroupId());
 		}
 
 		if (_isStagingFolder(name, actionId)) {

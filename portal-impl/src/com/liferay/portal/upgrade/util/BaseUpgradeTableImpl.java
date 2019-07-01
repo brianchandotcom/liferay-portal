@@ -121,13 +121,13 @@ public abstract class BaseUpgradeTableImpl extends Table {
 			boolean dropIndexes = false;
 
 			for (String indexSQL : indexesSQL) {
-				if (!isAllowUniqueIndexes()) {
-					if (indexSQL.contains("create unique index")) {
-						indexSQL = StringUtil.replace(
-							indexSQL, "create unique index ", "create index ");
+				if (!isAllowUniqueIndexes() &&
+					indexSQL.contains("create unique index")) {
 
-						dropIndexes = true;
-					}
+					indexSQL = StringUtil.replace(
+						indexSQL, "create unique index ", "create index ");
+
+					dropIndexes = true;
 				}
 
 				try {

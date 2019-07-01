@@ -29,14 +29,13 @@ public abstract class BaseScopeCheckerContainerRequestFilter
 	@Override
 	public void filter(ContainerRequestContext containerRequestContext) {
 		if (OAuth2ProviderScopeLiferayAccessControlContext.
-				isOAuth2AuthVerified()) {
+				isOAuth2AuthVerified() &&
+			!isContainerRequestContextAllowed(containerRequestContext)) {
 
-			if (!isContainerRequestContextAllowed(containerRequestContext)) {
-				containerRequestContext.abortWith(
-					Response.status(
-						Response.Status.FORBIDDEN
-					).build());
-			}
+			containerRequestContext.abortWith(
+				Response.status(
+					Response.Status.FORBIDDEN
+				).build());
 		}
 	}
 

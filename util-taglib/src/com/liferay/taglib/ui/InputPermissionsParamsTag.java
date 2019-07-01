@@ -104,13 +104,13 @@ public class InputPermissionsParamsTag extends TagSupport {
 					guestChecked = false;
 				}
 
-				if (group.isOrganization() || group.isRegularSite()) {
-					if (groupChecked) {
-						sb.append(StringPool.AMPERSAND);
-						sb.append(renderResponse.getNamespace());
-						sb.append("groupPermissions=");
-						sb.append(URLCodec.encodeURL(action));
-					}
+				if ((group.isOrganization() || group.isRegularSite()) &&
+					groupChecked) {
+
+					sb.append(StringPool.AMPERSAND);
+					sb.append(renderResponse.getNamespace());
+					sb.append("groupPermissions=");
+					sb.append(URLCodec.encodeURL(action));
 				}
 
 				if (guestChecked) {

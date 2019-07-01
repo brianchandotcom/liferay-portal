@@ -73,12 +73,10 @@ public class NotificationSenderFactory {
 		NotificationSender previousNotificationSender =
 			_notificationSenders.put(notificationType, notificationSender);
 
-		if (_log.isWarnEnabled()) {
-			if (previousNotificationSender != null) {
-				Class<?> clazz = previousNotificationSender.getClass();
+		if (_log.isWarnEnabled() && (previousNotificationSender != null)) {
+			Class<?> clazz = previousNotificationSender.getClass();
 
-				_log.warn("Overriding notification sender " + clazz.getName());
-			}
+			_log.warn("Overriding notification sender " + clazz.getName());
 		}
 	}
 

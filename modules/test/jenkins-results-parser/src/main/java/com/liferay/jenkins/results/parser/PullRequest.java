@@ -467,13 +467,11 @@ public class PullRequest {
 		GitHubRemoteGitRepository.Label testSuiteLabel =
 			gitHubRemoteGitRepository.getLabel(sb.toString());
 
-		if (testSuiteLabel == null) {
-			if (gitHubRemoteGitRepository.addLabel(
-					testSuiteStatus.getColor(), "", sb.toString())) {
+		if ((testSuiteLabel == null) &&
+			gitHubRemoteGitRepository.addLabel(
+				testSuiteStatus.getColor(), "", sb.toString())) {
 
-				testSuiteLabel = gitHubRemoteGitRepository.getLabel(
-					sb.toString());
-			}
+			testSuiteLabel = gitHubRemoteGitRepository.getLabel(sb.toString());
 		}
 
 		addLabel(testSuiteLabel);

@@ -107,17 +107,16 @@ public class IFrameConfigurationAction extends DefaultConfigurationAction {
 			"formPassword", StringPool.BLANK);
 
 		if (Validator.isNotNull(formPassword) &&
-			formPassword.contains("@password@")) {
+			formPassword.contains("@password@") &&
+			!IFrameUtil.isPasswordTokenEnabled(portletRequest)) {
 
-			if (!IFrameUtil.isPasswordTokenEnabled(portletRequest)) {
-				formPassword = formPassword.replaceAll("@password@", "");
+			formPassword = formPassword.replaceAll("@password@", "");
 
-				try {
-					portletPreferences.setValue("formPassword", formPassword);
-				}
-				catch (ReadOnlyException roe) {
-					throw new PortalException(roe);
-				}
+			try {
+				portletPreferences.setValue("formPassword", formPassword);
+			}
+			catch (ReadOnlyException roe) {
+				throw new PortalException(roe);
 			}
 		}
 	}

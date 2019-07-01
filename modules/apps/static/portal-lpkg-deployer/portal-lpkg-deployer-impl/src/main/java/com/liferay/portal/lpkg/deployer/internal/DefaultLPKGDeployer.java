@@ -584,16 +584,14 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 					continue;
 				}
 
-				if (checkFileName) {
-					if (!_isValid(pathName)) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Override file " + path +
-									" has an invalid name and will be ignored");
-						}
-
-						continue;
+				if (checkFileName && !_isValid(pathName)) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Override file " + path +
+								" has an invalid name and will be ignored");
 					}
+
+					continue;
 				}
 
 				files.add(path.toFile());

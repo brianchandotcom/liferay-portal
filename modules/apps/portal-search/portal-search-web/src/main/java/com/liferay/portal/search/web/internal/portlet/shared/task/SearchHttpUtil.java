@@ -95,10 +95,8 @@ public class SearchHttpUtil {
 			completeURL = _portal.getURLWithSessionId(completeURL, sessionId);
 		}
 
-		if (_log.isWarnEnabled()) {
-			if (completeURL.contains("?&")) {
-				_log.warn("Invalid URL " + completeURL);
-			}
+		if (_log.isWarnEnabled() && completeURL.contains("?&")) {
+			_log.warn("Invalid URL " + completeURL);
 		}
 
 		return completeURL;

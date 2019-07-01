@@ -47,17 +47,17 @@ public class PortalSessionListener implements HttpSessionListener {
 
 		new PortalSessionCreator(session);
 
-		if (PropsValues.SESSION_MAX_ALLOWED > 0) {
-			if (_counter.incrementAndGet() > PropsValues.SESSION_MAX_ALLOWED) {
-				session.setAttribute(WebKeys.SESSION_MAX_ALLOWED, Boolean.TRUE);
+		if ((PropsValues.SESSION_MAX_ALLOWED > 0) &&
+			(_counter.incrementAndGet() > PropsValues.SESSION_MAX_ALLOWED)) {
 
-				_log.error(
-					StringBundler.concat(
-						"Exceeded maximum number of ",
-						PropsValues.SESSION_MAX_ALLOWED,
-						" sessions allowed. You may be experiencing a DoS ",
-						"attack."));
-			}
+			session.setAttribute(WebKeys.SESSION_MAX_ALLOWED, Boolean.TRUE);
+
+			_log.error(
+				StringBundler.concat(
+					"Exceeded maximum number of ",
+					PropsValues.SESSION_MAX_ALLOWED,
+					" sessions allowed. You may be experiencing a DoS ",
+					"attack."));
 		}
 	}
 

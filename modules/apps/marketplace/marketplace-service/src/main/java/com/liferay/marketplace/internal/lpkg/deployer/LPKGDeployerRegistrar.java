@@ -143,15 +143,14 @@ public class LPKGDeployerRegistrar {
 			app = apps.get(remoteAppId);
 		}
 
-		if (app != null) {
-			if (!Objects.equals(title, app.getTitle()) ||
-				!Objects.equals(description, app.getDescription()) ||
-				!Objects.equals(category, app.getCategory()) ||
-				!Objects.equals(iconURL, app.getIconURL()) ||
-				(required != app.isRequired())) {
+		if ((app != null) &&
+			(!Objects.equals(title, app.getTitle()) ||
+			 !Objects.equals(description, app.getDescription()) ||
+			 !Objects.equals(category, app.getCategory()) ||
+			 !Objects.equals(iconURL, app.getIconURL()) ||
+			 (required != app.isRequired()))) {
 
-				app = null;
-			}
+			app = null;
 		}
 
 		if (app == null) {

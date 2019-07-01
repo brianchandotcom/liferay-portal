@@ -185,17 +185,15 @@ public class InputTag extends BaseInputTag {
 				"aui:model-context:defaultLanguageId");
 		}
 
-		if (Validator.isNull(defaultLanguageId)) {
-			if ((model != null) &&
-				ModelHintsUtil.hasField(model.getName(), "groupId")) {
+		if (Validator.isNull(defaultLanguageId) && (model != null) &&
+			ModelHintsUtil.hasField(model.getName(), "groupId")) {
 
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-				defaultLanguageId = LocaleUtil.toLanguageId(
-					themeDisplay.getSiteDefaultLocale());
-			}
+			defaultLanguageId = LocaleUtil.toLanguageId(
+				themeDisplay.getSiteDefaultLocale());
 		}
 
 		if (Validator.isNull(defaultLanguageId)) {

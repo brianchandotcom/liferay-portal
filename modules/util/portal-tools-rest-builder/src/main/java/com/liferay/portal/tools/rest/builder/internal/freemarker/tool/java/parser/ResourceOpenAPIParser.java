@@ -303,14 +303,12 @@ public class ResourceOpenAPIParser {
 				continue;
 			}
 
-			if (StringUtil.equals(parameterName, "page") ||
-				StringUtil.equals(parameterName, "pageSize")) {
+			if ((StringUtil.equals(parameterName, "page") ||
+				 StringUtil.equals(parameterName, "pageSize")) &&
+				parameterNames.contains("page") &&
+				parameterNames.contains("pageSize")) {
 
-				if (parameterNames.contains("page") &&
-					parameterNames.contains("pageSize")) {
-
-					continue;
-				}
+				continue;
 			}
 
 			javaMethodParameters.add(

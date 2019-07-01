@@ -549,11 +549,11 @@ public class PollsQuestionLocalServiceImpl
 			}
 		}
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			if ((expirationDate != null) && expirationDate.before(new Date())) {
-				throw new QuestionExpirationDateException(
-					"Expiration date " + expirationDate + " is in the past");
-			}
+		if (!ExportImportThreadLocal.isImportInProcess() &&
+			(expirationDate != null) && expirationDate.before(new Date())) {
+
+			throw new QuestionExpirationDateException(
+				"Expiration date " + expirationDate + " is in the past");
 		}
 	}
 

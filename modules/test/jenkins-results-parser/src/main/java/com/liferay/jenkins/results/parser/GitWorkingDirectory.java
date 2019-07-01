@@ -591,26 +591,25 @@ public class GitWorkingDirectory {
 
 		String remoteURL = remoteGitRepository.getRemoteURL();
 
-		if (JenkinsResultsParserUtil.isCINode()) {
-			if (remoteURL.contains("github.com:liferay/")) {
-				String gitHubDevRemoteURL = remoteURL.replace(
-					"github.com:liferay/", "github-dev.liferay.com:liferay/");
+		if (JenkinsResultsParserUtil.isCINode() &&
+			remoteURL.contains("github.com:liferay/")) {
 
-				RemoteGitBranch gitHubDevRemoteGitBranch = getRemoteGitBranch(
-					remoteGitRef.getName(), gitHubDevRemoteURL);
+			String gitHubDevRemoteURL = remoteURL.replace(
+				"github.com:liferay/", "github-dev.liferay.com:liferay/");
 
-				if (gitHubDevRemoteGitBranch != null) {
-					fetch(null, noTags, gitHubDevRemoteGitBranch);
+			RemoteGitBranch gitHubDevRemoteGitBranch = getRemoteGitBranch(
+				remoteGitRef.getName(), gitHubDevRemoteURL);
 
-					if (localSHAExists(remoteGitRefSHA)) {
-						if (localGitBranch != null) {
-							return createLocalGitBranch(
-								localGitBranch.getName(), true,
-								remoteGitRefSHA);
-						}
+			if (gitHubDevRemoteGitBranch != null) {
+				fetch(null, noTags, gitHubDevRemoteGitBranch);
 
-						return null;
+				if (localSHAExists(remoteGitRefSHA)) {
+					if (localGitBranch != null) {
+						return createLocalGitBranch(
+							localGitBranch.getName(), true, remoteGitRefSHA);
 					}
+
+					return null;
 				}
 			}
 		}

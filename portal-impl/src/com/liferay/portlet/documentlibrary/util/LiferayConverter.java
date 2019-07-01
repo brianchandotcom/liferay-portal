@@ -488,10 +488,10 @@ public abstract class LiferayConverter {
 
 		ICodec.ID iCodecID = outputICodec.getID();
 
-		if (iCodecID.equals(ICodec.ID.CODEC_ID_VORBIS)) {
-			if (originalBitRate < 64000) {
-				return 64000;
-			}
+		if (iCodecID.equals(ICodec.ID.CODEC_ID_VORBIS) &&
+			(originalBitRate < 64000)) {
+
+			return 64000;
 		}
 
 		return originalBitRate;

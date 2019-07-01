@@ -592,11 +592,11 @@ public class MVCPortlet extends LiferayPortlet {
 			portletRequestDispatcher.include(portletRequest, portletResponse);
 		}
 
-		if (clearRequestParameters) {
-			if (lifecycle.equals(PortletRequest.RENDER_PHASE)) {
-				portletResponse.setProperty(
-					"clear-request-parameters", Boolean.TRUE.toString());
-			}
+		if (clearRequestParameters &&
+			lifecycle.equals(PortletRequest.RENDER_PHASE)) {
+
+			portletResponse.setProperty(
+				"clear-request-parameters", Boolean.TRUE.toString());
 		}
 	}
 

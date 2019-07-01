@@ -226,12 +226,12 @@ public class XugglerAutoInstallHelper {
 
 				Matcher matcher = _pattern.matcher(file.getName());
 
-				if (matcher.matches()) {
-					if (jarFiles.contains(matcher.replaceAll("$1$2"))) {
-						file.delete();
+				if (matcher.matches() &&
+					jarFiles.contains(matcher.replaceAll("$1$2"))) {
 
-						iterator.remove();
-					}
+					file.delete();
+
+					iterator.remove();
 				}
 			}
 		}

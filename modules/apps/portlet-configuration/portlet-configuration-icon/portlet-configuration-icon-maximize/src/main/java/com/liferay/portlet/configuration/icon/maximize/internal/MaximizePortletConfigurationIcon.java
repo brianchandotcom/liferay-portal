@@ -136,13 +136,12 @@ public class MaximizePortletConfigurationIcon
 
 		Group group = themeDisplay.getScopeGroup();
 
-		if (!themeDisplay.isSignedIn() ||
-			(group.hasStagingGroup() && !group.isStagingGroup()) ||
-			!hasUpdateLayoutPermission(themeDisplay)) {
+		if ((!themeDisplay.isSignedIn() ||
+			 (group.hasStagingGroup() && !group.isStagingGroup()) ||
+			 !hasUpdateLayoutPermission(themeDisplay)) &&
+			!PropsValues.LAYOUT_GUEST_SHOW_MAX_ICON) {
 
-			if (!PropsValues.LAYOUT_GUEST_SHOW_MAX_ICON) {
-				return false;
-			}
+			return false;
 		}
 
 		return true;

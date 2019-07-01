@@ -441,10 +441,10 @@ public class PluginsEnvironmentBuilder {
 
 		List<String> importSharedJars = getImportSharedJars(projectDir);
 
-		if (sharedProject) {
-			if (!importSharedJars.contains("portal-compat-shared.jar")) {
-				importSharedJars.add("portal-compat-shared.jar");
-			}
+		if (sharedProject &&
+			!importSharedJars.contains("portal-compat-shared.jar")) {
+
+			importSharedJars.add("portal-compat-shared.jar");
 		}
 
 		File gitignoreFile = new File(

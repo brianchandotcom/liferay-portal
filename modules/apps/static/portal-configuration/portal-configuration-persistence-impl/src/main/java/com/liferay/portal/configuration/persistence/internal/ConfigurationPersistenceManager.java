@@ -517,12 +517,10 @@ public class ConfigurationPersistenceManager
 
 		String ignore = dictionary.get("configuration.cleaner.ignore");
 
-		if (!Boolean.valueOf(ignore)) {
-			if (!configFile.exists()) {
-				deleteFromDatabase(pid);
+		if (!Boolean.valueOf(ignore) && !configFile.exists()) {
+			deleteFromDatabase(pid);
 
-				return null;
-			}
+			return null;
 		}
 
 		return dictionary;

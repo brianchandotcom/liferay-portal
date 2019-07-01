@@ -226,10 +226,8 @@ public class HttpClientSPIAgent implements SPIAgent {
 
 		File requestBodyFile = spiAgentRequest.requestBodyFile;
 
-		if (requestBodyFile != null) {
-			if (!requestBodyFile.delete()) {
-				requestBodyFile.deleteOnExit();
-			}
+		if ((requestBodyFile != null) && !requestBodyFile.delete()) {
+			requestBodyFile.deleteOnExit();
 		}
 
 		SPIAgentResponse spiAgentResponse =
@@ -265,21 +263,20 @@ public class HttpClientSPIAgent implements SPIAgent {
 	protected Socket borrowSocket() throws IOException {
 		Socket socket = socketBlockingQueue.poll();
 
-		if (socket != null) {
-			if (socket.isClosed() || !socket.isConnected() ||
-				socket.isInputShutdown() || socket.isOutputShutdown()) {
+		if ((socket != null) &&
+			(socket.isClosed() || !socket.isConnected() ||
+			 socket.isInputShutdown() || socket.isOutputShutdown())) {
 
-				try {
-					socket.close();
-				}
-				catch (IOException ioe) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(ioe, ioe);
-					}
-				}
-
-				socket = null;
+			try {
+				socket.close();
 			}
+			catch (IOException ioe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(ioe, ioe);
+				}
+			}
+
+			socket = null;
 		}
 
 		if (socket == null) {

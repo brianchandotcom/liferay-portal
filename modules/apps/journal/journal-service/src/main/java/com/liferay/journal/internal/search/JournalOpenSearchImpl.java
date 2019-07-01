@@ -90,13 +90,11 @@ public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 					contentSearch.isPrivateLayout(),
 					contentSearch.getLayoutId(), ActionKeys.VIEW)) {
 
-				if (contentSearch.isPrivateLayout()) {
-					if (!_groupLocalService.hasUserGroup(
-							themeDisplay.getUserId(),
-							contentSearch.getGroupId())) {
+				if (contentSearch.isPrivateLayout() &&
+					!_groupLocalService.hasUserGroup(
+						themeDisplay.getUserId(), contentSearch.getGroupId())) {
 
-						continue;
-					}
+					continue;
 				}
 
 				Layout hitLayout = _layoutLocalService.getLayout(

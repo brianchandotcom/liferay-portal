@@ -277,11 +277,11 @@ public class NotificationsPortlet extends MVCPortlet {
 			_userNotificationEventLocalService.fetchUserNotificationEvent(
 				userNotificationEventId);
 
-		if (userNotificationEvent != null) {
-			if (!userNotificationEvent.isArchived()) {
-				updateArchived(
-					themeDisplay.getUserId(), userNotificationEventId, true);
-			}
+		if ((userNotificationEvent != null) &&
+			!userNotificationEvent.isArchived()) {
+
+			updateArchived(
+				themeDisplay.getUserId(), userNotificationEventId, true);
 		}
 
 		_addSuccessMessage(

@@ -43,12 +43,11 @@ public class GZipFilter extends BasePortalFilter {
 
 		boolean filterEnabled = false;
 
-		if (super.isFilterEnabled()) {
-			if (ServerDetector.isJBoss() || ServerDetector.isTomcat() ||
-				ServerDetector.isWebLogic() || ServerDetector.isWebSphere()) {
+		if (super.isFilterEnabled() &&
+			(ServerDetector.isJBoss() || ServerDetector.isTomcat() ||
+			 ServerDetector.isWebLogic() || ServerDetector.isWebSphere())) {
 
-				filterEnabled = true;
-			}
+			filterEnabled = true;
 		}
 
 		_filterEnabled = filterEnabled;

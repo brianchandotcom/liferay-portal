@@ -104,19 +104,17 @@ public class SearchResultManagerImpl implements SearchResultManager {
 		SearchResultContributor searchResultContributor =
 			getSearchResultContributor(document);
 
-		if (searchResultContributor != null) {
-			if (isClassPresent(document)) {
-				searchResultContributor.addRelatedModel(
-					searchResult, document, locale, portletRequest,
-					portletResponse);
+		if ((searchResultContributor != null) && isClassPresent(document)) {
+			searchResultContributor.addRelatedModel(
+				searchResult, document, locale, portletRequest,
+				portletResponse);
 
-				if (searchResult.getSummary() == null) {
-					searchResult.setSummary(
-						getSummaryWithClass(searchResult, locale));
-				}
-
-				return;
+			if (searchResult.getSummary() == null) {
+				searchResult.setSummary(
+					getSummaryWithClass(searchResult, locale));
 			}
+
+			return;
 		}
 
 		searchResult.setSummary(

@@ -121,16 +121,15 @@ public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 
 			httpServletRequest.setAttribute(WebKeys.BLOGS_ENTRY, entry);
 
-			if (PropsValues.BLOGS_PINGBACK_ENABLED) {
-				if ((entry != null) && entry.isAllowPingbacks()) {
-					HttpServletResponse httpServletResponse =
-						_portal.getHttpServletResponse(renderResponse);
+			if (PropsValues.BLOGS_PINGBACK_ENABLED && (entry != null) &&
+				entry.isAllowPingbacks()) {
 
-					httpServletResponse.addHeader(
-						"X-Pingback",
-						_portal.getPortalURL(renderRequest) +
-							"/xmlrpc/pingback");
-				}
+				HttpServletResponse httpServletResponse =
+					_portal.getHttpServletResponse(renderResponse);
+
+				httpServletResponse.addHeader(
+					"X-Pingback",
+					_portal.getPortalURL(renderRequest) + "/xmlrpc/pingback");
 			}
 		}
 		catch (Exception e) {

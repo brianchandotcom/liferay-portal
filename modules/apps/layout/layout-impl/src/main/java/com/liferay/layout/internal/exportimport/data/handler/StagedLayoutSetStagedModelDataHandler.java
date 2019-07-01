@@ -799,20 +799,18 @@ public class StagedLayoutSetStagedModelDataHandler
 				portletDataContext.getGroupId(), privateLayout, parentLayoutId);
 
 			for (Layout layout : siblingLayouts) {
-				if (!updatedPlids.contains(layout.getPlid())) {
-					if (hasSiblingLayoutWithSamePriority(
-							layout, siblingLayouts)) {
+				if (!updatedPlids.contains(layout.getPlid()) &&
+					hasSiblingLayoutWithSamePriority(layout, siblingLayouts)) {
 
-						do {
-							int priority = layout.getPriority();
+					do {
+						int priority = layout.getPriority();
 
-							layout.setPriority(++priority);
-						}
-						while (hasSiblingLayoutWithSamePriority(
-									layout, siblingLayouts));
-
-						_layoutLocalService.updateLayout(layout);
+						layout.setPriority(++priority);
 					}
+					while (hasSiblingLayoutWithSamePriority(
+								layout, siblingLayouts));
+
+					_layoutLocalService.updateLayout(layout);
 				}
 			}
 		}

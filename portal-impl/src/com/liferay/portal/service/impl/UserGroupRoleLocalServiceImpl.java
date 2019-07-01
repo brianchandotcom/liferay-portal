@@ -250,10 +250,8 @@ public class UserGroupRoleLocalServiceImpl
 			return true;
 		}
 
-		if (inherit) {
-			if (roleFinder.countByU_G_R(userId, groupId, roleId) > 0) {
-				return true;
-			}
+		if (inherit && (roleFinder.countByU_G_R(userId, groupId, roleId) > 0)) {
+			return true;
 		}
 
 		return false;

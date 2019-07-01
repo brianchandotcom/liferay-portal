@@ -137,13 +137,12 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 			int status = HttpServletResponse.SC_CREATED;
 
-			if (overwrite) {
-				if (deleteResource(
-						groupId, parentFolderId, name,
-						webDAVRequest.getLockUuid())) {
+			if (overwrite &&
+				deleteResource(
+					groupId, parentFolderId, name,
+					webDAVRequest.getLockUuid())) {
 
-					status = HttpServletResponse.SC_NO_CONTENT;
-				}
+				status = HttpServletResponse.SC_NO_CONTENT;
 			}
 
 			if (depth == 0) {
@@ -214,13 +213,12 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 			int status = HttpServletResponse.SC_CREATED;
 
-			if (overwrite) {
-				if (deleteResource(
-						groupId, parentFolderId, title,
-						webDAVRequest.getLockUuid())) {
+			if (overwrite &&
+				deleteResource(
+					groupId, parentFolderId, title,
+					webDAVRequest.getLockUuid())) {
 
-					status = HttpServletResponse.SC_NO_CONTENT;
-				}
+				status = HttpServletResponse.SC_NO_CONTENT;
 			}
 
 			_dlAppService.addFileEntry(
@@ -599,13 +597,12 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 			int status = HttpServletResponse.SC_CREATED;
 
-			if (overwrite) {
-				if (deleteResource(
-						groupId, parentFolderId, name,
-						webDAVRequest.getLockUuid())) {
+			if (overwrite &&
+				deleteResource(
+					groupId, parentFolderId, name,
+					webDAVRequest.getLockUuid())) {
 
-					status = HttpServletResponse.SC_NO_CONTENT;
-				}
+				status = HttpServletResponse.SC_NO_CONTENT;
 			}
 
 			if (parentFolderId != folder.getParentFolderId()) {
@@ -673,13 +670,12 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 			int status = HttpServletResponse.SC_CREATED;
 
-			if (overwrite) {
-				if (deleteResource(
-						groupId, newParentFolderId, title,
-						webDAVRequest.getLockUuid())) {
+			if (overwrite &&
+				deleteResource(
+					groupId, newParentFolderId, title,
+					webDAVRequest.getLockUuid())) {
 
-					status = HttpServletResponse.SC_NO_CONTENT;
-				}
+				status = HttpServletResponse.SC_NO_CONTENT;
 			}
 
 			// LPS-5415

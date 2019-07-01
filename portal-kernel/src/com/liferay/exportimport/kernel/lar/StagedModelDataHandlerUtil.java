@@ -556,31 +556,29 @@ public class StagedModelDataHandlerUtil {
 			while (iterator.hasNext()) {
 				String entry = iterator.next();
 
-				if (entry.endsWith(".xml")) {
-					if (_containsStagedModel(
-							portletDataContext, entry, stagedModel)) {
+				if (entry.endsWith(".xml") &&
+					_containsStagedModel(
+						portletDataContext, entry, stagedModel)) {
 
-						try {
-							Document document = SAXReaderUtil.read(
-								portletDataContext.getZipEntryAsString(entry));
+					try {
+						Document document = SAXReaderUtil.read(
+							portletDataContext.getZipEntryAsString(entry));
 
-							portletDataContext.setImportDataRootElement(
-								document.getRootElement());
+						portletDataContext.setImportDataRootElement(
+							document.getRootElement());
 
-							String path = ExportImportPathUtil.getModelPath(
-								stagedModel);
+						String path = ExportImportPathUtil.getModelPath(
+							stagedModel);
 
-							portletDataContext.removePrimaryKey(path);
+						portletDataContext.removePrimaryKey(path);
 
-							importStagedModel(
-								portletDataContext, referenceElement);
+						importStagedModel(portletDataContext, referenceElement);
 
-							return;
-						}
-						catch (Exception e) {
-							if (_log.isDebugEnabled()) {
-								_log.debug(e, e);
-							}
+						return;
+					}
+					catch (Exception e) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(e, e);
 						}
 					}
 				}

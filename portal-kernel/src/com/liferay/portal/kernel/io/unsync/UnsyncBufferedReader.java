@@ -207,12 +207,11 @@ public class UnsyncBufferedReader extends Reader {
 			if (hasLineBreak) {
 				index++;
 
-				if (lineEndChar == CharPool.RETURN) {
-					if ((index < buffer.length) &&
-						(buffer[index] == CharPool.NEW_LINE)) {
+				if ((lineEndChar == CharPool.RETURN) &&
+					(index < buffer.length) &&
+					(buffer[index] == CharPool.NEW_LINE)) {
 
-						index++;
-					}
+					index++;
 				}
 
 				if (sb == null) {

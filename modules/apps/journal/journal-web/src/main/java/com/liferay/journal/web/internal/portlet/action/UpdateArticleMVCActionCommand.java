@@ -511,18 +511,16 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 			redirect = _portal.escapeRedirect(redirect);
 
 			if (Validator.isNotNull(redirect) &&
-				Validator.isNotNull(portletId)) {
+				Validator.isNotNull(portletId) &&
+				actionName.equals("/journal/add_article") &&
+				(article != null) && Validator.isNotNull(namespace)) {
 
-				if (actionName.equals("/journal/add_article") &&
-					(article != null) && Validator.isNotNull(namespace)) {
-
-					redirect = _http.addParameter(
-						redirect, namespace + "className",
-						JournalArticle.class.getName());
-					redirect = _http.addParameter(
-						redirect, namespace + "classPK",
-						JournalArticleAssetRenderer.getClassPK(article));
-				}
+				redirect = _http.addParameter(
+					redirect, namespace + "className",
+					JournalArticle.class.getName());
+				redirect = _http.addParameter(
+					redirect, namespace + "classPK",
+					JournalArticleAssetRenderer.getClassPK(article));
 			}
 		}
 

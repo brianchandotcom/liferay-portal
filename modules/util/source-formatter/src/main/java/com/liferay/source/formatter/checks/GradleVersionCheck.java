@@ -44,13 +44,12 @@ public class GradleVersionCheck extends BaseFileCheck {
 			_checkDefaultVersion(
 				fileName, content, name, version, matcher.start());
 
-			if (isSubrepository() || absolutePath.contains("/modules/apps/") ||
-				absolutePath.contains("/modules/private/apps/")) {
+			if ((isSubrepository() || absolutePath.contains("/modules/apps/") ||
+				 absolutePath.contains("/modules/private/apps/")) &&
+				!_isTestUtilModule(absolutePath)) {
 
-				if (!_isTestUtilModule(absolutePath)) {
-					content = _fixMicroVersion(
-						fileName, content, matcher.group(1), name, version);
-				}
+				content = _fixMicroVersion(
+					fileName, content, matcher.group(1), name, version);
 			}
 		}
 

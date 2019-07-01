@@ -640,16 +640,15 @@ public class DLReferencesExportImportContentProcessor
 						String substring = content.substring(
 							curBeginPos, endPos);
 
-						if (substring.startsWith(hostName)) {
-							if (content.regionMatches(
-									true, curBeginPos - _OFFSET_HREF_ATTRIBUTE,
-									"href=", 0, 5) ||
-								content.regionMatches(
-									true, curBeginPos - _OFFSET_SRC_ATTRIBUTE,
-									"src=", 0, 4)) {
+						if (substring.startsWith(hostName) &&
+							(content.regionMatches(
+								true, curBeginPos - _OFFSET_HREF_ATTRIBUTE,
+								"href=", 0, 5) ||
+							 content.regionMatches(
+								 true, curBeginPos - _OFFSET_SRC_ATTRIBUTE,
+								 "src=", 0, 4))) {
 
-								absolutePortalURL = true;
-							}
+							absolutePortalURL = true;
 						}
 					}
 				}

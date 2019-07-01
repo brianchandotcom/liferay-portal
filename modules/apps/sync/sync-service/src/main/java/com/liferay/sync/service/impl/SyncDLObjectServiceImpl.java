@@ -159,18 +159,17 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 				fileEntry, SyncDLObjectConstants.EVENT_ADD, checksum);
 		}
 		catch (PortalException pe) {
-			if (pe instanceof DuplicateFileEntryException) {
-				if (GetterUtil.getBoolean(
-						serviceContext.getAttribute("overwrite"))) {
+			if ((pe instanceof DuplicateFileEntryException) &&
+				GetterUtil.getBoolean(
+					serviceContext.getAttribute("overwrite"))) {
 
-					FileEntry fileEntry = dlAppService.getFileEntry(
-						repositoryId, folderId, title);
+				FileEntry fileEntry = dlAppService.getFileEntry(
+					repositoryId, folderId, title);
 
-					return updateFileEntry(
-						fileEntry.getFileEntryId(), sourceFileName, mimeType,
-						title, description, changeLog, false, file, checksum,
-						serviceContext);
-				}
+				return updateFileEntry(
+					fileEntry.getFileEntryId(), sourceFileName, mimeType, title,
+					description, changeLog, false, file, checksum,
+					serviceContext);
 			}
 
 			throw new PortalException(
@@ -211,17 +210,15 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 			return toSyncDLObject(folder, SyncDLObjectConstants.EVENT_ADD);
 		}
 		catch (PortalException pe) {
-			if (pe instanceof DuplicateFolderNameException) {
-				if (GetterUtil.getBoolean(
-						serviceContext.getAttribute("overwrite"))) {
+			if ((pe instanceof DuplicateFolderNameException) &&
+				GetterUtil.getBoolean(
+					serviceContext.getAttribute("overwrite"))) {
 
-					Folder folder = dlAppService.getFolder(
-						repositoryId, parentFolderId, name);
+				Folder folder = dlAppService.getFolder(
+					repositoryId, parentFolderId, name);
 
-					return updateFolder(
-						folder.getFolderId(), name, description,
-						serviceContext);
-				}
+				return updateFolder(
+					folder.getFolderId(), name, description, serviceContext);
 			}
 
 			throw new PortalException(

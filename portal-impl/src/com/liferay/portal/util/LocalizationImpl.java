@@ -247,14 +247,13 @@ public class LocalizationImpl implements Localization {
 
 		if (useDefault &&
 			LanguageUtil.isDuplicateLanguageCode(
-				requestedLocale.getLanguage())) {
+				requestedLocale.getLanguage()) &&
+			!requestedLanguageId.equals(priorityLanguageId)) {
 
-			if (!requestedLanguageId.equals(priorityLanguageId)) {
-				Locale priorityLocale = LanguageUtil.getLocale(
-					requestedLocale.getLanguage());
+			Locale priorityLocale = LanguageUtil.getLocale(
+				requestedLocale.getLanguage());
 
-				priorityLanguageId = LocaleUtil.toLanguageId(priorityLocale);
-			}
+			priorityLanguageId = LocaleUtil.toLanguageId(priorityLocale);
 		}
 
 		XMLStreamReader xmlStreamReader = null;

@@ -307,13 +307,12 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 	protected HttpServletRequest handleNonSerializableRequest(
 		HttpServletRequest httpServletRequest) {
 
-		if (ServerDetector.isWebLogic()) {
-			if (!NonSerializableObjectRequestWrapper.isWrapped(
-					httpServletRequest)) {
+		if (ServerDetector.isWebLogic() &&
+			!NonSerializableObjectRequestWrapper.isWrapped(
+				httpServletRequest)) {
 
-				httpServletRequest = new NonSerializableObjectRequestWrapper(
-					httpServletRequest);
-			}
+			httpServletRequest = new NonSerializableObjectRequestWrapper(
+				httpServletRequest);
 		}
 
 		return httpServletRequest;

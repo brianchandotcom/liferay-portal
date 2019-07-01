@@ -59,13 +59,12 @@ public class DefaultCommentTreeDisplayContext
 		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
 				_discussionRequestHelper.getCompanyId(),
 				_discussionRequestHelper.getScopeGroupId(),
-				CommentConstants.getDiscussionClassName())) {
+				CommentConstants.getDiscussionClassName()) &&
+			!isCommentPending()) {
 
-			if (!isCommentPending()) {
-				publishButtonLabel = LanguageUtil.get(
-					_discussionRequestHelper.getRequest(),
-					"submit-for-publication");
-			}
+			publishButtonLabel = LanguageUtil.get(
+				_discussionRequestHelper.getRequest(),
+				"submit-for-publication");
 		}
 
 		return publishButtonLabel;

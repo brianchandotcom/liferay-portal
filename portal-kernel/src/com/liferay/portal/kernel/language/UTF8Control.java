@@ -64,12 +64,11 @@ public class UTF8Control extends ResourceBundle.Control {
 			CachedResourceBundle cachedResourceBundle =
 				_cachedResourceBundles.get(url);
 
-			if (cachedResourceBundle != null) {
-				if (urlConnection.getLastModified() <=
-						cachedResourceBundle.getLastModified()) {
+			if ((cachedResourceBundle != null) &&
+				(urlConnection.getLastModified() <=
+					cachedResourceBundle.getLastModified())) {
 
-					return cachedResourceBundle.getResourceBundle();
-				}
+				return cachedResourceBundle.getResourceBundle();
 			}
 		}
 

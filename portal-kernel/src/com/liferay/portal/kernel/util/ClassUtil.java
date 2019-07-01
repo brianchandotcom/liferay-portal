@@ -180,14 +180,14 @@ public class ClassUtil {
 			path = url.getFile();
 		}
 
-		if (ServerDetector.isJBoss() || ServerDetector.isWildfly()) {
-			if (path.startsWith("file:") && !path.startsWith("file:/")) {
-				path = path.substring(5);
+		if ((ServerDetector.isJBoss() || ServerDetector.isWildfly()) &&
+			path.startsWith("file:") && !path.startsWith("file:/")) {
 
-				path = "file:/".concat(path);
+			path = path.substring(5);
 
-				path = StringUtil.replace(path, "%5C", StringPool.SLASH);
-			}
+			path = "file:/".concat(path);
+
+			path = StringUtil.replace(path, "%5C", StringPool.SLASH);
 		}
 
 		if (_log.isDebugEnabled()) {

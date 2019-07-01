@@ -175,10 +175,10 @@ public class DTOOpenAPIParser {
 
 		String name = CamelCaseUtil.toCamelCase(propertySchemaName);
 
-		if (StringUtil.equalsIgnoreCase(propertySchema.getType(), "object")) {
-			if (propertySchema.getItems() != null) {
-				return OpenAPIUtil.formatSingular(name);
-			}
+		if (StringUtil.equalsIgnoreCase(propertySchema.getType(), "object") &&
+			(propertySchema.getItems() != null)) {
+
+			return OpenAPIUtil.formatSingular(name);
 		}
 
 		return name;

@@ -50,18 +50,16 @@ public class DateArrayConverter implements TypeConverter<Date[]> {
 
 		Class<?> componentType = type.getComponentType();
 
-		if (componentType.isPrimitive()) {
-			if (type == long[].class) {
-				long[] values = (long[])value;
+		if (componentType.isPrimitive() && (type == long[].class)) {
+			long[] values = (long[])value;
 
-				Date[] results = new Date[values.length];
+			Date[] results = new Date[values.length];
 
-				for (int i = 0; i < values.length; i++) {
-					results[i] = _convertBean.toDate(values[i]);
-				}
-
-				return results;
+			for (int i = 0; i < values.length; i++) {
+				results[i] = _convertBean.toDate(values[i]);
 			}
+
+			return results;
 		}
 
 		return convertArray((Object[])value);

@@ -174,13 +174,13 @@ public class MeetingsPortlet extends MVCPortlet {
 
 				name = ParamUtil.getString(actionRequest, "name");
 
-				if (powwowParticipant != null) {
-					if (!name.equals(powwowParticipant.getName())) {
-						powwowParticipant.setName(name);
+				if ((powwowParticipant != null) &&
+					!name.equals(powwowParticipant.getName())) {
 
-						PowwowParticipantLocalServiceUtil.
-							updatePowwowParticipant(powwowParticipant);
-					}
+					powwowParticipant.setName(name);
+
+					PowwowParticipantLocalServiceUtil.updatePowwowParticipant(
+						powwowParticipant);
 				}
 			}
 

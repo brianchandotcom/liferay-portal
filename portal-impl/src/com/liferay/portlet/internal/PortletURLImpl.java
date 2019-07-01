@@ -739,14 +739,11 @@ public class PortletURLImpl
 	public void setPortletMode(PortletMode portletMode)
 		throws PortletModeException {
 
-		if (_portletRequest != null) {
-			if (!_portlet.isUndeployedPortlet() &&
-				!_portlet.hasPortletMode(
-					_portletRequest.getResponseContentType(), portletMode)) {
+		if ((_portletRequest != null) && !_portlet.isUndeployedPortlet() &&
+			!_portlet.hasPortletMode(
+				_portletRequest.getResponseContentType(), portletMode)) {
 
-				throw new PortletModeException(
-					portletMode.toString(), portletMode);
-			}
+			throw new PortletModeException(portletMode.toString(), portletMode);
 		}
 
 		_portletModeString = portletMode.toString();
@@ -806,11 +803,10 @@ public class PortletURLImpl
 	public void setWindowState(WindowState windowState)
 		throws WindowStateException {
 
-		if (_portletRequest != null) {
-			if (!_portletRequest.isWindowStateAllowed(windowState)) {
-				throw new WindowStateException(
-					windowState.toString(), windowState);
-			}
+		if ((_portletRequest != null) &&
+			!_portletRequest.isWindowStateAllowed(windowState)) {
+
+			throw new WindowStateException(windowState.toString(), windowState);
 		}
 
 		if (LiferayWindowState.isWindowStatePreserved(
@@ -1177,22 +1173,20 @@ public class PortletURLImpl
 			result = HttpUtil.shortenURL(result);
 		}
 
-		if (PropsValues.PORTLET_URL_ANCHOR_ENABLE) {
-			if (_anchor && (_windowStateString != null) &&
-				!_windowStateString.equals(WindowState.MAXIMIZED.toString()) &&
-				!_windowStateString.equals(
-					LiferayWindowState.EXCLUSIVE.toString()) &&
-				!_windowStateString.equals(
-					LiferayWindowState.POP_UP.toString())) {
+		if (PropsValues.PORTLET_URL_ANCHOR_ENABLE && _anchor &&
+			(_windowStateString != null) &&
+			!_windowStateString.equals(WindowState.MAXIMIZED.toString()) &&
+			!_windowStateString.equals(
+				LiferayWindowState.EXCLUSIVE.toString()) &&
+			!_windowStateString.equals(LiferayWindowState.POP_UP.toString())) {
 
-				sb.setIndex(0);
+			sb.setIndex(0);
 
-				sb.append(result);
-				sb.append("#p_");
-				sb.append(URLCodec.encodeURL(_portlet.getPortletId()));
+			sb.append(result);
+			sb.append("#p_");
+			sb.append(URLCodec.encodeURL(_portlet.getPortletId()));
 
-				result = sb.toString();
-			}
+			result = sb.toString();
 		}
 
 		if (_escapeXml) {

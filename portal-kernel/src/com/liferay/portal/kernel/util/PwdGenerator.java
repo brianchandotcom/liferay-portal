@@ -97,22 +97,22 @@ public class PwdGenerator {
 		while (true) {
 			String password = getPassword(length, key);
 
-			if (key.contains(KEY1)) {
-				if (Validator.isNull(StringUtil.extractDigits(password))) {
-					continue;
-				}
+			if (key.contains(KEY1) &&
+				Validator.isNull(StringUtil.extractDigits(password))) {
+
+				continue;
 			}
 
-			if (key.contains(KEY2)) {
-				if (password.equals(StringUtil.toLowerCase(password))) {
-					continue;
-				}
+			if (key.contains(KEY2) &&
+				password.equals(StringUtil.toLowerCase(password))) {
+
+				continue;
 			}
 
-			if (key.contains(KEY3)) {
-				if (password.equals(StringUtil.toUpperCase(password))) {
-					continue;
-				}
+			if (key.contains(KEY3) &&
+				password.equals(StringUtil.toUpperCase(password))) {
+
+				continue;
 			}
 
 			return password;

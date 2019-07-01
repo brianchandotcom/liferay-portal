@@ -170,13 +170,12 @@ public abstract class JSONAction implements Action {
 			}
 		}
 
-		if (PropsValues.JSON_SERVICE_AUTH_TOKEN_ENABLED) {
-			if (!AccessControlUtil.isAccessAllowed(
-					httpServletRequest, _hostsAllowed)) {
+		if (PropsValues.JSON_SERVICE_AUTH_TOKEN_ENABLED &&
+			!AccessControlUtil.isAccessAllowed(
+				httpServletRequest, _hostsAllowed)) {
 
-				AuthTokenUtil.checkCSRFToken(
-					httpServletRequest, getCSRFOrigin(httpServletRequest));
-			}
+			AuthTokenUtil.checkCSRFToken(
+				httpServletRequest, getCSRFOrigin(httpServletRequest));
 		}
 	}
 

@@ -50,10 +50,8 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 	public SocialBookmark getSocialBookmark(String type) {
 		SocialBookmark socialBookmark = _serviceTrackerMap.getService(type);
 
-		if (socialBookmark == null) {
-			if (_isDeprecatedSocialBookmark(type)) {
-				socialBookmark = new DeprecatedSocialBookmark(type);
-			}
+		if ((socialBookmark == null) && _isDeprecatedSocialBookmark(type)) {
+			socialBookmark = new DeprecatedSocialBookmark(type);
 		}
 
 		if (socialBookmark == null) {

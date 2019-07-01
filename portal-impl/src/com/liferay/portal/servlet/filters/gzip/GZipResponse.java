@@ -184,12 +184,11 @@ public class GZipResponse extends HttpServletResponseWrapper {
 	private boolean _isGZipContentType() {
 		String contentType = getContentType();
 
-		if (contentType != null) {
-			if (contentType.equals(ContentTypes.APPLICATION_GZIP) ||
-				contentType.equals(ContentTypes.APPLICATION_X_GZIP)) {
+		if ((contentType != null) &&
+			(contentType.equals(ContentTypes.APPLICATION_GZIP) ||
+			 contentType.equals(ContentTypes.APPLICATION_X_GZIP))) {
 
-				return true;
-			}
+			return true;
 		}
 
 		return false;

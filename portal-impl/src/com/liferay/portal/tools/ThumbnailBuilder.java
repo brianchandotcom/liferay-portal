@@ -61,10 +61,10 @@ public class ThumbnailBuilder {
 			return;
 		}
 
-		if (!overwrite) {
-			if (thumbnailFile.lastModified() > originalFile.lastModified()) {
-				return;
-			}
+		if (!overwrite &&
+			(thumbnailFile.lastModified() > originalFile.lastModified())) {
+
+			return;
 		}
 
 		ImageBag imageBag = _imageToolUtil.read(originalFile);

@@ -647,18 +647,18 @@ public class DDMImpl implements DDM {
 			propertyValue = localizedValue.getString(defaultLocale);
 		}
 
-		if (type.equals(DDMImpl.TYPE_SELECT)) {
-			if (propertyName.equals("predefinedValue")) {
-				try {
-					jsonObject.put(
-						propertyName,
-						JSONFactoryUtil.createJSONArray(propertyValue));
-				}
-				catch (Exception e) {
-				}
+		if (type.equals(DDMImpl.TYPE_SELECT) &&
+			propertyName.equals("predefinedValue")) {
 
-				return;
+			try {
+				jsonObject.put(
+					propertyName,
+					JSONFactoryUtil.createJSONArray(propertyValue));
 			}
+			catch (Exception e) {
+			}
+
+			return;
 		}
 
 		jsonObject.put(propertyName, propertyValue);

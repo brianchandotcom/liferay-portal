@@ -278,13 +278,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		MBGroupServiceSettings mbGroupServiceSettings =
 			MBGroupServiceSettings.getInstance(groupId);
 
-		if (mbGroupServiceSettings != null) {
-			if (!mbGroupServiceSettings.isAllowAnonymousPosting()) {
-				if (anonymous || user.isDefaultUser()) {
-					throw new PrincipalException.MustHavePermission(
-						userId, ActionKeys.ADD_MESSAGE);
-				}
-			}
+		if ((mbGroupServiceSettings != null) &&
+			!mbGroupServiceSettings.isAllowAnonymousPosting() &&
+			(anonymous || user.isDefaultUser())) {
+
+			throw new PrincipalException.MustHavePermission(
+				userId, ActionKeys.ADD_MESSAGE);
 		}
 
 		if (user.isDefaultUser()) {
@@ -2733,34 +2732,31 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBThread thread = mbThreadLocalService.getThread(message.getThreadId());
 
-		if (serviceContext.getWorkflowAction() ==
-				WorkflowConstants.ACTION_SAVE_DRAFT) {
+		if ((serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_SAVE_DRAFT) &&
+			!message.isDraft() && !message.isPending()) {
 
-			if (!message.isDraft() && !message.isPending()) {
-				message.setStatus(WorkflowConstants.STATUS_DRAFT);
+			message.setStatus(WorkflowConstants.STATUS_DRAFT);
 
-				// Thread
+			// Thread
 
-				User user = userLocalService.getUser(userId);
+			User user = userLocalService.getUser(userId);
 
-				updateThreadStatus(
-					thread, message, user, oldStatus, modifiedDate);
+			updateThreadStatus(thread, message, user, oldStatus, modifiedDate);
 
-				// Asset
+			// Asset
 
-				assetEntryLocalService.updateVisible(
-					message.getWorkflowClassName(), message.getMessageId(),
-					false);
+			assetEntryLocalService.updateVisible(
+				message.getWorkflowClassName(), message.getMessageId(), false);
 
-				if (!message.isDiscussion()) {
+			if (!message.isDiscussion()) {
 
-					// Indexer
+				// Indexer
 
-					Indexer<MBMessage> indexer =
-						IndexerRegistryUtil.nullSafeGetIndexer(MBMessage.class);
+				Indexer<MBMessage> indexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(MBMessage.class);
 
-					indexer.delete(message);
-				}
+				indexer.delete(message);
 			}
 		}
 

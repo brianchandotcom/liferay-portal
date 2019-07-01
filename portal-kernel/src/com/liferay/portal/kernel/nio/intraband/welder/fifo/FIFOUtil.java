@@ -68,10 +68,8 @@ public class FIFOUtil {
 				createFIFO(tempFIFOFile);
 			}
 			finally {
-				if (!tempFIFOFile.delete()) {
-					if (tempFIFOFile.exists()) {
-						tempFIFOFile.deleteOnExit();
-					}
+				if (!tempFIFOFile.delete() && tempFIFOFile.exists()) {
+					tempFIFOFile.deleteOnExit();
 				}
 			}
 

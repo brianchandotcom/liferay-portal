@@ -56,10 +56,10 @@ public class OrderUtil {
 	private static String[] _appendAndSort(String[]... namesArray) {
 		Map<String, Integer> map = new HashMap<>();
 
-		if (namesArray[0] != null) {
-			if (Arrays.binarySearch(namesArray[0], Order.OTHERS) >= 0) {
-				map.put(Order.OTHERS, 1);
-			}
+		if ((namesArray[0] != null) &&
+			(Arrays.binarySearch(namesArray[0], Order.OTHERS) >= 0)) {
+
+			map.put(Order.OTHERS, 1);
 		}
 
 		for (String[] names : namesArray) {

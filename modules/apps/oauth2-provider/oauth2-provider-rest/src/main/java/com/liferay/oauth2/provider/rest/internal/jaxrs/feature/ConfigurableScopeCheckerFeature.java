@@ -327,10 +327,8 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 				return true;
 			}
 
-			if (scopes.length == 1) {
-				if (Validator.isNull(scopes[0])) {
-					return true;
-				}
+			if ((scopes.length == 1) && Validator.isNull(scopes[0])) {
+				return true;
 			}
 
 			return false;

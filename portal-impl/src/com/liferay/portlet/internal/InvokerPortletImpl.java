@@ -609,17 +609,13 @@ public class InvokerPortletImpl
 
 		Map<String, String[]> properties = portletResponse.getProperties();
 
-		if (MapUtil.isNotEmpty(properties)) {
-			if (_expCache != null) {
-				String[] expCache = properties.get(
-					RenderResponse.EXPIRATION_CACHE);
+		if (MapUtil.isNotEmpty(properties) && (_expCache != null)) {
+			String[] expCache = properties.get(RenderResponse.EXPIRATION_CACHE);
 
-				if ((expCache != null) && (expCache.length > 0) &&
-					(expCache[0] != null)) {
+			if ((expCache != null) && (expCache.length > 0) &&
+				(expCache[0] != null)) {
 
-					_expCache = Integer.valueOf(
-						GetterUtil.getInteger(expCache[0]));
-				}
+				_expCache = Integer.valueOf(GetterUtil.getInteger(expCache[0]));
 			}
 		}
 	}

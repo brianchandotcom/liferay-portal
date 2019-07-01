@@ -539,14 +539,12 @@ public class WebServerServlet extends HttpServlet {
 			}
 		}
 
-		if (getDefault) {
-			if (image == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Get a default image for " + imageId);
-				}
-
-				image = getDefaultImage(httpServletRequest, imageId);
+		if (getDefault && (image == null)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Get a default image for " + imageId);
 			}
+
+			image = getDefaultImage(httpServletRequest, imageId);
 		}
 
 		return image;
@@ -955,10 +953,10 @@ public class WebServerServlet extends HttpServlet {
 
 		String version = ParamUtil.getString(httpServletRequest, "version");
 
-		if (Validator.isNull(version)) {
-			if (Validator.isNotNull(fileEntry.getVersion())) {
-				version = fileEntry.getVersion();
-			}
+		if (Validator.isNull(version) &&
+			Validator.isNotNull(fileEntry.getVersion())) {
+
+			version = fileEntry.getVersion();
 		}
 
 		String tempFileId = DLUtil.getTempFileId(
@@ -1538,12 +1536,11 @@ public class WebServerServlet extends HttpServlet {
 						httpServletRequest, httpServletResponse, pathArray);
 				}
 				else {
-					if (PropsValues.WEB_SERVER_SERVLET_CHECK_IMAGE_GALLERY) {
-						if (isLegacyImageGalleryImageId(
-								httpServletRequest, httpServletResponse)) {
+					if (PropsValues.WEB_SERVER_SERVLET_CHECK_IMAGE_GALLERY &&
+						isLegacyImageGalleryImageId(
+							httpServletRequest, httpServletResponse)) {
 
-							return null;
-						}
+						return null;
 					}
 
 					Image image = getImage(httpServletRequest, true);

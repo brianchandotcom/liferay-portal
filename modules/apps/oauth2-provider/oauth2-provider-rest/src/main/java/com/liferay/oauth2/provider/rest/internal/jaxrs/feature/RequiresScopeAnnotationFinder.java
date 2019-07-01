@@ -120,10 +120,8 @@ public class RequiresScopeAnnotationFinder {
 			Collections.addAll(scopes, requiresScope.value());
 		}
 
-		if (_isSubresourceLocator(method)) {
-			if (recurse) {
-				_find(visited, scopes, false, method.getReturnType());
-			}
+		if (_isSubresourceLocator(method) && recurse) {
+			_find(visited, scopes, false, method.getReturnType());
 		}
 	}
 

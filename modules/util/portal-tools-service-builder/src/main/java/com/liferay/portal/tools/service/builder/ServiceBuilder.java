@@ -5949,25 +5949,24 @@ public class ServiceBuilder {
 			finderElements.add(0, finderElement);
 		}
 
-		if (externalReferenceCode) {
-			if (entityColumns.contains(new EntityColumn("companyId"))) {
-				Element finderElement = DocumentHelper.createElement("finder");
+		if (externalReferenceCode &&
+			entityColumns.contains(new EntityColumn("companyId"))) {
 
-				finderElement.addAttribute("name", "C_ERC");
-				finderElement.addAttribute("return-type", entityName);
+			Element finderElement = DocumentHelper.createElement("finder");
 
-				Element finderColumnElement = finderElement.addElement(
-					"finder-column");
+			finderElement.addAttribute("name", "C_ERC");
+			finderElement.addAttribute("return-type", entityName);
 
-				finderColumnElement.addAttribute("name", "companyId");
+			Element finderColumnElement = finderElement.addElement(
+				"finder-column");
 
-				finderColumnElement = finderElement.addElement("finder-column");
+			finderColumnElement.addAttribute("name", "companyId");
 
-				finderColumnElement.addAttribute(
-					"name", "externalReferenceCode");
+			finderColumnElement = finderElement.addElement("finder-column");
 
-				finderElements.add(finderElement);
-			}
+			finderColumnElement.addAttribute("name", "externalReferenceCode");
+
+			finderElements.add(finderElement);
 		}
 
 		if (permissionedModel) {

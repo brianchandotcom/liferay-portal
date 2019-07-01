@@ -379,10 +379,10 @@ public class LangBuilder {
 					}
 				}
 
-				if (translatedText != null) {
-					if (translatedText.endsWith(AUTOMATIC_COPY)) {
-						translatedText = "";
-					}
+				if ((translatedText != null) &&
+					translatedText.endsWith(AUTOMATIC_COPY)) {
+
+					translatedText = "";
 				}
 
 				if ((translatedText == null) || translatedText.equals("")) {

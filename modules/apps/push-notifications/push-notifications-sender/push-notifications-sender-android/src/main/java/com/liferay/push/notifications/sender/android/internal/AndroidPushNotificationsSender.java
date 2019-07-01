@@ -160,21 +160,18 @@ public class AndroidPushNotificationsSender implements PushNotificationsSender {
 
 			String errorCodeName = result.getErrorCodeName();
 
-			if (Validator.isNotNull(errorCodeName)) {
-				if (errorCodeName.equals(
-						Constants.ERROR_INVALID_REGISTRATION) ||
-					errorCodeName.equals(Constants.ERROR_MISMATCH_SENDER_ID) ||
-					errorCodeName.equals(Constants.ERROR_NOT_REGISTERED)) {
+			if (Validator.isNotNull(errorCodeName) &&
+				(errorCodeName.equals(Constants.ERROR_INVALID_REGISTRATION) ||
+				 errorCodeName.equals(Constants.ERROR_MISMATCH_SENDER_ID) ||
+				 errorCodeName.equals(Constants.ERROR_NOT_REGISTERED))) {
 
-					try {
-						_pushNotificationsDeviceLocalService.
-							deletePushNotificationsDevice(token);
-					}
-					catch (Exception e) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to delete invalid token " + token);
-						}
+				try {
+					_pushNotificationsDeviceLocalService.
+						deletePushNotificationsDevice(token);
+				}
+				catch (Exception e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("Unable to delete invalid token " + token);
 					}
 				}
 			}

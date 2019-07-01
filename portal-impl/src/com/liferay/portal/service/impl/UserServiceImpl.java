@@ -2314,13 +2314,12 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			}
 		}
 
-		if ((creatorUserId == 0) || (creatorUserId == defaultUserId)) {
-			if (!company.isStrangersWithMx() &&
-				company.hasCompanyMx(emailAddress)) {
+		if (((creatorUserId == 0) || (creatorUserId == defaultUserId)) &&
+			!company.isStrangersWithMx() &&
+			company.hasCompanyMx(emailAddress)) {
 
-				throw new UserEmailAddressException.MustNotUseCompanyMx(
-					emailAddress);
-			}
+			throw new UserEmailAddressException.MustNotUseCompanyMx(
+				emailAddress);
 		}
 	}
 

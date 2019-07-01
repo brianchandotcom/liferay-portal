@@ -348,32 +348,30 @@ public class HtmlImpl implements Html {
 		for (int i = 0; i < css.length(); i++) {
 			char c = css.charAt(i);
 
-			if (c < _VALID_CHARS.length) {
-				if (!_VALID_CHARS[c]) {
-					if (sb == null) {
-						sb = new StringBuilder(css.length() + 64);
-					}
-
-					if (i > lastReplacementIndex) {
-						sb.append(css, lastReplacementIndex, i);
-					}
-
-					sb.append(prefix);
-
-					_appendHexChars(sb, hexBuffer, c);
-
-					if (i < (css.length() - 1)) {
-						char nextChar = css.charAt(i + 1);
-
-						if ((nextChar >= CharPool.NUMBER_0) &&
-							(nextChar <= CharPool.NUMBER_9)) {
-
-							sb.append(CharPool.SPACE);
-						}
-					}
-
-					lastReplacementIndex = i + 1;
+			if ((c < _VALID_CHARS.length) && !_VALID_CHARS[c]) {
+				if (sb == null) {
+					sb = new StringBuilder(css.length() + 64);
 				}
+
+				if (i > lastReplacementIndex) {
+					sb.append(css, lastReplacementIndex, i);
+				}
+
+				sb.append(prefix);
+
+				_appendHexChars(sb, hexBuffer, c);
+
+				if (i < (css.length() - 1)) {
+					char nextChar = css.charAt(i + 1);
+
+					if ((nextChar >= CharPool.NUMBER_0) &&
+						(nextChar <= CharPool.NUMBER_9)) {
+
+						sb.append(CharPool.SPACE);
+					}
+				}
+
+				lastReplacementIndex = i + 1;
 			}
 		}
 

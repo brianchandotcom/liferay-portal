@@ -333,10 +333,10 @@ public class SelectorIntraband extends BaseIntraband {
 		boolean backOff = false;
 
 		if (channelContext.getWritingDatagram() != null) {
-			if (handleWriting(gatheringByteChannel, channelContext)) {
-				if (sendingQueue.isEmpty()) {
-					backOff = true;
-				}
+			if (handleWriting(gatheringByteChannel, channelContext) &&
+				sendingQueue.isEmpty()) {
+
+				backOff = true;
 			}
 		}
 		else {

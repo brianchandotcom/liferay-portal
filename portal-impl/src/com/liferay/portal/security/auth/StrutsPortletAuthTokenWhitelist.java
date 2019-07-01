@@ -64,15 +64,13 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 		String strutsAction = httpServletRequest.getParameter(
 			namespace.concat("struts_action"));
 
-		if (Validator.isNotNull(strutsAction)) {
-			if (_portletCSRFWhitelist.contains(strutsAction) &&
-				isValidStrutsAction(
-					portlet.getCompanyId(),
-					PortletIdCodec.decodePortletName(portletId),
-					strutsAction)) {
+		if (Validator.isNotNull(strutsAction) &&
+			_portletCSRFWhitelist.contains(strutsAction) &&
+			isValidStrutsAction(
+				portlet.getCompanyId(),
+				PortletIdCodec.decodePortletName(portletId), strutsAction)) {
 
-				return true;
-			}
+			return true;
 		}
 
 		return false;
@@ -93,13 +91,12 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 			strutsAction = httpServletRequest.getParameter("struts_action");
 		}
 
-		if (Validator.isNotNull(strutsAction)) {
-			if (_portletInvocationWhitelist.contains(strutsAction) &&
-				isValidStrutsAction(
-					portlet.getCompanyId(), portletId, strutsAction)) {
+		if (Validator.isNotNull(strutsAction) &&
+			_portletInvocationWhitelist.contains(strutsAction) &&
+			isValidStrutsAction(
+				portlet.getCompanyId(), portletId, strutsAction)) {
 
-				return true;
-			}
+			return true;
 		}
 
 		return false;

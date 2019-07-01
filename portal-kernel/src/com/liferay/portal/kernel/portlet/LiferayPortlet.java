@@ -99,13 +99,11 @@ public class LiferayPortlet extends GenericPortlet {
 			if (!SessionMessages.contains(
 					actionRequest,
 					portletId.concat(
-						SessionMessages.KEY_SUFFIX_FORCE_SEND_REDIRECT))) {
+						SessionMessages.KEY_SUFFIX_FORCE_SEND_REDIRECT)) &&
+				(isEmptySessionMessages(actionRequest) ||
+				 isAlwaysSendRedirect())) {
 
-				if (isEmptySessionMessages(actionRequest) ||
-					isAlwaysSendRedirect()) {
-
-					sendRedirect(actionRequest, actionResponse);
-				}
+				sendRedirect(actionRequest, actionResponse);
 			}
 
 			if (isAddSuccessMessage(actionRequest)) {

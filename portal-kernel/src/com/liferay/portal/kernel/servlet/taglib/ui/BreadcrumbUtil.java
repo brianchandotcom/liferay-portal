@@ -329,11 +329,11 @@ public class BreadcrumbUtil {
 
 		String layoutName = layout.getName(themeDisplay.getLocale());
 
-		if (layout.isTypeControlPanel()) {
-			if (layoutName.equals(LayoutConstants.NAME_CONTROL_PANEL_DEFAULT)) {
-				layoutName = LanguageUtil.get(
-					themeDisplay.getLocale(), "control-panel");
-			}
+		if (layout.isTypeControlPanel() &&
+			layoutName.equals(LayoutConstants.NAME_CONTROL_PANEL_DEFAULT)) {
+
+			layoutName = LanguageUtil.get(
+				themeDisplay.getLocale(), "control-panel");
 		}
 
 		breadcrumbEntry.setTitle(layoutName);

@@ -464,11 +464,11 @@ public class FacebookConnectAction implements StrutsAction {
 
 		String emailAddress = jsonObject.getString("email");
 
-		if (company.hasCompanyMx(emailAddress)) {
-			if (!company.isStrangersWithMx()) {
-				throw new UserEmailAddressException.MustNotUseCompanyMx(
-					emailAddress);
-			}
+		if (company.hasCompanyMx(emailAddress) &&
+			!company.isStrangersWithMx()) {
+
+			throw new UserEmailAddressException.MustNotUseCompanyMx(
+				emailAddress);
 		}
 	}
 

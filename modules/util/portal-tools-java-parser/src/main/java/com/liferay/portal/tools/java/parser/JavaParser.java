@@ -837,15 +837,13 @@ public class JavaParser {
 				return false;
 			}
 
-			if (precedingCommentToken.getType() ==
-					TokenTypes.SINGLE_LINE_COMMENT) {
+			if ((precedingCommentToken.getType() ==
+					TokenTypes.SINGLE_LINE_COMMENT) &&
+				StringUtil.startsWith(
+					StringUtil.trim(precedingCommentToken.getText()),
+					"Skip JavaParser")) {
 
-				if (StringUtil.startsWith(
-						StringUtil.trim(precedingCommentToken.getText()),
-						"Skip JavaParser")) {
-
-					return true;
-				}
+				return true;
 			}
 
 			precedingCommentToken = precedingCommentToken.getHiddenBefore();

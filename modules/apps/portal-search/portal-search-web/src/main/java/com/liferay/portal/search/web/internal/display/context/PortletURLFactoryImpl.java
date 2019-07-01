@@ -17,7 +17,6 @@ package com.liferay.portal.search.web.internal.display.context;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.portlet.shared.search.NullPortletURL;
 
@@ -45,17 +44,12 @@ public class PortletURLFactoryImpl implements PortletURLFactory {
 
 			@Override
 			public void setParameter(String name, String value) {
-				String portalUrl = PortalUtil.getPortalURL(
+				String portalURL = PortalUtil.getPortalURL(
 					PortalUtil.getHttpServletRequest(_portletRequest));
-				String currentUrl = (String)_portletRequest.getAttribute(
+				String currentURL = (String)_portletRequest.getAttribute(
 					WebKeys.CURRENT_URL);
 
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(portalUrl);
-				sb.append(currentUrl);
-
-				_url = sb.toString();
+				_url = portalURL.concat(currentURL);
 
 				Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
 					_url);

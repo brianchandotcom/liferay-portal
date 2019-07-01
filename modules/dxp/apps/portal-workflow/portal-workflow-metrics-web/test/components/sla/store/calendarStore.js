@@ -63,7 +63,7 @@ test('Should return empty json when there is no default calendar', () => {
 
 	calendarStore.setState({calendars});
 
-	expect(calendarStore.defaultCalendar).toBeEmpty();
+	expect(calendarStore.defaultCalendar).toEqual({});
 });
 
 test('Should set state', () => {

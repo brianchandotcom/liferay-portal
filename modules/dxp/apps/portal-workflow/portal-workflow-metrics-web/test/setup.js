@@ -1,5 +1,3 @@
-require('jest-canvas-mock');
-require('jest-extended');
 require('whatwg-fetch');
 
 const enzyme = require('enzyme');
@@ -35,7 +33,7 @@ window.Liferay = {
 	}
 };
 
-global.console = {error: jest.fn(), log: console.log};
+global.console = {error: jest.fn(), log: console.log, warn: console.warn};
 
 global.localStorage = (() => {
 	let store = {};

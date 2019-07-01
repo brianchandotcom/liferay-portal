@@ -16,6 +16,12 @@
 		"string.prototype.startswith": "0.2.0",
 		"text-mask-addons": "3.8.0"
 	},
+	"devDependencies": {
+		"@testing-library/react-hooks": "^1.0.4",
+		"enzyme": "^3.10.0",
+		"enzyme-adapter-react-16": "^1.14.0",
+		"enzyme-to-json": "^3.3.5"
+	},
 	"jest": {
 		"collectCoverageFrom": [
 			"src/main/resources/META-INF/resources/js/**/components/**/*.js"
@@ -39,9 +45,11 @@
 			"enzyme-to-json/serializer"
 		],
 		"testMatch": [
-			"<rootDir>/test/components/*.js",
-			"<rootDir>/test/components/**/*.js",
-			"<rootDir>/test/shared/**/*.js"
+			"<rootDir>/test/**/*.js"
+		],
+		"testPathIgnorePatterns": [
+			"<rootDir>/test/mock",
+			"<rootDir>/test/setup.js"
 		],
 		"testURL": "http://liferay.com",
 		"timers": "fake"

@@ -89,7 +89,7 @@ test('Should not reload component while loading state is true', () => {
 
 	const result = instance.loadData({...instance.props, page: 2});
 
-	expect(result).toBeNil();
+	expect(result).toEqual(undefined);
 });
 
 test('Should render component', () => {

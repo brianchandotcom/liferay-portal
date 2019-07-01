@@ -165,7 +165,7 @@ test('Should not reload component while loading state is true', () => {
 
 	const result = instance.loadInstances({...instance.props, page: 2});
 
-	expect(result).toBeNil();
+	expect(result).toEqual(undefined);
 });
 
 test('Should not reload process while loading state is true', () => {
@@ -181,7 +181,7 @@ test('Should not reload process while loading state is true', () => {
 
 	const result = instance.loadProcess({...instance.props});
 
-	expect(result).toBeNil();
+	expect(result).toEqual(undefined);
 });
 
 test('Should render component', () => {

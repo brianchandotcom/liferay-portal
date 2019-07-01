@@ -1,4 +1,4 @@
-import {act, renderHook} from 'react-hooks-testing-library';
+import {act, renderHook} from '@testing-library/react-hooks';
 import {START_NODE_KEYS, STOP_NODE_KEYS} from 'components/sla/Constants';
 import client from 'test/mock/fetch';
 import {useSLA} from 'components/sla/store/SLAStore';

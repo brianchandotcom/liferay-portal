@@ -58,7 +58,7 @@ public class RSSAction implements StrutsAction {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		if (!isRSSFeedsEnabled(httpServletRequest) ||
+		if (!_isRSSFeedsEnabled(httpServletRequest) ||
 			!_hasGroupViewPermission(httpServletRequest)) {
 
 			_portal.sendRSSFeedsDisabledError(
@@ -70,7 +70,7 @@ public class RSSAction implements StrutsAction {
 		try {
 			ServletResponseUtil.sendFile(
 				httpServletRequest, httpServletResponse, null,
-				getRSS(httpServletRequest), ContentTypes.TEXT_XML_UTF8);
+				_getRSS(httpServletRequest), ContentTypes.TEXT_XML_UTF8);
 
 			return null;
 		}
@@ -81,7 +81,7 @@ public class RSSAction implements StrutsAction {
 		}
 	}
 
-	protected byte[] getRSS(HttpServletRequest httpServletRequest)
+	private byte[] _getRSS(HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay =
@@ -156,7 +156,7 @@ public class RSSAction implements StrutsAction {
 		return rss.getBytes(StringPool.UTF8);
 	}
 
-	protected boolean isRSSFeedsEnabled(HttpServletRequest httpServletRequest)
+	private boolean _isRSSFeedsEnabled(HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay =

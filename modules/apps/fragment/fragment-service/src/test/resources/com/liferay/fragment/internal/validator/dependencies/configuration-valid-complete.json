@@ -1,0 +1,74 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "light",
+					"description": "this-is-the-style-that-will-be-applied",
+					"label": "applied-style",
+					"name": "appliedStyle",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							"dark",
+							"light"
+						]
+					}
+				}
+			],
+			"label": "Heading",
+			"name": "heading"
+		},
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "light",
+					"description": "this-is-the-style-that-will-be-applied",
+					"label": "applied-style",
+					"name": "appliedStyle",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							"dark",
+							"light"
+						]
+					}
+				},
+				{
+					"dataType": "int",
+					"defaultValue": "3",
+					"description": "the-number-of-columns-displayed",
+					"label": "number-of-columns",
+					"name": "numberOfColumns",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							"1",
+							"3",
+							"5"
+						]
+					}
+				},
+				{
+					"dataType": "double",
+					"defaultValue": "1.1",
+					"description": "the-width-of-the-table",
+					"label": "table-width",
+					"name": "tableWidth",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							"1.1",
+							"3.2",
+							"5.3"
+						]
+					}
+				}
+			],
+			"label": "Body",
+			"name": "body"
+		}
+	]
+}

@@ -151,14 +151,11 @@ public class FreeMarkerFragmentEntryProcessor
 			long[] segmentsExperienceIds =
 				fragmentEntryProcessorContext.getSegmentsExperienceIds();
 
-			long segmentsExperienceId;
+			long segmentsExperienceId =
+				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT;
 
 			if (segmentsExperienceIds.length > 0) {
 				segmentsExperienceId = segmentsExperienceIds[0];
-			}
-			else {
-				segmentsExperienceId =
-					SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT;
 			}
 
 			fragmentConfigurationJSONObject =
@@ -292,8 +289,6 @@ public class FreeMarkerFragmentEntryProcessor
 			JSONObject configFieldSetJSONObject =
 				(JSONObject)fieldSetsJSONArray.get(i);
 
-			String fieldSetName = configFieldSetJSONObject.getString("name");
-
 			JSONObject defaultValuesFieldSetJSONObject =
 				JSONFactoryUtil.createJSONObject();
 
@@ -313,7 +308,8 @@ public class FreeMarkerFragmentEntryProcessor
 					fieldDefaultValue);
 
 				defaultValuesJSONObject.put(
-					fieldSetName, defaultValuesFieldSetJSONObject);
+					configFieldSetJSONObject.getString("name"),
+					defaultValuesFieldSetJSONObject);
 			}
 		}
 

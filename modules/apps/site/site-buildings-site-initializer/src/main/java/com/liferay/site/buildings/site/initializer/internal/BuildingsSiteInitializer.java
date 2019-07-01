@@ -26,6 +26,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -208,11 +209,23 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 
 		nameMap.put(LocaleUtil.getSiteDefault(), name);
 
-		return _layoutLocalService.addLayout(
+		Layout layout = _layoutLocalService.addLayout(
 			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
 			false, parentLayoutId, nameMap, new HashMap<>(), new HashMap<>(),
 			new HashMap<>(), new HashMap<>(), LayoutConstants.TYPE_CONTENT,
 			null, false, false, new HashMap<>(), _serviceContext);
+
+		CommerceLayoutData commerceLayoutData = new CommerceLayoutData();
+
+		JSONObject jsonObject = commerceLayoutData.buildLayoutData(
+			layout, _serviceContext);
+
+		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
+			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+			_portal.getClassNameId(Layout.class), layout.getPlid(),
+			jsonObject.toString(), _serviceContext);
+
+		return layout;
 	}
 
 	private void _addLayoutPageTemplateEntry() throws PortalException {
@@ -390,6 +403,10 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	@Reference
 	private Portal _portal;

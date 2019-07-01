@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.internal.util.JournalHelperUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
+import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
@@ -209,6 +210,23 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 			classPK);
 
 		return article.isInTrashContainer();
+	}
+
+	@Override
+	public boolean isMovable(long classPK) throws PortalException {
+		JournalArticle article = _journalArticleLocalService.getLatestArticle(
+			classPK);
+
+		if (article.getFolderId() > 0) {
+			JournalFolder parentFolder = _journalFolderLocalService.fetchFolder(
+				article.getFolderId());
+
+			if ((parentFolder == null) || parentFolder.isInTrash()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override

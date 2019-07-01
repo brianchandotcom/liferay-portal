@@ -145,6 +145,23 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 	}
 
 	@Override
+	public boolean isMovable(long classPK) throws PortalException {
+		BookmarksFolder folder = getBookmarksFolder(classPK);
+
+		if (folder.getParentFolderId() > 0) {
+			BookmarksFolder parentFolder =
+				_bookmarksFolderLocalService.fetchBookmarksFolder(
+					folder.getParentFolderId());
+
+			if ((parentFolder == null) || parentFolder.isInTrash()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isRestorable(long classPK) throws PortalException {
 		BookmarksFolder folder = getBookmarksFolder(classPK);
 

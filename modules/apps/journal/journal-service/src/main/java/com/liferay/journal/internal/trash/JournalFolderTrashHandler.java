@@ -174,6 +174,22 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 	}
 
 	@Override
+	public boolean isMovable(long classPK) throws PortalException {
+		JournalFolder folder = getJournalFolder(classPK);
+
+		if (folder.getParentFolderId() > 0) {
+			JournalFolder parentFolder = _journalFolderLocalService.fetchFolder(
+				folder.getParentFolderId());
+
+			if ((parentFolder == null) || parentFolder.isInTrash()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isRestorable(long classPK) throws PortalException {
 		JournalFolder folder = getJournalFolder(classPK);
 

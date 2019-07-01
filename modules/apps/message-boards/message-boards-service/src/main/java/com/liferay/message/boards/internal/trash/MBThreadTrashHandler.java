@@ -195,6 +195,22 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
+	public boolean isMovable(long classPK) throws PortalException {
+		MBThread thread = _mbThreadLocalService.getThread(classPK);
+
+		if (thread.getCategoryId() > 0) {
+			MBCategory parentCategory = _mbCategoryLocalService.fetchMBCategory(
+				thread.getCategoryId());
+
+			if ((parentCategory == null) || parentCategory.isInTrash()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isRestorable(long classPK) throws PortalException {
 		MBThread thread = _mbThreadLocalService.getThread(classPK);
 

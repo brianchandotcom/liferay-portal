@@ -586,8 +586,21 @@ public interface TrashHandler {
 	 *
 	 * @return <code>true</code> if the entity can be moved from one container
 	 *         model to another; <code>false</code> otherwise
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #isMovable(long)}
 	 */
+	@Deprecated
 	public boolean isMovable();
+
+	/**
+	 * Returns <code>true</code> if the entity can be moved from one container
+	 * model (such as a folder) to another.
+	 *
+	 * @param  classPK the primary key of the model entity
+	 * @return <code>true</code> if the entity can be moved from one container
+	 *         model to another; <code>false</code> otherwise
+	 */
+	public boolean isMovable(long classPK) throws PortalException;
 
 	/**
 	 * Returns <code>true</code> if the model entity can be restored to its

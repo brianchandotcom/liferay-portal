@@ -17,6 +17,7 @@ package com.liferay.document.library.internal.trash;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -160,6 +161,24 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 
 		return super.hasTrashPermission(
 			permissionChecker, groupId, classPK, trashActionId);
+	}
+
+	@Override
+	public boolean isMovable(long classPK) throws PortalException {
+		DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
+
+		try {
+			DLFolder parentFolder = dlFileShortcut.getDLFolder();
+
+			return parentFolder.isInTrash();
+		}
+		catch (NoSuchFolderException nsfe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsfe, nsfe);
+			}
+
+			return true;
+		}
 	}
 
 	@Override

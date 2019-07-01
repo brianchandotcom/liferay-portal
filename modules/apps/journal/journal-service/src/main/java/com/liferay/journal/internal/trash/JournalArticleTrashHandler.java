@@ -198,6 +198,23 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 	}
 
 	@Override
+	public boolean isMovable(long classPK) throws PortalException {
+		JournalArticle article = _journalArticleLocalService.getLatestArticle(
+			classPK);
+
+		if (article.getFolderId() > 0) {
+			JournalFolder parentFolder = _journalFolderLocalService.fetchFolder(
+				article.getFolderId());
+
+			if ((parentFolder == null) || parentFolder.isInTrash()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isRestorable(long classPK) throws PortalException {
 		JournalArticle article = _journalArticleLocalService.getLatestArticle(
 			classPK);

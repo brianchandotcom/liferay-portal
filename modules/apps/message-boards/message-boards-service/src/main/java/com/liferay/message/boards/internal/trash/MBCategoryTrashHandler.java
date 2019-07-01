@@ -338,6 +338,22 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
+	public boolean isMovable(long classPK) throws PortalException {
+		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
+
+		if (category.getParentCategoryId() > 0) {
+			MBCategory parentCategory = _mbCategoryLocalService.fetchMBCategory(
+				category.getParentCategoryId());
+
+			if ((parentCategory == null) || parentCategory.isInTrash()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isRestorable(long classPK) throws PortalException {
 		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 

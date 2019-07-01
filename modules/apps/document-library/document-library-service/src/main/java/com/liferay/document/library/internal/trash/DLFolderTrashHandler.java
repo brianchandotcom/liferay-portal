@@ -211,6 +211,22 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 	}
 
 	@Override
+	public boolean isMovable(long classPK) throws PortalException {
+		DLFolder dlFolder = fetchDLFolder(classPK);
+
+		if (dlFolder.getParentFolderId() > 0) {
+			DLFolder parentFolder = _dlFolderLocalService.fetchFolder(
+				dlFolder.getParentFolderId());
+
+			if ((parentFolder == null) || parentFolder.isInTrash()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isRestorable(long classPK) throws PortalException {
 		DLFolder dlFolder = fetchDLFolder(classPK);
 

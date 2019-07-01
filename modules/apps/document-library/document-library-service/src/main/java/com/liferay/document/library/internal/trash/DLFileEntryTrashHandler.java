@@ -218,6 +218,22 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 	}
 
 	@Override
+	public boolean isMovable(long classPK) throws PortalException {
+		DLFileEntry dlFileEntry = fetchDLFileEntry(classPK);
+
+		if (dlFileEntry.getFolderId() > 0) {
+			DLFolder parentFolder = _dlFolderLocalService.fetchFolder(
+				dlFileEntry.getFolderId());
+
+			if ((parentFolder == null) || parentFolder.isInTrash()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isRestorable(long classPK) throws PortalException {
 		DLFileEntry dlFileEntry = fetchDLFileEntry(classPK);
 

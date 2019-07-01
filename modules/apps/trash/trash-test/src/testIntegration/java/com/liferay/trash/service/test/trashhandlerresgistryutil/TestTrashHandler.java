@@ -274,8 +274,18 @@ public class TestTrashHandler implements TrashHandler {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #isMovable(long)}
+	 */
+	@Deprecated
 	@Override
 	public boolean isMovable() {
+		return false;
+	}
+
+	@Override
+	public boolean isMovable(long classPK) {
 		return false;
 	}
 

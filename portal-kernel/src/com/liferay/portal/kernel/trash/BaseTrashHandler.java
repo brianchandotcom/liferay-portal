@@ -334,8 +334,18 @@ public abstract class BaseTrashHandler implements TrashHandler {
 			permissionChecker, 0, classPK, ActionKeys.DELETE);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #isMovable(long)}
+	 */
+	@Deprecated
 	@Override
 	public boolean isMovable() {
+		return false;
+	}
+
+	@Override
+	public boolean isMovable(long classPK) throws PortalException {
 		return false;
 	}
 

@@ -21,8 +21,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
@@ -106,14 +104,6 @@ public class RSSAction implements StrutsAction {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Layout layout = themeDisplay.getLayout();
-
-		long plid = ParamUtil.getLong(httpServletRequest, "plid");
-
-		if (plid == LayoutConstants.DEFAULT_PLID) {
-			plid = themeDisplay.getPlid();
-		}
-
 		long companyId = ParamUtil.getLong(httpServletRequest, "companyId");
 		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 		long organizationId = ParamUtil.getLong(
@@ -138,6 +128,9 @@ public class RSSAction implements StrutsAction {
 				StringPool.BLANK, entryURL, themeDisplay);
 		}
 		else if (groupId > 0) {
+			long plid = ParamUtil.getLong(
+				httpServletRequest, "plid", themeDisplay.getPlid());
+
 			String feedURL = _getFindEntryURL(plid, themeDisplay);
 
 			rss = _blogsEntryService.getGroupEntriesRSS(
@@ -151,7 +144,7 @@ public class RSSAction implements StrutsAction {
 				organizationId, new Date(), status, max, type, version,
 				displayStyle, StringPool.BLANK, entryURL, themeDisplay);
 		}
-		else if (layout != null) {
+		else if (themeDisplay.getLayout() != null) {
 			String feedURL = themeDisplay.getPathMain() + "/blogs/rss";
 
 			rss = _blogsEntryService.getGroupEntriesRSS(

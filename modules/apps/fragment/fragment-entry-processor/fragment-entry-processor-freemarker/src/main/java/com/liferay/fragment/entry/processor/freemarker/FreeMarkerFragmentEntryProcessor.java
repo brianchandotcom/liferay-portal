@@ -22,6 +22,11 @@ import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -35,9 +40,12 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,6 +63,19 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class FreeMarkerFragmentEntryProcessor
 	implements FragmentEntryProcessor {
+
+	@Override
+	public JSONObject getDefaultEditableValuesJSONObject(
+		String html, String configuration) {
+
+		if (configuration == null) {
+			return null;
+		}
+
+		return JSONUtil.put(
+			"segment-experience-id-0",
+			_getConfigDefaultValuesJSONObject(configuration));
+	}
 
 	@Override
 	public String processFragmentEntryLinkHTML(
@@ -103,6 +124,49 @@ public class FreeMarkerFragmentEntryProcessor
 		TemplateManager templateManager =
 			TemplateManagerUtil.getTemplateManager(
 				TemplateConstants.LANG_TYPE_FTL);
+
+		Map<String, Object> contextObjects = new HashMap<>();
+
+		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
+			fragmentEntryLink.getEditableValues());
+
+		Class<?> clazz = getClass();
+
+		String className = clazz.getName();
+
+		JSONObject fragmentConfigurationJSONObject = null;
+
+		if ((editableValuesJSONObject == null) ||
+			(editableValuesJSONObject.get(className) == null)) {
+
+			fragmentConfigurationJSONObject = _getConfigDefaultValuesJSONObject(
+				fragmentEntryLink.getConfiguration());
+		}
+		else {
+			JSONObject configurationValuesJSONObject =
+				(JSONObject)editableValuesJSONObject.get(className);
+
+			long[] segmentsExperienceIds =
+				fragmentEntryProcessorContext.getSegmentsExperienceIds();
+
+			long segmentsExperienceId;
+
+			if (segmentsExperienceIds.length > 0) {
+				segmentsExperienceId = segmentsExperienceIds[0];
+			}
+			else {
+				segmentsExperienceId = 0;
+			}
+
+			fragmentConfigurationJSONObject =
+				(JSONObject)configurationValuesJSONObject.get(
+					"segment-experience-id-" + segmentsExperienceId);
+		}
+
+		contextObjects.put(
+			"fragmentConfiguration", fragmentConfigurationJSONObject);
+
+		templateManager.addContextObjects(template, contextObjects);
 
 		templateManager.addTaglibSupport(
 			template, fragmentEntryProcessorContext.getHttpServletRequest(),
@@ -197,6 +261,73 @@ public class FreeMarkerFragmentEntryProcessor
 
 			throw new FragmentEntryContentException(message, te);
 		}
+	}
+
+	private JSONObject _getConfigDefaultValuesJSONObject(String config) {
+		JSONObject defaultValuesJSONObject = JSONFactoryUtil.createJSONObject();
+
+		JSONObject configJSONObject = null;
+
+		try {
+			configJSONObject = JSONFactoryUtil.createJSONObject(config);
+		}
+		catch (JSONException jsone) {
+			_log.error("Unable to parse config JSON object: " + config, jsone);
+
+			return null;
+		}
+
+		JSONArray fieldSetsJSONArray = (JSONArray)configJSONObject.get(
+			"fieldSets");
+
+		if (fieldSetsJSONArray == null) {
+			return null;
+		}
+
+		for (int i = 0; i < fieldSetsJSONArray.length(); i++) {
+			JSONObject configFieldSetJSONObject =
+				(JSONObject)fieldSetsJSONArray.get(i);
+
+			String fieldSetName = configFieldSetJSONObject.getString("name");
+
+			JSONObject defaultValuesFieldSetJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			JSONArray configFieldSetFieldsJSONArray =
+				(JSONArray)configFieldSetJSONObject.get("fields");
+
+			for (int j = 0; j < configFieldSetFieldsJSONArray.length(); j++) {
+				JSONObject configFieldSetFieldJSONObject =
+					(JSONObject)configFieldSetFieldsJSONArray.get(j);
+
+				Object fieldDefaultValue = _getFieldValue(
+					configFieldSetFieldJSONObject.getString("dataType"),
+					configFieldSetFieldJSONObject.getString("defaultValue"));
+
+				defaultValuesFieldSetJSONObject.put(
+					configFieldSetFieldJSONObject.getString("name"),
+					fieldDefaultValue);
+
+				defaultValuesJSONObject.put(
+					fieldSetName, defaultValuesFieldSetJSONObject);
+			}
+		}
+
+		return defaultValuesJSONObject;
+	}
+
+	private Object _getFieldValue(String dataType, String value) {
+		if (dataType.equals("double")) {
+			return GetterUtil.getDouble(value);
+		}
+		else if (dataType.equals("int")) {
+			return GetterUtil.getInteger(value);
+		}
+		else if (dataType.equals("string")) {
+			return value;
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -326,54 +326,6 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateContentDTDVersionSpringMVCPortlet70()
-		throws Exception {
-
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"spring-mvc-portlet", "foo-bar", "--liferay-version", "7.0");
-
-		ProjectTemplatesTestUtil.testContains(
-			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
-			"liferay-display_7_0_0.dtd");
-
-		ProjectTemplatesTestUtil.testContains(
-			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-portlet.xml",
-			"liferay-portlet-app_7_0_0.dtd");
-	}
-
-	@Test
-	public void testBuildTemplateContentDTDVersionSpringMVCPortlet71()
-		throws Exception {
-
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"spring-mvc-portlet", "foo-bar", "--liferay-version", "7.1");
-
-		ProjectTemplatesTestUtil.testContains(
-			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
-			"liferay-display_7_1_0.dtd");
-
-		ProjectTemplatesTestUtil.testContains(
-			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-portlet.xml",
-			"liferay-portlet-app_7_1_0.dtd");
-	}
-
-	@Test
-	public void testBuildTemplateContentDTDVersionSpringMVCPortlet72()
-		throws Exception {
-
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"spring-mvc-portlet", "foo-bar", "--liferay-version", "7.2");
-
-		ProjectTemplatesTestUtil.testContains(
-			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
-			"liferay-display_7_2_0.dtd");
-
-		ProjectTemplatesTestUtil.testContains(
-			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-portlet.xml",
-			"liferay-portlet-app_7_2_0.dtd");
-	}
-
-	@Test
 	public void testBuildTemplateContentDTDVersionWarHook70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"war-hook", "foo-bar", "--liferay-version", "7.0");

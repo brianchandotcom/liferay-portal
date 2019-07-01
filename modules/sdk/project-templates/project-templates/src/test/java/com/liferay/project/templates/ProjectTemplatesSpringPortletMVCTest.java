@@ -65,6 +65,7 @@ public class ProjectTemplatesSpringPortletMVCTest {
 	public static Iterable<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
+				{"springportletmvc", "embedded", "jsp", "7.0"},
 				{"springportletmvc", "embedded", "jsp", "7.1"},
 				{"springportletmvc", "embedded", "jsp", "7.2"},
 				{"portletmvc4spring", "embedded", "jsp", "7.1"},
@@ -122,6 +123,34 @@ public class ProjectTemplatesSpringPortletMVCTest {
 		ProjectTemplatesTestUtil.testExists(
 			gradleProjectDir,
 			"src/main/java/com/test/controller/UserController.java");
+
+		if (_liferayVersion.equals("7.0")) {
+			ProjectTemplatesTestUtil.testContains(
+				gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
+				"liferay-display_7_0_0.dtd");
+
+			ProjectTemplatesTestUtil.testContains(
+				gradleProjectDir, "src/main/webapp/WEB-INF/liferay-portlet.xml",
+				"liferay-portlet-app_7_0_0.dtd");
+		}
+		else if (_liferayVersion.equals("7.1")) {
+			ProjectTemplatesTestUtil.testContains(
+				gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
+				"liferay-display_7_1_0.dtd");
+
+			ProjectTemplatesTestUtil.testContains(
+				gradleProjectDir, "src/main/webapp/WEB-INF/liferay-portlet.xml",
+				"liferay-portlet-app_7_1_0.dtd");
+		}
+		else if (_liferayVersion.equals("7.2")) {
+			ProjectTemplatesTestUtil.testContains(
+				gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
+				"liferay-display_7_2_0.dtd");
+
+			ProjectTemplatesTestUtil.testContains(
+				gradleProjectDir, "src/main/webapp/WEB-INF/liferay-portlet.xml",
+				"liferay-portlet-app_7_2_0.dtd");
+		}
 
 		if (_viewType.equals("jsp")) {
 			if (_framework.equals("springportletmvc")) {

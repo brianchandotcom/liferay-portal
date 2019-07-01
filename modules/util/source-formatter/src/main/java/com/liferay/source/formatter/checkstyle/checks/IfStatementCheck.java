@@ -34,6 +34,12 @@ public class IfStatementCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		DetailAST parentDetailAST = detailAST.getParent();
+
+		if (parentDetailAST.getType() == TokenTypes.LITERAL_ELSE) {
+			return;
+		}
+
 		int closingCurlyBracePos = _getClosingCurlyBracePos(detailAST);
 
 		if (closingCurlyBracePos == -1) {

@@ -145,7 +145,6 @@
 		<column localized="true" name="name" type="String" />
 		<column name="priority" type="int" />
 		<column name="active" type="boolean" />
-		<column name="approved" type="boolean" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
@@ -201,21 +200,6 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="active" />
-		</finder>
-		<finder name="G_C_C_A_A" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
-			<finder-column name="active" />
-			<finder-column name="approved" />
-		</finder>
-		<finder name="G_S_C_C_A_A" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column arrayable-operator="OR" name="segmentsEntryId" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
-			<finder-column name="active" />
-			<finder-column name="approved" />
 		</finder>
 
 		<!-- References -->

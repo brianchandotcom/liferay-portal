@@ -162,6 +162,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.FullyQualifiedNameCheck">
 			<message key="import.statement.use" value="Use import statement instead of Fully Qualified Name for ''{0}'" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.IfStatementCheck">
+			<message key="if.statements.combine" value="Combine if-statements" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.InstanceofOrderCheck">
 			<message key="instanceof.order" value="''{0}'' should come before ''{1}''" />
 		</module>

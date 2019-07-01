@@ -129,14 +129,14 @@ public class FreeMarkerFragmentEntryProcessor
 
 		Map<String, Object> contextObjects = new HashMap<>();
 
+		JSONObject fragmentConfigurationJSONObject = null;
+
 		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
 			fragmentEntryLink.getEditableValues());
 
 		Class<?> clazz = getClass();
 
 		String className = clazz.getName();
-
-		JSONObject fragmentConfigurationJSONObject = null;
 
 		if ((editableValuesJSONObject == null) ||
 			(editableValuesJSONObject.get(className) == null)) {

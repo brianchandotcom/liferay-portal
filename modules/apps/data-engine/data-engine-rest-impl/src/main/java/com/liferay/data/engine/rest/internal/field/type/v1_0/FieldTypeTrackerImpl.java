@@ -14,8 +14,8 @@
 
 package com.liferay.data.engine.rest.internal.field.type.v1_0;
 
-import com.liferay.data.engine.spi.field.type.FieldType;
-import com.liferay.data.engine.spi.field.type.FieldTypeTracker;
+import com.liferay.data.engine.field.type.FieldType;
+import com.liferay.data.engine.field.type.FieldTypeTracker;
 
 import java.util.Collection;
 import java.util.Collections;

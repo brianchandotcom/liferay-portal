@@ -14,11 +14,11 @@
 
 package com.liferay.data.engine.taglib.servlet.taglib.util;
 
+import com.liferay.data.engine.field.type.FieldType;
+import com.liferay.data.engine.field.type.FieldTypeTracker;
+import com.liferay.data.engine.renderer.DataLayoutRenderer;
 import com.liferay.data.engine.rest.client.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.client.resource.v1_0.DataRecordResource;
-import com.liferay.data.engine.spi.field.type.FieldType;
-import com.liferay.data.engine.spi.field.type.FieldTypeTracker;
-import com.liferay.data.engine.spi.renderer.DataLayoutRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;

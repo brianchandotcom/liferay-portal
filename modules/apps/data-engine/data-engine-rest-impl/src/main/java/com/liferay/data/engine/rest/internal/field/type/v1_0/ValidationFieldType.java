@@ -14,10 +14,10 @@
 
 package com.liferay.data.engine.rest.internal.field.type.v1_0;
 
+import com.liferay.data.engine.field.type.BaseFieldType;
+import com.liferay.data.engine.field.type.FieldType;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertiesUtil;
 import com.liferay.data.engine.spi.dto.SPIDataDefinitionField;
-import com.liferay.data.engine.spi.field.type.BaseFieldType;
-import com.liferay.data.engine.spi.field.type.FieldType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;

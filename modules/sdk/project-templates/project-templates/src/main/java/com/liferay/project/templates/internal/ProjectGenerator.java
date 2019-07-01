@@ -17,11 +17,11 @@ package com.liferay.project.templates.internal;
 import aQute.bnd.version.Version;
 import aQute.bnd.version.VersionRange;
 
+import com.liferay.project.templates.FileUtil;
 import com.liferay.project.templates.ProjectTemplateCustomizer;
 import com.liferay.project.templates.ProjectTemplates;
 import com.liferay.project.templates.ProjectTemplatesArgs;
 import com.liferay.project.templates.WorkspaceUtil;
-import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.ProjectTemplatesUtil;
 import com.liferay.project.templates.internal.util.Validator;
 

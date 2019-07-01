@@ -14,7 +14,6 @@
 
 package com.liferay.project.templates;
 
-import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.StringUtil;
 
 import java.io.File;

@@ -17,7 +17,6 @@ package com.liferay.project.templates;
 import aQute.bnd.osgi.Constants;
 import aQute.bnd.version.VersionRange;
 
-import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.Validator;
 import com.liferay.project.templates.util.FileTestUtil;
 import com.liferay.project.templates.util.StringTestUtil;

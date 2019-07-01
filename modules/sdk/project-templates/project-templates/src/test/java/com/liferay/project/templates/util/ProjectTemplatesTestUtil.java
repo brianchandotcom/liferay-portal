@@ -16,13 +16,13 @@ package com.liferay.project.templates.util;
 
 import aQute.bnd.main.bnd;
 
+import com.liferay.project.templates.FileUtil;
 import com.liferay.project.templates.ProjectTemplates;
 import com.liferay.project.templates.ProjectTemplatesArgs;
 import com.liferay.project.templates.ProjectTemplatesTest;
 import com.liferay.project.templates.WorkspaceUtil;
 import com.liferay.project.templates.constants.ProjectTemplatesTestConstants;
 import com.liferay.project.templates.internal.ProjectGenerator;
-import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.Validator;
 
 import difflib.Delta;

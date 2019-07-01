@@ -20,7 +20,6 @@ import aQute.bnd.osgi.Domain;
 
 import com.liferay.maven.executor.MavenExecutor;
 import com.liferay.project.templates.constants.ProjectTemplatesTestConstants;
-import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.ProjectTemplatesUtil;
 import com.liferay.project.templates.internal.util.Validator;
 import com.liferay.project.templates.util.FileTestUtil;

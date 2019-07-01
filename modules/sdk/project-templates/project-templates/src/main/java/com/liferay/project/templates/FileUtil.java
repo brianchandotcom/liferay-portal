@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.project.templates.internal.util;
+package com.liferay.project.templates;
 
 import java.io.File;
 import java.io.FileInputStream;

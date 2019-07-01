@@ -14,8 +14,6 @@
 
 package com.liferay.project.templates;
 
-import com.liferay.project.templates.internal.util.FileUtil;
-
 import java.io.File;
 import java.io.IOException;
 

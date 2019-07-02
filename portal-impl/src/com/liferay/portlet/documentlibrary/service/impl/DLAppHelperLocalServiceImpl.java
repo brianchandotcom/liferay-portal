@@ -679,6 +679,14 @@ public class DLAppHelperLocalServiceImpl
 	public void restoreFileEntryFromTrash(long userId, FileEntry fileEntry)
 		throws PortalException {
 
+		restoreFileEntryFromTrash(userId, fileEntry.getFolderId(), fileEntry);
+	}
+
+	@Override
+	public void restoreFileEntryFromTrash(
+			long userId, long newFolderId, FileEntry fileEntry)
+		throws PortalException {
+
 		// File entry
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
@@ -703,9 +711,8 @@ public class DLAppHelperLocalServiceImpl
 			dlFileEntry.getTitle());
 
 		String title = dlFileEntryLocalService.getUniqueTitle(
-			dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
-			dlFileEntry.getFileEntryId(), originalTitle,
-			dlFileEntry.getExtension());
+			dlFileEntry.getGroupId(), newFolderId, dlFileEntry.getFileEntryId(),
+			originalTitle, dlFileEntry.getExtension());
 
 		String originalFileName = TrashUtil.getOriginalTitle(
 			dlFileEntry.getTitle(), "fileName");
@@ -1265,7 +1272,7 @@ public class DLAppHelperLocalServiceImpl
 		}
 
 		if (dlFileEntry.isInTrashExplicitly()) {
-			restoreFileEntryFromTrash(userId, fileEntry);
+			restoreFileEntryFromTrash(userId, newFolderId, fileEntry);
 
 			fileEntry = dlAppLocalService.moveFileEntry(
 				userId, fileEntry.getFileEntryId(), newFolderId,

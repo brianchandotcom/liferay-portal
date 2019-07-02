@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.seo.impl.configuration;
+package com.liferay.seo.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 

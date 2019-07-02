@@ -17,7 +17,7 @@ package com.liferay.seo.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
-import com.liferay.portal.kernel.seo.SEO;
+import com.liferay.portal.kernel.seo.SEOLinkManager;
 import com.liferay.portal.kernel.seo.SEOLink;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -43,7 +43,7 @@ import org.junit.runner.RunWith;
  * @author Cristina González
  */
 @RunWith(Arquillian.class)
-public class SEOTest {
+public class SEOLinkManagerTest {
 
 	@ClassRule
 	@Rule
@@ -57,7 +57,7 @@ public class SEOTest {
 		_testWithSEOCompanyConfiguration(
 			"classic",
 			() -> {
-				List<SEOLink> seoLinks = _seo.getLocalizedSEOLinks(
+				List<SEOLink> seoLinks = _seoLinkManager.getLocalizedSEOLinks(
 					TestPropsValues.getCompanyId(), LocaleUtil.US,
 					_CANONICAL_URL, _alternateURLs);
 
@@ -78,7 +78,7 @@ public class SEOTest {
 		_testWithSEOCompanyConfiguration(
 			"classic",
 			() -> {
-				List<SEOLink> seoLinks = _seo.getLocalizedSEOLinks(
+				List<SEOLink> seoLinks = _seoLinkManager.getLocalizedSEOLinks(
 					TestPropsValues.getCompanyId(), LocaleUtil.SPAIN,
 					_CANONICAL_URL, _alternateURLs);
 
@@ -99,7 +99,7 @@ public class SEOTest {
 		_testWithSEOCompanyConfiguration(
 			"default",
 			() -> {
-				List<SEOLink> seoLinks = _seo.getLocalizedSEOLinks(
+				List<SEOLink> seoLinks = _seoLinkManager.getLocalizedSEOLinks(
 					TestPropsValues.getCompanyId(), LocaleUtil.US,
 					_CANONICAL_URL, _alternateURLs);
 
@@ -120,7 +120,7 @@ public class SEOTest {
 		_testWithSEOCompanyConfiguration(
 			"default",
 			() -> {
-				List<SEOLink> seoLinks = _seo.getLocalizedSEOLinks(
+				List<SEOLink> seoLinks = _seoLinkManager.getLocalizedSEOLinks(
 					TestPropsValues.getCompanyId(), LocaleUtil.SPAIN,
 					_CANONICAL_URL, _alternateURLs);
 
@@ -260,6 +260,6 @@ public class SEOTest {
 		};
 
 	@Inject
-	private SEO _seo;
+	private SEOLinkManager _seoLinkManager;
 
 }

@@ -19,7 +19,7 @@
 <%@ page import="com.liferay.portal.kernel.model.Portlet" %><%@
 page import="com.liferay.portal.kernel.model.portlet.PortletDependency" %><%@
 page import="com.liferay.portal.kernel.seo.SEOLink" %><%@
-page import="com.liferay.portal.kernel.seo.SEOUtil" %><%@
+page import="com.liferay.portal.kernel.seo.SEOLinkManagerUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.BrowserMetadata" %><%@
 page import="com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil" %><%@
 page import="com.liferay.portal.servlet.ComboServletStaticURLGenerator" %><%@

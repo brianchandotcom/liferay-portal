@@ -23,7 +23,7 @@ public interface SEOLink {
 
 	public String getHref();
 
-	public Optional<String> getHrefLang();
+	public String getHrefLang();
 
 	public SEOLinkRel getSeoLinkRel();
 

@@ -9,6 +9,7 @@
 			fieldSets: list<[
 				label: string,
 				fields: list<[
+					name: string,
 					label: string,
 					type: string,
 					typeOptions: [
@@ -57,6 +58,7 @@
 	{@param fieldSet: [
 		label: string,
 		fields: list<[
+			name: string,
 			label: string,
 			type: string,
 			typeOptions: [
@@ -67,17 +69,18 @@
 
 	<p class="mb-3 sheet-subtitle">{$fieldSet.label}</p>
 		{foreach $field in $fieldSet.fields}
-			{call .field}
+			{delcall com.liferay.layout.content.page.editor.web.field variant="$field.type"}
 				{param field: $field /}
-			{/call}
+			{/delcall}
 		{/foreach}
 {/template}
 
 /**
  * Field
  */
-{template .field}
+{deltemplate com.liferay.layout.content.page.editor.web.field}
 	{@param field: [
+		name: string,
 		label: string,
 		type: string,
 		typeOptions: [
@@ -85,33 +88,31 @@
 		]
 	]}
 
-	<div class="form-group">
-		<label for="regularSelectElement">{$field.label}</label>
-
-		{delcall com.liferay.layout.content.page.editor.web.fieldType variant="$field.type"}
-			{param options: $field.typeOptions.validValues /}
-		{/delcall}
-	</div>
-{/template}
-
-/**
- * Field Type
- */
-{deltemplate com.liferay.layout.content.page.editor.web.fieldType}
-	{@param options: list<string>}
-
-	<div></div>
+	<div id="{$field.name}"></div>
 {/deltemplate}
 
 /**
- * Field Type Select variation
+ * Field Select variation
  */
-{deltemplate com.liferay.layout.content.page.editor.web.fieldType variant="'select'"}
-	{@param options: list<string>}
+{deltemplate com.liferay.layout.content.page.editor.web.field variant="'select'"}
+	{@param field: [
+		name: string,
+		label: string,
+		type: string,
+		typeOptions: [
+			validValues: list<string>
+		]
+	]}
 
-	<select class="form-control form-control-sm" id="regularSelectElement">
-		{foreach $option in $options}
-			<option>{$option}</option>
-		{/foreach}
-	</select>
+	{if $field.typeOptions and $field.typeOptions.validValues}
+		<div class="form-group">
+			<label for="regularSelectElement">{$field.label}</label>
+
+			<select class="form-control form-control-sm" id="regularSelectElement">
+				{foreach $option in $field.typeOptions.validValues}
+					<option>{$option}</option>
+				{/foreach}
+			</select>
+		</div>
+	{/if}
 {/deltemplate}

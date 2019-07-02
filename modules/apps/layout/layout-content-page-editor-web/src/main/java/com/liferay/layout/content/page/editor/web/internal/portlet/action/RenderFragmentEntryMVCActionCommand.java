@@ -60,6 +60,9 @@ public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		long fragmentEntryLinkId = ParamUtil.getLong(
 			actionRequest, "fragmentEntryLinkId");
 
+		long segmentsExperienceId = ParamUtil.getLong(
+			actionRequest, "segmentsExperienceId");
+
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 				fragmentEntryLinkId);

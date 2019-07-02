@@ -43,7 +43,8 @@ function addPortletReducer(state, action) {
 				nextState.classNameId,
 				nextState.classPK,
 				nextState.portletNamespace,
-				nextState.defaultSegmentsExperienceId
+				nextState.segmentsExperienceId ||
+					nextState.defaultSegmentsExperienceId
 			)
 				.then(response => {
 					fragmentEntryLink = response;
@@ -65,7 +66,9 @@ function addPortletReducer(state, action) {
 					getFragmentEntryLinkContent(
 						nextState.renderFragmentEntryURL,
 						fragmentEntryLink,
-						nextState.portletNamespace
+						nextState.portletNamespace,
+						nextState.segmentsExperienceId ||
+							nextState.defaultSegmentsExperienceId
 					)
 				)
 				.then(response => {
@@ -114,7 +117,7 @@ function addPortletReducer(state, action) {
  * @param {string} classNameId
  * @param {string} classPK
  * @param {string} portletNamespace
- * @param {string} defaultSegmentsExperienceId
+ * @param {string} segmentsExperienceId
  * @return {object}
  * @review
  */
@@ -124,13 +127,14 @@ function _addPortlet(
 	classNameId,
 	classPK,
 	portletNamespace,
-	defaultSegmentsExperienceId
+	segmentsExperienceId
 ) {
 	const formData = new FormData();
 
 	formData.append(`${portletNamespace}portletId`, portletId);
 	formData.append(`${portletNamespace}classNameId`, classNameId);
 	formData.append(`${portletNamespace}classPK`, classPK);
+	formData.append(`${portletNamespace}experienceId`, segmentsExperienceId);
 
 	return fetch(addPortletURL, {
 		body: formData,
@@ -148,7 +152,7 @@ function _addPortlet(
 				content: response.content,
 				editableValues: editableValuesMigrator(
 					response.editableValues,
-					prefixSegmentsExperienceId(defaultSegmentsExperienceId)
+					prefixSegmentsExperienceId(segmentsExperienceId)
 				),
 				fragmentEntryLinkId: response.fragmentEntryLinkId,
 				name: response.name

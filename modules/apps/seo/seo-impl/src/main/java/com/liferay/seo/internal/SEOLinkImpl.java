@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.seo.impl;
+package com.liferay.seo.internal;
 
 import com.liferay.portal.kernel.seo.SEOLink;
 import com.liferay.portal.kernel.util.Validator;

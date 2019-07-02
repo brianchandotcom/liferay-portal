@@ -12,15 +12,23 @@
  * details.
  */
 
-package com.liferay.seo.impl.configuration;
+package com.liferay.seo.internal.configuration.declaration;
+
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.seo.internal.configuration.SEOCompanyConfiguration;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Cristina González
  */
-public class SEOConfigurationConstants {
+@Component(service = ConfigurationBeanDeclaration.class)
+public class SEOConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
-	public static final String CLASSIC = "classic";
-
-	public static final String DEFAULT = "default";
+	@Override
+	public Class getConfigurationBeanClass() {
+		return SEOCompanyConfiguration.class;
+	}
 
 }

@@ -45,10 +45,10 @@ public class EntryResourceImpl extends BaseEntryResourceImpl {
 
 	@Override
 	public Page<Entry> getCollectionEntriesPage(
-			String[] changeTypesFilter, String[] classNameIdsFilter,
-			String[] groupIdsFilter, Long collectionId, Boolean collision,
-			Integer status, String[] userIdsFilter, Pagination pagination,
-			Sort[] sorts)
+			Long collectionId, String[] changeTypesFilter,
+			String[] classNameIdsFilter, Boolean collision,
+			String[] groupIdsFilter, Integer status, String[] userIdsFilter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(

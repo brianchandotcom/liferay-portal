@@ -107,7 +107,7 @@ definition {
 			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
-			configurationCategory = "Documents and Media",
+			configurationCategory = "Assets",
 			configurationName = "TensorFlow Image Auto Tagging",
 			configurationScope = "Virtual Instance Scope");
 

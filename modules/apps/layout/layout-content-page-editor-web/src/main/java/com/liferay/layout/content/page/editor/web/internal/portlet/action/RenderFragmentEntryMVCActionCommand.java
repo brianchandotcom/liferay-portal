@@ -79,6 +79,8 @@ public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			defaultFragmentRendererContext.setLocale(themeDisplay.getLocale());
 			defaultFragmentRendererContext.setMode(
 				FragmentEntryLinkConstants.EDIT);
+			defaultFragmentRendererContext.setSegmentsExperienceIds(
+				new long[] {segmentsExperienceId});
 
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(actionRequest);

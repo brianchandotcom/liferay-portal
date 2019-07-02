@@ -649,6 +649,8 @@ definition {
 			resourcePanels = "Sample QA app",
 			scopeAliasList = "everything,everything.read,everything.write",
 			scopeTranslation = "Example scope 1 + Example scope 2");
+
+		AssertElementNotPresent(locator1 = "xpath=(//a[contains(.,'Sample QA app')]//following-sibling::div//li)[2]");
 	}
 
 	test ViewAndRevokeGrantedAuthorizations {

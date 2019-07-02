@@ -284,6 +284,8 @@ public class ResourceOpenAPIParser {
 		}
 
 		List<JavaMethodParameter> javaMethodParameters = new ArrayList<>();
+		Map<String, JavaMethodParameter> sortedJavaMethodParameters =
+			new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
 		List<Parameter> parameters = operation.getParameters();
 
@@ -311,12 +313,21 @@ public class ResourceOpenAPIParser {
 				continue;
 			}
 
-			javaMethodParameters.add(
-				new JavaMethodParameter(
-					CamelCaseUtil.toCamelCase(parameterName),
-					OpenAPIParserUtil.getJavaDataType(
-						javaDataTypeMap, parameter.getSchema())));
+			JavaMethodParameter javaMethodParameter = new JavaMethodParameter(
+				CamelCaseUtil.toCamelCase(parameterName),
+				OpenAPIParserUtil.getJavaDataType(
+					javaDataTypeMap, parameter.getSchema()));
+
+			if (Objects.equals(parameter.getIn(), "path")) {
+				javaMethodParameters.add(javaMethodParameter);
+			}
+			else {
+				sortedJavaMethodParameters.put(
+					parameterName, javaMethodParameter);
+			}
 		}
+
+		javaMethodParameters.addAll(sortedJavaMethodParameters.values());
 
 		if (parameterNames.contains("filter")) {
 			JavaMethodParameter javaMethodParameter = new JavaMethodParameter(

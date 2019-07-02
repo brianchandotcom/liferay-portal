@@ -92,7 +92,7 @@ public class CTUserConfigurationResource {
 
 		boolean confirmationEnabled = true;
 
-		if (ctPreferences == null) {
+		if (ctPreferences != null) {
 			confirmationEnabled = ctPreferences.isConfirmationEnabled();
 		}
 

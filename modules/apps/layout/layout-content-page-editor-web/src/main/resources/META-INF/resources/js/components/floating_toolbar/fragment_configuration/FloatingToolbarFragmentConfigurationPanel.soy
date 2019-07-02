@@ -94,29 +94,3 @@
 
 	<div id="{$field.name}"></div>
 {/deltemplate}
-
-/**
- * Field Select variation
- */
-{deltemplate com.liferay.layout.content.page.editor.web.field variant="'select'"}
-	{@param field: [
-		name: string,
-		label: string,
-		type: string,
-		typeOptions: [
-			validValues: list<string>
-		]
-	]}
-
-	{if $field.typeOptions and $field.typeOptions.validValues}
-		<div class="form-group">
-			<label for="regularSelectElement">{$field.label}</label>
-
-			<select class="form-control form-control-sm" id="regularSelectElement">
-				{foreach $option in $field.typeOptions.validValues}
-					<option>{$option}</option>
-				{/foreach}
-			</select>
-		</div>
-	{/if}
-{/deltemplate}

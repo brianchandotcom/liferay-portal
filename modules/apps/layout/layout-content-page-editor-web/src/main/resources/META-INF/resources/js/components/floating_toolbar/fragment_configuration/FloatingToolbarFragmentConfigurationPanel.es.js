@@ -17,6 +17,7 @@ import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import './FloatingToolbarFragmentConfigurationPanelDelegateTemplate.soy';
+import './field_types/Select.soy';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import templates from './FloatingToolbarFragmentConfigurationPanel.soy';
 

@@ -1,0 +1,35 @@
+{namespace com.liferay.layout.content.page.editor.web.selectField}
+
+/**
+ * Field Select variation
+ */
+{deltemplate com.liferay.layout.content.page.editor.web.field variant="'select'"}
+	{@param field: [
+		name: string,
+		label: string,
+		type: string,
+		typeOptions: [
+			validValues: list<string>
+		]
+	]}
+	{@param fieldSetName: string}
+	{@param handleChangeConfiguration: any}
+
+	{if $field.typeOptions and $field.typeOptions.validValues}
+		<div class="form-group">
+			<label for="{$field.name}">{$field.label}</label>
+
+			<select
+				class="form-control form-control-sm"
+				data-onchange="{$handleChangeConfiguration}"
+				data-field-set-name="{$fieldSetName}"
+				data-field-type="{$field.type}"
+				id="{$field.name}"
+			>
+				{foreach $option in $field.typeOptions.validValues}
+					<option value="{$option}">{$option}</option>
+				{/foreach}
+			</select>
+		</div>
+	{/if}
+{/deltemplate}

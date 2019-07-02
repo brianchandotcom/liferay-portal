@@ -324,6 +324,16 @@ public class DLAppHelperLocalServiceWrapper
 	}
 
 	@Override
+	public void restoreFileEntryFromTrash(
+			long userId, long newFolderId,
+			com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_dlAppHelperLocalService.restoreFileEntryFromTrash(
+			userId, newFolderId, fileEntry);
+	}
+
+	@Override
 	public void restoreFileShortcutFromTrash(
 			long userId,
 			com.liferay.portal.kernel.repository.model.FileShortcut

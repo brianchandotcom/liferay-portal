@@ -194,6 +194,10 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	public void restoreFileEntryFromTrash(long userId, FileEntry fileEntry)
 		throws PortalException;
 
+	public void restoreFileEntryFromTrash(
+			long userId, long newFolderId, FileEntry fileEntry)
+		throws PortalException;
+
 	public void restoreFileShortcutFromTrash(
 			long userId, FileShortcut fileShortcut)
 		throws PortalException;

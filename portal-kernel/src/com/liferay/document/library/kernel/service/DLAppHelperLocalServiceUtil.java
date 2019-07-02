@@ -297,6 +297,14 @@ public class DLAppHelperLocalServiceUtil {
 		getService().restoreFileEntryFromTrash(userId, fileEntry);
 	}
 
+	public static void restoreFileEntryFromTrash(
+			long userId, long newFolderId,
+			com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().restoreFileEntryFromTrash(userId, newFolderId, fileEntry);
+	}
+
 	public static void restoreFileShortcutFromTrash(
 			long userId,
 			com.liferay.portal.kernel.repository.model.FileShortcut

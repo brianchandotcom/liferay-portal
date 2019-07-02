@@ -51,6 +51,10 @@ public class UndoTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() {
+		if (_getData() == null) {
+			return SKIP_BODY;
+		}
+
 		return EVAL_BODY_INCLUDE;
 	}
 

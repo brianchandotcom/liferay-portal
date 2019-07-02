@@ -130,10 +130,9 @@ class FragmentEntryLink extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
-	syncFragmentEntryLinks(fragmentEntryLinks) {
-		if (fragmentEntryLinks[this.fragmentEntryLinkId]) {
-			this._configuration =
-				fragmentEntryLinks[this.fragmentEntryLinkId].configuration;
+	syncFragmentEntryLinks() {
+		if (this.fragmentEntryLinks[this.fragmentEntryLinkId]) {
+			this._setConfiguration();
 		}
 	}
 
@@ -246,6 +245,17 @@ class FragmentEntryLink extends Component {
 		removeItem(this.store, REMOVE_FRAGMENT_ENTRY_LINK, {
 			fragmentEntryLinkId: this.fragmentEntryLinkId
 		});
+	}
+
+	/**
+	 * Set fragment entry configuration to internal property
+	 * @private
+	 * @review
+	 */
+	_setConfiguration() {
+		this._configuration = this.fragmentEntryLinks[
+			this.fragmentEntryLinkId
+		].configuration;
 	}
 
 	/**

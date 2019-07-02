@@ -19,6 +19,11 @@
 
 	&.navbar-light {
 		border-bottom: 1px solid $light-color;
+
+		.lexicon-icon {
+			font-size: 0.625rem;
+			margin: 0 0 0 0.25rem;
+		}
 	}
 
 	.navbar-blank {

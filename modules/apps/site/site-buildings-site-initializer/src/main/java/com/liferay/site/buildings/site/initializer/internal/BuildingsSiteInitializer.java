@@ -16,11 +16,16 @@ package com.liferay.site.buildings.site.initializer.internal;
 
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 
@@ -74,7 +79,9 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 	@Override
 	public void initialize(long groupId) throws InitializationException {
 		try {
-			_addFragments(groupId);
+			_createServiceContext(groupId);
+
+			_addFragments();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -93,15 +100,33 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 		_bundle = bundleContext.getBundle();
 	}
 
-	private void _addFragments(long groupId) throws Exception {
-		Group group = _groupLocalService.getGroup(groupId);
-
+	private void _addFragments() throws Exception {
 		URL url = _bundle.getEntry("/fragments.zip");
 
 		File file = FileUtil.createTempFile(url.openStream());
 
 		_fragmentsImporter.importFile(
-			group.getCreatorUserId(), groupId, 0, file, false);
+			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(), 0,
+			file, false);
+	}
+
+	private void _createServiceContext(long groupId) throws PortalException {
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		User user = _userLocalService.getUser(PrincipalThreadLocal.getUserId());
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		serviceContext.setLanguageId(LanguageUtil.getLanguageId(locale));
+
+		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setUserId(user.getUserId());
+		serviceContext.setTimeZone(user.getTimeZone());
+
+		_serviceContext = serviceContext;
 	}
 
 	private static final String _NAME = "Buildings";
@@ -114,12 +139,14 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 	@Reference
 	private FragmentsImporter _fragmentsImporter;
 
-	@Reference
-	private GroupLocalService _groupLocalService;
+	private ServiceContext _serviceContext;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.site.buildings.site.initializer)"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

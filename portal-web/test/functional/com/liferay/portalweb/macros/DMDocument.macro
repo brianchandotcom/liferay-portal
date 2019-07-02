@@ -525,6 +525,38 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro checkinManagementBar {
+		var key_dmDocumentTitle = "${dmDocumentTitle}";
+
+		Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+
+		Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+
+		MenuItem.click(menuItem = "Checkin");
+
+		if (IsElementPresent(locator1 = "Radio#MAJOR_VERSION")) {
+			if ("${revision}" == "Major") {
+				Click(locator1 = "Radio#MAJOR_VERSION");
+			}
+			else if ("${revision}" == "Minor") {
+				Click(locator1 = "Radio#MINOR_VERSION");
+			}
+			else if ("${revision}" == "Current") {
+				Click(locator1 = "Radio#CURRENT_VERSION");
+			}
+
+			if (isSet(changeLog)) {
+				Type(
+					locator1 = "TextArea#CHANGE_LOG",
+					value1 = "${changeLog}");
+			}
+
+			Click(locator1 = "Button#SAVE");
+		}
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro checkinPG {
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 

@@ -19,12 +19,28 @@ import Soy from 'metal-soy';
 import './FloatingToolbarFragmentConfigurationPanelDelegateTemplate.soy';
 import './field_types/Select.soy';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
+import {getSelectData} from './field_types/Select.es';
 import templates from './FloatingToolbarFragmentConfigurationPanel.soy';
+
+const GET_DATA_FUNCTIONS = {
+	select: getSelectData
+};
 
 /**
  * FloatingToolbarFragmentConfigurationPanel
  */
 class FloatingToolbarFragmentConfigurationPanel extends Component {
+	/**
+	 * Handles Configuration change
+	 * @private
+	 * @review
+	 */
+	_handleChangeConfiguration(event) {
+		const fieldType = event.delegateTarget.dataset.fieldType;
+
+		const fieldData = GET_DATA_FUNCTIONS[fieldType](event);
+	}
+
 	/**
 	 * Handles Restore button click
 	 * @private

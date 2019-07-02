@@ -21,6 +21,7 @@
 		],
 		fragmentEntryLinkId: string
 	]}
+	{@param? _handleChangeConfiguration: any}
 	{@param? _handleRestoreButtonClick: any}
 	{@param? spritemap: string}
 
@@ -29,6 +30,7 @@
 			{foreach $fieldSet in $item.configuration.fieldSets}
 				{call .fieldSet}
 					{param fieldSet: $fieldSet /}
+					{param handleChangeConfiguration: $_handleChangeConfiguration /}
 				{/call}
 			{/foreach}
 		</div>
@@ -68,12 +70,14 @@
 			]
 		]>
 	]}
+	{@param handleChangeConfiguration: any}
 
 	<p class="mb-3 sheet-subtitle">{$fieldSet.label}</p>
 		{foreach $field in $fieldSet.fields}
 			{delcall com.liferay.layout.content.page.editor.web.field variant="$field.type"}
 				{param field: $field /}
 				{param fieldSetName: $fieldSet.name /}
+				{param handleChangeConfiguration: $handleChangeConfiguration /}
 			{/delcall}
 		{/foreach}
 {/template}
@@ -91,6 +95,7 @@
 		]
 	]}
 	{@param fieldSetName: string}
+	{@param handleChangeConfiguration: any}
 
 	<div id="{$field.name}"></div>
 {/deltemplate}

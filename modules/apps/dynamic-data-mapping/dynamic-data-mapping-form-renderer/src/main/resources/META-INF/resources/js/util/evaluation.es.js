@@ -12,7 +12,7 @@
  * details.
  */
 
-import {convertToSearchParams, makeFetch} from './fetch.es';
+import {convertToFormData, makeFetch} from './fetch.es';
 import {debounce} from 'metal-debounce';
 import {PagesVisitor} from './visitors.es';
 
@@ -27,7 +27,7 @@ const doEvaluate = debounce((fieldName, evaluatorContext, callback) => {
 	} = evaluatorContext;
 
 	makeFetch({
-		body: convertToSearchParams({
+		body: convertToFormData({
 			languageId: editingLanguageId,
 			p_auth: Liferay.authToken,
 			portletNamespace,

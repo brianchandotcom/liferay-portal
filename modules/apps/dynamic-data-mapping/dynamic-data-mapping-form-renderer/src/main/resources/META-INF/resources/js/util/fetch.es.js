@@ -13,8 +13,7 @@
  */
 
 const defaultHeaders = {
-	Accept: 'application/json',
-	'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+	Accept: 'application/json'
 };
 
 export const makeFetch = ({
@@ -44,22 +43,20 @@ export const makeFetch = ({
 		});
 };
 
-export const convertToSearchParams = body => {
-	let searchParams = new URLSearchParams();
-
+export const convertToFormData = body => {
 	if (body instanceof HTMLFormElement) {
-		const formData = new FormData(body);
-
-		formData.forEach((value, key) => searchParams.set(key, value));
+		return new FormData(body);
 	} else if (body instanceof FormData) {
-		body.forEach((value, key) => searchParams.set(key, value));
+		return body;
 	} else if (typeof body === 'object') {
+		const formData = new FormData();
+
 		Object.entries(body).forEach(([key, value]) =>
-			searchParams.append(key, value)
+			formData.append(key, value)
 		);
-	} else {
-		searchParams = body;
+
+		return formData;
 	}
 
-	return searchParams;
+	throw new Error('Unsupported body type.');
 };

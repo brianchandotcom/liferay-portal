@@ -18,7 +18,7 @@ import Component from 'metal-jsx';
 import objectHash from 'object-hash';
 import {Config} from 'metal-state';
 import {
-	convertToSearchParams,
+	convertToFormData,
 	makeFetch
 } from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
 
@@ -159,7 +159,7 @@ class AutoSave extends Component {
 		formData.set(`${namespace}published`, JSON.stringify(this.published));
 		formData.set(`${namespace}saveAsDraft`, saveAsDraft);
 
-		return convertToSearchParams(formData);
+		return convertToFormData(formData);
 	}
 
 	_setInterval(minutes) {

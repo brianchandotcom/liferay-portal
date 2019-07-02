@@ -39,12 +39,11 @@ if (!themeDisplay.isSignedIn() && layout.isPublicLayout()) {
 	}
 
 	for (SEOLink seoLink : SEOLinkManagerUtil.getLocalizedSEOLinks(themeDisplay.getCompanyId(), PortalUtil.getLocale(request), canonicalURL, alternateURLs)) {
-		Optional<String> hrefLangOptional = seoLink.getHrefLang();
 %>
 
 		<c:choose>
-			<c:when test="<%= hrefLangOptional.isPresent() %>">
-				<link data-senna-track="temporary" href="<%= seoLink.getHref() %>" hreflang="<%= hrefLangOptional.get() %>" rel="<%= seoLink.getSeoLinkRel() %>" />
+			<c:when test="<%= Validator.isNotNull(seoLink.getHrefLang()) %>">
+				<link data-senna-track="temporary" href="<%= seoLink.getHref() %>" hreflang="<%= seoLink.getHrefLang() %>" rel="<%= seoLink.getSeoLinkRel() %>" />
 			</c:when>
 			<c:otherwise>
 				<link data-senna-track="temporary" href="<%= seoLink.getHref() %>" rel="<%= seoLink.getSeoLinkRel() %>" />

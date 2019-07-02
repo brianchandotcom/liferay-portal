@@ -25,11 +25,14 @@ import io.kubernetes.client.models.V1Pod;
 import io.kubernetes.client.models.V1PodSpec;
 import io.kubernetes.client.models.V1Volume;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -72,6 +75,19 @@ public class ResourceConfigurationFactory {
 		databaseConfigurationName = databaseConfigurationName.replace(".", "");
 
 		return databaseConfigurationName;
+	}
+
+	private static String _getKubernetesDockerRegistryHostname() {
+		try {
+			Properties buildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
+
+			return buildProperties.getProperty(
+				"kubernetes.docker.registry.hostname");
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get Docker Registry URL");
+		}
 	}
 
 	private static V1Container _newConfigurationContainer(
@@ -193,6 +209,36 @@ public class ResourceConfigurationFactory {
 			dockerBaseImageName, dockerImageName, v1ContainerPorts, v1EnvVars);
 	}
 
+	private static Pod _newOracleConfigurationPod(
+		String dockerBaseImageName, String dockerImageName) {
+
+		List<V1ContainerPort> v1ContainerPorts = new ArrayList<>(
+			Arrays.asList(
+				_newConfigurationContainerPort(dockerBaseImageName, 1521)));
+
+		List<V1EnvVar> v1EnvVars = new ArrayList<>(
+			Arrays.asList(
+				_newConfigurationEnvVar("DB_DOMAIN", ""),
+				_newConfigurationEnvVar("DB_PDB", "oracl")));
+
+		try {
+			Properties buildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
+
+			String oraclePassword = buildProperties.getProperty(
+				"portal.sql.properties[oracle.admin.password]");
+
+			v1EnvVars.add(_newConfigurationEnvVar("DB_PASSWD", oraclePassword));
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to get oracle database password");
+		}
+
+		return _newDatabaseConfigurationPod(
+			dockerBaseImageName, dockerImageName, v1ContainerPorts, v1EnvVars);
+	}
+
 	private static Pod _newPostgreSQLConfigurationPod(
 		String dockerBaseImageName, String dockerImageName) {
 
@@ -226,6 +272,12 @@ public class ResourceConfigurationFactory {
 					"mysql57",
 					ResourceConfigurationFactory._newMySQLConfigurationPod(
 						"mysql57", "mysql:5.7.25"));
+				put(
+					"oracle122",
+					ResourceConfigurationFactory._newOracleConfigurationPod(
+						"oracle122",
+						_getKubernetesDockerRegistryHostname() +
+							"/store/oracle/database-enterprise:12.2.0.1-slim"));
 				put(
 					"postgresql10",
 					ResourceConfigurationFactory._newPostgreSQLConfigurationPod(

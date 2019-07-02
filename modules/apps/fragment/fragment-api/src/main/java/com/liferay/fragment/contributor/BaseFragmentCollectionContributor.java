@@ -199,6 +199,8 @@ public abstract class BaseFragmentCollectionContributor
 			fragmentEntryLink.setCss(fragmentEntry.getCss());
 			fragmentEntryLink.setHtml(fragmentEntry.getHtml());
 			fragmentEntryLink.setJs(fragmentEntry.getJs());
+			fragmentEntryLink.setConfiguration(
+				fragmentEntry.getConfiguration());
 
 			fragmentEntryLinkLocalService.updateFragmentEntryLink(
 				fragmentEntryLink);

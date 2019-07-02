@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
@@ -45,7 +46,9 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 			return content;
 		}
 
-		if (!fileName.matches(".*/portal-impl/src/portal(_.*)?\\.properties")) {
+		if (!absolutePath.matches(
+				".*/portal-impl/src/portal(_.*)?\\.properties")) {
+
 			return content;
 		}
 
@@ -77,34 +80,44 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 		Matcher matcher = _pattern.matcher(content);
 
 		while (matcher.find()) {
-			StringBundler sb = new StringBundler();
+			String variablesContent = matcher.group(4);
 
-			String match = matcher.group(4);
+			Set<String> environmentVariables = _getEnvironmentVariables(
+				variablesContent);
 
-			Set<String> environmentVariables = _getEnvironmentVariables(match);
-
-			for (String environmentVariable : environmentVariables) {
-				sb.append(StringPool.NEW_LINE);
-				sb.append(StringPool.FOUR_SPACES);
-				sb.append("# Env: ");
-				sb.append(environmentVariable);
+			if (environmentVariables.isEmpty()) {
+				continue;
 			}
 
-			if (!environmentVariables.isEmpty()) {
+			String commentBlock = matcher.group(1);
+
+			StringBundler sb = new StringBundler();
+
+			if (Validator.isNull(commentBlock)) {
 				sb.append(StringPool.NEW_LINE);
 				sb.append(StringPool.FOUR_SPACES);
 				sb.append(StringPool.POUND);
+				sb.append(StringPool.NEW_LINE);
 			}
 
-			String blockComment = matcher.group(2);
-
-			if (blockComment == null) {
-				content = StringUtil.replaceFirst(
-					content, match, sb.toString() + match);
+			for (String environmentVariable : environmentVariables) {
+				sb.append(StringPool.FOUR_SPACES);
+				sb.append("# Env: ");
+				sb.append(environmentVariable);
+				sb.append(StringPool.NEW_LINE);
 			}
-			else if (!blockComment.equals(sb.toString())) {
-				content = StringUtil.replaceFirst(
-					content, blockComment, sb.toString());
+
+			sb.append(StringPool.FOUR_SPACES);
+			sb.append(StringPool.POUND);
+			sb.append(StringPool.NEW_LINE);
+
+			String environmentVariablesComment = sb.toString();
+
+			if (!commentBlock.endsWith(environmentVariablesComment)) {
+				return StringUtil.replaceFirst(
+					content, variablesContent,
+					environmentVariablesComment + variablesContent,
+					matcher.start() - 1);
 			}
 		}
 
@@ -123,13 +136,13 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 				trimmedLine = StringUtil.trim(trimmedLine);
 			}
 
-			String[] array = trimmedLine.split("=", 2);
+			int pos = trimmedLine.indexOf(StringPool.EQUAL);
 
-			if (array.length < 1) {
+			if (pos == -1) {
 				continue;
 			}
 
-			environmentVariables.add(_encode(array[0]));
+			environmentVariables.add(_encode(trimmedLine.substring(0, pos)));
 		}
 
 		return environmentVariables;
@@ -159,8 +172,6 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 		};
 
 	private static final Pattern _pattern = Pattern.compile(
-		"    #\\n(    # (?!Env:).*\\n)+    #(\\n(    # Env:.*\\n)+    #)?" +
-			"((\\n    [#\\w][#\\w].*)+)",
-		Pattern.MULTILINE);
+		"\n((    #( .*)?\n)*)((    ( |#?\\w).*\n)+)");
 
 }

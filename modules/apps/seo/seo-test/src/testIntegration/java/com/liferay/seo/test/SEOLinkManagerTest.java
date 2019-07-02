@@ -31,7 +31,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -144,8 +143,7 @@ public class SEOLinkManagerTest {
 		Assert.assertNotNull(seoLink);
 		Assert.assertEquals(alternateURLs.get(locale), seoLink.getHref());
 		Assert.assertEquals(
-			Optional.of(LocaleUtil.toW3cLanguageId(locale)),
-			seoLink.getHrefLang());
+			LocaleUtil.toW3cLanguageId(locale), seoLink.getHrefLang());
 		Assert.assertEquals(
 			seoLink.getSeoLinkRel(), SEOLink.SEOLinkRel.ALTERNATE);
 	}
@@ -167,7 +165,7 @@ public class SEOLinkManagerTest {
 
 		Assert.assertNotNull(canonicalURL);
 		Assert.assertEquals(canonicalURL, seoLink.getHref());
-		Assert.assertEquals(seoLink.getHrefLang(), Optional.empty());
+		Assert.assertNull(seoLink.getHrefLang());
 		Assert.assertEquals(
 			seoLink.getSeoLinkRel(), SEOLink.SEOLinkRel.CANONICAL);
 	}
@@ -180,7 +178,7 @@ public class SEOLinkManagerTest {
 		Assert.assertNotNull(seoLink);
 		Assert.assertEquals(
 			alternateURLs.get(LocaleUtil.getDefault()), seoLink.getHref());
-		Assert.assertEquals(seoLink.getHrefLang(), Optional.of("x-default"));
+		Assert.assertEquals("x-default", seoLink.getHrefLang());
 		Assert.assertEquals(
 			seoLink.getSeoLinkRel(), SEOLink.SEOLinkRel.ALTERNATE);
 	}
@@ -189,13 +187,11 @@ public class SEOLinkManagerTest {
 		Locale locale, List<SEOLink> seoLinks) {
 
 		for (SEOLink seoLink : seoLinks) {
-			Optional<String> hrefLangOptional = seoLink.getHrefLang();
+			String hrefLang = seoLink.getHrefLang();
 
 			if ((seoLink.getSeoLinkRel() == SEOLink.SEOLinkRel.ALTERNATE) &&
-				hrefLangOptional.isPresent() &&
-				Objects.equals(
-					hrefLangOptional.get(),
-					LocaleUtil.toW3cLanguageId(locale))) {
+				(hrefLang != null) &&
+				Objects.equals(hrefLang, LocaleUtil.toW3cLanguageId(locale))) {
 
 				return seoLink;
 			}
@@ -216,11 +212,9 @@ public class SEOLinkManagerTest {
 
 	private SEOLink _getXDefaultAlternateSEOLink(List<SEOLink> seoLinks) {
 		for (SEOLink seoLink : seoLinks) {
-			Optional<String> hrefLang = seoLink.getHrefLang();
+			String hrefLang = seoLink.getHrefLang();
 
-			if (hrefLang.isPresent() &&
-				Objects.equals(hrefLang.get(), "x-default")) {
-
+			if ((hrefLang != null) && Objects.equals(hrefLang, "x-default")) {
 				return seoLink;
 			}
 		}

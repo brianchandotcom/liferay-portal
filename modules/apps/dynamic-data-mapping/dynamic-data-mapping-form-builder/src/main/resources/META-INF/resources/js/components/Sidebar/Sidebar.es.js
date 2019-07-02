@@ -21,7 +21,6 @@ import Component, {Fragment} from 'metal-jsx';
 import dom from 'metal-dom';
 import FieldTypeBox from '../FieldTypeBox/FieldTypeBox.es.js';
 import Form from 'dynamic-data-mapping-form-renderer/js/containers/Form/Form.es';
-import UA from 'metal-useragent';
 import {ClayActionsDropdown, ClayDropdownBase} from 'clay-dropdown';
 import {ClayIcon} from 'clay-icon';
 import {Config} from 'metal-state';
@@ -213,7 +212,7 @@ class Sidebar extends Component {
 
 	refreshDragAndDrop() {
 		this._dragAndDrop.setState({
-			targets: UA.isIE
+			targets: Liferay.Browser.isIe()
 				? this._dragAndDrop.setterTargetsFn_('.ddm-target')
 				: '.ddm-target'
 		});

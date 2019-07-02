@@ -253,11 +253,11 @@ class FragmentEditableBackgroundImage extends Component {
 		this.store.dispatch(
 			updateEditableValueAction(
 				this.fragmentEntryLinkId,
-				this.editableId,
-				this.languageId || DEFAULT_LANGUAGE_ID_KEY,
 				backgroundImageURL,
+				BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 				segmentsExperienceId || defaultSegmentsExperienceId,
-				BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
+				this.editableId,
+				this.languageId || DEFAULT_LANGUAGE_ID_KEY
 			)
 		);
 	}

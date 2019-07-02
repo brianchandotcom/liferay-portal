@@ -18,7 +18,10 @@ import {Config} from 'metal-state';
 import {Modal, PortletBase} from 'frontend-js-web';
 import Soy from 'metal-soy';
 
-import {COMPATIBLE_TYPES} from '../../utils/constants';
+import {
+	COMPATIBLE_TYPES,
+	EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+} from '../../utils/constants';
 import {HIDE_MAPPING_DIALOG} from '../../actions/actions.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {Store} from '../../store/store.es';
@@ -76,9 +79,11 @@ class SelectMappingDialog extends PortletBase {
 			.dispatch(
 				updateEditableValueAction(
 					this.fragmentEntryLinkId,
+					key,
+					EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					'',
 					this.editableId,
-					'mappedField',
-					key
+					'mappedField'
 				)
 			)
 			.dispatch({

@@ -89,11 +89,11 @@ const debouncedUpdateEditableValues = debouncedAlert(
  */
 function updateEditableValueAction(
 	fragmentEntryLinkId,
-	editableId,
-	editableValueId,
 	editableValueContent,
+	processor,
 	segmentsExperienceId = '',
-	processor = EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+	editableId = '',
+	editableValueId = ''
 ) {
 	return updateEditableValuesAction(
 		fragmentEntryLinkId,

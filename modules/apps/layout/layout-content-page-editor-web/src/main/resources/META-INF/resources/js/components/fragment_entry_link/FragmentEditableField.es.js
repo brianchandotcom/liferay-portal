@@ -32,6 +32,7 @@ import {
 import {
 	DEFAULT_LANGUAGE_ID_KEY,
 	EDITABLE_FIELD_CONFIG_KEYS,
+	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 	FLOATING_TOOLBAR_BUTTONS,
 	FRAGMENTS_EDITOR_ITEM_TYPES
 } from '../../utils/constants';
@@ -442,10 +443,11 @@ class FragmentEditableField extends PortletBase {
 		this.store.dispatch(
 			updateEditableValueAction(
 				this.fragmentEntryLinkId,
-				this.editableId,
-				this.languageId || DEFAULT_LANGUAGE_ID_KEY,
 				newValue,
-				editableValueSegmentsExperienceId
+				EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				editableValueSegmentsExperienceId,
+				this.editableId,
+				this.languageId || DEFAULT_LANGUAGE_ID_KEY
 			)
 		);
 	}

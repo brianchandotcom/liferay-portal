@@ -56,10 +56,10 @@ public class SEOLinkManagerImpl implements SEOLinkManager {
 				null, SEOLink.SEOLinkRel.CANONICAL));
 
 		alternateURLs.forEach(
-			(locale1, url) -> seoLinks.add(
+			(urlLocale, url) -> seoLinks.add(
 				new SEOLinkImpl(
 					_html.escapeAttribute(url),
-					LocaleUtil.toW3cLanguageId(locale1),
+					LocaleUtil.toW3cLanguageId(urlLocale),
 					SEOLink.SEOLinkRel.ALTERNATE)));
 
 		String defaultLocaleURL = alternateURLs.get(LocaleUtil.getDefault());

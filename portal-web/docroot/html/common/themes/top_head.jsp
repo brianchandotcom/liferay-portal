@@ -30,9 +30,9 @@ if (!themeDisplay.isSignedIn() && layout.isPublicLayout()) {
 
 	String canonicalURL = PortalUtil.getCanonicalURL(completeURL, themeDisplay, layout, false, false);
 
-	Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
-
 	Map<Locale, String> alternateURLs = Collections.emptyMap();
+
+	Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
 	if (availableLocales.size() > 1) {
 		alternateURLs = PortalUtil.getAlternateURLs(canonicalURL, themeDisplay, layout);

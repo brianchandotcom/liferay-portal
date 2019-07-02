@@ -286,10 +286,10 @@ public class ProjectTemplatesArgs {
 	private String _framework;
 
 	@Parameter(
-		description = "Choose the way that the framework dependencies will be configured: (embedded|provided).",
+		description = "The way that the framework dependencies will be configured.",
 		names = "--framework-dependencies"
 	)
-	private String _frameworkDependencies;
+	private String _frameworkDependencies = "embedded";
 
 	@Parameter(
 		arity = 1,

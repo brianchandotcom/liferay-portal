@@ -62,6 +62,7 @@ public class ProjectTemplatesSpringPortletMVCTest
 	public static Iterable<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
+				{"springportletmvc", "provided", "jsp", "7.0"},
 				{"springportletmvc", "embedded", "jsp", "7.0"},
 				{"springportletmvc", "embedded", "jsp", "7.1"},
 				{"springportletmvc", "embedded", "jsp", "7.2"},

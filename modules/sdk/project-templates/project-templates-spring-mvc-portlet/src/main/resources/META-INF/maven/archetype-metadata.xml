@@ -48,7 +48,8 @@
 			<validationRegex>(springportletmvc)|(portletmvc4spring)</validationRegex>
 		</requiredProperty>
 		<requiredProperty key="frameworkDependencies">
-			<validationRegex>(embedded)|(provided)</validationRegex>
+			<defaultValue>embedded</defaultValue>
+			<validationRegex>(embedded)</validationRegex>
 		</requiredProperty>
 		<requiredProperty key="liferayVersion">
 		</requiredProperty>

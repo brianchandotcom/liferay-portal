@@ -115,6 +115,8 @@ class TranslationManager extends Component {
 		this.refs.deleteModal.events = {
 			clickButton: ({target}) => {
 				if (target.classList.contains('btn-primary')) {
+					this.refs.deleteModal.emit('hide');
+
 					this.availableLocales = availableLocales.filter(
 						({id}) => id !== localeId
 					);

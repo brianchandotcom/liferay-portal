@@ -1,0 +1,71 @@
+diff --git a/aQute/bnd/classfile/ConstantPool.java b/aQute/bnd/classfile/ConstantPool.java
+index c624c25e36ba..2417a514adf7 100644
+--- a/aQute/bnd/classfile/ConstantPool.java
++++ b/aQute/bnd/classfile/ConstantPool.java
+@@ -178,8 +178,7 @@ public class ConstantPool {
+ 	}
+ 
+ 	static String parseUtf8Info(DataInput in) throws IOException {
+-		String constant = in.readUTF();
+-		return constant.intern();
++		return in.readUTF();
+ 	}
+ 
+ 	static Integer parseIntegerInfo(DataInput in) throws IOException {
+@@ -520,3 +519,4 @@ public class ConstantPool {
+ 		return new PackageInfo(name_index);
+ 	}
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/aQute/bnd/osgi/Analyzer.java b/aQute/bnd/osgi/Analyzer.java
+index 36f4ffc09a6b..3d0ce253cdaf 100644
+--- a/aQute/bnd/osgi/Analyzer.java
++++ b/aQute/bnd/osgi/Analyzer.java
+@@ -2524,6 +2524,12 @@ public class Analyzer extends Processor {
+ 				.stream()
+ 				.noneMatch(dot::hasDirectory);
+ 
++			Map<File, Jar> classpathJars = new HashMap<>();
++
++			for (Jar jar : classpath) {
++				classpathJars.put(jar.getSource(), jar);
++			}
++
+ 			for (String path : bcp.keySet()) {
+ 				if (path.equals(".")) {
+ 					analyzeJar(dot, "", okToIncludeDirs, null);
+@@ -2538,11 +2544,23 @@ public class Analyzer extends Processor {
+ 				Resource resource = dot.getResource(path);
+ 				if (resource != null) {
+ 					try {
+-						Jar jar = Jar.fromResource(path, resource);
+-						// Don't want to close Jar from JarResource
+-						if (!(resource instanceof JarResource)) {
+-							addClose(jar);
++						Jar jar = null;
++
++						if (resource instanceof FileResource) {
++							FileResource fileResource = (FileResource)resource;
++
++							jar = classpathJars.get(fileResource.getFile());
+ 						}
++
++						if (jar == null) {
++							jar = Jar.fromResource(path, resource);
++
++							// Don't want to close Jar from JarResource
++							if (!(resource instanceof JarResource)) {
++								addClose(jar);
++							}
++						}
++
+ 						analyzeJar(jar, "", true, path);
+ 					} catch (Exception e) {
+ 						warning("Invalid bundle classpath entry: %s: %s", path, e);
+@@ -3717,3 +3735,4 @@ public class Analyzer extends Processor {
+ 	}
+ 
+ }
++/* @generated */
+\ No newline at end of file

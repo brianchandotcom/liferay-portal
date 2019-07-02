@@ -31,7 +31,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -144,7 +143,7 @@ public class SEOLinkManagerTest {
 		Assert.assertNotNull(seoLink);
 		Assert.assertEquals(alternateURLs.get(locale), seoLink.getHref());
 		Assert.assertEquals(
-			Optional.of(LocaleUtil.toW3cLanguageId(locale)),
+			LocaleUtil.toW3cLanguageId(locale),
 			seoLink.getHrefLang());
 		Assert.assertEquals(
 			seoLink.getRelationship(), SEOLink.Relationship.ALTERNATE);
@@ -167,7 +166,7 @@ public class SEOLinkManagerTest {
 
 		Assert.assertNotNull(canonicalURL);
 		Assert.assertEquals(canonicalURL, seoLink.getHref());
-		Assert.assertEquals(seoLink.getHrefLang(), Optional.empty());
+		Assert.assertEquals(seoLink.getHrefLang(), null);
 		Assert.assertEquals(
 			seoLink.getRelationship(), SEOLink.Relationship.CANONICAL);
 	}
@@ -180,7 +179,7 @@ public class SEOLinkManagerTest {
 		Assert.assertNotNull(seoLink);
 		Assert.assertEquals(
 			alternateURLs.get(LocaleUtil.getDefault()), seoLink.getHref());
-		Assert.assertEquals(seoLink.getHrefLang(), Optional.of("x-default"));
+		Assert.assertEquals(seoLink.getHrefLang(), "x-default");
 		Assert.assertEquals(
 			seoLink.getRelationship(), SEOLink.Relationship.ALTERNATE);
 	}

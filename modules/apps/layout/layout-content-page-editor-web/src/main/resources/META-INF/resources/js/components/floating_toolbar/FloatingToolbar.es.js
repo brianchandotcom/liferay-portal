@@ -25,6 +25,9 @@ import templates from './FloatingToolbar.soy';
  */
 const FIXED_PANEL_CLASS = 'fragments-editor__floating-toolbar-panel--fixed';
 
+const PRODUCT_MENU_HEIGHT = 56;
+const MANAGEMENT_BAR_HEIGHT = 64;
+
 /**
  * @type {object}
  */
@@ -126,6 +129,8 @@ class FloatingToolbar extends Component {
 		this._handleWindowResize = this._handleWindowResize.bind(this);
 		this._handleWrapperScroll = this._handleWrapperScroll.bind(this);
 
+		this._lastSelectedPanelId = this.selectedPanelId;
+
 		window.addEventListener('resize', this._handleWindowResize);
 
 		const wrapper = document.querySelector(
@@ -192,6 +197,22 @@ class FloatingToolbar extends Component {
 				this.selectedPanelId = null;
 			} else {
 				this.selectedPanelId = panelId;
+				this._lastSelectedPanelId = panelId;
+			}
+		}
+	}
+	/**
+	 * Controls the visibility of the panel.
+	 * The panel will be shown only when the anchor element is visible
+	 * @private
+	 * @review
+	 */
+	_handlePanelVisibilityOnScroll() {
+		if (!this._isAnchorElementVisible()) {
+			this.selectedPanelId = null;
+		} else {
+			if (this._lastSelectedPanelId && !this.selectedPanelId) {
+				this.selectedPanelId = this._lastSelectedPanelId;
 			}
 		}
 	}
@@ -223,6 +244,27 @@ class FloatingToolbar extends Component {
 	 */
 	_handleWrapperScroll() {
 		this._align();
+		this._handlePanelVisibilityOnScroll();
+	}
+
+	/**
+	 * Check whether the anchor element is visible or not
+	 * @private
+	 * @review
+	 */
+	_isAnchorElementVisible() {
+		if (this.anchorElement) {
+			const anchorElementRect = this.anchorElement.getBoundingClientRect();
+			const anchorElementBottom =
+				anchorElementRect.y + anchorElementRect.height;
+
+			return (
+				anchorElementBottom >
+				PRODUCT_MENU_HEIGHT + MANAGEMENT_BAR_HEIGHT
+			);
+		} else {
+			return false;
+		}
 	}
 
 	/**

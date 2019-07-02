@@ -254,7 +254,9 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 			String description = previousBuildJSONObject.optString(
 				"description", "");
 
-			if (!description.contains("IN PROGRESS")) {
+			if (!description.contains("IN PROGRESS") ||
+				!description.contains("IN QUEUE")) {
+
 				continue;
 			}
 

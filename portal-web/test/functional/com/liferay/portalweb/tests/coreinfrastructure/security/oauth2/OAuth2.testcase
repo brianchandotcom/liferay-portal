@@ -466,7 +466,7 @@ definition {
 			value1 = "test@liferay.com");
 	}
 
-	test ConfigureScopeMappings {
+	test UpdateScopeMappings {
 		property liferay.dependency.jars = "com.liferay.oauth2.provider.scope.sample.qa.jar";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration-liferay-oauth2-scope-sample-qa-app.config";
 		property osgi.module.configurations = "mapping=[&quot;example-scope-1,example-scope-2\=everything.read,everything.write&quot;]${line.separator}osgi.jaxrs.name=&quot;liferay-oauth2-scope-sample-qa-app&quot;${line.separator}passthrough=&quot;false&quot;";
@@ -504,7 +504,7 @@ definition {
 			scopeNameList = "everything,everything.read,everything.write");
 	}
 
-	test ConfigureScopePrefixes {
+	test UpdateScopeBundlePrefixes {
 		property liferay.dependency.jars = "com.liferay.oauth2.provider.scope.sample.qa.jar";
 
 		ProductMenu.gotoPortlet(

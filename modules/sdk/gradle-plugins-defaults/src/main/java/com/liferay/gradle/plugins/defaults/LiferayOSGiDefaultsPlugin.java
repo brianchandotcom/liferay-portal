@@ -2848,8 +2848,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		sourceSet.setRuntimeClasspath(
 			FileUtil.join(
-				portalTestSnapshotConfiguration, portalConfiguration,
-				compileClasspathConfiguration, sourceSet.getRuntimeClasspath(),
+				portalTestSnapshotConfiguration, compileClasspathConfiguration,
+				portalConfiguration, sourceSet.getRuntimeClasspath(),
 				portalTestConfiguration));
 	}
 

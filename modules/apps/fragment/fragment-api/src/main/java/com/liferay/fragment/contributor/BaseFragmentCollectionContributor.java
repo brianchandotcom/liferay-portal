@@ -154,6 +154,8 @@ public abstract class BaseFragmentCollectionContributor
 		String css = _getFileContent(path, jsonObject.getString("cssPath"));
 		String html = _getFileContent(path, jsonObject.getString("htmlPath"));
 		String js = _getFileContent(path, jsonObject.getString("jsPath"));
+		String configuration = _getFileContent(
+			path, jsonObject.getString("configurationPath"));
 
 		String thumbnailURL = _getImagePreviewURL(
 			jsonObject.getString("thumbnail"));
@@ -168,6 +170,7 @@ public abstract class BaseFragmentCollectionContributor
 		fragmentEntry.setCss(css);
 		fragmentEntry.setHtml(html);
 		fragmentEntry.setJs(js);
+		fragmentEntry.setConfiguration(configuration);
 		fragmentEntry.setType(type);
 		fragmentEntry.setImagePreviewURL(thumbnailURL);
 

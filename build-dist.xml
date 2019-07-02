@@ -662,7 +662,6 @@ release was successful.</echo>
 		<echo file="tools/servers/tomcat/bin/setenv.bat">set "CATALINA_OPTS=%CATALINA_OPTS% ${app.server.tomcat.jvm.args} ${app.server.tomcat.jvm.mem}"</echo>
 	</target>
 
-
 	<target name="prepare-generated-files">
 		<antcall target="clean" />
 		<antcall target="start" />

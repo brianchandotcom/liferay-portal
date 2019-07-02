@@ -549,9 +549,9 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a page to the site") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			SitePages.addPublicPage(pageName = "Test Page Name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Namee");
 		}
 
 		task ("Add a navigation menu") {

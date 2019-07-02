@@ -750,20 +750,23 @@ definition {
 		}
 
 		task ("Add a widget page to the site") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			SitePages.addPublicPage(pageName = "Site Page Name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Site Page Name");
 		}
 
 		task ("Add an Asset Publisher Widget to the widget page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Site Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("View the web content article through the Asset Publisher widget") {
 			Navigator.gotoSitePage(
 				pageName = "Site Page Name",
 				siteName = "Test Site Name");
 
-			Portlet.addPG(portletName = "Asset Publisher");
-		}
-
-		task ("View the web content article through the Asset Publisher widget") {
 			AssertTextEquals(
 				key_assetTitle = "Webcontent Title",
 				locator1 = "AP#ASSET_ABSTRACT_TITLE",
@@ -936,20 +939,23 @@ definition {
 		}
 
 		task ("Add a widget page to the site") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			SitePages.addPublicPage(pageName = "Site Page Name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Site Page Name");
 		}
 
 		task ("Add an Asset Publisher Widget to the page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Site Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("View the web content article through the Asset Publisher widget") {
 			Navigator.gotoSitePage(
 				pageName = "Site Page Name",
 				siteName = "Test Site Name");
 
-			Portlet.addPG(portletName = "Asset Publisher");
-		}
-
-		task ("View the web content article through the Asset Publisher widget") {
 			AssertTextEquals(
 				key_assetTitle = "Webcontent Title",
 				locator1 = "AP#ASSET_ABSTRACT_TITLE",

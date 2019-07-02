@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.seo.SEO;
 import com.liferay.portal.kernel.seo.SEOLink;
+import com.liferay.portal.kernel.seo.SEOLinkManager;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.seo.internal.configuration.SEOCompanyConfiguration;
@@ -36,9 +37,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Cristina González
  */
-@Component(service = SEO.class)
+@Component(service = SEOLinkManager.class)
 @ProviderType
-public class SEOImpl implements SEO {
+public class SEOLinkManagerImpl implements SEOLinkManager {
 
 	@Override
 	public List<SEOLink> getLocalizedSEOLinks(

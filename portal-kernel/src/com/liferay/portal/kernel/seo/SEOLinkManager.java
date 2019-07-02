@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * @author Cristina González
  */
-public interface SEO {
+public interface SEOLinkManager {
 
 	public List<SEOLink> getLocalizedSEOLinks(
 			long companyId, Locale locale, String canonicalURL,

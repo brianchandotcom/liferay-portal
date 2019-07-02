@@ -1685,11 +1685,11 @@ definition {
 			configurationScope = "Site Scope");
 
 		FormFields.viewSelectOption(
-			fieldName = "DisplayView",
+			fieldName = "Default Display View",
 			selectOption = "List");
 
 		FormFields.selectSelectOption(
-			fieldName = "DisplayView",
+			fieldName = "Default Display View",
 			selectOption = "Table");
 
 		SystemSettings.saveConfiguration();

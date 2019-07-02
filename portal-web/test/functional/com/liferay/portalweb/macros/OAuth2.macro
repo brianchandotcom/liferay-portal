@@ -515,6 +515,59 @@ definition {
 		}
 	}
 
+	macro viewScopeAliases {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${applicationName}");
+
+		Navigator.gotoNavItem(navItem = "Scopes");
+
+		for (var resourcePanel : list "${resourcePanels}") {
+			OAuth2.expandResourcePanel(resourcePanel = "${resourcePanel}");
+		}
+
+		for (var scopeAlias : list "${scopeAliasList}") {
+			AssertElementPresent(
+				key_scopeAlias = "${scopeAlias}",
+				locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_ALIAS");
+		}
+	}
+
+	macro viewScopeMappings {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${applicationName}");
+
+		Navigator.gotoNavItem(navItem = "Scopes");
+
+		for (var resourcePanel : list "${resourcePanels}") {
+			OAuth2.expandResourcePanel(resourcePanel = "${resourcePanel}");
+		}
+
+		if (isSet(scopeTranslation)) {
+			AssertTextEquals(
+				key_resourcePanel = "${resourcePanel}",
+				locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_TRANSLATION",
+				value1 = "${scopeTranslation}");
+		}
+
+		if (isSet(globalScopeLinkValue)) {
+			if (contains("${scopeTranslation}", "+")) {
+				var partialScopeTranslation = StringUtil.extractFirst("${scopeTranslation}", "+");
+				partialScopeTranslation = StringUtil.trim("${partialScopeTranslation}");
+
+				key_scopeText = "${partialScopeTranslation}";
+			}
+			else {
+				key_scopeText = "${scopeTranslation}";
+			}
+
+			AssertTextEquals(
+				locator1 = "OAuth2#ADMIN_MODAL_GLOBAL_SCOPE_LINK",
+				value1 = "${globalScopeLinkValue}");
+		}
+	}
+
 	macro viewScopes {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
@@ -599,51 +652,6 @@ definition {
 		}
 
 		Navigator.gotoBack();
-	}
-
-	macro viewScopesMappings {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "${applicationName}");
-
-		Navigator.gotoNavItem(navItem = "Scopes");
-
-		if (IsElementPresent(locator1 = "NavUnderline#ACTIVE_NAV_UNDERLINE_LINK", key_navUnderline = "Global scopes")) {
-			Navigator.gotoNavUnderline(navUnderline = "Resource scopes");
-		}
-
-		for (var resourcePanel : list "${resourcePanels}") {
-			OAuth2.expandResourcePanel(resourcePanel = "${resourcePanel}");
-		}
-
-		for (var scopeAlias : list "${scopeAliasList}") {
-			AssertElementPresent(
-				key_scopeAlias = "${scopeAlias}",
-				locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_ALIAS");
-		}
-
-		if (isSet(scopeTranslation)) {
-			AssertTextEquals(
-				key_resourcePanel = "${resourcePanel}",
-				locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_TRANSLATION",
-				value1 = "${scopeTranslation}");
-		}
-
-		if (isSet(globalScopeLinkValue)) {
-			if (contains("${scopeTranslation}", "+")) {
-				var partialScopeTranslation = StringUtil.extractFirst("${scopeTranslation}", "+");
-				partialScopeTranslation = StringUtil.trim("${partialScopeTranslation}");
-
-				key_scopeText = "${partialScopeTranslation}";
-			}
-			else {
-				key_scopeText = "${scopeTranslation}";
-			}
-
-			AssertTextEquals(
-				locator1 = "OAuth2#ADMIN_MODAL_GLOBAL_SCOPE_LINK",
-				value1 = "${globalScopeLinkValue}");
-		}
 	}
 
 }

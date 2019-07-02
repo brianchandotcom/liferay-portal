@@ -210,6 +210,12 @@ export const FRAGMENTS_EDITOR_ROW_TYPES = {
 };
 
 /**
+ * @type {string}
+ */
+export const FREEMARKER_FRAGMENT_ENTRY_PROCESSOR =
+	'com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor';
+
+/**
  * Available attributes for target config key
  */
 export const TARGET_TYPES = [

@@ -24,19 +24,20 @@ import java.util.Map;
 /**
  * @author Cristina González
  */
-public class SEOUtil {
+public class SEOLinkManagerUtil {
 
 	public static List<SEOLink> getLocalizedSEOLinks(
 			long companyId, Locale locale, String canonicalURL,
 			Map<Locale, String> alternateURLs)
 		throws PortalException {
 
-		return _seo.getLocalizedSEOLinks(
+		return _seoLinkManager.getLocalizedSEOLinks(
 			companyId, locale, canonicalURL, alternateURLs);
 	}
 
-	private static volatile SEO _seo =
+	private static volatile SEOLinkManager _seoLinkManager =
 		ServiceProxyFactory.newServiceTrackedInstance(
-			SEO.class, SEOUtil.class, "_seo", false);
+			SEOLinkManager.class, SEOLinkManagerUtil.class, "_seoLinkManager",
+			false);
 
 }

@@ -9214,7 +9214,12 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 							<equals arg1="${testray.main.component.name}" arg2="Rolling Restart" />
 							<then>
 								<if>
-									<matches pattern="https?://" string="${test.build.fix.pack.zip.url.previous}" />
+									<and>
+										<matches pattern="https?://" string="${test.build.fix.pack.zip.url.previous}" />
+										<not>
+											<matches pattern="dxp-0-" string="${test.build.fix.pack.zip.url.previous}" />
+										</not>
+									</and>
 									<then>
 										<antcall target="install-patches">
 											<param name="patch.file.zip.url" value="${test.build.fix.pack.zip.url.previous}" />

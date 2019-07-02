@@ -59,3 +59,36 @@
 		}
 	}
 }
+
+.taglib-item-selector {
+	.input-file {
+		$focus-box-shadow: 0 0 0 2px #fff, 0 0 0 4px #80acff !default;
+
+		width: 0.1px;
+		height: 0.1px;
+		opacity: 0;
+		overflow: hidden;
+		position: absolute;
+		z-index: -1;
+
+		& + label {
+			position: relative;
+
+			&::before {
+				border-radius: 4px;
+				bottom: -2px;
+				content: '';
+				display: block;
+				left: -2px;
+				position: absolute;
+				right: -2px;
+				top: -2px;
+				transition: box-shadow 0.15s ease-in-out;
+			}
+		}
+
+		&:focus + label::before {
+			box-shadow: $focus-box-shadow;
+		}
+	}
+}

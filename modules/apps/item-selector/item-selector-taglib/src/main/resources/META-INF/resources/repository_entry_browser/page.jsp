@@ -70,7 +70,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 	viewTypeItems="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getViewTypes() %>"
 />
 
-<div class="container-fluid container-fluid-max-xl lfr-item-viewer" id="<%= randomNamespace %>ItemSelectorContainer">
+<div class="container-fluid container-fluid-max-xl lfr-item-viewer taglib-item-selector" id="<%= randomNamespace %>ItemSelectorContainer">
 	<c:if test="<%= showSearchInfo %>">
 		<liferay-util:include page="/repository_entry_browser/search_info.jsp" servletContext="<%= application %>" />
 	</c:if>
@@ -97,9 +97,9 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 		<liferay-util:buffer
 			var="selectFileHTML"
 		>
-			<label class="btn btn-default" for="<%= randomNamespace %>InputFile"><liferay-ui:message key="select-file" /></label>
+			<input accept="<%= ListUtil.isEmpty(extensions) ? "*" : StringUtil.merge(extensions) %>" class="input-file" id="<%= randomNamespace %>InputFile" type="file" />
 
-			<input accept="<%= ListUtil.isEmpty(extensions) ? "*" : StringUtil.merge(extensions) %>" class="hide" id="<%= randomNamespace %>InputFile" type="file" />
+			<label class="btn btn-default" for="<%= randomNamespace %>InputFile"><liferay-ui:message key="select-file" /></label>
 		</liferay-util:buffer>
 
 		<div class="drop-enabled drop-zone no-border">

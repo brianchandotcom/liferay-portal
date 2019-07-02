@@ -90,7 +90,7 @@ definition {
 			copySitePagesVariationName = "Main Variation",
 			sitePagesVariationName = "Test Site Pages Variation");
 
-		Navigator.openSpecificSitePagesAdmin(siteName = "Site Name");
+		ProductMenu.gotoSite(site = "Site Name");
 
 		Navigator.gotoStagedView();
 
@@ -755,7 +755,7 @@ definition {
 	test StagingSiteVariationIncompletePage {
 		Staging.addSitePagesVariationPG(sitePagesVariationName = "Site Pages Variation Name");
 
-		Navigator.openSpecificSitePagesAdmin(siteName = "Site Name");
+		ProductMenu.gotoSite(site = "Site Name");
 
 		Navigator.gotoStagedView();
 

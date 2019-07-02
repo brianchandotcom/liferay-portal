@@ -250,7 +250,7 @@ definition {
 			privacy = "Public Pages",
 			sitePageType = "Widget Page");
 
-		Navigator.openSpecificSitePagesAdmin(siteName = "Community Site Name");
+		ProductMenu.gotoSite(site = "Community Site Name");
 
 		Navigator.gotoStagedView();
 
@@ -854,7 +854,7 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Page Revision");
 
-		Navigator.openSpecificSitePagesAdmin(siteName = "Community Site Name");
+		ProductMenu.gotoSite(site = "Community Site Name");
 
 		Navigator.gotoStagedView();
 
@@ -1229,9 +1229,9 @@ definition {
 
 		SitePages.deletePage(pageName = "Wiki");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Home",
-			siteName = "Community Site Name");
+		ProductMenu.gotoSite(site = "Community Site Name");
+
+		Navigator.gotoStagedView();
 
 		Staging.gotoPublishToLive();
 

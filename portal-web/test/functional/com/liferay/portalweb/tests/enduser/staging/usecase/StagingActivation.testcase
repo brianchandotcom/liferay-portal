@@ -12,7 +12,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Navigator.openSpecificSitePagesAdmin(siteName = "Site Name");
+		ProductMenu.gotoSite(site = "Site Name");
 	}
 
 	tearDown {

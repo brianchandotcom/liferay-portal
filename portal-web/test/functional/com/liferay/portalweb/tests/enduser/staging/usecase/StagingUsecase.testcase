@@ -12,7 +12,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Navigator.openSpecificSitePagesAdmin(siteName = "Site Name");
+		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -179,7 +179,7 @@ definition {
 
 	@priority = "5"
 	test ContentCannotBeCreatedOnLive {
-		Navigator.openSpecificSitePagesAdmin(siteName = "Site Name");
+		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
@@ -218,9 +218,9 @@ definition {
 	test DeleteLivePage {
 		property portal.acceptance = "true";
 
-		Navigator.openSpecificSitePagesAdmin(siteName = "Site Name");
+		ProductMenu.gotoSite(site = "Site Name");
 
-		ProductMenu.gotoStagingSite();
+		Navigator.gotoStagedView();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -266,7 +266,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.openSpecificSitePagesAdmin(siteName = "Site Name");
+		ProductMenu.gotoSite(site = "Site Name");
 
 		Navigator.gotoStagedView();
 
@@ -310,7 +310,7 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		Navigator.openSpecificSitePagesAdmin(siteName = "Site Name");
+		ProductMenu.gotoSite(site = "Site Name");
 
 		Navigator.gotoStagedView();
 
@@ -335,7 +335,7 @@ definition {
 
 		BlogsEntry.viewNoCP(entryTitle = "Blogs Entry Title");
 
-		Navigator.openSpecificSitePagesAdmin(siteName = "Site Name");
+		ProductMenu.gotoSite(site = "Site Name");
 
 		Navigator.gotoStagedView();
 
@@ -612,9 +612,9 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		Navigator.openSpecificSitePagesAdmin(siteName = "Site Name");
+		ProductMenu.gotoSite(site = "Site Name");
 
-		ProductMenu.gotoStagingSite();
+		Navigator.gotoStagedView();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -668,7 +668,7 @@ definition {
 
 	@priority = "3"
 	test PublishWebContentFriendlyURLEncoding {
-		Navigator.openSpecificSitePagesAdmin(siteName = "Site Name");
+		ProductMenu.gotoSite(site = "Site Name");
 
 		Navigator.gotoStagedView();
 
@@ -748,7 +748,7 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		Navigator.openSpecificSitePagesAdmin(siteName = "Site Name");
+		ProductMenu.gotoSite(site = "Site Name");
 
 		Navigator.gotoStagedView();
 
@@ -917,7 +917,7 @@ definition {
 
 	@priority = "4"
 	test StagingPublishOnlySelectedPage {
-		Navigator.openSpecificSitePagesAdmin(siteName = "Site Name");
+		ProductMenu.gotoSite(site = "Site Name");
 
 		Navigator.gotoStagedView();
 
@@ -932,7 +932,7 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Page 3");
 
-		Navigator.openSpecificSitePagesAdmin(siteName = "Site Name");
+		ProductMenu.gotoSite(site = "Site Name");
 
 		Navigator.gotoStagedView();
 

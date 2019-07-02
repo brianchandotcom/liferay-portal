@@ -77,7 +77,7 @@ definition {
 
 		Organization.addSiteCP(orgName = "Staging Organization Name");
 
-		Navigator.openSpecificSitePagesAdmin(siteName = "Staging Organization Name");
+		ProductMenu.gotoSite(site = "Staging Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

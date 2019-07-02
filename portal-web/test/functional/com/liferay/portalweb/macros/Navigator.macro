@@ -259,19 +259,6 @@ definition {
 		Open(locator1 = "${baseURL}/web/${siteNameURL}");
 	}
 
-	macro openSpecificSitePagesAdmin {
-		var siteNameURL = StringUtil.replace("${siteName}", " ", "-");
-		var siteNameURL = StringUtil.lowerCase("${siteNameURL}");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteNameURL}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet");
-
-		ProductMenuHelper.expandPanel(panel = "Site Administration");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
-			value1 = "${siteName}");
-	}
-
 	macro openSpecificURL {
 		Open(locator1 = "${url}");
 	}

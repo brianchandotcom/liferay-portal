@@ -652,7 +652,7 @@ definition {
 			groupName = "Site Name",
 			title = "Web Content Title");
 
-		Navigator.openSpecificSitePagesAdmin(siteName = "Site Name");
+		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -667,7 +667,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Navigator.openSpecificSitePagesAdmin(siteName = "Site Name");
+		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
@@ -871,7 +871,7 @@ definition {
 			sitePagesVariationMenulistName = "Test Site Pages Variation",
 			sitePagesVariationName = "Main Variation");
 
-		Navigator.openSpecificSitePagesAdmin(siteName = "Site Name");
+		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

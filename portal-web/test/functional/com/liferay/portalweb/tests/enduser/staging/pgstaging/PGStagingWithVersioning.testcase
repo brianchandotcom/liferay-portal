@@ -101,7 +101,7 @@ definition {
 
 	@priority = "5"
 	test AddPageWithPageVersioningEnabled {
-		Navigator.openSpecificSitePagesAdmin(siteName = "Site Name");
+		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoStagingSite();
 
@@ -120,7 +120,7 @@ definition {
 
 		Staging.markAsReadyForPublication();
 
-		Navigator.openSpecificSitePagesAdmin(siteName = "Site Name");
+		ProductMenu.gotoSite(site = "Site Name");
 
 		Navigator.gotoStagedView();
 

@@ -605,6 +605,7 @@ definition {
 		OAuth2.addPrefixHandlerInSystemSettings(
 			excludedScopesName = "example-scope-1",
 			osgiJaxrsName = "liferay-oauth2-scope-sample-qa-app",
+			separator = "_",
 			serviceProperties = "osgi.jaxrs.application.base");
 
 		ProductMenu.gotoPortlet(
@@ -615,7 +616,7 @@ definition {
 		OAuth2.viewScopeAliases(
 			applicationName = "OAuth Application",
 			resourcePanels = "Portal Services,Sample QA app",
-			scopeAliasList = "everything,example-scope-1,com.liferay.oauth2.provider.scope.sample.qa//sample-qa-app/example-scope-2");
+			scopeAliasList = "everything,example-scope-1,com.liferay.oauth2.provider.scope.sample.qa_/sample-qa-app_example-scope-2");
 	}
 
 	test UpdateScopeMappings {

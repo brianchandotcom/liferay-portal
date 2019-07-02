@@ -46,6 +46,10 @@ definition {
 			fieldName = "service.properties",
 			fieldValue = "${serviceProperties}");
 
+		FormFields.editTextMultiline(
+			fieldName = "separator",
+			fieldValue = "${separator}");
+
 		PortletEntry.save();
 	}
 

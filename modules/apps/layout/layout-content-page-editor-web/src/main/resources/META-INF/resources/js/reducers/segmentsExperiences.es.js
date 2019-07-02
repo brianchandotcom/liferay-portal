@@ -33,6 +33,7 @@ import {
 	getEmptyLayoutData
 } from '../utils/LayoutDataList.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../utils/constants';
+import {getFragmentEntryLinkContent} from './fragments.es';
 import {prefixSegmentsExperienceId} from '../utils/prefixSegmentsExperienceId.es';
 
 const CREATE_SEGMENTS_EXPERIENCE_URL =
@@ -211,6 +212,37 @@ function _removeLayoutDataItem(state, segmentsExperienceId) {
 }
 
 /**
+ *
+ * @param {object} state
+ * @param {string} segmentsExperienceId
+ * @returns {object}
+ */
+function _updateFragmentEntryLinks(state, segmentsExperienceId) {
+	const fragmentEntryLinkIds = Object.keys(state.fragmentEntryLinks);
+
+	const promises = fragmentEntryLinkIds.map(fragmentEntryLinkId => {
+		let fragmentEntryLink = state.fragmentEntryLinks[fragmentEntryLinkId];
+
+		return getFragmentEntryLinkContent(
+			state.renderFragmentEntryURL,
+			fragmentEntryLink,
+			state.portletNamespace,
+			segmentsExperienceId
+		).then(response => {
+			fragmentEntryLink = response;
+
+			state = setIn(
+				state,
+				['fragmentEntryLinks', fragmentEntryLinkId],
+				fragmentEntryLink
+			);
+		});
+	});
+
+	return Promise.all(promises).then(() => state);
+}
+
+/**
  * @param {object} state
  * @param {string} state.classNameId
  * @param {string} state.classPK
@@ -289,8 +321,15 @@ function createSegmentsExperienceReducer(state, action) {
 										segmentsExperienceId
 									);
 
-									resolve(nextNewState);
+									return nextNewState;
 								})
+								.then(nextNewState =>
+									_updateFragmentEntryLinks(
+										nextNewState,
+										segmentsExperienceId
+									)
+								)
+								.then(nextNewState => resolve(nextNewState))
 								.catch(e => {
 									reject(e);
 								});
@@ -512,8 +551,16 @@ function selectSegmentsExperienceReducer(state, action) {
 						['segmentsExperienceId'],
 						action.segmentsExperienceId
 					);
-					resolve(nextNewState);
+
+					return nextNewState;
 				})
+				.then(nextNewState =>
+					_updateFragmentEntryLinks(
+						nextNewState,
+						action.segmentsExperienceId
+					)
+				)
+				.then(nextNewState => resolve(nextNewState))
 				.catch(e => {
 					reject(e);
 				});

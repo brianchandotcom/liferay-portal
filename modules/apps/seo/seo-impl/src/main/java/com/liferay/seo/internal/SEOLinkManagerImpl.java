@@ -17,7 +17,6 @@ package com.liferay.seo.internal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.seo.SEO;
 import com.liferay.portal.kernel.seo.SEOLink;
 import com.liferay.portal.kernel.seo.SEOLinkManager;
 import com.liferay.portal.kernel.util.Html;

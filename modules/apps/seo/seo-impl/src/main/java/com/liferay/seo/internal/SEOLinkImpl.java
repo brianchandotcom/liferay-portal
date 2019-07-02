@@ -17,8 +17,6 @@ package com.liferay.seo.internal;
 import com.liferay.portal.kernel.seo.SEOLink;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Optional;
-
 /**
  * @author Adolfo Pérez
  */

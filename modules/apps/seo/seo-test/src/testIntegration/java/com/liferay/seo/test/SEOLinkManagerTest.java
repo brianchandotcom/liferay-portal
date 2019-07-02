@@ -143,8 +143,7 @@ public class SEOLinkManagerTest {
 		Assert.assertNotNull(seoLink);
 		Assert.assertEquals(alternateURLs.get(locale), seoLink.getHref());
 		Assert.assertEquals(
-			LocaleUtil.toW3cLanguageId(locale),
-			seoLink.getHrefLang());
+			LocaleUtil.toW3cLanguageId(locale), seoLink.getHrefLang());
 		Assert.assertEquals(
 			seoLink.getRelationship(), SEOLink.Relationship.ALTERNATE);
 	}
@@ -166,7 +165,7 @@ public class SEOLinkManagerTest {
 
 		Assert.assertNotNull(canonicalURL);
 		Assert.assertEquals(canonicalURL, seoLink.getHref());
-		Assert.assertEquals(seoLink.getHrefLang(), null);
+		Assert.assertNull(seoLink.getHrefLang());
 		Assert.assertEquals(
 			seoLink.getRelationship(), SEOLink.Relationship.CANONICAL);
 	}
@@ -179,7 +178,7 @@ public class SEOLinkManagerTest {
 		Assert.assertNotNull(seoLink);
 		Assert.assertEquals(
 			alternateURLs.get(LocaleUtil.getDefault()), seoLink.getHref());
-		Assert.assertEquals(seoLink.getHrefLang(), "x-default");
+		Assert.assertEquals("x-default", seoLink.getHrefLang());
 		Assert.assertEquals(
 			seoLink.getRelationship(), SEOLink.Relationship.ALTERNATE);
 	}
@@ -188,10 +187,11 @@ public class SEOLinkManagerTest {
 		Locale locale, List<SEOLink> seoLinks) {
 
 		for (SEOLink seoLink : seoLinks) {
+			String hrefLang = seoLink.getHrefLang();
+
 			if ((seoLink.getRelationship() == SEOLink.Relationship.ALTERNATE) &&
-				Objects.equals(
-					seoLink.getHrefLang(),
-					LocaleUtil.toW3cLanguageId(locale))) {
+				(hrefLang != null) &&
+				Objects.equals(hrefLang, LocaleUtil.toW3cLanguageId(locale))) {
 
 				return seoLink;
 			}
@@ -212,7 +212,9 @@ public class SEOLinkManagerTest {
 
 	private SEOLink _getXDefaultAlternateSEOLink(List<SEOLink> seoLinks) {
 		for (SEOLink seoLink : seoLinks) {
-			if (Objects.equals(seoLink.getHrefLang(), "x-default")) {
+			String hrefLang = seoLink.getHrefLang();
+
+			if ((hrefLang != null) && Objects.equals(hrefLang, "x-default")) {
 				return seoLink;
 			}
 		}

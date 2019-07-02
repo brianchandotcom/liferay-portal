@@ -1,6 +1,6 @@
 buildscript {
 	dependencies {
-		classpath fileTree(dir: pluginClasspathDir, include: "*.jar")
+		classpath fileTree(dir: pluginClasspathDir, include: "*.jar", exclude: "biz.aQute.bnd-3.5.0.jar")
 	}
 }
 

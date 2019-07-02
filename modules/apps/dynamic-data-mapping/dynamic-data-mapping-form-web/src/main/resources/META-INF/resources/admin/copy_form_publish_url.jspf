@@ -48,6 +48,7 @@
 <aui:script require="metal-clipboard/src/Clipboard">
 	var A = AUI();
 
+debugger
 	var clipboard = new metalClipboardSrcClipboard.default();
 
 	clipboard.on(

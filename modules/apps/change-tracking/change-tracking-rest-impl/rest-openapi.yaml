@@ -345,6 +345,12 @@ paths:
         get:
             operationId: getCollectionEntriesPage
             parameters:
+                - in: path
+                  name: collectionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
                 - explode: true
                   in: query
                   name: changeTypesFilter
@@ -363,6 +369,13 @@ paths:
                           type: string
                       type: array
                   style: form
+                - in: query
+                  name: collision
+                  required: false
+                  schema:
+                      default: false
+                      type: boolean
+                  style: form
                 - explode: true
                   in: query
                   name: groupIdsFilter
@@ -372,6 +385,12 @@ paths:
                           type: string
                       type: array
                   style: form
+                - in: query
+                  name: status
+                  required: false
+                  schema:
+                      default: 2
+                      type: integer
                 - explode: true
                   in: query
                   name: userIdsFilter
@@ -380,19 +399,6 @@ paths:
                       items:
                           type: string
                       type: array
-                  style: form
-                - in: path
-                  name: collectionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: collision
-                  required: false
-                  schema:
-                      default: false
-                      type: boolean
                   style: form
                 - in: query
                   name: page
@@ -409,12 +415,6 @@ paths:
                   required: false
                   schema:
                       type: string
-                - in: query
-                  name: status
-                  required: false
-                  schema:
-                      default: 2
-                      type: integer
             responses:
                 200:
                     content:

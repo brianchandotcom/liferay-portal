@@ -567,6 +567,7 @@ definition {
 			}
 
 			AssertTextEquals(
+				key_scopeText = "${key_scopeText}",
 				locator1 = "OAuth2#ADMIN_MODAL_GLOBAL_SCOPE_LINK",
 				value1 = "${globalScopeLinkValue}");
 		}

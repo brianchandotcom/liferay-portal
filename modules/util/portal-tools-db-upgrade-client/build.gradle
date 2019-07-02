@@ -1,6 +1,6 @@
-task addVersionsToScripts
+task addVersionToScripts
 
-addVersionsToScripts {
+addVersionToScripts {
 	def scriptBat = file('scripts/db_upgrade.bat')
 	def scriptBatWithVersion = new File(temporaryDir, 'db_upgrade.bat')
 	def scriptSh = file('scripts/db_upgrade.sh')
@@ -43,7 +43,7 @@ distributions {
 				include "*.properties"
 				into "lib"
 			}
-			from (addVersionsToScripts) {
+			from (addVersionToScripts) {
 				into "lib"
 			}
 		}

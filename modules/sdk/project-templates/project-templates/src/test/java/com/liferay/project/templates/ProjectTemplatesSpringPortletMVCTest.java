@@ -19,7 +19,7 @@ import com.liferay.project.templates.constants.ProjectTemplatesTestConstants;
 import com.liferay.project.templates.internal.util.ProjectTemplatesUtil;
 import com.liferay.project.templates.internal.util.Validator;
 import com.liferay.project.templates.util.FileTestUtil;
-import com.liferay.project.templates.util.ProjectTemplatesTestUtil;
+import com.liferay.project.templates.util.ProjectTemplatesTestSupport;
 
 import java.io.File;
 
@@ -50,7 +50,8 @@ import org.junit.runners.Parameterized;
  * @author Lawrence Lee
  */
 @RunWith(Parameterized.class)
-public class ProjectTemplatesSpringPortletMVCTest {
+public class ProjectTemplatesSpringPortletMVCTest
+	implements ProjectTemplatesTestSupport {
 
 	@ClassRule
 	public static final MavenExecutor mavenExecutor = new MavenExecutor();
@@ -117,51 +118,51 @@ public class ProjectTemplatesSpringPortletMVCTest {
 			"gradle", _framework, _frameworkDependencies, _viewType,
 			_liferayVersion);
 
-		ProjectTemplatesTestUtil.testExists(
+		testExists(
 			gradleProjectDir,
 			"src/main/webapp/WEB-INF/spring-context/portlet/Sample.xml");
-		ProjectTemplatesTestUtil.testExists(
+		testExists(
 			gradleProjectDir,
 			"src/main/java/com/test/controller/UserController.java");
 
 		if (_liferayVersion.equals("7.0")) {
-			ProjectTemplatesTestUtil.testContains(
+			testContains(
 				gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
 				"liferay-display_7_0_0.dtd");
 
-			ProjectTemplatesTestUtil.testContains(
+			testContains(
 				gradleProjectDir, "src/main/webapp/WEB-INF/liferay-portlet.xml",
 				"liferay-portlet-app_7_0_0.dtd");
 		}
 		else if (_liferayVersion.equals("7.1")) {
-			ProjectTemplatesTestUtil.testContains(
+			testContains(
 				gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
 				"liferay-display_7_1_0.dtd");
 
-			ProjectTemplatesTestUtil.testContains(
+			testContains(
 				gradleProjectDir, "src/main/webapp/WEB-INF/liferay-portlet.xml",
 				"liferay-portlet-app_7_1_0.dtd");
 		}
 		else if (_liferayVersion.equals("7.2")) {
-			ProjectTemplatesTestUtil.testContains(
+			testContains(
 				gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
 				"liferay-display_7_2_0.dtd");
 
-			ProjectTemplatesTestUtil.testContains(
+			testContains(
 				gradleProjectDir, "src/main/webapp/WEB-INF/liferay-portlet.xml",
 				"liferay-portlet-app_7_2_0.dtd");
 		}
 
 		if (_viewType.equals("jsp")) {
 			if (_framework.equals("springportletmvc")) {
-				ProjectTemplatesTestUtil.testContains(
+				testContains(
 					gradleProjectDir,
 					"src/main/webapp/WEB-INF/spring-context" +
 						"/portlet-application-context.xml",
 					"org.springframework.web.servlet.view.JstlView");
 			}
 			else {
-				ProjectTemplatesTestUtil.testContains(
+				testContains(
 					gradleProjectDir,
 					"src/main/webapp/WEB-INF/spring-context" +
 						"/portlet-application-context.xml",
@@ -170,25 +171,25 @@ public class ProjectTemplatesSpringPortletMVCTest {
 		}
 
 		if (_viewType.equals("jsp")) {
-			ProjectTemplatesTestUtil.testExists(
+			testExists(
 				gradleProjectDir,
 				"src/main/webapp/WEB-INF/views/greeting.jspx");
 
-			ProjectTemplatesTestUtil.testNotExists(
+			testNotExists(
 				gradleProjectDir,
 				"src/main/webapp/WEB-INF/views/greeting.html");
 		}
 		else {
-			ProjectTemplatesTestUtil.testExists(
+			testExists(
 				gradleProjectDir,
 				"src/main/webapp/WEB-INF/views/greeting.html");
-			ProjectTemplatesTestUtil.testNotExists(
+			testNotExists(
 				gradleProjectDir,
 				"src/main/webapp/WEB-INF/views/greeting.jspx");
 		}
 
 		if (_viewType.equals("jsp") || _framework.equals("portletmvc4spring")) {
-			ProjectTemplatesTestUtil.testNotExists(
+			testNotExists(
 				gradleProjectDir,
 				"src/main/java/com/test/spring4/ServletContextFactory.java");
 		}
@@ -203,8 +204,7 @@ public class ProjectTemplatesSpringPortletMVCTest {
 	@Rule
 	public final TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-	private static void _buildProjects(
-			File gradleProjectDir, File mavenProjectDir)
+	private void _buildProjects(File gradleProjectDir, File mavenProjectDir)
 		throws Exception {
 
 		File gradleOutputDir = new File(gradleProjectDir, "build/libs");
@@ -215,14 +215,13 @@ public class ProjectTemplatesSpringPortletMVCTest {
 			ProjectTemplatesTestConstants.GRADLE_TASK_PATH_BUILD);
 	}
 
-	private static void _buildProjects(
+	private void _buildProjects(
 			File gradleProjectDir, File mavenProjectDir, File gradleOutputDir,
 			File mavenOutputDir, String... gradleTaskPath)
 		throws Exception {
 
-		if (ProjectTemplatesTestUtil.isBuildProjects()) {
-			ProjectTemplatesTestUtil.executeGradle(
-				gradleProjectDir, gradleTaskPath);
+		if (isBuildProjects()) {
+			executeGradle(gradleProjectDir, gradleTaskPath);
 
 			Path gradleOutputPath = FileTestUtil.getFile(
 				gradleOutputDir.toPath(),
@@ -254,12 +253,10 @@ public class ProjectTemplatesSpringPortletMVCTest {
 
 			try {
 				if (gradleOutputFileName.endsWith(".jar")) {
-					ProjectTemplatesTestUtil.testBundlesDiff(
-						gradleOutputFile, mavenOutputFile);
+					testBundlesDiff(gradleOutputFile, mavenOutputFile);
 				}
 				else if (gradleOutputFileName.endsWith(".war")) {
-					ProjectTemplatesTestUtil.testWarsDiff(
-						gradleOutputFile, mavenOutputFile);
+					testWarsDiff(gradleOutputFile, mavenOutputFile);
 				}
 			}
 			catch (Throwable t) {
@@ -279,7 +276,41 @@ public class ProjectTemplatesSpringPortletMVCTest {
 		}
 	}
 
-	private static File _buildTemplateWithMaven(
+	private File _buildSpringMVCTemplate(
+			String buildType, String framework, String frameworkDependencies,
+			String viewType, String liferayVersion)
+		throws Exception {
+
+		String template = "spring-mvc-portlet";
+		String name = "sampleSpringMVCPortlet";
+
+		if (buildType.equals("maven")) {
+			String groupId = "com.test";
+
+			return _buildTemplateWithMaven(
+				template, name, groupId, "-Dpackage=com.test",
+				"-DclassName=Sample", "-Dframework=" + framework,
+				"-DframeworkDependencies=" + frameworkDependencies,
+				"-DviewType=" + viewType, "-DliferayVersion=" + liferayVersion);
+		}
+
+		return _buildTemplateWithGradle(
+			template, name, "--package-name", "com.test", "--class-name",
+			"Sample", "--framework", framework, "--framework-dependencies",
+			frameworkDependencies, "--view-type", viewType, "--liferay-version",
+			liferayVersion);
+	}
+
+	private File _buildTemplateWithGradle(
+			String template, String name, String... args)
+		throws Exception {
+
+		File destinationDir = temporaryFolder.newFolder("gradle");
+
+		return buildTemplateWithGradle(destinationDir, template, name, args);
+	}
+
+	private File _buildTemplateWithMaven(
 			File parentDir, File destinationDir, String template, String name,
 			String groupId, String... args)
 		throws Exception {
@@ -340,34 +371,42 @@ public class ProjectTemplatesSpringPortletMVCTest {
 
 		File projectDir = new File(destinationDir, name);
 
-		ProjectTemplatesTestUtil.testExists(projectDir, "pom.xml");
-		ProjectTemplatesTestUtil.testNotExists(projectDir, "gradlew");
-		ProjectTemplatesTestUtil.testNotExists(projectDir, "gradlew.bat");
-		ProjectTemplatesTestUtil.testNotExists(
-			projectDir, "gradle/wrapper/gradle-wrapper.jar");
-		ProjectTemplatesTestUtil.testNotExists(
-			projectDir, "gradle/wrapper/gradle-wrapper.properties");
+		testExists(projectDir, "pom.xml");
+		testNotExists(projectDir, "gradlew");
+		testNotExists(projectDir, "gradlew.bat");
+		testNotExists(projectDir, "gradle/wrapper/gradle-wrapper.jar");
+		testNotExists(projectDir, "gradle/wrapper/gradle-wrapper.properties");
 
-		ProjectTemplatesTestUtil.testArchetyper(
+		testArchetyper(
 			parentDir, destinationDir, projectDir, name, groupId, template,
 			completeArgs);
 
 		return projectDir;
 	}
 
-	private static String _executeMaven(
+	private File _buildTemplateWithMaven(
+			String template, String name, String groupId, String... args)
+		throws Exception {
+
+		File destinationDir = temporaryFolder.newFolder("maven");
+
+		return _buildTemplateWithMaven(
+			destinationDir, destinationDir, template, name, groupId, args);
+	}
+
+	private String _executeMaven(
 			File projectDir, boolean buildAndFail, String... args)
 		throws Exception {
 
 		File pomXmlFile = new File(projectDir, "pom.xml");
 
 		if (pomXmlFile.exists()) {
-			ProjectTemplatesTestUtil.editXml(
+			editXml(
 				pomXmlFile,
 				document -> {
-					ProjectTemplatesTestUtil.addNexusRepositoriesElement(
+					addNexusRepositoriesElement(
 						document, "repositories", "repository");
-					ProjectTemplatesTestUtil.addNexusRepositoriesElement(
+					addNexusRepositoriesElement(
 						document, "pluginRepositories", "pluginRepository");
 				});
 		}
@@ -392,55 +431,10 @@ public class ProjectTemplatesSpringPortletMVCTest {
 		return result.output;
 	}
 
-	private static String _executeMaven(File projectDir, String... args)
+	private String _executeMaven(File projectDir, String... args)
 		throws Exception {
 
 		return _executeMaven(projectDir, false, args);
-	}
-
-	private File _buildSpringMVCTemplate(
-			String buildType, String framework, String frameworkDependencies,
-			String viewType, String liferayVersion)
-		throws Exception {
-
-		String template = "spring-mvc-portlet";
-		String name = "sampleSpringMVCPortlet";
-
-		if (buildType.equals("maven")) {
-			String groupId = "com.test";
-
-			return _buildTemplateWithMaven(
-				template, name, groupId, "-Dpackage=com.test",
-				"-DclassName=Sample", "-Dframework=" + framework,
-				"-DframeworkDependencies=" + frameworkDependencies,
-				"-DviewType=" + viewType, "-DliferayVersion=" + liferayVersion);
-		}
-
-		return _buildTemplateWithGradle(
-			template, name, "--package-name", "com.test", "--class-name",
-			"Sample", "--framework", framework, "--framework-dependencies",
-			frameworkDependencies, "--view-type", viewType, "--liferay-version",
-			liferayVersion);
-	}
-
-	private File _buildTemplateWithGradle(
-			String template, String name, String... args)
-		throws Exception {
-
-		File destinationDir = temporaryFolder.newFolder("gradle");
-
-		return ProjectTemplatesTestUtil.buildTemplateWithGradle(
-			destinationDir, template, name, args);
-	}
-
-	private File _buildTemplateWithMaven(
-			String template, String name, String groupId, String... args)
-		throws Exception {
-
-		File destinationDir = temporaryFolder.newFolder("maven");
-
-		return _buildTemplateWithMaven(
-			destinationDir, destinationDir, template, name, groupId, args);
 	}
 
 	private final String _framework;

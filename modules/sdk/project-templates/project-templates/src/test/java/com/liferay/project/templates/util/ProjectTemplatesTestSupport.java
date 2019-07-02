@@ -80,9 +80,9 @@ import org.w3c.dom.Text;
 /**
  * @author Lawrence Lee
  */
-public class ProjectTemplatesTestUtil {
+public interface ProjectTemplatesTestSupport {
 
-	public static void addNexusRepositoriesElement(
+	public default void addNexusRepositoriesElement(
 		Document document, String parentElementName, String elementName) {
 
 		Element projectElement = document.getDocumentElement();
@@ -126,7 +126,7 @@ public class ProjectTemplatesTestUtil {
 		repositoriesElement.appendChild(repositoryElement);
 	}
 
-	public static File buildTemplateWithGradle(
+	public default File buildTemplateWithGradle(
 			File destinationDir, String template, String name, boolean gradle,
 			boolean maven, String... args)
 		throws Exception {
@@ -220,7 +220,7 @@ public class ProjectTemplatesTestUtil {
 		return projectDir;
 	}
 
-	public static File buildTemplateWithGradle(
+	public default File buildTemplateWithGradle(
 			File destinationDir, String template, String name, String... args)
 		throws Exception {
 
@@ -228,7 +228,7 @@ public class ProjectTemplatesTestUtil {
 			destinationDir, template, name, true, false, args);
 	}
 
-	public static void editXml(File xmlFile, Consumer<Document> consumer)
+	public default void editXml(File xmlFile, Consumer<Document> consumer)
 		throws Exception {
 
 		TransformerFactory transformerFactory =
@@ -251,7 +251,7 @@ public class ProjectTemplatesTestUtil {
 		transformer.transform(domSource, new StreamResult(xmlFile));
 	}
 
-	public static Optional<String> executeGradle(
+	public default Optional<String> executeGradle(
 			File projectDir, boolean debug, boolean buildAndFail,
 			String... taskPaths)
 		throws IOException {
@@ -396,20 +396,20 @@ public class ProjectTemplatesTestUtil {
 		return Optional.ofNullable(stdOutput);
 	}
 
-	public static Optional<String> executeGradle(
+	public default Optional<String> executeGradle(
 			File projectDir, boolean debug, String... taskPaths)
 		throws IOException {
 
 		return executeGradle(projectDir, debug, false, taskPaths);
 	}
 
-	public static void executeGradle(File projectDir, String... taskPaths)
+	public default void executeGradle(File projectDir, String... taskPaths)
 		throws IOException {
 
 		executeGradle(projectDir, false, taskPaths);
 	}
 
-	public static boolean isBuildProjects() {
+	public default boolean isBuildProjects() {
 		if (Validator.isNotNull(ProjectTemplatesTestConstants.BUILD_PROJECTS) &&
 			ProjectTemplatesTestConstants.BUILD_PROJECTS.equals("true")) {
 
@@ -419,7 +419,7 @@ public class ProjectTemplatesTestUtil {
 		return false;
 	}
 
-	public static List<String> sanitizeLines(List<String> lines) {
+	public default List<String> sanitizeLines(List<String> lines) {
 		List<String> sanitizedLines = new ArrayList<>();
 
 		for (String line : lines) {
@@ -431,7 +431,7 @@ public class ProjectTemplatesTestUtil {
 		return sanitizedLines;
 	}
 
-	public static void testArchetyper(
+	public default void testArchetyper(
 			File parentDir, File destinationDir, File projectDir, String name,
 			String groupId, String template, List<String> args)
 		throws Exception {
@@ -571,7 +571,7 @@ public class ProjectTemplatesTestUtil {
 			"Found differences " + differences, differences.isEmpty());
 	}
 
-	public static void testBundlesDiff(File bundleFile1, File bundleFile2)
+	public default void testBundlesDiff(File bundleFile1, File bundleFile2)
 		throws Exception {
 
 		PrintStream originalErrorStream = System.err;
@@ -611,21 +611,21 @@ public class ProjectTemplatesTestUtil {
 			"", output);
 	}
 
-	public static File testContains(
+	public default File testContains(
 			File dir, String fileName, boolean regex, String... strings)
 		throws IOException {
 
 		return testContainsOrNot(dir, fileName, regex, true, strings);
 	}
 
-	public static File testContains(
+	public default File testContains(
 			File dir, String fileName, String... strings)
 		throws IOException {
 
 		return testContains(dir, fileName, false, strings);
 	}
 
-	public static File testContainsOrNot(
+	public default File testContainsOrNot(
 			File dir, String fileName, boolean regex, boolean contains,
 			String... strings)
 		throws IOException {
@@ -660,7 +660,7 @@ public class ProjectTemplatesTestUtil {
 		return file;
 	}
 
-	public static File testExecutable(File dir, String fileName) {
+	public default File testExecutable(File dir, String fileName) {
 		File file = testExists(dir, fileName);
 
 		Assert.assertTrue(fileName + " is not executable", file.canExecute());
@@ -668,7 +668,7 @@ public class ProjectTemplatesTestUtil {
 		return file;
 	}
 
-	public static File testExists(File dir, String fileName) {
+	public default File testExists(File dir, String fileName) {
 		File file = new File(dir, fileName);
 
 		Assert.assertTrue("Missing " + fileName, file.exists());
@@ -676,25 +676,25 @@ public class ProjectTemplatesTestUtil {
 		return file;
 	}
 
-	public static void testExists(ZipFile zipFile, String name) {
+	public default void testExists(ZipFile zipFile, String name) {
 		Assert.assertNotNull("Missing " + name, zipFile.getEntry(name));
 	}
 
-	public static File testNotContains(
+	public default File testNotContains(
 			File dir, String fileName, boolean regex, String... strings)
 		throws IOException {
 
 		return testContainsOrNot(dir, fileName, regex, false, strings);
 	}
 
-	public static File testNotContains(
+	public default File testNotContains(
 			File dir, String fileName, String... strings)
 		throws IOException {
 
 		return testNotContains(dir, fileName, false, strings);
 	}
 
-	public static File testNotExists(File dir, String fileName) {
+	public default File testNotExists(File dir, String fileName) {
 		File file = new File(dir, fileName);
 
 		Assert.assertFalse("Unexpected " + fileName, file.exists());
@@ -702,7 +702,7 @@ public class ProjectTemplatesTestUtil {
 		return file;
 	}
 
-	public static void testWarsDiff(File warFile1, File warFile2)
+	public default void testWarsDiff(File warFile1, File warFile2)
 		throws IOException {
 
 		DifferenceCalculator differenceCalculator = new DifferenceCalculator(

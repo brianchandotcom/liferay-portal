@@ -83,7 +83,9 @@ const initSPA = function() {
 
 	Liferay.Util.submitForm = function(form) {
 		async.nextTick(() => {
-			const formElement = form.getDOM();
+			const formElement = HTMLFormElement.prototype.isPrototypeOf(form)
+				? form
+				: form.getDOM();
 			const formSelector =
 				'form' + Liferay.SPA.navigationExceptionSelectors;
 			const url = formElement.action;

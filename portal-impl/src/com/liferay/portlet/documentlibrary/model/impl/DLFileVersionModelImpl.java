@@ -79,26 +79,28 @@ public class DLFileVersionModelImpl
 	public static final String TABLE_NAME = "DLFileVersion";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"fileVersionId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"repositoryId", Types.BIGINT}, {"folderId", Types.BIGINT},
-		{"fileEntryId", Types.BIGINT}, {"treePath", Types.VARCHAR},
-		{"fileName", Types.VARCHAR}, {"extension", Types.VARCHAR},
-		{"mimeType", Types.VARCHAR}, {"title", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"changeLog", Types.VARCHAR},
-		{"extraSettings", Types.CLOB}, {"fileEntryTypeId", Types.BIGINT},
-		{"version", Types.VARCHAR}, {"size_", Types.BIGINT},
-		{"checksum", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"fileVersionId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"repositoryId", Types.BIGINT},
+		{"folderId", Types.BIGINT}, {"fileEntryId", Types.BIGINT},
+		{"treePath", Types.VARCHAR}, {"fileName", Types.VARCHAR},
+		{"extension", Types.VARCHAR}, {"mimeType", Types.VARCHAR},
+		{"title", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"changeLog", Types.VARCHAR}, {"extraSettings", Types.CLOB},
+		{"fileEntryTypeId", Types.BIGINT}, {"version", Types.VARCHAR},
+		{"size_", Types.BIGINT}, {"checksum", Types.VARCHAR},
+		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fileVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -130,7 +132,7 @@ public class DLFileVersionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DLFileVersion (uuid_ VARCHAR(75) null,fileVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,fileEntryId LONG,treePath STRING null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,checksum VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table DLFileVersion (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fileVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,fileEntryId LONG,treePath STRING null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,checksum VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table DLFileVersion";
 
@@ -194,6 +196,7 @@ public class DLFileVersionModelImpl
 
 		DLFileVersion model = new DLFileVersionImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setFileVersionId(soapModel.getFileVersionId());
 		model.setGroupId(soapModel.getGroupId());
@@ -376,6 +379,11 @@ public class DLFileVersionModelImpl
 		Map<String, BiConsumer<DLFileVersion, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<DLFileVersion, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", DLFileVersion::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<DLFileVersion, Long>)DLFileVersion::setMvccVersion);
 		attributeGetterFunctions.put("uuid", DLFileVersion::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<DLFileVersion, String>)DLFileVersion::setUuid);
@@ -504,6 +512,17 @@ public class DLFileVersionModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1141,6 +1160,7 @@ public class DLFileVersionModelImpl
 	public Object clone() {
 		DLFileVersionImpl dlFileVersionImpl = new DLFileVersionImpl();
 
+		dlFileVersionImpl.setMvccVersion(getMvccVersion());
 		dlFileVersionImpl.setUuid(getUuid());
 		dlFileVersionImpl.setFileVersionId(getFileVersionId());
 		dlFileVersionImpl.setGroupId(getGroupId());
@@ -1291,6 +1311,8 @@ public class DLFileVersionModelImpl
 	public CacheModel<DLFileVersion> toCacheModel() {
 		DLFileVersionCacheModel dlFileVersionCacheModel =
 			new DLFileVersionCacheModel();
+
+		dlFileVersionCacheModel.mvccVersion = getMvccVersion();
 
 		dlFileVersionCacheModel.uuid = getUuid();
 
@@ -1527,6 +1549,7 @@ public class DLFileVersionModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _fileVersionId;

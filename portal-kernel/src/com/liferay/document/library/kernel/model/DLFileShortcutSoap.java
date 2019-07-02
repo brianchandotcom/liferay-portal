@@ -34,6 +34,7 @@ public class DLFileShortcutSoap implements Serializable {
 	public static DLFileShortcutSoap toSoapModel(DLFileShortcut model) {
 		DLFileShortcutSoap soapModel = new DLFileShortcutSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setFileShortcutId(model.getFileShortcutId());
 		soapModel.setGroupId(model.getGroupId());
@@ -108,6 +109,14 @@ public class DLFileShortcutSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setFileShortcutId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -258,6 +267,7 @@ public class DLFileShortcutSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _fileShortcutId;
 	private long _groupId;

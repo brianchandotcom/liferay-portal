@@ -19,7 +19,6 @@ import aQute.bnd.header.Parameters;
 import aQute.bnd.osgi.Domain;
 
 import com.liferay.maven.executor.MavenExecutor;
-import com.liferay.project.templates.constants.ProjectTemplatesTestConstants;
 import com.liferay.project.templates.internal.util.ProjectTemplatesUtil;
 import com.liferay.project.templates.internal.util.Validator;
 import com.liferay.project.templates.util.FileTestUtil;
@@ -56,6 +55,7 @@ import java.util.regex.Pattern;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
@@ -100,19 +100,16 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 			gradleDistribution = properties.getProperty("distributionUrl");
 		}
 
-		Assert.assertTrue(
-			gradleDistribution.contains(
-				ProjectTemplatesTestConstants.GRADLE_WRAPPER_VERSION));
+		Assert.assertTrue(gradleDistribution.contains(GRADLE_WRAPPER_VERSION));
 
-		ProjectTemplatesTestConstants.gradleDistribution = URI.create(
-			gradleDistribution);
+		_gradleDistribution = URI.create(gradleDistribution);
 
 		XPathFactory xPathFactory = XPathFactory.newInstance();
 
 		XPath xPath = xPathFactory.newXPath();
 
-		ProjectTemplatesTestConstants.pomXmlNpmInstallXPathExpression =
-			xPath.compile("//id[contains(text(),'npm-install')]/parent::*");
+		_pomXmlNpmInstallXPathExpression = xPath.compile(
+			"//id[contains(text(),'npm-install')]/parent::*");
 	}
 
 	@Test
@@ -1102,8 +1099,7 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 
 		if (_isBuildProjects()) {
 			executeGradle(
-				gradleProjectDir,
-				ProjectTemplatesTestConstants.GRADLE_TASK_PATH_BUILD);
+				gradleProjectDir, _gradleDistribution, GRADLE_TASK_PATH_BUILD);
 
 			File jarFile = testExists(
 				gradleProjectDir,
@@ -1141,7 +1137,8 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 			workspaceProjectDir, "build.gradle", "version: \"[0-9].*");
 
 		if (_isBuildProjects()) {
-			executeGradle(workspaceDir, ":ext:loginExt:build");
+			executeGradle(
+				workspaceDir, _gradleDistribution, ":ext:loginExt:build");
 
 			testExists(
 				workspaceProjectDir,
@@ -1162,14 +1159,12 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 
 		if (_isBuildProjects()) {
 			executeGradle(
-				gradleProjectDir,
-				ProjectTemplatesTestConstants.GRADLE_TASK_PATH_BUILD);
+				gradleProjectDir, _gradleDistribution, GRADLE_TASK_PATH_BUILD);
 
 			File gradleOutputDir = new File(gradleProjectDir, "build/libs");
 
 			Path gradleOutputPath = FileTestUtil.getFile(
-				gradleOutputDir.toPath(),
-				ProjectTemplatesTestConstants.OUTPUT_FILENAME_GLOB_REGEX, 1);
+				gradleOutputDir.toPath(), OUTPUT_FILENAME_GLOB_REGEX, 1);
 
 			Assert.assertNotNull(gradleOutputPath);
 
@@ -2426,9 +2421,8 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 
 		if (_isBuildProjects()) {
 			Optional<String> stdOutput = executeGradle(
-				gradleProjectDir, false, true,
-				name + "-service" +
-					ProjectTemplatesTestConstants.GRADLE_TASK_PATH_BUILD);
+				gradleProjectDir, false, true, _gradleDistribution,
+				name + "-service" + GRADLE_TASK_PATH_BUILD);
 
 			Assert.assertTrue(stdOutput.isPresent());
 
@@ -2440,8 +2434,7 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 				gradleOutput.contains("Exporting an empty package"));
 
 			String mavenOutput = _executeMaven(
-				mavenProjectDir, true,
-				ProjectTemplatesTestConstants.MAVEN_GOAL_PACKAGE);
+				mavenProjectDir, true, MAVEN_GOAL_PACKAGE);
 
 			Assert.assertTrue(
 				"Expected maven output to include build error. " + mavenOutput,
@@ -2568,12 +2561,16 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 
 		if (_isBuildProjects()) {
 			executeGradle(
-				workspaceDir,
+				workspaceDir, _gradleDistribution,
 				":modules:foo:foo-service" + _GRADLE_TASK_PATH_BUILD_SERVICE);
 
-			executeGradle(workspaceDir, ":modules:foo:foo-api:build");
+			executeGradle(
+				workspaceDir, _gradleDistribution,
+				":modules:foo:foo-api:build");
 
-			executeGradle(workspaceDir, ":modules:foo:foo-service:build");
+			executeGradle(
+				workspaceDir, _gradleDistribution,
+				":modules:foo:foo-service:build");
 		}
 	}
 
@@ -2609,12 +2606,16 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 
 		if (_isBuildProjects()) {
 			executeGradle(
-				workspaceDir,
+				workspaceDir, _gradleDistribution,
 				":modules:foo:foo-service" + _GRADLE_TASK_PATH_BUILD_SERVICE);
 
-			executeGradle(workspaceDir, ":modules:foo:foo-api:build");
+			executeGradle(
+				workspaceDir, _gradleDistribution,
+				":modules:foo:foo-api:build");
 
-			executeGradle(workspaceDir, ":modules:foo:foo-service:build");
+			executeGradle(
+				workspaceDir, _gradleDistribution,
+				":modules:foo:foo-service:build");
 		}
 	}
 
@@ -2650,12 +2651,16 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 
 		if (_isBuildProjects()) {
 			executeGradle(
-				workspaceDir,
+				workspaceDir, _gradleDistribution,
 				":modules:foo:foo-service" + _GRADLE_TASK_PATH_BUILD_SERVICE);
 
-			executeGradle(workspaceDir, ":modules:foo:foo-api:build");
+			executeGradle(
+				workspaceDir, _gradleDistribution,
+				":modules:foo:foo-api:build");
 
-			executeGradle(workspaceDir, ":modules:foo:foo-service:build");
+			executeGradle(
+				workspaceDir, _gradleDistribution,
+				":modules:foo:foo-service:build");
 		}
 	}
 
@@ -2762,7 +2767,9 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 		if (_isBuildProjects()) {
 			_writeServiceClass(workspaceProjectDir);
 
-			executeGradle(workspaceDir, ":modules:servicepreaction:build");
+			executeGradle(
+				workspaceDir, _gradleDistribution,
+				":modules:servicepreaction:build");
 
 			testExists(
 				workspaceProjectDir, "build/libs/servicepreaction-1.0.0.jar");
@@ -2862,7 +2869,9 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 			workspaceProjectDir, "build.gradle", "version: \"[0-9].*");
 
 		if (_isBuildProjects()) {
-			executeGradle(workspaceDir, ":modules:serviceoverride:build");
+			executeGradle(
+				workspaceDir, _gradleDistribution,
+				":modules:serviceoverride:build");
 
 			testExists(
 				workspaceProjectDir, "build/libs/serviceoverride-1.0.0.jar");
@@ -3294,13 +3303,13 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 
 		if (_isBuildProjects()) {
 			executeGradle(
-				gradleProjectDir,
-				ProjectTemplatesTestConstants.GRADLE_TASK_PATH_BUILD);
+				gradleProjectDir, _gradleDistribution, GRADLE_TASK_PATH_BUILD);
 
 			File gradleWarFile = testExists(
 				gradleProjectDir, "build/libs/theme-test.war");
 
-			executeGradle(workspaceDir, ":wars:theme-test:build");
+			executeGradle(
+				workspaceDir, _gradleDistribution, ":wars:theme-test:build");
 
 			File workspaceWarFile = testExists(
 				workspaceProjectDir, "build/libs/theme-test.war");
@@ -3612,9 +3621,8 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 
 		if (_isBuildProjects()) {
 			executeGradle(
-				workspaceProjectDir,
-				":modules:foo-portlet" +
-					ProjectTemplatesTestConstants.GRADLE_TASK_PATH_BUILD);
+				workspaceProjectDir, _gradleDistribution,
+				":modules:foo-portlet" + GRADLE_TASK_PATH_BUILD);
 
 			testExists(moduleProjectDir, "build/libs/foo.portlet-1.0.0.jar");
 		}
@@ -3668,7 +3676,7 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 			new File(workspaceProjectDir, modulesDirName), "", "foo-portlet");
 
 		executeGradle(
-			workspaceProjectDir,
+			workspaceProjectDir, _gradleDistribution,
 			":" + modulesDirName.replace('/', ':') + ":foo-portlet" +
 				_GRADLE_TASK_PATH_DEPLOY);
 
@@ -3769,17 +3777,14 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 
 		if (_isBuildProjects()) {
 			executeGradle(
-				gradleWorkspaceProjectDir,
-				":modules:foo-portlet" +
-					ProjectTemplatesTestConstants.GRADLE_TASK_PATH_BUILD);
+				gradleWorkspaceProjectDir, _gradleDistribution,
+				":modules:foo-portlet" + GRADLE_TASK_PATH_BUILD);
 
 			testExists(
 				gradleModulesDir,
 				"foo-portlet/build/libs/foo.portlet-1.0.0.jar");
 
-			_executeMaven(
-				mavenModulesDir,
-				ProjectTemplatesTestConstants.MAVEN_GOAL_PACKAGE);
+			_executeMaven(mavenModulesDir, MAVEN_GOAL_PACKAGE);
 
 			testExists(
 				mavenModulesDir, "foo-portlet/target/foo-portlet-1.0.0.jar");
@@ -3800,8 +3805,8 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 		buildTemplateWithGradle(modulesDir, template, name);
 
 		Optional<String> result = executeGradle(
-			gradleProjectDir, true,
-			ProjectTemplatesTestConstants.GRADLE_TASK_PATH_BUILD);
+			gradleProjectDir, true, _gradleDistribution,
+			GRADLE_TASK_PATH_BUILD);
 
 		Matcher matcher = _gradlePluginVersionPattern.matcher(result.get());
 
@@ -3812,7 +3817,8 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 		}
 
 		result = executeGradle(
-			workspaceDir, true, ":modules:" + name + ":clean");
+			workspaceDir, true, _gradleDistribution,
+			":modules:" + name + ":clean");
 
 		matcher = _gradlePluginVersionPattern.matcher(result.get());
 
@@ -3837,7 +3843,8 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 			"service-builder", name, "--package-name", packageName);
 
 		Optional<String> gradleResult = executeGradle(
-			gradleProjectDir, true, ":" + serviceProjectName + ":dependencies");
+			gradleProjectDir, true, _gradleDistribution,
+			":" + serviceProjectName + ":dependencies");
 
 		String gradleServiceBuilderVersion = null;
 
@@ -3971,8 +3978,8 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 	}
 
 	private static boolean _isBuildProjects() {
-		if (Validator.isNotNull(ProjectTemplatesTestConstants.BUILD_PROJECTS) &&
-			ProjectTemplatesTestConstants.BUILD_PROJECTS.equals("true")) {
+		if (Validator.isNotNull(BUILD_PROJECTS) &&
+			BUILD_PROJECTS.equals("true")) {
 
 			return true;
 		}
@@ -4010,7 +4017,7 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, gradleOutputDir, mavenOutputDir,
-			ProjectTemplatesTestConstants.GRADLE_TASK_PATH_BUILD);
+			GRADLE_TASK_PATH_BUILD);
 	}
 
 	private void _buildProjects(
@@ -4019,11 +4026,11 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 		throws Exception {
 
 		if (_isBuildProjects()) {
-			executeGradle(gradleProjectDir, gradleTaskPath);
+			executeGradle(
+				gradleProjectDir, _gradleDistribution, gradleTaskPath);
 
 			Path gradleOutputPath = FileTestUtil.getFile(
-				gradleOutputDir.toPath(),
-				ProjectTemplatesTestConstants.OUTPUT_FILENAME_GLOB_REGEX, 1);
+				gradleOutputDir.toPath(), OUTPUT_FILENAME_GLOB_REGEX, 1);
 
 			Assert.assertNotNull(gradleOutputPath);
 
@@ -4033,13 +4040,10 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 
 			String gradleOutputFileName = gradleOutputFile.getName();
 
-			_executeMaven(
-				mavenProjectDir,
-				ProjectTemplatesTestConstants.MAVEN_GOAL_PACKAGE);
+			_executeMaven(mavenProjectDir, MAVEN_GOAL_PACKAGE);
 
 			Path mavenOutputPath = FileTestUtil.getFile(
-				mavenOutputDir.toPath(),
-				ProjectTemplatesTestConstants.OUTPUT_FILENAME_GLOB_REGEX, 1);
+				mavenOutputDir.toPath(), OUTPUT_FILENAME_GLOB_REGEX, 1);
 
 			Assert.assertNotNull(mavenOutputPath);
 
@@ -4058,7 +4062,7 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 				}
 			}
 			catch (Throwable t) {
-				if (ProjectTemplatesTestConstants.TEST_DEBUG_BUNDLE_DIFFS) {
+				if (TEST_DEBUG_BUNDLE_DIFFS) {
 					Path dirPath = Paths.get("build");
 
 					Files.copy(
@@ -4230,10 +4234,8 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 			document -> {
 				try {
 					NodeList nodeList =
-						(NodeList)
-							ProjectTemplatesTestConstants.
-								pomXmlNpmInstallXPathExpression.evaluate(
-									document, XPathConstants.NODESET);
+						(NodeList)_pomXmlNpmInstallXPathExpression.evaluate(
+							document, XPathConstants.NODESET);
 
 					Node executionNode = nodeList.item(0);
 
@@ -4309,8 +4311,7 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 
 		testContains(
 			gradleProjectDir, "build.gradle",
-			ProjectTemplatesTestConstants.DEPENDENCY_MODULES_EXTENDER_API +
-				", version: \"1.0.2",
+			DEPENDENCY_MODULES_EXTENDER_API + ", version: \"1.0.2",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0");
 
 		testContains(
@@ -4353,8 +4354,7 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 
 		testContains(
 			gradleProjectDir, "build.gradle",
-			ProjectTemplatesTestConstants.DEPENDENCY_MODULES_EXTENDER_API +
-				", version: \"2.0.2",
+			DEPENDENCY_MODULES_EXTENDER_API + ", version: \"2.0.2",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
 
 		testContains(
@@ -4400,8 +4400,7 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 
 		testContains(
 			gradleProjectDir, "build.gradle",
-			ProjectTemplatesTestConstants.DEPENDENCY_MODULES_EXTENDER_API +
-				", version: \"1.0.2",
+			DEPENDENCY_MODULES_EXTENDER_API + ", version: \"1.0.2",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0");
 
 		testContains(
@@ -4435,8 +4434,7 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 
 		testContains(
 			gradleProjectDir, "build.gradle",
-			ProjectTemplatesTestConstants.DEPENDENCY_MODULES_EXTENDER_API +
-				", version: \"2.0.2",
+			DEPENDENCY_MODULES_EXTENDER_API + ", version: \"2.0.2",
 			_DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
 
 		testContains(
@@ -5121,7 +5119,8 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 			workspaceProjectDir, "build.gradle", "version: \"[0-9].*");
 
 		if (_isBuildProjects()) {
-			executeGradle(workspaceDir, ":wars:" + name + ":build");
+			executeGradle(
+				workspaceDir, _gradleDistribution, ":wars:" + name + ":build");
 
 			testExists(workspaceProjectDir, "build/libs/" + name + ".war");
 		}
@@ -5167,7 +5166,7 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 					@Override
 					public Void call() throws Exception {
 						executeGradle(
-							rootProject,
+							rootProject, _gradleDistribution,
 							projectPath + ":" + serviceProjectName +
 								_GRADLE_TASK_PATH_BUILD_SERVICE);
 
@@ -5177,9 +5176,9 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 				});
 
 			executeGradle(
-				rootProject,
+				rootProject, _gradleDistribution,
 				projectPath + ":" + serviceProjectName +
-					ProjectTemplatesTestConstants.GRADLE_TASK_PATH_BUILD);
+					GRADLE_TASK_PATH_BUILD);
 
 			File gradleApiBundleFile = testExists(
 				gradleProjectDir,
@@ -5219,9 +5218,7 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 				mavenServicePropertiesFile.toPath(),
 				StandardCopyOption.REPLACE_EXISTING);
 
-			_executeMaven(
-				mavenProjectDir,
-				ProjectTemplatesTestConstants.MAVEN_GOAL_PACKAGE);
+			_executeMaven(mavenProjectDir, MAVEN_GOAL_PACKAGE);
 
 			File mavenApiBundleFile = testExists(
 				mavenProjectDir,
@@ -5254,7 +5251,9 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 			workspaceProjectDir, "build.gradle", "version: \"[0-9].*");
 
 		if (_isBuildProjects()) {
-			executeGradle(workspaceDir, ":modules:" + name + ":build");
+			executeGradle(
+				workspaceDir, _gradleDistribution,
+				":modules:" + name + ":build");
 
 			testExists(workspaceProjectDir, jarFilePath);
 		}
@@ -5400,9 +5399,11 @@ public class ProjectTemplatesTest implements ProjectTemplatesTestSupport {
 	private static final String _NODEJS_NPM_CI_SASS_BINARY_SITE =
 		System.getProperty("nodejs.npm.ci.sass.binary.site");
 
+	private static URI _gradleDistribution;
 	private static final Pattern _gradlePluginVersionPattern = Pattern.compile(
 		".*com\\.liferay\\.gradle\\.plugins:([0-9]+\\.[0-9]+\\.[0-9]+).*",
 		Pattern.DOTALL | Pattern.MULTILINE);
+	private static XPathExpression _pomXmlNpmInstallXPathExpression;
 	private static final Pattern _serviceBuilderVersionPattern =
 		Pattern.compile(
 			".*service\\.builder:([0-9]+\\.[0-9]+\\.[0-9]+).*",

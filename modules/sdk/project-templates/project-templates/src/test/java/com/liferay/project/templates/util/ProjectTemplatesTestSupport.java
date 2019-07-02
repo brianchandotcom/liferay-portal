@@ -21,7 +21,6 @@ import com.liferay.project.templates.ProjectTemplates;
 import com.liferay.project.templates.ProjectTemplatesArgs;
 import com.liferay.project.templates.ProjectTemplatesTest;
 import com.liferay.project.templates.WorkspaceUtil;
-import com.liferay.project.templates.constants.ProjectTemplatesTestConstants;
 import com.liferay.project.templates.internal.ProjectGenerator;
 import com.liferay.project.templates.internal.util.Validator;
 
@@ -36,6 +35,8 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.StringWriter;
 
+import java.net.URI;
+
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -45,6 +46,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -82,6 +84,44 @@ import org.w3c.dom.Text;
  */
 public interface ProjectTemplatesTestSupport {
 
+	public static final String BUILD_PROJECTS = System.getProperty(
+		"project.templates.test.builds");
+
+	public static final String BUNDLES_DIFF_IGNORES = StringTestUtil.merge(
+		Arrays.asList(
+			"*.js.map", "*manifest.json", "*pom.properties", "*pom.xml",
+			"*package.json", "Archiver-Version", "Build-Jdk", "Built-By",
+			"Javac-Debug", "Javac-Deprecation", "Javac-Encoding"),
+		',');
+
+	public static final String DEPENDENCY_MODULES_EXTENDER_API =
+		"compileOnly group: \"com.liferay\", name: " +
+			"\"com.liferay.frontend.js.loader.modules.extender.api\"";
+
+	public static final String GRADLE_TASK_PATH_BUILD = ":build";
+
+	public static final String[] GRADLE_WRAPPER_FILE_NAMES = {
+		"gradlew", "gradlew.bat", "gradle/wrapper/gradle-wrapper.jar",
+		"gradle/wrapper/gradle-wrapper.properties"
+	};
+
+	public static final String GRADLE_WRAPPER_VERSION = "4.10.2";
+
+	public static final String MAVEN_GOAL_PACKAGE = "package";
+
+	public static final String[] MAVEN_WRAPPER_FILE_NAMES = {
+		"mvnw", "mvnw.cmd", ".mvn/wrapper/maven-wrapper.jar",
+		".mvn/wrapper/maven-wrapper.properties"
+	};
+
+	public static final String OUTPUT_FILENAME_GLOB_REGEX = "*.{jar,war}";
+
+	public static final String REPOSITORY_CDN_URL =
+		"https://repository-cdn.liferay.com/nexus/content/groups/public";
+
+	public static final boolean TEST_DEBUG_BUNDLE_DIFFS = Boolean.getBoolean(
+		"test.debug.bundle.diffs");
+
 	public default void addNexusRepositoriesElement(
 		Document document, String parentElementName, String elementName) {
 
@@ -114,8 +154,7 @@ public interface ProjectTemplatesTestSupport {
 			urlText = document.createTextNode(repositoryUrl);
 		}
 		else {
-			urlText = document.createTextNode(
-				ProjectTemplatesTestConstants.REPOSITORY_CDN_URL);
+			urlText = document.createTextNode(REPOSITORY_CDN_URL);
 		}
 
 		urlElement.appendChild(urlText);
@@ -182,18 +221,14 @@ public interface ProjectTemplatesTestSupport {
 		boolean workspace = WorkspaceUtil.isWorkspace(destinationDir);
 
 		if (gradle && !workspace) {
-			for (String fileName :
-					ProjectTemplatesTestConstants.GRADLE_WRAPPER_FILE_NAMES) {
-
+			for (String fileName : GRADLE_WRAPPER_FILE_NAMES) {
 				testExists(projectDir, fileName);
 			}
 
 			testExecutable(projectDir, "gradlew");
 		}
 		else {
-			for (String fileName :
-					ProjectTemplatesTestConstants.GRADLE_WRAPPER_FILE_NAMES) {
-
+			for (String fileName : GRADLE_WRAPPER_FILE_NAMES) {
 				testNotExists(projectDir, fileName);
 			}
 
@@ -201,18 +236,14 @@ public interface ProjectTemplatesTestSupport {
 		}
 
 		if (maven && !workspace) {
-			for (String fileName :
-					ProjectTemplatesTestConstants.MAVEN_WRAPPER_FILE_NAMES) {
-
+			for (String fileName : MAVEN_WRAPPER_FILE_NAMES) {
 				testExists(projectDir, fileName);
 			}
 
 			testExecutable(projectDir, "mvnw");
 		}
 		else {
-			for (String fileName :
-					ProjectTemplatesTestConstants.MAVEN_WRAPPER_FILE_NAMES) {
-
+			for (String fileName : MAVEN_WRAPPER_FILE_NAMES) {
 				testNotExists(projectDir, fileName);
 			}
 		}
@@ -253,7 +284,7 @@ public interface ProjectTemplatesTestSupport {
 
 	public default Optional<String> executeGradle(
 			File projectDir, boolean debug, boolean buildAndFail,
-			String... taskPaths)
+			URI gradleDistribution, String... taskPaths)
 		throws IOException {
 
 		final String repositoryUrl =
@@ -295,9 +326,7 @@ public interface ProjectTemplatesTestSupport {
 
 						if (Validator.isNotNull(repositoryUrl)) {
 							content = content.replace(
-								"\"" +
-									ProjectTemplatesTestConstants.
-										REPOSITORY_CDN_URL + "\"",
+								"\"" + REPOSITORY_CDN_URL + "\"",
 								"\"" + repositoryUrl + "\"");
 						}
 
@@ -361,8 +390,7 @@ public interface ProjectTemplatesTestSupport {
 
 		gradleRunner.withArguments(arguments);
 
-		gradleRunner.withGradleDistribution(
-			ProjectTemplatesTestConstants.gradleDistribution);
+		gradleRunner.withGradleDistribution(gradleDistribution);
 		gradleRunner.withProjectDir(projectDir);
 
 		BuildResult buildResult = null;
@@ -397,21 +425,24 @@ public interface ProjectTemplatesTestSupport {
 	}
 
 	public default Optional<String> executeGradle(
-			File projectDir, boolean debug, String... taskPaths)
+			File projectDir, boolean debug, URI gradleDistribution,
+			String... taskPaths)
 		throws IOException {
 
-		return executeGradle(projectDir, debug, false, taskPaths);
+		return executeGradle(
+			projectDir, debug, false, gradleDistribution, taskPaths);
 	}
 
-	public default void executeGradle(File projectDir, String... taskPaths)
+	public default void executeGradle(
+			File projectDir, URI gradleDistribution, String... taskPaths)
 		throws IOException {
 
-		executeGradle(projectDir, false, taskPaths);
+		executeGradle(projectDir, false, gradleDistribution, taskPaths);
 	}
 
 	public default boolean isBuildProjects() {
-		if (Validator.isNotNull(ProjectTemplatesTestConstants.BUILD_PROJECTS) &&
-			ProjectTemplatesTestConstants.BUILD_PROJECTS.equals("true")) {
+		if (Validator.isNotNull(BUILD_PROJECTS) &&
+			BUILD_PROJECTS.equals("true")) {
 
 			return true;
 		}
@@ -588,8 +619,7 @@ public interface ProjectTemplatesTestSupport {
 
 		try (bnd bnd = new bnd()) {
 			String[] args = {
-				"diff", "--ignore",
-				ProjectTemplatesTestConstants.BUNDLES_DIFF_IGNORES,
+				"diff", "--ignore", BUNDLES_DIFF_IGNORES,
 				bundleFile1.getAbsolutePath(), bundleFile2.getAbsolutePath()
 			};
 

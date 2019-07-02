@@ -15,7 +15,6 @@
 package com.liferay.project.templates;
 
 import com.liferay.maven.executor.MavenExecutor;
-import com.liferay.project.templates.constants.ProjectTemplatesTestConstants;
 import com.liferay.project.templates.internal.util.ProjectTemplatesUtil;
 import com.liferay.project.templates.internal.util.Validator;
 import com.liferay.project.templates.util.FileTestUtil;
@@ -33,9 +32,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
-
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathFactory;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -87,19 +83,9 @@ public class ProjectTemplatesSpringPortletMVCTest
 			gradleDistribution = properties.getProperty("distributionUrl");
 		}
 
-		Assert.assertTrue(
-			gradleDistribution.contains(
-				ProjectTemplatesTestConstants.GRADLE_WRAPPER_VERSION));
+		Assert.assertTrue(gradleDistribution.contains(GRADLE_WRAPPER_VERSION));
 
-		ProjectTemplatesTestConstants.gradleDistribution = URI.create(
-			gradleDistribution);
-
-		XPathFactory xPathFactory = XPathFactory.newInstance();
-
-		XPath xPath = xPathFactory.newXPath();
-
-		ProjectTemplatesTestConstants.pomXmlNpmInstallXPathExpression =
-			xPath.compile("//id[contains(text(),'npm-install')]/parent::*");
+		_gradleDistribution = URI.create(gradleDistribution);
 	}
 
 	public ProjectTemplatesSpringPortletMVCTest(
@@ -212,7 +198,7 @@ public class ProjectTemplatesSpringPortletMVCTest
 
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, gradleOutputDir, mavenOutputDir,
-			ProjectTemplatesTestConstants.GRADLE_TASK_PATH_BUILD);
+			GRADLE_TASK_PATH_BUILD);
 	}
 
 	private void _buildProjects(
@@ -221,11 +207,8 @@ public class ProjectTemplatesSpringPortletMVCTest
 		throws Exception {
 
 		if (isBuildProjects()) {
-			executeGradle(gradleProjectDir, gradleTaskPath);
-
 			Path gradleOutputPath = FileTestUtil.getFile(
-				gradleOutputDir.toPath(),
-				ProjectTemplatesTestConstants.OUTPUT_FILENAME_GLOB_REGEX, 1);
+				gradleOutputDir.toPath(), OUTPUT_FILENAME_GLOB_REGEX, 1);
 
 			Assert.assertNotNull(gradleOutputPath);
 
@@ -235,13 +218,10 @@ public class ProjectTemplatesSpringPortletMVCTest
 
 			String gradleOutputFileName = gradleOutputFile.getName();
 
-			_executeMaven(
-				mavenProjectDir,
-				ProjectTemplatesTestConstants.MAVEN_GOAL_PACKAGE);
+			_executeMaven(mavenProjectDir, MAVEN_GOAL_PACKAGE);
 
 			Path mavenOutputPath = FileTestUtil.getFile(
-				mavenOutputDir.toPath(),
-				ProjectTemplatesTestConstants.OUTPUT_FILENAME_GLOB_REGEX, 1);
+				mavenOutputDir.toPath(), OUTPUT_FILENAME_GLOB_REGEX, 1);
 
 			Assert.assertNotNull(mavenOutputPath);
 
@@ -260,7 +240,7 @@ public class ProjectTemplatesSpringPortletMVCTest
 				}
 			}
 			catch (Throwable t) {
-				if (ProjectTemplatesTestConstants.TEST_DEBUG_BUNDLE_DIFFS) {
+				if (TEST_DEBUG_BUNDLE_DIFFS) {
 					Path dirPath = Paths.get("build");
 
 					Files.copy(
@@ -436,6 +416,8 @@ public class ProjectTemplatesSpringPortletMVCTest
 
 		return _executeMaven(projectDir, false, args);
 	}
+
+	private static URI _gradleDistribution;
 
 	private final String _framework;
 	private final String _frameworkDependencies;

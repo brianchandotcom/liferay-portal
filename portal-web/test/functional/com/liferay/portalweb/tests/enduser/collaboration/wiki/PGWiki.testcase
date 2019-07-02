@@ -3,7 +3,6 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property custom.properties = "default.layout.template.id=1_column";
 	property testray.main.component.name = "Wiki";
 	var pageName = "Wiki Test Page";
 	var portletName = "Wiki";
@@ -596,6 +595,17 @@ definition {
 
 	@priority = "4"
 	test AddWikiPageWithInlineImage {
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Wiki Test Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
 		WikiNavigator.gotoAllPagesPG();

@@ -215,7 +215,7 @@ class LiferayApp extends App {
 	 * @param  {!Event} event The event object
 	 */
 
-	onDataLayoutConfigReady_(event) {
+	onDataLayoutConfigReady_() {
 		if (Liferay.Layout) {
 			Liferay.Layout.init(Liferay.Data.layoutConfig);
 		}

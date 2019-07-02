@@ -60,9 +60,7 @@ class Utils {
 
 	static resetAllPortlets() {
 		Utils.getPortletBoundaryIds(Liferay.Portlet.list).forEach(function(
-			value,
-			index,
-			collection
+			value
 		) {
 			const portlet = document.querySelector('#' + value);
 

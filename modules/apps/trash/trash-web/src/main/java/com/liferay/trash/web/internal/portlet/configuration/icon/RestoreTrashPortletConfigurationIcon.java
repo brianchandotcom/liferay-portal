@@ -126,10 +126,6 @@ public class RestoreTrashPortletConfigurationIcon
 			return false;
 		}
 
-		if (!trashHandler.isMovable()) {
-			return false;
-		}
-
 		if (trashHandler.isContainerModel()) {
 			return false;
 		}
@@ -138,6 +134,10 @@ public class RestoreTrashPortletConfigurationIcon
 
 		if (trashEntry != null) {
 			try {
+				if (!trashHandler.isMovable(trashEntry.getClassPK())) {
+					return false;
+				}
+
 				if (!trashHandler.isRestorable(trashEntry.getClassPK())) {
 					return false;
 				}

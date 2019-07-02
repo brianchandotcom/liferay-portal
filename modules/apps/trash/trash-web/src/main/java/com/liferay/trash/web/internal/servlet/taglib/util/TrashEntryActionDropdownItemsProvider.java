@@ -62,7 +62,7 @@ public class TrashEntryActionDropdownItemsProvider {
 				}
 				else if (!_trashHandler.isRestorable(
 							_trashEntry.getClassPK()) &&
-						 _trashHandler.isMovable()) {
+						 _trashHandler.isMovable(_trashEntry.getClassPK())) {
 
 					add(_getMoveActionDropdownItem());
 				}

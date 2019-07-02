@@ -67,7 +67,8 @@ public class TrashContainerActionDropdownItemsProvider {
 					}
 					else if (!_trashHandler.isRestorable(
 								_trashEntry.getClassPK()) &&
-							 _trashHandler.isMovable()) {
+							 _trashHandler.isMovable(
+								 _trashEntry.getClassPK())) {
 
 						add(_getMoveTrashEntryActionDropdownItem());
 					}
@@ -79,7 +80,7 @@ public class TrashContainerActionDropdownItemsProvider {
 					}
 				}
 				else {
-					if (_trashHandler.isMovable()) {
+					if (_trashHandler.isMovable(_trashRenderer.getClassPK())) {
 						add(_getMoveActionDropdownItem());
 					}
 					else if (_trashHandler.isDeletable(

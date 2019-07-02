@@ -54,7 +54,7 @@ public class TrashViewContentActionDropdownItemsProvider {
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
 		return new DropdownItemList() {
 			{
-				if (_trashHandler.isMovable()) {
+				if (_trashHandler.isMovable(_classPK)) {
 					add(_getMoveActionDropdownItem());
 				}
 

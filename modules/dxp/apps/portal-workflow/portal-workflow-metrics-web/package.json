@@ -61,7 +61,7 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"doc:code": "./node_modules/.bin/jsdoc -c ./jsdoc.json",
 		"format": "liferay-npm-scripts fix",
-		"test_DISABLED": "liferay-npm-scripts test"
+		"test": "liferay-npm-scripts test"
 	},
 	"version": "2.0.0"
 }

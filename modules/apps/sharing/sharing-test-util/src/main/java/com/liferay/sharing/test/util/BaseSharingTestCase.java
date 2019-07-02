@@ -101,11 +101,8 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 
 			T model = getModel(_user, _group);
 
-			Assert.assertTrue(
-				getSharingPermissionChecker().hasPermission(
-					permissionChecker, (Long)model.getPrimaryKeyObj(),
-					_group.getGroupId(),
-					Arrays.asList(SharingEntryAction.ADD_DISCUSSION)));
+			_assertContainsSharingPermission(
+				permissionChecker, model, SharingEntryAction.ADD_DISCUSSION);
 		}
 	}
 
@@ -119,11 +116,8 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 
 			T model = getModel(_user, _group);
 
-			Assert.assertTrue(
-				getSharingPermissionChecker().hasPermission(
-					permissionChecker, (Long)model.getPrimaryKeyObj(),
-					_group.getGroupId(),
-					Arrays.asList(SharingEntryAction.UPDATE)));
+			_assertContainsSharingPermission(
+				permissionChecker, model, SharingEntryAction.UPDATE);
 		}
 	}
 
@@ -137,11 +131,8 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 
 			T model = getModel(_user, _group);
 
-			Assert.assertTrue(
-				getSharingPermissionChecker().hasPermission(
-					permissionChecker, (Long)model.getPrimaryKeyObj(),
-					_group.getGroupId(),
-					Arrays.asList(SharingEntryAction.VIEW)));
+			_assertContainsSharingPermission(
+				permissionChecker, model, SharingEntryAction.VIEW);
 		}
 	}
 
@@ -282,9 +273,12 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 					model.getModelClassName()));
 			sb.append("))");
 
+			PermissionSQLContributor permissionSQLContributor =
+				getPermissionSQLContributor();
+
 			Assert.assertEquals(
 				sb.toString(),
-				getPermissionSQLContributor().getPermissionSQL(
+				permissionSQLContributor.getPermissionSQL(
 					model.getModelClassName(), "1234", null, null, null));
 		}
 	}
@@ -353,9 +347,8 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, permissionChecker)) {
 
-			Assert.assertTrue(
-				getModelResourcePermission().contains(
-					permissionChecker, model, ActionKeys.ADD_DISCUSSION));
+			_assertContainsPermission(
+				permissionChecker, model, ActionKeys.ADD_DISCUSSION);
 		}
 	}
 
@@ -386,9 +379,8 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, permissionChecker)) {
 
-			Assert.assertFalse(
-				getModelResourcePermission().contains(
-					permissionChecker, model, ActionKeys.UPDATE));
+			_assertNotContainsPermission(
+				permissionChecker, model, ActionKeys.UPDATE);
 		}
 	}
 
@@ -407,11 +399,8 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 
 			T model = getModel(_user, _group);
 
-			Assert.assertFalse(
-				getSharingPermissionChecker().hasPermission(
-					permissionChecker, (Long)model.getPrimaryKeyObj(),
-					_group.getGroupId(),
-					Arrays.asList(SharingEntryAction.UPDATE)));
+			_assertNotContainsSharingPermission(
+				permissionChecker, model, SharingEntryAction.UPDATE);
 		}
 	}
 
@@ -430,11 +419,8 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 
 			T model = getModel(_user, _group);
 
-			Assert.assertFalse(
-				getSharingPermissionChecker().hasPermission(
-					permissionChecker, (Long)model.getPrimaryKeyObj(),
-					_group.getGroupId(),
-					Arrays.asList(SharingEntryAction.VIEW)));
+			_assertNotContainsSharingPermission(
+				permissionChecker, model, SharingEntryAction.VIEW);
 		}
 	}
 
@@ -453,11 +439,8 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 
 			T model = getModel(_user, _group);
 
-			Assert.assertTrue(
-				getSharingPermissionChecker().hasPermission(
-					permissionChecker, (Long)model.getPrimaryKeyObj(),
-					_group.getGroupId(),
-					Arrays.asList(SharingEntryAction.ADD_DISCUSSION)));
+			_assertContainsSharingPermission(
+				permissionChecker, model, SharingEntryAction.ADD_DISCUSSION);
 		}
 	}
 
@@ -473,11 +456,8 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 
 			T model = getModel(_user, _group);
 
-			Assert.assertFalse(
-				getSharingPermissionChecker().hasPermission(
-					permissionChecker, (Long)model.getPrimaryKeyObj(),
-					_group.getGroupId(),
-					Arrays.asList(SharingEntryAction.ADD_DISCUSSION)));
+			_assertNotContainsSharingPermission(
+				permissionChecker, model, SharingEntryAction.ADD_DISCUSSION);
 		}
 	}
 
@@ -491,10 +471,10 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, permissionChecker)) {
 
-			Assert.assertFalse(
-				getModelResourcePermission().contains(
-					permissionChecker, getModel(_user, _group),
-					ActionKeys.ADD_DISCUSSION));
+			T model = getModel(_user, _group);
+
+			_assertNotContainsPermission(
+				permissionChecker, model, ActionKeys.ADD_DISCUSSION);
 		}
 	}
 
@@ -508,10 +488,10 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, permissionChecker)) {
 
-			Assert.assertFalse(
-				getModelResourcePermission().contains(
-					permissionChecker, getModel(_user, _group),
-					ActionKeys.VIEW));
+			T model = getModel(_user, _group);
+
+			_assertNotContainsPermission(
+				permissionChecker, model, ActionKeys.VIEW);
 		}
 	}
 
@@ -527,11 +507,8 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 
 			T model = getModel(_user, _group);
 
-			Assert.assertFalse(
-				getSharingPermissionChecker().hasPermission(
-					permissionChecker, (Long)model.getPrimaryKeyObj(),
-					_group.getGroupId(),
-					Arrays.asList(SharingEntryAction.UPDATE)));
+			_assertNotContainsSharingPermission(
+				permissionChecker, model, SharingEntryAction.UPDATE);
 		}
 	}
 
@@ -545,10 +522,10 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, permissionChecker)) {
 
-			Assert.assertFalse(
-				getModelResourcePermission().contains(
-					permissionChecker, getModel(_user, _group),
-					ActionKeys.UPDATE));
+			T model = getModel(_user, _group);
+
+			_assertNotContainsPermission(
+				permissionChecker, model, ActionKeys.UPDATE);
 		}
 	}
 
@@ -564,11 +541,8 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 
 			T model = getModel(_user, _group);
 
-			Assert.assertFalse(
-				getSharingPermissionChecker().hasPermission(
-					permissionChecker, (Long)model.getPrimaryKeyObj(),
-					_group.getGroupId(),
-					Arrays.asList(SharingEntryAction.VIEW)));
+			_assertNotContainsSharingPermission(
+				permissionChecker, model, SharingEntryAction.VIEW);
 		}
 	}
 
@@ -582,10 +556,10 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, permissionChecker)) {
 
-			Assert.assertFalse(
-				getModelResourcePermission().contains(
-					permissionChecker, getModel(_user, _group),
-					ActionKeys.VIEW));
+			T model = getModel(_user, _group);
+
+			_assertNotContainsPermission(
+				permissionChecker, model, ActionKeys.VIEW);
 		}
 	}
 
@@ -615,9 +589,8 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, permissionChecker)) {
 
-			Assert.assertFalse(
-				getModelResourcePermission().contains(
-					permissionChecker, model, ActionKeys.ADD_DISCUSSION));
+			_assertNotContainsPermission(
+				permissionChecker, model, ActionKeys.ADD_DISCUSSION);
 		}
 	}
 
@@ -647,9 +620,8 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, permissionChecker)) {
 
-			Assert.assertTrue(
-				getModelResourcePermission().contains(
-					permissionChecker, model, ActionKeys.UPDATE));
+			_assertContainsPermission(
+				permissionChecker, model, ActionKeys.UPDATE);
 		}
 	}
 
@@ -668,11 +640,8 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 
 			T model = getModel(_user, _group);
 
-			Assert.assertFalse(
-				getSharingPermissionChecker().hasPermission(
-					permissionChecker, (Long)model.getPrimaryKeyObj(),
-					_group.getGroupId(),
-					Arrays.asList(SharingEntryAction.ADD_DISCUSSION)));
+			_assertNotContainsSharingPermission(
+				permissionChecker, model, SharingEntryAction.ADD_DISCUSSION);
 		}
 	}
 
@@ -691,11 +660,8 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 
 			T model = getModel(_user, _group);
 
-			Assert.assertFalse(
-				getSharingPermissionChecker().hasPermission(
-					permissionChecker, (Long)model.getPrimaryKeyObj(),
-					_group.getGroupId(),
-					Arrays.asList(SharingEntryAction.VIEW)));
+			_assertNotContainsSharingPermission(
+				permissionChecker, model, SharingEntryAction.VIEW);
 		}
 	}
 
@@ -714,11 +680,8 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 
 			T model = getModel(_user, _group);
 
-			Assert.assertTrue(
-				getSharingPermissionChecker().hasPermission(
-					permissionChecker, (Long)model.getPrimaryKeyObj(),
-					_group.getGroupId(),
-					Arrays.asList(SharingEntryAction.UPDATE)));
+			_assertContainsSharingPermission(
+				permissionChecker, model, SharingEntryAction.UPDATE);
 		}
 	}
 
@@ -736,11 +699,8 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 
 			T model = getModel(_user, _group);
 
-			Assert.assertFalse(
-				getSharingPermissionChecker().hasPermission(
-					permissionChecker, (Long)model.getPrimaryKeyObj(),
-					_group.getGroupId(),
-					Arrays.asList(SharingEntryAction.ADD_DISCUSSION)));
+			_assertNotContainsSharingPermission(
+				permissionChecker, model, SharingEntryAction.ADD_DISCUSSION);
 		}
 	}
 
@@ -758,11 +718,8 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 
 			T model = getModel(_user, _group);
 
-			Assert.assertFalse(
-				getSharingPermissionChecker().hasPermission(
-					permissionChecker, (Long)model.getPrimaryKeyObj(),
-					_group.getGroupId(),
-					Arrays.asList(SharingEntryAction.UPDATE)));
+			_assertNotContainsSharingPermission(
+				permissionChecker, model, SharingEntryAction.UPDATE);
 		}
 	}
 
@@ -778,11 +735,8 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 
 			T model = getModel(_user, _group);
 
-			Assert.assertTrue(
-				getSharingPermissionChecker().hasPermission(
-					permissionChecker, (Long)model.getPrimaryKeyObj(),
-					_group.getGroupId(),
-					Arrays.asList(SharingEntryAction.VIEW)));
+			_assertContainsSharingPermission(
+				permissionChecker, model, SharingEntryAction.VIEW);
 		}
 	}
 
@@ -811,9 +765,8 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, permissionChecker)) {
 
-			Assert.assertFalse(
-				getModelResourcePermission().contains(
-					permissionChecker, model, ActionKeys.VIEW));
+			_assertNotContainsPermission(
+				permissionChecker, model, ActionKeys.VIEW);
 		}
 	}
 
@@ -842,9 +795,8 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, permissionChecker)) {
 
-			Assert.assertTrue(
-				getModelResourcePermission().contains(
-					permissionChecker, model, ActionKeys.VIEW));
+			_assertContainsPermission(
+				permissionChecker, model, ActionKeys.VIEW);
 		}
 	}
 
@@ -867,6 +819,60 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 	protected abstract SharingPermissionChecker getSharingPermissionChecker();
 
 	protected abstract void moveModelToTrash(T model) throws PortalException;
+
+	private void _assertContainsPermission(
+			PermissionChecker permissionChecker, T model, String actionId)
+		throws PortalException {
+
+		ModelResourcePermission<T> modelResourcePermission =
+			getModelResourcePermission();
+
+		Assert.assertTrue(
+			modelResourcePermission.contains(
+				permissionChecker, model, actionId));
+	}
+
+	private void _assertContainsSharingPermission(
+			PermissionChecker permissionChecker, T model,
+			SharingEntryAction sharingEntryAction)
+		throws PortalException {
+
+		SharingPermissionChecker sharingPermissionChecker =
+			getSharingPermissionChecker();
+
+		Assert.assertTrue(
+			sharingPermissionChecker.hasPermission(
+				permissionChecker, (Long)model.getPrimaryKeyObj(),
+				_group.getGroupId(),
+				Collections.singletonList(sharingEntryAction)));
+	}
+
+	private void _assertNotContainsPermission(
+			PermissionChecker permissionChecker, T model, String actionId)
+		throws PortalException {
+
+		ModelResourcePermission<T> modelResourcePermission =
+			getModelResourcePermission();
+
+		Assert.assertFalse(
+			modelResourcePermission.contains(
+				permissionChecker, model, actionId));
+	}
+
+	private void _assertNotContainsSharingPermission(
+			PermissionChecker permissionChecker, T model,
+			SharingEntryAction sharingEntryAction)
+		throws PortalException {
+
+		SharingPermissionChecker sharingPermissionChecker =
+			getSharingPermissionChecker();
+
+		Assert.assertFalse(
+			sharingPermissionChecker.hasPermission(
+				permissionChecker, (Long)model.getPrimaryKeyObj(),
+				_group.getGroupId(),
+				Collections.singletonList(sharingEntryAction)));
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseSharingTestCase.class);

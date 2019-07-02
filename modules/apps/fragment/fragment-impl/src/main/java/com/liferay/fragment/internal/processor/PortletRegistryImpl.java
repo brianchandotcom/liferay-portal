@@ -100,6 +100,21 @@ public class PortletRegistryImpl implements PortletRegistry {
 			portletIds.add(portletId);
 		}
 
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				fragmentEntryLink.getEditableValues());
+
+			String portletId = jsonObject.getString("portletId");
+			String instanceId = jsonObject.getString("instanceId");
+
+			if (Validator.isNotNull(portletId)) {
+				portletIds.add(PortletIdCodec.encode(portletId, instanceId));
+			}
+		}
+		catch (PortalException pe) {
+			_log.error("Unable to get portlets list", pe);
+		}
+
 		return portletIds;
 	}
 

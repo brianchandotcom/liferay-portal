@@ -576,7 +576,7 @@ definition {
 		OAuth2.viewScopeAliases(
 			applicationName = "OAuth Application",
 			resourcePanels = "Portal Services,Sample QA app",
-			scopeAliasList = "liferay-json-web-services/everything,liferay-oauth2-scope-sample-qa-app/example-scope-1");
+			scopeAliasList = "liferay-json-web-services.everything,liferay-oauth2-scope-sample-qa-app.example-scope-1");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

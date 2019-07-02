@@ -14,7 +14,7 @@
 
 /* eslint no-unused-vars: "warn" */
 
-import Clipboard from 'metal-clipboard';
+import ClipboardJS from 'clipboard';
 import Component, {Config} from 'metal-jsx';
 import getCN from 'classnames';
 import Popover from '../Popover/Popover.es';
@@ -24,24 +24,18 @@ import {selectText} from 'dynamic-data-mapping-form-builder/js/util/dom.es';
 
 class ShareFormPopover extends Component {
 	attached() {
-		this._clipboard = new Clipboard({
-			selector: '.ddm-copy-clipboard'
-		});
-		this._eventHandler = new EventHandler();
+		this._clipboard = new ClipboardJS('.ddm-copy-clipboard');
 
-		this._eventHandler.add(
-			this._clipboard.on(
-				'success',
-				this._handleClipboardSuccess.bind(this)
-			)
+		this._clipboard.on(
+			'success',
+			this._handleClipboardSuccess.bind(this)
 		);
 	}
 
 	disposeInternal() {
 		super.disposeInternal();
 
-		this._clipboard.dispose();
-		this._eventHandler.removeAllListeners();
+		this._clipboard.destroy();
 	}
 
 	render() {
@@ -92,8 +86,7 @@ class ShareFormPopover extends Component {
 						<span class='input-group-append input-group-item input-group-item-shrink'>
 							<button
 								class={buttonClasses}
-								data-clipboard
-								data-text={url}
+								data-clipboard-text={url}
 								type='button'
 							>
 								{success ? (

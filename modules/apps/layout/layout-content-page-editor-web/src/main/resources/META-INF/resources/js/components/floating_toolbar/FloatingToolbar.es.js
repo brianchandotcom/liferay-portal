@@ -173,16 +173,9 @@ class FloatingToolbar extends Component {
 	}
 
 	/**
-	 * @param {string} selectedPanelId
-	 * @return {string}
 	 * @review
 	 */
-	syncSelectedPanelId(selectedPanelId) {
-		this._selectedPanel = this.buttons.find(
-			button => button.panelId === selectedPanelId
-		);
 
-		return selectedPanelId;
 	}
 
 	/**
@@ -299,18 +292,6 @@ class FloatingToolbar extends Component {
  * @type {!Object}
  */
 FloatingToolbar.STATE = {
-	/**
-	 * Selected panel
-	 * @default null
-	 * @instance
-	 * @memberof FloatingToolbar
-	 * @review
-	 * @type {object|null}
-	 */
-	_selectedPanel: Config.object()
-		.internal()
-		.value(null),
-
 	/**
 	 * Element where the floating toolbar is positioned with
 	 * @default undefined

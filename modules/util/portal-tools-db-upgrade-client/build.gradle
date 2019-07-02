@@ -53,3 +53,5 @@ distributions {
 liferayOSGi {
 	expandCompileInclude = true
 }
+
+startScripts.onlyIf {false}

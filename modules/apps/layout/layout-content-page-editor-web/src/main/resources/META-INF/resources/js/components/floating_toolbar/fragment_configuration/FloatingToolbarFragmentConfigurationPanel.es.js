@@ -18,9 +18,13 @@ import Soy from 'metal-soy';
 
 import './FloatingToolbarFragmentConfigurationPanelDelegateTemplate.soy';
 import './field_types/Select.soy';
+import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../utils/constants';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {getSelectData} from './field_types/Select.es';
+import {prefixSegmentsExperienceId} from '../../../utils/prefixSegmentsExperienceId.es';
+import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarFragmentConfigurationPanel.soy';
+import {updateEditableValueAction} from '../../../actions/updateEditableValue.es';
 
 const GET_DATA_FUNCTIONS = {
 	select: getSelectData
@@ -39,6 +43,27 @@ class FloatingToolbarFragmentConfigurationPanel extends Component {
 		const fieldType = event.delegateTarget.dataset.fieldType;
 
 		const fieldData = GET_DATA_FUNCTIONS[fieldType](event);
+
+		const defaultSegmentsExperienceId = prefixSegmentsExperienceId(
+			this.defaultSegmentsExperienceId
+		);
+		const segmentsExperienceId = prefixSegmentsExperienceId(
+			this.segmentsExperienceId
+		);
+		const nextConfigurationValues = setIn(
+			this.item.configurationValues,
+			[fieldData.fieldSetName, fieldData.fieldName],
+			fieldData.fieldValue
+		);
+
+		this.store.dispatch(
+			updateEditableValueAction(
+				this.item.fragmentEntryLinkId,
+				nextConfigurationValues,
+				FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				segmentsExperienceId || defaultSegmentsExperienceId
+			)
+		);
 	}
 
 	/**
@@ -75,7 +100,7 @@ FloatingToolbarFragmentConfigurationPanel.STATE = {
 
 const ConnectedFloatingToolbarFragmentConfigurationPanel = getConnectedComponent(
 	FloatingToolbarFragmentConfigurationPanel,
-	['spritemap']
+	['defaultSegmentsExperienceId', 'segmentsExperienceId', 'spritemap']
 );
 
 Soy.register(ConnectedFloatingToolbarFragmentConfigurationPanel, templates);

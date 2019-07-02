@@ -36,7 +36,8 @@ import {
 import {
 	FLOATING_TOOLBAR_BUTTONS,
 	FRAGMENTS_EDITOR_ITEM_TYPES,
-	FRAGMENTS_EDITOR_ROW_TYPES
+	FRAGMENTS_EDITOR_ROW_TYPES,
+	FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
 } from '../../utils/constants';
 import {
 	moveItem,
@@ -44,6 +45,7 @@ import {
 	removeItem,
 	setIn
 } from '../../utils/FragmentsEditorUpdateUtils.es';
+import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 
 /**
@@ -133,6 +135,7 @@ class FragmentEntryLink extends Component {
 	syncFragmentEntryLinks() {
 		if (this.fragmentEntryLinks[this.fragmentEntryLinkId]) {
 			this._setConfiguration();
+			this._setConfigurationValues();
 		}
 	}
 
@@ -146,6 +149,7 @@ class FragmentEntryLink extends Component {
 			buttons: FRAGMENT_FLOATING_TOOLBAR_BUTTONS,
 			item: {
 				configuration: this._configuration,
+				configurationValues: this._configurationValues,
 				fragmentEntryLinkId: this.fragmentEntryLinkId
 			},
 			itemId: this.fragmentEntryLinkId,
@@ -259,6 +263,32 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
+	 * Set fragment entry link configuration values to internal property
+	 * @private
+	 * @review
+	 */
+	_setConfigurationValues() {
+		const defaultSegmentsExperienceId = prefixSegmentsExperienceId(
+			this.defaultSegmentsExperienceId
+		);
+		const segmentsExperienceId = prefixSegmentsExperienceId(
+			this.segmentsExperienceId
+		);
+
+		const configurationValues = this.fragmentEntryLinks[
+			this.fragmentEntryLinkId
+		].editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR];
+
+		if (configurationValues) {
+			const segmentedConfigurationValues =
+				configurationValues[defaultSegmentsExperienceId] ||
+				configurationValues[segmentsExperienceId];
+
+			this._configurationValues = segmentedConfigurationValues;
+		}
+	}
+
+	/**
 	 * Returns wether the config panel should be shown or not
 	 * @private
 	 * @review
@@ -291,6 +321,14 @@ FragmentEntryLink.STATE = {
 	 * @type {object}
 	 */
 	_configuration: Config.object().internal(),
+
+	/**
+	 * Fragment Entry Link Configuration values
+	 * @instance
+	 * @memberOf FragmentEntryLink
+	 * @type {object}
+	 */
+	_configurationValues: Config.object().internal(),
 
 	/**
 	 * Floating toolbar instance for internal use.
@@ -355,6 +393,7 @@ const ConnectedFragmentEntryLink = getConnectedComponent(FragmentEntryLink, [
 	'activeItemId',
 	'activeItemType',
 	'defaultLanguageId',
+	'defaultSegmentsExperienceId',
 	'dropTargetItemId',
 	'dropTargetItemType',
 	'dropTargetBorder',
@@ -366,6 +405,7 @@ const ConnectedFragmentEntryLink = getConnectedComponent(FragmentEntryLink, [
 	'languageId',
 	'layoutData',
 	'portletNamespace',
+	'segmentsExperienceId',
 	'selectedMappingTypes',
 	'selectedSidebarPanelId',
 	'spritemap'

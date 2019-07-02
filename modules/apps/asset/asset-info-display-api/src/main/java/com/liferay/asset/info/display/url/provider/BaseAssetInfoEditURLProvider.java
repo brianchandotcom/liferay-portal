@@ -14,17 +14,10 @@
 
 package com.liferay.asset.info.display.url.provider;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.info.display.url.provider.util.AssetInfoEditURLProviderUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.info.display.url.provider.InfoEditURLProvider;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,43 +36,9 @@ public class BaseAssetInfoEditURLProvider
 			return StringPool.BLANK;
 		}
 
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				assetEntry.getClassName());
-
-		if (assetRendererFactory == null) {
-			return StringPool.BLANK;
-		}
-
-		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-			assetEntry.getClassPK());
-
-		if (assetRenderer == null) {
-			return StringPool.BLANK;
-		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (!assetRenderer.hasEditPermission(
-				themeDisplay.getPermissionChecker())) {
-
-			return StringPool.BLANK;
-		}
-
-		PortletURL editAssetEntryURL = assetRenderer.getURLEdit(
-			httpServletRequest, LiferayWindowState.NORMAL,
-			themeDisplay.getURLCurrent());
-
-		if (editAssetEntryURL == null) {
-			return StringPool.BLANK;
-		}
-
-		editAssetEntryURL.setParameter(
-			"portletResource", assetRendererFactory.getPortletId());
-
-		return editAssetEntryURL.toString();
+		return AssetInfoEditURLProviderUtil.getURL(
+			assetEntry.getClassName(), assetEntry.getClassPK(),
+			httpServletRequest);
 	}
 
 }

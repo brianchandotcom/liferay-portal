@@ -14,10 +14,14 @@
 
 package com.liferay.blogs.web.internal.info.display.url.provider;
 
-import com.liferay.asset.info.display.url.provider.BaseAssetInfoEditURLProvider;
+import com.liferay.asset.info.display.url.provider.AssetInfoEditURLProvider;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.info.display.url.provider.InfoEditURLProvider;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -27,5 +31,19 @@ import org.osgi.service.component.annotations.Component;
 	service = InfoEditURLProvider.class
 )
 public class BlogsAssetInfoEditURLProvider
-	extends BaseAssetInfoEditURLProvider {
+	implements InfoEditURLProvider<BlogsEntry> {
+
+	@Override
+	public String getURL(
+			BlogsEntry blogsEntry, HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		return _assetInfoEditURLProvider.getURL(
+			BlogsEntry.class.getName(), blogsEntry.getEntryId(),
+			httpServletRequest);
+	}
+
+	@Reference
+	private AssetInfoEditURLProvider _assetInfoEditURLProvider;
+
 }

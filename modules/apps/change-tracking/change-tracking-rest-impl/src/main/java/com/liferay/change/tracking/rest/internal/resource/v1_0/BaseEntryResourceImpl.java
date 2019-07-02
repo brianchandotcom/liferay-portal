@@ -60,11 +60,11 @@ public abstract class BaseEntryResourceImpl implements EntryResource {
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.PATH, name = "collectionId"),
 			@Parameter(in = ParameterIn.QUERY, name = "changeTypesFilter"),
 			@Parameter(in = ParameterIn.QUERY, name = "classNameIdsFilter"),
-			@Parameter(in = ParameterIn.QUERY, name = "groupIdsFilter"),
-			@Parameter(in = ParameterIn.PATH, name = "collectionId"),
 			@Parameter(in = ParameterIn.QUERY, name = "collision"),
+			@Parameter(in = ParameterIn.QUERY, name = "groupIdsFilter"),
 			@Parameter(in = ParameterIn.QUERY, name = "status"),
 			@Parameter(in = ParameterIn.QUERY, name = "userIdsFilter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
@@ -76,16 +76,16 @@ public abstract class BaseEntryResourceImpl implements EntryResource {
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Entry")})
 	public Page<Entry> getCollectionEntriesPage(
+			@NotNull @Parameter(hidden = true) @PathParam("collectionId") Long
+				collectionId,
 			@Parameter(hidden = true) @QueryParam("changeTypesFilter") String[]
 				changeTypesFilter,
 			@Parameter(hidden = true) @QueryParam("classNameIdsFilter") String[]
 				classNameIdsFilter,
-			@Parameter(hidden = true) @QueryParam("groupIdsFilter") String[]
-				groupIdsFilter,
-			@NotNull @Parameter(hidden = true) @PathParam("collectionId") Long
-				collectionId,
 			@DefaultValue("false") @Parameter(hidden = true)
 			@QueryParam("collision") Boolean collision,
+			@Parameter(hidden = true) @QueryParam("groupIdsFilter") String[]
+				groupIdsFilter,
 			@DefaultValue("2") @Parameter(hidden = true) @QueryParam("status")
 				Integer status,
 			@Parameter(hidden = true) @QueryParam("userIdsFilter") String[]

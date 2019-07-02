@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
 
@@ -50,21 +49,20 @@ public class AffectedEntryResourceImpl extends BaseAffectedEntryResourceImpl {
 
 	@Override
 	public Page<AffectedEntry> getCollectionEntryAffectedEntriesPage(
-			Long collectionId, Long entryId, String keywords,
-			Pagination pagination)
-		throws Exception {
+		Long collectionId, Long entryId, String keywords,
+		Pagination pagination) {
 
 		try {
+			QueryDefinition<CTEntry> queryDefinition =
+				SearchUtil.getQueryDefinition(CTEntry.class, pagination, null);
+
+			queryDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
+
 			CTEntry ctEntry = _ctEntryLocalService.getCTEntry(
 				GetterUtil.getLong(entryId));
 
 			List<CTEntry> affectedByCTEntries;
 			int totalCount;
-
-			QueryDefinition<CTEntry> queryDefinition =
-				SearchUtil.getQueryDefinition(CTEntry.class, pagination, null);
-
-			queryDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 			if (Validator.isNotNull(keywords)) {
 				OrderByComparator<CTEntry> orderByComparator =
@@ -102,8 +100,7 @@ public class AffectedEntryResourceImpl extends BaseAffectedEntryResourceImpl {
 			}
 
 			return Page.of(
-				TransformUtil.transform(
-					affectedByCTEntries, this::_toAffectedEntry),
+				transform(affectedByCTEntries, this::_toAffectedEntry),
 				pagination, totalCount);
 		}
 		catch (PortalException pe) {

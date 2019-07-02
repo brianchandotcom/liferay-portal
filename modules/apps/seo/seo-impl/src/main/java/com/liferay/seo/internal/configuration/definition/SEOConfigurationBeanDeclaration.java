@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.seo.internal.configuration.declaration;
+package com.liferay.seo.internal.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 import com.liferay.seo.internal.configuration.SEOCompanyConfiguration;

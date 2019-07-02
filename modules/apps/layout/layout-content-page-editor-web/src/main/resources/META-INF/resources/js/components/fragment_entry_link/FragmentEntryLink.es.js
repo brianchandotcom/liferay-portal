@@ -47,14 +47,6 @@ import {
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 
 /**
- * Defines the list of available panels.
- * @type {object[]}
- */
-const FRAGMENT_FLOATING_TOOLBAR_BUTTONS = [
-	FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration
-];
-
-/**
  * FragmentEntryLink
  * @review
  */
@@ -144,7 +136,7 @@ class FragmentEntryLink extends Component {
 	_createFloatingToolbar() {
 		const config = {
 			anchorElement: this.element,
-			buttons: FRAGMENT_FLOATING_TOOLBAR_BUTTONS,
+			buttons: [],
 			item: {
 				configuration: this._configuration,
 				fragmentEntryLinkId: this.fragmentEntryLinkId

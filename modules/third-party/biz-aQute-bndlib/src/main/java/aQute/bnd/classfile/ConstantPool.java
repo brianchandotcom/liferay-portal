@@ -178,8 +178,7 @@ public class ConstantPool {
 	}
 
 	static String parseUtf8Info(DataInput in) throws IOException {
-		String constant = in.readUTF();
-		return constant.intern();
+		return in.readUTF();
 	}
 
 	static Integer parseIntegerInfo(DataInput in) throws IOException {
@@ -520,3 +519,4 @@ public class ConstantPool {
 		return new PackageInfo(name_index);
 	}
 }
+/* @generated */

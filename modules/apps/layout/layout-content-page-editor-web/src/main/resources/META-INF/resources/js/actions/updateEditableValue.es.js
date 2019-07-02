@@ -130,22 +130,35 @@ function updateEditableValuesAction(
 		const previousEditableValues =
 			state.fragmentEntryLinks[fragmentEntryLinkId].editableValues;
 
-		const keysTreeArray = editableValueSegmentsExperienceId
-			? [processor, editableId, editableValueSegmentsExperienceId]
-			: [processor, editableId];
+		let keysTreeArray = [processor];
+
+		if (editableId) {
+			keysTreeArray = [...keysTreeArray, editableId];
+		}
+
+		if (editableValueSegmentsExperienceId) {
+			keysTreeArray = [
+				...keysTreeArray,
+				editableValueSegmentsExperienceId
+			];
+		}
 
 		let nextEditableValues = previousEditableValues;
 
 		editableValues.forEach(editableValue => {
 			if (!editableValue.content) {
-				nextEditableValues = deleteIn(nextEditableValues, [
-					...keysTreeArray,
+				nextEditableValues = deleteIn(
+					nextEditableValues,
 					editableValue.editableValueId
-				]);
+						? [...keysTreeArray, editableValue.editableValueId]
+						: keysTreeArray
+				);
 			} else {
 				nextEditableValues = setIn(
 					nextEditableValues,
-					[...keysTreeArray, editableValue.editableValueId],
+					editableValue.editableValueId
+						? [...keysTreeArray, editableValue.editableValueId]
+						: keysTreeArray,
 					editableValue.content
 				);
 			}

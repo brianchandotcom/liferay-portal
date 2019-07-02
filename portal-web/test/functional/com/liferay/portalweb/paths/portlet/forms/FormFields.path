@@ -307,7 +307,7 @@
 <!--VALIDATION-->
 <tr>
 	<td>VALIDATION_ARGUMENT</td>
-	<td>//div[contains(@data-field-name,'validation')]//div[contains(@class,'select-field-trigger')] | //div[contains(@class,'validation')]//div[contains(@class,'select-field-trigger')]</td>
+	<td>//div[contains(@data-field-name,'selectedValidation')]//ul[contains(@class,'select-field-trigger')]</td>
 	<td></td>
 </tr>
 <tr>

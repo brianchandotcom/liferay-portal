@@ -64,11 +64,11 @@
 	.input-file {
 		$focus-box-shadow: 0 0 0 2px #fff, 0 0 0 4px #80acff !default;
 
-		width: 0.1px;
 		height: 0.1px;
 		opacity: 0;
 		overflow: hidden;
 		position: absolute;
+		width: 0.1px;
 		z-index: -1;
 
 		& + label {

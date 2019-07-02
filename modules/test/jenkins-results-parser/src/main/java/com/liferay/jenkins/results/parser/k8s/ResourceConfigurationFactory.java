@@ -58,7 +58,9 @@ public class ResourceConfigurationFactory {
 		String databaseName, String databaseVersion) {
 
 		if (StringUtils.countMatches(databaseVersion, ".") > 1) {
-			int index = databaseVersion.lastIndexOf(".");
+			int index = databaseVersion.indexOf(".");
+
+			index = databaseVersion.indexOf(".", index + 1);
 
 			databaseVersion = databaseVersion.substring(0, index);
 		}

@@ -465,7 +465,8 @@ definition {
 	test AddSubFolderNameDocumentNameDuplicate {
 		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1008,7 +1009,8 @@ definition {
 	test MoveFolderDocumentToFolder {
 		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder1 Description",
-			dmFolderName = "DM Folder1 Name");
+			dmFolderName = "DM Folder1 Name",
+			groupName = "Guest");
 
 		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder2 Description",
@@ -1429,7 +1431,8 @@ definition {
 	test UnlockDocumentInFolder {
 		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

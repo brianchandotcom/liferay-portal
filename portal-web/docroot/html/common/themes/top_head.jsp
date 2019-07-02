@@ -38,7 +38,7 @@ if (!themeDisplay.isSignedIn() && layout.isPublicLayout()) {
 		alternateURLs = PortalUtil.getAlternateURLs(canonicalURL, themeDisplay, layout);
 	}
 
-	for (SEOLink seoLink : SEOUtil.getLocalizedSEOLinks(themeDisplay.getCompanyId(), PortalUtil.getLocale(request), canonicalURL, alternateURLs)) {
+	for (SEOLink seoLink : SEOLinkManagerUtil.getLocalizedSEOLinks(themeDisplay.getCompanyId(), PortalUtil.getLocale(request), canonicalURL, alternateURLs)) {
 		Optional<String> hrefLangOptional = seoLink.getHrefLang();
 %>
 

@@ -22,5 +22,5 @@ String adminMailHostNames = PrefsPropsUtil.getString(company.getCompanyId(), Pro
 
 <aui:fieldset>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input label='<%= LanguageUtil.format(request, "enter-one-mail-host-name-per-line-for-all-additional-mail-host-names-besides-x", company.getMx(), false) %>' name='<%= "settings--" + PropsKeys.ADMIN_MAIL_HOST_NAMES + "--" %>' type="textarea" value="<%= adminMailHostNames %>" />
+	<aui:input label='<%= LanguageUtil.format(resourceBundle, "enter-one-mail-host-name-per-line-for-all-additional-mail-host-names-besides-x", company.getMx(), false) %>' name='<%= "settings--" + PropsKeys.ADMIN_MAIL_HOST_NAMES + "--" %>' type="textarea" value="<%= adminMailHostNames %>" />
 </aui:fieldset>

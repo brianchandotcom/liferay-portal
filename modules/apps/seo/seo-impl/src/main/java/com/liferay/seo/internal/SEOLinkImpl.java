@@ -46,8 +46,8 @@ public class SEOLinkImpl implements SEOLink {
 		return _href;
 	}
 
-	public Optional<String> getHrefLang() {
-		return Optional.ofNullable(_hrefLang);
+	public String getHrefLang() {
+		return _hrefLang;
 	}
 
 	public SEOLink.SEOLinkRel getSeoLinkRel() {

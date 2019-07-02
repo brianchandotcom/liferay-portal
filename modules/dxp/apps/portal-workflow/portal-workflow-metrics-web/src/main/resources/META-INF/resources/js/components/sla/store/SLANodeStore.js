@@ -30,12 +30,10 @@ const useSLANodes = (processId, fetchClient) => {
 
 						if (node.initial) {
 							nodeBegins.push(newNode);
-						}
-						else {
+						} else {
 							nodeEnds.push(newNode);
 						}
-					}
-					else if (node.type === 'TASK') {
+					} else if (node.type === 'TASK') {
 						nodeEnters.push({
 							...node,
 							desc: `${entersTaskString} ${node.name}`,

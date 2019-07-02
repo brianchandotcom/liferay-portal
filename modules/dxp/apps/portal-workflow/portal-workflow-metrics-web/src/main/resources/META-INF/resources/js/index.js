@@ -28,8 +28,7 @@ export default function(defaultDelta, deltas, maxPages, namespace, portletId) {
 		if (path.indexOf(portletId) > -1) {
 			ReactDOM.unmountComponentAtNode(container);
 			buildContainer();
-		}
-		else {
+		} else {
 			ReactDOM.unmountComponentAtNode(container);
 		}
 	});

@@ -56,9 +56,7 @@ class InstanceListItem extends React.Component {
 				<td>
 					{statusIcon && (
 						<span
-							className={`mr-3 sticker sticker-sm ${
-								statusIcon.bgColor
-							}`}
+							className={`mr-3 sticker sticker-sm ${statusIcon.bgColor}`}
 						>
 							<span className='inline-item'>
 								<Icon

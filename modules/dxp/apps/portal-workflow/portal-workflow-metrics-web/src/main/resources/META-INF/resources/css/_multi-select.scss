@@ -3,7 +3,7 @@
 	position: relative;
 
 	> .drop-icon {
-		color: #6B6C7E;
+		color: #6b6c7e;
 		padding-right: 0.5rem;
 	}
 
@@ -18,17 +18,19 @@
 		width: 100%;
 
 		> ul > li.no-results > a {
-			&:hover, &:active, &{
+			&:hover,
+			&:active,
+			& {
 				background-color: transparent;
-				color: #6B6C7E;
+				color: #6b6c7e;
 				cursor: default;
 			}
 		}
 	}
 
 	&.is-active {
-		background-color: #F0F5FF;
-		border-color: #80ACFF;
+		background-color: #f0f5ff;
+		border-color: #80acff;
 		color: #272833;
 		outline: 0;
 

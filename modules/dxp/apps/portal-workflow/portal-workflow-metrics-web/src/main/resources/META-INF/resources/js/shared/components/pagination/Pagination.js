@@ -35,8 +35,7 @@ class Pagination extends React.Component {
 		for (let i = initCount; i < condition; i++) {
 			if (functionIterator) {
 				functionIterator(data, i);
-			}
-			else {
+			} else {
 				data.push(i);
 			}
 		}
@@ -112,8 +111,7 @@ class Pagination extends React.Component {
 						/>
 					);
 				}
-			}
-			else if (activePage === 1) {
+			} else if (activePage === 1) {
 				for (let i = 1; i <= 3; i++) {
 					addPage(
 						i,
@@ -142,8 +140,7 @@ class Pagination extends React.Component {
 						page={lastPage}
 					/>
 				);
-			}
-			else if (activePage === pages) {
+			} else if (activePage === pages) {
 				addPage(
 					1,
 					<PageItem
@@ -171,8 +168,7 @@ class Pagination extends React.Component {
 						/>
 					);
 				}
-			}
-			else {
+			} else {
 				addPage(
 					1,
 					<PageItem
@@ -191,8 +187,7 @@ class Pagination extends React.Component {
 								: maxPages
 						)
 					);
-				}
-				else {
+				} else {
 					for (
 						let i = 2,
 							x =
@@ -251,8 +246,7 @@ class Pagination extends React.Component {
 						activePage + 2,
 						this.buildDropMenu(activePage + 2, remainingPages)
 					);
-				}
-				else {
+				} else {
 					for (let i = activePage + 2; i < remainingPages; i++) {
 						addPage(
 							i,

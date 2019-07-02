@@ -1,4 +1,4 @@
-$c: ".workflow-process-dashboard";
+$c: '.workflow-process-dashboard';
 
 #{$c} {
 	.dashboard-panel-header {
@@ -9,7 +9,7 @@ $c: ".workflow-process-dashboard";
 
 		.workflow-tooltip {
 			svg {
-				color: #A7A9BC;
+				color: #a7a9bc;
 				font-size: 16px;
 			}
 
@@ -31,10 +31,10 @@ $c: ".workflow-process-dashboard";
 	}
 
 	.process-dashboard-summary-card {
-		border: 1px solid #E7E7ED;
+		border: 1px solid #e7e7ed;
 		border-radius: 0.25rem;
 		box-sizing: border-box;
-		color: #30313F !important;
+		color: #30313f !important;
 		display: inline-flex;
 		font-size: 0.875rem;
 		margin-right: 1.5rem;
@@ -50,11 +50,11 @@ $c: ".workflow-process-dashboard";
 		}
 
 		.footer {
-			color: #6B6C7E;
+			color: #6b6c7e;
 			min-height: 1.3rem;
 
 			.highlight-hover {
-				color: #0B5FFF;
+				color: #0b5fff;
 			}
 		}
 
@@ -66,7 +66,7 @@ $c: ".workflow-process-dashboard";
 			pointer-events: none;
 
 			.header {
-				color: #A7A9BC;
+				color: #a7a9bc;
 
 				.sticker {
 					opacity: 0.4;
@@ -75,7 +75,7 @@ $c: ".workflow-process-dashboard";
 		}
 
 		&:hover {
-			border: 2px solid #80ACFF;
+			border: 2px solid #80acff;
 			padding: 15px;
 		}
 
@@ -85,7 +85,10 @@ $c: ".workflow-process-dashboard";
 	}
 
 	.table-list {
-		td:last-child, th:last-child, td + td, th + th {
+		td:last-child,
+		th:last-child,
+		td + td,
+		th + th {
 			padding-right: 3rem;
 		}
 

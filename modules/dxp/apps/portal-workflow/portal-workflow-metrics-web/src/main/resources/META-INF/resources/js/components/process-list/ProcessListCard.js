@@ -83,7 +83,7 @@ class ProcessListCard extends React.Component {
 		const emptyMessageText = searching
 			? Liferay.Language.get('no-results-were-found')
 			: Liferay.Language.get(
-				'once-there-are-active-processes-metrics-will-appear-here'
+					'once-there-are-active-processes-metrics-will-appear-here'
 			  );
 
 		return (

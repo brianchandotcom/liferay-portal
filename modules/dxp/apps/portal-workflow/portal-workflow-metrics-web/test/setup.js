@@ -13,8 +13,7 @@ window.Liferay = {
 		get: key => {
 			if (key === 'decimal-delimiter') {
 				return '.';
-			}
-			else if (key === 'thousand-abbreviation') {
+			} else if (key === 'thousand-abbreviation') {
 				return 'K';
 			}
 

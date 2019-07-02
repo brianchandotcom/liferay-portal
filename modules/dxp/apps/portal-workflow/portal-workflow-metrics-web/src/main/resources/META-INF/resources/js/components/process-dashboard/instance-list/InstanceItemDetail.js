@@ -54,11 +54,9 @@ class InstanceItemDetail extends React.Component {
 
 		if (status === 'Pending' && slaStatus === 'OnTime') {
 			styleName = 'text-success';
-		}
-		else if (status === 'Completed') {
+		} else if (status === 'Completed') {
 			styleName = 'text-secondary';
-		}
-		else if (empty) {
+		} else if (empty) {
 			styleName = 'text-info';
 		}
 
@@ -66,8 +64,7 @@ class InstanceItemDetail extends React.Component {
 
 		if (empty) {
 			iconTitleName = 'hr';
-		}
-		else if (overdue) {
+		} else if (overdue) {
 			iconTitleName = 'exclamation-circle';
 		}
 
@@ -250,8 +247,7 @@ InstanceItemDetail.Item = ({
 
 	if (status === 'Stopped' && onTime) {
 		statusText = `(${Liferay.Language.get('resolved-on-time')})`;
-	}
-	else if (status === 'Running') {
+	} else if (status === 'Running') {
 		const remainingTimePositive = onTime
 			? remainingTime
 			: remainingTime * -1;
@@ -267,8 +263,7 @@ InstanceItemDetail.Item = ({
 		statusText = `${moment(dateOverdue).format(
 			'MMM DD, LT'
 		)} (${durationText} ${onTimeText})`;
-	}
-	else if (status === 'Paused') {
+	} else if (status === 'Paused') {
 		statusText = `(${Liferay.Language.get('sla-paused')})`;
 	}
 

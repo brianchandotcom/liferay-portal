@@ -19,6 +19,14 @@ distributions {
 	}
 }
 
+distZip {
+	filesMatching("**/*.jar") {
+		file ->
+
+		file.setPath(file.getName())
+	}
+}
+
 jar {
 	archiveName "$baseName" + ".jar"
 }

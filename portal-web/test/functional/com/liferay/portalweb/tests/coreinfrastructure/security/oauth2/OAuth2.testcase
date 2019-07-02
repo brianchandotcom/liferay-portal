@@ -576,7 +576,7 @@ definition {
 		OAuth2.viewScopesMappings(
 			applicationName = "OAuth Application",
 			resourcePanels = "Portal Services,Sample QA app",
-			scopeNameList = "liferay-json-web-services/everything,liferay-oauth2-scope-sample-qa-app/example-scope-1");
+			scopeAliasList = "liferay-json-web-services/everything,liferay-oauth2-scope-sample-qa-app/example-scope-1");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -600,7 +600,7 @@ definition {
 		OAuth2.viewScopesMappings(
 			applicationName = "OAuth Application",
 			resourcePanels = "Portal Services,Sample QA app",
-			scopeNameList = "everything,example-scope-1");
+			scopeAliasList = "everything,example-scope-1");
 
 		OAuth2.addPrefixHandlerInSystemSettings(
 			excludedScopesName = "example-scope-1",
@@ -615,7 +615,7 @@ definition {
 		OAuth2.viewScopesMappings(
 			applicationName = "OAuth Application",
 			resourcePanels = "Portal Services,Sample QA app",
-			scopeNameList = "everything,example-scope-1,com.liferay.oauth2.provider.scope.sample.qa//sample-qa-app/example-scope-2");
+			scopeAliasList = "everything,example-scope-1,com.liferay.oauth2.provider.scope.sample.qa//sample-qa-app/example-scope-2");
 	}
 
 	test UpdateScopeMappings {
@@ -652,8 +652,8 @@ definition {
 			applicationName = "OAuth Application",
 			globalScopeLinkValue = "This resource scope MUST be assigned via a global scope.",
 			resourcePanels = "Sample QA app",
-			scopeAliase = "Example scope 1 + Example scope 2",
-			scopeNameList = "everything,everything.read,everything.write");
+			scopeAliasList = "everything,everything.read,everything.write",
+			scopeTranslation = "Example scope 1 + Example scope 2");
 	}
 
 	test ViewAndRevokeGrantedAuthorizations {

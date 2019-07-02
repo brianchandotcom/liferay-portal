@@ -81,7 +81,7 @@
 </tr>
 <tr>
 	<td>ADMIN_MODAL_GLOBAL_SCOPE_LINK</td>
-	<td>//li[contains(.,'${key_scopeName}')]//a[@data-slave]</td>
+	<td>//li[contains(.,'${key_scopeText}')]//a[@data-slave]</td>
 	<td></td>
 </tr>
 <tr>
@@ -95,8 +95,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADMIN_RESOURCE_SCOPE_ALIASE</td>
-	<td>//a[contains(.,'${key_resourcePanel}')]//following-sibling::div//label[contains(@for,'scopeAlias')]</td>
+	<td>ADMIN_RESOURCE_SCOPE_ALIAS</td>
+	<td>//span[contains(@class,'badge-item') and contains(.,'${key_scopeAlias}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -110,13 +110,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADMIN_RESOURCE_SCOPE_NAME</td>
-	<td>//span[contains(@class,'badge-item') and contains(.,'${key_scopeName}')]</td>
+	<td>ADMIN_RESOURCE_SCOPE_REMOVED</td>
+	<td>//span[contains(.,'${key_scopeName}') and contains(@class,'removed-scope-alias')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADMIN_RESOURCE_SCOPE_REMOVED</td>
-	<td>//span[contains(.,'${key_scopeName}') and contains(@class,'removed-scope-alias')]</td>
+	<td>ADMIN_RESOURCE_SCOPE_TRANSLATION</td>
+	<td>//a[contains(.,'${key_resourcePanel}')]//following-sibling::div//label[contains(@for,'scopeAlias')]</td>
 	<td></td>
 </tr>
 <tr>

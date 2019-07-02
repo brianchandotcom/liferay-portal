@@ -130,7 +130,7 @@ definition {
 
 			if (isSet(checkGlobalScopesViaModal)) {
 				AssertClick.assertPartialTextClickAt(
-					key_scopeName = "${modalLinkScope}",
+					key_scopeText = "${modalLinkScope}",
 					locator1 = "OAuth2#ADMIN_MODAL_GLOBAL_SCOPE_LINK",
 					value1 = "assigned via a global scope");
 
@@ -578,7 +578,7 @@ definition {
 
 			if (isSet(checkedGlobalScopesViaModal)) {
 				AssertClick.assertPartialTextClickAt(
-					key_scopeName = "${modalLinkScope}",
+					key_scopeText = "${modalLinkScope}",
 					locator1 = "OAuth2#ADMIN_MODAL_GLOBAL_SCOPE_LINK",
 					value1 = "assigned via a global scope");
 
@@ -616,28 +616,28 @@ definition {
 			OAuth2.expandResourcePanel(resourcePanel = "${resourcePanel}");
 		}
 
-		for (var scopeName : list "${scopeNameList}") {
+		for (var scopeAlias : list "${scopeAliasList}") {
 			AssertElementPresent(
-				key_scopeName = "${scopeName}",
-				locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_NAME");
+				key_scopeAlias = "${scopeAlias}",
+				locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_ALIAS");
 		}
 
-		if (isSet(scopeAliase)) {
+		if (isSet(scopeTranslation)) {
 			AssertTextEquals(
 				key_resourcePanel = "${resourcePanel}",
-				locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_ALIASE",
-				value1 = "${scopeAliase}");
+				locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_TRANSLATION",
+				value1 = "${scopeTranslation}");
 		}
 
 		if (isSet(globalScopeLinkValue)) {
-			if (contains("${scopeAliase}", "+")) {
-				var partialScopeAliase = StringUtil.extractFirst("${scopeAliase}", "+");
-				var partialScopeAliase1 = StringUtil.trim("${partialScopeAliase}");
+			if (contains("${scopeTranslation}", "+")) {
+				var partialScopeTranslation = StringUtil.extractFirst("${scopeTranslation}", "+");
+				partialScopeTranslation = StringUtil.trim("${partialScopeTranslation}");
 
-				key_scopeName = "${partialScopeAliase1}";
+				key_scopeText = "${partialScopeTranslation}";
 			}
 			else {
-				key_scopeName = "${scopeAliase}";
+				key_scopeText = "${scopeTranslation}";
 			}
 
 			AssertTextEquals(

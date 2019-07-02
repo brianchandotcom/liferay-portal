@@ -22,12 +22,12 @@ import com.liferay.portal.kernel.seo.SEOLinkManager;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.seo.internal.configuration.SEOCompanyConfiguration;
-import com.liferay.seo.internal.configuration.SEOConfigurationConstants;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
@@ -85,8 +85,8 @@ public class SEOLinkManagerImpl implements SEOLinkManager {
 			_configurationProvider.getCompanyConfiguration(
 				SEOCompanyConfiguration.class, companyId);
 
-		if (SEOConfigurationConstants.CLASSIC.equals(
-				seoCompanyConfiguration.configuration())) {
+		if (Objects.equals(
+				seoCompanyConfiguration.configuration(), "classic")) {
 
 			return canonicalURL;
 		}

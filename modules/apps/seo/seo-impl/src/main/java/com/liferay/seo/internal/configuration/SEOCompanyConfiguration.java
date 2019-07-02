@@ -37,13 +37,9 @@ public interface SEOCompanyConfiguration {
 	 * @review
 	 */
 	@Meta.AD(
-		deflt = SEOConfigurationConstants.DEFAULT,
-		name = "seo-configuration-localized-url",
+		deflt = "default", name = "seo-configuration-localized-url",
 		optionLabels = {"default", "classic"},
-		optionValues = {
-			SEOConfigurationConstants.DEFAULT, SEOConfigurationConstants.CLASSIC
-		},
-		required = false
+		optionValues = {"default", "classic"}, required = false
 	)
 	public String configuration();
 

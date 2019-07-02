@@ -43,10 +43,10 @@ if (!themeDisplay.isSignedIn() && layout.isPublicLayout()) {
 
 		<c:choose>
 			<c:when test="<%= Validator.isNotNull(seoLink.getHrefLang()) %>">
-				<link data-senna-track="temporary" href="<%= seoLink.getHref() %>" hreflang="<%= seoLink.getHrefLang() %>" rel="<%= seoLink.getSeoLinkRel() %>" />
+				<link data-senna-track="temporary" href="<%= seoLink.getHref() %>" hreflang="<%= seoLink.getHrefLang() %>" rel="<%= seoLink.getRelationship() %>" />
 			</c:when>
 			<c:otherwise>
-				<link data-senna-track="temporary" href="<%= seoLink.getHref() %>" rel="<%= seoLink.getSeoLinkRel() %>" />
+				<link data-senna-track="temporary" href="<%= seoLink.getHref() %>" rel="<%= seoLink.getRelationship() %>" />
 			</c:otherwise>
 		</c:choose>
 

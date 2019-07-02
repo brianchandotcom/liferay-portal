@@ -23,21 +23,19 @@ import com.liferay.portal.kernel.util.Validator;
 public class SEOLinkImpl implements SEOLink {
 
 	public SEOLinkImpl(
-		String href, String hrefLang, SEOLink.SEOLinkRel seoLinkRel) {
+		String href, String hrefLang, Relationship relationship) {
 
 		if (Validator.isNull(href)) {
-			throw new IllegalArgumentException(
-				"Null or empty string is not a valid SEOLink href");
+			throw new IllegalArgumentException("HREF is null");
 		}
 
-		if (seoLinkRel == null) {
-			throw new IllegalArgumentException(
-				"Null is not a valid SEOLink seoLinkRel");
+		if (relationship == null) {
+			throw new IllegalArgumentException("Relationship is null");
 		}
 
 		_href = href;
 		_hrefLang = hrefLang;
-		_seoLinkRel = seoLinkRel;
+		_relationship = relationship;
 	}
 
 	public String getHref() {
@@ -48,12 +46,12 @@ public class SEOLinkImpl implements SEOLink {
 		return _hrefLang;
 	}
 
-	public SEOLink.SEOLinkRel getSeoLinkRel() {
-		return _seoLinkRel;
+	public Relationship getRelationship() {
+		return _relationship;
 	}
 
 	private final String _href;
 	private final String _hrefLang;
-	private final SEOLink.SEOLinkRel _seoLinkRel;
+	private final Relationship _relationship;
 
 }

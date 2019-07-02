@@ -53,14 +53,14 @@ public class SEOLinkManagerImpl implements SEOLinkManager {
 				_html.escapeAttribute(
 					_getCanonicalURL(
 						companyId, locale, canonicalURL, alternateURLs)),
-				null, SEOLink.SEOLinkRel.CANONICAL));
+				null, SEOLink.Relationship.CANONICAL));
 
 		alternateURLs.forEach(
 			(urlLocale, url) -> seoLinks.add(
 				new SEOLinkImpl(
 					_html.escapeAttribute(url),
 					LocaleUtil.toW3cLanguageId(urlLocale),
-					SEOLink.SEOLinkRel.ALTERNATE)));
+					SEOLink.Relationship.ALTERNATE)));
 
 		String defaultLocaleURL = alternateURLs.get(LocaleUtil.getDefault());
 
@@ -71,7 +71,7 @@ public class SEOLinkManagerImpl implements SEOLinkManager {
 		seoLinks.add(
 			new SEOLinkImpl(
 				_html.escapeAttribute(defaultLocaleURL), "x-default",
-				SEOLink.SEOLinkRel.ALTERNATE));
+				SEOLink.Relationship.ALTERNATE));
 
 		return seoLinks;
 	}

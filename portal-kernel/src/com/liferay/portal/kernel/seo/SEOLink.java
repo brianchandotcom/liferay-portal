@@ -23,9 +23,9 @@ public interface SEOLink {
 
 	public String getHrefLang();
 
-	public SEOLinkRel getSeoLinkRel();
+	public Relationship getRelationship();
 
-	public enum SEOLinkRel {
+	public enum Relationship {
 
 		ALTERNATE {
 

@@ -2524,6 +2524,12 @@ public class Analyzer extends Processor {
 				.stream()
 				.noneMatch(dot::hasDirectory);
 
+			Map<File, Jar> classpathJars = new HashMap<>();
+
+			for (Jar jar : classpath) {
+				classpathJars.put(jar.getSource(), jar);
+			}
+
 			for (String path : bcp.keySet()) {
 				if (path.equals(".")) {
 					analyzeJar(dot, "", okToIncludeDirs, null);
@@ -2538,11 +2544,23 @@ public class Analyzer extends Processor {
 				Resource resource = dot.getResource(path);
 				if (resource != null) {
 					try {
-						Jar jar = Jar.fromResource(path, resource);
-						// Don't want to close Jar from JarResource
-						if (!(resource instanceof JarResource)) {
-							addClose(jar);
+						Jar jar = null;
+
+						if (resource instanceof FileResource) {
+							FileResource fileResource = (FileResource)resource;
+
+							jar = classpathJars.get(fileResource.getFile());
 						}
+
+						if (jar == null) {
+							jar = Jar.fromResource(path, resource);
+
+							// Don't want to close Jar from JarResource
+							if (!(resource instanceof JarResource)) {
+								addClose(jar);
+							}
+						}
+
 						analyzeJar(jar, "", true, path);
 					} catch (Exception e) {
 						warning("Invalid bundle classpath entry: %s: %s", path, e);
@@ -3717,3 +3735,4 @@ public class Analyzer extends Processor {
 	}
 
 }
+/* @generated */

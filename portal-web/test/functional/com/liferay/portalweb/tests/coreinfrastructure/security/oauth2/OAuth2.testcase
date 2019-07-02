@@ -643,14 +643,8 @@ definition {
 			panel = "Control Panel",
 			portlet = "OAuth 2 Administration");
 
-		OAuth2.addApplication(
-			applicationName = "OAuth Application",
-			checkboxUncheckList = "Authorization Code");
-
-		Navigator.gotoBack();
-
 		OAuth2.viewScopeMappings(
-			applicationName = "OAuth Application",
+			applicationName = "Analytics Cloud",
 			globalScopeLinkValue = "This resource scope MUST be assigned via a global scope.",
 			resourcePanels = "Sample QA app",
 			scopeAliasList = "everything,everything.read,everything.write",

@@ -156,6 +156,36 @@ definition {
 		DMDocument.viewDocumentVersionNumberCmdPG(dmDocumentVersionNumber = "1.1");
 	}
 
+	@description = "This test covers LPS-82306. It ensures that a user can check in a document through Management bar and allow to select the change version."
+	@priority = "4"
+	test CheckInDocumentAtManagementBar {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Check in as current version");
+
+		DMDocument.checkoutCP(dmDocumentTitle = "Check in as current version");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.checkinManagementBar(
+			dmDocumentTitle = "Check in as current version",
+			revision = "Current");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		AssertElementNotPresent(
+			key_dmDocumentTitle = "Check in as current version",
+			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED");
+
+		DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "Check in as current version");
+
+		DMDocument.viewDocumentVersionNumberCmdPG(dmDocumentVersionNumber = "1.0");
+	}
+
 	@description = "This test asserts that major version increment will occur even if only metadata was changed if version increment was selected manually."
 	@priority = "4"
 	test CustomizeVersionNumberMajor {

@@ -303,16 +303,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			}
 		}
 
-		InitUtil.registerSpringInitialized();
-
-		try {
-			ModuleFrameworkUtilAdapter.registerContext(
-				ContextLoader.getCurrentWebApplicationContext());
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-
 		CustomJspBagRegistryUtil.getCustomJspBags();
 
 		initListeners(servletContext);
@@ -388,6 +378,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		super.contextInitialized(servletContextEvent);
 
+		InitUtil.registerSpringInitialized();
+
 		ApplicationContext applicationContext =
 			ContextLoader.getCurrentWebApplicationContext();
 
@@ -413,6 +405,13 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			DynamicProxyCreator.getDynamicProxyCreator();
 
 		dynamicProxyCreator.clear();
+
+		try {
+			ModuleFrameworkUtilAdapter.registerContext(applicationContext);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	private void _logJVMArguments() {

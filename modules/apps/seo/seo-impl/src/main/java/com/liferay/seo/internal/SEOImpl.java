@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.seo.impl;
+package com.liferay.seo.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.seo.SEO;
 import com.liferay.portal.kernel.seo.SEOLink;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.seo.impl.configuration.SEOCompanyConfiguration;
-import com.liferay.seo.impl.configuration.SEOConfigurationConstants;
+import com.liferay.seo.internal.configuration.SEOCompanyConfiguration;
+import com.liferay.seo.internal.configuration.SEOConfigurationConstants;
 
 import java.util.ArrayList;
 import java.util.List;

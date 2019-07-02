@@ -20,6 +20,8 @@ import {Config} from 'metal-state';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './FloatingToolbar.soy';
 
+import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
+
 /**
  * @type {object}
  */
@@ -169,18 +171,28 @@ class FloatingToolbar extends Component {
 	 * @inheritdoc
 	 * @review
 	 */
+	prepareStateForRender(state) {
+		let nextState = state;
+
+		nextState = setIn(
+			nextState,
+			['selectedPanelId'],
+			this._isAnchorElementVisible() ? state.selectedPanelId : null
+		);
+
+		return nextState;
+	}
+
+	/**
+	 * @inheritdoc
+	 * @review
+	 */
 	rendered() {
 		this._setFixedPanelClass();
 
 		requestAnimationFrame(() => {
 			this._align();
 		});
-	}
-
-	/**
-	 * @review
-	 */
-
 	}
 
 	/**

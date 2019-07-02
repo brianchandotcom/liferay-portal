@@ -5,25 +5,16 @@ dependencies {
 }
 
 deploy {
-	from ("properties") {
-		include "*.properties"
-	}
-	from ("scripts") {
-		include "*.bat"
-		include "*.sh"
-	}
+	from "properties"
+	from "scripts"
 }
 
 distributions {
 	main {
 		contents {
-			from("properties") {
-				include "*.properties"
-				into "lib"
-			}
-			from ("scripts") {
-				into "lib"
-			}
+			from "properties"
+			from "scripts"
+			into '/'
 		}
 	}
 }

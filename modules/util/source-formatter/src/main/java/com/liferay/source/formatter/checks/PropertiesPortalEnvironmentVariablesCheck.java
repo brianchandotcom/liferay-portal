@@ -81,7 +81,7 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 
 			String match = matcher.group(4);
 
-			Set<String> environmentVariables = _getEnviornmentVariables(match);
+			Set<String> environmentVariables = _getEnvironmentVariables(match);
 
 			for (String environmentVariable : environmentVariables) {
 				sb.append(StringPool.NEW_LINE);
@@ -111,7 +111,7 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private Set<String> _getEnviornmentVariables(String s) {
+	private Set<String> _getEnvironmentVariables(String s) {
 		Set<String> environmentVariables = new TreeSet<>();
 
 		for (String line : StringUtil.splitLines(s)) {

@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import 'clay-multi-select';
 import {Config} from 'metal-state';
 import Component from 'metal-component';
@@ -39,11 +37,9 @@ class AssetVocabularyCategoriesSelector extends Component {
 
 	/**
 	 * Opens the tag selection dialog.
-	 *
-	 * @param {!Event} event The event.
 	 * @private
 	 */
-	_handleButtonClicked(event) {
+	_handleButtonClicked() {
 		const sub = (str, obj) => str.replace(/\{([^}]+)\}/g, (_, m) => obj[m]);
 
 		const uri = sub(decodeURIComponent(this.portletURL), {
@@ -194,7 +190,7 @@ class AssetVocabularyCategoriesSelector extends Component {
 	 * @private
 	 */
 	_handleQuery(query) {
-		return new Promise((resolve, reject) => {
+		return new Promise(resolve => {
 			const serviceOptions = {
 				end: 20,
 				groupIds: this.groupIds,

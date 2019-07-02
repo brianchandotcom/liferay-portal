@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import 'clay-multi-select';
 import {Config} from 'metal-state';
 import Component from 'metal-component';
@@ -199,7 +197,7 @@ class AssetTagsSelector extends Component {
 	 * @private
 	 */
 	_handleQuery(query) {
-		return new Promise((resolve, reject) => {
+		return new Promise(resolve => {
 			Liferay.Service(
 				'/assettag/search',
 				{

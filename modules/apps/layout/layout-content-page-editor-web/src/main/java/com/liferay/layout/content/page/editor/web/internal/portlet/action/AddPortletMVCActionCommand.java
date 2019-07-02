@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.util.SegmentsExperiencePortletUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -90,6 +91,9 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
+		long segmentsExperienceId = ParamUtil.getLong(
+			actionRequest, "segmentsExperienceId");
+
 		Layout layout = _layoutLocalService.getLayout(classPK);
 
 		String portletId = PortletIdCodec.decodePortletName(
@@ -120,6 +124,12 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 					throw new PortletIdException(
 						"Cannot add non-instanceable portlet more than once");
 				}
+			}
+
+			if (segmentsExperienceId > 0) {
+				instanceId =
+					SegmentsExperiencePortletUtil.setSegmentsExperienceId(
+						instanceId, segmentsExperienceId);
 			}
 
 			String html = _getPortletFragmentEntryLinkHTML(

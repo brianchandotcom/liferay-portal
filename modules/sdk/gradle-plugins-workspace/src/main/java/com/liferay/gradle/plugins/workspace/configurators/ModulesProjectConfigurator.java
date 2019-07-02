@@ -22,6 +22,7 @@ import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.poshi.runner.PoshiRunnerPlugin;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
+import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
@@ -47,13 +48,18 @@ import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.CopySourceSpec;
+import org.gradle.api.file.CopySpec;
+import org.gradle.api.file.DeleteSpec;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.Copy;
+import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.compile.JavaCompile;
 import org.gradle.jvm.tasks.Jar;
+import org.gradle.language.base.plugins.LifecycleBasePlugin;
 
 /**
  * @author Andrea Di Giorgi
@@ -103,6 +109,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 				public void execute(Project project) {
 					_configureTaskCompileJSP(
 						compileJSPTask, workspaceExtension);
+					_configureTaskTestIntegration(project);
 				}
 
 			});
@@ -159,6 +166,12 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 	}
 
 	protected static final String NAME = "modules";
+
+	private static File _getResourcesDir(SourceSet sourceSet) {
+		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+		return sourceSetOutput.getResourcesDir();
+	}
 
 	private void _applyPlugins(Project project) {
 		GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);
@@ -251,6 +264,64 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			project, PoshiRunnerPlugin.RUN_POSHI_TASK_NAME);
 
 		task.dependsOn(LiferayBasePlugin.DEPLOY_TASK_NAME);
+	}
+
+	private void _configureTaskTestIntegration(Project project) {
+		File testClassesIntegrationDir = project.file(
+			"test-classes/integration");
+		Task testIntegrationClassesTask = GradleUtil.getTask(
+			project,
+			TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME + "Classes");
+
+		SourceSet testIntegrationSourceSet = GradleUtil.getSourceSet(
+			project,
+			TestIntegrationBasePlugin.TEST_INTEGRATION_SOURCE_SET_NAME);
+
+		testIntegrationClassesTask.doLast(
+			"Copy test integration classes to test-classes/integration",
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					project.sync(
+						new Action<CopySpec>() {
+
+							@Override
+							public void execute(CopySpec copySpec) {
+								copySpec.from(
+									FileUtil.getJavaClassesDir(
+										testIntegrationSourceSet));
+								copySpec.from(
+									_getResourcesDir(testIntegrationSourceSet));
+								copySpec.into(testClassesIntegrationDir);
+							}
+
+						});
+				}
+
+			});
+
+		Task cleanTask = GradleUtil.getTask(
+			project, LifecycleBasePlugin.CLEAN_TASK_NAME);
+
+		cleanTask.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					project.delete(
+						new Action<DeleteSpec>() {
+
+							@Override
+							public void execute(DeleteSpec deleteSpec) {
+								deleteSpec.delete(
+									testClassesIntegrationDir.getParentFile());
+							}
+
+						});
+				}
+
+			});
 	}
 
 	private String _getCompileJSPDestinationDirName(Project project) {

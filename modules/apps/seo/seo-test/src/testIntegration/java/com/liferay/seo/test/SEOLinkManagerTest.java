@@ -189,12 +189,9 @@ public class SEOLinkManagerTest {
 		Locale locale, List<SEOLink> seoLinks) {
 
 		for (SEOLink seoLink : seoLinks) {
-			Optional<String> hrefLangOptional = seoLink.getHrefLang();
-
 			if ((seoLink.getSeoLinkRel() == SEOLink.SEOLinkRel.ALTERNATE) &&
-				hrefLangOptional.isPresent() &&
 				Objects.equals(
-					hrefLangOptional.get(),
+					seoLink.getHrefLang(),
 					LocaleUtil.toW3cLanguageId(locale))) {
 
 				return seoLink;
@@ -216,11 +213,7 @@ public class SEOLinkManagerTest {
 
 	private SEOLink _getXDefaultAlternateSEOLink(List<SEOLink> seoLinks) {
 		for (SEOLink seoLink : seoLinks) {
-			Optional<String> hrefLang = seoLink.getHrefLang();
-
-			if (hrefLang.isPresent() &&
-				Objects.equals(hrefLang.get(), "x-default")) {
-
+			if (Objects.equals(seoLink.getHrefLang(), "x-default")) {
 				return seoLink;
 			}
 		}

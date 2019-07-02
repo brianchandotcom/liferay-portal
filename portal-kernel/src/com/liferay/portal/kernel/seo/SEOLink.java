@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.seo;
 
-import java.util.Optional;
-
 /**
  * @author Cristina González
  */

@@ -998,9 +998,12 @@ public class LiferayOAuthDataProvider
 				fetchOAuth2ApplicationScopeAliases(
 					oAuth2ApplicationScopeAliasesId);
 
-		Collection<LiferayOAuth2Scope> liferayOAuth2Scopes =
-			_scopeLocator.getLiferayOAuth2Scopes(
+		Collection<LiferayOAuth2Scope> liferayOAuth2Scopes = new ArrayList<>();
+
+		if (oAuth2ApplicationScopeAliases != null) {
+			liferayOAuth2Scopes = _scopeLocator.getLiferayOAuth2Scopes(
 				oAuth2ApplicationScopeAliases.getCompanyId());
+		}
 
 		return stream.filter(
 			oAuth2ScopeGrant -> !Collections.disjoint(

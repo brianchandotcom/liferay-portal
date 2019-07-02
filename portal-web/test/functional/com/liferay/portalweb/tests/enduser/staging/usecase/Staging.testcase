@@ -799,14 +799,11 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			tagName = "stagingtag");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Staging Test Page",
-			widgetName = "Documents and Media");
-
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Documents and Media");
 
 		DMDocument.addPG(
 			dmDocumentFile = "Document_1.doc",

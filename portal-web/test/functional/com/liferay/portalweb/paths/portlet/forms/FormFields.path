@@ -218,7 +218,7 @@
 <!--PARAGRAPH-->
 <tr>
 	<td>PARAGRAPH_BODY_TEXT_CONTENT</td>
-	<td>//div[contains(@class,'paragraph') and contains(@data-field-name,'${key_fieldName}')]//div</td>
+	<td>//div[(@class='form-group') and contains(@data-field-name,'${key_fieldName}')]//div</td>
 	<td></td>
 </tr>
 <tr>
@@ -228,7 +228,7 @@
 </tr>
 <tr>
 	<td>PARAGRAPH_TITLE</td>
-	<td>//div[contains(@class,'paragraph') and contains(@data-field-name,'${key_fieldName}')]/label</td>
+	<td>//div[(@class='form-group') and contains(@data-field-name,'${key_fieldName}')]/label</td>
 	<td></td>
 </tr>
 <tr>

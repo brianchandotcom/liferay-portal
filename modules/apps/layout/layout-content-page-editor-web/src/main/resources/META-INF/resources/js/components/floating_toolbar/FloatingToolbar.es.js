@@ -165,11 +165,10 @@ class FloatingToolbar extends Component {
 	 * @review
 	 */
 	rendered() {
-		this._align();
+		this._setFixedPanelClass();
 
 		requestAnimationFrame(() => {
 			this._align();
-			this._setFixedPanelClass();
 		});
 	}
 
@@ -239,27 +238,25 @@ class FloatingToolbar extends Component {
 	 * @review
 	 */
 	_align() {
-		requestAnimationFrame(() => {
-			if (this.refs.buttons && this.anchorElement) {
-				const buttonsAlign = FloatingToolbar._getElementAlign(
-					this.refs.panel || this.refs.buttons,
-					this.anchorElement
-				);
+		if (this.refs.buttons && this.anchorElement) {
+			const buttonsAlign = FloatingToolbar._getElementAlign(
+				this.refs.panel || this.refs.buttons,
+				this.anchorElement
+			);
 
-				Align.align(
-					this.refs.buttons,
-					this.anchorElement,
-					buttonsAlign,
-					false
-				);
+			Align.align(
+				this.refs.buttons,
+				this.anchorElement,
+				buttonsAlign,
+				false
+			);
 
-				requestAnimationFrame(() => {
-					this._alignPanel();
-				});
-			} else if (this.anchorElement) {
+			requestAnimationFrame(() => {
 				this._alignPanel();
-			}
-		});
+			});
+		} else if (this.anchorElement) {
+			this._alignPanel();
+		}
 	}
 
 	/**

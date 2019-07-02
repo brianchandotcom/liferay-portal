@@ -189,16 +189,9 @@ export default Component => {
 
 			handleFormSubmitted(this.getEvaluatorContext()).then(validForm => {
 				if (validForm) {
-					const {target} = event;
-
-					Liferay.Util.submitForm({
-						getDOM: () => target,
-						one: selector => target.querySelector(selector)
-					});
+					Liferay.Util.submitForm(event.target);
 				} else {
-					const {activePage} = this;
-
-					this.dispatch('pageValidationFailed', activePage);
+					this.dispatch('pageValidationFailed', this.activePage);
 				}
 			});
 		}

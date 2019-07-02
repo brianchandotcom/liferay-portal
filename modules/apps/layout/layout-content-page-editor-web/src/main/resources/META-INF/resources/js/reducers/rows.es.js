@@ -36,6 +36,7 @@ import {
 	getRowIndex
 } from '../utils/FragmentsEditorGetUtils.es';
 import {
+	removeExperience,
 	removeFragmentEntryLinks,
 	updatePageEditorLayoutData
 } from '../utils/FragmentsEditorFetchUtils.es';
@@ -142,7 +143,9 @@ function removeRowReducer(state, action) {
 				state.layoutData.structure[
 					getRowIndex(state.layoutData.structure, action.rowId)
 				]
-			).filter(
+			);
+
+			const fragmentEntryLinkIdsToRemove = fragmentEntryLinkIds.filter(
 				fragmentEntryLinkId =>
 					!containsFragmentEntryLinkId(
 						nextState.layoutDataList,
@@ -152,7 +155,26 @@ function removeRowReducer(state, action) {
 					)
 			);
 
-			fragmentEntryLinkIds.forEach(fragmentEntryLinkId => {
+			const fragmentEntryLinkIdsToRemoveExperience = fragmentEntryLinkIds.filter(
+				fragmentEntryLinkId =>
+					containsFragmentEntryLinkId(
+						nextState.layoutDataList,
+						fragmentEntryLinkId,
+						nextState.segmentsExperienceId ||
+							nextState.defaultSegmentsExperienceId
+					)
+			);
+
+			if (fragmentEntryLinkIdsToRemoveExperience.length > 0) {
+				removeExperience(
+					nextState.segmentsExperienceId ||
+						nextState.defaultSegmentsExperienceId,
+					fragmentEntryLinkIdsToRemoveExperience,
+					false
+				);
+			}
+
+			fragmentEntryLinkIdsToRemove.forEach(fragmentEntryLinkId => {
 				nextState = updateWidgets(nextState, fragmentEntryLinkId);
 			});
 
@@ -163,7 +185,7 @@ function removeRowReducer(state, action) {
 				.then(() =>
 					removeFragmentEntryLinks(
 						nextState.layoutData,
-						fragmentEntryLinkIds,
+						fragmentEntryLinkIdsToRemove,
 						nextState.segmentsExperienceId
 					)
 				)

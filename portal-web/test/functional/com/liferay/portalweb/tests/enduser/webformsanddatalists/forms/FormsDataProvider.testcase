@@ -166,7 +166,7 @@ definition {
 
 		Form.disableAutocompleteConfiguration();
 
-		AssertNotVisible(
+		AssertElementNotPresent(
 			key_fieldName = "dataSourceType",
 			key_radioOption = "From Data Provider",
 			locator1 = "FormFields#RADIO_OPTION_LABEL");

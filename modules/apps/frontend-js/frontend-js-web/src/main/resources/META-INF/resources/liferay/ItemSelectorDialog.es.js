@@ -164,13 +164,16 @@ ItemSelectorDialog.STATE = {
 	eventName: Config.string().required(),
 
 	/**
-	 * The selected item in the dialog.
+	 * The selected item(s) in the dialog.
 	 *
 	 * @instance
 	 * @review
-	 * @type {Object}
+	 * @type {Object|Object[]}
 	 */
-	selectedItem: Config.object(),
+	selectedItem: Config.oneOfType([
+		Config.object(),
+		Config.arrayOf(Config.object())
+	]),
 
 	/**
 	 * Dialog's title

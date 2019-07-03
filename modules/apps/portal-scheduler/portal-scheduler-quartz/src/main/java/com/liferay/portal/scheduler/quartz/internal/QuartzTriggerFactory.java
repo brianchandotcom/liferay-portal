@@ -100,7 +100,7 @@ public class QuartzTriggerFactory implements TriggerFactory {
 	@Override
 	public Trigger createTrigger(
 		String jobName, String groupName, Date startDate, Date endDate,
-		TimeZone timeZone, String cronExpression) {
+		String cronExpression, TimeZone timeZone) {
 
 		CronScheduleBuilder cronScheduleBuilder =
 			CronScheduleBuilder.cronSchedule(cronExpression);

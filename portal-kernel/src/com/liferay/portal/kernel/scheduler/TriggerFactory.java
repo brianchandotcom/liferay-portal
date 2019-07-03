@@ -35,7 +35,7 @@ public interface TriggerFactory {
 
 	public Trigger createTrigger(
 		String jobName, String groupName, Date startDate, Date endDate,
-		TimeZone timeZone, String cronExpression);
+		String cronExpression, TimeZone timeZone);
 
 	public Trigger createTrigger(Trigger trigger, Date startDate, Date endDate);
 

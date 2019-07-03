@@ -2471,7 +2471,7 @@ public class ClusterSchedulerEngineTest {
 		@Override
 		public Trigger createTrigger(
 			String jobName, String groupName, Date startDate, Date endDate,
-			TimeZone timeZone, String cronExpression) {
+			String cronExpression, TimeZone timeZone) {
 
 			return null;
 		}

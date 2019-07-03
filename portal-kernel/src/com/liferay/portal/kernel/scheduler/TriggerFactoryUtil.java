@@ -42,10 +42,10 @@ public class TriggerFactoryUtil {
 
 	public static Trigger createTrigger(
 		String jobName, String groupName, Date startDate, Date endDate,
-		TimeZone timeZone, String cronExpression) {
+		String cronExpression, TimeZone timeZone) {
 
 		return _triggerFactory.createTrigger(
-			jobName, groupName, startDate, endDate, timeZone, cronExpression);
+			jobName, groupName, startDate, endDate, cronExpression, timeZone);
 	}
 
 	public static Trigger createTrigger(

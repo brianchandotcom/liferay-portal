@@ -73,6 +73,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOTIFICATIONS_DELETE_ENTRY_TITLE</td>
+	<td>//div[contains(@class,'autofit-col')]/div[contains(.,'Notification no longer applies.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATIONS_DELETE_ENTRY_CONTENT</td>
+	<td>//div[contains(@class,'autofit-col')]/div[contains(.,'Notification for Sharing was deleted.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -81,6 +91,11 @@
 <tr>
 	<td>SHARED_CONTENT_CONTENT_OPTIONS</td>
 	<td>//tr/td[contains(.,'${key_contentTitle}')]/..//div//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHARED_CONTENT_CONTENT_STATUS</td>
+	<td>//span[contains(@class,'label-item') and contains(.,'${key_status}')]</td>
 	<td></td>
 </tr>
 <tr>

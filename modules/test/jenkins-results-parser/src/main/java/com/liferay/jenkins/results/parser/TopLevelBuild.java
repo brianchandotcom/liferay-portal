@@ -57,7 +57,7 @@ import org.json.JSONObject;
 /**
  * @author Kevin Yen
  */
-public class TopLevelBuild extends BaseBuild {
+public abstract class TopLevelBuild extends BaseBuild {
 
 	@Override
 	public void addDownstreamBuilds(String... urls) {
@@ -246,39 +246,6 @@ public class TopLevelBuild extends BaseBuild {
 		metricLabels.put("top_level_job_name", getJobName());
 
 		return metricLabels;
-	}
-
-	@Override
-	public String getResult() {
-		String result = super.getResult();
-
-		if (!downstreamBuilds.isEmpty() && (result == null)) {
-			boolean hasFailure = false;
-
-			for (Build downstreamBuild : downstreamBuilds) {
-				String downstreamBuildResult = downstreamBuild.getResult();
-
-				if (downstreamBuildResult == null) {
-					setResult(null);
-
-					return null;
-				}
-
-				if (!downstreamBuildResult.equals("SUCCESS")) {
-					hasFailure = true;
-				}
-			}
-
-			if (result == null) {
-				if (hasFailure) {
-					return "FAILURE";
-				}
-
-				return "SUCCESS";
-			}
-		}
-
-		return super.getResult();
 	}
 
 	@Override

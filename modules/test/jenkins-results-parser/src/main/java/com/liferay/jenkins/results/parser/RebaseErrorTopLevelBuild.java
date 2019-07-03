@@ -33,7 +33,7 @@ import org.json.JSONObject;
 /**
  * @author Peter Yoo
  */
-public class RebaseErrorTopLevelBuild extends TopLevelBuild {
+public class RebaseErrorTopLevelBuild extends DefaultTopLevelBuild {
 
 	public RebaseErrorTopLevelBuild(String url, TopLevelBuild topLevelBuild) {
 		super(url, topLevelBuild);

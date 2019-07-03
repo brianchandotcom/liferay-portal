@@ -57,7 +57,7 @@ public class BuildFactory {
 			}
 		}
 
-		TopLevelBuild topLevelBuild = new TopLevelBuild(
+		TopLevelBuild topLevelBuild = new DefaultTopLevelBuild(
 			url, (TopLevelBuild)parentBuild);
 
 		String jobName = topLevelBuild.getJobName();
@@ -65,6 +65,15 @@ public class BuildFactory {
 		if (jobName.equals("root-cause-analysis-tool")) {
 			return new RootCauseAnalysisToolBuild(
 				url, (TopLevelBuild)parentBuild);
+		}
+
+		if (jobName.startsWith("test-portal-acceptance-pullrequest")) {
+			String testSuite = topLevelBuild.getParameterValue("CI_TEST_SUITE");
+
+			if (testSuite.equals("bundle")) {
+				return new StandaloneTopLevelBuild(
+					url, (TopLevelBuild)parentBuild);
+			}
 		}
 
 		if ((parentBuild != null) &&

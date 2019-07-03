@@ -24,7 +24,7 @@ import org.dom4j.Element;
 /**
  * @author Cesar Polanco
  */
-public class SourceFormatBuild extends TopLevelBuild {
+public class SourceFormatBuild extends DefaultTopLevelBuild {
 
 	@Override
 	public String getBaseGitRepositoryName() {

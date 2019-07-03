@@ -29,7 +29,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class RootCauseAnalysisToolBuild extends TopLevelBuild {
+public class RootCauseAnalysisToolBuild extends DefaultTopLevelBuild {
 
 	@Override
 	public Element getJenkinsReportElement() {

@@ -14,12 +14,13 @@
 
 package com.liferay.gradle.plugins.defaults.internal.util;
 
-import com.github.jk1.license.LicenseReportPlugin.LicenseReportExtension;
+import com.github.jk1.license.LicenseReportExtension;
 import com.github.jk1.license.ManifestData;
 import com.github.jk1.license.ModuleData;
 import com.github.jk1.license.PomData;
 import com.github.jk1.license.ProjectData;
-import com.github.jk1.license.render.SingleInfoReportRenderer;
+import com.github.jk1.license.render.LicenseDataCollector;
+import com.github.jk1.license.render.ReportRenderer;
 
 import com.liferay.gradle.util.Validator;
 
@@ -42,7 +43,7 @@ import org.w3c.dom.Element;
 /**
  * @author Andrea Di Giorgi
  */
-public class VersionsXmlReportRenderer extends SingleInfoReportRenderer {
+public class VersionsXmlReportRenderer implements ReportRenderer {
 
 	public VersionsXmlReportRenderer(
 		String fileName, LicenseReportExtension licenseReportExtension,
@@ -74,8 +75,8 @@ public class VersionsXmlReportRenderer extends SingleInfoReportRenderer {
 		Document document, Element librariesElement, String fileName,
 		ModuleData moduleData) {
 
-		List<String> moduleLicenseInfo = moduleLicenseInfo(
-			_licenseReportExtension, moduleData);
+		List<String> moduleLicenseInfo =
+			LicenseDataCollector.singleModuleLicenseInfo(moduleData);
 
 		String projectUrl = moduleLicenseInfo.get(0);
 		String licenseName = moduleLicenseInfo.get(1);
@@ -183,7 +184,7 @@ public class VersionsXmlReportRenderer extends SingleInfoReportRenderer {
 				document, librariesElement, entry.getKey(), entry.getValue());
 		}
 
-		File file = new File(_licenseReportExtension.getOutputDir(), _fileName);
+		File file = new File(_licenseReportExtension.outputDir, _fileName);
 
 		XMLUtil.write(document, file);
 	}

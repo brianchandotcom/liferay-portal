@@ -71,13 +71,6 @@ public interface AssetListAssetEntryProvider {
 	public AssetEntryQuery getAssetEntryQuery(
 		AssetListEntry assetListEntry, long segmentsEntryId);
 
-	public default AssetEntryQuery getAssetEntryQuery(
-		AssetListEntry assetListEntry, long segmentsEntryId, String userId) {
-
-		return getAssetEntryQuery(
-			assetListEntry, segmentsEntryId, StringPool.BLANK);
-	}
-
 	public AssetEntryQuery getAssetEntryQuery(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds);
 

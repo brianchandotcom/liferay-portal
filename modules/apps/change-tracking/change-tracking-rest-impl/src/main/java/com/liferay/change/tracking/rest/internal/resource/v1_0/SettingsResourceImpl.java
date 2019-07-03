@@ -73,7 +73,7 @@ public class SettingsResourceImpl extends BaseSettingsResourceImpl {
 
 	@Override
 	public Settings putSettings(
-		Long companyId, Long userId, SettingsUpdate settingsUpdate)
+			Long companyId, Long userId, SettingsUpdate settingsUpdate)
 		throws Exception {
 
 		_companyLocalService.getCompany(companyId);

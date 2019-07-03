@@ -19,7 +19,6 @@ import aQute.bnd.osgi.Constants;
 import com.github.jk1.license.LicenseReportExtension;
 import com.github.jk1.license.LicenseReportPlugin;
 import com.github.jk1.license.ModuleData;
-import com.github.jk1.license.render.LicenseDataCollector;
 import com.github.jk1.license.render.ReportRenderer;
 
 import com.liferay.gradle.plugins.LiferayAntPlugin;
@@ -35,8 +34,8 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
@@ -318,7 +317,35 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 		}
 
 		@Override
-		protected boolean isExcluded(ModuleData moduleData) {
+		protected String getLicenseName(
+			String moduleFileName, ModuleData moduleData) {
+
+			for (String[] license : _LICENSES) {
+				if (Objects.equals(moduleFileName, license[0])) {
+					return license[1];
+				}
+			}
+
+			return super.getLicenseName(moduleFileName, moduleData);
+		}
+
+		@Override
+		protected String getLicenseUrl(
+			String moduleFileName, ModuleData moduleData) {
+
+			for (String[] license : _LICENSES) {
+				if (Objects.equals(moduleFileName, license[0])) {
+					return license[2];
+				}
+			}
+
+			return super.getLicenseUrl(moduleFileName, moduleData);
+		}
+
+		@Override
+		protected boolean isExcluded(
+			String moduleFileName, ModuleData moduleData) {
+
 			String group = moduleData.getGroup();
 			String name = moduleData.getName();
 
@@ -329,15 +356,35 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 				return true;
 			}
 
-			List<String> moduleLicenseInfo =
-				LicenseDataCollector.singleModuleLicenseInfo(moduleData);
-
-			if (Validator.isNull(moduleLicenseInfo.get(1))) {
+			if (Validator.isNull(getLicenseName(moduleFileName, moduleData))) {
 				return true;
 			}
 
 			return false;
 		}
+
+		private static final String[][] _LICENSES = {
+			{
+				"com.liferay.commerce.payment.method.paypal.jar!rest-api-sdk.jar",
+				"PayPal SDK License",
+				"https://github.com/paypal/PayPal-Java-SDK/blob/master/LICENSE"
+			},
+			{
+				"com.liferay.portal.security.sso.cas.impl.jar!cas-client-core.jar",
+				"Apache License 2.0",
+				"https://github.com/apereo/java-cas-client/blob/master/cas-client-core/LICENSE.txt"
+			},
+			{
+				"com.liferay.portal.security.sso.openid.impl.jar!httpcore.jar",
+				"Apache License 2.0",
+				"http://www.apache.org/licenses/LICENSE-2.0.html"
+			},
+			{
+				"com.liferay.portal.security.sso.openid.impl.jar!org.apache.httpcomponents.httpclient.jar",
+				"Apache License 2.0",
+				"http://www.apache.org/licenses/LICENSE-2.0.html"
+			}
+		};
 
 	}
 

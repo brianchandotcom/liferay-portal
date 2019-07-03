@@ -67,7 +67,25 @@ public class VersionsXmlReportRenderer implements ReportRenderer {
 		}
 	}
 
-	protected boolean isExcluded(ModuleData moduleData) {
+	protected String getLicenseName(
+		String moduleFileName, ModuleData moduleData) {
+
+		List<String> moduleLicenseInfo =
+			LicenseDataCollector.singleModuleLicenseInfo(moduleData);
+
+		return moduleLicenseInfo.get(1);
+	}
+
+	protected String getLicenseUrl(
+		String moduleFileName, ModuleData moduleData) {
+
+		List<String> moduleLicenseInfo =
+			LicenseDataCollector.singleModuleLicenseInfo(moduleData);
+
+		return moduleLicenseInfo.get(2);
+	}
+
+	protected boolean isExcluded(String moduleFileName, ModuleData moduleData) {
 		return false;
 	}
 
@@ -79,8 +97,9 @@ public class VersionsXmlReportRenderer implements ReportRenderer {
 			LicenseDataCollector.singleModuleLicenseInfo(moduleData);
 
 		String projectUrl = moduleLicenseInfo.get(0);
-		String licenseName = moduleLicenseInfo.get(1);
-		String licenseUrl = moduleLicenseInfo.get(2);
+
+		String licenseName = getLicenseName(moduleFileName, moduleData);
+		String licenseUrl = getLicenseUrl(moduleFileName, moduleData);
 
 		Element libraryElement = XMLUtil.appendElement(
 			document, librariesElement, "library");
@@ -151,12 +170,12 @@ public class VersionsXmlReportRenderer implements ReportRenderer {
 		String moduleFileNamePrefix = _moduleFileNamePrefixCallable.call();
 
 		for (ModuleData moduleData : projectData.getAllDependencies()) {
-			if (isExcluded(moduleData)) {
-				continue;
-			}
-
 			String moduleFileName =
 				moduleFileNamePrefix + "!" + moduleData.getName() + ".jar";
+
+			if (isExcluded(moduleFileName, moduleData)) {
+				continue;
+			}
 
 			fileNameModuleDataMap.put(moduleFileName, moduleData);
 		}

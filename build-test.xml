@@ -2128,6 +2128,27 @@ tell application "Safari" to quit
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-saml-algorithm-blacklists">
+		<sequential>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.saml.opensaml.integration.internal.bootstrap.SecurityConfigurationBootstrap.config">blacklisted.algorithms = ["http://www.w3.org/2001/04/xmldsig-more#rsa-sha256", "http://www.w3.org/2001/04/xmldsig-more#rsa-sha384", "http://www.w3.org/2001/04/xmldsig-more#rsa-sha512", "http://www.w3.org/2001/04/xmlenc#sha256", "http://www.w3.org/2001/04/xmldsig-more#sha384", "http://www.w3.org/2001/04/xmlenc#sha512"]</echo>
+
+			<get-testcase-property property.name="app.server.bundles.size" />
+
+			<if>
+				<equals arg1="${app.server.bundles.size}" arg2="1" />
+				<then>
+					<set-app-server-properties app.server.bundle.index="1" />
+
+					<echo file="${test.app.server.liferay.home}/osgi/configs/com.liferay.saml.opensaml.integration.internal.bootstrap.SecurityConfigurationBootstrap.config">blacklisted.algorithms = ["http://www.w3.org/2000/09/xmldsig#rsa-sha1", "http://www.w3.org/2000/09/xmldsig#sha1"]</echo>
+				</then>
+			</if>
+
+			<print-file file.name="${liferay.home}/osgi/configs/com.liferay.saml.opensaml.integration.internal.bootstrap.SecurityConfigurationBootstrap.config" />
+
+			<print-file file.name="${test.app.server.liferay.home}/osgi/configs/com.liferay.saml.opensaml.integration.internal.bootstrap.SecurityConfigurationBootstrap.config" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-test-app-server-custom">
 		<sequential>
 			<ant antfile="build-dist.xml" inheritAll="false" target="unzip-${app.server.type}-custom" />
@@ -10773,6 +10794,15 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			<equals arg1="${cluster.enabled}" arg2="true" />
 			<then>
 				<prepare-test-cluster-properties />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="blacklist.saml.algorithms" />
+
+		<if>
+			<equals arg1="${blacklist.saml.algorithms}" arg2="true" />
+			<then>
+				<prepare-saml-algorithm-blacklists />
 			</then>
 		</if>
 

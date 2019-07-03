@@ -468,8 +468,6 @@ definition {
 		else if (IsElementPresent(locator1 = "Button#SAVE")) {
 			PortletEntry.save();
 		}
-
-		Alert.viewSuccessMessage();
 	}
 
 	macro editConfigurationUsersPersonalMenuShowInControlMenu {
@@ -484,8 +482,6 @@ definition {
 		else if (IsElementPresent(locator1 = "Button#SAVE")) {
 			PortletEntry.save();
 		}
-
-		Alert.viewSuccessMessage();
 	}
 
 	macro editDefaultLandingPageCP {

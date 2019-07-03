@@ -188,29 +188,37 @@ public class BlogsEntryAssetRenderer
 	}
 
 	@Override
-	public PortletURL getURLEdit(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws Exception {
-
+	public PortletURL getURLEdit(HttpServletRequest httpServletRequest) {
 		Group group = GroupLocalServiceUtil.fetchGroup(_entry.getGroupId());
 
 		if (group.isCompany()) {
 			ThemeDisplay themeDisplay =
-				(ThemeDisplay)liferayPortletRequest.getAttribute(
+				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
 			group = themeDisplay.getScopeGroup();
 		}
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, group, BlogsPortletKeys.BLOGS, 0, 0,
+			httpServletRequest, group, BlogsPortletKeys.BLOGS, 0, 0,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcRenderCommandName", "/blogs/edit_entry");
 		portletURL.setParameter("entryId", String.valueOf(_entry.getEntryId()));
 
 		return portletURL;
+	}
+
+	@Override
+	public PortletURL getURLEdit(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws Exception {
+
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(liferayPortletRequest);
+
+		return getURLEdit(httpServletRequest);
 	}
 
 	@Override

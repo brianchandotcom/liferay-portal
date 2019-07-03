@@ -14,26 +14,31 @@
 
 package com.liferay.segments.asah.connector.internal.servlet.taglib.ui;
 
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.constants.AssetListFormConstants;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.segments.constants.SegmentsConstants;
+
+import java.io.IOException;
 
 import java.util.Locale;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
-import javax.portlet.PortletPreferences;
-
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = FormNavigatorEntry.class
 )
 public class AsahInterestTermFormNavigatorEntry
-	extends BaseJSPFormNavigatorEntry {
+	extends BaseJSPFormNavigatorEntry<AssetListEntry> {
 
 	@Override
 	public String getCategoryKey() {
@@ -72,8 +77,49 @@ public class AsahInterestTermFormNavigatorEntry
 	}
 
 	@Override
-	public boolean isVisible(User user, Object object) {
-		if (isDynamicAssetSelection()) {
+	public void include(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException {
+
+		long assetListEntryId = ParamUtil.getLong(
+			httpServletRequest, "assetListEntryId");
+
+		long segmentsEntryId = ParamUtil.getLong(
+			httpServletRequest, "segmentsEntryId",
+			SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT);
+
+		try {
+			AssetListEntry assetListEntry =
+				_assetListEntryService.fetchAssetListEntry(assetListEntryId);
+
+			if (assetListEntry != null) {
+				UnicodeProperties properties = new UnicodeProperties();
+
+				properties.load(
+					assetListEntry.getTypeSettings(segmentsEntryId));
+
+				boolean enableContentRecommendation = GetterUtil.getBoolean(
+					properties.getProperty(
+						"enableContentRecommendation",
+						Boolean.FALSE.toString()));
+
+				httpServletRequest.setAttribute(
+					"enableContentRecommendation", enableContentRecommendation);
+			}
+		}
+		catch (Exception e) {
+			_log.error("Error setting content recommendation value");
+		}
+
+		super.include(httpServletRequest, httpServletResponse);
+	}
+
+	@Override
+	public boolean isVisible(User user, AssetListEntry assetListEntry) {
+		if (assetListEntry.getType() ==
+				AssetListEntryTypeConstants.TYPE_DYNAMIC) {
+
 			return true;
 		}
 
@@ -82,7 +128,7 @@ public class AsahInterestTermFormNavigatorEntry
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.segments.asah.entry.query.processor.interest.terms)",
+		target = "(osgi.web.symbolicname=com.liferay.segments.asah.connector)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
@@ -94,26 +140,10 @@ public class AsahInterestTermFormNavigatorEntry
 		return "/interest_terms.jsp";
 	}
 
-	protected boolean isDynamicAssetSelection() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+	private static final Log _log = LogFactoryUtil.getLog(
+		AsahInterestTermFormNavigatorEntry.class);
 
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		PortletPreferences portletSetup =
-			themeDisplay.getStrictLayoutPortletSetup(
-				themeDisplay.getLayout(), portletDisplay.getPortletResource());
-
-		String selectionStyle = GetterUtil.getString(
-			portletSetup.getValue("selectionStyle", null), "dynamic");
-
-		if (Objects.equals(selectionStyle, "dynamic")) {
-			return true;
-		}
-
-		return false;
-	}
+	@Reference
+	private AssetListEntryService _assetListEntryService;
 
 }

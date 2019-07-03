@@ -14,6 +14,16 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<aui:input helpMessage="enable-content-recommendation-help-message" label="enable-content-recommendation-label" name="TypeSettingsProperties--enableContentRecommendation--" type="toggle-switch" value="<%= enableContentRecommendation %>" />
+<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
+
+<liferay-frontend:defineObjects />
+
+<liferay-theme:defineObjects />
+
+<%
+boolean enableContentRecommendation = GetterUtil.getBoolean(request.getAttribute("enableContentRecommendation"));
+%>

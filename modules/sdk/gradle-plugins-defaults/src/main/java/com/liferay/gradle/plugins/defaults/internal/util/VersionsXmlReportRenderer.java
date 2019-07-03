@@ -72,7 +72,7 @@ public class VersionsXmlReportRenderer implements ReportRenderer {
 	}
 
 	private void _appendLibraryElement(
-		Document document, Element librariesElement, String fileName,
+		Document document, Element librariesElement, String moduleFileName,
 		ModuleData moduleData) {
 
 		List<String> moduleLicenseInfo =
@@ -85,7 +85,8 @@ public class VersionsXmlReportRenderer implements ReportRenderer {
 		Element libraryElement = XMLUtil.appendElement(
 			document, librariesElement, "library");
 
-		XMLUtil.appendElement(document, libraryElement, "file-name", fileName);
+		XMLUtil.appendElement(
+			document, libraryElement, "file-name", moduleFileName);
 		XMLUtil.appendElement(
 			document, libraryElement, "version", moduleData.getVersion());
 		XMLUtil.appendElement(

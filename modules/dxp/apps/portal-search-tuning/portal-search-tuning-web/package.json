@@ -42,8 +42,7 @@
 		"build": "liferay-npm-scripts build --bundler",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix",
-		"storybook": "start-storybook -p 9000 -c ./src/main/resources/META-INF/resources/js/stories",
-		"test": "liferay-npm-scripts test"
+		"storybook": "start-storybook -p 9000 -c ./src/main/resources/META-INF/resources/js/stories"
 	},
 	"version": "1.0.0"
 }

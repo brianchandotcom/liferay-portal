@@ -131,6 +131,56 @@ definition {
 			ownerName = "Test Test");
 	}
 
+	@description = "This test covers LPS-94858. It asserts deleted entry displays in a user's Shared Content."
+	@priority = "4"
+	test AssertSingleDeleteEntry {
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.sharePG(
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.deletePG(dmDocumentTitle = "DM Document Title");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		AssertTextEquals(
+			locator1 = "Sharing#NOTIFICATIONS_DELETE_ENTRY_TITLE",
+			value1 = "Notification no longer applies.");
+		AssertTextEquals(
+			locator1 = "Sharing#NOTIFICATIONS_DELETE_ENTRY_CONTENT",
+			value1 = "Notification for Sharing was deleted.");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
+
+		AssertElementPresent(
+			key_status = "Not Visible",
+			locator1 = "Sharing#SHARED_CONTENT_CONTENT_STATUS");
+		AssertElementNotPresent(
+			key_contentTitle = "DM Document Title",
+			locator1 = "Sharing#SHARED_CONTENT_CONTENT_OPTIONS");
+		AssertElementNotPresent(locator1 = "//tbody/tr/td[contains(@class,'table-cell-content')]/a[contains(.,'DM Document Title')]");
+	}
+
 	@description = "This test asserts only one entry displays in a user's Shared Content app when multiple users share the same document to him."
 	@priority = "4"
 	test AssertSingleEntry {

@@ -370,6 +370,11 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 				"https://github.com/paypal/PayPal-Java-SDK/blob/master/LICENSE"
 			},
 			{
+				"com.liferay.portal.search.elasticsearch6.impl.jar!jts-core.jar",
+				"Eclipse Publish License, Version 1.0",
+				"https://github.com/locationtech/jts/blob/master/LICENSE_EPLv1.txt"
+			},
+			{
 				"com.liferay.portal.security.sso.cas.impl.jar!cas-client-core.jar",
 				"Apache License 2.0",
 				"https://github.com/apereo/java-cas-client/blob/master/cas-client-core/LICENSE.txt"
@@ -383,6 +388,41 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 				"com.liferay.portal.security.sso.openid.impl.jar!org.apache.httpcomponents.httpclient.jar",
 				"Apache License 2.0",
 				"http://www.apache.org/licenses/LICENSE-2.0.html"
+			},
+			{
+				"com.liferay.portal.upgrade.impl.jar!jgrapht-core.jar",
+				"Eclipse Public License (EPL) 1.0",
+				"http://www.eclipse.org/legal/epl-v10.html"
+			},
+			{
+				"com.liferay.portal.vulcan.impl.jar!javassist.jar",
+				"LGPL 2.1",
+				"http://www.gnu.org/licenses/lgpl-2.1.html"
+			},
+			{
+				"com.liferay.portal.vulcan.impl.jar!reflections.jar",
+				"The New BSD License",
+				"http://www.opensource.org/licenses/bsd-license.html"
+			},
+			{
+				"com.liferay.registry.api.jar!biz.aQute.bndlib.jar",
+				"Apache License, Version 2.0",
+				"http://www.opensource.org/licenses/apache2.0.php"
+			},
+			{
+				"opensocial-portlet.war!org.osgi.annotation.versioning.jar",
+				"Apache License 2.0",
+				"http://www.apache.org/licenses/LICENSE-2.0"
+			},
+			{
+				"powwow-portlet.war!org.osgi.annotation.versioning.jar",
+				"Apache License 2.0",
+				"http://www.apache.org/licenses/LICENSE-2.0"
+			},
+			{
+				"tasks-portlet.war!org.osgi.annotation.versioning.jar",
+				"Apache License 2.0",
+				"http://www.apache.org/licenses/LICENSE-2.0"
 			}
 		};
 

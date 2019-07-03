@@ -102,12 +102,12 @@ public class QuartzTriggerFactory implements TriggerFactory {
 		String jobName, String groupName, Date startDate, Date endDate,
 		TimeZone timeZone, String cronExpression) {
 
-		CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(
-			cronExpression);
+		CronScheduleBuilder cronScheduleBuilder =
+			CronScheduleBuilder.cronSchedule(cronExpression);
 
 		return createTrigger(
 			jobName, groupName, startDate, endDate,
-			scheduleBuilder.inTimeZone(timeZone));
+			cronScheduleBuilder.inTimeZone(timeZone));
 	}
 
 	@Override

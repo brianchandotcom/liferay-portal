@@ -22,6 +22,7 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.fragment.util.FragmentEntryConfigUtil;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.petra.string.StringPool;
@@ -147,6 +148,10 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 			jsonObject.put(
 				"configuration",
 				JSONFactoryUtil.createJSONObject(
+					fragmentEntryLink.getConfiguration())
+			).put(
+				"defaultConfigurationValues",
+				FragmentEntryConfigUtil.getConfigurationDefaultValuesJSONObject(
 					fragmentEntryLink.getConfiguration())
 			).put(
 				"editableValues", fragmentEntryLink.getEditableValues()

@@ -70,7 +70,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		AssertElementNotPresent(locator1 = "Button#ADD");
+		AssertElementNotPresent(locator1 = "Button#PLUS");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_COMMUNITY",
@@ -98,7 +98,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		AssertElementNotPresent(locator1 = "Button#ADD");
+		AssertElementNotPresent(locator1 = "Button#PLUS");
 	}
 
 	@priority = "5"

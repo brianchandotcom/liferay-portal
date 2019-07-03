@@ -85,16 +85,16 @@ public class AsahInterestTermFormNavigatorEntry
 		long assetListEntryId = ParamUtil.getLong(
 			httpServletRequest, "assetListEntryId");
 
-		long segmentsEntryId = ParamUtil.getLong(
-			httpServletRequest, "segmentsEntryId",
-			SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT);
-
 		try {
 			AssetListEntry assetListEntry =
 				_assetListEntryService.fetchAssetListEntry(assetListEntryId);
 
 			if (assetListEntry != null) {
 				UnicodeProperties properties = new UnicodeProperties();
+
+				long segmentsEntryId = ParamUtil.getLong(
+					httpServletRequest, "segmentsEntryId",
+					SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT);
 
 				properties.load(
 					assetListEntry.getTypeSettings(segmentsEntryId));

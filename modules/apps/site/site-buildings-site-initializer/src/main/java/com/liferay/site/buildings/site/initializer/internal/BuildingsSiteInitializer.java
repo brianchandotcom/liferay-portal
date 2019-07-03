@@ -18,7 +18,14 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.importer.FragmentsImporter;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.fragment.renderer.FragmentRendererTracker;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -30,6 +37,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -51,6 +59,7 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
@@ -165,6 +174,50 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private FragmentEntryLink _addFragmentEntryLink(
+		long plid, String fragmentEntryKey, String editableValues) {
+
+		FragmentEntry fragmentEntry = _getFragmentEntry(fragmentEntryKey);
+
+		FragmentRenderer fragmentRenderer =
+			_fragmentRendererTracker.getFragmentRenderer(fragmentEntryKey);
+
+		if ((fragmentEntry == null) && (fragmentRenderer == null)) {
+			return null;
+		}
+
+		try {
+			if (fragmentEntry != null) {
+				String contributedRendererKey = null;
+
+				if (fragmentEntry.getFragmentEntryId() == 0) {
+					contributedRendererKey = fragmentEntryKey;
+				}
+
+				return _fragmentEntryLinkLocalService.addFragmentEntryLink(
+					_serviceContext.getUserId(),
+					_serviceContext.getScopeGroupId(), 0,
+					fragmentEntry.getFragmentEntryId(),
+					_portal.getClassNameId(Layout.class), plid,
+					fragmentEntry.getCss(), fragmentEntry.getHtml(),
+					fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+					editableValues, StringPool.BLANK, 0, contributedRendererKey,
+					_serviceContext);
+			}
+
+			return _fragmentEntryLinkLocalService.addFragmentEntryLink(
+				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+				0, 0, _portal.getClassNameId(Layout.class), plid,
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, editableValues, StringPool.BLANK, 0,
+				fragmentEntryKey, _serviceContext);
+		}
+		catch (Exception e) {
+		}
+
+		return null;
+	}
+
 	private void _addFragments() throws Exception {
 		URL url = _bundle.getEntry("/fragments.zip");
 
@@ -207,7 +260,8 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private Layout _addLayout(long parentLayoutId, String name)
+	private Layout _addLayout(
+			long parentLayoutId, String name, String type, String dataPath)
 		throws Exception {
 
 		Map<Locale, String> nameMap = new HashMap<>();
@@ -217,18 +271,19 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 		Layout layout = _layoutLocalService.addLayout(
 			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
 			false, parentLayoutId, nameMap, new HashMap<>(), new HashMap<>(),
-			new HashMap<>(), new HashMap<>(), LayoutConstants.TYPE_CONTENT,
-			null, false, false, new HashMap<>(), _serviceContext);
+			new HashMap<>(), new HashMap<>(), type, null, false, false,
+			new HashMap<>(), _serviceContext);
 
-		CommerceLayoutData commerceLayoutData = new CommerceLayoutData();
-
-		JSONObject jsonObject = commerceLayoutData.buildLayoutData(
-			layout, _serviceContext);
+		if (Validator.isNull(dataPath)) {
+			return layout;
+		}
 
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
 			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
 			_portal.getClassNameId(Layout.class), layout.getPlid(),
-			jsonObject.toString(), _serviceContext);
+			_parseLayoutContent(
+				layout.getPlid(), _PATH + "/layout-content/" + dataPath),
+			_serviceContext);
 
 		return layout;
 	}
@@ -249,50 +304,69 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addLayouts() throws Exception {
-		_addLayout(LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Home");
+		_addLayout(
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Home",
+			LayoutConstants.TYPE_CONTENT, "home.json");
 
 		Layout productsLayout = _addLayout(
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Products");
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Products", "node",
+			StringPool.BLANK);
 
 		Layout digitalExperiencePlatformLayout = _addLayout(
-			productsLayout.getLayoutId(), "Digital Experience Platform");
+			productsLayout.getLayoutId(), "Digital Experience Platform",
+			LayoutConstants.TYPE_CONTENT, "digital-experience-platform.json");
 
 		Layout overviewLayout = _addLayout(
-			digitalExperiencePlatformLayout.getLayoutId(), "Overview");
+			digitalExperiencePlatformLayout.getLayoutId(), "Overview",
+			LayoutConstants.TYPE_CONTENT, StringPool.BLANK);
 
 		Layout featuresLayout = _addLayout(
-			digitalExperiencePlatformLayout.getLayoutId(), "Features");
+			digitalExperiencePlatformLayout.getLayoutId(), "Features",
+			LayoutConstants.TYPE_CONTENT, StringPool.BLANK);
 
 		Layout keyBenefitsLayout = _addLayout(
-			digitalExperiencePlatformLayout.getLayoutId(), "Key Benefits");
+			digitalExperiencePlatformLayout.getLayoutId(), "Key Benefits",
+			LayoutConstants.TYPE_CONTENT, StringPool.BLANK);
 
 		Layout whatIsNewLayout = _addLayout(
-			digitalExperiencePlatformLayout.getLayoutId(), "What is New");
+			digitalExperiencePlatformLayout.getLayoutId(), "What is New",
+			LayoutConstants.TYPE_CONTENT, StringPool.BLANK);
 
 		_addNavigationMenus(
 			"DXP Secondary", overviewLayout, featuresLayout, keyBenefitsLayout,
 			whatIsNewLayout);
 
 		Layout commerceLayout = _addLayout(
-			productsLayout.getLayoutId(), "Commerce");
+			productsLayout.getLayoutId(), "Commerce",
+			LayoutConstants.TYPE_CONTENT, "commerce.json");
 
 		Layout commerceDemoLayout = _addLayout(
-			commerceLayout.getLayoutId(), "Commerce Demo");
+			commerceLayout.getLayoutId(), "Commerce Demo",
+			LayoutConstants.TYPE_CONTENT, StringPool.BLANK);
 
-		featuresLayout = _addLayout(commerceLayout.getLayoutId(), "Features");
+		featuresLayout = _addLayout(
+			commerceLayout.getLayoutId(), "Features",
+			LayoutConstants.TYPE_CONTENT, StringPool.BLANK);
 
-		Layout newsLayout = _addLayout(commerceLayout.getLayoutId(), "News");
+		Layout newsLayout = _addLayout(
+			commerceLayout.getLayoutId(), "News", LayoutConstants.TYPE_CONTENT,
+			StringPool.BLANK);
 
 		Layout analyticsCloudLayout = _addLayout(
-			productsLayout.getLayoutId(), "Analytics Cloud");
+			productsLayout.getLayoutId(), "Analytics Cloud",
+			LayoutConstants.TYPE_CONTENT, "analytics-cloud.json");
 
 		_addNavigationMenus(
 			"Commerce Secondary", commerceDemoLayout, featuresLayout,
 			newsLayout, analyticsCloudLayout);
 
-		_addLayout(LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Solutions");
+		_addLayout(
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Solutions",
+			LayoutConstants.TYPE_CONTENT, "solutions.json");
 
-		_addLayout(LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "News");
+		_addLayout(
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "News",
+			LayoutConstants.TYPE_CONTENT, "news.json");
 	}
 
 	private void _addNavigationMenus(String name, Layout... layouts)
@@ -370,6 +444,81 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 		_serviceContext = serviceContext;
 	}
 
+	private FragmentEntry _getFragmentEntry(String fragmentEntryKey) {
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.fetchFragmentEntry(
+				_serviceContext.getScopeGroupId(), fragmentEntryKey);
+
+		if (fragmentEntry != null) {
+			return fragmentEntry;
+		}
+
+		Map<String, FragmentEntry> fragmentEntries =
+			_fragmentCollectionContributorTracker.getFragmentEntries();
+
+		return fragmentEntries.get(fragmentEntryKey);
+	}
+
+	private String _parseLayoutContent(long plid, String dataPath)
+		throws Exception {
+
+		Class<?> clazz = getClass();
+
+		String data = StringUtil.read(clazz.getClassLoader(), dataPath);
+
+		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
+
+		JSONArray structureJSONArray = dataJSONObject.getJSONArray("structure");
+
+		for (int i = 0; i < structureJSONArray.length(); i++) {
+			JSONObject rowJSONObject = structureJSONArray.getJSONObject(i);
+
+			JSONArray columnsJSONArray = rowJSONObject.getJSONArray("columns");
+
+			for (int j = 0; j < columnsJSONArray.length(); j++) {
+				JSONObject columnJSONObject = columnsJSONArray.getJSONObject(j);
+
+				JSONArray fragmentEntriesJSONArray =
+					columnJSONObject.getJSONArray("fragmentEntries");
+
+				JSONArray fragmentEntryLinkIdsJSONArray =
+					JSONFactoryUtil.createJSONArray();
+
+				for (int k = 0; k < fragmentEntriesJSONArray.length(); k++) {
+					JSONObject fragmentEntryJSONObject =
+						fragmentEntriesJSONArray.getJSONObject(k);
+
+					String fragmentEntryKey = fragmentEntryJSONObject.getString(
+						"fragmentEntryKey");
+
+					String editableValues = fragmentEntryJSONObject.getString(
+						"editableValues");
+
+					editableValues = StringUtil.replace(
+						editableValues, StringPool.DOLLAR, StringPool.DOLLAR,
+						_fileEntriesLinkMap);
+
+					FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
+						plid, fragmentEntryKey, editableValues);
+
+					if (fragmentEntryLink != null) {
+						fragmentEntryLinkIdsJSONArray.put(
+							fragmentEntryLink.getFragmentEntryLinkId());
+					}
+				}
+
+				columnJSONObject.remove("fragmentEntries");
+
+				columnJSONObject.put(
+					"fragmentEntryLinkIds", fragmentEntryLinkIdsJSONArray);
+			}
+		}
+
+		return StringUtil.replace(
+			dataJSONObject.toString(), StringPool.DOLLAR, StringPool.DOLLAR,
+			_fileEntriesLinkMap);
+	}
+
 	private void _updateLookAndFeel() throws Exception {
 		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
 			_serviceContext.getScopeGroupId(), false);
@@ -419,6 +568,19 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 
 	private final Map<String, String> _fileEntriesLinkMap = new HashMap<>();
 	private final Map<String, String> _fileEntriesObjectMap = new HashMap<>();
+
+	@Reference
+	private FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private FragmentRendererTracker _fragmentRendererTracker;
 
 	@Reference
 	private FragmentsImporter _fragmentsImporter;

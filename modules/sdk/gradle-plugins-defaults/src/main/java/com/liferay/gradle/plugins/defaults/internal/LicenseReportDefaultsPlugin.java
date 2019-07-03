@@ -19,6 +19,7 @@ import aQute.bnd.osgi.Constants;
 import com.github.jk1.license.LicenseReportExtension;
 import com.github.jk1.license.LicenseReportPlugin;
 import com.github.jk1.license.ModuleData;
+import com.github.jk1.license.render.LicenseDataCollector;
 import com.github.jk1.license.render.ReportRenderer;
 
 import com.liferay.gradle.plugins.LiferayAntPlugin;
@@ -34,6 +35,7 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -324,6 +326,13 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 				 group.startsWith("com.liferay.")) &&
 				name.startsWith("com.liferay.")) {
 
+				return true;
+			}
+
+			List<String> moduleLicenseInfo =
+				LicenseDataCollector.singleModuleLicenseInfo(moduleData);
+
+			if (Validator.isNull(moduleLicenseInfo.get(1))) {
 				return true;
 			}
 

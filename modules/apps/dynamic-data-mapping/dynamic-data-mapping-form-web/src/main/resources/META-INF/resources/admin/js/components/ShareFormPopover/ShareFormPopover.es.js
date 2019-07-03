@@ -26,10 +26,7 @@ class ShareFormPopover extends Component {
 	attached() {
 		this._clipboard = new ClipboardJS('.ddm-copy-clipboard');
 
-		this._clipboard.on(
-			'success',
-			this._handleClipboardSuccess.bind(this)
-		);
+		this._clipboard.on('success', this._handleClipboardSuccess.bind(this));
 	}
 
 	disposeInternal() {

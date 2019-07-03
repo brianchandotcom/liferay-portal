@@ -20,11 +20,11 @@ module.exports = {
 				use: {
 					loader: 'babel-loader',
 					options: {
-						compact: false,
-					},
-				},
-			},
-		],
+						compact: false
+					}
+				}
+			}
+		]
 	},
 	output: {
 		path: buildFolder,
@@ -33,7 +33,5 @@ module.exports = {
 	optimization: {
 		minimize: true
 	},
-	plugins: [
-		new webpack.optimize.ModuleConcatenationPlugin()
-	]
+	plugins: [new webpack.optimize.ModuleConcatenationPlugin()]
 };

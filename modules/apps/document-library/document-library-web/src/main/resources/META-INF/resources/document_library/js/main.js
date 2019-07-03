@@ -244,35 +244,46 @@ AUI.add(
 						Liferay.Loader.require(
 							'frontend-js-web/liferay/ItemSelectorDialog.es',
 							function(ItemSelectorDialog) {
-
-								var itemSelectorDialog = new ItemSelectorDialog.default({
-									buttonAddLabel: Liferay.Language.get('select'),
-									eventName: instance.ns('selectFileEntryType'),
-									title: Liferay.Language.get('select-document-type'),
-									url: instance.get('selectFileEntryTypeURL')
-								});
+								var itemSelectorDialog = new ItemSelectorDialog.default(
+									{
+										buttonAddLabel: Liferay.Language.get(
+											'select'
+										),
+										eventName: instance.ns(
+											'selectFileEntryType'
+										),
+										title: Liferay.Language.get(
+											'select-document-type'
+										),
+										url: instance.get(
+											'selectFileEntryTypeURL'
+										)
+									}
+								);
 
 								itemSelectorDialog.open();
 
-								itemSelectorDialog.on('selectedItemChange', event => {
-									var selectedItem = event.selectedItem;
+								itemSelectorDialog.on(
+									'selectedItemChange',
+									event => {
+										var selectedItem = event.selectedItem;
 
-									if (selectedItem) {
-										var uri = instance.get(
-											'viewFileEntryTypeURL'
-										);
+										if (selectedItem) {
+											var uri = instance.get(
+												'viewFileEntryTypeURL'
+											);
 
-										uri = Liferay.Util.addParams(
-											instance.ns(
-												'fileEntryTypeId='
-											) + selectedItem,
-											uri
-										);
+											uri = Liferay.Util.addParams(
+												instance.ns(
+													'fileEntryTypeId='
+												) + selectedItem,
+												uri
+											);
 
-										location.href = uri;
+											location.href = uri;
+										}
 									}
-								})
-
+								);
 							}
 						);
 					}

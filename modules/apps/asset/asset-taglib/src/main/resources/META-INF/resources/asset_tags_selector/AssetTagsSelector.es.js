@@ -50,7 +50,7 @@ class AssetTagsSelector extends Component {
 			selectedTagNames: this._getTagNames()
 		});
 
-		let itemSelectorDialog = new ItemSelectorDialog({
+		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: Liferay.Language.get('done'),
 			eventName: this.eventName,
 			title: Liferay.Language.get('tags'),

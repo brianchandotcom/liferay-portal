@@ -17,7 +17,7 @@ import {Config} from 'metal-state';
 
 class ElementsDefaultEventHandler extends DefaultEventHandler {
 	delete(itemData) {
-		let message = Liferay.Language.get(
+		const message = Liferay.Language.get(
 			'are-you-sure-you-want-to-delete-this'
 		);
 

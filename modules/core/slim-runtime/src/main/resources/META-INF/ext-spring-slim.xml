@@ -79,11 +79,6 @@
 	<bean class="com.liferay.portal.kernel.license.util.LicenseManagerUtil" id="com.liferay.portal.kernel.license.util.LicenseManagerUtil">
 		<property name="licenseManager" ref="com.liferay.portal.kernel.license.util.LicenseManager" />
 	</bean>
-	<bean class="com.liferay.portal.kernel.management.PortalManagerUtil" id="com.liferay.portal.kernel.management.PortalManagerUtil">
-		<property name="portalManager">
-			<bean class="com.liferay.portal.management.BasePortalManager" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.kernel.patcher.PatcherUtil" id="com.liferay.portal.kernel.patcher.PatcherUtil">
 		<property name="patcher">
 			<bean class="com.liferay.portal.patcher.PatcherImpl" />

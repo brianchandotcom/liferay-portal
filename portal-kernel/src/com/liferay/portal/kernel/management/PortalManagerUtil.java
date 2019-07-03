@@ -28,7 +28,9 @@ import java.lang.reflect.Method;
 /**
  * @author Shuyang Zhou
  * @author Raymond Augé
+ * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
+@Deprecated
 public class PortalManagerUtil {
 
 	public static MethodHandler createManageActionMethodHandler(

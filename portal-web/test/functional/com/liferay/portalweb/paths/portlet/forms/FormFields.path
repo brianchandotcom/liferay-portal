@@ -359,7 +359,7 @@
 <!--AUTOCOMPLETE-->
 <tr>
 	<td>AUTOCOMPLETE_OPTION</td>
-	<td>//li[@data-text='${key_autocompleteOption}']</td>
+	<td>//li[contains(.,'${key_autocompleteOption}')]</td>
 	<td></td>
 </tr>
 <tr>

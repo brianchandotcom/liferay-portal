@@ -194,6 +194,13 @@ definition {
 			value1 = "\BACK_SPACE");
 	}
 
+	macro editTextWithDataProvider {
+		Type.sendKeys(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#TEXT_FIELD",
+			value1 = "${fieldValue}");
+	}
+
 	macro editValidation {
 		Click(locator1 = "FormFields#VALIDATION_ARGUMENT");
 

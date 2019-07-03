@@ -16,6 +16,7 @@ package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -44,6 +45,12 @@ public class HypersonicSQLTransformerLogic extends BaseSQLTransformerLogic {
 	}
 
 	@Override
+	protected Function<String, String> getNullDateFunction() {
+		return (String sql) -> StringUtil.replace(
+			sql, "[$NULL_DATE$]", "CAST(NULL AS DATE)");
+	}
+
+	@Override
 	protected String replaceCastLong(Matcher matcher) {
 		return matcher.replaceAll("CONVERT($1, SQL_BIGINT)");
 	}
@@ -53,6 +60,7 @@ public class HypersonicSQLTransformerLogic extends BaseSQLTransformerLogic {
 		return matcher.replaceAll("CONVERT($1, SQL_VARCHAR)");
 	}
 
+	@Override
 	protected String replaceDropTableIfExistsText(Matcher matcher) {
 		return matcher.replaceAll("DROP TABLE $1 IF EXISTS");
 	}

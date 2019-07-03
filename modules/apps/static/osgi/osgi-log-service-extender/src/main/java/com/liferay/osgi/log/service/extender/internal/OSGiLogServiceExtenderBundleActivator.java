@@ -67,9 +67,9 @@ public class OSGiLogServiceExtenderBundleActivator implements BundleActivator {
 
 		try {
 			_loadLogConfigurations(
-				bundle, "META-INF/osgi-logging.properties", logLevels);
+				bundle, "osgi-logging.properties", logLevels);
 			_loadLogConfigurations(
-				bundle, "META-INF/osgi-logging-ext.properties", logLevels);
+				bundle, "osgi-logging-ext.properties", logLevels);
 		}
 		catch (IOException ioe) {
 			_log.error(
@@ -86,7 +86,8 @@ public class OSGiLogServiceExtenderBundleActivator implements BundleActivator {
 			Bundle bundle, String resourcePath, Map<String, LogLevel> logLevels)
 		throws IOException {
 
-		Enumeration<URL> enumeration = bundle.getResources(resourcePath);
+		Enumeration<URL> enumeration = bundle.findEntries(
+			"META-INF", resourcePath, false);
 
 		if (enumeration != null) {
 			while (enumeration.hasMoreElements()) {

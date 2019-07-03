@@ -60,8 +60,8 @@ public class Log4jExtenderBundleActivator implements BundleActivator {
 			@Override
 			public Bundle addingBundle(Bundle bundle, BundleEvent bundleEvent) {
 				try {
-					_configureLog4j(bundle, "META-INF/module-log4j.xml");
-					_configureLog4j(bundle, "META-INF/module-log4j-ext.xml");
+					_configureLog4j(bundle, "module-log4j.xml");
+					_configureLog4j(bundle, "module-log4j-ext.xml");
 					_configureLog4j(bundle.getSymbolicName());
 				}
 				catch (IOException ioe) {
@@ -146,7 +146,8 @@ public class Log4jExtenderBundleActivator implements BundleActivator {
 	private void _configureLog4j(Bundle bundle, String resourcePath)
 		throws IOException {
 
-		Enumeration<URL> enumeration = bundle.getResources(resourcePath);
+		Enumeration<URL> enumeration = bundle.findEntries(
+			"META-INF", resourcePath, false);
 
 		if (enumeration != null) {
 			while (enumeration.hasMoreElements()) {

@@ -125,9 +125,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
-		FormFields.editText(
+		FormFields.editTextWithDataProvider(
 			fieldName = "TextFieldWithAutocomplete",
-			fieldValue = "Un");
+			fieldValue = "United");
 
 		FormFields.selectAutoCompleteOption(autocompleteOption = "United States");
 

@@ -217,6 +217,8 @@ public class EndpointSchemaInferrer {
 			designField = new Schema.Field(
 				fieldName, AvroUtils.wrapAsNullable(AvroUtils._string()), null,
 				(Object)null);
+
+			designField.addProp("oas.dictionary", "true");
 		}
 		else if (oasFormat == OASFormat.DOUBLE) {
 			designField = new Schema.Field(

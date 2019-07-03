@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -209,6 +210,10 @@ public class LiferayWriter
 			new HashMap<>();
 
 		for (Schema.Field field : indexRecordFields) {
+			if (indexedRecord.get(field.pos()) == null) {
+				continue;
+			}
+
 			String fieldName = field.name();
 
 			Schema unwrappedSchema = AvroUtils.unwrapIfNullable(field.schema());
@@ -252,7 +257,7 @@ public class LiferayWriter
 					 AvroUtils.isSameType(unwrappedSchema, AvroUtils._date())) {
 
 				currentJsonObjectBuilder.add(
-					fieldName, (String)indexedRecord.get(field.pos()));
+					fieldName, (Long)indexedRecord.get(field.pos()));
 			}
 			else if (AvroUtils.isSameType(
 						unwrappedSchema, AvroUtils._double())) {
@@ -277,12 +282,26 @@ public class LiferayWriter
 			else if (AvroUtils.isSameType(
 						unwrappedSchema, AvroUtils._string())) {
 
-				StringReader stringReader = new StringReader(
-					(String)indexedRecord.get(field.pos()));
+				String stringFieldValue = (String)indexedRecord.get(
+					field.pos());
 
-				JsonReader jsonReader = Json.createReader(stringReader);
+				if (Objects.equals("true", field.getProp("oas.dictionary")) ||
+					Objects.equals("Dictionary", unwrappedSchema.getName())) {
 
-				currentJsonObjectBuilder.add(fieldName, jsonReader.readValue());
+					StringReader stringReader = new StringReader(
+						stringFieldValue);
+
+					JsonReader jsonReader = Json.createReader(stringReader);
+
+					currentJsonObjectBuilder.add(
+						fieldName, jsonReader.readValue());
+
+					jsonReader.close();
+
+					continue;
+				}
+
+				currentJsonObjectBuilder.add(fieldName, stringFieldValue);
 			}
 			else {
 				throw new IOException(

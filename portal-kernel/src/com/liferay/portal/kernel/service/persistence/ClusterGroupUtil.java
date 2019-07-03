@@ -37,8 +37,10 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Brian Wing Shun Chan
  * @see ClusterGroupPersistence
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public class ClusterGroupUtil {
 

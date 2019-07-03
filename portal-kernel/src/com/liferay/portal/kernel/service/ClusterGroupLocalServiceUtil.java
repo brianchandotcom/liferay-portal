@@ -28,8 +28,10 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Brian Wing Shun Chan
  * @see ClusterGroupLocalService
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public class ClusterGroupLocalServiceUtil {
 

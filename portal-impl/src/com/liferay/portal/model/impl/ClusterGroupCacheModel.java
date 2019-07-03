@@ -31,8 +31,10 @@ import org.osgi.annotation.versioning.ProviderType;
  * The cache model class for representing ClusterGroup in entity cache.
  *
  * @author Brian Wing Shun Chan
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public class ClusterGroupCacheModel
 	implements CacheModel<ClusterGroup>, Externalizable, MVCCModel {

@@ -48,8 +48,10 @@ import org.osgi.annotation.versioning.ProviderType;
  * </p>
  *
  * @author Brian Wing Shun Chan
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public class ClusterGroupPersistenceImpl
 	extends BasePersistenceImpl<ClusterGroup>

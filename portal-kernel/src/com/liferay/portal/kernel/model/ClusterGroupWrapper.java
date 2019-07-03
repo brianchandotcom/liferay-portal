@@ -28,8 +28,10 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Brian Wing Shun Chan
  * @see ClusterGroup
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public class ClusterGroupWrapper
 	extends BaseModelWrapper<ClusterGroup>

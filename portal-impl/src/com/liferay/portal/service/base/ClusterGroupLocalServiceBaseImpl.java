@@ -57,8 +57,10 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.service.impl.ClusterGroupLocalServiceImpl
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class ClusterGroupLocalServiceBaseImpl
 	extends BaseLocalServiceImpl

@@ -24,8 +24,10 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Brian Wing Shun Chan
  * @see ClusterGroupModel
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ImplementationClassName("com.liferay.portal.model.impl.ClusterGroupImpl")
 @ProviderType
 public interface ClusterGroup extends ClusterGroupModel, PersistedModel {

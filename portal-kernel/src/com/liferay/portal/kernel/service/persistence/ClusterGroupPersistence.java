@@ -28,8 +28,10 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Brian Wing Shun Chan
  * @see ClusterGroupUtil
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface ClusterGroupPersistence extends BasePersistence<ClusterGroup> {
 

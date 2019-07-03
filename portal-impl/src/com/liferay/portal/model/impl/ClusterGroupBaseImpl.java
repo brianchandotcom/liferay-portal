@@ -29,8 +29,10 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Brian Wing Shun Chan
  * @see ClusterGroupImpl
  * @see ClusterGroup
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class ClusterGroupBaseImpl
 	extends ClusterGroupModelImpl implements ClusterGroup {

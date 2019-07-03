@@ -25,8 +25,10 @@ import org.osgi.annotation.versioning.ProviderType;
  * This class is used by SOAP remote services.
  *
  * @author Brian Wing Shun Chan
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public class ClusterGroupSoap implements Serializable {
 

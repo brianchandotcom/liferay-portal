@@ -29,7 +29,6 @@
 	<import class="com.liferay.portal.kernel.model.Address" />
 	<import class="com.liferay.portal.kernel.model.BrowserTracker" />
 	<import class="com.liferay.portal.kernel.model.ClassName" />
-	<import class="com.liferay.portal.kernel.model.ClusterGroup" />
 	<import class="com.liferay.portal.kernel.model.Company" />
 	<import class="com.liferay.portal.kernel.model.Contact" />
 	<import class="com.liferay.portal.kernel.model.Country" />
@@ -165,15 +164,6 @@
 		</id>
 		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="value" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-	</class>
-	<class dynamic-update="true" name="com.liferay.portal.model.impl.ClusterGroupImpl" table="ClusterGroup">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="clusterGroupId" type="long">
-			<generator class="assigned" />
-		</id>
-		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="clusterNodeIds" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="wholeCluster" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.portal.model.impl.CompanyImpl" table="Company">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="long">

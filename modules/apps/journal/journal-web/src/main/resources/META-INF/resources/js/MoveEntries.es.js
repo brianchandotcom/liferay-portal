@@ -68,7 +68,10 @@ class MoveEntries extends PortletBase {
 					nameValue: selectedItem.folderName
 				};
 
-				Liferay.Util.selectFolder(folderData, this.portletNamespace);
+				Liferay.Util.selectFolder(
+					folderData,
+					this.namespace || this.portletNamespace
+				);
 			}
 		});
 

@@ -50,7 +50,7 @@ public class DataDefinitionResourceTest
 		Page<DataDefinition> page =
 			dataDefinitionResource.getSiteDataDefinitionsPage(
 				testGetSiteDataDefinitionsPage_getSiteId(), "definition",
-				Pagination.of(1, 2));
+				Pagination.of(1, 2), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -210,7 +210,7 @@ public class DataDefinitionResourceTest
 
 		Page<DataDefinition> page =
 			dataDefinitionResource.getSiteDataDefinitionsPage(
-				siteId, keywords, Pagination.of(1, 2));
+				siteId, keywords, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(1, page.getTotalCount());
 

@@ -14,9 +14,12 @@
 
 package com.liferay.asset.info.display.field.util;
 
-import com.liferay.asset.info.display.field.ClassTypesInfoDisplayFieldProvider;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
+import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.info.display.contributor.InfoDisplayField;
+import com.liferay.info.display.field.ClassTypesInfoDisplayFieldProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
@@ -38,8 +41,12 @@ public class ClassTypesInfoDisplayFieldProviderUtil {
 		ClassTypesInfoDisplayFieldProvider classTypesInfoDisplayFieldProvider =
 			_serviceTracker.getService();
 
+		ClassTypeReader classTypeReader = _getClassTypeReader(className);
+
+		ClassType classType = classTypeReader.getClassType(classTypeId, locale);
+
 		return classTypesInfoDisplayFieldProvider.getClassTypeInfoDisplayFields(
-			className, classTypeId, locale);
+			classType, locale);
 	}
 
 	public static List<ClassType> getClassTypes(
@@ -49,8 +56,24 @@ public class ClassTypesInfoDisplayFieldProviderUtil {
 		ClassTypesInfoDisplayFieldProvider classTypesInfoDisplayFieldProvider =
 			_serviceTracker.getService();
 
+		ClassTypeReader classTypeReader = _getClassTypeReader(className);
+
 		return classTypesInfoDisplayFieldProvider.getClassTypes(
-			groupId, className, locale);
+			groupId, classTypeReader, locale);
+	}
+
+	private static ClassTypeReader _getClassTypeReader(String className) {
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				className);
+
+		if ((assetRendererFactory == null) ||
+			!assetRendererFactory.isSupportsClassTypes()) {
+
+			return null;
+		}
+
+		return assetRendererFactory.getClassTypeReader();
 	}
 
 	private static final ServiceTracker

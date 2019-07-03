@@ -12,15 +12,13 @@
  * details.
  */
 
-package com.liferay.asset.info.display.internal.contributor.field;
+package com.liferay.info.internal.display.field;
 
-import com.liferay.asset.info.display.field.ClassTypesInfoDisplayFieldProvider;
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeField;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.info.display.contributor.InfoDisplayField;
+import com.liferay.info.display.field.ClassTypesInfoDisplayFieldProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -42,27 +40,8 @@ public class ClassTypesInfoDisplayFieldProviderImpl
 
 	@Override
 	public List<InfoDisplayField> getClassTypeInfoDisplayFields(
-			String className, long classTypeId, Locale locale)
+			ClassType classType, Locale locale)
 		throws PortalException {
-
-		if (classTypeId == 0) {
-			return Collections.emptyList();
-		}
-
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				className);
-
-		if ((assetRendererFactory == null) ||
-			!assetRendererFactory.isSupportsClassTypes()) {
-
-			return Collections.emptyList();
-		}
-
-		ClassTypeReader classTypeReader =
-			assetRendererFactory.getClassTypeReader();
-
-		ClassType classType = classTypeReader.getClassType(classTypeId, locale);
 
 		if (classType == null) {
 			return Collections.emptyList();
@@ -83,21 +62,8 @@ public class ClassTypesInfoDisplayFieldProviderImpl
 
 	@Override
 	public List<ClassType> getClassTypes(
-			long groupId, String className, Locale locale)
+			long groupId, ClassTypeReader classTypeReader, Locale locale)
 		throws PortalException {
-
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				className);
-
-		if ((assetRendererFactory == null) ||
-			!assetRendererFactory.isSupportsClassTypes()) {
-
-			return Collections.emptyList();
-		}
-
-		ClassTypeReader classTypeReader =
-			assetRendererFactory.getClassTypeReader();
 
 		return classTypeReader.getAvailableClassTypes(
 			_portal.getCurrentAndAncestorSiteGroupIds(groupId), locale);

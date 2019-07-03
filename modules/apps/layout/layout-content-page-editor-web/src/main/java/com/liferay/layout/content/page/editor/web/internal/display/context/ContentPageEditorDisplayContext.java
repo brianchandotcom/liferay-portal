@@ -31,6 +31,7 @@ import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
+import com.liferay.fragment.util.FragmentEntryConfigUtil;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
@@ -789,6 +790,11 @@ public class ContentPageEditorDisplayContext {
 						fragmentEntryLink.getConfiguration())
 				).putHTML(
 					"content", content
+				).put(
+					"defaultConfigurationValues",
+					FragmentEntryConfigUtil.
+						getConfigurationDefaultValuesJSONObject(
+							fragmentEntryLink.getConfiguration())
 				).put(
 					"editableValues", editableValuesJSONObject
 				).put(

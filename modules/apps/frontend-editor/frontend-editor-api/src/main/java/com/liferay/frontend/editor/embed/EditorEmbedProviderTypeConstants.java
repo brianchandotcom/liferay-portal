@@ -12,21 +12,15 @@
  * details.
  */
 
-package com.liferay.frontend.editor.api;
+package com.liferay.frontend.editor.embed;
 
 /**
- * @author Iván Zaera Avellón
+ * @author Sergio González
  */
-public interface EditorRenderer {
+public class EditorEmbedProviderTypeConstants {
 
-	public String getAttributeNamespace();
+	public static final String UNKNOWN = "unknown";
 
-	public String[] getJavaScriptModules();
-
-	public String getJspPath();
-
-	public String getResourcesJspPath();
-
-	public String getResourceType();
+	public static final String VIDEO = "video";
 
 }

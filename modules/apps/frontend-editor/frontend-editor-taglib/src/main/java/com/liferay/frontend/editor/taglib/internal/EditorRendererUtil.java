@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.editor.taglib.internal;
 
-import com.liferay.frontend.editor.api.EditorRenderer;
+import com.liferay.frontend.editor.EditorRenderer;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;

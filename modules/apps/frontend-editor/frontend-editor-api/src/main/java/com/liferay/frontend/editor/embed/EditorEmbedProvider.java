@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.editor.api.embed;
+package com.liferay.frontend.editor.embed;
 
 /**
  * Provides an interface for supporting embed providers for editors.

@@ -14,8 +14,8 @@
 
 package com.liferay.frontend.editor.alloyeditor.web.internal;
 
+import com.liferay.frontend.editor.EditorRenderer;
 import com.liferay.frontend.editor.alloyeditor.web.internal.constants.AlloyEditorConstants;
-import com.liferay.frontend.editor.api.EditorRenderer;
 import com.liferay.portal.kernel.editor.Editor;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 

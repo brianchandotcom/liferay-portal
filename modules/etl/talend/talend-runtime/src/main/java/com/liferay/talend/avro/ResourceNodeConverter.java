@@ -17,6 +17,8 @@ package com.liferay.talend.avro;
 import com.liferay.talend.common.json.JsonFinder;
 import com.liferay.talend.common.oas.OASException;
 
+import java.util.Objects;
+
 import javax.json.JsonNumber;
 import javax.json.JsonObject;
 import javax.json.JsonString;
@@ -91,17 +93,27 @@ public class ResourceNodeConverter
 				else if (AvroUtils.isSameType(
 							fieldSchema, AvroUtils._double())) {
 
-					record.put(
-						schemaEntry.pos(),
-						avroConverter.convertToAvro(_asDouble(jsonValue)));
+					record.put(schemaEntry.pos(), _asDouble(jsonValue));
 				}
 				else if (AvroUtils.isSameType(fieldSchema, AvroUtils._long())) {
 					record.put(schemaEntry.pos(), _asLong(jsonValue));
 				}
 				else if (AvroUtils.isSameType(fieldSchema, AvroUtils._int())) {
+					record.put(schemaEntry.pos(), _asInteger(jsonValue));
+				}
+				else if (fieldSchema.getType() == Schema.Type.RECORD) {
+					BaseConverter recordConverter = new OASDictionaryConverter(
+						fieldSchema);
+
+					if (!Objects.equals("Dictionary", fieldSchema.getName())) {
+						recordConverter = new ResourceNodeConverter(
+							fieldSchema);
+					}
+
 					record.put(
 						schemaEntry.pos(),
-						avroConverter.convertToAvro(_asInteger(jsonValue)));
+						recordConverter.convertToAvro(
+							jsonValue.asJsonObject()));
 				}
 				else {
 					if (jsonValue instanceof JsonString) {

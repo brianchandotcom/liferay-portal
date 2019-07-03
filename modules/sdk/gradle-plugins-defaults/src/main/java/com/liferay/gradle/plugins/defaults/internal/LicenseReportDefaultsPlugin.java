@@ -16,9 +16,10 @@ package com.liferay.gradle.plugins.defaults.internal;
 
 import aQute.bnd.osgi.Constants;
 
+import com.github.jk1.license.LicenseReportExtension;
 import com.github.jk1.license.LicenseReportPlugin;
-import com.github.jk1.license.LicenseReportPlugin.LicenseReportExtension;
 import com.github.jk1.license.ModuleData;
+import com.github.jk1.license.render.ReportRenderer;
 
 import com.liferay.gradle.plugins.LiferayAntPlugin;
 import com.liferay.gradle.plugins.LiferayOSGiPlugin;
@@ -154,7 +155,7 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 				GradleUtil.getExtension(project, LicenseReportExtension.class);
 
 			try {
-				licenseReportExtension.setConfigurations(addConfigurations());
+				licenseReportExtension.configurations = addConfigurations();
 			}
 			catch (IOException ioe) {
 				throw new UncheckedIOException(ioe);
@@ -167,8 +168,9 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 			// We need to pass a nonexistent group to avoid excluding
 			// "com.liferay" dependencies.
 
-			licenseReportExtension.setExcludeGroups(
-				String.valueOf(System.currentTimeMillis()));
+			licenseReportExtension.excludeGroups = new String[] {
+				String.valueOf(System.currentTimeMillis())
+			};
 
 			String fileName = "versions.xml";
 
@@ -177,10 +179,10 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 			if (Validator.isNotNull(outputDir)) {
 				fileName = project.getName() + ".xml";
 
-				licenseReportExtension.setOutputDir(outputDir);
+				licenseReportExtension.outputDir = outputDir;
 			}
 
-			licenseReportExtension.setRenderer(
+			licenseReportExtension.renderers = new ReportRenderer[] {
 				new ThirdPartyVersionsXmlReportRenderer(
 					fileName, licenseReportExtension,
 					new Callable<String>() {
@@ -191,7 +193,8 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 								"." + getArchiveExtension();
 						}
 
-					}));
+					})
+			};
 		}
 
 		protected String[] addConfigurations() throws Exception {

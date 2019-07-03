@@ -960,19 +960,18 @@ public class ProjectTemplateFilesTest {
 		String pathString = path.toString();
 
 		if (!pathString.contains("spring-mvc-portlet") &&
-			!fileName.equals("portlet")) {
+			!fileName.equals("portlet") && extension.equals("xml") &&
+			Validator.isNotNull(text)) {
 
-			if (extension.equals("xml") && Validator.isNotNull(text)) {
-				String xmlDeclaration = _xmlDeclarations.get(fileName);
+			String xmlDeclaration = _xmlDeclarations.get(fileName);
 
-				if (xmlDeclaration == null) {
-					xmlDeclaration = _xmlDeclarations.get(null);
-				}
-
-				Assert.assertTrue(
-					"Incorrect XML declaration in " + path,
-					text.startsWith(xmlDeclaration));
+			if (xmlDeclaration == null) {
+				xmlDeclaration = _xmlDeclarations.get(null);
 			}
+
+			Assert.assertTrue(
+				"Incorrect XML declaration in " + path,
+				text.startsWith(xmlDeclaration));
 		}
 
 		if (!fileName.endsWith(".js")) {

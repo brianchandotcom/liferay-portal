@@ -42,9 +42,8 @@ public class SpringMVCPortletProjectTemplateCustomizer
 
 		Path destinationDirPath = destinationDir.toPath();
 
-		String name = projectTemplatesArgs.getName();
-
-		Path projectPath = destinationDirPath.resolve(name);
+		Path projectPath = destinationDirPath.resolve(
+			projectTemplatesArgs.getName());
 
 		File buildDir = projectPath.toFile();
 

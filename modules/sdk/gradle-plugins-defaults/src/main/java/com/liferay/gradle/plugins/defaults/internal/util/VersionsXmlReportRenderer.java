@@ -94,20 +94,16 @@ public class VersionsXmlReportRenderer implements ReportRenderer {
 		XMLUtil.appendElement(
 			document, libraryElement, "project-url", projectUrl);
 
-		if (Validator.isNotNull(licenseName) ||
-			Validator.isNotNull(licenseUrl)) {
+		Element licensesElement = XMLUtil.appendElement(
+			document, libraryElement, "licenses");
 
-			Element licensesElement = XMLUtil.appendElement(
-				document, libraryElement, "licenses");
+		Element licenseElement = XMLUtil.appendElement(
+			document, licensesElement, "license");
 
-			Element licenseElement = XMLUtil.appendElement(
-				document, licensesElement, "license");
-
-			XMLUtil.appendElement(
-				document, licenseElement, "license-name", licenseName);
-			XMLUtil.appendElement(
-				document, licenseElement, "license-url", licenseUrl);
-		}
+		XMLUtil.appendElement(
+			document, licenseElement, "license-name", licenseName);
+		XMLUtil.appendElement(
+			document, licenseElement, "license-url", licenseUrl);
 	}
 
 	private String _getProjectName(ModuleData moduleData) {

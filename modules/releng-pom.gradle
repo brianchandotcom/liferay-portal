@@ -87,7 +87,7 @@ generatePomCompileOnly {
 	}
 
 	doLast {
-		Model model = _getPomModel("release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".compile.only")
+		Model model = _getModel("release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".compile.only")
 
 		DependencyManagement dependencyManagement = new DependencyManagement()
 
@@ -125,13 +125,13 @@ generatePomCompileOnly {
 
 		model.setDependencyManagement(dependencyManagement)
 
-		_writePom(model)
+		_write(model)
 	}
 }
 
 generatePomRelease {
 	doLast {
-		Model model = _getPomModel("release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".bom")
+		Model model = _getModel("release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".bom")
 
 		DependencyManagement dependencyManagement = new DependencyManagement()
 
@@ -218,13 +218,13 @@ generatePomRelease {
 
 		model.setDependencyManagement(dependencyManagement)
 
-		_writePom(model)
+		_write(model)
 	}
 }
 
 generatePomThirdParty {
 	doLast {
-		Model model = _getPomModel("release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".third.party")
+		Model model = _getModel("release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".third.party")
 
 		DependencyManagement dependencyManagement = new DependencyManagement()
 
@@ -266,11 +266,11 @@ generatePomThirdParty {
 
 		model.setDependencyManagement(dependencyManagement)
 
-		_writePom(model)
+		_write(model)
 	}
 }
 
-private Model _getPomModel(String artifactId) {
+private Model _getModel(String artifactId) {
 	Model model = new Model()
 
 	model.setArtifactId(artifactId)
@@ -344,7 +344,7 @@ private String _isDigitalExperiencePlatform() {
 	return false
 }
 
-private void _writePom(Model model) {
+private void _write(Model model) {
 	MavenXpp3Writer mavenWriter = new MavenXpp3Writer()
 
 	mkdir(buildDir)

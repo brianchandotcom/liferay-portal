@@ -254,16 +254,13 @@ public class LiferaySourceOrSink
 	@Deprecated
 	@Override
 	public Schema getEndpointSchema(
-			RuntimeContainer runtimeContainer, String endpoint)
-		throws IOException {
+		RuntimeContainer runtimeContainer, String endpoint) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public Schema getEndpointSchema(String endpoint, String operation)
-		throws IOException {
-
+	public Schema getEndpointSchema(String endpoint, String operation) {
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveConnection(null);
 

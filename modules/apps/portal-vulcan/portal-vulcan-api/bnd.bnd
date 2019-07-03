@@ -5,6 +5,7 @@ Export-Package:\
 	com.liferay.portal.vulcan.accept.language,\
 	com.liferay.portal.vulcan.fields,\
 	com.liferay.portal.vulcan.graphql.annotation,\
+	com.liferay.portal.vulcan.graphql.query,\
 	com.liferay.portal.vulcan.graphql.servlet,\
 	com.liferay.portal.vulcan.multipart,\
 	com.liferay.portal.vulcan.pagination,\

@@ -18,10 +18,9 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.util.AssetListEntryQueryProcessor;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.segments.asah.connector.internal.provider.AsahInterestTermProvider;
-
-import java.util.Arrays;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,7 +50,7 @@ public class AsahInterestTermAssetListEntryQueryProcessor
 			String[] interestTerms = _asahInterestTermProvider.getInterestTerms(
 				userId);
 
-			String terms = Arrays.toString(interestTerms);
+			String terms = StringUtil.merge(interestTerms);
 
 			assetEntryQuery.setKeywords(terms);
 		}

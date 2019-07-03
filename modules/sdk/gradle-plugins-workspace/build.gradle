@@ -51,17 +51,17 @@ copyRepo {
 
 dependencies {
 	compile group: "com.bmuschko", name: "gradle-docker-plugin", version: "3.6.2"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "4.0.51", {
+	compile(group: "com.liferay", name: "com.liferay.gradle.plugins", version: "4.0.51") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "2.2.13", {
+	compile(group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "2.2.13") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.target.platform", version: "2.0.0"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.7", {
+	compile(group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.7") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}
-	compile group: "com.liferay", name: "com.liferay.portal.tools.bundle.support", version: "3.4.3", {
+	compile(group: "com.liferay", name: "com.liferay.portal.tools.bundle.support", version: "3.4.3") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}
 	compile group: "de.undercouch", name: "gradle-download-task", version: "3.2.0"

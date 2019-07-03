@@ -113,28 +113,23 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 
 	@Override
 	public void visit(LinkNode linkNode) {
-		WikiPage linkedWikiPage = null;
-
 		String title = StringUtil.replace(
 			linkNode.getLink(), CharPool.NO_BREAK_SPACE, StringPool.SPACE);
 
-		if (!linkNode.isAbsoluteLink()) {
-			try {
-				linkedWikiPage = WikiPageLocalServiceUtil.fetchPage(
-					_page.getNodeId(), title);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+		WikiPage wikiPage = null;
+
+		if ((title != null) && !linkNode.isAbsoluteLink()) {
+			wikiPage = WikiPageLocalServiceUtil.fetchPage(
+				_page.getNodeId(), title);
 		}
 
 		append("<a href=\"");
 
-		appendHref(linkNode, title, linkedWikiPage);
+		appendHref(linkNode, title, wikiPage);
 
-		append("\"");
+		append(StringPool.QUOTE);
 
-		if (!linkNode.isAbsoluteLink() && (linkedWikiPage == null)) {
+		if (!linkNode.isAbsoluteLink() && (wikiPage == null)) {
 			append(" class=\"new-wiki-page\"");
 		}
 
@@ -204,7 +199,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 			appendAbsoluteHref(linkNode);
 		}
 		else {
-			appendWikiHref(linkNode, title, wikiPage);
+			appendWikiHref(linkNode, wikiPage, title);
 		}
 	}
 
@@ -263,7 +258,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 	}
 
 	protected void appendWikiHref(
-		LinkNode linkNode, String title, WikiPage wikiPage) {
+		LinkNode linkNode, WikiPage wikiPage, String title) {
 
 		String attachmentLink = searchLinkInAttachments(linkNode);
 

@@ -244,11 +244,7 @@ generatePomCompileOnly {
 	}
 
 	doLast {
-		File releaseInfoJavaFile = new File("../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
-
-		boolean dxp = releaseInfoJavaFile.text.contains(" DXP ") || releaseInfoJavaFile.text.contains(" Digital Experience ")
-
-		Model model = _getPomModel("release." + (dxp ? "dxp" : "portal") + ".compile.only")
+		Model model = _getPomModel("release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".compile.only")
 
 		DependencyManagement dependencyManagement = new DependencyManagement()
 
@@ -292,11 +288,7 @@ generatePomCompileOnly {
 
 generatePomRelease {
 	doLast {
-		File releaseInfoJavaFile = new File("../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
-
-		boolean dxp = releaseInfoJavaFile.text.contains(" DXP ") || releaseInfoJavaFile.text.contains(" Digital Experience ")
-
-		Model model = _getPomModel("release." + (dxp ? "dxp" : "portal") + ".bom")
+		Model model = _getPomModel("release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".bom")
 
 		DependencyManagement dependencyManagement = new DependencyManagement()
 
@@ -389,11 +381,7 @@ generatePomRelease {
 
 generatePomThirdParty {
 	doLast {
-		File releaseInfoJavaFile = new File("../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
-
-		boolean dxp = releaseInfoJavaFile.text.contains(" DXP ") || releaseInfoJavaFile.text.contains(" Digital Experience ")
-
-		Model model = _getPomModel("release." + (dxp ? "dxp" : "portal") + ".third.party")
+		Model model = _getPomModel("release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".third.party")
 
 		DependencyManagement dependencyManagement = new DependencyManagement()
 
@@ -1879,6 +1867,20 @@ private RevCommit _getRevCommit(String commitId) {
 	finally {
 		revWalk.dispose()
 	}
+}
+
+private String _isDigitalExperiencePlatform() {
+	File releaseInfoFile = file("../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
+
+	Matcher matcher = (releaseInfoFile.text =~ /private static final String _NAME = "(.+)";/)
+
+	String releaseInfoName = matcher[0][1]
+
+	if (releaseInfoName.contains(" DXP ") || releaseInfoName.contains(" Digital Experience ")) {
+		return true
+	}
+
+	return false
 }
 
 private boolean _isGitRepoReadOnly(File dir) {

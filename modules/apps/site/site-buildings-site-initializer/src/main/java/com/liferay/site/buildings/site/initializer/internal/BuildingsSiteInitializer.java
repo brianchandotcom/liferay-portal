@@ -20,13 +20,17 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.buildings.site.initializer.internal.util.ImagesImporter;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
@@ -86,6 +90,8 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 
 			_addFragments();
 			_addImages();
+
+			_updateLookAndFeel();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -143,7 +149,38 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 		_serviceContext = serviceContext;
 	}
 
+	private void _updateLookAndFeel() throws Exception {
+		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
+			_serviceContext.getScopeGroupId(), false);
+
+		UnicodeProperties settingsProperties =
+			layoutSet.getSettingsProperties();
+
+		settingsProperties.setProperty(
+			"lfr-theme:regular:show-footer", Boolean.FALSE.toString());
+		settingsProperties.setProperty(
+			"lfr-theme:regular:show-header", Boolean.FALSE.toString());
+		settingsProperties.setProperty(
+			"lfr-theme:regular:show-header-search", Boolean.FALSE.toString());
+
+		_layoutSetLocalService.updateSettings(
+			_serviceContext.getScopeGroupId(), false,
+			settingsProperties.toString());
+
+		Class<?> clazz = getClass();
+
+		String css = StringUtil.read(
+			clazz.getClassLoader(), _PATH + "/layout-set/custom.css");
+
+		_layoutSetLocalService.updateLookAndFeel(
+			_serviceContext.getScopeGroupId(), false, layoutSet.getThemeId(),
+			layoutSet.getColorSchemeId(), css);
+	}
+
 	private static final String _NAME = "Buildings";
+
+	private static final String _PATH =
+		"com/liferay/site/buildings/site/initializer/internal/dependencies";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BuildingsSiteInitializer.class);
@@ -156,6 +193,9 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private ImagesImporter _imagesImporter;
+
+	@Reference
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	private ServiceContext _serviceContext;
 

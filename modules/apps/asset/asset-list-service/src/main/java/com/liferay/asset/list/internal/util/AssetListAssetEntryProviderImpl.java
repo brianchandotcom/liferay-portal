@@ -186,6 +186,24 @@ public class AssetListAssetEntryProviderImpl
 
 	@Override
 	public AssetEntryQuery getAssetEntryQuery(
+		AssetListEntry assetListEntry, long[] segmentsEntryIds) {
+
+		return getAssetEntryQuery(
+			assetListEntry,
+			_getFirstSegmentsEntryId(assetListEntry, segmentsEntryIds),
+			StringPool.BLANK);
+	}
+
+	@Override
+	public AssetEntryQuery getAssetEntryQuery(
+		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId) {
+
+		return getAssetEntryQuery(
+			assetListEntry,
+			_getFirstSegmentsEntryId(assetListEntry, segmentsEntryIds), userId);
+	}
+
+	protected AssetEntryQuery getAssetEntryQuery(
 		AssetListEntry assetListEntry, long segmentsEntryId, String userId) {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
@@ -277,25 +295,6 @@ public class AssetListAssetEntryProviderImpl
 		_processAssetEntryQuery(userId, properties, assetEntryQuery);
 
 		return assetEntryQuery;
-	}
-
-	@Override
-	public AssetEntryQuery getAssetEntryQuery(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds) {
-
-		return getAssetEntryQuery(
-			assetListEntry,
-			_getFirstSegmentsEntryId(assetListEntry, segmentsEntryIds),
-			StringPool.BLANK);
-	}
-
-	@Override
-	public AssetEntryQuery getAssetEntryQuery(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId) {
-
-		return getAssetEntryQuery(
-			assetListEntry,
-			_getFirstSegmentsEntryId(assetListEntry, segmentsEntryIds), userId);
 	}
 
 	@Reference(

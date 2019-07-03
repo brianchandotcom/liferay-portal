@@ -1,0 +1,10 @@
+{
+	"body" : {
+		"appliedStyle" : "light",
+		"numberOfColumns" : 3,
+		"tableWidth" : 1.1
+	},
+	"heading" : {
+		"appliedStyle" : "light"
+	}
+}

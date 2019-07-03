@@ -27,9 +27,6 @@ import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
  */
 const FIXED_PANEL_CLASS = 'fragments-editor__floating-toolbar-panel--fixed';
 
-const PRODUCT_MENU_HEIGHT = 56;
-const MANAGEMENT_BAR_HEIGHT = 64;
-
 /**
  * @type {object}
  */
@@ -123,6 +120,21 @@ class FloatingToolbar extends Component {
 	}
 
 	/**
+	 * Gets the height of the element matching the selector
+	 * Defaults to 0
+	 * @param {string} selector
+	 */
+	static _getElementHeight(selector) {
+		const element = document.querySelector(selector);
+
+		if (element) {
+			return element.offsetHeight;
+		}
+
+		return 0;
+	}
+
+	/**
 	 * @inheritdoc
 	 * @review
 	 */
@@ -132,6 +144,13 @@ class FloatingToolbar extends Component {
 		this._handleWrapperScroll = this._handleWrapperScroll.bind(this);
 
 		this._lastSelectedPanelId = this.selectedPanelId;
+
+		this._managementBarHeight = FloatingToolbar._getElementHeight(
+			'.management-bar'
+		);
+		this._productMenuHeight = FloatingToolbar._getElementHeight(
+			'.control-menu'
+		);
 
 		window.addEventListener('resize', this._handleWindowResize);
 
@@ -272,7 +291,7 @@ class FloatingToolbar extends Component {
 
 			return (
 				anchorElementBottom >
-				PRODUCT_MENU_HEIGHT + MANAGEMENT_BAR_HEIGHT
+				this._productMenuHeight + this._managementBarHeight
 			);
 		} else {
 			return false;
@@ -396,7 +415,44 @@ FloatingToolbar.STATE = {
 	 */
 	selectedPanelId: Config.string()
 		.internal()
-		.value(null)
+		.value(null),
+
+	/**
+	 * Used for restoring the panel after hiding it
+	 * @default null
+	 * @instance
+	 * @memberOf FloatingToolbar
+	 * @private
+	 * @review
+	 * @type {string|null}
+	 */
+	_lastSelectedPanelId: Config.string()
+		.internal()
+		.value(null),
+
+	/**
+	 * @default 0
+	 * @instance
+	 * @memberOf FloatingToolbar
+	 * @private
+	 * @review
+	 * @type {number}
+	 */
+	_managementBarHeight: Config.number()
+		.internal()
+		.value(0),
+
+	/**
+	 * @default 0
+	 * @instance
+	 * @memberOf FloatingToolbar
+	 * @private
+	 * @review
+	 * @type {number}
+	 */
+	_productMenuHeight: Config.number()
+		.internal()
+		.value(0)
 };
 
 const ConnectedFloatingToolbar = getConnectedComponent(FloatingToolbar, [

@@ -165,12 +165,7 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 					"Unable to configure license report for " + project, e);
 			}
 
-			// We need to pass a nonexistent group to avoid excluding
-			// "com.liferay" dependencies.
-
-			licenseReportExtension.excludeGroups = new String[] {
-				String.valueOf(System.currentTimeMillis())
-			};
+			licenseReportExtension.excludeOwnGroup = false;
 
 			String fileName = "versions.xml";
 

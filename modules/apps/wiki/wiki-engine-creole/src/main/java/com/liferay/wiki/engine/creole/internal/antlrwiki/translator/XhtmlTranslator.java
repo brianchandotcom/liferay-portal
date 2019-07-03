@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeNode;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wiki.engine.creole.internal.antlrwiki.translator.internal.UnformattedHeadingTextVisitor;
 import com.liferay.wiki.engine.creole.internal.antlrwiki.translator.internal.UnformattedLinksTextVisitor;
 import com.liferay.wiki.engine.creole.internal.parser.ast.CollectionNode;
@@ -121,7 +120,8 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 
 		if (!linkNode.isAbsoluteLink()) {
 			try {
-				linkedWikiPage = WikiPageLocalServiceUtil.fetchPage(_page.getNodeId(), title);
+				linkedWikiPage = WikiPageLocalServiceUtil.fetchPage(
+					_page.getNodeId(), title);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -134,7 +134,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 
 		append("\"");
 
-		if (!linkNode.isAbsoluteLink() && linkedWikiPage == null) {
+		if (!linkNode.isAbsoluteLink() && (linkedWikiPage == null)) {
 			append(" class=\"new-wiki-page\"");
 		}
 
@@ -191,6 +191,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 
 	protected void appendHref(
 		LinkNode linkNode, String title, WikiPage wikiPage) {
+
 		if (linkNode.getLink() == null) {
 			UnformattedLinksTextVisitor unformattedLinksTextVisitor =
 				new UnformattedLinksTextVisitor();

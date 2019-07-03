@@ -17,7 +17,7 @@ definition {
 
 		Panel.expandPanel(panel = "Categorization");
 
-		Type(
+		Type.sendKeys(
 			locator1 = "AssetCategorization#TAGS_FIELD",
 			value1 = "tag ");
 

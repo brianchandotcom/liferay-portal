@@ -56,7 +56,6 @@ import java.util.List;
 
 import javax.ws.rs.BadRequestException;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -262,7 +261,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate() {
 		_spiDataRecordCollectionResource =
 			new SPIDataRecordCollectionResource<>(
 				_ddlRecordSetLocalService, _ddmStructureLocalService,
@@ -292,21 +291,10 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 	private void _addDefaultDataRecordCollection(DataDefinition dataDefinition)
 		throws Exception {
 
-		DataRecordCollection dataRecordCollection = new DataRecordCollection() {
-			{
-				setDataRecordCollectionKey(
-					dataDefinition.getDataDefinitionKey());
-				setDescription(dataDefinition.getDescription());
-				setName(dataDefinition.getName());
-				setSiteId(dataDefinition.getSiteId());
-			}
-		};
-
 		_spiDataRecordCollectionResource.postDataDefinitionDataRecordCollection(
 			contextCompany, dataDefinition.getId(),
-			dataRecordCollection.getDataRecordCollectionKey(),
-			dataRecordCollection.getDescription(),
-			dataRecordCollection.getName());
+			dataDefinition.getDataDefinitionKey(),
+			dataDefinition.getDescription(), dataDefinition.getName());
 	}
 
 	private long _getClassNameId() {

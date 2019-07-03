@@ -14,11 +14,11 @@
 
 package com.liferay.data.engine.rest.internal.resource.spi;
 
+import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
 import com.liferay.data.engine.rest.internal.constants.DataRecordCollectionConstants;
 import com.liferay.data.engine.rest.internal.model.InternalDataRecordCollection;
 import com.liferay.data.engine.rest.internal.resource.v1_0.util.DataEnginePermissionUtil;
-import com.liferay.data.engine.spi.field.type.util.LocalizedValueUtil;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
@@ -290,12 +290,12 @@ public class SPIDataRecordCollectionResource<T> {
 			Map<String, Object> name)
 		throws Exception {
 
-		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getRecordSet(
-			dataRecordCollectionId);
-
 		_modelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
 			dataRecordCollectionId, ActionKeys.UPDATE);
+
+		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getRecordSet(
+			dataRecordCollectionId);
 
 		ServiceContext serviceContext = new ServiceContext();
 

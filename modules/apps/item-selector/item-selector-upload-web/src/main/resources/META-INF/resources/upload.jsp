@@ -21,7 +21,7 @@ ItemSelectorUploadViewDisplayContext itemSelectorUploadViewDisplayContext = (Ite
 %>
 
 <div class="container-fluid-1280 lfr-item-viewer" id="itemSelectorUploadContainer">
-	<div class="drop-enabled drop-zone upload-view item-selector">
+	<div class="drop-enabled drop-zone item-selector upload-view">
 		<div id="uploadDescription">
 			<c:if test="<%= !BrowserSnifferUtil.isMobile(request) %>">
 				<p>

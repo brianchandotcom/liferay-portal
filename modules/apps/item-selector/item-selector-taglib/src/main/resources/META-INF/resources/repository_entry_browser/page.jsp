@@ -70,7 +70,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 	viewTypeItems="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getViewTypes() %>"
 />
 
-<div class="container-fluid container-fluid-max-xl lfr-item-viewer item-selector" id="<%= randomNamespace %>ItemSelectorContainer">
+<div class="container-fluid container-fluid-max-xl item-selector lfr-item-viewer" id="<%= randomNamespace %>ItemSelectorContainer">
 	<c:if test="<%= showSearchInfo %>">
 		<liferay-util:include page="/repository_entry_browser/search_info.jsp" servletContext="<%= application %>" />
 	</c:if>

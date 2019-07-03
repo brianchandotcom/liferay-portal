@@ -86,7 +86,13 @@ public abstract class BaseLiferayResourceProperties
 	public URI getEndpointURI() {
 		String applicationBaseHref = connection.getApplicationBaseHref();
 
-		String endpointHref = applicationBaseHref.concat(endpoint.getValue());
+		String endpointRelativePath = endpoint.getValue();
+
+		if (endpointRelativePath.startsWith("/")) {
+			endpointRelativePath = endpointRelativePath.substring(1);
+		}
+
+		String endpointHref = applicationBaseHref.concat(endpointRelativePath);
 
 		UriBuilder uriBuilder = UriBuilder.fromPath(endpointHref);
 

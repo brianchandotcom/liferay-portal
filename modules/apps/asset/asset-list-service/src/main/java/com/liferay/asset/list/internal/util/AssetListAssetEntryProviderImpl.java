@@ -582,6 +582,7 @@ public class AssetListAssetEntryProviderImpl
 		searchContext.setClassTypeIds(assetEntryQuery.getClassTypeIds());
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(assetEntryQuery.getEnd());
+		searchContext.setKeywords(assetEntryQuery.getKeywords());
 		searchContext.setStart(assetEntryQuery.getStart());
 
 		try {

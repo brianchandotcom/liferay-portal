@@ -14,6 +14,7 @@
 
 package com.liferay.segments.util;
 
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.segments.constants.SegmentsConstants;
 
@@ -21,6 +22,16 @@ import com.liferay.segments.constants.SegmentsConstants;
  * @author Pavel Savinov
  */
 public class SegmentsExperiencePortletUtil {
+
+	public static String decodePortletName(String portletId) {
+		int index = portletId.indexOf(_EXPERIENCE_SEPARATOR);
+
+		if (index == -1) {
+			return PortletIdCodec.decodePortletName(portletId);
+		}
+
+		return PortletIdCodec.decodePortletName(portletId.substring(0, index));
+	}
 
 	public static long getSegmentsExperienceId(String portletId) {
 		int index = portletId.indexOf(_SEGMENTS_EXPERIENCE_SEPARATOR);
@@ -33,6 +44,31 @@ public class SegmentsExperiencePortletUtil {
 			portletId.substring(
 				index + _SEGMENTS_EXPERIENCE_SEPARATOR.length()),
 			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
+	}
+
+	public static boolean hasSegmentsExperienceId(
+		String portletId, long segmentsExperienceId) {
+
+		if (segmentsExperienceId ==
+				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT) {
+
+			return true;
+		}
+
+		int index = portletId.indexOf(_EXPERIENCE_SEPARATOR);
+
+		if (index == -1) {
+			return false;
+		}
+
+		long currentSegmentsExperience = GetterUtil.getLong(
+			portletId.substring(index + _EXPERIENCE_SEPARATOR.length()));
+
+		if (segmentsExperienceId == currentSegmentsExperience) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static String setSegmentsExperienceId(

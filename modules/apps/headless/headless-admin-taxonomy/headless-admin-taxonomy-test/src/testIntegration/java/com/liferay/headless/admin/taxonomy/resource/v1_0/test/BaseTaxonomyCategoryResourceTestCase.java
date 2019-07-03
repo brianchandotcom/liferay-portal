@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
@@ -47,6 +48,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
@@ -406,10 +408,28 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		testGetTaxonomyCategoryTaxonomyCategoriesPageWithSort(
 			EntityField.Type.STRING,
 			(entityField, taxonomyCategory1, taxonomyCategory2) -> {
-				BeanUtils.setProperty(
-					taxonomyCategory1, entityField.getName(), "Aaa");
-				BeanUtils.setProperty(
-					taxonomyCategory2, entityField.getName(), "Bbb");
+				Class clazz = taxonomyCategory1.getClass();
+
+				Method method = clazz.getMethod(
+					"get" +
+						StringUtil.upperCaseFirstLetter(entityField.getName()));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						taxonomyCategory1, entityField.getName(),
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						taxonomyCategory2, entityField.getName(),
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else {
+					BeanUtils.setProperty(
+						taxonomyCategory1, entityField.getName(), "Aaa");
+					BeanUtils.setProperty(
+						taxonomyCategory2, entityField.getName(), "Bbb");
+				}
 			});
 	}
 
@@ -846,10 +866,28 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		testGetTaxonomyVocabularyTaxonomyCategoriesPageWithSort(
 			EntityField.Type.STRING,
 			(entityField, taxonomyCategory1, taxonomyCategory2) -> {
-				BeanUtils.setProperty(
-					taxonomyCategory1, entityField.getName(), "Aaa");
-				BeanUtils.setProperty(
-					taxonomyCategory2, entityField.getName(), "Bbb");
+				Class clazz = taxonomyCategory1.getClass();
+
+				Method method = clazz.getMethod(
+					"get" +
+						StringUtil.upperCaseFirstLetter(entityField.getName()));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						taxonomyCategory1, entityField.getName(),
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						taxonomyCategory2, entityField.getName(),
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else {
+					BeanUtils.setProperty(
+						taxonomyCategory1, entityField.getName(), "Aaa");
+					BeanUtils.setProperty(
+						taxonomyCategory2, entityField.getName(), "Bbb");
+				}
 			});
 	}
 

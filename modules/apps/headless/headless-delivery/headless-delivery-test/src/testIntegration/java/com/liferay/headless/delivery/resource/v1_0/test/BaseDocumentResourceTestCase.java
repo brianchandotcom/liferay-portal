@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
@@ -49,6 +50,7 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import java.io.File;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
@@ -381,8 +383,28 @@ public abstract class BaseDocumentResourceTestCase {
 		testGetDocumentFolderDocumentsPageWithSort(
 			EntityField.Type.STRING,
 			(entityField, document1, document2) -> {
-				BeanUtils.setProperty(document1, entityField.getName(), "Aaa");
-				BeanUtils.setProperty(document2, entityField.getName(), "Bbb");
+				Class clazz = document1.getClass();
+
+				Method method = clazz.getMethod(
+					"get" +
+						StringUtil.upperCaseFirstLetter(entityField.getName()));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						document1, entityField.getName(),
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						document2, entityField.getName(),
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else {
+					BeanUtils.setProperty(
+						document1, entityField.getName(), "Aaa");
+					BeanUtils.setProperty(
+						document2, entityField.getName(), "Bbb");
+				}
 			});
 	}
 
@@ -781,8 +803,28 @@ public abstract class BaseDocumentResourceTestCase {
 		testGetSiteDocumentsPageWithSort(
 			EntityField.Type.STRING,
 			(entityField, document1, document2) -> {
-				BeanUtils.setProperty(document1, entityField.getName(), "Aaa");
-				BeanUtils.setProperty(document2, entityField.getName(), "Bbb");
+				Class clazz = document1.getClass();
+
+				Method method = clazz.getMethod(
+					"get" +
+						StringUtil.upperCaseFirstLetter(entityField.getName()));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						document1, entityField.getName(),
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						document2, entityField.getName(),
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else {
+					BeanUtils.setProperty(
+						document1, entityField.getName(), "Aaa");
+					BeanUtils.setProperty(
+						document2, entityField.getName(), "Bbb");
+				}
 			});
 	}
 

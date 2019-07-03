@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
@@ -47,6 +48,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
@@ -407,8 +409,28 @@ public abstract class BaseKeywordResourceTestCase {
 		testGetSiteKeywordsPageWithSort(
 			EntityField.Type.STRING,
 			(entityField, keyword1, keyword2) -> {
-				BeanUtils.setProperty(keyword1, entityField.getName(), "Aaa");
-				BeanUtils.setProperty(keyword2, entityField.getName(), "Bbb");
+				Class clazz = keyword1.getClass();
+
+				Method method = clazz.getMethod(
+					"get" +
+						StringUtil.upperCaseFirstLetter(entityField.getName()));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						keyword1, entityField.getName(),
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						keyword2, entityField.getName(),
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else {
+					BeanUtils.setProperty(
+						keyword1, entityField.getName(), "Aaa");
+					BeanUtils.setProperty(
+						keyword2, entityField.getName(), "Bbb");
+				}
 			});
 	}
 

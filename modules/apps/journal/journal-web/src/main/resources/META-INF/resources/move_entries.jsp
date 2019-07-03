@@ -175,8 +175,6 @@ JournalMoveEntriesDisplayContext journalMovesEntriesDisplayContext = new Journal
 <%
 Map<String, Object> context = new HashMap<>();
 
-context.put("selectFolderButtonId", "selectFolderButton");
-context.put("selectFolderEventName", "selectFolder");
 context.put("selectFolderURL", selectFolderURL);
 %>
 

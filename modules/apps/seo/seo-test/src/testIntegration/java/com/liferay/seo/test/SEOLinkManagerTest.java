@@ -242,7 +242,7 @@ public class SEOLinkManagerTest {
 	private static final String _CANONICAL_URL = "canonicalURL";
 
 	private static final String _SEO_CONFIGURATION_PID =
-		"com.liferay.seo.impl.configuration.SEOCompanyConfiguration";
+		"com.liferay.seo.internal.configuration.SEOCompanyConfiguration";
 
 	private final Map<Locale, String> _alternateURLs =
 		new HashMap<Locale, String>() {

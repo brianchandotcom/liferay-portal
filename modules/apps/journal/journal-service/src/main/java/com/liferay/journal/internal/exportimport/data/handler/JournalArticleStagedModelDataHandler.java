@@ -526,6 +526,12 @@ public class JournalArticleStagedModelDataHandler
 				JournalArticle.class + ".groupId");
 
 		articleGroupIds.put(articleArticleId, existingArticle.getGroupId());
+
+		Map<Long, Long> articlePrimaryKeys =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				JournalArticle.class + ".primaryKey");
+
+		articlePrimaryKeys.put(articleId, existingArticle.getPrimaryKey());
 	}
 
 	@Override

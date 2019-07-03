@@ -14,7 +14,6 @@
 
 package com.liferay.data.engine.rest.internal.resource.v1_0;
 
-
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollection;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollectionPermission;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataRecordCollectionUtil;
@@ -28,10 +27,10 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -116,16 +115,23 @@ public class DataRecordCollectionResourceImpl
 
 		_spiDataRecordCollectionResource.
 			postDataRecordCollectionDataRecordCollectionPermissions(
-				dataRecordCollectionPermission.getAddDataRecord(),
+				GetterUtil.getBoolean(
+					dataRecordCollectionPermission.getAddDataRecord()),
 				contextCompany, dataRecordCollectionId,
-				dataRecordCollectionPermission.getDelete(),
-				dataRecordCollectionPermission.getDeleteDataRecord(),
-				dataRecordCollectionPermission.getExportDataRecord(), operation,
-				dataRecordCollectionPermission.getRoleNames(),
-				dataRecordCollectionPermission.getUpdate(),
-				dataRecordCollectionPermission.getUpdateDataRecord(),
-				dataRecordCollectionPermission.getView(),
-				dataRecordCollectionPermission.getViewDataRecord());
+				GetterUtil.getBoolean(
+					dataRecordCollectionPermission.getDelete()),
+				GetterUtil.getBoolean(
+					dataRecordCollectionPermission.getDeleteDataRecord()),
+				GetterUtil.getBoolean(
+					dataRecordCollectionPermission.getExportDataRecord()),
+				operation, dataRecordCollectionPermission.getRoleNames(),
+				GetterUtil.getBoolean(
+					dataRecordCollectionPermission.getUpdate()),
+				GetterUtil.getBoolean(
+					dataRecordCollectionPermission.getUpdateDataRecord()),
+				GetterUtil.getBoolean(dataRecordCollectionPermission.getView()),
+				GetterUtil.getBoolean(
+					dataRecordCollectionPermission.getViewDataRecord()));
 	}
 
 	@Override
@@ -136,9 +142,12 @@ public class DataRecordCollectionResourceImpl
 
 		_spiDataRecordCollectionResource.
 			postSiteDataRecordCollectionPermissions(
-				dataRecordCollectionPermission.getAddDataRecordCollection(),
+				GetterUtil.getBoolean(
+					dataRecordCollectionPermission.
+						getAddDataRecordCollection()),
 				contextCompany,
-				dataRecordCollectionPermission.getDefinePermissions(),
+				GetterUtil.getBoolean(
+					dataRecordCollectionPermission.getDefinePermissions()),
 				operation, dataRecordCollectionPermission.getRoleNames(),
 				siteId);
 	}
@@ -155,7 +164,7 @@ public class DataRecordCollectionResourceImpl
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate() {
 		_spiDataRecordCollectionResource =
 			new SPIDataRecordCollectionResource<>(
 				_ddlRecordSetLocalService, _ddmStructureLocalService,

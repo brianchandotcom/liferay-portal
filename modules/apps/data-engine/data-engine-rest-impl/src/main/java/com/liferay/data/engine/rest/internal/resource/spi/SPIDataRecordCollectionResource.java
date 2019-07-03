@@ -290,12 +290,12 @@ public class SPIDataRecordCollectionResource<T> {
 			Map<String, Object> name)
 		throws Exception {
 
-		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getRecordSet(
-			dataRecordCollectionId);
-
 		_modelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
 			dataRecordCollectionId, ActionKeys.UPDATE);
+
+		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getRecordSet(
+			dataRecordCollectionId);
 
 		ServiceContext serviceContext = new ServiceContext();
 

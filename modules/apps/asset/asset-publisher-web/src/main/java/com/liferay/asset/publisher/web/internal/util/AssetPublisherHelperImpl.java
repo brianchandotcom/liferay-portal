@@ -328,8 +328,12 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 				portletRequest.getAttribute(
 					SegmentsWebKeys.SEGMENTS_ENTRY_IDS));
 
+			String acClientUserId = GetterUtil.getString(
+				portletRequest.getAttribute(
+					SegmentsWebKeys.SEGMENTS_ANONYMOUS_USER_ID));
+
 			return _assetListAssetEntryProvider.getAssetEntries(
-				assetListEntry, segmentsEntryIds);
+				assetListEntry, segmentsEntryIds, acClientUserId);
 		}
 
 		List<AssetEntry> assetEntries = getAssetEntries(

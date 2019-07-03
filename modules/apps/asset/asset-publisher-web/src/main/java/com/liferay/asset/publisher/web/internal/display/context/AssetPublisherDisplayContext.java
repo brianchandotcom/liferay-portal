@@ -268,7 +268,7 @@ public class AssetPublisherDisplayContext {
 		}
 		else if (isSelectionStyleAssetList() && (assetListEntry != null)) {
 			return _assetListAssetEntryProvider.getAssetEntries(
-				assetListEntry, _getSegmentsEntryIds());
+				assetListEntry, _getSegmentsEntryIds(), _getAcClientUserId());
 		}
 		else if (isSelectionStyleAssetListProvider()) {
 			String infoListProviderClassName = GetterUtil.getString(
@@ -327,7 +327,7 @@ public class AssetPublisherDisplayContext {
 
 		if (isSelectionStyleAssetList() && (assetListEntry != null)) {
 			_assetEntryQuery = _assetListAssetEntryProvider.getAssetEntryQuery(
-				assetListEntry, _getSegmentsEntryIds());
+				assetListEntry, _getSegmentsEntryIds(), _getAcClientUserId());
 		}
 		else {
 			_assetEntryQuery = _assetPublisherHelper.getAssetEntryQuery(
@@ -1872,6 +1872,12 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return filteredCategories;
+	}
+
+	private String _getAcClientUserId() {
+		return GetterUtil.getString(
+			_portletRequest.getAttribute(
+				SegmentsWebKeys.SEGMENTS_ANONYMOUS_USER_ID));
 	}
 
 	private long[] _getSegmentsEntryIds() {

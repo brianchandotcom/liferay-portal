@@ -20,10 +20,9 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
+import com.liferay.fragment.util.FragmentEntryConfigUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -40,7 +39,6 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsConstants;
@@ -77,7 +75,8 @@ public class FreeMarkerFragmentEntryProcessor
 		return JSONUtil.put(
 			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX +
 				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT,
-			_getConfigurationDefaultValuesJSONObject(configuration));
+			FragmentEntryConfigUtil.getConfigurationDefaultValuesJSONObject(
+				configuration));
 	}
 
 	@Override
@@ -142,8 +141,9 @@ public class FreeMarkerFragmentEntryProcessor
 		if ((editableValuesJSONObject == null) ||
 			(editableValuesJSONObject.get(className) == null)) {
 
-			configurationJSONObject = _getConfigurationDefaultValuesJSONObject(
-				fragmentEntryLink.getConfiguration());
+			configurationJSONObject =
+				FragmentEntryConfigUtil.getConfigurationDefaultValuesJSONObject(
+					fragmentEntryLink.getConfiguration());
 		}
 		else {
 			JSONObject configurationValuesJSONObject =
@@ -262,80 +262,6 @@ public class FreeMarkerFragmentEntryProcessor
 
 			throw new FragmentEntryContentException(message, te);
 		}
-	}
-
-	private JSONObject _getConfigurationDefaultValuesJSONObject(
-		String configuration) {
-
-		JSONObject defaultValuesJSONObject = JSONFactoryUtil.createJSONObject();
-
-		JSONObject configurationJSONObject = null;
-
-		try {
-			configurationJSONObject = JSONFactoryUtil.createJSONObject(
-				configuration);
-		}
-		catch (JSONException jsone) {
-			_log.error(
-				"Unable to parse configuration JSON object: " + configuration,
-				jsone);
-
-			return null;
-		}
-
-		JSONArray fieldSetsJSONArray = configurationJSONObject.getJSONArray(
-			"fieldSets");
-
-		if (fieldSetsJSONArray == null) {
-			return null;
-		}
-
-		for (int i = 0; i < fieldSetsJSONArray.length(); i++) {
-			JSONObject configurationFieldSetJSONObject =
-				fieldSetsJSONArray.getJSONObject(i);
-
-			JSONObject defaultValuesFieldSetJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			JSONArray configurationFieldSetFieldsJSONArray =
-				configurationFieldSetJSONObject.getJSONArray("fields");
-
-			for (int j = 0; j < configurationFieldSetFieldsJSONArray.length();
-				 j++) {
-
-				JSONObject configurationFieldSetFieldJSONObject =
-					configurationFieldSetFieldsJSONArray.getJSONObject(j);
-
-				Object fieldDefaultValue = _getFieldValue(
-					configurationFieldSetFieldJSONObject.getString("dataType"),
-					configurationFieldSetFieldJSONObject.getString(
-						"defaultValue"));
-
-				defaultValuesFieldSetJSONObject.put(
-					configurationFieldSetFieldJSONObject.getString("name"),
-					fieldDefaultValue);
-			}
-
-			defaultValuesJSONObject.put(
-				configurationFieldSetJSONObject.getString("name"),
-				defaultValuesFieldSetJSONObject);
-		}
-
-		return defaultValuesJSONObject;
-	}
-
-	private Object _getFieldValue(String dataType, String value) {
-		if (dataType.equals("double")) {
-			return GetterUtil.getDouble(value);
-		}
-		else if (dataType.equals("int")) {
-			return GetterUtil.getInteger(value);
-		}
-		else if (dataType.equals("string")) {
-			return value;
-		}
-
-		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

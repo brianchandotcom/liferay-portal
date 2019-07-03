@@ -9,7 +9,7 @@
 
 <liferay-portlet-app>
 	<portlet>
-		<portlet-name>${className.toLowerCase()}</portlet-name>
+		<portlet-name>${artifactId}</portlet-name>
 		<icon>/icon.png</icon>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 		<header-portlet-css>/css/main.css</header-portlet-css>

@@ -9,6 +9,6 @@
 
 <display>
 	<category name="category.sample">
-		<portlet id="${className.toLowerCase()}" />
+		<portlet id="${artifactId}" />
 	</category>
 </display>

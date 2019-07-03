@@ -19,6 +19,7 @@
 				]>
 			]>
 		],
+		configurationValues: ?,
 		fragmentEntryLinkId: string
 	]}
 	{@param? _handleChangeConfiguration: any}
@@ -29,6 +30,7 @@
 		<div class="inline-scroller pb-3 pl-3 pr-3">
 			{foreach $fieldSet in $item.configuration.fieldSets}
 				{call .fieldSet}
+					{param configurationValues: $item.configurationValues /}
 					{param fieldSet: $fieldSet /}
 					{param handleChangeConfiguration: $_handleChangeConfiguration /}
 				{/call}
@@ -58,6 +60,7 @@
  * FieldSet
  */
 {template .fieldSet}
+	{@param configurationValues: ?}
 	{@param fieldSet: [
 		name: string,
 		label: string,
@@ -75,6 +78,7 @@
 	<p class="mb-3 sheet-subtitle">{$fieldSet.label}</p>
 		{foreach $field in $fieldSet.fields}
 			{delcall com.liferay.layout.content.page.editor.web.field variant="$field.type"}
+				{param configurationValues: $configurationValues /}
 				{param field: $field /}
 				{param fieldSetName: $fieldSet.name /}
 				{param handleChangeConfiguration: $handleChangeConfiguration /}
@@ -86,6 +90,7 @@
  * Field
  */
 {deltemplate com.liferay.layout.content.page.editor.web.field}
+	{@param configurationValues: ?}
 	{@param field: [
 		name: string,
 		label: string,

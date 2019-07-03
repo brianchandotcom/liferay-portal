@@ -4,6 +4,7 @@
  * Field Select variation
  */
 {deltemplate com.liferay.layout.content.page.editor.web.field variant="'select'"}
+	{@param configurationValues: ?}
 	{@param field: [
 		name: string,
 		label: string,
@@ -27,7 +28,15 @@
 				id="{$field.name}"
 			>
 				{foreach $option in $field.typeOptions.validValues}
-					<option value="{$option}">{$option}</option>
+					{let $optionAttributes kind="attributes"}
+						value="{$option}"
+
+						{if $configurationValues[$fieldSetName][$field.name] == $option}
+							selected
+						{/if}
+					{/let}
+
+					<option {$optionAttributes}>{$option}</option>
 				{/foreach}
 			</select>
 		</div>

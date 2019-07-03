@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeNode;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wiki.engine.creole.internal.antlrwiki.translator.internal.UnformattedHeadingTextVisitor;
 import com.liferay.wiki.engine.creole.internal.antlrwiki.translator.internal.UnformattedLinksTextVisitor;
 import com.liferay.wiki.engine.creole.internal.parser.ast.CollectionNode;
@@ -113,11 +114,31 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 
 	@Override
 	public void visit(LinkNode linkNode) {
+		WikiPage linkedWikiPage = null;
+
+		String title = StringUtil.replace(
+			linkNode.getLink(), CharPool.NO_BREAK_SPACE, StringPool.SPACE);
+
+		if (!linkNode.isAbsoluteLink()) {
+			try {
+				linkedWikiPage = WikiPageLocalServiceUtil.fetchPage(_page.getNodeId(), title);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+
 		append("<a href=\"");
 
-		appendHref(linkNode);
+		appendHref(linkNode, title, linkedWikiPage);
 
-		append("\">");
+		append("\"");
+
+		if (!linkNode.isAbsoluteLink() && linkedWikiPage == null) {
+			append(" class=\"new-wiki-page\"");
+		}
+
+		append(">");
 
 		if (linkNode.hasAltCollectionNode()) {
 			CollectionNode altCollectionNode = linkNode.getAltCollectionNode();
@@ -168,7 +189,8 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		append(HtmlUtil.escape(linkNode.getLink()));
 	}
 
-	protected void appendHref(LinkNode linkNode) {
+	protected void appendHref(
+		LinkNode linkNode, String title, WikiPage wikiPage) {
 		if (linkNode.getLink() == null) {
 			UnformattedLinksTextVisitor unformattedLinksTextVisitor =
 				new UnformattedLinksTextVisitor();
@@ -181,7 +203,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 			appendAbsoluteHref(linkNode);
 		}
 		else {
-			appendWikiHref(linkNode);
+			appendWikiHref(linkNode, title, wikiPage);
 		}
 	}
 
@@ -239,18 +261,8 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		append("</ol>");
 	}
 
-	protected void appendWikiHref(LinkNode linkNode) {
-		WikiPage page = null;
-
-		String title = StringUtil.replace(
-			linkNode.getLink(), CharPool.NO_BREAK_SPACE, StringPool.SPACE);
-
-		try {
-			page = WikiPageLocalServiceUtil.fetchPage(_page.getNodeId(), title);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+	protected void appendWikiHref(
+		LinkNode linkNode, String title, WikiPage wikiPage) {
 
 		String attachmentLink = searchLinkInAttachments(linkNode);
 
@@ -263,7 +275,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 			return;
 		}
 
-		if ((page != null) && (_viewPageURL != null)) {
+		if ((wikiPage != null) && (_viewPageURL != null)) {
 			_viewPageURL.setParameter("title", title);
 
 			append(_viewPageURL.toString());

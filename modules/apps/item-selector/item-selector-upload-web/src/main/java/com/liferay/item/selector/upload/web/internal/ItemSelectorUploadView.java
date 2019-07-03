@@ -17,6 +17,7 @@ package com.liferay.item.selector.upload.web.internal;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.criteria.DownloadFileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.item.selector.upload.web.internal.display.context.ItemSelectorUploadViewDisplayContext;
@@ -114,7 +115,8 @@ public class ItemSelectorUploadView
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
 				new ItemSelectorReturnType[] {
-					new FileEntryItemSelectorReturnType()
+					new FileEntryItemSelectorReturnType(),
+					new DownloadFileEntryItemSelectorReturnType()
 				}));
 
 	@Reference

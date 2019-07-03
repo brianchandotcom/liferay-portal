@@ -53,20 +53,20 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 
 <div class="sidebar-body">
 
-<%
-String tabsNames = "details";
+	<%
+	String tabsNames = "details";
 
-if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
-	tabsNames += ",versions";
-}
-%>
+	if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
+		tabsNames += ",versions";
+	}
+	%>
 
-<liferay-ui:tabs
-	cssClass="navbar-no-collapse"
-	names="<%= tabsNames %>"
-	refresh="<%= false %>"
->
-	<liferay-ui:section>
+	<liferay-ui:tabs
+		cssClass="navbar-no-collapse"
+		names="<%= tabsNames %>"
+		refresh="<%= false %>"
+	>
+		<liferay-ui:section>
 
 			<%
 			String thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay);
@@ -188,18 +188,13 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 						UrlBtnData.put("clipboard-target", "#" + renderResponse.getNamespace() + UrlInputId);
 						%>
 
-						<aui:input
-							label="<%= urlLabel %>"
-							name="url"
-							type="resource"
-							value="<%= DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, !isLatestVersion, true) %>"
-							id="<%= UrlInputId %>"
-						/>
+						<aui:input id="<%= UrlInputId %>" label="<%= urlLabel %>" name="url" type="resource" value="<%= DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, !isLatestVersion, true) %>" />
+
 						<clay:button
+							data="<%= UrlBtnData %>"
 							elementClasses="dm-infopanel-copy-clipboard"
-							style="secondary"
 							icon="paste"
-							data='<%= UrlBtnData %>'
+							style="secondary"
 						/>
 
 						<c:if test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() && isLatestVersion %>">
@@ -459,20 +454,21 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 				%>
 
 			</liferay-ui:panel-container>
-	</liferay-ui:section>
+		</liferay-ui:section>
 
-	<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
-		<liferay-ui:section>
+		<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
+			<liferay-ui:section>
 
 				<%
 				request.setAttribute("info_panel.jsp-fileEntry", fileEntry);
 				%>
 
 				<liferay-util:include page="/document_library/file_entry_history.jsp" servletContext="<%= application %>" />
-		</liferay-ui:section>
-	</c:if>
-</liferay-ui:tabs>
+			</liferay-ui:section>
+		</c:if>
+	</liferay-ui:tabs>
 </div>
+
 <liferay-frontend:component
 	module="document_library/InfoPanel.es"
 />

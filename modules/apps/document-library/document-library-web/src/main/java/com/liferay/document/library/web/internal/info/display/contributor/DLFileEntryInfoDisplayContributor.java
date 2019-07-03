@@ -14,21 +14,21 @@
 
 package com.liferay.document.library.web.internal.info.display.contributor;
 
-import com.liferay.asset.info.display.contributor.BaseAssetInfoDisplayContributor;
+import com.liferay.asset.info.display.field.AssetEntryInfoDisplayFieldProvider;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.ClassType;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayField;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
-import com.liferay.petra.string.StringPool;
+import com.liferay.info.display.field.ClassTypesInfoDisplayFieldProvider;
+import com.liferay.info.display.field.ExpandoInfoDisplayFieldProvider;
+import com.liferay.info.display.field.InfoDisplayFieldProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portlet.documentlibrary.asset.model.DLFileEntryClassTypeReader;
 
 import java.util.HashMap;
 import java.util.List;
@@ -48,24 +48,15 @@ public class DLFileEntryInfoDisplayContributor
 
 	@Override
 	public String getClassName() {
-		return _dlFileEntryAssetInfoDisplayContributor.getClassName();
-	}
-
-	@Override
-	public List<InfoDisplayField> getClassTypeInfoDisplayFields(
-			long classTypeId, Locale locale)
-		throws PortalException {
-
-		return _dlFileEntryAssetInfoDisplayContributor.
-			getClassTypeInfoDisplayFields(classTypeId, locale);
+		return DLFileEntryConstants.getClassName();
 	}
 
 	@Override
 	public List<ClassType> getClassTypes(long groupId, Locale locale)
 		throws PortalException {
 
-		return _dlFileEntryAssetInfoDisplayContributor.getClassTypes(
-			groupId, locale);
+		return _classTypesInfoDisplayFieldProvider.getClassTypes(
+			groupId, new DLFileEntryClassTypeReader(), locale);
 	}
 
 	@Override
@@ -73,8 +64,27 @@ public class DLFileEntryInfoDisplayContributor
 			long classTypeId, Locale locale)
 		throws PortalException {
 
-		return _dlFileEntryAssetInfoDisplayContributor.getInfoDisplayFields(
+		Set<InfoDisplayField> infoDisplayFields =
+			_infoDisplayFieldProvider.getContributorInfoDisplayFields(
+				locale, AssetEntry.class.getName(), getClassName());
+
+		DLFileEntryClassTypeReader dlFileEntryClassTypeReader =
+			new DLFileEntryClassTypeReader();
+
+		ClassType classType = dlFileEntryClassTypeReader.getClassType(
 			classTypeId, locale);
+
+		if (classType != null) {
+			infoDisplayFields.addAll(
+				_classTypesInfoDisplayFieldProvider.
+					getClassTypeInfoDisplayFields(classType, locale));
+		}
+
+		infoDisplayFields.addAll(
+			_expandoInfoDisplayFieldProvider.
+				getContributorExpandoInfoDisplayFields(getClassName(), locale));
+
+		return infoDisplayFields;
 	}
 
 	@Override
@@ -82,21 +92,21 @@ public class DLFileEntryInfoDisplayContributor
 			FileEntry fileEntry, Locale locale)
 		throws PortalException {
 
-		AssetEntry assetEntry = _getAssetEntry(fileEntry);
+		Map<String, Object> infoDisplayFieldValues = new HashMap<>();
 
-		return _dlFileEntryAssetInfoDisplayContributor.
-			getInfoDisplayFieldsValues(assetEntry, locale);
-	}
+		infoDisplayFieldValues.putAll(
+			_assetEntryInfoDisplayFieldProvider.
+				getAssetEntryInfoDisplayFieldsValues(
+					getClassName(), fileEntry.getFileEntryId(), locale));
+		infoDisplayFieldValues.putAll(
+			_infoDisplayFieldProvider.getContributorInfoDisplayFieldsValues(
+				getClassName(), fileEntry, locale));
+		infoDisplayFieldValues.putAll(
+			_expandoInfoDisplayFieldProvider.
+				getContributorExpandoInfoDisplayFieldsValues(
+					getClassName(), fileEntry, locale));
 
-	@Override
-	public Object getInfoDisplayFieldValue(
-			FileEntry fileEntry, String fieldName, Locale locale)
-		throws PortalException {
-
-		AssetEntry assetEntry = _getAssetEntry(fileEntry);
-
-		return _dlFileEntryAssetInfoDisplayContributor.getInfoDisplayFieldValue(
-			assetEntry, fieldName, locale);
+		return infoDisplayFieldValues;
 	}
 
 	@Override
@@ -112,70 +122,7 @@ public class DLFileEntryInfoDisplayContributor
 
 		FileEntry fileEntry = localRepository.getFileEntry(classPK);
 
-		return new InfoDisplayObjectProvider<FileEntry>() {
-
-			@Override
-			public long getClassNameId() {
-				return _classNameLocalService.getClassNameId(getClassName());
-			}
-
-			@Override
-			public long getClassPK() {
-				return classPK;
-			}
-
-			@Override
-			public long getClassTypeId() {
-				InfoDisplayObjectProvider infoDisplayObjectProvider =
-					_dlFileEntryAssetInfoDisplayContributor.
-						getInfoDisplayObjectProvider(classPK);
-
-				if (infoDisplayObjectProvider != null) {
-					return infoDisplayObjectProvider.getClassTypeId();
-				}
-
-				return 0;
-			}
-
-			@Override
-			public String getDescription(Locale locale) {
-				return fileEntry.getDescription();
-			}
-
-			@Override
-			public FileEntry getDisplayObject() {
-				return fileEntry;
-			}
-
-			@Override
-			public long getGroupId() {
-				return fileEntry.getGroupId();
-			}
-
-			@Override
-			public String getKeywords(Locale locale) {
-				InfoDisplayObjectProvider infoDisplayObjectProvider =
-					_dlFileEntryAssetInfoDisplayContributor.
-						getInfoDisplayObjectProvider(classPK);
-
-				if (infoDisplayObjectProvider != null) {
-					return infoDisplayObjectProvider.getKeywords(locale);
-				}
-
-				return StringPool.BLANK;
-			}
-
-			@Override
-			public String getTitle(Locale locale) {
-				return fileEntry.getTitle();
-			}
-
-			@Override
-			public String getURLTitle(Locale locale) {
-				return String.valueOf(classPK);
-			}
-
-		};
+		return new DLFileEntryInfoDisplayObjectProvider(fileEntry);
 	}
 
 	@Override
@@ -188,73 +135,24 @@ public class DLFileEntryInfoDisplayContributor
 
 	@Override
 	public String getInfoURLSeparator() {
-		return _dlFileEntryAssetInfoDisplayContributor.getInfoURLSeparator();
-	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		return _dlFileEntryAssetInfoDisplayContributor.getLabel(locale);
-	}
-
-	private AssetEntry _getAssetEntry(FileEntry fileEntry) {
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			getClassName(), fileEntry.getFileEntryId());
-
-		if (assetEntry == null) {
-			assetEntry = _assetEntryLocalService.createAssetEntry(
-				fileEntry.getFileEntryId());
-
-			assetEntry.setGroupId(fileEntry.getGroupId());
-			assetEntry.setCompanyId(fileEntry.getCompanyId());
-			assetEntry.setUserId(fileEntry.getUserId());
-			assetEntry.setCreateDate(fileEntry.getCreateDate());
-			assetEntry.setClassNameId(
-				_classNameLocalService.getClassNameId(getClassName()));
-			assetEntry.setClassPK(fileEntry.getFileEntryId());
-			assetEntry.setPublishDate(fileEntry.getModifiedDate());
-			assetEntry.setTitle(fileEntry.getTitle());
-			assetEntry.setDescription(fileEntry.getDescription());
-		}
-
-		return assetEntry;
+		return "/d/";
 	}
 
 	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
+	private AssetEntryInfoDisplayFieldProvider
+		_assetEntryInfoDisplayFieldProvider;
 
 	@Reference
-	private ClassNameLocalService _classNameLocalService;
+	private ClassTypesInfoDisplayFieldProvider
+		_classTypesInfoDisplayFieldProvider;
 
 	@Reference
-	private DLAppLocalService _dlAppLocalService;
+	private ExpandoInfoDisplayFieldProvider _expandoInfoDisplayFieldProvider;
 
-	private final DLFileEntryAssetInfoDisplayContributor
-		_dlFileEntryAssetInfoDisplayContributor =
-			new DLFileEntryAssetInfoDisplayContributor();
+	@Reference
+	private InfoDisplayFieldProvider _infoDisplayFieldProvider;
 
 	@Reference
 	private RepositoryProvider _repositoryProvider;
-
-	private class DLFileEntryAssetInfoDisplayContributor
-		extends BaseAssetInfoDisplayContributor<FileEntry> {
-
-		@Override
-		public String getClassName() {
-			return DLFileEntryConstants.getClassName();
-		}
-
-		@Override
-		public String getInfoURLSeparator() {
-			return "/d/";
-		}
-
-		@Override
-		protected Map<String, Object> getClassTypeValues(
-			FileEntry fileEntry, Locale locale) {
-
-			return new HashMap<>();
-		}
-
-	}
 
 }

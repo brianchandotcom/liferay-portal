@@ -1,0 +1,42 @@
+h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
+	font-weight: 700 !important;
+	line-height: 1.3;
+}
+
+h1 {
+	font-size:40px;
+}
+h2 {
+	font-size: 32px;
+}
+h3 {
+	font-size: 24px;
+}
+h4 {
+	font-size: 24px;
+	font-weight: 400 !important;
+}
+
+.btn-primary,
+.btn-success {
+	box-shadow: 0 0 0.75em 0 rgba(100,116,128,.12), 0 0.375em 1em -0.5em rgba(100,116,128,.7);
+}
+
+.btn-success {
+	background-color: #00B57F;
+}
+
+.btn-secondary {
+	color: #0B5FFF;
+}
+
+.nav-item .lexicon-icon-angle-down {
+	height: 10px;
+	margin: 0;
+	margin-left: 4px;
+	width: 10px;
+}
+
+.bg-info {
+	background-color: #F0F5FF !important;
+}

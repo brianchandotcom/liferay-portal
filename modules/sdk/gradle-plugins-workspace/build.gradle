@@ -49,17 +49,21 @@ copyRepo {
 	into new File(buildDir, "gradleTest/repo")
 }
 
-def excludeBnd = {
-	exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
-}
-
 dependencies {
 	compile group: "com.bmuschko", name: "gradle-docker-plugin", version: "3.6.2"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "4.0.51", excludeBnd
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "2.2.13", excludeBnd
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "4.0.51", {
+		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
+	}
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "2.2.13", {
+		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
+	}
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.target.platform", version: "2.0.0"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.7", excludeBnd
-	compile group: "com.liferay", name: "com.liferay.portal.tools.bundle.support", version: "3.4.3", excludeBnd
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.7", {
+		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
+	}
+	compile group: "com.liferay", name: "com.liferay.portal.tools.bundle.support", version: "3.4.3", {
+		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
+	}
 	compile group: "de.undercouch", name: "gradle-download-task", version: "3.2.0"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))

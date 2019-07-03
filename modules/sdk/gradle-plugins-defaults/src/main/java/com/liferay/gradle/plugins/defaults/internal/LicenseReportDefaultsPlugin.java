@@ -395,8 +395,7 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 				"http://www.eclipse.org/legal/epl-v10.html"
 			},
 			{
-				"com.liferay.portal.vulcan.impl.jar!javassist.jar",
-				"LGPL 2.1",
+				"com.liferay.portal.vulcan.impl.jar!javassist.jar", "LGPL 2.1",
 				"http://www.gnu.org/licenses/lgpl-2.1.html"
 			},
 			{

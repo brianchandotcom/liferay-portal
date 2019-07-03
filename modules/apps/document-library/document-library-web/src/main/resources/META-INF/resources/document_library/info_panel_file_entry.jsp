@@ -180,9 +180,27 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 						else {
 							urlLabel = LanguageUtil.format(request, "version-x-url", fileVersion.getVersion());
 						}
+
+						String UrlInputId = "inputUrl";
+
+						Map<String, String> UrlBtnData = new HashMap<>();
+
+						UrlBtnData.put("clipboard-target", "#" + renderResponse.getNamespace() + UrlInputId);
 						%>
 
-						<aui:input label="<%= urlLabel %>" name="url" type="resource" value="<%= DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, !isLatestVersion, true) %>" />
+						<aui:input
+							label="<%= urlLabel %>"
+							name="url"
+							type="resource"
+							value="<%= DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, !isLatestVersion, true) %>"
+							id="<%= UrlInputId %>"
+						/>
+						<clay:button
+							elementClasses="dm-infopanel-copy-clipboard"
+							style="secondary"
+							icon="paste"
+							data='<%= UrlBtnData %>'
+						/>
 
 						<c:if test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() && isLatestVersion %>">
 
@@ -453,5 +471,8 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 				<liferay-util:include page="/document_library/file_entry_history.jsp" servletContext="<%= application %>" />
 		</liferay-ui:section>
 	</c:if>
-	</div>
 </liferay-ui:tabs>
+</div>
+<liferay-frontend:component
+	module="document_library/InfoPanel.es"
+/>

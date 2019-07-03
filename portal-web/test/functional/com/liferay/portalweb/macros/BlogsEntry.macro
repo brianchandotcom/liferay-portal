@@ -357,8 +357,6 @@ definition {
 			key_menuItem = "Move to Recycle Bin",
 			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 
-		AssertConfirm(value1 = "Are you sure you want to move this to the Recycle Bin?");
-
 		Alert.viewSuccessMessage();
 	}
 
@@ -378,8 +376,6 @@ definition {
 		ClickNoError(
 			key_menuItem = "Move to Recycle Bin",
 			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
-
-		AssertConfirm(value1 = "Are you sure you want to move this to the Recycle Bin?");
 
 		Alert.viewSuccessMessage();
 	}

@@ -1,6 +1,6 @@
-import client from '../../../shared/rest/fetch';
+import client from 'shared/rest/fetch';
 import {completionPeriodKeys} from '../instance-list/filterConstants';
-import moment from 'moment';
+import moment from '../../../shared/util/moment';
 
 class TimeRangeStore {
 	constructor(client) {
@@ -63,16 +63,16 @@ class TimeRangeStore {
 		const daysDiff = dateEndMoment.diff(dateStartMoment, 'days');
 
 		if (daysDiff <= 1) {
-			return 'DD MMM, hh A';
+			return Liferay.Language.get('dd-mmm-hh-a');
 		}
 
 		const monthsDiff = dateEndMoment.diff(dateStartMoment, 'months');
 
 		if (monthsDiff < 5) {
-			return 'DD MMM';
+			return Liferay.Language.get('dd-mmm');
 		}
 
-		return 'DD MMM, YYYY';
+		return Liferay.Language.get('dd-mmm-yyyy');
 	}
 
 	getState() {

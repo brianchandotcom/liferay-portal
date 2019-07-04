@@ -1,6 +1,6 @@
 import {AppContext} from '../../AppContext';
 import Icon from '../../../shared/components/Icon';
-import moment from 'moment';
+import moment from '../../../shared/util/moment';
 import React from 'react';
 
 class InstanceItemDetail extends React.Component {
@@ -171,7 +171,7 @@ class InstanceItemDetail extends React.Component {
 										'creation-date'
 									)}
 									detail={moment(dateCreated).format(
-										'MMM DD, LT'
+										Liferay.Language.get('mmm-dd-lt')
 									)}
 								/>
 							)}
@@ -203,7 +203,7 @@ class InstanceItemDetail extends React.Component {
 										'end-date'
 									)}
 									detail={moment(dateCompletion).format(
-										'MMM DD, LT'
+										Liferay.Language.get('mmm-dd-lt')
 									)}
 								/>
 							)}
@@ -261,7 +261,7 @@ InstanceItemDetail.Item = ({
 			onTimeText = Liferay.Language.get('left');
 		}
 		statusText = `${moment(dateOverdue).format(
-			'MMM DD, LT'
+			Liferay.Language.get('mmm-dd-lt')
 		)} (${durationText} ${onTimeText})`;
 	} else if (status === 'Paused') {
 		statusText = `(${Liferay.Language.get('sla-paused')})`;

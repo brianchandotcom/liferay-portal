@@ -1,6 +1,6 @@
 import Icon from '../../../shared/components/Icon';
 import {InstanceContext} from './InstanceContext';
-import moment from 'moment';
+import moment from '../../../shared/util/moment';
 import React from 'react';
 
 class InstanceListItem extends React.Component {
@@ -91,7 +91,9 @@ class InstanceListItem extends React.Component {
 				<td>{userName}</td>
 
 				<td className='pr-4 text-right'>
-					{moment(dateCreated).format('MMM DD, LT')}
+					{moment(dateCreated).format(
+						Liferay.Language.get('mmm-dd-lt')
+					)}
 				</td>
 			</tr>
 		);

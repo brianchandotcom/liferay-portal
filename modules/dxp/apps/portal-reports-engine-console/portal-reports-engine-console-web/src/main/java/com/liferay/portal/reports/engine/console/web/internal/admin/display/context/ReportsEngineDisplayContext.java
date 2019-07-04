@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.reports.engine.console.web.admin.internal.display.context;
+package com.liferay.portal.reports.engine.console.web.internal.admin.display.context;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -32,10 +32,10 @@ import com.liferay.portal.reports.engine.console.util.comparator.DefinitionCreat
 import com.liferay.portal.reports.engine.console.util.comparator.EntryCreateDateComparator;
 import com.liferay.portal.reports.engine.console.util.comparator.SourceCreateDateComparator;
 import com.liferay.portal.reports.engine.console.web.admin.configuration.ReportsEngineAdminWebConfiguration;
-import com.liferay.portal.reports.engine.console.web.admin.internal.display.context.util.ReportsEngineRequestHelper;
-import com.liferay.portal.reports.engine.console.web.admin.internal.search.DefinitionSearch;
-import com.liferay.portal.reports.engine.console.web.admin.internal.search.EntrySearch;
-import com.liferay.portal.reports.engine.console.web.admin.internal.search.SourceSearch;
+import com.liferay.portal.reports.engine.console.web.internal.admin.display.context.util.ReportsEngineRequestHelper;
+import com.liferay.portal.reports.engine.console.web.internal.admin.search.DefinitionSearch;
+import com.liferay.portal.reports.engine.console.web.internal.admin.search.EntrySearch;
+import com.liferay.portal.reports.engine.console.web.internal.admin.search.SourceSearch;
 
 import javax.portlet.PortletURL;
 

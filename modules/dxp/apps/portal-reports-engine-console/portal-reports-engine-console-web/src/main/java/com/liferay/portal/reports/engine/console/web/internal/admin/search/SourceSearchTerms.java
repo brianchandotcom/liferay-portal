@@ -12,15 +12,22 @@
  *
  */
 
-package com.liferay.portal.reports.engine.console.web.admin.internal.constants;
+package com.liferay.portal.reports.engine.console.web.internal.admin.search;
+
+import com.liferay.portal.kernel.dao.search.DAOParamUtil;
+
+import javax.portlet.PortletRequest;
 
 /**
  * @author Rafael Praxedes
  */
-public class ReportsEngineWebKeys {
+public class SourceSearchTerms extends SourceDisplayTerms {
 
-	public static final String DEFINITION = "DEFINITION";
+	public SourceSearchTerms(PortletRequest portletRequest) {
+		super(portletRequest);
 
-	public static final String SOURCE = "SOURCE";
+		name = DAOParamUtil.getString(portletRequest, NAME);
+		driverUrl = DAOParamUtil.getString(portletRequest, DRIVER_URL);
+	}
 
 }

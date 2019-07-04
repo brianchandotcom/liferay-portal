@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.reports.engine.console.web.admin.internal.search;
+package com.liferay.portal.reports.engine.console.web.internal.admin.search;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.reports.engine.console.model.Source;

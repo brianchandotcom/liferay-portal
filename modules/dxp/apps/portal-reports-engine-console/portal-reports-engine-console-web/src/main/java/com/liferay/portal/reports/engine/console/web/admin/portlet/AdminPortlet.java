@@ -33,7 +33,7 @@ import com.liferay.portal.reports.engine.console.model.Source;
 import com.liferay.portal.reports.engine.console.service.DefinitionLocalService;
 import com.liferay.portal.reports.engine.console.service.SourceLocalService;
 import com.liferay.portal.reports.engine.console.web.admin.configuration.ReportsEngineAdminWebConfiguration;
-import com.liferay.portal.reports.engine.console.web.admin.internal.constants.ReportsEngineWebKeys;
+import com.liferay.portal.reports.engine.console.web.internal.admin.constants.ReportsEngineWebKeys;
 
 import java.io.IOException;
 import java.io.InputStream;

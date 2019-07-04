@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.workflow.kaleo.forms.web.configuration;
+package com.liferay.portal.workflow.kaleo.forms.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "forms-and-workflow")
 @Meta.OCD(
-	id = "com.liferay.portal.workflow.kaleo.forms.web.configuration.KaleoFormsWebConfiguration",
+	id = "com.liferay.portal.workflow.kaleo.forms.web.internal.configuration.KaleoFormsWebConfiguration",
 	localization = "content/Language", name = "kaleo-web-configuration-name"
 )
 public interface KaleoFormsWebConfiguration {

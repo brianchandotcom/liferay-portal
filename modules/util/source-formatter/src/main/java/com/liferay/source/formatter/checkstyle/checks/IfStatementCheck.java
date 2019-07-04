@@ -69,7 +69,9 @@ public class IfStatementCheck extends BaseCheck {
 
 		for (DetailAST identDetailAST : identDetailASTList) {
 			if (Objects.equals(identDetailAST.getText(), "_log") ||
-				Objects.equals(identDetailAST.getText(), "log")) {
+				Objects.equals(identDetailAST.getText(), "_logger") ||
+				Objects.equals(identDetailAST.getText(), "log") ||
+				Objects.equals(identDetailAST.getText(), "logger")) {
 
 				return;
 			}

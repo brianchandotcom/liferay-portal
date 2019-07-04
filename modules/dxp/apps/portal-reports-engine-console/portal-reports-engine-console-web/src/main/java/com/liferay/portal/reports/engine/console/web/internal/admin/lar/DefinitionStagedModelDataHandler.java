@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.reports.engine.console.web.admin.lar;
+package com.liferay.portal.reports.engine.console.web.internal.admin.lar;
 
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;

@@ -12,11 +12,11 @@
  *
  */
 
-package com.liferay.portal.reports.engine.console.web.display.portlet;
+package com.liferay.portal.reports.engine.console.web.internal.display.portlet;
 
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys;
-import com.liferay.portal.reports.engine.console.web.admin.portlet.AdminPortlet;
+import com.liferay.portal.reports.engine.console.web.internal.admin.portlet.AdminPortlet;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

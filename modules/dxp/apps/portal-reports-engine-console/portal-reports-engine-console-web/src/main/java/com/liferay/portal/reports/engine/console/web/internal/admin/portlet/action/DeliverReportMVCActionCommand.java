@@ -12,13 +12,12 @@
  *
  */
 
-package com.liferay.portal.reports.engine.console.web.admin.portlet.action;
+package com.liferay.portal.reports.engine.console.web.internal.admin.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys;
 import com.liferay.portal.reports.engine.console.service.EntryService;
 
@@ -34,27 +33,26 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
+		"javax.portlet.name=" + ReportsEngineConsolePortletKeys.DISPLAY_REPORTS,
 		"javax.portlet.name=" + ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
-		"mvc.command.name=deleteReport"
+		"mvc.command.name=deliverReport"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteReportMVCActionCommand extends BaseMVCActionCommand {
+public class DeliverReportMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long entryId = ParamUtil.getLong(actionRequest, "entryId");
 
+		String[] emailAddresses = StringUtil.split(
+			ParamUtil.getString(actionRequest, "emailAddresses"));
 		String fileName = ParamUtil.getString(actionRequest, "fileName");
 
-		_entryService.deleteAttachment(
-			themeDisplay.getCompanyId(), entryId, fileName);
+		_entryService.sendEmails(entryId, fileName, emailAddresses, false);
 	}
 
 	@Reference

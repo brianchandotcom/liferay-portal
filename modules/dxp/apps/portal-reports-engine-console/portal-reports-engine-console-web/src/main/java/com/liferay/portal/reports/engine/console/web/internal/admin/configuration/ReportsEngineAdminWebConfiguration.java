@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.reports.engine.console.web.admin.configuration;
+package com.liferay.portal.reports.engine.console.web.internal.admin.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "forms-and-workflow")
 @Meta.OCD(
-	id = "com.liferay.portal.reports.engine.console.web.admin.configuration.ReportsEngineAdminWebConfiguration",
+	id = "com.liferay.portal.reports.engine.console.web.internal.admin.configuration.ReportsEngineAdminWebConfiguration",
 	name = "reports-engine-admin-web-configuration-name"
 )
 public interface ReportsEngineAdminWebConfiguration {

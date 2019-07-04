@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.reports.engine.console.web.admin.portlet.action;
+package com.liferay.portal.reports.engine.console.web.internal.admin.portlet.action;
 
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;

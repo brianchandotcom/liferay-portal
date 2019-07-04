@@ -12,13 +12,13 @@
  *
  */
 
-package com.liferay.portal.reports.engine.console.web.admin.portlet.action;
+package com.liferay.portal.reports.engine.console.web.internal.admin.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys;
-import com.liferay.portal.reports.engine.console.service.DefinitionService;
+import com.liferay.portal.reports.engine.console.service.EntryService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -27,29 +27,29 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Michael C. Han
+ * @author Gavin Wan
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
-		"mvc.command.name=deleteDefinition"
+		"mvc.command.name=archiveRequest"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteDefinitionMVCActionCommand extends BaseMVCActionCommand {
+public class ArchiveRequestMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long definitionId = ParamUtil.getLong(actionRequest, "definitionId");
+		long entryId = ParamUtil.getLong(actionRequest, "entryId");
 
-		_definitionService.deleteDefinition(definitionId);
+		_entryService.deleteEntry(entryId);
 	}
 
 	@Reference
-	private DefinitionService _definitionService;
+	private EntryService _entryService;
 
 }

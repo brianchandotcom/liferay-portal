@@ -12,15 +12,22 @@
  *
  */
 
-package com.liferay.portal.reports.engine.console.web.admin.portlet.action;
+package com.liferay.portal.reports.engine.console.web.internal.admin.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys;
 import com.liferay.portal.reports.engine.console.model.Source;
 import com.liferay.portal.reports.engine.console.service.SourceService;
-import com.liferay.portal.reports.engine.console.util.ReportsEngineConsoleUtil;
+
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -29,17 +36,17 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Michael C. Han
+ * @author Gavin Wan
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
-		"mvc.command.name=testDataSource"
+		"mvc.command.name=editDataSource"
 	},
 	service = MVCActionCommand.class
 )
-public class TestDataSourceMVCActionCommand extends BaseMVCActionCommand {
+public class EditDataSourceMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -48,11 +55,32 @@ public class TestDataSourceMVCActionCommand extends BaseMVCActionCommand {
 
 		long sourceId = ParamUtil.getLong(actionRequest, "sourceId");
 
-		Source source = _sourceService.getSource(sourceId);
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "name");
+		String driverClassName = ParamUtil.getString(
+			actionRequest, "driverClassName");
+		String driverUrl = ParamUtil.getString(actionRequest, "driverUrl");
+		String driverUserName = ParamUtil.getString(
+			actionRequest, "driverUserName");
+		String driverPassword = ParamUtil.getString(
+			actionRequest, "driverPassword");
 
-		ReportsEngineConsoleUtil.validateJDBCConnection(
-			source.getDriverClassName(), source.getDriverUrl(),
-			source.getDriverUserName(), source.getDriverPassword());
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			Source.class.getName(), actionRequest);
+
+		if (sourceId <= 0) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			_sourceService.addSource(
+				themeDisplay.getScopeGroupId(), nameMap, driverClassName,
+				driverUrl, driverUserName, driverPassword, serviceContext);
+		}
+		else {
+			_sourceService.updateSource(
+				sourceId, nameMap, driverClassName, driverUrl, driverUserName,
+				driverPassword, serviceContext);
+		}
 	}
 
 	@Reference

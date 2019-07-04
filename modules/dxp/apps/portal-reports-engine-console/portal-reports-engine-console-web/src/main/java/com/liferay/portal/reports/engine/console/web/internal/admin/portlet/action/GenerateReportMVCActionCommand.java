@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.reports.engine.console.web.admin.portlet.action;
+package com.liferay.portal.reports.engine.console.web.internal.admin.portlet.action;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;

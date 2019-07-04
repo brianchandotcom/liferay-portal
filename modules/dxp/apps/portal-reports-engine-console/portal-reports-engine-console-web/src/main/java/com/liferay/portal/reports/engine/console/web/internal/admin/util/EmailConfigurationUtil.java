@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.reports.engine.console.web.admin.util;
+package com.liferay.portal.reports.engine.console.web.internal.admin.util;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;

@@ -12,14 +12,13 @@
  *
  */
 
-package com.liferay.portal.reports.engine.console.web.admin.portlet.action;
+package com.liferay.portal.reports.engine.console.web.internal.admin.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys;
-import com.liferay.portal.reports.engine.console.service.EntryService;
+import com.liferay.portal.reports.engine.console.service.DefinitionService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -28,34 +27,29 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Gavin Wan
+ * @author Michael C. Han
  */
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + ReportsEngineConsolePortletKeys.DISPLAY_REPORTS,
 		"javax.portlet.name=" + ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
-		"mvc.command.name=deliverReport"
+		"mvc.command.name=deleteDefinition"
 	},
 	service = MVCActionCommand.class
 )
-public class DeliverReportMVCActionCommand extends BaseMVCActionCommand {
+public class DeleteDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+		long definitionId = ParamUtil.getLong(actionRequest, "definitionId");
 
-		String[] emailAddresses = StringUtil.split(
-			ParamUtil.getString(actionRequest, "emailAddresses"));
-		String fileName = ParamUtil.getString(actionRequest, "fileName");
-
-		_entryService.sendEmails(entryId, fileName, emailAddresses, false);
+		_definitionService.deleteDefinition(definitionId);
 	}
 
 	@Reference
-	private EntryService _entryService;
+	private DefinitionService _definitionService;
 
 }

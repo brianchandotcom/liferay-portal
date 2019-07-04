@@ -31,7 +31,7 @@ import com.liferay.portal.reports.engine.console.model.Source;
 import com.liferay.portal.reports.engine.console.util.comparator.DefinitionCreateDateComparator;
 import com.liferay.portal.reports.engine.console.util.comparator.EntryCreateDateComparator;
 import com.liferay.portal.reports.engine.console.util.comparator.SourceCreateDateComparator;
-import com.liferay.portal.reports.engine.console.web.admin.configuration.ReportsEngineAdminWebConfiguration;
+import com.liferay.portal.reports.engine.console.web.internal.admin.configuration.ReportsEngineAdminWebConfiguration;
 import com.liferay.portal.reports.engine.console.web.internal.admin.display.context.util.ReportsEngineRequestHelper;
 import com.liferay.portal.reports.engine.console.web.internal.admin.search.DefinitionSearch;
 import com.liferay.portal.reports.engine.console.web.internal.admin.search.EntrySearch;

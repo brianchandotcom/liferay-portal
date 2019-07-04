@@ -79,7 +79,6 @@ page import="com.liferay.portal.reports.engine.console.service.permission.Report
 page import="com.liferay.portal.reports.engine.console.service.permission.SourcePermissionChecker" %><%@
 page import="com.liferay.portal.reports.engine.console.status.ReportStatus" %><%@
 page import="com.liferay.portal.reports.engine.console.util.ReportsEngineConsoleUtil" %><%@
-page import="com.liferay.portal.reports.engine.console.web.admin.util.EmailConfigurationUtil" %><%@
 page import="com.liferay.portal.reports.engine.console.web.internal.admin.constants.ReportsEngineWebKeys" %><%@
 page import="com.liferay.portal.reports.engine.console.web.internal.admin.display.context.ReportsEngineDisplayContext" %><%@
 page import="com.liferay.portal.reports.engine.console.web.internal.admin.display.context.util.ReportsEngineRequestHelper" %><%@
@@ -89,6 +88,7 @@ page import="com.liferay.portal.reports.engine.console.web.internal.admin.search
 page import="com.liferay.portal.reports.engine.console.web.internal.admin.search.EntrySearch" %><%@
 page import="com.liferay.portal.reports.engine.console.web.internal.admin.search.SourceDisplayTerms" %><%@
 page import="com.liferay.portal.reports.engine.console.web.internal.admin.search.SourceSearch" %><%@
+page import="com.liferay.portal.reports.engine.console.web.internal.admin.util.EmailConfigurationUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.text.Format" %>

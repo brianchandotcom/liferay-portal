@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.reports.engine.console.web.admin.portlet.action;
+package com.liferay.portal.reports.engine.console.web.internal.admin.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -33,11 +33,12 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
-		"mvc.command.name=archiveRequest"
+		"mvc.command.name=unscheduleReportRequest"
 	},
 	service = MVCActionCommand.class
 )
-public class ArchiveRequestMVCActionCommand extends BaseMVCActionCommand {
+public class UnscheduleReportRequestMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -46,7 +47,7 @@ public class ArchiveRequestMVCActionCommand extends BaseMVCActionCommand {
 
 		long entryId = ParamUtil.getLong(actionRequest, "entryId");
 
-		_entryService.deleteEntry(entryId);
+		_entryService.unscheduleEntry(entryId);
 	}
 
 	@Reference

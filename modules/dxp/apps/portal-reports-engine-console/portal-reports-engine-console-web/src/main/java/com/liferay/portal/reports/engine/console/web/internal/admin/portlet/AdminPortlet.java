@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.reports.engine.console.web.admin.portlet;
+package com.liferay.portal.reports.engine.console.web.internal.admin.portlet;
 
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -32,7 +32,7 @@ import com.liferay.portal.reports.engine.console.model.Definition;
 import com.liferay.portal.reports.engine.console.model.Source;
 import com.liferay.portal.reports.engine.console.service.DefinitionLocalService;
 import com.liferay.portal.reports.engine.console.service.SourceLocalService;
-import com.liferay.portal.reports.engine.console.web.admin.configuration.ReportsEngineAdminWebConfiguration;
+import com.liferay.portal.reports.engine.console.web.internal.admin.configuration.ReportsEngineAdminWebConfiguration;
 import com.liferay.portal.reports.engine.console.web.internal.admin.constants.ReportsEngineWebKeys;
 
 import java.io.IOException;
@@ -56,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gavin Wan
  */
 @Component(
-	configurationPid = "com.liferay.portal.reports.engine.console.web.admin.configuration.ReportsEngineAdminWebConfiguration",
+	configurationPid = "com.liferay.portal.reports.engine.console.web.internal.admin.configuration.ReportsEngineAdminWebConfiguration",
 	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=reports-portlet",

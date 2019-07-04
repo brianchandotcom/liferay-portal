@@ -108,6 +108,8 @@ definition {
 
 	@priority = "4"
 	test NavigateToMySites {
+		ProductMenu.gotoSiteViaLink();
+
 		UserBar.gotoDropdownItem(dropdownItem = "My Sites");
 
 		Site.viewSelectSiteViaPersonalMenuMySites(siteName = "Liferay");

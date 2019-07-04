@@ -158,13 +158,13 @@ public class DataDefinitionResourceImpl
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.setGroupIds(new long[] {siteId});
 				searchContext.setAttribute(
 					Field.CLASS_NAME_ID,
 					_portal.getClassNameId(InternalDataDefinition.class));
 				searchContext.setAttribute(Field.DESCRIPTION, keywords);
 				searchContext.setAttribute(Field.NAME, keywords);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setGroupIds(new long[] {siteId});
 			},
 			document -> DataDefinitionUtil.toDataDefinition(
 				_ddmStructureLocalService.getStructure(

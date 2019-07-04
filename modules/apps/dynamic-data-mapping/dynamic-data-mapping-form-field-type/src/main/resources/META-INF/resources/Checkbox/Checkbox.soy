@@ -96,39 +96,41 @@
 			</span>
 		</label>
 	{else}
-		<label>
-			{let $inputAttributes kind="attributes"}
-				{if $checked}
-					checked="checked"
-				{/if}
+		<div class="custom-control custom-checkbox">
+			<label>
+				{let $inputAttributes kind="attributes"}
+					{if $checked}
+						checked="checked"
+					{/if}
 
-				class="custom-control-input"
-				data-onchange="{$handleInputChangeEvent}"
+					class="custom-control-input"
+					data-onchange="{$handleInputChangeEvent}"
 
-				{if $disabled}
-					disabled="disabled"
-				{/if}
+					{if $disabled}
+						disabled="disabled"
+					{/if}
 
-				name="{$name}"
-				type="checkbox"
-				value="true"
-			{/let}
+					name="{$name}"
+					type="checkbox"
+					value="true"
+				{/let}
 
-			<input {$inputAttributes} />
+				<input {$inputAttributes} />
 
-			{if $showLabel}
-				<span class="custom-control-label">
-					<span class="custom-control-label-text">
-						{$label}{sp}
+				{if $showLabel}
+					<span class="custom-control-label">
+						<span class="custom-control-label-text">
+							{$label}{sp}
+						</span>
 					</span>
-				</span>
 
-				{if $required}
-					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
-						<use xlink:href="{$spritemap}#asterisk" />
-					</svg>
+					{if $required}
+						<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
+							<use xlink:href="{$spritemap}#asterisk" />
+						</svg>
+					{/if}
 				{/if}
-			{/if}
-		</label>
+			</label>
+		</div>
 	{/if}
 {/template}

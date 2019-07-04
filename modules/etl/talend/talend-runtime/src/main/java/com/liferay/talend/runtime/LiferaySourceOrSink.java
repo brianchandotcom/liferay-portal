@@ -31,8 +31,10 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import javax.json.Json;
@@ -64,6 +66,7 @@ import org.talend.daikon.properties.ValidationResultMutable;
 /**
  * @author Zoltán Takács
  * @author Igor Beslic
+ * @author Ivica Cardic
  */
 public class LiferaySourceOrSink
 	extends TranslatableImpl
@@ -201,7 +204,18 @@ public class LiferaySourceOrSink
 
 	@Override
 	public Set<String> getEndpointList(String operation) {
-		Set<String> endpoints = new TreeSet<>();
+		LiferayConnectionProperties liferayConnectionProperties =
+			getEffectiveConnection(null);
+
+		JsonObject oasJsonObject = doGetRequest(
+			liferayConnectionProperties.getApiSpecURL());
+
+		return _extractEndpoints(operation, oasJsonObject);
+	}
+
+	@Override
+	public Map<String, String> getEndpointMap(String operation) {
+		Map<String, String> endpointMap = new TreeMap<>();
 
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveConnection(null);
@@ -209,43 +223,16 @@ public class LiferaySourceOrSink
 		JsonObject oasJsonObject = doGetRequest(
 			liferayConnectionProperties.getApiSpecURL());
 
-		JsonObject pathsJsonObject = oasJsonObject.getJsonObject(
-			OASConstants.PATHS);
+		Set<String> endpoints = _extractEndpoints(operation, oasJsonObject);
 
-		pathsJsonObject.forEach(
-			(path, operationsJsonValue) -> {
-				JsonObject operationsJsonObject =
-					operationsJsonValue.asJsonObject();
+		for (String endpoint : endpoints) {
+			endpointMap.put(
+				endpoint,
+				_endpointSchemaInferrer.extractEndpointSchemaName(
+					endpoint, operation, oasJsonObject));
+		}
 
-				operationsJsonObject.forEach(
-					(operationName, operationJsonValue) -> {
-						if (!Objects.equals(
-								operation,
-								StringUtil.toUpperCase(operationName))) {
-
-							return;
-						}
-
-						if (!Objects.equals(operation, HttpMethod.GET)) {
-							endpoints.add(path);
-
-							return;
-						}
-
-						if (_jsonFinder.hasPath(
-								OASConstants.PATH_RESPONSE_SCHEMA_REFERENCE,
-								operationJsonValue.asJsonObject()) ||
-							_jsonFinder.hasPath(
-								OASConstants.
-									PATH_RESPONSE_SCHEMA_ITEMS_REFERENCE,
-								operationJsonValue.asJsonObject())) {
-
-							endpoints.add(path);
-						}
-					});
-			});
-
-		return endpoints;
+		return endpointMap;
 	}
 
 	/**
@@ -475,6 +462,50 @@ public class LiferaySourceOrSink
 	protected volatile LiferayConnectionPropertiesProvider
 		liferayConnectionPropertiesProvider;
 	protected RESTClient restClient;
+
+	private Set<String> _extractEndpoints(
+		String operation, JsonObject oasJsonObject) {
+
+		Set<String> endpoints = new TreeSet<>();
+
+		JsonObject pathsJsonObject = oasJsonObject.getJsonObject(
+			OASConstants.PATHS);
+
+		pathsJsonObject.forEach(
+			(path, operationsJsonValue) -> {
+				JsonObject operationsJsonObject =
+					operationsJsonValue.asJsonObject();
+
+				operationsJsonObject.forEach(
+					(operationName, operationJsonValue) -> {
+						if (!Objects.equals(
+								operation,
+								StringUtil.toUpperCase(operationName))) {
+
+							return;
+						}
+
+						if (!Objects.equals(operation, HttpMethod.GET)) {
+							endpoints.add(path);
+
+							return;
+						}
+
+						if (_jsonFinder.hasPath(
+								OASConstants.PATH_RESPONSE_SCHEMA_REFERENCE,
+								operationJsonValue.asJsonObject()) ||
+							_jsonFinder.hasPath(
+								OASConstants.
+									PATH_RESPONSE_SCHEMA_ITEMS_REFERENCE,
+								operationJsonValue.asJsonObject())) {
+
+							endpoints.add(path);
+						}
+					});
+			});
+
+		return endpoints;
+	}
 
 	private boolean _isNullString(String value) {
 		if (value == null) {

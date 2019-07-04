@@ -38,8 +38,7 @@ public class JavaInternalPackageCheck extends BaseJavaTermCheck {
 			String fileContent)
 		throws IOException {
 
-		if (!absolutePath.contains("/modules/apps/") ||
-			!absolutePath.contains("-web/src/") ||
+		if (!absolutePath.contains("-web/src/") ||
 			absolutePath.contains("/test/") ||
 			absolutePath.contains("/testIntegration/")) {
 

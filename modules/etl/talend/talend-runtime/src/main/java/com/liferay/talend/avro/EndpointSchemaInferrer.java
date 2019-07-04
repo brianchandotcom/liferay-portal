@@ -57,25 +57,10 @@ import org.talend.daikon.exception.TalendRuntimeException;
  */
 public class EndpointSchemaInferrer {
 
-	public Schema inferSchema(
-		String endpoint, String operation, JsonObject apiSpecJsonObject) {
-
-		operation = operation.toLowerCase(Locale.US);
-
-		Schema schema = SchemaProperties.EMPTY_SCHEMA;
-
-		if (operation.equals(Action.Delete.getMethodName())) {
-			schema = _getDeleteSchema();
-		}
-		else {
-			schema = _getSchema(endpoint, operation, apiSpecJsonObject);
-		}
-
-		return schema;
-	}
-
-	private static String _extractEndpointSchemaName(
+	public String extractEndpointSchemaName(
 		String endpoint, String operation, JsonObject oasJsonObject) {
+
+		operation = StringUtil.toLowerCase(operation);
 
 		String schemaName = null;
 
@@ -129,6 +114,23 @@ public class EndpointSchemaInferrer {
 			schemaJsonObject.getString(OASConstants.REF));
 
 		return schemaName;
+	}
+
+	public Schema inferSchema(
+		String endpoint, String operation, JsonObject apiSpecJsonObject) {
+
+		operation = operation.toLowerCase(Locale.US);
+
+		Schema schema = SchemaProperties.EMPTY_SCHEMA;
+
+		if (operation.equals(Action.Delete.getMethodName())) {
+			schema = _getDeleteSchema();
+		}
+		else {
+			schema = _getSchema(endpoint, operation, apiSpecJsonObject);
+		}
+
+		return schema;
 	}
 
 	private static JsonObject _extractSchemaJsonObject(
@@ -276,7 +278,7 @@ public class EndpointSchemaInferrer {
 		List<Schema.Field> schemaFields = new ArrayList<>();
 		Set<String> previousFieldNames = new HashSet<>();
 
-		String schemaName = _extractEndpointSchemaName(
+		String schemaName = extractEndpointSchemaName(
 			endpoint, operation, apiSpecJsonObject);
 
 		if (_log.isDebugEnabled()) {

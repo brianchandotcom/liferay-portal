@@ -14,6 +14,8 @@
 
 package com.liferay.wiki.uad.anonymizer;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -47,6 +49,8 @@ public abstract class BaseWikiPageUADAnonymizer
 		if (wikiPage.getUserId() == userId) {
 			wikiPage.setUserId(anonymousUser.getUserId());
 			wikiPage.setUserName(anonymousUser.getFullName());
+
+			autoAnonymizeAsset(wikiPage, anonymousUser);
 		}
 
 		if (wikiPage.getStatusByUserId() == userId) {
@@ -67,6 +71,17 @@ public abstract class BaseWikiPageUADAnonymizer
 		return WikiPage.class;
 	}
 
+	protected void autoAnonymizeAsset(WikiPage wikiPage, User anonymousUser) {
+		AssetEntry assetEntry = fetchAssetEntry(wikiPage);
+
+		if (assetEntry != null) {
+			assetEntry.setUserId(anonymousUser.getUserId());
+			assetEntry.setUserName(anonymousUser.getFullName());
+
+			assetEntryLocalService.updateAssetEntry(assetEntry);
+		}
+	}
+
 	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
 		return wikiPageLocalService.getActionableDynamicQuery();
@@ -76,6 +91,14 @@ public abstract class BaseWikiPageUADAnonymizer
 	protected String[] doGetUserIdFieldNames() {
 		return WikiUADConstants.USER_ID_FIELD_NAMES_WIKI_PAGE;
 	}
+
+	protected AssetEntry fetchAssetEntry(WikiPage wikiPage) {
+		return assetEntryLocalService.fetchEntry(
+			WikiPage.class.getName(), wikiPage.getPageId());
+	}
+
+	@Reference
+	protected AssetEntryLocalService assetEntryLocalService;
 
 	@Reference
 	protected WikiPageLocalService wikiPageLocalService;

@@ -18,13 +18,10 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.segments.internal.odata.entity.ContextEntityModel;
 
-import java.util.ArrayList;
-
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Eduardo García
@@ -35,13 +32,6 @@ public class ContextRegistrar {
 	@Activate
 	public void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
-
-		register(new ContextEntityModel(new ArrayList<>()));
-	}
-
-	@Deactivate
-	public void deactivate() {
-		unregister();
 	}
 
 	public void register(ContextEntityModel contextEntityModel) {
@@ -52,7 +42,11 @@ public class ContextRegistrar {
 	}
 
 	public void unregister() {
-		_serviceRegistration.unregister();
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+
+			_serviceRegistration = null;
+		}
 	}
 
 	private BundleContext _bundleContext;

@@ -193,10 +193,13 @@ public class SPIDataRecordCollectionResource<T> {
 	}
 
 	public void postDataRecordCollectionDataRecordCollectionPermissions(
-			boolean addDataRecord, Company company, Long dataRecordCollectionId,
-			boolean delete, boolean deleteDataRecord, boolean exportDataRecord,
-			String operation, String[] roleNames, boolean update,
-			boolean updateDataRecord, boolean view, boolean viewDataRecord)
+			Company company, Long dataRecordCollectionId,
+			boolean hasAddDataRecordPermission, boolean hasDeletePermission,
+			boolean hasDeleteDataRecordPermission, boolean hasUpdatePermission,
+			boolean hasUpdateDataRecordPermission, boolean hasViewPermission,
+			boolean hasViewDataRecordPermission,
+			boolean hasExportDataRecordPermission, String operation,
+			String[] roleNames)
 		throws Exception {
 
 		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getRecordSet(
@@ -207,35 +210,35 @@ public class SPIDataRecordCollectionResource<T> {
 
 		List<String> actionIds = new ArrayList<>();
 
-		if (addDataRecord) {
+		if (hasAddDataRecordPermission) {
 			actionIds.add(DataActionKeys.ADD_DATA_RECORD);
 		}
 
-		if (delete) {
+		if (hasDeletePermission) {
 			actionIds.add(ActionKeys.DELETE);
 		}
 
-		if (deleteDataRecord) {
+		if (hasDeleteDataRecordPermission) {
 			actionIds.add(DataActionKeys.DELETE_DATA_RECORD);
 		}
 
-		if (exportDataRecord) {
+		if (hasExportDataRecordPermission) {
 			actionIds.add(DataActionKeys.EXPORT_DATA_RECORDS);
 		}
 
-		if (update) {
+		if (hasUpdatePermission) {
 			actionIds.add(ActionKeys.UPDATE);
 		}
 
-		if (updateDataRecord) {
+		if (hasUpdateDataRecordPermission) {
 			actionIds.add(DataActionKeys.UPDATE_DATA_RECORD);
 		}
 
-		if (view) {
+		if (hasViewPermission) {
 			actionIds.add(ActionKeys.VIEW);
 		}
 
-		if (viewDataRecord) {
+		if (hasViewDataRecordPermission) {
 			actionIds.add(DataActionKeys.VIEW_DATA_RECORD);
 		}
 
@@ -251,9 +254,9 @@ public class SPIDataRecordCollectionResource<T> {
 	}
 
 	public void postSiteDataRecordCollectionPermissions(
-			boolean addDataRecordCollection, Company company,
-			boolean definePermissions, String operation, String[] roleNames,
-			Long siteId)
+			Company company, boolean hasAddDataRecordCollectionPermission,
+			boolean hasDefinePermissionsPermission, String operation,
+			String[] roleNames, Long siteId)
 		throws Exception {
 
 		DataEnginePermissionUtil.checkOperationPermission(
@@ -261,11 +264,11 @@ public class SPIDataRecordCollectionResource<T> {
 
 		List<String> actionIds = new ArrayList<>();
 
-		if (addDataRecordCollection) {
+		if (hasAddDataRecordCollectionPermission) {
 			actionIds.add(DataActionKeys.ADD_DATA_RECORD_COLLECTION);
 		}
 
-		if (definePermissions) {
+		if (hasDefinePermissionsPermission) {
 			actionIds.add(DataActionKeys.DEFINE_PERMISSIONS);
 		}
 

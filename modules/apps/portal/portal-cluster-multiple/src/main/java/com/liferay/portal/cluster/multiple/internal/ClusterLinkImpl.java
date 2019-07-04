@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
@@ -55,10 +54,6 @@ public class ClusterLinkImpl implements ClusterLink {
 
 	@Override
 	public void sendMulticastMessage(Message message, Priority priority) {
-		if (!isEnabled()) {
-			return;
-		}
-
 		ClusterChannel clusterChannel = getChannel(priority);
 
 		clusterChannel.sendMulticastMessage(message);
@@ -67,10 +62,6 @@ public class ClusterLinkImpl implements ClusterLink {
 	@Override
 	public void sendUnicastMessage(
 		Address address, Message message, Priority priority) {
-
-		if (!isEnabled()) {
-			return;
-		}
 
 		if (_localAddresses.contains(address)) {
 			sendLocalMessage(message);
@@ -85,26 +76,18 @@ public class ClusterLinkImpl implements ClusterLink {
 
 	@Activate
 	protected void activate() {
-		_enabled = GetterUtil.getBoolean(
-			_props.get(PropsKeys.CLUSTER_LINK_ENABLED));
+		_enabled = true;
 
-		if (_enabled) {
-			initialize(
-				getChannelSettings(
-					PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_TRANSPORT),
-				getChannelSettings(
-					PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT),
-				getChannelSettings(
-					PropsKeys.CLUSTER_LINK_CHANNEL_NAME_TRANSPORT));
-		}
+		initialize(
+			getChannelSettings(
+				PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_TRANSPORT),
+			getChannelSettings(
+				PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT),
+			getChannelSettings(PropsKeys.CLUSTER_LINK_CHANNEL_NAME_TRANSPORT));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		if (!_enabled) {
-			return;
-		}
-
 		if (_clusterChannels != null) {
 			for (ClusterChannel clusterChannel : _clusterChannels) {
 				clusterChannel.close();

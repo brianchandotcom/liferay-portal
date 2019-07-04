@@ -88,12 +88,6 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 		_clusterExecutorConfiguration = ConfigurableUtil.createConfigurable(
 			ClusterExecutorConfiguration.class, properties);
 
-		if (!GetterUtil.getBoolean(
-				_props.get(PropsKeys.CLUSTER_LINK_ENABLED))) {
-
-			return;
-		}
-
 		initSystemProperties(
 			_props.getArray(PropsKeys.CLUSTER_LINK_CHANNEL_SYSTEM_PROPERTIES));
 

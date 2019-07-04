@@ -62,6 +62,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MODAL_INVITE_TO_COLLABORATE_FEEDBACK_ITEM</td>
+	<td>//div[contains(@class,'form-feedback-item') and contains(.,"User ${key_userEmailAddress} does not exist.")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

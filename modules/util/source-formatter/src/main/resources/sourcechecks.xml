@@ -215,9 +215,7 @@
 		<check name="JavaIllegalImportsCheck">
 			<property name="enforceJavaUtilFunctionImports" value="true" />
 		</check>
-		<check name="JavaInternalPackageCheck">
-			<property name="enabled" value="false" />
-		</check>
+		<check name="JavaInternalPackageCheck" />
 		<check name="JavaJSPDynamicIncludeCheck" />
 		<check name="JavaLogClassNameCheck" />
 		<check name="JavaLogLevelCheck" />

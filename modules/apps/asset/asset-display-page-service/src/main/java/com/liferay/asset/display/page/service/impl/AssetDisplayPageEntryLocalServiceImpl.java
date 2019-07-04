@@ -217,13 +217,16 @@ public class AssetDisplayPageEntryLocalServiceImpl
 			return LayoutConstants.DEFAULT_PLID;
 		}
 
+		long classTypeId = assetEntry.getClassTypeId();
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry = Optional.ofNullable(
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				layoutPageTemplateEntryId)
-		).orElse(
-			_layoutPageTemplateEntryLocalService.
-				fetchDefaultLayoutPageTemplateEntry(
-					groupId, classNameId, assetEntry.getClassTypeId())
+		).orElseGet(
+			() ->
+				_layoutPageTemplateEntryLocalService.
+					fetchDefaultLayoutPageTemplateEntry(
+						groupId, classNameId, classTypeId)
 		);
 
 		if (layoutPageTemplateEntry != null) {

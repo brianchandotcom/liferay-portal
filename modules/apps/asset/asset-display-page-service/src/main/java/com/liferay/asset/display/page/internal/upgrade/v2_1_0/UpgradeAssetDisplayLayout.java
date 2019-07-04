@@ -72,10 +72,12 @@ public class UpgradeAssetDisplayLayout extends UpgradeProcess {
 		LayoutPageTemplateEntry layoutPageTemplateEntry = Optional.ofNullable(
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				layoutPageTemplateEntryId)
-		).orElse(
-			_layoutPageTemplateEntryService.fetchDefaultLayoutPageTemplateEntry(
-				groupId, assetEntry.getClassNameId(),
-				assetEntry.getClassTypeId())
+		).orElseGet(
+			() ->
+				_layoutPageTemplateEntryService.
+					fetchDefaultLayoutPageTemplateEntry(
+						groupId, assetEntry.getClassNameId(),
+						assetEntry.getClassTypeId())
 		);
 
 		if (layoutPageTemplateEntry == null) {

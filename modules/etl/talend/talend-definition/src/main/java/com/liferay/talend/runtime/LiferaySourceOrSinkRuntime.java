@@ -20,6 +20,7 @@ import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
 import java.io.IOException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.avro.Schema;
@@ -34,6 +35,9 @@ import org.talend.daikon.properties.ValidationResult;
 public interface LiferaySourceOrSinkRuntime extends SourceOrSink {
 
 	public Set<String> getEndpointList(String operation) throws IOException;
+
+	public Map<String, String> getEndpointMap(String operation)
+		throws IOException;
 
 	public Schema getEndpointSchema(String endpoint, String operation)
 		throws IOException;

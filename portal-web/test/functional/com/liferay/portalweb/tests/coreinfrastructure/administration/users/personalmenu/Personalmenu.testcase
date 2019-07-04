@@ -108,11 +108,13 @@ definition {
 
 	@priority = "4"
 	test NavigateToMySites {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		ProductMenu.gotoSiteViaLink();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Sites");
 
-		Site.viewSelectSiteViaPersonalMenuMySites(siteName = "Liferay");
+		Site.viewSelectSiteViaPersonalMenuMySites(siteName = "${siteName}");
 	}
 
 }

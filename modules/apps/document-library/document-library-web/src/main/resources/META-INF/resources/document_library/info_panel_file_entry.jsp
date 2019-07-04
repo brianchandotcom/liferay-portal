@@ -181,21 +181,33 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 							urlLabel = LanguageUtil.format(request, "version-x-url", fileVersion.getVersion());
 						}
 
-						String UrlInputId = "inputUrl";
+						String UrlInputId = renderResponse.getNamespace() + "inputUrl";
 
 						Map<String, String> UrlBtnData = new HashMap<>();
 
-						UrlBtnData.put("clipboard-target", "#" + renderResponse.getNamespace() + UrlInputId);
+						UrlBtnData.put("clipboard-target", "#" + UrlInputId);
 						%>
 
-						<aui:input id="<%= UrlInputId %>" label="<%= urlLabel %>" name="url" type="resource" value="<%= DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, !isLatestVersion, true) %>" />
-
-						<clay:button
-							data="<%= UrlBtnData %>"
-							elementClasses="dm-infopanel-copy-clipboard"
-							icon="paste"
-							style="secondary"
-						/>
+						<div class="form-group">
+							<label for="<%= UrlInputId %>"><%= urlLabel %></label>
+							<div class="input-group input-group-sm">
+								<div class="input-group-item input-group-prepend">
+									<input
+										class="form-control"
+										id="<%= UrlInputId %>"
+										value="<%= DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, !isLatestVersion, true) %>"
+									/>
+								</div>
+								<span class="input-group-append input-group-item input-group-item-shrink">
+									<clay:button
+										data="<%= UrlBtnData %>"
+										elementClasses="dm-infopanel-copy-clipboard btn-secondary"
+										icon="paste"
+										style="secondary"
+									/>
+								</span>
+							</div>
+						</div>
 
 						<c:if test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() && isLatestVersion %>">
 
@@ -209,20 +221,36 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 								webDavHelpMessage = LanguageUtil.format(request, "webdav-help", "https://dev.liferay.com/discover/portal/-/knowledge_base/7-0/publishing-files#desktop-access-to-documents-and-media", false);
 							}
 
-								String webDavInputId = "inputwebDavURL";
+								String webDavInputId = renderResponse.getNamespace() + "inputwebDavURL";
 
 								Map<String, String> webDavBtnData = new HashMap<>();
 
-								webDavBtnData.put("clipboard-target", "#" + renderResponse.getNamespace() + webDavInputId);
+								webDavBtnData.put("clipboard-target", "#" + webDavInputId);
 							%>
 
-							<aui:input helpMessage="<%= webDavHelpMessage %>"  id="<%= webDavInputId %>" name="webDavURL" type="resource" value="<%= DLURLHelperUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry) %>" />
-							<clay:button
-								data="<%= webDavBtnData %>"
-								elementClasses="dm-infopanel-copy-clipboard"
-								icon="paste"
-								style="secondary"
-							/>
+							<div class="form-group">
+								<label for="<%= webDavInputId %>">
+									<liferay-ui:message key='<%= TextFormatter.format("webDavURL", TextFormatter.K) %>' />
+									<liferay-ui:icon-help message="<%= webDavHelpMessage %>" />
+								</label>
+								<div class="input-group input-group-sm">
+									<div class="input-group-item input-group-prepend">
+										<input
+											class="form-control"
+											id="<%= webDavInputId %>"
+											value="<%= DLURLHelperUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry) %>"
+										/>
+									</div>
+									<span class="input-group-append input-group-item input-group-item-shrink">
+										<clay:button
+											data="<%= webDavBtnData %>"
+											elementClasses="dm-infopanel-copy-clipboard btn-secondary"
+											icon="paste"
+											style="secondary"
+										/>
+									</span>
+								</div>
+							</div>
 						</c:if>
 					</div>
 				</div>

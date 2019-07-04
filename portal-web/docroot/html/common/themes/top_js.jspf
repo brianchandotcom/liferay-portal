@@ -449,6 +449,7 @@ String[] liferayAnalyticsGroupIds = PrefsPropsUtil.getStringArray(company.getCom
 			Analytics.registerMiddleware(
 				function(request) {
 					request.context.canonicalUrl = themeDisplay.getCanonicalURL();
+					request.context.groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
 
 					return request;
 				}
@@ -473,6 +474,15 @@ String[] liferayAnalyticsGroupIds = PrefsPropsUtil.getStringArray(company.getCom
 
 						if (!themeDisplay.isControlPanel()) {
 							Analytics.create({...config});
+
+							Analytics.registerMiddleware(
+								function(request) {
+									request.context.canonicalUrl = themeDisplay.getCanonicalURL();
+									request.context.groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
+
+									return request;
+								}
+							);
 
 							if (themeDisplay.isSignedIn()) {
 								Analytics.setIdentity(

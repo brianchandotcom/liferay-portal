@@ -14,7 +14,7 @@
 
 package com.liferay.segments.internal.context;
 
-import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.segments.internal.odata.entity.ContextEntityModel;
 
@@ -47,11 +47,8 @@ public class ContextRegistrar {
 	public void register(ContextEntityModel contextEntityModel) {
 		_serviceRegistration = _bundleContext.registerService(
 			EntityModel.class, contextEntityModel,
-			new HashMapDictionary<String, Object>() {
-				{
-					put("entity.model.name", ContextEntityModel.NAME);
-				}
-			});
+			MapUtil.singletonDictionary(
+				"entity.model.name", ContextEntityModel.NAME));
 	}
 
 	public void unregister() {

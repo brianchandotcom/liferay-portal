@@ -14,6 +14,8 @@
 
 package com.liferay.message.boards.uad.anonymizer;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.uad.constants.MBUADConstants;
@@ -47,6 +49,8 @@ public abstract class BaseMBThreadUADAnonymizer
 		if (mbThread.getUserId() == userId) {
 			mbThread.setUserId(anonymousUser.getUserId());
 			mbThread.setUserName(anonymousUser.getFullName());
+
+			autoAnonymizeAsset(mbThread, anonymousUser);
 		}
 
 		if (mbThread.getRootMessageUserId() == userId) {
@@ -75,6 +79,17 @@ public abstract class BaseMBThreadUADAnonymizer
 		return MBThread.class;
 	}
 
+	protected void autoAnonymizeAsset(MBThread mbThread, User anonymousUser) {
+		AssetEntry assetEntry = fetchAssetEntry(mbThread);
+
+		if (assetEntry != null) {
+			assetEntry.setUserId(anonymousUser.getUserId());
+			assetEntry.setUserName(anonymousUser.getFullName());
+
+			assetEntryLocalService.updateAssetEntry(assetEntry);
+		}
+	}
+
 	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
 		return mbThreadLocalService.getActionableDynamicQuery();
@@ -84,6 +99,14 @@ public abstract class BaseMBThreadUADAnonymizer
 	protected String[] doGetUserIdFieldNames() {
 		return MBUADConstants.USER_ID_FIELD_NAMES_MB_THREAD;
 	}
+
+	protected AssetEntry fetchAssetEntry(MBThread mbThread) {
+		return assetEntryLocalService.fetchEntry(
+			MBThread.class.getName(), mbThread.getThreadId());
+	}
+
+	@Reference
+	protected AssetEntryLocalService assetEntryLocalService;
 
 	@Reference
 	protected MBThreadLocalService mbThreadLocalService;

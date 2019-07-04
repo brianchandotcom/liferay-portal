@@ -12,8 +12,7 @@
  * details.
  */
 
-/* eslint no-undef: "warn" */
-/* eslint no-unused-vars: "warn" */
+/* global global */
 
 import ManagementToolbar from '../../src/main/resources/META-INF/resources/management_toolbar/ManagementToolbar.es';
 
@@ -43,7 +42,7 @@ describe('ManagementToolbar', () => {
 			fire: jest.fn(eventName =>
 				searchContainerCallbacks[eventName].apply(this)
 			),
-			on: jest.fn((eventName, cb) => {
+			on: jest.fn(eventName => {
 				searchContainerCallbacks[eventName] = jest.fn();
 				return searchContainerHandle;
 			}),

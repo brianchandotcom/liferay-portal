@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.entity.BooleanEntityField;
@@ -193,8 +194,6 @@ public class RequestContextMapper {
 	@Reference
 	private BrowserSniffer _browserSniffer;
 
-	private final ContextRegistrar _contextRegistrar = new ContextRegistrar();
-
 	@Reference
 	private Portal _portal;
 
@@ -229,9 +228,9 @@ public class RequestContextMapper {
 			List<EntityField> customEntityFields = _addCustomEntityField(
 				requestContextContributorKey, requestContextContributorType);
 
-			_contextRegistrar.unregister();
+			_unregister();
 
-			_contextRegistrar.register(
+			_register(
 				_bundleContext, new ContextEntityModel(customEntityFields));
 
 			return _bundleContext.getService(serviceReference);
@@ -259,9 +258,9 @@ public class RequestContextMapper {
 			List<EntityField> customEntityFields = _removeCustomEntityField(
 				requestContextContributorKey);
 
-			_contextRegistrar.unregister();
+			_unregister();
 
-			_contextRegistrar.register(
+			_register(
 				_bundleContext, new ContextEntityModel(customEntityFields));
 
 			_bundleContext.ungetService(serviceReference);
@@ -306,6 +305,16 @@ public class RequestContextMapper {
 			return new ArrayList(_customEntityFields.values());
 		}
 
+		private void _register(
+			BundleContext bundleContext,
+			ContextEntityModel contextEntityModel) {
+
+			_serviceRegistration = bundleContext.registerService(
+				EntityModel.class, contextEntityModel,
+				MapUtil.singletonDictionary(
+					"entity.model.name", ContextEntityModel.NAME));
+		}
+
 		private List<EntityField> _removeCustomEntityField(
 			String requestContextContributorKey) {
 
@@ -314,8 +323,17 @@ public class RequestContextMapper {
 			return new ArrayList(_customEntityFields.values());
 		}
 
+		private void _unregister() {
+			if (_serviceRegistration != null) {
+				_serviceRegistration.unregister();
+
+				_serviceRegistration = null;
+			}
+		}
+
 		private final BundleContext _bundleContext;
 		private Map<String, EntityField> _customEntityFields = new HashMap();
+		private ServiceRegistration<EntityModel> _serviceRegistration;
 
 	}
 

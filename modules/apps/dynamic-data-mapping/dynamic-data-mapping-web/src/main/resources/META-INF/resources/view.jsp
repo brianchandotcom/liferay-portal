@@ -19,8 +19,6 @@
 <%
 boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 
-List<DDMDisplayTabItem> ddmDisplayTabItems = ddmDisplay.getTabItems();
-
 if (ddmDisplay.getDescription(locale) != null) {
 	portletDisplay.setDescription(ddmDisplay.getDescription(locale));
 }
@@ -28,6 +26,8 @@ if (ddmDisplay.getDescription(locale) != null) {
 if (ddmDisplay.getTitle(locale) != null) {
 	renderResponse.setTitle(ddmDisplay.getTitle(locale));
 }
+
+List<DDMDisplayTabItem> ddmDisplayTabItems = ddmDisplay.getTabItems();
 %>
 
 <c:if test="<%= (ddmDisplayTabItems.size() < 2) && ddmDisplay.isShowBackURLInTitleBar() && showBackURL %>">

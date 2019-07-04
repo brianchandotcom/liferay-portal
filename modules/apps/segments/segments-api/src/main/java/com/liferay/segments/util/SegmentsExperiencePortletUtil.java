@@ -14,10 +14,23 @@
 
 package com.liferay.segments.util;
 
+import com.liferay.portal.kernel.util.GetterUtil;
+
 /**
  * @author Pavel Savinov
  */
 public class SegmentsExperiencePortletUtil {
+
+	public static long getSegmentsExperienceId(String portletId) {
+		int index = portletId.indexOf(_EXPERIENCE_SEPARATOR);
+
+		if (index == -1) {
+			return 0L;
+		}
+
+		return GetterUtil.getLong(
+			portletId.substring(index + _EXPERIENCE_SEPARATOR.length()));
+	}
 
 	public static String setSegmentsExperienceId(
 		String instanceId, long segmentsExperienceId) {

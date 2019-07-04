@@ -208,9 +208,21 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 							else {
 								webDavHelpMessage = LanguageUtil.format(request, "webdav-help", "https://dev.liferay.com/discover/portal/-/knowledge_base/7-0/publishing-files#desktop-access-to-documents-and-media", false);
 							}
+
+								String webDavInputId = "inputwebDavURL";
+
+								Map<String, String> webDavBtnData = new HashMap<>();
+
+								webDavBtnData.put("clipboard-target", "#" + renderResponse.getNamespace() + webDavInputId);
 							%>
 
-							<aui:input helpMessage="<%= webDavHelpMessage %>" name="webDavURL" type="resource" value="<%= DLURLHelperUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry) %>" />
+							<aui:input helpMessage="<%= webDavHelpMessage %>"  id="<%= webDavInputId %>" name="webDavURL" type="resource" value="<%= DLURLHelperUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry) %>" />
+							<clay:button
+								data="<%= webDavBtnData %>"
+								elementClasses="dm-infopanel-copy-clipboard"
+								icon="paste"
+								style="secondary"
+							/>
 						</c:if>
 					</div>
 				</div>

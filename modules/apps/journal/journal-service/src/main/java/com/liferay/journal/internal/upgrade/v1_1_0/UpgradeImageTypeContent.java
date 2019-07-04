@@ -154,15 +154,6 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 
 		@Override
 		public Boolean call() throws Exception {
-			String fileName = String.valueOf(_articleImageId);
-
-			FileEntry fileEntry = _portletFileRepository.fetchPortletFileEntry(
-				_groupId, _folderId, fileName);
-
-			if (fileEntry != null) {
-				return null;
-			}
-
 			try {
 				Image image = _imageLocalService.getImage(_articleImageId);
 
@@ -170,8 +161,18 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 					return null;
 				}
 
-				String mimeType = MimeTypesUtil.getContentType(
-					fileName + StringPool.PERIOD + image.getType());
+				String fileName =
+					_articleImageId + StringPool.PERIOD + image.getType();
+
+				FileEntry fileEntry =
+					_portletFileRepository.fetchPortletFileEntry(
+						_groupId, _folderId, fileName);
+
+				if (fileEntry != null) {
+					return null;
+				}
+
+				String mimeType = MimeTypesUtil.getContentType(fileName);
 
 				_portletFileRepository.addPortletFileEntry(
 					_groupId, _userId, JournalArticle.class.getName(),
@@ -182,8 +183,8 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 			}
 			catch (Exception e) {
 				_log.error(
-					"Unable to add the journal article image " + fileName +
-						" into the file repository",
+					"Unable to add the journal article image " +
+						_articleImageId + " into the file repository",
 					e);
 
 				return false;

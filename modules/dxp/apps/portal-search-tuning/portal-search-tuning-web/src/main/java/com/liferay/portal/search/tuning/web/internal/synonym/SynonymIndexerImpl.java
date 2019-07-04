@@ -109,21 +109,20 @@ public class SynonymIndexerImpl implements SynonymIndexer {
 	}
 
 	protected String buildSettings(String filterName, String[] synonymSets) {
-		JSONObject jsonObject1 = JSONUtil.put(
-			"lenient", true
-		).put(
-			"synonyms", jsonFactory.createJSONArray(synonymSets)
-		).put(
-			"type", "synonym"
-		);
-
-		JSONObject jsonObject2 = JSONUtil.put(filterName, jsonObject1);
-
-		JSONObject jsonObject3 = JSONUtil.put("filter", jsonObject2);
-
-		JSONObject jsonObject4 = JSONUtil.put("analysis", jsonObject3);
-
-		return jsonObject4.toJSONString();
+		return JSONUtil.put(
+			"analysis",
+			JSONUtil.put(
+				"filter",
+				JSONUtil.put(
+					filterName,
+					JSONUtil.put(
+						"lenient", true
+					).put(
+						"synonyms", jsonFactory.createJSONArray(synonymSets)
+					).put(
+						"type", "synonym"
+					)))
+		).toString();
 	}
 
 	protected void closeIndex(String indexName) {

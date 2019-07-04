@@ -20,12 +20,10 @@ import com.liferay.segments.internal.odata.entity.ContextEntityModel;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eduardo García
  */
-@Component(immediate = true, service = ContextRegistrar.class)
 public class ContextRegistrar {
 
 	public void register(

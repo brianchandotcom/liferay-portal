@@ -193,8 +193,7 @@ public class RequestContextMapper {
 	@Reference
 	private BrowserSniffer _browserSniffer;
 
-	@Reference
-	private ContextRegistrar _contextRegistrar;
+	private final ContextRegistrar _contextRegistrar = new ContextRegistrar();
 
 	@Reference
 	private Portal _portal;

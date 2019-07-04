@@ -190,18 +190,16 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 
 						<div class="form-group">
 							<label for="<%= UrlInputId %>"><%= urlLabel %></label>
+
 							<div class="input-group input-group-sm">
 								<div class="input-group-item input-group-prepend">
-									<input
-										class="form-control"
-										id="<%= UrlInputId %>"
-										value="<%= DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, !isLatestVersion, true) %>"
-									/>
+									<input class="form-control" id="<%= UrlInputId %>" value="<%= DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, !isLatestVersion, true) %>" />
 								</div>
+
 								<span class="input-group-append input-group-item input-group-item-shrink">
 									<clay:button
 										data="<%= UrlBtnData %>"
-										elementClasses="dm-infopanel-copy-clipboard btn-secondary"
+										elementClasses="btn-secondary dm-infopanel-copy-clipboard"
 										icon="paste"
 										style="secondary"
 									/>
@@ -231,20 +229,19 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 							<div class="form-group">
 								<label for="<%= webDavInputId %>">
 									<liferay-ui:message key='<%= TextFormatter.format("webDavURL", TextFormatter.K) %>' />
+
 									<liferay-ui:icon-help message="<%= webDavHelpMessage %>" />
 								</label>
+
 								<div class="input-group input-group-sm">
 									<div class="input-group-item input-group-prepend">
-										<input
-											class="form-control"
-											id="<%= webDavInputId %>"
-											value="<%= DLURLHelperUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry) %>"
-										/>
+										<input class="form-control" id="<%= webDavInputId %>" value="<%= DLURLHelperUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry) %>" />
 									</div>
+
 									<span class="input-group-append input-group-item input-group-item-shrink">
 										<clay:button
 											data="<%= webDavBtnData %>"
-											elementClasses="dm-infopanel-copy-clipboard btn-secondary"
+											elementClasses="btn-secondary dm-infopanel-copy-clipboard"
 											icon="paste"
 											style="secondary"
 										/>

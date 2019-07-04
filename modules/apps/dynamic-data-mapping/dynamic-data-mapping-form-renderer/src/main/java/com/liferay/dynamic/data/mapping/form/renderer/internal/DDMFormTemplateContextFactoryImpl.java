@@ -122,6 +122,15 @@ public class DDMFormTemplateContextFactoryImpl
 
 		setDDMFormFieldsEvaluableProperty(ddmForm);
 
+		Locale locale = ddmFormRenderingContext.getLocale();
+
+		if (locale == null) {
+			locale = LocaleThreadLocal.getSiteDefaultLocale();
+		}
+
+		templateContext.put(
+			"editingLanguageId", LanguageUtil.getLanguageId(locale));
+
 		templateContext.put(
 			"evaluatorURL", getDDMFormContextProviderServletURL());
 
@@ -137,12 +146,6 @@ public class DDMFormTemplateContextFactoryImpl
 		templateContext.put(
 			"portletNamespace", ddmFormRenderingContext.getPortletNamespace());
 		templateContext.put("readOnly", ddmFormRenderingContext.isReadOnly());
-
-		Locale locale = ddmFormRenderingContext.getLocale();
-
-		if (locale == null) {
-			locale = LocaleThreadLocal.getSiteDefaultLocale();
-		}
 
 		ResourceBundle resourceBundle = getResourceBundle(locale);
 

@@ -233,7 +233,7 @@ public class RequestContextMapper {
 			_contextRegistrar.unregister();
 
 			_contextRegistrar.register(
-				new ContextEntityModel(customEntityFields));
+				_bundleContext, new ContextEntityModel(customEntityFields));
 
 			return _bundleContext.getService(serviceReference);
 		}
@@ -263,7 +263,7 @@ public class RequestContextMapper {
 			_contextRegistrar.unregister();
 
 			_contextRegistrar.register(
-				new ContextEntityModel(customEntityFields));
+				_bundleContext, new ContextEntityModel(customEntityFields));
 
 			_bundleContext.ungetService(serviceReference);
 		}

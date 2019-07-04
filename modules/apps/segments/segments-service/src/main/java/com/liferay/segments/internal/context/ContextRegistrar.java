@@ -20,7 +20,6 @@ import com.liferay.segments.internal.odata.entity.ContextEntityModel;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -29,13 +28,10 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = ContextRegistrar.class)
 public class ContextRegistrar {
 
-	@Activate
-	public void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-	}
+	public void register(
+		BundleContext bundleContext, ContextEntityModel contextEntityModel) {
 
-	public void register(ContextEntityModel contextEntityModel) {
-		_serviceRegistration = _bundleContext.registerService(
+		_serviceRegistration = bundleContext.registerService(
 			EntityModel.class, contextEntityModel,
 			MapUtil.singletonDictionary(
 				"entity.model.name", ContextEntityModel.NAME));
@@ -49,7 +45,6 @@ public class ContextRegistrar {
 		}
 	}
 
-	private BundleContext _bundleContext;
 	private ServiceRegistration<EntityModel> _serviceRegistration;
 
 }

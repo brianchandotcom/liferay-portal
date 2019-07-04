@@ -21,7 +21,9 @@ import com.google.auto.service.AutoService;
 import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
 import com.liferay.talend.tliferayinput.TLiferayInputDefinition;
 import com.liferay.talend.tliferayoutput.TLiferayOutputDefinition;
+import com.liferay.talend.wizard.LiferayConnectionEditWizardDefinition;
 import com.liferay.talend.wizard.LiferayConnectionWizardDefinition;
+import com.liferay.talend.wizard.LiferaySchemaWizardDefinition;
 
 import org.talend.components.api.AbstractComponentFamilyDefinition;
 import org.talend.components.api.ComponentInstaller;
@@ -47,6 +49,8 @@ public class LiferayFamilyDefinition
 		super(
 			NAME, new TLiferayConnectionDefinition(),
 			new TLiferayInputDefinition(), new TLiferayOutputDefinition(),
+			new LiferayConnectionEditWizardDefinition(),
+			new LiferaySchemaWizardDefinition(),
 			new LiferayConnectionWizardDefinition());
 	}
 

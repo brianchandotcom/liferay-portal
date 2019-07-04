@@ -20,7 +20,8 @@ package com.liferay.portal.search.tuning.web.internal.constants;
 public class SearchTuningPortletKeys {
 
 	public static final String SEARCH_TUNING =
-		"com_liferay_portal_search_tuning_web_portlet_SearchTuningPortlet";
+		"com_liferay_portal_search_tuning_web_internal_portlet_" +
+			"SearchTuningPortlet";
 
 	public static final String SYNONYMS_DISPLAY_CONTEXT =
 		"SYNONYMS_DISPLAY_CONTEXT";

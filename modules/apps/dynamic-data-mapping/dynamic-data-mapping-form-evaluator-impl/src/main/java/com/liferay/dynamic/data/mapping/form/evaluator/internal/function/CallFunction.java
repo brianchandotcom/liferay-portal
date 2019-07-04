@@ -266,7 +266,9 @@ public class CallFunction
 					ddmDataProviderResponse.getOutputOptional(
 						outputName, String.class);
 
-				setDDMFormFieldValue(ddmFormFieldName, valueOptional.get());
+				if (Validator.isNull(getDDMFormFieldValue(ddmFormFieldName))) {
+					setDDMFormFieldValue(ddmFormFieldName, valueOptional.get());
+				}
 			}
 		}
 	}

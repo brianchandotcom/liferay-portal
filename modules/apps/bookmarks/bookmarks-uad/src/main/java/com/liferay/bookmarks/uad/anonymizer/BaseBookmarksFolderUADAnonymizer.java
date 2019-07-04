@@ -14,6 +14,8 @@
 
 package com.liferay.bookmarks.uad.anonymizer;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
@@ -47,6 +49,8 @@ public abstract class BaseBookmarksFolderUADAnonymizer
 		if (bookmarksFolder.getUserId() == userId) {
 			bookmarksFolder.setUserId(anonymousUser.getUserId());
 			bookmarksFolder.setUserName(anonymousUser.getFullName());
+
+			autoAnonymizeAsset(bookmarksFolder, anonymousUser);
 		}
 
 		if (bookmarksFolder.getStatusByUserId() == userId) {
@@ -67,6 +71,19 @@ public abstract class BaseBookmarksFolderUADAnonymizer
 		return BookmarksFolder.class;
 	}
 
+	protected void autoAnonymizeAsset(
+		BookmarksFolder bookmarksFolder, User anonymousUser) {
+
+		AssetEntry assetEntry = fetchAssetEntry(bookmarksFolder);
+
+		if (assetEntry != null) {
+			assetEntry.setUserId(anonymousUser.getUserId());
+			assetEntry.setUserName(anonymousUser.getFullName());
+
+			assetEntryLocalService.updateAssetEntry(assetEntry);
+		}
+	}
+
 	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
 		return bookmarksFolderLocalService.getActionableDynamicQuery();
@@ -76,6 +93,14 @@ public abstract class BaseBookmarksFolderUADAnonymizer
 	protected String[] doGetUserIdFieldNames() {
 		return BookmarksUADConstants.USER_ID_FIELD_NAMES_BOOKMARKS_FOLDER;
 	}
+
+	protected AssetEntry fetchAssetEntry(BookmarksFolder bookmarksFolder) {
+		return assetEntryLocalService.fetchEntry(
+			BookmarksFolder.class.getName(), bookmarksFolder.getFolderId());
+	}
+
+	@Reference
+	protected AssetEntryLocalService assetEntryLocalService;
 
 	@Reference
 	protected BookmarksFolderLocalService bookmarksFolderLocalService;

@@ -361,6 +361,16 @@ definition {
 			publishTemplateDescription = "Publish Template Description Edit",
 			publishTemplateName = "Publish Template Name Edit");
 
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
 		Staging.publishToLivePublishTemplate(
 			publishTemplateName = "Publish Template Name Edit",
 			siteName = "Site Name");

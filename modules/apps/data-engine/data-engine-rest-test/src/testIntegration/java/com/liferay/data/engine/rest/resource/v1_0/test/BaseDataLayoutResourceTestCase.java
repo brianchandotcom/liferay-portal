@@ -28,6 +28,7 @@ import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
 import com.liferay.data.engine.rest.client.resource.v1_0.DataLayoutResource;
 import com.liferay.data.engine.rest.client.serdes.v1_0.DataLayoutSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
@@ -46,10 +48,13 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -60,6 +65,7 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
 
@@ -191,7 +197,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 		Page<DataLayout> page =
 			dataLayoutResource.getDataDefinitionDataLayoutsPage(
 				testGetDataDefinitionDataLayoutsPage_getDataDefinitionId(),
-				RandomTestUtil.randomString(), Pagination.of(1, 2));
+				RandomTestUtil.randomString(), Pagination.of(1, 2), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -206,7 +212,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 					irrelevantDataDefinitionId, randomIrrelevantDataLayout());
 
 			page = dataLayoutResource.getDataDefinitionDataLayoutsPage(
-				irrelevantDataDefinitionId, null, Pagination.of(1, 2));
+				irrelevantDataDefinitionId, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -225,7 +231,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 				dataDefinitionId, randomDataLayout());
 
 		page = dataLayoutResource.getDataDefinitionDataLayoutsPage(
-			dataDefinitionId, null, Pagination.of(1, 2));
+			dataDefinitionId, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -256,7 +262,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		Page<DataLayout> page1 =
 			dataLayoutResource.getDataDefinitionDataLayoutsPage(
-				dataDefinitionId, null, Pagination.of(1, 2));
+				dataDefinitionId, null, Pagination.of(1, 2), null);
 
 		List<DataLayout> dataLayouts1 = (List<DataLayout>)page1.getItems();
 
@@ -264,7 +270,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		Page<DataLayout> page2 =
 			dataLayoutResource.getDataDefinitionDataLayoutsPage(
-				dataDefinitionId, null, Pagination.of(2, 2));
+				dataDefinitionId, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -274,11 +280,117 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		Page<DataLayout> page3 =
 			dataLayoutResource.getDataDefinitionDataLayoutsPage(
-				dataDefinitionId, null, Pagination.of(1, 3));
+				dataDefinitionId, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(dataLayout1, dataLayout2, dataLayout3),
 			(List<DataLayout>)page3.getItems());
+	}
+
+	@Test
+	public void testGetDataDefinitionDataLayoutsPageWithSortDateTime()
+		throws Exception {
+
+		testGetDataDefinitionDataLayoutsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, dataLayout1, dataLayout2) -> {
+				BeanUtils.setProperty(
+					dataLayout1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetDataDefinitionDataLayoutsPageWithSortInteger()
+		throws Exception {
+
+		testGetDataDefinitionDataLayoutsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, dataLayout1, dataLayout2) -> {
+				BeanUtils.setProperty(dataLayout1, entityField.getName(), 0);
+				BeanUtils.setProperty(dataLayout2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetDataDefinitionDataLayoutsPageWithSortString()
+		throws Exception {
+
+		testGetDataDefinitionDataLayoutsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, dataLayout1, dataLayout2) -> {
+				Class clazz = dataLayout1.getClass();
+
+				Method method = clazz.getMethod(
+					"get" +
+						StringUtil.upperCaseFirstLetter(entityField.getName()));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						dataLayout1, entityField.getName(),
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						dataLayout2, entityField.getName(),
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else {
+					BeanUtils.setProperty(
+						dataLayout1, entityField.getName(), "Aaa");
+					BeanUtils.setProperty(
+						dataLayout2, entityField.getName(), "Bbb");
+				}
+			});
+	}
+
+	protected void testGetDataDefinitionDataLayoutsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, DataLayout, DataLayout, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long dataDefinitionId =
+			testGetDataDefinitionDataLayoutsPage_getDataDefinitionId();
+
+		DataLayout dataLayout1 = randomDataLayout();
+		DataLayout dataLayout2 = randomDataLayout();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, dataLayout1, dataLayout2);
+		}
+
+		dataLayout1 = testGetDataDefinitionDataLayoutsPage_addDataLayout(
+			dataDefinitionId, dataLayout1);
+
+		dataLayout2 = testGetDataDefinitionDataLayoutsPage_addDataLayout(
+			dataDefinitionId, dataLayout2);
+
+		for (EntityField entityField : entityFields) {
+			Page<DataLayout> ascPage =
+				dataLayoutResource.getDataDefinitionDataLayoutsPage(
+					dataDefinitionId, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(dataLayout1, dataLayout2),
+				(List<DataLayout>)ascPage.getItems());
+
+			Page<DataLayout> descPage =
+				dataLayoutResource.getDataDefinitionDataLayoutsPage(
+					dataDefinitionId, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(dataLayout2, dataLayout1),
+				(List<DataLayout>)descPage.getItems());
+		}
 	}
 
 	protected DataLayout testGetDataDefinitionDataLayoutsPage_addDataLayout(
@@ -394,7 +506,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 	public void testGetSiteDataLayoutPage() throws Exception {
 		Page<DataLayout> page = dataLayoutResource.getSiteDataLayoutPage(
 			testGetSiteDataLayoutPage_getSiteId(),
-			RandomTestUtil.randomString(), Pagination.of(1, 2));
+			RandomTestUtil.randomString(), Pagination.of(1, 2), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -407,7 +519,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 					irrelevantSiteId, randomIrrelevantDataLayout());
 
 			page = dataLayoutResource.getSiteDataLayoutPage(
-				irrelevantSiteId, null, Pagination.of(1, 2));
+				irrelevantSiteId, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -424,7 +536,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 			siteId, randomDataLayout());
 
 		page = dataLayoutResource.getSiteDataLayoutPage(
-			siteId, null, Pagination.of(1, 2));
+			siteId, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -448,14 +560,14 @@ public abstract class BaseDataLayoutResourceTestCase {
 			siteId, randomDataLayout());
 
 		Page<DataLayout> page1 = dataLayoutResource.getSiteDataLayoutPage(
-			siteId, null, Pagination.of(1, 2));
+			siteId, null, Pagination.of(1, 2), null);
 
 		List<DataLayout> dataLayouts1 = (List<DataLayout>)page1.getItems();
 
 		Assert.assertEquals(dataLayouts1.toString(), 2, dataLayouts1.size());
 
 		Page<DataLayout> page2 = dataLayoutResource.getSiteDataLayoutPage(
-			siteId, null, Pagination.of(2, 2));
+			siteId, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -464,11 +576,109 @@ public abstract class BaseDataLayoutResourceTestCase {
 		Assert.assertEquals(dataLayouts2.toString(), 1, dataLayouts2.size());
 
 		Page<DataLayout> page3 = dataLayoutResource.getSiteDataLayoutPage(
-			siteId, null, Pagination.of(1, 3));
+			siteId, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(dataLayout1, dataLayout2, dataLayout3),
 			(List<DataLayout>)page3.getItems());
+	}
+
+	@Test
+	public void testGetSiteDataLayoutPageWithSortDateTime() throws Exception {
+		testGetSiteDataLayoutPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, dataLayout1, dataLayout2) -> {
+				BeanUtils.setProperty(
+					dataLayout1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetSiteDataLayoutPageWithSortInteger() throws Exception {
+		testGetSiteDataLayoutPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, dataLayout1, dataLayout2) -> {
+				BeanUtils.setProperty(dataLayout1, entityField.getName(), 0);
+				BeanUtils.setProperty(dataLayout2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetSiteDataLayoutPageWithSortString() throws Exception {
+		testGetSiteDataLayoutPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, dataLayout1, dataLayout2) -> {
+				Class clazz = dataLayout1.getClass();
+
+				Method method = clazz.getMethod(
+					"get" +
+						StringUtil.upperCaseFirstLetter(entityField.getName()));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						dataLayout1, entityField.getName(),
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						dataLayout2, entityField.getName(),
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else {
+					BeanUtils.setProperty(
+						dataLayout1, entityField.getName(), "Aaa");
+					BeanUtils.setProperty(
+						dataLayout2, entityField.getName(), "Bbb");
+				}
+			});
+	}
+
+	protected void testGetSiteDataLayoutPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, DataLayout, DataLayout, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteDataLayoutPage_getSiteId();
+
+		DataLayout dataLayout1 = randomDataLayout();
+		DataLayout dataLayout2 = randomDataLayout();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, dataLayout1, dataLayout2);
+		}
+
+		dataLayout1 = testGetSiteDataLayoutPage_addDataLayout(
+			siteId, dataLayout1);
+
+		dataLayout2 = testGetSiteDataLayoutPage_addDataLayout(
+			siteId, dataLayout2);
+
+		for (EntityField entityField : entityFields) {
+			Page<DataLayout> ascPage = dataLayoutResource.getSiteDataLayoutPage(
+				siteId, null, Pagination.of(1, 2),
+				entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(dataLayout1, dataLayout2),
+				(List<DataLayout>)ascPage.getItems());
+
+			Page<DataLayout> descPage =
+				dataLayoutResource.getSiteDataLayoutPage(
+					siteId, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(dataLayout2, dataLayout1),
+				(List<DataLayout>)descPage.getItems());
+		}
 	}
 
 	protected DataLayout testGetSiteDataLayoutPage_addDataLayout(

@@ -38,12 +38,14 @@ public interface DataLayoutResource {
 	}
 
 	public Page<DataLayout> getDataDefinitionDataLayoutsPage(
-			Long dataDefinitionId, String keywords, Pagination pagination)
+			Long dataDefinitionId, String keywords, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getDataDefinitionDataLayoutsPageHttpResponse(
-				Long dataDefinitionId, String keywords, Pagination pagination)
+				Long dataDefinitionId, String keywords, Pagination pagination,
+				String sortString)
 		throws Exception;
 
 	public DataLayout postDataDefinitionDataLayout(
@@ -86,11 +88,13 @@ public interface DataLayoutResource {
 		throws Exception;
 
 	public Page<DataLayout> getSiteDataLayoutPage(
-			Long siteId, String keywords, Pagination pagination)
+			Long siteId, String keywords, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSiteDataLayoutPageHttpResponse(
-			Long siteId, String keywords, Pagination pagination)
+			Long siteId, String keywords, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public void postSiteDataLayoutPermission(
@@ -154,12 +158,13 @@ public interface DataLayoutResource {
 	public static class DataLayoutResourceImpl implements DataLayoutResource {
 
 		public Page<DataLayout> getDataDefinitionDataLayoutsPage(
-				Long dataDefinitionId, String keywords, Pagination pagination)
+				Long dataDefinitionId, String keywords, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getDataDefinitionDataLayoutsPageHttpResponse(
-					dataDefinitionId, keywords, pagination);
+					dataDefinitionId, keywords, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -175,7 +180,7 @@ public interface DataLayoutResource {
 		public HttpInvoker.HttpResponse
 				getDataDefinitionDataLayoutsPageHttpResponse(
 					Long dataDefinitionId, String keywords,
-					Pagination pagination)
+					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -196,6 +201,10 @@ public interface DataLayoutResource {
 					"page", String.valueOf(pagination.getPage()));
 				httpInvoker.parameter(
 					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
 			}
 
 			httpInvoker.path(
@@ -462,11 +471,13 @@ public interface DataLayoutResource {
 		}
 
 		public Page<DataLayout> getSiteDataLayoutPage(
-				Long siteId, String keywords, Pagination pagination)
+				Long siteId, String keywords, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getSiteDataLayoutPageHttpResponse(siteId, keywords, pagination);
+				getSiteDataLayoutPageHttpResponse(
+					siteId, keywords, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -480,7 +491,8 @@ public interface DataLayoutResource {
 		}
 
 		public HttpInvoker.HttpResponse getSiteDataLayoutPageHttpResponse(
-				Long siteId, String keywords, Pagination pagination)
+				Long siteId, String keywords, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -501,6 +513,10 @@ public interface DataLayoutResource {
 					"page", String.valueOf(pagination.getPage()));
 				httpInvoker.parameter(
 					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
 			}
 
 			httpInvoker.path(

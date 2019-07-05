@@ -18,6 +18,7 @@ import com.liferay.data.engine.rest.dto.v1_0.DataLayout;
 import com.liferay.data.engine.rest.dto.v1_0.DataLayoutPermission;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -39,7 +40,8 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface DataLayoutResource {
 
 	public Page<DataLayout> getDataDefinitionDataLayoutsPage(
-			Long dataDefinitionId, String keywords, Pagination pagination)
+			Long dataDefinitionId, String keywords, Pagination pagination,
+			Sort[] sorts)
 		throws Exception;
 
 	public DataLayout postDataDefinitionDataLayout(
@@ -59,7 +61,7 @@ public interface DataLayoutResource {
 		throws Exception;
 
 	public Page<DataLayout> getSiteDataLayoutPage(
-			Long siteId, String keywords, Pagination pagination)
+			Long siteId, String keywords, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public void postSiteDataLayoutPermission(

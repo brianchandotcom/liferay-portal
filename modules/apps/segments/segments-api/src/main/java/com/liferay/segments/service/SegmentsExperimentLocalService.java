@@ -23,10 +23,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -62,6 +65,10 @@ public interface SegmentsExperimentLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SegmentsExperimentLocalServiceUtil} to access the segments experiment local service. Add custom service methods to <code>com.liferay.segments.service.impl.SegmentsExperimentLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public SegmentsExperiment addSegmentsExperiment(
+			long segmentsExperienceId, long classNameId, long classPK,
+			String name, String description, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Adds the segments experiment to the database. Also notifies the appropriate model listeners.
@@ -107,10 +114,17 @@ public interface SegmentsExperimentLocalService
 	 *
 	 * @param segmentsExperiment the segments experiment
 	 * @return the segments experiment that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public SegmentsExperiment deleteSegmentsExperiment(
-		SegmentsExperiment segmentsExperiment);
+			SegmentsExperiment segmentsExperiment)
+		throws PortalException;
+
+	public void deleteSegmentsExperiments(
+			long segmentsExperienceId, long classNameId, long classPK)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();
@@ -252,6 +266,14 @@ public interface SegmentsExperimentLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsExperiment> getSegmentsExperiments(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsExperiment> getSegmentsExperiments(
+		long groupId, long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsExperiment> getSegmentsExperimentsByExperience(
+		long segmentsExperienceId, long classNameId, long classPK);
 
 	/**
 	 * Returns all the segments experiments matching the UUID and company.

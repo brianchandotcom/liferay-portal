@@ -67,7 +67,7 @@ public class SegmentsExperimentCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -89,6 +89,10 @@ public class SegmentsExperimentCacheModel
 		sb.append(segmentsExperimentKey);
 		sb.append(", segmentsExperienceId=");
 		sb.append(segmentsExperienceId);
+		sb.append(", classNameId=");
+		sb.append(classNameId);
+		sb.append(", classPK=");
+		sb.append(classPK);
 		sb.append(", segmentsEntryId=");
 		sb.append(segmentsEntryId);
 		sb.append(", name=");
@@ -151,6 +155,8 @@ public class SegmentsExperimentCacheModel
 		}
 
 		segmentsExperimentImpl.setSegmentsExperienceId(segmentsExperienceId);
+		segmentsExperimentImpl.setClassNameId(classNameId);
+		segmentsExperimentImpl.setClassPK(classPK);
 		segmentsExperimentImpl.setSegmentsEntryId(segmentsEntryId);
 
 		if (name == null) {
@@ -199,6 +205,10 @@ public class SegmentsExperimentCacheModel
 
 		segmentsExperienceId = objectInput.readLong();
 
+		classNameId = objectInput.readLong();
+
+		classPK = objectInput.readLong();
+
 		segmentsEntryId = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
@@ -243,6 +253,10 @@ public class SegmentsExperimentCacheModel
 
 		objectOutput.writeLong(segmentsExperienceId);
 
+		objectOutput.writeLong(classNameId);
+
+		objectOutput.writeLong(classPK);
+
 		objectOutput.writeLong(segmentsEntryId);
 
 		if (name == null) {
@@ -279,6 +293,8 @@ public class SegmentsExperimentCacheModel
 	public long modifiedDate;
 	public String segmentsExperimentKey;
 	public long segmentsExperienceId;
+	public long classNameId;
+	public long classPK;
 	public long segmentsEntryId;
 	public String name;
 	public String description;

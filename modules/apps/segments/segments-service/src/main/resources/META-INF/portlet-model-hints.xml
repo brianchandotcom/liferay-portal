@@ -64,6 +64,8 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="segmentsExperimentKey" type="String" />
 		<field name="segmentsExperienceId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
 		<field name="segmentsEntryId" type="long" />
 		<field name="name" type="String" />
 		<field name="description" type="String" />

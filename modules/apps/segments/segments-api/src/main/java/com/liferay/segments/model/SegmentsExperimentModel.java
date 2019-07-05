@@ -15,6 +15,7 @@
 package com.liferay.segments.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
@@ -37,8 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface SegmentsExperimentModel
-	extends BaseModel<SegmentsExperiment>, GroupedModel, ShardedModel,
-			StagedAuditedModel {
+	extends AttachedModel, BaseModel<SegmentsExperiment>, GroupedModel,
+			ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -232,6 +233,48 @@ public interface SegmentsExperimentModel
 	 * @param segmentsExperienceId the segments experience ID of this segments experiment
 	 */
 	public void setSegmentsExperienceId(long segmentsExperienceId);
+
+	/**
+	 * Returns the fully qualified class name of this segments experiment.
+	 *
+	 * @return the fully qualified class name of this segments experiment
+	 */
+	@Override
+	public String getClassName();
+
+	public void setClassName(String className);
+
+	/**
+	 * Returns the class name ID of this segments experiment.
+	 *
+	 * @return the class name ID of this segments experiment
+	 */
+	@Override
+	public long getClassNameId();
+
+	/**
+	 * Sets the class name ID of this segments experiment.
+	 *
+	 * @param classNameId the class name ID of this segments experiment
+	 */
+	@Override
+	public void setClassNameId(long classNameId);
+
+	/**
+	 * Returns the class pk of this segments experiment.
+	 *
+	 * @return the class pk of this segments experiment
+	 */
+	@Override
+	public long getClassPK();
+
+	/**
+	 * Sets the class pk of this segments experiment.
+	 *
+	 * @param classPK the class pk of this segments experiment
+	 */
+	@Override
+	public void setClassPK(long classPK);
 
 	/**
 	 * Returns the segments entry ID of this segments experiment.

@@ -39,6 +39,17 @@ public class SegmentsExperimentServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.segments.service.impl.SegmentsExperimentServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.segments.model.SegmentsExperiment
+			addSegmentsExperiment(
+				long segmentsExperienceId, long classNameId, long classPK,
+				String name, String description,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addSegmentsExperiment(
+			segmentsExperienceId, classNameId, classPK, name, description,
+			serviceContext);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -47,6 +58,20 @@ public class SegmentsExperimentServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.segments.model.SegmentsExperiment
+			getSegmentsExperiment(long segmentsExperimentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getSegmentsExperiment(segmentsExperimentId);
+	}
+
+	public static java.util.List<com.liferay.segments.model.SegmentsExperiment>
+		getSegmentsExperiments(long groupId, long classNameId, long classPK) {
+
+		return getService().getSegmentsExperiments(
+			groupId, classNameId, classPK);
 	}
 
 	public static SegmentsExperimentService getService() {

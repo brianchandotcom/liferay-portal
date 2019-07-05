@@ -14,11 +14,17 @@
 
 package com.liferay.segments.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.segments.service.SegmentsExperimentServiceUtil;
+
+import java.rmi.RemoteException;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.segments.service.SegmentsExperimentServiceUtil</code> service
+ * <code>SegmentsExperimentServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -57,4 +63,70 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class SegmentsExperimentServiceSoap {
+
+	public static com.liferay.segments.model.SegmentsExperimentSoap
+			addSegmentsExperiment(
+				long segmentsExperienceId, long classNameId, long classPK,
+				String name, String description,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.segments.model.SegmentsExperiment returnValue =
+				SegmentsExperimentServiceUtil.addSegmentsExperiment(
+					segmentsExperienceId, classNameId, classPK, name,
+					description, serviceContext);
+
+			return com.liferay.segments.model.SegmentsExperimentSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.segments.model.SegmentsExperimentSoap
+			getSegmentsExperiment(long segmentsExperimentId)
+		throws RemoteException {
+
+		try {
+			com.liferay.segments.model.SegmentsExperiment returnValue =
+				SegmentsExperimentServiceUtil.getSegmentsExperiment(
+					segmentsExperimentId);
+
+			return com.liferay.segments.model.SegmentsExperimentSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.segments.model.SegmentsExperimentSoap[]
+			getSegmentsExperiments(long groupId, long classNameId, long classPK)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.segments.model.SegmentsExperiment>
+				returnValue =
+					SegmentsExperimentServiceUtil.getSegmentsExperiments(
+						groupId, classNameId, classPK);
+
+			return com.liferay.segments.model.SegmentsExperimentSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		SegmentsExperimentServiceSoap.class);
+
 }

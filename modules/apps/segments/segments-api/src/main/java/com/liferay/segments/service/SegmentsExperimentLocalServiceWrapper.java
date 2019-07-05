@@ -36,6 +36,18 @@ public class SegmentsExperimentLocalServiceWrapper
 		_segmentsExperimentLocalService = segmentsExperimentLocalService;
 	}
 
+	@Override
+	public com.liferay.segments.model.SegmentsExperiment addSegmentsExperiment(
+			long segmentsExperienceId, long classNameId, long classPK,
+			String name, String description,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperimentLocalService.addSegmentsExperiment(
+			segmentsExperienceId, classNameId, classPK, name, description,
+			serviceContext);
+	}
+
 	/**
 	 * Adds the segments experiment to the database. Also notifies the appropriate model listeners.
 	 *
@@ -97,14 +109,26 @@ public class SegmentsExperimentLocalServiceWrapper
 	 *
 	 * @param segmentsExperiment the segments experiment
 	 * @return the segments experiment that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.segments.model.SegmentsExperiment
-		deleteSegmentsExperiment(
-			com.liferay.segments.model.SegmentsExperiment segmentsExperiment) {
+			deleteSegmentsExperiment(
+				com.liferay.segments.model.SegmentsExperiment
+					segmentsExperiment)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperimentLocalService.deleteSegmentsExperiment(
 			segmentsExperiment);
+	}
+
+	@Override
+	public void deleteSegmentsExperiments(
+			long segmentsExperienceId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_segmentsExperimentLocalService.deleteSegmentsExperiments(
+			segmentsExperienceId, classNameId, classPK);
 	}
 
 	@Override
@@ -314,6 +338,24 @@ public class SegmentsExperimentLocalServiceWrapper
 
 		return _segmentsExperimentLocalService.getSegmentsExperiments(
 			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.segments.model.SegmentsExperiment>
+		getSegmentsExperiments(long groupId, long classNameId, long classPK) {
+
+		return _segmentsExperimentLocalService.getSegmentsExperiments(
+			groupId, classNameId, classPK);
+	}
+
+	@Override
+	public java.util.List<com.liferay.segments.model.SegmentsExperiment>
+		getSegmentsExperimentsByExperience(
+			long segmentsExperienceId, long classNameId, long classPK) {
+
+		return _segmentsExperimentLocalService.
+			getSegmentsExperimentsByExperience(
+				segmentsExperienceId, classNameId, classPK);
 	}
 
 	/**

@@ -39,6 +39,17 @@ public class SegmentsExperimentLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.segments.service.impl.SegmentsExperimentLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.segments.model.SegmentsExperiment
+			addSegmentsExperiment(
+				long segmentsExperienceId, long classNameId, long classPK,
+				String name, String description,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addSegmentsExperiment(
+			segmentsExperienceId, classNameId, classPK, name, description,
+			serviceContext);
+	}
 
 	/**
 	 * Adds the segments experiment to the database. Also notifies the appropriate model listeners.
@@ -95,12 +106,23 @@ public class SegmentsExperimentLocalServiceUtil {
 	 *
 	 * @param segmentsExperiment the segments experiment
 	 * @return the segments experiment that was removed
+	 * @throws PortalException
 	 */
 	public static com.liferay.segments.model.SegmentsExperiment
-		deleteSegmentsExperiment(
-			com.liferay.segments.model.SegmentsExperiment segmentsExperiment) {
+			deleteSegmentsExperiment(
+				com.liferay.segments.model.SegmentsExperiment
+					segmentsExperiment)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteSegmentsExperiment(segmentsExperiment);
+	}
+
+	public static void deleteSegmentsExperiments(
+			long segmentsExperienceId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteSegmentsExperiments(
+			segmentsExperienceId, classNameId, classPK);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
@@ -290,6 +312,21 @@ public class SegmentsExperimentLocalServiceUtil {
 		getSegmentsExperiments(int start, int end) {
 
 		return getService().getSegmentsExperiments(start, end);
+	}
+
+	public static java.util.List<com.liferay.segments.model.SegmentsExperiment>
+		getSegmentsExperiments(long groupId, long classNameId, long classPK) {
+
+		return getService().getSegmentsExperiments(
+			groupId, classNameId, classPK);
+	}
+
+	public static java.util.List<com.liferay.segments.model.SegmentsExperiment>
+		getSegmentsExperimentsByExperience(
+			long segmentsExperienceId, long classNameId, long classPK) {
+
+		return getService().getSegmentsExperimentsByExperience(
+			segmentsExperienceId, classNameId, classPK);
 	}
 
 	/**

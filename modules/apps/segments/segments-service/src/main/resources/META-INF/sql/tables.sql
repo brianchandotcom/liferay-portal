@@ -60,6 +60,8 @@ create table SegmentsExperiment (
 	modifiedDate DATE null,
 	segmentsExperimentKey VARCHAR(75) null,
 	segmentsExperienceId LONG,
+	classNameId LONG,
+	classPK LONG,
 	segmentsEntryId LONG,
 	name VARCHAR(75) null,
 	description VARCHAR(75) null,

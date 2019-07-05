@@ -36,6 +36,18 @@ public class SegmentsExperimentServiceWrapper
 		_segmentsExperimentService = segmentsExperimentService;
 	}
 
+	@Override
+	public com.liferay.segments.model.SegmentsExperiment addSegmentsExperiment(
+			long segmentsExperienceId, long classNameId, long classPK,
+			String name, String description,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperimentService.addSegmentsExperiment(
+			segmentsExperienceId, classNameId, classPK, name, description,
+			serviceContext);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -44,6 +56,23 @@ public class SegmentsExperimentServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _segmentsExperimentService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.segments.model.SegmentsExperiment getSegmentsExperiment(
+			long segmentsExperimentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperimentService.getSegmentsExperiment(
+			segmentsExperimentId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.segments.model.SegmentsExperiment>
+		getSegmentsExperiments(long groupId, long classNameId, long classPK) {
+
+		return _segmentsExperimentService.getSegmentsExperiments(
+			groupId, classNameId, classPK);
 	}
 
 	@Override

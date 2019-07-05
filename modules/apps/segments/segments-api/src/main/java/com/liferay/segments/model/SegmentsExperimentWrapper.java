@@ -56,6 +56,8 @@ public class SegmentsExperimentWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("segmentsExperimentKey", getSegmentsExperimentKey());
 		attributes.put("segmentsExperienceId", getSegmentsExperienceId());
+		attributes.put("classNameId", getClassNameId());
+		attributes.put("classPK", getClassPK());
 		attributes.put("segmentsEntryId", getSegmentsEntryId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
@@ -130,6 +132,18 @@ public class SegmentsExperimentWrapper
 			setSegmentsExperienceId(segmentsExperienceId);
 		}
 
+		Long classNameId = (Long)attributes.get("classNameId");
+
+		if (classNameId != null) {
+			setClassNameId(classNameId);
+		}
+
+		Long classPK = (Long)attributes.get("classPK");
+
+		if (classPK != null) {
+			setClassPK(classPK);
+		}
+
 		Long segmentsEntryId = (Long)attributes.get("segmentsEntryId");
 
 		if (segmentsEntryId != null) {
@@ -159,6 +173,36 @@ public class SegmentsExperimentWrapper
 		if (typeSettings != null) {
 			setTypeSettings(typeSettings);
 		}
+	}
+
+	/**
+	 * Returns the fully qualified class name of this segments experiment.
+	 *
+	 * @return the fully qualified class name of this segments experiment
+	 */
+	@Override
+	public String getClassName() {
+		return model.getClassName();
+	}
+
+	/**
+	 * Returns the class name ID of this segments experiment.
+	 *
+	 * @return the class name ID of this segments experiment
+	 */
+	@Override
+	public long getClassNameId() {
+		return model.getClassNameId();
+	}
+
+	/**
+	 * Returns the class pk of this segments experiment.
+	 *
+	 * @return the class pk of this segments experiment
+	 */
+	@Override
+	public long getClassPK() {
+		return model.getClassPK();
 	}
 
 	/**
@@ -334,6 +378,31 @@ public class SegmentsExperimentWrapper
 	@Override
 	public void persist() {
 		model.persist();
+	}
+
+	@Override
+	public void setClassName(String className) {
+		model.setClassName(className);
+	}
+
+	/**
+	 * Sets the class name ID of this segments experiment.
+	 *
+	 * @param classNameId the class name ID of this segments experiment
+	 */
+	@Override
+	public void setClassNameId(long classNameId) {
+		model.setClassNameId(classNameId);
+	}
+
+	/**
+	 * Sets the class pk of this segments experiment.
+	 *
+	 * @param classPK the class pk of this segments experiment
+	 */
+	@Override
+	public void setClassPK(long classPK) {
+		model.setClassPK(classPK);
 	}
 
 	/**

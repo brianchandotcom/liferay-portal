@@ -251,14 +251,15 @@ class FragmentEditableBackgroundImage extends Component {
 		);
 
 		this.store.dispatch(
-			updateEditableValueAction(
-				this.fragmentEntryLinkId,
-				backgroundImageURL,
-				BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
-				segmentsExperienceId || defaultSegmentsExperienceId,
-				this.editableId,
-				this.languageId || DEFAULT_LANGUAGE_ID_KEY
-			)
+			updateEditableValueAction({
+				fragmentEntryLinkId: this.fragmentEntryLinkId,
+				editableValueContent: backgroundImageURL,
+				processor: BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+				editableId: this.editableId,
+				editableValueId: this.languageId || DEFAULT_LANGUAGE_ID_KEY,
+				segmentsExperienceId:
+					segmentsExperienceId || defaultSegmentsExperienceId
+			})
 		);
 	}
 }

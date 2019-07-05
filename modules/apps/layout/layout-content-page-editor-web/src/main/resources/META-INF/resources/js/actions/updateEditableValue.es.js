@@ -79,33 +79,28 @@ const debouncedUpdateEditableValues = debouncedAlert(
 );
 
 /**
- * @param {string} fragmentEntryLinkId
- * @param {string} editableId
- * @param {string} editableValueId
- * @param {string} editableValueContent
- * @param {string} [segmentsExperienceId='']
+ * @param {!object} data
+ * @param {!string} data.fragmentEntryLinkId
+ * @param {!string} data.editableValueContent
+ * @param {!string} data.processor
+ * @param {string} data.editableId
+ * @param {string} data.editableValueId
+ * @param {string} data.segmentsExperienceId
  * @return {function}
  * @review
  */
-function updateEditableValueAction(
-	fragmentEntryLinkId,
-	editableValueContent,
-	processor,
-	segmentsExperienceId = '',
-	editableId = '',
-	editableValueId = ''
-) {
+function updateEditableValueAction(data) {
 	return updateEditableValuesAction(
-		fragmentEntryLinkId,
-		editableId,
+		data.fragmentEntryLinkId,
+		data.editableId,
 		[
 			{
-				content: editableValueContent,
-				editableValueId
+				content: data.editableValueContent,
+				editableValueId: data.editableValueId
 			}
 		],
-		segmentsExperienceId,
-		processor
+		data.segmentsExperienceId,
+		data.processor
 	);
 }
 

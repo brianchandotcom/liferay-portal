@@ -441,14 +441,14 @@ class FragmentEditableField extends PortletBase {
 		}
 
 		this.store.dispatch(
-			updateEditableValueAction(
-				this.fragmentEntryLinkId,
-				newValue,
-				EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-				editableValueSegmentsExperienceId,
-				this.editableId,
-				this.languageId || DEFAULT_LANGUAGE_ID_KEY
-			)
+			updateEditableValueAction({
+				fragmentEntryLinkId: this.fragmentEntryLinkId,
+				editableValueContent: newValue,
+				processor: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				editableId: this.editableId,
+				editableValueId: this.languageId || DEFAULT_LANGUAGE_ID_KEY,
+				segmentsExperienceId: editableValueSegmentsExperienceId
+			})
 		);
 	}
 

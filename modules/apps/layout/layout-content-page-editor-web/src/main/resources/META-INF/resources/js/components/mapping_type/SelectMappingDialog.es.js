@@ -77,14 +77,13 @@ class SelectMappingDialog extends PortletBase {
 	_handleMappeableFieldSelected(key = '') {
 		this.store
 			.dispatch(
-				updateEditableValueAction(
-					this.fragmentEntryLinkId,
-					key,
-					EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-					'',
-					this.editableId,
-					'mappedField'
-				)
+				updateEditableValueAction({
+					fragmentEntryLinkId: this.fragmentEntryLinkId,
+					editableValueContent: key,
+					processor: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					editableId: this.editableId,
+					editableValueId: 'mappedField'
+				})
 			)
 			.dispatch({
 				type: HIDE_MAPPING_DIALOG

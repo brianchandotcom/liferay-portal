@@ -57,12 +57,13 @@ class FloatingToolbarFragmentConfigurationPanel extends Component {
 		);
 
 		this.store.dispatch(
-			updateEditableValueAction(
-				this.item.fragmentEntryLinkId,
-				nextConfigurationValues,
-				FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-				segmentsExperienceId || defaultSegmentsExperienceId
-			)
+			updateEditableValueAction({
+				fragmentEntryLinkId: this.item.fragmentEntryLinkId,
+				editableValueContent: nextConfigurationValues,
+				processor: FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				segmentsExperienceId:
+					segmentsExperienceId || defaultSegmentsExperienceId
+			})
 		);
 	}
 

@@ -25,6 +25,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.Future;
 
+import org.apache.commons.lang.StringUtils;
+
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequestBuilder;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.client.AdminClient;
@@ -142,7 +144,9 @@ public abstract class BaseElasticsearchConnection
 
 			@Override
 			public void put(String setting, String value) {
-				builder.put(setting, value);
+				if (!StringUtils.isBlank(value)) {
+					builder.put(setting, value);
+				}
 			}
 
 			@Override

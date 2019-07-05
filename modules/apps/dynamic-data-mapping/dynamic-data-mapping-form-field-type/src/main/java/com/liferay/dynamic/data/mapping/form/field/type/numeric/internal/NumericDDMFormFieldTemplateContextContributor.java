@@ -75,7 +75,7 @@ public class NumericDDMFormFieldTemplateContextContributor
 		parameters.put(
 			"predefinedValue",
 			getFormattedValue(
-				predefinedValue, locale, ddmFormFieldRenderingContext));
+				ddmFormFieldRenderingContext, locale, predefinedValue));
 
 		parameters.put("symbols", getSymbolsMap(locale));
 
@@ -95,7 +95,7 @@ public class NumericDDMFormFieldTemplateContextContributor
 		else {
 			parameters.put(
 				"value",
-				getFormattedValue(value, locale, ddmFormFieldRenderingContext));
+				getFormattedValue(ddmFormFieldRenderingContext, locale, value));
 		}
 
 		return parameters;
@@ -121,8 +121,8 @@ public class NumericDDMFormFieldTemplateContextContributor
 	}
 
 	protected String getFormattedValue(
-		String value, Locale locale,
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext,
+		Locale locale, String value) {
 
 		if (Validator.isNull(value)) {
 			return StringPool.BLANK;

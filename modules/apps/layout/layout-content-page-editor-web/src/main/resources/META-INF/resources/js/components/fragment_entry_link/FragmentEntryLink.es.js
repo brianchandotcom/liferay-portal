@@ -134,8 +134,28 @@ class FragmentEntryLink extends Component {
 	 */
 	syncFragmentEntryLinks() {
 		if (this.fragmentEntryLinks[this.fragmentEntryLinkId]) {
-			this._setConfiguration();
-			this._setConfigurationValues();
+			const defaultSegmentsExperienceId = prefixSegmentsExperienceId(
+				this.defaultSegmentsExperienceId
+			);
+			const segmentsExperienceId = prefixSegmentsExperienceId(
+				this.segmentsExperienceId
+			);
+
+			const configurationValues = this.fragmentEntryLinks[
+				this.fragmentEntryLinkId
+			].editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR];
+
+			this._configuration = this.fragmentEntryLinks[
+				this.fragmentEntryLinkId
+			].configuration;
+
+			if (configurationValues) {
+				const segmentedConfigurationValues =
+					configurationValues[defaultSegmentsExperienceId] ||
+					configurationValues[segmentsExperienceId];
+
+				this._configurationValues = segmentedConfigurationValues;
+			}
 		}
 	}
 
@@ -249,43 +269,6 @@ class FragmentEntryLink extends Component {
 		removeItem(this.store, REMOVE_FRAGMENT_ENTRY_LINK, {
 			fragmentEntryLinkId: this.fragmentEntryLinkId
 		});
-	}
-
-	/**
-	 * Set fragment entry configuration to internal property
-	 * @private
-	 * @review
-	 */
-	_setConfiguration() {
-		this._configuration = this.fragmentEntryLinks[
-			this.fragmentEntryLinkId
-		].configuration;
-	}
-
-	/**
-	 * Set fragment entry link configuration values to internal property
-	 * @private
-	 * @review
-	 */
-	_setConfigurationValues() {
-		const defaultSegmentsExperienceId = prefixSegmentsExperienceId(
-			this.defaultSegmentsExperienceId
-		);
-		const segmentsExperienceId = prefixSegmentsExperienceId(
-			this.segmentsExperienceId
-		);
-
-		const configurationValues = this.fragmentEntryLinks[
-			this.fragmentEntryLinkId
-		].editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR];
-
-		if (configurationValues) {
-			const segmentedConfigurationValues =
-				configurationValues[defaultSegmentsExperienceId] ||
-				configurationValues[segmentsExperienceId];
-
-			this._configurationValues = segmentedConfigurationValues;
-		}
 	}
 
 	/**

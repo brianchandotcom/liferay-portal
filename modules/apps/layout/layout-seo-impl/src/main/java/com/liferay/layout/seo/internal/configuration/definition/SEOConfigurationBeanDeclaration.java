@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.seo.internal.configuration.definition;
+package com.liferay.layout.seo.internal.configuration.definition;
 
+import com.liferay.layout.seo.internal.configuration.SEOCompanyConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.seo.internal.configuration.SEOCompanyConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 

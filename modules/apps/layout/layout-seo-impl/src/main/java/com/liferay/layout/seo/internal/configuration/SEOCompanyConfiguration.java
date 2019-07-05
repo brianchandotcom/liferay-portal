@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.seo.internal.configuration;
+package com.liferay.layout.seo.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	description = "seo-configuration-description",
-	id = "com.liferay.seo.internal.configuration.SEOCompanyConfiguration",
+	id = "com.liferay.layout.seo.internal.configuration.SEOCompanyConfiguration",
 	localization = "content/Language", name = "seo-configuration-name"
 )
 public interface SEOCompanyConfiguration {

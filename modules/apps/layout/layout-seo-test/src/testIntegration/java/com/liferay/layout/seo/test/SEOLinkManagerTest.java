@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.seo.test;
+package com.liferay.layout.seo.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeRunnable;
@@ -240,7 +240,7 @@ public class SEOLinkManagerTest {
 	private static final String _CANONICAL_URL = "canonicalURL";
 
 	private static final String _SEO_CONFIGURATION_PID =
-		"com.liferay.seo.internal.configuration.SEOCompanyConfiguration";
+		"com.liferay.layout.seo.internal.configuration.SEOCompanyConfiguration";
 
 	private final Map<Locale, String> _alternateURLs =
 		new HashMap<Locale, String>() {

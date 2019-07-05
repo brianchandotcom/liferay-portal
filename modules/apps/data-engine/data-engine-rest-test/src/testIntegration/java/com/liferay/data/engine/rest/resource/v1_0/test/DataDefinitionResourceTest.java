@@ -26,10 +26,12 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -212,12 +214,17 @@ public class DataDefinitionResourceTest
 			dataDefinitionResource.getSiteDataDefinitionsPage(
 				siteId, keywords, Pagination.of(1, 2), null);
 
-		Assert.assertEquals(1, page.getTotalCount());
+		IdempotentRetryAssert.retryAssert(
+			8, TimeUnit.SECONDS,
+			() -> {
+				Assert.assertEquals(1, page.getTotalCount());
+				assertEqualsIgnoringOrder(
+					Arrays.asList(dataDefinition),
+					(List<DataDefinition>)page.getItems());
+				assertValid(page);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(dataDefinition),
-			(List<DataDefinition>)page.getItems());
-		assertValid(page);
+				return null;
+			});
 
 		dataDefinitionResource.deleteDataDefinition(dataDefinition.getId());
 	}

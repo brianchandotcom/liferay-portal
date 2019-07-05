@@ -59,7 +59,7 @@ definition {
 		}
 	}
 
-	@description = "This test asserts that users get the proper notification based on sharing permissions granted to him."
+	@description = "This test asserts that users get the proper notification based on sharing permissions granted to him, also covers LPS-94448"
 	@priority = "4"
 	test AssertNotifications {
 		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
@@ -121,7 +121,16 @@ definition {
 		Notifications.viewNewSharedContent(
 			contentSharingPermission = "updating",
 			contentTitle = "DM Document Title 2",
+			openNotification = "true",
 			ownerName = "Test Test");
+
+		NotificationsPortlet.configureNotificationPG(menuItem = "Edit");
+
+		IFrame.selectModalFrame();
+
+		DMDocument.editCmd(dmDocumentTitleEdit = "DM Document Title");
+
+		Button.clickPublish();
 
 		Notifications.gotoNotifications();
 

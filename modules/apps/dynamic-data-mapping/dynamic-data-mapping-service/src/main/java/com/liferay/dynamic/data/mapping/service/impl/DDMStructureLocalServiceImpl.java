@@ -1576,13 +1576,7 @@ public class DDMStructureLocalServiceImpl
 			ddmStructureVersionLocalService.getLatestStructureVersion(
 				structure.getStructureId());
 
-		boolean majorVersion = GetterUtil.getBoolean(
-			serviceContext.getAttribute("majorVersion"));
-
-		String version = getNextVersion(
-			latestStructureVersion.getVersion(), majorVersion);
-
-		structure.setVersion(version);
+		structure.setVersion(latestStructureVersion.getVersion());
 
 		structure.setNameMap(nameMap);
 		structure.setVersionUserId(user.getUserId());
@@ -1591,18 +1585,7 @@ public class DDMStructureLocalServiceImpl
 		structure.setDescriptionMap(descriptionMap);
 		structure.setDefinition(definition);
 
-		// Structure version
-
-		DDMStructureVersion structureVersion = addStructureVersion(
-			user, structure, version, serviceContext);
-
-		if (!structureVersion.isApproved()) {
-			return structure;
-		}
-
 		ddmStructurePersistence.update(structure);
-
-		// Indexer
 
 		reindexStructure(structure, serviceContext);
 

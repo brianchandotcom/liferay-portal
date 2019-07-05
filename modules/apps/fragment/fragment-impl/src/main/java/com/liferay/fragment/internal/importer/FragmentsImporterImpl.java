@@ -323,6 +323,10 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 					0,
 					fragmentCollectionPath.lastIndexOf(StringPool.SLASH) + 1);
 
+				if (Validator.isNull(fragmentCollectionPath)) {
+					break;
+				}
+
 				String fragmentCollectionFileName =
 					fragmentCollectionPath +
 						FragmentExportImportConstants.

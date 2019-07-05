@@ -230,7 +230,6 @@ public class CounterLocalServiceTest {
 				PropsKeys.COUNTER_INCREMENT + "." + _counterName, "1");
 
 			System.setProperty("catalina.base", ".");
-			System.setProperty("external-properties", "portal-test.properties");
 
 			// C3PO
 

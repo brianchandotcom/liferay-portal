@@ -183,9 +183,9 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 
 						String urlInputId = renderResponse.getNamespace() + "inputUrl";
 
-						Map<String, String> urlBtnData = new HashMap<>();
+						Map<String, String> urlButtonData = new HashMap<>();
 
-						urlBtnData.put("clipboard-target", "#" + urlInputId);
+						urlButtonData.put("clipboard-target", "#" + urlInputId);
 						%>
 
 						<div class="form-group">
@@ -198,7 +198,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 
 								<span class="input-group-append input-group-item input-group-item-shrink">
 									<clay:button
-										data="<%= urlBtnData %>"
+										data="<%= urlButtonData %>"
 										elementClasses="btn-secondary dm-infopanel-copy-clipboard"
 										icon="paste"
 										style="secondary"
@@ -221,9 +221,9 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 
 								String webDavInputId = renderResponse.getNamespace() + "inputwebDavURL";
 
-								Map<String, String> webDavBtnData = new HashMap<>();
+								Map<String, String> webDavButtonData = new HashMap<>();
 
-								webDavBtnData.put("clipboard-target", "#" + webDavInputId);
+								webDavButtonData.put("clipboard-target", "#" + webDavInputId);
 							%>
 
 							<div class="form-group">
@@ -240,7 +240,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 
 									<span class="input-group-append input-group-item input-group-item-shrink">
 										<clay:button
-											data="<%= webDavBtnData %>"
+											data="<%= webDavButtonData %>"
 											elementClasses="btn-secondary dm-infopanel-copy-clipboard"
 											icon="paste"
 											style="secondary"

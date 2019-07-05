@@ -338,6 +338,10 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 					break;
 				}
 
+				if (Validator.isNull(fragmentCollectionPath)) {
+					break;
+				}
+
 				fragmentCollectionPath = fragmentCollectionPath.substring(
 					0, fragmentCollectionPath.lastIndexOf(StringPool.SLASH));
 			}

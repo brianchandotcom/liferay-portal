@@ -1,0 +1,288 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.segments.service.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.util.test.LayoutTestUtil;
+import com.liferay.segments.constants.SegmentsActionKeys;
+import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.model.SegmentsExperiment;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
+import com.liferay.segments.service.SegmentsExperienceService;
+import com.liferay.segments.service.SegmentsExperimentService;
+import com.liferay.segments.test.util.SegmentsTestUtil;
+
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author David Arques
+ */
+@RunWith(Arquillian.class)
+public class SegmentsExperimentServiceTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Before
+	public void setUp() throws Exception {
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		_group = GroupTestUtil.addGroup();
+
+		_role = RoleLocalServiceUtil.addRole(
+			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
+			null, null, RoleConstants.TYPE_SITE, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_user = UserTestUtil.addGroupUser(_group, _role.getName());
+	}
+
+	@Test
+	public void testAddSegmentsExperimentsWithManageSegmentsEntriesPermission()
+		throws Exception {
+
+		ResourcePermissionLocalServiceUtil.addResourcePermission(
+			_group.getCompanyId(), "com.liferay.segments",
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
+			_role.getRoleId(), SegmentsActionKeys.MANAGE_SEGMENTS_ENTRIES);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_addSegmentsExperiment(
+				ServiceContextTestUtil.getServiceContext(
+					_group, _user.getUserId()));
+		}
+	}
+
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	public void testAddSegmentsExperimentsWithoutManageSegmentsEntriesPermission()
+		throws Exception {
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_addSegmentsExperiment(
+				ServiceContextTestUtil.getServiceContext(
+					_group, _user.getUserId()));
+		}
+	}
+
+	@Test
+	public void testGetSegmentsExperimentsWithoutViewPermission()
+		throws Exception {
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			Layout.class.getName());
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		SegmentsExperience segmentsExperience1 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), classNameId, layout.getPlid());
+
+		SegmentsExperience segmentsExperience2 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), classNameId, layout.getPlid());
+
+		SegmentsExperiment segmentsExperiment1 =
+			_segmentsExperimentService.addSegmentsExperiment(
+				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT, classNameId,
+				layout.getPlid(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		SegmentsExperiment segmentsExperiment2 =
+			_segmentsExperimentService.addSegmentsExperiment(
+				segmentsExperience1.getSegmentsExperienceId(), classNameId,
+				layout.getPlid(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		SegmentsExperiment segmentsExperiment3 =
+			_segmentsExperimentService.addSegmentsExperiment(
+				segmentsExperience2.getSegmentsExperienceId(), classNameId,
+				layout.getPlid(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		for (Role role : RoleLocalServiceUtil.getRoles(_group.getCompanyId())) {
+			if (RoleConstants.OWNER.equals(role.getName())) {
+				continue;
+			}
+
+			ResourcePermissionLocalServiceUtil.removeResourcePermission(
+				_group.getCompanyId(),
+				"com.liferay.segments.model.SegmentsExperiment",
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(segmentsExperiment2.getSegmentsExperimentId()),
+				role.getRoleId(), ActionKeys.VIEW);
+		}
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			List<SegmentsExperiment> segmentsExperiments =
+				_segmentsExperimentService.getSegmentsExperiments(
+					layout.getGroupId(), classNameId, layout.getPlid());
+
+			Assert.assertEquals(
+				segmentsExperiments.toString(), 2, segmentsExperiments.size());
+
+			Assert.assertTrue(
+				segmentsExperiments.contains(segmentsExperiment1));
+
+			Assert.assertTrue(
+				segmentsExperiments.contains(segmentsExperiment3));
+		}
+	}
+
+	@Test
+	public void testGetSegmentsExperimentsWithViewPermission()
+		throws Exception {
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			Layout.class.getName());
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		SegmentsExperience segmentsExperience1 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), classNameId, layout.getPlid());
+
+		SegmentsExperience segmentsExperience2 =
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), classNameId, layout.getPlid());
+
+		SegmentsExperiment segmentsExperiment1 =
+			_segmentsExperimentService.addSegmentsExperiment(
+				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT, classNameId,
+				layout.getPlid(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		SegmentsExperiment segmentsExperiment2 =
+			_segmentsExperimentService.addSegmentsExperiment(
+				segmentsExperience1.getSegmentsExperienceId(), classNameId,
+				layout.getPlid(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		SegmentsExperiment segmentsExperiment3 =
+			_segmentsExperimentService.addSegmentsExperiment(
+				segmentsExperience2.getSegmentsExperienceId(), classNameId,
+				layout.getPlid(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			List<SegmentsExperiment> segmentsExperiments =
+				_segmentsExperimentService.getSegmentsExperiments(
+					layout.getGroupId(), classNameId, layout.getPlid());
+
+			Assert.assertEquals(
+				segmentsExperiments.toString(), 3, segmentsExperiments.size());
+			Assert.assertTrue(
+				segmentsExperiments.contains(segmentsExperiment1));
+			Assert.assertTrue(
+				segmentsExperiments.contains(segmentsExperiment2));
+			Assert.assertTrue(
+				segmentsExperiments.contains(segmentsExperiment3));
+		}
+	}
+
+	private SegmentsExperiment _addSegmentsExperiment(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceService.addSegmentsExperience(
+				segmentsEntry.getSegmentsEntryId(),
+				_classNameLocalService.getClassNameId(Layout.class.getName()),
+				layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), true,
+				serviceContext);
+
+		return _segmentsExperimentService.addSegmentsExperiment(
+			segmentsExperience.getSegmentsExperienceId(),
+			segmentsExperience.getClassNameId(),
+			segmentsExperience.getClassPK(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
+	}
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
+	@DeleteAfterTestRun
+	private Group _group;
+
+	@DeleteAfterTestRun
+	private Role _role;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Inject
+	private SegmentsExperienceService _segmentsExperienceService;
+
+	@Inject
+	private SegmentsExperimentService _segmentsExperimentService;
+
+	@DeleteAfterTestRun
+	private User _user;
+
+}

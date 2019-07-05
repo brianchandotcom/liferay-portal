@@ -436,17 +436,20 @@ public class SegmentsExperienceServiceTest {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
-			List<SegmentsExperience> segmentsEntries =
+			List<SegmentsExperience> segmentsExperiences =
 				_segmentsExperienceService.getSegmentsExperiences(
 					_group.getGroupId(), _classNameId, _classPK, true,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 			Assert.assertEquals(
-				segmentsEntries.toString(), 3, segmentsEntries.size());
+				segmentsExperiences.toString(), 3, segmentsExperiences.size());
 
-			Assert.assertTrue(segmentsEntries.contains(segmentsExperience1));
-			Assert.assertTrue(segmentsEntries.contains(segmentsExperience2));
-			Assert.assertTrue(segmentsEntries.contains(segmentsExperience3));
+			Assert.assertTrue(
+				segmentsExperiences.contains(segmentsExperience1));
+			Assert.assertTrue(
+				segmentsExperiences.contains(segmentsExperience2));
+			Assert.assertTrue(
+				segmentsExperiences.contains(segmentsExperience3));
 		}
 	}
 

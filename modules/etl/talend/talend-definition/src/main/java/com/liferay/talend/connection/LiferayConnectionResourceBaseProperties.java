@@ -52,20 +52,20 @@ public abstract class LiferayConnectionResourceBaseProperties
 			getLiferayConnectionProperties();
 
 		if (liferayConnectionProperties == null) {
-			_log.error("LiferayConnectionProperties is null");
+			_logger.error("LiferayConnectionProperties is null");
 		}
 
 		LiferayConnectionProperties referencedLiferayConnectionProperties =
 			liferayConnectionProperties.getReferencedConnectionProperties();
 
 		if (referencedLiferayConnectionProperties != null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Using a reference connection properties");
-				_log.debug(
+			if (_logger.isDebugEnabled()) {
+				_logger.debug("Using a reference connection properties");
+				_logger.debug(
 					"API spec URL: " +
 						referencedLiferayConnectionProperties.apiSpecURL.
 							getValue());
-				_log.debug(
+				_logger.debug(
 					"User ID: " +
 						referencedLiferayConnectionProperties.getUserId());
 			}
@@ -73,11 +73,12 @@ public abstract class LiferayConnectionResourceBaseProperties
 			return referencedLiferayConnectionProperties;
 		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
+		if (_logger.isDebugEnabled()) {
+			_logger.debug(
 				"API spec URL: " +
 					liferayConnectionProperties.apiSpecURL.getValue());
-			_log.debug("User ID: " + liferayConnectionProperties.getUserId());
+			_logger.debug(
+				"User ID: " + liferayConnectionProperties.getUserId());
 		}
 
 		return liferayConnectionProperties;
@@ -129,7 +130,7 @@ public abstract class LiferayConnectionResourceBaseProperties
 	protected transient PropertyPathConnector mainConnector =
 		new PropertyPathConnector(Connector.MAIN_NAME, "resource.main");
 
-	private static final Logger _log = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		LiferayConnectionResourceBaseProperties.class);
 
 	private static final long serialVersionUID = 4534371813009904L;

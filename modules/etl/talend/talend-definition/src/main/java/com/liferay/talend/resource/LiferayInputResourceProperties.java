@@ -53,8 +53,8 @@ public class LiferayInputResourceProperties
 	}
 
 	public void afterParametersTable() {
-		if (_log.isDebugEnabled()) {
-			_log.debug(
+		if (_logger.isDebugEnabled()) {
+			_logger.debug(
 				"Parameters: " + parametersTable.valueColumnName.getValue());
 		}
 	}
@@ -109,8 +109,8 @@ public class LiferayInputResourceProperties
 		LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime,
 		ValidationResultMutable validationResultMutable) {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Endpoint: " + endpoint.getValue());
+		if (_logger.isDebugEnabled()) {
+			_logger.debug("Endpoint: " + endpoint.getValue());
 		}
 
 		try {
@@ -125,7 +125,7 @@ public class LiferayInputResourceProperties
 				_i18nMessages.getMessage("error.validation.schema"));
 			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
 
-			_log.error("Unable to generate schema", e);
+			_logger.error("Unable to generate schema", e);
 		}
 
 		if (validationResultMutable.getStatus() ==
@@ -139,7 +139,7 @@ public class LiferayInputResourceProperties
 		return validationResultMutable;
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		LiferayInputResourceProperties.class);
 
 	private static final I18nMessages _i18nMessages;

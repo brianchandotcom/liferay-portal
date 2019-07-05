@@ -99,10 +99,10 @@ public class TLiferayOutputProperties
 				public void afterSchema() {
 					Schema schema = resource.main.schema.getValue();
 
-					if (_log.isTraceEnabled()) {
-						_log.trace("Schema details:\n" + schema.toString());
+					if (_logger.isTraceEnabled()) {
+						_logger.trace("Schema details:\n" + schema.toString());
 
-						DebugUtils.logCurrentStackTrace(_log);
+						DebugUtils.logCurrentStackTrace(_logger);
 					}
 
 					if (schema.equals(SchemaProperties.EMPTY_SCHEMA)) {
@@ -182,8 +182,8 @@ public class TLiferayOutputProperties
 	}
 
 	private void _updateOutputSchemas() {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Update output schemas");
+		if (_logger.isDebugEnabled()) {
+			_logger.debug("Update output schemas");
 		}
 
 		Schema inputSchema = resource.main.schema.getValue();
@@ -195,7 +195,7 @@ public class TLiferayOutputProperties
 		schemaReject.schema.setValue(rejectSchema);
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		TLiferayOutputProperties.class);
 
 }

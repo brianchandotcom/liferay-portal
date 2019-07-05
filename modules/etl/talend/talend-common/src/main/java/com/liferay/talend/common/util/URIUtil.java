@@ -40,8 +40,8 @@ public class URIUtil {
 		String resourceURL, String queryCondition) {
 
 		if (StringUtil.isEmpty(queryCondition)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Query condition was empty!");
+			if (_logger.isDebugEnabled()) {
+				_logger.debug("Query condition was empty!");
 			}
 
 			return toURI(resourceURL);
@@ -152,7 +152,7 @@ public class URIUtil {
 			return new URI(StringUtil.removeQuotes(href));
 		}
 		catch (URISyntaxException urise) {
-			_log.error("Unable to convert URL to URI: " + href);
+			_logger.error("Unable to convert URL to URI: " + href);
 
 			throw new RuntimeException(urise);
 		}
@@ -217,7 +217,8 @@ public class URIUtil {
 		}
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(URIUtil.class);
+	private static final Logger _logger = LoggerFactory.getLogger(
+		URIUtil.class);
 
 	private static final Pattern _openAPISpecURLPattern = Pattern.compile(
 		"(https?://.+(:\\d+)?)(/o/(.+)/)(v\\d+(.\\d+)*)/openapi\\.(yaml|json)");

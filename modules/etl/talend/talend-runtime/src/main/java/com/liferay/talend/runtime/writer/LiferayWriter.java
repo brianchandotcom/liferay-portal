@@ -139,14 +139,14 @@ public class LiferayWriter
 		if ((indexedRecordDatum == null) ||
 			!(indexedRecordDatum instanceof IndexedRecord)) {
 
-			if (_log.isDebugEnabled()) {
+			if (_logger.isDebugEnabled()) {
 				if (indexedRecordDatum != null) {
-					_log.debug(
+					_logger.debug(
 						"Unable to process incoming data row: " +
 							indexedRecordDatum.toString());
 				}
 				else {
-					_log.debug("Skipping NULL data row");
+					_logger.debug("Skipping NULL data row");
 				}
 			}
 
@@ -177,8 +177,8 @@ public class LiferayWriter
 			_handleSuccessRecord(indexedRecord);
 		}
 		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e.getMessage(), e);
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(e.getMessage(), e);
 			}
 
 			_handleRejectRecord(indexedRecord, e);
@@ -346,7 +346,7 @@ public class LiferayWriter
 			((currentRecordSchemaFields.size() +
 				additionRejectSchemaFieldsSize) != rejectSchemaFields.size())) {
 
-			_log.error("Reject schema was not setup properly");
+			_logger.error("Reject schema was not setup properly");
 
 			return;
 		}
@@ -387,7 +387,7 @@ public class LiferayWriter
 		return false;
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		LiferayWriter.class);
 
 	private static final AvroConverter<String, String> _stringStringConverter =

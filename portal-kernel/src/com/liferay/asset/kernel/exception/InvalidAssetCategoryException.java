@@ -11,31 +11,70 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.asset.kernel.exception;
+
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.util.Locale;
 
 import org.osgi.annotation.versioning.ProviderType;
 
-import com.liferay.portal.kernel.exception.PortalException;
-
 /**
- * @author Brian Wing Shun Chan
+ * @author Jürgen Kappler
  */
 @ProviderType
 public class InvalidAssetCategoryException extends PortalException {
 
-	public InvalidAssetCategoryException() {
+	public static final int CANNOT_MOVE_INTO_CHILD_CATEGORY = 1;
+
+	public static final int CANNOT_MOVE_INTO_ITSELF = 2;
+
+	public InvalidAssetCategoryException(long categoryId, int type) {
+		_categoryId = categoryId;
+		_type = type;
 	}
 
-	public InvalidAssetCategoryException(String msg) {
-		super(msg);
+	public long getCategoryId() {
+		return _categoryId;
 	}
 
-	public InvalidAssetCategoryException(String msg, Throwable cause) {
-		super(msg, cause);
+	public String getMessageArgument(Locale locale) {
+		try {
+			AssetCategory category = AssetCategoryLocalServiceUtil.getCategory(
+				_categoryId);
+
+			return category.getTitle(locale);
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
+
+			return StringPool.BLANK;
+		}
 	}
 
-	public InvalidAssetCategoryException(Throwable cause) {
-		super(cause);
+	public String getMessageKey() {
+		if (_type == CANNOT_MOVE_INTO_CHILD_CATEGORY) {
+			return "unable-to-move-category-x-into-one-of-its-children";
+		}
+		else if (_type == CANNOT_MOVE_INTO_ITSELF) {
+			return "unable-to-move-category-x-into-itself";
+		}
+
+		return null;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		InvalidAssetCategoryException.class);
+
+	private final long _categoryId;
+	private final int _type;
 
 }

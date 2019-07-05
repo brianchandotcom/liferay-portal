@@ -219,11 +219,11 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 								webDavHelpMessage = LanguageUtil.format(request, "webdav-help", "https://dev.liferay.com/discover/portal/-/knowledge_base/7-0/publishing-files#desktop-access-to-documents-and-media", false);
 							}
 
-								String webDavInputId = renderResponse.getNamespace() + "inputwebDavURL";
+							String webDavInputId = renderResponse.getNamespace() + "inputwebDavURL";
 
-								Map<String, String> webDavButtonData = new HashMap<>();
+							Map<String, String> webDavButtonData = new HashMap<>();
 
-								webDavButtonData.put("clipboard-target", "#" + webDavInputId);
+							webDavButtonData.put("clipboard-target", "#" + webDavInputId);
 							%>
 
 							<div class="form-group">

@@ -181,24 +181,24 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 							urlLabel = LanguageUtil.format(request, "version-x-url", fileVersion.getVersion());
 						}
 
-						String UrlInputId = renderResponse.getNamespace() + "inputUrl";
+						String urlInputId = renderResponse.getNamespace() + "inputUrl";
 
-						Map<String, String> UrlBtnData = new HashMap<>();
+						Map<String, String> urlBtnData = new HashMap<>();
 
-						UrlBtnData.put("clipboard-target", "#" + UrlInputId);
+						urlBtnData.put("clipboard-target", "#" + urlInputId);
 						%>
 
 						<div class="form-group">
-							<label for="<%= UrlInputId %>"><%= urlLabel %></label>
+							<label for="<%= urlInputId %>"><%= urlLabel %></label>
 
 							<div class="input-group input-group-sm">
 								<div class="input-group-item input-group-prepend">
-									<input class="form-control" id="<%= UrlInputId %>" value="<%= DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, !isLatestVersion, true) %>" />
+									<input class="form-control" id="<%= urlInputId %>" value="<%= DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, !isLatestVersion, true) %>" />
 								</div>
 
 								<span class="input-group-append input-group-item input-group-item-shrink">
 									<clay:button
-										data="<%= UrlBtnData %>"
+										data="<%= urlBtnData %>"
 										elementClasses="btn-secondary dm-infopanel-copy-clipboard"
 										icon="paste"
 										style="secondary"

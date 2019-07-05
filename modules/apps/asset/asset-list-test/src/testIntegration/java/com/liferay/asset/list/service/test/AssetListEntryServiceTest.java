@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -77,6 +78,13 @@ public class AssetListEntryServiceTest {
 	@Test(expected = AssetListEntryTitleException.class)
 	public void testAddAssetListEntryWithEmptyTitle() throws PortalException {
 		_addAssetListEntry(StringPool.BLANK);
+	}
+
+	@Test(expected = AssetListEntryTitleException.class)
+	public void testAddAssetListEntryWithInvalidLength()
+		throws PortalException {
+
+		_addAssetListEntry(RandomTestUtil.randomString(76));
 	}
 
 	@Test(expected = AssetListEntryTitleException.class)

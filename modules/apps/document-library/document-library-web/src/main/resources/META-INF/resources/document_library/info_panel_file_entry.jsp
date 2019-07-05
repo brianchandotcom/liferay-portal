@@ -181,7 +181,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 							urlLabel = LanguageUtil.format(request, "version-x-url", fileVersion.getVersion());
 						}
 
-						String urlInputId = renderResponse.getNamespace() + "inputUrl";
+						String urlInputId = liferayPortletResponse.getNamespace() + "inputUrl";
 
 						Map<String, String> urlButtonData = new HashMap<>();
 
@@ -219,7 +219,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 								webDavHelpMessage = LanguageUtil.format(request, "webdav-help", "https://dev.liferay.com/discover/portal/-/knowledge_base/7-0/publishing-files#desktop-access-to-documents-and-media", false);
 							}
 
-							String webDavInputId = renderResponse.getNamespace() + "inputwebDavURL";
+							String webDavInputId = liferayPortletResponse.getNamespace() + "inputwebDavURL";
 
 							Map<String, String> webDavButtonData = new HashMap<>();
 

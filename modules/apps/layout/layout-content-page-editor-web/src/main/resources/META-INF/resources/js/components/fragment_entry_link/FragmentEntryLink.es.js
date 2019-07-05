@@ -149,6 +149,10 @@ class FragmentEntryLink extends Component {
 				this.fragmentEntryLinkId
 			].configuration;
 
+			this._defaultConfigurationValues = this.fragmentEntryLinks[
+				this.fragmentEntryLinkId
+			].defaultConfigurationValues;
+
 			if (configurationValues) {
 				const segmentedConfigurationValues =
 					configurationValues[defaultSegmentsExperienceId] ||
@@ -170,6 +174,7 @@ class FragmentEntryLink extends Component {
 			item: {
 				configuration: this._configuration,
 				configurationValues: this._configurationValues,
+				defaultConfigurationValues: this._defaultConfigurationValues,
 				fragmentEntryLinkId: this.fragmentEntryLinkId
 			},
 			itemId: this.fragmentEntryLinkId,
@@ -312,6 +317,14 @@ FragmentEntryLink.STATE = {
 	 * @type {object}
 	 */
 	_configurationValues: Config.object().internal(),
+
+	/**
+	 * Fragment Entry Link Default configuration values
+	 * @instance
+	 * @memberOf FragmentEntryLink
+	 * @type {object}
+	 */
+	_defaultConfigurationValues: Config.object().internal(),
 
 	/**
 	 * Floating toolbar instance for internal use.

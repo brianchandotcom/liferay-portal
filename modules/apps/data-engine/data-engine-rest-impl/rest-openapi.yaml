@@ -382,6 +382,11 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -1037,6 +1042,11 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
             responses:
                 200:
                     content:

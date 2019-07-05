@@ -29,7 +29,13 @@ export default function objectToURLSearchParams(obj) {
 	const urlSearchParams = new URLSearchParams();
 
 	Object.entries(obj).forEach(([key, value]) => {
-		urlSearchParams.append(key, value);
+		if (Array.isArray(value)) {
+			for (let i = 0; i < value.length; i++) {
+				urlSearchParams.append(key, value[i]);
+			}
+		} else {
+			urlSearchParams.append(key, value);
+		}
 	});
 
 	return urlSearchParams;

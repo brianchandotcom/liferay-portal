@@ -87,7 +87,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		URI endpointURI =
 			liferayConnectionResourceBaseProperties.resource.getEndpointURI();
 
-		_endpointJsonObject = _getEndpointJsonNode(endpointURI, ++actual, -1);
+		_endpointJsonObject = _getEndpointJsonObject(endpointURI, ++actual, -1);
 
 		_inputRecordsJsonArray = _endpointJsonObject.getJsonArray("items");
 
@@ -119,14 +119,14 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		try {
 			AvroConverter<Object, IndexedRecord> avroConverter = getConverter();
 
-			return avroConverter.convertToAvro(getCurrentJsonNode());
+			return avroConverter.convertToAvro(getCurrentJsonObject());
 		}
 		catch (IOException ioe) {
 			throw new ComponentException(ioe);
 		}
 	}
 
-	public JsonValue getCurrentJsonNode() throws NoSuchElementException {
+	public JsonValue getCurrentJsonObject() throws NoSuchElementException {
 		return _inputRecordsJsonArray.get(_inputRecordsIndex);
 	}
 
@@ -135,7 +135,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		URI endpointURI =
 			liferayConnectionResourceBaseProperties.resource.getEndpointURI();
 
-		_endpointJsonObject = _getEndpointJsonNode(endpointURI, 1, -1);
+		_endpointJsonObject = _getEndpointJsonObject(endpointURI, 1, -1);
 
 		if (_endpointJsonObject.containsKey("items")) {
 			_inputRecordsJsonArray = _endpointJsonObject.getJsonArray("items");
@@ -184,7 +184,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		return _resourceEntityAvroConverter;
 	}
 
-	private JsonObject _getEndpointJsonNode(
+	private JsonObject _getEndpointJsonObject(
 		URI endpointURI, int page, int pageSize) {
 
 		if (page <= 0) {

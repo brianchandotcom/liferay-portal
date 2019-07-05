@@ -105,22 +105,22 @@ public class RESTClient {
 		return _execute(HttpMethod.GET, _createBuilder(decoratedURI));
 	}
 
-	public Response executePatchRequest(JsonObject jsonNode) {
+	public Response executePatchRequest(JsonObject jsonObject) {
 		return _execute(
 			HttpMethod.PATCH, _createBuilder(_getTargetURI()),
-			Entity.json(_jsonNodeToPrettyString(jsonNode)));
+			Entity.json(_jsonObjectToPrettyString(jsonObject)));
 	}
 
-	public Response executePostRequest(JsonObject jsonNode) {
+	public Response executePostRequest(JsonObject jsonObject) {
 		return _execute(
 			HttpMethod.POST, _createBuilder(_getTargetURI()),
-			Entity.json(_jsonNodeToPrettyString(jsonNode)));
+			Entity.json(_jsonObjectToPrettyString(jsonObject)));
 	}
 
-	public Response executePutRequest(JsonObject jsonNode) {
+	public Response executePutRequest(JsonObject jsonObject) {
 		return _execute(
 			HttpMethod.PUT, _createBuilder(_getTargetURI()),
-			Entity.json(_jsonNodeToPrettyString(jsonNode)));
+			Entity.json(_jsonObjectToPrettyString(jsonObject)));
 	}
 
 	public boolean matches(String target) {
@@ -136,7 +136,7 @@ public class RESTClient {
 		return String.format("REST API Client [%s].", _getTarget());
 	}
 
-	private JsonObject _asJsonNode(Response response) {
+	private JsonObject _asJsonObject(Response response) {
 		try {
 			String entity = response.readEntity(String.class);
 
@@ -257,7 +257,7 @@ public class RESTClient {
 	private String _getBearerToken(
 		LiferayConnectionProperties liferayConnectionProperties) {
 
-		JsonObject authorizationJsonObject = _requestAuthorizationJsonNode(
+		JsonObject authorizationJsonObject = _requestAuthorizationJsonObject(
 			liferayConnectionProperties);
 
 		String tokenType = authorizationJsonObject.getString("token_type");
@@ -371,12 +371,12 @@ public class RESTClient {
 		return false;
 	}
 
-	private String _jsonNodeToPrettyString(JsonObject jsonNode) {
+	private String _jsonObjectToPrettyString(JsonObject jsonObject) {
 		StringWriter stringWriter = new StringWriter();
 
 		JsonWriter jsonWriter = Json.createWriter(stringWriter);
 
-		jsonWriter.writeObject(jsonNode);
+		jsonWriter.writeObject(jsonObject);
 
 		stringWriter.flush();
 
@@ -418,7 +418,7 @@ public class RESTClient {
 		return currentResponse;
 	}
 
-	private JsonObject _requestAuthorizationJsonNode(
+	private JsonObject _requestAuthorizationJsonObject(
 			LiferayConnectionProperties liferayConnectionProperties)
 		throws ConnectionException {
 
@@ -448,7 +448,7 @@ public class RESTClient {
 					response.getStatus(), contentTypeValues.get(0)));
 		}
 
-		return _asJsonNode(response);
+		return _asJsonObject(response);
 	}
 
 	private String _toHttps(String url) {

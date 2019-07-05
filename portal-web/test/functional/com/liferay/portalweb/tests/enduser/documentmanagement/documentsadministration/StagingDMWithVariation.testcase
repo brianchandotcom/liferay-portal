@@ -12,14 +12,11 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging DM Page");
+
 		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Staging DM Page");
 	}
 
 	tearDown {

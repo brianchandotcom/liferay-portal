@@ -44,22 +44,33 @@ class FloatingToolbarFragmentConfigurationPanel extends Component {
 
 		const fieldData = GET_DATA_FUNCTIONS[fieldType](event);
 
-		const defaultSegmentsExperienceId = prefixSegmentsExperienceId(
-			this.defaultSegmentsExperienceId
-		);
-		const segmentsExperienceId = prefixSegmentsExperienceId(
-			this.segmentsExperienceId
-		);
 		const nextConfigurationValues = setIn(
 			this.item.configurationValues,
 			[fieldData.fieldSetName, fieldData.fieldName],
 			fieldData.fieldValue
 		);
 
+		this._sendConfiguration(nextConfigurationValues);
+	}
+
+	/**
+	 * Update editableValues with new configuration
+	 * @param {object} configurationValues
+	 * @private
+	 * @review
+	 */
+	_sendConfiguration(configurationValues) {
+		const defaultSegmentsExperienceId = prefixSegmentsExperienceId(
+			this.defaultSegmentsExperienceId
+		);
+		const segmentsExperienceId = prefixSegmentsExperienceId(
+			this.segmentsExperienceId
+		);
+
 		this.store.dispatch(
 			updateEditableValueAction({
 				fragmentEntryLinkId: this.item.fragmentEntryLinkId,
-				editableValueContent: nextConfigurationValues,
+				editableValueContent: configurationValues,
 				processor: FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
 				segmentsExperienceId:
 					segmentsExperienceId || defaultSegmentsExperienceId

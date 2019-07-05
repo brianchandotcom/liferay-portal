@@ -12,22 +12,36 @@
  * details.
  */
 
-package com.liferay.portal.kernel.seo;
-
-import com.liferay.portal.kernel.exception.PortalException;
-
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+package com.liferay.layouts.seo.kernel;
 
 /**
  * @author Cristina González
  */
-public interface SEOLinkManager {
+public interface SEOLink {
 
-	public List<SEOLink> getLocalizedSEOLinks(
-			long companyId, Locale locale, String canonicalURL,
-			Map<Locale, String> alternateURLs)
-		throws PortalException;
+	public String getHref();
+
+	public String getHrefLang();
+
+	public Relationship getRelationship();
+
+	public enum Relationship {
+
+		ALTERNATE {
+
+			public String toString() {
+				return "alternate";
+			}
+
+		},
+		CANONICAL {
+
+			public String toString() {
+				return "canonical";
+			}
+
+		}
+
+	}
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.seo;
+package com.liferay.layouts.seo.kernel;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;

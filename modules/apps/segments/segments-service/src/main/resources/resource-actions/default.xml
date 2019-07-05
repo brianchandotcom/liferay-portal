@@ -76,4 +76,28 @@
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.segments.model.SegmentsExperiment</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_segments_web_internal_portlet_SegmentsPortlet</portlet-name>
+		</portlet-ref>
+		<weight>4</weight>
+		<permissions>
+			<supports>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults>
+				<action-key>VIEW</action-key>
+			</site-member-defaults>
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
+			<guest-unsupported>
+				<action-key>UPDATE</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
 </resource-action-mapping>

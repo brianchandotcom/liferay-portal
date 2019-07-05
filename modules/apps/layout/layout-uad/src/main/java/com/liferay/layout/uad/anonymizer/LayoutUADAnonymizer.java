@@ -32,6 +32,8 @@ public class LayoutUADAnonymizer extends BaseLayoutUADAnonymizer {
 		throws PortalException {
 
 		layoutLocalService.anonymizeLayout(layout, userId, anonymousUser);
+
+		autoAnonymizeAsset(layout, anonymousUser);
 	}
 
 }

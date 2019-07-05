@@ -12,10 +12,18 @@
  * details.
  */
 
-import App from './components/App.es';
 import React from 'react';
-import ReactDOM from 'react-dom';
 
-export default function(id) {
-	ReactDOM.render(<App />, document.getElementById(id));
+export default function EmptyState(props) {
+	const {message, title} = props;
+
+	return (
+		<div className={'sheet taglib-empty-result-message'}>
+			<div className={'taglib-empty-result-message-header'} />
+
+			{title && <h3 className='text-center'>{title}</h3>}
+
+			<div className='sheet-text text-center'>{message}</div>
+		</div>
+	);
 }

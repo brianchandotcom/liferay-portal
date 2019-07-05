@@ -14,7 +14,7 @@
 
 import {ClaySelectWithOption} from '@clayui/select';
 import React, {Fragment} from 'react';
-import {sub} from '../utils/lang.es';
+import {sub} from '../../utils/lang.es';
 
 export default function PageSize(props) {
 	const {itemsCount, onPageSizeChange, page, pageSize, totalCount} = props;

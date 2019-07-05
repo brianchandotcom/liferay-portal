@@ -16,6 +16,8 @@ package com.liferay.portal.osgi.web.servlet.context.helper.internal;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -31,6 +33,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.lang.management.ManagementFactory;
 
 import java.net.URL;
 
@@ -48,6 +52,10 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+
+import javax.management.JMException;
+import javax.management.MBeanServer;
+import javax.management.ObjectInstance;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
@@ -192,6 +200,12 @@ public class ServletContextHelperRegistrationImpl
 
 			}
 		}
+
+		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
+
+		ClassLoader classLoader = bundleWiring.getClassLoader();
+
+		clearResidualMBeans(classLoader);
 	}
 
 	@Override
@@ -245,6 +259,26 @@ public class ServletContextHelperRegistrationImpl
 		}
 
 		_servletContextHelperServiceRegistration.setProperties(properties);
+	}
+
+	protected void clearResidualMBeans(ClassLoader classLoader) {
+		MBeanServer server = ManagementFactory.getPlatformMBeanServer();
+
+		Set<ObjectInstance> mbeans = server.queryMBeans(null, null);
+
+		for (ObjectInstance mbean : mbeans) {
+			try {
+				ClassLoader mbeanClassLoader = server.getClassLoaderFor(
+					mbean.getObjectName());
+
+				if (classLoader.equals(mbeanClassLoader)) {
+					server.unregisterMBean(mbean.getObjectName());
+				}
+			}
+			catch (JMException jme) {
+				_log.error(jme, jme);
+			}
+		}
 	}
 
 	protected ServiceRegistration<?> createDefaultServlet() {
@@ -547,6 +581,9 @@ public class ServletContextHelperRegistrationImpl
 
 		_BLACKLIST = blacklist;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ServletContextHelperRegistrationImpl.class);
 
 	private final Set<Class<?>> _annotatedClasses;
 	private final Bundle _bundle;

@@ -68,12 +68,12 @@ public class DeleteSegmentsExperienceMVCActionCommand
 	protected void deleteSegmentsExperience(ActionRequest actionRequest)
 		throws PortalException {
 
+		boolean deleteSegmentsExperience = ParamUtil.getBoolean(
+			actionRequest, "deleteSegmentsExperience");
+
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId",
 			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
-
-		boolean deleteSegmentsExperience = ParamUtil.getBoolean(
-			actionRequest, "deleteSegmentsExperience");
 
 		if (deleteSegmentsExperience &&
 			(segmentsExperienceId !=

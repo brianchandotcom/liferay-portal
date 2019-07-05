@@ -54,6 +54,15 @@ class FloatingToolbarFragmentConfigurationPanel extends Component {
 	}
 
 	/**
+	 * Handles Restore button click
+	 * @private
+	 * @review
+	 */
+	_handleRestoreButtonClick() {
+		this._sendConfiguration(this.item.defaultConfigurationValues);
+	}
+
+	/**
 	 * Update editableValues with new configuration
 	 * @param {object} configurationValues
 	 * @private
@@ -77,13 +86,6 @@ class FloatingToolbarFragmentConfigurationPanel extends Component {
 			})
 		);
 	}
-
-	/**
-	 * Handles Restore button click
-	 * @private
-	 * @review
-	 */
-	_handleRestoreButtonClick() {}
 }
 
 /**

@@ -41,7 +41,7 @@ export const updateField = (
 	return {
 		focusedField: updatedFocusedField,
 		pages: updatePages(pages, focusedField, updatedFocusedField),
-		rules: updateRulesReferences(rules, focusedField, updateFocusedField)
+		rules: updateRulesReferences(rules, focusedField, updatedFocusedField)
 	};
 };
 

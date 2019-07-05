@@ -126,11 +126,8 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 
-			if (segmentsExperienceId > 0) {
-				instanceId =
-					SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-						instanceId, segmentsExperienceId);
-			}
+			instanceId = SegmentsExperiencePortletUtil.setSegmentsExperienceId(
+				instanceId, segmentsExperienceId);
 
 			String html = _getPortletFragmentEntryLinkHTML(
 				serviceContext.getRequest(),

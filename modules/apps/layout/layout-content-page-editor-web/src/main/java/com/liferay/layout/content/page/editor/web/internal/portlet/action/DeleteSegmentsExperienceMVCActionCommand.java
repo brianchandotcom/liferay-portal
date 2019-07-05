@@ -109,16 +109,6 @@ public class DeleteSegmentsExperienceMVCActionCommand
 						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
 						fragmentEntryLink.getClassPK(),
 						portletIdWithExperience);
-
-					if (segmentsExperienceId ==
-							SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT) {
-
-						_portletPreferencesLocalService.
-							deletePortletPreferences(
-								PortletKeys.PREFS_OWNER_ID_DEFAULT,
-								PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-								fragmentEntryLink.getClassPK(), portletId);
-					}
 				}
 			}
 

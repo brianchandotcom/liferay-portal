@@ -228,6 +228,8 @@
 
 		<column name="segmentsExperimentKey" type="String" />
 		<column name="segmentsExperienceId" type="long" />
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
 		<column name="segmentsEntryId" type="long" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
@@ -245,13 +247,36 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="SegmentsExperienceId" return-type="Collection">
-			<finder-column name="segmentsExperienceId" />
-		</finder>
 		<finder name="G_S" return-type="SegmentsExperiment" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="segmentsExperimentKey" />
 		</finder>
+		<finder name="G_C_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="S_C_C" return-type="Collection">
+			<finder-column name="segmentsExperienceId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="G_S_C_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column arrayable-operator="OR" name="segmentsExperienceId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="S_C_C_S" return-type="Collection">
+			<finder-column name="segmentsExperienceId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="status" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="Layout" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="SegmentsExperimentRel" remote-service="true">
 
@@ -290,5 +315,7 @@
 		<exception>SegmentsEntryName</exception>
 		<exception>SegmentsExperienceName</exception>
 		<exception>SegmentsExperiencePriority</exception>
+		<exception>SegmentsExperimentName</exception>
+		<exception>SegmentsExperimentStatus</exception>
 	</exceptions>
 </service-builder>

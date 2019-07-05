@@ -137,6 +137,14 @@ public class DDMFormField implements Serializable {
 	}
 
 	public DDMFormFieldOptions getDDMFormFieldOptions() {
+		String dataSourceType = (String)_properties.get("dataSourceType");
+
+		if (Validator.isNotNull(dataSourceType) &&
+			!dataSourceType.equals("manual")) {
+
+			return new DDMFormFieldOptions();
+		}
+
 		return (DDMFormFieldOptions)_properties.get("options");
 	}
 

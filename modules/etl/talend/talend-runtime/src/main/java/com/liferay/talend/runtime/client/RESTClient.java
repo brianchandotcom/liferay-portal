@@ -89,8 +89,8 @@ public class RESTClient {
 
 		_client = ClientBuilder.newClient(_getClientConfig());
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Created new REST Client for endpoint {}", target);
+		if (_logger.isDebugEnabled()) {
+			_logger.debug("Created new REST Client for endpoint {}", target);
 		}
 	}
 
@@ -152,8 +152,8 @@ public class RESTClient {
 	private Invocation.Builder _createBuilder(URI targetURI) {
 		WebTarget webTarget = _client.target(targetURI);
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Target: {}", targetURI);
+		if (_logger.isDebugEnabled()) {
+			_logger.debug("Target: {}", targetURI);
 		}
 
 		Invocation.Builder builder = webTarget.request(
@@ -331,7 +331,8 @@ public class RESTClient {
 			return new URI(_getTarget());
 		}
 		catch (URISyntaxException urise) {
-			_log.error("Unable to parse {} as a URI reference", _getTarget());
+			_logger.error(
+				"Unable to parse {} as a URI reference", _getTarget());
 		}
 
 		return null;
@@ -399,8 +400,8 @@ public class RESTClient {
 				return currentResponse;
 			}
 
-			if (_log.isDebugEnabled()) {
-				_log.debug("Redirect {}# to {}", count, location);
+			if (_logger.isDebugEnabled()) {
+				_logger.debug("Redirect {}# to {}", count, location);
 			}
 
 			currentResponse.close();
@@ -468,7 +469,7 @@ public class RESTClient {
 	private static final String _LIFERAY_OAUTH2_ACCESS_TOKEN_ENDPOINT =
 		"/o/oauth2/token";
 
-	private static final Logger _log = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		RESTClient.class);
 
 	private static final Pattern _openAPISpecURLPattern = Pattern.compile(

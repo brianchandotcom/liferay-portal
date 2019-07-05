@@ -119,14 +119,14 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		try {
 			AvroConverter<Object, IndexedRecord> avroConverter = getConverter();
 
-			return avroConverter.convertToAvro(getCurrentJsonObject());
+			return avroConverter.convertToAvro(getCurrentJsonValue());
 		}
 		catch (IOException ioe) {
 			throw new ComponentException(ioe);
 		}
 	}
 
-	public JsonValue getCurrentJsonObject() throws NoSuchElementException {
+	public JsonValue getCurrentJsonValue() throws NoSuchElementException {
 		return _inputRecordsJsonArray.get(_inputRecordsIndex);
 	}
 
@@ -207,8 +207,8 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
 		LiferaySource liferaySource = (LiferaySource)getCurrentSource();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
+		if (_logger.isDebugEnabled()) {
+			_logger.debug(
 				"Started to process resources at entry point: " +
 					resourceURI.toString());
 		}
@@ -216,7 +216,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		return liferaySource.doGetRequest(resourceURI.toString());
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		LiferayInputReader.class);
 
 	private transient JsonObject _endpointJsonObject;

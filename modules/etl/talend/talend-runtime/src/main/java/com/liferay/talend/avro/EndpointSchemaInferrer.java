@@ -281,8 +281,8 @@ public class EndpointSchemaInferrer {
 		String schemaName = extractEndpointSchemaName(
 			endpoint, operation, apiSpecJsonObject);
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Schema name: {}", schemaName);
+		if (_logger.isDebugEnabled()) {
+			_logger.debug("Schema name: {}", schemaName);
 		}
 
 		if (StringUtil.isEmpty(schemaName)) {
@@ -361,7 +361,7 @@ public class EndpointSchemaInferrer {
 		}
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		EndpointSchemaInferrer.class);
 
 	private static final JsonFinder _jsonFinder = new JsonFinder();

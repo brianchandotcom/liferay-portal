@@ -59,8 +59,8 @@ public abstract class BaseLiferayResourceProperties
 	}
 
 	public ValidationResult afterEndpoint() throws Exception {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Endpoint: " + endpoint.getValue());
+		if (_logger.isDebugEnabled()) {
+			_logger.debug("Endpoint: " + endpoint.getValue());
 		}
 
 		ValidatedSoSSandboxRuntime validatedSoSSandboxRuntime =
@@ -196,19 +196,19 @@ public abstract class BaseLiferayResourceProperties
 			getLiferayConnectionProperties();
 
 		if (liferayConnectionProperties == null) {
-			_log.error("LiferayConnectionProperties is null");
+			_logger.error("LiferayConnectionProperties is null");
 		}
 
 		LiferayConnectionProperties referencedLiferayConnectionProperties =
 			liferayConnectionProperties.getReferencedConnectionProperties();
 
 		if (referencedLiferayConnectionProperties != null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Using a reference connection properties");
-				_log.debug(
+			if (_logger.isDebugEnabled()) {
+				_logger.debug("Using a reference connection properties");
+				_logger.debug(
 					"API spec URL: " +
 						referencedLiferayConnectionProperties.getApiSpecURL());
-				_log.debug(
+				_logger.debug(
 					"User ID: " +
 						referencedLiferayConnectionProperties.getUserId());
 			}
@@ -216,11 +216,12 @@ public abstract class BaseLiferayResourceProperties
 			return referencedLiferayConnectionProperties;
 		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
+		if (_logger.isDebugEnabled()) {
+			_logger.debug(
 				"API spec URL: " +
 					liferayConnectionProperties.apiSpecURL.getValue());
-			_log.debug("User ID: " + liferayConnectionProperties.getUserId());
+			_logger.debug(
+				"User ID: " + liferayConnectionProperties.getUserId());
 		}
 
 		return liferayConnectionProperties;
@@ -298,7 +299,7 @@ public abstract class BaseLiferayResourceProperties
 			parametersTableWidget.setWidgetType(Widget.TABLE_WIDGET_TYPE));
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		BaseLiferayResourceProperties.class);
 
 }

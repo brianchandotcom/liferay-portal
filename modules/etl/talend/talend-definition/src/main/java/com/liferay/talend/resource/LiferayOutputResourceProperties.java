@@ -68,8 +68,8 @@ public class LiferayOutputResourceProperties
 	public ValidationResult afterOperations() {
 		Action action = operations.getValue();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Selected method: " + action.getMethodName());
+		if (_logger.isDebugEnabled()) {
+			_logger.debug("Selected method: " + action.getMethodName());
 		}
 
 		ValidatedSoSSandboxRuntime validatedSoSSandboxRuntime =
@@ -252,7 +252,7 @@ public class LiferayOutputResourceProperties
 				_i18nMessages.getMessage("error.validation.schema"));
 			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
 
-			_log.error("Unable to generate schema", e);
+			_logger.error("Unable to generate schema", e);
 		}
 	}
 
@@ -279,8 +279,8 @@ public class LiferayOutputResourceProperties
 	}
 
 	private void _updateOutputSchemas() {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Update output schemas");
+		if (_logger.isDebugEnabled()) {
+			_logger.debug("Update output schemas");
 		}
 
 		Schema inputSchema = main.schema.getValue();
@@ -294,7 +294,7 @@ public class LiferayOutputResourceProperties
 
 	private static final String _ADD_QUOTES = "ADD_QUOTES";
 
-	private static final Logger _log = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		LiferayOutputResourceProperties.class);
 
 	private static final I18nMessages _i18nMessages;

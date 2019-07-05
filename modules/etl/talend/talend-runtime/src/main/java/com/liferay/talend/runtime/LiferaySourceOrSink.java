@@ -377,11 +377,11 @@ public class LiferaySourceOrSink
 
 		String target = liferayConnectionProperties.getApiSpecURL();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
+		if (_logger.isDebugEnabled()) {
+			_logger.debug(
 				"Validate API spec URL: {}",
 				liferayConnectionProperties.getApiSpecURL());
-			_log.debug(
+			_logger.debug(
 				"Validate user ID: {}",
 				liferayConnectionProperties.getUserId());
 		}
@@ -419,7 +419,7 @@ public class LiferaySourceOrSink
 				i18nMessages.getMessage("success.validation.connection"));
 		}
 		catch (TalendRuntimeException tre) {
-			_log.error(tre.getMessage(), tre);
+			_logger.error(tre.getMessage(), tre);
 
 			return new ValidationResult(
 				ValidationResult.Result.ERROR,
@@ -428,7 +428,7 @@ public class LiferaySourceOrSink
 					tre.getLocalizedMessage()));
 		}
 		catch (ProcessingException pe) {
-			_log.error(pe.getMessage(), pe);
+			_logger.error(pe.getMessage(), pe);
 
 			return new ValidationResult(
 				ValidationResult.Result.ERROR,
@@ -437,7 +437,7 @@ public class LiferaySourceOrSink
 					pe.getLocalizedMessage()));
 		}
 		catch (Throwable t) {
-			_log.error(t.getMessage(), t);
+			_logger.error(t.getMessage(), t);
 
 			return new ValidationResult(
 				ValidationResult.Result.ERROR,
@@ -544,7 +544,7 @@ public class LiferaySourceOrSink
 		return oasParameter;
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		LiferaySourceOrSink.class);
 
 	private static final long serialVersionUID = 3109815759807236523L;

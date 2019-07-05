@@ -37,8 +37,9 @@ public class LiferaySource
 
 	@Override
 	public BoundedReader<?> createReader(RuntimeContainer runtimeContainer) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Creating reader for fetching data from the datastore");
+		if (_logger.isDebugEnabled()) {
+			_logger.debug(
+				"Creating reader for fetching data from the datastore");
 		}
 
 		return new LiferayInputReader(
@@ -100,7 +101,7 @@ public class LiferaySource
 		return validationResultMutable;
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		LiferaySource.class);
 
 	private static final long serialVersionUID = 7966201253956643887L;

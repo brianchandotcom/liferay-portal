@@ -110,14 +110,14 @@ public class LiferayConnectionProperties
 		}
 
 		if (getReferencedComponentId() != null) {
-			_log.error(
+			_logger.error(
 				"Connection has a reference to '{}' but the referenced " +
 					"Object is null",
 				getReferencedComponentId());
 		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
+		if (_logger.isDebugEnabled()) {
+			_logger.debug(
 				"Fall back to the actual instance " +
 					"LiferayConnectionProperties for the runtime environment");
 		}
@@ -423,7 +423,7 @@ public class LiferayConnectionProperties
 
 	private static final int _READ_TIMEOUT = 60;
 
-	private static final Logger _log = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		LiferayConnectionProperties.class);
 
 	private static final long serialVersionUID = -746398918369840241L;

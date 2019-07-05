@@ -63,8 +63,8 @@ public class ResourceNodeConverter
 
 				if (jsonValue == JsonValue.NULL) {
 					if (AvroUtils.isNullable(schemaEntry.schema())) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(
+						if (_logger.isDebugEnabled()) {
+							_logger.debug(
 								"Ignoring content's absent path {}",
 								valueFinderPath);
 						}
@@ -182,7 +182,7 @@ public class ResourceNodeConverter
 		return name.replaceFirst("_", ">");
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		ResourceNodeConverter.class);
 
 	private static final JsonFinder _jsonFinder = new JsonFinder();

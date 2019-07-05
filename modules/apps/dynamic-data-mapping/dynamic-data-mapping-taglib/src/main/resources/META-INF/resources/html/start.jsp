@@ -21,7 +21,7 @@
 		<div class="input-group-item input-group-item-shrink input-localized-content <%= hideClass %>" role="menu" style="justify-content: flex-end;">
 
 			<%
-			String defaultLanguageId = LocaleUtil.toLanguageId(defaultEditLocale);
+			String defaultLanguageId = LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
 
 			String normalizedDefaultLanguageId = StringUtil.replace(defaultLanguageId, '_', '-');
 			%>
@@ -45,7 +45,7 @@
 
 						uniqueLanguageIds.add(defaultLanguageId);
 
-						Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(groupId);
+						Set<Locale> availableLocales = ddmForm.getAvailableLocales();
 
 						for (Locale availableLocale : availableLocales) {
 							String curLanguageId = LocaleUtil.toLanguageId(availableLocale);

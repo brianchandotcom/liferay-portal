@@ -22,6 +22,7 @@ import com.liferay.data.engine.rest.internal.constants.DataLayoutConstants;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataLayoutUtil;
 import com.liferay.data.engine.rest.internal.model.InternalDataLayout;
 import com.liferay.data.engine.rest.internal.model.InternalDataRecordCollection;
+import com.liferay.data.engine.rest.internal.odata.entity.v1_0.DataLayoutEntityModel;
 import com.liferay.data.engine.rest.internal.resource.v1_0.util.DataEnginePermissionUtil;
 import com.liferay.data.engine.rest.resource.v1_0.DataLayoutResource;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -30,8 +31,9 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
-import com.liferay.dynamic.data.mapping.util.comparator.StructureLayoutNameComparator;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -41,16 +43,21 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,7 +70,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/data-layout.properties",
 	scope = ServiceScope.PROTOTYPE, service = DataLayoutResource.class
 )
-public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
+public class DataLayoutResourceImpl
+	extends BaseDataLayoutResourceImpl implements EntityModelResource {
 
 	@Override
 	public void deleteDataLayout(Long dataLayoutId) throws Exception {
@@ -76,7 +84,8 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 
 	@Override
 	public Page<DataLayout> getDataDefinitionDataLayoutsPage(
-			Long dataDefinitionId, String keywords, Pagination pagination)
+			Long dataDefinitionId, String keywords, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		if (pagination.getPageSize() > 250) {
@@ -86,23 +95,40 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 					"page-size-is-greater-than-x", 250));
 		}
 
+		if (ArrayUtil.isEmpty(sorts)) {
+			sorts = new Sort[] {
+				new Sort(
+					Field.getSortableFieldName(Field.MODIFIED_DATE),
+					Sort.STRING_TYPE, true)
+			};
+		}
+
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			dataDefinitionId);
 
-		return Page.of(
-			transform(
-				_ddmStructureLayoutLocalService.search(
-					ddmStructure.getCompanyId(),
-					new long[] {ddmStructure.getGroupId()}, _getClassNameId(),
-					keywords, pagination.getStartPosition(),
-					pagination.getEndPosition(),
-					new StructureLayoutNameComparator()),
-				this::_toDataLayout),
-			pagination,
-			_ddmStructureLayoutLocalService.searchCount(
-				ddmStructure.getCompanyId(),
-				new long[] {ddmStructure.getGroupId()}, _getClassNameId(),
-				keywords));
+		return SearchUtil.search(
+			booleanQuery -> {
+			},
+			null, DDMStructureLayout.class, keywords, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setAttribute(
+					Field.CLASS_NAME_ID,
+					_portal.getClassNameId(InternalDataLayout.class));
+				searchContext.setAttribute(Field.DESCRIPTION, keywords);
+				searchContext.setAttribute(Field.NAME, keywords);
+				searchContext.setAttribute(
+					"structureVersionId",
+					_getDDMStructureVersionId(dataDefinitionId));
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setGroupIds(
+					new long[] {ddmStructure.getGroupId()});
+			},
+			document -> _toDataLayout(
+				_ddmStructureLayoutLocalService.getStructureLayout(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
+			sorts);
 	}
 
 	@Override
@@ -117,6 +143,13 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 	}
 
 	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return _entityModel;
+	}
+
+	@Override
 	public DataLayout getSiteDataLayout(Long siteId, String dataLayoutKey)
 		throws Exception {
 
@@ -127,7 +160,7 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 
 	@Override
 	public Page<DataLayout> getSiteDataLayoutPage(
-			Long siteId, String keywords, Pagination pagination)
+			Long siteId, String keywords, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		if (pagination.getPageSize() > 250) {
@@ -137,18 +170,33 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 					"page-size-is-greater-than-x", 250));
 		}
 
-		return Page.of(
-			transform(
-				_ddmStructureLayoutLocalService.search(
-					contextCompany.getCompanyId(), new long[] {siteId},
-					_getClassNameId(), keywords, pagination.getStartPosition(),
-					pagination.getEndPosition(),
-					new StructureLayoutNameComparator()),
-				this::_toDataLayout),
-			pagination,
-			_ddmStructureLayoutLocalService.searchCount(
-				contextCompany.getCompanyId(), new long[] {siteId},
-				_getClassNameId(), keywords));
+		if (ArrayUtil.isEmpty(sorts)) {
+			sorts = new Sort[] {
+				new Sort(
+					Field.getSortableFieldName(Field.MODIFIED_DATE),
+					Sort.STRING_TYPE, true)
+			};
+		}
+
+		return SearchUtil.search(
+			booleanQuery -> {
+			},
+			null, DDMStructureLayout.class, keywords, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setAttribute(
+					Field.CLASS_NAME_ID,
+					_portal.getClassNameId(InternalDataLayout.class));
+				searchContext.setAttribute(Field.DESCRIPTION, keywords);
+				searchContext.setAttribute(Field.NAME, keywords);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setGroupIds(new long[] {siteId});
+			},
+			document -> _toDataLayout(
+				_ddmStructureLayoutLocalService.getStructureLayout(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
+			sorts);
 	}
 
 	@Override
@@ -338,6 +386,8 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 
 		return dataLayout;
 	}
+
+	private static final EntityModel _entityModel = new DataLayoutEntityModel();
 
 	@Reference
 	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;

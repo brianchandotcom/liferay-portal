@@ -23,9 +23,16 @@ import {Config} from 'metal-state';
 
 class Numeric extends Component {
 	applyMask() {
-		const {dataType, element} = this;
+		const {dataType, element, symbols} = this;
 		const inputElement = element.querySelector('input');
+		const value = inputElement.value;
 		const numberMaskOptions = this.getMaskConfig(dataType);
+
+		if (value && dataType == 'integer') {
+			inputElement.value = Math.round(
+				value.replace(symbols.decimalSymbol, '.')
+			);
+		}
 
 		const mask = createNumberMask(numberMaskOptions);
 
@@ -33,6 +40,8 @@ class Numeric extends Component {
 			inputElement,
 			mask
 		});
+
+		this.setState({value: inputElement.value});
 	}
 
 	disposed() {
@@ -98,6 +107,10 @@ class Numeric extends Component {
 
 	_handleFieldChanged(event) {
 		const value = event.target.value;
+
+		if (value.substr(-1) == this.symbols.decimalSymbol) {
+			return;
+		}
 
 		this.setState(
 			{

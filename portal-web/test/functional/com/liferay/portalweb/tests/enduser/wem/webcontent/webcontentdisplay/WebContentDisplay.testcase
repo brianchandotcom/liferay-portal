@@ -756,7 +756,7 @@ definition {
 	test SelectWebContentScopeGlobal {
 		property testray.component.names = "Web Content Display";
 
-		Navigator.openSiteURL(siteName = "Global");
+		SitePages.openPagesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

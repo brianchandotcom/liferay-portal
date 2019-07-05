@@ -27,7 +27,7 @@ definition {
 
 	@priority = "4"
 	test AddPageTemplate {
-		Navigator.openSiteURL(siteName = "Global");
+		SitePages.openPagesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -44,7 +44,7 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		Navigator.openSiteURL(siteName = "Global");
+		SitePages.openPagesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -77,7 +77,7 @@ definition {
 			page = "Site Page",
 			pageTemplateName = "Page Template Name");
 
-		Navigator.openSiteURL(siteName = "Global");
+		SitePages.openPagesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -109,7 +109,7 @@ definition {
 
 		Navigator.openURL();
 
-		Navigator.openSiteURL(siteName = "Global");
+		SitePages.openPagesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -131,7 +131,7 @@ definition {
 	test DeactivateAndActivatePageTemplate {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		Navigator.openSiteURL(siteName = "Global");
+		SitePages.openPagesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -163,7 +163,7 @@ definition {
 
 		Page.viewPageTemplateTypeNotPresent(pageTemplateName = "Page Template Name");
 
-		Navigator.openSiteURL(siteName = "Global");
+		SitePages.openPagesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -196,7 +196,7 @@ definition {
 	test DeletePageTemplate {
 		property portal.acceptance = "true";
 
-		Navigator.openSiteURL(siteName = "Global");
+		SitePages.openPagesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -217,7 +217,7 @@ definition {
 	test EditPageTemplate {
 		property portal.acceptance = "true";
 
-		Navigator.openSiteURL(siteName = "Global");
+		SitePages.openPagesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -242,7 +242,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "guest");
 
-		Navigator.openSiteURL(siteName = "Global");
+		SitePages.openPagesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -256,7 +256,7 @@ definition {
 
 	@priority = "4"
 	test EditPageTemplateDescription {
-		Navigator.openSiteURL(siteName = "Global");
+		SitePages.openPagesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -280,7 +280,7 @@ definition {
 	test ImportLAR {
 		property testray.component.names = "Training";
 
-		Navigator.openSiteURL(siteName = "Global");
+		SitePages.openPagesAdmin(siteURLKey = "global");
 
 		LAR.importSiteCP(
 			larFileName = "college-and-department-page-templates.lar",
@@ -311,7 +311,7 @@ definition {
 
 		Navigator.openURL();
 
-		Navigator.openSiteURL(siteName = "Global");
+		SitePages.openPagesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -337,7 +337,7 @@ definition {
 	test LocalizeDefaultPageTemplates {
 		property test.name.skip.portal.instance = "WidgetPageTemplates#LocalizeDefaultPageTemplates";
 
-		Navigator.openSiteURL(siteName = "Global");
+		SitePages.openPagesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -384,7 +384,7 @@ definition {
 
 		Navigator.openURL();
 
-		Navigator.openSiteURL(siteName = "Global");
+		SitePages.openPagesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -398,7 +398,7 @@ definition {
 	test ViewEditedPageTemplatePageName {
 		property testray.component.names = "Page Templates";
 
-		Navigator.openSiteURL(siteName = "Global");
+		SitePages.openPagesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -415,7 +415,7 @@ definition {
 			pageTemplateName = "Page Template Name",
 			siteName = "${siteName}");
 
-		Navigator.openSiteURL(siteName = "Global");
+		SitePages.openPagesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

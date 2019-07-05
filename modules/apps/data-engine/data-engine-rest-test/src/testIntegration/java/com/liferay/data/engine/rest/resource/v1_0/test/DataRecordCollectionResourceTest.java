@@ -57,45 +57,6 @@ public class DataRecordCollectionResourceTest
 	}
 
 	@Override
-	public void testDeleteDataRecordCollection() throws Exception {
-		super.testDeleteDataRecordCollection();
-
-		DataRecordCollection dataRecordCollection1 =
-			testDeleteDataRecordCollection_addDataRecordCollection();
-
-		DataRecordCollection dataRecordCollection2 =
-			testDeleteDataRecordCollection_addDataRecordCollection();
-
-		assertHttpResponseStatusCode(
-			500,
-			_dataDefinitionResource.deleteDataDefinitionHttpResponse(
-				_dataDefinition.getId()));
-
-		assertHttpResponseStatusCode(
-			204,
-			dataRecordCollectionResource.deleteDataRecordCollectionHttpResponse(
-				dataRecordCollection1.getId()));
-
-		assertHttpResponseStatusCode(
-			204,
-			dataRecordCollectionResource.deleteDataRecordCollectionHttpResponse(
-				dataRecordCollection2.getId()));
-
-		dataRecordCollection1 =
-			testDeleteDataRecordCollection_addDataRecordCollection();
-
-		assertHttpResponseStatusCode(
-			204,
-			dataRecordCollectionResource.deleteDataRecordCollectionHttpResponse(
-				dataRecordCollection1.getId()));
-
-		assertHttpResponseStatusCode(
-			204,
-			_dataDefinitionResource.deleteDataDefinitionHttpResponse(
-				_dataDefinition.getId()));
-	}
-
-	@Override
 	@Test
 	public void testPostDataDefinitionDataRecordCollection() throws Exception {
 		super.testPostDataDefinitionDataRecordCollection();

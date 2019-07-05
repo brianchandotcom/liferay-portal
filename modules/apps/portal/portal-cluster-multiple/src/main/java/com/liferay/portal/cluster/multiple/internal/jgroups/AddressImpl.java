@@ -14,12 +14,22 @@
 
 package com.liferay.portal.cluster.multiple.internal.jgroups;
 
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+
 import org.jgroups.Address;
+import org.jgroups.util.Util;
 
 /**
  * @author Shuyang Zhou
  */
-public class AddressImpl implements com.liferay.portal.kernel.cluster.Address {
+public class AddressImpl
+	implements com.liferay.portal.kernel.cluster.Address, Externalizable {
+
+	public AddressImpl() {
+	}
 
 	public AddressImpl(Address address) {
 		_address = address;
@@ -60,12 +70,24 @@ public class AddressImpl implements com.liferay.portal.kernel.cluster.Address {
 	}
 
 	@Override
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
+		_address = Util.readAddress(objectInput);
+	}
+
+	@Override
 	public String toString() {
 		return _address.toString();
 	}
 
+	@Override
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		Util.writeAddress(_address, objectOutput);
+	}
+
 	private static final long serialVersionUID = 7969878022424426497L;
 
-	private final Address _address;
+	private Address _address;
 
 }

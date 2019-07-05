@@ -1,0 +1,85 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property ignore.errors = "Plugin security management is not enabled. Enable a security manager, then restart.";
+	property testray.main.component.name = "Upgrades Core Infrastructure";
+
+	setUp {
+		User.loginPG(
+			authenticationMethod = "By Screen Name",
+			userScreenName = "test");
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		AssertLocation(value1 = "${portalURL}/web/test/home");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+	}
+
+	@priority = "5"
+	test ViewPortalConfigurationAfterUpgrade625 {
+		property data.archive.type = "data-archive-portal-settings";
+		property database.types = "mysql";
+		property portal.version = "6.2.5";
+
+		Upgrade.viewInstanceSettings();
+	}
+
+	@priority = "5"
+	test ViewPortalConfigurationAfterUpgrade704 {
+		property data.archive.type = "data-archive-portal-settings";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.0.4";
+
+		Upgrade.viewInstanceSettings();
+
+		Upgrade.viewSystemSettings();
+	}
+
+	@priority = "5"
+	test ViewPortalConfigurationAfterUpgrade7110 {
+		property data.archive.type = "data-archive-portal-settings";
+		property portal.version = "7.1.10";
+
+		Upgrade.viewInstanceSettings();
+
+		Upgrade.viewSystemSettings();
+	}
+
+	@priority = "5"
+	test ViewPortalConfigurationAfterUpgrade70106 {
+		property data.archive.type = "data-archive-portal-settings";
+		property portal.version = "7.0.10.6";
+
+		Upgrade.viewInstanceSettings();
+
+		Upgrade.viewSystemSettings();
+	}
+
+	@priority = "5"
+	test ViewPortalConfigurationAfterUpgrade621015 {
+		property data.archive.type = "data-archive-portal-settings";
+		property database.types = "db2,mysql,oracle,sybase";
+		property portal.version = "6.2.10.15";
+
+		Upgrade.viewInstanceSettings();
+	}
+
+	@priority = "5"
+	test ViewPortalConfigurationAfterUpgrade621021 {
+		property data.archive.type = "data-archive-portal-settings";
+		property database.types = "db2,mysql,oracle,postgresql,sybase";
+		property portal.version = "6.2.10.21";
+
+		Upgrade.viewInstanceSettings();
+	}
+
+}

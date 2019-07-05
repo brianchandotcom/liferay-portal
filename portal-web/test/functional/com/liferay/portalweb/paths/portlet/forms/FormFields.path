@@ -177,7 +177,7 @@
 <!--TEXT-->
 <tr>
 	<td>REPEATABLE_TEXT_MULTILINE_FIELD</td>
-	<td>//div[contains(@class,'form-field-container')][${key_repeatableFieldNumber}]//textarea[contains(@id,'${key_fieldName}')]</td>
+	<td>//div[contains(@class,'form-group')][${key_repeatableFieldNumber}]//textarea[contains(@id,'${key_fieldName}') or contains(@name,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>

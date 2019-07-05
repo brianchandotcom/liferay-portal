@@ -144,4 +144,20 @@ definition {
 			locator1 = "SystemSettings#DROPDOWN_MENU_OPTION");
 	}
 
+	macro viewTextareaValue {
+		if (isSet(repeatableFieldNumber)) {
+			AssertTextEquals.assertValue(
+				key_fieldName = "${fieldName}",
+				key_repeatableFieldNumber = "${repeatableFieldNumber}",
+				locator1 = "FormFields#REPEATABLE_TEXT_MULTILINE_FIELD",
+				value1 = "${fieldValue}");
+		}
+		else {
+			AssertTextEquals.assertValue(
+				key_fieldName = "${fieldName}",
+				locator1 = "FormFields#TEXT_MULTILINE_FIELD",
+				value1 = "${fieldValue}");
+		}
+	}
+
 }

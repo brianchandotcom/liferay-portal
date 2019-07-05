@@ -183,7 +183,7 @@ definition {
 				orgName = "${suborgName}");
 		}
 
-		ProductMenu.gotoSite(site = "College of Agricultural Science");
+		Navigator.openSiteURL(siteName = "College of Agricultural Science");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -192,7 +192,7 @@ definition {
 
 		Site.assignUserGroupAsMemberCP(userGroupName = "Agricultural Science");
 
-		ProductMenu.gotoSite(site = "College of Business");
+		Navigator.openSiteURL(siteName = "College of Business");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -204,7 +204,7 @@ definition {
 		}
 
 		for (var siteName : list "Accounting,Business Administration") {
-			ProductMenu.gotoSite(site = "${siteName}");
+			Navigator.openSiteURL(siteName = "${siteName}");
 
 			ProductMenu.gotoPortlet(
 				category = "People",

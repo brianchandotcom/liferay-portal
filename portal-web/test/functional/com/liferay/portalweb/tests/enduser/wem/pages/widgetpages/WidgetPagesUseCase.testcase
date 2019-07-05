@@ -488,7 +488,7 @@ definition {
 			userEmailAddress = PropsUtil.get("email.address.2"),
 			userScreenName = "usersn1");
 
-		ProductMenu.gotoSite(site = "${siteName}");
+		Navigator.openSiteURL(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

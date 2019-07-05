@@ -938,7 +938,7 @@ definition {
 			Navigator.openURL();
 		}
 
-		ProductMenu.gotoSite(site = "${siteName}");
+		Navigator.openSiteURL(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",

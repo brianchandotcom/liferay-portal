@@ -66,7 +66,7 @@ definition {
 	test AddXSL {
 		property test.name.skip.portal.instance = "XSL#AddXSL";
 
-		ProductMenu.gotoSite(site = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -86,7 +86,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		ProductMenu.gotoSite(site = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -106,7 +106,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		ProductMenu.gotoSite(site = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -182,7 +182,7 @@ definition {
 		property ignore.errors = "must be terminated by the matching end-tag";
 		property test.name.skip.portal.instance = "XSL#ConfigurePortletWithCorruptXML";
 
-		ProductMenu.gotoSite(site = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -202,7 +202,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		ProductMenu.gotoSite(site = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -222,7 +222,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		ProductMenu.gotoSite(site = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -288,7 +288,7 @@ definition {
 		property ignore.errors = "must be terminated by the matching end-tag";
 		property test.name.skip.portal.instance = "XSL#ConfigurePortletWithCorruptXSL";
 
-		ProductMenu.gotoSite(site = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -308,7 +308,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		ProductMenu.gotoSite(site = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -328,7 +328,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		ProductMenu.gotoSite(site = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -393,7 +393,7 @@ definition {
 	test ConfigurePortletWithIncorrectVersionXmlAndXsl {
 		property test.name.skip.portal.instance = "XSL#ConfigurePortletWithIncorrectVersionXmlAndXsl";
 
-		ProductMenu.gotoSite(site = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -413,7 +413,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		ProductMenu.gotoSite(site = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -433,7 +433,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		ProductMenu.gotoSite(site = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

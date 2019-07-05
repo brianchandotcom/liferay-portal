@@ -169,7 +169,7 @@ definition {
 	}
 
 	macro gotoSiteTeamsCP {
-		ProductMenu.gotoSite(site = "${siteScopeName}");
+		Navigator.openSiteURL(siteName = "${siteScopeName}");
 
 		ProductMenu.gotoPortlet(
 			category = "People",

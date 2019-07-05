@@ -35,7 +35,7 @@ definition {
 			siteName = "Fjord Theme Site",
 			siteTemplateName = "Fjord");
 
-		ProductMenu.gotoSite(site = "Fjord Theme Site");
+		Navigator.openSiteURL(siteName = "Fjord Theme Site");
 
 		AssertClick(
 			key_pageName = "Home",

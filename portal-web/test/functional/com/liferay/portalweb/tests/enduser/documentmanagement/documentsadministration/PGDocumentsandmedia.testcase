@@ -1554,7 +1554,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name 1");
 
-		ProductMenu.gotoSite(site = "Site Name 1");
+		Navigator.openSiteURL(siteName = "Site Name 1");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -1563,7 +1563,7 @@ definition {
 
 		Site.assignUserGroupAsMemberCP(userGroupName = "UG UserGroup Name");
 
-		ProductMenu.gotoSite(site = "Site Name 1");
+		Navigator.openSiteURL(siteName = "Site Name 1");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -1574,7 +1574,7 @@ definition {
 			teamDescription = "Site Team Description",
 			teamName = "Site Team Name");
 
-		ProductMenu.gotoSite(site = "Site Name 1");
+		Navigator.openSiteURL(siteName = "Site Name 1");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -1585,7 +1585,7 @@ definition {
 			teamName = "Site Team Name",
 			userGroupName = "UG UserGroup Name");
 
-		ProductMenu.gotoSite(site = "Site Name 1");
+		Navigator.openSiteURL(siteName = "Site Name 1");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -1710,7 +1710,7 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		ProductMenu.gotoSite(site = "Site Name 1");
+		Navigator.openSiteURL(siteName = "Site Name 1");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

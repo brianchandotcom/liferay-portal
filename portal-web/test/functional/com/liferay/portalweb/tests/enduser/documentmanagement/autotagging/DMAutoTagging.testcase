@@ -115,7 +115,7 @@ definition {
 			groupName = "Site AutoTag Disabled",
 			layoutName = "AutoTag Disabled Site Page");
 
-		ProductMenu.gotoSite(site = "Site AutoTag Disabled");
+		Navigator.openSiteURL(siteName = "Site AutoTag Disabled");
 
 		AutoTagging.disableAutoTagging(disableAutoTaggingFor = "Settings");
 

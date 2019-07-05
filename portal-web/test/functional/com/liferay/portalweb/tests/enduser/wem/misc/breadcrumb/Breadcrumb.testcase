@@ -83,7 +83,7 @@ definition {
 			childPageName = "Child Page Name",
 			parentPageName = "Parent Page Name");
 
-		ProductMenu.gotoSite(site = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		Page.gotoChildPagePG(
 			childPageName = "Child Page Name",
@@ -255,7 +255,7 @@ definition {
 			childPageName = "Child Page Name",
 			parentPageName = "Parent Page Name");
 
-		ProductMenu.gotoSite(site = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		Page.gotoChildPagePG(
 			childPageName = "Child Page Name",
@@ -393,7 +393,7 @@ definition {
 			childPageName = "Child Page Name",
 			parentPageName = "Parent Page Name");
 
-		ProductMenu.gotoSite(site = "Child SiteName");
+		Navigator.openSiteURL(siteName = "Child SiteName");
 
 		Page.gotoChildPagePG(
 			childPageName = "Child Page Name",
@@ -438,7 +438,7 @@ definition {
 			childPageName = "Child Page Name",
 			parentPageName = "Home");
 
-		ProductMenu.gotoSite(site = "${siteName}");
+		Navigator.openSiteURL(siteName = "${siteName}");
 
 		Page.gotoChildPagePG(
 			childPageName = "Child Page Name",
@@ -480,7 +480,7 @@ definition {
 			childPageName = "Child Page Name",
 			parentPageName = "Home");
 
-		ProductMenu.gotoSite(site = "${siteName}");
+		Navigator.openSiteURL(siteName = "${siteName}");
 
 		Page.gotoChildPagePG(
 			childPageName = "Child Page Name",
@@ -523,7 +523,7 @@ definition {
 			childPageName = "Child Page Name",
 			parentPageName = "Home");
 
-		ProductMenu.gotoSite(site = "${siteName}");
+		Navigator.openSiteURL(siteName = "${siteName}");
 
 		Page.gotoChildPagePG(
 			childPageName = "Child Page Name",

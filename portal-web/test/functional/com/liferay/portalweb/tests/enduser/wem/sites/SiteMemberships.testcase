@@ -166,7 +166,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoSite(site = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -281,7 +281,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoSite(site = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -293,7 +293,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoSite(site = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -307,7 +307,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoSite(site = "Child SiteName");
+		Navigator.openSiteURL(siteName = "Child SiteName");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -319,7 +319,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoSite(site = "Child SiteName");
+		Navigator.openSiteURL(siteName = "Child SiteName");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -333,7 +333,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoSite(site = "Child SiteName");
+		Navigator.openSiteURL(siteName = "Child SiteName");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -346,7 +346,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoSite(site = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -359,7 +359,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoSite(site = "Child SiteName");
+		Navigator.openSiteURL(siteName = "Child SiteName");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -405,7 +405,7 @@ definition {
 
 		Organization.addSiteCP(orgName = "Organization Name 1");
 
-		ProductMenu.gotoSite(site = "Organization Name 1");
+		Navigator.openSiteURL(siteName = "Organization Name 1");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -465,7 +465,7 @@ definition {
 			allowManualMembershipManagement = "true",
 			orgName = "Organization Name 1");
 
-		ProductMenu.gotoSite(site = "Organization Name 1");
+		Navigator.openSiteURL(siteName = "Organization Name 1");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -492,7 +492,7 @@ definition {
 			orgName = "Organization Name 3",
 			orgType = "Organization");
 
-		ProductMenu.gotoSite(site = "Organization Name 1");
+		Navigator.openSiteURL(siteName = "Organization Name 1");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -504,7 +504,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoSite(site = "Organization Name 1");
+		Navigator.openSiteURL(siteName = "Organization Name 1");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -513,7 +513,7 @@ definition {
 
 		Site.assignOrganizationAsMemberCP(orgName = "Organization Name 2");
 
-		ProductMenu.gotoSite(site = "Organization Name 1");
+		Navigator.openSiteURL(siteName = "Organization Name 1");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -522,7 +522,7 @@ definition {
 
 		Site.viewMemberOrganizationCP(orgName = "Organization Name 2");
 
-		ProductMenu.gotoSite(site = "Organization Name 1");
+		Navigator.openSiteURL(siteName = "Organization Name 1");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -531,7 +531,7 @@ definition {
 
 		Site.assignOrganizationAsMemberCP(orgName = "Organization Name 3");
 
-		ProductMenu.gotoSite(site = "Organization Name 1");
+		Navigator.openSiteURL(siteName = "Organization Name 1");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -574,7 +574,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoSite(site = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -683,7 +683,7 @@ definition {
 
 		Site.addAllMembersCP();
 
-		ProductMenu.gotoSite(site = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -1002,7 +1002,7 @@ definition {
 
 		User.logoutAndLoginPG(userLoginFullName = "Test Test");
 
-		ProductMenu.gotoSite(site = "Site Name 1");
+		Navigator.openSiteURL(siteName = "Site Name 1");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -1013,7 +1013,7 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln");
 
-		ProductMenu.gotoSite(site = "Site Name 2");
+		Navigator.openSiteURL(siteName = "Site Name 2");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -1042,7 +1042,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoSite(site = "${siteName}");
+		Navigator.openSiteURL(siteName = "${siteName}");
 
 		AssertNotVisible(
 			locator1 = "ControlMenu#ADMIN_SITE_ADMINISTRATION_USERS",

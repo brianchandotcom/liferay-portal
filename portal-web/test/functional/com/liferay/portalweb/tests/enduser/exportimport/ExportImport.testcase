@@ -507,7 +507,7 @@ definition {
 		property portal.release = "false";
 		property test.name.skip.portal.instance = "ExportImport#ExportImportGlobalDDMStructureViaInstances";
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
+		SitePages.openPagesAdmin(siteURLKey = "Global");
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
@@ -566,7 +566,7 @@ definition {
 		property test.name.skip.portal.instance = "ExportImport#ExportImportGlobalPagesViaInstances";
 		property portal.release = "false";
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
+		SitePages.openPagesAdmin(siteURLKey = "Global");
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
@@ -989,7 +989,7 @@ definition {
 			groupName = "Site Name A",
 			title = "Web Content Title");
 
-		ProductMenu.gotoSite(site = "Site Name A");
+		Navigator.openSiteURL(siteName = "Site Name A");
 
 		LAR.exportSiteCP();
 

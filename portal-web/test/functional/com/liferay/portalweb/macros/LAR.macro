@@ -119,7 +119,7 @@ definition {
 
 	macro _gotoExportSite {
 		if (isSet(siteScopeName)) {
-			ProductMenu.gotoSite(site = "${siteScopeName}");
+			Navigator.openSiteURL(siteName = "${siteScopeName}");
 		}
 
 		ProductMenu.gotoPortlet(
@@ -130,7 +130,7 @@ definition {
 
 	macro _gotoImportSite {
 		if (isSet(siteName)) {
-			ProductMenu.gotoSite(site = "${siteName}");
+			Navigator.openSiteURL(siteName = "${siteName}");
 		}
 
 		ProductMenu.gotoPortlet(

@@ -33,7 +33,7 @@ definition {
 			pageVersioningEnabled = "true",
 			siteName = "Staging Site Name");
 
-		ProductMenu.gotoSite(site = "Staging Site Name");
+		Navigator.openSiteURL(siteName = "Staging Site Name");
 	}
 
 	tearDown {

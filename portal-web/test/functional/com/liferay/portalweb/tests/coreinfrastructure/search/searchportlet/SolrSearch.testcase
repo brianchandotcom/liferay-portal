@@ -637,7 +637,7 @@ definition {
 
 		Site.addBlankCP(siteName = "Test Site");
 
-		ProductMenu.gotoSite(site = "Test Site");
+		Navigator.openSiteURL(siteName = "Test Site");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1611,7 +1611,7 @@ definition {
 
 		var newSiteId = JSONGroup._getSiteIdByGroupName(groupName = "New Site");
 
-		ProductMenu.gotoSite(site = "New Site");
+		Navigator.openSiteURL(siteName = "New Site");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

@@ -787,7 +787,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Moon Rocks 101");
 
-		ProductMenu.gotoSite(site = "Moon Rocks 101");
+		Navigator.openSiteURL(siteName = "Moon Rocks 101");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
@@ -811,7 +811,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoSite(site = "Moon Rocks 101");
+		Navigator.openSiteURL(siteName = "Moon Rocks 101");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -894,7 +894,7 @@ definition {
 
 		Refresh();
 
-		ProductMenu.gotoSite(site = "Moon Rocks 101");
+		Navigator.openSiteURL(siteName = "Moon Rocks 101");
 
 		User.logoutPG();
 
@@ -1228,7 +1228,7 @@ definition {
 			layoutName = "Documents and Media Page - Global",
 			widgetName = "Documents and Media");
 
-		ProductMenu.gotoSite(site = "Global");
+		Navigator.openSiteURL(siteName = "Global");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1245,7 +1245,7 @@ definition {
 			dmFolderDescription = "DM SubFolder Description",
 			dmFolderName = "DM SubFolder Name");
 
-		ProductMenu.gotoSite(site = "Global");
+		Navigator.openSiteURL(siteName = "Global");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1320,7 +1320,7 @@ definition {
 			siteName = "DM Site Name",
 			siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoSite(site = "DM Site Name");
+		Navigator.openSiteURL(siteName = "DM Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "DM Site Page Name - Global",
@@ -1505,7 +1505,7 @@ definition {
 			userName = "userfn userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoSite(site = "Organization Name");
+		Navigator.openSiteURL(siteName = "Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

@@ -235,7 +235,7 @@ definition {
 				userScreenName = "usersn");
 		}
 
-		ProductMenu.gotoSite(site = "Site A");
+		Navigator.openSiteURL(siteName = "Site A");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -248,7 +248,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		ProductMenu.gotoSite(site = "Site C");
+		Navigator.openSiteURL(siteName = "Site C");
 
 		ProductMenu.gotoPortlet(
 			category = "People",

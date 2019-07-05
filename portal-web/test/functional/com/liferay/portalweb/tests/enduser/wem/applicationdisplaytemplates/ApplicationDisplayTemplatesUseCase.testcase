@@ -279,7 +279,7 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Categories,Content and Application Templates";
 
-		ProductMenu.gotoSite(site = "Test Site Name");
+		Navigator.openSiteURL(siteName = "Test Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
@@ -493,7 +493,7 @@ definition {
 	test ADTStagingCategoriesNavigation {
 		property testray.component.names = "Categories,Content and Application Templates,Staging";
 
-		ProductMenu.gotoSite(site = "Test Site Name");
+		Navigator.openSiteURL(siteName = "Test Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",

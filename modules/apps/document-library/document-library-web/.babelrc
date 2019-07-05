@@ -1,5 +1,5 @@
 {
 	"ignore": [
-		"**/document_library/js/*.js"
+		"**/document_library/js/legacy/*.js"
 	]
 }

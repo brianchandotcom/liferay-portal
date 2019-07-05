@@ -16,7 +16,7 @@
 	AUI().applyConfig({
 		groups: {
 			dl: {
-				base: MODULE_PATH + '/document_library/js/',
+				base: MODULE_PATH + '/document_library/js/legacy/',
 				combine: Liferay.AUI.getCombine(),
 				filter: Liferay.AUI.getFilterConfig(),
 				modules: {
@@ -54,7 +54,7 @@
 						]
 					}
 				},
-				root: MODULE_PATH + '/document_library/js/'
+				root: MODULE_PATH + '/document_library/js/legacy/'
 			}
 		}
 	});

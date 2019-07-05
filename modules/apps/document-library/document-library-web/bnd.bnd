@@ -5,7 +5,7 @@ Import-Package:\
 	org.apache.xerces.parsers,\
 	\
 	*
-Liferay-JS-Config: /META-INF/resources/document_library/js/config.js
+Liferay-JS-Config: /META-INF/resources/document_library/js/legacy/config.js
 Provide-Capability:\
 	soy;\
 		type="document-library-web";\

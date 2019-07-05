@@ -77,7 +77,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 
 		<soy:component-renderer
 			context="<%= context %>"
-			module="document_library/bulk/BulkStatus.es"
+			module="document_library/js/bulk/BulkStatus.es"
 			templateNamespace="com.liferay.document.library.web.BulkStatus.render"
 		/>
 
@@ -308,14 +308,14 @@ String navigation = ParamUtil.getString(request, "navigation");
 			componentId='<%= liferayPortletResponse.getNamespace() + "EditTagsComponent" %>'
 			containerId='<%= "#" + liferayPortletResponse.getNamespace() + "documentLibraryModal" %>'
 			context="<%= tagsContext %>"
-			module="document_library/categorization/EditTags.es"
+			module="document_library/js/categorization/EditTags.es"
 		/>
 
 		<liferay-frontend:component
 			componentId='<%= liferayPortletResponse.getNamespace() + "EditCategoriesComponent" %>'
 			containerId='<%= "#" + liferayPortletResponse.getNamespace() + "documentLibraryModal" %>'
 			context="<%= categoriesContext %>"
-			module="document_library/categorization/EditCategories.es"
+			module="document_library/js/categorization/EditCategories.es"
 		/>
 
 		<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view.jsp#post" />

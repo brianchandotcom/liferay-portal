@@ -169,6 +169,13 @@ public class SegmentsExperienceLocalServiceImpl
 				});
 		}
 
+		// Segments experiments
+
+		segmentsExperimentLocalService.deleteSegmentsExperiments(
+			segmentsExperience.getSegmentsExperienceId(),
+			segmentsExperience.getClassNameId(),
+			segmentsExperience.getClassPK());
+
 		// Resources
 
 		resourceLocalService.deleteResource(
@@ -190,6 +197,12 @@ public class SegmentsExperienceLocalServiceImpl
 			segmentsExperienceLocalService.deleteSegmentsExperience(
 				segmentsExperience.getSegmentsExperienceId());
 		}
+
+		// Segments experiments of default experience
+
+		segmentsExperimentLocalService.deleteSegmentsExperiments(
+			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT, classNameId,
+			classPK);
 	}
 
 	@Override

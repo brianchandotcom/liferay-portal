@@ -181,7 +181,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 							urlLabel = LanguageUtil.format(request, "version-x-url", fileVersion.getVersion());
 						}
 
-						String urlInputId = liferayPortletResponse.getNamespace() + "inputUrl";
+						String urlInputId = liferayPortletResponse.getNamespace() + "urlInput";
 
 						Map<String, String> urlButtonData = new HashMap<>();
 
@@ -219,15 +219,15 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 								webDavHelpMessage = LanguageUtil.format(request, "webdav-help", "https://dev.liferay.com/discover/portal/-/knowledge_base/7-0/publishing-files#desktop-access-to-documents-and-media", false);
 							}
 
-							String webDavInputId = liferayPortletResponse.getNamespace() + "inputwebDavURL";
+							String webDavURLInputId = liferayPortletResponse.getNamespace() + "webDavURLInput";
 
 							Map<String, String> webDavButtonData = new HashMap<>();
 
-							webDavButtonData.put("clipboard-target", "#" + webDavInputId);
+							webDavButtonData.put("clipboard-target", "#" + webDavURLInputId);
 							%>
 
 							<div class="form-group">
-								<label for="<%= webDavInputId %>">
+								<label for="<%= webDavURLInputId %>">
 									<liferay-ui:message key='<%= TextFormatter.format("webDavURL", TextFormatter.K) %>' />
 
 									<liferay-ui:icon-help message="<%= webDavHelpMessage %>" />
@@ -235,7 +235,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 
 								<div class="input-group input-group-sm">
 									<div class="input-group-item input-group-prepend">
-										<input class="form-control" id="<%= webDavInputId %>" value="<%= DLURLHelperUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry) %>" />
+										<input class="form-control" id="<%= webDavURLInputId %>" value="<%= DLURLHelperUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry) %>" />
 									</div>
 
 									<span class="input-group-append input-group-item input-group-item-shrink">

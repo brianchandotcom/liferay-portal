@@ -20,6 +20,8 @@ import {Config} from 'metal-state';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './FloatingToolbar.soy';
 
+import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
+
 /**
  * @type {object}
  */
@@ -118,6 +120,21 @@ class FloatingToolbar extends Component {
 	}
 
 	/**
+	 * Gets the height of the element matching the selector
+	 * Defaults to 0
+	 * @param {string} selector
+	 */
+	static _getElementHeight(selector) {
+		const element = document.querySelector(selector);
+
+		if (element) {
+			return element.offsetHeight;
+		}
+
+		return 0;
+	}
+
+	/**
 	 * @inheritdoc
 	 * @review
 	 */
@@ -125,6 +142,15 @@ class FloatingToolbar extends Component {
 		this._defaultButtonClicked = this._defaultButtonClicked.bind(this);
 		this._handleWindowResize = this._handleWindowResize.bind(this);
 		this._handleWrapperScroll = this._handleWrapperScroll.bind(this);
+
+		this._lastSelectedPanelId = this.selectedPanelId;
+
+		this._managementBarHeight = FloatingToolbar._getElementHeight(
+			'.management-bar'
+		);
+		this._productMenuHeight = FloatingToolbar._getElementHeight(
+			'.control-menu'
+		);
 
 		window.addEventListener('resize', this._handleWindowResize);
 
@@ -164,26 +190,28 @@ class FloatingToolbar extends Component {
 	 * @inheritdoc
 	 * @review
 	 */
-	rendered() {
-		this._align();
+	prepareStateForRender(state) {
+		let nextState = state;
 
-		requestAnimationFrame(() => {
-			this._align();
-			this._setFixedPanelClass();
-		});
+		nextState = setIn(
+			nextState,
+			['selectedPanelId'],
+			this._isAnchorElementVisible() ? state.selectedPanelId : null
+		);
+
+		return nextState;
 	}
 
 	/**
-	 * @param {string} selectedPanelId
-	 * @return {string}
+	 * @inheritdoc
 	 * @review
 	 */
-	syncSelectedPanelId(selectedPanelId) {
-		this._selectedPanel = this.buttons.find(
-			button => button.panelId === selectedPanelId
-		);
+	rendered() {
+		this._setFixedPanelClass();
 
-		return selectedPanelId;
+		requestAnimationFrame(() => {
+			this._align();
+		});
 	}
 
 	/**
@@ -200,6 +228,22 @@ class FloatingToolbar extends Component {
 				this.selectedPanelId = null;
 			} else {
 				this.selectedPanelId = panelId;
+				this._lastSelectedPanelId = panelId;
+			}
+		}
+	}
+	/**
+	 * Controls the visibility of the panel.
+	 * The panel will be shown only when the anchor element is visible
+	 * @private
+	 * @review
+	 */
+	_handlePanelVisibilityOnScroll() {
+		if (!this._isAnchorElementVisible()) {
+			this.selectedPanelId = null;
+		} else {
+			if (this._lastSelectedPanelId && !this.selectedPanelId) {
+				this.selectedPanelId = this._lastSelectedPanelId;
 			}
 		}
 	}
@@ -231,6 +275,27 @@ class FloatingToolbar extends Component {
 	 */
 	_handleWrapperScroll() {
 		this._align();
+		this._handlePanelVisibilityOnScroll();
+	}
+
+	/**
+	 * Check whether the anchor element is visible or not
+	 * @private
+	 * @review
+	 */
+	_isAnchorElementVisible() {
+		if (this.anchorElement) {
+			const anchorElementRect = this.anchorElement.getBoundingClientRect();
+			const anchorElementBottom =
+				anchorElementRect.y + anchorElementRect.height;
+
+			return (
+				anchorElementBottom >
+				this._productMenuHeight + this._managementBarHeight
+			);
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -239,27 +304,25 @@ class FloatingToolbar extends Component {
 	 * @review
 	 */
 	_align() {
-		requestAnimationFrame(() => {
-			if (this.refs.buttons && this.anchorElement) {
-				const buttonsAlign = FloatingToolbar._getElementAlign(
-					this.refs.panel || this.refs.buttons,
-					this.anchorElement
-				);
+		if (this.refs.buttons && this.anchorElement) {
+			const buttonsAlign = FloatingToolbar._getElementAlign(
+				this.refs.panel || this.refs.buttons,
+				this.anchorElement
+			);
 
-				Align.align(
-					this.refs.buttons,
-					this.anchorElement,
-					buttonsAlign,
-					false
-				);
+			Align.align(
+				this.refs.buttons,
+				this.anchorElement,
+				buttonsAlign,
+				false
+			);
 
-				requestAnimationFrame(() => {
-					this._alignPanel();
-				});
-			} else if (this.anchorElement) {
+			requestAnimationFrame(() => {
 				this._alignPanel();
-			}
-		});
+			});
+		} else if (this.anchorElement) {
+			this._alignPanel();
+		}
 	}
 
 	/**
@@ -302,18 +365,6 @@ class FloatingToolbar extends Component {
  * @type {!Object}
  */
 FloatingToolbar.STATE = {
-	/**
-	 * Selected panel
-	 * @default null
-	 * @instance
-	 * @memberof FloatingToolbar
-	 * @review
-	 * @type {object|null}
-	 */
-	_selectedPanel: Config.object()
-		.internal()
-		.value(null),
-
 	/**
 	 * Element where the floating toolbar is positioned with
 	 * @default undefined
@@ -364,7 +415,44 @@ FloatingToolbar.STATE = {
 	 */
 	selectedPanelId: Config.string()
 		.internal()
-		.value(null)
+		.value(null),
+
+	/**
+	 * Used for restoring the panel after hiding it
+	 * @default null
+	 * @instance
+	 * @memberOf FloatingToolbar
+	 * @private
+	 * @review
+	 * @type {string|null}
+	 */
+	_lastSelectedPanelId: Config.string()
+		.internal()
+		.value(null),
+
+	/**
+	 * @default 0
+	 * @instance
+	 * @memberOf FloatingToolbar
+	 * @private
+	 * @review
+	 * @type {number}
+	 */
+	_managementBarHeight: Config.number()
+		.internal()
+		.value(0),
+
+	/**
+	 * @default 0
+	 * @instance
+	 * @memberOf FloatingToolbar
+	 * @private
+	 * @review
+	 * @type {number}
+	 */
+	_productMenuHeight: Config.number()
+		.internal()
+		.value(0)
 };
 
 const ConnectedFloatingToolbar = getConnectedComponent(FloatingToolbar, [

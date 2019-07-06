@@ -135,29 +135,30 @@ public class LiferayWriter
 	}
 
 	@Override
-	public void write(Object indexedRecordDatum) throws IOException {
-		if ((indexedRecordDatum == null) ||
-			!(indexedRecordDatum instanceof IndexedRecord)) {
+	public void write(Object object) throws IOException {
+		if (!(object instanceof IndexedRecord)) {
+			IllegalArgumentException iae = new IllegalArgumentException(
+				"Method argument must not be null");
 
-			if (_logger.isDebugEnabled()) {
-				if (indexedRecordDatum != null) {
-					_logger.debug(
-						"Unable to process incoming data row: " +
-							indexedRecordDatum.toString());
-				}
-				else {
-					_logger.debug("Skipping NULL data row");
-				}
+			if (object != null) {
+				iae = new IllegalArgumentException(
+					String.format(
+						"Method expected argument instance of %s but actual " +
+							"instance passed wads %s",
+						IndexedRecord.class, object.getClass()));
 			}
+
+			_handleFailedIndexedRecord(iae);
+
+			_logger.error("Unable to write record " + object);
 
 			return;
 		}
 
-		IndexedRecord indexedRecord = (IndexedRecord)indexedRecordDatum;
+		IndexedRecord indexedRecord = (IndexedRecord)object;
 		cleanWrites();
 
-		Action action =
-			_tLiferayOutputProperties.resource.operations.getValue();
+		Action action = _tLiferayOutputProperties.getConfiguredAction();
 
 		try {
 			if (Action.Delete == action) {
@@ -171,7 +172,7 @@ public class LiferayWriter
 			}
 			else {
 				throw TalendRuntimeException.createUnexpectedException(
-					"Unexpected Operation in Output component");
+					"Unsupported write action " + action);
 			}
 
 			_handleSuccessRecord(indexedRecord);
@@ -181,7 +182,7 @@ public class LiferayWriter
 				_logger.debug(e.getMessage(), e);
 			}
 
-			_handleRejectRecord(indexedRecord, e);
+			_handleFailedIndexedRecord(indexedRecord, e);
 		}
 
 		_result.totalCount++;
@@ -322,8 +323,14 @@ public class LiferayWriter
 		return objectBuilder.build();
 	}
 
-	private void _handleRejectRecord(
-			IndexedRecord indexedRecord, Exception exception)
+	private void _handleFailedIndexedRecord(Exception exception)
+		throws IOException {
+
+		_handleFailedIndexedRecord(null, exception);
+	}
+
+	private void _handleFailedIndexedRecord(
+			IndexedRecord failedIndexedRecord, Exception exception)
 		throws IOException {
 
 		if (_dieOnError) {
@@ -332,46 +339,45 @@ public class LiferayWriter
 
 		_result.rejectCount++;
 
-		Schema currentRecordSchema = indexedRecord.getSchema();
+		if (failedIndexedRecord == null) {
+			_logger.error("Unable to reject null instance of indexed record");
 
-		List<Schema.Field> currentRecordSchemaFields =
-			currentRecordSchema.getFields();
+			return;
+		}
 
-		List<Schema.Field> rejectSchemaFields = _rejectSchema.getFields();
+		Schema failedIndexedRecordSchema = failedIndexedRecord.getSchema();
 
-		int additionRejectSchemaFieldsSize =
-			TLiferayOutputProperties.rejectSchemaFieldNames.size();
-
-		if (rejectSchemaFields.isEmpty() ||
-			((currentRecordSchemaFields.size() +
-				additionRejectSchemaFieldsSize) != rejectSchemaFields.size())) {
-
+		if (!_matchesRejectSchemaSize(failedIndexedRecordSchema)) {
 			_logger.error("Reject schema was not setup properly");
 
 			return;
 		}
 
-		IndexedRecord errorIndexedRecord = new GenericData.Record(
+		List<Schema.Field> failedIndexedRecordSchemaFields =
+			failedIndexedRecordSchema.getFields();
+
+		IndexedRecord rejectIndexedRecord = new GenericData.Record(
 			_rejectSchema);
 
-		for (Schema.Field field : currentRecordSchemaFields) {
+		for (Schema.Field field : failedIndexedRecordSchemaFields) {
 			Schema.Field rejectField = _rejectSchema.getField(field.name());
 
 			if (rejectField != null) {
 				int pos = rejectField.pos();
 
-				errorIndexedRecord.put(pos, indexedRecord.get(field.pos()));
+				rejectIndexedRecord.put(
+					pos, failedIndexedRecord.get(field.pos()));
 			}
 		}
 
 		Schema.Field errorField = _rejectSchema.getField(
 			SchemaConstants.FIELD_ERROR_MESSAGE);
 
-		errorIndexedRecord.put(
+		rejectIndexedRecord.put(
 			errorField.pos(),
 			_stringStringConverter.convertToAvro(exception.getMessage()));
 
-		_rejectWrites.add(errorIndexedRecord);
+		_rejectWrites.add(rejectIndexedRecord);
 	}
 
 	private void _handleSuccessRecord(IndexedRecord indexedRecord) {
@@ -385,6 +391,27 @@ public class LiferayWriter
 		}
 
 		return false;
+	}
+
+	private boolean _matchesRejectSchemaSize(Schema failedIndexedRecordSchema) {
+		List<Schema.Field> rejectSchemaFields = _rejectSchema.getFields();
+
+		if (rejectSchemaFields.isEmpty()) {
+			return false;
+		}
+
+		List<Schema.Field> failedIndexedRecordSchemaFields =
+			failedIndexedRecordSchema.getFields();
+
+		int availableFieldsCount =
+			failedIndexedRecordSchemaFields.size() +
+				_tLiferayOutputProperties.getRejectSchemaExtraFieldsCount();
+
+		if (availableFieldsCount != rejectSchemaFields.size()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

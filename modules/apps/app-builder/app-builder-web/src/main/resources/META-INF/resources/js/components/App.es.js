@@ -12,10 +12,22 @@
  * details.
  */
 
-import App from './components/App.es';
+import CustomObject from './CustomObject.es';
+import CustomObjectsList from './CustomObjectsList.es';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {Route, HashRouter as Router, Switch} from 'react-router-dom';
 
-export default function(id) {
-	ReactDOM.render(<App />, document.getElementById(id));
+export default function App() {
+	return (
+		<Router>
+			<Switch>
+				<Route exact path='/' component={CustomObjectsList} />
+
+				<Route
+					path='/custom-object/:dataDefinitionId'
+					component={CustomObject}
+				/>
+			</Switch>
+		</Router>
+	);
 }

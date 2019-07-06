@@ -4,12 +4,12 @@
 		"@clayui/drop-down": "^3.0.0-milestone.1",
 		"@clayui/icon": "^3.0.0-milestone.1",
 		"@clayui/pagination": "^3.0.0-milestone.1",
-		"@clayui/select": "^3.0.0-milestone.1",
 		"@clayui/table": "^3.0.0-milestone.1",
 		"axios": "^0.19.0",
 		"moment": "^2.24.0",
 		"react": "^16.8.6",
-		"react-dom": "^16.8.6"
+		"react-dom": "^16.8.6",
+		"react-router-dom": "^5.0.1"
 	},
 	"description": "",
 	"main": "js/index.es.js",

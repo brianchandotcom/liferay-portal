@@ -12,6 +12,7 @@
  * details.
  */
 
+import EmptyState from './EmptyState.es';
 import PageSize from './PageSize.es';
 import Pagination from './Pagination.es';
 import React, {Fragment, useState} from 'react';
@@ -19,14 +20,12 @@ import Table from './Table.es';
 import {useResource} from '@clayui/data-provider';
 
 export default function SearchContainer(props) {
-	const {columns, endpoint, formatter} = props;
+	const {columns, emptyState, endpoint, formatter} = props;
 
 	const [state, setState] = useState({
 		page: 1,
 		pageSize: 20
 	});
-
-	const {page, pageSize} = state;
 
 	const {resource, refetch} = useResource({
 		link: endpoint,
@@ -43,6 +42,8 @@ export default function SearchContainer(props) {
 	if (resource) {
 		({items, totalCount, lastPage: totalPages} = resource);
 	}
+
+	const {page, pageSize} = state;
 
 	const actions = props.actions.map(action => ({
 		...action,
@@ -62,6 +63,10 @@ export default function SearchContainer(props) {
 		}
 	}));
 
+	if (!items || items.length === 0) {
+		return <EmptyState {...emptyState} />;
+	}
+
 	return (
 		<Fragment>
 			<Table
@@ -69,6 +74,7 @@ export default function SearchContainer(props) {
 				columns={columns}
 				rows={formatter(items)}
 			/>
+
 			<PageSize
 				itemsCount={items.length}
 				onPageSizeChange={pageSize => setState({page: 1, pageSize})}
@@ -76,6 +82,7 @@ export default function SearchContainer(props) {
 				pageSize={pageSize}
 				totalCount={totalCount}
 			/>
+
 			<Pagination
 				page={page}
 				onPageChange={page =>

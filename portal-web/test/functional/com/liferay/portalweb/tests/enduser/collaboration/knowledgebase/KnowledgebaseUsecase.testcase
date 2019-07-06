@@ -141,6 +141,70 @@ definition {
 			kbStatus = "Draft");
 	}
 
+	@description = "This test covers LPS-91303. It ensures that the configured KB root folder is available for selection."
+	@priority = "3"
+	test ConfiguredKBRootFolder {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page",
+			widgetName = "Knowledge Base Display");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Home Article",
+			kbArticleTitle = "Knowledge Base Home Article");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder 1 Description",
+			kbFolderName = "KB Folder 1");
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder 1");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Folder 1 Content 1",
+			kbArticleTitle = "Knowledge Base Article Folder 1 Title 1");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBFolder.addCP(
+			kbFolderDescription = "KB Folder 2 Description",
+			kbFolderName = "KB Folder 2");
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder 2");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Folder 2 Content 1",
+			kbArticleTitle = "Knowledge Base Article Folder 2 Title 1");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBFolder.gotoViaKBDisplayPG(kbFolderName = "KB Folder 1");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Folder 1 Content 1",
+			kbArticleTitle = "Knowledge Base Article Folder 1 Title 1");
+
+		KBFolder.gotoViaKBDisplayPG(kbFolderName = "Home");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Home Article",
+			kbArticleTitle = "Knowledge Base Home Article");
+
+		KBFolder.gotoViaKBDisplayPG(kbFolderName = "KB Folder 2");
+
+		KBArticle.viewViaKBDisplayPG(
+			kbArticleContent = "Knowledge Base Article Folder 2 Content 1",
+			kbArticleTitle = "Knowledge Base Article Folder 2 Title 1");
+	}
+
 	@priority = "5"
 	test DeleteConfiguredKBFolder {
 		property portal.acceptance = "true";

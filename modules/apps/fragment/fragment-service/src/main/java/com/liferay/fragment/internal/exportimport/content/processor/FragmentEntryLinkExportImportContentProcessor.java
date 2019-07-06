@@ -211,15 +211,17 @@ public class FragmentEntryLinkExportImportContentProcessor
 				SegmentsExperiencePortletUtil.getSegmentsExperienceId(
 					portletPreferences.getPortletId());
 
-			if (segmentsExperienceId > 0) {
-				SegmentsExperience segmentsExperience =
-					_segmentsExperienceLocalService.getSegmentsExperience(
-						segmentsExperienceId);
+			SegmentsExperience segmentsExperience =
+				_segmentsExperienceLocalService.fetchSegmentsExperience(
+					segmentsExperienceId);
 
-				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, fragmentEntryLink, segmentsExperience,
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+			if (segmentsExperience == null) {
+				continue;
 			}
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, fragmentEntryLink, segmentsExperience,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
 	}
 
@@ -456,15 +458,13 @@ public class FragmentEntryLinkExportImportContentProcessor
 				editableKey.substring(
 					SegmentsConstants.SEGMENTS_EXPERIENCE_ID_PREFIX.length()));
 
-			if (segmentsExperienceId ==
-					SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT) {
-
-				continue;
-			}
-
 			SegmentsExperience segmentsExperience =
 				_segmentsExperienceLocalService.fetchSegmentsExperience(
 					segmentsExperienceId);
+
+			if (segmentsExperience == null) {
+				continue;
+			}
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, stagedModel, segmentsExperience,

@@ -60,9 +60,41 @@ public class TLiferayOutputProperties
 		super(name);
 	}
 
+	public Action getConfiguredAction() {
+		return resource.operations.getValue();
+	}
+
+	public int getRejectSchemaExtraFieldsCount() {
+		return rejectSchemaFieldNames.size();
+	}
+
 	@Override
 	public void refreshLayout(Form form) {
 		super.refreshLayout(form);
+	}
+
+	public void setConnectionApiSpecURLValue(String value) {
+		connection.apiSpecURL.setValue(value);
+	}
+
+	public void setResourceEndpointValue(String value) {
+		resource.endpoint.setValue(value);
+	}
+
+	public void setResourceOperationsValue(Action action) {
+		resource.operations.setValue(action);
+	}
+
+	public void setResourceParametersTableColumnNameValue(String value) {
+		resource.parametersTable.columnName.setValue(Arrays.asList(value));
+	}
+
+	public void setResourceParametersTableTypeColumnNameValue(String value) {
+		resource.parametersTable.typeColumnName.setValue(Arrays.asList(value));
+	}
+
+	public void setResourceParametersTableValueColumnNameValue(String value) {
+		resource.parametersTable.valueColumnName.setValue(Arrays.asList(value));
 	}
 
 	@Override

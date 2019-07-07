@@ -31,6 +31,8 @@ import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
+import com.liferay.headless.delivery.dto.v1_0.WikiNode;
+import com.liferay.headless.delivery.dto.v1_0.WikiPage;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.delivery.resource.v1_0.CommentResource;
@@ -47,6 +49,8 @@ import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
+import com.liferay.headless.delivery.resource.v1_0.WikiNodeResource;
+import com.liferay.headless.delivery.resource.v1_0.WikiPageResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
@@ -200,6 +204,22 @@ public class Query {
 
 		_structuredContentFolderResourceComponentServiceObjects =
 			structuredContentFolderResourceComponentServiceObjects;
+	}
+
+	public static void setWikiNodeResourceComponentServiceObjects(
+		ComponentServiceObjects<WikiNodeResource>
+			wikiNodeResourceComponentServiceObjects) {
+
+		_wikiNodeResourceComponentServiceObjects =
+			wikiNodeResourceComponentServiceObjects;
+	}
+
+	public static void setWikiPageResourceComponentServiceObjects(
+		ComponentServiceObjects<WikiPageResource>
+			wikiPageResourceComponentServiceObjects) {
+
+		_wikiPageResourceComponentServiceObjects =
+			wikiPageResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -1231,6 +1251,68 @@ public class Query {
 					structuredContentFolderId));
 	}
 
+	@GraphQLField
+	public WikiNodePage getSiteWikiNodesPage(
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sorts") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiNodeResource -> new WikiNodePage(
+				wikiNodeResource.getSiteWikiNodesPage(
+					siteId, search,
+					_filterBiFunction.apply(wikiNodeResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(wikiNodeResource, sortsString))));
+	}
+
+	@GraphQLField
+	public WikiNode getWikiNode(@GraphQLName("wikiNodeId") Long wikiNodeId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiNodeResource -> wikiNodeResource.getWikiNode(wikiNodeId));
+	}
+
+	@GraphQLField
+	public WikiPagePage getWikiNodeWikiPagesPage(
+			@GraphQLName("wikiNodeId") Long wikiNodeId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sorts") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageResource -> new WikiPagePage(
+				wikiPageResource.getWikiNodeWikiPagesPage(
+					wikiNodeId, search,
+					_filterBiFunction.apply(wikiPageResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(wikiPageResource, sortsString))));
+	}
+
+	@GraphQLField
+	public WikiPage getWikiPage(@GraphQLName("wikiPageId") Long wikiPageId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageResource -> wikiPageResource.getWikiPage(wikiPageId));
+	}
+
 	@GraphQLName("BlogPostingPage")
 	public class BlogPostingPage {
 
@@ -1615,6 +1697,54 @@ public class Query {
 
 	}
 
+	@GraphQLName("WikiNodePage")
+	public class WikiNodePage {
+
+		public WikiNodePage(Page wikiNodePage) {
+			items = wikiNodePage.getItems();
+			page = wikiNodePage.getPage();
+			pageSize = wikiNodePage.getPageSize();
+			totalCount = wikiNodePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<WikiNode> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("WikiPagePage")
+	public class WikiPagePage {
+
+		public WikiPagePage(Page wikiPagePage) {
+			items = wikiPagePage.getItems();
+			page = wikiPagePage.getPage();
+			pageSize = wikiPagePage.getPageSize();
+			totalCount = wikiPagePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<WikiPage> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -1779,6 +1909,22 @@ public class Query {
 		structuredContentFolderResource.setContextUser(_user);
 	}
 
+	private void _populateResourceContext(WikiNodeResource wikiNodeResource)
+		throws Exception {
+
+		wikiNodeResource.setContextAcceptLanguage(_acceptLanguage);
+		wikiNodeResource.setContextCompany(_company);
+		wikiNodeResource.setContextUser(_user);
+	}
+
+	private void _populateResourceContext(WikiPageResource wikiPageResource)
+		throws Exception {
+
+		wikiPageResource.setContextAcceptLanguage(_acceptLanguage);
+		wikiPageResource.setContextCompany(_company);
+		wikiPageResource.setContextUser(_user);
+	}
+
 	private static ComponentServiceObjects<BlogPostingResource>
 		_blogPostingResourceComponentServiceObjects;
 	private static ComponentServiceObjects<BlogPostingImageResource>
@@ -1811,6 +1957,10 @@ public class Query {
 		_structuredContentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<StructuredContentFolderResource>
 		_structuredContentFolderResourceComponentServiceObjects;
+	private static ComponentServiceObjects<WikiNodeResource>
+		_wikiNodeResourceComponentServiceObjects;
+	private static ComponentServiceObjects<WikiPageResource>
+		_wikiPageResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private BiFunction<Object, String, Filter> _filterBiFunction;

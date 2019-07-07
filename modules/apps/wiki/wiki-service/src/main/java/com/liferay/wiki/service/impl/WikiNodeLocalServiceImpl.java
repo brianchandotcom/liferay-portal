@@ -279,6 +279,13 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		subscriptionLocalService.deleteSubscriptions(
 			node.getCompanyId(), WikiNode.class.getName(), node.getNodeId());
 
+		// Indexer
+
+		Indexer<WikiNode> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			WikiNode.class);
+
+		indexer.delete(node);
+
 		if (node.isInTrash()) {
 			node.setName(trashHelper.getOriginalTitle(node.getName()));
 
@@ -286,13 +293,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 			trashEntryLocalService.deleteEntry(
 				WikiNode.class.getName(), node.getNodeId());
-
-			// Indexer
-
-			Indexer<WikiNode> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				WikiNode.class);
-
-			indexer.delete(node);
 		}
 	}
 

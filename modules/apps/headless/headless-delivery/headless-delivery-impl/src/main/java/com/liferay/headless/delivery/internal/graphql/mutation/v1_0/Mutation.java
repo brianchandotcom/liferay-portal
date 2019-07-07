@@ -29,6 +29,8 @@ import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
+import com.liferay.headless.delivery.dto.v1_0.WikiNode;
+import com.liferay.headless.delivery.dto.v1_0.WikiPage;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.delivery.resource.v1_0.CommentResource;
@@ -43,6 +45,8 @@ import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
+import com.liferay.headless.delivery.resource.v1_0.WikiNodeResource;
+import com.liferay.headless.delivery.resource.v1_0.WikiPageResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
@@ -174,6 +178,22 @@ public class Mutation {
 
 		_structuredContentFolderResourceComponentServiceObjects =
 			structuredContentFolderResourceComponentServiceObjects;
+	}
+
+	public static void setWikiNodeResourceComponentServiceObjects(
+		ComponentServiceObjects<WikiNodeResource>
+			wikiNodeResourceComponentServiceObjects) {
+
+		_wikiNodeResourceComponentServiceObjects =
+			wikiNodeResourceComponentServiceObjects;
+	}
+
+	public static void setWikiPageResourceComponentServiceObjects(
+		ComponentServiceObjects<WikiPageResource>
+			wikiPageResourceComponentServiceObjects) {
+
+		_wikiPageResourceComponentServiceObjects =
+			wikiPageResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -1372,6 +1392,82 @@ public class Mutation {
 					structuredContentFolderId, structuredContentFolder));
 	}
 
+	@GraphQLField
+	public WikiNode postSiteWikiNode(
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("wikiNode") WikiNode wikiNode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiNodeResource -> wikiNodeResource.postSiteWikiNode(
+				siteId, wikiNode));
+	}
+
+	@GraphQLField
+	public boolean deleteWikiNode(@GraphQLName("wikiNodeId") Long wikiNodeId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiNodeResource -> wikiNodeResource.deleteWikiNode(wikiNodeId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public WikiNode putWikiNode(
+			@GraphQLName("wikiNodeId") Long wikiNodeId,
+			@GraphQLName("wikiNode") WikiNode wikiNode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiNodeResource -> wikiNodeResource.putWikiNode(
+				wikiNodeId, wikiNode));
+	}
+
+	@GraphQLField
+	public WikiPage postWikiNodeWikiPage(
+			@GraphQLName("wikiNodeId") Long wikiNodeId,
+			@GraphQLName("wikiPage") WikiPage wikiPage)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageResource -> wikiPageResource.postWikiNodeWikiPage(
+				wikiNodeId, wikiPage));
+	}
+
+	@GraphQLField
+	public boolean deleteWikiPage(@GraphQLName("wikiPageId") Long wikiPageId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageResource -> wikiPageResource.deleteWikiPage(wikiPageId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public WikiPage putWikiPage(
+			@GraphQLName("wikiPageId") Long wikiPageId,
+			@GraphQLName("wikiPage") WikiPage wikiPage)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageResource -> wikiPageResource.putWikiPage(
+				wikiPageId, wikiPage));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -1523,6 +1619,20 @@ public class Mutation {
 		structuredContentFolderResource.setContextCompany(_company);
 	}
 
+	private void _populateResourceContext(WikiNodeResource wikiNodeResource)
+		throws Exception {
+
+		wikiNodeResource.setContextAcceptLanguage(_acceptLanguage);
+		wikiNodeResource.setContextCompany(_company);
+	}
+
+	private void _populateResourceContext(WikiPageResource wikiPageResource)
+		throws Exception {
+
+		wikiPageResource.setContextAcceptLanguage(_acceptLanguage);
+		wikiPageResource.setContextCompany(_company);
+	}
+
 	private static ComponentServiceObjects<BlogPostingResource>
 		_blogPostingResourceComponentServiceObjects;
 	private static ComponentServiceObjects<BlogPostingImageResource>
@@ -1551,6 +1661,10 @@ public class Mutation {
 		_structuredContentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<StructuredContentFolderResource>
 		_structuredContentFolderResourceComponentServiceObjects;
+	private static ComponentServiceObjects<WikiNodeResource>
+		_wikiNodeResourceComponentServiceObjects;
+	private static ComponentServiceObjects<WikiPageResource>
+		_wikiPageResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private Company _company;

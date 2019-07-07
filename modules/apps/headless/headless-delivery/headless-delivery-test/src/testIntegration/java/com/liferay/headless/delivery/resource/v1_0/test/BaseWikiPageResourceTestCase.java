@@ -1,0 +1,1129 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.headless.delivery.resource.v1_0.test;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+
+import com.liferay.headless.delivery.client.dto.v1_0.WikiPage;
+import com.liferay.headless.delivery.client.http.HttpInvoker;
+import com.liferay.headless.delivery.client.pagination.Page;
+import com.liferay.headless.delivery.client.pagination.Pagination;
+import com.liferay.headless.delivery.client.resource.v1_0.WikiPageResource;
+import com.liferay.headless.delivery.client.serdes.v1_0.WikiPageSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
+
+import java.lang.reflect.InvocationTargetException;
+
+import java.text.DateFormat;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import javax.annotation.Generated;
+
+import javax.ws.rs.core.MultivaluedHashMap;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.lang.time.DateUtils;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+/**
+ * @author Javier Gamarra
+ * @generated
+ */
+@Generated("")
+public abstract class BaseWikiPageResourceTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		irrelevantGroup = GroupTestUtil.addGroup();
+		testGroup = GroupTestUtil.addGroup();
+
+		testCompany = CompanyLocalServiceUtil.getCompany(
+			testGroup.getCompanyId());
+
+		_wikiPageResource.setContextCompany(testCompany);
+
+		WikiPageResource.Builder builder = WikiPageResource.builder();
+
+		wikiPageResource = builder.locale(
+			LocaleUtil.getDefault()
+		).build();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		GroupTestUtil.deleteGroup(irrelevantGroup);
+		GroupTestUtil.deleteGroup(testGroup);
+	}
+
+	@Test
+	public void testClientSerDesToDTO() throws Exception {
+		ObjectMapper objectMapper = new ObjectMapper() {
+			{
+				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				configure(
+					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
+				enable(SerializationFeature.INDENT_OUTPUT);
+				setDateFormat(new ISO8601DateFormat());
+				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+				setVisibility(
+					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+				setVisibility(
+					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
+			}
+		};
+
+		WikiPage wikiPage1 = randomWikiPage();
+
+		String json = objectMapper.writeValueAsString(wikiPage1);
+
+		WikiPage wikiPage2 = WikiPageSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(wikiPage1, wikiPage2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = new ObjectMapper() {
+			{
+				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				configure(
+					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
+				setDateFormat(new ISO8601DateFormat());
+				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+				setVisibility(
+					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+				setVisibility(
+					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
+			}
+		};
+
+		WikiPage wikiPage = randomWikiPage();
+
+		String json1 = objectMapper.writeValueAsString(wikiPage);
+		String json2 = WikiPageSerDes.toJSON(wikiPage);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		WikiPage wikiPage = randomWikiPage();
+
+		wikiPage.setAlternativeHeadline(regex);
+		wikiPage.setContent(regex);
+		wikiPage.setEncodingFormat(regex);
+		wikiPage.setHeadline(regex);
+
+		String json = WikiPageSerDes.toJSON(wikiPage);
+
+		Assert.assertFalse(json.contains(regex));
+
+		wikiPage = WikiPageSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, wikiPage.getAlternativeHeadline());
+		Assert.assertEquals(regex, wikiPage.getContent());
+		Assert.assertEquals(regex, wikiPage.getEncodingFormat());
+		Assert.assertEquals(regex, wikiPage.getHeadline());
+	}
+
+	@Test
+	public void testGetWikiNodeWikiPagesPage() throws Exception {
+		Page<WikiPage> page = wikiPageResource.getWikiNodeWikiPagesPage(
+			testGetWikiNodeWikiPagesPage_getWikiNodeId(),
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		Long wikiNodeId = testGetWikiNodeWikiPagesPage_getWikiNodeId();
+		Long irrelevantWikiNodeId =
+			testGetWikiNodeWikiPagesPage_getIrrelevantWikiNodeId();
+
+		if ((irrelevantWikiNodeId != null)) {
+			WikiPage irrelevantWikiPage =
+				testGetWikiNodeWikiPagesPage_addWikiPage(
+					irrelevantWikiNodeId, randomIrrelevantWikiPage());
+
+			page = wikiPageResource.getWikiNodeWikiPagesPage(
+				irrelevantWikiNodeId, null, null, Pagination.of(1, 2), null);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantWikiPage),
+				(List<WikiPage>)page.getItems());
+			assertValid(page);
+		}
+
+		WikiPage wikiPage1 = testGetWikiNodeWikiPagesPage_addWikiPage(
+			wikiNodeId, randomWikiPage());
+
+		WikiPage wikiPage2 = testGetWikiNodeWikiPagesPage_addWikiPage(
+			wikiNodeId, randomWikiPage());
+
+		page = wikiPageResource.getWikiNodeWikiPagesPage(
+			wikiNodeId, null, null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(wikiPage1, wikiPage2),
+			(List<WikiPage>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetWikiNodeWikiPagesPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long wikiNodeId = testGetWikiNodeWikiPagesPage_getWikiNodeId();
+
+		WikiPage wikiPage1 = randomWikiPage();
+
+		wikiPage1 = testGetWikiNodeWikiPagesPage_addWikiPage(
+			wikiNodeId, wikiPage1);
+
+		for (EntityField entityField : entityFields) {
+			Page<WikiPage> page = wikiPageResource.getWikiNodeWikiPagesPage(
+				wikiNodeId, null,
+				getFilterString(entityField, "between", wikiPage1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(wikiPage1),
+				(List<WikiPage>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetWikiNodeWikiPagesPageWithFilterStringEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long wikiNodeId = testGetWikiNodeWikiPagesPage_getWikiNodeId();
+
+		WikiPage wikiPage1 = testGetWikiNodeWikiPagesPage_addWikiPage(
+			wikiNodeId, randomWikiPage());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WikiPage wikiPage2 = testGetWikiNodeWikiPagesPage_addWikiPage(
+			wikiNodeId, randomWikiPage());
+
+		for (EntityField entityField : entityFields) {
+			Page<WikiPage> page = wikiPageResource.getWikiNodeWikiPagesPage(
+				wikiNodeId, null, getFilterString(entityField, "eq", wikiPage1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(wikiPage1),
+				(List<WikiPage>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetWikiNodeWikiPagesPageWithPagination() throws Exception {
+		Long wikiNodeId = testGetWikiNodeWikiPagesPage_getWikiNodeId();
+
+		WikiPage wikiPage1 = testGetWikiNodeWikiPagesPage_addWikiPage(
+			wikiNodeId, randomWikiPage());
+
+		WikiPage wikiPage2 = testGetWikiNodeWikiPagesPage_addWikiPage(
+			wikiNodeId, randomWikiPage());
+
+		WikiPage wikiPage3 = testGetWikiNodeWikiPagesPage_addWikiPage(
+			wikiNodeId, randomWikiPage());
+
+		Page<WikiPage> page1 = wikiPageResource.getWikiNodeWikiPagesPage(
+			wikiNodeId, null, null, Pagination.of(1, 2), null);
+
+		List<WikiPage> wikiPages1 = (List<WikiPage>)page1.getItems();
+
+		Assert.assertEquals(wikiPages1.toString(), 2, wikiPages1.size());
+
+		Page<WikiPage> page2 = wikiPageResource.getWikiNodeWikiPagesPage(
+			wikiNodeId, null, null, Pagination.of(2, 2), null);
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<WikiPage> wikiPages2 = (List<WikiPage>)page2.getItems();
+
+		Assert.assertEquals(wikiPages2.toString(), 1, wikiPages2.size());
+
+		Page<WikiPage> page3 = wikiPageResource.getWikiNodeWikiPagesPage(
+			wikiNodeId, null, null, Pagination.of(1, 3), null);
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(wikiPage1, wikiPage2, wikiPage3),
+			(List<WikiPage>)page3.getItems());
+	}
+
+	@Test
+	public void testGetWikiNodeWikiPagesPageWithSortDateTime()
+		throws Exception {
+
+		testGetWikiNodeWikiPagesPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, wikiPage1, wikiPage2) -> {
+				BeanUtils.setProperty(
+					wikiPage1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetWikiNodeWikiPagesPageWithSortInteger() throws Exception {
+		testGetWikiNodeWikiPagesPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, wikiPage1, wikiPage2) -> {
+				BeanUtils.setProperty(wikiPage1, entityField.getName(), 0);
+				BeanUtils.setProperty(wikiPage2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetWikiNodeWikiPagesPageWithSortString() throws Exception {
+		testGetWikiNodeWikiPagesPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, wikiPage1, wikiPage2) -> {
+				BeanUtils.setProperty(wikiPage1, entityField.getName(), "Aaa");
+				BeanUtils.setProperty(wikiPage2, entityField.getName(), "Bbb");
+			});
+	}
+
+	protected void testGetWikiNodeWikiPagesPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, WikiPage, WikiPage, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long wikiNodeId = testGetWikiNodeWikiPagesPage_getWikiNodeId();
+
+		WikiPage wikiPage1 = randomWikiPage();
+		WikiPage wikiPage2 = randomWikiPage();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, wikiPage1, wikiPage2);
+		}
+
+		wikiPage1 = testGetWikiNodeWikiPagesPage_addWikiPage(
+			wikiNodeId, wikiPage1);
+
+		wikiPage2 = testGetWikiNodeWikiPagesPage_addWikiPage(
+			wikiNodeId, wikiPage2);
+
+		for (EntityField entityField : entityFields) {
+			Page<WikiPage> ascPage = wikiPageResource.getWikiNodeWikiPagesPage(
+				wikiNodeId, null, null, Pagination.of(1, 2),
+				entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(wikiPage1, wikiPage2),
+				(List<WikiPage>)ascPage.getItems());
+
+			Page<WikiPage> descPage = wikiPageResource.getWikiNodeWikiPagesPage(
+				wikiNodeId, null, null, Pagination.of(1, 2),
+				entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(wikiPage2, wikiPage1),
+				(List<WikiPage>)descPage.getItems());
+		}
+	}
+
+	protected WikiPage testGetWikiNodeWikiPagesPage_addWikiPage(
+			Long wikiNodeId, WikiPage wikiPage)
+		throws Exception {
+
+		return wikiPageResource.postWikiNodeWikiPage(wikiNodeId, wikiPage);
+	}
+
+	protected Long testGetWikiNodeWikiPagesPage_getWikiNodeId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetWikiNodeWikiPagesPage_getIrrelevantWikiNodeId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testPostWikiNodeWikiPage() throws Exception {
+		WikiPage randomWikiPage = randomWikiPage();
+
+		WikiPage postWikiPage = testPostWikiNodeWikiPage_addWikiPage(
+			randomWikiPage);
+
+		assertEquals(randomWikiPage, postWikiPage);
+		assertValid(postWikiPage);
+	}
+
+	protected WikiPage testPostWikiNodeWikiPage_addWikiPage(WikiPage wikiPage)
+		throws Exception {
+
+		return wikiPageResource.postWikiNodeWikiPage(
+			testGetWikiNodeWikiPagesPage_getWikiNodeId(), wikiPage);
+	}
+
+	@Test
+	public void testDeleteWikiPage() throws Exception {
+		WikiPage wikiPage = testDeleteWikiPage_addWikiPage();
+
+		assertHttpResponseStatusCode(
+			204, wikiPageResource.deleteWikiPageHttpResponse(wikiPage.getId()));
+
+		assertHttpResponseStatusCode(
+			404, wikiPageResource.getWikiPageHttpResponse(wikiPage.getId()));
+
+		assertHttpResponseStatusCode(
+			404, wikiPageResource.getWikiPageHttpResponse(0L));
+	}
+
+	protected WikiPage testDeleteWikiPage_addWikiPage() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetWikiPage() throws Exception {
+		WikiPage postWikiPage = testGetWikiPage_addWikiPage();
+
+		WikiPage getWikiPage = wikiPageResource.getWikiPage(
+			postWikiPage.getId());
+
+		assertEquals(postWikiPage, getWikiPage);
+		assertValid(getWikiPage);
+	}
+
+	protected WikiPage testGetWikiPage_addWikiPage() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutWikiPage() throws Exception {
+		WikiPage postWikiPage = testPutWikiPage_addWikiPage();
+
+		WikiPage randomWikiPage = randomWikiPage();
+
+		WikiPage putWikiPage = wikiPageResource.putWikiPage(
+			postWikiPage.getId(), randomWikiPage);
+
+		assertEquals(randomWikiPage, putWikiPage);
+		assertValid(putWikiPage);
+
+		WikiPage getWikiPage = wikiPageResource.getWikiPage(
+			putWikiPage.getId());
+
+		assertEquals(randomWikiPage, getWikiPage);
+		assertValid(getWikiPage);
+	}
+
+	protected WikiPage testPutWikiPage_addWikiPage() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected void assertHttpResponseStatusCode(
+		int expectedHttpResponseStatusCode,
+		HttpInvoker.HttpResponse actualHttpResponse) {
+
+		Assert.assertEquals(
+			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
+	}
+
+	protected void assertEquals(WikiPage wikiPage1, WikiPage wikiPage2) {
+		Assert.assertTrue(
+			wikiPage1 + " does not equal " + wikiPage2,
+			equals(wikiPage1, wikiPage2));
+	}
+
+	protected void assertEquals(
+		List<WikiPage> wikiPages1, List<WikiPage> wikiPages2) {
+
+		Assert.assertEquals(wikiPages1.size(), wikiPages2.size());
+
+		for (int i = 0; i < wikiPages1.size(); i++) {
+			WikiPage wikiPage1 = wikiPages1.get(i);
+			WikiPage wikiPage2 = wikiPages2.get(i);
+
+			assertEquals(wikiPage1, wikiPage2);
+		}
+	}
+
+	protected void assertEqualsIgnoringOrder(
+		List<WikiPage> wikiPages1, List<WikiPage> wikiPages2) {
+
+		Assert.assertEquals(wikiPages1.size(), wikiPages2.size());
+
+		for (WikiPage wikiPage1 : wikiPages1) {
+			boolean contains = false;
+
+			for (WikiPage wikiPage2 : wikiPages2) {
+				if (equals(wikiPage1, wikiPage2)) {
+					contains = true;
+
+					break;
+				}
+			}
+
+			Assert.assertTrue(
+				wikiPages2 + " does not contain " + wikiPage1, contains);
+		}
+	}
+
+	protected void assertValid(WikiPage wikiPage) {
+		boolean valid = true;
+
+		if (wikiPage.getDateCreated() == null) {
+			valid = false;
+		}
+
+		if (wikiPage.getDateModified() == null) {
+			valid = false;
+		}
+
+		if (wikiPage.getId() == null) {
+			valid = false;
+		}
+
+		if (!Objects.equals(wikiPage.getSiteId(), testGroup.getGroupId())) {
+			valid = false;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"alternativeHeadline", additionalAssertFieldName)) {
+
+				if (wikiPage.getAlternativeHeadline() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("content", additionalAssertFieldName)) {
+				if (wikiPage.getContent() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (wikiPage.getCreator() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (wikiPage.getCustomFields() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
+				if (wikiPage.getEncodingFormat() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("headline", additionalAssertFieldName)) {
+				if (wikiPage.getHeadline() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("keywords", additionalAssertFieldName)) {
+				if (wikiPage.getKeywords() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("relatedContents", additionalAssertFieldName)) {
+				if (wikiPage.getRelatedContents() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"taxonomyCategories", additionalAssertFieldName)) {
+
+				if (wikiPage.getTaxonomyCategories() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"taxonomyCategoryIds", additionalAssertFieldName)) {
+
+				if (wikiPage.getTaxonomyCategoryIds() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("viewableBy", additionalAssertFieldName)) {
+				if (wikiPage.getViewableBy() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		Assert.assertTrue(valid);
+	}
+
+	protected void assertValid(Page<WikiPage> page) {
+		boolean valid = false;
+
+		java.util.Collection<WikiPage> wikiPages = page.getItems();
+
+		int size = wikiPages.size();
+
+		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
+			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
+			(size > 0)) {
+
+			valid = true;
+		}
+
+		Assert.assertTrue(valid);
+	}
+
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[0];
+	}
+
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[0];
+	}
+
+	protected boolean equals(WikiPage wikiPage1, WikiPage wikiPage2) {
+		if (wikiPage1 == wikiPage2) {
+			return true;
+		}
+
+		if (!Objects.equals(wikiPage1.getSiteId(), wikiPage2.getSiteId())) {
+			return false;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"alternativeHeadline", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						wikiPage1.getAlternativeHeadline(),
+						wikiPage2.getAlternativeHeadline())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("content", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						wikiPage1.getContent(), wikiPage2.getContent())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						wikiPage1.getCreator(), wikiPage2.getCreator())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						wikiPage1.getCustomFields(),
+						wikiPage2.getCustomFields())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						wikiPage1.getDateCreated(),
+						wikiPage2.getDateCreated())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateModified", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						wikiPage1.getDateModified(),
+						wikiPage2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						wikiPage1.getEncodingFormat(),
+						wikiPage2.getEncodingFormat())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("headline", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						wikiPage1.getHeadline(), wikiPage2.getHeadline())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(wikiPage1.getId(), wikiPage2.getId())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("keywords", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						wikiPage1.getKeywords(), wikiPage2.getKeywords())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("relatedContents", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						wikiPage1.getRelatedContents(),
+						wikiPage2.getRelatedContents())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"taxonomyCategories", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						wikiPage1.getTaxonomyCategories(),
+						wikiPage2.getTaxonomyCategories())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"taxonomyCategoryIds", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						wikiPage1.getTaxonomyCategoryIds(),
+						wikiPage2.getTaxonomyCategoryIds())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("viewableBy", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						wikiPage1.getViewableBy(), wikiPage2.getViewableBy())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		return true;
+	}
+
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
+		if (!(_wikiPageResource instanceof EntityModelResource)) {
+			throw new UnsupportedOperationException(
+				"Resource is not an instance of EntityModelResource");
+		}
+
+		EntityModelResource entityModelResource =
+			(EntityModelResource)_wikiPageResource;
+
+		EntityModel entityModel = entityModelResource.getEntityModel(
+			new MultivaluedHashMap());
+
+		Map<String, EntityField> entityFieldsMap =
+			entityModel.getEntityFieldsMap();
+
+		return entityFieldsMap.values();
+	}
+
+	protected List<EntityField> getEntityFields(EntityField.Type type)
+		throws Exception {
+
+		java.util.Collection<EntityField> entityFields = getEntityFields();
+
+		Stream<EntityField> stream = entityFields.stream();
+
+		return stream.filter(
+			entityField ->
+				Objects.equals(entityField.getType(), type) &&
+				!ArrayUtil.contains(
+					getIgnoredEntityFieldNames(), entityField.getName())
+		).collect(
+			Collectors.toList()
+		);
+	}
+
+	protected String getFilterString(
+		EntityField entityField, String operator, WikiPage wikiPage) {
+
+		StringBundler sb = new StringBundler();
+
+		String entityFieldName = entityField.getName();
+
+		sb.append(entityFieldName);
+
+		sb.append(" ");
+		sb.append(operator);
+		sb.append(" ");
+
+		if (entityFieldName.equals("alternativeHeadline")) {
+			sb.append("'");
+			sb.append(String.valueOf(wikiPage.getAlternativeHeadline()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("content")) {
+			sb.append("'");
+			sb.append(String.valueOf(wikiPage.getContent()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("creator")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("customFields")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("dateCreated")) {
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(wikiPage.getDateCreated(), -2)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(wikiPage.getDateCreated(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(wikiPage.getDateCreated()));
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("dateModified")) {
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(wikiPage.getDateModified(), -2)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(wikiPage.getDateModified(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(wikiPage.getDateModified()));
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("encodingFormat")) {
+			sb.append("'");
+			sb.append(String.valueOf(wikiPage.getEncodingFormat()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("headline")) {
+			sb.append("'");
+			sb.append(String.valueOf(wikiPage.getHeadline()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("id")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("keywords")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("relatedContents")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("siteId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("taxonomyCategories")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("taxonomyCategoryIds")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("viewableBy")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid entity field " + entityFieldName);
+	}
+
+	protected WikiPage randomWikiPage() throws Exception {
+		return new WikiPage() {
+			{
+				alternativeHeadline = RandomTestUtil.randomString();
+				content = RandomTestUtil.randomString();
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				encodingFormat = RandomTestUtil.randomString();
+				headline = RandomTestUtil.randomString();
+				id = RandomTestUtil.randomLong();
+				siteId = testGroup.getGroupId();
+			}
+		};
+	}
+
+	protected WikiPage randomIrrelevantWikiPage() throws Exception {
+		WikiPage randomIrrelevantWikiPage = randomWikiPage();
+
+		randomIrrelevantWikiPage.setSiteId(irrelevantGroup.getGroupId());
+
+		return randomIrrelevantWikiPage;
+	}
+
+	protected WikiPage randomPatchWikiPage() throws Exception {
+		return randomWikiPage();
+	}
+
+	protected WikiPageResource wikiPageResource;
+	protected Group irrelevantGroup;
+	protected Company testCompany;
+	protected Group testGroup;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseWikiPageResourceTestCase.class);
+
+	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
+
+		@Override
+		public void copyProperty(Object bean, String name, Object value)
+			throws IllegalAccessException, InvocationTargetException {
+
+			if (value != null) {
+				super.copyProperty(bean, name, value);
+			}
+		}
+
+	};
+	private static DateFormat _dateFormat;
+
+	@Inject
+	private com.liferay.headless.delivery.resource.v1_0.WikiPageResource
+		_wikiPageResource;
+
+}

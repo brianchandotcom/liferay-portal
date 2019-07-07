@@ -1,0 +1,1672 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.headless.delivery.internal.graphql.mutation.v1_0;
+
+import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
+import com.liferay.headless.delivery.dto.v1_0.BlogPostingImage;
+import com.liferay.headless.delivery.dto.v1_0.Comment;
+import com.liferay.headless.delivery.dto.v1_0.Document;
+import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
+import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
+import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseAttachment;
+import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
+import com.liferay.headless.delivery.dto.v1_0.MessageBoardAttachment;
+import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
+import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
+import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
+import com.liferay.headless.delivery.dto.v1_0.Rating;
+import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
+import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
+import com.liferay.headless.delivery.dto.v1_0.WikiNode;
+import com.liferay.headless.delivery.dto.v1_0.WikiPage;
+import com.liferay.headless.delivery.resource.v1_0.BlogPostingImageResource;
+import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
+import com.liferay.headless.delivery.resource.v1_0.CommentResource;
+import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
+import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
+import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
+import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseAttachmentResource;
+import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
+import com.liferay.headless.delivery.resource.v1_0.MessageBoardAttachmentResource;
+import com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource;
+import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
+import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
+import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
+import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
+import com.liferay.headless.delivery.resource.v1_0.WikiNodeResource;
+import com.liferay.headless.delivery.resource.v1_0.WikiPageResource;
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
+
+import javax.annotation.Generated;
+
+import org.osgi.service.component.ComponentServiceObjects;
+
+/**
+ * @author Javier Gamarra
+ * @generated
+ */
+@Generated("")
+public class Mutation {
+
+	public static void setBlogPostingResourceComponentServiceObjects(
+		ComponentServiceObjects<BlogPostingResource>
+			blogPostingResourceComponentServiceObjects) {
+
+		_blogPostingResourceComponentServiceObjects =
+			blogPostingResourceComponentServiceObjects;
+	}
+
+	public static void setBlogPostingImageResourceComponentServiceObjects(
+		ComponentServiceObjects<BlogPostingImageResource>
+			blogPostingImageResourceComponentServiceObjects) {
+
+		_blogPostingImageResourceComponentServiceObjects =
+			blogPostingImageResourceComponentServiceObjects;
+	}
+
+	public static void setCommentResourceComponentServiceObjects(
+		ComponentServiceObjects<CommentResource>
+			commentResourceComponentServiceObjects) {
+
+		_commentResourceComponentServiceObjects =
+			commentResourceComponentServiceObjects;
+	}
+
+	public static void setDocumentResourceComponentServiceObjects(
+		ComponentServiceObjects<DocumentResource>
+			documentResourceComponentServiceObjects) {
+
+		_documentResourceComponentServiceObjects =
+			documentResourceComponentServiceObjects;
+	}
+
+	public static void setDocumentFolderResourceComponentServiceObjects(
+		ComponentServiceObjects<DocumentFolderResource>
+			documentFolderResourceComponentServiceObjects) {
+
+		_documentFolderResourceComponentServiceObjects =
+			documentFolderResourceComponentServiceObjects;
+	}
+
+	public static void setKnowledgeBaseArticleResourceComponentServiceObjects(
+		ComponentServiceObjects<KnowledgeBaseArticleResource>
+			knowledgeBaseArticleResourceComponentServiceObjects) {
+
+		_knowledgeBaseArticleResourceComponentServiceObjects =
+			knowledgeBaseArticleResourceComponentServiceObjects;
+	}
+
+	public static void
+		setKnowledgeBaseAttachmentResourceComponentServiceObjects(
+			ComponentServiceObjects<KnowledgeBaseAttachmentResource>
+				knowledgeBaseAttachmentResourceComponentServiceObjects) {
+
+		_knowledgeBaseAttachmentResourceComponentServiceObjects =
+			knowledgeBaseAttachmentResourceComponentServiceObjects;
+	}
+
+	public static void setKnowledgeBaseFolderResourceComponentServiceObjects(
+		ComponentServiceObjects<KnowledgeBaseFolderResource>
+			knowledgeBaseFolderResourceComponentServiceObjects) {
+
+		_knowledgeBaseFolderResourceComponentServiceObjects =
+			knowledgeBaseFolderResourceComponentServiceObjects;
+	}
+
+	public static void setMessageBoardAttachmentResourceComponentServiceObjects(
+		ComponentServiceObjects<MessageBoardAttachmentResource>
+			messageBoardAttachmentResourceComponentServiceObjects) {
+
+		_messageBoardAttachmentResourceComponentServiceObjects =
+			messageBoardAttachmentResourceComponentServiceObjects;
+	}
+
+	public static void setMessageBoardMessageResourceComponentServiceObjects(
+		ComponentServiceObjects<MessageBoardMessageResource>
+			messageBoardMessageResourceComponentServiceObjects) {
+
+		_messageBoardMessageResourceComponentServiceObjects =
+			messageBoardMessageResourceComponentServiceObjects;
+	}
+
+	public static void setMessageBoardSectionResourceComponentServiceObjects(
+		ComponentServiceObjects<MessageBoardSectionResource>
+			messageBoardSectionResourceComponentServiceObjects) {
+
+		_messageBoardSectionResourceComponentServiceObjects =
+			messageBoardSectionResourceComponentServiceObjects;
+	}
+
+	public static void setMessageBoardThreadResourceComponentServiceObjects(
+		ComponentServiceObjects<MessageBoardThreadResource>
+			messageBoardThreadResourceComponentServiceObjects) {
+
+		_messageBoardThreadResourceComponentServiceObjects =
+			messageBoardThreadResourceComponentServiceObjects;
+	}
+
+	public static void setStructuredContentResourceComponentServiceObjects(
+		ComponentServiceObjects<StructuredContentResource>
+			structuredContentResourceComponentServiceObjects) {
+
+		_structuredContentResourceComponentServiceObjects =
+			structuredContentResourceComponentServiceObjects;
+	}
+
+	public static void
+		setStructuredContentFolderResourceComponentServiceObjects(
+			ComponentServiceObjects<StructuredContentFolderResource>
+				structuredContentFolderResourceComponentServiceObjects) {
+
+		_structuredContentFolderResourceComponentServiceObjects =
+			structuredContentFolderResourceComponentServiceObjects;
+	}
+
+	public static void setWikiNodeResourceComponentServiceObjects(
+		ComponentServiceObjects<WikiNodeResource>
+			wikiNodeResourceComponentServiceObjects) {
+
+		_wikiNodeResourceComponentServiceObjects =
+			wikiNodeResourceComponentServiceObjects;
+	}
+
+	public static void setWikiPageResourceComponentServiceObjects(
+		ComponentServiceObjects<WikiPageResource>
+			wikiPageResourceComponentServiceObjects) {
+
+		_wikiPageResourceComponentServiceObjects =
+			wikiPageResourceComponentServiceObjects;
+	}
+
+	@GraphQLField
+	public boolean deleteBlogPosting(
+			@GraphQLName("blogPostingId") Long blogPostingId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource -> blogPostingResource.deleteBlogPosting(
+				blogPostingId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public BlogPosting patchBlogPosting(
+			@GraphQLName("blogPostingId") Long blogPostingId,
+			@GraphQLName("blogPosting") BlogPosting blogPosting)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource -> blogPostingResource.patchBlogPosting(
+				blogPostingId, blogPosting));
+	}
+
+	@GraphQLField
+	public BlogPosting putBlogPosting(
+			@GraphQLName("blogPostingId") Long blogPostingId,
+			@GraphQLName("blogPosting") BlogPosting blogPosting)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource -> blogPostingResource.putBlogPosting(
+				blogPostingId, blogPosting));
+	}
+
+	@GraphQLField
+	public boolean deleteBlogPostingMyRating(
+			@GraphQLName("blogPostingId") Long blogPostingId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource ->
+				blogPostingResource.deleteBlogPostingMyRating(blogPostingId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Rating postBlogPostingMyRating(
+			@GraphQLName("blogPostingId") Long blogPostingId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource -> blogPostingResource.postBlogPostingMyRating(
+				blogPostingId, rating));
+	}
+
+	@GraphQLField
+	public Rating putBlogPostingMyRating(
+			@GraphQLName("blogPostingId") Long blogPostingId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource -> blogPostingResource.putBlogPostingMyRating(
+				blogPostingId, rating));
+	}
+
+	@GraphQLField
+	public BlogPosting postSiteBlogPosting(
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("blogPosting") BlogPosting blogPosting)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource -> blogPostingResource.postSiteBlogPosting(
+				siteId, blogPosting));
+	}
+
+	@GraphQLField
+	public boolean deleteBlogPostingImage(
+			@GraphQLName("blogPostingImageId") Long blogPostingImageId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_blogPostingImageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingImageResource ->
+				blogPostingImageResource.deleteBlogPostingImage(
+					blogPostingImageId));
+
+		return true;
+	}
+
+	@GraphQLField
+	@GraphQLName("postSiteBlogPostingImageSiteIdMultipartBody")
+	public BlogPostingImage postSiteBlogPostingImage(
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("multipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_blogPostingImageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingImageResource ->
+				blogPostingImageResource.postSiteBlogPostingImage(
+					siteId, multipartBody));
+	}
+
+	@GraphQLField
+	public Comment postBlogPostingComment(
+			@GraphQLName("blogPostingId") Long blogPostingId,
+			@GraphQLName("comment") Comment comment)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.postBlogPostingComment(
+				blogPostingId, comment));
+	}
+
+	@GraphQLField
+	public boolean deleteComment(@GraphQLName("commentId") Long commentId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.deleteComment(commentId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Comment putComment(
+			@GraphQLName("commentId") Long commentId,
+			@GraphQLName("comment") Comment comment)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.putComment(commentId, comment));
+	}
+
+	@GraphQLField
+	public Comment postCommentComment(
+			@GraphQLName("parentCommentId") Long parentCommentId,
+			@GraphQLName("comment") Comment comment)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.postCommentComment(
+				parentCommentId, comment));
+	}
+
+	@GraphQLField
+	public Comment postDocumentComment(
+			@GraphQLName("documentId") Long documentId,
+			@GraphQLName("comment") Comment comment)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.postDocumentComment(
+				documentId, comment));
+	}
+
+	@GraphQLField
+	public Comment postStructuredContentComment(
+			@GraphQLName("structuredContentId") Long structuredContentId,
+			@GraphQLName("comment") Comment comment)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.postStructuredContentComment(
+				structuredContentId, comment));
+	}
+
+	@GraphQLField
+	@GraphQLName("postDocumentFolderDocumentDocumentFolderIdMultipartBody")
+	public Document postDocumentFolderDocument(
+			@GraphQLName("documentFolderId") Long documentFolderId,
+			@GraphQLName("multipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.postDocumentFolderDocument(
+				documentFolderId, multipartBody));
+	}
+
+	@GraphQLField
+	public boolean deleteDocument(@GraphQLName("documentId") Long documentId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.deleteDocument(documentId));
+
+		return true;
+	}
+
+	@GraphQLField
+	@GraphQLName("patchDocumentDocumentIdMultipartBody")
+	public Document patchDocument(
+			@GraphQLName("documentId") Long documentId,
+			@GraphQLName("multipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.patchDocument(
+				documentId, multipartBody));
+	}
+
+	@GraphQLField
+	@GraphQLName("putDocumentDocumentIdMultipartBody")
+	public Document putDocument(
+			@GraphQLName("documentId") Long documentId,
+			@GraphQLName("multipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.putDocument(
+				documentId, multipartBody));
+	}
+
+	@GraphQLField
+	public boolean deleteDocumentMyRating(
+			@GraphQLName("documentId") Long documentId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.deleteDocumentMyRating(
+				documentId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Rating postDocumentMyRating(
+			@GraphQLName("documentId") Long documentId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.postDocumentMyRating(
+				documentId, rating));
+	}
+
+	@GraphQLField
+	public Rating putDocumentMyRating(
+			@GraphQLName("documentId") Long documentId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.putDocumentMyRating(
+				documentId, rating));
+	}
+
+	@GraphQLField
+	@GraphQLName("postSiteDocumentSiteIdMultipartBody")
+	public Document postSiteDocument(
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("multipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.postSiteDocument(
+				siteId, multipartBody));
+	}
+
+	@GraphQLField
+	public boolean deleteDocumentFolder(
+			@GraphQLName("documentFolderId") Long documentFolderId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.deleteDocumentFolder(documentFolderId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public DocumentFolder patchDocumentFolder(
+			@GraphQLName("documentFolderId") Long documentFolderId,
+			@GraphQLName("documentFolder") DocumentFolder documentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.patchDocumentFolder(
+					documentFolderId, documentFolder));
+	}
+
+	@GraphQLField
+	public DocumentFolder putDocumentFolder(
+			@GraphQLName("documentFolderId") Long documentFolderId,
+			@GraphQLName("documentFolder") DocumentFolder documentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource -> documentFolderResource.putDocumentFolder(
+				documentFolderId, documentFolder));
+	}
+
+	@GraphQLField
+	public DocumentFolder postDocumentFolderDocumentFolder(
+			@GraphQLName("parentDocumentFolderId") Long parentDocumentFolderId,
+			@GraphQLName("documentFolder") DocumentFolder documentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.postDocumentFolderDocumentFolder(
+					parentDocumentFolderId, documentFolder));
+	}
+
+	@GraphQLField
+	public DocumentFolder postSiteDocumentFolder(
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("documentFolder") DocumentFolder documentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.postSiteDocumentFolder(
+					siteId, documentFolder));
+	}
+
+	@GraphQLField
+	public boolean deleteKnowledgeBaseArticle(
+			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.deleteKnowledgeBaseArticle(
+					knowledgeBaseArticleId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public KnowledgeBaseArticle patchKnowledgeBaseArticle(
+			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
+			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
+				knowledgeBaseArticle)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.patchKnowledgeBaseArticle(
+					knowledgeBaseArticleId, knowledgeBaseArticle));
+	}
+
+	@GraphQLField
+	public KnowledgeBaseArticle putKnowledgeBaseArticle(
+			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
+			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
+				knowledgeBaseArticle)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.putKnowledgeBaseArticle(
+					knowledgeBaseArticleId, knowledgeBaseArticle));
+	}
+
+	@GraphQLField
+	public boolean deleteKnowledgeBaseArticleMyRating(
+			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.deleteKnowledgeBaseArticleMyRating(
+					knowledgeBaseArticleId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Rating postKnowledgeBaseArticleMyRating(
+			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.postKnowledgeBaseArticleMyRating(
+					knowledgeBaseArticleId, rating));
+	}
+
+	@GraphQLField
+	public Rating putKnowledgeBaseArticleMyRating(
+			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.putKnowledgeBaseArticleMyRating(
+					knowledgeBaseArticleId, rating));
+	}
+
+	@GraphQLField
+	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
+			@GraphQLName("parentKnowledgeBaseArticleId") Long
+				parentKnowledgeBaseArticleId,
+			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
+				knowledgeBaseArticle)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.
+					postKnowledgeBaseArticleKnowledgeBaseArticle(
+						parentKnowledgeBaseArticleId, knowledgeBaseArticle));
+	}
+
+	@GraphQLField
+	public KnowledgeBaseArticle postKnowledgeBaseFolderKnowledgeBaseArticle(
+			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
+			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
+				knowledgeBaseArticle)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.
+					postKnowledgeBaseFolderKnowledgeBaseArticle(
+						knowledgeBaseFolderId, knowledgeBaseArticle));
+	}
+
+	@GraphQLField
+	public KnowledgeBaseArticle postSiteKnowledgeBaseArticle(
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
+				knowledgeBaseArticle)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
+					siteId, knowledgeBaseArticle));
+	}
+
+	@GraphQLField
+	@GraphQLName(
+		"postKnowledgeBaseArticleKnowledgeBaseAttachmentKnowledgeBaseArticleIdMultipartBody"
+	)
+	public KnowledgeBaseAttachment
+			postKnowledgeBaseArticleKnowledgeBaseAttachment(
+				@GraphQLName("knowledgeBaseArticleId") Long
+					knowledgeBaseArticleId,
+				@GraphQLName("multipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseAttachmentResource ->
+				knowledgeBaseAttachmentResource.
+					postKnowledgeBaseArticleKnowledgeBaseAttachment(
+						knowledgeBaseArticleId, multipartBody));
+	}
+
+	@GraphQLField
+	public boolean deleteKnowledgeBaseAttachment(
+			@GraphQLName("knowledgeBaseAttachmentId") Long
+				knowledgeBaseAttachmentId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_knowledgeBaseAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseAttachmentResource ->
+				knowledgeBaseAttachmentResource.deleteKnowledgeBaseAttachment(
+					knowledgeBaseAttachmentId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean deleteKnowledgeBaseFolder(
+			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource ->
+				knowledgeBaseFolderResource.deleteKnowledgeBaseFolder(
+					knowledgeBaseFolderId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public KnowledgeBaseFolder patchKnowledgeBaseFolder(
+			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
+			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
+				knowledgeBaseFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource ->
+				knowledgeBaseFolderResource.patchKnowledgeBaseFolder(
+					knowledgeBaseFolderId, knowledgeBaseFolder));
+	}
+
+	@GraphQLField
+	public KnowledgeBaseFolder putKnowledgeBaseFolder(
+			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
+			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
+				knowledgeBaseFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource ->
+				knowledgeBaseFolderResource.putKnowledgeBaseFolder(
+					knowledgeBaseFolderId, knowledgeBaseFolder));
+	}
+
+	@GraphQLField
+	public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolder(
+			@GraphQLName("parentKnowledgeBaseFolderId") Long
+				parentKnowledgeBaseFolderId,
+			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
+				knowledgeBaseFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource ->
+				knowledgeBaseFolderResource.
+					postKnowledgeBaseFolderKnowledgeBaseFolder(
+						parentKnowledgeBaseFolderId, knowledgeBaseFolder));
+	}
+
+	@GraphQLField
+	public KnowledgeBaseFolder postSiteKnowledgeBaseFolder(
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
+				knowledgeBaseFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource ->
+				knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
+					siteId, knowledgeBaseFolder));
+	}
+
+	@GraphQLField
+	public boolean deleteMessageBoardAttachment(
+			@GraphQLName("messageBoardAttachmentId") Long
+				messageBoardAttachmentId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardAttachmentResource ->
+				messageBoardAttachmentResource.deleteMessageBoardAttachment(
+					messageBoardAttachmentId));
+
+		return true;
+	}
+
+	@GraphQLField
+	@GraphQLName(
+		"postMessageBoardMessageMessageBoardAttachmentMessageBoardMessageIdMultipartBody"
+	)
+	public MessageBoardAttachment postMessageBoardMessageMessageBoardAttachment(
+			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
+			@GraphQLName("multipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardAttachmentResource ->
+				messageBoardAttachmentResource.
+					postMessageBoardMessageMessageBoardAttachment(
+						messageBoardMessageId, multipartBody));
+	}
+
+	@GraphQLField
+	@GraphQLName(
+		"postMessageBoardThreadMessageBoardAttachmentMessageBoardThreadIdMultipartBody"
+	)
+	public MessageBoardAttachment postMessageBoardThreadMessageBoardAttachment(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+			@GraphQLName("multipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardAttachmentResource ->
+				messageBoardAttachmentResource.
+					postMessageBoardThreadMessageBoardAttachment(
+						messageBoardThreadId, multipartBody));
+	}
+
+	@GraphQLField
+	public boolean deleteMessageBoardMessage(
+			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.deleteMessageBoardMessage(
+					messageBoardMessageId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public MessageBoardMessage patchMessageBoardMessage(
+			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
+			@GraphQLName("messageBoardMessage") MessageBoardMessage
+				messageBoardMessage)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.patchMessageBoardMessage(
+					messageBoardMessageId, messageBoardMessage));
+	}
+
+	@GraphQLField
+	public MessageBoardMessage putMessageBoardMessage(
+			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
+			@GraphQLName("messageBoardMessage") MessageBoardMessage
+				messageBoardMessage)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.putMessageBoardMessage(
+					messageBoardMessageId, messageBoardMessage));
+	}
+
+	@GraphQLField
+	public boolean deleteMessageBoardMessageMyRating(
+			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.deleteMessageBoardMessageMyRating(
+					messageBoardMessageId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Rating postMessageBoardMessageMyRating(
+			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.postMessageBoardMessageMyRating(
+					messageBoardMessageId, rating));
+	}
+
+	@GraphQLField
+	public Rating putMessageBoardMessageMyRating(
+			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.putMessageBoardMessageMyRating(
+					messageBoardMessageId, rating));
+	}
+
+	@GraphQLField
+	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
+			@GraphQLName("parentMessageBoardMessageId") Long
+				parentMessageBoardMessageId,
+			@GraphQLName("messageBoardMessage") MessageBoardMessage
+				messageBoardMessage)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.
+					postMessageBoardMessageMessageBoardMessage(
+						parentMessageBoardMessageId, messageBoardMessage));
+	}
+
+	@GraphQLField
+	public MessageBoardMessage postMessageBoardThreadMessageBoardMessage(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+			@GraphQLName("messageBoardMessage") MessageBoardMessage
+				messageBoardMessage)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.
+					postMessageBoardThreadMessageBoardMessage(
+						messageBoardThreadId, messageBoardMessage));
+	}
+
+	@GraphQLField
+	public boolean deleteMessageBoardSection(
+			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardSectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardSectionResource ->
+				messageBoardSectionResource.deleteMessageBoardSection(
+					messageBoardSectionId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public MessageBoardSection patchMessageBoardSection(
+			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
+			@GraphQLName("messageBoardSection") MessageBoardSection
+				messageBoardSection)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardSectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardSectionResource ->
+				messageBoardSectionResource.patchMessageBoardSection(
+					messageBoardSectionId, messageBoardSection));
+	}
+
+	@GraphQLField
+	public MessageBoardSection putMessageBoardSection(
+			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
+			@GraphQLName("messageBoardSection") MessageBoardSection
+				messageBoardSection)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardSectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardSectionResource ->
+				messageBoardSectionResource.putMessageBoardSection(
+					messageBoardSectionId, messageBoardSection));
+	}
+
+	@GraphQLField
+	public MessageBoardSection postMessageBoardSectionMessageBoardSection(
+			@GraphQLName("parentMessageBoardSectionId") Long
+				parentMessageBoardSectionId,
+			@GraphQLName("messageBoardSection") MessageBoardSection
+				messageBoardSection)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardSectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardSectionResource ->
+				messageBoardSectionResource.
+					postMessageBoardSectionMessageBoardSection(
+						parentMessageBoardSectionId, messageBoardSection));
+	}
+
+	@GraphQLField
+	public MessageBoardSection postSiteMessageBoardSection(
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("messageBoardSection") MessageBoardSection
+				messageBoardSection)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardSectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardSectionResource ->
+				messageBoardSectionResource.postSiteMessageBoardSection(
+					siteId, messageBoardSection));
+	}
+
+	@GraphQLField
+	public MessageBoardThread postMessageBoardSectionMessageBoardThread(
+			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
+			@GraphQLName("messageBoardThread") MessageBoardThread
+				messageBoardThread)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.
+					postMessageBoardSectionMessageBoardThread(
+						messageBoardSectionId, messageBoardThread));
+	}
+
+	@GraphQLField
+	public boolean deleteMessageBoardThread(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.deleteMessageBoardThread(
+					messageBoardThreadId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public MessageBoardThread patchMessageBoardThread(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+			@GraphQLName("messageBoardThread") MessageBoardThread
+				messageBoardThread)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.patchMessageBoardThread(
+					messageBoardThreadId, messageBoardThread));
+	}
+
+	@GraphQLField
+	public MessageBoardThread putMessageBoardThread(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+			@GraphQLName("messageBoardThread") MessageBoardThread
+				messageBoardThread)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.putMessageBoardThread(
+					messageBoardThreadId, messageBoardThread));
+	}
+
+	@GraphQLField
+	public boolean deleteMessageBoardThreadMyRating(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.deleteMessageBoardThreadMyRating(
+					messageBoardThreadId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Rating postMessageBoardThreadMyRating(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.postMessageBoardThreadMyRating(
+					messageBoardThreadId, rating));
+	}
+
+	@GraphQLField
+	public Rating putMessageBoardThreadMyRating(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.putMessageBoardThreadMyRating(
+					messageBoardThreadId, rating));
+	}
+
+	@GraphQLField
+	public MessageBoardThread postSiteMessageBoardThread(
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("messageBoardThread") MessageBoardThread
+				messageBoardThread)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.postSiteMessageBoardThread(
+					siteId, messageBoardThread));
+	}
+
+	@GraphQLField
+	public StructuredContent postSiteStructuredContent(
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("structuredContent") StructuredContent
+				structuredContent)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.postSiteStructuredContent(
+					siteId, structuredContent));
+	}
+
+	@GraphQLField
+	public StructuredContent postStructuredContentFolderStructuredContent(
+			@GraphQLName("structuredContentFolderId") Long
+				structuredContentFolderId,
+			@GraphQLName("structuredContent") StructuredContent
+				structuredContent)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.
+					postStructuredContentFolderStructuredContent(
+						structuredContentFolderId, structuredContent));
+	}
+
+	@GraphQLField
+	public boolean deleteStructuredContent(
+			@GraphQLName("structuredContentId") Long structuredContentId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.deleteStructuredContent(
+					structuredContentId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public StructuredContent patchStructuredContent(
+			@GraphQLName("structuredContentId") Long structuredContentId,
+			@GraphQLName("structuredContent") StructuredContent
+				structuredContent)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.patchStructuredContent(
+					structuredContentId, structuredContent));
+	}
+
+	@GraphQLField
+	public StructuredContent putStructuredContent(
+			@GraphQLName("structuredContentId") Long structuredContentId,
+			@GraphQLName("structuredContent") StructuredContent
+				structuredContent)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.putStructuredContent(
+					structuredContentId, structuredContent));
+	}
+
+	@GraphQLField
+	public boolean deleteStructuredContentMyRating(
+			@GraphQLName("structuredContentId") Long structuredContentId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.deleteStructuredContentMyRating(
+					structuredContentId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Rating postStructuredContentMyRating(
+			@GraphQLName("structuredContentId") Long structuredContentId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.postStructuredContentMyRating(
+					structuredContentId, rating));
+	}
+
+	@GraphQLField
+	public Rating putStructuredContentMyRating(
+			@GraphQLName("structuredContentId") Long structuredContentId,
+			@GraphQLName("rating") Rating rating)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.putStructuredContentMyRating(
+					structuredContentId, rating));
+	}
+
+	@GraphQLField
+	public StructuredContentFolder postSiteStructuredContentFolder(
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("structuredContentFolder") StructuredContentFolder
+				structuredContentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.postSiteStructuredContentFolder(
+					siteId, structuredContentFolder));
+	}
+
+	@GraphQLField
+	public StructuredContentFolder
+			postStructuredContentFolderStructuredContentFolder(
+				@GraphQLName("parentStructuredContentFolderId") Long
+					parentStructuredContentFolderId,
+				@GraphQLName("structuredContentFolder") StructuredContentFolder
+					structuredContentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					postStructuredContentFolderStructuredContentFolder(
+						parentStructuredContentFolderId,
+						structuredContentFolder));
+	}
+
+	@GraphQLField
+	public boolean deleteStructuredContentFolder(
+			@GraphQLName("structuredContentFolderId") Long
+				structuredContentFolderId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.deleteStructuredContentFolder(
+					structuredContentFolderId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public StructuredContentFolder patchStructuredContentFolder(
+			@GraphQLName("structuredContentFolderId") Long
+				structuredContentFolderId,
+			@GraphQLName("structuredContentFolder") StructuredContentFolder
+				structuredContentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.patchStructuredContentFolder(
+					structuredContentFolderId, structuredContentFolder));
+	}
+
+	@GraphQLField
+	public StructuredContentFolder putStructuredContentFolder(
+			@GraphQLName("structuredContentFolderId") Long
+				structuredContentFolderId,
+			@GraphQLName("structuredContentFolder") StructuredContentFolder
+				structuredContentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.putStructuredContentFolder(
+					structuredContentFolderId, structuredContentFolder));
+	}
+
+	@GraphQLField
+	public WikiNode postSiteWikiNode(
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("wikiNode") WikiNode wikiNode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiNodeResource -> wikiNodeResource.postSiteWikiNode(
+				siteId, wikiNode));
+	}
+
+	@GraphQLField
+	public boolean deleteWikiNode(@GraphQLName("wikiNodeId") Long wikiNodeId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiNodeResource -> wikiNodeResource.deleteWikiNode(wikiNodeId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public WikiNode putWikiNode(
+			@GraphQLName("wikiNodeId") Long wikiNodeId,
+			@GraphQLName("wikiNode") WikiNode wikiNode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiNodeResource -> wikiNodeResource.putWikiNode(
+				wikiNodeId, wikiNode));
+	}
+
+	@GraphQLField
+	public WikiPage postWikiNodeWikiPage(
+			@GraphQLName("wikiNodeId") Long wikiNodeId,
+			@GraphQLName("wikiPage") WikiPage wikiPage)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageResource -> wikiPageResource.postWikiNodeWikiPage(
+				wikiNodeId, wikiPage));
+	}
+
+	@GraphQLField
+	public boolean deleteWikiPage(@GraphQLName("wikiPageId") Long wikiPageId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageResource -> wikiPageResource.deleteWikiPage(wikiPageId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public WikiPage putWikiPage(
+			@GraphQLName("wikiPageId") Long wikiPageId,
+			@GraphQLName("wikiPage") WikiPage wikiPage)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageResource -> wikiPageResource.putWikiPage(
+				wikiPageId, wikiPage));
+	}
+
+	private <T, R, E1 extends Throwable, E2 extends Throwable> R
+			_applyComponentServiceObjects(
+				ComponentServiceObjects<T> componentServiceObjects,
+				UnsafeConsumer<T, E1> unsafeConsumer,
+				UnsafeFunction<T, R, E2> unsafeFunction)
+		throws E1, E2 {
+
+		T resource = componentServiceObjects.getService();
+
+		try {
+			unsafeConsumer.accept(resource);
+
+			return unsafeFunction.apply(resource);
+		}
+		finally {
+			componentServiceObjects.ungetService(resource);
+		}
+	}
+
+	private <T, E1 extends Throwable, E2 extends Throwable> void
+			_applyVoidComponentServiceObjects(
+				ComponentServiceObjects<T> componentServiceObjects,
+				UnsafeConsumer<T, E1> unsafeConsumer,
+				UnsafeConsumer<T, E2> unsafeFunction)
+		throws E1, E2 {
+
+		T resource = componentServiceObjects.getService();
+
+		try {
+			unsafeConsumer.accept(resource);
+
+			unsafeFunction.accept(resource);
+		}
+		finally {
+			componentServiceObjects.ungetService(resource);
+		}
+	}
+
+	private void _populateResourceContext(
+			BlogPostingResource blogPostingResource)
+		throws Exception {
+
+		blogPostingResource.setContextAcceptLanguage(_acceptLanguage);
+		blogPostingResource.setContextCompany(_company);
+	}
+
+	private void _populateResourceContext(
+			BlogPostingImageResource blogPostingImageResource)
+		throws Exception {
+
+		blogPostingImageResource.setContextAcceptLanguage(_acceptLanguage);
+		blogPostingImageResource.setContextCompany(_company);
+	}
+
+	private void _populateResourceContext(CommentResource commentResource)
+		throws Exception {
+
+		commentResource.setContextAcceptLanguage(_acceptLanguage);
+		commentResource.setContextCompany(_company);
+	}
+
+	private void _populateResourceContext(DocumentResource documentResource)
+		throws Exception {
+
+		documentResource.setContextAcceptLanguage(_acceptLanguage);
+		documentResource.setContextCompany(_company);
+	}
+
+	private void _populateResourceContext(
+			DocumentFolderResource documentFolderResource)
+		throws Exception {
+
+		documentFolderResource.setContextAcceptLanguage(_acceptLanguage);
+		documentFolderResource.setContextCompany(_company);
+	}
+
+	private void _populateResourceContext(
+			KnowledgeBaseArticleResource knowledgeBaseArticleResource)
+		throws Exception {
+
+		knowledgeBaseArticleResource.setContextAcceptLanguage(_acceptLanguage);
+		knowledgeBaseArticleResource.setContextCompany(_company);
+	}
+
+	private void _populateResourceContext(
+			KnowledgeBaseAttachmentResource knowledgeBaseAttachmentResource)
+		throws Exception {
+
+		knowledgeBaseAttachmentResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		knowledgeBaseAttachmentResource.setContextCompany(_company);
+	}
+
+	private void _populateResourceContext(
+			KnowledgeBaseFolderResource knowledgeBaseFolderResource)
+		throws Exception {
+
+		knowledgeBaseFolderResource.setContextAcceptLanguage(_acceptLanguage);
+		knowledgeBaseFolderResource.setContextCompany(_company);
+	}
+
+	private void _populateResourceContext(
+			MessageBoardAttachmentResource messageBoardAttachmentResource)
+		throws Exception {
+
+		messageBoardAttachmentResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		messageBoardAttachmentResource.setContextCompany(_company);
+	}
+
+	private void _populateResourceContext(
+			MessageBoardMessageResource messageBoardMessageResource)
+		throws Exception {
+
+		messageBoardMessageResource.setContextAcceptLanguage(_acceptLanguage);
+		messageBoardMessageResource.setContextCompany(_company);
+	}
+
+	private void _populateResourceContext(
+			MessageBoardSectionResource messageBoardSectionResource)
+		throws Exception {
+
+		messageBoardSectionResource.setContextAcceptLanguage(_acceptLanguage);
+		messageBoardSectionResource.setContextCompany(_company);
+	}
+
+	private void _populateResourceContext(
+			MessageBoardThreadResource messageBoardThreadResource)
+		throws Exception {
+
+		messageBoardThreadResource.setContextAcceptLanguage(_acceptLanguage);
+		messageBoardThreadResource.setContextCompany(_company);
+	}
+
+	private void _populateResourceContext(
+			StructuredContentResource structuredContentResource)
+		throws Exception {
+
+		structuredContentResource.setContextAcceptLanguage(_acceptLanguage);
+		structuredContentResource.setContextCompany(_company);
+	}
+
+	private void _populateResourceContext(
+			StructuredContentFolderResource structuredContentFolderResource)
+		throws Exception {
+
+		structuredContentFolderResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		structuredContentFolderResource.setContextCompany(_company);
+	}
+
+	private void _populateResourceContext(WikiNodeResource wikiNodeResource)
+		throws Exception {
+
+		wikiNodeResource.setContextAcceptLanguage(_acceptLanguage);
+		wikiNodeResource.setContextCompany(_company);
+	}
+
+	private void _populateResourceContext(WikiPageResource wikiPageResource)
+		throws Exception {
+
+		wikiPageResource.setContextAcceptLanguage(_acceptLanguage);
+		wikiPageResource.setContextCompany(_company);
+	}
+
+	private static ComponentServiceObjects<BlogPostingResource>
+		_blogPostingResourceComponentServiceObjects;
+	private static ComponentServiceObjects<BlogPostingImageResource>
+		_blogPostingImageResourceComponentServiceObjects;
+	private static ComponentServiceObjects<CommentResource>
+		_commentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<DocumentResource>
+		_documentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<DocumentFolderResource>
+		_documentFolderResourceComponentServiceObjects;
+	private static ComponentServiceObjects<KnowledgeBaseArticleResource>
+		_knowledgeBaseArticleResourceComponentServiceObjects;
+	private static ComponentServiceObjects<KnowledgeBaseAttachmentResource>
+		_knowledgeBaseAttachmentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<KnowledgeBaseFolderResource>
+		_knowledgeBaseFolderResourceComponentServiceObjects;
+	private static ComponentServiceObjects<MessageBoardAttachmentResource>
+		_messageBoardAttachmentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<MessageBoardMessageResource>
+		_messageBoardMessageResourceComponentServiceObjects;
+	private static ComponentServiceObjects<MessageBoardSectionResource>
+		_messageBoardSectionResourceComponentServiceObjects;
+	private static ComponentServiceObjects<MessageBoardThreadResource>
+		_messageBoardThreadResourceComponentServiceObjects;
+	private static ComponentServiceObjects<StructuredContentResource>
+		_structuredContentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<StructuredContentFolderResource>
+		_structuredContentFolderResourceComponentServiceObjects;
+	private static ComponentServiceObjects<WikiNodeResource>
+		_wikiNodeResourceComponentServiceObjects;
+	private static ComponentServiceObjects<WikiPageResource>
+		_wikiPageResourceComponentServiceObjects;
+
+	private AcceptLanguage _acceptLanguage;
+	private Company _company;
+
+}

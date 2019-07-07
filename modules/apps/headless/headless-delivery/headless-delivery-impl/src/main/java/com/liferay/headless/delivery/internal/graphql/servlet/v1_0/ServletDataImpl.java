@@ -32,6 +32,8 @@ import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
+import com.liferay.headless.delivery.resource.v1_0.WikiNodeResource;
+import com.liferay.headless.delivery.resource.v1_0.WikiPageResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
 import javax.annotation.Generated;
@@ -81,6 +83,10 @@ public class ServletDataImpl implements ServletData {
 			_structuredContentResourceComponentServiceObjects);
 		Mutation.setStructuredContentFolderResourceComponentServiceObjects(
 			_structuredContentFolderResourceComponentServiceObjects);
+		Mutation.setWikiNodeResourceComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects);
+		Mutation.setWikiPageResourceComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects);
 
 		Query.setBlogPostingResourceComponentServiceObjects(
 			_blogPostingResourceComponentServiceObjects);
@@ -114,6 +120,10 @@ public class ServletDataImpl implements ServletData {
 			_structuredContentResourceComponentServiceObjects);
 		Query.setStructuredContentFolderResourceComponentServiceObjects(
 			_structuredContentFolderResourceComponentServiceObjects);
+		Query.setWikiNodeResourceComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects);
+		Query.setWikiPageResourceComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects);
 	}
 
 	@Override
@@ -190,6 +200,14 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<StructuredContentFolderResource>
 		_structuredContentFolderResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<WikiNodeResource>
+		_wikiNodeResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<WikiPageResource>
+		_wikiPageResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ContentSetElementResource>

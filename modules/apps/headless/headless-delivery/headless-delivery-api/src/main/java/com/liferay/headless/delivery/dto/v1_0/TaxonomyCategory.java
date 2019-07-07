@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class TaxonomyCategory {
 
 	@Schema(
-		description = "The category's ID, which can be used to retrieve more information via the `TaxonomyCategory` API."
+		description = "The category's ID. This can be used to retrieve more information in the `TaxonomyCategory` API."
 	)
 	public Long getTaxonomyCategoryId() {
 		return taxonomyCategoryId;

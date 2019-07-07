@@ -29,7 +29,7 @@
 			data-onsubmit="{$_handleSubmit}"
 			method="post"
 		>
-			<div class="sharing-modal-form-content">
+			<div class="inline-scroller modal-body">
 				<div class="form-group {$emailAddressErrorMessage ? ' has-error' : '' }">
 					{call ClayMultiSelect.render}
 						{param contentRenderer: 'sharingUser' /}

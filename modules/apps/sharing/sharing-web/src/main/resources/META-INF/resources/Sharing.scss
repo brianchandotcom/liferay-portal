@@ -1,15 +1,15 @@
 .sharing-modal-content {
 	background-color: #fff;
 
-	.sharing-modal-form-content {
-		padding: 1.5rem 1.5rem 8px;
-	}
-
 	.custom-radio .form-text {
 		font-weight: normal;
 		margin-bottom: 1rem;
 		margin-top: 0;
 		padding-left: 1.5rem;
+	}
+
+	.modal-body.inline-scroller {
+		max-height: 400px;
 	}
 }
 

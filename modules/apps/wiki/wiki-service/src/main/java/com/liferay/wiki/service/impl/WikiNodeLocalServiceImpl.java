@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -87,6 +89,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			StringPool.BLANK, serviceContext);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public WikiNode addNode(
 			long userId, String name, String description,
@@ -279,6 +282,13 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		subscriptionLocalService.deleteSubscriptions(
 			node.getCompanyId(), WikiNode.class.getName(), node.getNodeId());
 
+		// Indexer
+
+		Indexer<WikiNode> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			WikiNode.class);
+
+		indexer.delete(node);
+
 		if (node.isInTrash()) {
 			node.setName(trashHelper.getOriginalTitle(node.getName()));
 
@@ -286,13 +296,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 			trashEntryLocalService.deleteEntry(
 				WikiNode.class.getName(), node.getNodeId());
-
-			// Indexer
-
-			Indexer<WikiNode> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				WikiNode.class);
-
-			indexer.delete(node);
 		}
 	}
 

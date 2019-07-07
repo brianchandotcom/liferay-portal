@@ -71,6 +71,7 @@ public interface WikiNodeLocalService
 	public WikiNode addDefaultNode(long userId, ServiceContext serviceContext)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public WikiNode addNode(
 			long userId, String name, String description,
 			ServiceContext serviceContext)

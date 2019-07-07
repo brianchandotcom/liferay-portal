@@ -125,7 +125,7 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 	protected void doReindex(WikiNode wikiNode) throws Exception {
 		Document document = getDocument(wikiNode);
 
-		if (!wikiNode.isInTrash()) {
+		if (wikiNode.isInTrash()) {
 			_indexWriterHelper.deleteDocument(
 				getSearchEngineId(), wikiNode.getCompanyId(),
 				document.get(Field.UID), isCommitImmediately());
@@ -147,7 +147,7 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 				Property property = PropertyFactoryUtil.forName("status");
 
 				dynamicQuery.add(
-					property.eq(WorkflowConstants.STATUS_IN_TRASH));
+					property.eq(WorkflowConstants.STATUS_APPROVED));
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(

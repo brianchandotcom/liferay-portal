@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.document.library.web.internal.info.display.contributor;
+package com.liferay.dynamic.data.mapping.internal.info.display.field;
 
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.dynamic.data.mapping.model.Value;
-import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.info.display.field.DDMFormValuesInfoDisplayFieldProvider;
+import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
+import com.liferay.dynamic.data.mapping.kernel.Value;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -54,7 +54,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(service = DDMFormValuesInfoDisplayFieldProvider.class)
-public class DDMFormValuesInfoDisplayFieldProvider<T extends GroupedModel> {
+public class DDMFormValuesInfoDisplayFieldProviderImpl<T extends GroupedModel>
+	implements DDMFormValuesInfoDisplayFieldProvider<T> {
 
 	public Map<String, Object> getInfoDisplayFieldsValues(
 			T t, DDMFormValues ddmFormValues, Locale locale)
@@ -208,7 +209,7 @@ public class DDMFormValuesInfoDisplayFieldProvider<T extends GroupedModel> {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DDMFormValuesInfoDisplayFieldProvider.class);
+		DDMFormValuesInfoDisplayFieldProviderImpl.class);
 
 	@Reference
 	private DLAppService _dlAppService;

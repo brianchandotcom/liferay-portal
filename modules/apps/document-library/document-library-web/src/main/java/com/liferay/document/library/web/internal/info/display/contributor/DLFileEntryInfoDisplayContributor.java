@@ -19,13 +19,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
-import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
-import com.liferay.document.library.kernel.model.DLFileEntryType;
-import com.liferay.document.library.kernel.model.DLFileVersion;
-import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.info.display.field.DDMFormValuesInfoDisplayFieldProvider;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayField;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
@@ -36,6 +30,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portlet.documentlibrary.asset.DLFileEntryDDMFormValuesReader;
 import com.liferay.portlet.documentlibrary.asset.model.DLFileEntryClassTypeReader;
 
 import java.util.HashMap;
@@ -117,26 +112,16 @@ public class DLFileEntryInfoDisplayContributor
 		if (fileEntry.getModel() instanceof DLFileEntry) {
 			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-			DLFileEntryType dlFileEntryType = dlFileEntry.getDLFileEntryType();
+			DLFileEntryDDMFormValuesReader dlFileEntryDDMFormValuesReader =
+				new DLFileEntryDDMFormValuesReader(
+					fileEntry, fileEntry.getFileVersion());
 
-			for (DDMStructure ddmStructure :
-					dlFileEntryType.getDDMStructures()) {
-
-				DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
-
-				DLFileEntryMetadata fileEntryMetadata =
-					_dlFileEntryMetadataLocalService.getFileEntryMetadata(
-						ddmStructure.getStructureId(),
-						dlFileVersion.getFileVersionId());
-
-				DDMFormValues ddmFormValues = _storageEngine.getDDMFormValues(
-					fileEntryMetadata.getDDMStorageId());
-
-				infoDisplayFieldValues.putAll(
-					_ddmFormValuesInfoDisplayFieldProvider.
-						getInfoDisplayFieldsValues(
-							dlFileEntry, ddmFormValues, locale));
-			}
+			infoDisplayFieldValues.putAll(
+				_ddmFormValuesInfoDisplayFieldProvider.
+					getInfoDisplayFieldsValues(
+						dlFileEntry,
+						dlFileEntryDDMFormValuesReader.getDDMFormValues(),
+						locale));
 		}
 
 		return infoDisplayFieldValues;
@@ -184,9 +169,6 @@ public class DLFileEntryInfoDisplayContributor
 		_ddmFormValuesInfoDisplayFieldProvider;
 
 	@Reference
-	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
-
-	@Reference
 	private ExpandoInfoDisplayFieldProvider _expandoInfoDisplayFieldProvider;
 
 	@Reference
@@ -194,8 +176,5 @@ public class DLFileEntryInfoDisplayContributor
 
 	@Reference
 	private RepositoryProvider _repositoryProvider;
-
-	@Reference
-	private StorageEngine _storageEngine;
 
 }

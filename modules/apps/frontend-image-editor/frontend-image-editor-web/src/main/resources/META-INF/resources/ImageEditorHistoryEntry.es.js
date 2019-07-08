@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 /**
  * Image Editor History Entry
  *
@@ -28,7 +26,7 @@ class ImageEditorHistoryEntry {
 	 * @review
 	 */
 	constructor(image) {
-		this.dataPromise_ = new Promise((resolve, reject) => {
+		this.dataPromise_ = new Promise(resolve => {
 			// Preemtively fetch the imageData when all we have is the image url
 
 			if (image.url && !image.data) {
@@ -46,7 +44,7 @@ class ImageEditorHistoryEntry {
 	 * @review
 	 */
 	loadData_(imageURL) {
-		return new Promise((resolve, reject) => {
+		return new Promise(resolve => {
 			const bufferImage = new Image();
 
 			bufferImage.onload = () => {

@@ -12,7 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
 /* eslint no-useless-escape: "warn" */
 
 import 'clay-dropdown';
@@ -23,7 +22,7 @@ import {async, core} from 'metal';
 import {PortletBase} from 'frontend-js-web';
 
 import ImageEditorHistoryEntry from './ImageEditorHistoryEntry.es';
-import ImageEditorLoading from './ImageEditorLoading.es';
+import './ImageEditorLoading.es';
 import templates from './ImageEditor.soy';
 
 /**
@@ -170,7 +169,7 @@ class ImageEditor extends PortletBase {
 	 * @return {Promise} A promise that resolves with the image blob.
 	 */
 	getImageEditorImageBlob() {
-		return new Promise((resolve, reject) => {
+		return new Promise(resolve => {
 			this.getImageEditorImageData().then(imageData => {
 				const canvas = document.createElement('canvas');
 				canvas.width = imageData.width;
@@ -351,7 +350,7 @@ class ImageEditor extends PortletBase {
 	 */
 	setterSaveMimeTypeFn_(saveMimeType) {
 		if (!saveMimeType) {
-			const imageExtensionRegex = /\.(\w+)\/[^?\/]+/;
+			const imageExtensionRegex = /\.(\w+)\/[^?/]+/;
 			const imageExtension = this.image.match(imageExtensionRegex)[1];
 
 			saveMimeType = `image/${imageExtension}`;
@@ -414,7 +413,7 @@ class ImageEditor extends PortletBase {
 	 * @protected
 	 */
 	syncHistory_() {
-		return new Promise((resolve, reject) => {
+		return new Promise(resolve => {
 			this.history_[this.historyIndex_].getImageData().then(imageData => {
 				this.syncImageData_(imageData);
 

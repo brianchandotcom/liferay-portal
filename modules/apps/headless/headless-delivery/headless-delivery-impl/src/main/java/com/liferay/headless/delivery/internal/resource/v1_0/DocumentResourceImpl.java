@@ -35,7 +35,6 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.DocumentEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -64,10 +63,11 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
@@ -88,9 +88,7 @@ public class DocumentResourceImpl
 
 	@Override
 	public void deleteDocumentMyRating(Long documentId) throws Exception {
-		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
-
-		spiRatingResource.deleteRating(documentId);
+		_spiRatingResource.deleteRating(documentId);
 	}
 
 	@Override
@@ -122,9 +120,7 @@ public class DocumentResourceImpl
 	}
 
 	public Rating getDocumentMyRating(Long documentId) throws Exception {
-		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
-
-		return spiRatingResource.getRating(documentId);
+		return _spiRatingResource.getRating(documentId);
 	}
 
 	@Override
@@ -244,9 +240,7 @@ public class DocumentResourceImpl
 	public Rating postDocumentMyRating(Long documentId, Rating rating)
 		throws Exception {
 
-		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
-
-		return spiRatingResource.addOrUpdateRating(
+		return _spiRatingResource.addOrUpdateRating(
 			rating.getRatingValue(), documentId);
 	}
 
@@ -323,10 +317,21 @@ public class DocumentResourceImpl
 	public Rating putDocumentMyRating(Long documentId, Rating rating)
 		throws Exception {
 
-		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
-
-		return spiRatingResource.addOrUpdateRating(
+		return _spiRatingResource.addOrUpdateRating(
 			rating.getRatingValue(), documentId);
+	}
+
+	@Activate
+	protected void activate() {
+		_spiRatingResource = new SPIRatingResource<>(
+			DLFileEntry.class.getName(), _ratingsEntryLocalService,
+			ratingsEntry -> RatingUtil.toRating(
+				_portal, ratingsEntry, _userLocalService));
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_spiRatingResource = null;
 	}
 
 	private Document _addDocument(
@@ -415,14 +420,6 @@ public class DocumentResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
-	private SPIRatingResource<Rating> _getSPIRatingResource() {
-		return new SPIRatingResource<>(
-			DLFileEntry.class.getName(), _ratingsEntryLocalService,
-			ratingsEntry -> RatingUtil.toRating(
-				_portal, ratingsEntry, _userLocalService),
-			_user);
-	}
-
 	private Document _toDocument(FileEntry fileEntry) throws Exception {
 		return _documentDTOConverter.toDTO(
 			new DefaultDTOConverterContext(null, fileEntry.getFileEntryId()));
@@ -452,8 +449,7 @@ public class DocumentResourceImpl
 	@Reference
 	private RatingsEntryLocalService _ratingsEntryLocalService;
 
-	@Context
-	private User _user;
+	private SPIRatingResource<Rating> _spiRatingResource;
 
 	@Reference
 	private UserLocalService _userLocalService;

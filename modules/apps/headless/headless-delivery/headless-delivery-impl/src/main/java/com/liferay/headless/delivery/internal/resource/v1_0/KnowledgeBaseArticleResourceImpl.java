@@ -58,7 +58,9 @@ import java.util.Optional;
 
 import javax.ws.rs.core.MultivaluedMap;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
@@ -84,9 +86,7 @@ public class KnowledgeBaseArticleResourceImpl
 	public void deleteKnowledgeBaseArticleMyRating(Long knowledgeBaseArticleId)
 		throws Exception {
 
-		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
-
-		spiRatingResource.deleteRating(knowledgeBaseArticleId);
+		_spiRatingResource.deleteRating(knowledgeBaseArticleId);
 	}
 
 	@Override
@@ -136,9 +136,7 @@ public class KnowledgeBaseArticleResourceImpl
 	public Rating getKnowledgeBaseArticleMyRating(Long knowledgeBaseArticleId)
 		throws Exception {
 
-		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
-
-		return spiRatingResource.getRating(knowledgeBaseArticleId);
+		return _spiRatingResource.getRating(knowledgeBaseArticleId);
 	}
 
 	@Override
@@ -215,9 +213,7 @@ public class KnowledgeBaseArticleResourceImpl
 			Long knowledgeBaseArticleId, Rating rating)
 		throws Exception {
 
-		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
-
-		return spiRatingResource.addOrUpdateRating(
+		return _spiRatingResource.addOrUpdateRating(
 			rating.getRatingValue(), knowledgeBaseArticleId);
 	}
 
@@ -277,10 +273,21 @@ public class KnowledgeBaseArticleResourceImpl
 			Long knowledgeBaseArticleId, Rating rating)
 		throws Exception {
 
-		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
-
-		return spiRatingResource.addOrUpdateRating(
+		return _spiRatingResource.addOrUpdateRating(
 			rating.getRatingValue(), knowledgeBaseArticleId);
+	}
+
+	@Activate
+	protected void activate() {
+		_spiRatingResource = new SPIRatingResource<>(
+			KBArticle.class.getName(), _ratingsEntryLocalService,
+			ratingsEntry -> RatingUtil.toRating(
+				_portal, ratingsEntry, _userLocalService), contextUser);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_spiRatingResource = null;
 	}
 
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
@@ -338,14 +345,6 @@ public class KnowledgeBaseArticleResourceImpl
 			sorts);
 	}
 
-	private SPIRatingResource<Rating> _getSPIRatingResource() {
-		return new SPIRatingResource<>(
-			KBArticle.class.getName(), _ratingsEntryLocalService,
-			ratingsEntry -> RatingUtil.toRating(
-				_portal, ratingsEntry, _userLocalService),
-			contextUser);
-	}
-
 	private KnowledgeBaseArticle _toKBArticle(KBArticle kbArticle)
 		throws Exception {
 
@@ -386,6 +385,8 @@ public class KnowledgeBaseArticleResourceImpl
 
 	@Reference
 	private RatingsEntryLocalService _ratingsEntryLocalService;
+
+	private SPIRatingResource<Rating> _spiRatingResource;
 
 	@Reference
 	private UserLocalService _userLocalService;

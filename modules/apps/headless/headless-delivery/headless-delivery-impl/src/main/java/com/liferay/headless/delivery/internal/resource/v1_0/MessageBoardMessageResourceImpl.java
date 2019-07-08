@@ -56,7 +56,9 @@ import java.util.Map;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
@@ -80,9 +82,7 @@ public class MessageBoardMessageResourceImpl
 	public void deleteMessageBoardMessageMyRating(Long messageBoardMessageId)
 		throws Exception {
 
-		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
-
-		spiRatingResource.deleteRating(messageBoardMessageId);
+		_spiRatingResource.deleteRating(messageBoardMessageId);
 	}
 
 	@Override
@@ -118,9 +118,7 @@ public class MessageBoardMessageResourceImpl
 	public Rating getMessageBoardMessageMyRating(Long messageBoardMessageId)
 		throws Exception {
 
-		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
-
-		return spiRatingResource.getRating(messageBoardMessageId);
+		return _spiRatingResource.getRating(messageBoardMessageId);
 	}
 
 	@Override
@@ -152,9 +150,7 @@ public class MessageBoardMessageResourceImpl
 			Long messageBoardMessageId, Rating rating)
 		throws Exception {
 
-		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
-
-		return spiRatingResource.addOrUpdateRating(
+		return _spiRatingResource.addOrUpdateRating(
 			rating.getRatingValue(), messageBoardMessageId);
 	}
 
@@ -215,10 +211,21 @@ public class MessageBoardMessageResourceImpl
 			Long messageBoardMessageId, Rating rating)
 		throws Exception {
 
-		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
-
-		return spiRatingResource.addOrUpdateRating(
+		return _spiRatingResource.addOrUpdateRating(
 			rating.getRatingValue(), messageBoardMessageId);
+	}
+
+	@Activate
+	protected void activate() {
+		_spiRatingResource = new SPIRatingResource<>(
+			MBMessage.class.getName(), _ratingsEntryLocalService,
+			ratingsEntry -> RatingUtil.toRating(
+				_portal, ratingsEntry, _userLocalService), contextUser);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_spiRatingResource = null;
 	}
 
 	private MessageBoardMessage _addMessageBoardThread(
@@ -293,14 +300,6 @@ public class MessageBoardMessageResourceImpl
 			sorts);
 	}
 
-	private SPIRatingResource<Rating> _getSPIRatingResource() {
-		return new SPIRatingResource<>(
-			MBMessage.class.getName(), _ratingsEntryLocalService,
-			ratingsEntry -> RatingUtil.toRating(
-				_portal, ratingsEntry, _userLocalService),
-			contextUser);
-	}
-
 	private MessageBoardMessage _toMessageBoardMessage(MBMessage mbMessage)
 		throws Exception {
 
@@ -342,6 +341,8 @@ public class MessageBoardMessageResourceImpl
 
 	@Reference
 	private RatingsEntryLocalService _ratingsEntryLocalService;
+
+	private SPIRatingResource<Rating> _spiRatingResource;
 
 	@Reference
 	private UserLocalService _userLocalService;

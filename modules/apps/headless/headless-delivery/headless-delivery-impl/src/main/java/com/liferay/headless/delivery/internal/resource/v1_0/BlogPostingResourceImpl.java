@@ -60,7 +60,9 @@ import java.util.Optional;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
@@ -81,9 +83,7 @@ public class BlogPostingResourceImpl
 
 	@Override
 	public void deleteBlogPostingMyRating(Long blogPostingId) throws Exception {
-		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
-
-		spiRatingResource.deleteRating(blogPostingId);
+		_spiRatingResource.deleteRating(blogPostingId);
 	}
 
 	@Override
@@ -95,9 +95,7 @@ public class BlogPostingResourceImpl
 
 	@Override
 	public Rating getBlogPostingMyRating(Long blogPostingId) throws Exception {
-		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
-
-		return spiRatingResource.getRating(blogPostingId);
+		return _spiRatingResource.getRating(blogPostingId);
 	}
 
 	@Override
@@ -137,9 +135,7 @@ public class BlogPostingResourceImpl
 	public Rating postBlogPostingMyRating(Long blogPostingId, Rating rating)
 		throws Exception {
 
-		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
-
-		return spiRatingResource.addOrUpdateRating(
+		return _spiRatingResource.addOrUpdateRating(
 			rating.getRatingValue(), blogPostingId);
 	}
 
@@ -223,10 +219,21 @@ public class BlogPostingResourceImpl
 	public Rating putBlogPostingMyRating(Long blogPostingId, Rating rating)
 		throws Exception {
 
-		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
-
-		return spiRatingResource.addOrUpdateRating(
+		return _spiRatingResource.addOrUpdateRating(
 			rating.getRatingValue(), blogPostingId);
+	}
+
+	@Activate
+	protected void activate() {
+		_spiRatingResource = new SPIRatingResource<>(
+			BlogsEntry.class.getName(), _ratingsEntryLocalService,
+			ratingsEntry -> RatingUtil.toRating(
+				_portal, ratingsEntry, _userLocalService), contextUser);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_spiRatingResource = null;
 	}
 
 	@Override
@@ -284,14 +291,6 @@ public class BlogPostingResourceImpl
 		}
 	}
 
-	private SPIRatingResource<Rating> _getSPIRatingResource() {
-		return new SPIRatingResource<>(
-			BlogsEntry.class.getName(), _ratingsEntryLocalService,
-			ratingsEntry -> RatingUtil.toRating(
-				_portal, ratingsEntry, _userLocalService),
-			contextUser);
-	}
-
 	private BlogPosting _toBlogPosting(BlogsEntry blogsEntry) throws Exception {
 		return _blogPostingDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -319,6 +318,8 @@ public class BlogPostingResourceImpl
 
 	@Reference
 	private RatingsEntryLocalService _ratingsEntryLocalService;
+
+	private SPIRatingResource<Rating> _spiRatingResource;
 
 	@Reference
 	private UserLocalService _userLocalService;

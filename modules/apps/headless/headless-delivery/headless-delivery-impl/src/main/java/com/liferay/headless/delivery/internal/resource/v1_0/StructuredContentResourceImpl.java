@@ -108,7 +108,9 @@ import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.core.MultivaluedMap;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
@@ -138,9 +140,7 @@ public class StructuredContentResourceImpl
 	public void deleteStructuredContentMyRating(Long structuredContentId)
 		throws Exception {
 
-		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
-
-		spiRatingResource.deleteRating(structuredContentId);
+		_spiRatingResource.deleteRating(structuredContentId);
 	}
 
 	@Override
@@ -278,9 +278,7 @@ public class StructuredContentResourceImpl
 	public Rating getStructuredContentMyRating(Long structuredContentId)
 		throws Exception {
 
-		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
-
-		return spiRatingResource.getRating(structuredContentId);
+		return _spiRatingResource.getRating(structuredContentId);
 	}
 
 	@Override
@@ -406,9 +404,7 @@ public class StructuredContentResourceImpl
 			Long structuredContentId, Rating rating)
 		throws Exception {
 
-		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
-
-		return spiRatingResource.addOrUpdateRating(
+		return _spiRatingResource.addOrUpdateRating(
 			rating.getRatingValue(), structuredContentId);
 	}
 
@@ -473,10 +469,21 @@ public class StructuredContentResourceImpl
 			Long structuredContentId, Rating rating)
 		throws Exception {
 
-		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
-
-		return spiRatingResource.addOrUpdateRating(
+		return _spiRatingResource.addOrUpdateRating(
 			rating.getRatingValue(), structuredContentId);
+	}
+
+	@Activate
+	protected void activate() {
+		_spiRatingResource = new SPIRatingResource<>(
+			JournalArticle.class.getName(), _ratingsEntryLocalService,
+			ratingsEntry -> RatingUtil.toRating(
+				_portal, ratingsEntry, _userLocalService), contextUser);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_spiRatingResource = null;
 	}
 
 	private StructuredContent _addStructuredContent(
@@ -640,14 +647,6 @@ public class StructuredContentResourceImpl
 		return transform(
 			ddmStructure.getRootFieldNames(),
 			fieldName -> _getDDMFormField(ddmStructure, fieldName));
-	}
-
-	private SPIRatingResource<Rating> _getSPIRatingResource() {
-		return new SPIRatingResource<>(
-			JournalArticle.class.getName(), _ratingsEntryLocalService,
-			ratingsEntry -> RatingUtil.toRating(
-				_portal, ratingsEntry, _userLocalService),
-			contextUser);
 	}
 
 	private StructuredContent _getStructuredContent(
@@ -903,6 +902,8 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private RatingsEntryLocalService _ratingsEntryLocalService;
+
+	private SPIRatingResource<Rating> _spiRatingResource;
 
 	@Reference
 	private StructuredContentDTOConverter _structuredContentDTOConverter;

@@ -79,7 +79,9 @@ import java.util.Optional;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
@@ -104,12 +106,10 @@ public class MessageBoardThreadResourceImpl
 	public void deleteMessageBoardThreadMyRating(Long messageBoardThreadId)
 		throws Exception {
 
-		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
-
 		MBThread mbThread = _mbThreadLocalService.getMBThread(
 			messageBoardThreadId);
 
-		spiRatingResource.deleteRating(mbThread.getRootMessageId());
+		_spiRatingResource.deleteRating(mbThread.getRootMessageId());
 	}
 
 	@Override
@@ -161,12 +161,10 @@ public class MessageBoardThreadResourceImpl
 	public Rating getMessageBoardThreadMyRating(Long messageBoardThreadId)
 		throws Exception {
 
-		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
-
 		MBThread mbThread = _mbThreadLocalService.getMBThread(
 			messageBoardThreadId);
 
-		return spiRatingResource.getRating(mbThread.getRootMessageId());
+		return _spiRatingResource.getRating(mbThread.getRootMessageId());
 	}
 
 	@Override
@@ -210,12 +208,10 @@ public class MessageBoardThreadResourceImpl
 			Long messageBoardThreadId, Rating rating)
 		throws Exception {
 
-		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
-
 		MBThread mbThread = _mbThreadLocalService.getThread(
 			messageBoardThreadId);
 
-		return spiRatingResource.addOrUpdateRating(
+		return _spiRatingResource.addOrUpdateRating(
 			rating.getRatingValue(), mbThread.getRootMessageId());
 	}
 
@@ -264,13 +260,24 @@ public class MessageBoardThreadResourceImpl
 			Long messageBoardThreadId, Rating rating)
 		throws Exception {
 
-		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
-
 		MBThread mbThread = _mbThreadLocalService.getThread(
 			messageBoardThreadId);
 
-		return spiRatingResource.addOrUpdateRating(
+		return _spiRatingResource.addOrUpdateRating(
 			rating.getRatingValue(), mbThread.getRootMessageId());
+	}
+
+	@Activate
+	protected void activate() {
+		_spiRatingResource = new SPIRatingResource<>(
+			MBMessage.class.getName(), _ratingsEntryLocalService,
+			ratingsEntry -> RatingUtil.toRating(
+				_portal, ratingsEntry, _userLocalService), contextUser);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_spiRatingResource = null;
 	}
 
 	private MessageBoardThread _addMessageBoardThread(
@@ -321,14 +328,6 @@ public class MessageBoardThreadResourceImpl
 				_mbMessageService.getMessage(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
 			sorts);
-	}
-
-	private SPIRatingResource<Rating> _getSPIRatingResource() {
-		return new SPIRatingResource<>(
-			MBMessage.class.getName(), _ratingsEntryLocalService,
-			ratingsEntry -> RatingUtil.toRating(
-				_portal, ratingsEntry, _userLocalService),
-			contextUser);
 	}
 
 	private MessageBoardThread _toMessageBoardThread(MBMessage mbMessage)
@@ -492,6 +491,8 @@ public class MessageBoardThreadResourceImpl
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
+
+	private SPIRatingResource<Rating> _spiRatingResource;
 
 	@Reference
 	private UserLocalService _userLocalService;

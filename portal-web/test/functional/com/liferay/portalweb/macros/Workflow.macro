@@ -348,7 +348,11 @@ definition {
 	macro gotoPreviewEdit {
 		Click(locator1 = "WorkflowSubmissionsTask#PREVIEW_EDIT");
 
-		SelectFrame(locator1 = "IFrame#EDIT_ASSET");
+		var editAsset = "IFrame#EDIT_ASSET";
+
+		if (IsElementPresent(locator1 = "${editAsset}")) {
+			SelectFrame(locator1 = "${editAsset}");
+		}
 	}
 
 	macro gotoPreviewView {

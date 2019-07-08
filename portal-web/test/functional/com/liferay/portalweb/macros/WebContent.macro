@@ -862,12 +862,17 @@ definition {
 				navTab = "Web Content Images",
 				uploadFileName = "${webContentImage}");
 		}
+		var iFrameDialog = "IFrame#DIALOG";
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		if (IsElementPresent(locator1 = "${iFrameDialog}")) {
+			SelectFrame(locator1 = "${iFrameDialog}");
+		}
 
 		PortletEntry.save();
 
-		IFrame.closeFrame();
+		if (IsElementPresent(locator1 = "${iFrameDialog}")) {
+			IFrame.closeFrame();
+		}
 	}
 
 	macro editNullCP {

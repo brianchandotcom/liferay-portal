@@ -488,6 +488,12 @@ public class GroupLocalServiceUtil {
 		return getService().fetchGroup(groupId);
 	}
 
+	public static com.liferay.portal.kernel.model.Group fetchGroup(
+		long companyId, long classNameId, long classPK) {
+
+		return getService().fetchGroup(companyId, classNameId, classPK);
+	}
+
 	/**
 	 * Returns the group with the matching group key by first searching the
 	 * system groups and then using the finder cache.

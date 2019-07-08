@@ -37,6 +37,7 @@ class AssetVocabularyCategoriesSelector extends Component {
 
 	/**
 	 * Opens the tag selection dialog.
+	 *
 	 * @private
 	 */
 	_handleButtonClicked() {

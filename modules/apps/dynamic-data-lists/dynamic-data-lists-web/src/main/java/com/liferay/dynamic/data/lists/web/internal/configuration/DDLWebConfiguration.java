@@ -37,7 +37,7 @@ public interface DDLWebConfiguration {
 
 	@Meta.AD(
 		deflt = "enabled-with-warning", name = "csv-export",
-		optionLabels = {"Enabled", "enabled-with-warning", "Disabled"},
+		optionLabels = {"enabled", "enabled-with-warning", "disabled"},
 		optionValues = {"enabled", "enabled-with-warning", "disabled"},
 		required = false
 	)

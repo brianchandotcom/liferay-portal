@@ -111,59 +111,70 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 				</div>
 			</liferay-dynamic-section:dynamic-section>
 
-			<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadLinkVisible() %>">
+			<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadLinkVisible() || dlViewFileVersionDisplayContext.isSharingLinkVisible() %>">
 				<div class="sidebar-section">
 					<div class="btn-group sidebar-panel">
-						<div class="btn-group-item">
+						<c:if test="<%= dlViewFileVersionDisplayContext.isSharingLinkVisible() %>">
+							<div class="btn-group-item">
 
-							<%
-							Map<String, String> data = new HashMap<>(1);
+								<%
+								Map<String, String> data = new HashMap<>(1);
 
-							data.put("analytics-file-entry-id", String.valueOf(fileEntry.getFileEntryId()));
-							%>
+								data.put("analytics-file-entry-id", String.valueOf(fileEntry.getFileEntryId()));
+								%>
 
-							<clay:link
-								buttonStyle="primary"
-								data="<%= data %>"
-								elementClasses='<%= "btn-sm" %>'
-								href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true) %>"
-								label='<%= LanguageUtil.get(resourceBundle, "download") %>'
-								title='<%= LanguageUtil.format(resourceBundle, "file-size-x", TextFormatter.formatStorageSize(fileVersion.getSize(), locale), false) %>'
-							/>
-						</div>
+								<clay:link
+									buttonStyle="primary"
+									data="<%= data %>"
+									elementClasses='<%= "btn-sm" %>'
+									href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true) %>"
+									label='<%= LanguageUtil.get(resourceBundle, "download") %>'
+									title='<%= LanguageUtil.format(resourceBundle, "file-size-x", TextFormatter.formatStorageSize(fileVersion.getSize(), locale), false) %>'
+								/>
+							</div>
 
-						<c:if test="<%= PropsValues.DL_FILE_ENTRY_CONVERSIONS_ENABLED && DocumentConversionUtil.isEnabled() %>">
+							<c:if test="<%= PropsValues.DL_FILE_ENTRY_CONVERSIONS_ENABLED && DocumentConversionUtil.isEnabled() %>">
 
-							<%
-							final String[] conversions = DocumentConversionUtil.getConversions(fileVersion.getExtension());
-							%>
+								<%
+								final String[] conversions = DocumentConversionUtil.getConversions(fileVersion.getExtension());
+								%>
 
-							<c:if test="<%= conversions.length > 0 %>">
-								<div class="btn-group-item">
-									<div class="d-inline-block">
-										<clay:dropdown-menu
-											dropdownItems="<%=
-												new JSPDropdownItemList(pageContext) {
-													{
-														ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
+								<c:if test="<%= conversions.length > 0 %>">
+									<div class="btn-group-item">
+										<div class="d-inline-block">
+											<clay:dropdown-menu
+												dropdownItems="<%=
+													new JSPDropdownItemList(pageContext) {
+														{
+															ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
 
-														for (String conversion : conversions) {
-															add(
-																dropdownItem -> {
-																	dropdownItem.setHref(DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion));
-																	dropdownItem.setLabel(StringUtil.toUpperCase(conversion));
-																});
+															for (String conversion : conversions) {
+																add(
+																	dropdownItem -> {
+																		dropdownItem.setHref(DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion));
+																		dropdownItem.setLabel(StringUtil.toUpperCase(conversion));
+																	});
+															}
 														}
 													}
-												}
-											%>"
-											style="secondary"
-											triggerCssClasses="btn-outline-borderless btn-sm"
-											label="<%= LanguageUtil.get(request, "download-as") %>"
-										/>
+												%>"
+												style="secondary"
+												triggerCssClasses="btn-outline-borderless btn-sm"
+												label="<%= LanguageUtil.get(request, "download-as") %>"
+											/>
+										</div>
 									</div>
-								</div>
+								</c:if>
 							</c:if>
+						</c:if>
+
+						<c:if test="<%= dlViewFileVersionDisplayContext.isSharingLinkVisible() %>">
+							<div class="btn-group-item">
+								<liferay-sharing:button
+									className="<%= DLFileEntryConstants.getClassName() %>"
+									classPK="<%= fileEntry.getFileEntryId() %>"
+								/>
+							</div>
 						</c:if>
 					</div>
 

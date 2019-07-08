@@ -29,13 +29,13 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface SolrConfiguration {
 
 	@Meta.AD(
-		deflt = "BASIC", optionLabels = {"Basic", "Cert"},
+		deflt = "BASIC", optionLabels = {"basic", "cert"},
 		optionValues = {"BASIC", "CERT"}, required = false
 	)
 	public String authenticationMode();
 
 	@Meta.AD(
-		deflt = "REPLICATED", optionLabels = {"Cloud", "Replicated"},
+		deflt = "REPLICATED", optionLabels = {"cloud", "replicated"},
 		optionValues = {"CLOUD", "REPLICATED"}, required = false
 	)
 	public String clientType();

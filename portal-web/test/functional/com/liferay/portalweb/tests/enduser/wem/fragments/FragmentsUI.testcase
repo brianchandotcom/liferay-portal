@@ -71,7 +71,11 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Publish the section fragment") {
-			PortletEntry.publish();
+			Button.clickPublish();
+		}
+
+		task ("Assert the fragment appears in Fragments Admin") {
+			FragmentsAdmin.viewEntryPresent(entry = "Fragment Name");
 		}
 
 		task ("Navigate to pages admin") {

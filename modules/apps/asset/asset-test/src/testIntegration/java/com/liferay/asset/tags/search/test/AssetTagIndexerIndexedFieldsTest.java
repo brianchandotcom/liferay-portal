@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -39,6 +40,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -74,6 +76,9 @@ public class AssetTagIndexerIndexedFieldsTest {
 
 	@Test
 	public void testIndexedFields() throws Exception {
+		Assume.assumeFalse(
+			isNumberSortableImplementedAsDoubleForSearchEngine());
+
 		AssetTag assetTag = assetTagFixture.createAssetTag();
 
 		String searchTerm = assetTag.getUserName();
@@ -84,6 +89,19 @@ public class AssetTagIndexerIndexedFieldsTest {
 
 		FieldValuesAssert.assertFieldValues(
 			_expectedFieldValues(assetTag), document, searchTerm);
+	}
+
+	protected boolean isNumberSortableImplementedAsDoubleForSearchEngine() {
+		SearchEngine searchEngine = searchEngineHelper.getSearchEngine(
+			searchEngineHelper.getDefaultSearchEngineId());
+
+		String vendor = searchEngine.getVendor();
+
+		if (vendor.equals("Solr")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void setUpAssetTagFixture() throws Exception {

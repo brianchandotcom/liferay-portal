@@ -1014,7 +1014,8 @@ definition {
 
 		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder2 Description",
-			dmFolderName = "DM Folder2 Name");
+			dmFolderName = "DM Folder2 Name",
+			groupName = "Guest");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

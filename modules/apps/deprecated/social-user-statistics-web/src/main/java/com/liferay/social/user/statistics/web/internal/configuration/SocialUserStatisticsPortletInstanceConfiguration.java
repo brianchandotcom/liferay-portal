@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.user.statistics.web.configuration;
+package com.liferay.social.user.statistics.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE
 )
 @Meta.OCD(
-	id = "com.liferay.social.user.statistics.web.configuration.SocialUserStatisticsPortletInstanceConfiguration",
+	id = "com.liferay.social.user.statistics.web.internal.configuration.SocialUserStatisticsPortletInstanceConfiguration",
 	localization = "content/Language",
 	name = "social-user-statistics-portlet-instance-configuration-name"
 )

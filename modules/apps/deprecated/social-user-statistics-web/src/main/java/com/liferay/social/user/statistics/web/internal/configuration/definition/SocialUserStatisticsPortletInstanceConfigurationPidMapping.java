@@ -12,23 +12,29 @@
  * details.
  */
 
-package com.liferay.social.user.statistics.web.configuration.definition;
+package com.liferay.social.user.statistics.web.internal.configuration.definition;
 
-import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.social.user.statistics.web.configuration.SocialUserStatisticsPortletInstanceConfiguration;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
+import com.liferay.social.user.statistics.constants.SocialUserStatisticsPortletKeys;
+import com.liferay.social.user.statistics.web.internal.configuration.SocialUserStatisticsPortletInstanceConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Iván Zaera
+ * @author Kailash Yadav
  */
-@Component(service = ConfigurationBeanDeclaration.class)
-public class SocialUserStatisticsPortletInstanceConfigurationBeanDeclaration
-	implements ConfigurationBeanDeclaration {
+@Component(service = ConfigurationPidMapping.class)
+public class SocialUserStatisticsPortletInstanceConfigurationPidMapping
+	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
 		return SocialUserStatisticsPortletInstanceConfiguration.class;
+	}
+
+	@Override
+	public String getConfigurationPid() {
+		return SocialUserStatisticsPortletKeys.SOCIAL_USER_STATISTICS;
 	}
 
 }

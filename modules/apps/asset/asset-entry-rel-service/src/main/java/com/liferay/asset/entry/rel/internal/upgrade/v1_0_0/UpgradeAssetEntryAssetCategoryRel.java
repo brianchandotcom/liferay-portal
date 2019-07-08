@@ -41,7 +41,7 @@ public class UpgradeAssetEntryAssetCategoryRel extends UpgradeProcess {
 
 	protected void addAssetEntryAssetCategoryRels() throws Exception {
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select * from AssetEntries_AssetCategories");
+				"select entryId, categoryId from AssetEntries_AssetCategories");
 			ResultSet rs = ps.executeQuery()) {
 
 			List<InsertAssetEntryAssetCategoryRelCallable>

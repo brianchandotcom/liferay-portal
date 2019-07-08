@@ -27,8 +27,8 @@ class SucessPage extends Component {
 
 		return {
 			...state,
-			body: body[editingLanguageId] || '',
-			title: title[editingLanguageId] || ''
+			body: (body && body[editingLanguageId]) || '',
+			title: (title && title[editingLanguageId]) || ''
 		};
 	}
 
@@ -56,7 +56,10 @@ SucessPage.STATE = {
 	 * @type {?object}
 	 */
 
-	successPageSettings: Config.object().value({})
+	successPageSettings: Config.object().value({
+		body: {},
+		title: {}
+	})
 };
 
 Soy.register(SucessPage, templates);

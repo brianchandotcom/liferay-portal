@@ -21,11 +21,13 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.site.buildings.site.initializer.internal.util.ImagesImporter;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 
@@ -33,6 +35,7 @@ import java.io.File;
 
 import java.net.URL;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
@@ -82,6 +85,7 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 			_createServiceContext(groupId);
 
 			_addFragments();
+			_addImages();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -110,6 +114,16 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 			file, false);
 	}
 
+	private void _addImages() throws Exception {
+		URL url = _bundle.getEntry("/images.zip");
+
+		File file = FileUtil.createTempFile(url.openStream());
+
+		_fileEntries = _imagesImporter.importFile(
+			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+			file);
+	}
+
 	private void _createServiceContext(long groupId) throws PortalException {
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -135,9 +149,13 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 		BuildingsSiteInitializer.class);
 
 	private Bundle _bundle;
+	private List<FileEntry> _fileEntries;
 
 	@Reference
 	private FragmentsImporter _fragmentsImporter;
+
+	@Reference
+	private ImagesImporter _imagesImporter;
 
 	private ServiceContext _serviceContext;
 

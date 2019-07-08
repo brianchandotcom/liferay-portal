@@ -46,6 +46,9 @@ public class DDMStructureLayoutModelDocumentContributor
 			Field.CLASS_NAME_ID,
 			classNameLocalService.getClassNameId(DDMStructureLayout.class));
 
+		document.addKeyword(
+			"structureVersionId", ddmStructureLayout.getStructureVersionId());
+
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);

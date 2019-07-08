@@ -46,6 +46,14 @@ public class DDMStructureLayoutModelPreFilterContributor
 		BooleanFilter booleanFilter, ModelSearchSettings modelSearchSettings,
 		SearchContext searchContext) {
 
+		long structureVersionId = GetterUtil.getLong(
+			searchContext.getAttribute("structureVersionId"));
+
+		if (structureVersionId > 0) {
+			booleanFilter.addRequiredTerm(
+				"structureVersionId", structureVersionId);
+		}
+
 		addWorkflowStatusFilter(
 			booleanFilter, modelSearchSettings, searchContext);
 	}

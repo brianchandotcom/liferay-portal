@@ -63,8 +63,16 @@ FileVersion fileVersion = (FileVersion)request.getAttribute("file_entry_upper_tb
 
 				<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadLinkVisible() %>">
 					<li class="d-none d-sm-flex tbar-item">
+
+						<%
+						Map<String, String> data = new HashMap<>(1);
+
+						data.put("analytics-file-entry-id", String.valueOf(fileEntry.getFileEntryId()));
+						%>
+
 						<clay:link
 							buttonStyle="primary"
+							data="<%= data %>"
 							elementClasses="btn-sm"
 							href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true) %>"
 							icon="download"

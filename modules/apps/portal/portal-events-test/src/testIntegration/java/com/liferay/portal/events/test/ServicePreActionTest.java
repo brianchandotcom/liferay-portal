@@ -97,17 +97,12 @@ public class ServicePreActionTest {
 				Layout.class, List.class, boolean.class
 			},
 			_request, _user, PermissionCheckerFactoryUtil.create(_user),
-			ReflectionTestUtil.invoke(
-				defaultLayoutComposite, "getLayout", null, null),
-			ReflectionTestUtil.invoke(
-				defaultLayoutComposite, "getLayouts", null, null),
-			false);
+			_getLayout(defaultLayoutComposite),
+			_getLayouts(defaultLayoutComposite), false);
 
-		Layout layout = ReflectionTestUtil.invoke(
-			defaultLayoutComposite, "getLayout", null, null);
+		Layout layout = _getLayout(defaultLayoutComposite);
 
-		List<Layout> layouts = ReflectionTestUtil.invoke(
-			defaultLayoutComposite, "getLayouts", null, null);
+		List<Layout> layouts = _getLayouts(defaultLayoutComposite);
 
 		Assert.assertEquals(layout.getPlid(), plid);
 
@@ -124,8 +119,7 @@ public class ServicePreActionTest {
 			_servicePreAction, "_getDefaultUserPersonalSiteLayoutComposite",
 			new Class<?>[] {User.class}, _user);
 
-		Layout layout = ReflectionTestUtil.invoke(
-			defaultLayoutComposite, "getLayout", null, null);
+		Layout layout = _getLayout(defaultLayoutComposite);
 
 		Assert.assertEquals(layout.getPlid(), plid);
 	}
@@ -149,8 +143,7 @@ public class ServicePreActionTest {
 				_servicePreAction, "_getDefaultUserSitesLayoutComposite",
 				new Class<?>[] {User.class}, _user);
 
-			Layout layout = ReflectionTestUtil.invoke(
-				defaultLayoutComposite, "getLayout", null, null);
+			Layout layout = _getLayout(defaultLayoutComposite);
 
 			Assert.assertEquals(layout.getPlid(), plid);
 		}
@@ -172,8 +165,7 @@ public class ServicePreActionTest {
 			_servicePreAction, "_getGuestSiteLayoutComposite",
 			new Class<?>[] {User.class}, _user);
 
-		Layout layout = ReflectionTestUtil.invoke(
-			defaultLayoutComposite, "getLayout", null, null);
+		Layout layout = _getLayout(defaultLayoutComposite);
 
 		Assert.assertEquals(layout.getPlid(), plid);
 	}
@@ -188,8 +180,7 @@ public class ServicePreActionTest {
 			_servicePreAction, "_getDefaultVirtualHostLayoutComposite",
 			new Class<?>[] {HttpServletRequest.class}, _request);
 
-		Layout layout = ReflectionTestUtil.invoke(
-			defaultLayoutComposite, "getLayout", null, null);
+		Layout layout = _getLayout(defaultLayoutComposite);
 
 		Assert.assertEquals(layout.getPlid(), plid);
 	}
@@ -223,6 +214,16 @@ public class ServicePreActionTest {
 			WebKeys.THEME_DISPLAY);
 
 		return themeDisplay.getPlid();
+	}
+
+	private Layout _getLayout(Object layoutComposite) {
+		return ReflectionTestUtil.invoke(
+			layoutComposite, "getLayout", null, null);
+	}
+
+	private List<Layout> _getLayouts(Object layoutComposite) {
+		return ReflectionTestUtil.invoke(
+			layoutComposite, "getLayouts", null, null);
 	}
 
 	@DeleteAfterTestRun

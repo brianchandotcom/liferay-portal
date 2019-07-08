@@ -6,16 +6,16 @@ test('Should fetch time ranges', () => {
 	const data = {
 		items: [
 			{
-				dateEnd: new Date(2019, 5, 13),
-				dateStart: new Date(2019, 5, 12),
+				dateEnd: new Date(Date.UTC(2019, 5, 13)),
+				dateStart: new Date(Date.UTC(2019, 5, 12)),
 				defaultTimeRange: true,
 				id: 0,
 				key: 'today',
 				name: 'Today'
 			},
 			{
-				dateEnd: new Date(2019, 4, 10),
-				dateStart: new Date(2019, 1, 10),
+				dateEnd: new Date(Date.UTC(2019, 4, 10)),
+				dateStart: new Date(Date.UTC(2019, 1, 10)),
 				defaultTimeRange: false,
 				id: 1,
 				key: 'four-months',
@@ -42,24 +42,24 @@ test('Should format time range description', () => {
 	const data = {
 		items: [
 			{
-				dateEnd: new Date(2019, 4, 10),
-				dateStart: new Date(2018, 4, 10),
+				dateEnd: new Date(Date.UTC(2019, 4, 10)),
+				dateStart: new Date(Date.UTC(2018, 4, 10)),
 				defaultTimeRange: true,
 				id: 0,
 				key: 'one-year',
 				name: 'One Year'
 			},
 			{
-				dateEnd: new Date(2019, 4, 10),
-				dateStart: new Date(2019, 1, 10),
+				dateEnd: new Date(Date.UTC(2019, 4, 10)),
+				dateStart: new Date(Date.UTC(2019, 1, 10)),
 				defaultTimeRange: false,
 				id: 1,
 				key: 'four-months',
 				name: 'Four Months'
 			},
 			{
-				dateEnd: new Date(2019, 4, 10, 23),
-				dateStart: new Date(2019, 4, 10, 0),
+				dateEnd: new Date(Date.UTC(2019, 4, 10, 23)),
+				dateStart: new Date(Date.UTC(2019, 4, 10, 0)),
 				defaultTimeRange: false,
 				id: 2,
 				key: 'today',
@@ -77,7 +77,7 @@ test('Should format time range description', () => {
 
 	const timeRangeStore = new TimeRangeStore(client(data));
 
-	timeRangeStore.fetchTimeRanges().then(() => {
+	return timeRangeStore.fetchTimeRanges().then(() => {
 		timeRangeStore
 			.getState()
 			.timeRanges.filter(
@@ -96,8 +96,8 @@ test('Should get default time range', () => {
 
 	const timeRanges = [
 		{
-			dateEnd: new Date(2019, 5, 13),
-			dateStart: new Date(2019, 5, 12),
+			dateEnd: new Date(Date.UTC(2019, 5, 13)),
+			dateStart: new Date(Date.UTC(2019, 5, 12)),
 			defaultTimeRange: true,
 			id: 0,
 			key: 'today',
@@ -121,8 +121,8 @@ test('Should get selected time range', () => {
 	const timeRanges = [
 		{
 			active: true,
-			dateEnd: new Date(2019, 5, 13),
-			dateStart: new Date(2019, 5, 12),
+			dateEnd: new Date(Date.UTC(2019, 5, 13)),
+			dateStart: new Date(Date.UTC(2019, 5, 12)),
 			defaultTimeRange: true,
 			id: 0,
 			key: 'today',
@@ -173,8 +173,8 @@ test('Should return null when there is no selected time range', () => {
 	const timeRanges = [
 		{
 			active: false,
-			dateEnd: new Date(2019, 5, 13),
-			dateStart: new Date(2019, 5, 12),
+			dateEnd: new Date(Date.UTC(2019, 5, 13)),
+			dateStart: new Date(Date.UTC(2019, 5, 12)),
 			defaultTimeRange: true,
 			id: 0,
 			key: 'today',

@@ -7,14 +7,21 @@ window.AUI = () => ({
 	use: (module, callback) => callback()
 });
 
+const languageMap = {
+	'dd-mmm': 'DD MMM',
+	'dd-mmm-hh-a': 'DD MMM, hh A',
+	'dd-mmm-yyyy': 'DD MMM, YYYY',
+	'decimal-delimiter': '.',
+	'mmm-dd-lt': 'MMM DD, LT',
+	'thousand-abbreviation': 'K'
+};
+
 window.Liferay = {
 	authToken: 'auth',
 	Language: {
 		get: key => {
-			if (key === 'decimal-delimiter') {
-				return '.';
-			} else if (key === 'thousand-abbreviation') {
-				return 'K';
+			if (languageMap[key]) {
+				return languageMap[key];
 			}
 
 			return key;

@@ -4,6 +4,8 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import {MockRouter as Router} from 'test/mock/MockRouter';
 
+const dateUTC = new Date(Date.UTC('2019', '05', '20', '17', '09', '30'));
+
 test('Should render component', () => {
 	const component = renderer.create(
 		<Router>
@@ -19,7 +21,7 @@ test('Should render component', () => {
 test('Should render Item component', () => {
 	const component = renderer.create(
 		<InstanceItemDetail.Item
-			dateOverdue='2019-05-20T17:09:30.348Z'
+			dateOverdue={dateUTC}
 			name='test'
 			onTime={false}
 			remainingTime={-1558363436797}
@@ -35,7 +37,7 @@ test('Should render Item component', () => {
 test('Should render Item component onTime', () => {
 	const component = renderer.create(
 		<InstanceItemDetail.Item
-			dateOverdue='2019-05-20T17:09:30.348Z'
+			dateOverdue={dateUTC}
 			name='test'
 			onTime
 			remainingTime={1558363436797}
@@ -51,7 +53,7 @@ test('Should render Item component onTime', () => {
 test('Should render Item component status Paused', () => {
 	const component = renderer.create(
 		<InstanceItemDetail.Item
-			dateOverdue='2019-05-20T17:09:30.348Z'
+			dateOverdue={dateUTC}
 			name='test'
 			onTime
 			remainingTime={1558363436797}
@@ -67,7 +69,7 @@ test('Should render Item component status Paused', () => {
 test('Should render Item component status Running', () => {
 	const component = renderer.create(
 		<InstanceItemDetail.Item
-			dateOverdue='2019-05-20T17:09:30.348Z'
+			dateOverdue={dateUTC}
 			name='test'
 			onTime
 			remainingTime={1558363436797}
@@ -83,7 +85,7 @@ test('Should render Item component status Running', () => {
 test('Should render Item component status Running and overdue', () => {
 	const component = renderer.create(
 		<InstanceItemDetail.Item
-			dateOverdue='2019-05-20T17:09:30.348Z'
+			dateOverdue={dateUTC}
 			name='test'
 			onTime={false}
 			remainingTime={-1558363436797}
@@ -99,7 +101,7 @@ test('Should render Item component status Running and overdue', () => {
 test('Should render Item component status Stopped', () => {
 	const component = renderer.create(
 		<InstanceItemDetail.Item
-			dateOverdue='2019-05-20T17:09:30.348Z'
+			dateOverdue='2019-05-20T17:09:30.000Z'
 			name='test'
 			onTime
 			remainingTime={1558363436797}
@@ -115,7 +117,7 @@ test('Should render Item component status Stopped', () => {
 test('Should render Item component status Stopped overdue', () => {
 	const component = renderer.create(
 		<InstanceItemDetail.Item
-			dateOverdue='2019-05-20T17:09:30.348Z'
+			dateOverdue={dateUTC}
 			name='test'
 			onTime={false}
 			remainingTime={-1558363436797}
@@ -189,10 +191,12 @@ test('Should test render with status OnTime', () => {
 	const data = {
 		assetTitle: 'test',
 		assetType: 'test',
-		dateCreated: '2019-05-20T17:09:30.348Z',
+		dateCreated: dateUTC,
 		slaResults: [
 			{
-				dateOverdue: '2019-05-17T02:04:06Z',
+				dateOverdue: new Date(
+					Date.UTC('2019', '05', '17', '02', '04', '06')
+				),
 				id: 41531,
 				name: 'SLA 1',
 				onTime: false,
@@ -200,7 +204,9 @@ test('Should test render with status OnTime', () => {
 				status: 'Running'
 			},
 			{
-				dateOverdue: '2019-05-22T02:02:06Z',
+				dateOverdue: new Date(
+					Date.UTC('2019', '05', '22', '02', '02', '06')
+				),
 				id: 41774,
 				name: 'SLA TEST',
 				onTime: true,
@@ -250,7 +256,9 @@ test('Should test render with status OnTime', () => {
 		{
 			slaResults: [
 				{
-					dateOverdue: '2019-05-22T02:02:06Z',
+					dateOverdue: new Date(
+						Date.UTC('2019', '05', '22', '02', '02', '06')
+					),
 					id: 41774,
 					name: 'SLA TEST',
 					onTime: true,
@@ -258,7 +266,9 @@ test('Should test render with status OnTime', () => {
 					status: 'Stopped'
 				},
 				{
-					dateOverdue: '2019-05-22T02:02:06Z',
+					dateOverdue: new Date(
+						Date.UTC('2019', '05', '22', '02', '02', '06')
+					),
 					id: 41774,
 					name: 'SLA TEST',
 					onTime: true,

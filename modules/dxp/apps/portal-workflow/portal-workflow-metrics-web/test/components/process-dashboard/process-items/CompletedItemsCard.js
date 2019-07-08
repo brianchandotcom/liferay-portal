@@ -37,8 +37,8 @@ test('Should test filter', () => {
 	const dataTime = {
 		items: [
 			{
-				dateEnd: new Date(2019, 5, 13),
-				dateStart: new Date(2019, 5, 12),
+				dateEnd: new Date(Date.UTC(2019, 5, 13)),
+				dateStart: new Date(Date.UTC(2019, 5, 12)),
 				defaultTimeRange: true,
 				id: 0,
 				key: 'today',

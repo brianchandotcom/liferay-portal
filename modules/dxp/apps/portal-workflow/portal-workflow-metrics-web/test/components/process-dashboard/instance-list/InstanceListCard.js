@@ -12,7 +12,7 @@ test('Should build request url with query filters', () => {
 			{
 				assetTitle: 'Item Subject Test',
 				assetType: 'Process',
-				dateCreated: new Date('2019', '01', '01'),
+				dateCreated: new Date(Date.UTC('2019', '01', '01')),
 				id: 12351,
 				slaStatus: 'Overdue',
 				taskNames: ['Step 1', 'Step 2', 'Step 3'],
@@ -52,7 +52,7 @@ test('Should component load process instances', () => {
 			{
 				assetTitle: 'Item Subject Test',
 				assetType: 'Process',
-				dateCreated: new Date('2019', '01', '01'),
+				dateCreated: new Date(Date.UTC('2019', '01', '01')),
 				id: 12351,
 				slaStatus: 'Overdue',
 				taskNames: ['Step 1', 'Step 2', 'Step 3'],
@@ -84,7 +84,7 @@ test('Should component receive props', () => {
 			{
 				assetTitle: 'Item Subject Test',
 				assetType: 'Process',
-				dateCreated: new Date('2019', '01', '01'),
+				dateCreated: new Date(Date.UTC('2019', '01', '01')),
 				id: 12351,
 				status: 'Overdue',
 				taskNames: ['Step 1', 'Step 2', 'Step 3'],
@@ -190,7 +190,9 @@ test('Should render component', () => {
 			{
 				assetTitle: 'Item Subject Test',
 				assetType: 'Process',
-				dateCreated: '2019-05-16T18:24:10.084Z',
+				dateCreated: new Date(
+					Date.UTC('2019', '05', '16', '18', '24', '10')
+				),
 				id: 12351,
 				slaStatus: 'Untracked',
 				taskNames: ['Step 1', 'Step 2', 'Step 3'],
@@ -218,7 +220,9 @@ test('Should render component with empty data', () => {
 	const data = {
 		items: [
 			{
-				dateCreated: '2019-05-16T18:24:10.084Z'
+				dateCreated: new Date(
+					Date.UTC('2019', '05', '16', '18', '24', '10')
+				)
 			}
 		],
 		totalCount: 0

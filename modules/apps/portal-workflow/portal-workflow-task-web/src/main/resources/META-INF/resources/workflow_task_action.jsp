@@ -122,15 +122,25 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 	</c:if>
 </liferay-ui:icon-menu>
 
-<div class="hide" id="<%= randomId %>updateDueDate">
-	<aui:input bean="<%= workflowTask %>" model="<%= WorkflowTask.class %>" name="dueDate" required="<%= true %>" />
-</div>
+<aui:form name='<%= randomId + "form" %>'>
+	<div class="hide" id="<%= randomId %>updateDueDate">
+		<aui:input bean="<%= workflowTask %>" ignoreRequestValue="<%= true %>" model="<%= WorkflowTask.class %>" name="dueDate" required="<%= true %>" />
+	</div>
 
-<div class="hide" id="<%= randomId %>updateComments">
-	<aui:input cols="55" cssClass="task-content-comment" name="comment" placeholder="comment" rows="1" type="textarea" />
-</div>
+	<div class="hide" id="<%= randomId %>updateComments">
+		<aui:input cols="55" cssClass="task-content-comment" name="comment" placeholder="comment" rows="1" type="textarea" />
+	</div>
+</aui:form>
 
 <aui:script use="liferay-workflow-tasks">
+	var maxLength = Liferay.AUI.getDateFormat().replace(/%[mdY]/gm,'').length + 8;
+
+	A.all('#<portlet:namespace />dueDate').set('maxLength', maxLength);
+
+	var onDueDateClickFn = A.rbind('onDueDateClick', Liferay.WorkflowTasks, '<%= randomId %>', '<portlet:namespace />');
+
+	Liferay.delegateClick('<portlet:namespace /><%= randomId %>taskDueDateLink', onDueDateClickFn);
+
 	var onTaskClickFn = A.rbind('onTaskClick', Liferay.WorkflowTasks, '<%= randomId %>');
 
 	<c:if test="<%= !workflowTask.isCompleted() && workflowTaskDisplayContext.isAssignedToUser(workflowTask) %>">
@@ -149,8 +159,6 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 		%>
 
 	</c:if>
-
-	Liferay.delegateClick('<portlet:namespace /><%= randomId %>taskDueDateLink', onTaskClickFn);
 </aui:script>
 
 <aui:script>

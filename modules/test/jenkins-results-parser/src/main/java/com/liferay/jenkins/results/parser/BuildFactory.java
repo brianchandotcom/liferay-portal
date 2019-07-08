@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser;
 import java.io.IOException;
 import java.io.StringReader;
 
+import java.util.Objects;
 import java.util.Properties;
 
 /**
@@ -70,7 +71,7 @@ public class BuildFactory {
 		if (jobName.startsWith("test-portal-acceptance-pullrequest")) {
 			String testSuite = topLevelBuild.getParameterValue("CI_TEST_SUITE");
 
-			if (testSuite.equals("bundle")) {
+			if (Objects.equals(testSuite, "bundle")) {
 				return new StandaloneTopLevelBuild(
 					url, (TopLevelBuild)parentBuild);
 			}

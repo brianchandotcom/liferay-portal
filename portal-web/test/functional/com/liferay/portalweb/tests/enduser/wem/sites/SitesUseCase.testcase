@@ -623,6 +623,8 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
+		Pause(locator1 = "30000");
+
 		Gmail.login(
 			userEmailAddress = PropsUtil.get("email.address.2"),
 			userPassword = PropsUtil.get("email.password.2"));

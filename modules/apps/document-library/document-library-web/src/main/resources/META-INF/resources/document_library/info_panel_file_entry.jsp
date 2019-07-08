@@ -114,59 +114,84 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 			<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadLinkVisible() || dlViewFileVersionDisplayContext.isSharingLinkVisible() %>">
 				<div class="sidebar-section">
 					<div class="btn-group sidebar-panel">
-						<c:if test="<%= dlViewFileVersionDisplayContext.isSharingLinkVisible() %>">
-							<div class="btn-group-item">
+						<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadLinkVisible() %>">
+							<c:choose>
+								<c:when test="<%= PropsValues.DL_FILE_ENTRY_CONVERSIONS_ENABLED && DocumentConversionUtil.isEnabled() %>">
+									<%
+										final String[] conversions = DocumentConversionUtil.getConversions(fileVersion.getExtension());
+										final String label = LanguageUtil.get(resourceBundle, "original");
+									%>
 
-								<%
-								Map<String, String> data = new HashMap<>(1);
+									<c:choose>
+										<c:when test="<%= conversions.length > 0 %>">
+											<div
+												class="btn-group-item"
+												data-analytics-file-entry-id="<%= String.valueOf(fileEntry.getFileEntryId()) %>"
+											>
+												<clay:dropdown-menu
+													dropdownItems="<%=
+														new JSPDropdownItemList(pageContext) {
+															{
+																ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
 
-								data.put("analytics-file-entry-id", String.valueOf(fileEntry.getFileEntryId()));
-								%>
-
-								<clay:link
-									buttonStyle="primary"
-									data="<%= data %>"
-									elementClasses='<%= "btn-sm" %>'
-									href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true) %>"
-									label='<%= LanguageUtil.get(resourceBundle, "download") %>'
-									title='<%= LanguageUtil.format(resourceBundle, "file-size-x", TextFormatter.formatStorageSize(fileVersion.getSize(), locale), false) %>'
-								/>
-							</div>
-
-							<c:if test="<%= PropsValues.DL_FILE_ENTRY_CONVERSIONS_ENABLED && DocumentConversionUtil.isEnabled() %>">
-
-								<%
-								final String[] conversions = DocumentConversionUtil.getConversions(fileVersion.getExtension());
-								%>
-
-								<c:if test="<%= conversions.length > 0 %>">
-									<div class="btn-group-item">
-										<div class="d-inline-block">
-											<clay:dropdown-menu
-												dropdownItems="<%=
-													new JSPDropdownItemList(pageContext) {
-														{
-															ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
-
-															for (String conversion : conversions) {
 																add(
 																	dropdownItem -> {
-																		dropdownItem.setHref(DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion));
-																		dropdownItem.setLabel(StringUtil.toUpperCase(conversion));
+																		dropdownItem.setHref(DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true));
+																		dropdownItem.setLabel(label);
 																	});
+
+																for (String conversion : conversions) {
+																	add(
+																		dropdownItem -> {
+																			dropdownItem.setHref(DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion));
+																			dropdownItem.setLabel(StringUtil.toUpperCase(conversion));
+																		});
+																}
 															}
 														}
-													}
-												%>"
-												style="secondary"
-												triggerCssClasses="btn-outline-borderless btn-sm"
-												label="<%= LanguageUtil.get(request, "download-as") %>"
-											/>
-										</div>
+													%>"
+													style="primary"
+													triggerCssClasses="btn-sm"
+													label="<%= LanguageUtil.get(request, "download-as") %>"
+												/>
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div
+												class="btn-group-item"
+												data-analytics-file-entry-id="<%= String.valueOf(fileEntry.getFileEntryId()) %>"
+											>
+
+												<clay:link
+													buttonStyle="primary"
+													elementClasses='<%= "btn-sm" %>'
+													href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true) %>"
+													label='<%= LanguageUtil.get(resourceBundle, "download") %>'
+													title='<%= LanguageUtil.format(resourceBundle, "file-size-x", TextFormatter.formatStorageSize(fileVersion.getSize(), locale), false) %>'
+												/>
+											</div>
+										</c:otherwise>
+									</c:choose>
+
+								</c:when>
+								<c:otherwise>
+									<div
+										class="btn-group-item"
+										data-analytics-file-entry-id="<%= String.valueOf(fileEntry.getFileEntryId()) %>"
+									>
+
+										<clay:link
+											buttonStyle="primary"
+											elementClasses='<%= "btn-sm" %>'
+											href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true) %>"
+											label='<%= LanguageUtil.get(resourceBundle, "download") %>'
+											title='<%= LanguageUtil.format(resourceBundle, "file-size-x", TextFormatter.formatStorageSize(fileVersion.getSize(), locale), false) %>'
+										/>
 									</div>
-								</c:if>
-							</c:if>
+								</c:otherwise>
+							</c:choose>
 						</c:if>
+
 
 						<c:if test="<%= dlViewFileVersionDisplayContext.isSharingLinkVisible() %>">
 							<div class="btn-group-item">

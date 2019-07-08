@@ -92,7 +92,7 @@ public class ServicePreActionTest {
 			_servicePreAction, "_getDefaultVirtualHostLayoutComposite",
 			new Class<?>[] {HttpServletRequest.class}, _request);
 
-		defaultLayoutComposite = ReflectionTestUtil.invoke(
+		Object viewableLayoutComposite = ReflectionTestUtil.invoke(
 			_servicePreAction, "_getViewableLayoutComposite",
 			new Class<?>[] {
 				HttpServletRequest.class, User.class, PermissionChecker.class,
@@ -102,9 +102,9 @@ public class ServicePreActionTest {
 			_getLayout(defaultLayoutComposite),
 			_getLayouts(defaultLayoutComposite), false);
 
-		Layout layout = _getLayout(defaultLayoutComposite);
+		Layout layout = _getLayout(viewableLayoutComposite);
 
-		List<Layout> layouts = _getLayouts(defaultLayoutComposite);
+		List<Layout> layouts = _getLayouts(viewableLayoutComposite);
 
 		Assert.assertEquals(layout.getPlid(), plid);
 

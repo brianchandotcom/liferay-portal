@@ -316,6 +316,8 @@ public class LiferayCIPlugin implements Plugin<Project> {
 					File lfrBuildCISkipTestIntegrationCheckFile =
 						dependencyProject.file(
 							".lfrbuild-ci-skip-test-integration-check");
+					File lfrBuildPortalDeprecatedFile = dependencyProject.file(
+						".lfrbuild-portal-deprecated");
 					File lfrBuildPortalFile = dependencyProject.file(
 						".lfrbuild-portal");
 
@@ -329,6 +331,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 						}
 					}
 					else if (!lfrBuildCIFile.exists() &&
+							 !lfrBuildPortalDeprecatedFile.exists() &&
 							 !lfrBuildPortalFile.exists()) {
 
 						throw new GradleException(

@@ -120,7 +120,11 @@ public class MatchQueryTranslatorImpl implements MatchQueryTranslator {
 	}
 
 	private String _defuseUpperCaseLuceneBooleanOperators(String value) {
-		return StringUtil.toLowerCase(value);
+		value = StringUtil.replace(value, "AND", "and");
+		value = StringUtil.replace(value, "OR", "or");
+		value = StringUtil.replace(value, "NOT", "not");
+
+		return value;
 	}
 
 	private String _encloseMultiword(String value, String open, String close) {

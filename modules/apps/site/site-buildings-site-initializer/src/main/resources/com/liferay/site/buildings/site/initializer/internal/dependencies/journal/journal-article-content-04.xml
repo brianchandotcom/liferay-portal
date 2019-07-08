@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="text" instance-id="uzbn" name="CaseImage" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[$case_03.png$]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="ywpd" name="CaseTitle" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Federal Bank. A Digital Pioneer in India's Banking]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="lxma" name="CaseIntro" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Liferay has always been prompt in helping us understand vast possibilities with the portal and how we can leverage it for our own custom needs.]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="fiep" name="CaseBody" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p>Federal Bank Limited is a major private sector Indian commercial bank headquartered at Aluva, Kerala, and has more than 1,000 branches and ATMs spread across India. The bank is a pioneer among traditional banks in India when it comes to using technology to manage its operations. Federal Bank was also among the first banks in India to computerize its branches. Today, the bank offers its customers a variety of services such as internet banking, mobile banking, online bill payment, online fee collection, depository services, cash management services, merchant banking services, insurance, mutual fund products, and much more, as part of its strategy to position itself as a financial super market and to provide its customers the best-in-class experience.</p>
+
+<p>&nbsp;</p>
+
+<h3>Customer Experiences Hindered by Legacy</h3>
+
+<p>A major roadblock to providing customers with the best customer experience possible was the custom-built legacy website based on dated .net technology. The old website was mainly informative, lacking even the basic actionable features needed by a bank, such as loan applications, opening an account, and call back request. Even basic changes to the content and layout needed exhaustive alterations to the code and in-depth knowledge of HTML. There was no support available for running dynamic campaigns to drive brand awareness and generate leads. Further, there were major issues with website stability, as the site often went down with the slightest increase in load.</p>
+
+<p>&nbsp;</p>
+
+<h3>New Modern Website Places Bank Ahead of Competitors</h3>
+
+<p>When the vendor responsible for maintaining the legacy website closed shop, Federal Bank realized that it was time to look for better and future-proof options. After considering multiple options, some of which were already being used at the bank, Liferay was chosen based on its ranking as a Leader in the Gartner Magic Quadrant for Horizontal Portals, and a strong recommendation from the consultant supporting Federal Bank with vendor selection.</p>
+
+<p>Although the bank was wary of using open-source- based technology considering the industry they operate in, these fears were allayed by the portal's adherence to strictest security norms, and its ability to be customized and integrated with an array of third-party systems.</p>
+
+<p>Liferay supported Federal Bank in identifying and implementing all key functionalities needed in a modern banking website. Liferay also helped in migrating all relevant content from the legacy platform. Custom templates were created for the bank which could later be used to manage content using simple drag-and-drop. The website was also integrated with other internal systems including the CRM and the customer-service portal. Post implementation, Liferay helped the bank understand the portal, and the possibilities that come with it, in detail. The association has helped the bank in providing new features to its customers on a yearly basis, and to stay ahead of the competition.</p>
+
+<p>&nbsp;</p>
+
+<h3>Gaining New Customer Insights</h3>
+
+<p>The most immediate impact of migrating to Liferay was the freeing up of IT and development bandwidth to focus on more strategic initiatives. As Sooraj Bhat, Senior Manager Digital at Federal Bank puts it, "We realized how much we could achieve with so little development efforts." The custom templates made website authoring and content management faster and more efficient. Mobile support meant that the website could be updated from anywhere, anytime, in a hassle-free way. The multi-server architecture also helped in boosting the website stability, and significantly reducing the maintenance hassles. The website availability is 99.9% (against a target of 99.5%).</p>
+
+<p>The bank was also able to host all dynamic campaigns on the website, turning it into a powerful business tool for generating business and capturing precious customer insights through integration with their analytics platform. The portal's personalization capabilities and its support for quick SEO and meta tag management also enabled the bank to push the most relevant offers to its various customer segments. Use of features such as calendar and blogs, quick SEO capabilities and meta tag management has resulted in a significant uptick in the daily number of hits and the time spent on the website. The bank has since had to upgrade the infrastructure to support the increased number of users.</p>
+
+<p>&nbsp;</p>
+
+<h3>The Way Forward</h3>
+
+<p>Federal Bank is now planning to upgrade to the latest version of Liferay Digital Experience Platform (DXP) to provide its customers an even better experience. Presently, the bank uses social media for amplifying the content on the website. With Liferay DXP, the bank would be able to leverage social logins and capture deeper insights about their customers. Liferay DXP would also help the bank in pushing the most relevant offers to its customers and in personalizing the experience for its different customer segments.</p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="rnlr" name="CaseSideDetails" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p><strong>Key Features</strong></p>
+
+<p>CMS, Third-Party Integration (CRM, analytics), SEO, Mobile, Custom Templates for Content Authoring, Calendars, Blogs, Multi-Server Architecture</p>
+
+<p><strong>Challenges</strong></p>
+
+<ul>
+	<li>Dated .net-based legacy platform</li>
+	<li>Need for actionable banking features on the website</li>
+	<li>Severe issues with stability, availability, security and maintenance</li>
+</ul>
+
+<p><strong>Results</strong></p>
+
+<aside>
+<header>
+<ul>
+	<li>30,000 daily website hits (5x growth)</li>
+	<li>Over 20,000 monthly organic leads</li>
+	<li>Easy integration with external systems (CRM, customer care and analytics)</li>
+	<li>New features made available on website more frequently</li>
+</ul>
+</header>
+</aside>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="euqt" name="CaseSideInfo" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p><strong>Industry:</strong>&nbsp;Financial Services</p>
+
+<p><strong>Location:</strong>&nbsp;India</p>
+
+<p><strong>Solution:</strong>&nbsp;Public Websites</p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="gusk" name="CaseLogo" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+</root>

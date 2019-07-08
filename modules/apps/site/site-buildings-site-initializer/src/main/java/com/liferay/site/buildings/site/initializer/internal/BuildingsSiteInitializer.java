@@ -17,8 +17,14 @@ package com.liferay.site.buildings.site.initializer.internal;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleConstants;
+import com.liferay.journal.model.JournalFolderConstants;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,6 +35,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -43,9 +50,13 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 
@@ -97,6 +108,7 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 			_addImages();
 
 			_addDDMStructures();
+			_addWebContent();
 
 			_updateLookAndFeel();
 		}
@@ -153,6 +165,43 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 			file);
 	}
 
+	private void _addWebContent() throws Exception {
+		JSONArray journalArticlesJSONArray = JSONFactoryUtil.createJSONArray(
+			_readFile("/journal/journal-articles.json"));
+
+		Map<String, String> fileEntriesMap = _getFileEntriesMap();
+
+		for (int i = 0; i < journalArticlesJSONArray.length(); i++) {
+			JSONObject jsonObject = journalArticlesJSONArray.getJSONObject(i);
+
+			String content = StringUtil.replace(
+				_readFile(jsonObject.getString("contentPath")),
+				StringPool.DOLLAR, StringPool.DOLLAR, fileEntriesMap);
+
+			Calendar calendar = CalendarFactoryUtil.getCalendar(
+				_serviceContext.getTimeZone());
+
+			int displayDateMonth = calendar.get(Calendar.MONTH);
+			int displayDateDay = calendar.get(Calendar.DAY_OF_MONTH);
+			int displayDateYear = calendar.get(Calendar.YEAR);
+			int displayDateHour = calendar.get(Calendar.HOUR_OF_DAY);
+			int displayDateMinute = calendar.get(Calendar.MINUTE);
+
+			_journalArticleLocalService.addArticle(
+				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				JournalArticleConstants.CLASSNAME_ID_DEFAULT, 0,
+				jsonObject.getString("articleId"), true, 1,
+				Collections.singletonMap(
+					LocaleUtil.US, jsonObject.getString("name")),
+				null, content, jsonObject.getString("ddmStructureKey"), null,
+				null, displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, 0, 0, 0, 0, 0, true, 0, 0,
+				0, 0, 0, true, true, false, null, null, null, null,
+				_serviceContext);
+		}
+	}
+
 	private void _createServiceContext(long groupId) throws PortalException {
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -170,6 +219,18 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 		serviceContext.setUserId(user.getUserId());
 
 		_serviceContext = serviceContext;
+	}
+
+	private Map<String, String> _getFileEntriesMap() {
+		Map<String, String> fileEntriesMap = new HashMap<>();
+
+		for (FileEntry fileEntry : _fileEntries) {
+			fileEntriesMap.put(
+				fileEntry.getFileName(),
+				JSONFactoryUtil.looseSerialize(fileEntry));
+		}
+
+		return fileEntriesMap;
 	}
 
 	private String _readFile(String fileName) throws IOException {
@@ -221,6 +282,9 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private ImagesImporter _imagesImporter;
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;

@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="text" instance-id="yazz" name="EntryMainImage" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[$conquering_three_common_intranet_search_challenges_with_liferay_dxp_image.jpg$]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="xunh" name="ImageCaption" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[@ David Aragonés Otero]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="mvzq" name="EntryTitle" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Conquering Three Common Intranet Search Challenges with Liferay DXP]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="ifwd" name="EntrySubtilte" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[See how you can cut down 20% of search time with Liferay DXP]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="weuf" name="EntryBody" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p>Difficulty with intranet search is a common pain point within companies – resulting in loss of productivity and employee frustrations. According to&nbsp;<a href="https://info.nintex.com/rs/272-JVS-996/images/Nintex%20AMBP%20Ebook%20Final.pdf" target="_blank">a study done by Nintex</a>&nbsp;of 1,000 full-time employees across industries and departments:</p>
+
+<ul>
+	<li>&nbsp;49% said they have trouble locating documents</li>
+	<li>&nbsp;39% believe their document management system is broken</li>
+</ul>
+
+<h3>&nbsp;</h3>
+
+<h3>Loss of Productivity</h3>
+
+<p>With such large percentages of the workforce losing time due to difficult-to-track documents and information, productivity takes a massive toll.&nbsp;<a href="https://www.articlecube.com/research-shows-searching-information-work-wastes-time-and-money" target="_blank">Interact</a>reported that "19.8% of business time – the equivalent of one day per working week – is wasted by employees searching for information to do their job effectively." This inability to find and retrieve documents can cost an organization of 1000 workers up to $2.5 million per year.</p>
+
+<p>As an increasing percentage of teams connect remotely and communicate with colleagues spread across the globe, an effective intranet that enables employees to search for documents easily is crucial for workplace productivity. Siloed information or documents uploaded to disparate systems lead to messy storage systems and impossible to navigate searches.</p>
+
+<h3>&nbsp;</h3>
+
+<h3>Searching for the Correct Tool</h3>
+
+<p>An intranet that includes a digital asset management (DAM) system with search functionality recaptures lost time while improving workflow and communication. By building a powerful intranet with&nbsp;<a href="https://www.liferay.com/products/dxp" target="_blank">Liferay Digital Experience Platform (DXP</a>), you can solve three common intranet search challenges:</p>
+
+<h3>&nbsp;</h3>
+
+<h3>Challenge #1: I can't find what I'm looking for.</h3>
+
+<p>Perhaps the most common intranet challenge employees face is that they simply cannot find what they need.</p>
+
+<p>Liferay DXP can be used to build an intranet that out-of-the-box combines knowledge bases, forums and tagging with a powerful search engine. Self-service tools like knowledge bases and forums enable employees to quickly find relevant information, while tagging helps organize that data. Elasticsearch is an enterprise-grade, open source intranet search engine that provides a fast, scalable solution and helps companies manage monitoring, security, reporting, alerts and much more. Liferay DXP currently supports Elasticsearch 6 offering site-wide full-text search capabilities and also offers flexible intranet solutions for customized workflows, user management and analytics tools.</p>
+
+<h3>&nbsp;</h3>
+
+<h3>Challenge #2: Our search engine should work like Google.</h3>
+
+<p>Searching via Google is so easy and ingrained into our culture that employees expect their intranet search engine to perform similarly. However, intranet search should be different because it requires:</p>
+
+<ol>
+	<li><strong>Precise results:</strong>&nbsp;Employees need to find the content they are looking for without sifting through an excess of results.</li>
+	<li><strong>Role-based results:</strong>&nbsp;By nature, intranets should have content and permissions restricted by role, which means search needs to function within those filters.</li>
+	<li><strong>Multiple information repositories:</strong>&nbsp;Employees will need to find information across a range of business applications, databases, emails, etc.</li>
+	<li><strong>Multiple languages and file formats:</strong>&nbsp;Global companies will have documents and content in multiple languages and formats so the intranet's search engine needs to be able to accommodate accordingly.</li>
+	<li><strong>Security and compliance:</strong>&nbsp;Information stored on an intranet is often sensitive and private, so security is paramount.</li>
+</ol>
+
+<p>With Liferay DXP, all of these features are integrated within Elasticsearch to provide the best possible search experience for an intranet, enabling employees to accomplish highly specific enterprise goals.</p>
+
+<h3>&nbsp;</h3>
+
+<h3>Challenge #3: Our search technology just doesn't work.</h3>
+
+<p>While outdated technology may be the problem, effective information retrieval and knowledge management also require:</p>
+
+<ul>
+	<li>&nbsp;Governance or established rules and defined processes — also known as taxonomy.</li>
+	<li>&nbsp;Employees who have been trained on those rules and who actively participate in sharing information and experiential knowledge.</li>
+	<li>&nbsp;Effective supporting technology such as content management tools and meta tagging.</li>
+	<li>&nbsp;Useful and relevant content that will actually be helpful to the intranet's users.</li>
+</ul>
+
+<p>Liferay DXP empowers organizations with built-in governance and effective content management tools. However, technology needs to work alongside company-wide processes and initiatives in order to be truly successful—such as providing intranet training to all users. By ensuring users are equipped to utilize an intranet, it will have a higher adoption and success rate. Intranet search challenges are not insurmountable so long as they are addressed with a clear focus and users are empowered to adopt.</p>
+
+<h3>&nbsp;</h3>
+
+<h3>Productive, Engaged and Satisfied Employees</h3>
+
+<p>Improved communication and collaboration through&nbsp;<a href="https://www.mckinsey.com/industries/high-tech/our-insights/the-social-economy" target="_blank">intranet technology raises the productivity of workers by 20 to 25%</a>&nbsp;and companies with more engaged employees can outperform those without by&nbsp;<a href="https://www.business2community.com/business-innovation/remote-workforce-nps-important-metric-youre-missing-01785305#oWRIA4bsxOwz6011.97" target="_blank">up to 202%</a>. Provide your employees with the tools necessary to work effectively, communicate with their teams and easily access critical files and functionalities.</p>
+
+<p>Ultimately, a powerful search tool is just one facet of a full-featured DAM system like Liferay DXP. Dynamic tagging, site content sharing and&nbsp;<a href="https://www.liferay.com/resource/3292406/Liferay+DXP+7.1+Intranet+Features" target="_blank">many other features</a>&nbsp;can further improve your workflow and storage. An intranet is the main gateway to your organization where employees connect to their peers, access files and get their day-to-day work done. It's imperative that your intranet provides quick and seamless access to critical tools and functionalities. Liferay has helped clients like Coach accomplish this through their intranet; read about Coachweb in our case study&nbsp;<a href="https://www.liferay.com/resource/coach-case-study" target="_blank">here</a>.</p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="xnra" name="EntryBottomCTA" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<h4>Tailored Search for Your Intranet</h4>
+
+<p>Recapture time employees spend searching for information with a modern, user-friendly intranet. By bringing tools and systems under one umbrella customized for your brand, search and other out-of-the-box capabilities can be used to create open, efficient communication for growing global companies.</p>
+
+<p><a href="https://www.liferay.com/resource/3292406/Liferay+DXP+7.1+Intranet+Features">See how Liferay can help you build an effective intranet&nbsp;&nbsp;</a></p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="nenx" name="LinkToPageh6ej" type="link_to_layout">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+</root>

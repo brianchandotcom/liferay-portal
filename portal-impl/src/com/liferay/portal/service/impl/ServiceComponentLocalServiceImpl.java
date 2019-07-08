@@ -214,8 +214,6 @@ public class ServiceComponentLocalServiceImpl
 			serviceComponent = serviceComponentPersistence.update(
 				serviceComponent);
 
-			serviceComponents.put(buildNamespace, serviceComponent);
-
 			if (((serviceComponentConfiguration instanceof
 					ServletServiceContextComponentConfiguration) &&
 				 (previousServiceComponent == null)) ||
@@ -227,6 +225,8 @@ public class ServiceComponentLocalServiceImpl
 					previousServiceComponent, tablesSQL, sequencesSQL,
 					indexesSQL);
 			}
+
+			serviceComponents.put(buildNamespace, serviceComponent);
 
 			removeOldServiceComponents(buildNamespace);
 

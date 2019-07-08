@@ -118,11 +118,11 @@ public class ServicePreActionTest {
 		try {
 			long plid = _getThemeDisplayPlid(false, true);
 
-			Object defaultLayoutComposite = ReflectionTestUtil.invoke(
-				_servicePreAction, "_getDefaultUserPersonalSiteLayoutComposite",
-				new Class<?>[] {User.class}, _user);
-
-			Layout layout = _getLayout(defaultLayoutComposite);
+			Layout layout = _getLayout(
+				ReflectionTestUtil.invoke(
+					_servicePreAction,
+					"_getDefaultUserPersonalSiteLayoutComposite",
+					new Class<?>[] {User.class}, _user));
 
 			Assert.assertEquals(layout.getPlid(), plid);
 		}
@@ -148,11 +148,10 @@ public class ServicePreActionTest {
 		try {
 			long plid = _getThemeDisplayPlid(false, true);
 
-			Object defaultLayoutComposite = ReflectionTestUtil.invoke(
-				_servicePreAction, "_getDefaultUserSitesLayoutComposite",
-				new Class<?>[] {User.class}, _user);
-
-			Layout layout = _getLayout(defaultLayoutComposite);
+			Layout layout = _getLayout(
+				ReflectionTestUtil.invoke(
+					_servicePreAction, "_getDefaultUserSitesLayoutComposite",
+					new Class<?>[] {User.class}, _user));
 
 			Assert.assertEquals(layout.getPlid(), plid);
 		}
@@ -174,11 +173,10 @@ public class ServicePreActionTest {
 
 		long plid = _getThemeDisplayPlid(false, false);
 
-		Object defaultLayoutComposite = ReflectionTestUtil.invoke(
-			_servicePreAction, "_getGuestSiteLayoutComposite",
-			new Class<?>[] {User.class}, _user);
-
-		Layout layout = _getLayout(defaultLayoutComposite);
+		Layout layout = _getLayout(
+			ReflectionTestUtil.invoke(
+				_servicePreAction, "_getGuestSiteLayoutComposite",
+				new Class<?>[] {User.class}, _user));
 
 		Assert.assertEquals(layout.getPlid(), plid);
 	}
@@ -189,11 +187,10 @@ public class ServicePreActionTest {
 
 		long plid = _getThemeDisplayPlid(true, false);
 
-		Object defaultLayoutComposite = ReflectionTestUtil.invoke(
-			_servicePreAction, "_getDefaultVirtualHostLayoutComposite",
-			new Class<?>[] {HttpServletRequest.class}, _request);
-
-		Layout layout = _getLayout(defaultLayoutComposite);
+		Layout layout = _getLayout(
+			ReflectionTestUtil.invoke(
+				_servicePreAction, "_getDefaultVirtualHostLayoutComposite",
+				new Class<?>[] {HttpServletRequest.class}, _request));
 
 		Assert.assertEquals(layout.getPlid(), plid);
 	}

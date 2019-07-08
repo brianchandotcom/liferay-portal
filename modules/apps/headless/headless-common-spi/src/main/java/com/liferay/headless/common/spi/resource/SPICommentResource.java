@@ -28,13 +28,13 @@ import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -57,11 +57,10 @@ import javax.ws.rs.core.MultivaluedMap;
 public class SPICommentResource<T> {
 
 	public SPICommentResource(
-		CommentManager commentManager, Company company,
+		CommentManager commentManager,
 		UnsafeFunction<Comment, T, Exception> transformUnsafeFunction) {
 
 		_commentManager = commentManager;
-		_company = company;
 		_transformUnsafeFunction = transformUnsafeFunction;
 	}
 
@@ -166,7 +165,7 @@ public class SPICommentResource<T> {
 		DiscussionPermission discussionPermission = _getDiscussionPermission();
 
 		discussionPermission.checkViewPermission(
-			_company.getCompanyId(), comment.getGroupId(),
+			CompanyThreadLocal.getCompanyId(), comment.getGroupId(),
 			comment.getClassName(), comment.getClassPK());
 	}
 
@@ -202,7 +201,7 @@ public class SPICommentResource<T> {
 				searchContext.setAttribute("discussion", Boolean.TRUE);
 				searchContext.setAttribute(
 					"searchPermissionContext", StringPool.BLANK);
-				searchContext.setCompanyId(_company.getCompanyId());
+				searchContext.setCompanyId(CompanyThreadLocal.getCompanyId());
 			},
 			document -> _transformUnsafeFunction.apply(
 				_commentManager.fetchComment(
@@ -230,7 +229,7 @@ public class SPICommentResource<T> {
 		DiscussionPermission discussionPermission = _getDiscussionPermission();
 
 		discussionPermission.checkAddPermission(
-			_company.getCompanyId(), groupId, className, classPK);
+			CompanyThreadLocal.getCompanyId(), groupId, className, classPK);
 
 		try {
 			long commentId = addCommentUnsafeSupplier.get();
@@ -254,7 +253,6 @@ public class SPICommentResource<T> {
 	private static final EntityModel _entityModel = new CommentEntityModel();
 
 	private final CommentManager _commentManager;
-	private final Company _company;
 	private final UnsafeFunction<Comment, T, Exception>
 		_transformUnsafeFunction;
 

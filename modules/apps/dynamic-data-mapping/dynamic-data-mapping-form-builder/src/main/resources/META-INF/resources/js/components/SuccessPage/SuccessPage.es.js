@@ -14,7 +14,7 @@
 
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import templates from './SucessPage.soy.js';
+import templates from './SuccessPage.soy.js';
 import {Config} from 'metal-state';
 import {setValue} from '../../util/i18n.es';
 

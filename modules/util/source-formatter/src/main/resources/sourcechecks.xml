@@ -107,7 +107,9 @@
 		<check name="GradleJavaVersionCheck" />
 		<check name="GradlePropertiesCheck" />
 		<check name="GradleProvidedDependenciesCheck" />
-		<check name="GradleRequiredDependenciesCheck" />
+		<check name="GradleRequiredDependenciesCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="GradleStylingCheck" />
 		<check name="GradleTaskCreationCheck" />
 		<check name="GradleTestDependencyVersionCheck">

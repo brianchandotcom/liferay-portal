@@ -17,6 +17,8 @@ package com.liferay.headless.common.spi.resource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.ratings.kernel.model.RatingsEntry;
@@ -29,49 +31,59 @@ public class SPIRatingResource<T> {
 
 	public SPIRatingResource(
 		String className, RatingsEntryLocalService ratingsEntryLocalService,
-		UnsafeFunction<RatingsEntry, T, Exception> transformUnsafeFunction,
-		User user) {
+		UnsafeFunction<RatingsEntry, T, Exception> transformUnsafeFunction) {
 
 		_className = className;
 		_ratingsEntryLocalService = ratingsEntryLocalService;
 		_transformUnsafeFunction = transformUnsafeFunction;
-		_user = user;
 	}
 
 	public T addOrUpdateRating(Number ratingValue, long classPK)
 		throws Exception {
 
-		_checkPermission();
+		User user = _getUser();
+
+		_checkPermission(user);
 
 		return _transformUnsafeFunction.apply(
 			_ratingsEntryLocalService.updateEntry(
-				_user.getUserId(), _className, classPK,
+				user.getUserId(), _className, classPK,
 				GetterUtil.getDouble(ratingValue), new ServiceContext()));
 	}
 
 	public void deleteRating(Long classPK) throws Exception {
-		_checkPermission();
+		User user = _getUser();
+
+		_checkPermission(user);
 
 		_ratingsEntryLocalService.deleteEntry(
-			_user.getUserId(), _className, classPK);
+			user.getUserId(), _className, classPK);
 	}
 
 	public T getRating(Long classPK) throws Exception {
+		User user = _getUser();
+
 		return _transformUnsafeFunction.apply(
 			_ratingsEntryLocalService.getEntry(
-				_user.getUserId(), _className, classPK));
+				user.getUserId(), _className, classPK));
 	}
 
-	private void _checkPermission() throws Exception {
-		if (_user.isDefaultUser()) {
+	private void _checkPermission(User user) throws Exception {
+		if (user.isDefaultUser()) {
 			throw new PrincipalException();
 		}
+	}
+
+	private User _getUser() {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		return permissionChecker.getUser();
 	}
 
 	private final String _className;
 	private final RatingsEntryLocalService _ratingsEntryLocalService;
 	private final UnsafeFunction<RatingsEntry, T, Exception>
 		_transformUnsafeFunction;
-	private final User _user;
 
 }

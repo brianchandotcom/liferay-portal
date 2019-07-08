@@ -494,11 +494,8 @@ function deleteSegmentsExperienceReducer(state, action) {
 							)
 					);
 
-				removeExperience(
-					segmentsExperienceId,
-					fragmentEntryLinkIds
-				).then(
-					() => {
+				removeExperience(segmentsExperienceId, fragmentEntryLinkIds)
+					.then(() => {
 						const priority =
 							nextState.availableSegmentsExperiences[
 								segmentsExperienceId
@@ -550,12 +547,12 @@ function deleteSegmentsExperienceReducer(state, action) {
 							experienceIdToSelect
 						);
 
-						resolve(nextState);
-					},
-					error => {
+						return _setUsedWidgets(nextState, experienceIdToSelect);
+					})
+					.then(nextNewState => resolve(nextNewState))
+					.catch(error => {
 						reject(error);
-					}
-				);
+					});
 			} else {
 				resolve(nextState);
 			}

@@ -174,7 +174,7 @@ function removeRowReducer(state, action) {
 				);
 			}
 
-			fragmentEntryLinkIdsToRemove.forEach(fragmentEntryLinkId => {
+			fragmentEntryLinkIds.forEach(fragmentEntryLinkId => {
 				nextState = updateWidgets(nextState, fragmentEntryLinkId);
 			});
 

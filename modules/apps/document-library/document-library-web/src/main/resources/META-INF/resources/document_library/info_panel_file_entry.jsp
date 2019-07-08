@@ -119,8 +119,9 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 								<c:when test="<%= PropsValues.DL_FILE_ENTRY_CONVERSIONS_ENABLED && DocumentConversionUtil.isEnabled() %>">
 
 									<%
-										final String[] conversions = DocumentConversionUtil.getConversions(fileVersion.getExtension());
-										final String label = LanguageUtil.get(resourceBundle, "original");
+									String[] conversions = DocumentConversionUtil.getConversions(fileVersion.getExtension());
+
+									String label = LanguageUtil.get(resourceBundle, "original");
 									%>
 
 									<c:choose>
@@ -132,8 +133,13 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 															{
 																ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
 
+																Map<String, Object> data = new HashMap<>(1);
+
+																data.put("analytics-file-entry-id", String.valueOf(fileEntry.getFileEntryId()));
+
 																add(
 																	dropdownItem -> {
+																		dropdownItem.setData(data);
 																		dropdownItem.setHref(DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true));
 																		dropdownItem.setLabel(label);
 																	});
@@ -141,6 +147,7 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 																for (String conversion : conversions) {
 																	add(
 																		dropdownItem -> {
+																			dropdownItem.setData(data);
 																			dropdownItem.setHref(DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion));
 																			dropdownItem.setLabel(StringUtil.toUpperCase(conversion));
 																		});
@@ -155,9 +162,17 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 											</div>
 										</c:when>
 										<c:otherwise>
-											<div class="btn-group-item" data-analytics-file-entry-id="<%= String.valueOf(fileEntry.getFileEntryId()) %>">
+
+											<%
+											Map<String, String> data = new HashMap<>(1);
+
+											data.put("analytics-file-entry-id", String.valueOf(fileEntry.getFileEntryId()));
+											%>
+
+											<div class="btn-group-item">
 												<clay:link
 													buttonStyle="primary"
+													data="<%= data %>"
 													elementClasses='<%= "btn-sm" %>'
 													href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true) %>"
 													label='<%= LanguageUtil.get(resourceBundle, "download") %>'

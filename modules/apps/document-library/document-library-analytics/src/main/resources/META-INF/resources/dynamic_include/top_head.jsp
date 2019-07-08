@@ -30,7 +30,9 @@
 			var anchor = event.target;
 			var match = pathnameRegexp.exec(anchor.pathname);
 
-			if (anchor.dataset.analyticsFileEntryId && match) {
+			var fileEntryId = anchor.dataset.analyticsFileEntryId || (anchor.parentElement && anchor.parentElement.dataset.analyticsFileEntryId);
+
+			if (fileEntryId && match) {
 				var getParameterValue = function(parameterName) {
 					var result = null;
 
@@ -56,7 +58,7 @@
 					'Document',
 					{
 						groupId: match[1],
-						fileEntryId: anchor.dataset.analyticsFileEntryId,
+						fileEntryId: fileEntryId,
 						preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
 						title: decodeURIComponent(match[3].replace(/\+/ig, ' ')),
 						version: getParameterValue('version')

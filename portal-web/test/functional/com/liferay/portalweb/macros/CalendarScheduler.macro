@@ -26,14 +26,13 @@ definition {
 
 		var key_endDate = "${endDate}";
 		var key_endDateTime = "${endDateTime}";
+		var key_eventTitle = "${eventTitle}";
 		var key_startDate = "${startDate}";
 		var key_startDateTime = "${startDateTime}";
 
 		AssertElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_REGULAR");
 
-		AssertTextEquals(
-			locator1 = "Calendar#SCHEDULER_EVENT_REGULAR_TITLE_VIA_MONTH",
-			value1 = "${eventTitle}");
+		AssertElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_REGULAR_TITLE_ELEMENT_VIA_MONTH");
 	}
 
 	macro addEventToday {

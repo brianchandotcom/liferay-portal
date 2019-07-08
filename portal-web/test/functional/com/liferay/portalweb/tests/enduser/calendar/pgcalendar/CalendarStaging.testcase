@@ -171,7 +171,7 @@ definition {
 			siteName = "Site Name",
 			siteURL = "true");
 
-		CalendarEvent.view(eventTitle = "Site Name Staged Event");
+		CalendarEvent.viewToday(eventTitle = "Site Name Staged Event");
 
 		CalendarNavigator.gotoAddEvent();
 
@@ -184,7 +184,7 @@ definition {
 			siteName = "Site Name",
 			siteURL = "true");
 
-		CalendarEvent.view(eventTitle = "Test Test Live Event");
+		CalendarEvent.viewToday(eventTitle = "Test Test Live Event");
 
 		CalendarResource.add(
 			calendarResourceName = "Calendar Resource Name",
@@ -210,7 +210,7 @@ definition {
 
 		CalendarResource.viewResourceNameNotPresent(calendarResourceName = "Calendar Resource Name");
 
-		CalendarEvent.view(eventTitle = "Test Test Live Event");
+		CalendarEvent.viewToday(eventTitle = "Test Test Live Event");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -226,9 +226,9 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		CalendarEvent.view(eventTitle = "Site Name Staged Event");
+		CalendarEvent.viewToday(eventTitle = "Site Name Staged Event");
 
-		CalendarEvent.view(eventTitle = "Test Test Live Event");
+		CalendarEvent.viewToday(eventTitle = "Test Test Live Event");
 
 		Calendar.view(
 			calendarName = "Calendar Resource Name",

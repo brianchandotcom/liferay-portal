@@ -1747,6 +1747,30 @@ definition {
 			value1 = "${eventTitle}");
 	}
 
+	macro viewToday {
+		var eventTitle = "${eventTitle}";
+
+		CalendarScheduler.viewDay(eventTitle = "${eventTitle}");
+
+		CalendarScheduler.viewWeek(
+			eventTitle = "${eventTitle}",
+			frequency = "${frequency}",
+			numberOfOccurrences = "${numberOfOccurrences}");
+
+		CalendarScheduler.viewMonth(
+			eventTitle = "${eventTitle}",
+			frequency = "${frequency}",
+			numberOfOccurrences = "${numberOfOccurrences}");
+
+		CalendarNavigator.gotoToday();
+
+		CalendarScheduler.viewAgenda(
+			eventTitle = "${eventTitle}",
+			numberOfOccurrences = "${numberOfOccurrences}");
+
+		CalendarNavigator.gotoView(viewType = "Week");
+	}
+
 	macro viewUnavailableCalendarsNotPresent {
 		CalendarEvent._expandPanel(panelName = "Details");
 

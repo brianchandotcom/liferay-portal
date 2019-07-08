@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
@@ -45,11 +43,10 @@ class DiffVersionComparator extends Component {
 
 	/**
 	 * Handles click event of close button on version filter header.
-	 * @param {Event} event
 	 * @protected
 	 * @review
 	 */
-	handleCloseFilterClick_(event) {
+	handleCloseFilterClick_() {
 		this.selectedVersion = null;
 
 		this.loadDiffHtmlResults_(this.targetVersion);

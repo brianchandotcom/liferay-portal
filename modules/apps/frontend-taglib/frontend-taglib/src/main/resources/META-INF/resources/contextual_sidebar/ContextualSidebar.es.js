@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-undef: "warn" */
-
 import Component from 'metal-component';
 import {isFunction, isObject} from 'metal';
 import Soy from 'metal-soy';
@@ -35,18 +33,26 @@ class ContextualSidebar extends Component {
 	created() {
 		document.body.classList.add('has-contextual-sidebar');
 
-		this._productMenuToggle = $('.product-menu-toggle');
-
-		this._handleOpenProductMenu = this._handleOpenProductMenu.bind(this);
-
-		const sidenav = Liferay.SideNavigation.instance(
-			this._productMenuToggle
+		const productMenuToggle = document.querySelector(
+			'.product-menu-toggle'
 		);
 
-		this._toggleHandle = sidenav.on(
-			'openStart.lexicon.sidenav',
-			this._handleOpenProductMenu
-		);
+		if (productMenuToggle) {
+			this._productMenuToggle = productMenuToggle;
+
+			this._handleOpenProductMenu = this._handleOpenProductMenu.bind(
+				this
+			);
+
+			const sidenav = Liferay.SideNavigation.instance(
+				this._productMenuToggle
+			);
+
+			this._toggleHandle = sidenav.on(
+				'openStart.lexicon.sidenav',
+				this._handleOpenProductMenu
+			);
+		}
 	}
 
 	/**

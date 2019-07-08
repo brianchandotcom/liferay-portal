@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.content.search.web.configuration;
+package com.liferay.journal.content.search.web.internal.configuration;
 
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;

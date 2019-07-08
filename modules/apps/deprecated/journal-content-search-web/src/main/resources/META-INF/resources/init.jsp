@@ -24,7 +24,7 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.journal.content.search.web.configuration.JournalContentSearchPortletInstanceConfiguration" %><%@
+<%@ page import="com.liferay.journal.content.search.web.internal.configuration.JournalContentSearchPortletInstanceConfiguration" %><%@
 page import="com.liferay.journal.content.search.web.internal.display.context.JournalContentSearchDisplayContext" %><%@
 page import="com.liferay.journal.service.JournalContentSearchLocalServiceUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@

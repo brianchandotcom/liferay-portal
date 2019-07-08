@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.journal.content.search.web.configuration.definition;
+package com.liferay.journal.content.search.web.internal.configuration.definition;
 
-import com.liferay.journal.content.search.web.configuration.JournalContentSearchPortletInstanceConfiguration;
+import com.liferay.journal.content.search.web.internal.configuration.JournalContentSearchPortletInstanceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;

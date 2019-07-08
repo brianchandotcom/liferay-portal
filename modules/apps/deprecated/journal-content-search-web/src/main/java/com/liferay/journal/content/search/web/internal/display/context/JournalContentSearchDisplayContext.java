@@ -14,7 +14,7 @@
 
 package com.liferay.journal.content.search.web.internal.display.context;
 
-import com.liferay.journal.content.search.web.configuration.JournalContentSearchPortletInstanceConfiguration;
+import com.liferay.journal.content.search.web.internal.configuration.JournalContentSearchPortletInstanceConfiguration;
 import com.liferay.journal.content.search.web.internal.constants.JournalContentSearchWebKeys;
 import com.liferay.journal.content.search.web.internal.util.ContentHits;
 import com.liferay.journal.model.JournalArticle;

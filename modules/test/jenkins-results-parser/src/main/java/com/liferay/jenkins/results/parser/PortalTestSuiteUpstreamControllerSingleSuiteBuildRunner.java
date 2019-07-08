@@ -239,7 +239,7 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 			String description = previousBuildJSONObject.optString(
 				"description", "");
 
-			if (description.contains("Invocation URL")) {
+			if (description.contains("IN QUEUE")) {
 				return true;
 			}
 		}

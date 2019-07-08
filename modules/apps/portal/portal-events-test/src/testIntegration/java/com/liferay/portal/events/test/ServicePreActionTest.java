@@ -24,16 +24,17 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -72,7 +73,7 @@ public class ServicePreActionTest {
 		LayoutTestUtil.addLayout(
 			_group.getGroupId(), "Page not visible", false, null, false, true);
 
-		_request.setRequestURI(PortalUtil.getPathMain() + "/portal/login");
+		_request.setRequestURI(_portal.getPathMain() + "/portal/login");
 
 		_request.setAttribute(
 			WebKeys.VIRTUAL_HOST_LAYOUT_SET, _group.getPublicLayoutSet());
@@ -96,7 +97,7 @@ public class ServicePreActionTest {
 				HttpServletRequest.class, User.class, PermissionChecker.class,
 				Layout.class, List.class, boolean.class
 			},
-			_request, _user, PermissionCheckerFactoryUtil.create(_user),
+			_request, _user, _permissionCheckerFactory.create(_user),
 			_getLayout(defaultLayoutComposite),
 			_getLayouts(defaultLayoutComposite), false);
 
@@ -190,10 +191,10 @@ public class ServicePreActionTest {
 		throws Exception {
 
 		if (!hasGuestViewPermission) {
-			Role role = RoleLocalServiceUtil.getRole(
+			Role role = _roleLocalService.getRole(
 				_group.getCompanyId(), RoleConstants.GUEST);
 
-			ResourcePermissionLocalServiceUtil.removeResourcePermissions(
+			_resourcePermissionLocalService.removeResourcePermissions(
 				_group.getCompanyId(), Layout.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL, role.getRoleId(),
 				ActionKeys.VIEW);
@@ -203,7 +204,7 @@ public class ServicePreActionTest {
 			_user = UserTestUtil.addUser();
 		}
 		else {
-			_user = PortalUtil.initUser(_request);
+			_user = _portal.initUser(_request);
 		}
 
 		_request.setAttribute(WebKeys.USER, _user);
@@ -229,10 +230,24 @@ public class ServicePreActionTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	@Inject
+	private PermissionCheckerFactory _permissionCheckerFactory;
+
+	@Inject
+	private Portal _portal;
+
 	private final MockHttpServletRequest _request =
 		new MockHttpServletRequest();
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
 	private final MockHttpServletResponse _response =
 		new MockHttpServletResponse();
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
 	private final ServicePreAction _servicePreAction = new ServicePreAction();
 	private User _user;
 

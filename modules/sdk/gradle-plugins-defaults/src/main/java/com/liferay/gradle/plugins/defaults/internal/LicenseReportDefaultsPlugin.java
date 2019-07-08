@@ -19,6 +19,7 @@ import aQute.bnd.osgi.Constants;
 import com.github.jk1.license.LicenseReportExtension;
 import com.github.jk1.license.LicenseReportPlugin;
 import com.github.jk1.license.ModuleData;
+import com.github.jk1.license.ReportTask;
 import com.github.jk1.license.render.ReportRenderer;
 
 import com.liferay.gradle.plugins.LiferayAntPlugin;
@@ -54,6 +55,7 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ExternalModuleDependency;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.tasks.TaskInputs;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.bundling.War;
 import org.gradle.util.GUtil;
@@ -201,6 +203,15 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 
 					})
 			};
+
+			if (_licensePropertiesFile != null) {
+				ReportTask reportTask = (ReportTask)GradleUtil.getTask(
+					project, "generateLicenseReport");
+
+				TaskInputs taskInputs = reportTask.getInputs();
+
+				taskInputs.file(_licensePropertiesFile);
+			}
 		}
 
 		protected String[] addConfigurations() throws Exception {

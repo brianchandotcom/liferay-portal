@@ -84,7 +84,7 @@ public class ProjectGenerator {
 
 			throw new IllegalArgumentException(
 				"Specified Liferay version is invalid. Must be in range " +
-					liferayVersions);
+					liferayVersions + ". For NPM projects see LPS-97950.");
 		}
 
 		if (Objects.isNull(groupId)) {

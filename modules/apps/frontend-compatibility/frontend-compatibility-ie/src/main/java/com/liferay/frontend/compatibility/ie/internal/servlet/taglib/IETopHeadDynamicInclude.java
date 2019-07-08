@@ -17,6 +17,7 @@ package com.liferay.frontend.compatibility.ie.internal.servlet.taglib;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
@@ -54,7 +55,9 @@ public class IETopHeadDynamicInclude extends BaseDynamicInclude {
 				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 					httpServletRequest);
 
-			for (String fileName : _FILE_NAMES) {
+			String[] fileNames = ArrayUtil.append(_FILE_NAMES, _FETCH_POLYFILL);
+
+			for (String fileName : fileNames) {
 				printWriter.print(
 					"<script data-senna-track=\"permanent\" src=\"");
 
@@ -80,13 +83,15 @@ public class IETopHeadDynamicInclude extends BaseDynamicInclude {
 		_bundleContext = bundleContext;
 	}
 
+	private static final String _FETCH_POLYFILL = "/fetch.js";
+
 	private static final String[] _FILE_NAMES = {
 		"/array.fill.js", "/array.find.js", "/array.findindex.js",
 		"/array.from.js", "/array.includes.js", "/array.of.js",
-		"/element.classlist.js", "/fetch.js", "/formdata.js",
-		"/nodelist.foreach.js", "/object.assign.js", "/object.entries.js",
-		"/object.values.js", "/promise.js", "/string.endswith.js",
-		"/string.includes.js", "/uint16array.slice.js", "/url.search.params.js"
+		"/element.classlist.js", "/formdata.js", "/nodelist.foreach.js",
+		"/object.assign.js", "/object.entries.js", "/object.values.js",
+		"/promise.js", "/string.endswith.js", "/string.includes.js",
+		"/uint16array.slice.js", "/url.search.params.js"
 	};
 
 	@Reference

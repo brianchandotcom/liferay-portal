@@ -215,6 +215,45 @@ definition {
 	}
 
 	@priority = "4"
+	test AssertSSOFailsWhenAlgorithmsMismatch {
+		property blacklist.saml.algorithms = "true";
+		property test.name.skip.portal.instance = "SAML#AssertSSOFailsWhenAlgorithmsMismatch";
+
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
+
+		SAML.configureLiferaySAMLAsSP(
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080/");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:9080/c/portal/saml/metadata");
+
+		AssertHTMLSourceTextNotPresent(value1 = "http://www.w3.org/2000/09/xmldsig#rsa-sha1");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080/c/portal/saml/metadata");
+
+		for (var algorithm : list "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256,http://www.w3.org/2001/04/xmldsig-more#rsa-sha384,http://www.w3.org/2001/04/xmldsig-more#rsa-sha512") {
+
+			AssertHTMLSourceTextNotPresent(value1 = "algorithm");
+		}
+
+		User.logoutPG();
+
+		User.viewLoggedOutPG();
+
+		Navigator.openSpecificURL(url = "http://www.able.com:9080");
+
+		AssertClick(
+			locator1 = "UserBar#USER_SIGN_IN",
+			value1 = "Sign In");
+
+		AssertTextEquals(
+			locator1 = "Portlet#PORTLET_CONTENT",
+			value1 = "Unable to process SAML request.");
+
+		AssertConsoleTextPresent(value1 = "Validation of protocol message signature failed");
+	}
+
+	@priority = "4"
 	test AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout {
 		property test.name.skip.portal.instance = "SAML#AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout";
 		property web.xml.timeout = "2";

@@ -130,7 +130,7 @@ public class VariableNameCheck extends BaseCheck {
 			String expectedName = TextFormatter.format(
 				typeName, TextFormatter.F);
 
-			if (!name.equals(TextFormatter.format(typeName, TextFormatter.F))) {
+			if (!name.equals(expectedName)) {
 				log(detailAST, _MSG_RENAME_VARIABLE, name, expectedName);
 			}
 		}

@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
@@ -127,8 +126,7 @@ public class VariableNameCheck extends BaseCheck {
 			fileContents.getFileName(), CharPool.BACK_SLASH, CharPool.SLASH);
 
 		if (fileName.endsWith("ExceptionMapper.java")) {
-			String expectedName = TextFormatter.format(
-				typeName, TextFormatter.F);
+			String expectedName = _getExpectedVariableName(typeName);
 
 			if (!name.equals(expectedName)) {
 				log(detailAST, _MSG_RENAME_VARIABLE, name, expectedName);

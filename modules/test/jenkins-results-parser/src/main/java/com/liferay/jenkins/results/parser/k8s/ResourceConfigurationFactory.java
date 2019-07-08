@@ -126,7 +126,7 @@ public class ResourceConfigurationFactory {
 	private static V1ObjectMeta _newConfigurationMetaData(String metaDataName) {
 		V1ObjectMeta v1ObjectMeta = new V1ObjectMeta();
 
-		v1ObjectMeta.setName(metaDataName);
+		v1ObjectMeta.setName(metaDataName.toLowerCase());
 
 		return v1ObjectMeta;
 	}

@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="text" instance-id="mcae" name="CaseImage" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[$case_01.png$]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="dkcr" name="CaseTitle" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[A Personalized, Role-Based Dashboard for Enterprises]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="orbs" name="CaseIntro" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[We are transforming the way digital business is performed by changing the way the data is brought together and personalized for the individual.]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="gqjq" name="CaseBody" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p>Unisys is a global IT company that designs enterprise solutions for many of the largest companies in the world. The company was looking for a new platform for its product VantagePoint, a business services portal that integrates disparate enterprise systems, turning data into a unified, real-time and personalized dashboard that is customized for end users based on their roles.</p>
+
+<p>The portal technologies that Unisys had tried in the past were either too expensive or proprietary. The company wanted to make a shift to open source in order to take advantage of its lower cost and standards-based technology. In addition, the new solution needed to have powerful integration features and be configurable for different clients. After a review of options, Unisys chose Liferay for its multitenancy capabilities, customizable UI and flexibility.</p>
+
+<p>"The best news I ever received was when I found out I could do persona-based computing," said Richard Phelps, the Global Director of User Experience at Unisys. "Individual users are trying to perform very specific job functions, and we had the ability to help them with Liferay."</p>
+
+<p>&nbsp;</p>
+
+<h3>Compelling Customer Experience</h3>
+
+<p>One of the first successes Unisys saw with Liferay was significant cost savings through multitenancy. The company supports about 70 clients on a single Liferay license, accounting for 6,000 unique interactions each day. Other solutions required a license fee per user, resulting in more than 10x the cost per client.</p>
+
+<p>In moving VantagePoint to Liferay, Unisys aimed to create an intuitive and personalized user interface for its customers. The company used Liferay's modularity to design a card-based dashboard with the ability to create personas and views with aggregated data that is useful to individual users, based on their role in the enterprise. Its purpose is to give people the ability to see if everything is going well at a glance. "The ability to go from ‘It’s broken’ to ‘Here’s why’ in two clicks is really one of the greatest innovations," Phelps said. "Every client we show it to wants it." With the new front end, VantagePoint is turning out to be a primary differentiator for Unisys.</p>
+
+<p>VantagePoint has more than a compelling user experience. The company primarily uses Liferay as an application integration platform, and its flexibility makes it fast and easy to add new applications as needed. Currently, VantagePoint integrates 6 – 7 applications, and the company has plans to add more in the future, including facilities crisis management, stealth technology, security management and mobile environment management.</p>
+
+<p>&nbsp;</p>
+
+<h3>One Solution for Mobile Configurations</h3>
+
+<p>Another key benefit of the Liferay platform was its move to responsive web design. As a company that serves enterprises, Unisys has no control of what end users have in their hands. They need to account for every combination of mobile technology — more than 3,000 combinations of devices and operating systems. This isn't a problem that could be solved one device at a time with apps. Liferay's responsive web design makes it easy to adapt to the environment and the device, which really made a difference in Unisys's mobile approach. Now, the VantagePoint dashboard adapts to any screen — desktop, tablet or smartphone — to deliver real-time views of what's happening across people, operations and the business.</p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="oxgc" name="CaseSideDetails" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p><strong>Key Features</strong></p>
+
+<p>Single Sign On, Multitenancy, Mobile Responsive, Mobile App</p>
+
+<p><strong>Challenges</strong></p>
+
+<ul>
+	<li>Existing system was inflexible and expensive</li>
+	<li>Needed to personalize branding and functionality for every client</li>
+	<li>Solution needed to be mobile-ready to account for Bring-Your-Own-Device policies</li>
+</ul>
+
+<p><strong>Results</strong></p>
+
+<aside>
+<header>
+<ul>
+	<li>Higher Win Rate</li>
+	<li>10x Lower Cost</li>
+	<li>Role-Based Personas</li>
+	<li>Faster Integratio</li>
+</ul>
+</header>
+</aside>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="exfi" name="CaseSideInfo" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p><strong>Industry:</strong> Technology</p>
+
+<p><strong>Location:</strong>&nbsp;United States</p>
+
+<p><strong>Solution:</strong> Content Management Solutions, Customer Portals, Mobile</p>
+
+<p><strong>Topic:</strong>&nbsp;Digital Strategy</p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="cdnw" name="CaseLogo" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+</root>

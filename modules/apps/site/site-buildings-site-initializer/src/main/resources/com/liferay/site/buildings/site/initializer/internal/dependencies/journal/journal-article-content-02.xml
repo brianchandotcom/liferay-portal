@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="text" instance-id="qzxw" name="EntryMainImage" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[$dxp_cloud_breaking_the_barriers_of_time_and_project_constraints_image.jpg$]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="pdxj" name="ImageCaption" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[@ David Aragonés Otero]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="rhfl" name="EntryTitle" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Liferay DXP Cloud: Breaking the Barriers of Time and Project Constraints]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="mijs" name="EntrySubtilte" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[How operating on the cloud can optimize your digital experience platform]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="dmsk" name="EntryBody" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p>Moving to the cloud is top of mind for many enterprises, as is the security, installation process, and other key issues that come along with the decision. The long-term benefits of operating on the cloud are easily recognizable, but companies also need to consider other methods to reduce costs and expedite business needs—such as a fully functional development operations strategy, advanced metrics for their environments and a development cycle that allows for faster innovation.</p>
+
+<p>In order to make cloud deployments easier, we launched&nbsp;<a href="https://www.liferay.com/products/dxp-cloud">Liferay DXP Cloud</a>, the best way for enterprises to deploy, manage and scale&nbsp;<a href="https://www.liferay.com/products/dxp">Liferay Digital Experience Platform (DXP)</a>.&nbsp;&nbsp;</p>
+
+<h3>&nbsp;</h3>
+
+<h3>Meet Liferay DXP Cloud &nbsp;&nbsp;</h3>
+
+<p>Liferay DXP Cloud is an enterprise solution that simplifies the deployment, management and scaling of Liferay DXP with Platform as a Service (PaaS) capabilities. Operating on Liferay DXP Cloud greatly lessens the need for IT to maintain and manage their own infrastructures—allowing them to focus on delivering new business services.</p>
+
+<p>Specifically built for our leading&nbsp;<a href="https://www.liferay.com/resources/l/digital-experience-platform">digital experience platform</a>, Liferay DXP Cloud comes with out-of-the-box features to help optimize the performance of Liferay DXP and the evolution of your DevOps strategy:</p>
+
+<ol>
+	<li><strong>Improved Agility:</strong>&nbsp;Dynamically scale up bandwidth to maintain steady performance even through traffic peaks. IT teams can accommodate unexpected traffic flows on Liferay DXP Cloud through its Autoscaling feature in order to avoid service disruptions and manage unpredictable fluctuations.</li>
+	<li><strong>Automatic Backup and Recovery:</strong>&nbsp;Liferay DXP Cloud provides hourly automatic and secure backups to ensure organizational data and documents are protected and able to be restored in case of data corruption or failure.&nbsp;<a href="https://www.liferay.com/resource?folderId=3292406&amp;title=Liferay+DXP+Cloud+Features+List">Encryption at rest</a>&nbsp;ensures that sensitive data saved on disks is not readable by any user or application without a valid key. Each backup is saved for 30 days and available for you to restore.</li>
+	<li><strong>High Performance and Availability:&nbsp;</strong>With DXP Cloud, optimize performance to ensure high availability for your applications. Use the out-of-the-box health checks on the platform and configure self-healing for your services in case issues arise. Plus, deliver high availability, zero downtime deployments to guarantee that mission-critical sites stay online. &nbsp;</li>
+	<li><strong>Detailed Project Monitoring:</strong>&nbsp;DXP Cloud delivers comprehensive performance metrics so IT teams can track the health and computing requirements of their sites over time. Administrators can quickly understand CPU, memory usage, data transfer rates, and more, at one glance. For even more in-depth numbers, DXP Cloud's out-of-the-box integration with Dynatrace offers advanced metrics so your team can stay on top of your project at all times. Users can also opt to receive real-time alerts about project performance, resources or resolution of issues.</li>
+	<li><strong>Integrated Governance:</strong>&nbsp;Administrators are empowered to deliver maximum productivity and security by managing permissions that match governance policies for your team members within each project environment. There's no need to develop or deploy separate permissions.</li>
+	<li><strong>Reliable Security:</strong>&nbsp;According to a&nbsp;<a href="https://searchdatacenter.techtarget.com/tip/Advantages-and-drawbacks-to-public-cloud-services">TechTarget survey</a>, 40% of respondents avoided public cloud deployment because of security concerns. Combat those fears with DXP Cloud's private network that includes a database offering encryption at rest and encryption in transit. Additionally, you can encrypt traffic and secure the way data is sent between your services and browsers thanks to automatically renewed SSL certificates. &nbsp;</li>
+</ol>
+
+<p>Read the full list of<a href="https://www.liferay.com/resource/3292406/Liferay+DXP+Cloud+Features+List">&nbsp;Liferay DXP Cloud capabilities here</a>.</p>
+
+<h3>&nbsp;</h3>
+
+<h3>Continuous Innovation</h3>
+
+<p>Innovation is made easier on an agile platform teeming with features and tools that allow you to customize and drastically improve the end user experience.</p>
+
+<p>"We developed Liferay DXP Cloud because we realized there was a need among enterprise customers to make cloud deployments easier, speed up the development process and deliver business solutions faster," said Eduardo Lundgren, Engineering Director at Liferay. "Liferay DXP Cloud is a complete platform to enable innovation, simplify infrastructure and ensure faster time-to-market."</p>
+
+<p>Keep your business focused on what really matters by easing the digital transition with Liferay DXP Cloud.</p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="ifeg" name="EntryBottomCTA" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<h4>Launch with DXP Cloud</h4>
+
+<p>Securely and reliably create and manage engaging digital experiences for your users without having to worry about infrastructure or complexity.</p>
+
+<p><a href="https://www.liferay.com/request-a-demo">Request a live, customized demo to see DXP Cloud in action.&nbsp;&nbsp;</a></p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="vnvq" name="LinkToPageh6ej" type="link_to_layout">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+</root>

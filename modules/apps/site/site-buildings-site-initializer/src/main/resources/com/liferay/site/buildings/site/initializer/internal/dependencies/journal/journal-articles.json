@@ -1,0 +1,38 @@
+[
+	{
+		"articleId": "WEB-CONTENT-01",
+		"contentPath": "/journal/journal-article-content-01.xml",
+		"ddmStructureKey": "blog-entries-structure",
+		"name": "Conquering Three Common Intranet Search Challenges with Liferay DXP"
+	},
+	{
+		"articleId": "WEB-CONTENT-02",
+		"contentPath": "/journal/journal-article-content-02.xml",
+		"ddmStructureKey": "blog-entries-structure",
+		"name": "Liferay DXP Cloud: Breaking the Barriers of Time and Project Constraints"
+	},
+	{
+		"articleId": "WEB-CONTENT-03",
+		"contentPath": "/journal/journal-article-content-03.xml",
+		"ddmStructureKey": "blog-entries-structure",
+		"name": "Everything you want to know about Headless CMS"
+	},
+	{
+		"articleId": "WEB-CONTENT-04",
+		"contentPath": "/journal/journal-article-content-04.xml",
+		"ddmStructureKey": "case-studies-structure",
+		"name": "Federal Study"
+	},
+	{
+		"articleId": "WEB-CONTENT-05",
+		"contentPath": "/journal/journal-article-content-05.xml",
+		"ddmStructureKey": "case-studies-structure",
+		"name": "Spire Study"
+	},
+	{
+		"articleId": "WEB-CONTENT-06",
+		"contentPath": "/journal/journal-article-content-06.xml",
+		"ddmStructureKey": "case-studies-structure",
+		"name": "Unisys Study"
+	}
+]

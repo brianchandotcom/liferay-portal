@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="text" instance-id="woui" name="CaseImage" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[$case_02.png$]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="ibff" name="CaseTitle" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Spire. Empowering an Energy Company with Liferay]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="yxuq" name="CaseIntro" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Spire refined detailed requirements for the development team before each development sprint for review before starting actual coding.]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="xvyb" name="CaseBody" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p>Spire, Inc. is an energy company serving 1.7 million customers across Missouri, Mississippi and Alabama. As the fifth largest publicly traded gas utility in the U.S., Spire's mission is "answer every challenge, advance every community and enrich every life through the strength of our energy." To improve customer service, Spire decided to replace two separate online account management websites with a single platform solution providing a variety of tools at myaccount.spireenergy.com.</p>
+
+<p>After a rigorous evaluation process, the team eventually chose Liferay DXP.</p>
+
+<p>The Liferay platform provided a solid foundation with great flexibility with Liferay partner XTIVIA providing in-depth consultation services and a track record of successful projects. The result was a state-of-the-art modern unified customer portal experience leveraging Liferay DXP with an Angular-based client side UI. This replaced two separate sites written in different languages with a single, cohesive user experience. Direct integrations with SAP and Oracle Customer Care &amp; Billing provide customers with real-time information directly from the core customer information systems.</p>
+
+<p>Spire refined detailed requirements for the XTIVIA development team before each development sprint for review before starting actual coding.</p>
+
+<p>"The XTIVIA team exceeded expectations by working with our business and technology groups to deliver a state-of-the-art, turn-key solution in record time," said Deborah Banks, Director at Spire. "This solution delivers an engaging user experience and homogenizes our complex back-end systems. We’re excited to continue working with XTIVIA on future projects and releases."</p>
+
+<p><img alt="" src="" width="704" /></p>
+
+<p>&nbsp;</p>
+
+<h3>Effective Tools for Customers and Service Agents</h3>
+
+<p>This extensive integration provides gas usage charts, online bill payment and self-service tools for enrolling in payment arrangements, paperless billing and a DollarHelp program for customers in need. It also features user management for individual accounts, internal customer service agent single sign-on, custom permissioning and authorization capabilities, fraudulent account detection and lock-out, custom alert messages and more. Also, the portal includes a service layer that homogenizes data and data models from two different customer information systems to provide a seamless user interface, as well as integration with two payment processors and two mobile workforce management systems.</p>
+
+<p>Spire met their objectives and had a successful launch. The My Account site is easy to use and responsive for all devices. Customer service agents now use the same applications and site as consumers, which helps finetune call center operations and reduce costs.</p>
+
+<p>Liferay DXP exceeded Spire's expectations and helped support a larger re-branding effort for the company. Spire has regularly heard from customers about how much they love the My Account site due to enhanced user experiences. Spire plans to introduce many cutting-edge features in the future like real-time service technician tracking, integration with smart home devices and more.</p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="bzqu" name="CaseSideDetails" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p><strong>Key Features</strong></p>
+
+<p>Role-Based Access Control, Web Content Management, Custom Application Development, Mobile-Friendly Design, Enterprise Integration, Single Sign On, Identity Management, Online User Dashboard</p>
+
+<p><strong>Challenges</strong></p>
+
+<ul>
+	<li>Replace multiple disparate portals for a unified user experience</li>
+	<li>Homogenize two ERP systems, two payment processing systems and two mobile workforce management systems</li>
+	<li>Give customers real time account updates, billing information and energy usage data</li>
+</ul>
+
+<p><strong>Results</strong></p>
+
+<aside>
+<header>
+<ul>
+	<li>Comprehensive Service Platform</li>
+	<li>Improved Customer Satisfaction</li>
+	<li>Successful Integration</li>
+	<li>Streamlined Back-End Systems</li>
+</ul>
+</header>
+</aside>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="pirz" name="CaseSideInfo" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p><strong>Industry:</strong> Energy</p>
+
+<p><strong>Location:</strong>&nbsp;United States</p>
+
+<p><strong>Solution:</strong> Customer Portals</p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="kmio" name="CaseLogo" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+</root>

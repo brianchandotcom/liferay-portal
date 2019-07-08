@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="text" instance-id="zzbb" name="EntryMainImage" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[$what_is_headless.jpg$]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="knwu" name="ImageCaption" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[@ David Aragonés Otero]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="hzzj" name="EntryTitle" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Everything you want to know about Headless CMS]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="lktd" name="EntrySubtilte" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Learn the difference between a traditional and headless CMS]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="spkw" name="EntryBody" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p>Marketers have been using content management systems (CMS) to manage their online content but the need for omnichannel marketing has turned CMS on its head, literally and has led to the creation of headless CMS.</p>
+
+<p>&nbsp;</p>
+
+<h3>History of CMS Solutions</h3>
+
+<p><a href="https://www.liferay.com/resources/l/content-management-system" target="_blank">A traditional CMS</a>&nbsp;enables users to create and edit content on a backend and the system then displays that content on a pre-built front-end delivery layer. These solutions have been very useful, especially for marketers to easily upload and edit content for websites without the assistance of a developer. But as technology started to shift away from desktop to mobile and other devices, new delivery layers needed to be created, which made content uploading more burdensome for both developers and marketers. In order to circumvent these shortcomings, developers have created headless solutions.</p>
+
+<p>&nbsp;</p>
+
+<h3>Explaining Headless</h3>
+
+<p>A headless CMS is a system with no front-end components, or head, to determine how the content is presented to end users. Content instead can be published anywhere, for many channels through an API. With an API, front-end developers are free to build as many heads as they want such as websites, apps, kiosks, smartwatches and others for more ways to deliver richer and faster user experiences since these front-end presentations are not tied to the page layout system of a CMS. In addition, separating the front-end presentation layer speeds the time to market and allows for integration with other third-party technologies; keeping content future-proof and scalable for upcoming innovative devices. However, in order to use a CMS headlessly, a decoupled architecture must be in place to support a pure headless approach.</p>
+
+<p>&nbsp;</p>
+
+<h3>What is Decoupled Architecture?</h3>
+
+<p>In a traditional CMS, your architecture is coupled, or connected, but in order to leverage a headless CMS, your architecture needs to be decoupled. Decoupled architecture refers to a state of an IT environment in which two or more systems somehow work or are connected without being directly connected. It is a type of IT operation environment where systems, elements or components have very little knowledge about other components. The decoupled architecture also allows for a variety of approaches in terms of content delivery, these approaches fall into three categories: traditional CMS, a hybrid approach and full headless.</p>
+
+<p>However, a full headless CMS has its own downfalls: marketers may struggle due to the lack of traditional content editing features, such as site building and page layout. To combat these problems, a hybrid CMS has pre-built front-end delivery tools but are connected to the back-end through APIs. It has all the benefits of a headless CMS but still retains its head or delivery layer, just detached. This means that marketers can still access templates, publishing tools and content previews before an API pushes out the content to the different front-ends.</p>
+
+<img alt="" src="https://web.liferay.com/documents/14/88321876/Headless+CMS+Explained/3f16ce6b-d14e-49ca-b570-f7a75e1c4ad2?t=1560178605725" width="808" />
+
+<p>Here are the differences between a traditional and headless CMS depicted. Like we mentioned before, a headless CMS is contained within the decoupled architecture, that allows users to leverage a traditional, hybrid or headless CMS based on whatever best fits their needs.</p>
+
+<p>&nbsp;</p>
+
+<h3>How Does Headless Fit into Your Marketing Strategy?</h3>
+
+<p>The need for omnichannel marketing is evident. According to&nbsp;<a href="https://www.huffpost.com/entry/top-2018-ecommerce-trends-to-watch-for_b_5a1d7d63e4b09413e786af2f" target="_blank">Google</a>, about 85% of online shoppers start a purchase on one device but will finish on another. But it's not simply enough to be present on multiple channels, rather enterprises need to ensure that the brand, messaging and experiences are seamless and uniform from platform to platform, creating a fluid customer journey throughout every touchpoint.</p>
+
+<p>If executed successfully, omnichannel marketing can:</p>
+
+<ul>
+	<li>&nbsp;Retain&nbsp;<a href="https://iterable.com/blog/34-essential-omni-channel-marketing-stats-you-need-to-know/" target="_blank">89%</a>&nbsp;of customers with strong omnichannel engagement strategies in comparison to only 33% with weak strategies.</li>
+	<li>&nbsp;Achieve customer satisfaction rates of up to&nbsp;<a href="https://iterable.com/blog/34-essential-omni-channel-marketing-stats-you-need-to-know/" target="_blank">23 times</a>&nbsp;higher.</li>
+	<li>&nbsp;Generate&nbsp;<a href="https://www.pedowitzgroup.com/26-statistics-on-why-you-should-consider-omni-channel-marketing/" target="_blank">14.6% year-over-year increase</a>&nbsp;in annual income.</li>
+</ul>
+
+<p>Yet according to&nbsp;<a href="https://www.pedowitzgroup.com/26-statistics-on-why-you-should-consider-omni-channel-marketing/" target="_blank">Gartner</a>, over 90% of marketers struggle to seamlessly connect more than three channels on the buyer journey. Failing to deliver omnichannel experiences can also result in a&nbsp;<a href="http://onereach.com/blog/10-omnichannel-statistics-need-know/" target="_blank">10% loss in revenue</a>. Overcome these challenges with a foundation established by headless technology to be able to deliver seamless customer experiences regardless of what new devices may be invented in the future.</p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="poyh" name="EntryBottomCTA" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<h4>Want to Learn More about Headless?</h4>
+
+<p>In a world with an ever-increasing number of touchpoints and new channels, the ability to display content and data effectively and quickly across them is crucial to digital success. Watch our webinar to learn when and why headless needs to be a part of your strategy.</p>
+
+<p><a href="https://www.liferay.com/events?marketingEventId=232788462">Watch Here&nbsp;&nbsp;</a></p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="qpkw" name="LinkToPageh6ej" type="link_to_layout">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+</root>

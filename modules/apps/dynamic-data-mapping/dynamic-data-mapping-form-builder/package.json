@@ -47,6 +47,7 @@
 			"PageRenderer",
 			"RuleBuilder",
 			"RuleEditor",
+			"RuleList",
 			"Sidebar"
 		]
 	},
@@ -55,7 +56,7 @@
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix",
-		"test": "liferay-npm-scripts test"
+		"test": "metalsoy -s \"test/**/*.soy\" -d \"test\" && liferay-npm-scripts test"
 	},
 	"version": "3.0.0"
 }

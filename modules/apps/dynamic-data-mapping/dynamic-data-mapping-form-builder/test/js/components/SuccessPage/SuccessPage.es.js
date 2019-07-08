@@ -16,10 +16,28 @@
 
 import SuccessPage from 'source/components/SuccessPage/SuccessPage.es';
 import SucessPageSettings from 'mock/mockSuccessPage.es';
-import {dom as MetalTestUtil} from 'metal-dom';
+import dom from 'metal-dom';
+import JSXComponent from 'metal-jsx';
 
 let component;
 let successPageSettings;
+
+const withStore = context => {
+	return class WithContext extends JSXComponent {
+		getChildContext() {
+			return {
+				store: this,
+				...context
+			};
+		}
+
+		render() {
+			const SuccessPageTag = SuccessPage;
+
+			return <SuccessPageTag {...this.props} />;
+		}
+	};
+};
 
 describe('SuccessPage', () => {
 	beforeEach(() => {
@@ -36,8 +54,10 @@ describe('SuccessPage', () => {
 		successPageSettings = null;
 	});
 
-	it('renders the default layour', () => {
-		component = new SuccessPage({
+	it('renders the component', () => {
+		const Component = withStore({});
+
+		component = new Component({
 			contentLabel: 'Content',
 			successPageSettings,
 			titleLabel: 'Title'
@@ -48,59 +68,51 @@ describe('SuccessPage', () => {
 		expect(component).toMatchSnapshot();
 	});
 
-	it('emits success page changed when success page title is changed', () => {
-		const newPageSettings = {
-			...successPageSettings,
-			enabled: true
-		};
+	it('emits event when page title is changed', () => {
+		const dispatch = jest.fn();
 
-		component = new SuccessPage({
-			contentLabel: 'Content',
-			successPageSettings: newPageSettings,
-			titleLabel: 'Title'
+		const Component = withStore({dispatch});
+
+		component = new Component({
+			editingLanguageId: 'en_US',
+			successPageSettings: {}
 		});
-		const spy = jest.spyOn(component, 'emit');
+
 		const titleNode = component.element.querySelector(
 			'input[data-setting="title"]'
 		);
 
 		titleNode.value = 'Some title';
+		dom.triggerEvent(titleNode, 'input', {});
 
-		jest.runAllTimers();
-
-		MetalTestUtil.triggerEvent(titleNode, 'keyup', {});
-
-		expect(spy).toHaveBeenCalledWith(
-			'successPageChanged',
-			expect.anything()
-		);
+		expect(dispatch).toHaveBeenCalledWith('successPageChanged', {
+			title: {
+				en_US: 'Some title'
+			}
+		});
 	});
 
-	it('emits success page changed when success page body is changed', () => {
-		const newPageSettings = {
-			...successPageSettings,
-			enabled: true
-		};
+	it('emits event when page body is changed', () => {
+		const dispatch = jest.fn();
 
-		component = new SuccessPage({
-			contentLabel: 'Content',
-			successPageSettings: newPageSettings,
-			titleLabel: 'Title'
+		const Component = withStore({dispatch});
+
+		component = new Component({
+			editingLanguageId: 'en_US',
+			successPageSettings: {}
 		});
-		const spy = jest.spyOn(component, 'emit');
-		const titleNode = component.element.querySelector(
+
+		const bodyNode = component.element.querySelector(
 			'input[data-setting="body"]'
 		);
 
-		titleNode.value = 'Some description';
+		bodyNode.value = 'Some description';
+		dom.triggerEvent(bodyNode, 'input', {});
 
-		jest.runAllTimers();
-
-		MetalTestUtil.triggerEvent(titleNode, 'keyup', {});
-
-		expect(spy).toHaveBeenCalledWith(
-			'successPageChanged',
-			expect.anything()
-		);
+		expect(dispatch).toHaveBeenCalledWith('successPageChanged', {
+			body: {
+				en_US: 'Some description'
+			}
+		});
 	});
 });

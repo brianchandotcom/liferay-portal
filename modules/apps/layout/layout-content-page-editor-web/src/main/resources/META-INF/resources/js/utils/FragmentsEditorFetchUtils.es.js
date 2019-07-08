@@ -60,6 +60,12 @@ function addFragmentEntryLinkComment(fragmentEntryLinkId, body) {
 	});
 }
 
+function getExperienceUsedPortletIds(segmentsExperienceId) {
+	return _fetch(_store.getState().getExperienceUsedPortletsURL, {
+		segmentsExperienceId
+	}).then(response => response.json());
+}
+
 /**
  * @param {string} segmentsExperienceId
  * @param {Array<string>} [fragmentEntryLinkIds=[]]
@@ -150,6 +156,7 @@ function updatePageEditorLayoutData(layoutData, segmentsExperienceId) {
 
 export {
 	addFragmentEntryLinkComment,
+	getExperienceUsedPortletIds,
 	removeExperience,
 	removeFragmentEntryLinks,
 	setStore,

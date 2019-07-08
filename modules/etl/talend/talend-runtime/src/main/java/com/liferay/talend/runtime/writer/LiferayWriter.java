@@ -138,7 +138,7 @@ public class LiferayWriter
 	public void write(Object object) throws IOException {
 		if (!(object instanceof IndexedRecord)) {
 			IllegalArgumentException iae = new IllegalArgumentException(
-				"Method argument must not be null");
+				"Method argument is null");
 
 			if (object != null) {
 				iae = new IllegalArgumentException(

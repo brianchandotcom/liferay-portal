@@ -584,7 +584,7 @@ definition {
 
 	@priority = "5"
 	test DeleteBlogsEntryOrgRoleDefaultPermission {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		Permissions.setUpOrgRoleLoginUserPG(
 			orgName = "Organization Name",
@@ -1354,7 +1354,7 @@ definition {
 
 	@priority = "5"
 	test SubscribeBlogsRegRole {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		Permissions.setUpRegRoleLoginUserPG(
 			pageName = "Blogs Page",

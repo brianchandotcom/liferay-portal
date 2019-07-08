@@ -192,7 +192,7 @@ definition {
 
 	@priority = "5"
 	test AddStructureSiteRoleDefaultPermission {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		Permissions.setUpSiteRoleCP(
 			page = "Public Pages",
@@ -237,7 +237,7 @@ definition {
 
 	@priority = "5"
 	test AddStructureSiteRoleDefinePermission {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPRolesCPWebcontent#AddStructureSiteRoleDefinePermission";
 
 		Permissions.setUpSiteRoleCP(
@@ -323,7 +323,7 @@ definition {
 
 	@priority = "5"
 	test AddTemplateSiteRoleDefaultPermission {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPRolesCPWebcontent#AddTemplateSiteRoleDefaultPermission";
 
 		Permissions.setUpSiteRoleCP(

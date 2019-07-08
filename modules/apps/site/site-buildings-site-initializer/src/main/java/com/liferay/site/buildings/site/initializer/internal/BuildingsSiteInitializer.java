@@ -36,6 +36,7 @@ import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.net.URL;
 
@@ -149,6 +150,12 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 		_serviceContext = serviceContext;
 	}
 
+	private String _readFile(String fileName) throws IOException {
+		Class<?> clazz = getClass();
+
+		return StringUtil.read(clazz.getClassLoader(), _PATH + fileName);
+	}
+
 	private void _updateLookAndFeel() throws Exception {
 		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
 			_serviceContext.getScopeGroupId(), false);
@@ -167,14 +174,9 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 			_serviceContext.getScopeGroupId(), false,
 			settingsProperties.toString());
 
-		Class<?> clazz = getClass();
-
-		String css = StringUtil.read(
-			clazz.getClassLoader(), _PATH + "/layout-set/custom.css");
-
 		_layoutSetLocalService.updateLookAndFeel(
 			_serviceContext.getScopeGroupId(), false, layoutSet.getThemeId(),
-			layoutSet.getColorSchemeId(), css);
+			layoutSet.getColorSchemeId(), _readFile("/layout-set/custom.css"));
 	}
 
 	private static final String _NAME = "Buildings";

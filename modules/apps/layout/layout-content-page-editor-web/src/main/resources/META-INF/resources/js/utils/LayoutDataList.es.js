@@ -12,7 +12,12 @@
  * details.
  */
 
-import {getFragmentRowIndex} from './FragmentsEditorGetUtils.es';
+/* eslint no-for-of-loops/no-for-of-loops: "warn" */
+
+import {
+	getFragmentRowIndex,
+	getRowFragmentEntryLinkIds
+} from './FragmentsEditorGetUtils.es';
 
 /**
  * Tells if a fragmentEntryLink is referenced in any (but the current one)
@@ -53,4 +58,26 @@ function getEmptyLayoutData() {
 	};
 }
 
-export {containsFragmentEntryLinkId, getEmptyLayoutData};
+/**
+ * Utility to get a fragment entry links ids from layout data
+ *
+ * @param layoutData {LayoutDataShape}
+ * @returns {Array}
+ */
+function getLayoutDataFragmentEntryLinkIds(layoutData) {
+	let fragmentEntryLinkIds = [];
+
+	for (const row of layoutData.structure) {
+		fragmentEntryLinkIds = fragmentEntryLinkIds.concat(
+			getRowFragmentEntryLinkIds(row)
+		);
+	}
+
+	return fragmentEntryLinkIds;
+}
+
+export {
+	containsFragmentEntryLinkId,
+	getEmptyLayoutData,
+	getLayoutDataFragmentEntryLinkIds
+};

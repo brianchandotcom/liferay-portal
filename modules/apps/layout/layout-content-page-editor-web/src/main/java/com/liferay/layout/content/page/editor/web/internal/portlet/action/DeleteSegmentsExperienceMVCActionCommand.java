@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -104,11 +105,17 @@ public class DeleteSegmentsExperienceMVCActionCommand
 						SegmentsExperiencePortletUtil.setSegmentsExperienceId(
 							portletId, segmentsExperienceId);
 
-					_portletPreferencesLocalService.deletePortletPreferences(
-						PortletKeys.PREFS_OWNER_ID_DEFAULT,
-						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-						fragmentEntryLink.getClassPK(),
-						portletIdWithExperience);
+					PortletPreferences portletPreferences =
+						_portletPreferencesLocalService.fetchPortletPreferences(
+							PortletKeys.PREFS_OWNER_ID_DEFAULT,
+							PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+							fragmentEntryLink.getClassPK(),
+							portletIdWithExperience);
+
+					if (portletPreferences != null) {
+						_portletPreferencesLocalService.
+							deletePortletPreferences(portletPreferences);
+					}
 				}
 			}
 

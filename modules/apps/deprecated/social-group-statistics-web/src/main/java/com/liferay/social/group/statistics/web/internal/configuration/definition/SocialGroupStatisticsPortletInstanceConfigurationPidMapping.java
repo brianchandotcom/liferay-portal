@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.social.group.statistics.web.configuration.definition;
+package com.liferay.social.group.statistics.web.internal.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.social.group.statistics.web.configuration.SocialGroupStatisticsPortletInstanceConfiguration;
+import com.liferay.social.group.statistics.web.internal.configuration.SocialGroupStatisticsPortletInstanceConfiguration;
 import com.liferay.social.group.statistics.web.internal.constants.SocialGroupStatisticsPortletKeys;
 
 import org.osgi.service.component.annotations.Component;

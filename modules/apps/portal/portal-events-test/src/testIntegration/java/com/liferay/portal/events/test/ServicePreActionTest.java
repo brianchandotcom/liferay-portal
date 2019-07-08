@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -114,15 +115,22 @@ public class ServicePreActionTest {
 	public void testInitThemeDisplayPlidDefaultUserPersonalSiteLayoutComposite()
 		throws Exception {
 
-		long plid = _getThemeDisplayPlid(false, true);
+		try {
+			long plid = _getThemeDisplayPlid(false, true);
 
-		Object defaultLayoutComposite = ReflectionTestUtil.invoke(
-			_servicePreAction, "_getDefaultUserPersonalSiteLayoutComposite",
-			new Class<?>[] {User.class}, _user);
+			Object defaultLayoutComposite = ReflectionTestUtil.invoke(
+				_servicePreAction, "_getDefaultUserPersonalSiteLayoutComposite",
+				new Class<?>[] {User.class}, _user);
 
-		Layout layout = _getLayout(defaultLayoutComposite);
+			Layout layout = _getLayout(defaultLayoutComposite);
 
-		Assert.assertEquals(layout.getPlid(), plid);
+			Assert.assertEquals(layout.getPlid(), plid);
+		}
+		finally {
+			if (_user != null) {
+				_userLocalService.deleteUser(_user);
+			}
+		}
 	}
 
 	@Test
@@ -153,6 +161,10 @@ public class ServicePreActionTest {
 				publicLayoutsAutoCreate;
 			PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE =
 				privateLayoutsAutoCreate;
+
+			if (_user != null) {
+				_userLocalService.deleteUser(_user);
+			}
 		}
 	}
 
@@ -250,5 +262,8 @@ public class ServicePreActionTest {
 
 	private final ServicePreAction _servicePreAction = new ServicePreAction();
 	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

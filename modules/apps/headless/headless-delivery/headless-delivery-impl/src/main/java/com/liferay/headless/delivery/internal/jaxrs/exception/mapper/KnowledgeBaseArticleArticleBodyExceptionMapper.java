@@ -41,7 +41,7 @@ public class KnowledgeBaseArticleArticleBodyExceptionMapper
 
 	@Override
 	public Response toResponse(
-		KBArticleContentException kBArticleContentException) {
+		KBArticleContentException kbArticleContentException) {
 
 		return Response.status(
 			400
@@ -49,7 +49,7 @@ public class KnowledgeBaseArticleArticleBodyExceptionMapper
 			MediaType.TEXT_PLAIN
 		).entity(
 			StringUtil.replace(
-				kBArticleContentException.getMessage(), "Content",
+				kbArticleContentException.getMessage(), "Content",
 				"Article body")
 		).build();
 	}

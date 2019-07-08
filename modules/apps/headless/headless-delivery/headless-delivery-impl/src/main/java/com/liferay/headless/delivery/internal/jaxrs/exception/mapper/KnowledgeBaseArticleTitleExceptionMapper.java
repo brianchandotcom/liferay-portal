@@ -40,14 +40,14 @@ public class KnowledgeBaseArticleTitleExceptionMapper
 
 	@Override
 	public Response toResponse(
-		KBArticleTitleException kBArticleTitleException) {
+		KBArticleTitleException kbArticleTitleException) {
 
 		return Response.status(
 			400
 		).type(
 			MediaType.TEXT_PLAIN
 		).entity(
-			kBArticleTitleException.getMessage()
+			kbArticleTitleException.getMessage()
 		).build();
 	}
 

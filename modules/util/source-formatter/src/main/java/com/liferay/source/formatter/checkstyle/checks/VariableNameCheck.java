@@ -73,12 +73,13 @@ public class VariableNameCheck extends BaseCheck {
 		String typeName = firstChildDetailAST.getText();
 
 		if (isAttributeValue(_CHECK_TYPE_NAME_KEY)) {
+			_checkExceptionVariableName(detailAST, name, typeName);
+
 			_checkTypeName(
 				detailAST, name, typeName, "DetailAST", "HttpServletRequest",
 				"HttpServletResponse");
 		}
 
-		_checkExceptionVariableName(detailAST, name, typeName);
 		_checkTypo(detailAST, name, typeName);
 	}
 

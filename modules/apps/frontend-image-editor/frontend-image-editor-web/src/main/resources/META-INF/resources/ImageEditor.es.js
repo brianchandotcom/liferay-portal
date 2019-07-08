@@ -12,18 +12,15 @@
  * details.
  */
 
-/* eslint no-useless-escape: "warn" */
-
+import './ImageEditorLoading.es';
 import 'clay-dropdown';
 
-import Soy from 'metal-soy';
 import dom from 'metal-dom';
+import ImageEditorHistoryEntry from './ImageEditorHistoryEntry.es';
+import Soy from 'metal-soy';
+import templates from './ImageEditor.soy';
 import {async, core} from 'metal';
 import {PortletBase} from 'frontend-js-web';
-
-import ImageEditorHistoryEntry from './ImageEditorHistoryEntry.es';
-import './ImageEditorLoading.es';
-import templates from './ImageEditor.soy';
 
 /**
  * Creates an Image Editor component.

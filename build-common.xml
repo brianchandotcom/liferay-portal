@@ -1097,14 +1097,12 @@ information.
 				<jvmarg if:true="${junit.code.coverage}" line="-javaagent:${jacoco.agent.jar}${jacoco.agent.configuration}" />
 				<jvmarg if:true="${aspectj.weaver.enabled}" line="${aspectj.agent}" />
 				<jvmarg if:set="junit.java.add.opens" line="${junit.java.add.opens}" />
+				<jvmarg line="${app.server.jvm.args}" />
 				<jvmarg line="${junit.java.gc}" />
 				<jvmarg line="${whip.agent}" />
 				<jvmarg value="-Xss2m" />
 				<jvmarg value="-Dexternal-properties=${test.properties}" />
-				<jvmarg value="-Dfile.encoding=UTF-8" />
 				<jvmarg value="-Dfixed.issues=${fixed.issues}" />
-				<jvmarg value="-Djava.locale.providers=JRE,COMPAT,CLDR" />
-				<jvmarg value="-Djava.net.preferIPv4Stack=true" />
 				<jvmarg value="-Dliferay.log.dir=${liferay.home}/logs" />
 				<jvmarg value="-Dliferay.mode=test" />
 				<jvmarg value="-Dosgi.state.dir=${liferay.home}/osgi/state" />
@@ -1113,7 +1111,6 @@ information.
 				<jvmarg value="-DsocksProxyPort=8888" />
 				<jvmarg value="-Dsun.zip.disableMemoryMapping=true" />
 				<misc />
-				<jvmarg value="-Duser.timezone=GMT" />
 				<classpath location="test-coverage" />
 				<classpath refid="test.classpath" />
 				<formatter type="brief" usefile="false" />

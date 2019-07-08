@@ -33,7 +33,7 @@ public interface AssetCategoriesAdminWebConfiguration {
 	@Meta.AD(
 		deflt = AssetCategoriesAdminDisplayStyleKeys.DEFAULT,
 		name = "category-navigation-display-style",
-		optionLabels = {"Default", "Flattened Tree"},
+		optionLabels = {"default", "flattened-tree"},
 		optionValues = {
 			AssetCategoriesAdminDisplayStyleKeys.DEFAULT,
 			AssetCategoriesAdminDisplayStyleKeys.FLATTENED_TREE

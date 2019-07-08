@@ -261,14 +261,12 @@ public class CallFunction
 			if (optionsOptional.isPresent()) {
 				setDDMFormFieldOptions(ddmFormFieldName, optionsOptional.get());
 			}
-			else {
+			else if (Validator.isNull(getDDMFormFieldValue(ddmFormFieldName))) {
 				Optional<String> valueOptional =
 					ddmDataProviderResponse.getOutputOptional(
 						outputName, String.class);
 
-				if (Validator.isNull(getDDMFormFieldValue(ddmFormFieldName))) {
-					setDDMFormFieldValue(ddmFormFieldName, valueOptional.get());
-				}
+				setDDMFormFieldValue(ddmFormFieldName, valueOptional.get());
 			}
 		}
 	}

@@ -528,9 +528,9 @@ public class BeanPortletExtension implements Extension {
 
 		_serviceRegistrations.clear();
 
-		ServletContext servletContext = (ServletContext)contextObject;
-
 		if (_log.isInfoEnabled()) {
+			ServletContext servletContext = (ServletContext)contextObject;
+
 			_log.info(
 				StringBundler.concat(
 					"Unregistered ", _beanPortlets.size(),

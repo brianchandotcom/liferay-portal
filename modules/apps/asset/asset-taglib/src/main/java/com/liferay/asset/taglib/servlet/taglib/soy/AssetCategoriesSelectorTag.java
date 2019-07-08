@@ -333,12 +333,14 @@ public class AssetCategoriesSelectorTag extends ComponentRendererTag {
 				_showRequiredLabel);
 
 			String selectedCategoryIds = categoryIdsTitles.get(i)[0];
-			String selectedCategoryIdTitles = categoryIdsTitles.get(i)[1];
 
 			vocabulary.put("selectedCategoryIds", selectedCategoryIds);
 
 			if (Validator.isNotNull(selectedCategoryIds)) {
 				String[] categoryIds = selectedCategoryIds.split(",");
+
+				String selectedCategoryIdTitles = categoryIdsTitles.get(i)[1];
+
 				String[] categoryTitles = selectedCategoryIdTitles.split(
 					"_CATEGORY_");
 

@@ -68,10 +68,11 @@ public class DLFileEntryUADExporter extends BaseDLFileEntryUADExporter {
 	protected void writeToZip(DLFileEntry dlFileEntry, ZipWriter zipWriter)
 		throws Exception {
 
-		String dlFileEntryFileName = StringBundler.concat(
-			dlFileEntry.getPrimaryKeyObj(), ".", dlFileEntry.getExtension());
-
 		if (dlFileEntry.getSize() > 0) {
+			String dlFileEntryFileName = StringBundler.concat(
+				dlFileEntry.getPrimaryKeyObj(), ".",
+				dlFileEntry.getExtension());
+
 			zipWriter.addEntry(
 				dlFileEntryFileName, dlFileEntry.getContentStream());
 		}

@@ -263,13 +263,14 @@ public class AssetEntryUsagesDisplayContext {
 	public String getPreviewURL(AssetEntryUsage assetEntryUsage)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String layoutURL = null;
 
 		if (assetEntryUsage.getContainerType() == PortalUtil.getClassNameId(
 				FragmentEntryLink.class)) {
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_renderRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			Layout layout = LayoutLocalServiceUtil.fetchLayout(
 				assetEntryUsage.getPlid());

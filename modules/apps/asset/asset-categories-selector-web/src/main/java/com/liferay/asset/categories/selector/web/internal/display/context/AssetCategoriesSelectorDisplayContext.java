@@ -58,10 +58,6 @@ public class AssetCategoriesSelectorDisplayContext {
 	}
 
 	public JSONArray getCategoriesJSONArray() throws Exception {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		JSONArray vocabulariesJSONArray = _getVocabulariesJSONArray();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -70,6 +66,10 @@ public class AssetCategoriesSelectorDisplayContext {
 			jsonObject = vocabulariesJSONArray.getJSONObject(0);
 		}
 		else {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			jsonObject.put(
 				"children", vocabulariesJSONArray
 			).put(

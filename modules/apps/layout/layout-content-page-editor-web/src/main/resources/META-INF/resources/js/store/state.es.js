@@ -396,6 +396,14 @@ const INITIAL_STATE = {
 	getAssetMappingFieldsURL: Config.string().value(''),
 
 	/**
+	 * Get portlets used in a particular experience
+	 * @default undefined
+	 * @review
+	 * @type {string}
+	 */
+	getExperienceUsedPortletsURL: Config.string().value(''),
+
+	/**
 	 * URL for obtaining the asset types for which info display pages can be
 	 * created.
 	 * @default '''

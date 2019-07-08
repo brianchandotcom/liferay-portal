@@ -85,7 +85,7 @@ public class ServicePreActionTest {
 
 		_request.setRequestURI("/nonexistent_page");
 
-		long plid = getThemeDisplayPlid(true, false);
+		long plid = _getThemeDisplayPlid(true, false);
 
 		Object defaultLayoutComposite = ReflectionTestUtil.invoke(
 			_servicePreAction, "_getDefaultVirtualHostLayoutComposite",
@@ -114,7 +114,7 @@ public class ServicePreActionTest {
 	public void testInitThemeDisplayPlidDefaultUserPersonalSiteLayoutComposite()
 		throws Exception {
 
-		long plid = getThemeDisplayPlid(false, true);
+		long plid = _getThemeDisplayPlid(false, true);
 
 		Object defaultLayoutComposite = ReflectionTestUtil.invoke(
 			_servicePreAction, "_getDefaultUserPersonalSiteLayoutComposite",
@@ -138,7 +138,7 @@ public class ServicePreActionTest {
 		PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE = false;
 
 		try {
-			long plid = getThemeDisplayPlid(false, true);
+			long plid = _getThemeDisplayPlid(false, true);
 
 			Object defaultLayoutComposite = ReflectionTestUtil.invoke(
 				_servicePreAction, "_getDefaultUserSitesLayoutComposite",
@@ -160,7 +160,7 @@ public class ServicePreActionTest {
 	public void testInitThemeDisplayPlidGuestSiteLayoutComposite()
 		throws Exception {
 
-		long plid = getThemeDisplayPlid(false, false);
+		long plid = _getThemeDisplayPlid(false, false);
 
 		Object defaultLayoutComposite = ReflectionTestUtil.invoke(
 			_servicePreAction, "_getGuestSiteLayoutComposite",
@@ -175,7 +175,7 @@ public class ServicePreActionTest {
 	public void testInitThemeDisplayPlidVirtualHostLayoutComposite()
 		throws Exception {
 
-		long plid = getThemeDisplayPlid(true, false);
+		long plid = _getThemeDisplayPlid(true, false);
 
 		Object defaultLayoutComposite = ReflectionTestUtil.invoke(
 			_servicePreAction, "_getDefaultVirtualHostLayoutComposite",
@@ -186,7 +186,17 @@ public class ServicePreActionTest {
 		Assert.assertEquals(layout.getPlid(), plid);
 	}
 
-	protected long getThemeDisplayPlid(
+	private Layout _getLayout(Object layoutComposite) {
+		return ReflectionTestUtil.invoke(
+			layoutComposite, "getLayout", null, null);
+	}
+
+	private List<Layout> _getLayouts(Object layoutComposite) {
+		return ReflectionTestUtil.invoke(
+			layoutComposite, "getLayouts", null, null);
+	}
+
+	private long _getThemeDisplayPlid(
 			boolean hasGuestViewPermission, boolean signedIn)
 		throws Exception {
 
@@ -215,16 +225,6 @@ public class ServicePreActionTest {
 			WebKeys.THEME_DISPLAY);
 
 		return themeDisplay.getPlid();
-	}
-
-	private Layout _getLayout(Object layoutComposite) {
-		return ReflectionTestUtil.invoke(
-			layoutComposite, "getLayout", null, null);
-	}
-
-	private List<Layout> _getLayouts(Object layoutComposite) {
-		return ReflectionTestUtil.invoke(
-			layoutComposite, "getLayouts", null, null);
 	}
 
 	@DeleteAfterTestRun

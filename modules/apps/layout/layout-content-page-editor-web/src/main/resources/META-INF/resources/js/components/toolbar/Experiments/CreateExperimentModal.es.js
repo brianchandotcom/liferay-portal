@@ -18,7 +18,7 @@ import React, {useState, useContext} from 'react';
 import PropTypes from 'prop-types';
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
-import {ExperimentsContext} from './Context.es';
+import {PageEditorContext} from '../../../utils/PageEditorContext.es';
 
 /**
  * Second order function to generate a function from a listener
@@ -32,7 +32,7 @@ const _inputValueGetter = listener => event => listener(event.target.value);
 function CreateExperimentModal({setVisible, visible, onCreateExperiment}) {
 	const [name, setName] = useState(Liferay.Language.get('experiment-new'));
 	const [description, setDescription] = useState('');
-	const {portletNamespace} = useContext(ExperimentsContext);
+	const {portletNamespace} = useContext(PageEditorContext);
 
 	const formId = `${portletNamespace}_createExperiement`;
 

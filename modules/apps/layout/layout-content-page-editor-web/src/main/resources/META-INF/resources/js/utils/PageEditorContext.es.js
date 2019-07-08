@@ -14,6 +14,6 @@
 
 import React from 'react';
 
-export const ExperimentsContext = React.createContext({
+export const PageEditorContext = React.createContext({
 	portletNamespace: ''
 });

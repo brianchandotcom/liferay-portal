@@ -12,7 +12,7 @@
  * details.
  */
 
-/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "^React$|^ClayIconSpriteContext$|^ExperimentsContext$|^ConnectedExperiments$" }]*/
+/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "^React$|^ClayIconSpriteContext$|^PageEditorContext$|^ConnectedExperiments$" }]*/
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -27,7 +27,7 @@ import Store from '../../store/store.es';
 import {CREATE_SEGMENTS_EXPERIMENT} from '../../actions/actions.es';
 import ExperimentsDropdown from './Experiments/ExperimentsDropdown.es';
 import templates from './Experiments.soy';
-import {ExperimentsContext} from './Experiments/Context.es';
+import {PageEditorContext} from '../../utils/PageEditorContext.es';
 
 class Experiments extends Component {
 	syncStore(store, prevStore) {
@@ -87,11 +87,15 @@ function _renderExperimentsApp(id, store, context) {
 	)(ExperimentsDropdown);
 
 	ReactDOM.render(
-		<ExperimentsContext.Provider value={context.portletNamespace}>
+		<PageEditorContext.Provider
+			value={{
+				portletNamespace: context.portletNamespace
+			}}
+		>
 			<ClayIconSpriteContext.Provider value={context.spritemap}>
 				<ConnectedExperiments />
 			</ClayIconSpriteContext.Provider>
-		</ExperimentsContext.Provider>,
+		</PageEditorContext.Provider>,
 		document.getElementById(id)
 	);
 }

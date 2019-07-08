@@ -1360,6 +1360,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	@Override
+	public Group fetchGroup(long companyId, long classNameId, long classPK) {
+		return groupPersistence.fetchByC_C_C(companyId, classNameId, classPK);
+	}
+
+	@Override
 	public Group fetchStagingGroup(long liveGroupId) {
 		return groupPersistence.fetchByLiveGroupId(liveGroupId);
 	}

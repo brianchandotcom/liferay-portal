@@ -631,15 +631,6 @@ definition {
 
 		Gmail.gotoMail(
 			emailFromUserName = "Joe Bloggs",
-			gmailAssetType = "New Account",
-			gmailMessageTitle = "Your New Account");
-
-		var emailPassword = selenium.getText("Gmail#EMAIL_PASSWORD");
-
-		Gmail.gotoHtmlMode();
-
-		Gmail.gotoMail(
-			emailFromUserName = "Joe Bloggs",
 			gmailAssetType = "Address Verification",
 			gmailMessageTitle = "Email Address Verification");
 
@@ -652,7 +643,7 @@ definition {
 		Navigator.openSpecificURL(url = "http://www.baker.com:8080/");
 
 		User.signInPG(
-			emailPassword = "${emailPassword}",
+			emailPassword = "password",
 			emailVerification = "${emailVerification}",
 			userEmailAddress = PropsUtil.get("email.address.2"));
 

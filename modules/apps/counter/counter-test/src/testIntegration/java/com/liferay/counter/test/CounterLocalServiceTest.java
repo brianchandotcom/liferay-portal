@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.test.rule.ClassTestRule;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.InitUtil;
@@ -171,7 +172,9 @@ public class CounterLocalServiceTest {
 		for (int i = 0; i < _PROCESS_COUNT; i++) {
 			ProcessCallable<Long[]> processCallable =
 				new IncrementProcessCallable(
-					"Increment Process-" + i, _COUNTER_NAME, _INCREMENT_COUNT);
+					"Increment Process-" + i,
+					SystemProperties.get("catalina.base"), _COUNTER_NAME,
+					_INCREMENT_COUNT);
 
 			ProcessChannel<Long[]> processChannel = _processExecutor.execute(
 				processConfig, processCallable);
@@ -215,9 +218,11 @@ public class CounterLocalServiceTest {
 		implements ProcessCallable<Long[]> {
 
 		public IncrementProcessCallable(
-			String processName, String counterName, int incrementCount) {
+			String processName, String catalinaBase, String counterName,
+			int incrementCount) {
 
 			_processName = processName;
+			_catalinaBase = catalinaBase;
 			_counterName = counterName;
 			_incrementCount = incrementCount;
 		}
@@ -229,7 +234,7 @@ public class CounterLocalServiceTest {
 			System.setProperty(
 				PropsKeys.COUNTER_INCREMENT + "." + _counterName, "1");
 
-			System.setProperty("catalina.base", ".");
+			System.setProperty("catalina.base", _catalinaBase);
 
 			// C3PO
 
@@ -280,6 +285,7 @@ public class CounterLocalServiceTest {
 
 		private static final long serialVersionUID = 1L;
 
+		private final String _catalinaBase;
 		private final String _counterName;
 		private final int _incrementCount;
 		private final String _processName;

@@ -323,13 +323,10 @@ public abstract class LayoutSetLocalServiceBaseImpl
 	 *
 	 * @param layoutSet the layout set
 	 * @return the layout set that was updated
-	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public LayoutSet updateLayoutSet(LayoutSet layoutSet)
-		throws PortalException {
-
+	public LayoutSet updateLayoutSet(LayoutSet layoutSet) {
 		return layoutSetPersistence.update(layoutSet);
 	}
 

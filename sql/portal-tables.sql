@@ -720,25 +720,6 @@ create table LayoutSetPrototype (
 	active_ BOOLEAN
 );
 
-create table LayoutSetVersion (
-	layoutSetVersionId LONG not null primary key,
-	version INTEGER,
-	layoutSetId LONG,
-	groupId LONG,
-	companyId LONG,
-	createDate DATE null,
-	modifiedDate DATE null,
-	privateLayout BOOLEAN,
-	logoId LONG,
-	themeId VARCHAR(75) null,
-	colorSchemeId VARCHAR(75) null,
-	css TEXT null,
-	pageCount INTEGER,
-	settings_ TEXT null,
-	layoutSetPrototypeUuid VARCHAR(75) null,
-	layoutSetPrototypeLinkEnabled BOOLEAN
-);
-
 create table ListType (
 	mvccVersion LONG default 0 not null,
 	listTypeId LONG not null primary key,

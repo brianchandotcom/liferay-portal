@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.LayoutSetVersion;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -74,9 +73,6 @@ public interface LayoutSetLocalService
 	public LayoutSet addLayoutSet(long groupId, boolean privateLayout)
 		throws PortalException;
 
-	public LayoutSet checkout(LayoutSet layoutSet, int version)
-		throws PortalException;
-
 	/**
 	 * Creates a new layout set with the primary key. Does not add the layout set to the database.
 	 *
@@ -85,12 +81,6 @@ public interface LayoutSetLocalService
 	 */
 	@Transactional(enabled = false)
 	public LayoutSet createLayoutSet(long layoutSetId);
-
-	@Indexable(type = IndexableType.DELETE)
-	public LayoutSet delete(LayoutSet layoutSet) throws PortalException;
-
-	@Indexable(type = IndexableType.DELETE)
-	public LayoutSet deleteDraft(LayoutSet layoutSet) throws PortalException;
 
 	/**
 	 * Deletes the layout set from the database. Also notifies the appropriate model listeners.
@@ -189,15 +179,6 @@ public interface LayoutSetLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutSet fetchDraft(LayoutSet layoutSet);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutSet fetchDraft(long primaryKey);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutSetVersion fetchLatestVersion(LayoutSet layoutSet);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutSet fetchLayoutSet(long layoutSetId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -211,19 +192,7 @@ public interface LayoutSetLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutSet fetchPublished(LayoutSet layoutSet);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutSet fetchPublished(long primaryKey);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutSet getDraft(LayoutSet layoutSet) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutSet getDraft(long primaryKey) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -284,27 +253,14 @@ public interface LayoutSetLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutSetVersion getVersion(LayoutSet layoutSet, int version)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<LayoutSetVersion> getVersions(LayoutSet layoutSet);
-
-	public LayoutSet publishDraft(LayoutSet layoutSet) throws PortalException;
-
-	public LayoutSet updateDraft(LayoutSet layoutSet) throws PortalException;
-
 	/**
 	 * Updates the layout set in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param layoutSet the layout set
 	 * @return the layout set that was updated
-	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.REINDEX)
-	public LayoutSet updateLayoutSet(LayoutSet layoutSet)
-		throws PortalException;
+	public LayoutSet updateLayoutSet(LayoutSet layoutSet);
 
 	/**
 	 * Updates the state of the layout set prototype link.

@@ -150,6 +150,21 @@ definition {
 		AutoTagging.assertNoAutoTag();
 	}
 
+	@description = "This test asserts that the max number of tags at the instance level cannot be greater than the max number of tags at the portal level."
+	@priority = "4"
+	test MaxNumberOfTagsCheckBetweenInstanceLevelAndPortalLevel {
+		property test.name.skip.portal.instance = "DMAutoTagging#MaxNumberOfTagsCheckBetweenInstanceLevelAndPortalLevel";
+
+		AutoTagging.enableAutoTagging(
+			enableAutoTaggingFor = "System Settings",
+			maximumNumberOfTags = "5");
+
+		AutoTagging.enableAutoTagging(
+			enableAutoTaggingFor = "Instance Settings",
+			maximumNumberOfTags = "10",
+			validationError = "Maximum number of tags cannot be greater than the maximum number of system tags.");
+	}
+
 	@description = "This test asserts that no auto-tags are generated for manually tagged images."
 	@priority = "4"
 	test NoAutoTagForManuallyTaggedImage {

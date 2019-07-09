@@ -34,6 +34,11 @@ serverURL.setParameter("tabs2", tabs2);
 int delta = ParamUtil.getInteger(request, "delta");
 
 serverURL.setParameter("delta", String.valueOf(delta));
+
+PortletURL clearResultsURL = PortletURLUtil.clone(serverURL, liferayPortletResponse);
+
+clearResultsURL.setParameter("keywords", StringPool.BLANK);
+clearResultsURL.setParameter("navigation", (String)null);
 %>
 
 <div class="server-admin-tabs">
@@ -57,6 +62,7 @@ serverURL.setParameter("delta", String.valueOf(delta));
 
 		<c:if test='<%= tabs2.equals("update-categories") %>'>
 			<clay:management-toolbar
+				clearResultsURL="<%= String.valueOf(clearResultsURL) %>"
 				searchActionURL="<%= String.valueOf(serverURL) %>"
 				searchFormName="searchFm"
 				selectable="<%= false %>"

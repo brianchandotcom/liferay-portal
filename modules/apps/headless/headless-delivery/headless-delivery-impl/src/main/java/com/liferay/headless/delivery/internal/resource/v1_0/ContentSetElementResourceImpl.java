@@ -42,14 +42,13 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Javier Gamarra
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/content-set-element.properties",
-	scope = ServiceScope.PROTOTYPE, service = ContentSetElementResource.class
+	service = ContentSetElementResource.class
 )
 public class ContentSetElementResourceImpl
 	extends BaseContentSetElementResourceImpl {

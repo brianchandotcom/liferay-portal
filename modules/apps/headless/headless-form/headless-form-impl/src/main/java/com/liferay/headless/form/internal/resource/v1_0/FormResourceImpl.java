@@ -45,7 +45,6 @@ import javax.ws.rs.core.Context;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Javier Gamarra
@@ -53,7 +52,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/form.properties",
-	scope = ServiceScope.PROTOTYPE, service = FormResource.class
+	service = FormResource.class
 )
 public class FormResourceImpl extends BaseFormResourceImpl {
 

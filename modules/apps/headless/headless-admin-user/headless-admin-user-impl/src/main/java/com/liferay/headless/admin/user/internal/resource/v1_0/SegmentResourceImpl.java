@@ -39,14 +39,13 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Javier Gamarra
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/segment.properties",
-	scope = ServiceScope.PROTOTYPE, service = SegmentResource.class
+	service = SegmentResource.class
 )
 public class SegmentResourceImpl extends BaseSegmentResourceImpl {
 

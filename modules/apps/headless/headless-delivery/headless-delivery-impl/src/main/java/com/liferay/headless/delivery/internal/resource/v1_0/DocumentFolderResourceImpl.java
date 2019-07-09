@@ -49,14 +49,13 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Javier Gamarra
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/document-folder.properties",
-	scope = ServiceScope.PROTOTYPE, service = DocumentFolderResource.class
+	service = DocumentFolderResource.class
 )
 public class DocumentFolderResourceImpl
 	extends BaseDocumentFolderResourceImpl implements EntityModelResource {

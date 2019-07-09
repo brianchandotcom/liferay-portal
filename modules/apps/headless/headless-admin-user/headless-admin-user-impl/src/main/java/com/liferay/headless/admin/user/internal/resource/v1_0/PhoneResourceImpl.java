@@ -27,14 +27,13 @@ import com.liferay.portal.vulcan.pagination.Page;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Javier Gamarra
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/phone.properties",
-	scope = ServiceScope.PROTOTYPE, service = PhoneResource.class
+	service = PhoneResource.class
 )
 public class PhoneResourceImpl extends BasePhoneResourceImpl {
 

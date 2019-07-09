@@ -22,7 +22,6 @@ import com.liferay.headless.form.resource.v1_0.FormDocumentResource;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Javier Gamarra
@@ -30,7 +29,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/form-document.properties",
-	scope = ServiceScope.PROTOTYPE, service = FormDocumentResource.class
+	service = FormDocumentResource.class
 )
 public class FormDocumentResourceImpl extends BaseFormDocumentResourceImpl {
 

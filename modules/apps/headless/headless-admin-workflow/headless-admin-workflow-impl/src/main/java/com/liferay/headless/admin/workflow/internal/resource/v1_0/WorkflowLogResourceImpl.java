@@ -28,14 +28,13 @@ import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Javier Gamarra
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/workflow-log.properties",
-	scope = ServiceScope.PROTOTYPE, service = WorkflowLogResource.class
+	service = WorkflowLogResource.class
 )
 public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 

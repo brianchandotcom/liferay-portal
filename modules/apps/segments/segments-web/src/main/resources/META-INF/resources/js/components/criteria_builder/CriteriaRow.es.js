@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import BooleanInput from '../inputs/BooleanInput.es';
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
@@ -224,8 +222,7 @@ class CriteriaRow extends Component {
 		propertyLabel,
 		operatorLabel,
 		value,
-		type,
-		error
+		type
 	}) => {
 		const parsedValue =
 			type === PROPERTY_TYPES.DATE || type === PROPERTY_TYPES.DATE_TIME

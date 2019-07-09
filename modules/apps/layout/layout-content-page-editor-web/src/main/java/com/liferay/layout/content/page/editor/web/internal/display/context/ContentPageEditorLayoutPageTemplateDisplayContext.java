@@ -23,6 +23,7 @@ import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -44,11 +45,12 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 	public ContentPageEditorLayoutPageTemplateDisplayContext(
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
 		String className, long classPK, boolean showMapping,
-		FragmentRendererController fragmentRendererController) {
+		FragmentRendererController fragmentRendererController,
+		CommentManager commentManager) {
 
 		super(
 			httpServletRequest, renderResponse, className, classPK,
-			fragmentRendererController);
+			fragmentRendererController, commentManager);
 
 		_showMapping = showMapping;
 	}

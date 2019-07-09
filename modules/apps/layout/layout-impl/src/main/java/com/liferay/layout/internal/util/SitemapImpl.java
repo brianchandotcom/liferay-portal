@@ -24,22 +24,21 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypeController;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.portal.util.PropsValues;
-import org.osgi.service.component.annotations.Component;
 
 import java.text.DateFormat;
 
@@ -48,10 +47,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Jorge Ferrer
  * @author Vilmos Papp
  */
+@Component(service = Sitemap.class)
 public class SitemapImpl implements Sitemap {
 
 	@Override
@@ -164,7 +167,7 @@ public class SitemapImpl implements Sitemap {
 			String canonicalURL, ThemeDisplay themeDisplay, Layout layout)
 		throws PortalException {
 
-		return PortalUtil.getAlternateURLs(canonicalURL, themeDisplay, layout);
+		return _portal.getAlternateURLs(canonicalURL, themeDisplay, layout);
 	}
 
 	@Override
@@ -181,7 +184,7 @@ public class SitemapImpl implements Sitemap {
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Document document = SAXReaderUtil.createDocument();
+		Document document = _saxReader.createDocument();
 
 		document.setXMLEncoding(StringPool.UTF8);
 
@@ -207,7 +210,7 @@ public class SitemapImpl implements Sitemap {
 
 		rootElement.addAttribute("xmlns:xhtml", "http://www.w3.org/1999/xhtml");
 
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			groupId, privateLayout);
 
 		if (Validator.isNull(layoutUuid) &&
@@ -261,7 +264,7 @@ public class SitemapImpl implements Sitemap {
 				continue;
 			}
 
-			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			List<Layout> layouts = _layoutLocalService.getLayouts(
 				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
 				entry.getKey());
 
@@ -285,7 +288,7 @@ public class SitemapImpl implements Sitemap {
 				StringBundler sb = new StringBundler(10);
 
 				sb.append(portalURL);
-				sb.append(PortalUtil.getPathContext());
+				sb.append(_portal.getPathContext());
 				sb.append("/sitemap.xml?p_l_id=");
 				sb.append(layout.getPlid());
 				sb.append("&layoutUuid=");
@@ -299,5 +302,17 @@ public class SitemapImpl implements Sitemap {
 			}
 		}
 	}
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private SAXReader _saxReader;
 
 }

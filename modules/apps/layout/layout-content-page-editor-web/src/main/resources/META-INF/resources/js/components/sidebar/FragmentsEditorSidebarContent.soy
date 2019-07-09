@@ -50,6 +50,10 @@
 				{call com.liferay.layout.content.page.editor.web.SidebarWidgetsPanel.render}
 					{param store: $store /}
 				{/call}
+			{elseif $selectedSidebarPanelId == 'comments'}
+				{call com.liferay.layout.content.page.editor.web.SidebarCommentsPanel.render}
+					{param store: $store /}
+				{/call}
 			{/if}
 		</div>
 

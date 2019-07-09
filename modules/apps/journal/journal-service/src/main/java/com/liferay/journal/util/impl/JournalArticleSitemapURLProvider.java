@@ -74,27 +74,6 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		visitArticles(element, layoutSet, themeDisplay, journalArticles);
 	}
 
-	@Reference(unbind = "-")
-	protected void setJournalArticleService(
-		JournalArticleService journalArticleService) {
-
-		_journalArticleService = journalArticleService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutSetLocalService(
-		LayoutSetLocalService layoutSetLocalService) {
-
-		_layoutSetLocalService = layoutSetLocalService;
-	}
-
 	protected void visitArticles(
 			Element element, LayoutSet layoutSet, ThemeDisplay themeDisplay,
 			List<JournalArticle> journalArticles)
@@ -157,8 +136,13 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		}
 	}
 
+	@Reference
 	private JournalArticleService _journalArticleService;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Reference

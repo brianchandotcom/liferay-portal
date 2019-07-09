@@ -129,16 +129,9 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
-	@Context
 	protected AcceptLanguage contextAcceptLanguage;
-
-	@Context
 	protected Company contextCompany;
-
-	@Context
 	protected UriInfo contextUriInfo;
-
-	@Context
 	protected User contextUser;
 
 }

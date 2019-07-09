@@ -126,7 +126,9 @@ public class AsahSegmentsEntryProviderTest {
 		Context context = new Context();
 
 		context.put(
-			SegmentsAsahRequestContextContributor.AC_CLIENT_USER_ID, userId);
+			SegmentsAsahRequestContextContributor.
+				SEGMENTS_ANONYMOUS_USER_ID_KEY,
+			userId);
 
 		Assert.assertArrayEquals(
 			segmentsEntryIds,
@@ -146,7 +148,8 @@ public class AsahSegmentsEntryProviderTest {
 		Context context = new Context();
 
 		context.put(
-			SegmentsAsahRequestContextContributor.AC_CLIENT_USER_ID,
+			SegmentsAsahRequestContextContributor.
+				SEGMENTS_ANONYMOUS_USER_ID_KEY,
 			StringPool.BLANK);
 
 		Assert.assertArrayEquals(
@@ -189,7 +192,9 @@ public class AsahSegmentsEntryProviderTest {
 		Context context = new Context();
 
 		context.put(
-			SegmentsAsahRequestContextContributor.AC_CLIENT_USER_ID, userId);
+			SegmentsAsahRequestContextContributor.
+				SEGMENTS_ANONYMOUS_USER_ID_KEY,
+			userId);
 
 		Assert.assertArrayEquals(
 			new long[0],

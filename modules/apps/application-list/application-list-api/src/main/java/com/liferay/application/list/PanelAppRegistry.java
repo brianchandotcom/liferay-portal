@@ -253,6 +253,12 @@ public class PanelAppRegistry {
 			else if (_log.isDebugEnabled()) {
 				_log.debug("Unable to get portlet " + panelApp.getPortletId());
 			}
+
+			if (panelApp instanceof BasePanelApp) {
+				BasePanelApp basePanelApp = (BasePanelApp)panelApp;
+
+				basePanelApp.setPortletLocalService(_portletLocalService);
+			}
 		}
 
 		@Override

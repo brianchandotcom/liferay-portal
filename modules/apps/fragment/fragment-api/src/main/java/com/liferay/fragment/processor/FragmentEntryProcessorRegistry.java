@@ -196,6 +196,10 @@ public interface FragmentEntryProcessorRegistry {
 			fragmentEntryLink, defaultFragmentEntryProcessorContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
 	public default void validateFragmentEntryHTML(String html)
 		throws PortalException {
 

@@ -20,7 +20,6 @@ import './FloatingToolbarFragmentConfigurationPanelDelegateTemplate.soy';
 import './field_types/Select.soy';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {getSelectData} from './field_types/Select.es';
-import {prefixSegmentsExperienceId} from '../../../utils/prefixSegmentsExperienceId.es';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarFragmentConfigurationPanel.soy';
 import {updateConfigurationValueAction} from '../../../actions/updateEditableValue.es';
@@ -68,18 +67,11 @@ class FloatingToolbarFragmentConfigurationPanel extends Component {
 	 * @review
 	 */
 	_sendConfiguration(configurationValues) {
-		const defaultSegmentsExperienceId = prefixSegmentsExperienceId(
-			this.defaultSegmentsExperienceId
-		);
-		const segmentsExperienceId = prefixSegmentsExperienceId(
-			this.segmentsExperienceId
-		);
-
 		this.store.dispatch(
 			updateConfigurationValueAction(
 				this.item.fragmentEntryLinkId,
 				configurationValues,
-				segmentsExperienceId || defaultSegmentsExperienceId
+				this.segmentsExperienceId || this.defaultSegmentsExperienceId
 			)
 		);
 	}

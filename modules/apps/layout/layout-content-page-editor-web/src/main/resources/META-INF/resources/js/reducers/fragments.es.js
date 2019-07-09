@@ -260,13 +260,15 @@ function enableFragmentEditorReducer(state, action) {
  * @param {string} renderFragmentEntryURL
  * @param {{fragmentEntryLinkId: string}} fragmentEntryLink
  * @param {string} portletNamespace
+ * @param {number} segmentsExperienceId
  * @return {Promise<object>}
  * @review
  */
 function getFragmentEntryLinkContent(
 	renderFragmentEntryURL,
 	fragmentEntryLink,
-	portletNamespace
+	portletNamespace,
+	segmentsExperienceId = null
 ) {
 	const formData = new FormData();
 
@@ -274,6 +276,13 @@ function getFragmentEntryLinkContent(
 		`${portletNamespace}fragmentEntryLinkId`,
 		fragmentEntryLink.fragmentEntryLinkId
 	);
+
+	if (segmentsExperienceId) {
+		formData.append(
+			`${portletNamespace}segmentsExperienceId`,
+			segmentsExperienceId
+		);
+	}
 
 	return fetch(renderFragmentEntryURL, {
 		body: formData,
@@ -549,7 +558,7 @@ function updateFragmentEntryLinkContentReducer(state, action) {
 
 	return new Promise(resolve => {
 		if (action.type === UPDATE_FRAGMENT_ENTRY_LINK_CONTENT) {
-			const {fragmentEntryLinkId} = action;
+			const {fragmentEntryLinkId, segmentsExperienceId} = action;
 
 			const fragmentEntryLink =
 				nextState.fragmentEntryLinks[fragmentEntryLinkId];
@@ -561,7 +570,8 @@ function updateFragmentEntryLinkContentReducer(state, action) {
 			return getFragmentEntryLinkContent(
 				nextState.renderFragmentEntryURL,
 				fragmentEntryLink,
-				nextState.portletNamespace
+				nextState.portletNamespace,
+				segmentsExperienceId
 			)
 				.then(response => {
 					const updatedFragmentEntryLink = response;

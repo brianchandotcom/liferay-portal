@@ -34,6 +34,7 @@ import {
 } from './actions.es';
 import {updateEditableValues} from '../utils/FragmentsEditorFetchUtils.es';
 import debouncedAlert from '../utils/debouncedAlert.es';
+import {prefixSegmentsExperienceId} from '../utils/prefixSegmentsExperienceId.es';
 
 /**
  * @type {number}
@@ -85,17 +86,21 @@ const debouncedUpdateEditableValues = debouncedAlert(
 function updateConfigurationValueAction(
 	fragmentEntryLinkId,
 	configurationValues,
-	segmentsExperienceId = ''
+	segmentsExperienceId
 ) {
 	return function(dispatch, getState) {
 		const state = getState();
+
+		const prefixedSegmentsExperienceId = prefixSegmentsExperienceId(
+			segmentsExperienceId
+		);
 
 		const previousEditableValues =
 			state.fragmentEntryLinks[fragmentEntryLinkId].editableValues;
 
 		const nextEditableValues = setIn(
 			previousEditableValues,
-			[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR, segmentsExperienceId],
+			[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR, prefixedSegmentsExperienceId],
 			configurationValues
 		);
 
@@ -113,7 +118,12 @@ function updateConfigurationValueAction(
 				dispatch(updateEditableValueSuccessAction());
 				dispatch(disableSavingChangesStatusAction());
 				dispatch(updateLastSaveDateAction());
-				dispatch(updateFragmentEntryLinkContent(fragmentEntryLinkId));
+				dispatch(
+					updateFragmentEntryLinkContent(
+						fragmentEntryLinkId,
+						segmentsExperienceId
+					)
+				);
 			})
 			.catch(() => {
 				dispatch(
@@ -297,15 +307,20 @@ function updateEditableValueSuccessAction(date = new Date()) {
 	};
 }
 
-function updateFragmentEntryLinkContent(fragmentEntryLinkId) {
+function updateFragmentEntryLinkContent(
+	fragmentEntryLinkId,
+	segmentsExperienceId
+) {
 	return {
 		fragmentEntryLinkId,
+		segmentsExperienceId,
 		type: UPDATE_FRAGMENT_ENTRY_LINK_CONTENT
 	};
 }
 
 export {
 	updateConfigurationValueAction,
+	updateFragmentEntryLinkContent,
 	updateEditableValueAction,
 	updateEditableValuesAction,
 	updateEditableValueSuccessAction

@@ -24,6 +24,8 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
+import com.liferay.asset.list.asset.entry.query.processor.AssetListAssetEntryQueryProcessor;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.internal.dynamic.data.mapping.util.DDMIndexerUtil;
 import com.liferay.asset.list.model.AssetListEntry;
@@ -31,8 +33,6 @@ import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
-import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
-import com.liferay.asset.list.asset.entry.query.processor.AssetListAssetEntryQueryProcessor;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -553,8 +553,9 @@ public class AssetListAssetEntryProviderImpl
 		String userId, UnicodeProperties properties,
 		AssetEntryQuery assetEntryQuery) {
 
-		for (AssetListAssetEntryQueryProcessor assetListAssetEntryQueryProcessor :
-			_assetListAssetEntryQueryProcessors) {
+		for (AssetListAssetEntryQueryProcessor
+				assetListAssetEntryQueryProcessor :
+					_assetListAssetEntryQueryProcessors) {
 
 			assetListAssetEntryQueryProcessor.processAssetEntryQuery(
 				userId, properties, assetEntryQuery);
@@ -720,12 +721,12 @@ public class AssetListAssetEntryProviderImpl
 	@Reference
 	private AssetHelper _assetHelper;
 
+	private final List<AssetListAssetEntryQueryProcessor>
+		_assetListAssetEntryQueryProcessors = new CopyOnWriteArrayList<>();
+
 	@Reference
 	private AssetListEntryAssetEntryRelLocalService
 		_assetListEntryAssetEntryRelLocalService;
-
-	private final List<AssetListAssetEntryQueryProcessor>
-		_assetListAssetEntryQueryProcessors = new CopyOnWriteArrayList<>();
 
 	@Reference
 	private AssetListEntrySegmentsEntryRelLocalService

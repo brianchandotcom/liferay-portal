@@ -15,8 +15,8 @@
 package com.liferay.segments.asah.connector.internal.asset.list.asset.entry.query.processor;
 
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
-import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.asset.entry.query.processor.AssetListAssetEntryQueryProcessor;
+import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;

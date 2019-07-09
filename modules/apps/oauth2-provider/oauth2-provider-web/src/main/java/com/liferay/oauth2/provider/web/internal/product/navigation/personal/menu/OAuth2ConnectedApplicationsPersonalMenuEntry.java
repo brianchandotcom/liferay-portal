@@ -35,7 +35,7 @@ public class OAuth2ConnectedApplicationsPersonalMenuEntry
 	extends BasePersonalMenuEntry {
 
 	@Override
-	protected String getPortletId() {
+	public String getPortletId() {
 		return OAuth2ProviderPortletKeys.OAUTH2_CONNECTED_APPLICATIONS;
 	}
 

@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 public class SyncDevicesPersonalMenuEntry extends BasePersonalMenuEntry {
 
 	@Override
-	protected String getPortletId() {
+	public String getPortletId() {
 		return SyncPortletKeys.SYNC_DEVICES_PORTLET;
 	}
 

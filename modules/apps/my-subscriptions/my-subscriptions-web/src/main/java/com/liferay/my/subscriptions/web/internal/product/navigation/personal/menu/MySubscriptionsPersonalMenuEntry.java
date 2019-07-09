@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 public class MySubscriptionsPersonalMenuEntry extends BasePersonalMenuEntry {
 
 	@Override
-	protected String getPortletId() {
+	public String getPortletId() {
 		return MySubscriptionsPortletKeys.MY_SUBSCRIPTIONS;
 	}
 

@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 public class UserWorkflowPersonalMenuEntry extends BasePersonalMenuEntry {
 
 	@Override
-	protected String getPortletId() {
+	public String getPortletId() {
 		return WorkflowPortletKeys.USER_WORKFLOW;
 	}
 

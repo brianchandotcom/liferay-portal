@@ -15,7 +15,8 @@
 package com.liferay.portal.spring.hibernate.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.service.PortalServiceUtil;
+import com.liferay.portal.kernel.service.PortalService;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.ClassRule;
@@ -38,7 +39,10 @@ public class AutoSyncHibernateSessionStateOnTxCreationTest {
 	public void testAutoSyncHibernateSessionStateOnTxCreation()
 		throws Exception {
 
-		PortalServiceUtil.testAutoSyncHibernateSessionStateOnTxCreation();
+		_portalService.testAutoSyncHibernateSessionStateOnTxCreation();
 	}
+
+	@Inject
+	private PortalService _portalService;
 
 }

@@ -15,18 +15,19 @@
 package com.liferay.portal.spring.transaction.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.kernel.service.persistence.ClassNameUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.model.impl.ClassNameImpl;
 import com.liferay.portal.spring.hibernate.PortletTransactionManager;
 import com.liferay.portal.spring.transaction.TransactionExecutor;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
@@ -56,9 +57,9 @@ public class TransactionInterceptorTest {
 	public void testFailOnCommit() {
 		CacheRegistryUtil.clear();
 
-		long classNameId = CounterLocalServiceUtil.increment();
+		long classNameId = _counterLocalService.increment();
 
-		ClassName className = ClassNameUtil.create(classNameId);
+		ClassName className = _classNamePersistence.create(classNameId);
 
 		HibernateTransactionManager hibernateTransactionManager =
 			(HibernateTransactionManager)
@@ -77,7 +78,7 @@ public class TransactionInterceptorTest {
 				platformTransactionManagerWrapper);
 
 		try {
-			ClassNameLocalServiceUtil.addClassName(className);
+			_classNameLocalService.addClassName(className);
 
 			Assert.fail();
 		}
@@ -91,11 +92,23 @@ public class TransactionInterceptorTest {
 				platformTransactionManager);
 		}
 
-		ClassName cachedClassName = (ClassName)EntityCacheUtil.getResult(
+		ClassName cachedClassName = (ClassName)_entityCache.getResult(
 			true, ClassNameImpl.class, classNameId);
 
 		Assert.assertNull(cachedClassName);
 	}
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private ClassNamePersistence _classNamePersistence;
+
+	@Inject
+	private CounterLocalService _counterLocalService;
+
+	@Inject
+	private EntityCache _entityCache;
 
 	private static class MockPlatformTransactionManager
 		extends PortletTransactionManager {

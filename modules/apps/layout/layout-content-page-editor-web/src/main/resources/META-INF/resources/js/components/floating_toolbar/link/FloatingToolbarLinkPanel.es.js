@@ -13,7 +13,7 @@
  */
 
 import Component from 'metal-component';
-import debounce from 'metal-debounce';
+import {debounce} from 'frontend-js-web';
 import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarLinkPanelDelegateTemplate.soy';

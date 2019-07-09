@@ -15,7 +15,7 @@
 import {Align} from 'metal-position';
 import Component from 'metal-component';
 import {Config} from 'metal-state';
-import debounce from 'metal-debounce';
+import {debounce} from 'frontend-js-web';
 import dom from 'metal-dom';
 import Soy from 'metal-soy';
 

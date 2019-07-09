@@ -13,7 +13,7 @@
  */
 
 import {Config} from 'metal-state';
-import {debounce} from 'metal-debounce';
+import {debounce} from 'frontend-js-web';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import 'clay-button';

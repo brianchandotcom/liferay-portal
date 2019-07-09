@@ -13,7 +13,7 @@
  */
 
 import {convertToFormData, makeFetch} from './fetch.es';
-import {debounce} from 'metal-debounce';
+import {debounce} from 'frontend-js-web';
 import {PagesVisitor} from './visitors.es';
 
 const EVALUATOR_URL = '/o/dynamic-data-mapping-form-context-provider/';

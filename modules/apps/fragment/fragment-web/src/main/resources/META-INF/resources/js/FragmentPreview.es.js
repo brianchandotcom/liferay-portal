@@ -13,7 +13,7 @@
  */
 
 import {Config} from 'metal-state';
-import debounce from 'metal-debounce';
+import {debounce} from 'frontend-js-web';
 import {PortletBase} from 'frontend-js-web';
 import Soy from 'metal-soy';
 

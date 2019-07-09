@@ -12,7 +12,7 @@
  * details.
  */
 
-import debounce from 'metal-debounce';
+import {debounce} from 'frontend-js-web';
 import {closest, getClosestAssetElement} from '../utils/assets';
 import {DEBOUNCE} from '../utils/constants';
 import {onReady} from '../utils/events.js';

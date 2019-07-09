@@ -17,7 +17,7 @@
 import Component from 'metal-component';
 import {Slider} from 'frontend-js-web';
 import Soy from 'metal-soy';
-import debounce from 'metal-debounce';
+import {debounce} from 'frontend-js-web';
 import {core} from 'metal';
 
 import componentTemplates from './BrightnessComponent.soy';

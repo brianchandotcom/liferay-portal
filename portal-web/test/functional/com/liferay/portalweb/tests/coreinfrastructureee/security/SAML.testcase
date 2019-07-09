@@ -232,7 +232,6 @@ definition {
 		Navigator.openSpecificURL(url = "http://localhost:8080/c/portal/saml/metadata");
 
 		for (var algorithm : list "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256,http://www.w3.org/2001/04/xmldsig-more#rsa-sha384,http://www.w3.org/2001/04/xmldsig-more#rsa-sha512") {
-
 			AssertHTMLSourceTextNotPresent(value1 = "algorithm");
 		}
 

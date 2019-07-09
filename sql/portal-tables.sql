@@ -667,8 +667,6 @@ create table LayoutRevision (
 
 create table LayoutSet (
 	mvccVersion LONG default 0 not null,
-	headId LONG,
-	head BOOLEAN,
 	layoutSetId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,

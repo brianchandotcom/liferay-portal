@@ -45,7 +45,6 @@ public class LayoutSetWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("headId", getHeadId());
 		attributes.put("layoutSetId", getLayoutSetId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -71,12 +70,6 @@ public class LayoutSetWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
-		}
-
-		Long headId = (Long)attributes.get("headId");
-
-		if (headId != null) {
-			setHeadId(headId);
 		}
 
 		Long layoutSetId = (Long)attributes.get("layoutSetId");
@@ -247,16 +240,6 @@ public class LayoutSetWrapper
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
-	}
-
-	/**
-	 * Returns the head ID of this layout set.
-	 *
-	 * @return the head ID of this layout set
-	 */
-	@Override
-	public long getHeadId() {
-		return model.getHeadId();
 	}
 
 	/**
@@ -533,16 +516,6 @@ public class LayoutSetWrapper
 	}
 
 	/**
-	 * Sets the head ID of this layout set.
-	 *
-	 * @param headId the head ID of this layout set
-	 */
-	@Override
-	public void setHeadId(long headId) {
-		model.setHeadId(headId);
-	}
-
-	/**
 	 * Sets the layout set ID of this layout set.
 	 *
 	 * @param layoutSetId the layout set ID of this layout set
@@ -670,16 +643,6 @@ public class LayoutSetWrapper
 	@Override
 	public void setVirtualHostname(String virtualHostname) {
 		model.setVirtualHostname(virtualHostname);
-	}
-
-	@Override
-	public boolean isHead() {
-		return model.isHead();
-	}
-
-	@Override
-	public void populateVersionModel(LayoutSetVersion layoutSetVersion) {
-		model.populateVersionModel(layoutSetVersion);
 	}
 
 	@Override

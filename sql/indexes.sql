@@ -218,11 +218,9 @@ create index IX_7FFAE700 on LayoutRevision (layoutSetBranchId, status);
 create index IX_8EC3D2BC on LayoutRevision (plid, status);
 create index IX_421223B1 on LayoutRevision (status);
 
-create index IX_50C60CC0 on LayoutSet (groupId, head);
-create unique index IX_AAF037A5 on LayoutSet (groupId, privateLayout, head);
-create unique index IX_28B7204D on LayoutSet (headId);
-create index IX_7C82254B on LayoutSet (layoutSetPrototypeUuid[$COLUMN_LENGTH:75$], head);
-create index IX_461CF3ED on LayoutSet (privateLayout, logoId, head);
+create unique index IX_48550691 on LayoutSet (groupId, privateLayout);
+create index IX_72BBA8B7 on LayoutSet (layoutSetPrototypeUuid[$COLUMN_LENGTH:75$]);
+create index IX_1B698D9 on LayoutSet (privateLayout, logoId);
 
 create index IX_CCF0DA29 on LayoutSetBranch (groupId, privateLayout, master);
 create unique index IX_5FF18552 on LayoutSetBranch (groupId, privateLayout, name[$COLUMN_LENGTH:75$]);

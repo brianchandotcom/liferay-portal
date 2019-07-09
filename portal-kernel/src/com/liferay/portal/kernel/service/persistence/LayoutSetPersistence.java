@@ -183,161 +183,6 @@ public interface LayoutSetPersistence extends BasePersistence<LayoutSet> {
 	public int countByGroupId(long groupId);
 
 	/**
-	 * Returns all the layout sets where groupId = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param head the head
-	 * @return the matching layout sets
-	 */
-	public java.util.List<LayoutSet> findByGroupId_Head(
-		long groupId, boolean head);
-
-	/**
-	 * Returns a range of all the layout sets where groupId = &#63; and head = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutSetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param head the head
-	 * @param start the lower bound of the range of layout sets
-	 * @param end the upper bound of the range of layout sets (not inclusive)
-	 * @return the range of matching layout sets
-	 */
-	public java.util.List<LayoutSet> findByGroupId_Head(
-		long groupId, boolean head, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the layout sets where groupId = &#63; and head = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutSetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param head the head
-	 * @param start the lower bound of the range of layout sets
-	 * @param end the upper bound of the range of layout sets (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout sets
-	 */
-	public java.util.List<LayoutSet> findByGroupId_Head(
-		long groupId, boolean head, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-			orderByComparator);
-
-	/**
-	 * Returns an ordered range of all the layout sets where groupId = &#63; and head = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutSetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param head the head
-	 * @param start the lower bound of the range of layout sets
-	 * @param end the upper bound of the range of layout sets (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching layout sets
-	 */
-	public java.util.List<LayoutSet> findByGroupId_Head(
-		long groupId, boolean head, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-			orderByComparator,
-		boolean retrieveFromCache);
-
-	/**
-	 * Returns the first layout set in the ordered set where groupId = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout set
-	 * @throws NoSuchLayoutSetException if a matching layout set could not be found
-	 */
-	public LayoutSet findByGroupId_Head_First(
-			long groupId, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-				orderByComparator)
-		throws NoSuchLayoutSetException;
-
-	/**
-	 * Returns the first layout set in the ordered set where groupId = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout set, or <code>null</code> if a matching layout set could not be found
-	 */
-	public LayoutSet fetchByGroupId_Head_First(
-		long groupId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-			orderByComparator);
-
-	/**
-	 * Returns the last layout set in the ordered set where groupId = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set
-	 * @throws NoSuchLayoutSetException if a matching layout set could not be found
-	 */
-	public LayoutSet findByGroupId_Head_Last(
-			long groupId, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-				orderByComparator)
-		throws NoSuchLayoutSetException;
-
-	/**
-	 * Returns the last layout set in the ordered set where groupId = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set, or <code>null</code> if a matching layout set could not be found
-	 */
-	public LayoutSet fetchByGroupId_Head_Last(
-		long groupId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-			orderByComparator);
-
-	/**
-	 * Returns the layout sets before and after the current layout set in the ordered set where groupId = &#63; and head = &#63;.
-	 *
-	 * @param layoutSetId the primary key of the current layout set
-	 * @param groupId the group ID
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout set
-	 * @throws NoSuchLayoutSetException if a layout set with the primary key could not be found
-	 */
-	public LayoutSet[] findByGroupId_Head_PrevAndNext(
-			long layoutSetId, long groupId, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-				orderByComparator)
-		throws NoSuchLayoutSetException;
-
-	/**
-	 * Removes all the layout sets where groupId = &#63; and head = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param head the head
-	 */
-	public void removeByGroupId_Head(long groupId, boolean head);
-
-	/**
-	 * Returns the number of layout sets where groupId = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param head the head
-	 * @return the number of matching layout sets
-	 */
-	public int countByGroupId_Head(long groupId, boolean head);
-
-	/**
 	 * Returns all the layout sets where layoutSetPrototypeUuid = &#63;.
 	 *
 	 * @param layoutSetPrototypeUuid the layout set prototype uuid
@@ -482,307 +327,45 @@ public interface LayoutSetPersistence extends BasePersistence<LayoutSet> {
 	public int countByLayoutSetPrototypeUuid(String layoutSetPrototypeUuid);
 
 	/**
-	 * Returns all the layout sets where layoutSetPrototypeUuid = &#63; and head = &#63;.
+	 * Returns the layout set where groupId = &#63; and privateLayout = &#63; or throws a <code>NoSuchLayoutSetException</code> if it could not be found.
 	 *
-	 * @param layoutSetPrototypeUuid the layout set prototype uuid
-	 * @param head the head
-	 * @return the matching layout sets
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @return the matching layout set
+	 * @throws NoSuchLayoutSetException if a matching layout set could not be found
 	 */
-	public java.util.List<LayoutSet> findByLayoutSetPrototypeUuid_Head(
-		String layoutSetPrototypeUuid, boolean head);
+	public LayoutSet findByG_P(long groupId, boolean privateLayout)
+		throws NoSuchLayoutSetException;
 
 	/**
-	 * Returns a range of all the layout sets where layoutSetPrototypeUuid = &#63; and head = &#63;.
+	 * Returns the layout set where groupId = &#63; and privateLayout = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutSetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param layoutSetPrototypeUuid the layout set prototype uuid
-	 * @param head the head
-	 * @param start the lower bound of the range of layout sets
-	 * @param end the upper bound of the range of layout sets (not inclusive)
-	 * @return the range of matching layout sets
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @return the matching layout set, or <code>null</code> if a matching layout set could not be found
 	 */
-	public java.util.List<LayoutSet> findByLayoutSetPrototypeUuid_Head(
-		String layoutSetPrototypeUuid, boolean head, int start, int end);
+	public LayoutSet fetchByG_P(long groupId, boolean privateLayout);
 
 	/**
-	 * Returns an ordered range of all the layout sets where layoutSetPrototypeUuid = &#63; and head = &#63;.
+	 * Returns the layout set where groupId = &#63; and privateLayout = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutSetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param layoutSetPrototypeUuid the layout set prototype uuid
-	 * @param head the head
-	 * @param start the lower bound of the range of layout sets
-	 * @param end the upper bound of the range of layout sets (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout sets
-	 */
-	public java.util.List<LayoutSet> findByLayoutSetPrototypeUuid_Head(
-		String layoutSetPrototypeUuid, boolean head, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-			orderByComparator);
-
-	/**
-	 * Returns an ordered range of all the layout sets where layoutSetPrototypeUuid = &#63; and head = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutSetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param layoutSetPrototypeUuid the layout set prototype uuid
-	 * @param head the head
-	 * @param start the lower bound of the range of layout sets
-	 * @param end the upper bound of the range of layout sets (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching layout sets
+	 * @return the matching layout set, or <code>null</code> if a matching layout set could not be found
 	 */
-	public java.util.List<LayoutSet> findByLayoutSetPrototypeUuid_Head(
-		String layoutSetPrototypeUuid, boolean head, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-			orderByComparator,
-		boolean retrieveFromCache);
+	public LayoutSet fetchByG_P(
+		long groupId, boolean privateLayout, boolean retrieveFromCache);
 
 	/**
-	 * Returns the first layout set in the ordered set where layoutSetPrototypeUuid = &#63; and head = &#63;.
+	 * Removes the layout set where groupId = &#63; and privateLayout = &#63; from the database.
 	 *
-	 * @param layoutSetPrototypeUuid the layout set prototype uuid
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout set
-	 * @throws NoSuchLayoutSetException if a matching layout set could not be found
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @return the layout set that was removed
 	 */
-	public LayoutSet findByLayoutSetPrototypeUuid_Head_First(
-			String layoutSetPrototypeUuid, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-				orderByComparator)
+	public LayoutSet removeByG_P(long groupId, boolean privateLayout)
 		throws NoSuchLayoutSetException;
-
-	/**
-	 * Returns the first layout set in the ordered set where layoutSetPrototypeUuid = &#63; and head = &#63;.
-	 *
-	 * @param layoutSetPrototypeUuid the layout set prototype uuid
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout set, or <code>null</code> if a matching layout set could not be found
-	 */
-	public LayoutSet fetchByLayoutSetPrototypeUuid_Head_First(
-		String layoutSetPrototypeUuid, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-			orderByComparator);
-
-	/**
-	 * Returns the last layout set in the ordered set where layoutSetPrototypeUuid = &#63; and head = &#63;.
-	 *
-	 * @param layoutSetPrototypeUuid the layout set prototype uuid
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set
-	 * @throws NoSuchLayoutSetException if a matching layout set could not be found
-	 */
-	public LayoutSet findByLayoutSetPrototypeUuid_Head_Last(
-			String layoutSetPrototypeUuid, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-				orderByComparator)
-		throws NoSuchLayoutSetException;
-
-	/**
-	 * Returns the last layout set in the ordered set where layoutSetPrototypeUuid = &#63; and head = &#63;.
-	 *
-	 * @param layoutSetPrototypeUuid the layout set prototype uuid
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set, or <code>null</code> if a matching layout set could not be found
-	 */
-	public LayoutSet fetchByLayoutSetPrototypeUuid_Head_Last(
-		String layoutSetPrototypeUuid, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-			orderByComparator);
-
-	/**
-	 * Returns the layout sets before and after the current layout set in the ordered set where layoutSetPrototypeUuid = &#63; and head = &#63;.
-	 *
-	 * @param layoutSetId the primary key of the current layout set
-	 * @param layoutSetPrototypeUuid the layout set prototype uuid
-	 * @param head the head
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout set
-	 * @throws NoSuchLayoutSetException if a layout set with the primary key could not be found
-	 */
-	public LayoutSet[] findByLayoutSetPrototypeUuid_Head_PrevAndNext(
-			long layoutSetId, String layoutSetPrototypeUuid, boolean head,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-				orderByComparator)
-		throws NoSuchLayoutSetException;
-
-	/**
-	 * Removes all the layout sets where layoutSetPrototypeUuid = &#63; and head = &#63; from the database.
-	 *
-	 * @param layoutSetPrototypeUuid the layout set prototype uuid
-	 * @param head the head
-	 */
-	public void removeByLayoutSetPrototypeUuid_Head(
-		String layoutSetPrototypeUuid, boolean head);
-
-	/**
-	 * Returns the number of layout sets where layoutSetPrototypeUuid = &#63; and head = &#63;.
-	 *
-	 * @param layoutSetPrototypeUuid the layout set prototype uuid
-	 * @param head the head
-	 * @return the number of matching layout sets
-	 */
-	public int countByLayoutSetPrototypeUuid_Head(
-		String layoutSetPrototypeUuid, boolean head);
-
-	/**
-	 * Returns all the layout sets where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @return the matching layout sets
-	 */
-	public java.util.List<LayoutSet> findByG_P(
-		long groupId, boolean privateLayout);
-
-	/**
-	 * Returns a range of all the layout sets where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutSetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param start the lower bound of the range of layout sets
-	 * @param end the upper bound of the range of layout sets (not inclusive)
-	 * @return the range of matching layout sets
-	 */
-	public java.util.List<LayoutSet> findByG_P(
-		long groupId, boolean privateLayout, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the layout sets where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutSetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param start the lower bound of the range of layout sets
-	 * @param end the upper bound of the range of layout sets (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout sets
-	 */
-	public java.util.List<LayoutSet> findByG_P(
-		long groupId, boolean privateLayout, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-			orderByComparator);
-
-	/**
-	 * Returns an ordered range of all the layout sets where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutSetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param start the lower bound of the range of layout sets
-	 * @param end the upper bound of the range of layout sets (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching layout sets
-	 */
-	public java.util.List<LayoutSet> findByG_P(
-		long groupId, boolean privateLayout, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-			orderByComparator,
-		boolean retrieveFromCache);
-
-	/**
-	 * Returns the first layout set in the ordered set where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout set
-	 * @throws NoSuchLayoutSetException if a matching layout set could not be found
-	 */
-	public LayoutSet findByG_P_First(
-			long groupId, boolean privateLayout,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-				orderByComparator)
-		throws NoSuchLayoutSetException;
-
-	/**
-	 * Returns the first layout set in the ordered set where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout set, or <code>null</code> if a matching layout set could not be found
-	 */
-	public LayoutSet fetchByG_P_First(
-		long groupId, boolean privateLayout,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-			orderByComparator);
-
-	/**
-	 * Returns the last layout set in the ordered set where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set
-	 * @throws NoSuchLayoutSetException if a matching layout set could not be found
-	 */
-	public LayoutSet findByG_P_Last(
-			long groupId, boolean privateLayout,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-				orderByComparator)
-		throws NoSuchLayoutSetException;
-
-	/**
-	 * Returns the last layout set in the ordered set where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set, or <code>null</code> if a matching layout set could not be found
-	 */
-	public LayoutSet fetchByG_P_Last(
-		long groupId, boolean privateLayout,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-			orderByComparator);
-
-	/**
-	 * Returns the layout sets before and after the current layout set in the ordered set where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * @param layoutSetId the primary key of the current layout set
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout set
-	 * @throws NoSuchLayoutSetException if a layout set with the primary key could not be found
-	 */
-	public LayoutSet[] findByG_P_PrevAndNext(
-			long layoutSetId, long groupId, boolean privateLayout,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-				orderByComparator)
-		throws NoSuchLayoutSetException;
-
-	/**
-	 * Removes all the layout sets where groupId = &#63; and privateLayout = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 */
-	public void removeByG_P(long groupId, boolean privateLayout);
 
 	/**
 	 * Returns the number of layout sets where groupId = &#63; and privateLayout = &#63;.
@@ -794,210 +377,45 @@ public interface LayoutSetPersistence extends BasePersistence<LayoutSet> {
 	public int countByG_P(long groupId, boolean privateLayout);
 
 	/**
-	 * Returns the layout set where groupId = &#63; and privateLayout = &#63; and head = &#63; or throws a <code>NoSuchLayoutSetException</code> if it could not be found.
+	 * Returns the layout set where privateLayout = &#63; and logoId = &#63; or throws a <code>NoSuchLayoutSetException</code> if it could not be found.
 	 *
-	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param head the head
+	 * @param logoId the logo ID
 	 * @return the matching layout set
 	 * @throws NoSuchLayoutSetException if a matching layout set could not be found
 	 */
-	public LayoutSet findByG_P_Head(
-			long groupId, boolean privateLayout, boolean head)
+	public LayoutSet findByP_L(boolean privateLayout, long logoId)
 		throws NoSuchLayoutSetException;
 
 	/**
-	 * Returns the layout set where groupId = &#63; and privateLayout = &#63; and head = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the layout set where privateLayout = &#63; and logoId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param head the head
+	 * @param logoId the logo ID
 	 * @return the matching layout set, or <code>null</code> if a matching layout set could not be found
 	 */
-	public LayoutSet fetchByG_P_Head(
-		long groupId, boolean privateLayout, boolean head);
+	public LayoutSet fetchByP_L(boolean privateLayout, long logoId);
 
 	/**
-	 * Returns the layout set where groupId = &#63; and privateLayout = &#63; and head = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout set where privateLayout = &#63; and logoId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param head the head
+	 * @param logoId the logo ID
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching layout set, or <code>null</code> if a matching layout set could not be found
 	 */
-	public LayoutSet fetchByG_P_Head(
-		long groupId, boolean privateLayout, boolean head,
-		boolean retrieveFromCache);
+	public LayoutSet fetchByP_L(
+		boolean privateLayout, long logoId, boolean retrieveFromCache);
 
 	/**
-	 * Removes the layout set where groupId = &#63; and privateLayout = &#63; and head = &#63; from the database.
+	 * Removes the layout set where privateLayout = &#63; and logoId = &#63; from the database.
 	 *
-	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param head the head
+	 * @param logoId the logo ID
 	 * @return the layout set that was removed
 	 */
-	public LayoutSet removeByG_P_Head(
-			long groupId, boolean privateLayout, boolean head)
+	public LayoutSet removeByP_L(boolean privateLayout, long logoId)
 		throws NoSuchLayoutSetException;
-
-	/**
-	 * Returns the number of layout sets where groupId = &#63; and privateLayout = &#63; and head = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param head the head
-	 * @return the number of matching layout sets
-	 */
-	public int countByG_P_Head(
-		long groupId, boolean privateLayout, boolean head);
-
-	/**
-	 * Returns all the layout sets where privateLayout = &#63; and logoId = &#63;.
-	 *
-	 * @param privateLayout the private layout
-	 * @param logoId the logo ID
-	 * @return the matching layout sets
-	 */
-	public java.util.List<LayoutSet> findByP_L(
-		boolean privateLayout, long logoId);
-
-	/**
-	 * Returns a range of all the layout sets where privateLayout = &#63; and logoId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutSetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param privateLayout the private layout
-	 * @param logoId the logo ID
-	 * @param start the lower bound of the range of layout sets
-	 * @param end the upper bound of the range of layout sets (not inclusive)
-	 * @return the range of matching layout sets
-	 */
-	public java.util.List<LayoutSet> findByP_L(
-		boolean privateLayout, long logoId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the layout sets where privateLayout = &#63; and logoId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutSetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param privateLayout the private layout
-	 * @param logoId the logo ID
-	 * @param start the lower bound of the range of layout sets
-	 * @param end the upper bound of the range of layout sets (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout sets
-	 */
-	public java.util.List<LayoutSet> findByP_L(
-		boolean privateLayout, long logoId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-			orderByComparator);
-
-	/**
-	 * Returns an ordered range of all the layout sets where privateLayout = &#63; and logoId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutSetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param privateLayout the private layout
-	 * @param logoId the logo ID
-	 * @param start the lower bound of the range of layout sets
-	 * @param end the upper bound of the range of layout sets (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching layout sets
-	 */
-	public java.util.List<LayoutSet> findByP_L(
-		boolean privateLayout, long logoId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-			orderByComparator,
-		boolean retrieveFromCache);
-
-	/**
-	 * Returns the first layout set in the ordered set where privateLayout = &#63; and logoId = &#63;.
-	 *
-	 * @param privateLayout the private layout
-	 * @param logoId the logo ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout set
-	 * @throws NoSuchLayoutSetException if a matching layout set could not be found
-	 */
-	public LayoutSet findByP_L_First(
-			boolean privateLayout, long logoId,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-				orderByComparator)
-		throws NoSuchLayoutSetException;
-
-	/**
-	 * Returns the first layout set in the ordered set where privateLayout = &#63; and logoId = &#63;.
-	 *
-	 * @param privateLayout the private layout
-	 * @param logoId the logo ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout set, or <code>null</code> if a matching layout set could not be found
-	 */
-	public LayoutSet fetchByP_L_First(
-		boolean privateLayout, long logoId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-			orderByComparator);
-
-	/**
-	 * Returns the last layout set in the ordered set where privateLayout = &#63; and logoId = &#63;.
-	 *
-	 * @param privateLayout the private layout
-	 * @param logoId the logo ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set
-	 * @throws NoSuchLayoutSetException if a matching layout set could not be found
-	 */
-	public LayoutSet findByP_L_Last(
-			boolean privateLayout, long logoId,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-				orderByComparator)
-		throws NoSuchLayoutSetException;
-
-	/**
-	 * Returns the last layout set in the ordered set where privateLayout = &#63; and logoId = &#63;.
-	 *
-	 * @param privateLayout the private layout
-	 * @param logoId the logo ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set, or <code>null</code> if a matching layout set could not be found
-	 */
-	public LayoutSet fetchByP_L_Last(
-		boolean privateLayout, long logoId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-			orderByComparator);
-
-	/**
-	 * Returns the layout sets before and after the current layout set in the ordered set where privateLayout = &#63; and logoId = &#63;.
-	 *
-	 * @param layoutSetId the primary key of the current layout set
-	 * @param privateLayout the private layout
-	 * @param logoId the logo ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout set
-	 * @throws NoSuchLayoutSetException if a layout set with the primary key could not be found
-	 */
-	public LayoutSet[] findByP_L_PrevAndNext(
-			long layoutSetId, boolean privateLayout, long logoId,
-			com.liferay.portal.kernel.util.OrderByComparator<LayoutSet>
-				orderByComparator)
-		throws NoSuchLayoutSetException;
-
-	/**
-	 * Removes all the layout sets where privateLayout = &#63; and logoId = &#63; from the database.
-	 *
-	 * @param privateLayout the private layout
-	 * @param logoId the logo ID
-	 */
-	public void removeByP_L(boolean privateLayout, long logoId);
 
 	/**
 	 * Returns the number of layout sets where privateLayout = &#63; and logoId = &#63;.
@@ -1007,109 +425,6 @@ public interface LayoutSetPersistence extends BasePersistence<LayoutSet> {
 	 * @return the number of matching layout sets
 	 */
 	public int countByP_L(boolean privateLayout, long logoId);
-
-	/**
-	 * Returns the layout set where privateLayout = &#63; and logoId = &#63; and head = &#63; or throws a <code>NoSuchLayoutSetException</code> if it could not be found.
-	 *
-	 * @param privateLayout the private layout
-	 * @param logoId the logo ID
-	 * @param head the head
-	 * @return the matching layout set
-	 * @throws NoSuchLayoutSetException if a matching layout set could not be found
-	 */
-	public LayoutSet findByP_L_Head(
-			boolean privateLayout, long logoId, boolean head)
-		throws NoSuchLayoutSetException;
-
-	/**
-	 * Returns the layout set where privateLayout = &#63; and logoId = &#63; and head = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param privateLayout the private layout
-	 * @param logoId the logo ID
-	 * @param head the head
-	 * @return the matching layout set, or <code>null</code> if a matching layout set could not be found
-	 */
-	public LayoutSet fetchByP_L_Head(
-		boolean privateLayout, long logoId, boolean head);
-
-	/**
-	 * Returns the layout set where privateLayout = &#63; and logoId = &#63; and head = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param privateLayout the private layout
-	 * @param logoId the logo ID
-	 * @param head the head
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching layout set, or <code>null</code> if a matching layout set could not be found
-	 */
-	public LayoutSet fetchByP_L_Head(
-		boolean privateLayout, long logoId, boolean head,
-		boolean retrieveFromCache);
-
-	/**
-	 * Removes the layout set where privateLayout = &#63; and logoId = &#63; and head = &#63; from the database.
-	 *
-	 * @param privateLayout the private layout
-	 * @param logoId the logo ID
-	 * @param head the head
-	 * @return the layout set that was removed
-	 */
-	public LayoutSet removeByP_L_Head(
-			boolean privateLayout, long logoId, boolean head)
-		throws NoSuchLayoutSetException;
-
-	/**
-	 * Returns the number of layout sets where privateLayout = &#63; and logoId = &#63; and head = &#63;.
-	 *
-	 * @param privateLayout the private layout
-	 * @param logoId the logo ID
-	 * @param head the head
-	 * @return the number of matching layout sets
-	 */
-	public int countByP_L_Head(
-		boolean privateLayout, long logoId, boolean head);
-
-	/**
-	 * Returns the layout set where headId = &#63; or throws a <code>NoSuchLayoutSetException</code> if it could not be found.
-	 *
-	 * @param headId the head ID
-	 * @return the matching layout set
-	 * @throws NoSuchLayoutSetException if a matching layout set could not be found
-	 */
-	public LayoutSet findByHeadId(long headId) throws NoSuchLayoutSetException;
-
-	/**
-	 * Returns the layout set where headId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param headId the head ID
-	 * @return the matching layout set, or <code>null</code> if a matching layout set could not be found
-	 */
-	public LayoutSet fetchByHeadId(long headId);
-
-	/**
-	 * Returns the layout set where headId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param headId the head ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching layout set, or <code>null</code> if a matching layout set could not be found
-	 */
-	public LayoutSet fetchByHeadId(long headId, boolean retrieveFromCache);
-
-	/**
-	 * Removes the layout set where headId = &#63; from the database.
-	 *
-	 * @param headId the head ID
-	 * @return the layout set that was removed
-	 */
-	public LayoutSet removeByHeadId(long headId)
-		throws NoSuchLayoutSetException;
-
-	/**
-	 * Returns the number of layout sets where headId = &#63;.
-	 *
-	 * @param headId the head ID
-	 * @return the number of matching layout sets
-	 */
-	public int countByHeadId(long headId);
 
 	/**
 	 * Caches the layout set in the entity cache if it is enabled.

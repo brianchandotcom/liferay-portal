@@ -56,37 +56,39 @@ public class LayoutSetLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.LayoutSet checkout(
-			com.liferay.portal.kernel.model.LayoutSet publishedLayoutSet,
-			int version)
+			com.liferay.portal.kernel.model.LayoutSet layoutSet, int version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _layoutSetLocalService.checkout(publishedLayoutSet, version);
+		return _layoutSetLocalService.checkout(layoutSet, version);
 	}
 
 	/**
-	 * Creates a new layout set. Does not add the layout set to the database.
+	 * Creates a new layout set with the primary key. Does not add the layout set to the database.
 	 *
+	 * @param layoutSetId the primary key for the new layout set
 	 * @return the new layout set
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.LayoutSet create() {
-		return _layoutSetLocalService.create();
+	public com.liferay.portal.kernel.model.LayoutSet createLayoutSet(
+		long layoutSetId) {
+
+		return _layoutSetLocalService.createLayoutSet(layoutSetId);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.LayoutSet delete(
-			com.liferay.portal.kernel.model.LayoutSet publishedLayoutSet)
+			com.liferay.portal.kernel.model.LayoutSet layoutSet)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _layoutSetLocalService.delete(publishedLayoutSet);
+		return _layoutSetLocalService.delete(layoutSet);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.LayoutSet deleteDraft(
-			com.liferay.portal.kernel.model.LayoutSet draftLayoutSet)
+			com.liferay.portal.kernel.model.LayoutSet layoutSet)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _layoutSetLocalService.deleteDraft(draftLayoutSet);
+		return _layoutSetLocalService.deleteDraft(layoutSet);
 	}
 
 	/**
@@ -135,14 +137,6 @@ public class LayoutSetLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutSetLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.LayoutSetVersion deleteVersion(
-			com.liferay.portal.kernel.model.LayoutSetVersion layoutSetVersion)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _layoutSetLocalService.deleteVersion(layoutSetVersion);
 	}
 
 	@Override
@@ -431,38 +425,18 @@ public class LayoutSetLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.LayoutSet publishDraft(
-			com.liferay.portal.kernel.model.LayoutSet draftLayoutSet)
+			com.liferay.portal.kernel.model.LayoutSet layoutSet)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _layoutSetLocalService.publishDraft(draftLayoutSet);
-	}
-
-	@Override
-	public void registerListener(
-		com.liferay.portal.kernel.service.version.VersionServiceListener
-			<com.liferay.portal.kernel.model.LayoutSet,
-			 com.liferay.portal.kernel.model.LayoutSetVersion>
-				versionServiceListener) {
-
-		_layoutSetLocalService.registerListener(versionServiceListener);
-	}
-
-	@Override
-	public void unregisterListener(
-		com.liferay.portal.kernel.service.version.VersionServiceListener
-			<com.liferay.portal.kernel.model.LayoutSet,
-			 com.liferay.portal.kernel.model.LayoutSetVersion>
-				versionServiceListener) {
-
-		_layoutSetLocalService.unregisterListener(versionServiceListener);
+		return _layoutSetLocalService.publishDraft(layoutSet);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.LayoutSet updateDraft(
-			com.liferay.portal.kernel.model.LayoutSet draftLayoutSet)
+			com.liferay.portal.kernel.model.LayoutSet layoutSet)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _layoutSetLocalService.updateDraft(draftLayoutSet);
+		return _layoutSetLocalService.updateDraft(layoutSet);
 	}
 
 	/**
@@ -474,10 +448,10 @@ public class LayoutSetLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.LayoutSet updateLayoutSet(
-			com.liferay.portal.kernel.model.LayoutSet draftLayoutSet)
+			com.liferay.portal.kernel.model.LayoutSet layoutSet)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _layoutSetLocalService.updateLayoutSet(draftLayoutSet);
+		return _layoutSetLocalService.updateLayoutSet(layoutSet);
 	}
 
 	/**

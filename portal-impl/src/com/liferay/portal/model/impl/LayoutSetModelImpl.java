@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetModel;
 import com.liferay.portal.kernel.model.LayoutSetSoap;
-import com.liferay.portal.kernel.model.LayoutSetVersion;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -73,8 +72,7 @@ public class LayoutSetModelImpl
 	public static final String TABLE_NAME = "LayoutSet";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"headId", Types.BIGINT},
-		{"head", Types.BOOLEAN}, {"layoutSetId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"layoutSetId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"privateLayout", Types.BOOLEAN}, {"logoId", Types.BIGINT},
@@ -89,8 +87,6 @@ public class LayoutSetModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("headId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("head", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("layoutSetId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -108,7 +104,7 @@ public class LayoutSetModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutSet (mvccVersion LONG default 0 not null,headId LONG,head BOOLEAN,layoutSetId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,pageCount INTEGER,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN)";
+		"create table LayoutSet (mvccVersion LONG default 0 not null,layoutSetId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,pageCount INTEGER,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutSet";
 
@@ -141,17 +137,13 @@ public class LayoutSetModelImpl
 
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
 
-	public static final long HEAD_COLUMN_BITMASK = 2L;
+	public static final long LAYOUTSETPROTOTYPEUUID_COLUMN_BITMASK = 2L;
 
-	public static final long HEADID_COLUMN_BITMASK = 4L;
+	public static final long LOGOID_COLUMN_BITMASK = 4L;
 
-	public static final long LAYOUTSETPROTOTYPEUUID_COLUMN_BITMASK = 8L;
+	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 8L;
 
-	public static final long LOGOID_COLUMN_BITMASK = 16L;
-
-	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 32L;
-
-	public static final long LAYOUTSETID_COLUMN_BITMASK = 64L;
+	public static final long LAYOUTSETID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -167,7 +159,6 @@ public class LayoutSetModelImpl
 		LayoutSet model = new LayoutSetImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setHeadId(soapModel.getHeadId());
 		model.setLayoutSetId(soapModel.getLayoutSetId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -339,9 +330,6 @@ public class LayoutSetModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<LayoutSet, Long>)LayoutSet::setMvccVersion);
-		attributeGetterFunctions.put("headId", LayoutSet::getHeadId);
-		attributeSetterBiConsumers.put(
-			"headId", (BiConsumer<LayoutSet, Long>)LayoutSet::setHeadId);
 		attributeGetterFunctions.put("layoutSetId", LayoutSet::getLayoutSetId);
 		attributeSetterBiConsumers.put(
 			"layoutSetId",
@@ -407,49 +395,6 @@ public class LayoutSetModelImpl
 			(Map)attributeSetterBiConsumers);
 	}
 
-	public boolean getHead() {
-		return _head;
-	}
-
-	@Override
-	public boolean isHead() {
-		return _head;
-	}
-
-	public boolean getOriginalHead() {
-		return _originalHead;
-	}
-
-	public void setHead(boolean head) {
-		_columnBitmask |= HEAD_COLUMN_BITMASK;
-
-		if (!_setOriginalHead) {
-			_setOriginalHead = true;
-
-			_originalHead = _head;
-		}
-
-		_head = head;
-	}
-
-	@Override
-	public void populateVersionModel(LayoutSetVersion layoutSetVersion) {
-		layoutSetVersion.setGroupId(getGroupId());
-		layoutSetVersion.setCompanyId(getCompanyId());
-		layoutSetVersion.setCreateDate(getCreateDate());
-		layoutSetVersion.setModifiedDate(getModifiedDate());
-		layoutSetVersion.setPrivateLayout(getPrivateLayout());
-		layoutSetVersion.setLogoId(getLogoId());
-		layoutSetVersion.setThemeId(getThemeId());
-		layoutSetVersion.setColorSchemeId(getColorSchemeId());
-		layoutSetVersion.setCss(getCss());
-		layoutSetVersion.setPageCount(getPageCount());
-		layoutSetVersion.setSettings(getSettings());
-		layoutSetVersion.setLayoutSetPrototypeUuid(getLayoutSetPrototypeUuid());
-		layoutSetVersion.setLayoutSetPrototypeLinkEnabled(
-			getLayoutSetPrototypeLinkEnabled());
-	}
-
 	@JSON
 	@Override
 	public long getMvccVersion() {
@@ -459,36 +404,6 @@ public class LayoutSetModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
-	public long getHeadId() {
-		return _headId;
-	}
-
-	@Override
-	public void setHeadId(long headId) {
-		_columnBitmask |= HEADID_COLUMN_BITMASK;
-
-		if (!_setOriginalHeadId) {
-			_setOriginalHeadId = true;
-
-			_originalHeadId = _headId;
-		}
-
-		if (headId >= 0) {
-			setHead(false);
-		}
-		else {
-			setHead(true);
-		}
-
-		_headId = headId;
-	}
-
-	public long getOriginalHeadId() {
-		return _originalHeadId;
 	}
 
 	@JSON
@@ -788,7 +703,6 @@ public class LayoutSetModelImpl
 		LayoutSetImpl layoutSetImpl = new LayoutSetImpl();
 
 		layoutSetImpl.setMvccVersion(getMvccVersion());
-		layoutSetImpl.setHeadId(getHeadId());
 		layoutSetImpl.setLayoutSetId(getLayoutSetId());
 		layoutSetImpl.setGroupId(getGroupId());
 		layoutSetImpl.setCompanyId(getCompanyId());
@@ -866,14 +780,6 @@ public class LayoutSetModelImpl
 	public void resetOriginalValues() {
 		LayoutSetModelImpl layoutSetModelImpl = this;
 
-		layoutSetModelImpl._originalHeadId = layoutSetModelImpl._headId;
-
-		layoutSetModelImpl._setOriginalHeadId = false;
-
-		layoutSetModelImpl._originalHead = layoutSetModelImpl._head;
-
-		layoutSetModelImpl._setOriginalHead = false;
-
 		layoutSetModelImpl._originalGroupId = layoutSetModelImpl._groupId;
 
 		layoutSetModelImpl._setOriginalGroupId = false;
@@ -904,10 +810,6 @@ public class LayoutSetModelImpl
 		LayoutSetCacheModel layoutSetCacheModel = new LayoutSetCacheModel();
 
 		layoutSetCacheModel.mvccVersion = getMvccVersion();
-
-		layoutSetCacheModel.headId = getHeadId();
-
-		layoutSetCacheModel.head = isHead();
 
 		layoutSetCacheModel.layoutSetId = getLayoutSetId();
 
@@ -1065,12 +967,6 @@ public class LayoutSetModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _headId;
-	private long _originalHeadId;
-	private boolean _setOriginalHeadId;
-	private boolean _head;
-	private boolean _originalHead;
-	private boolean _setOriginalHead;
 	private long _layoutSetId;
 	private long _groupId;
 	private long _originalGroupId;

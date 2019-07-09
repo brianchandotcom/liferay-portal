@@ -59,34 +59,36 @@ public class LayoutSetLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.LayoutSet checkout(
-			com.liferay.portal.kernel.model.LayoutSet publishedLayoutSet,
-			int version)
+			com.liferay.portal.kernel.model.LayoutSet layoutSet, int version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().checkout(publishedLayoutSet, version);
+		return getService().checkout(layoutSet, version);
 	}
 
 	/**
-	 * Creates a new layout set. Does not add the layout set to the database.
+	 * Creates a new layout set with the primary key. Does not add the layout set to the database.
 	 *
+	 * @param layoutSetId the primary key for the new layout set
 	 * @return the new layout set
 	 */
-	public static com.liferay.portal.kernel.model.LayoutSet create() {
-		return getService().create();
+	public static com.liferay.portal.kernel.model.LayoutSet createLayoutSet(
+		long layoutSetId) {
+
+		return getService().createLayoutSet(layoutSetId);
 	}
 
 	public static com.liferay.portal.kernel.model.LayoutSet delete(
-			com.liferay.portal.kernel.model.LayoutSet publishedLayoutSet)
+			com.liferay.portal.kernel.model.LayoutSet layoutSet)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().delete(publishedLayoutSet);
+		return getService().delete(layoutSet);
 	}
 
 	public static com.liferay.portal.kernel.model.LayoutSet deleteDraft(
-			com.liferay.portal.kernel.model.LayoutSet draftLayoutSet)
+			com.liferay.portal.kernel.model.LayoutSet layoutSet)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().deleteDraft(draftLayoutSet);
+		return getService().deleteDraft(layoutSet);
 	}
 
 	/**
@@ -131,15 +133,6 @@ public class LayoutSetLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.kernel.model.LayoutSetVersion
-			deleteVersion(
-				com.liferay.portal.kernel.model.LayoutSetVersion
-					layoutSetVersion)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().deleteVersion(layoutSetVersion);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
@@ -402,35 +395,17 @@ public class LayoutSetLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.LayoutSet publishDraft(
-			com.liferay.portal.kernel.model.LayoutSet draftLayoutSet)
+			com.liferay.portal.kernel.model.LayoutSet layoutSet)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().publishDraft(draftLayoutSet);
-	}
-
-	public static void registerListener(
-		com.liferay.portal.kernel.service.version.VersionServiceListener
-			<com.liferay.portal.kernel.model.LayoutSet,
-			 com.liferay.portal.kernel.model.LayoutSetVersion>
-				versionServiceListener) {
-
-		getService().registerListener(versionServiceListener);
-	}
-
-	public static void unregisterListener(
-		com.liferay.portal.kernel.service.version.VersionServiceListener
-			<com.liferay.portal.kernel.model.LayoutSet,
-			 com.liferay.portal.kernel.model.LayoutSetVersion>
-				versionServiceListener) {
-
-		getService().unregisterListener(versionServiceListener);
+		return getService().publishDraft(layoutSet);
 	}
 
 	public static com.liferay.portal.kernel.model.LayoutSet updateDraft(
-			com.liferay.portal.kernel.model.LayoutSet draftLayoutSet)
+			com.liferay.portal.kernel.model.LayoutSet layoutSet)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().updateDraft(draftLayoutSet);
+		return getService().updateDraft(layoutSet);
 	}
 
 	/**
@@ -441,10 +416,10 @@ public class LayoutSetLocalServiceUtil {
 	 * @throws PortalException
 	 */
 	public static com.liferay.portal.kernel.model.LayoutSet updateLayoutSet(
-			com.liferay.portal.kernel.model.LayoutSet draftLayoutSet)
+			com.liferay.portal.kernel.model.LayoutSet layoutSet)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().updateLayoutSet(draftLayoutSet);
+		return getService().updateLayoutSet(layoutSet);
 	}
 
 	/**

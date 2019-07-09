@@ -108,6 +108,8 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.fileupload.FileUploadBase;
 
 import org.osgi.service.component.annotations.Activate;
@@ -949,16 +951,13 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				DLFileEntry.class.getName(), uploadPortletRequest);
+			ServiceContext serviceContext = _createServiceContext(
+				uploadPortletRequest);
 
 			FileEntry fileEntry = null;
 
 			if (cmd.equals(Constants.ADD) ||
 				cmd.equals(Constants.ADD_DYNAMIC)) {
-
-				_clearGuestPermissionsIfPrivateLayout(
-					cmd, themeDisplay, serviceContext);
 
 				// Add file entry
 
@@ -1009,39 +1008,47 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _clearGuestPermissionsIfPrivateLayout(
-		String cmd, ThemeDisplay themeDisplay, ServiceContext serviceContext) {
+	private ServiceContext _createServiceContext(
+			HttpServletRequest httpServletRequest)
+		throws PortalException {
 
-		if (cmd.equals(Constants.ADD_DYNAMIC)) {
-			boolean guestChecked = false;
+		String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
 
-			Layout layout = themeDisplay.getLayout();
-
-			if (layout.isTypeControlPanel()) {
-				Group group = themeDisplay.getScopeGroup();
-
-				if (!group.hasPrivateLayouts()) {
-					guestChecked = true;
-				}
-			}
-			else if (layout.isPublicLayout()) {
-				guestChecked = true;
-			}
-
-			if (!guestChecked) {
-				ModelPermissions currentModelPermissions =
-					serviceContext.getModelPermissions();
-
-				ModelPermissions modelPermissions =
-					ModelPermissionsFactory.create(
-						currentModelPermissions.getActionIds(
-							RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE),
-						new String[0], DLFileEntry.class.getName());
-
-				serviceContext.setModelPermissions(modelPermissions);
-			}
+		if (!cmd.equals(Constants.ADD_DYNAMIC)) {
+			return ServiceContextFactory.getInstance(
+				DLFileEntry.class.getName(), httpServletRequest);
 		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+		Group group = themeDisplay.getScopeGroup();
+
+		if (layout.isPublicLayout() ||
+			(layout.isTypeControlPanel() && !group.hasPrivateLayouts())) {
+
+			return ServiceContextFactory.getInstance(
+				DLFileEntry.class.getName(), httpServletRequest);
+		}
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DLFileEntry.class.getName(), httpServletRequest);
+
+		ModelPermissions modelPermissions =
+			serviceContext.getModelPermissions();
+
+		serviceContext.setModelPermissions(
+			ModelPermissionsFactory.create(
+				modelPermissions.getActionIds(
+					RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE),
+				_RESTRICTED_GUEST_PERMISSIONS, DLFileEntry.class.getName()));
+
+		return serviceContext;
 	}
+
+	private static final String[] _RESTRICTED_GUEST_PERMISSIONS = {};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditFileEntryMVCActionCommand.class);

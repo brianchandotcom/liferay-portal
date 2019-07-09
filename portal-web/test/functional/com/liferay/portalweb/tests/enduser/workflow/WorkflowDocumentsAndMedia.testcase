@@ -270,6 +270,21 @@ definition {
 			dmFolderName = "DM Folder Name",
 			workflowRestriction = "Parent Folder");
 
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Text Box",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMFolder.configureWorkflowCP(
+			dmDocumentTypeName = "DM Document Type Name",
+			dmFolderName = "DM Folder Name",
+			workflowDefinition = "Single Approver",
+			workflowRestriction = "Specific Restrictions");
+
 		DMFolder.configureWorkflowCP(
 			dmFolderName = "DM Folder Name",
 			workflowDefinition = "No Workflow",

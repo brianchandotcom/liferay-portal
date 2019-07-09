@@ -15,6 +15,7 @@
 package com.liferay.portal.vulcan.internal.jaxrs.validation;
 
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.vulcan.internal.jaxrs.context.provider.ContextProviderUtil;
 
 import java.io.IOException;
 
@@ -34,10 +35,6 @@ import javax.ws.rs.ext.Provider;
 
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.interceptor.InterceptorChain;
-import org.apache.cxf.jaxrs.lifecycle.ResourceProvider;
-import org.apache.cxf.jaxrs.model.ClassResourceInfo;
-import org.apache.cxf.jaxrs.model.OperationResourceInfo;
-import org.apache.cxf.message.Exchange;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.message.MessageContentsList;
 import org.apache.cxf.phase.PhaseInterceptorChain;
@@ -89,30 +86,7 @@ public class BeanValidationInterceptor
 
 	@Override
 	protected Object getServiceObject(Message message) {
-		Exchange exchange = message.getExchange();
-
-		OperationResourceInfo operationResourceInfo = exchange.get(
-			OperationResourceInfo.class);
-
-		if (operationResourceInfo == null) {
-			return null;
-		}
-
-		ClassResourceInfo classResourceInfo =
-			operationResourceInfo.getClassResourceInfo();
-
-		if (!classResourceInfo.isRoot()) {
-			return exchange.get("org.apache.cxf.service.object.last");
-		}
-
-		ResourceProvider resourceProvider =
-			classResourceInfo.getResourceProvider();
-
-		Object instance = resourceProvider.getInstance(message);
-
-		resourceProvider.releaseInstance(message, instance);
-
-		return instance;
+		return ContextProviderUtil.getMatchedResource(message);
 	}
 
 	@Override

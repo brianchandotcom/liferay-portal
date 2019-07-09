@@ -45,7 +45,7 @@ import org.apache.cxf.message.Message;
 public class ContextProviderUtil {
 
 	public static EntityModel getEntityModel(Message message) throws Exception {
-		Object matchedResource = _getMatchedResource(message);
+		Object matchedResource = getMatchedResource(message);
 
 		if (matchedResource instanceof EntityModelResource) {
 			EntityModelResource entityModelResource =
@@ -63,19 +63,7 @@ public class ContextProviderUtil {
 			"HTTP.REQUEST");
 	}
 
-	public static MultivaluedHashMap<String, String> getMultivaluedHashMap(
-		Map<String, String[]> parameterMap) {
-
-		return new MultivaluedHashMap<String, String>() {
-			{
-				for (Entry<String, String[]> entry : parameterMap.entrySet()) {
-					put(entry.getKey(), Arrays.asList(entry.getValue()));
-				}
-			}
-		};
-	}
-
-	private static Object _getMatchedResource(Message message) {
+	public static Object getMatchedResource(Message message) {
 		Exchange exchange = message.getExchange();
 
 		Object root = exchange.get(JAXRSUtils.ROOT_INSTANCE);
@@ -111,6 +99,18 @@ public class ContextProviderUtil {
 		Class<?> matchedResourceClass = (Class<?>)matchedResources.get(0);
 
 		return resourceContext.getResource(matchedResourceClass);
+	}
+
+	public static MultivaluedHashMap<String, String> getMultivaluedHashMap(
+		Map<String, String[]> parameterMap) {
+
+		return new MultivaluedHashMap<String, String>() {
+			{
+				for (Entry<String, String[]> entry : parameterMap.entrySet()) {
+					put(entry.getKey(), Arrays.asList(entry.getValue()));
+				}
+			}
+		};
 	}
 
 	private static MultivaluedMap<String, String> _getPathParameters(

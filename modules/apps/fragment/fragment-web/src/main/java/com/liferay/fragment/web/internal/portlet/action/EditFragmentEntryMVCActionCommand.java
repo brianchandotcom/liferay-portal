@@ -58,8 +58,8 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		String css = ParamUtil.getString(actionRequest, "cssContent");
-		String js = ParamUtil.getString(actionRequest, "jsContent");
 		String html = ParamUtil.getString(actionRequest, "htmlContent");
+		String js = ParamUtil.getString(actionRequest, "jsContent");
 		String configuration = ParamUtil.getString(
 			actionRequest, "configurationContent");
 		int status = ParamUtil.getInteger(actionRequest, "status");

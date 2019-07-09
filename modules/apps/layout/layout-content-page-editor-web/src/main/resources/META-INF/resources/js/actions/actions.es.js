@@ -60,6 +60,9 @@ export const UPDATE_EDITABLE_VALUE_ERROR = 'UPDATE_EDITABLE_VALUE_ERROR';
 export const UPDATE_EDITABLE_VALUE_LOADING = 'UPDATE_EDITABLE_VALUE_LOADING';
 export const UPDATE_EDITABLE_VALUE_SUCCESS = 'UPDATE_EDITABLE_VALUE_SUCCESS';
 
+export const UPDATE_FRAGMENT_ENTRY_LINK_CONTENT =
+	'updateFragmentEntryLinkContent';
+
 export const CLEAR_ACTIVE_ITEM = 'clearActiveItem';
 export const CLEAR_DROP_TARGET = 'clearDragTarget';
 export const CLEAR_HOVERED_ITEM = 'clearHoveredItem';

@@ -20,6 +20,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -53,11 +54,12 @@ public class ContentPageLayoutEditorDisplayContext
 	public ContentPageLayoutEditorDisplayContext(
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
 		String className, long classPK,
-		FragmentRendererController fragmentRendererController) {
+		FragmentRendererController fragmentRendererController,
+		CommentManager commentManager) {
 
 		super(
 			httpServletRequest, renderResponse, className, classPK,
-			fragmentRendererController);
+			fragmentRendererController, commentManager);
 	}
 
 	@Override

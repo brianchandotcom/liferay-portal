@@ -20,6 +20,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -54,7 +55,7 @@ public class ContentPageEditorDisplayContextProvider {
 		if (Objects.equals(className, Layout.class.getName())) {
 			return new ContentPageLayoutEditorDisplayContext(
 				httpServletRequest, renderResponse, className, classPK,
-				_fragmentRendererController);
+				_fragmentRendererController, _commentManager);
 		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -76,8 +77,12 @@ public class ContentPageEditorDisplayContextProvider {
 
 		return new ContentPageEditorLayoutPageTemplateDisplayContext(
 			httpServletRequest, renderResponse, Layout.class.getName(),
-			draftLayout.getPlid(), showMapping, _fragmentRendererController);
+			draftLayout.getPlid(), showMapping, _fragmentRendererController,
+			_commentManager);
 	}
+
+	@Reference
+	private CommentManager _commentManager;
 
 	@Reference
 	private FragmentRendererController _fragmentRendererController;

@@ -12,9 +12,6 @@
  * details.
  */
 
-/* eslint no-console: "warn" */
-/* eslint no-unused-vars: "warn" */
-
 import {App} from 'senna';
 import {openToast} from 'frontend-js-web';
 import core from 'metal';
@@ -311,6 +308,7 @@ class LiferayApp extends App {
 			);
 
 			if (Liferay.SPA.debugEnabled) {
+				// eslint-disable-next-line no-console
 				console.error(event.error);
 
 				if (event.error.invalidStatus) {

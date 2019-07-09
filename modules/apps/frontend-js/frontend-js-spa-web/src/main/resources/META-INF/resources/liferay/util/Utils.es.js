@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 const MAX_TIMEOUT = Math.pow(2, 31) - 1;
 
 /**

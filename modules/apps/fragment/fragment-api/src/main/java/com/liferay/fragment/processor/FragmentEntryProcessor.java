@@ -203,6 +203,13 @@ public interface FragmentEntryProcessor {
 			fragmentEntryLink, html, defaultFragmentEntryProcessorContext);
 	}
 
-	public void validateFragmentEntryHTML(String html) throws PortalException;
+	public default void validateFragmentEntryHTML(String html)
+		throws PortalException {
+
+		validateFragmentEntryHTML(html, null);
+	}
+
+	public void validateFragmentEntryHTML(String html, String configuration)
+		throws PortalException;
 
 }

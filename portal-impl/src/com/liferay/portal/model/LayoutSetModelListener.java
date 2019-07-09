@@ -26,7 +26,7 @@ public class LayoutSetModelListener extends BaseModelListener<LayoutSet> {
 
 	@Override
 	public void onAfterRemove(LayoutSet layoutSet) {
-		if ((layoutSet == null) || !layoutSet.isHead()) {
+		if (layoutSet == null) {
 			return;
 		}
 
@@ -35,7 +35,7 @@ public class LayoutSetModelListener extends BaseModelListener<LayoutSet> {
 
 	@Override
 	public void onAfterUpdate(LayoutSet layoutSet) {
-		if ((layoutSet == null) || !layoutSet.isHead()) {
+		if (layoutSet == null) {
 			return;
 		}
 

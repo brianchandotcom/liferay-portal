@@ -107,8 +107,8 @@ public class VirtualHostLocalServiceImpl
 				companyId, PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
 
 			if (group != null) {
-				layoutSet = layoutSetPersistence.fetchByG_P_Head(
-					group.getGroupId(), false, false);
+				layoutSet = layoutSetPersistence.fetchByG_P(
+					group.getGroupId(), false);
 			}
 		}
 

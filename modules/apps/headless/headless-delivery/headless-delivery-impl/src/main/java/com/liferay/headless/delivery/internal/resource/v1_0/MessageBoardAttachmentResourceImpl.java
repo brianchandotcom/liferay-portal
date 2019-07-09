@@ -35,14 +35,12 @@ import javax.ws.rs.core.Context;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Javier Gamarra
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/message-board-attachment.properties",
-	scope = ServiceScope.PROTOTYPE,
 	service = MessageBoardAttachmentResource.class
 )
 public class MessageBoardAttachmentResourceImpl

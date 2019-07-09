@@ -60,14 +60,13 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Javier Gamarra
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/message-board-message.properties",
-	scope = ServiceScope.PROTOTYPE, service = MessageBoardMessageResource.class
+	service = MessageBoardMessageResource.class
 )
 public class MessageBoardMessageResourceImpl
 	extends BaseMessageBoardMessageResourceImpl implements EntityModelResource {

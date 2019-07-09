@@ -38,14 +38,13 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Javier Gamarra
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/comment.properties",
-	scope = ServiceScope.PROTOTYPE, service = CommentResource.class
+	service = CommentResource.class
 )
 public class CommentResourceImpl
 	extends BaseCommentResourceImpl implements EntityModelResource {

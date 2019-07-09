@@ -21,7 +21,8 @@ import {
 	REMOVE_FRAGMENT_ENTRY_LINK,
 	UPDATE_CONFIG_ATTRIBUTES,
 	UPDATE_EDITABLE_VALUE_ERROR,
-	UPDATE_EDITABLE_VALUE_LOADING
+	UPDATE_EDITABLE_VALUE_LOADING,
+	UPDATE_FRAGMENT_ENTRY_LINK_CONTENT
 } from '../actions/actions.es';
 import {
 	add,
@@ -537,6 +538,56 @@ function updateFragmentEntryLinkConfigReducer(state, action) {
 }
 
 /**
+ * @param {object} state
+ * @param {object} action
+ * @param {string} action.fragmentEntryLinkId
+ * @return {object}
+ * @review
+ */
+function updateFragmentEntryLinkContentReducer(state, action) {
+	let nextState = state;
+
+	return new Promise(resolve => {
+		if (action.type === UPDATE_FRAGMENT_ENTRY_LINK_CONTENT) {
+			const {fragmentEntryLinkId} = action;
+
+			const fragmentEntryLink =
+				nextState.fragmentEntryLinks[fragmentEntryLinkId];
+
+			if (!fragmentEntryLink) {
+				return resolve(nextState);
+			}
+
+			return getFragmentEntryLinkContent(
+				nextState.renderFragmentEntryURL,
+				fragmentEntryLink,
+				nextState.portletNamespace
+			)
+				.then(response => {
+					const updatedFragmentEntryLink = response;
+
+					nextState = setIn(
+						nextState,
+						[
+							'fragmentEntryLinks',
+							fragmentEntryLink.fragmentEntryLinkId,
+							'content'
+						],
+						updatedFragmentEntryLink.content
+					);
+
+					resolve(nextState);
+				})
+				.catch(() => {
+					resolve(nextState);
+				});
+		} else {
+			resolve(nextState);
+		}
+	});
+}
+
+/**
  * @param {string} addFragmentEntryLinkURL
  * @param {string} fragmentEntryKey
  * @param {string} fragmentName
@@ -740,5 +791,6 @@ export {
 	moveFragmentEntryLinkReducer,
 	removeFragmentEntryLinkReducer,
 	updateEditableValueReducer,
-	updateFragmentEntryLinkConfigReducer
+	updateFragmentEntryLinkConfigReducer,
+	updateFragmentEntryLinkContentReducer
 };

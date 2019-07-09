@@ -428,6 +428,12 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			fragmentEntryId, name);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #updateFragmentEntry(long, String, String, String,
+	 *             String, String, int)}
+	 */
+	@Deprecated
 	@Override
 	public FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, String name, String css, String html,
@@ -445,6 +451,12 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			getUserId(), fragmentEntryId, name, css, html, js, status);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #updateFragmentEntry(long, String, String, String,
+	 *             String, String, long, int)}
+	 */
+	@Deprecated
 	@Override
 	public FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, String name, String css, String html,

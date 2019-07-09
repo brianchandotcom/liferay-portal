@@ -15,7 +15,6 @@
 package com.liferay.portal.vulcan.internal.accept.language;
 
 import com.liferay.portal.kernel.exception.NoSuchUserException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -78,9 +77,9 @@ public class AcceptLanguageImpl implements AcceptLanguage {
 
 			return locales;
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 			throw new InternalServerErrorException(
-				"Unable to get preferred locale: " + pe.getMessage(), pe);
+				"Unable to get preferred locale: " + e.getMessage(), e);
 		}
 	}
 

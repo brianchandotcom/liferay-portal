@@ -12,13 +12,12 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
-import {Modal, PortletBase} from 'frontend-js-web';
+import {PortletBase} from 'frontend-js-web';
+import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import Soy from 'metal-soy';
 import templates from './Flags.soy';
 import {Config} from 'metal-state';
-import ClayButton from 'clay-button';
+import 'clay-button';
 
 /**
  * It opens a dialog where the user can flag the page.

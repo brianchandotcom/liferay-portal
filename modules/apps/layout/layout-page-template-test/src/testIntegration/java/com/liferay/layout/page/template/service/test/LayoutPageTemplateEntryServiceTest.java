@@ -27,8 +27,8 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateEntryPersistence;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -40,11 +40,14 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.test.rule.PersistenceTestRule;
+import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.util.List;
 
@@ -66,7 +69,11 @@ public class LayoutPageTemplateEntryServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			PermissionCheckerMethodTestRule.INSTANCE);
+			PermissionCheckerMethodTestRule.INSTANCE,
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(
+				Propagation.REQUIRED,
+				"com.liferay.layout.page.template.service"));
 
 	@Before
 	public void setUp() throws Exception {
@@ -135,8 +142,13 @@ public class LayoutPageTemplateEntryServiceTest {
 					getLayoutPageTemplateCollectionId(),
 				"Layout Page Template Entry", serviceContext);
 
+		LayoutPageTemplateEntry persistedLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryPersistence.fetchByPrimaryKey(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+
 		Assert.assertEquals(
-			"Layout Page Template Entry", layoutPageTemplateEntry.getName());
+			"Layout Page Template Entry",
+			persistedLayoutPageTemplateEntry.getName());
 	}
 
 	@Test
@@ -296,11 +308,10 @@ public class LayoutPageTemplateEntryServiceTest {
 					null, serviceContext);
 
 		List<LayoutPageTemplateEntry> originalLayoutPageTemplateEntries =
-			_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
+			_layoutPageTemplateEntryPersistence.findByG_L(
 				layoutPageTemplateCollection.getGroupId(),
 				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+					getLayoutPageTemplateCollectionId());
 
 		_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 			_group.getGroupId(),
@@ -313,11 +324,10 @@ public class LayoutPageTemplateEntryServiceTest {
 			"Layout Page Template Entry 2", serviceContext);
 
 		List<LayoutPageTemplateEntry> actualLayoutPageTemplateEntries =
-			_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
+			_layoutPageTemplateEntryPersistence.findByG_L(
 				layoutPageTemplateCollection.getGroupId(),
 				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+					getLayoutPageTemplateCollectionId());
 
 		Assert.assertEquals(
 			actualLayoutPageTemplateEntries.toString(),
@@ -360,11 +370,11 @@ public class LayoutPageTemplateEntryServiceTest {
 			layoutPageTemplateEntries);
 
 		Assert.assertNull(
-			_layoutPageTemplateEntryService.fetchLayoutPageTemplateEntry(
+			_layoutPageTemplateEntryPersistence.fetchByPrimaryKey(
 				layoutPageTemplateEntry1.getLayoutPageTemplateEntryId()));
 
 		Assert.assertNull(
-			_layoutPageTemplateEntryService.fetchLayoutPageTemplateEntry(
+			_layoutPageTemplateEntryPersistence.fetchByPrimaryKey(
 				layoutPageTemplateEntry2.getLayoutPageTemplateEntryId()));
 	}
 
@@ -381,7 +391,7 @@ public class LayoutPageTemplateEntryServiceTest {
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
 		Assert.assertNull(
-			_layoutPageTemplateEntryService.fetchLayoutPageTemplateEntry(
+			_layoutPageTemplateEntryPersistence.fetchByPrimaryKey(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 	}
 
@@ -459,11 +469,15 @@ public class LayoutPageTemplateEntryServiceTest {
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 				classNameId, classTypeId);
 
-		Assert.assertEquals(
-			classNameId, layoutPageTemplateEntry.getClassNameId());
+		LayoutPageTemplateEntry persistedLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryPersistence.fetchByPrimaryKey(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
 		Assert.assertEquals(
-			classTypeId, layoutPageTemplateEntry.getClassTypeId());
+			classNameId, persistedLayoutPageTemplateEntry.getClassNameId());
+
+		Assert.assertEquals(
+			classTypeId, persistedLayoutPageTemplateEntry.getClassTypeId());
 	}
 
 	@Test
@@ -477,11 +491,14 @@ public class LayoutPageTemplateEntryServiceTest {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getLayoutPageTemplateEntry(serviceContext);
 
-		layoutPageTemplateEntry =
-			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
+		_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
 
-		Assert.assertEquals(true, layoutPageTemplateEntry.isDefaultTemplate());
+		LayoutPageTemplateEntry persistedLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryPersistence.fetchByPrimaryKey(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+
+		Assert.assertTrue(persistedLayoutPageTemplateEntry.isDefaultTemplate());
 	}
 
 	@Test
@@ -496,18 +513,21 @@ public class LayoutPageTemplateEntryServiceTest {
 			_getLayoutPageTemplateEntry(serviceContext);
 
 		try {
-			layoutPageTemplateEntry =
-				_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-					"Layout Page Template Entry New");
+			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				"Layout Page Template Entry New");
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
 		}
 
+		LayoutPageTemplateEntry persistedLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryPersistence.fetchByPrimaryKey(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+
 		Assert.assertEquals(
 			"Layout Page Template Entry New",
-			layoutPageTemplateEntry.getName());
+			persistedLayoutPageTemplateEntry.getName());
 	}
 
 	@Test
@@ -525,9 +545,13 @@ public class LayoutPageTemplateEntryServiceTest {
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			WorkflowConstants.STATUS_APPROVED);
 
+		LayoutPageTemplateEntry persistedLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryPersistence.fetchByPrimaryKey(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED,
-			layoutPageTemplateEntry.getStatus());
+			persistedLayoutPageTemplateEntry.getStatus());
 	}
 
 	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry(
@@ -552,6 +576,10 @@ public class LayoutPageTemplateEntryServiceTest {
 	@Inject
 	private LayoutPageTemplateCollectionService
 		_layoutPageTemplateCollectionService;
+
+	@Inject
+	private LayoutPageTemplateEntryPersistence
+		_layoutPageTemplateEntryPersistence;
 
 	@Inject
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;

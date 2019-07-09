@@ -183,4 +183,41 @@ describe('Field Numeric', () => {
 
 		expect(component.dataType).toBe('double');
 	});
+
+	it('check if event is sent when decimal is being writen', done => {
+		const handleFieldEdited = data => {
+			expect(data).toEqual(
+				expect.objectContaining({
+					fieldInstance: component,
+					originalEvent: expect.any(Object),
+					value: '3.0'
+				})
+			);
+			done();
+		};
+
+		const events = {fieldEdited: handleFieldEdited};
+
+		component = new Numeric({
+			...defaultNumericConfig,
+			events,
+			key: 'input'
+		});
+
+		component._handleFieldChanged({
+			target: {
+				value: '3.0'
+			}
+		});
+	});
+
+	it('check field value is rounded when fieldType is integer but it receives a double', () => {
+		component = new Numeric({
+			...defaultNumericConfig,
+			key: 'input',
+			value: '3.8'
+		});
+
+		expect(component.value).toEqual('4');
+	});
 });

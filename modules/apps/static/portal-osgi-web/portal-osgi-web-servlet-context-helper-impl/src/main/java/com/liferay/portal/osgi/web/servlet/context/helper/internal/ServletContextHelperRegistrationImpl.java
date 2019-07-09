@@ -55,7 +55,7 @@ import java.util.concurrent.Future;
 
 import javax.management.JMException;
 import javax.management.MBeanServer;
-import javax.management.ObjectInstance;
+import javax.management.ObjectName;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
@@ -262,17 +262,14 @@ public class ServletContextHelperRegistrationImpl
 	}
 
 	protected void clearResidualMBeans(ClassLoader classLoader) {
-		MBeanServer server = ManagementFactory.getPlatformMBeanServer();
+		MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
 
-		Set<ObjectInstance> mbeans = server.queryMBeans(null, null);
-
-		for (ObjectInstance mbean : mbeans) {
+		for (ObjectName objectName : mBeanServer.queryNames(null, null)) {
 			try {
-				ClassLoader mbeanClassLoader = server.getClassLoaderFor(
-					mbean.getObjectName());
+				if (classLoader.equals(
+						mBeanServer.getClassLoaderFor(objectName))) {
 
-				if (classLoader.equals(mbeanClassLoader)) {
-					server.unregisterMBean(mbean.getObjectName());
+					mBeanServer.unregisterMBean(objectName);
 				}
 			}
 			catch (JMException jme) {
@@ -570,6 +567,9 @@ public class ServletContextHelperRegistrationImpl
 	private static final String _SERVLET_INIT_PARAM_PREFIX =
 		HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX;
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ServletContextHelperRegistrationImpl.class);
+
 	static {
 		String[] blacklist =
 			PropsValues.
@@ -581,9 +581,6 @@ public class ServletContextHelperRegistrationImpl
 
 		_BLACKLIST = blacklist;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ServletContextHelperRegistrationImpl.class);
 
 	private final Set<Class<?>> _annotatedClasses;
 	private final Bundle _bundle;

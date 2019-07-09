@@ -283,7 +283,7 @@ class FragmentEntryLink extends Component {
 			this.fragmentEntryLinkId === this.activeItemId &&
 			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment;
 
-		return this._config && fieldSetsExist && fragmentIsActive;
+		return fieldSetsExist && fragmentIsActive;
 	}
 }
 

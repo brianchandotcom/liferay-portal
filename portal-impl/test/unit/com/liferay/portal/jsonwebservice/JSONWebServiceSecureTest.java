@@ -15,7 +15,16 @@
 package com.liferay.portal.jsonwebservice;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.jsonwebservice.action.JSONWebServiceInvokerAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
+
+import java.util.Collections;
+
+import jodd.typeconverter.TypeConversionException;
 
 import junit.framework.TestCase;
 
@@ -94,6 +103,102 @@ public class JSONWebServiceSecureTest extends BaseJSONWebServiceTestCase {
 		}
 		catch (Exception e) {
 		}
+	}
+
+	@Test(expected = TypeConversionException.class)
+	public void testAttack3NotOnWhitelistCall() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/invoke");
+
+		mockHttpServletRequest.setParameter("cmd", "{\"/open/run3\":{}}");
+		mockHttpServletRequest.setParameter(
+			"+object:java.io.ObjectInputStream", "{}");
+
+		JSONWebServiceAction jsonWebServiceAction =
+			new JSONWebServiceInvokerAction(mockHttpServletRequest);
+
+		jsonWebServiceAction.invoke();
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testAttack3UtilCall() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/invoke");
+
+		mockHttpServletRequest.setParameter("cmd", "{\"/open/run3\":{}}");
+		mockHttpServletRequest.setParameter(
+			"+object:com.liferay.portal.kernel.bean.PortalBeanLocatorUtil",
+			"{\"beanLocator\":null}");
+
+		JSONWebServiceAction jsonWebServiceAction =
+			new JSONWebServiceInvokerAction(mockHttpServletRequest);
+
+		jsonWebServiceAction.invoke();
+	}
+
+	@Test
+	public void testAttack3ValidCall() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/invoke");
+
+		mockHttpServletRequest.setParameter("cmd", "{\"/open/run3\":{}}");
+		mockHttpServletRequest.setParameter("+object:java.lang.Object", "{}");
+
+		JSONWebServiceAction jsonWebServiceAction =
+			new JSONWebServiceInvokerAction(mockHttpServletRequest);
+
+		jsonWebServiceAction.invoke();
+	}
+
+	@Test
+	public void testAttack3WhitelistedByOSGiCall() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/invoke");
+
+		mockHttpServletRequest.setParameter("cmd", "{\"/open/run3\":{}}");
+		mockHttpServletRequest.setParameter("+object:java.util.Random", "{}");
+
+		JSONWebServiceAction jsonWebServiceAction =
+			new JSONWebServiceInvokerAction(mockHttpServletRequest);
+
+		try {
+			jsonWebServiceAction.invoke();
+
+			TestCase.fail();
+		}
+		catch (Exception e) {
+		}
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceRegistration<Object> serviceRegistration =
+			registry.registerService(
+				Object.class, new Object(),
+				Collections.singletonMap(
+					PropsKeys.
+						JSONWS_WEB_SERVICE_PARAMETER_TYPE_WHITELIST_CLASS_NAMES,
+					new String[] {"java.util.Random", "some.other.Class"}));
+
+		try {
+			jsonWebServiceAction.invoke();
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
+	}
+
+	@Test
+	public void testAttack3WhitelistedByPropertiesCall() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/invoke");
+
+		mockHttpServletRequest.setParameter("cmd", "{\"/open/run3\":{}}");
+		mockHttpServletRequest.setParameter("+object:java.util.Date", "0");
+
+		JSONWebServiceAction jsonWebServiceAction =
+			new JSONWebServiceInvokerAction(mockHttpServletRequest);
+
+		jsonWebServiceAction.invoke();
 	}
 
 }

@@ -70,6 +70,12 @@ definition {
 				configurationScope = "System Scope");
 
 			FormFields.enableCheckbox(fieldName = "enabled");
+
+			if (isSet(maximumNumberOfTags)) {
+				SystemSettings.editTextSetting(
+					settingName = "Maximum Number of Tags",
+					settingValue = "${maximumNumberOfTags}");
+			}
 		}
 
 		else if ("${enableAutoTaggingFor}" == "Instance Settings") {
@@ -77,7 +83,14 @@ definition {
 				configurationCategory = "Assets",
 				configurationName = "Asset Auto Tagging",
 				configurationScope = "Virtual Instance Scope");
+
 			Check(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
+
+			if (isSet(maximumNumberOfTags)) {
+				SystemSettings.editTextSetting(
+					settingName = "Maximum Number of Tags",
+					settingValue = "${maximumNumberOfTags}");
+			}
 		}
 
 		else if ("${enableAutoTaggingFor}" == "Settings") {
@@ -91,12 +104,29 @@ definition {
 			Check.checkToggleSwitch(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
 		}
 
-		if (IsElementPresent(locator1 = "Button#UPDATE")) {
-			PortletEntry.update();
-		}
+		if (isSet(validationError)) {
+			if (IsElementPresent(locator1 = "Button#UPDATE")) {
+				Button.clickUpdate();
+			}
 
-		else if (IsElementPresent(locator1 = "Button#SAVE")) {
-			PortletEntry.save();
+			else if (IsElementPresent(locator1 = "Button#SAVE")) {
+				Button.clickSave();
+			}
+
+			Alert.viewRequestFailedToComplete();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_1",
+				value1 = "${validationError}");
+		}
+		else {
+			if (IsElementPresent(locator1 = "Button#UPDATE")) {
+				PortletEntry.update();
+			}
+
+			else if (IsElementPresent(locator1 = "Button#SAVE")) {
+				PortletEntry.save();
+			}
 		}
 	}
 

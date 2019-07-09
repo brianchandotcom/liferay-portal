@@ -20,7 +20,8 @@ import {
 	moveFragmentEntryLinkReducer,
 	removeFragmentEntryLinkReducer,
 	updateEditableValueReducer,
-	updateFragmentEntryLinkConfigReducer
+	updateFragmentEntryLinkConfigReducer,
+	updateFragmentEntryLinkContentReducer
 } from './fragments.es';
 import {addMappingAssetEntry} from './mapping.es';
 import {addPortletReducer} from './portlets.es';
@@ -87,6 +88,7 @@ const reducers = [
 	updateDropTargetReducer,
 	updateEditableValueReducer,
 	updateFragmentEntryLinkConfigReducer,
+	updateFragmentEntryLinkContentReducer,
 	updateHoveredItemReducer,
 	updateRowColumnsNumberReducer,
 	updateRowColumnsReducer,

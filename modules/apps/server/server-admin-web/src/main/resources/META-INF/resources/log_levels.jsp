@@ -39,6 +39,39 @@ PortletURL clearResultsURL = PortletURLUtil.clone(serverURL, liferayPortletRespo
 
 clearResultsURL.setParameter("keywords", StringPool.BLANK);
 clearResultsURL.setParameter("navigation", (String)null);
+
+SearchContainer logSearchContainer = new SearchContainer(liferayPortletRequest, serverURL, null, null);
+
+Map currentLoggerNames = new TreeMap();
+
+Enumeration enu = LogManager.getCurrentLoggers();
+
+while (enu.hasMoreElements()) {
+	Logger logger = (Logger)enu.nextElement();
+
+	if (Validator.isNull(keywords) || logger.getName().contains(keywords)) {
+		currentLoggerNames.put(logger.getName(), logger);
+	}
+}
+
+List currentLoggerNamesList = ListUtil.fromCollection(currentLoggerNames.entrySet());
+
+Iterator itr = currentLoggerNamesList.iterator();
+
+while (itr.hasNext()) {
+	Map.Entry entry = (Map.Entry)itr.next();
+
+	String name = (String)entry.getKey();
+	Logger logger = (Logger)entry.getValue();
+
+	Level level = logger.getLevel();
+
+	if (level == null) {
+		itr.remove();
+	}
+}
+
+logSearchContainer.setResults(ListUtil.subList(currentLoggerNamesList, logSearchContainer.getStart(), logSearchContainer.getEnd()));
 %>
 
 <div class="server-admin-tabs">
@@ -98,46 +131,10 @@ clearResultsURL.setParameter("navigation", (String)null);
 			</aui:button-row>
 		</c:when>
 		<c:otherwise>
-
-			<%
-			Map currentLoggerNames = new TreeMap();
-
-			Enumeration enu = LogManager.getCurrentLoggers();
-
-			while (enu.hasMoreElements()) {
-				Logger logger = (Logger)enu.nextElement();
-
-				if (Validator.isNull(keywords) || logger.getName().contains(keywords)) {
-					currentLoggerNames.put(logger.getName(), logger);
-				}
-			}
-
-			List currentLoggerNamesList = ListUtil.fromCollection(currentLoggerNames.entrySet());
-
-			Iterator itr = currentLoggerNamesList.iterator();
-
-			while (itr.hasNext()) {
-				Map.Entry entry = (Map.Entry)itr.next();
-
-				String name = (String)entry.getKey();
-				Logger logger = (Logger)entry.getValue();
-
-				Level level = logger.getLevel();
-
-				if (level == null) {
-					itr.remove();
-				}
-			}
-			%>
-
 			<liferay-ui:search-container
 				iteratorURL="<%= serverURL %>"
 				total="<%= currentLoggerNamesList.size() %>"
 			>
-				<liferay-ui:search-container-results
-					results="<%= ListUtil.subList(currentLoggerNamesList, searchContainer.getStart(), searchContainer.getEnd()) %>"
-				/>
-
 				<liferay-ui:search-container-row
 					className="java.util.Map.Entry"
 					modelVar="entry"

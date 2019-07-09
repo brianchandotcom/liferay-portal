@@ -68,7 +68,7 @@ public class HypersonicSQLTransformerLogicTest
 
 	@Override
 	protected String getNullDateTransformedSQL() {
-		return "select NULL from Foo";
+		return "select CAST(NULL AS DATE) from Foo";
 	}
 
 }

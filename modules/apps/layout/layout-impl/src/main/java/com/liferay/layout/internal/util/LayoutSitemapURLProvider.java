@@ -15,18 +15,17 @@
 package com.liferay.layout.internal.util;
 
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
+import com.liferay.layout.admin.kernel.util.Sitemap;
 import com.liferay.layout.admin.kernel.util.SitemapURLProvider;
-import com.liferay.layout.admin.kernel.util.SitemapUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypeController;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutServiceUtil;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
@@ -35,10 +34,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Eduardo García
  */
-@OSGiBeanProperties
+@Component(service = SitemapURLProvider.class)
 public class LayoutSitemapURLProvider implements SitemapURLProvider {
 
 	@Override
@@ -52,7 +54,7 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Layout layout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+		Layout layout = _layoutLocalService.getLayoutByUuidAndGroupId(
 			layoutUuid, layoutSet.getGroupId(), layoutSet.isPrivateLayout());
 
 		visitLayout(element, layout, themeDisplay);
@@ -79,7 +81,7 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 				continue;
 			}
 
-			List<Layout> layouts = LayoutServiceUtil.getLayouts(
+			List<Layout> layouts = _layoutService.getLayouts(
 				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
 				entry.getKey());
 
@@ -104,20 +106,31 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 			return;
 		}
 
-		String layoutFullURL = PortalUtil.getLayoutFullURL(
-			layout, themeDisplay);
+		String layoutFullURL = _portal.getLayoutFullURL(layout, themeDisplay);
 
-		layoutFullURL = PortalUtil.getCanonicalURL(
+		layoutFullURL = _portal.getCanonicalURL(
 			layoutFullURL, themeDisplay, layout);
 
-		Map<Locale, String> alternateURLs = SitemapUtil.getAlternateURLs(
+		Map<Locale, String> alternateURLs = _sitemap.getAlternateURLs(
 			layoutFullURL, themeDisplay, layout);
 
 		for (String alternateURL : alternateURLs.values()) {
-			SitemapUtil.addURLElement(
+			_sitemap.addURLElement(
 				element, alternateURL, typeSettingsProperties,
 				layout.getModifiedDate(), layoutFullURL, alternateURLs);
 		}
 	}
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutService _layoutService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private Sitemap _sitemap;
 
 }

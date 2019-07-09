@@ -12,12 +12,10 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
+import 'clay-alert';
 import 'clay-button';
 import 'clay-select';
 import 'clay-sticker';
-import {ClayStripe} from 'clay-alert';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 import templates from './ManageCollaborators.soy';

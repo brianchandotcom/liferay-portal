@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,8 +56,9 @@ public class FragmentRendererTrackerImpl implements FragmentRendererTracker {
 		Collection<FragmentRenderer> fragmentRenderers =
 			_fragmentRenderers.values();
 
-		return fragmentRenderers.stream(
-		).filter(
+		Stream<FragmentRenderer> stream = fragmentRenderers.stream();
+
+		return stream.filter(
 			fragmentRenderer -> fragmentRenderer.getType() == type
 		).collect(
 			Collectors.toCollection(ArrayList::new)

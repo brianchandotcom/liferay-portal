@@ -235,9 +235,10 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 			return Collections.emptySet();
 		}
 
-		return StreamSupport.stream(
-			(Spliterator<JSONObject>)jsonArray.spliterator(), false
-		).filter(
+		Stream<JSONObject> stream = StreamSupport.stream(
+			(Spliterator<JSONObject>)jsonArray.spliterator(), false);
+
+		return stream.filter(
 			predicate
 		).map(
 			jsonObject -> StringUtil.removeChars(

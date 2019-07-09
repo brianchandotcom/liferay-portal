@@ -301,8 +301,9 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
 		Set<String> fieldNames = dataRecordValues.keySet();
 
-		List<String> missingFieldNames = fieldNames.stream(
-		).filter(
+		Stream<String> fieldNamesStream = fieldNames.stream();
+
+		List<String> missingFieldNames = fieldNamesStream.filter(
 			fieldName -> !dataDefinitionFieldNames.contains(fieldName)
 		).collect(
 			Collectors.toList()

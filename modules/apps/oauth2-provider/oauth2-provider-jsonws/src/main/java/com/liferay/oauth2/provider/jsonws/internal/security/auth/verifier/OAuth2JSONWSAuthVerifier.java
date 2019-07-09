@@ -53,6 +53,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -117,8 +118,10 @@ public class OAuth2JSONWSAuthVerifier implements AuthVerifier {
 					getOAuth2AuthorizationOAuth2ScopeGrants(
 						oAuth2Authorization.getOAuth2AuthorizationId());
 
-			List<String> scopes = oAuth2AuthorizationOAuth2ScopeGrants.stream(
-			).filter(
+			Stream<OAuth2ScopeGrant> stream =
+				oAuth2AuthorizationOAuth2ScopeGrants.stream();
+
+			List<String> scopes = stream.filter(
 				oAuth2ScopeGrant -> _jaxRsApplicationNames.contains(
 					oAuth2ScopeGrant.getApplicationName())
 			).map(

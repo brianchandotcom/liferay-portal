@@ -17,12 +17,14 @@ package com.liferay.asset.auto.tagger.internal.configuration.admin.definition;
 import com.liferay.asset.auto.tagger.text.extractor.TextExtractor;
 import com.liferay.asset.auto.tagger.text.extractor.TextExtractorTracker;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.configuration.admin.definition.ConfigurationFieldOptionsProvider;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,10 +44,14 @@ public class EnabledClassNamesConfigurationFieldOptionsProvider
 	implements ConfigurationFieldOptionsProvider {
 
 	public List<Option> getOptions() {
-		return AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
-			CompanyThreadLocal.getCompanyId()
-		).stream(
-		).filter(
+		List<AssetRendererFactory<?>> assetRendererFactories =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
+				CompanyThreadLocal.getCompanyId());
+
+		Stream<AssetRendererFactory<?>> stream =
+			assetRendererFactories.stream();
+
+		return stream.filter(
 			assetRendererFactory -> {
 				TextExtractor textExtractor =
 					_textExtractorTracker.getTextExtractor(

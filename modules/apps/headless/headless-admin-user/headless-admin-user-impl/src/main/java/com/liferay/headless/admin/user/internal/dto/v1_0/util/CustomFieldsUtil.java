@@ -35,6 +35,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.stream.Stream;
 
 /**
  * @author Javier Gamarra
@@ -51,8 +52,9 @@ public class CustomFieldsUtil {
 
 		Set<Map.Entry<String, Serializable>> entries = attributes.entrySet();
 
-		return entries.stream(
-		).filter(
+		Stream<Entry<String, Serializable>> entriesStream = entries.stream();
+
+		return entriesStream.filter(
 			entry -> {
 				UnicodeProperties unicodeProperties =
 					expandoBridge.getAttributeProperties(entry.getKey());

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -58,9 +59,9 @@ public class AssignScopesMVCActionCommand implements MVCActionCommand {
 		String[] scopeAliases = ParamUtil.getStringValues(
 			actionRequest, "scopeAliases");
 
-		List<String> scopeAliasesList = Arrays.stream(
-			scopeAliases
-		).flatMap(
+		Stream<String> scopeAliasesStream = Arrays.stream(scopeAliases);
+
+		List<String> scopeAliasesList = scopeAliasesStream.flatMap(
 			scopeAlias -> Arrays.stream(scopeAlias.split(StringPool.SPACE))
 		).filter(
 			Validator::isNotNull

@@ -129,10 +129,11 @@ public class CTProcessResource {
 
 		CTJaxRsUtil.checkCompany(companyId);
 
-		Stream<CTProcess> stream = _getCTProcesses(
+		List<CTProcess> ctProcesses = _getCTProcesses(
 			companyId, CTConstants.USER_FILTER_ALL, keywords, type, offset,
-			limit, null
-		).stream();
+			limit, null);
+
+		Stream<CTProcess> stream = ctProcesses.stream();
 
 		return stream.map(
 			CTProcess::getUserId

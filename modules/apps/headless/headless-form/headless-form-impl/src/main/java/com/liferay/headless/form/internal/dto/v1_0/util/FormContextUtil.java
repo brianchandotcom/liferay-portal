@@ -106,9 +106,10 @@ public class FormContextUtil {
 			{
 				enabled = _getBoolean(formPageContext, "enabled");
 
-				Stream<Map<String, Object>> stream = _getMaps(
-					formPageContext, "rows"
-				).stream();
+				List<Map<String, Object>> maps = _getMaps(
+					formPageContext, "rows");
+
+				Stream<Map<String, Object>> stream = maps.stream();
 
 				List<Map<String, Object>> fields = stream.map(
 					row -> _getMaps(row, "columns")

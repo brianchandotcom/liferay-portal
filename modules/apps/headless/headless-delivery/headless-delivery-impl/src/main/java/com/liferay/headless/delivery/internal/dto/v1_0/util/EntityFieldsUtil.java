@@ -33,6 +33,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Javier Gamarra
@@ -54,8 +55,9 @@ public class EntityFieldsUtil {
 		List<ExpandoColumn> expandoColumns =
 			expandoColumnLocalService.getColumns(expandoTable.getTableId());
 
-		return expandoColumns.stream(
-		).map(
+		Stream<ExpandoColumn> expandoColumnStream = expandoColumns.stream();
+
+		return expandoColumnStream.map(
 			EntityFieldsUtil::_getEntityField
 		).filter(
 			Objects::nonNull

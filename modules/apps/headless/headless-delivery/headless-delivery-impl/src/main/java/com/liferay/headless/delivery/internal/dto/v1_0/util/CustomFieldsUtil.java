@@ -61,8 +61,9 @@ public class CustomFieldsUtil {
 
 		Set<Map.Entry<String, Serializable>> entries = attributes.entrySet();
 
-		return entries.stream(
-		).filter(
+		Stream<Entry<String, Serializable>> entriesStream = entries.stream();
+
+		return entriesStream.filter(
 			entry -> {
 				UnicodeProperties unicodeProperties =
 					expandoBridge.getAttributeProperties(entry.getKey());

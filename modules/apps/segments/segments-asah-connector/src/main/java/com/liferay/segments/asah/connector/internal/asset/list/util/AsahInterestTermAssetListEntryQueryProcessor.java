@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.asah.connector.internal.asset.list;
+package com.liferay.segments.asah.connector.internal.asset.list.util;
 
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.constants.AssetListPortletKeys;

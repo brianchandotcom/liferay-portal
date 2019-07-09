@@ -303,15 +303,17 @@ public class AssetListAssetEntryProviderImpl
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void setAssetListEntryQueryProcessor(
-		AssetListEntryQueryProcessor assetListEntryQueryProcessor) {
+		AssetListAssetEntryQueryProcessor assetListAssetEntryQueryProcessor) {
 
-		_assetListEntryQueryProcessors.add(assetListEntryQueryProcessor);
+		_assetListAssetEntryQueryProcessors.add(
+			assetListAssetEntryQueryProcessor);
 	}
 
 	protected void unsetAssetListEntryQueryProcessor(
-		AssetListEntryQueryProcessor assetListEntryQueryProcessor) {
+		AssetListAssetEntryQueryProcessor assetListAssetEntryQueryProcessor) {
 
-		_assetListEntryQueryProcessors.remove(assetListEntryQueryProcessor);
+		_assetListAssetEntryQueryProcessors.remove(
+			assetListAssetEntryQueryProcessor);
 	}
 
 	private static long[] _getAssetCategoryIds(UnicodeProperties properties) {
@@ -551,10 +553,10 @@ public class AssetListAssetEntryProviderImpl
 		String userId, UnicodeProperties properties,
 		AssetEntryQuery assetEntryQuery) {
 
-		for (AssetListEntryQueryProcessor assetListEntryQueryProcessor :
-				_assetListEntryQueryProcessors) {
+		for (AssetListAssetEntryQueryProcessor assetListAssetEntryQueryProcessor :
+			_assetListAssetEntryQueryProcessors) {
 
-			assetListEntryQueryProcessor.processAssetEntryQuery(
+			assetListAssetEntryQueryProcessor.processAssetEntryQuery(
 				userId, properties, assetEntryQuery);
 		}
 	}
@@ -722,8 +724,8 @@ public class AssetListAssetEntryProviderImpl
 	private AssetListEntryAssetEntryRelLocalService
 		_assetListEntryAssetEntryRelLocalService;
 
-	private final List<AssetListEntryQueryProcessor>
-		_assetListEntryQueryProcessors = new CopyOnWriteArrayList<>();
+	private final List<AssetListAssetEntryQueryProcessor>
+		_assetListAssetEntryQueryProcessors = new CopyOnWriteArrayList<>();
 
 	@Reference
 	private AssetListEntrySegmentsEntryRelLocalService

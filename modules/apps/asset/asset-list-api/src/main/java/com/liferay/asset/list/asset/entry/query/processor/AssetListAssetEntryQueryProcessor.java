@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 /**
  * @author Sarai Díaz
  */
-public interface AssetListEntryQueryProcessor {
+public interface AssetListAssetEntryQueryProcessor {
 
 	public void processAssetEntryQuery(
 		String userId, UnicodeProperties unicodeProperties,

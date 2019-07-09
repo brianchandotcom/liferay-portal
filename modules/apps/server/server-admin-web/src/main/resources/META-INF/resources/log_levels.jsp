@@ -30,6 +30,10 @@ PortletURL serverURL = renderResponse.createRenderURL();
 serverURL.setParameter("mvcRenderCommandName", "/server_admin/view");
 serverURL.setParameter("tabs1", tabs1);
 serverURL.setParameter("tabs2", tabs2);
+
+int delta = ParamUtil.getInteger(request, "delta");
+
+serverURL.setParameter("delta", String.valueOf(delta));
 %>
 
 <div class="server-admin-tabs">
@@ -52,14 +56,12 @@ serverURL.setParameter("tabs2", tabs2);
 		</aui:nav>
 
 		<c:if test='<%= tabs2.equals("update-categories") %>'>
-			<aui:nav-bar-search>
-				<liferay-ui:input-search
-					autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
-					markupView="lexicon"
-					placeholder='<%= LanguageUtil.get(request, "keywords") %>'
-					title='<%= LanguageUtil.get(request, "search-categories") %>'
-				/>
-			</aui:nav-bar-search>
+			<clay:management-toolbar
+				searchActionURL="<%= String.valueOf(serverURL) %>"
+				searchFormName="searchFm"
+				selectable="<%= false %>"
+				showSearch="<%= true %>"
+			/>
 		</c:if>
 	</aui:nav-bar>
 

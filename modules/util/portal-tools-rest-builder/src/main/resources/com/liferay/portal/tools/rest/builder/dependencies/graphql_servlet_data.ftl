@@ -16,7 +16,6 @@ import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author ${configYAML.author}
@@ -70,7 +69,7 @@ public class ServletDataImpl implements ServletData {
 	</#list>
 
 	<#list schemaNames as schemaName>
-		@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+		@Reference
 		private ComponentServiceObjects<${schemaName}Resource> _${freeMarkerTool.getSchemaVarName(schemaName)}ResourceComponentServiceObjects;
 	</#list>
 

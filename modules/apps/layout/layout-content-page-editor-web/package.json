@@ -14,7 +14,9 @@
 		"metal-state": "2.16.8",
 		"metal-throttle": "3.0.1",
 		"metal-uri": "2.4.0",
-		"react": "16.8.6"
+		"prop-types": "^15.7.2",
+		"react": "16.8.6",
+		"react-dom": "^16.8.6"
 	},
 	"jest": {
 		"setupFiles": [

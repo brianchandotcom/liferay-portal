@@ -165,22 +165,34 @@ const Body = ({id, processId, query}) => {
 		}
 	};
 
-	const onDurationChanged = (days, hours) => () => {
+	const onDurationChanged = (oldDays, oldHours) => days => {
 		errors[ALERT_MESSAGE] = '';
-		errors[DURATION] = validateDuration(days, hours);
+		errors[DURATION] = validateDuration(days, oldHours);
 		errors[HOURS] = '';
 
 		setErrors({...errors});
 	};
 
-	const onHoursBlurred = hours => () => {
-		const beforeHoursError = errors[HOURS];
-
-		errors[ALERT_MESSAGE] = '';
-		errors[HOURS] = validateHours(hours);
-
-		if (beforeHoursError !== errors[HOURS]) {
+	const onHoursBlurred = (days, hours) => () => {
+		if (days && Number(days) > 0 && (!hours || hours === '00:00')) {
+			errors[ALERT_MESSAGE] = '';
+			errors[HOURS] = '';
 			setErrors({...errors});
+		} else {
+			const beforeHoursError = errors[HOURS];
+
+			errors[ALERT_MESSAGE] = '';
+			errors[HOURS] = validateHours(hours);
+
+			if (hours && hours === '00:00') {
+				errors[HOURS] = Liferay.Language.get(
+					'value-must-be-an-hour-below'
+				);
+			}
+
+			if (beforeHoursError !== errors[HOURS]) {
+				setErrors({...errors});
+			}
 		}
 	};
 
@@ -458,7 +470,7 @@ const Body = ({id, processId, query}) => {
 								id='sla_duration_hours'
 								mask={[/\d/, /\d/, ':', /\d/, /\d/]}
 								name={HOURS}
-								onBlur={onHoursBlurred(hours)}
+								onBlur={onHoursBlurred(days, hours)}
 								onChange={onChangeHandler(
 									changeValue,
 									onDurationChanged(days, hours)
@@ -570,6 +582,10 @@ const Footer = ({id, onReloadNodes, processId, query}) => {
 		errors[PAUSE_NODE_KEYS] = '';
 		errors[START_NODE_KEYS] = validateNodeKeys(startNodeKeys.nodeKeys);
 		errors[STOP_NODE_KEYS] = validateNodeKeys(stopNodeKeys.nodeKeys);
+
+		if ((!hours || hours === '00:00') && (days && Number(days) > 0)) {
+			errors[HOURS] = '';
+		}
 
 		if (hasErrors(errors)) {
 			errors[ALERT_MESSAGE] = Liferay.Language.get(

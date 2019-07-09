@@ -13,11 +13,11 @@ const validateDuration = (days, hours) => {
 const validateHours = hours => {
 	const hoursRegex = /([01][0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?/;
 
-	if (hours && !hours.match(hoursRegex)) {
-		return Liferay.Language.get('value-must-be-an-hour-below');
+	if (hours && hours.trim().length && hours.match(hoursRegex)) {
+		return '';
 	}
 
-	return '';
+	return Liferay.Language.get('value-must-be-an-hour-below');
 };
 
 const validateName = name => {

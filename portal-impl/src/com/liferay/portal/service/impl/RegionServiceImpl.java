@@ -14,16 +14,23 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RegionCodeException;
 import com.liferay.portal.kernel.exception.RegionNameException;
+import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.impl.RegionModelImpl;
 import com.liferay.portal.service.base.RegionServiceBaseImpl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -98,13 +105,38 @@ public class RegionServiceImpl extends RegionServiceBaseImpl {
 
 	@Override
 	public List<Region> getRegions(long countryId) {
-		return regionPersistence.findByCountryId(countryId);
+		return regionPersistence.findByCountryId(
+			countryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			_getOrderByComparator(countryId));
 	}
 
 	@AccessControlled(guestAccessEnabled = true)
 	@Override
 	public List<Region> getRegions(long countryId, boolean active) {
-		return regionPersistence.findByC_A(countryId, active);
+		return regionPersistence.findByC_A(
+			countryId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			_getOrderByComparator(countryId));
 	}
+
+	private OrderByComparator<Region> _getOrderByComparator(long countryId) {
+		Country country = countryService.fetchCountry(countryId);
+
+		if (country == null) {
+			return null;
+		}
+
+		return _countryOrderByComparatorMap.get(country.getA2());
+	}
+
+	private static final Map<String, OrderByComparator<Region>>
+		_countryOrderByComparatorMap =
+			new HashMap<String, OrderByComparator<Region>>() {
+				{
+					put(
+						"JP",
+						OrderByComparatorFactoryUtil.create(
+							RegionModelImpl.TABLE_NAME, "regionCode", true));
+				}
+			};
 
 }

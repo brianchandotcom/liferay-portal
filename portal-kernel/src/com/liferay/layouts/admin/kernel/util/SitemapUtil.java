@@ -26,7 +26,9 @@ import java.util.Map;
 
 /**
  * @author Raymond Augé
+ * @deprecated As of Mueller (7.2.x), replaced by {@link com.liferay.layout.admin.kernel.util.SitemapUtil}
  */
+@Deprecated
 public class SitemapUtil {
 
 	public static void addURLElement(

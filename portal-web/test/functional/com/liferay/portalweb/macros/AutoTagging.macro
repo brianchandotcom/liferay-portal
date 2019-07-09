@@ -84,7 +84,7 @@ definition {
 				configurationName = "Asset Auto Tagging",
 				configurationScope = "Virtual Instance Scope");
 
-			Check(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
+			FormFields.enableCheckbox(fieldName = "enabled");
 
 			if (isSet(maximumNumberOfTags)) {
 				SystemSettings.editTextSetting(

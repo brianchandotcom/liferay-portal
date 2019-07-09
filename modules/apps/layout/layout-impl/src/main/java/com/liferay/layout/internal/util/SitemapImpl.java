@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.layoutsadmin.util;
+package com.liferay.layout.internal.util;
 
-import com.liferay.layouts.admin.kernel.model.LayoutTypePortletConstants;
-import com.liferay.layouts.admin.kernel.util.Sitemap;
-import com.liferay.layouts.admin.kernel.util.SitemapURLProvider;
-import com.liferay.layouts.admin.kernel.util.SitemapURLProviderRegistryUtil;
+import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
+import com.liferay.layout.admin.kernel.util.Sitemap;
+import com.liferay.layout.admin.kernel.util.SitemapURLProvider;
+import com.liferay.layout.admin.kernel.util.SitemapURLProviderRegistryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.portal.util.PropsValues;
+import org.osgi.service.component.annotations.Component;
 
 import java.text.DateFormat;
 
@@ -50,9 +51,7 @@ import java.util.Map;
 /**
  * @author Jorge Ferrer
  * @author Vilmos Papp
- * @deprecated As of Mueller (7.2.x), replaced by {@link com.liferay.layout.internal.util.SitemapImpl}
  */
-@Deprecated
 public class SitemapImpl implements Sitemap {
 
 	@Override

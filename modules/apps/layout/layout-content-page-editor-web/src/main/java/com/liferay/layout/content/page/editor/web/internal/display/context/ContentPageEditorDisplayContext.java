@@ -144,14 +144,10 @@ public class ContentPageEditorDisplayContext {
 		request = httpServletRequest;
 		_renderResponse = renderResponse;
 		this.classPK = classPK;
+		_fragmentRendererController = fragmentRendererController;
+		_commentManager = commentManager;
 
 		classNameId = PortalUtil.getClassNameId(className);
-		infoDisplayContributorTracker =
-			(InfoDisplayContributorTracker)httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER);
-		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-		_fragmentRendererController = fragmentRendererController;
 		_fragmentCollectionContributorTracker =
 			(FragmentCollectionContributorTracker)
 				httpServletRequest.getAttribute(
@@ -160,9 +156,13 @@ public class ContentPageEditorDisplayContext {
 		_fragmentRendererTracker =
 			(FragmentRendererTracker)httpServletRequest.getAttribute(
 				FragmentActionKeys.FRAGMENT_RENDERER_TRACKER);
+		infoDisplayContributorTracker =
+			(InfoDisplayContributorTracker)httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER);
 		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
 			ContentPageEditorWebKeys.ITEM_SELECTOR);
-		_commentManager = commentManager;
+		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public SoyContext getEditorSoyContext() throws Exception {

@@ -32,4 +32,7 @@ public class ApplicationListWebKeys {
 	public static final String PANEL_CATEGORY_REGISTRY =
 		"PANEL_CATEGORY_REGISTRY";
 
+	public static final String PERSONAL_MENU_ENTRY_HELPER =
+		"PERSONAL_MENU_ENTRY_HELPER";
+
 }

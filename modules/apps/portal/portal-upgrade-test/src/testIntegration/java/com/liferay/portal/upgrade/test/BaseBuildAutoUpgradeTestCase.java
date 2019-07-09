@@ -21,13 +21,16 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
+import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.service.persistence.ServiceComponentPersistence;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.DBAssertionUtil;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -37,6 +40,8 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.lang.reflect.Field;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -135,6 +140,21 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 
 				return null;
 			});
+
+		AopInvocationHandler aopInvocationHandler =
+			(AopInvocationHandler)ProxyUtil.getInvocationHandler(
+				_serviceComponentLocalService);
+
+		Object serviceComponentLocalServiceImpl =
+			aopInvocationHandler.getTarget();
+
+		Class<?> clazz = serviceComponentLocalServiceImpl.getClass();
+
+		Field field = clazz.getDeclaredField("_serviceComponents");
+
+		field.setAccessible(true);
+
+		field.set(serviceComponentLocalServiceImpl, null);
 	}
 
 	@Test
@@ -516,6 +536,9 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 
 	@Inject
 	private ReleaseLocalService _releaseLocalService;
+
+	@Inject
+	private ServiceComponentLocalService _serviceComponentLocalService;
 
 	@Inject
 	private ServiceComponentPersistence _serviceComponentPersistence;

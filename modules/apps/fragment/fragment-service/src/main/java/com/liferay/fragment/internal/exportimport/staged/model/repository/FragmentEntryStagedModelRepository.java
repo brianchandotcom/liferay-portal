@@ -57,10 +57,12 @@ public class FragmentEntryStagedModelRepository
 
 		return _fragmentEntryLocalService.addFragmentEntry(
 			userId, fragmentEntry.getGroupId(),
-			fragmentEntry.getFragmentCollectionId(), fragmentEntry.getName(),
+			fragmentEntry.getFragmentCollectionId(),
+			fragmentEntry.getFragmentEntryKey(), fragmentEntry.getName(),
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), fragmentEntry.getPreviewFileEntryId(),
-			fragmentEntry.getType(), fragmentEntry.getStatus(), serviceContext);
+			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+			fragmentEntry.getPreviewFileEntryId(), fragmentEntry.getType(),
+			fragmentEntry.getStatus(), serviceContext);
 	}
 
 	@Override

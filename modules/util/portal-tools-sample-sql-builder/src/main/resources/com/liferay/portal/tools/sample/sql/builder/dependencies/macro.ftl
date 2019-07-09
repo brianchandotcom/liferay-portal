@@ -142,8 +142,6 @@
 	${dataFactory.toInsertSQL(_layoutModel)}
 
 	${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(_layoutModel))}
-
-	${dataFactory.toInsertSQL(dataFactory.newLayoutVersionModel(_layoutModel))}
 </#macro>
 
 <#macro insertMBDiscussion

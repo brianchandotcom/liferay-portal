@@ -145,7 +145,6 @@ import com.liferay.portal.kernel.model.LayoutModel;
 import com.liferay.portal.kernel.model.LayoutSetModel;
 import com.liferay.portal.kernel.model.LayoutSetVersionModel;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
-import com.liferay.portal.kernel.model.LayoutVersionModel;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferencesModel;
@@ -193,7 +192,6 @@ import com.liferay.portal.model.impl.LayoutFriendlyURLModelImpl;
 import com.liferay.portal.model.impl.LayoutModelImpl;
 import com.liferay.portal.model.impl.LayoutSetModelImpl;
 import com.liferay.portal.model.impl.LayoutSetVersionModelImpl;
-import com.liferay.portal.model.impl.LayoutVersionModelImpl;
 import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
 import com.liferay.portal.model.impl.ReleaseModelImpl;
 import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
@@ -2171,7 +2169,6 @@ public class DataFactory {
 		long plid = _counter.get();
 
 		layoutModel.setPlid(plid);
-		layoutModel.setHeadId(plid);
 
 		layoutModel.setGroupId(groupId);
 		layoutModel.setCompanyId(_companyId);
@@ -2225,28 +2222,6 @@ public class DataFactory {
 				newLayoutSetVersionModel(layoutSetModel)));
 
 		return layoutSetVersionModels;
-	}
-
-	public LayoutVersionModel newLayoutVersionModel(LayoutModel layoutModel) {
-		LayoutVersionModel layoutVersionModel = new LayoutVersionModelImpl();
-
-		layoutVersionModel.setLayoutVersionId(_counter.get());
-		layoutVersionModel.setUuid(SequentialUUID.generate());
-		layoutVersionModel.setPlid(layoutModel.getPlid());
-		layoutVersionModel.setGroupId(layoutModel.getGroupId());
-		layoutVersionModel.setCompanyId(_companyId);
-		layoutVersionModel.setUserId(_sampleUserId);
-		layoutVersionModel.setUserName(_SAMPLE_USER_NAME);
-		layoutVersionModel.setCreateDate(new Date());
-		layoutVersionModel.setModifiedDate(new Date());
-		layoutVersionModel.setLayoutId(layoutModel.getLayoutId());
-		layoutVersionModel.setName(layoutModel.getName());
-		layoutVersionModel.setType(layoutModel.getType());
-		layoutVersionModel.setFriendlyURL(layoutModel.getFriendlyURL());
-		layoutVersionModel.setTypeSettings(layoutModel.getTypeSettings());
-		layoutVersionModel.setLastPublishDate(new Date());
-
-		return layoutVersionModel;
 	}
 
 	public List<MBCategoryModel> newMBCategoryModels(long groupId) {

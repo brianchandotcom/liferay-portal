@@ -112,15 +112,14 @@ public class ETagFilter extends BasePortalFilter {
 				restrictedByteBufferCacheServletResponse)
 		throws IOException {
 
-		if (!restrictedByteBufferCacheServletResponse.isOverflowed()) {
-			if (!isEligibleForETag(
-					restrictedByteBufferCacheServletResponse.getStatus()) ||
-				!ETagUtil.processETag(
-					httpServletRequest, httpServletResponse,
-					restrictedByteBufferCacheServletResponse.getByteBuffer())) {
+		if (!restrictedByteBufferCacheServletResponse.isOverflowed() &&
+			(!isEligibleForETag(
+				restrictedByteBufferCacheServletResponse.getStatus()) ||
+			 !ETagUtil.processETag(
+				 httpServletRequest, httpServletResponse,
+				 restrictedByteBufferCacheServletResponse.getByteBuffer()))) {
 
-				restrictedByteBufferCacheServletResponse.flushCache();
-			}
+			restrictedByteBufferCacheServletResponse.flushCache();
 		}
 	}
 

@@ -143,7 +143,6 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLModel;
 import com.liferay.portal.kernel.model.LayoutModel;
 import com.liferay.portal.kernel.model.LayoutSetModel;
-import com.liferay.portal.kernel.model.LayoutSetVersionModel;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.PortletConstants;
@@ -191,7 +190,6 @@ import com.liferay.portal.model.impl.GroupModelImpl;
 import com.liferay.portal.model.impl.LayoutFriendlyURLModelImpl;
 import com.liferay.portal.model.impl.LayoutModelImpl;
 import com.liferay.portal.model.impl.LayoutSetModelImpl;
-import com.liferay.portal.model.impl.LayoutSetVersionModelImpl;
 import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
 import com.liferay.portal.model.impl.ReleaseModelImpl;
 import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
@@ -2211,19 +2209,6 @@ public class DataFactory {
 		return layoutSetModels;
 	}
 
-	public List<LayoutSetVersionModel> newLayoutSetVersionModels(
-		List<LayoutSetModel> layoutSetModels) {
-
-		List<LayoutSetVersionModel> layoutSetVersionModels = new ArrayList<>(
-			layoutSetModels.size());
-
-		layoutSetModels.forEach(
-			layoutSetModel -> layoutSetVersionModels.add(
-				newLayoutSetVersionModel(layoutSetModel)));
-
-		return layoutSetVersionModels;
-	}
-
 	public List<MBCategoryModel> newMBCategoryModels(long groupId) {
 		List<MBCategoryModel> mbCategoryModels = new ArrayList<>(
 			_maxMBCategoryCount);
@@ -3470,7 +3455,6 @@ public class DataFactory {
 		long layoutSetId = _counter.get();
 
 		layoutSetModel.setLayoutSetId(layoutSetId);
-		layoutSetModel.setHeadId(layoutSetId);
 
 		layoutSetModel.setGroupId(groupId);
 		layoutSetModel.setCompanyId(_companyId);
@@ -3482,28 +3466,6 @@ public class DataFactory {
 		layoutSetModel.setPageCount(pageCount);
 
 		return layoutSetModel;
-	}
-
-	protected LayoutSetVersionModel newLayoutSetVersionModel(
-		LayoutSetModel layoutSetModel) {
-
-		LayoutSetVersionModel layoutSetVersionModel =
-			new LayoutSetVersionModelImpl();
-
-		layoutSetVersionModel.setLayoutSetVersionId(_counter.get());
-		layoutSetVersionModel.setLayoutSetId(layoutSetModel.getLayoutSetId());
-		layoutSetVersionModel.setGroupId(layoutSetModel.getGroupId());
-		layoutSetVersionModel.setCompanyId(layoutSetModel.getCompanyId());
-		layoutSetVersionModel.setCreateDate(new Date());
-		layoutSetVersionModel.setModifiedDate(new Date());
-		layoutSetVersionModel.setPrivateLayout(
-			layoutSetModel.getPrivateLayout());
-		layoutSetVersionModel.setThemeId(layoutSetModel.getThemeId());
-		layoutSetVersionModel.setColorSchemeId(
-			layoutSetModel.getColorSchemeId());
-		layoutSetVersionModel.setPageCount(layoutSetModel.getPageCount());
-
-		return layoutSetVersionModel;
 	}
 
 	protected MBCategoryModel newMBCategoryModel(long groupId, int index) {

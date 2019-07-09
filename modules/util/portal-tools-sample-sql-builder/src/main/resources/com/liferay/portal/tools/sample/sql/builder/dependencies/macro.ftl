@@ -128,12 +128,6 @@
 	<#list layoutSetModels as layoutSetModel>
 		${dataFactory.toInsertSQL(layoutSetModel)}
 	</#list>
-
-	<#local layoutSetVersionModels = dataFactory.newLayoutSetVersionModels(layoutSetModels)>
-
-	<#list layoutSetVersionModels as layoutSetVersionModel>
-		${dataFactory.toInsertSQL(layoutSetVersionModel)}
-	</#list>
 </#macro>
 
 <#macro insertLayout

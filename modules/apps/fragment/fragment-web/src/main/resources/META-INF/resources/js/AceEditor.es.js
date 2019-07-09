@@ -221,7 +221,8 @@ class AceEditor extends Component {
 AceEditor.SYNTAX = {
 	css: 'css',
 	html: 'html',
-	javascript: 'javascript'
+	javascript: 'javascript',
+	json: 'json'
 };
 
 /**

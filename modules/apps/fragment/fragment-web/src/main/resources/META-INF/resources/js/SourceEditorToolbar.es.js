@@ -58,7 +58,8 @@ class SourceEditorToolbar extends Component {
 SourceEditorToolbar.SYNTAX_LABEL = {
 	[AceEditor.SYNTAX.css]: 'CSS',
 	[AceEditor.SYNTAX.html]: 'HTML',
-	[AceEditor.SYNTAX.javascript]: 'JavaScript'
+	[AceEditor.SYNTAX.javascript]: 'JavaScript',
+	[AceEditor.SYNTAX.json]: 'JSON'
 };
 
 /**

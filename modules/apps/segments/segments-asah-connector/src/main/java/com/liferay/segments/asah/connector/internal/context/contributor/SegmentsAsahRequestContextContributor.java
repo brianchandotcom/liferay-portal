@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"request.context.contributor.key=" + SegmentsAsahRequestContextContributor.AC_CLIENT_USER_ID,
+		"request.context.contributor.key=" + SegmentsAsahRequestContextContributor.SEGMENTS_ANONYMOUS_USER_ID_KEY,
 		"request.context.contributor.type=id"
 	},
 	service = RequestContextContributor.class
@@ -42,21 +42,26 @@ import org.osgi.service.component.annotations.Component;
 public class SegmentsAsahRequestContextContributor
 	implements RequestContextContributor {
 
-	public static final String AC_CLIENT_USER_ID = "acClientUserId";
+	public static final String SEGMENTS_ANONYMOUS_USER_ID_KEY =
+		"segmentsAnonymousUserId";
 
 	@Override
 	public void contribute(
 		Context context, HttpServletRequest httpServletRequest) {
 
-		String acClientUserId = _getACClientUserId(httpServletRequest);
+		String segmentsAnonymousUserId = _getSegmentsAnonymousUserId(
+			httpServletRequest);
 
 		httpServletRequest.setAttribute(
-			SegmentsWebKeys.SEGMENTS_ANONYMOUS_USER_ID, acClientUserId);
+			SegmentsWebKeys.SEGMENTS_ANONYMOUS_USER_ID,
+			segmentsAnonymousUserId);
 
-		context.put(AC_CLIENT_USER_ID, acClientUserId);
+		context.put(SEGMENTS_ANONYMOUS_USER_ID_KEY, segmentsAnonymousUserId);
 	}
 
-	private String _getACClientUserId(HttpServletRequest httpServletRequest) {
+	private String _getSegmentsAnonymousUserId(
+		HttpServletRequest httpServletRequest) {
+
 		Cookie[] cookies = httpServletRequest.getCookies();
 
 		if (ArrayUtil.isEmpty(cookies)) {

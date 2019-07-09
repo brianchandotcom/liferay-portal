@@ -19,6 +19,7 @@ import com.liferay.fragment.entry.processor.util.FragmentEntryProcessorUtil;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
+import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -56,9 +56,8 @@ public class BackgroundImageFragmentEntryProcessor
 
 	@Override
 	public String processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink, String html, String mode,
-			Locale locale, long[] segmentsExperienceIds, long previewClassPK,
-			int previewType)
+			FragmentEntryLink fragmentEntryLink, String html,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -90,14 +89,19 @@ public class BackgroundImageFragmentEntryProcessor
 
 			String value = StringPool.BLANK;
 
-			if (_fragmentEntryProcessorUtil.isAssetDisplayPage(mode)) {
+			if (_fragmentEntryProcessorUtil.isAssetDisplayPage(
+					fragmentEntryProcessorContext.getMode())) {
+
 				value = editableValueJSONObject.getString("mappedField");
 			}
 
 			if (_fragmentEntryProcessorUtil.isMapped(editableValueJSONObject)) {
 				Object fieldValue = _fragmentEntryProcessorUtil.getMappedValue(
-					editableValueJSONObject, infoDisplaysFieldValues, mode,
-					locale, previewClassPK, previewType);
+					editableValueJSONObject, infoDisplaysFieldValues,
+					fragmentEntryProcessorContext.getMode(),
+					fragmentEntryProcessorContext.getLocale(),
+					fragmentEntryProcessorContext.getPreviewClassPK(),
+					fragmentEntryProcessorContext.getPreviewType());
 
 				if (fieldValue != null) {
 					value = String.valueOf(fieldValue);
@@ -106,7 +110,9 @@ public class BackgroundImageFragmentEntryProcessor
 
 			if (Validator.isNull(value)) {
 				value = _fragmentEntryProcessorUtil.getEditableValue(
-					editableValueJSONObject, locale, segmentsExperienceIds);
+					editableValueJSONObject,
+					fragmentEntryProcessorContext.getLocale(),
+					fragmentEntryProcessorContext.getSegmentsExperienceIds());
 			}
 
 			if (Validator.isNotNull(value)) {
@@ -118,8 +124,11 @@ public class BackgroundImageFragmentEntryProcessor
 		}
 
 		if (Objects.equals(
-				mode, FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE) ||
-			Objects.equals(mode, FragmentEntryLinkConstants.VIEW)) {
+				fragmentEntryProcessorContext.getMode(),
+				FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE) ||
+			Objects.equals(
+				fragmentEntryProcessorContext.getMode(),
+				FragmentEntryLinkConstants.VIEW)) {
 
 			for (Element element :
 					document.select("[data-lfr-background-image-id]")) {

@@ -63,6 +63,7 @@ class FragmentPreview extends PortletBase {
 
 		window.addEventListener('resize', this._updatePreviewSize);
 
+		this.on('configurationChanged', this._updatePreview);
 		this.on('cssChanged', this._updatePreview);
 		this.on('htmlChanged', this._updatePreview);
 		this.on('jsChanged', this._updatePreview);
@@ -82,6 +83,7 @@ class FragmentPreview extends PortletBase {
 	detached() {
 		window.removeEventListener('resize', this._updatePreviewSize);
 
+		this.off('configurationChanged', this._updatePreview);
 		this.off('cssChanged', this._updatePreview);
 		this.off('htmlChanged', this._updatePreview);
 		this.off('jsChanged', this._updatePreview);
@@ -159,6 +161,7 @@ class FragmentPreview extends PortletBase {
 			this._loading = true;
 
 			this.fetch(this.urls.render, {
+				configuration: this.configuration,
 				css: this.css,
 				html: this.html,
 				js: this.js
@@ -213,6 +216,15 @@ class FragmentPreview extends PortletBase {
  * @static
  */
 FragmentPreview.STATE = {
+	/**
+	 * Configuration content of the preview.
+	 *
+	 * @instance
+	 * @memberOf FragmentPreview
+	 * @type {!string}
+	 */
+	configuration: Config.string().required(),
+
 	/**
 	 * CSS content of the preview.
 	 *

@@ -24,6 +24,7 @@
 		content: string,
 		name: string
 	]>}
+	{@param? _configuration: string}
 	{@param? _css: string}
 	{@param? _handleCSSChanged: any}
 	{@param? _handleHTMLChanged: any}
@@ -143,6 +144,7 @@
 					{/call}
 
 					{call com.liferay.fragment.web.FragmentPreview.render}
+						{param configuration: $_configuration /}
 						{param css: $_css /}
 						{param html: $_html /}
 						{param js: $_js /}

@@ -31,8 +31,8 @@
 		}
 	},
 	"dependencies": {
-		"incremental-dom-string": "0.0.2",
 		"frontend-js-web": "^4.0.0",
+		"incremental-dom-string": "0.0.2",
 		"metal-component": "2.16.8",
 		"metal-soy": "2.16.8"
 	},

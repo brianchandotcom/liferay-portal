@@ -14,10 +14,10 @@
 
 package com.liferay.portlet.layoutsadmin.util;
 
-import com.liferay.layouts.admin.kernel.model.LayoutTypePortletConstants;
-import com.liferay.layouts.admin.kernel.util.Sitemap;
-import com.liferay.layouts.admin.kernel.util.SitemapURLProvider;
-import com.liferay.layouts.admin.kernel.util.SitemapURLProviderRegistryUtil;
+import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
+import com.liferay.layout.admin.kernel.util.Sitemap;
+import com.liferay.layout.admin.kernel.util.SitemapURLProvider;
+import com.liferay.layout.admin.kernel.util.SitemapURLProviderRegistryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;

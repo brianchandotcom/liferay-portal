@@ -14,7 +14,7 @@
 
 package com.liferay.portal.action;
 
-import com.liferay.layouts.admin.kernel.util.SitemapUtil;
+import com.liferay.layout.admin.kernel.util.SitemapUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutSetException;
 import com.liferay.portal.kernel.log.Log;

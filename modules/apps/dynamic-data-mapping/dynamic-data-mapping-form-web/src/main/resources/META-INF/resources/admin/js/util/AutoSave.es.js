@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-spaced-func: 0 */
-
 import Component from 'metal-jsx';
 import objectHash from 'object-hash';
 import {Config} from 'metal-state';

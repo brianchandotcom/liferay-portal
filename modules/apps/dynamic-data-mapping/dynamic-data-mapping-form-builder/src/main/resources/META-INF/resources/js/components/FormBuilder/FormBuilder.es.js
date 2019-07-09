@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import '../SuccessPage/SuccessPage.es';
 import ClayModal from 'clay-modal';
 import Component from 'metal-jsx';

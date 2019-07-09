@@ -12,9 +12,6 @@
  * details.
  */
 
-/* eslint no-for-of-loops/no-for-of-loops: "warn" */
-/* eslint no-unused-vars: "warn" */
-
 import '../Calculator/Calculator.es';
 import 'clay-alert';
 import 'clay-button';

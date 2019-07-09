@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import ClayButton from 'clay-button';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';

@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import ClipboardJS from 'clipboard';
 import Component, {Config} from 'metal-jsx';
 import getCN from 'classnames';

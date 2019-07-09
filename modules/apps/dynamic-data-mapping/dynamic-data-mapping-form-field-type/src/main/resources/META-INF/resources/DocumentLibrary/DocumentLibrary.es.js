@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import '../FieldBase/FieldBase.es';
 import './DocumentLibraryRegister.soy.js';
 import Component from 'metal-component';

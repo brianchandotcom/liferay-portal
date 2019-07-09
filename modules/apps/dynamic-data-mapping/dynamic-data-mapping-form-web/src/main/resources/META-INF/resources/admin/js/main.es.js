@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import AutoSave from './util/AutoSave.es';
 import ClayModal from 'clay-modal';
 import Component from 'metal-jsx';

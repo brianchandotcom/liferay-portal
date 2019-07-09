@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-useless-escape: "warn" */
-
 import 'clay-dropdown';
 import Component from 'metal-component';
 import Soy from 'metal-soy';

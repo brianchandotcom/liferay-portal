@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import '../SuccessPage/SuccessPagePaginationItem.soy.js';
 import '../SuccessPage/SuccessPageRenderer.soy.js';
 import '../SuccessPage/SuccessPageWizardItem.soy.js';

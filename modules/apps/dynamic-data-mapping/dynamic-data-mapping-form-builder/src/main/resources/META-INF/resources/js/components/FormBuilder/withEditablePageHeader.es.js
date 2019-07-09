@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import './EditablePageHeader.soy.js';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';

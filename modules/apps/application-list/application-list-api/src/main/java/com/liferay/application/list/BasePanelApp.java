@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -122,6 +123,13 @@ public abstract class BasePanelApp implements PanelApp {
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
+		Portlet portlet = _portletLocalService.getPortletById(
+			group.getCompanyId(), getPortletId());
+
+		if (!portlet.isActive()) {
+			return false;
+		}
+
 		try {
 			ControlPanelEntry controlPanelEntry = getControlPanelEntry();
 
@@ -190,6 +198,12 @@ public abstract class BasePanelApp implements PanelApp {
 		return groupProvider.getGroup(httpServletRequest);
 	}
 
+	protected void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+
+		_portletLocalService = portletLocalService;
+	}
+
 	protected void setUserNotificationEventLocalService(
 		UserNotificationEventLocalService userNotificationEventLocalService) {
 
@@ -199,6 +213,7 @@ public abstract class BasePanelApp implements PanelApp {
 	protected GroupProvider groupProvider;
 
 	private Portlet _portlet;
+	private PortletLocalService _portletLocalService;
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;
 

@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.Collections;
-import java.util.Locale;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -108,8 +107,8 @@ public class FragmentEntryProcessorRegistryImpl
 
 	@Override
 	public String processFragmentEntryLinkCSS(
-			FragmentEntryLink fragmentEntryLink, String mode, Locale locale,
-			long[] segmentsExperienceIds, long previewClassPK, int previewType)
+			FragmentEntryLink fragmentEntryLink,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
 		String css = fragmentEntryLink.getCss();
@@ -118,8 +117,7 @@ public class FragmentEntryProcessorRegistryImpl
 				_serviceTrackerList) {
 
 			css = fragmentEntryProcessor.processFragmentEntryLinkCSS(
-				fragmentEntryLink, css, mode, locale, segmentsExperienceIds,
-				previewClassPK, previewType);
+				fragmentEntryLink, css, fragmentEntryProcessorContext);
 		}
 
 		return css;
@@ -138,25 +136,6 @@ public class FragmentEntryProcessorRegistryImpl
 
 			html = fragmentEntryProcessor.processFragmentEntryLinkHTML(
 				fragmentEntryLink, html, fragmentEntryProcessorContext);
-		}
-
-		return html;
-	}
-
-	@Override
-	public String processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink, String mode, Locale locale,
-			long[] segmentsExperienceIds, long previewClassPK, int previewType)
-		throws PortalException {
-
-		String html = fragmentEntryLink.getHtml();
-
-		for (FragmentEntryProcessor fragmentEntryProcessor :
-				_serviceTrackerList) {
-
-			html = fragmentEntryProcessor.processFragmentEntryLinkHTML(
-				fragmentEntryLink, html, mode, locale, segmentsExperienceIds,
-				previewClassPK, previewType);
 		}
 
 		return html;

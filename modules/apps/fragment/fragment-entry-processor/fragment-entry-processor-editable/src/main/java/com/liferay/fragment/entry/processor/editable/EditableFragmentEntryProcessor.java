@@ -20,7 +20,6 @@ import com.liferay.fragment.entry.processor.editable.parser.EditableElementParse
 import com.liferay.fragment.entry.processor.util.FragmentEntryProcessorUtil;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.petra.string.StringBundler;
@@ -44,7 +43,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -272,27 +270,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		bodyElement = previewElement.html(bodyElement.html());
 
 		return bodyElement.outerHtml();
-	}
-
-	@Override
-	public String processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink, String html, String mode,
-			Locale locale, long[] segmentsExperienceIds, long previewClassPK,
-			int previewType)
-		throws PortalException {
-
-		DefaultFragmentEntryProcessorContext
-			defaultFragmentEntryProcessorContext =
-				new DefaultFragmentEntryProcessorContext(
-					null, null, mode, locale);
-
-		defaultFragmentEntryProcessorContext.setPreviewClassPK(previewClassPK);
-		defaultFragmentEntryProcessorContext.setPreviewType(previewType);
-		defaultFragmentEntryProcessorContext.setSegmentsExperienceIds(
-			segmentsExperienceIds);
-
-		return processFragmentEntryLinkHTML(
-			fragmentEntryLink, html, defaultFragmentEntryProcessorContext);
 	}
 
 	@Reference(

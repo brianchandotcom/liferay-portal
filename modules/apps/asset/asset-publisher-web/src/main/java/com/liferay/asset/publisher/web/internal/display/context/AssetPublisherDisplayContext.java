@@ -31,10 +31,10 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
-import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetEntryResult;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
@@ -268,7 +268,8 @@ public class AssetPublisherDisplayContext {
 		}
 		else if (isSelectionStyleAssetList() && (assetListEntry != null)) {
 			return _assetListAssetEntryProvider.getAssetEntries(
-				assetListEntry, _getSegmentsEntryIds(), _getSegmentsAnonymousUserId());
+				assetListEntry, _getSegmentsEntryIds(),
+				_getSegmentsAnonymousUserId());
 		}
 		else if (isSelectionStyleAssetListProvider()) {
 			String infoListProviderClassName = GetterUtil.getString(
@@ -327,7 +328,8 @@ public class AssetPublisherDisplayContext {
 
 		if (isSelectionStyleAssetList() && (assetListEntry != null)) {
 			_assetEntryQuery = _assetListAssetEntryProvider.getAssetEntryQuery(
-				assetListEntry, _getSegmentsEntryIds(), _getSegmentsAnonymousUserId());
+				assetListEntry, _getSegmentsEntryIds(),
+				_getSegmentsAnonymousUserId());
 		}
 		else {
 			_assetEntryQuery = _assetPublisherHelper.getAssetEntryQuery(

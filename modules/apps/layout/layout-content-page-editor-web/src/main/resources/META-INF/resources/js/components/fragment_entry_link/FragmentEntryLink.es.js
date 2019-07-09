@@ -147,8 +147,8 @@ class FragmentEntryLink extends Component {
 
 			if (configurationValues) {
 				const segmentedConfigurationValues =
-					configurationValues[defaultSegmentsExperienceId] ||
-					configurationValues[segmentsExperienceId];
+					configurationValues[segmentsExperienceId] ||
+					configurationValues[defaultSegmentsExperienceId];
 
 				this._configurationValues = segmentedConfigurationValues;
 			}

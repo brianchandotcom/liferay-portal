@@ -31,6 +31,7 @@ portletURL.setParameter("tabs2", tabs2);
 	<portlet:param name="mvcRenderCommandName" value="/server_admin/view" />
 	<portlet:param name="tabs1" value="<%= tabs1 %>" />
 	<portlet:param name="cur" value="<%= String.valueOf(cur) %>" />
+	<portlet:param name="delta" value="<%= String.valueOf(delta) %>" />
 </portlet:renderURL>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">

@@ -12,10 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
-import async from 'metal/src/async/async';
-import core from 'metal/src/core';
 import dom from 'metal-dom/src/dom';
 import State from 'metal-state/src/State';
 
@@ -57,10 +53,9 @@ class TopSearch extends State {
 	 * Toggles the visibility of the search component when the user
 	 * clicks on the search icon
 	 *
-	 * @param  {MouseEvent} event
 	 * @protected
 	 */
-	onPorygonSearchButtonClick_(event) {
+	onPorygonSearchButtonClick_() {
 		dom.toggleClasses(this.porygonSearch_, 'active');
 		this.porygonSearchInput_.focus();
 	}

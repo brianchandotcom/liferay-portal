@@ -15,7 +15,6 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/${escapedVersion}/${stringUtil.toLowerCase(schemaPath)}.properties",
-	scope = ServiceScope.PROTOTYPE,
 	service = ${schemaName}Resource.class
 )
 public class ${schemaName}ResourceImpl extends Base${schemaName}ResourceImpl {

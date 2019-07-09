@@ -144,7 +144,7 @@ public class LiferayWriter
 				iae = new IllegalArgumentException(
 					String.format(
 						"Method expected argument instance of %s but actual " +
-							"instance passed wads %s",
+							"instance passed was %s",
 						IndexedRecord.class, object.getClass()));
 			}
 

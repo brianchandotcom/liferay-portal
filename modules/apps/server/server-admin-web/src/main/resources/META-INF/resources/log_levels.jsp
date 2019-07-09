@@ -72,6 +72,7 @@ while (itr.hasNext()) {
 }
 
 logSearchContainer.setResults(ListUtil.subList(currentLoggerNamesList, logSearchContainer.getStart(), logSearchContainer.getEnd()));
+logSearchContainer.setTotal(currentLoggerNamesList.size());
 %>
 
 <div class="server-admin-tabs">
@@ -96,6 +97,7 @@ logSearchContainer.setResults(ListUtil.subList(currentLoggerNamesList, logSearch
 		<c:if test='<%= tabs2.equals("update-categories") %>'>
 			<clay:management-toolbar
 				clearResultsURL="<%= String.valueOf(clearResultsURL) %>"
+				itemsTotal="<%= logSearchContainer.getTotal() %>"
 				searchActionURL="<%= String.valueOf(serverURL) %>"
 				searchFormName="searchFm"
 				selectable="<%= false %>"
@@ -132,8 +134,7 @@ logSearchContainer.setResults(ListUtil.subList(currentLoggerNamesList, logSearch
 		</c:when>
 		<c:otherwise>
 			<liferay-ui:search-container
-				iteratorURL="<%= serverURL %>"
-				total="<%= currentLoggerNamesList.size() %>"
+				searchContainer="<%= logSearchContainer %>"
 			>
 				<liferay-ui:search-container-row
 					className="java.util.Map.Entry"

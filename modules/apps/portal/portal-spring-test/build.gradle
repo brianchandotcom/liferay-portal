@@ -1,0 +1,7 @@
+dependencies {
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile group: "org.springframework", name: "spring-orm", version: "4.3.22.RELEASE"
+	testIntegrationCompile group: "org.springframework", name: "spring-tx", version: "4.3.22.RELEASE"
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

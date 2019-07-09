@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
+import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.ContextContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.NestedFieldsContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.ServiceEventsContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.SiteValidatorContainerRequestFilter;
@@ -117,6 +118,8 @@ public class VulcanFeature implements Feature {
 		featureContext.register(
 			new AcceptLanguageContextProvider(_language, _portal));
 		featureContext.register(new CompanyContextProvider(_portal));
+		featureContext.register(
+			new ContextContainerRequestFilter(_language, _portal));
 		featureContext.register(
 			new FilterContextProvider(
 				_expressionConvert, _filterParserProvider, _language, _portal));

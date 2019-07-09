@@ -12,14 +12,12 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import {Config} from 'metal-state';
 import Component from 'metal-component';
 import dom from 'metal-dom';
 import Soy from 'metal-soy';
 
-import {Modal} from 'frontend-js-web';
+import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import templates from './LayoutFinder.soy';
 
 /**

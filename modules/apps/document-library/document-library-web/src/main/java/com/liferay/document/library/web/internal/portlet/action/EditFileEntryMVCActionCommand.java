@@ -147,6 +147,171 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			DLConfiguration.class, properties);
 	}
 
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		FileEntry fileEntry = null;
+
+		PortletConfig portletConfig = getPortletConfig(actionRequest);
+
+		try {
+			UploadException uploadException =
+				(UploadException)actionRequest.getAttribute(
+					WebKeys.UPLOAD_EXCEPTION);
+
+			if (uploadException != null) {
+				Throwable cause = uploadException.getCause();
+
+				if (cmd.equals(Constants.ADD_TEMP)) {
+					if (cause instanceof FileUploadBase.IOFileUploadException) {
+						if (_log.isInfoEnabled()) {
+							_log.info("Temporary upload was cancelled");
+						}
+					}
+				}
+				else {
+					if (uploadException.isExceededFileSizeLimit()) {
+						throw new FileSizeException(cause);
+					}
+
+					if (uploadException.isExceededLiferayFileItemSizeLimit()) {
+						throw new LiferayFileItemException(cause);
+					}
+
+					if (uploadException.isExceededUploadRequestSizeLimit()) {
+						throw new UploadRequestSizeException(cause);
+					}
+
+					throw new PortalException(cause);
+				}
+			}
+			else if (cmd.equals(Constants.ADD) ||
+					 cmd.equals(Constants.ADD_DYNAMIC) ||
+					 cmd.equals(Constants.UPDATE) ||
+					 cmd.equals(Constants.UPDATE_AND_CHECKIN)) {
+
+				UploadPortletRequest uploadPortletRequest =
+					_portal.getUploadPortletRequest(actionRequest);
+
+				String sourceFileName = uploadPortletRequest.getFileName(
+					"file");
+
+				try {
+					fileEntry = _updateFileEntry(
+						portletConfig, actionRequest, actionResponse,
+						uploadPortletRequest);
+				}
+				catch (Exception e) {
+					if (!cmd.equals(Constants.ADD_DYNAMIC) &&
+						Validator.isNotNull(sourceFileName)) {
+
+						SessionErrors.add(
+							actionRequest, RequiredFileException.class);
+					}
+
+					throw e;
+				}
+			}
+			else if (cmd.equals(Constants.ADD_MULTIPLE)) {
+				_addMultipleFileEntries(
+					portletConfig, actionRequest, actionResponse);
+			}
+			else if (cmd.equals(Constants.ADD_TEMP)) {
+				_addTempFileEntry(actionRequest, actionResponse);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				_deleteFileEntry(actionRequest, false);
+			}
+			else if (cmd.equals(Constants.DELETE_TEMP)) {
+				_deleteTempFileEntry(actionRequest, actionResponse);
+			}
+			else if (cmd.equals(Constants.CANCEL_CHECKOUT)) {
+				_cancelFileEntriesCheckOut(actionRequest);
+			}
+			else if (cmd.equals(Constants.CHECKIN)) {
+				_checkInFileEntries(actionRequest);
+			}
+			else if (cmd.equals(Constants.CHECKOUT)) {
+				_checkOutFileEntries(actionRequest);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				_deleteFileEntry(actionRequest, true);
+			}
+			else if (cmd.equals(Constants.RESTORE)) {
+				_restoreTrashEntries(actionRequest);
+			}
+			else if (cmd.equals(Constants.REVERT)) {
+				_revertFileEntry(actionRequest);
+			}
+
+			if (cmd.equals(Constants.ADD_TEMP) ||
+				cmd.equals(Constants.DELETE_TEMP)) {
+
+				actionResponse.setRenderParameter("mvcPath", "/null.jsp");
+			}
+			else if (cmd.equals(Constants.PREVIEW)) {
+				SessionMessages.add(
+					actionRequest,
+					_portal.getPortletId(actionRequest) +
+						SessionMessages.KEY_SUFFIX_FORCE_SEND_REDIRECT);
+
+				hideDefaultSuccessMessage(actionRequest);
+
+				actionResponse.setRenderParameter(
+					"mvcRenderCommandName",
+					"/document_library/edit_file_entry");
+			}
+			else {
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+				int workflowAction = ParamUtil.getInteger(
+					actionRequest, "workflowAction",
+					WorkflowConstants.ACTION_SAVE_DRAFT);
+
+				if ((fileEntry != null) &&
+					(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
+
+					redirect = _getSaveAndContinueRedirect(
+						portletConfig, actionRequest, fileEntry, redirect);
+
+					sendRedirect(actionRequest, actionResponse, redirect);
+				}
+				else {
+					redirect = _portal.escapeRedirect(
+						ParamUtil.getString(actionRequest, "redirect"));
+
+					if (Validator.isNotNull(redirect)) {
+						if (cmd.equals(Constants.ADD) && (fileEntry != null)) {
+							String portletResource = _http.getParameter(
+								redirect, "portletResource", false);
+
+							String namespace = _portal.getPortletNamespace(
+								portletResource);
+
+							if (Validator.isNotNull(portletResource)) {
+								redirect = _http.addParameter(
+									redirect, namespace + "className",
+									DLFileEntry.class.getName());
+								redirect = _http.addParameter(
+									redirect, namespace + "classPK",
+									fileEntry.getFileEntryId());
+							}
+						}
+
+						actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+					}
+				}
+			}
+		}
+		catch (Exception e) {
+			_handleUploadException(actionRequest, actionResponse, cmd, e);
+		}
+	}
+
 	private void _addMultipleFileEntries(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse)
@@ -368,6 +533,46 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private ServiceContext _createServiceContext(
+			HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
+
+		if (!cmd.equals(Constants.ADD_DYNAMIC)) {
+			return ServiceContextFactory.getInstance(
+				DLFileEntry.class.getName(), httpServletRequest);
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+		Group group = themeDisplay.getScopeGroup();
+
+		if (layout.isPublicLayout() ||
+			(layout.isTypeControlPanel() && !group.hasPrivateLayouts())) {
+
+			return ServiceContextFactory.getInstance(
+				DLFileEntry.class.getName(), httpServletRequest);
+		}
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DLFileEntry.class.getName(), httpServletRequest);
+
+		ModelPermissions modelPermissions =
+			serviceContext.getModelPermissions();
+
+		serviceContext.setModelPermissions(
+			ModelPermissionsFactory.create(
+				modelPermissions.getActionIds(
+					RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE),
+				_RESTRICTED_GUEST_PERMISSIONS, DLFileEntry.class.getName()));
+
+		return serviceContext;
+	}
+
 	private void _deleteFileEntry(
 			ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {
@@ -445,171 +650,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
-	}
-
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		FileEntry fileEntry = null;
-
-		PortletConfig portletConfig = getPortletConfig(actionRequest);
-
-		try {
-			UploadException uploadException =
-				(UploadException)actionRequest.getAttribute(
-					WebKeys.UPLOAD_EXCEPTION);
-
-			if (uploadException != null) {
-				Throwable cause = uploadException.getCause();
-
-				if (cmd.equals(Constants.ADD_TEMP)) {
-					if (cause instanceof FileUploadBase.IOFileUploadException) {
-						if (_log.isInfoEnabled()) {
-							_log.info("Temporary upload was cancelled");
-						}
-					}
-				}
-				else {
-					if (uploadException.isExceededFileSizeLimit()) {
-						throw new FileSizeException(cause);
-					}
-
-					if (uploadException.isExceededLiferayFileItemSizeLimit()) {
-						throw new LiferayFileItemException(cause);
-					}
-
-					if (uploadException.isExceededUploadRequestSizeLimit()) {
-						throw new UploadRequestSizeException(cause);
-					}
-
-					throw new PortalException(cause);
-				}
-			}
-			else if (cmd.equals(Constants.ADD) ||
-					 cmd.equals(Constants.ADD_DYNAMIC) ||
-					 cmd.equals(Constants.UPDATE) ||
-					 cmd.equals(Constants.UPDATE_AND_CHECKIN)) {
-
-				UploadPortletRequest uploadPortletRequest =
-					_portal.getUploadPortletRequest(actionRequest);
-
-				String sourceFileName = uploadPortletRequest.getFileName(
-					"file");
-
-				try {
-					fileEntry = _updateFileEntry(
-						portletConfig, actionRequest, actionResponse,
-						uploadPortletRequest);
-				}
-				catch (Exception e) {
-					if (!cmd.equals(Constants.ADD_DYNAMIC) &&
-						Validator.isNotNull(sourceFileName)) {
-
-						SessionErrors.add(
-							actionRequest, RequiredFileException.class);
-					}
-
-					throw e;
-				}
-			}
-			else if (cmd.equals(Constants.ADD_MULTIPLE)) {
-				_addMultipleFileEntries(
-					portletConfig, actionRequest, actionResponse);
-			}
-			else if (cmd.equals(Constants.ADD_TEMP)) {
-				_addTempFileEntry(actionRequest, actionResponse);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				_deleteFileEntry(actionRequest, false);
-			}
-			else if (cmd.equals(Constants.DELETE_TEMP)) {
-				_deleteTempFileEntry(actionRequest, actionResponse);
-			}
-			else if (cmd.equals(Constants.CANCEL_CHECKOUT)) {
-				_cancelFileEntriesCheckOut(actionRequest);
-			}
-			else if (cmd.equals(Constants.CHECKIN)) {
-				_checkInFileEntries(actionRequest);
-			}
-			else if (cmd.equals(Constants.CHECKOUT)) {
-				_checkOutFileEntries(actionRequest);
-			}
-			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				_deleteFileEntry(actionRequest, true);
-			}
-			else if (cmd.equals(Constants.RESTORE)) {
-				_restoreTrashEntries(actionRequest);
-			}
-			else if (cmd.equals(Constants.REVERT)) {
-				_revertFileEntry(actionRequest);
-			}
-
-			if (cmd.equals(Constants.ADD_TEMP) ||
-				cmd.equals(Constants.DELETE_TEMP)) {
-
-				actionResponse.setRenderParameter("mvcPath", "/null.jsp");
-			}
-			else if (cmd.equals(Constants.PREVIEW)) {
-				SessionMessages.add(
-					actionRequest,
-					_portal.getPortletId(actionRequest) +
-						SessionMessages.KEY_SUFFIX_FORCE_SEND_REDIRECT);
-
-				hideDefaultSuccessMessage(actionRequest);
-
-				actionResponse.setRenderParameter(
-					"mvcRenderCommandName",
-					"/document_library/edit_file_entry");
-			}
-			else {
-				String redirect = ParamUtil.getString(
-					actionRequest, "redirect");
-				int workflowAction = ParamUtil.getInteger(
-					actionRequest, "workflowAction",
-					WorkflowConstants.ACTION_SAVE_DRAFT);
-
-				if ((fileEntry != null) &&
-					(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
-
-					redirect = _getSaveAndContinueRedirect(
-						portletConfig, actionRequest, fileEntry, redirect);
-
-					sendRedirect(actionRequest, actionResponse, redirect);
-				}
-				else {
-					redirect = _portal.escapeRedirect(
-						ParamUtil.getString(actionRequest, "redirect"));
-
-					if (Validator.isNotNull(redirect)) {
-						if (cmd.equals(Constants.ADD) && (fileEntry != null)) {
-							String portletResource = _http.getParameter(
-								redirect, "portletResource", false);
-
-							String namespace = _portal.getPortletNamespace(
-								portletResource);
-
-							if (Validator.isNotNull(portletResource)) {
-								redirect = _http.addParameter(
-									redirect, namespace + "className",
-									DLFileEntry.class.getName());
-								redirect = _http.addParameter(
-									redirect, namespace + "classPK",
-									fileEntry.getFileEntryId());
-							}
-						}
-
-						actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-					}
-				}
-			}
-		}
-		catch (Exception e) {
-			_handleUploadException(actionRequest, actionResponse, cmd, e);
-		}
 	}
 
 	private String _getAddMultipleFileEntriesErrorMessage(
@@ -986,46 +1026,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			return fileEntry;
 		}
-	}
-
-	private ServiceContext _createServiceContext(
-			HttpServletRequest httpServletRequest)
-		throws PortalException {
-
-		String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
-
-		if (!cmd.equals(Constants.ADD_DYNAMIC)) {
-			return ServiceContextFactory.getInstance(
-				DLFileEntry.class.getName(), httpServletRequest);
-		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-		Group group = themeDisplay.getScopeGroup();
-
-		if (layout.isPublicLayout() ||
-			(layout.isTypeControlPanel() && !group.hasPrivateLayouts())) {
-
-			return ServiceContextFactory.getInstance(
-				DLFileEntry.class.getName(), httpServletRequest);
-		}
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DLFileEntry.class.getName(), httpServletRequest);
-
-		ModelPermissions modelPermissions =
-			serviceContext.getModelPermissions();
-
-		serviceContext.setModelPermissions(
-			ModelPermissionsFactory.create(
-				modelPermissions.getActionIds(
-					RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE),
-				_RESTRICTED_GUEST_PERMISSIONS, DLFileEntry.class.getName()));
-
-		return serviceContext;
 	}
 
 	private static final String[] _RESTRICTED_GUEST_PERMISSIONS = {};

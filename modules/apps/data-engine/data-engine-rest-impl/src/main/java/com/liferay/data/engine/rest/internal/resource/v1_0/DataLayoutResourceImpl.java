@@ -217,7 +217,7 @@ public class DataLayoutResourceImpl
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		DDMStructureLayout ddmStructureLayout =
+		dataLayout = _toDataLayout(
 			_ddmStructureLayoutLocalService.addStructureLayout(
 				PrincipalThreadLocal.getUserId(), ddmStructure.getGroupId(),
 				_getClassNameId(), dataLayout.getDataLayoutKey(),
@@ -225,9 +225,7 @@ public class DataLayoutResourceImpl
 				LocalizedValueUtil.toLocaleStringMap(dataLayout.getName()),
 				LocalizedValueUtil.toLocaleStringMap(
 					dataLayout.getDescription()),
-				DataLayoutUtil.toJSON(dataLayout), serviceContext);
-
-		dataLayout.setId(ddmStructureLayout.getStructureLayoutId());
+				DataLayoutUtil.toJSON(dataLayout), serviceContext));
 
 		_resourceLocalService.addModelResources(
 			contextCompany.getCompanyId(), ddmStructure.getGroupId(),

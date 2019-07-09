@@ -78,9 +78,9 @@ public class AcceptLanguageImpl implements AcceptLanguage {
 
 			return locales;
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 			throw new InternalServerErrorException(
-				"Unable to get preferred locale: " + pe.getMessage(), pe);
+				"Unable to get preferred locale: " + e.getMessage(), e);
 		}
 	}
 

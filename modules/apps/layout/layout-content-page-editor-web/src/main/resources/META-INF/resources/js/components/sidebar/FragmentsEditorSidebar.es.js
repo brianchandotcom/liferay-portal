@@ -31,15 +31,24 @@ class FragmentsEditorSidebar extends Component {
 	 * @review
 	 */
 	created() {
-		this._productMenuToggle = document.querySelector('.product-menu-toggle');
-		this._handleHide = this._handleHide.bind(this);
-		const sidenav = Liferay.SideNavigation.instance(
-			this._productMenuToggle
+		const productMenuToggle = document.querySelector(
+			'.product-menu-toggle'
 		);
-		this._toggleHandle = sidenav.on(
-			'openStart.lexicon.sidenav',
-			this._handleHide
-		);
+
+		if (productMenuToggle) {
+			this._productMenuToggle = productMenuToggle;
+
+			this._handleHide = this._handleHide.bind(this);
+
+			const sidenav = Liferay.SideNavigation.instance(
+				this._productMenuToggle
+			);
+
+			this._toggleHandle = sidenav.on(
+				'openStart.lexicon.sidenav',
+				this._handleHide
+			);
+		}
 	}
 
 	/**

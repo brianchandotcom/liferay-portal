@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -59,7 +58,6 @@ import com.liferay.portal.kernel.xml.XPath;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -397,16 +395,16 @@ public class JournalArticleExportImportContentProcessor
 			long classPK = GetterUtil.getLong(
 				referenceElement.attributeValue("class-pk"));
 
-			Map<Long, Long> articlePrimaryKeys =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					JournalArticle.class + ".primaryKey");
+			long articlePrimaryKey = portletDataContext.getNewPrimaryKey(
+				JournalArticle.class + ".primaryKey", classPK);
 
-			long articlePrimaryKey = MapUtil.getLong(
-				articlePrimaryKeys, classPK, classPK);
+			JournalArticle journalArticle = null;
 
-			JournalArticle journalArticle =
-				_journalArticleLocalService.fetchJournalArticle(
-					articlePrimaryKey);
+			if (articlePrimaryKey != 0) {
+				journalArticle =
+					_journalArticleLocalService.fetchJournalArticle(
+						articlePrimaryKey);
+			}
 
 			if (journalArticle == null) {
 				if (_log.isWarnEnabled()) {

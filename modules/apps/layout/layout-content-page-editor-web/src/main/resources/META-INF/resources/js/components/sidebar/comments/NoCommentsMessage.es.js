@@ -14,8 +14,12 @@
 
 import React from 'react';
 
+import {NoCommentsMessageIcon} from './NoCommentsMessageIcon.es';
+
 export const NoCommentsMessage = () => (
 	<div className='p-4 text-center'>
+		<NoCommentsMessageIcon />
+
 		<h1 className='h4'>{Liferay.Language.get('no-comments-yet')}</h1>
 
 		<p className='small text-secondary'>

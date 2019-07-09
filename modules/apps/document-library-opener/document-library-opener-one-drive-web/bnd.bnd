@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Document Library Opener One Drive Web
+Bundle-SymbolicName: com.liferay.document.library.opener.one.drive.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /document-library-opener-one-drive-web

@@ -660,7 +660,6 @@
 	<model name="com.liferay.portal.kernel.model.Layout">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
-		<field name="headId" type="long" />
 		<field name="plid" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -911,67 +910,6 @@
 		</field>
 		<field name="layoutSetPrototypeUuid" type="String" />
 		<field name="layoutSetPrototypeLinkEnabled" type="boolean" />
-	</model>
-	<model name="com.liferay.portal.kernel.model.LayoutVersion">
-		<field name="layoutVersionId" type="long" />
-		<field name="version" type="int" />
-		<field name="uuid" type="String" />
-		<field name="plid" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="parentPlid" type="long" />
-		<field name="privateLayout" type="boolean" />
-		<field name="layoutId" type="long" />
-		<field name="parentLayoutId" type="long" />
-		<field name="classNameId" type="long" />
-		<field name="classPK" type="long" />
-		<field localized="true" name="name" type="String">
-			<hint name="display-width">210</hint>
-			<hint name="max-length">4000</hint>
-			<validator name="required" />
-		</field>
-		<field localized="true" name="title" type="String">
-			<hint name="display-width">210</hint>
-			<hint name="max-length">4000</hint>
-		</field>
-		<field localized="true" name="description" type="String">
-			<hint-collection name="TEXTAREA" />
-			<hint name="display-width">300</hint>
-		</field>
-		<field localized="true" name="keywords" type="String">
-			<hint-collection name="TEXTAREA" />
-			<hint name="display-width">300</hint>
-		</field>
-		<field localized="true" name="robots" type="String">
-			<hint-collection name="TEXTAREA" />
-			<hint name="display-width">300</hint>
-		</field>
-		<field name="type" type="String" />
-		<field name="typeSettings" type="String">
-			<hint-collection name="CLOB" />
-		</field>
-		<field name="hidden" type="boolean" />
-		<field name="system" type="boolean" />
-		<field name="friendlyURL" type="String">
-			<hint name="display-width">210</hint>
-			<hint name="max-length">255</hint>
-		</field>
-		<field name="iconImageId" type="long" />
-		<field name="themeId" type="String" />
-		<field name="colorSchemeId" type="String" />
-		<field name="css" type="String">
-			<hint-collection name="CLOB" />
-		</field>
-		<field name="priority" type="int" />
-		<field name="layoutPrototypeUuid" type="String" />
-		<field name="layoutPrototypeLinkEnabled" type="boolean" />
-		<field name="sourcePrototypeLayoutUuid" type="String" />
-		<field name="publishDate" type="Date" />
-		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.ListType">
 		<field name="mvccVersion" type="long" />

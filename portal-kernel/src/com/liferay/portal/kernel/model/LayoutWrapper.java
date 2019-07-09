@@ -46,7 +46,6 @@ public class LayoutWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
-		attributes.put("headId", getHeadId());
 		attributes.put("plid", getPlid());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -98,12 +97,6 @@ public class LayoutWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
-		}
-
-		Long headId = (Long)attributes.get("headId");
-
-		if (headId != null) {
-			setHeadId(headId);
 		}
 
 		Long plid = (Long)attributes.get("plid");
@@ -654,16 +647,6 @@ public class LayoutWrapper
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
-	}
-
-	/**
-	 * Returns the head ID of this layout.
-	 *
-	 * @return the head ID of this layout
-	 */
-	@Override
-	public long getHeadId() {
-		return model.getHeadId();
 	}
 
 	/**
@@ -1806,16 +1789,6 @@ public class LayoutWrapper
 	}
 
 	/**
-	 * Sets the head ID of this layout.
-	 *
-	 * @param headId the head ID of this layout
-	 */
-	@Override
-	public void setHeadId(long headId) {
-		model.setHeadId(headId);
-	}
-
-	/**
 	 * Sets whether this layout is hidden.
 	 *
 	 * @param hidden the hidden of this layout
@@ -2330,16 +2303,6 @@ public class LayoutWrapper
 	@Override
 	public StagedModelType getStagedModelType() {
 		return model.getStagedModelType();
-	}
-
-	@Override
-	public boolean isHead() {
-		return model.isHead();
-	}
-
-	@Override
-	public void populateVersionModel(LayoutVersion layoutVersion) {
-		model.populateVersionModel(layoutVersion);
 	}
 
 	@Override

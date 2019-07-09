@@ -26,15 +26,11 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutReference;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.LayoutVersion;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.service.version.VersionService;
-import com.liferay.portal.kernel.service.version.VersionServiceListener;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -60,20 +56,13 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see LayoutLocalServiceUtil
  * @generated
  */
-@OSGiBeanProperties(
-	property = {
-		"model.class.name=com.liferay.portal.kernel.model.Layout",
-		"version.model.class.name=com.liferay.portal.kernel.model.LayoutVersion"
-	}
-)
 @ProviderType
 @Transactional(
 	isolation = Isolation.PORTAL,
 	rollbackFor = {PortalException.class, SystemException.class}
 )
 public interface LayoutLocalService
-	extends BaseLocalService, PersistedModelLocalService,
-			VersionService<Layout, LayoutVersion> {
+	extends BaseLocalService, PersistedModelLocalService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -373,36 +362,13 @@ public interface LayoutLocalService
 		throws PortalException;
 
 	/**
-	 * Anonymize user information of the specific layout
+	 * Creates a new layout with the primary key. Does not add the layout to the database.
 	 *
-	 * @param layout the layout that need to anonymized
-	 * @param userId the primary key of the owner user
-	 * @param anonymousUser the anonymized user information
-	 */
-	public void anonymizeLayout(Layout layout, long userId, User anonymousUser)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public Layout checkout(Layout publishedLayout, int version)
-		throws PortalException;
-
-	/**
-	 * Creates a new layout. Does not add the layout to the database.
-	 *
+	 * @param plid the primary key for the new layout
 	 * @return the new layout
 	 */
 	@Transactional(enabled = false)
-	@Override
-	public Layout create();
-
-	@Indexable(type = IndexableType.DELETE)
-	@Override
-	public Layout delete(Layout publishedLayout) throws PortalException;
-
-	@Indexable(type = IndexableType.DELETE)
-	@Override
-	public Layout deleteDraft(Layout draftLayout) throws PortalException;
+	public Layout createLayout(long plid);
 
 	/**
 	 * Deletes the layout from the database. Also notifies the appropriate model listeners.
@@ -491,10 +457,6 @@ public interface LayoutLocalService
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	public LayoutVersion deleteVersion(LayoutVersion layoutVersion)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();
 
@@ -564,14 +526,6 @@ public interface LayoutLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Layout fetchDefaultLayout(long groupId, boolean privateLayout);
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Layout fetchDraft(Layout layout);
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Layout fetchDraft(long primaryKey);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Layout fetchFirstLayout(
 		long groupId, boolean privateLayout, long parentLayoutId);
@@ -580,10 +534,6 @@ public interface LayoutLocalService
 	public Layout fetchFirstLayout(
 		long groupId, boolean privateLayout, long parentLayoutId,
 		boolean hidden);
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutVersion fetchLatestVersion(Layout layout);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Layout fetchLayout(long plid);
@@ -613,23 +563,11 @@ public interface LayoutLocalService
 	 * @param uuid the layout's UUID
 	 * @param groupId the primary key of the group
 	 * @param privateLayout whether the layout is private to the group
-	 * @return the matching layout, or <code>null</code> if a matching layout
-	 could not be found
+	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Layout fetchLayoutByUuidAndGroupId(
 		String uuid, long groupId, boolean privateLayout);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutVersion fetchLayoutVersion(long layoutVersionId);
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Layout fetchPublished(Layout layout);
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Layout fetchPublished(long primaryKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -669,14 +607,6 @@ public interface LayoutLocalService
 	public long getDefaultPlid(
 			long groupId, boolean privateLayout, String portletId)
 		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Layout getDraft(Layout layout) throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Layout getDraft(long primaryKey) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -995,10 +925,8 @@ public interface LayoutLocalService
 	 * @param companyId the primary key of the company
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by
-	 (optionally <code>null</code>)
-	 * @return the range of matching layouts, or an empty list if no matches
-	 were found
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching layouts, or an empty list if no matches were found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Layout> getLayoutsByUuidAndCompanyId(
@@ -1114,15 +1042,6 @@ public interface LayoutLocalService
 			long parentGroupId, boolean privateLayout)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutVersion getVersion(Layout layout, int version)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<LayoutVersion> getVersions(Layout layout);
-
 	/**
 	 * Returns <code>true</code> if there is a matching layout with the UUID,
 	 * group, and privacy.
@@ -1183,14 +1102,6 @@ public interface LayoutLocalService
 			String layoutSetPrototypeUuid, long companyId, String layoutUuid)
 		throws PortalException;
 
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public Layout publishDraft(Layout draftLayout) throws PortalException;
-
-	@Override
-	public void registerListener(
-		VersionServiceListener<Layout, LayoutVersion> versionServiceListener);
-
 	/**
 	 * Sets the layouts for the group, replacing and prioritizing all layouts of
 	 * the parent layout.
@@ -1207,18 +1118,10 @@ public interface LayoutLocalService
 			long[] layoutIds, ServiceContext serviceContext)
 		throws PortalException;
 
-	@Override
-	public void unregisterListener(
-		VersionServiceListener<Layout, LayoutVersion> versionServiceListener);
-
 	public void updateAsset(
 			long userId, Layout layout, long[] assetCategoryIds,
 			String[] assetTagNames)
 		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public Layout updateDraft(Layout draftLayout) throws PortalException;
 
 	/**
 	 * Updates the friendly URL of the layout.
@@ -1242,10 +1145,9 @@ public interface LayoutLocalService
 	 *
 	 * @param layout the layout
 	 * @return the layout that was updated
-	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.REINDEX)
-	public Layout updateLayout(Layout draftLayout) throws PortalException;
+	public Layout updateLayout(Layout layout);
 
 	/**
 	 * Updates the layout replacing its draft publish date.

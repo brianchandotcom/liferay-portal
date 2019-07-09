@@ -109,7 +109,7 @@ public class AsahInterestTermFormNavigatorEntry
 			}
 		}
 		catch (Exception e) {
-			_log.error("Error setting content recommendation value");
+			_log.error("Unable to set content recommendation value");
 		}
 
 		super.include(httpServletRequest, httpServletResponse);

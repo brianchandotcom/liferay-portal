@@ -31,10 +31,10 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = "javax.portlet.name=" + AssetListPortletKeys.ASSET_LIST,
-	service = AssetListEntryQueryProcessor.class
+	service = AssetListAssetEntryQueryProcessor.class
 )
-public class AsahInterestTermAssetListEntryQueryProcessor
-	implements AssetListEntryQueryProcessor {
+public class AsahInterestTermAssetListAssetEntryQueryProcessor
+	implements AssetListAssetEntryQueryProcessor {
 
 	@Override
 	public void processAssetEntryQuery(

@@ -33,8 +33,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
-import org.apache.commons.lang.StringUtils;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Kenji Heigel
@@ -60,12 +60,10 @@ public class ResourceConfigurationFactory {
 	private static String _getDatabaseConfigurationName(
 		String databaseName, String databaseVersion) {
 
-		if (StringUtils.countMatches(databaseVersion, ".") > 1) {
-			int index = databaseVersion.indexOf(".");
+		Matcher matcher = _databaseVersionPattern.matcher(databaseVersion);
 
-			index = databaseVersion.indexOf(".", index + 1);
-
-			databaseVersion = databaseVersion.substring(0, index);
+		if (matcher.matches()) {
+			databaseVersion = matcher.group(1);
 		}
 
 		String databaseConfigurationName = databaseName + databaseVersion;
@@ -253,6 +251,8 @@ public class ResourceConfigurationFactory {
 			dockerBaseImageName, dockerImageName, v1ContainerPorts, v1EnvVars);
 	}
 
+	private static final Pattern _databaseVersionPattern = Pattern.compile(
+		"([^\\.]*\\.[^\\.]*)\\..*");
 	private static final Map<String, Pod> _podConfigurationsMap =
 		new HashMap<String, Pod>() {
 			{

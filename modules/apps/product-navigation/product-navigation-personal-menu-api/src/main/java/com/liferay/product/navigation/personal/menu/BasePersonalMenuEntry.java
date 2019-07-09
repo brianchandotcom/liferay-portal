@@ -18,6 +18,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -27,6 +33,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.personal.menu.util.PersonalApplicationURLUtil;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -94,8 +101,73 @@ public abstract class BasePersonalMenuEntry implements PersonalMenuEntry {
 		return false;
 	}
 
+	@Override
+	public boolean isShow(
+			PortletRequest portletRequest, PermissionChecker permissionChecker)
+		throws PortalException {
+
+		try {
+			return hasAccessPermission(
+				permissionChecker,
+				PortletLocalServiceUtil.getPortletById(getPortletId()));
+		}
+		catch (PortalException | RuntimeException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			throw new PortalException(e);
+		}
+	}
+
 	protected ResourceBundle getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(locale, getClass());
+	}
+
+	protected boolean hasAccessPermission(
+			PermissionChecker permissionChecker, Portlet portlet)
+		throws Exception {
+
+		if (hasAccessPermissionDenied(permissionChecker, portlet)) {
+			return false;
+		}
+
+		if (hasAccessPermissionExplicitlyGranted(permissionChecker, portlet)) {
+			return true;
+		}
+
+		return hasPermissionImplicitlyGranted(permissionChecker, portlet);
+	}
+
+	protected boolean hasAccessPermissionDenied(
+			PermissionChecker permissionChecker, Portlet portlet)
+		throws Exception {
+
+		return false;
+	}
+
+	protected boolean hasAccessPermissionExplicitlyGranted(
+			PermissionChecker permissionChecker, Portlet portlet)
+		throws PortalException {
+
+		List<String> actions = ResourceActionsUtil.getResourceActions(
+			portlet.getPortletId());
+
+		if (actions.contains(ActionKeys.ACCESS_IN_CONTROL_PANEL) &&
+			PortletPermissionUtil.contains(
+				permissionChecker, 0, portlet.getRootPortletId(),
+				ActionKeys.ACCESS_IN_CONTROL_PANEL, true)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean hasPermissionImplicitlyGranted(
+			PermissionChecker permissionChecker, Portlet portlet)
+		throws Exception {
+
+		return false;
 	}
 
 }

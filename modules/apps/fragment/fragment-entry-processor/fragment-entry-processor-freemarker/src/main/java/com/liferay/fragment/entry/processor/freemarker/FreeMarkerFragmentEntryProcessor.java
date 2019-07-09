@@ -224,6 +224,15 @@ public class FreeMarkerFragmentEntryProcessor
 					TemplateManagerUtil.getTemplateManager(
 						TemplateConstants.LANG_TYPE_FTL);
 
+				Map<String, Object> contextObjects = new HashMap<>();
+
+				contextObjects.put(
+					"configuration",
+					FragmentEntryConfigUtil.
+						getConfigurationDefaultValuesJSONObject(configuration));
+
+				templateManager.addContextObjects(template, contextObjects);
+
 				templateManager.addTaglibSupport(
 					template, httpServletRequest, httpServletResponse);
 

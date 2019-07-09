@@ -17,7 +17,10 @@ import {
 	enableSavingChangesStatusAction,
 	updateLastSaveDateAction
 } from './saveChanges.es';
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../utils/constants';
+import {
+	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+	FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
+} from '../utils/constants';
 import {
 	deleteIn,
 	setIn,
@@ -26,7 +29,8 @@ import {
 import {
 	UPDATE_EDITABLE_VALUE_ERROR,
 	UPDATE_EDITABLE_VALUE_LOADING,
-	UPDATE_EDITABLE_VALUE_SUCCESS
+	UPDATE_EDITABLE_VALUE_SUCCESS,
+	UPDATE_FRAGMENT_ENTRY_LINK_CONTENT
 } from './actions.es';
 import {updateEditableValues} from '../utils/FragmentsEditorFetchUtils.es';
 import debouncedAlert from '../utils/debouncedAlert.es';
@@ -77,6 +81,52 @@ const debouncedUpdateEditableValues = debouncedAlert(
 
 	UPDATE_EDITABLE_VALUES_DELAY
 );
+
+function updateConfigurationValueAction(
+	fragmentEntryLinkId,
+	configurationValues,
+	segmentsExperienceId = ''
+) {
+	return function(dispatch, getState) {
+		const state = getState();
+
+		const previousEditableValues =
+			state.fragmentEntryLinks[fragmentEntryLinkId].editableValues;
+
+		const nextEditableValues = setIn(
+			previousEditableValues,
+			[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR, segmentsExperienceId],
+			configurationValues
+		);
+
+		dispatch(
+			updateEditableValueLoadingAction(
+				fragmentEntryLinkId,
+				nextEditableValues
+			)
+		);
+
+		dispatch(enableSavingChangesStatusAction());
+
+		updateEditableValues(fragmentEntryLinkId, nextEditableValues)
+			.then(() => {
+				dispatch(updateEditableValueSuccessAction());
+				dispatch(disableSavingChangesStatusAction());
+				dispatch(updateLastSaveDateAction());
+				dispatch(updateFragmentEntryLinkContent(fragmentEntryLinkId));
+			})
+			.catch(() => {
+				dispatch(
+					updateEditableValueErrorAction(
+						fragmentEntryLinkId,
+						previousEditableValues
+					)
+				);
+
+				dispatch(disableSavingChangesStatusAction());
+			});
+	};
+}
 
 /**
  * @param {!object} data
@@ -247,7 +297,15 @@ function updateEditableValueSuccessAction(date = new Date()) {
 	};
 }
 
+function updateFragmentEntryLinkContent(fragmentEntryLinkId) {
+	return {
+		fragmentEntryLinkId,
+		type: UPDATE_FRAGMENT_ENTRY_LINK_CONTENT
+	};
+}
+
 export {
+	updateConfigurationValueAction,
 	updateEditableValueAction,
 	updateEditableValuesAction,
 	updateEditableValueSuccessAction

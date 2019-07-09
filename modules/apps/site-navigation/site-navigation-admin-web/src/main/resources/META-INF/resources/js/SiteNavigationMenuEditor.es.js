@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import {dom} from 'metal-dom';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import position from 'metal-position';
@@ -135,10 +133,9 @@ class SiteNavigationMenuEditor extends State {
 	 * Handles the event when the user drags the item across the container.
 	 *
 	 * @param {!object} data The drag event data.
-	 * @param {!Event} event The drag event.
 	 * @private
 	 */
-	_handleDragItem(data, event) {
+	_handleDragItem(data) {
 		const placeholderMenuItem = data.placeholder;
 		const sourceMenuItem = data.source;
 

@@ -99,6 +99,8 @@ definition {
 
 		Portlet.startServer(deleteLiferayHome = "false");
 
+		User.firstLoginPG();
+
 		// LRQA-46018
 
 		ProductMenu.gotoPortlet(

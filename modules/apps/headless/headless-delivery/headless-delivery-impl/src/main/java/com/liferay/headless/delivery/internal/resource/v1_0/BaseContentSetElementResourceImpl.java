@@ -176,16 +176,9 @@ public abstract class BaseContentSetElementResourceImpl
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
-	@Context
 	protected AcceptLanguage contextAcceptLanguage;
-
-	@Context
 	protected Company contextCompany;
-
-	@Context
 	protected UriInfo contextUriInfo;
-
-	@Context
 	protected User contextUser;
 
 }

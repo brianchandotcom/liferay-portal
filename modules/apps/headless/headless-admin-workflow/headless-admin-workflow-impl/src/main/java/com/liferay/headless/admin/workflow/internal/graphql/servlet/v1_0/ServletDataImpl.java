@@ -27,7 +27,6 @@ import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author Javier Gamarra
@@ -67,11 +66,11 @@ public class ServletDataImpl implements ServletData {
 		return new Query();
 	}
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<WorkflowTaskResource>
 		_workflowTaskResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<WorkflowLogResource>
 		_workflowLogResourceComponentServiceObjects;
 

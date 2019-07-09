@@ -41,7 +41,6 @@ import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author Javier Gamarra
@@ -135,67 +134,67 @@ public class ServletDataImpl implements ServletData {
 		return new Query();
 	}
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<BlogPostingResource>
 		_blogPostingResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<BlogPostingImageResource>
 		_blogPostingImageResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<CommentResource>
 		_commentResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<DocumentResource>
 		_documentResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<DocumentFolderResource>
 		_documentFolderResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<KnowledgeBaseArticleResource>
 		_knowledgeBaseArticleResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<KnowledgeBaseAttachmentResource>
 		_knowledgeBaseAttachmentResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<KnowledgeBaseFolderResource>
 		_knowledgeBaseFolderResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<MessageBoardAttachmentResource>
 		_messageBoardAttachmentResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<MessageBoardMessageResource>
 		_messageBoardMessageResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<MessageBoardSectionResource>
 		_messageBoardSectionResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<MessageBoardThreadResource>
 		_messageBoardThreadResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<StructuredContentResource>
 		_structuredContentResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<StructuredContentFolderResource>
 		_structuredContentFolderResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<ContentSetElementResource>
 		_contentSetElementResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<ContentStructureResource>
 		_contentStructureResourceComponentServiceObjects;
 

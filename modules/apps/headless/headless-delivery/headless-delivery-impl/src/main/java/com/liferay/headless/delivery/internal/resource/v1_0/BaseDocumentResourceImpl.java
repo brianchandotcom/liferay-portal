@@ -356,16 +356,9 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
-	@Context
 	protected AcceptLanguage contextAcceptLanguage;
-
-	@Context
 	protected Company contextCompany;
-
-	@Context
 	protected UriInfo contextUriInfo;
-
-	@Context
 	protected User contextUser;
 
 }

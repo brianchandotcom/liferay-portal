@@ -34,7 +34,6 @@ import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author Javier Gamarra
@@ -85,39 +84,39 @@ public class ServletDataImpl implements ServletData {
 		return new Query();
 	}
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<EmailAddressResource>
 		_emailAddressResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<OrganizationResource>
 		_organizationResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<PhoneResource>
 		_phoneResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<PostalAddressResource>
 		_postalAddressResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<RoleResource>
 		_roleResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<SegmentResource>
 		_segmentResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<SegmentUserResource>
 		_segmentUserResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<UserAccountResource>
 		_userAccountResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<WebUrlResource>
 		_webUrlResourceComponentServiceObjects;
 

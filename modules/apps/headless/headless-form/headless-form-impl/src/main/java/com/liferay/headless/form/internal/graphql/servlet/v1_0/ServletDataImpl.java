@@ -29,7 +29,6 @@ import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
  * @author Javier Gamarra
@@ -77,19 +76,19 @@ public class ServletDataImpl implements ServletData {
 		return new Query();
 	}
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<FormResource>
 		_formResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<FormDocumentResource>
 		_formDocumentResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<FormRecordResource>
 		_formRecordResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	@Reference
 	private ComponentServiceObjects<FormStructureResource>
 		_formStructureResourceComponentServiceObjects;
 

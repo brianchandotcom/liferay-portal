@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.version.VersionServiceListener;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -290,22 +289,6 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	@Override
 	public LayoutSet publishDraft(LayoutSet layoutSet) throws PortalException {
 		return layoutSetPersistence.update(layoutSet);
-	}
-
-	@Override
-	public void registerListener(
-		VersionServiceListener<LayoutSet, LayoutSetVersion>
-			versionServiceListener) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void unregisterListener(
-		VersionServiceListener<LayoutSet, LayoutSetVersion>
-			versionServiceListener) {
-
-		throw new UnsupportedOperationException();
 	}
 
 	@Override

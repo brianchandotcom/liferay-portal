@@ -388,7 +388,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
-			value1 = "Pages");
+			value1 = "Child SiteName2");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "MANAGE_SUBGROUPS",
@@ -415,7 +415,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
-			value1 = "Pages");
+			value1 = "Child SiteName1");
 
 		Navigator.openURL();
 
@@ -432,7 +432,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
-			value1 = "Pages");
+			value1 = "Child SiteName2");
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "MANAGE_SUBGROUPS",
@@ -467,7 +467,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
-			value1 = "Pages");
+			value1 = "Child SiteName2");
 	}
 
 	@priority = "4"

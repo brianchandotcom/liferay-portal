@@ -20,11 +20,11 @@ import {
 	CREATE_SEGMENTS_EXPERIENCE,
 	DELETE_SEGMENTS_EXPERIENCE,
 	EDIT_SEGMENTS_EXPERIENCE,
-	SELECT_SEGMENTS_EXPERIENCE,
 	UPDATE_SEGMENTS_EXPERIENCE_PRIORITY
 } from '../../actions/actions.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {selectSegmentExperienceAction} from '../../actions/selectSegmentsExperience.es';
 import templates from './SegmentsExperienceSelector.soy';
 import './segmentsExperiences/modal.es';
 
@@ -698,10 +698,9 @@ class SegmentsExperienceSelector extends Component {
 	 * @review
 	 */
 	_selectSegmentsExperience(segmentsExperienceId) {
-		this.store.dispatch({
-			segmentsExperienceId,
-			type: SELECT_SEGMENTS_EXPERIENCE
-		});
+		this.store.dispatch(
+			selectSegmentExperienceAction(segmentsExperienceId)
+		);
 	}
 
 	/**

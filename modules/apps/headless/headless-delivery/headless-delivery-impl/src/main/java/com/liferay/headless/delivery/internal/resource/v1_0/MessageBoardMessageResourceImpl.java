@@ -32,13 +32,13 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBThreadLocalService;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -55,7 +55,6 @@ import java.util.Collections;
 import java.util.Map;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -91,7 +90,7 @@ public class MessageBoardMessageResourceImpl
 		return new MessageBoardMessageEntityModel(
 			EntityFieldsUtil.getEntityFields(
 				_portal.getClassNameId(MBMessage.class.getName()),
-				contextCompany.getCompanyId(), _expandoColumnLocalService,
+				CompanyThreadLocal.getCompanyId(), _expandoColumnLocalService,
 				_expandoTableLocalService));
 	}
 
@@ -257,7 +256,7 @@ public class MessageBoardMessageResourceImpl
 		MessageBoardMessage messageBoardMessage) {
 
 		return CustomFieldsUtil.toMap(
-			MBMessage.class.getName(), contextCompany.getCompanyId(),
+			MBMessage.class.getName(), CompanyThreadLocal.getCompanyId(),
 			messageBoardMessage.getCustomFields(),
 			contextAcceptLanguage.getPreferredLocale());
 	}
@@ -299,7 +298,7 @@ public class MessageBoardMessageResourceImpl
 			MBMessage.class.getName(), _ratingsEntryLocalService,
 			ratingsEntry -> RatingUtil.toRating(
 				_portal, ratingsEntry, _userLocalService),
-			_user);
+			contextUser);
 	}
 
 	private MessageBoardMessage _toMessageBoardMessage(MBMessage mbMessage)
@@ -343,9 +342,6 @@ public class MessageBoardMessageResourceImpl
 
 	@Reference
 	private RatingsEntryLocalService _ratingsEntryLocalService;
-
-	@Context
-	private User _user;
 
 	@Reference
 	private UserLocalService _userLocalService;

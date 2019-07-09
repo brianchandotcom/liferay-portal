@@ -23,6 +23,7 @@ import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -159,7 +160,7 @@ public class KnowledgeBaseFolderResourceImpl
 		KnowledgeBaseFolder knowledgeBaseFolder) {
 
 		return CustomFieldsUtil.toMap(
-			KBFolder.class.getName(), contextCompany.getCompanyId(),
+			KBFolder.class.getName(), CompanyThreadLocal.getCompanyId(),
 			knowledgeBaseFolder.getCustomFields(),
 			contextAcceptLanguage.getPreferredLocale());
 	}

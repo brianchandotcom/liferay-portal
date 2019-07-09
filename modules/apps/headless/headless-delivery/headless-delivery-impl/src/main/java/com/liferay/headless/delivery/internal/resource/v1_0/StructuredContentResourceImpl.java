@@ -61,13 +61,13 @@ import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -189,9 +189,8 @@ public class StructuredContentResourceImpl
 		return new StructuredContentEntityModel(
 			entityFields,
 			EntityFieldsUtil.getEntityFields(
-				_portal.getClassNameId(JournalArticle.class.getName()),
-				contextCompany.getCompanyId(), _expandoColumnLocalService,
-				_expandoTableLocalService));
+				_portal.getClassNameId(JournalArticle.class.getName()), 0,
+				_expandoColumnLocalService, _expandoTableLocalService));
 	}
 
 	@Override
@@ -633,7 +632,7 @@ public class StructuredContentResourceImpl
 		StructuredContent structuredContent) {
 
 		return CustomFieldsUtil.toMap(
-			JournalArticle.class.getName(), contextCompany.getCompanyId(),
+			JournalArticle.class.getName(), CompanyThreadLocal.getCompanyId(),
 			structuredContent.getCustomFields(),
 			contextAcceptLanguage.getPreferredLocale());
 	}
@@ -651,7 +650,7 @@ public class StructuredContentResourceImpl
 			JournalArticle.class.getName(), _ratingsEntryLocalService,
 			ratingsEntry -> RatingUtil.toRating(
 				_portal, ratingsEntry, _userLocalService),
-			_user);
+			contextUser);
 	}
 
 	private StructuredContent _getStructuredContent(
@@ -916,9 +915,6 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private StructuredContentDTOConverter _structuredContentDTOConverter;
-
-	@Context
-	private User _user;
 
 	@Reference
 	private UserLocalService _userLocalService;

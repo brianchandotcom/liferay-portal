@@ -23,7 +23,7 @@ import com.liferay.asset.list.constants.AssetListWebKeys;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
-import com.liferay.asset.list.util.AssetListAssetEntryProvider;
+import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.util.AssetListPortletUtil;
 import com.liferay.asset.list.web.internal.security.permission.resource.AssetListPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;

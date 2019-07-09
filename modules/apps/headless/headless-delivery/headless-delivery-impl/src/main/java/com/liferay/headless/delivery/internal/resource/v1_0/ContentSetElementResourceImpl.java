@@ -17,7 +17,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
-import com.liferay.asset.list.util.AssetListAssetEntryProvider;
+import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.headless.delivery.dto.v1_0.ContentSetElement;
 import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;

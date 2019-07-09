@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.list.util;
+package com.liferay.asset.list.asset.entry.query.processor;
 
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.portal.kernel.util.UnicodeProperties;

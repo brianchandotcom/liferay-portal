@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.list.util;
+package com.liferay.asset.list.asset.entry.provider;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;

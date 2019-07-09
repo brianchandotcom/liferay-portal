@@ -763,6 +763,14 @@ public class ContentPageEditorDisplayContext {
 				portraitURL = commentUser.getPortraitURL(themeDisplay);
 			}
 
+			Date createDate = rootComment.getCreateDate();
+
+			String dateDescription = LanguageUtil.format(
+				request, "x-ago",
+				LanguageUtil.getTimeDescription(
+					request, System.currentTimeMillis() - createDate.getTime(),
+					true));
+
 			jsonArray.put(
 				JSONUtil.put(
 					"commentId", rootComment.getCommentId()
@@ -775,6 +783,8 @@ public class ContentPageEditorDisplayContext {
 					).put(
 						"portraitURL", portraitURL
 					)
+				).put(
+					"dateDescription", dateDescription
 				));
 		}
 

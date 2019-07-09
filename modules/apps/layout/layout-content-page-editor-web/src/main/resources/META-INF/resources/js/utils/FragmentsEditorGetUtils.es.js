@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-for-of-loops/no-for-of-loops: "warn" */
-
 import {
 	FRAGMENTS_EDITOR_ITEM_BORDERS,
 	FRAGMENTS_EDITOR_ITEM_TYPES
@@ -272,8 +270,10 @@ function getTargetBorder(direction) {
 function getWidget(widgets, portletId) {
 	let widget = null;
 
-	for (const widgetCategory of widgets) {
-		const {categories = [], portlets = []} = widgetCategory;
+	const widgetsLength = widgets.length;
+
+	for (let i = 0; i < widgetsLength; i++) {
+		const {categories = [], portlets = []} = widgets[i];
 		const categoryPortlet = portlets.find(
 			_portlet => _portlet.portletId === portletId
 		);

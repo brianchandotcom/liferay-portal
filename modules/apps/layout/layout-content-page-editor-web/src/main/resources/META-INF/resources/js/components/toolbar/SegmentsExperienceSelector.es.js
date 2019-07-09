@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
@@ -26,7 +24,9 @@ import {
 	SELECT_SEGMENTS_EXPERIENCE,
 	UPDATE_SEGMENTS_EXPERIENCE_PRIORITY
 } from '../../actions/actions.es';
-import {Modal} from 'frontend-js-web';
+
+import 'frontend-js-web/liferay/compat/modal/Modal.es';
+
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 
 const DISMISS_ALERT_ANIMATION_WAIT = 500;

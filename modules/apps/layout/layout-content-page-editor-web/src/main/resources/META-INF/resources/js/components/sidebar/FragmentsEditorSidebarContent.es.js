@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 
@@ -61,11 +59,10 @@ class FragmentsEditorSidebarContent extends Component {
 
 	/**
 	 * Opens look and feel configuration window
-	 * @param {!MouseEvent} event
 	 * @private
 	 * @review
 	 */
-	_handleLookAndFeeldButtonClick(event) {
+	_handleLookAndFeeldButtonClick() {
 		Liferay.Util.navigate(this.lookAndFeelURL);
 	}
 

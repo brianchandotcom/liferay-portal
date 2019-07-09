@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import {
 	CREATE_SEGMENTS_EXPERIENCE,
 	DELETE_SEGMENTS_EXPERIENCE,
@@ -21,10 +19,7 @@ import {
 	SELECT_SEGMENTS_EXPERIENCE,
 	UPDATE_SEGMENTS_EXPERIENCE_PRIORITY
 } from '../actions/actions.es';
-import {
-	deepClone,
-	getFragmentRowIndex
-} from '../utils/FragmentsEditorGetUtils.es';
+import {deepClone} from '../utils/FragmentsEditorGetUtils.es';
 import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 import {
 	removeExperience,

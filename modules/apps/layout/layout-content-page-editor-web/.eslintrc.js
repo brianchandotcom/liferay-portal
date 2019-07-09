@@ -14,6 +14,7 @@
 
 module.exports = {
 	globals: {
-		AlloyEditor: true
+		AlloyEditor: true,
+		process: true
 	}
 };

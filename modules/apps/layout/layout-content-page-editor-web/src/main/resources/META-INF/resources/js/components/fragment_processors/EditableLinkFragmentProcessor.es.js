@@ -12,16 +12,13 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import {FLOATING_TOOLBAR_BUTTONS} from '../../utils/constants';
 import {destroy, init} from './EditableTextFragmentProcessor.es';
 
 /**
- * @param {object} editableValues
  * @return {object[]} Floating toolbar panels
  */
-function getFloatingToolbarButtons(editableValues) {
+function getFloatingToolbarButtons() {
 	return [FLOATING_TOOLBAR_BUTTONS.edit, FLOATING_TOOLBAR_BUTTONS.link];
 }
 

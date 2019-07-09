@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-undef: "warn" */
-
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
@@ -33,7 +31,7 @@ class FragmentsEditorSidebar extends Component {
 	 * @review
 	 */
 	created() {
-		this._productMenuToggle = $('.product-menu-toggle');
+		this._productMenuToggle = document.querySelector('.product-menu-toggle');
 		this._handleHide = this._handleHide.bind(this);
 		const sidenav = Liferay.SideNavigation.instance(
 			this._productMenuToggle

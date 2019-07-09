@@ -466,6 +466,24 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 	@Override
 	public FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, String name, String css, String html,
+			String js, String configuration, int status)
+		throws PortalException {
+
+		FragmentEntry fragmentEntry =
+			fragmentEntryLocalService.getFragmentEntry(fragmentEntryId);
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), fragmentEntry.getGroupId(),
+			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
+
+		return fragmentEntryLocalService.updateFragmentEntry(
+			getUserId(), fragmentEntryId, name, css, html, js, configuration,
+			status);
+	}
+
+	@Override
+	public FragmentEntry updateFragmentEntry(
+			long fragmentEntryId, String name, String css, String html,
 			String js, String configuration, long previewFileEntryId,
 			int status)
 		throws PortalException {

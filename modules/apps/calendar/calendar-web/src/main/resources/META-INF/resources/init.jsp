@@ -245,3 +245,5 @@ else {
 	dateFormatTime = FastDateFormatFactoryUtil.getSimpleDateFormat("hh:mm a", locale, userTimeZone);
 }
 %>
+
+<%@ include file="/init-ext.jsp" %>

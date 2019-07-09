@@ -8,6 +8,7 @@
 		approved: string,
 		draft: string
 	]}
+	{@param initialConfiguration: string}
 	{@param initialCSS: string}
 	{@param initialHTML: string}
 	{@param initialJS: string}
@@ -26,6 +27,7 @@
 	]>}
 	{@param? _configuration: string}
 	{@param? _css: string}
+	{@param? _handleConfigurationChanged: any}
 	{@param? _handleCSSChanged: any}
 	{@param? _handleHTMLChanged: any}
 	{@param? _handleJSChanged: any}
@@ -156,6 +158,12 @@
 			</div>
 
 			<div aria-labelledby="configurationTab" class="fade tab-pane" id="configuration" role="tabpanel">
+				{call com.liferay.fragment.web.SourceEditor.render}
+					{param events: ['contentChanged': $_handleConfigurationChanged] /}
+					{param initialContent: $initialConfiguration /}
+					{param spritemap: $spritemap /}
+					{param syntax: 'json' /}
+				{/call}
 			</div>
 		</div>
 	</div>

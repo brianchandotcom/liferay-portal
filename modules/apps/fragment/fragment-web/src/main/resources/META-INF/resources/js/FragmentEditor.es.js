@@ -31,7 +31,13 @@ class FragmentEditor extends PortletBase {
 	 * @inheritDoc
 	 */
 	shouldUpdate(changes) {
-		return changes._html || changes._js || changes._css || changes._saving;
+		return (
+			changes._html ||
+			changes._js ||
+			changes._configuration ||
+			changes._css ||
+			changes._saving
+		);
 	}
 
 	/**
@@ -39,6 +45,7 @@ class FragmentEditor extends PortletBase {
 	 *
 	 * @public
 	 * @return {{
+	 *   configuration: string,
 	 *   css: string,
 	 *   html: string,
 	 *   js: string
@@ -46,6 +53,7 @@ class FragmentEditor extends PortletBase {
 	 */
 	getContent() {
 		return {
+			configuration: this._configuration,
 			css: this._css,
 			html: this._html,
 			js: this._js
@@ -71,6 +79,17 @@ class FragmentEditor extends PortletBase {
 	 */
 	_handleContentChanged() {
 		this.emit('contentChanged', this.getContent());
+	}
+
+	/**
+	 * Callback executed when the Configuration editor changes.
+	 *
+	 * @param {!Event} event
+	 * @private
+	 */
+	_handleConfigurationChanged(event) {
+		this._configuration = event.content;
+		this._handleContentChanged();
 	}
 
 	/**
@@ -122,6 +141,7 @@ class FragmentEditor extends PortletBase {
 			this._saving = true;
 
 			this.fetch(this.urls.edit, {
+				configurationContent: content.configuration,
 				cssContent: content.css,
 				fragmentCollectionId: this.fragmentCollectionId,
 				fragmentEntryId: this.fragmentEntryId,
@@ -229,6 +249,20 @@ FragmentEditor.STATE = {
 		edit: Config.string().required(),
 		redirect: Config.string().required()
 	}).required(),
+
+	/**
+	 * Updated Configuration content of the editor. This value is propagated to the
+	 * preview pane.
+	 *
+	 * @default ''
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @private
+	 * @type {string}
+	 */
+	_configuration: Config.string()
+		.internal()
+		.value(''),
 
 	/**
 	 * Updated CSS content of the editor. This value is propagated to the

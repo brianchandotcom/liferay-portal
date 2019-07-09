@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -82,7 +81,8 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
 			_ddmFormInstanceRecordVersionService.
 				fetchLatestFormInstanceRecordVersion(
-					_user.getUserId(), ddmFormInstance.getFormInstanceId(),
+					contextUser.getUserId(),
+					ddmFormInstance.getFormInstanceId(),
 					ddmFormInstance.getVersion(),
 					WorkflowConstants.STATUS_DRAFT);
 
@@ -297,9 +297,6 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 
 	@Reference
 	private Portal _portal;
-
-	@Context
-	private User _user;
 
 	@Reference
 	private UserLocalService _userLocalService;

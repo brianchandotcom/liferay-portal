@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -95,7 +96,7 @@ public class KnowledgeBaseArticleResourceImpl
 		return new KnowledgeBaseArticleEntityModel(
 			EntityFieldsUtil.getEntityFields(
 				_portal.getClassNameId(KBArticle.class.getName()),
-				contextCompany.getCompanyId(), _expandoColumnLocalService,
+				CompanyThreadLocal.getCompanyId(), _expandoColumnLocalService,
 				_expandoTableLocalService));
 	}
 
@@ -288,7 +289,7 @@ public class KnowledgeBaseArticleResourceImpl
 		KnowledgeBaseArticle knowledgeBaseArticle) {
 
 		return CustomFieldsUtil.toMap(
-			KBArticle.class.getName(), contextCompany.getCompanyId(),
+			KBArticle.class.getName(), CompanyThreadLocal.getCompanyId(),
 			knowledgeBaseArticle.getCustomFields(),
 			contextAcceptLanguage.getPreferredLocale());
 	}

@@ -46,7 +46,6 @@ import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -54,6 +53,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -78,7 +78,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -119,8 +118,8 @@ public class MessageBoardThreadResourceImpl
 			new ArrayList<>(
 				EntityFieldsUtil.getEntityFields(
 					_portal.getClassNameId(MBMessage.class.getName()),
-					contextCompany.getCompanyId(), _expandoColumnLocalService,
-					_expandoTableLocalService)));
+					CompanyThreadLocal.getCompanyId(),
+					_expandoColumnLocalService, _expandoTableLocalService)));
 	}
 
 	@Override
@@ -298,7 +297,7 @@ public class MessageBoardThreadResourceImpl
 		MessageBoardThread messageBoardThread) {
 
 		return CustomFieldsUtil.toMap(
-			MBMessage.class.getName(), contextCompany.getCompanyId(),
+			MBMessage.class.getName(), CompanyThreadLocal.getCompanyId(),
 			messageBoardThread.getCustomFields(),
 			contextAcceptLanguage.getPreferredLocale());
 	}
@@ -329,7 +328,7 @@ public class MessageBoardThreadResourceImpl
 			MBMessage.class.getName(), _ratingsEntryLocalService,
 			ratingsEntry -> RatingUtil.toRating(
 				_portal, ratingsEntry, _userLocalService),
-			_user);
+			contextUser);
 	}
 
 	private MessageBoardThread _toMessageBoardThread(MBMessage mbMessage)
@@ -493,9 +492,6 @@ public class MessageBoardThreadResourceImpl
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
-
-	@Context
-	private User _user;
 
 	@Reference
 	private UserLocalService _userLocalService;

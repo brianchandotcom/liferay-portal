@@ -35,7 +35,6 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.DocumentEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -45,6 +44,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -64,7 +64,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -131,7 +130,7 @@ public class DocumentResourceImpl
 		return new DocumentEntityModel(
 			EntityFieldsUtil.getEntityFields(
 				_portal.getClassNameId(DLFileEntry.class.getName()),
-				contextCompany.getCompanyId(), _expandoColumnLocalService,
+				CompanyThreadLocal.getCompanyId(), _expandoColumnLocalService,
 				_expandoTableLocalService));
 	}
 
@@ -409,7 +408,7 @@ public class DocumentResourceImpl
 		Optional<Document> documentOptional) {
 
 		return CustomFieldsUtil.toMap(
-			DLFileEntry.class.getName(), contextCompany.getCompanyId(),
+			DLFileEntry.class.getName(), CompanyThreadLocal.getCompanyId(),
 			_getExpandoBridgeAttributes(documentOptional),
 			contextAcceptLanguage.getPreferredLocale());
 	}
@@ -419,7 +418,7 @@ public class DocumentResourceImpl
 			DLFileEntry.class.getName(), _ratingsEntryLocalService,
 			ratingsEntry -> RatingUtil.toRating(
 				_portal, ratingsEntry, _userLocalService),
-			_user);
+			contextUser);
 	}
 
 	private Document _toDocument(FileEntry fileEntry) throws Exception {
@@ -450,9 +449,6 @@ public class DocumentResourceImpl
 
 	@Reference
 	private RatingsEntryLocalService _ratingsEntryLocalService;
-
-	@Context
-	private User _user;
 
 	@Reference
 	private UserLocalService _userLocalService;

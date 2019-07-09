@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -91,7 +92,7 @@ public class DocumentFolderResourceImpl
 		return new DocumentFolderEntityModel(
 			EntityFieldsUtil.getEntityFields(
 				_portal.getClassNameId(DLFolder.class.getName()),
-				contextCompany.getCompanyId(), _expandoColumnLocalService,
+				CompanyThreadLocal.getCompanyId(), _expandoColumnLocalService,
 				_expandoTableLocalService));
 	}
 

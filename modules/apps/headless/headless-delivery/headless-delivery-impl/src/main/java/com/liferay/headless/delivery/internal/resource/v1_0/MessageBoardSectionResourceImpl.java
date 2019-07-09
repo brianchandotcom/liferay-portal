@@ -26,7 +26,6 @@ import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryService;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -34,6 +33,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -48,7 +48,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -77,8 +76,8 @@ public class MessageBoardSectionResourceImpl
 			new ArrayList<>(
 				EntityFieldsUtil.getEntityFields(
 					_portal.getClassNameId(MBCategory.class.getName()),
-					contextCompany.getCompanyId(), _expandoColumnLocalService,
-					_expandoTableLocalService)));
+					CompanyThreadLocal.getCompanyId(),
+					_expandoColumnLocalService, _expandoTableLocalService)));
 	}
 
 	@Override
@@ -183,7 +182,7 @@ public class MessageBoardSectionResourceImpl
 
 		return _toMessageBoardSection(
 			_mbCategoryService.addCategory(
-				_user.getUserId(), parentMessageBoardSectionId,
+				contextUser.getUserId(), parentMessageBoardSectionId,
 				messageBoardSection.getTitle(),
 				messageBoardSection.getDescription(),
 				ServiceContextUtil.createServiceContext(
@@ -195,7 +194,7 @@ public class MessageBoardSectionResourceImpl
 		MessageBoardSection messageBoardSection) {
 
 		return CustomFieldsUtil.toMap(
-			MBCategory.class.getName(), contextCompany.getCompanyId(),
+			MBCategory.class.getName(), CompanyThreadLocal.getCompanyId(),
 			messageBoardSection.getCustomFields(),
 			contextAcceptLanguage.getPreferredLocale());
 	}
@@ -258,9 +257,6 @@ public class MessageBoardSectionResourceImpl
 
 	@Reference
 	private Portal _portal;
-
-	@Context
-	private User _user;
 
 	@Reference
 	private UserLocalService _userLocalService;

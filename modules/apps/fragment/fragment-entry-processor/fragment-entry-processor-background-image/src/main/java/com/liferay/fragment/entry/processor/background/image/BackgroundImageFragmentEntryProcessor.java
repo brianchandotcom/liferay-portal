@@ -143,7 +143,9 @@ public class BackgroundImageFragmentEntryProcessor
 	}
 
 	@Override
-	public void validateFragmentEntryHTML(String html) throws PortalException {
+	public void validateFragmentEntryHTML(String html, String configuration)
+		throws PortalException {
+
 		Document document = _getDocument(html);
 
 		Elements elements = document.select("[data-lfr-background-image-id]");

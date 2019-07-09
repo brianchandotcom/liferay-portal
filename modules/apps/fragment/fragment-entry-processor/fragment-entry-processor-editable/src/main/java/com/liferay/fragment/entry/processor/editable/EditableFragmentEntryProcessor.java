@@ -295,7 +295,9 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	@Override
-	public void validateFragmentEntryHTML(String html) throws PortalException {
+	public void validateFragmentEntryHTML(String html, String configuration)
+		throws PortalException {
+
 		_validateAttributes(html);
 		_validateDuplicatedIds(html);
 		_validateEditableElements(html);

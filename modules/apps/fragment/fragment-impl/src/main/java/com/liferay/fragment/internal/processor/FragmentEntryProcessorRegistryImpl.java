@@ -142,11 +142,14 @@ public class FragmentEntryProcessorRegistryImpl
 	}
 
 	@Override
-	public void validateFragmentEntryHTML(String html) throws PortalException {
+	public void validateFragmentEntryHTML(String html, String configuration)
+		throws PortalException {
+
 		for (FragmentEntryProcessor fragmentEntryProcessor :
 				_serviceTrackerList) {
 
-			fragmentEntryProcessor.validateFragmentEntryHTML(html);
+			fragmentEntryProcessor.validateFragmentEntryHTML(
+				html, configuration);
 		}
 	}
 

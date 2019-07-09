@@ -371,7 +371,7 @@ public class FragmentEntryLocalServiceImpl
 		validateFragmentEntryKey(groupId, fragmentEntryKey);
 
 		if (WorkflowConstants.STATUS_APPROVED == status) {
-			validateContent(html);
+			validateContent(html, configuration);
 
 			html = _parseHTMLContent(html);
 		}
@@ -644,7 +644,7 @@ public class FragmentEntryLocalServiceImpl
 		validate(name);
 
 		if (WorkflowConstants.STATUS_APPROVED == status) {
-			validateContent(html);
+			validateContent(html, configuration);
 
 			html = _parseHTMLContent(html);
 		}
@@ -709,8 +709,11 @@ public class FragmentEntryLocalServiceImpl
 		}
 	}
 
-	protected void validateContent(String html) throws PortalException {
-		_fragmentEntryProcessorRegistry.validateFragmentEntryHTML(html);
+	protected void validateContent(String html, String configuration)
+		throws PortalException {
+
+		_fragmentEntryProcessorRegistry.validateFragmentEntryHTML(
+			html, configuration);
 	}
 
 	protected void validateFragmentEntryKey(

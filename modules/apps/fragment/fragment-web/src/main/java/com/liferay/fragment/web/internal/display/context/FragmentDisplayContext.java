@@ -140,6 +140,29 @@ public class FragmentDisplayContext {
 		};
 	}
 
+	public String getConfigurationContent() {
+		if (Validator.isNotNull(_configurationContent)) {
+			return _configurationContent;
+		}
+
+		_configurationContent = ParamUtil.getString(
+			_httpServletRequest, "configurationContent");
+
+		FragmentEntry fragmentEntry = getFragmentEntry();
+
+		if ((fragmentEntry != null) &&
+			Validator.isNull(_configurationContent)) {
+
+			_configurationContent = fragmentEntry.getConfiguration();
+
+			if (Validator.isNull(_configurationContent)) {
+				_configurationContent = "{\n\t\"fieldSets\": [\n\t]\n}";
+			}
+		}
+
+		return _configurationContent;
+	}
+
 	public String getCssContent() {
 		if (Validator.isNotNull(_cssContent)) {
 			return _cssContent;
@@ -229,6 +252,8 @@ public class FragmentDisplayContext {
 			"fragmentCollectionId", getFragmentCollectionId()
 		).put(
 			"fragmentEntryId", getFragmentEntryId()
+		).put(
+			"initialConfiguration", getConfigurationContent()
 		).put(
 			"initialCSS", getCssContent()
 		).put(
@@ -620,6 +645,7 @@ public class FragmentDisplayContext {
 		return _tabs1;
 	}
 
+	private String _configurationContent;
 	private String _cssContent;
 	private FragmentCollection _fragmentCollection;
 	private Long _fragmentCollectionId;

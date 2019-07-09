@@ -1449,7 +1449,7 @@ public class FragmentEntryServiceTest {
 		fragmentEntry = _fragmentEntryService.updateFragmentEntry(
 			fragmentEntry.getFragmentEntryId(), "Fragment Entry Updated",
 			"div {\ncolor: red;\n}", "<div>Updated</div>", "alert(\"test\");",
-			WorkflowConstants.STATUS_APPROVED);
+			"{\n\t\"fieldSets\": [\n\t]\n}", WorkflowConstants.STATUS_APPROVED);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -1490,7 +1490,8 @@ public class FragmentEntryServiceTest {
 		fragmentEntry = _fragmentEntryService.updateFragmentEntry(
 			fragmentEntry.getFragmentEntryId(), "Fragment Entry Updated",
 			"div {\ncolor: red;\n}", "<div>Updated</div>", "alert(\"test\");",
-			1, WorkflowConstants.STATUS_APPROVED);
+			"{\n\t\"fieldSets\": [\n\t]\n}", 1,
+			WorkflowConstants.STATUS_APPROVED);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -1530,7 +1531,8 @@ public class FragmentEntryServiceTest {
 		_fragmentEntryService.updateFragmentEntry(
 			fragmentEntry.getFragmentEntryId(), "Fragment Entry Updated",
 			"div {\ncolor: red;\n}", "<div>Updated</div>", "alert(\"test\");",
-			1, WorkflowConstants.STATUS_APPROVED);
+			"{\n\t\"fieldSets\": [\n\t]\n}", 1,
+			WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
@@ -1552,7 +1554,7 @@ public class FragmentEntryServiceTest {
 		_fragmentEntryService.updateFragmentEntry(
 			fragmentEntry.getFragmentEntryId(), "Fragment Entry Updated",
 			"div {\ncolor: red;\n}", "<div>Updated</div>", "alert(\"test\");",
-			WorkflowConstants.STATUS_APPROVED);
+			"{\n\t\"fieldSets\": [\n\t]\n}", WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Test

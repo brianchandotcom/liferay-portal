@@ -142,7 +142,8 @@ public class FragmentEntryStagedModelRepository
 		return _fragmentEntryLocalService.updateFragmentEntry(
 			userId, fragmentEntry.getFragmentEntryId(), fragmentEntry.getName(),
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), fragmentEntry.getStatus());
+			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+			fragmentEntry.getStatus());
 	}
 
 	@Reference

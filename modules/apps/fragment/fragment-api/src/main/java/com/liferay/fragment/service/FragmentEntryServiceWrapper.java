@@ -354,6 +354,12 @@ public class FragmentEntryServiceWrapper
 		return _fragmentEntryService.updateFragmentEntry(fragmentEntryId, name);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #updateFragmentEntry(long, String, String, String,
+	 String, String, int)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, String name, String css, String html,
@@ -364,6 +370,12 @@ public class FragmentEntryServiceWrapper
 			fragmentEntryId, name, css, html, js, status);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #updateFragmentEntry(long, String, String, String,
+	 String, String, long, int)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, String name, String css, String html,
@@ -372,6 +384,16 @@ public class FragmentEntryServiceWrapper
 
 		return _fragmentEntryService.updateFragmentEntry(
 			fragmentEntryId, name, css, html, js, previewFileEntryId, status);
+	}
+
+	@Override
+	public com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
+			long fragmentEntryId, String name, String css, String html,
+			String js, String configuration, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _fragmentEntryService.updateFragmentEntry(
+			fragmentEntryId, name, css, html, js, configuration, status);
 	}
 
 	@Override

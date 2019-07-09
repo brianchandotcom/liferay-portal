@@ -675,6 +675,12 @@ public class FragmentEntryLocalServiceUtil {
 			fragmentEntryId, previewFileEntryId);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #updateFragmentEntry(long, long, String, String, String,
+	 String, String, int)}
+	 */
+	@Deprecated
 	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
 			long userId, long fragmentEntryId, String name, String css,
 			String html, String js, int status)
@@ -684,6 +690,12 @@ public class FragmentEntryLocalServiceUtil {
 			userId, fragmentEntryId, name, css, html, js, status);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #updateFragmentEntry(long, long, String, String, String,
+	 String, String, long, int)}
+	 */
+	@Deprecated
 	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
 			long userId, long fragmentEntryId, String name, String css,
 			String html, String js, long previewFileEntryId, int status)
@@ -691,6 +703,16 @@ public class FragmentEntryLocalServiceUtil {
 
 		return getService().updateFragmentEntry(
 			userId, fragmentEntryId, name, css, html, js, previewFileEntryId,
+			status);
+	}
+
+	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
+			long userId, long fragmentEntryId, String name, String css,
+			String html, String js, String configuration, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateFragmentEntry(
+			userId, fragmentEntryId, name, css, html, js, configuration,
 			status);
 	}
 

@@ -112,6 +112,10 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 					" for method argument ", argumentPos));
 		}
 
+		if (parameterType.isPrimitive()) {
+			return;
+		}
+
 		if (parameterTypeName.equals(
 				_jsonWebServiceNaming.convertModelClassToImplClassName(
 					targetClass))) {

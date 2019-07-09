@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 public class MyChangeListsPersonalMenuEntry extends BasePersonalMenuEntry {
 
 	@Override
-	protected String getPortletId() {
+	public String getPortletId() {
 		return CTPortletKeys.MY_CHANGE_LISTS;
 	}
 

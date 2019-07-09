@@ -42,6 +42,11 @@ import org.osgi.service.component.annotations.Reference;
 public class SharedAssetsPersonalMenuEntry extends BasePersonalMenuEntry {
 
 	@Override
+	public String getPortletId() {
+		return SharingPortletKeys.SHARED_ASSETS;
+	}
+
+	@Override
 	public boolean isShow(
 			PortletRequest portletRequest, PermissionChecker permissionChecker)
 		throws PortalException {
@@ -55,11 +60,6 @@ public class SharedAssetsPersonalMenuEntry extends BasePersonalMenuEntry {
 		}
 
 		return super.isShow(portletRequest, permissionChecker);
-	}
-
-	@Override
-	protected String getPortletId() {
-		return SharingPortletKeys.SHARED_ASSETS;
 	}
 
 	@Reference

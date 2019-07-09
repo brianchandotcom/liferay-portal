@@ -64,7 +64,7 @@ public class NotificationsPersonalMenuEntry extends BasePersonalMenuEntry {
 	}
 
 	@Override
-	protected String getPortletId() {
+	public String getPortletId() {
 		return NotificationsPortletKeys.NOTIFICATIONS;
 	}
 

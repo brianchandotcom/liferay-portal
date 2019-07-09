@@ -99,9 +99,7 @@ public abstract class BaseUpgradeTableImpl extends Table {
 			DB db = DBManagerUtil.getDB();
 
 			if (Validator.isNotNull(tempFileName) && deleteSource) {
-				String deleteSQL = getDeleteSQL();
-
-				db.runSQL(sourceConnection, deleteSQL);
+				db.runSQL(sourceConnection, getDeleteSQL());
 			}
 
 			String createSQL = getCreateSQL();

@@ -1148,9 +1148,7 @@ public class PluginPackageUtil {
 
 		Document document = SAXReaderUtil.read(xml);
 
-		Element rootElement = document.getRootElement();
-
-		return _readPluginPackageXml(rootElement);
+		return _readPluginPackageXml(document.getRootElement());
 	}
 
 	private Properties _readProperties(Element parentElement, String name) {

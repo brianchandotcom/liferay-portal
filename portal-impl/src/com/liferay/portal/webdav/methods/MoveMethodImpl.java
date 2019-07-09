@@ -39,7 +39,6 @@ public class MoveMethodImpl implements Method {
 		HttpServletRequest httpServletRequest =
 			webDAVRequest.getHttpServletRequest();
 
-		long companyId = webDAVRequest.getCompanyId();
 		String destination = WebDAVUtil.getDestination(
 			httpServletRequest, storage.getRootPath());
 
@@ -53,7 +52,7 @@ public class MoveMethodImpl implements Method {
 		}
 
 		if (!destination.equals(webDAVRequest.getPath()) &&
-			(WebDAVUtil.getGroupId(companyId, destination) ==
+			(WebDAVUtil.getGroupId(webDAVRequest.getCompanyId(), destination) ==
 				webDAVRequest.getGroupId())) {
 
 			Resource resource = storage.getResource(webDAVRequest);

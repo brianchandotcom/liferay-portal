@@ -1482,9 +1482,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Verify digest
 
-		String digest = user.getDigest();
-
-		if (Validator.isNull(digest)) {
+		if (Validator.isNull(user.getDigest())) {
 			_log.error(
 				"User must first login through the portal " + user.getUserId());
 

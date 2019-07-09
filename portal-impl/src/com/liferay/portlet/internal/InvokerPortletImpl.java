@@ -64,7 +64,6 @@ import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -369,14 +368,13 @@ public class InvokerPortletImpl
 				(BufferCacheServletResponse)
 					renderResponseImpl.getHttpServletResponse();
 
-			PortletSession portletSession = renderRequest.getPortletSession();
-
 			long now = System.currentTimeMillis();
 
 			Layout layout = (Layout)renderRequest.getAttribute(WebKeys.LAYOUT);
 
 			Map<String, InvokerPortletResponse> sessionResponses =
-				InvokerPortletUtil.getResponses(portletSession);
+				InvokerPortletUtil.getResponses(
+					renderRequest.getPortletSession());
 
 			String sessionResponseId = InvokerPortletUtil.encodeResponseKey(
 				layout.getPlid(), _portletId,
@@ -461,14 +459,13 @@ public class InvokerPortletImpl
 				(BufferCacheServletResponse)
 					headerResponseImpl.getHttpServletResponse();
 
-			PortletSession portletSession = headerRequest.getPortletSession();
-
 			long now = System.currentTimeMillis();
 
 			Layout layout = (Layout)headerRequest.getAttribute(WebKeys.LAYOUT);
 
 			Map<String, InvokerPortletResponse> sessionResponses =
-				InvokerPortletUtil.getResponses(portletSession);
+				InvokerPortletUtil.getResponses(
+					headerRequest.getPortletSession());
 
 			String sessionResponseId = InvokerPortletUtil.encodeResponseKey(
 				layout.getPlid(), _portletId,

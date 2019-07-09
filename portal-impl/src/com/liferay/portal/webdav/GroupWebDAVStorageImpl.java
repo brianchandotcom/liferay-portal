@@ -65,9 +65,8 @@ public class GroupWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		String path = webDAVRequest.getPath();
 
 		try {
-			long userId = webDAVRequest.getUserId();
-
-			List<Group> groups = WebDAVUtil.getGroups(userId);
+			List<Group> groups = WebDAVUtil.getGroups(
+				webDAVRequest.getUserId());
 
 			for (Group group : groups) {
 				if (path.equals(group.getFriendlyURL())) {

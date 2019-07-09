@@ -1744,9 +1744,7 @@ public class SitesImpl implements Sites {
 
 		LayoutLocalServiceUtil.updateLayout(layout);
 
-		LayoutSet layoutSet = layout.getLayoutSet();
-
-		doResetPrototype(layoutSet);
+		doResetPrototype(layout.getLayoutSet());
 	}
 
 	/**

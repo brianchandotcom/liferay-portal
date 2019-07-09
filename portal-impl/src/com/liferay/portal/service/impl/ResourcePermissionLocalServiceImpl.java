@@ -1313,10 +1313,7 @@ public class ResourcePermissionLocalServiceImpl
 		ResourcePermission resourcePermission = getResourcePermission(
 			resourcePermissionId);
 
-		long companyId = resourcePermission.getCompanyId();
 		String name = resourcePermission.getName();
-		int scope = resourcePermission.getScope();
-		String primKey = resourcePermission.getPrimKey();
 		long fromRoleId = resourcePermission.getRoleId();
 
 		Role toRole = roleLocalService.getRole(toRoleId);
@@ -1332,8 +1329,9 @@ public class ResourcePermissionLocalServiceImpl
 		}
 
 		setResourcePermissions(
-			companyId, name, scope, primKey, toRoleId,
-			actionIds.toArray(new String[0]));
+			resourcePermission.getCompanyId(), name,
+			resourcePermission.getScope(), resourcePermission.getPrimKey(),
+			toRoleId, actionIds.toArray(new String[0]));
 
 		resourcePermissionPersistence.remove(resourcePermissionId);
 

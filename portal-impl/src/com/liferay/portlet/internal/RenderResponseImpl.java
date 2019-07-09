@@ -25,7 +25,6 @@ import com.liferay.portlet.configuration.kernel.util.PortletConfigurationUtil;
 import java.util.Collection;
 
 import javax.portlet.PortletMode;
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 /**
@@ -81,10 +80,8 @@ public class RenderResponseImpl
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		PortletPreferences portletSetup = portletDisplay.getPortletSetup();
-
 		String localizedCustomTitle = PortletConfigurationUtil.getPortletTitle(
-			portletSetup, themeDisplay.getLanguageId());
+			portletDisplay.getPortletSetup(), themeDisplay.getLanguageId());
 
 		if (portletDisplay.isActive() &&
 			Validator.isNull(localizedCustomTitle)) {

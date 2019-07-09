@@ -113,7 +113,6 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * @author Shuyang Zhou
@@ -366,10 +365,9 @@ public class PortletContainerImpl implements PortletContainer {
 				WebKeys.THEME_DISPLAY);
 
 		if (user != null) {
-			HttpSession session = httpServletRequest.getSession();
-
 			InvokerPortletUtil.clearResponse(
-				session, layout.getPrimaryKey(), portlet.getPortletId(),
+				httpServletRequest.getSession(), layout.getPrimaryKey(),
+				portlet.getPortletId(),
 				LanguageUtil.getLanguageId(httpServletRequest));
 		}
 
@@ -546,8 +544,6 @@ public class PortletContainerImpl implements PortletContainer {
 					requestLayout);
 			}
 
-			List<Event> events = liferayActionResponse.getEvents();
-
 			String redirectLocation =
 				liferayActionResponse.getRedirectLocation();
 
@@ -567,10 +563,8 @@ public class PortletContainerImpl implements PortletContainer {
 					for (Map.Entry<String, String[]> entry :
 							renderParameters.entrySet()) {
 
-						String key = entry.getKey();
-						String[] value = entry.getValue();
-
-						portletURL.setParameter(key, value);
+						portletURL.setParameter(
+							entry.getKey(), entry.getValue());
 					}
 				}
 				else {
@@ -582,7 +576,8 @@ public class PortletContainerImpl implements PortletContainer {
 				redirectLocation = portletURL.toString();
 			}
 
-			return new ActionResult(events, redirectLocation);
+			return new ActionResult(
+				liferayActionResponse.getEvents(), redirectLocation);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -603,8 +598,6 @@ public class PortletContainerImpl implements PortletContainer {
 
 		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
 			portlet, servletContext);
-
-		PortletContext portletContext = portletConfig.getPortletContext();
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
@@ -675,8 +668,9 @@ public class PortletContainerImpl implements PortletContainer {
 				scopeGroupId, layout, portlet.getPortletId(), null);
 
 		LiferayEventRequest liferayEventRequest = EventRequestFactory.create(
-			httpServletRequest, portlet, invokerPortlet, portletContext,
-			windowState, portletMode, portletPreferences, layout.getPlid());
+			httpServletRequest, portlet, invokerPortlet,
+			portletConfig.getPortletContext(), windowState, portletMode,
+			portletPreferences, layout.getPlid());
 
 		liferayEventRequest.setEvent(
 			serializeEvent(event, invokerPortlet.getPortletClassLoader()));
@@ -700,13 +694,11 @@ public class PortletContainerImpl implements PortletContainer {
 				PortletApp portletApp = portlet.getPortletApp();
 
 				if (portletApp.getSpecMajorVersion() < 3) {
-					Map<String, String[]> renderParameterMap =
-						liferayEventResponse.getRenderParameterMap();
-
 					RenderParametersPool.put(
 						httpServletRequest, requestLayout.getPlid(),
 						portlet.getPortletId(),
-						new HashMap<>(renderParameterMap));
+						new HashMap<>(
+							liferayEventResponse.getRenderParameterMap()));
 				}
 				else {
 					_setAllRenderParameters(
@@ -816,9 +808,7 @@ public class PortletContainerImpl implements PortletContainer {
 		if ((portlet != null) && portlet.isInstanceable() &&
 			!portlet.isAddDefaultResource()) {
 
-			String instanceId = portlet.getInstanceId();
-
-			if (!Validator.isPassword(instanceId)) {
+			if (!Validator.isPassword(portlet.getInstanceId())) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
@@ -1057,14 +1047,14 @@ public class PortletContainerImpl implements PortletContainer {
 		LiferayResourceResponse liferayResourceResponse = null;
 
 		if (liferayResourceRequest == null) {
-			PortletContext portletContext = portletConfig.getPortletContext();
 			PortletPreferences portletPreferences =
 				PortletPreferencesLocalServiceUtil.getStrictPreferences(
 					portletPreferencesIds);
 
 			liferayResourceRequest = ResourceRequestFactory.create(
-				httpServletRequest, portlet, invokerPortlet, portletContext,
-				windowState, portletMode, portletPreferences, layout.getPlid());
+				httpServletRequest, portlet, invokerPortlet,
+				portletConfig.getPortletContext(), windowState, portletMode,
+				portletPreferences, layout.getPlid());
 
 			liferayResourceResponse = ResourceResponseFactory.create(
 				liferayResourceRequest, httpServletResponse);

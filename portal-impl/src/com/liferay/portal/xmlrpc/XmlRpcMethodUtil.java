@@ -126,9 +126,7 @@ public class XmlRpcMethodUtil {
 				return;
 			}
 
-			String methodName = method.getMethodName();
-
-			methods.remove(methodName);
+			methods.remove(method.getMethodName());
 
 			if (methods.isEmpty()) {
 				_methodRegistry.remove(token);

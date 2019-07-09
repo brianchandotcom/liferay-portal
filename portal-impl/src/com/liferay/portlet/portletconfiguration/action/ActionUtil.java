@@ -76,10 +76,8 @@ public class ActionUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Layout layout = themeDisplay.getLayout();
-
 		return PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-			layout, portlet.getPortletId());
+			themeDisplay.getLayout(), portlet.getPortletId());
 	}
 
 	public static void getLayoutPublicRenderParameters(
@@ -156,10 +154,8 @@ public class ActionUtil {
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			Layout layout = themeDisplay.getLayout();
-
 			preferences = PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-				layout, portlet.getPortletId());
+				themeDisplay.getLayout(), portlet.getPortletId());
 		}
 
 		List<PublicRenderParameterConfiguration>

@@ -348,11 +348,10 @@ public class OrganizationLocalServiceImpl
 	public void addOrganizationResources(long userId, Organization organization)
 		throws PortalException {
 
-		String name = Organization.class.getName();
-
 		resourceLocalService.addResources(
-			organization.getCompanyId(), 0, userId, name,
-			organization.getOrganizationId(), false, false, false);
+			organization.getCompanyId(), 0, userId,
+			Organization.class.getName(), organization.getOrganizationId(),
+			false, false, false);
 	}
 
 	/**
@@ -480,10 +479,8 @@ public class OrganizationLocalServiceImpl
 
 		// Resources
 
-		String name = Organization.class.getName();
-
 		resourceLocalService.deleteResource(
-			organization.getCompanyId(), name,
+			organization.getCompanyId(), Organization.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			organization.getOrganizationId());
 
@@ -2378,14 +2375,12 @@ public class OrganizationLocalServiceImpl
 	protected void reindexUsers(Organization organization)
 		throws PortalException {
 
-		long companyId = organization.getCompanyId();
-
 		long[] userIds = getUserPrimaryKeys(organization.getOrganizationId());
 
 		if (ArrayUtil.isNotEmpty(userIds)) {
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
-					reindex(companyId, userIds);
+					reindex(organization.getCompanyId(), userIds);
 
 					return null;
 				});

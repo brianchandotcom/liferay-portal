@@ -100,9 +100,7 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 		Theme theme = (Theme)obj;
 
-		String themeId = theme.getThemeId();
-
-		if (getThemeId().equals(themeId)) {
+		if (getThemeId().equals(theme.getThemeId())) {
 			return true;
 		}
 
@@ -706,10 +704,8 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 		String servletContextName = StringPool.BLANK;
 
-		String contextPath = servletContext.getContextPath();
-
 		if (!Objects.equals(
-				PortalUtil.getPathContext(contextPath),
+				PortalUtil.getPathContext(servletContext.getContextPath()),
 				PortalUtil.getPathContext())) {
 
 			servletContextName = GetterUtil.getString(

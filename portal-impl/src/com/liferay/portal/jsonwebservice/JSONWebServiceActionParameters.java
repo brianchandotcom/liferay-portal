@@ -149,9 +149,8 @@ public class JSONWebServiceActionParameters {
 		for (Map.Entry<String, Object> entry : parameterMap.entrySet()) {
 			String parameterName = entry.getKey();
 
-			Object value = entry.getValue();
-
-			_jsonWebServiceActionParameters.put(parameterName, value);
+			_jsonWebServiceActionParameters.put(
+				parameterName, entry.getValue());
 		}
 	}
 

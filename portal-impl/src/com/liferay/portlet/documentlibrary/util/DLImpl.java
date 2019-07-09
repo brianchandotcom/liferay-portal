@@ -899,10 +899,8 @@ public class DLImpl implements DL {
 
 	@Override
 	public String getTitleWithExtension(FileEntry fileEntry) {
-		String title = fileEntry.getTitle();
-		String extension = fileEntry.getExtension();
-
-		return getTitleWithExtension(title, extension);
+		return getTitleWithExtension(
+			fileEntry.getTitle(), fileEntry.getExtension());
 	}
 
 	@Override

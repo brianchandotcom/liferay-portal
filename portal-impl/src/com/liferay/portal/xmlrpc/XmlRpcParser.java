@@ -128,9 +128,7 @@ public class XmlRpcParser {
 						xmlStreamReader.nextTag();
 					}
 					else {
-						String text = xmlStreamReader.getText();
-
-						arguments.add(text);
+						arguments.add(xmlStreamReader.getText());
 
 						xmlStreamReader.nextTag();
 						xmlStreamReader.nextTag();

@@ -173,10 +173,9 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 		UserGroup userGroup = userGroupLocalService.getUserGroup(
 			user.getCompanyId(), name);
 
-		long userGroupId = userGroup.getUserGroupId();
-
 		UserGroupPermissionUtil.check(
-			getPermissionChecker(), userGroupId, ActionKeys.VIEW);
+			getPermissionChecker(), userGroup.getUserGroupId(),
+			ActionKeys.VIEW);
 
 		return userGroup;
 	}

@@ -132,9 +132,8 @@ public class PollerRequestHandlerImpl
 
 		PollerResponse pollerResponse = (PollerResponse)messagePayload;
 
-		PollerHeader pollerHeader = pollerResponse.getPollerHeader();
-
-		String pollerSessionId = getPollerSessionId(pollerHeader);
+		String pollerSessionId = getPollerSessionId(
+			pollerResponse.getPollerHeader());
 
 		synchronized (_pollerSessions) {
 			PollerSession pollerSession = _pollerSessions.get(pollerSessionId);

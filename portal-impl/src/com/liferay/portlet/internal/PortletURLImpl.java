@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletURLListenerFactory;
 import com.liferay.portlet.PublicRenderParametersPool;
@@ -388,10 +387,9 @@ public class PortletURLImpl
 			return;
 		}
 
-		QName qName = publicRenderParameter.getQName();
-
 		_removePublicRenderParameters.add(
-			PortletQNameUtil.getRemovePublicRenderParameterName(qName));
+			PortletQNameUtil.getRemovePublicRenderParameterName(
+				publicRenderParameter.getQName()));
 	}
 
 	@Override
@@ -1206,10 +1204,9 @@ public class PortletURLImpl
 				_portlet.getPublicRenderParameter(name);
 
 			if (publicRenderParameter != null) {
-				QName qName = publicRenderParameter.getQName();
-
 				publicRenderParameterName =
-					PortletQNameUtil.getPublicRenderParameterName(qName);
+					PortletQNameUtil.getPublicRenderParameterName(
+						publicRenderParameter.getQName());
 			}
 		}
 

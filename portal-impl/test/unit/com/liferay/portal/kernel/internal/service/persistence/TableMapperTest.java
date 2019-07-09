@@ -116,10 +116,8 @@ public class TableMapperTest {
 
 		Class<?> clazz = TableMapperTest.class;
 
-		ClassLoader classLoader = clazz.getClassLoader();
-
 		_dataSource = (DataSource)ProxyUtil.newProxyInstance(
-			classLoader, new Class<?>[] {DataSource.class},
+			clazz.getClassLoader(), new Class<?>[] {DataSource.class},
 			new InvocationHandler() {
 
 				@Override
@@ -1410,14 +1408,12 @@ public class TableMapperTest {
 	public void testReverseTableMapper() {
 		Class<?> clazz = TableMapper.class;
 
-		ClassLoader classLoader = clazz.getClassLoader();
-
 		RecordInvocationHandler recordInvocationHandler =
 			new RecordInvocationHandler();
 
 		TableMapper<Left, Right> tableMapper =
 			(TableMapper<Left, Right>)ProxyUtil.newProxyInstance(
-				classLoader, new Class<?>[] {TableMapper.class},
+				clazz.getClassLoader(), new Class<?>[] {TableMapper.class},
 				recordInvocationHandler);
 
 		ReverseTableMapper<Right, Left> reverseTableMapper =
@@ -1988,10 +1984,8 @@ public class TableMapperTest {
 
 			Class<T> modelClass = getModelClass();
 
-			ClassLoader classLoader = modelClass.getClassLoader();
-
 			return (T)ProxyUtil.newProxyInstance(
-				classLoader, new Class<?>[] {modelClass},
+				modelClass.getClassLoader(), new Class<?>[] {modelClass},
 				new GetPrimaryKeyObjInvocationHandler(primaryKey));
 		}
 

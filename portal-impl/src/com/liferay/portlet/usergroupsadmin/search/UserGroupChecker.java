@@ -17,7 +17,6 @@ package com.liferay.portlet.usergroupsadmin.search;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil;
 
@@ -36,12 +35,9 @@ public class UserGroupChecker extends EmptyOnClickRowChecker {
 	public boolean isDisabled(Object obj) {
 		UserGroup userGroup = (UserGroup)obj;
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
 		if (!UserGroupPermissionUtil.contains(
-				permissionChecker, userGroup.getUserGroupId(),
-				ActionKeys.DELETE)) {
+				PermissionThreadLocal.getPermissionChecker(),
+				userGroup.getUserGroupId(), ActionKeys.DELETE)) {
 
 			return true;
 		}

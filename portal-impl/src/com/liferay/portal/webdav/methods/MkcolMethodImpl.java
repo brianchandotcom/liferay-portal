@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.webdav.WebDAVRequest;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.webdav.methods.Method;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -44,15 +43,14 @@ public class MkcolMethodImpl implements Method {
 			Status status = storage.makeCollection(webDAVRequest);
 
 			if (Validator.isNotNull(status.getObject())) {
-				HttpServletRequest httpServletRequest =
-					webDAVRequest.getHttpServletRequest();
 				HttpServletResponse httpServletResponse =
 					webDAVRequest.getHttpServletResponse();
 
 				httpServletResponse.setHeader(
 					HttpHeaders.LOCATION,
 					StringBundler.concat(
-						PortalUtil.getPortalURL(httpServletRequest),
+						PortalUtil.getPortalURL(
+							webDAVRequest.getHttpServletRequest()),
 						webDAVRequest.getRootPath(), StringPool.SLASH,
 						status.getObject()));
 			}

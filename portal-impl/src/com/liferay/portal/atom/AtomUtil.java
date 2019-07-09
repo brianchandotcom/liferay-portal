@@ -122,9 +122,8 @@ public class AtomUtil {
 	}
 
 	public static Company getCompany() throws PortalException {
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		return CompanyLocalServiceUtil.getCompanyById(companyId);
+		return CompanyLocalServiceUtil.getCompanyById(
+			CompanyThreadLocal.getCompanyId());
 	}
 
 	public static AtomPager getPager(RequestContext requestContext) {

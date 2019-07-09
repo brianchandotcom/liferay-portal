@@ -1680,9 +1680,7 @@ public class LanguageImpl implements Language, Serializable {
 	}
 
 	private static CompanyLocalesBag _getCompanyLocalesBag() {
-		Long companyId = CompanyThreadLocal.getCompanyId();
-
-		return _getCompanyLocalesBag(companyId);
+		return _getCompanyLocalesBag(CompanyThreadLocal.getCompanyId());
 	}
 
 	private static CompanyLocalesBag _getCompanyLocalesBag(long companyId) {

@@ -56,13 +56,11 @@ public abstract class BasePreferencesImpl implements Serializable {
 		Map<String, String[]> map = new HashMap<>();
 
 		for (Map.Entry<String, Preference> entry : preferences.entrySet()) {
-			String key = entry.getKey();
-
 			Preference preference = entry.getValue();
 
 			String[] actualValues = getActualValues(preference.getValues());
 
-			map.put(key, actualValues);
+			map.put(entry.getKey(), actualValues);
 		}
 
 		return map;

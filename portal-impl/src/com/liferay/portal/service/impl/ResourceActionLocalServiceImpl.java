@@ -241,14 +241,13 @@ public class ResourceActionLocalServiceImpl
 
 	@Override
 	public ResourceAction deleteResourceAction(ResourceAction resourceAction) {
-		final String name = resourceAction.getName();
 		final long bitwiseValue = resourceAction.getBitwiseValue();
 
 		ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
 			dynamicQuery -> {
 				Property nameProperty = PropertyFactoryUtil.forName("name");
 
-				dynamicQuery.add(nameProperty.eq(name));
+				dynamicQuery.add(nameProperty.eq(resourceAction.getName()));
 			};
 
 		for (Company company : companyLocalService.getCompanies()) {

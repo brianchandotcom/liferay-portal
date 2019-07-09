@@ -271,9 +271,7 @@ public class UserGroupRoleLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		long companyId = user.getCompanyId();
-
-		Role role = rolePersistence.fetchByC_N(companyId, roleName);
+		Role role = rolePersistence.fetchByC_N(user.getCompanyId(), roleName);
 
 		if (role == null) {
 			return false;

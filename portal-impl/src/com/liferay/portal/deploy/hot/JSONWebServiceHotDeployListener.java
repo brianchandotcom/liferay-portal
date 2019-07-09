@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 
-import javax.servlet.ServletContext;
-
 /**
  * @author Igor Spasic
  */
@@ -55,18 +53,15 @@ public class JSONWebServiceHotDeployListener extends BaseHotDeployListener {
 	protected void doInvokeDeploy(HotDeployEvent hotDeployEvent)
 		throws Exception {
 
-		ServletContext servletContext = hotDeployEvent.getServletContext();
-
-		JSONWebServiceActionsManagerUtil.registerServletContext(servletContext);
+		JSONWebServiceActionsManagerUtil.registerServletContext(
+			hotDeployEvent.getServletContext());
 	}
 
 	protected void doInvokeUndeploy(HotDeployEvent hotDeployEvent)
 		throws Exception {
 
-		ServletContext servletContext = hotDeployEvent.getServletContext();
-
 		JSONWebServiceActionsManagerUtil.unregisterServletContext(
-			servletContext);
+			hotDeployEvent.getServletContext());
 	}
 
 }

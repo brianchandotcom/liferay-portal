@@ -432,11 +432,9 @@ public class PortalPreferencesImpl
 			}
 			catch (Exception e) {
 				if (isCausedByStaleObjectException(e)) {
-					long ownerId = getOwnerId();
-					int ownerType = getOwnerType();
-
 					com.liferay.portal.kernel.model.PortalPreferences
-						portalPreferences = _reload(ownerId, ownerType);
+						portalPreferences = _reload(
+							getOwnerId(), getOwnerType());
 
 					if (portalPreferences == null) {
 						continue;

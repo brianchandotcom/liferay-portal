@@ -71,9 +71,9 @@ public class LayoutTemplateImpl
 			return false;
 		}
 
-		String layoutTemplateId = layoutTemplate.getLayoutTemplateId();
+		if (getLayoutTemplateId().equals(
+				layoutTemplate.getLayoutTemplateId())) {
 
-		if (getLayoutTemplateId().equals(layoutTemplateId)) {
 			return true;
 		}
 

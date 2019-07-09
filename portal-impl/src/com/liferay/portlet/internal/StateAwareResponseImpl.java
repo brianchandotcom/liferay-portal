@@ -220,10 +220,8 @@ public abstract class StateAwareResponseImpl
 			return;
 		}
 
-		com.liferay.portal.kernel.xml.QName qName =
-			publicRenderParameter.getQName();
-
-		String key = PortletQNameUtil.getPublicRenderParameterName(qName);
+		String key = PortletQNameUtil.getPublicRenderParameterName(
+			publicRenderParameter.getQName());
 
 		_publicRenderParameters.remove(key);
 	}
@@ -434,9 +432,6 @@ public abstract class StateAwareResponseImpl
 			return false;
 		}
 
-		com.liferay.portal.kernel.xml.QName qName =
-			publicRenderParameter.getQName();
-
 		String[] oldValues = _publicRenderParameters.get(name);
 
 		if (oldValues != null) {
@@ -444,7 +439,9 @@ public abstract class StateAwareResponseImpl
 		}
 
 		_publicRenderParameters.put(
-			PortletQNameUtil.getPublicRenderParameterName(qName), values);
+			PortletQNameUtil.getPublicRenderParameterName(
+				publicRenderParameter.getQName()),
+			values);
 
 		return true;
 	}

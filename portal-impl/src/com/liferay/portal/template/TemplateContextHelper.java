@@ -212,9 +212,8 @@ public class TemplateContextHelper {
 	public TemplateControlContext getTemplateControlContext() {
 		Thread currentThread = Thread.currentThread();
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		return new TemplateControlContext(null, contextClassLoader);
+		return new TemplateControlContext(
+			null, currentThread.getContextClassLoader());
 	}
 
 	public void prepare(
@@ -293,7 +292,6 @@ public class TemplateContextHelper {
 
 		if (themeDisplay != null) {
 			Layout layout = themeDisplay.getLayout();
-			List<Layout> layouts = themeDisplay.getLayouts();
 
 			HttpServletRequest originalHttpServletRequest =
 				PortalUtil.getOriginalServletRequest(httpServletRequest);
@@ -309,7 +307,7 @@ public class TemplateContextHelper {
 			contextObjects.put("colorScheme", themeDisplay.getColorScheme());
 			contextObjects.put("company", themeDisplay.getCompany());
 			contextObjects.put("layout", layout);
-			contextObjects.put("layouts", layouts);
+			contextObjects.put("layouts", themeDisplay.getLayouts());
 			contextObjects.put(
 				"layoutTypePortlet", themeDisplay.getLayoutTypePortlet());
 			contextObjects.put("locale", themeDisplay.getLocale());

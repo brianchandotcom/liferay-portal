@@ -108,14 +108,12 @@ public class PortalResiliencyAction implements Action {
 			Layout requestLayout = (Layout)httpServletRequest.getAttribute(
 				WebKeys.LAYOUT);
 
-			String typeSettings = requestLayout.getTypeSettings();
-
 			ActionResult actionResult = portletContainer.processAction(
 				httpServletRequest, httpServletResponse, portlet);
 
 			String newTypeSettings = requestLayout.getTypeSettings();
 
-			if (!newTypeSettings.equals(typeSettings)) {
+			if (!newTypeSettings.equals(requestLayout.getTypeSettings())) {
 				httpServletRequest.setAttribute(
 					WebKeys.SPI_AGENT_LAYOUT_TYPE_SETTINGS, newTypeSettings);
 			}
@@ -126,8 +124,6 @@ public class PortalResiliencyAction implements Action {
 		else if (lifecycle == SPIAgent.Lifecycle.EVENT) {
 			Layout requestLayout = (Layout)httpServletRequest.getAttribute(
 				WebKeys.LAYOUT);
-
-			String typeSettings = requestLayout.getTypeSettings();
 
 			Layout layout = (Layout)httpServletRequest.getAttribute(
 				WebKeys.SPI_AGENT_LAYOUT);
@@ -141,7 +137,7 @@ public class PortalResiliencyAction implements Action {
 
 			String newTypeSettings = requestLayout.getTypeSettings();
 
-			if (!newTypeSettings.equals(typeSettings)) {
+			if (!newTypeSettings.equals(requestLayout.getTypeSettings())) {
 				httpServletRequest.setAttribute(
 					WebKeys.SPI_AGENT_LAYOUT_TYPE_SETTINGS, newTypeSettings);
 			}

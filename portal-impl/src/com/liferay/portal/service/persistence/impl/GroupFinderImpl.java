@@ -1054,9 +1054,7 @@ public class GroupFinderImpl
 		StringBundler sb = new StringBundler(params.size());
 
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
-			Object value = entry.getValue();
-
-			if (Validator.isNull(value)) {
+			if (Validator.isNull(entry.getValue())) {
 				continue;
 			}
 

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
-import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portlet.PublicRenderParametersPool;
 import com.liferay.portlet.RenderParametersPool;
 
@@ -170,10 +169,9 @@ public class RenderStateUtil {
 				for (PublicRenderParameter publicRenderParameter :
 						publicRenderParameters) {
 
-					QName qName = publicRenderParameter.getQName();
-
 					String publicRenderParameterName =
-						PortletQNameUtil.getPublicRenderParameterName(qName);
+						PortletQNameUtil.getPublicRenderParameterName(
+							publicRenderParameter.getQName());
 
 					String[] currentValue = currentPublicRenderParameters.get(
 						publicRenderParameterName);

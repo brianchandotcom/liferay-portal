@@ -257,11 +257,6 @@ public class WorkflowInstanceLinkLocalServiceImpl
 			workflowHandler.getWorkflowDefinitionLink(
 				companyId, groupId, classPK);
 
-		String workflowDefinitionName =
-			workflowDefinitionLink.getWorkflowDefinitionName();
-		int workflowDefinitionVersion =
-			workflowDefinitionLink.getWorkflowDefinitionVersion();
-
 		if (workflowContext != null) {
 			workflowContext = new HashMap<>(workflowContext);
 		}
@@ -283,8 +278,10 @@ public class WorkflowInstanceLinkLocalServiceImpl
 
 		WorkflowInstance workflowInstance =
 			WorkflowInstanceManagerUtil.startWorkflowInstance(
-				companyId, groupId, userId, workflowDefinitionName,
-				workflowDefinitionVersion, null, workflowContext);
+				companyId, groupId, userId,
+				workflowDefinitionLink.getWorkflowDefinitionName(),
+				workflowDefinitionLink.getWorkflowDefinitionVersion(), null,
+				workflowContext);
 
 		addWorkflowInstanceLink(
 			userId, companyId, groupId, className, classPK,

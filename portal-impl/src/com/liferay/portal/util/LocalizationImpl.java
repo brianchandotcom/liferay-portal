@@ -876,13 +876,12 @@ public class LocalizationImpl implements Localization {
 
 			for (Map.Entry<String, String> entry : map.entrySet()) {
 				String languageId = entry.getKey();
-				String value = entry.getValue();
 
 				xmlStreamWriter.writeStartElement(key);
 
 				xmlStreamWriter.writeAttribute(_LANGUAGE_ID, languageId);
 				xmlStreamWriter.writeCharacters(
-					XMLUtil.stripInvalidChars(value));
+					XMLUtil.stripInvalidChars(entry.getValue()));
 
 				xmlStreamWriter.writeEndElement();
 			}
@@ -1082,9 +1081,9 @@ public class LocalizationImpl implements Localization {
 
 		for (Map.Entry<Locale, String> entry : map.entrySet()) {
 			String languageId = LocaleUtil.toLanguageId(entry.getKey());
-			String value = entry.getValue();
 
-			setPreferencesValue(preferences, parameter, languageId, value);
+			setPreferencesValue(
+				preferences, parameter, languageId, entry.getValue());
 		}
 	}
 

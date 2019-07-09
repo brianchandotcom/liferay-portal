@@ -568,11 +568,10 @@ public class NettyFabricWorkerExecutionChannelHandler
 						public FabricWorker<Serializable> call()
 							throws ProcessException {
 
-							ProcessConfig processConfig =
-								_nettyFabricWorkerConfig.getProcessConfig();
-
 							return _fabricAgent.execute(
-								loadedPaths.toProcessConfig(processConfig),
+								loadedPaths.toProcessConfig(
+									_nettyFabricWorkerConfig.
+										getProcessConfig()),
 								_nettyFabricWorkerConfig.getProcessCallable());
 						}
 

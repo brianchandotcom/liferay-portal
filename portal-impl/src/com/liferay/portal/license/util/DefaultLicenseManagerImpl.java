@@ -86,8 +86,6 @@ public class DefaultLicenseManagerImpl implements LicenseManager {
 		try {
 			JSONObject jsonObject = new JSONObjectImpl();
 
-			byte[] serverIdBytes = LicenseUtil.getServerIdBytes();
-
 			jsonObject.put(
 				Constants.CMD, "GET_LICENSE_STATE"
 			).put(
@@ -112,7 +110,7 @@ public class DefaultLicenseManagerImpl implements LicenseManager {
 			jsonObject.put(
 				"randomUuid", randomUuid
 			).put(
-				"serverId", Arrays.toString(serverIdBytes)
+				"serverId", Arrays.toString(LicenseUtil.getServerIdBytes())
 			);
 
 			String userCount = licenseProperties.get("userCount");

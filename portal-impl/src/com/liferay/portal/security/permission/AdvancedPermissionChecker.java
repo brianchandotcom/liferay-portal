@@ -1325,10 +1325,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		while (organization != null) {
 			long organizationGroupId = organization.getGroupId();
 
-			long userId = getUserId();
-
 			if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-					userId, organizationGroupId,
+					getUserId(), organizationGroupId,
 					RoleConstants.ORGANIZATION_OWNER, true)) {
 
 				return true;

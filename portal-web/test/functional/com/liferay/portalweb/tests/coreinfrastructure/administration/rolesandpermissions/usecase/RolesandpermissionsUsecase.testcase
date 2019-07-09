@@ -1531,7 +1531,7 @@ definition {
 		Navigator.gotoNavItem(navItem = "User Groups");
 
 		Site.assignSiteRoleToUserGroup(
-			roleTitle = "Sports Journalist Name",
+			roleName = "Sports Journalist Name",
 			userGroupName = "UG UserGroup3 Name");
 
 		Navigator.openSiteURL(siteName = "Site Name");

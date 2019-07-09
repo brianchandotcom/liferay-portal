@@ -14,9 +14,6 @@
 
 package com.liferay.layout.internal.service.permission;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -47,12 +44,7 @@ public class LayoutPermissionUpdateHandler implements PermissionUpdateHandler {
 
 		layout.setModifiedDate(new Date());
 
-		try {
-			_layoutLocalService.updateLayout(layout);
-		}
-		catch (PortalException pe) {
-			_log.error(pe.getMessage(), pe);
-		}
+		_layoutLocalService.updateLayout(layout);
 	}
 
 	@Reference(unbind = "-")
@@ -61,9 +53,6 @@ public class LayoutPermissionUpdateHandler implements PermissionUpdateHandler {
 
 		_layoutLocalService = layoutLocalService;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutPermissionUpdateHandler.class);
 
 	private LayoutLocalService _layoutLocalService;
 

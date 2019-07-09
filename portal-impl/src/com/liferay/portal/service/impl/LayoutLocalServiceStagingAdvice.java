@@ -176,8 +176,8 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 		layoutLocalServiceHelper.validateParentLayoutId(
 			groupId, privateLayout, layoutId, parentLayoutId);
 
-		Layout layout = LayoutUtil.findByG_P_L_Head(
-			groupId, privateLayout, layoutId, false);
+		Layout layout = LayoutUtil.findByG_P_L(
+			groupId, privateLayout, layoutId);
 
 		if (LayoutStagingUtil.isBranchingLayout(layout)) {
 			layout = getProxiedLayout(layout);
@@ -273,8 +273,8 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 			boolean privateLayout, long layoutId, String typeSettings)
 		throws PortalException {
 
-		Layout layout = LayoutUtil.findByG_P_L_Head(
-			groupId, privateLayout, layoutId, false);
+		Layout layout = LayoutUtil.findByG_P_L(
+			groupId, privateLayout, layoutId);
 
 		if (LayoutStagingUtil.isBranchingLayout(layout)) {
 			layout = getProxiedLayout(layout);
@@ -322,8 +322,8 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 			String colorSchemeId, String css)
 		throws PortalException {
 
-		Layout layout = LayoutUtil.findByG_P_L_Head(
-			groupId, privateLayout, layoutId, false);
+		Layout layout = LayoutUtil.findByG_P_L(
+			groupId, privateLayout, layoutId);
 
 		if (LayoutStagingUtil.isBranchingLayout(layout)) {
 			layout = getProxiedLayout(layout);

@@ -529,8 +529,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	public LayoutSet updatePageCount(long groupId, boolean privateLayout)
 		throws PortalException {
 
-		int pageCount = layoutPersistence.countByG_P_Head(
-			groupId, privateLayout, false);
+		int pageCount = layoutPersistence.countByG_P(groupId, privateLayout);
 
 		LayoutSet layoutSet = layoutSetPersistence.findByG_P_Head(
 			groupId, privateLayout, false);

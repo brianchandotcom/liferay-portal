@@ -786,19 +786,15 @@ public class LayoutSetPrototypePropagationTest
 		if ((layout != null) && (_layout != null)) {
 			layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
 
-			Layout draftLayout = LayoutLocalServiceUtil.getDraft(layout);
+			layout.setLayoutPrototypeLinkEnabled(linkEnabled);
 
-			draftLayout.setLayoutPrototypeLinkEnabled(linkEnabled);
-
-			layout = LayoutLocalServiceUtil.publishDraft(draftLayout);
+			LayoutLocalServiceUtil.updateLayout(layout);
 
 			_layout = LayoutLocalServiceUtil.getLayout(_layout.getPlid());
 
-			draftLayout = LayoutLocalServiceUtil.getDraft(_layout);
+			_layout.setLayoutPrototypeLinkEnabled(linkEnabled);
 
-			draftLayout.setLayoutPrototypeLinkEnabled(linkEnabled);
-
-			_layout = LayoutLocalServiceUtil.updateLayout(draftLayout);
+			LayoutLocalServiceUtil.updateLayout(_layout);
 		}
 
 		MergeLayoutPrototypesThreadLocal.clearMergeComplete();

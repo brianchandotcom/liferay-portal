@@ -99,11 +99,18 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 	private void _checkTypeIsAssignable(
 		int argumentPos, Class<?> targetClass, Class<?> parameterType) {
 
+		String parameterTypeName = parameterType.getName();
+
+		if (parameterTypeName.contains("com.liferay") &&
+			parameterTypeName.contains("Util")) {
+
+			throw new IllegalArgumentException(
+				"Not instantiating " + parameterTypeName);
+		}
+
 		if (Objects.equals(targetClass, parameterType)) {
 			return;
 		}
-
-		String parameterTypeName = parameterType.getName();
 
 		if (!ReflectUtil.isTypeOf(parameterType, targetClass)) {
 			throw new IllegalArgumentException(
@@ -358,13 +365,6 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			}
 
 			return serviceContext;
-		}
-
-		String className = parameterType.getName();
-
-		if (className.contains("com.liferay") && className.contains("Util")) {
-			throw new IllegalArgumentException(
-				"Not instantiating " + className);
 		}
 
 		return parameterType.newInstance();

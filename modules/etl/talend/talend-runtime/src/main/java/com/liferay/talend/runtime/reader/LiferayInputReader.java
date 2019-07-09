@@ -73,8 +73,17 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 			return true;
 		}
 
-		int actual = _endpointJsonObject.getInt("page");
-		int last = _endpointJsonObject.getInt("lastPage");
+		int actual = 0;
+
+		if (_endpointJsonObject.containsKey("page")) {
+			actual = _endpointJsonObject.getInt("page");
+		}
+
+		int last = 0;
+
+		if (_endpointJsonObject.containsKey("lastPage")) {
+			last = _endpointJsonObject.getInt("lastPage");
+		}
 
 		if (actual >= last) {
 			_hasMore = false;

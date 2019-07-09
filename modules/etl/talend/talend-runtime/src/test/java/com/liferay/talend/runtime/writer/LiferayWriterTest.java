@@ -16,6 +16,7 @@ package com.liferay.talend.runtime.writer;
 
 import com.liferay.talend.BaseTest;
 import com.liferay.talend.avro.ResourceNodeConverter;
+import com.liferay.talend.runtime.LiferayRequestContentAggregatorSink;
 import com.liferay.talend.runtime.LiferaySink;
 import com.liferay.talend.tliferayoutput.Action;
 import com.liferay.talend.tliferayoutput.TLiferayOutputProperties;

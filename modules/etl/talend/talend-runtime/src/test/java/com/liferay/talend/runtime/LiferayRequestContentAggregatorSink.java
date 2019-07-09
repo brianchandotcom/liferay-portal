@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.talend.runtime.writer;
-
-import com.liferay.talend.runtime.LiferaySink;
+package com.liferay.talend.runtime;
 
 import javax.json.Json;
 import javax.json.JsonObject;

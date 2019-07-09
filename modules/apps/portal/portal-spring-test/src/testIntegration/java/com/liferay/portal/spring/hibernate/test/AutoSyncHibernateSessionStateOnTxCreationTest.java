@@ -12,18 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.spring.hibernate;
+package com.liferay.portal.spring.hibernate.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.service.PortalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Shuyang Zhou
  */
+@RunWith(Arquillian.class)
 public class AutoSyncHibernateSessionStateOnTxCreationTest {
 
 	@ClassRule

@@ -249,12 +249,12 @@ exports[`SegmentEdit renders with edit buttons if the user has update permission
             <div
               class="btn-group-item"
             >
-              <a
-                class="text-capitalize link-outline link-outline-secondary"
-                href="/test-url"
+              <button
+                class="text-capitalize btn btn-secondary btn-sm"
+                type="button"
               >
                 cancel
-              </a>
+              </button>
             </div>
             <div
               class="btn-group-item"
@@ -428,12 +428,12 @@ exports[`SegmentEdit renders with given values 1`] = `
             <div
               class="btn-group-item"
             >
-              <a
-                class="text-capitalize link-outline link-outline-secondary"
-                href="/test-url"
+              <button
+                class="text-capitalize btn btn-secondary btn-sm"
+                type="button"
               >
                 cancel
-              </a>
+              </button>
             </div>
             <div
               class="btn-group-item"

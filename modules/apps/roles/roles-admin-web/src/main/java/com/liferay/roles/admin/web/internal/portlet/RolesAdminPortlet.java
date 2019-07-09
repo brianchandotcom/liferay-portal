@@ -19,6 +19,9 @@ import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
+import com.liferay.application.list.display.context.logic.PersonalMenuEntryHelper;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.exception.DuplicateRoleException;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.RequiredRoleException;
@@ -58,10 +61,12 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
 import com.liferay.roles.admin.constants.RolesAdminPortletKeys;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -77,7 +82,10 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -282,6 +290,17 @@ public class RolesAdminPortlet extends MVCPortlet {
 		}
 	}
 
+	public List<PersonalMenuEntry> getPersonalMenuEntries() {
+		List<PersonalMenuEntry> personalMenuEntries = new ArrayList<>(
+			_serviceTrackerList.size());
+
+		for (PersonalMenuEntry personalMenuEntry : _serviceTrackerList) {
+			personalMenuEntries.add(personalMenuEntry);
+		}
+
+		return personalMenuEntries;
+	}
+
 	@Override
 	public void serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
@@ -428,6 +447,17 @@ public class RolesAdminPortlet extends MVCPortlet {
 		}
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, PersonalMenuEntry.class);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
+	}
+
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -497,6 +527,13 @@ public class RolesAdminPortlet extends MVCPortlet {
 		portletRequest.setAttribute(
 			ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY,
 			_panelCategoryRegistry);
+
+		PersonalMenuEntryHelper personalMenuEntryHelper =
+			new PersonalMenuEntryHelper(getPersonalMenuEntries());
+
+		portletRequest.setAttribute(
+			ApplicationListWebKeys.PERSONAL_MENU_ENTRY_HELPER,
+			personalMenuEntryHelper);
 	}
 
 	@Reference(unbind = "-")
@@ -659,6 +696,8 @@ public class RolesAdminPortlet extends MVCPortlet {
 	private ResourcePermissionService _resourcePermissionService;
 	private RoleLocalService _roleLocalService;
 	private RoleService _roleService;
+	private ServiceTrackerList<PersonalMenuEntry, PersonalMenuEntry>
+		_serviceTrackerList;
 	private UserService _userService;
 
 }

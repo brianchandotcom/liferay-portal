@@ -403,6 +403,24 @@ public class ContentPageEditorDisplayContext {
 
 		soyContexts.add(availableSoyContext);
 
+		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
+
+		availableSoyContext.put("type", "separator");
+
+		soyContexts.add(availableSoyContext);
+
+		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
+
+		availableSoyContext.put(
+			"icon", "comments"
+		).put(
+			"label", LanguageUtil.get(resourceBundle, "comments")
+		).put(
+			"sidebarPanelId", "comments"
+		);
+
+		soyContexts.add(availableSoyContext);
+
 		_sidebarPanelSoyContexts = soyContexts;
 
 		return _sidebarPanelSoyContexts;

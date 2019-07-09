@@ -218,7 +218,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 		int status = WorkflowConstants.STATUS_APPROVED;
 
 		try {
-			_fragmentEntryProcessorRegistry.validateFragmentEntryHTML(html);
+			_fragmentEntryProcessorRegistry.validateFragmentEntryHTML(
+				html, configuration);
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {

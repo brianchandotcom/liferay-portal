@@ -46,7 +46,9 @@ public class NullableFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	@Override
-	public void validateFragmentEntryHTML(String html) throws PortalException {
+	public void validateFragmentEntryHTML(String html, String configuration)
+		throws PortalException {
+
 		if (Validator.isNull(html)) {
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 				"content.Language", getClass());

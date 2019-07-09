@@ -739,13 +739,20 @@ public class ContentPageEditorDisplayContext {
 			FragmentEntryLink fragmentEntryLink)
 		throws PortalException {
 
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		if (!_commentManager.hasDiscussion(
+				FragmentEntryLink.class.getName(),
+				fragmentEntryLink.getFragmentEntryLinkId())) {
+
+			return jsonArray;
+		}
+
 		List<Comment> rootComments = _commentManager.getRootComments(
 			FragmentEntryLink.class.getName(),
 			fragmentEntryLink.getFragmentEntryLinkId(),
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (Comment rootComment : rootComments) {
 			User commentUser = rootComment.getUser();

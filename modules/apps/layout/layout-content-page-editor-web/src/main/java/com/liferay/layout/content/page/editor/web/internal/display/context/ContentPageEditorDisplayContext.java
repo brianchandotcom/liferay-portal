@@ -47,6 +47,7 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -132,7 +133,8 @@ public class ContentPageEditorDisplayContext {
 	public ContentPageEditorDisplayContext(
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
 		String className, long classPK,
-		FragmentRendererController fragmentRendererController) {
+		FragmentRendererController fragmentRendererController,
+		CommentManager commentManager) {
 
 		request = httpServletRequest;
 		_renderResponse = renderResponse;
@@ -155,6 +157,7 @@ public class ContentPageEditorDisplayContext {
 				FragmentActionKeys.FRAGMENT_RENDERER_TRACKER);
 		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
 			ContentPageEditorWebKeys.ITEM_SELECTOR);
+		_commentManager = commentManager;
 	}
 
 	public SoyContext getEditorSoyContext() throws Exception {
@@ -1268,6 +1271,7 @@ public class ContentPageEditorDisplayContext {
 		ContentPageEditorDisplayContext.class);
 
 	private List<SoyContext> _assetBrowserLinksSoyContexts;
+	private final CommentManager _commentManager;
 	private Map<String, Object> _defaultConfigurations;
 	private final FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;

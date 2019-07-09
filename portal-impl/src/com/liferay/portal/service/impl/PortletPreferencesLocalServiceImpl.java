@@ -188,6 +188,8 @@ public class PortletPreferencesLocalServiceImpl
 		long companyId, long ownerId, int ownerType, long plid,
 		String portletId) {
 
+		plid = _swapPlidForPortletPreferences(plid);
+
 		PortletPreferences portletPreferences =
 			portletPreferencesPersistence.fetchByO_O_P_P(
 				ownerId, ownerType, plid, portletId);

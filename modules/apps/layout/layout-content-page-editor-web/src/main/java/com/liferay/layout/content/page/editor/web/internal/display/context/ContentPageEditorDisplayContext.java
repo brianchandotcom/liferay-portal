@@ -48,12 +48,16 @@ import com.liferay.layout.content.page.editor.web.internal.configuration.util.Co
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -62,6 +66,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
@@ -753,6 +758,45 @@ public class ContentPageEditorDisplayContext {
 		return soyContexts;
 	}
 
+	private JSONArray _getFragmentEntryLinkCommentsJSONArray(
+			FragmentEntryLink fragmentEntryLink)
+		throws PortalException {
+
+		List<Comment> rootComments = _commentManager.getRootComments(
+			FragmentEntryLink.class.getName(),
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (Comment rootComment : rootComments) {
+			User commentUser = rootComment.getUser();
+
+			String portraitURL = StringPool.BLANK;
+
+			if (commentUser.getPortraitId() > 0) {
+				portraitURL = commentUser.getPortraitURL(themeDisplay);
+			}
+
+			jsonArray.put(
+				JSONUtil.put(
+					"commentId", rootComment.getCommentId()
+				).put(
+					"body", rootComment.getBody()
+				).put(
+					"author",
+					JSONUtil.put(
+						"fullName", commentUser.getFullName()
+					).put(
+						"portraitURL", portraitURL
+					)
+				));
+		}
+
+		return jsonArray;
+	}
+
 	private SoyContext _getFragmentEntryLinksSoyContext()
 		throws PortalException {
 
@@ -828,6 +872,9 @@ public class ContentPageEditorDisplayContext {
 				).put(
 					"fragmentEntryLinkId",
 					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())
+				).put(
+					"comments",
+					_getFragmentEntryLinkCommentsJSONArray(fragmentEntryLink)
 				).putAll(
 					_getFragmentEntrySoyContext(
 						fragmentEntryLink, fragmentEntry, content)

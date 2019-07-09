@@ -162,10 +162,11 @@
 			{param elementClasses: 'ddm-btn-full ddm-select-dropdown' /}
 			{param expanded: $expanded /}
 			{param items: $options /}
+			{param label: $trigger /}
 			{param ref: 'dropdown' /}
 			{param searchable: length($options) > 6 ? true : false /}
 			{param spritemap: $spritemap /}
-			{param label: $trigger /}
+			{param useSearchableWithForm: false /}
 		{/call}
 	{/if}
 {/template}

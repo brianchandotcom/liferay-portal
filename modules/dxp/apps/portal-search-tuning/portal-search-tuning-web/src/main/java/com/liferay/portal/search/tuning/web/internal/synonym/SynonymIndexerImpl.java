@@ -34,10 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adam Brandizzi
  */
-@Component(
-	immediate = true, property = "search.engine.impl=Elasticsearch",
-	service = SynonymIndexer.class
-)
+@Component(immediate = true, service = SynonymIndexer.class)
 public class SynonymIndexerImpl implements SynonymIndexer {
 
 	@Override

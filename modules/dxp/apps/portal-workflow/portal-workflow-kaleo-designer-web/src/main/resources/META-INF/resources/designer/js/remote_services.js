@@ -5,44 +5,38 @@ AUI.add(
 			getRole: function(roleId, callback) {
 				var instance = this;
 
-				instance._invokeResourceURL(
-					{
-						callback: callback,
-						queryParameters: {
-							roleIds: roleId
-						},
-						resourceId: 'roles',
-						sync: false
-					}
-				);
+				instance._invokeResourceURL({
+					callback: callback,
+					queryParameters: {
+						roleIds: roleId
+					},
+					resourceId: 'roles',
+					sync: false
+				});
 			},
 
 			getScriptLanguages: function(callback) {
 				var instance = this;
 
-				instance._invokeResourceURL(
-					{
-						callback: callback,
-						queryParameters: {},
-						resourceId: 'scriptLanguages',
-						sync: true
-					}
-				);
+				instance._invokeResourceURL({
+					callback: callback,
+					queryParameters: {},
+					resourceId: 'scriptLanguages',
+					sync: true
+				});
 			},
 
 			getUser: function(userId, callback) {
 				var instance = this;
 
-				instance._invokeResourceURL(
-					{
-						callback: callback,
-						queryParameters: {
-							userIds: userId
-						},
-						resourceId: 'users',
-						sync: false
-					}
-				);
+				instance._invokeResourceURL({
+					callback: callback,
+					queryParameters: {
+						userIds: userId
+					},
+					resourceId: 'users',
+					sync: false
+				});
 			},
 
 			_invokeResourceURL: function(params) {
@@ -51,21 +45,20 @@ AUI.add(
 				var url = Liferay.PortletURL.createResourceURL();
 
 				url.setParameters(params.queryParameters);
-				url.setPortletId('com_liferay_portal_workflow_kaleo_designer_web_portlet_KaleoDesignerPortlet');
+				url.setPortletId(
+					'com_liferay_portal_workflow_kaleo_designer_web_portlet_KaleoDesignerPortlet'
+				);
 				url.setResourceId(params.resourceId);
 
-				A.io.request(
-					url.toString(),
-					{
-						dataType: 'JSON',
-						on: {
-							success: function() {
-								params.callback(this.get('responseData'));
-							}
-						},
-						sync: params.sync
-					}
-				);
+				A.io.request(url.toString(), {
+					dataType: 'JSON',
+					on: {
+						success: function() {
+							params.callback(this.get('responseData'));
+						}
+					},
+					sync: params.sync
+				});
 			}
 		};
 

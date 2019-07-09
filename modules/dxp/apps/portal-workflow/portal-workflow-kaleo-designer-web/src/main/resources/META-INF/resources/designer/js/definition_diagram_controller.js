@@ -14,11 +14,9 @@ AUI.add(
 		var DefinitionDiagramController = function(content, canvas) {
 			var instance = this;
 
-			instance.definition = new XMLDefinition(
-				{
-					value: content
-				}
-			);
+			instance.definition = new XMLDefinition({
+				value: content
+			});
 
 			instance.canvas = canvas;
 		};
@@ -29,28 +27,28 @@ AUI.add(
 
 				var connectors = [];
 
-				instance.definition.forEachField(
-					function(tagName, fieldData) {
-						fieldData.results.forEach(
-							function(item1, index1, collection1) {
-								item1.transitions.forEach(
-									function(item2, index2, collection2) {
-										connectors.push(
-											{
-												connector: {
-													'default': item2.default,
-													name: item2.name
-												},
-												source: item1.name,
-												target: item2.target
-											}
-										);
-									}
-								);
-							}
-						);
-					}
-				);
+				instance.definition.forEachField(function(tagName, fieldData) {
+					fieldData.results.forEach(function(
+						item1,
+						index1,
+						collection1
+					) {
+						item1.transitions.forEach(function(
+							item2,
+							index2,
+							collection2
+						) {
+							connectors.push({
+								connector: {
+									default: item2.default,
+									name: item2.name
+								},
+								source: item1.name,
+								target: item2.target
+							});
+						});
+					});
+				});
 
 				return connectors;
 			},
@@ -60,50 +58,56 @@ AUI.add(
 
 				var fields = [];
 
-				instance.definition.forEachField(
-					function(tagName, fieldData) {
-						fieldData.results.forEach(
-							function(item, index, collection) {
-								var type = tagName;
+				instance.definition.forEachField(function(tagName, fieldData) {
+					fieldData.results.forEach(function(
+						item,
+						index,
+						collection
+					) {
+						var type = tagName;
 
-								if (item.initial) {
-									type = 'start';
-								}
+						if (item.initial) {
+							type = 'start';
+						}
 
-								var metadata = jsonParse(item.metadata);
+						var metadata = jsonParse(item.metadata);
 
-								if (metadata) {
-									if (metadata.terminal) {
-										type = 'end';
-									}
-								}
-								else {
-									metadata = {
-										xy: instance._getRandomXY()
-									};
-								}
-
-								fields.push(
-									{
-										actions: FieldNormalizer.normalizeToActions(item.actions),
-										assignments: FieldNormalizer.normalizeToAssignments(item.assignments),
-										description: item.description,
-										fields: [{}],
-										initial: item.initial,
-										metadata: metadata,
-										name: item.name,
-										notifications: FieldNormalizer.normalizeToNotifications(item.notifications),
-										script: item.script,
-										scriptLanguage: item.scriptLanguage || DEFAULT_LANGUAGE,
-										taskTimers: FieldNormalizer.normalizeToTaskTimers(item.taskTimers),
-										type: type,
-										xy: metadata.xy
-									}
-								);
+						if (metadata) {
+							if (metadata.terminal) {
+								type = 'end';
 							}
-						);
-					}
-				);
+						} else {
+							metadata = {
+								xy: instance._getRandomXY()
+							};
+						}
+
+						fields.push({
+							actions: FieldNormalizer.normalizeToActions(
+								item.actions
+							),
+							assignments: FieldNormalizer.normalizeToAssignments(
+								item.assignments
+							),
+							description: item.description,
+							fields: [{}],
+							initial: item.initial,
+							metadata: metadata,
+							name: item.name,
+							notifications: FieldNormalizer.normalizeToNotifications(
+								item.notifications
+							),
+							script: item.script,
+							scriptLanguage:
+								item.scriptLanguage || DEFAULT_LANGUAGE,
+							taskTimers: FieldNormalizer.normalizeToTaskTimers(
+								item.taskTimers
+							),
+							type: type,
+							xy: metadata.xy
+						});
+					});
+				});
 
 				return fields;
 			},
@@ -113,7 +117,11 @@ AUI.add(
 
 				return serializeDefinition(
 					instance.definition.get('xmlNamespace'),
-					instance.definition.getAttrs(['description', 'name', 'version']),
+					instance.definition.getAttrs([
+						'description',
+						'name',
+						'version'
+					]),
 					json
 				);
 			},
@@ -134,6 +142,11 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-kaleo-designer-field-normalizer', 'liferay-kaleo-designer-utils', 'liferay-kaleo-designer-xml-definition', 'liferay-kaleo-designer-xml-definition-serializer']
+		requires: [
+			'liferay-kaleo-designer-field-normalizer',
+			'liferay-kaleo-designer-utils',
+			'liferay-kaleo-designer-xml-definition',
+			'liferay-kaleo-designer-xml-definition-serializer'
+		]
 	}
 );

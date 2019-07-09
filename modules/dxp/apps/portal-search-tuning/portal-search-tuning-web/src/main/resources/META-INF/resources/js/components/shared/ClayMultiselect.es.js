@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
 import CreatableSelect from 'react-select/lib/Creatable';
 import React, {Component} from 'react';
 import {PropTypes} from 'prop-types';
@@ -39,29 +50,28 @@ class ClayMultiselect extends Component {
 		const {inputValue} = this.state;
 
 		switch (event.key) {
-		case 'Enter':
-		case 'Tab':
-		case ',':
-			if (!inputValue && event.key == 'Enter') {
-				this.props.onSubmit();
-				return;
-			}
-
-			inputValue.split(',').forEach(input => {
-				if (!value.map(item => item.value).includes(input)) {
-					value.push(createOption(input));
+			case 'Enter':
+			case 'Tab':
+			case ',':
+				if (!inputValue && event.key == 'Enter') {
+					this.props.onSubmit();
+					return;
 				}
-			}
-			);
 
-			this.props.onAction(value);
+				inputValue.split(',').forEach(input => {
+					if (!value.map(item => item.value).includes(input)) {
+						value.push(createOption(input));
+					}
+				});
 
-			this.setState({inputValue: ''});
+				this.props.onAction(value);
 
-			event.preventDefault();
+				this.setState({inputValue: ''});
 
-			break;
-		default:
+				event.preventDefault();
+
+				break;
+			default:
 		}
 	};
 
@@ -71,8 +81,8 @@ class ClayMultiselect extends Component {
 
 		return (
 			<CreatableSelect
-				className="multiselect-root"
-				classNamePrefix="react-select"
+				className='multiselect-root'
+				classNamePrefix='react-select'
 				components={components}
 				inputValue={inputValue}
 				isClearable
@@ -81,7 +91,7 @@ class ClayMultiselect extends Component {
 				onChange={this._handleChange}
 				onInputChange={this._handleInputChange}
 				onKeyDown={this._handleKeyDown}
-				placeholder=""
+				placeholder=''
 				value={value}
 			/>
 		);

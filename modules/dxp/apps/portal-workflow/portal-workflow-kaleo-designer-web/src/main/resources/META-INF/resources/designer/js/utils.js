@@ -57,7 +57,9 @@ AUI.add(
 		KaleoDesignerUtils.PropertyListFormatter = PropertyListFormatter;
 
 		var cdata = function(value) {
-			value = value.replace(STR_CDATA_OPEN, '').replace(STR_CDATA_CLOSE, '');
+			value = value
+				.replace(STR_CDATA_OPEN, '')
+				.replace(STR_CDATA_CLOSE, '');
 
 			return STR_CDATA_OPEN + value + STR_CDATA_CLOSE;
 		};
@@ -69,9 +71,7 @@ AUI.add(
 
 			try {
 				jsonObj = JSON.parse(val);
-			}
-			catch (e) {
-			}
+			} catch (e) {}
 
 			return jsonObj;
 		};
@@ -83,9 +83,7 @@ AUI.add(
 
 			try {
 				jsonString = JSON.stringify(val);
-			}
-			catch (e) {
-			}
+			} catch (e) {}
 
 			return jsonString;
 		};
@@ -96,45 +94,43 @@ AUI.add(
 			var data = {};
 
 			if (form) {
-				form.all(':input:not(:button)').each(
-					function(item, index, collection) {
-						var checked = item.get('checked');
-						var name = item.get('name');
-						var type = item.get('type');
+				form.all(':input:not(:button)').each(function(
+					item,
+					index,
+					collection
+				) {
+					var checked = item.get('checked');
+					var name = item.get('name');
+					var type = item.get('type');
 
-						var value = item.val();
+					var value = item.val();
 
-						if (name) {
-							if (!isArray(data[name])) {
-								data[name] = [];
-							}
-
-							if (type === 'checkbox') {
-								value = checked;
-							}
-
-							if (type === 'radio' && !checked) {
-								value = null;
-							}
-
-							if (type === 'select-multiple') {
-								value = [];
-
-								item.all('option:selected').each(
-									function(option) {
-										value.push(
-											{
-												notificationType: option.val()
-											}
-										);
-									}
-								);
-							}
-
-							data[name].push(value);
+					if (name) {
+						if (!isArray(data[name])) {
+							data[name] = [];
 						}
+
+						if (type === 'checkbox') {
+							value = checked;
+						}
+
+						if (type === 'radio' && !checked) {
+							value = null;
+						}
+
+						if (type === 'select-multiple') {
+							value = [];
+
+							item.all('option:selected').each(function(option) {
+								value.push({
+									notificationType: option.val()
+								});
+							});
+						}
+
+						data[name].push(value);
 					}
-				);
+				});
 			}
 
 			return data;
@@ -151,54 +147,57 @@ AUI.add(
 		var previewBeforeRevert = function(event, renderUrl, actionUrl, title) {
 			var instance = this;
 
-			var dialog = Liferay.Util.Window.getWindow(
-				{
-					dialog: {
-						destroyOnHide: true,
-						modal: true,
-						toolbars: {
-							footer: [
-								{
-									cssClass: 'btn btn-secondary',
-									discardDefaultButtonCssClasses: true,
-									label: Liferay.Language.get('cancel'),
-									on: {
-										click: function() {
-											dialog.destroy();
-										}
-									}
-								},
-								{
-									cssClass: 'btn btn-primary',
-									discardDefaultButtonCssClasses: true,
-									label: Liferay.Language.get('restore'),
-									on: {
-										click: function() {
-											window.location.assign(actionUrl);
-										}
+			var dialog = Liferay.Util.Window.getWindow({
+				dialog: {
+					destroyOnHide: true,
+					modal: true,
+					toolbars: {
+						footer: [
+							{
+								cssClass: 'btn btn-secondary',
+								discardDefaultButtonCssClasses: true,
+								label: Liferay.Language.get('cancel'),
+								on: {
+									click: function() {
+										dialog.destroy();
 									}
 								}
-							],
-							header: [
-								{
-									cssClass: 'close',
-									discardDefaultButtonCssClasses: true,
-									labelHTML: '<svg class="lexicon-icon" focusable="false"><use data-href="' + Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg#times" /><title>' + Liferay.Language.get('close') + '</title></svg>',
-									on: {
-										click: function(event) {
-											dialog.destroy();
+							},
+							{
+								cssClass: 'btn btn-primary',
+								discardDefaultButtonCssClasses: true,
+								label: Liferay.Language.get('restore'),
+								on: {
+									click: function() {
+										window.location.assign(actionUrl);
+									}
+								}
+							}
+						],
+						header: [
+							{
+								cssClass: 'close',
+								discardDefaultButtonCssClasses: true,
+								labelHTML:
+									'<svg class="lexicon-icon" focusable="false"><use data-href="' +
+									Liferay.ThemeDisplay.getPathThemeImages() +
+									'/lexicon/icons.svg#times" /><title>' +
+									Liferay.Language.get('close') +
+									'</title></svg>',
+								on: {
+									click: function(event) {
+										dialog.destroy();
 
-											event.domEvent.stopPropagation();
-										}
+										event.domEvent.stopPropagation();
 									}
 								}
-							]
-						}
-					},
-					title: title,
-					uri: renderUrl
-				}
-			);
+							}
+						]
+					}
+				},
+				title: title,
+				uri: renderUrl
+			});
 		};
 
 		KaleoDesignerUtils.previewBeforeRevert = previewBeforeRevert;
@@ -219,9 +218,11 @@ AUI.add(
 			cancel: Liferay.Language.get('cancel'),
 			closeMessage: Liferay.Language.get('close'),
 			day: Liferay.Language.get('day'),
-			'default': Liferay.Language.get('default'),
+			default: Liferay.Language.get('default'),
 			definition: Liferay.Language.get('definition'),
-			deleteNodesMessage: Liferay.Language.get('are-you-sure-you-want-to-delete-the-selected-nodes'),
+			deleteNodesMessage: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-the-selected-nodes'
+			),
 			description: Liferay.Language.get('description'),
 			duration: Liferay.Language.get('duration'),
 			edit: Liferay.Language.get('edit'),
@@ -236,7 +237,9 @@ AUI.add(
 			hour: Liferay.Language.get('hour'),
 			im: Liferay.Language.get('instant-messenger'),
 			initial: Liferay.Language.get('initial'),
-			inspectTaskMessage: Liferay.Language.get('inspect-the-task-nodes-to-assign-a-form-template'),
+			inspectTaskMessage: Liferay.Language.get(
+				'inspect-the-task-nodes-to-assign-a-form-template'
+			),
 			java: Liferay.Language.get('java'),
 			javascript: Liferay.Language.get('javascript'),
 			language: Liferay.Language.get('language'),
@@ -244,7 +247,9 @@ AUI.add(
 			month: Liferay.Language.get('month'),
 			name: Liferay.Language.get('name'),
 			notification: Liferay.Language.get('notification'),
-			notificationRecipients: Liferay.Language.get('notification-recipients'),
+			notificationRecipients: Liferay.Language.get(
+				'notification-recipients'
+			),
 			notifications: Liferay.Language.get('notifications'),
 			notificationType: Liferay.Language.get('notification-type'),
 			onAssignment: Liferay.Language.get('on-assignment'),

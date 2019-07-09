@@ -1,7 +1,26 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
 export default function(nameSpace) {
 	var deleteMultipleSynonyms = function() {
-		if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-the-selected-entries'))) {
-			var searchContainer = document.getElementById(`${nameSpace}SynonymSetsEntriesFm`);
+		if (
+			confirm(
+				Liferay.Language.get(
+					'are-you-sure-you-want-to-delete-the-selected-entries'
+				)
+			)
+		) {
+			var searchContainer = document.getElementById(
+				`${nameSpace}SynonymSetsEntriesFm`
+			);
 			var selector = 'input[type=checkbox]';
 
 			var checkedSynonyms = new Array();
@@ -14,7 +33,9 @@ export default function(nameSpace) {
 
 			var form = document.forms[`${nameSpace}SynonymSetsEntriesFm`];
 
-			form.elements[`${nameSpace}deletedSynonymSetsString`].value = checkedSynonyms.join(';');
+			form.elements[
+				`${nameSpace}deletedSynonymSetsString`
+			].value = checkedSynonyms.join(';');
 
 			form.submit();
 		}
@@ -26,16 +47,13 @@ export default function(nameSpace) {
 
 	Liferay.componentReady('synonymSetsEntriesManagementToolbar').then(
 		managementToolbar => {
-			managementToolbar.on(
-				'actionItemClicked',
-				event => {
-					var itemData = event.data.item.data;
+			managementToolbar.on('actionItemClicked', event => {
+				var itemData = event.data.item.data;
 
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
+				if (itemData && itemData.action && ACTIONS[itemData.action]) {
+					ACTIONS[itemData.action]();
 				}
-			);
+			});
 		}
 	);
 }

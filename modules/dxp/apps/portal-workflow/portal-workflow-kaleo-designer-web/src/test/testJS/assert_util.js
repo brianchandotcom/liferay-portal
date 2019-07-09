@@ -1,18 +1,15 @@
-AUI().use(
-	'aui',
-	function(A) {
-		Liferay.Test = Liferay.Test || {};
+AUI().use('aui', function(A) {
+	Liferay.Test = Liferay.Test || {};
 
-		var assertIsValue = function(value, message) {
-			assert(A.Lang.isValue(value), message);
-		};
+	var assertIsValue = function(value, message) {
+		assert(A.Lang.isValue(value), message);
+	};
 
-		Liferay.Test.assertIsValue = assertIsValue;
+	Liferay.Test.assertIsValue = assertIsValue;
 
-		var assertIsNotValue = function(value, message) {
-			assert(!A.Lang.isValue(value), message);
-		};
+	var assertIsNotValue = function(value, message) {
+		assert(!A.Lang.isValue(value), message);
+	};
 
-		Liferay.Test.assertIsNotValue = assertIsNotValue;
-	}
-);
+	Liferay.Test.assertIsNotValue = assertIsNotValue;
+});

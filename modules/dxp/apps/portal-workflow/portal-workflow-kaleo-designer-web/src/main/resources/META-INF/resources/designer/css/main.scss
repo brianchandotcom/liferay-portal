@@ -12,7 +12,7 @@
 }
 
 .basecelleditor {
-	background-color: #FFF;
+	background-color: #fff;
 	padding: 13px;
 
 	.basecelleditor {
@@ -37,7 +37,8 @@
 	padding-left: 3px;
 }
 
-.celleditor-textarea, .celleditor-textarea-small {
+.celleditor-textarea,
+.celleditor-textarea-small {
 	height: 100px;
 }
 
@@ -50,7 +51,7 @@
 }
 
 .celleditor-view + .celleditor-view {
-	border-top: 1px solid #EFEFEF;
+	border-top: 1px solid #efefef;
 	margin-top: 22px;
 	padding-top: 19px;
 }
@@ -75,7 +76,7 @@
 
 		&.diagram-node-selected {
 			border-width: 0;
-			color: #65B6F0;
+			color: #65b6f0;
 		}
 
 		.diagram-node-content {
@@ -85,7 +86,10 @@
 			position: relative;
 			text-align: center;
 
-			&.icon-db-condition, &.icon-db-fork, &.icon-db-join, &.icon-db-joinxor {
+			&.icon-db-condition,
+			&.icon-db-fork,
+			&.icon-db-join,
+			&.icon-db-joinxor {
 				font-size: 62px;
 				padding-top: 0;
 				position: relative;
@@ -98,7 +102,9 @@
 				}
 			}
 
-			&.icon-db-start, &.icon-db-state, &.icon-db-end {
+			&.icon-db-start,
+			&.icon-db-state,
+			&.icon-db-end {
 				font-size: 38px;
 				padding-left: 1px;
 				padding-top: 1px;
@@ -119,7 +125,7 @@
 			}
 
 			.diagram-node-shape-boundary {
-				stroke: #FFF;
+				stroke: #fff;
 				stroke-width: 5px;
 			}
 
@@ -157,11 +163,11 @@
 		}
 
 		.tabbable-content.main-tab > .nav-tabs {
-			border-bottom: 1px solid #DDD;
+			border-bottom: 1px solid #ddd;
 		}
 
 		.nav-item.active {
-			border: 1px solid #DDD;
+			border: 1px solid #ddd;
 			border-bottom: transparent;
 			border-radius: 4px 4px 0 0;
 		}
@@ -172,10 +178,10 @@
 	}
 
 	.property-builder-content-container .btn-toolbar-button {
-		background-color: #869CAD;
+		background-color: #869cad;
 		border-radius: 100%;
 		border-width: 0;
-		color: #FFF;
+		color: #fff;
 		font-size: 10px;
 		line-height: normal;
 		padding: 4px 5px;
@@ -184,7 +190,7 @@
 		top: -10px;
 
 		&:hover {
-			background-color: #65B6F0;
+			background-color: #65b6f0;
 		}
 	}
 
@@ -236,7 +242,7 @@
 
 .dialog-iframe-popup,
 .info-bar-container {
-	background: #FFF;
+	background: #fff;
 }
 
 .info-bar-container .info-bar-default .btn-default.sidenav-transition {
@@ -297,7 +303,7 @@
 .recipients-editor-container .celleditor-assignment-view,
 .delays-editor-container,
 .timer-actions-editor-container {
-	border: 1px solid #EFEFEF;
+	border: 1px solid #efefef;
 	padding: 8px;
 }
 
@@ -356,7 +362,7 @@
 }
 
 .table-sort-liner {
-	height: auto;	
+	height: auto;
 	word-break: keep-all;
 }
 
@@ -379,9 +385,9 @@
 }
 
 .timer-actions-editor-container .editor-container {
-	border: 1px solid #EFEFEF;
+	border: 1px solid #efefef;
 	margin-bottom: 8px;
-    padding: 8px;
+	padding: 8px;
 }
 
 .workflow-definition-container,
@@ -402,7 +408,7 @@
 	padding: 10px;
 
 	.workflow-definition-content-source {
-		border: 1px solid #B5B5B5;
+		border: 1px solid #b5b5b5;
 	}
 
 	.workflow-definition-content-source-wrapper {

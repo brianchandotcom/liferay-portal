@@ -10,26 +10,33 @@ AUI.add(
 		var isObject = Lang.isObject;
 		var isValue = Lang.isValue;
 
-		var COL_TYPES_ASSIGNMENT = ['address', 'receptionType', 'resourceActions', 'roleId', 'roleType', 'scriptedAssignment', 'scriptedRecipient', 'taskAssignees', 'user', 'userId'];
+		var COL_TYPES_ASSIGNMENT = [
+			'address',
+			'receptionType',
+			'resourceActions',
+			'roleId',
+			'roleType',
+			'scriptedAssignment',
+			'scriptedRecipient',
+			'taskAssignees',
+			'user',
+			'userId'
+		];
 
 		var STR_BLANK = '';
 
 		var populateRole = function(assignments) {
-			KaleoDesignerRemoteServices.getRole(
-				assignments.roleId,
-				function(data) {
-					AArray.each(
-						data,
-						function(item) {
-							if (item) {
-								var index = assignments.roleId.indexOf(item.roleId);
+			KaleoDesignerRemoteServices.getRole(assignments.roleId, function(
+				data
+			) {
+				AArray.each(data, function(item) {
+					if (item) {
+						var index = assignments.roleId.indexOf(item.roleId);
 
-								assignments.roleNameAC[index] = item.name;
-							}
-						}
-					);
-				}
-			);
+						assignments.roleNameAC[index] = item.name;
+					}
+				});
+			});
 		};
 
 		var populateUser = function(assignments) {
@@ -37,18 +44,18 @@ AUI.add(
 				KaleoDesignerRemoteServices.getUser(
 					assignments.userId,
 					function(data) {
-						AArray.each(
-							data,
-							function(item) {
-								if (item) {
-									var index = assignments.userId.indexOf(item.userId);
+						AArray.each(data, function(item) {
+							if (item) {
+								var index = assignments.userId.indexOf(
+									item.userId
+								);
 
-									assignments.emailAddress[index] = item.emailAddress;
-									assignments.fullName[index] = item.fullName;
-									assignments.screenName[index] = item.screenName;
-								}
+								assignments.emailAddress[index] =
+									item.emailAddress;
+								assignments.fullName[index] = item.fullName;
+								assignments.screenName[index] = item.screenName;
 							}
-						);
+						});
 					}
 				);
 			}
@@ -59,8 +66,7 @@ AUI.add(
 
 			if (index === undefined) {
 				obj[key].push(value);
-			}
-			else {
+			} else {
 				obj[key][index] = value;
 			}
 		};
@@ -71,22 +77,17 @@ AUI.add(
 
 				data = data || {};
 
-				data.forEach(
-					function(item1, index1, collection1) {
-						A.each(
-							item1,
-							function(item2, index2, collection2) {
-								if (isValue(item2)) {
-									if (index2 === 'script') {
-										item2 = Lang.trim(item2);
-									}
-
-									_put(actions, index2, item2, index1);
-								}
+				data.forEach(function(item1, index1, collection1) {
+					A.each(item1, function(item2, index2, collection2) {
+						if (isValue(item2)) {
+							if (index2 === 'script') {
+								item2 = Lang.trim(item2);
 							}
-						);
-					}
-				);
+
+							_put(actions, index2, item2, index1);
+						}
+					});
+				});
 
 				return actions;
 			},
@@ -97,55 +98,70 @@ AUI.add(
 				};
 
 				if (data && data.length) {
-					COL_TYPES_ASSIGNMENT.forEach(
-						function(item1, index1, collection1) {
-							var value = data[0][item1];
+					COL_TYPES_ASSIGNMENT.forEach(function(
+						item1,
+						index1,
+						collection1
+					) {
+						var value = data[0][item1];
 
-							if (!isValue(value)) {
-								return;
-							}
-
-							var assignmentValue = AArray(value);
-
-							assignmentValue.forEach(
-								function(item2, index2, collection2) {
-									if (isObject(item2)) {
-										A.each(
-											item2,
-											function(item3, index3, collection3) {
-												_put(assignments, index3, item3, index2);
-											}
-										);
-									}
-									else {
-										_put(assignments, item1, item2);
-									}
-								}
-							);
-
-							// Reception type is an assignment attribute but never a type of assignment
-
-							if (item1 !== 'receptionType' && AArray.some(
-								assignmentValue,
-								function(item2, index2, collection2) {
-									var valid = isValue(item2);
-
-									if (valid && (['user','roleId','roleType'].indexOf(item1) > -1)) {
-										valid = AArray.some(AObject.values(item2), isValue);
-									}
-
-									return valid;
-								}
-							)) {
-								assignments.assignmentType = AArray(item1);
-							}
+						if (!isValue(value)) {
+							return;
 						}
-					);
+
+						var assignmentValue = AArray(value);
+
+						assignmentValue.forEach(function(
+							item2,
+							index2,
+							collection2
+						) {
+							if (isObject(item2)) {
+								A.each(item2, function(
+									item3,
+									index3,
+									collection3
+								) {
+									_put(assignments, index3, item3, index2);
+								});
+							} else {
+								_put(assignments, item1, item2);
+							}
+						});
+
+						// Reception type is an assignment attribute but never a type of assignment
+
+						if (
+							item1 !== 'receptionType' &&
+							AArray.some(assignmentValue, function(
+								item2,
+								index2,
+								collection2
+							) {
+								var valid = isValue(item2);
+
+								if (
+									valid &&
+									['user', 'roleId', 'roleType'].indexOf(
+										item1
+									) > -1
+								) {
+									valid = AArray.some(
+										AObject.values(item2),
+										isValue
+									);
+								}
+
+								return valid;
+							})
+						) {
+							assignments.assignmentType = AArray(item1);
+						}
+					});
 
 					if (assignments.assignmentType == 'roleId') {
 						populateRole(assignments);
-					}
-					else if (assignments.assignmentType == 'user') {
+					} else if (assignments.assignmentType == 'user') {
 						populateUser(assignments);
 					}
 				}
@@ -158,18 +174,13 @@ AUI.add(
 
 				data = data || {};
 
-				data.forEach(
-					function(item1, index1, collection1) {
-						A.each(
-							item1,
-							function(item2, index2, collection2) {
-								if (isValue(item2)) {
-									_put(delays, index2, item2, index1);
-								}
-							}
-						);
-					}
-				);
+				data.forEach(function(item1, index1, collection1) {
+					A.each(item1, function(item2, index2, collection2) {
+						if (isValue(item2)) {
+							_put(delays, index2, item2, index1);
+						}
+					});
+				});
 
 				return delays;
 			},
@@ -179,26 +190,27 @@ AUI.add(
 
 				data = data || {};
 
-				data.forEach(
-					function(item1, index1, collection1) {
-						A.each(
-							item1,
-							function(item2, index2, collection2) {
-								if (isValue(item2)) {
-									if (index2 === 'recipients') {
-										if (item2[0] && item2[0].receptionType) {
-											_put(notifications, 'receptionType', item2[0].receptionType);
-										}
-
-										item2 = FieldNormalizer.normalizeToAssignments(item2);
-									}
-
-									_put(notifications, index2, item2, index1);
+				data.forEach(function(item1, index1, collection1) {
+					A.each(item1, function(item2, index2, collection2) {
+						if (isValue(item2)) {
+							if (index2 === 'recipients') {
+								if (item2[0] && item2[0].receptionType) {
+									_put(
+										notifications,
+										'receptionType',
+										item2[0].receptionType
+									);
 								}
+
+								item2 = FieldNormalizer.normalizeToAssignments(
+									item2
+								);
 							}
-						);
-					}
-				);
+
+							_put(notifications, index2, item2, index1);
+						}
+					});
+				});
 
 				return notifications;
 			},
@@ -208,35 +220,37 @@ AUI.add(
 
 				data = data || {};
 
-				data.forEach(
-					function(item1, index1, collection1) {
-						A.each(
-							item1,
-							function(item2, index2, collection2) {
-								if (isValue(item2)) {
-									if (index2 === 'delay' || index2 === 'recurrence') {
-										return;
-									}
-									else if (index2 === 'timerNotifications') {
-										item2 = FieldNormalizer.normalizeToNotifications(item2);
-									}
-									else if (index2 === 'timerActions') {
-										item2 = FieldNormalizer.normalizeToActions(item2);
-									}
-									else if (index2 === 'reassignments') {
-										item2 = FieldNormalizer.normalizeToAssignments(item2);
-									}
-
-									_put(taskTimers, index2, item2, index1);
-								}
+				data.forEach(function(item1, index1, collection1) {
+					A.each(item1, function(item2, index2, collection2) {
+						if (isValue(item2)) {
+							if (index2 === 'delay' || index2 === 'recurrence') {
+								return;
+							} else if (index2 === 'timerNotifications') {
+								item2 = FieldNormalizer.normalizeToNotifications(
+									item2
+								);
+							} else if (index2 === 'timerActions') {
+								item2 = FieldNormalizer.normalizeToActions(
+									item2
+								);
+							} else if (index2 === 'reassignments') {
+								item2 = FieldNormalizer.normalizeToAssignments(
+									item2
+								);
 							}
-						);
 
-						var delays = item1.delay.concat(item1.recurrence);
+							_put(taskTimers, index2, item2, index1);
+						}
+					});
 
-						_put(taskTimers, 'delay', FieldNormalizer.normalizeToDelays(delays));
-					}
-				);
+					var delays = item1.delay.concat(item1.recurrence);
+
+					_put(
+						taskTimers,
+						'delay',
+						FieldNormalizer.normalizeToDelays(delays)
+					);
+				});
 
 				return taskTimers;
 			}

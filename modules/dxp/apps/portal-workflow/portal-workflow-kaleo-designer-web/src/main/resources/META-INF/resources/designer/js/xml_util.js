@@ -38,26 +38,30 @@ AUI.add(
 
 				var node = instance.createObj(name, attrs);
 
-				return node.open + (isValue(content) ? content : STR_BLANK) + node.close;
+				return (
+					node.open +
+					(isValue(content) ? content : STR_BLANK) +
+					node.close
+				);
 			},
 
 			createObj: function(name, attrs) {
 				var instance = this;
 
 				var attrBuffer = [STR_SPACE];
-				var normalizedName = LString.uncamelize(name, STR_DASH).toLowerCase();
+				var normalizedName = LString.uncamelize(
+					name,
+					STR_DASH
+				).toLowerCase();
 
-				A.each(
-					attrs,
-					function(item, index, collection) {
-						if (item !== undefined) {
-							BUFFER_ATTR[0] = index;
-							BUFFER_ATTR[2] = item;
+				A.each(attrs, function(item, index, collection) {
+					if (item !== undefined) {
+						BUFFER_ATTR[0] = index;
+						BUFFER_ATTR[2] = item;
 
-							attrBuffer.push(BUFFER_ATTR.join(STR_BLANK));
-						}
+						attrBuffer.push(BUFFER_ATTR.join(STR_BLANK));
 					}
-				);
+				});
 
 				var attributes = Lang.trimRight(attrBuffer.join(STR_BLANK));
 
@@ -79,40 +83,40 @@ AUI.add(
 				var inCDATA = false;
 				var pad = 0;
 
-				var lines = xml.replace(instance.REGEX_TOKEN_1, '$1' + STR_CHAR_CRLF + '$2$3').split(/\r?\n/g);
+				var lines = xml
+					.replace(
+						instance.REGEX_TOKEN_1,
+						'$1' + STR_CHAR_CRLF + '$2$3'
+					)
+					.split(/\r?\n/g);
 
-				lines.forEach(
-					function(item, index, collection) {
-						var indent = 0;
+				lines.forEach(function(item, index, collection) {
+					var indent = 0;
 
-						if (!inCDATA) {
-							if (item.match(instance.REGEX_TOKEN_2)) {
-								indent = 0;
+					if (!inCDATA) {
+						if (item.match(instance.REGEX_TOKEN_2)) {
+							indent = 0;
+						} else if (item.match(instance.REGEX_TOKEN_3)) {
+							if (pad !== 0) {
+								pad -= 1;
 							}
-							else if (item.match(instance.REGEX_TOKEN_3)) {
-								if (pad !== 0) {
-									pad -= 1;
-								}
-							}
-							else if (item.match(instance.REGEX_TOKEN_4)) {
-								indent = 1;
-							}
-
-							formatted += LString.repeat(STR_CHAR_TAB, pad);
+						} else if (item.match(instance.REGEX_TOKEN_4)) {
+							indent = 1;
 						}
 
-						formatted += item + STR_CHAR_CRLF;
-
-						if (item.indexOf(STR_CDATA_OPEN) > -1) {
-							inCDATA = true;
-						}
-						else if (item.indexOf(STR_CDATA_CLOSE) > -1) {
-							inCDATA = false;
-						}
-
-						pad += indent;
+						formatted += LString.repeat(STR_CHAR_TAB, pad);
 					}
-				);
+
+					formatted += item + STR_CHAR_CRLF;
+
+					if (item.indexOf(STR_CDATA_OPEN) > -1) {
+						inCDATA = true;
+					} else if (item.indexOf(STR_CDATA_CLOSE) > -1) {
+						inCDATA = false;
+					}
+
+					pad += indent;
+				});
 
 				return formatted;
 			},
@@ -122,7 +126,11 @@ AUI.add(
 
 				var valid = true;
 
-				if (isNull(doc) || isNull(doc.documentElement) || A.one(doc).one('parsererror')) {
+				if (
+					isNull(doc) ||
+					isNull(doc.documentElement) ||
+					A.one(doc).one('parsererror')
+				) {
 					valid = false;
 				}
 

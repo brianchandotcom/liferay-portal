@@ -7,11 +7,12 @@
 		margin-left: 5px;
 	}
 
-	.kaleo-process-export-dialog, .kaleo-process-preview-fields-dialog {
+	.kaleo-process-export-dialog,
+	.kaleo-process-preview-fields-dialog {
 		.modal-content {
 			.modal-body {
 				.checkbox {
-					margin-bottom: 0
+					margin-bottom: 0;
 				}
 
 				.property-builder-content {
@@ -40,7 +41,7 @@
 	}
 
 	.kaleo-process-message {
-		color: #CCC;
+		color: #ccc;
 		font-style: italic;
 		margin-bottom: 20px;
 	}
@@ -57,43 +58,47 @@
 	.form .taglib-form-navigator > .form-steps > ul.form-navigator.nav {
 		margin: 6px 0 20px 0;
 
-		.tab, .tab.section-error {
+		.tab,
+		.tab.section-error {
 			.tab-label {
 				.message {
-					color: #8D8D8D;
+					color: #8d8d8d;
 					font-size: 15px;
 				}
 
 				.number {
-					background: #F4F4F4;
-					color: #8D8D8D;
+					background: #f4f4f4;
+					color: #8d8d8d;
 				}
 			}
 		}
 
-		.tab.active, .tab.active.section-error, .tab.active, .tab.active.section-success {
+		.tab.active,
+		.tab.active.section-error,
+		.tab.active,
+		.tab.active.section-success {
 			.tab-label {
 				.message {
-					color: #009AE5;
+					color: #009ae5;
 					font-size: 15px;
 					font-weight: bolder;
 				}
 
 				.number {
-					background: #009AE5;
-					color: #FFF;
+					background: #009ae5;
+					color: #fff;
 				}
 			}
 		}
 
 		.tab.section-success .tab-label {
 			.message {
-				color: #80CCF2;
+				color: #80ccf2;
 			}
 
 			.number {
-				background: #FFF;
-				color: #80CCF2;
+				background: #fff;
+				color: #80ccf2;
 			}
 		}
 	}
@@ -103,20 +108,24 @@
 
 .kaleo-forms-admin-portlet {
 	.form .taglib-form-navigator > .form-steps > ul.form-navigator.nav {
-		.tab, .tab.section-error {
+		.tab,
+		.tab.section-error {
 			.tab-label .number {
-				box-shadow: 0 0 5px 0 #8D8D8D;
+				box-shadow: 0 0 5px 0 #8d8d8d;
 			}
 		}
 
-		.tab.active, .tab.active.section-error, .tab.active, .tab.active.section-success {
+		.tab.active,
+		.tab.active.section-error,
+		.tab.active,
+		.tab.active.section-success {
 			.tab-label .number {
-				box-shadow: 0 0 5px 0 #009AE5;
+				box-shadow: 0 0 5px 0 #009ae5;
 			}
 		}
 
 		.tab.section-success .tab-label .number {
-			box-shadow: 0 0 5px 0 #80CCF2;
+			box-shadow: 0 0 5px 0 #80ccf2;
 		}
 	}
 }

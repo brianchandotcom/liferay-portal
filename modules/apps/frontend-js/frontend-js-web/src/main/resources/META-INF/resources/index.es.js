@@ -20,6 +20,7 @@ import navigate from './liferay/util/navigate.es';
 import ItemSelectorDialog from './liferay/ItemSelectorDialog.es';
 
 export {AOP} from './liferay/aop/AOP.es';
+export {cancelDebounce, debounce} from './liferay/debounce/debounce.es';
 export {CompatibilityEventProxy};
 export {DefaultEventHandler};
 export {ItemSelectorDialog};

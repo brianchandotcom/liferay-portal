@@ -312,6 +312,11 @@ definition {
 			userScreenName = "usersn");
 
 		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_COMMUNITY",
+			resourceName = "90",
+			roleTitle = "Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
 			resourceName = "90",
 			roleTitle = "Regrole Name");

@@ -861,21 +861,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		_dlAppService.revertFileEntry(fileEntryId, version, serviceContext);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLAppService(DLAppService dlAppService) {
-		_dlAppService = dlAppService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLTrashService(DLTrashService dlTrashService) {
-		_dlTrashService = dlTrashService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setTrashEntryService(TrashEntryService trashEntryService) {
-		_trashEntryService = trashEntryService;
-	}
-
 	protected FileEntry updateFileEntry(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse,
@@ -1057,8 +1042,12 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	private AssetDisplayPageEntryFormProcessor
 		_assetDisplayPageEntryFormProcessor;
 
+	@Reference
 	private DLAppService _dlAppService;
+
 	private volatile DLConfiguration _dlConfiguration;
+
+	@Reference
 	private DLTrashService _dlTrashService;
 
 	@Reference
@@ -1073,6 +1062,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private TrashEntryService _trashEntryService;
 
 }

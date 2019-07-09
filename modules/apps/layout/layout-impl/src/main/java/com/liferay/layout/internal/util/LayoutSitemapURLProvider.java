@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.util;
+package com.liferay.layout.internal.util;
 
-import com.liferay.layouts.admin.kernel.model.LayoutTypePortletConstants;
-import com.liferay.layouts.admin.kernel.util.SitemapURLProvider;
-import com.liferay.layouts.admin.kernel.util.SitemapUtil;
+import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
+import com.liferay.layout.admin.kernel.util.SitemapURLProvider;
+import com.liferay.layout.admin.kernel.util.SitemapUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.util.LayoutTypeControllerTracker;
 
 import java.util.List;
 import java.util.Locale;
@@ -36,9 +37,7 @@ import java.util.Map;
 
 /**
  * @author Eduardo García
- * @deprecated As of Mueller (7.2.x), replaced by {@link com.liferay.layout.internal.util.LayoutSitemapURLProvider}
  */
-@Deprecated
 @OSGiBeanProperties
 public class LayoutSitemapURLProvider implements SitemapURLProvider {
 

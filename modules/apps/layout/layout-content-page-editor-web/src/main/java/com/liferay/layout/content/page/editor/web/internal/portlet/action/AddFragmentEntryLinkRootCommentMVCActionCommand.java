@@ -98,16 +98,16 @@ public class AddFragmentEntryLinkRootCommentMVCActionCommand
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse,
 			JSONUtil.put(
-				"commentId", comment.getCommentId()
-			).put(
-				"body", comment.getBody()
-			).put(
 				"author",
 				JSONUtil.put(
 					"fullName", user.getFullName()
 				).put(
 					"portraitURL", portraitURL
 				)
+			).put(
+				"body", comment.getBody()
+			).put(
+				"commentId", comment.getCommentId()
 			).put(
 				"dateDescription", dateDescription
 			));

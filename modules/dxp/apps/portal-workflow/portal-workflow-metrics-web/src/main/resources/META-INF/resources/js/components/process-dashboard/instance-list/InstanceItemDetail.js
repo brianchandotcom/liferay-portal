@@ -170,9 +170,11 @@ class InstanceItemDetail extends React.Component {
 									description={Liferay.Language.get(
 										'creation-date'
 									)}
-									detail={moment(dateCreated).format(
-										Liferay.Language.get('mmm-dd-lt')
-									)}
+									detail={moment
+										.utc(dateCreated)
+										.format(
+											Liferay.Language.get('mmm-dd-lt')
+										)}
 								/>
 							)}
 
@@ -202,9 +204,11 @@ class InstanceItemDetail extends React.Component {
 									description={Liferay.Language.get(
 										'end-date'
 									)}
-									detail={moment(dateCompletion).format(
-										Liferay.Language.get('mmm-dd-lt')
-									)}
+									detail={moment
+										.utc(dateCompletion)
+										.format(
+											Liferay.Language.get('mmm-dd-lt')
+										)}
 								/>
 							)}
 
@@ -260,9 +264,11 @@ InstanceItemDetail.Item = ({
 		if (onTime) {
 			onTimeText = Liferay.Language.get('left');
 		}
-		statusText = `${moment(dateOverdue).format(
-			Liferay.Language.get('mmm-dd-lt')
-		)} (${durationText} ${onTimeText})`;
+		statusText = `${moment
+			.utc(dateOverdue)
+			.format(
+				Liferay.Language.get('mmm-dd-lt')
+			)} (${durationText} ${onTimeText})`;
 	} else if (status === 'Paused') {
 		statusText = `(${Liferay.Language.get('sla-paused')})`;
 	}

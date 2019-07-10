@@ -91,9 +91,9 @@ class InstanceListItem extends React.Component {
 				<td>{userName}</td>
 
 				<td className='pr-4 text-right'>
-					{moment(dateCreated).format(
-						Liferay.Language.get('mmm-dd-lt')
-					)}
+					{moment
+						.utc(dateCreated)
+						.format(Liferay.Language.get('mmm-dd-lt'))}
 				</td>
 			</tr>
 		);

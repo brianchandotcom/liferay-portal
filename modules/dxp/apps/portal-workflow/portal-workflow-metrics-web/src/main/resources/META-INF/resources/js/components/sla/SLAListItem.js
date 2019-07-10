@@ -37,10 +37,10 @@ class SLAListItem extends React.Component {
 			const date = new Date(dateModified);
 			const month = date.toLocaleString(
 				Liferay.ThemeDisplay.getBCP47LanguageId(),
-				{month: 'short'}
+				{month: 'short', timeZone: 'UTC'}
 			);
 
-			const dayOfMonth = `${date.getDate()}`.padStart(2, '0');
+			const dayOfMonth = `${date.getUTCDate()}`.padStart(2, '0');
 
 			dateModifiedText = `${month} ${dayOfMonth}`;
 		}

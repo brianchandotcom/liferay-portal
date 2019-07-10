@@ -519,6 +519,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SHARE</td>
+	<td>//div[contains(@class,'btn-group-item')]/button[contains(@class,'btn') and contains(.,'Share')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH</td>
 	<td>//*[@data-qa-id='searchButton'] | //button[contains(.,'Search')]</td>
 	<td></td>

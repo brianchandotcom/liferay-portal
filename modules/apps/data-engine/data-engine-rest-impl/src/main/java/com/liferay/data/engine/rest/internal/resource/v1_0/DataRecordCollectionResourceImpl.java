@@ -164,7 +164,10 @@ public class DataRecordCollectionResourceImpl
 	}
 
 	@Activate
+	@Override
 	protected void activate() {
+		super.activate();
+
 		_commonDataRecordCollectionResource =
 			new CommonDataRecordCollectionResource<>(
 				_ddlRecordSetLocalService, _ddmStructureLocalService,

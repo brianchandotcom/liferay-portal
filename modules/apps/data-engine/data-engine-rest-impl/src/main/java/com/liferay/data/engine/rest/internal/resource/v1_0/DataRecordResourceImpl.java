@@ -76,7 +76,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
 	@Activate
+	@Override
 	public void activate() {
+		super.activate();
+
 		_dataRecordExporter = new DataRecordExporter(_ddlRecordSetLocalService);
 	}
 

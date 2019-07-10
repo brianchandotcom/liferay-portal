@@ -208,12 +208,6 @@ public class RequestContextMapper {
 		implements ServiceTrackerCustomizer
 			<RequestContextContributor, RequestContextContributor> {
 
-		public RequestContextContributorServiceTrackerCustomizer(
-			BundleContext bundleContext) {
-
-			_bundleContext = bundleContext;
-		}
-
 		@Override
 		public RequestContextContributor addingService(
 			ServiceReference<RequestContextContributor> serviceReference) {
@@ -260,6 +254,12 @@ public class RequestContextMapper {
 				_bundleContext, new ContextEntityModel(customEntityFields));
 
 			_bundleContext.ungetService(serviceReference);
+		}
+
+		private RequestContextContributorServiceTrackerCustomizer(
+			BundleContext bundleContext) {
+
+			_bundleContext = bundleContext;
 		}
 
 		private List<EntityField> _addCustomEntityField(
@@ -324,7 +324,8 @@ public class RequestContextMapper {
 		}
 
 		private final BundleContext _bundleContext;
-		private Map<String, EntityField> _customEntityFields = new HashMap<>();
+		private final Map<String, EntityField> _customEntityFields =
+			new HashMap<>();
 		private ServiceRegistration<EntityModel> _serviceRegistration;
 
 	}

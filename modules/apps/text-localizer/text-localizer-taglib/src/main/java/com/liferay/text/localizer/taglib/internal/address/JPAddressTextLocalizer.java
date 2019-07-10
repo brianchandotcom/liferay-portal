@@ -88,7 +88,7 @@ public class JPAddressTextLocalizer implements AddressTextLocalizer {
 			sb.append(city);
 		}
 
-		// Jyusyo
+		// Residence
 		String street1 = escapedAddress.getStreet1();
 
 		if (Validator.isNotNull(street1)) {

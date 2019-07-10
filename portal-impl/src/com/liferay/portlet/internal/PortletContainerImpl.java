@@ -806,18 +806,19 @@ public class PortletContainerImpl implements PortletContainer {
 		throws Exception {
 
 		if ((portlet != null) && portlet.isInstanceable() &&
-			!portlet.isAddDefaultResource() &&
-			!Validator.isPassword(portlet.getInstanceId())) {
+			!portlet.isAddDefaultResource()) {
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Portlet ", portlet.getPortletId(),
-						" is instanceable but does not have a valid instance ",
-						"id"));
+			if (!Validator.isPassword(portlet.getInstanceId())) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Portlet ", portlet.getPortletId(),
+							" is instanceable but does not have a valid ",
+							"instance id"));
+				}
+
+				portlet = null;
 			}
-
-			portlet = null;
 		}
 
 		if (portlet == null) {

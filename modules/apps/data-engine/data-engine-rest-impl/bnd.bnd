@@ -7,3 +7,4 @@ Provide-Capability:\
 		resource.bundle.base.name="content.Language";\
 		service.ranking:Long="1"
 Web-ContextPath: /data-engine-rest-impl
+-dsannotations-options: inherit

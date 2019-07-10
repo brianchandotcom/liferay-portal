@@ -9,3 +9,4 @@ Provide-Capability:\
 Require-Capability:\
 	liferay.resource.bundle;\
 		filter:="(bundle.symbolic.name=com.liferay.change.tracking.lang)"
+-dsannotations-options: inherit

@@ -143,12 +143,12 @@ public class LayoutPageTemplateEntryServiceTest {
 				_group.getGroupId(),
 				_layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				name, LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+				name, LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
 				WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 		Assert.assertEquals(name, layoutPageTemplateEntry.getName());
 		Assert.assertEquals(
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+			LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
 			layoutPageTemplateEntry.getType());
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT,

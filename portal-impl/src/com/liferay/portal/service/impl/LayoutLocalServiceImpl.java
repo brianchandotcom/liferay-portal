@@ -232,7 +232,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Date now = new Date();
 
-		long plid = counterLocalService.increment();
+		long plid = counterLocalService.increment(Layout.class.getName());
 
 		Layout layout = layoutPersistence.create(plid);
 

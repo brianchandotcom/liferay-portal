@@ -115,7 +115,10 @@ public class VariableNameCheck extends BaseCheck {
 	private void _checkExceptionVariableName(
 		DetailAST detailAST, String name, String typeName) {
 
-		if ((detailAST.getType() != TokenTypes.PARAMETER_DEF) ||
+		DetailAST parentDetailAST = detailAST.getParent();
+
+		if ((parentDetailAST.getType() == TokenTypes.LITERAL_CATCH) ||
+			(detailAST.getType() != TokenTypes.PARAMETER_DEF) ||
 			!typeName.endsWith("Exception")) {
 
 			return;

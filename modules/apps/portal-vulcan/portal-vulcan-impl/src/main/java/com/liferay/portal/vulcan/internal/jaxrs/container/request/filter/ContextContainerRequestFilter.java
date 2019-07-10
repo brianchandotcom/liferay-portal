@@ -26,6 +26,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -33,19 +34,15 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
 
 import org.apache.cxf.interceptor.Fault;
-import org.apache.cxf.interceptor.InterceptorChain;
 import org.apache.cxf.jaxrs.impl.UriInfoImpl;
 import org.apache.cxf.message.Message;
-import org.apache.cxf.phase.AbstractPhaseInterceptor;
-import org.apache.cxf.phase.Phase;
 import org.apache.cxf.phase.PhaseInterceptorChain;
 
 /**
  * @author Javier Gamarra
  */
 @Provider
-public class ContextContainerRequestFilter
-	implements ContainerRequestFilter {
+public class ContextContainerRequestFilter implements ContainerRequestFilter {
 
 	public ContextContainerRequestFilter(Language language, Portal portal) {
 		_language = language;
@@ -94,6 +91,20 @@ public class ContextContainerRequestFilter
 
 					field.set(instance, _portal.getCompany(httpServletRequest));
 				}
+				else if (fieldType.isAssignableFrom(HttpServletRequest.class)) {
+					field.setAccessible(true);
+
+					field.set(instance, httpServletRequest);
+				}
+				else if (fieldType.isAssignableFrom(
+							HttpServletResponse.class)) {
+
+					field.setAccessible(true);
+
+					field.set(
+						instance,
+						message.getContextualProperty("HTTP.RESPONSE"));
+				}
 				else if (fieldType.isAssignableFrom(UriInfo.class)) {
 					field.setAccessible(true);
 
@@ -111,7 +122,7 @@ public class ContextContainerRequestFilter
 		}
 	}
 
-	private Language _language;
-	private Portal _portal;
+	private final Language _language;
+	private final Portal _portal;
 
 }

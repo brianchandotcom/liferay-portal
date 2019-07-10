@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-console: "warn" */
-
 import {isFunction} from 'metal';
 import Uri from 'metal-uri';
 
@@ -211,6 +209,7 @@ const component = function(id, value, componentConfig) {
 			delete componentConfigs[id];
 			delete componentPromiseWrappers[id];
 
+			// eslint-disable-next-line no-console
 			console.warn(
 				'Component with id "' +
 					id +

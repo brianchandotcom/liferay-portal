@@ -12,9 +12,6 @@
  * details.
  */
 
-/* eslint no-undef: "warn" */
-/* eslint no-unused-vars: "warn" */
-
 'use strict';
 
 import PortletBase from '../../src/main/resources/META-INF/resources/liferay/PortletBase.es';
@@ -130,7 +127,7 @@ describe('PortletBase', () => {
 		it('transforms the given body using getRequestBody_', done => {
 			portletBase.getRequestBody_ = jest.fn();
 
-			global.fetch = jest.fn((url, options) => {
+			global.fetch = jest.fn(() => {
 				expect(portletBase.getRequestBody_.mock.calls).toEqual([
 					[sampleBody]
 				]);

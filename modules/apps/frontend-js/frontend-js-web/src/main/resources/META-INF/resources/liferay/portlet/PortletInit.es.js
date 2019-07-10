@@ -12,11 +12,6 @@
  * details.
  */
 
-/* eslint no-empty: "warn" */
-/* eslint no-for-of-loops/no-for-of-loops: "warn" */
-/* eslint no-undef: "warn" */
-/* eslint no-unused-vars: "warn" */
-
 import fetch from './../util/fetch.es';
 import {isDefAndNotNull, isFunction, isObject, isString} from 'metal';
 
@@ -247,14 +242,14 @@ class PortletInit {
 
 		const parameterKeys = Object.keys(publicRenderParameters);
 
-		for (const parameterKey of parameterKeys) {
+		parameterKeys.forEach(parameterKey => {
 			const newValue = publicRenderParameters[parameterKey];
 
 			const groupMap = pageRenderState.prpMap[parameterKey];
 
 			const groupKeys = Object.keys(groupMap);
 
-			for (const groupKey of groupKeys) {
+			groupKeys.forEach(groupKey => {
 				if (groupKey !== this._portletId) {
 					const parts = groupMap[groupKey].split('|');
 
@@ -270,10 +265,11 @@ class PortletInit {
 							parameterName
 						] = [...newValue];
 					}
+
 					updatedIds.push(portletId);
 				}
-			}
-		}
+			});
+		});
 
 		const portletId = this._portletId;
 
@@ -285,9 +281,9 @@ class PortletInit {
 		// Delete render data for all affected portlets in order to avoid dispatching
 		// stale render data
 
-		for (const updatedId of updatedIds) {
+		updatedIds.forEach(updatedId => {
 			pageRenderState.portlets[updatedId].renderData.content = null;
-		}
+		});
 
 		// Update history for back-button support
 
@@ -362,7 +358,9 @@ class PortletInit {
 				} else {
 					try {
 						history.pushState(token, '', url);
-					} catch (e) {}
+					} catch (e) {
+						// Do nothing
+					}
 				}
 			});
 		}
@@ -412,15 +410,13 @@ class PortletInit {
 
 		// Update portlets and collect IDs of affected portlets.
 
-		const keys = Object.keys(portlets);
+		const entries = Object.entries(portlets);
 
-		for (const key of keys) {
-			const portletData = portlets[key];
-
+		entries.forEach(([key, portletData]) => {
 			pageRenderState.portlets[key] = portletData;
 			updatedIds.push(key);
 			stateUpdated = true;
-		}
+		});
 
 		// portletId will be null or undefined when called from onpopstate routine.
 		// In that case, don't update history.
@@ -445,14 +441,15 @@ class PortletInit {
 	 */
 
 	_updatePortletStates(updatedIds) {
-		return new Promise((resolve, reject) => {
+		return new Promise(resolve => {
 			if (updatedIds.length === 0) {
 				busy = false;
 			} else {
-				for (const updatedId of updatedIds) {
+				updatedIds.forEach(updatedId => {
 					this._updateStateForPortlet(updatedId);
-				}
+				});
 			}
+
 			resolve(updatedIds);
 		});
 	}
@@ -505,19 +502,17 @@ class PortletInit {
 	_updateStateForPortlet(portletId) {
 		const updateQueueIds = eventListenersQueue.map(item => item.handle);
 
-		const keys = Object.keys(eventListeners);
+		const entries = Object.entries(eventListeners);
 
-		for (const key of keys) {
-			const eventData = eventListeners[key];
-
+		entries.forEach(([key, eventData]) => {
 			if (eventData.type !== 'portlet.onStateChange') {
-				continue;
+				return;
 			}
 
 			if (eventData.id === portletId && !updateQueueIds.includes(key)) {
 				eventListenersQueue.push(eventData);
 			}
-		}
+		});
 
 		if (eventListenersQueue.length > 0) {
 			setTimeout(() => {
@@ -572,7 +567,7 @@ class PortletInit {
 		let argCount = 0;
 		let el = null;
 
-		for (const arg of args) {
+		args.forEach(arg => {
 			if (arg instanceof HTMLFormElement) {
 				if (el !== null) {
 					throw new TypeError(
@@ -598,7 +593,7 @@ class PortletInit {
 				);
 			}
 			argCount++;
-		}
+		});
 
 		if (el) {
 			validateForm(el);

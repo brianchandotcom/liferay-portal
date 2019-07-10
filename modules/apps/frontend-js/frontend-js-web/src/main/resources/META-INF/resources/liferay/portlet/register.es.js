@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-undef: "warn" */
-
 import PortletInit from './PortletInit.es';
 import {validateArguments, validatePortletId} from './portlet_util.es';
 

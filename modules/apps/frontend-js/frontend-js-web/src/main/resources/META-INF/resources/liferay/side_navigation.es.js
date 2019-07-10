@@ -12,10 +12,6 @@
  * details.
  */
 
-/* eslint no-console: "warn" */
-/* eslint no-const-assign: "warn" */
-/* eslint no-unused-vars: "warn" */
-
 import EventEmitter from 'metal-events';
 
 /**
@@ -341,8 +337,6 @@ SideNavigation.prototype = {
 	destroy() {
 		const instance = this;
 
-		const options = instance.options;
-
 		if (instance._sidenavCloseSubscription) {
 			instance._sidenavCloseSubscription.dispose();
 			instance._sidenavCloseSubscription = null;
@@ -553,7 +547,7 @@ SideNavigation.prototype = {
 		const type = mobile ? options.typeMobile : options.type;
 
 		if (type !== 'fixed') {
-			const navigationStartX = hasClass(container, 'open')
+			let navigationStartX = hasClass(container, 'open')
 				? offsetLeft(navigation) - options.gutter
 				: offsetLeft(navigation) - offset;
 
@@ -867,6 +861,7 @@ SideNavigation.prototype = {
 					instance.setHeight();
 				})
 				.catch(err => {
+					// eslint-disable-next-line no-console
 					console.log(err);
 				});
 		}

@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-empty: "warn" */
-
 import State from 'metal-state';
 import {core} from 'metal';
 
@@ -88,7 +86,9 @@ class CompatibilityEventProxy extends State {
 				if (core.isObject(event)) {
 					try {
 						event.target = this.host;
-					} catch (e) {}
+					} catch (e) {
+						// Do nothing
+					}
 				}
 
 				let emitFacadeReference;

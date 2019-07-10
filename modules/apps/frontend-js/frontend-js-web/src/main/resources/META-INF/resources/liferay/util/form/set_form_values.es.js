@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-for-of-loops/no-for-of-loops: "warn" */
-
 import {isDef, isObject} from 'metal';
 import getFormElement from './get_form_element.es';
 
@@ -30,11 +28,13 @@ export default function setFormValues(form, data) {
 		return;
 	}
 
-	for (const [elementName, elementValue] of Object.entries(data)) {
+	const entries = Object.entries(data);
+
+	entries.forEach(([elementName, elementValue]) => {
 		const element = getFormElement(form, elementName);
 
 		if (element) {
 			element.value = elementValue;
 		}
-	}
+	});
 }

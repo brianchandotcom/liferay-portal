@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import dom from 'metal-dom';
 import {ClayToast} from 'clay-alert';
 
@@ -52,7 +50,7 @@ function openToast({
 
 	const mergedEvents = Object.assign(
 		{
-			disposed(event) {
+			disposed() {
 				if (!alertContainer.hasChildNodes()) {
 					dom.exitDocument(alertContainer);
 				}

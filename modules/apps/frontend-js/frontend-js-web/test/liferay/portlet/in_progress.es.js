@@ -12,9 +12,6 @@
  * details.
  */
 
-/* eslint no-undef: "warn" */
-/* eslint no-unused-vars: "warn" */
-
 import register from '../../../src/main/resources/META-INF/resources/liferay/portlet/register.es';
 
 describe('PortletHub', () => {
@@ -261,7 +258,6 @@ describe('PortletHub', () => {
 		});
 
 		it('returns true when setRenderState has been called but the updates have not been dispatched', () => {
-			const parameters = {};
 			const state = pageState.portlets.PortletC.state;
 
 			state.parameters.param1 = ['paramValue1'];
@@ -277,7 +273,6 @@ describe('PortletHub', () => {
 		});
 
 		it('returns true through a different hub when setRenderState has been called but the updates have not been dispatched', () => {
-			const parameters = {};
 			const state = pageState.portlets.PortletC.state;
 
 			state.parameters.param1 = ['paramValue1'];
@@ -293,7 +288,6 @@ describe('PortletHub', () => {
 		});
 
 		it('returns false after setRenderState updates have been dispatched', () => {
-			const parameters = {};
 			const state = pageState.portlets.PortletC.state;
 
 			state.parameters.param1 = ['paramValue1'];

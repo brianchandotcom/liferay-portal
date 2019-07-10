@@ -12,9 +12,6 @@
  * details.
  */
 
-/* eslint no-undef: "warn" */
-/* eslint no-unused-vars: "warn" */
-
 import register from '../../../src/main/resources/META-INF/resources/liferay/portlet/register.es';
 
 describe('PortletHub', () => {
@@ -80,8 +77,6 @@ describe('PortletHub', () => {
 	});
 
 	it('throws error if dispatchClientEvent is called with invalid args', () => {
-		const stub = jest.fn();
-
 		return register('PortletA').then(hub => {
 			expect(() => {
 				hub.dispatchClientEvent(1, 2, 3);
@@ -142,13 +137,11 @@ describe('PortletHub', () => {
 		const portletB = ids[3];
 
 		let hubA;
-		let hubB;
 
 		beforeEach(() => {
 			return Promise.all([register(portletA), register(portletB)]).then(
 				values => {
 					hubA = values[0];
-					hubB = values[1];
 				}
 			);
 		});
@@ -183,7 +176,7 @@ describe('PortletHub', () => {
 
 		it('throws a TypeError if the type argument is not a string', () => {
 			const testFn = () => {
-				hubA.addEventListener(89, function(type, data) {});
+				hubA.addEventListener(89, function() {});
 			};
 
 			expect(testFn).toThrow(TypeError);
@@ -199,7 +192,7 @@ describe('PortletHub', () => {
 
 		it('throws a TypeError if the type is null', () => {
 			const testFn = () => {
-				hubA.addEventListener(null, function(type, data) {});
+				hubA.addEventListener(null, function() {});
 			};
 
 			expect(testFn).toThrow(TypeError);
@@ -215,10 +208,7 @@ describe('PortletHub', () => {
 
 		it('throws a TypeError if the type begins with "portlet." but is neither "portlet.onStateChange" or "portlet.onError"', () => {
 			const testFn = () => {
-				hubA.addEventListener('portlet.invalidType', function(
-					type,
-					data
-				) {});
+				hubA.addEventListener('portlet.invalidType', function() {});
 			};
 
 			expect(testFn).toThrow(TypeError);
@@ -226,10 +216,7 @@ describe('PortletHub', () => {
 
 		it('does not throw an exception if both parameters are valid', () => {
 			const testFn = () => {
-				return hubA.addEventListener('someEvent', function(
-					type,
-					data
-				) {});
+				return hubA.addEventListener('someEvent', function() {});
 			};
 
 			expect(testFn).not.toThrow();
@@ -240,10 +227,7 @@ describe('PortletHub', () => {
 		});
 
 		it('returns a handle to the event handler (an object) when the parameters are valid', () => {
-			const handle = hubA.addEventListener('someEvent', function(
-				type,
-				data
-			) {});
+			const handle = hubA.addEventListener('someEvent', function() {});
 
 			expect(handle).not.toBeUndefined();
 
@@ -252,10 +236,10 @@ describe('PortletHub', () => {
 
 		it('allows a listener for event type "portlet.onStateChange" to be added', () => {
 			const testFn = () => {
-				return hubA.addEventListener('portlet.onStateChange', function(
-					type,
-					data
-				) {});
+				return hubA.addEventListener(
+					'portlet.onStateChange',
+					function() {}
+				);
 			};
 
 			// expect(testFn).not.toThrow();
@@ -269,10 +253,7 @@ describe('PortletHub', () => {
 
 		it('allows a listener for event type "portlet.onError" to be added', () => {
 			const testFn = () => {
-				return hubA.addEventListener('portlet.onError', function(
-					type,
-					data
-				) {});
+				return hubA.addEventListener('portlet.onError', function() {});
 			};
 
 			// expect(testFn).not.toThrow();
@@ -287,7 +268,6 @@ describe('PortletHub', () => {
 
 	describe('removeEventListener', () => {
 		const ids = global.portlet.getIds();
-		const pageState = global.portlet.data.pageRenderState.portlets;
 		const portletA = ids[0];
 
 		let hubA;
@@ -429,10 +409,8 @@ describe('PortletHub', () => {
 		let hubA;
 		let returnedRenderData;
 		let returnedRenderState;
-		let returnType;
 
 		const onStateChange = jest.fn((eventType, renderState, renderData) => {
-			returnType = eventType;
 			returnedRenderState = renderState;
 			returnedRenderData = renderData;
 		});
@@ -441,7 +419,7 @@ describe('PortletHub', () => {
 			return register(portletA).then(hub => {
 				hubA = hub;
 				onStateChange.mockClear();
-				returnType = returnedRenderState = returnedRenderData = undefined;
+				returnedRenderState = returnedRenderData = undefined;
 			});
 		});
 
@@ -484,10 +462,6 @@ describe('PortletHub', () => {
 
 		it('is passed a RenderState parameter that has 3 properties', done => {
 			const handle = hubA.addEventListener(eventType, onStateChange);
-
-			const originalState = pageState[portletA].state;
-
-			const originalKeys = Object.keys(originalState);
 
 			setTimeout(() => {
 				expect(onStateChange).toHaveBeenCalled();
@@ -1217,10 +1191,7 @@ describe('PortletHub', () => {
 				const payload = 'payload';
 				const type = 'event';
 
-				const handle = hubB.addEventListener(
-					'differentEvent',
-					listener
-				);
+				hubB.addEventListener('differentEvent', listener);
 
 				const count = hubA.dispatchClientEvent(type, payload);
 
@@ -1284,7 +1255,7 @@ describe('PortletHub', () => {
 				const payload = 'payload';
 				const type = 'liferay.event';
 
-				const handle = hubB.addEventListener('liferay..*', listener);
+				hubB.addEventListener('liferay..*', listener);
 
 				const count = hubA.dispatchClientEvent(type, payload);
 
@@ -1297,7 +1268,7 @@ describe('PortletHub', () => {
 				const payload = 'payload';
 				const type = 'event';
 
-				const handle = hubB.addEventListener('liferay..*', listener);
+				hubB.addEventListener('liferay..*', listener);
 
 				const count = hubA.dispatchClientEvent(type, payload);
 

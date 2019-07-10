@@ -12,9 +12,6 @@
  * details.
  */
 
-/* eslint no-undef: "warn" */
-/* eslint no-unused-vars: "warn" */
-
 import register from '../../../src/main/resources/META-INF/resources/liferay/portlet/register.es';
 
 describe('PortletHub', () => {
@@ -205,7 +202,6 @@ describe('PortletHub', () => {
 		let listenerB;
 		let listenerC;
 		let listenerD;
-		let listenerZ;
 
 		beforeEach(() => {
 			return Promise.all([

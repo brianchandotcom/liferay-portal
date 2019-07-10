@@ -12,10 +12,6 @@
  * details.
  */
 
-/* eslint no-empty: "warn" */
-/* eslint no-for-of-loops/no-for-of-loops: "warn" */
-/* eslint no-useless-escape: "warn" */
-
 import {isDefAndNotNull, isString} from 'metal';
 
 // Constants for URL generation
@@ -69,7 +65,7 @@ const decodeUpdateString = function(pageRenderState, updateString) {
 		if (newRenderState.portlets) {
 			const keys = Object.keys(portlets);
 
-			for (const key of keys) {
+			keys.forEach(key => {
 				const newState = newRenderState.portlets[key].state;
 				const oldState = portlets[key].state;
 
@@ -82,9 +78,11 @@ const decodeUpdateString = function(pageRenderState, updateString) {
 				if (stateChanged(pageRenderState, newState, key)) {
 					portlets[key] = newRenderState.portlets[key];
 				}
-			}
+			});
 		}
-	} catch (e) {}
+	} catch (e) {
+		// Do nothing
+	}
 
 	return portlets;
 };
@@ -158,16 +156,18 @@ const encodeParameter = function(name, values) {
 				VALUE_DELIM +
 				VALUE_ARRAY_EMPTY;
 		} else {
-			for (const value of values) {
+			values.forEach(value => {
 				str += TOKEN_DELIM + encodeURIComponent(name);
+
 				if (value === null) {
 					str += VALUE_DELIM + VALUE_NULL;
 				} else {
 					str += VALUE_DELIM + encodeURIComponent(value);
 				}
-			}
+			});
 		}
 	}
+
 	return str;
 };
 
@@ -327,7 +327,7 @@ const getUpdatedPublicRenderParameters = function(
 
 			const keys = Object.keys(portletPublicParameters);
 
-			for (const key of keys) {
+			keys.forEach(key => {
 				if (
 					!isParameterInStateEqual(
 						pageRenderState,
@@ -340,7 +340,7 @@ const getUpdatedPublicRenderParameters = function(
 
 					publicRenderParameters[group] = state.parameters[key];
 				}
-			}
+			});
 		}
 	}
 
@@ -449,7 +449,7 @@ const getUrl = function(
 
 						const keys = Object.keys(stateParameters);
 
-						for (const key of keys) {
+						keys.forEach(key => {
 							if (
 								!isPublicParameter(
 									pageRenderState,
@@ -464,7 +464,8 @@ const getUrl = function(
 									RENDER_PARAM_KEY
 								);
 							}
-						}
+						});
+
 						url += str;
 					}
 				}
@@ -477,13 +478,16 @@ const getUrl = function(
 					const publicRenderParameters = {};
 
 					const mapKeys = Object.keys(pageRenderState.prpMap);
-					for (const mapKey of mapKeys) {
+
+					mapKeys.forEach(mapKey => {
 						const groupKeys = Object.keys(
 							pageRenderState.prpMap[mapKey]
 						);
-						for (const groupKey of groupKeys) {
+
+						groupKeys.forEach(groupKey => {
 							const groupName =
 								pageRenderState.prpMap[mapKey][groupKey];
+
 							const parts = groupName.split('|');
 
 							// Only need to add parameter once, since it is shared
@@ -503,8 +507,8 @@ const getUrl = function(
 
 								str += publicRenderParameters[mapKey];
 							}
-						}
-					}
+						});
+					});
 
 					url += str;
 				}
@@ -518,12 +522,12 @@ const getUrl = function(
 		str = '';
 		const parameterKeys = Object.keys(parameters);
 
-		for (const parameterKey of parameterKeys) {
+		parameterKeys.forEach(parameterKey => {
 			str += encodeParameter(
 				portletId + parameterKey,
 				parameters[parameterKey]
 			);
-		}
+		});
 
 		url += str;
 	}
@@ -660,23 +664,25 @@ const stateChanged = function(pageRenderState, newState, portletId) {
 				// Has a parameter changed or been added?
 
 				const newKeys = Object.keys(newState.parameters);
-				for (const key of newKeys) {
+
+				newKeys.forEach(key => {
 					const newParameter = newState.parameters[key];
 					const oldParameter = oldState.parameters[key];
 
 					if (!isParameterEqual(newParameter, oldParameter)) {
 						result = true;
 					}
-				}
+				});
 
 				// Make sure no parameter was deleted
 
 				const oldKeys = Object.keys(oldState.parameters);
-				for (const key of oldKeys) {
+
+				oldKeys.forEach(key => {
 					if (!newState.parameters[key]) {
 						result = true;
 					}
-				}
+				});
 			}
 		}
 	}
@@ -758,7 +764,7 @@ const validateForm = function(form) {
 		enctype !== 'multipart/form-data'
 	) {
 		throw new TypeError(
-			`Invalid form enctype ${enctype}. Allowed: 'application\/x-www-form-urlencoded' & 'multipart\/form-data'`
+			`Invalid form enctype ${enctype}. Allowed: 'application/x-www-form-urlencoded' & 'multipart/form-data'`
 		);
 	}
 
@@ -808,7 +814,8 @@ const validateParameters = function(parameters) {
 	}
 
 	const keys = Object.keys(parameters);
-	for (const key of keys) {
+
+	keys.forEach(key => {
 		if (!Array.isArray(parameters[key])) {
 			throw new TypeError(`${key} parameter is not an array`);
 		}
@@ -816,7 +823,7 @@ const validateParameters = function(parameters) {
 		if (!parameters[key].length) {
 			throw new TypeError(`${key} parameter is an empty array`);
 		}
-	}
+	});
 };
 
 /**

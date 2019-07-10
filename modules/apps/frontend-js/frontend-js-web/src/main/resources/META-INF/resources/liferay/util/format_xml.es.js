@@ -12,9 +12,6 @@
  * details.
  */
 
-/* eslint no-unused-expressions: "warn" */
-/* eslint no-useless-escape: "warn" */
-
 import {isString} from 'metal';
 
 const NEW_LINE = '\r\n';
@@ -31,15 +28,15 @@ const REGEX_ELEMENT = /^<\w/;
 
 const REGEX_ELEMENT_CLOSE = /^<\/\w/;
 
-const REGEX_ELEMENT_NAMESPACED = /^<[\w:\-\.\,]+/;
+const REGEX_ELEMENT_NAMESPACED = /^<[\w:\-.,]+/;
 
-const REGEX_ELEMENT_NAMESPACED_CLOSE = /^<\/[\w:\-\.\,]+/;
+const REGEX_ELEMENT_NAMESPACED_CLOSE = /^<\/[\w:\-.,]+/;
 
 const REGEX_ELEMENT_OPEN = /<\w/;
 
-const REGEX_NAMESPACE_XML = /xmlns(?:\:|\=)/g;
+const REGEX_NAMESPACE_XML = /xmlns(?::|=)/g;
 
-const REGEX_NAMESPACE_XML_ATTR = /\s*(xmlns)(\:|\=)/g;
+const REGEX_NAMESPACE_XML_ATTR = /\s*(xmlns)(:|=)/g;
 
 const REGEX_TAG_CLOSE = /<\//;
 
@@ -119,7 +116,9 @@ export default function formatXML(content, options = {}) {
 		) {
 			result += item;
 
-			!inComment && --level;
+			if (!inComment) {
+				--level;
+			}
 		} else if (
 			REGEX_ELEMENT_OPEN.test(item) &&
 			!REGEX_TAG_CLOSE.test(item) &&

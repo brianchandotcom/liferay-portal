@@ -12,9 +12,6 @@
  * details.
  */
 
-/* eslint no-undef: "warn" */
-/* eslint no-unused-vars: "warn" */
-
 import register from '../../../src/main/resources/META-INF/resources/liferay/portlet/register.es';
 
 describe('PortletHub', () => {
@@ -88,10 +85,6 @@ describe('PortletHub', () => {
 		});
 
 		it('throws a TypeError if there are 2 cacheability arguments', () => {
-			const parameters = {
-				param1: ['paramValue1']
-			};
-
 			const testFn = () => {
 				hubA.createResourceUrl('cacheLevelPage', 'cacheLevelFull');
 			};
@@ -118,7 +111,7 @@ describe('PortletHub', () => {
 
 			return hubA
 				.createResourceUrl(parameters, 'cacheLevelPage')
-				.then(updatedIds => {
+				.then(() => {
 					done();
 				});
 		});
@@ -148,10 +141,6 @@ describe('PortletHub', () => {
 		});
 
 		it('returns a string if only cacheability present', () => {
-			const parameters = {
-				param1: ['paramValue1']
-			};
-
 			return hubA
 				.createResourceUrl(null, 'cacheLevelPortlet')
 				.then(url => {
@@ -171,11 +160,6 @@ describe('PortletHub', () => {
 		});
 
 		it('returns a string if no parameters present', () => {
-			const parameters = {
-				param1: ['paramValue1'],
-				param2: ['paramValue2']
-			};
-
 			return hubA.createResourceUrl().then(url => {
 				expect(typeof url).toEqual('string');
 			});

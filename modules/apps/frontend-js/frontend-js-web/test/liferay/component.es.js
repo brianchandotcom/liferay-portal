@@ -12,9 +12,6 @@
  * details.
  */
 
-/* eslint no-console: "warn" */
-/* eslint no-unused-vars: "warn" */
-
 'use strict';
 
 import {
@@ -39,7 +36,7 @@ describe('Liferay', () => {
 	describe('Liferay.component', () => {
 		it('stores function inputs and invoke them lazily on component retrieval', () => {
 			const myButton = {myButton: 'myButton'};
-			const spy = jest.fn(x => myButton);
+			const spy = jest.fn(() => myButton);
 
 			component('myButton', spy);
 
@@ -51,6 +48,7 @@ describe('Liferay', () => {
 		it('warns through console when a component is registered twice', () => {
 			let msg = '';
 
+			// eslint-disable-next-line no-console
 			console.warn = function() {
 				for (let i = 0; i < arguments.length; i++) {
 					msg += arguments[i].toString();
@@ -227,7 +225,7 @@ describe('Liferay', () => {
 
 			destroyUnfulfilledPromises();
 
-			const promise = componentReady('component').then(component => {
+			const promise = componentReady('component').then(() => {
 				expect(spy).not.toHaveBeenCalled();
 			});
 

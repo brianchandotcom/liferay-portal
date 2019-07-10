@@ -549,6 +549,7 @@ function updateFragmentEntryLinkConfigReducer(state, action) {
 /**
  * @param {object} state
  * @param {object} action
+ * @param {string} action.fragmentEntryLinkContent
  * @param {string} action.fragmentEntryLinkId
  * @return {object}
  * @review

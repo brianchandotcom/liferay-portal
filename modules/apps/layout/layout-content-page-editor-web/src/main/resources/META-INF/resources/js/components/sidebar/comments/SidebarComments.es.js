@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint no-unused-vars: "warn" */
+
 import React from 'react';
 import {NoCommentsMessage} from './NoCommentsMessage.es';
 

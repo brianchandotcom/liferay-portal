@@ -206,6 +206,10 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		soyContext.put(
+			"addFragmentEntryLinkRootCommentURL",
+			getFragmentEntryActionURL(
+				"/content_layout/add_fragment_entry_link_root_comment")
+		).put(
 			"editFragmentEntryLinkURL",
 			getFragmentEntryActionURL(
 				"/content_layout/edit_fragment_entry_link")

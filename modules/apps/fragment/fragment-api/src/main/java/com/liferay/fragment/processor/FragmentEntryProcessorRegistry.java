@@ -117,10 +117,13 @@ public interface FragmentEntryProcessorRegistry {
 			fragmentEntryLink, FragmentEntryLinkConstants.EDIT);
 	}
 
-	public String processFragmentEntryLinkHTML(
+	public default String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink,
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
-		throws PortalException;
+		throws PortalException {
+
+		return fragmentEntryLink.getHtml();
+	}
 
 	/**
 	 * @deprecated As of Mueller (7.2.x)

@@ -303,7 +303,10 @@ definition {
 			groupName = "Child SiteName",
 			parentGroupName = "Site Name");
 
-		Staging.remoteStagingSetUp(siteName = "Child SiteName");
+		Staging.remoteStagingSetUp(
+			remotePort = "9080",
+			remoteStaging = "true",
+			siteName = "Child SiteName");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
@@ -445,7 +448,10 @@ definition {
 		property databases.size = "1";
 		property test.name.skip.portal.instance = "Staging#PublishCustomFieldDeletionviaRemoteStaging";
 
-		Staging.remoteStagingSetUp(siteName = "Site Name");
+		Staging.remoteStagingSetUp(
+			remotePort = "9080",
+			remoteStaging = "true",
+			siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -1918,7 +1924,10 @@ definition {
 		property databases.size = "1";
 		property test.name.skip.portal.instance = "Staging#StagingRemoteDMDocumentType";
 
-		Staging.remoteStagingSetUp(siteName = "Site Name");
+		Staging.remoteStagingSetUp(
+			remotePort = "9080",
+			remoteStaging = "true",
+			siteName = "Site Name");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
@@ -1996,7 +2005,10 @@ definition {
 		property databases.size = "1";
 		property test.name.skip.portal.instance = "Staging#StagingRemoteLivePolls";
 
-		Staging.remoteStagingSetUp(siteName = "Site Name");
+		Staging.remoteStagingSetUp(
+			remotePort = "9080",
+			remoteStaging = "true",
+			siteName = "Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",
@@ -2054,7 +2066,10 @@ definition {
 		property databases.size = "1";
 		property test.name.skip.portal.instance = "Staging#StagingRemoteLiveWebContent";
 
-		Staging.remoteStagingSetUp(siteName = "Site Name");
+		Staging.remoteStagingSetUp(
+			remotePort = "9080",
+			remoteStaging = "true",
+			siteName = "Site Name");
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -2176,7 +2191,10 @@ definition {
 		property databases.size = "1";
 		property test.name.skip.portal.instance = "Staging#StagingRemoteLiveWebContentViaPortletCP";
 
-		Staging.remoteStagingSetUp(siteName = "Site Name");
+		Staging.remoteStagingSetUp(
+			remotePort = "9080",
+			remoteStaging = "true",
+			siteName = "Site Name");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
@@ -2222,7 +2240,10 @@ definition {
 		property databases.size = "1";
 		property test.name.skip.portal.instance = "Staging#StagingRemoteLiveWebContentViaPortletPG";
 
-		Staging.remoteStagingSetUp(siteName = "Site Name");
+		Staging.remoteStagingSetUp(
+			remotePort = "9080",
+			remoteStaging = "true",
+			siteName = "Site Name");
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -2282,7 +2303,10 @@ definition {
 		property databases.size = "1";
 		property test.name.skip.portal.instance = "Staging#StagingRemoteLiveWebContentWithManualChosenID";
 
-		Staging.remoteStagingSetUp(siteName = "Site Name");
+		Staging.remoteStagingSetUp(
+			remotePort = "9080",
+			remoteStaging = "true",
+			siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -2345,7 +2369,10 @@ definition {
 		property databases.size = "1";
 		property test.name.skip.portal.instance = "Staging#StagingRemoteWithDynamicExportLimit";
 
-		Staging.remoteStagingSetUp(siteName = "Site Name");
+		Staging.remoteStagingSetUp(
+			remotePort = "9080",
+			remoteStaging = "true",
+			siteName = "Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",

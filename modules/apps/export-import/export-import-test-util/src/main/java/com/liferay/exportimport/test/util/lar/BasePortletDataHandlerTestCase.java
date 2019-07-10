@@ -44,8 +44,6 @@ import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -63,6 +61,11 @@ import javax.portlet.PortletPreferences;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Zsolt Berentey
@@ -568,17 +571,20 @@ public abstract class BasePortletDataHandlerTestCase {
 
 	protected PortletDataHandler getPortletDataHandler(String portletId) {
 		try {
-			Registry registry = RegistryUtil.getRegistry();
+			Bundle bundle = FrameworkUtil.getBundle(getClass());
 
-			Collection<PortletDataHandler> portletDataHandlers =
-				registry.getServices(
-					PortletDataHandler.class,
-					"(javax.portlet.name=" + portletId + ")");
+			BundleContext bundleContext = bundle.getBundleContext();
 
-			Iterator<PortletDataHandler> iterator =
-				portletDataHandlers.iterator();
+			Collection<ServiceReference<PortletDataHandler>>
+				portletDataHandlerReferences =
+					bundleContext.getServiceReferences(
+						PortletDataHandler.class,
+						"(javax.portlet.name=" + portletId + ")");
 
-			return iterator.next();
+			Iterator<ServiceReference<PortletDataHandler>> iterator =
+				portletDataHandlerReferences.iterator();
+
+			return bundleContext.getService(iterator.next());
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

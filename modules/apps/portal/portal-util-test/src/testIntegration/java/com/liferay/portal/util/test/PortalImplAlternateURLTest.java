@@ -196,6 +196,7 @@ public class PortalImplAlternateURLTest {
 		themeDisplay.setLayoutSet(group.getPublicLayoutSet());
 		themeDisplay.setPortalDomain(HttpUtil.getDomain(portalURL));
 		themeDisplay.setPortalURL(portalURL);
+		themeDisplay.setSiteGroupId(group.getGroupId());
 
 		return themeDisplay;
 	}

@@ -1,3 +1,29 @@
+diff --git a/pom.xml b/pom.xml
+index 5f96c817c..ed7759eff 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -19,6 +19,21 @@
+ -->
+ <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+ 
++  <repositories>
++    <repository>
++      <id>liferay</id>
++      <name>Liferay Repository</name>
++      <url>https://repository-cdn.liferay.com/nexus/content/groups/public/</url>
++    </repository>
++  </repositories>
++  <pluginRepositories>
++    <pluginRepository>
++      <id>liferay</id>
++      <name>Liferay Repository</name>
++      <url>https://repository-cdn.liferay.com/nexus/content/groups/public/</url>
++    </pluginRepository>
++  </pluginRepositories>
++
+   <parent>
+     <groupId>org.apache.portals</groupId>
+     <artifactId>portals-pom</artifactId>
 diff --git a/portlet-tck_3.0/V3PortletHubTests/src/main/java/javax/portlet/tck/portlets/PortletHubTests_SPEC_23_JS.java b/portlet-tck_3.0/V3PortletHubTests/src/main/java/javax/portlet/tck/portlets/PortletHubTests_SPEC_23_JS.java
 index 2bb4a8b29..ed9993e79 100644
 --- a/portlet-tck_3.0/V3PortletHubTests/src/main/java/javax/portlet/tck/portlets/PortletHubTests_SPEC_23_JS.java

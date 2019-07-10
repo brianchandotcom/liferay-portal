@@ -47,16 +47,18 @@ public class LiferayWriterTest extends BaseTest {
 		TLiferayOutputProperties testLiferayOutputProperties =
 			_getTLiferayOutputProperties(_OAS_URL, endpoint);
 
+		JsonObject oasJsonObject = readObject("openapi.json");
+
+		Schema postContentSchema = getSchema(
+			"/v1.0/catalogs/{siteId}/product", "POST", oasJsonObject);
+
+		testLiferayOutputProperties.setSchema(postContentSchema);
+
 		LiferayWriter liferayWriter = new LiferayWriter(
 			new LiferayWriteOperation(
 				liferayRequestContentAggregatorSink,
 				testLiferayOutputProperties),
 			null, testLiferayOutputProperties);
-
-		JsonObject oasJsonObject = readObject("openapi.json");
-
-		Schema postContentSchema = getSchema(
-			"/v1.0/catalogs/{siteId}/product", "POST", oasJsonObject);
 
 		liferayWriter.open("aaaa-bbbb-cccc-dddd");
 

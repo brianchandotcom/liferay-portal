@@ -7,6 +7,7 @@
 		"clay-sticker": "2.16.2",
 		"frontend-js-web": "^4.0.0",
 		"metal-component": "2.16.8",
+		"metal-dom": "2.16.8",
 		"metal-soy": "2.16.8"
 	},
 	"name": "sharing-web",

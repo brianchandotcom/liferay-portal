@@ -16,11 +16,20 @@ import '../FieldBase/FieldBase.es';
 import './TextRegister.soy.js';
 import 'clay-autocomplete';
 import Component from 'metal-component';
+import dom from 'metal-dom';
 import Soy from 'metal-soy';
 import templates from './Text.soy.js';
 import {Config} from 'metal-state';
 
 class Text extends Component {
+	attached() {
+		const portalElement = dom.toElement('#clay_dropdown_portal');
+
+		if (portalElement) {
+			dom.addClasses(portalElement, 'show');
+		}
+	}
+
 	dispatchEvent(event, name, value) {
 		this.emit(name, {
 			fieldInstance: this,

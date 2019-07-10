@@ -183,7 +183,10 @@ public class RESTClient {
 		String responseBody = "No response body available";
 
 		if (response.hasEntity()) {
-			responseBody = response.readEntity(String.class);
+			ResponseEntityReader responseEntityReader =
+				new ResponseEntityReader();
+
+			responseBody = responseEntityReader.asText(response);
 		}
 
 		throw TalendRuntimeException.createUnexpectedException(

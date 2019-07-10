@@ -25,9 +25,9 @@ import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
 import com.liferay.talend.properties.ExceptionUtils;
 import com.liferay.talend.runtime.client.RESTClient;
+import com.liferay.talend.runtime.client.ResponseEntityReader;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,14 +37,11 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
-import javax.json.JsonReader;
 
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.ProcessingException;
-import javax.ws.rs.core.Response;
 
 import org.apache.avro.Schema;
 
@@ -81,7 +78,8 @@ public class LiferaySourceOrSink
 
 		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
 
-		return _readJsonObject(restClient.executeDeleteRequest());
+		return _responseEntityReader.asJsonObject(
+			restClient.executeDeleteRequest());
 	}
 
 	public JsonObject doDeleteRequest(String resourceURL) {
@@ -97,7 +95,8 @@ public class LiferaySourceOrSink
 
 		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
 
-		return _readJsonObject(restClient.executeGetRequest());
+		return _responseEntityReader.asJsonObject(
+			restClient.executeGetRequest());
 	}
 
 	public JsonObject doGetRequest(String resourceURL) {
@@ -117,7 +116,8 @@ public class LiferaySourceOrSink
 
 		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
 
-		return _readJsonObject(restClient.executePatchRequest(jsonObject));
+		return _responseEntityReader.asJsonObject(
+			restClient.executePatchRequest(jsonObject));
 	}
 
 	public JsonObject doPatchRequest(
@@ -138,7 +138,8 @@ public class LiferaySourceOrSink
 
 		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
 
-		return _readJsonObject(restClient.executePostRequest(jsonObject));
+		return _responseEntityReader.asJsonObject(
+			restClient.executePostRequest(jsonObject));
 	}
 
 	public JsonObject doPostRequest(String resourceURL, JsonObject jsonObject)
@@ -521,13 +522,6 @@ public class LiferaySourceOrSink
 		return false;
 	}
 
-	private JsonObject _readJsonObject(Response response) {
-		JsonReader jsonReader = Json.createReader(
-			(InputStream)response.getEntity());
-
-		return jsonReader.readObject();
-	}
-
 	private OASParameter _toParameter(JsonObject jsonObject) {
 		OASParameter oasParameter = new OASParameter();
 
@@ -552,5 +546,7 @@ public class LiferaySourceOrSink
 	private final EndpointSchemaInferrer _endpointSchemaInferrer =
 		new EndpointSchemaInferrer();
 	private final JsonFinder _jsonFinder = new JsonFinder();
+	private final ResponseEntityReader _responseEntityReader =
+		new ResponseEntityReader();
 
 }

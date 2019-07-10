@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -119,6 +120,27 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 
 				return StringUtil.replaceFirst(
 					content, s, StringUtil.toLowerCase(s), matcher.start(7));
+			}
+
+			if (deprecatedInfo.matches(", since [0-9.]+(, [\\S\\s]*)?")) {
+				int x = deprecatedInfo.indexOf(CharPool.COMMA, 1);
+
+				if (x == -1) {
+					return StringUtil.replaceFirst(
+						content, deprecatedInfo, StringPool.BLANK,
+						matcher.start(7));
+				}
+
+				String s = deprecatedInfo.substring(0, x);
+
+				return StringUtil.replaceFirst(
+					content, s, StringPool.BLANK, matcher.start(7));
+			}
+
+			if (deprecatedInfo.equals(", unused")) {
+				return StringUtil.replaceFirst(
+					content, deprecatedInfo, StringPool.BLANK,
+					matcher.start(7));
 			}
 
 			if (deprecatedInfo.endsWith(StringPool.PERIOD) &&

@@ -556,7 +556,7 @@ exports[`Should render component blocked 1`] = `
       }
     >
       <SLAListItem
-        dateModified="2019-05-06T20:32:18.811Z"
+        dateModified={2019-05-06T20:32:18.000Z}
         instancesCount="10"
         onTime="5"
         overdue="5"

@@ -8,7 +8,7 @@ test('Should render component', () => {
 		{
 			assetTitle: 'Item Subject Test',
 			assetType: 'Process',
-			dateCreated: new Date('2019', '01', '01'),
+			dateCreated: new Date(Date.UTC('2019', '01', '01')),
 			id: 12351,
 			slaStatus: 'OnTime',
 			taskNames: ['Step 1', 'Step 2', 'Step 3'],
@@ -17,7 +17,7 @@ test('Should render component', () => {
 		{
 			assetTitle: 'Item Subject Test 2',
 			assetType: 'Process',
-			dateCreated: new Date('2019', '01', '02'),
+			dateCreated: new Date(Date.UTC('2019', '01', '02')),
 			id: 12351,
 			slaStatus: 'Overdue',
 			taskNames: ['Step 1', 'Step 2'],
@@ -26,7 +26,7 @@ test('Should render component', () => {
 		{
 			assetTitle: 'Item Subject Test 3',
 			assetType: 'Process',
-			dateCreated: new Date('2019', '01', '03'),
+			dateCreated: new Date(Date.UTC('2019', '01', '03')),
 			id: 12351,
 			slaStatus: 'Untracked',
 			userName: 'User Test'
@@ -34,7 +34,7 @@ test('Should render component', () => {
 		{
 			assetTitle: 'Item Subject Test 4',
 			assetType: 'Process',
-			dateCreated: new Date('2019', '01', '04'),
+			dateCreated: new Date(Date.UTC('2019', '01', '04')),
 			id: 12351,
 			userName: 'User Test'
 		}

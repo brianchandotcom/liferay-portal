@@ -48,7 +48,9 @@ test('Should render component blocked', () => {
 	const component = mount(
 		<Router>
 			<SLAListItem
-				dateModified='2019-05-06T20:32:18.811Z'
+				dateModified={
+					new Date(Date.UTC('2019', '04', '06', '20', '32', '18'))
+				}
 				instancesCount='10'
 				onTime='5'
 				overdue='5'

@@ -89,7 +89,7 @@ public class LiferayOutputResourceProperties
 			populateParametersTable(
 				liferaySourceOrSinkRuntime, action.getMethodName());
 
-			_calculateSchema(
+			_createEndpointSchema(
 				liferaySourceOrSinkRuntime, validationResultMutable);
 		}
 
@@ -229,7 +229,7 @@ public class LiferayOutputResourceProperties
 		return validationResultMutable;
 	}
 
-	private void _calculateSchema(
+	private void _createEndpointSchema(
 		LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime,
 		ValidationResultMutable validationResultMutable) {
 
@@ -242,7 +242,7 @@ public class LiferayOutputResourceProperties
 
 			main.schema.setValue(endpointSchema);
 
-			_updateOutputSchemas();
+			_updateSchemas();
 
 			validationResultMutable.setMessage(
 				_i18nMessages.getMessage("success.validation.schema"));
@@ -278,16 +278,16 @@ public class LiferayOutputResourceProperties
 		);
 	}
 
-	private void _updateOutputSchemas() {
+	private void _updateSchemas() {
 		if (_logger.isDebugEnabled()) {
 			_logger.debug("Update output schemas");
 		}
 
-		Schema inputSchema = main.schema.getValue();
+		Schema schema = main.schema.getValue();
 
-		_schemaFlow.schema.setValue(inputSchema);
+		_schemaFlow.schema.setValue(schema);
 
-		Schema rejectSchema = SchemaUtils.createRejectSchema(inputSchema);
+		Schema rejectSchema = SchemaUtils.createRejectSchema(schema);
 
 		_schemaReject.schema.setValue(rejectSchema);
 	}

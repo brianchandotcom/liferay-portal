@@ -67,17 +67,20 @@ public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		if (fragmentEntryLink != null) {
-			long segmentsExperienceId = ParamUtil.getLong(
-				actionRequest, "segmentsExperienceId");
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
 			DefaultFragmentRendererContext defaultFragmentRendererContext =
 				new DefaultFragmentRendererContext(fragmentEntryLink);
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
 			defaultFragmentRendererContext.setLocale(themeDisplay.getLocale());
+
 			defaultFragmentRendererContext.setMode(
 				FragmentEntryLinkConstants.EDIT);
+
+			long segmentsExperienceId = ParamUtil.getLong(
+				actionRequest, "segmentsExperienceId");
+
 			defaultFragmentRendererContext.setSegmentsExperienceIds(
 				new long[] {segmentsExperienceId});
 

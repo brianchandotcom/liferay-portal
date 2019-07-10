@@ -12,10 +12,31 @@
  * details.
  */
 
-import React from 'react';
-import {NoCommentsMessage} from './NoCommentsMessage.es';
+/* eslint no-unused-vars: "warn" */
 
-const SidebarComments = () => <NoCommentsMessage />;
+import PropTypes from 'prop-types';
+import React from 'react';
+
+import {NoCommentsMessage} from './NoCommentsMessage.es';
+import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
+import {FragmentComments} from './FragmentComments.es';
+
+const SidebarComments = props => {
+	const fragmentIsSelected =
+		props.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment &&
+		props.activeItemId;
+
+	return fragmentIsSelected ? (
+		<FragmentComments fragmentEntryLinkId={props.activeItemId} />
+	) : (
+		<NoCommentsMessage />
+	);
+};
+
+SidebarComments.propTypes = {
+	activeItemId: PropTypes.string,
+	activeItemType: PropTypes.string
+};
 
 export {SidebarComments};
 export default SidebarComments;

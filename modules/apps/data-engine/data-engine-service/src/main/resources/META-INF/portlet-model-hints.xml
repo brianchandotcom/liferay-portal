@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.data.engine.model.DEDataDefinitionFieldLink">
+		<field name="uuid" type="String" />
+		<field name="dataDefinitionFieldLinkId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="DDMStructureId" type="long" />
+		<field name="fieldName" type="long" />
+	</model>
+	<model name="com.liferay.data.engine.model.DEListView">
+		<field name="uuid" type="String" />
+		<field name="listViewId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="DDMStructureId" type="long" />
+		<field localized="true" name="name" type="String" />
+		<field name="recordQueryId" type="long" />
+	</model>
+	<model name="com.liferay.data.engine.model.DERecordQuery">
+		<field name="uuid" type="String" />
+		<field name="recordQueryId" type="long" />
+		<field name="appliedFilters" type="String" />
+		<field name="fieldNames" type="String" />
+	</model>
+</model-hints>

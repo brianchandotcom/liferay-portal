@@ -12,12 +12,12 @@
  * details.
  */
 
-import {Config} from 'metal-state';
+import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import Component from 'metal-component';
 import dom from 'metal-dom';
 import Soy from 'metal-soy';
+import {Config} from 'metal-state';
 
-import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import templates from './LayoutFinder.soy';
 
 /**

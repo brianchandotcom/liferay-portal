@@ -112,7 +112,7 @@ public class PortletRegistryImpl implements PortletRegistry {
 			}
 		}
 		catch (PortalException pe) {
-			_log.error("Unable to get portlets list", pe);
+			_log.error("Unable to get portlet IDs", pe);
 		}
 
 		return portletIds;

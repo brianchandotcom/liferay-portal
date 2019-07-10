@@ -134,8 +134,7 @@ public class DLFileEntryInfoDisplayContributorTest {
 					StringPool.BLANK,
 					infoDisplayFieldsValues.get("authorProfileImage"));
 				Assert.assertEquals(
-					StringPool.BLANK,
-					infoDisplayFieldsValues.get("categories"));
+					null, infoDisplayFieldsValues.get("categories"));
 				Assert.assertEquals(
 					fileEntry.getDescription(),
 					infoDisplayFieldsValues.get("description"));
@@ -170,7 +169,7 @@ public class DLFileEntryInfoDisplayContributorTest {
 						fileEntry.getSize(), LocaleUtil.getDefault()),
 					infoDisplayFieldsValues.get("size"));
 				Assert.assertEquals(
-					StringPool.BLANK, infoDisplayFieldsValues.get("tagNames"));
+					null, infoDisplayFieldsValues.get("tagNames"));
 				Assert.assertEquals(
 					fileEntry.getTitle(), infoDisplayFieldsValues.get("title"));
 				Assert.assertEquals(

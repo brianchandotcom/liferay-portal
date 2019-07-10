@@ -40,6 +40,9 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import javax.validation.constraints.NotNull;
 
 import javax.ws.rs.Consumes;
@@ -556,16 +559,11 @@ public abstract class BaseStructuredContentResourceImpl
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
-	@Context
 	protected AcceptLanguage contextAcceptLanguage;
-
-	@Context
 	protected Company contextCompany;
-
-	@Context
+	protected HttpServletRequest contextHttpServletRequest;
+	protected HttpServletResponse contextHttpServletResponse;
 	protected UriInfo contextUriInfo;
-
-	@Context
 	protected User contextUser;
 
 }

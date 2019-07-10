@@ -30,7 +30,7 @@ public interface ReportsEngineAdminWebConfiguration {
 
 	@Meta.AD(
 		deflt = "list", name = "default-display-view",
-		optionLabels = {"Descriptive", "List"},
+		optionLabels = {"%list", "%table"},
 		optionValues = {"descriptive", "list"}, required = false
 	)
 	public String defaultDisplayView();

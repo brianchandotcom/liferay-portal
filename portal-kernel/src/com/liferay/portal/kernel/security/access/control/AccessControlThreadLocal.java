@@ -16,20 +16,35 @@ package com.liferay.portal.kernel.security.access.control;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Michael C. Han
  * @author Raymond Augé
  */
 public class AccessControlThreadLocal {
 
+	public static HttpServletRequest getHttpServletRequest() {
+		return _httpServletRequest.get();
+	}
+
 	public static boolean isRemoteAccess() {
 		return _remoteAccess.get();
+	}
+
+	public static void setHttpServletRequest(
+		HttpServletRequest httpServletRequest) {
+
+		_httpServletRequest.set(httpServletRequest);
 	}
 
 	public static void setRemoteAccess(boolean remoteAccess) {
 		_remoteAccess.set(remoteAccess);
 	}
 
+	private static final ThreadLocal<HttpServletRequest> _httpServletRequest =
+		new CentralizedThreadLocal<>(
+			AccessControlThreadLocal.class + "._httpServletRequest");
 	private static final ThreadLocal<Boolean> _remoteAccess =
 		new CentralizedThreadLocal<>(
 			AccessControlThreadLocal.class + "._remoteAccess",

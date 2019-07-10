@@ -40,6 +40,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -161,10 +162,19 @@ public class AuthVerifierFilterTracker {
 
 			AccessControlThreadLocal.setRemoteAccess(true);
 
+			HttpServletRequest httpServletRequest =
+				AccessControlThreadLocal.getHttpServletRequest();
+
+			AccessControlThreadLocal.setHttpServletRequest(
+				(HttpServletRequest)servletRequest);
+
 			try {
 				filterChain.doFilter(servletRequest, servletResponse);
 			}
 			finally {
+				AccessControlThreadLocal.setHttpServletRequest(
+					httpServletRequest);
+
 				AccessControlThreadLocal.setRemoteAccess(remoteAccess);
 			}
 		}

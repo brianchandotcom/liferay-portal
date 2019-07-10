@@ -152,8 +152,6 @@ public class ContentPageEditorDisplayContext {
 				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER);
 		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
-			ContentPageEditorWebKeys.ITEM_SELECTOR);
 		_fragmentCollectionContributorTracker =
 			(FragmentCollectionContributorTracker)
 				httpServletRequest.getAttribute(
@@ -162,6 +160,8 @@ public class ContentPageEditorDisplayContext {
 		_fragmentRendererTracker =
 			(FragmentRendererTracker)httpServletRequest.getAttribute(
 				FragmentActionKeys.FRAGMENT_RENDERER_TRACKER);
+		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
+			ContentPageEditorWebKeys.ITEM_SELECTOR);
 	}
 
 	public SoyContext getEditorSoyContext() throws Exception {

@@ -88,16 +88,17 @@ definition {
 	}
 
 	@priority = "5"
-	test WarHookTemplateSmoke {
+	test WarMvcPortletTemplateSmoke {
 		property portal.acceptance = "true";
-		property project.templates = "war-hook";
-		property test.name.skip.portal.instance = "SampleProjectTemplates#WarHookTemplateSmoke";
-		var userFirstName = "Test";
+		property project.templates = "war-mvc-portlet";
+		property test.name.skip.portal.instance = "SampleProjectTemplates#WarMvcPortletTemplateSmoke";
 
-		SignOut.signOut();
+		Navigator.gotoPage(pageName = "Templates Page");
 
-		SignIn.signIn();
+		Portlet.addPG(portletName = "samplewarmvcportlet");
 
-		AssertConsoleTextPresent(value1 = "${userFirstName} has logged in.");
+		Portlet.viewPG(
+			portletBody = "Hello from samplewarmvcportlet!",
+			portletName = "samplewarmvcportlet");
 	}
 }

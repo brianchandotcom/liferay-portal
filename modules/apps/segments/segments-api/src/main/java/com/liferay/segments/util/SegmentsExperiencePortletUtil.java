@@ -23,14 +23,15 @@ import com.liferay.segments.constants.SegmentsConstants;
 public class SegmentsExperiencePortletUtil {
 
 	public static long getSegmentsExperienceId(String portletId) {
-		int index = portletId.indexOf(_EXPERIENCE_SEPARATOR);
+		int index = portletId.indexOf(_SEGMENTS_EXPERIENCE_SEPARATOR);
 
 		if (index == -1) {
 			return 0L;
 		}
 
 		return GetterUtil.getLong(
-			portletId.substring(index + _EXPERIENCE_SEPARATOR.length()),
+			portletId.substring(
+				index + _SEGMENTS_EXPERIENCE_SEPARATOR.length()),
 			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT);
 	}
 
@@ -43,16 +44,18 @@ public class SegmentsExperiencePortletUtil {
 			return instanceId;
 		}
 
-		int index = instanceId.indexOf(_EXPERIENCE_SEPARATOR);
+		int index = instanceId.indexOf(_SEGMENTS_EXPERIENCE_SEPARATOR);
 
 		if (index == -1) {
-			return instanceId + _EXPERIENCE_SEPARATOR + segmentsExperienceId;
+			return instanceId + _SEGMENTS_EXPERIENCE_SEPARATOR +
+				segmentsExperienceId;
 		}
 
-		return instanceId.substring(0, index) + _EXPERIENCE_SEPARATOR +
+		return instanceId.substring(0, index) + _SEGMENTS_EXPERIENCE_SEPARATOR +
 			segmentsExperienceId;
 	}
 
-	private static final String _EXPERIENCE_SEPARATOR = "_EXPERIENCE_";
+	private static final String _SEGMENTS_EXPERIENCE_SEPARATOR =
+		"_SEGMENTS_EXPERIENCE_";
 
 }

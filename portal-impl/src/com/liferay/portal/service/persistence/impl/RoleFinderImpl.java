@@ -1177,7 +1177,9 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 		StringBundler sb = new StringBundler(params.size());
 
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
-			if (Validator.isNotNull(entry.getValue())) {
+			Object value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
 				sb.append(getJoin(entry.getKey()));
 			}
 		}
@@ -1229,7 +1231,9 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 		StringBundler sb = new StringBundler(params.size());
 
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
-			if (Validator.isNotNull(entry.getValue())) {
+			Object value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
 				sb.append(getWhere(entry.getKey()));
 			}
 		}

@@ -59,11 +59,12 @@ public class MessagingHotDeployListener extends BaseHotDeployListener {
 
 		ServletContext servletContext = hotDeployEvent.getServletContext();
 
+		String servletContextName = servletContext.getServletContextName();
+
 		Message message = new Message();
 
 		message.put("command", "deploy");
-		message.put(
-			"servletContextName", servletContext.getServletContextName());
+		message.put("servletContextName", servletContextName);
 
 		MessageBusUtil.sendMessage(DestinationNames.HOT_DEPLOY, message);
 	}
@@ -73,11 +74,12 @@ public class MessagingHotDeployListener extends BaseHotDeployListener {
 
 		ServletContext servletContext = hotDeployEvent.getServletContext();
 
+		String servletContextName = servletContext.getServletContextName();
+
 		Message message = new Message();
 
 		message.put("command", "undeploy");
-		message.put(
-			"servletContextName", servletContext.getServletContextName());
+		message.put("servletContextName", servletContextName);
 
 		MessageBusUtil.sendMessage(DestinationNames.HOT_DEPLOY, message);
 	}

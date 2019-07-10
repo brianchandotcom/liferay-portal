@@ -21,6 +21,8 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
+import java.nio.ByteBuffer;
+
 import javax.servlet.AsyncContext;
 import javax.servlet.AsyncEvent;
 import javax.servlet.AsyncListener;
@@ -113,11 +115,13 @@ public class ETagFilter extends BasePortalFilter {
 		throws IOException {
 
 		if (!restrictedByteBufferCacheServletResponse.isOverflowed()) {
+			ByteBuffer byteBuffer =
+				restrictedByteBufferCacheServletResponse.getByteBuffer();
+
 			if (!isEligibleForETag(
 					restrictedByteBufferCacheServletResponse.getStatus()) ||
 				!ETagUtil.processETag(
-					httpServletRequest, httpServletResponse,
-					restrictedByteBufferCacheServletResponse.getByteBuffer())) {
+					httpServletRequest, httpServletResponse, byteBuffer)) {
 
 				restrictedByteBufferCacheServletResponse.flushCache();
 			}

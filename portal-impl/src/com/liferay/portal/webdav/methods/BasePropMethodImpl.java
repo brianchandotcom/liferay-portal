@@ -300,8 +300,11 @@ public abstract class BasePropMethodImpl implements Method {
 			if (customProps.contains(qName)) {
 				Namespace namespace = qName.getNamespace();
 
-				String text = webDAVProps.getText(
-					qName.getName(), namespace.getPrefix(), namespace.getURI());
+				String name = qName.getName();
+				String prefix = namespace.getPrefix();
+				String uri = namespace.getURI();
+
+				String text = webDAVProps.getText(name, prefix, uri);
 
 				DocUtil.add(successPropElement, qName, text);
 

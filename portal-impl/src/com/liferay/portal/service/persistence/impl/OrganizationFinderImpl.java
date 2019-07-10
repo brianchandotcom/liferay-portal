@@ -910,7 +910,9 @@ public class OrganizationFinderImpl
 				continue;
 			}
 
-			if (Validator.isNotNull(entry.getValue())) {
+			Object value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
 				sb.append(getJoin(key));
 			}
 		}

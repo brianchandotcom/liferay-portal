@@ -107,9 +107,10 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 			return 0;
 		}
 
+		String scheme = httpAuthorizationHeader.getScheme();
+
 		if (!StringUtil.equalsIgnoreCase(
-				httpAuthorizationHeader.getScheme(),
-				HttpAuthorizationHeader.SCHEME_BASIC)) {
+				scheme, HttpAuthorizationHeader.SCHEME_BASIC)) {
 
 			return 0;
 		}
@@ -128,9 +129,10 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 			return 0;
 		}
 
+		String scheme = httpAuthorizationHeader.getScheme();
+
 		if (!StringUtil.equalsIgnoreCase(
-				httpAuthorizationHeader.getScheme(),
-				HttpAuthorizationHeader.SCHEME_DIGEST)) {
+				scheme, HttpAuthorizationHeader.SCHEME_DIGEST)) {
 
 			return 0;
 		}

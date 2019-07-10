@@ -117,8 +117,10 @@ public class FileEntryUtil {
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
+		String name = dlFileEntry.getName();
+
 		InputStream is = DLStoreUtil.getFileAsStream(
-			fileEntry.getCompanyId(), repositoryId, dlFileEntry.getName(),
+			fileEntry.getCompanyId(), repositoryId, name,
 			fileEntry.getVersion());
 
 		if (is == null) {

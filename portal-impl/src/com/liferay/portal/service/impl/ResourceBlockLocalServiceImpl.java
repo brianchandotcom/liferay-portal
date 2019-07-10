@@ -70,6 +70,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
+import javax.sql.DataSource;
+
 /**
  * Provides the local service for accessing, adding, deleting, and updating
  * resource blocks.
@@ -857,9 +859,11 @@ public class ResourceBlockLocalServiceImpl
 
 		resourceBlockPermissionsContainer.setPermissions(roleId, actionIdsLong);
 
+		String permissionsHash =
+			resourceBlockPermissionsContainer.getPermissionsHash();
+
 		resourceBlockLocalService.updateResourceBlockId(
-			companyId, groupId, name, permissionedModel,
-			resourceBlockPermissionsContainer.getPermissionsHash(),
+			companyId, groupId, name, permissionedModel, permissionsHash,
 			resourceBlockPermissionsContainer);
 	}
 
@@ -908,9 +912,11 @@ public class ResourceBlockLocalServiceImpl
 					DB db = DBManagerUtil.getDB();
 
 					if (!db.isSupportsQueryingAfterException()) {
+						DataSource dataSource =
+							resourceBlockPersistence.getDataSource();
+
 						Connection connection =
-							CurrentConnectionUtil.getConnection(
-								resourceBlockPersistence.getDataSource());
+							CurrentConnectionUtil.getConnection(dataSource);
 
 						try {
 							connection.rollback();

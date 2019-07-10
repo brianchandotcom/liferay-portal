@@ -269,12 +269,15 @@ public class LayoutTypePortletImpl
 
 	@Override
 	public List<Portlet> getAllPortlets() {
+		List<Portlet> explicitlyAddedPortlets = getExplicitlyAddedPortlets();
+
 		List<Portlet> staticPortlets = getStaticPortlets(
 			PropsKeys.LAYOUT_STATIC_PORTLETS_ALL);
 
+		List<Portlet> embeddedPortlets = getEmbeddedPortlets();
+
 		return addStaticPortlets(
-			getExplicitlyAddedPortlets(), staticPortlets,
-			getEmbeddedPortlets());
+			explicitlyAddedPortlets, staticPortlets, embeddedPortlets);
 	}
 
 	@Override
@@ -378,9 +381,11 @@ public class LayoutTypePortletImpl
 
 	@Override
 	public LayoutTemplate getLayoutTemplate() {
+		String themeId = getThemeId();
+
 		LayoutTemplate layoutTemplate =
 			LayoutTemplateLocalServiceUtil.getLayoutTemplate(
-				getLayoutTemplateId(), false, getThemeId());
+				getLayoutTemplateId(), false, themeId);
 
 		if (layoutTemplate == null) {
 			layoutTemplate = new LayoutTemplateImpl(
@@ -1009,9 +1014,11 @@ public class LayoutTypePortletImpl
 				return;
 			}
 
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
 			if (!LayoutPermissionUtil.contains(
-					PermissionThreadLocal.getPermissionChecker(), getLayout(),
-					ActionKeys.UPDATE) &&
+					permissionChecker, getLayout(), ActionKeys.UPDATE) &&
 				!isCustomizable()) {
 
 				return;
@@ -1200,9 +1207,11 @@ public class LayoutTypePortletImpl
 			return;
 		}
 
+		String themeId = getThemeId();
+
 		LayoutTemplate newLayoutTemplate =
 			LayoutTemplateLocalServiceUtil.getLayoutTemplate(
-				newLayoutTemplateId, false, getThemeId());
+				newLayoutTemplateId, false, themeId);
 
 		if (newLayoutTemplate == null) {
 			if (_log.isWarnEnabled()) {

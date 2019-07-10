@@ -603,8 +603,10 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		PermissionChecker permissionChecker = getPermissionChecker();
+
 		_fileEntryModelResourcePermission.check(
-			getPermissionChecker(), fileEntryId, ActionKeys.VIEW);
+			permissionChecker, fileEntryId, ActionKeys.VIEW);
 
 		return dlFileEntryLocalService.isKeepFileVersionLabel(
 			fileEntryId, majorVersion, serviceContext);
@@ -620,8 +622,10 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			long fileEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
+		PermissionChecker permissionChecker = getPermissionChecker();
+
 		_fileEntryModelResourcePermission.check(
-			getPermissionChecker(), fileEntryId, ActionKeys.VIEW);
+			permissionChecker, fileEntryId, ActionKeys.VIEW);
 
 		return dlFileEntryLocalService.isKeepFileVersionLabel(
 			fileEntryId, serviceContext);

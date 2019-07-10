@@ -187,14 +187,15 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
 			portlet, servletContext);
 
+		PortletContext portletContext = portletConfig.getPortletContext();
+
 		boolean checkAuthToken = rootInvokerPortletInstance.isCheckAuthToken();
 		boolean facesPortlet = rootInvokerPortletInstance.isFacesPortlet();
 		boolean headerPortlet = rootInvokerPortletInstance.isHeaderPortlet();
 
 		InvokerPortlet instanceInvokerPortletInstance =
 			_invokerPortletFactory.create(
-				portlet, portletInstance, portletConfig,
-				portletConfig.getPortletContext(),
+				portlet, portletInstance, portletConfig, portletContext,
 				(InvokerFilterContainer)rootInvokerPortletInstance,
 				checkAuthToken, facesPortlet, headerPortlet, false, false);
 

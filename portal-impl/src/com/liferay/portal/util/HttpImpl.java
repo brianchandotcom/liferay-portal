@@ -1345,7 +1345,9 @@ public class HttpImpl implements Http {
 	protected void addProxyCredentials(
 		URI uri, HttpClientContext httpClientContext) {
 
-		if (!isProxyHost(uri.getHost()) || (_proxyCredentials == null)) {
+		String host = uri.getHost();
+
+		if (!isProxyHost(host) || (_proxyCredentials == null)) {
 			return;
 		}
 

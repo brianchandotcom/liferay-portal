@@ -96,6 +96,8 @@ import java.util.concurrent.ConcurrentMap;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
+import javax.servlet.ServletContext;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -2048,8 +2050,10 @@ public class PortletImpl extends PortletBaseImpl {
 		if (_timestamp == null) {
 			PortletApp portletApp = getPortletApp();
 
+			ServletContext servletContext = portletApp.getServletContext();
+
 			_timestamp = ServletContextUtil.getLastModified(
-				portletApp.getServletContext(), StringPool.SLASH, true);
+				servletContext, StringPool.SLASH, true);
 		}
 
 		return _timestamp;

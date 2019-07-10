@@ -379,7 +379,9 @@ public class UserGroupFinderImpl
 				continue;
 			}
 
-			if (Validator.isNotNull(entry.getValue())) {
+			Object value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
 				sb.append(getJoin(key));
 			}
 		}
@@ -531,7 +533,9 @@ public class UserGroupFinderImpl
 		}
 
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
-			if (!_isFinderParam(entry.getKey())) {
+			String key = entry.getKey();
+
+			if (!_isFinderParam(key)) {
 				continue;
 			}
 

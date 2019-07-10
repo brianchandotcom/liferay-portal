@@ -214,7 +214,9 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 
 	@Override
 	public String getThemeSetting(String key, String device) {
-		if (!Validator.isBlank(super.getSettings())) {
+		String settings = super.getSettings();
+
+		if (!Validator.isBlank(settings)) {
 			UnicodeProperties settingsProperties = getSettingsProperties();
 
 			String value = settingsProperties.getProperty(

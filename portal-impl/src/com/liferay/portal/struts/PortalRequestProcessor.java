@@ -778,12 +778,13 @@ public class PortalRequestProcessor {
 						(ThemeDisplay)httpServletRequest.getAttribute(
 							WebKeys.THEME_DISPLAY);
 
+					Layout layout = themeDisplay.getLayout();
 					PermissionChecker permissionChecker =
 						themeDisplay.getPermissionChecker();
 
 					if (!PortletPermissionUtil.contains(
-							permissionChecker, themeDisplay.getLayout(),
-							portlet, ActionKeys.VIEW)) {
+							permissionChecker, layout, portlet,
+							ActionKeys.VIEW)) {
 
 						throw new PrincipalException.MustHavePermission(
 							permissionChecker, Portlet.class.getName(),

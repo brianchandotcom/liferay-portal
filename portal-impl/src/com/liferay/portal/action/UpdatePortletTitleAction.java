@@ -17,6 +17,7 @@ package com.liferay.portal.action;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -49,10 +50,13 @@ public class UpdatePortletTitleAction extends JSONAction {
 
 		Layout layout = themeDisplay.getLayout();
 
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
 		String portletId = ParamUtil.getString(httpServletRequest, "portletId");
 
 		if (!PortletPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), layout, portletId,
+				permissionChecker, layout, portletId,
 				ActionKeys.CONFIGURATION)) {
 
 			return null;

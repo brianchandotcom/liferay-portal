@@ -1217,8 +1217,9 @@ public class PortalImpl implements Portal {
 		throws PortalException {
 
 		String modelName = resourcePermission.getName();
+		String primKey = resourcePermission.getPrimKey();
 
-		return getBaseModel(modelName, resourcePermission.getPrimKey());
+		return getBaseModel(modelName, primKey);
 	}
 
 	@Override
@@ -5986,7 +5987,9 @@ public class PortalImpl implements Portal {
 	public String getUserPassword(HttpServletRequest httpServletRequest) {
 		httpServletRequest = getOriginalServletRequest(httpServletRequest);
 
-		return getUserPassword(httpServletRequest.getSession());
+		HttpSession session = httpServletRequest.getSession();
+
+		return getUserPassword(session);
 	}
 
 	@Override
@@ -8134,7 +8137,9 @@ public class PortalImpl implements Portal {
 	}
 
 	protected boolean isValidPortalDomain(String domain) {
-		return isValidPortalDomain(CompanyThreadLocal.getCompanyId(), domain);
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		return isValidPortalDomain(companyId, domain);
 	}
 
 	protected boolean isValidVirtualHostname(String virtualHostname) {

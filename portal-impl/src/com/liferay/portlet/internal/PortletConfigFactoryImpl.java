@@ -111,8 +111,9 @@ public class PortletConfigFactoryImpl implements PortletConfigFactory {
 		PortletConfig portletConfig = portletConfigs.get(
 			portlet.getPortletId());
 
-		portletConfig = new PortletConfigImpl(
-			portlet, portletConfig.getPortletContext());
+		PortletContext portletContext = portletConfig.getPortletContext();
+
+		portletConfig = new PortletConfigImpl(portlet, portletContext);
 
 		portletConfigs.put(portlet.getPortletId(), portletConfig);
 

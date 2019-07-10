@@ -370,7 +370,9 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		// Group
 
-		groupLocalService.deleteGroup(userGroup.getGroup());
+		Group group = userGroup.getGroup();
+
+		groupLocalService.deleteGroup(group);
 
 		// User group roles
 
@@ -1263,12 +1265,14 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	}
 
 	protected void reindexUsers(UserGroup userGroup) throws PortalException {
+		long companyId = userGroup.getCompanyId();
+
 		long[] userIds = getUserPrimaryKeys(userGroup.getUserGroupId());
 
 		if (ArrayUtil.isNotEmpty(userIds)) {
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
-					reindex(userGroup.getCompanyId(), userIds);
+					reindex(companyId, userIds);
 
 					return null;
 				});

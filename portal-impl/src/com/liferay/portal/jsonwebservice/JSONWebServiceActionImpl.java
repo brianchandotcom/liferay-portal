@@ -413,8 +413,9 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 		Method actionMethod = _jsonWebServiceActionConfig.getActionMethod();
 
-		Object[] parameters = _prepareParameters(
-			_jsonWebServiceActionConfig.getActionClass());
+		Class<?> actionClass = _jsonWebServiceActionConfig.getActionClass();
+
+		Object[] parameters = _prepareParameters(actionClass);
 
 		if (_jsonWebServiceActionConfig.isDeprecated() &&
 			_log.isWarnEnabled()) {

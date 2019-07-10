@@ -154,8 +154,9 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 			Repository repository = RepositoryLocalServiceUtil.getRepository(
 				repositoryId);
 
-			DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(
-				repository.getDlFolderId());
+			long dlFolderId = repository.getDlFolderId();
+
+			DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(dlFolderId);
 
 			return dlFolder.isHidden();
 		}

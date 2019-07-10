@@ -171,7 +171,9 @@ public class PortletQNameImpl implements PortletQName {
 			sb.append(StringPool.UNDERLINE);
 		}
 
-		if (!Validator.isBlank(qName.getNamespaceURI())) {
+		String namespaceURI = qName.getNamespaceURI();
+
+		if (!Validator.isBlank(namespaceURI)) {
 			sb.append(qName.getNamespaceURI());
 			sb.append(StringPool.UNDERLINE);
 		}

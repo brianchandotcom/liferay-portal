@@ -115,7 +115,9 @@ public class ZipWriterImpl implements ZipWriter {
 
 	@Override
 	public byte[] finish() throws IOException {
-		return FileUtil.getBytes(getFile());
+		java.io.File file = getFile();
+
+		return FileUtil.getBytes(file);
 	}
 
 	@Override

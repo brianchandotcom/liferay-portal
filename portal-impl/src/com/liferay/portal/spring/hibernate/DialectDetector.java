@@ -81,6 +81,8 @@ public class DialectDetector {
 						".", dbMinorVersion));
 			}
 
+			String driverName = dbInfo.getDriverName();
+
 			if (dbName.startsWith("HSQL")) {
 				dialect = new HSQLDialect();
 
@@ -110,7 +112,7 @@ public class DialectDetector {
 			else if (dbName.startsWith("DB2") && (dbMajorVersion >= 9)) {
 				dialect = new DB2Dialect();
 			}
-			else if (StringUtil.startsWith(dbInfo.getDriverName(), "mariadb")) {
+			else if (StringUtil.startsWith(driverName, "mariadb")) {
 				dialect = new MariaDBDialect();
 			}
 			else if (dbName.startsWith("Microsoft") && (dbMajorVersion == 9)) {

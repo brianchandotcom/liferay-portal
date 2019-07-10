@@ -864,14 +864,20 @@ public class ResourceActionsImpl implements ResourceActions {
 				_checkPortletActions(portlet, portletActions);
 			}
 
-			_checkPortletGroupDefaultActions(
-				portletResourceActionsBag.getGroupDefaultActions());
+			Set<String> groupDefaultActions =
+				portletResourceActionsBag.getGroupDefaultActions();
 
-			_checkPortletGuestDefaultActions(
-				portletResourceActionsBag.getGuestDefaultActions());
+			_checkPortletGroupDefaultActions(groupDefaultActions);
 
-			_checkPortletLayoutManagerActions(
-				portletResourceActionsBag.getLayoutManagerActions());
+			Set<String> guestDefaultActions =
+				portletResourceActionsBag.getGuestDefaultActions();
+
+			_checkPortletGuestDefaultActions(guestDefaultActions);
+
+			Set<String> layoutManagerActions =
+				portletResourceActionsBag.getLayoutManagerActions();
+
+			_checkPortletLayoutManagerActions(layoutManagerActions);
 		}
 
 		return new ArrayList<>(portletActions);
@@ -1262,23 +1268,26 @@ public class ResourceActionsImpl implements ResourceActions {
 				"There are more than 64 actions for resource " + name);
 		}
 
-		_readGroupDefaultActions(
-			modelResourceElement,
-			modelResourceActionsBag.getGroupDefaultActions());
+		Set<String> groupDefaultActions =
+			modelResourceActionsBag.getGroupDefaultActions();
+
+		_readGroupDefaultActions(modelResourceElement, groupDefaultActions);
 
 		Set<String> guestDefaultActions =
 			modelResourceActionsBag.getGuestDefaultActions();
 
 		_readGuestDefaultActions(modelResourceElement, guestDefaultActions);
 
-		_readGuestUnsupportedActions(
-			modelResourceElement,
-			modelResourceActionsBag.getGuestUnsupportedActions(),
-			guestDefaultActions);
+		Set<String> guestUnsupportedActions =
+			modelResourceActionsBag.getGuestUnsupportedActions();
 
-		_readOwnerDefaultActions(
-			modelResourceElement,
-			modelResourceActionsBag.getOwnerDefaultActions());
+		_readGuestUnsupportedActions(
+			modelResourceElement, guestUnsupportedActions, guestDefaultActions);
+
+		Set<String> ownerDefaultActions =
+			modelResourceActionsBag.getOwnerDefaultActions();
+
+		_readOwnerDefaultActions(modelResourceElement, ownerDefaultActions);
 
 		return name;
 	}
@@ -1333,24 +1342,28 @@ public class ResourceActionsImpl implements ResourceActions {
 				"There are more than 64 actions for resource " + name);
 		}
 
-		_readGroupDefaultActions(
-			portletResourceElement,
-			portletResourceActionsBag.getGroupDefaultActions());
+		Set<String> groupDefaultActions =
+			portletResourceActionsBag.getGroupDefaultActions();
+
+		_readGroupDefaultActions(portletResourceElement, groupDefaultActions);
 
 		Set<String> guestDefaultActions =
 			portletResourceActionsBag.getGuestDefaultActions();
 
 		_readGuestDefaultActions(portletResourceElement, guestDefaultActions);
 
+		Set<String> guestUnsupportedActions =
+			portletResourceActionsBag.getGuestUnsupportedActions();
+
 		_readGuestUnsupportedActions(
-			portletResourceElement,
-			portletResourceActionsBag.getGuestUnsupportedActions(),
+			portletResourceElement, guestUnsupportedActions,
 			guestDefaultActions);
 
+		Set<String> layoutManagerActions =
+			portletResourceActionsBag.getLayoutManagerActions();
+
 		_readLayoutManagerActions(
-			portletResourceElement,
-			portletResourceActionsBag.getLayoutManagerActions(),
-			portletActions);
+			portletResourceElement, layoutManagerActions, portletActions);
 
 		return name;
 	}

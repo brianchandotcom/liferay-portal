@@ -646,7 +646,9 @@ public class DLFileEntryTypeLocalServiceImpl
 			groupId, folderId);
 
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
-			if (fileEntryTypeIds.contains(dlFileEntry.getFileEntryTypeId())) {
+			Long fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
+
+			if (fileEntryTypeIds.contains(fileEntryTypeId)) {
 				continue;
 			}
 

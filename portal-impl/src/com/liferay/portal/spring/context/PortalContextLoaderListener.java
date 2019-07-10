@@ -322,8 +322,10 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			classLoader = classLoader.getParent();
 		}
 
-		clearFilteredPropertyDescriptorsCache(
-			applicationContext.getAutowireCapableBeanFactory());
+		AutowireCapableBeanFactory autowireCapableBeanFactory =
+			applicationContext.getAutowireCapableBeanFactory();
+
+		clearFilteredPropertyDescriptorsCache(autowireCapableBeanFactory);
 
 		DynamicProxyCreator dynamicProxyCreator =
 			DynamicProxyCreator.getDynamicProxyCreator();

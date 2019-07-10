@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
@@ -86,8 +87,9 @@ public abstract class FindStrutsAction implements StrutsAction {
 			PortletLayoutFinder.Result result = portletLayoutFinder.find(
 				themeDisplay, groupId);
 
-			Layout layout = _setTargetLayout(
-				httpServletRequest, groupId, result.getPlid());
+			long plid = result.getPlid();
+
+			Layout layout = _setTargetLayout(httpServletRequest, groupId, plid);
 
 			LayoutPermissionUtil.check(
 				themeDisplay.getPermissionChecker(), layout, true,
@@ -187,6 +189,9 @@ public abstract class FindStrutsAction implements StrutsAction {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
@@ -194,7 +199,7 @@ public abstract class FindStrutsAction implements StrutsAction {
 			(group.getParentGroupId() == layout.getGroupId()) ||
 			(layout.isPrivateLayout() &&
 			 !SitesUtil.isUserGroupLayoutSetViewable(
-				 themeDisplay.getPermissionChecker(), layout.getGroup()))) {
+				 permissionChecker, layout.getGroup()))) {
 
 			return layout;
 		}

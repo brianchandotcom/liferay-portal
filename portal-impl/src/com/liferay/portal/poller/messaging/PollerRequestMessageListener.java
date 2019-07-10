@@ -34,9 +34,10 @@ public class PollerRequestMessageListener extends BaseMessageListener {
 	protected void doReceive(Message message) throws Exception {
 		PollerRequest pollerRequest = (PollerRequest)message.getPayload();
 
+		String portletId = pollerRequest.getPortletId();
+
 		PollerProcessor pollerProcessor =
-			PollerProcessorUtil.getPollerProcessor(
-				pollerRequest.getPortletId());
+			PollerProcessorUtil.getPollerProcessor(portletId);
 
 		if (pollerRequest.isReceiveRequest()) {
 			PollerResponse pollerResponse = null;

@@ -551,8 +551,9 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 				variableStatements.add(variableStatement);
 			}
 			else {
-				parameterMap.put(
-					CamelCaseUtil.normalizeCamelCase(key), entry.getValue());
+				Object value = entry.getValue();
+
+				parameterMap.put(CamelCaseUtil.normalizeCamelCase(key), value);
 			}
 		}
 

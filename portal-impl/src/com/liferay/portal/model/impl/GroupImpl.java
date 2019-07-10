@@ -229,9 +229,10 @@ public class GroupImpl extends GroupBaseImpl {
 			name = layoutSetPrototype.getName(locale);
 		}
 		else if (isOrganization()) {
+			long organizationId = getOrganizationId();
+
 			Organization organization =
-				OrganizationLocalServiceUtil.getOrganization(
-					getOrganizationId());
+				OrganizationLocalServiceUtil.getOrganization(organizationId);
 
 			name = organization.getName();
 

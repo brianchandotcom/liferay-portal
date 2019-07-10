@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.util.servlet.NullServletOutputStream;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 
 import java.util.Locale;
@@ -194,8 +195,10 @@ public class PortletServletResponse extends HttpServletResponseWrapper {
 
 			MimeResponse mimeResponse = _getMimeResponse();
 
-			return new ServletOutputStreamAdapter(
-				mimeResponse.getPortletOutputStream());
+			OutputStream portletOutputStream =
+				mimeResponse.getPortletOutputStream();
+
+			return new ServletOutputStreamAdapter(portletOutputStream);
 		}
 
 		return new NullServletOutputStream();

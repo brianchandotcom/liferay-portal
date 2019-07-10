@@ -86,6 +86,8 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 			ServletContext servletContext, String dir, String jarName)
 		throws Exception {
 
+		String servletContextName = servletContext.getServletContextName();
+
 		String jarFullName = StringBundler.concat(
 			"/WEB-INF/", jarName, "/", jarName, ".jar");
 
@@ -96,8 +98,7 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 		}
 
 		String newJarFullName = StringBundler.concat(
-			dir, "ext-", servletContext.getServletContextName(),
-			jarName.substring(3), ".jar");
+			dir, "ext-", servletContextName, jarName.substring(3), ".jar");
 
 		StreamUtil.transfer(is, new FileOutputStream(new File(newJarFullName)));
 	}

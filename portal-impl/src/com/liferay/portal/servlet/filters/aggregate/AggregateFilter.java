@@ -645,10 +645,11 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		String content) {
 
 		try {
+			String requestURI = httpServletRequest.getRequestURI();
+
 			ServletContext cssServletContext =
 				ResourceUtil.getPathServletContext(
-					resourcePath, httpServletRequest.getRequestURI(),
-					_servletContext);
+					resourcePath, requestURI, _servletContext);
 
 			return getCssContent(
 				httpServletRequest, httpServletResponse, cssServletContext,
@@ -683,9 +684,9 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 	@Override
 	protected boolean isModuleRequest(HttpServletRequest httpServletRequest) {
-		if (PortalWebResourcesUtil.hasContextPath(
-				httpServletRequest.getRequestURI())) {
+		String requestURI = httpServletRequest.getRequestURI();
 
+		if (PortalWebResourcesUtil.hasContextPath(requestURI)) {
 			return false;
 		}
 

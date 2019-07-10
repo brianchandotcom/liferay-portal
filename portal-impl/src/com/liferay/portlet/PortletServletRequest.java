@@ -25,6 +25,7 @@ import com.liferay.portlet.internal.PortletRequestDispatcherImpl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
 import java.lang.reflect.Constructor;
@@ -217,8 +218,10 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 			ClientDataRequest clientDataRequest = _getClientDataRequest();
 
-			return new ServletInputStreamAdapter(
-				clientDataRequest.getPortletInputStream());
+			InputStream portletInputStream =
+				clientDataRequest.getPortletInputStream();
+
+			return new ServletInputStreamAdapter(portletInputStream);
 		}
 
 		return null;

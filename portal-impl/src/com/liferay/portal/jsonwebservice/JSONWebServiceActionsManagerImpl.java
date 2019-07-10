@@ -387,7 +387,9 @@ public class JSONWebServiceActionsManagerImpl
 
 	@Override
 	public int unregisterServletContext(ServletContext servletContext) {
-		return unregisterJSONWebServiceActions(servletContext.getContextPath());
+		String contextPath = servletContext.getContextPath();
+
+		return unregisterJSONWebServiceActions(contextPath);
 	}
 
 	private boolean _addJSONWebServiceActionConfig(

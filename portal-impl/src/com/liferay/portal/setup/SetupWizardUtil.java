@@ -198,7 +198,9 @@ public class SetupWizardUtil {
 		UnicodeProperties unicodeProperties) {
 
 		for (Map.Entry<String, String> entry : unicodeProperties.entrySet()) {
-			if (Validator.isNull(entry.getValue())) {
+			String value = entry.getValue();
+
+			if (Validator.isNull(value)) {
 				unicodeProperties.setProperty(entry.getKey(), _NULL_HOLDER);
 			}
 		}

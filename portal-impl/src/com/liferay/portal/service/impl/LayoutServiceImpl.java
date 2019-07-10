@@ -354,7 +354,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	public List<Layout> getAncestorLayouts(long plid) throws PortalException {
 		Layout layout = layoutLocalService.getLayout(plid);
 
-		return filterLayouts(layout.getAncestors());
+		List<Layout> ancestors = layout.getAncestors();
+
+		return filterLayouts(ancestors);
 	}
 
 	/**

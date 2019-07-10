@@ -56,9 +56,10 @@ public class PortletPreferencesServiceImpl
 		long ownerId = portletItemId;
 		int ownerType = PortletKeys.PREFS_OWNER_TYPE_ARCHIVED;
 		long plid = 0;
+		String portletId = portletItem.getPortletId();
 
 		portletPreferencesLocalService.deletePortletPreferences(
-			ownerId, ownerType, plid, portletItem.getPortletId());
+			ownerId, ownerType, plid, portletId);
 
 		portletItemLocalService.deletePortletItem(portletItemId);
 	}

@@ -538,14 +538,18 @@ public class ImageToolImpl implements ImageTool {
 			throw new IOException("Unable to decode image");
 		}
 
+		String type = imageBag.getType();
+
+		int height = renderedImage.getHeight();
+		int width = renderedImage.getWidth();
 		int size = bytes.length;
 
 		Image image = new ImageImpl();
 
 		image.setTextObj(bytes);
-		image.setType(imageBag.getType());
-		image.setHeight(renderedImage.getHeight());
-		image.setWidth(renderedImage.getWidth());
+		image.setType(type);
+		image.setHeight(height);
+		image.setWidth(width);
 		image.setSize(size);
 
 		return image;

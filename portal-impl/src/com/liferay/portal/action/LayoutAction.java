@@ -143,8 +143,9 @@ public class LayoutAction implements Action {
 				httpServletResponse.sendRedirect(authLoginURL);
 			}
 			else {
-				String redirect = PortalUtil.getLayoutURL(
-					themeDisplay.getLayout(), themeDisplay);
+				Layout layout = themeDisplay.getLayout();
+
+				String redirect = PortalUtil.getLayoutURL(layout, themeDisplay);
 
 				if (_log.isDebugEnabled()) {
 					_log.debug("Redirect default layout to " + redirect);

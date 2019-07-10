@@ -561,8 +561,10 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public String getFriendlyURLsXML() {
+		Map<Locale, String> friendlyURLMap = getFriendlyURLMap();
+
 		return LocalizationUtil.updateLocalization(
-			getFriendlyURLMap(), StringPool.BLANK, "FriendlyURL",
+			friendlyURLMap, StringPool.BLANK, "FriendlyURL",
 			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
 	}
 

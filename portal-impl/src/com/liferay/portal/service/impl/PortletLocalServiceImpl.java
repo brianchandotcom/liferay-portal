@@ -1277,11 +1277,12 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		Document document = UnsecureSAXReaderUtil.read(xml, true);
 
+		Element rootElement = document.getRootElement();
+
 		Set<String> portletIds = new HashSet<>();
 
 		readLiferayDisplay(
-			servletContextName, document.getRootElement(), portletCategory,
-			portletIds);
+			servletContextName, rootElement, portletCategory, portletIds);
 
 		// Portlets that do not belong to any categories should default to the
 		// Undefined category

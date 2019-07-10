@@ -2051,7 +2051,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		List<Group> organizationGroups = new ArrayList<>();
 
 		for (Organization organization : organizations) {
-			organizationGroups.add(organization.getGroup());
+			Group group = organization.getGroup();
+
+			organizationGroups.add(group);
 		}
 
 		return organizationGroups;
@@ -2230,7 +2232,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		List<Group> userGroupGroups = new ArrayList<>();
 
 		for (UserGroup userGroup : userGroups) {
-			userGroupGroups.add(userGroup.getGroup());
+			Group group = userGroup.getGroup();
+
+			userGroupGroups.add(group);
 		}
 
 		return userGroupGroups;
@@ -2378,7 +2382,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			if (roleName.equals(RoleConstants.SITE_ADMINISTRATOR) ||
 				roleName.equals(RoleConstants.SITE_OWNER)) {
 
-				sites.add(userGroupRole.getGroup());
+				Group group = userGroupRole.getGroup();
+
+				sites.add(group);
 			}
 		}
 
@@ -4734,13 +4740,15 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		Organization organization = organizationLocalService.getOrganization(
 			organizationId);
 
+		long companyId = organization.getCompanyId();
+
 		long[] userIds = organizationLocalService.getUserPrimaryKeys(
 			organizationId);
 
 		if (ArrayUtil.isNotEmpty(userIds)) {
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
-					reindex(organization.getCompanyId(), userIds);
+					reindex(companyId, userIds);
 
 					return null;
 				});
@@ -4752,13 +4760,15 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		UserGroup userGroup = userGroupLocalService.getUserGroup(userGroupId);
 
+		long companyId = userGroup.getCompanyId();
+
 		long[] userIds = organizationLocalService.getUserPrimaryKeys(
 			userGroupId);
 
 		if (ArrayUtil.isNotEmpty(userIds)) {
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
-					reindex(userGroup.getCompanyId(), userIds);
+					reindex(companyId, userIds);
 
 					return null;
 				});

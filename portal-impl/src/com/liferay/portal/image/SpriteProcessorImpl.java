@@ -285,7 +285,9 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 		if (colorModel instanceof IndexColorModel) {
 			IndexColorModel indexColorModel = (IndexColorModel)colorModel;
 
-			byte[][] data = new byte[4][indexColorModel.getMapSize()];
+			int mapSize = indexColorModel.getMapSize();
+
+			byte[][] data = new byte[4][mapSize];
 
 			indexColorModel.getReds(data[0]);
 			indexColorModel.getGreens(data[1]);

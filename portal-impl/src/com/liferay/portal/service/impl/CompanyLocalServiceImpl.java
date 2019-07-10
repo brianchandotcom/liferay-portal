@@ -1627,9 +1627,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				VirtualHost virtualHost = virtualHostPersistence.findByHostname(
 					virtualHostname);
 
+				long companyId = virtualHost.getCompanyId();
+
 				Company virtualHostnameCompany =
-					companyPersistence.findByPrimaryKey(
-						virtualHost.getCompanyId());
+					companyPersistence.findByPrimaryKey(companyId);
 
 				if (!webId.equals(virtualHostnameCompany.getWebId())) {
 					throw new CompanyVirtualHostException();

@@ -427,7 +427,9 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			int size)
 		throws PortalException {
 
-		GroupPermissionUtil.check(getPermissionChecker(), ActionKeys.VIEW);
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		GroupPermissionUtil.check(permissionChecker, ActionKeys.VIEW);
 
 		return groupPersistence.findByG_C_P_S(
 			gtGroupId, companyId, parentGroupId, site, 0, size,

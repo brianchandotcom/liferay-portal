@@ -165,6 +165,8 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 			for (int i = 0; i < methodParameters.length; i++) {
 				MethodParameter methodParameter = methodParameters[i];
 
+				Class<?>[] genericTypes = methodParameter.getGenericTypes();
+
 				Map<String, String> parameterMap = new HashMap<>();
 
 				if (javadocMethod != null) {
@@ -180,8 +182,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 				parameterMap.put(
 					"type",
 					_formatType(
-						methodParameter.getType(),
-						methodParameter.getGenericTypes(), false));
+						methodParameter.getType(), genericTypes, false));
 
 				parametersList.add(parameterMap);
 			}
@@ -286,8 +287,9 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		Class<?> type, Class<?>[] genericTypes, boolean returnType) {
 
 		if (type.isArray()) {
-			return _formatType(
-				type.getComponentType(), genericTypes, returnType) + "[]";
+			Class<?> componentType = type.getComponentType();
+
+			return _formatType(componentType, genericTypes, returnType) + "[]";
 		}
 
 		if (type.isPrimitive()) {

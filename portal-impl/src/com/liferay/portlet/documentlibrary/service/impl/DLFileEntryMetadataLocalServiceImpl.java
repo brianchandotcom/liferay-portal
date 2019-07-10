@@ -167,9 +167,11 @@ public class DLFileEntryMetadataLocalServiceImpl
 		DLFileEntryType fileEntryType =
 			dlFileEntryTypeLocalService.getFileEntryType(fileEntryTypeId);
 
+		List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
+
 		updateFileEntryMetadata(
-			fileEntryType.getCompanyId(), fileEntryType.getDDMStructures(),
-			fileEntryId, fileVersionId, ddmFormValuesMap, serviceContext);
+			fileEntryType.getCompanyId(), ddmStructures, fileEntryId,
+			fileVersionId, ddmFormValuesMap, serviceContext);
 	}
 
 	protected void updateFileEntryMetadata(

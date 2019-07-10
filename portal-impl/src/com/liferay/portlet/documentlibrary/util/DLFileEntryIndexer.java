@@ -292,7 +292,9 @@ public class DLFileEntryIndexer
 			SearchContext searchContext)
 		throws Exception {
 
-		if (Validator.isNull(searchContext.getKeywords())) {
+		String keywords = searchContext.getKeywords();
+
+		if (Validator.isNull(keywords)) {
 			addSearchTerm(searchQuery, searchContext, Field.DESCRIPTION, false);
 			addSearchTerm(searchQuery, searchContext, Field.TITLE, false);
 			addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
@@ -675,10 +677,12 @@ public class DLFileEntryIndexer
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
 			(DLFolder dlFolder) -> {
+				long groupId = dlFolder.getGroupId();
+				long folderId = dlFolder.getFolderId();
+
 				String[] newIds = {
-					String.valueOf(companyId),
-					String.valueOf(dlFolder.getGroupId()),
-					String.valueOf(dlFolder.getFolderId())
+					String.valueOf(companyId), String.valueOf(groupId),
+					String.valueOf(folderId)
 				};
 
 				reindex(newIds);

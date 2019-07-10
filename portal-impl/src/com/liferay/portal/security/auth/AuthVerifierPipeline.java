@@ -425,7 +425,9 @@ public class AuthVerifierPipeline {
 					key = key.substring(authVerifierPropertyName.length());
 				}
 
-				properties.setProperty(key, String.valueOf(entry.getValue()));
+				Object value = entry.getValue();
+
+				properties.setProperty(key, String.valueOf(value));
 			}
 
 			return properties;

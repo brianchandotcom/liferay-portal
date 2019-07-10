@@ -288,7 +288,9 @@ public abstract class BaseAuthFilter extends BasePortalFilter {
 			sb.append(httpServletRequest.getServerName());
 			sb.append(httpServletRequest.getServletPath());
 
-			if (Validator.isNotNull(httpServletRequest.getQueryString())) {
+			String queryString = httpServletRequest.getQueryString();
+
+			if (Validator.isNotNull(queryString)) {
 				sb.append(StringPool.QUESTION);
 				sb.append(httpServletRequest.getQueryString());
 			}

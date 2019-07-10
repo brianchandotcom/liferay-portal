@@ -259,13 +259,14 @@ public class AssetCategoryLocalServiceImpl
 		}
 
 		if (!categories.isEmpty() && !skipRebuildTree) {
+			final long groupId = category.getGroupId();
+
 			TransactionCommitCallbackUtil.registerCallback(
 				new Callable<Void>() {
 
 					@Override
 					public Void call() throws Exception {
-						assetCategoryLocalService.rebuildTree(
-							category.getGroupId(), true);
+						assetCategoryLocalService.rebuildTree(groupId, true);
 
 						return null;
 					}

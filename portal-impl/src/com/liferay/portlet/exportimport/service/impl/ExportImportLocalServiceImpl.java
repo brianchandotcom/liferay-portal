@@ -167,8 +167,10 @@ public class ExportImportLocalServiceImpl
 			long userId, ExportImportConfiguration exportImportConfiguration)
 		throws PortalException {
 
-		String fileName = MapUtil.getString(
-			exportImportConfiguration.getSettingsMap(), "fileName");
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		String fileName = MapUtil.getString(settingsMap, "fileName");
 
 		if (!DLValidatorUtil.isValidName(fileName)) {
 			throw new LARFileNameException(fileName);

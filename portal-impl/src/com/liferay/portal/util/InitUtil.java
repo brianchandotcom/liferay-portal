@@ -136,7 +136,9 @@ public class InitUtil {
 		if (GetterUtil.getBoolean(
 				SystemProperties.get("log4j.configure.on.startup"), true)) {
 
-			Log4JUtil.configureLog4J(InitUtil.class.getClassLoader());
+			ClassLoader classLoader = InitUtil.class.getClassLoader();
+
+			Log4JUtil.configureLog4J(classLoader);
 		}
 
 		// Shared log

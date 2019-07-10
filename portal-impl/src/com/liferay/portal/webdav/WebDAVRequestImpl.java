@@ -126,7 +126,9 @@ public class WebDAVRequestImpl implements WebDAVRequest {
 
 	@Override
 	public boolean isAppleDoubleRequest() {
-		String name = WebDAVUtil.getResourceName(getPathArray());
+		String[] pathArray = getPathArray();
+
+		String name = WebDAVUtil.getResourceName(pathArray);
 
 		if (isMac() && name.startsWith(_APPLE_DOUBLE_PREFIX)) {
 			return true;

@@ -310,12 +310,12 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			PermissionChecker permissionChecker = getPermissionChecker();
 
 			for (AssetEntry entry : entries) {
+				String className = entry.getClassName();
 				long classPK = entry.getClassPK();
 
 				AssetRendererFactory<?> assetRendererFactory =
 					AssetRendererFactoryRegistryUtil.
-						getAssetRendererFactoryByClassName(
-							entry.getClassName());
+						getAssetRendererFactoryByClassName(className);
 
 				try {
 					if (assetRendererFactory.hasPermission(

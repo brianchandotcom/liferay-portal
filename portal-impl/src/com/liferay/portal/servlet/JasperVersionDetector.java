@@ -124,8 +124,9 @@ public class JasperVersionDetector {
 			Method method = ReflectionUtil.getDeclaredMethod(
 				clazz, "getDependants");
 
-			_jspServletDependantsMap = Map.class.isAssignableFrom(
-				method.getReturnType());
+			Class<?> returnType = method.getReturnType();
+
+			_jspServletDependantsMap = Map.class.isAssignableFrom(returnType);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

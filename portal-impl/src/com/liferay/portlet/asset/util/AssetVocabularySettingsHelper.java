@@ -50,11 +50,15 @@ public class AssetVocabularySettingsHelper {
 	}
 
 	public long[] getClassNameIds() {
-		return getClassNameIds(getClassNameIdsAndClassTypePKs());
+		String[] classNameIdsAndClassTypePKs = getClassNameIdsAndClassTypePKs();
+
+		return getClassNameIds(classNameIdsAndClassTypePKs);
 	}
 
 	public long[] getClassTypePKs() {
-		return getClassTypePKs(getClassNameIdsAndClassTypePKs());
+		String[] classNameIdsAndClassTypePKs = getClassNameIdsAndClassTypePKs();
+
+		return getClassTypePKs(classNameIdsAndClassTypePKs);
 	}
 
 	public long[] getRequiredClassNameIds() {

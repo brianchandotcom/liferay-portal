@@ -325,10 +325,9 @@ public class CacheFilter extends BasePortalFilter {
 
 		if ((_pattern == _PATTERN_FRIENDLY) || (_pattern == _PATTERN_LAYOUT)) {
 			long userId = PortalUtil.getUserId(httpServletRequest);
+			String remoteUser = httpServletRequest.getRemoteUser();
 
-			if ((userId > 0) ||
-				Validator.isNotNull(httpServletRequest.getRemoteUser())) {
-
+			if ((userId > 0) || Validator.isNotNull(remoteUser)) {
 				return false;
 			}
 		}

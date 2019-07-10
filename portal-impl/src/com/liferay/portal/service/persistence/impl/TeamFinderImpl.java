@@ -245,7 +245,9 @@ public class TeamFinderImpl extends TeamFinderBaseImpl implements TeamFinder {
 		StringBundler sb = new StringBundler(params.size());
 
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
-			if (Validator.isNotNull(entry.getValue())) {
+			Object value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
 				sb.append(getJoin(entry.getKey()));
 			}
 		}
@@ -282,7 +284,9 @@ public class TeamFinderImpl extends TeamFinderBaseImpl implements TeamFinder {
 		StringBundler sb = new StringBundler(params.size());
 
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
-			if (Validator.isNotNull(entry.getValue())) {
+			Object value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
 				sb.append(getWhere(entry.getKey()));
 			}
 		}

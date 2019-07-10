@@ -210,10 +210,13 @@ public class UserGroupGroupRoleLocalServiceImpl
 		UserGroup userGroup = userGroupPersistence.findByPrimaryKey(
 			userGroupId);
 
-		Role role = rolePersistence.findByC_N(
-			userGroup.getCompanyId(), roleName);
+		long companyId = userGroup.getCompanyId();
 
-		return hasUserGroupGroupRole(userGroupId, groupId, role.getRoleId());
+		Role role = rolePersistence.findByC_N(companyId, roleName);
+
+		long roleId = role.getRoleId();
+
+		return hasUserGroupGroupRole(userGroupId, groupId, roleId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

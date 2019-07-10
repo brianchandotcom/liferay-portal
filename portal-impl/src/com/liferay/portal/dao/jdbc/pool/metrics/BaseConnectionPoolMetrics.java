@@ -90,19 +90,21 @@ public abstract class BaseConnectionPoolMetrics
 							(DefaultDynamicDataSourceTargetSource)
 								targetDataSource;
 
-					if (dataSource.equals(
-							defaultDynamicDataSourceTargetSource.
-								getReadDataSource())) {
+					Object readDataSource =
+						defaultDynamicDataSourceTargetSource.
+							getReadDataSource();
 
+					if (dataSource.equals(readDataSource)) {
 						_name = "readDataSource";
 
 						return;
 					}
 
-					if (dataSource.equals(
-							defaultDynamicDataSourceTargetSource.
-								getWriteDataSource())) {
+					Object writeDataSource =
+						defaultDynamicDataSourceTargetSource.
+							getWriteDataSource();
 
+					if (dataSource.equals(writeDataSource)) {
 						_name = "writeDataSource";
 
 						return;

@@ -39,6 +39,7 @@ public class CopyMethodImpl implements Method {
 		HttpServletRequest httpServletRequest =
 			webDAVRequest.getHttpServletRequest();
 
+		long companyId = webDAVRequest.getCompanyId();
 		String destination = WebDAVUtil.getDestination(
 			httpServletRequest, storage.getRootPath());
 
@@ -52,7 +53,7 @@ public class CopyMethodImpl implements Method {
 		}
 
 		if (!destination.equals(webDAVRequest.getPath()) &&
-			(WebDAVUtil.getGroupId(webDAVRequest.getCompanyId(), destination) ==
+			(WebDAVUtil.getGroupId(companyId, destination) ==
 				webDAVRequest.getGroupId())) {
 
 			Resource resource = storage.getResource(webDAVRequest);

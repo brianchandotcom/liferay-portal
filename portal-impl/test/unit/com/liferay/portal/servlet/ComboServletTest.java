@@ -278,7 +278,9 @@ public class ComboServletTest extends PowerMockito {
 	protected void setUpComboServlet() throws ServletException {
 		_comboServlet = new ComboServlet();
 
-		_comboServlet.init(getServletConfig());
+		ServletConfig servletConfig = getServletConfig();
+
+		_comboServlet.init(servletConfig);
 	}
 
 	protected void setUpPluginServletContext() {

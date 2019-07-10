@@ -136,9 +136,10 @@ public class InvokerFilterTest {
 				mockHttpServletRequest, mockHttpServletResponse,
 				mockFilterChain);
 
+			int status = mockHttpServletResponse.getStatus();
+
 			Assert.assertEquals(
-				HttpServletResponse.SC_REQUEST_URI_TOO_LONG,
-				mockHttpServletResponse.getStatus());
+				HttpServletResponse.SC_REQUEST_URI_TOO_LONG, status);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 

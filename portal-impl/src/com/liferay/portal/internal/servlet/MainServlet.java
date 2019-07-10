@@ -527,7 +527,9 @@ public class MainServlet extends HttpServlet {
 			_log.debug("Check variables");
 		}
 
-		httpServletRequest.setAttribute(WebKeys.CTX, getServletContext());
+		ServletContext servletContext = getServletContext();
+
+		httpServletRequest.setAttribute(WebKeys.CTX, servletContext);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Handle non-serializable request");
@@ -1089,7 +1091,9 @@ public class MainServlet extends HttpServlet {
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
-		if (GroupLocalServiceUtil.isLiveGroupActive(layout.getGroup())) {
+		Group group = layout.getGroup();
+
+		if (GroupLocalServiceUtil.isLiveGroupActive(group)) {
 			return false;
 		}
 
@@ -1150,9 +1154,11 @@ public class MainServlet extends HttpServlet {
 
 			httpServletRequest.setAttribute(PageContext.EXCEPTION, e);
 
+			ServletContext servletContext = getServletContext();
+
 			StrutsUtil.forward(
 				PropsValues.SERVLET_SERVICE_EVENTS_PRE_ERROR_PAGE,
-				getServletContext(), httpServletRequest, httpServletResponse);
+				servletContext, httpServletRequest, httpServletResponse);
 
 			if (e == httpServletRequest.getAttribute(PageContext.EXCEPTION)) {
 				httpServletRequest.removeAttribute(PageContext.EXCEPTION);

@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -1143,6 +1144,19 @@ public class GroupServiceTest {
 		Assert.assertEquals(
 			LocaleUtil.SPAIN,
 			_portal.getSiteDefaultLocale(_group.getGroupId()));
+	}
+
+	@Test
+	public void testUpdateFriendlyURLWithJapaneseCharacters() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		String friendlyURL = "/平仮名片仮名漢字";
+
+		_group = _groupService.updateFriendlyURL(
+			_group.getGroupId(), friendlyURL);
+
+		Assert.assertEquals(
+			friendlyURL, HttpUtil.decodeURL(_group.getFriendlyURL()));
 	}
 
 	@Test

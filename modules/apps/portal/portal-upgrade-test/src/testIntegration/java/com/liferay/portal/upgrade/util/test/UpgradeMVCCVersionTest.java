@@ -18,15 +18,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.util.DBAssertionUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
-import com.liferay.portal.kernel.util.StreamUtil;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 import java.sql.DatabaseMetaData;
-
-import java.util.jar.JarEntry;
-import java.util.jar.JarOutputStream;
 
 import org.junit.After;
 import org.junit.Before;
@@ -42,6 +35,7 @@ public class UpgradeMVCCVersionTest extends UpgradeMVCCVersion {
 	@Before
 	public void setUp() throws Exception {
 		connection = DataAccess.getConnection();
+
 		runSQL(UpgradeMVCCVersionTestTableClass.TABLE_SQL_CREATE);
 	}
 
@@ -71,28 +65,6 @@ public class UpgradeMVCCVersionTest extends UpgradeMVCCVersion {
 		DBAssertionUtil.assertColumns(
 			UpgradeMVCCVersionTestTableClass.TABLE_NAME, "_id", "_userId",
 			"mvccVersion");
-	}
-
-	protected void addResource(String path, JarOutputStream jarOutputStream)
-		throws IOException {
-
-		addResource(path, path, jarOutputStream);
-	}
-
-	protected void addResource(
-			String resourcePath, String path, JarOutputStream jarOutputStream)
-		throws IOException {
-
-		jarOutputStream.putNextEntry(new JarEntry(path));
-
-		try (InputStream inputStream =
-				UpgradeMVCCVersionTest.class.getResourceAsStream(
-					resourcePath)) {
-
-			StreamUtil.transfer(inputStream, jarOutputStream, false);
-		}
-
-		jarOutputStream.closeEntry();
 	}
 
 }

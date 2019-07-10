@@ -39,6 +39,12 @@ public class ExceptionVariableNameForExceptionMapper
 	@Override
 	public Response toResponse(NoSuchStructureException exception) {
 
+		try {
+			String testString = "Hello";
+		}
+		catch (Exception e) {
+		}
+
 		return Response.status(
 			Response.Status.NOT_FOUND
 		).entity(

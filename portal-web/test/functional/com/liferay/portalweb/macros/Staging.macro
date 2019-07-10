@@ -898,6 +898,16 @@ definition {
 	}
 
 	macro remoteStagingSetUp {
+		if (isSet(remotePort)) {
+			User.loginPG(
+				nodePort = "${remotePort}",
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+		}
+		else {
+			Navigator.openURL();
+		}
+
 		var siteID = "${siteID}";
 
 		ProductMenu.gotoPortlet(
@@ -917,6 +927,16 @@ definition {
 		Copy(
 			locator1 = "SitesEditSite#SITE_ID",
 			value1 = "siteID");
+
+		if (isSet(remotePort)) {
+			User.loginPG(
+				nodePort = "8080",
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+		}
+		else {
+			Navigator.openURL();
+		}
 
 		ProductMenu.gotoSite(site = "${siteName}");
 

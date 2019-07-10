@@ -116,84 +116,55 @@ CreationMenu creationMenu = new CreationMenu() {
 		</c:if>
 	</aui:nav-bar>
 
-	<c:choose>
-		<c:when test='<%= tabs2.equals("add-category") %>'>
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
-					<aui:input cssClass="lfr-input-text-container" label="logger-name" name="loggerName" type="text" />
+	<liferay-ui:search-container
+		searchContainer="<%= loggerSearchContainer %>"
+	>
+		<liferay-ui:search-container-row
+			className="java.util.Map.Entry"
+			modelVar="entry"
+		>
 
-					<aui:select label="log-level" name="priority">
+			<%
+			String name = (String)entry.getKey();
+			%>
 
-						<%
-						for (int i = 0; i < Levels.ALL_LEVELS.length; i++) {
-						%>
+			<liferay-ui:search-container-column-text
+				name="category"
+				value="<%= HtmlUtil.escape(name) %>"
+			/>
 
-							<aui:option label="<%= Levels.ALL_LEVELS[i] %>" selected="<%= Level.INFO.equals(Levels.ALL_LEVELS[i]) %>" />
-
-						<%
-						}
-						%>
-
-					</aui:select>
-				</aui:fieldset>
-			</aui:fieldset-group>
-
-			<aui:button-row>
-				<aui:button cssClass="save-server-button" data-cmd="addLogLevel" value="save" />
-			</aui:button-row>
-		</c:when>
-		<c:otherwise>
-			<liferay-ui:search-container
-				searchContainer="<%= loggerSearchContainer %>"
+			<liferay-ui:search-container-column-text
+				name="level"
 			>
-				<liferay-ui:search-container-row
-					className="java.util.Map.Entry"
-					modelVar="entry"
-				>
+
+				<%
+				Logger logger = (Logger)entry.getValue();
+
+				Level level = logger.getLevel();
+				%>
+
+				<select name="<%= renderResponse.getNamespace() + "logLevel" + HtmlUtil.escapeAttribute(name) %>">
 
 					<%
-					String name = (String)entry.getKey();
+					for (int j = 0; j < Levels.ALL_LEVELS.length; j++) {
 					%>
 
-					<liferay-ui:search-container-column-text
-						name="category"
-						value="<%= HtmlUtil.escape(name) %>"
-					/>
+						<option <%= level.equals(Levels.ALL_LEVELS[j]) ? "selected" : StringPool.BLANK %> value="<%= Levels.ALL_LEVELS[j] %>"><%= Levels.ALL_LEVELS[j] %></option>
 
-					<liferay-ui:search-container-column-text
-						name="level"
-					>
+					<%
+					}
+					%>
 
-						<%
-						Logger logger = (Logger)entry.getValue();
+				</select>
+			</liferay-ui:search-container-column-text>
+		</liferay-ui:search-container-row>
 
-						Level level = logger.getLevel();
-						%>
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
+	</liferay-ui:search-container>
 
-						<select name="<%= renderResponse.getNamespace() + "logLevel" + HtmlUtil.escapeAttribute(name) %>">
-
-							<%
-							for (int j = 0; j < Levels.ALL_LEVELS.length; j++) {
-							%>
-
-								<option <%= level.equals(Levels.ALL_LEVELS[j]) ? "selected" : StringPool.BLANK %> value="<%= Levels.ALL_LEVELS[j] %>"><%= Levels.ALL_LEVELS[j] %></option>
-
-							<%
-							}
-							%>
-
-						</select>
-					</liferay-ui:search-container-column-text>
-				</liferay-ui:search-container-row>
-
-				<liferay-ui:search-iterator
-					markupView="lexicon"
-				/>
-			</liferay-ui:search-container>
-
-			<aui:button-row>
-				<aui:button cssClass="save-server-button" data-cmd="updateLogLevels" value="save" />
-			</aui:button-row>
-		</c:otherwise>
-	</c:choose>
+	<aui:button-row>
+		<aui:button cssClass="save-server-button" data-cmd="updateLogLevels" value="save" />
+	</aui:button-row>
 </div>

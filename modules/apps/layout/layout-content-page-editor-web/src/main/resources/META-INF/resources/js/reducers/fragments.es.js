@@ -563,45 +563,26 @@ function updateFragmentEntryLinkConfigReducer(state, action) {
 function updateFragmentEntryLinkContentReducer(state, action) {
 	let nextState = state;
 
-	return new Promise(resolve => {
-		if (action.type === UPDATE_FRAGMENT_ENTRY_LINK_CONTENT) {
-			const {fragmentEntryLinkId, segmentsExperienceId} = action;
+	if (action.type === UPDATE_FRAGMENT_ENTRY_LINK_CONTENT) {
+		const {fragmentEntryLinkContent, fragmentEntryLinkId} = action;
 
-			const fragmentEntryLink =
-				nextState.fragmentEntryLinks[fragmentEntryLinkId];
+		const fragmentEntryLink =
+			nextState.fragmentEntryLinks[fragmentEntryLinkId];
 
-			if (!fragmentEntryLink) {
-				return resolve(nextState);
-			}
-
-			return getFragmentEntryLinkContent(
-				nextState.renderFragmentEntryURL,
-				fragmentEntryLink,
-				nextState.portletNamespace,
-				segmentsExperienceId
-			)
-				.then(response => {
-					const updatedFragmentEntryLink = response;
-
-					nextState = setIn(
-						nextState,
-						[
-							'fragmentEntryLinks',
-							fragmentEntryLink.fragmentEntryLinkId,
-							'content'
-						],
-						updatedFragmentEntryLink.content
-					);
-
-					resolve(nextState);
-				})
-				.catch(() => {
-					resolve(nextState);
-				});
-		} else {
-			resolve(nextState);
+		if (fragmentEntryLink) {
+			nextState = setIn(
+				nextState,
+				[
+					'fragmentEntryLinks',
+					fragmentEntryLink.fragmentEntryLinkId,
+					'content'
+				],
+				fragmentEntryLinkContent
+			);
 		}
-	});
+	}
+
+	return nextState;
 }
 
 /**

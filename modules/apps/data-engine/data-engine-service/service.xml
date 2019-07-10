@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_2_0.dtd">
+
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.data.engine">
+	<namespace>DE</namespace>
+	<entity local-service="true" name="DEDataDefinitionFieldLink" remote-service="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="deDataDefinitionFieldLinkId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="ddmStructureId" type="long" />
+		<column name="fieldName" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="C_C_D_F" return-type="DEDataDefinitionFieldLink" unique="true">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="ddmStructureId" />
+			<finder-column name="fieldName" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="DEDataListView" remote-service="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="deDataListViewId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="ddmStructureId" type="long" />
+		<column localized="true" name="name" type="String" />
+		<column name="deDataRecordQueryId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="G_C_D" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="companyId" />
+			<finder-column name="ddmStructureId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="DEDataRecordQuery" remote-service="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="deDataRecordQueryId" primary="true" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="appliedFilters" type="String" />
+		<column name="fieldNames" type="String" />
+	</entity>
+</service-builder>

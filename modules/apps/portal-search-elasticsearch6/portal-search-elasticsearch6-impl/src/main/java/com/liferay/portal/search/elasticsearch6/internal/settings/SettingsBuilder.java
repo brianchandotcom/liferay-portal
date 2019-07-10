@@ -60,6 +60,10 @@ public class SettingsBuilder {
 		}
 	}
 
+	public void putList(String setting, String... values) {
+		_builder.putList(setting, values);
+	}
+
 	private final Settings.Builder _builder;
 
 }

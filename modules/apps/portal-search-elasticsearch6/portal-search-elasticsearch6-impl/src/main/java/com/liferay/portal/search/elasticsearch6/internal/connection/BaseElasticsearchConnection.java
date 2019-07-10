@@ -25,8 +25,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.Future;
 
-import org.apache.commons.lang.StringUtils;
-
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequestBuilder;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.client.AdminClient;
@@ -138,20 +136,16 @@ public abstract class BaseElasticsearchConnection
 	protected abstract void loadRequiredDefaultConfigurations();
 
 	protected void loadSettingsContributors() {
-		final Settings.Builder builder = settingsBuilder.getBuilder();
-
 		ClientSettingsHelper clientSettingsHelper = new ClientSettingsHelper() {
 
 			@Override
 			public void put(String setting, String value) {
-				if (!StringUtils.isBlank(value)) {
-					builder.put(setting, value);
-				}
+				settingsBuilder.put(setting, value);
 			}
 
 			@Override
 			public void putArray(String setting, String... values) {
-				builder.putList(setting, values);
+				settingsBuilder.putList(setting, values);
 			}
 
 		};

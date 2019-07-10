@@ -228,8 +228,6 @@ public class RequestContextMapper {
 			List<EntityField> customEntityFields = _addCustomEntityField(
 				requestContextContributorKey, requestContextContributorType);
 
-			_unregister();
-
 			_register(
 				_bundleContext, new ContextEntityModel(customEntityFields));
 
@@ -257,8 +255,6 @@ public class RequestContextMapper {
 
 			List<EntityField> customEntityFields = _removeCustomEntityField(
 				requestContextContributorKey);
-
-			_unregister();
 
 			_register(
 				_bundleContext, new ContextEntityModel(customEntityFields));
@@ -309,6 +305,10 @@ public class RequestContextMapper {
 			BundleContext bundleContext,
 			ContextEntityModel contextEntityModel) {
 
+			if (_serviceRegistration != null) {
+				_serviceRegistration.unregister();
+			}
+
 			_serviceRegistration = bundleContext.registerService(
 				EntityModel.class, contextEntityModel,
 				MapUtil.singletonDictionary(
@@ -321,14 +321,6 @@ public class RequestContextMapper {
 			_customEntityFields.remove(requestContextContributorKey);
 
 			return new ArrayList(_customEntityFields.values());
-		}
-
-		private void _unregister() {
-			if (_serviceRegistration != null) {
-				_serviceRegistration.unregister();
-
-				_serviceRegistration = null;
-			}
 		}
 
 		private final BundleContext _bundleContext;

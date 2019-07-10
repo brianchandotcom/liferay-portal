@@ -30,7 +30,7 @@ public interface WorkflowInstanceWebConfiguration {
 
 	@Meta.AD(
 		deflt = "list", name = "default-display-view",
-		optionLabels = {"descriptive", "list"},
+		optionLabels = {"%list", "%table"},
 		optionValues = {"descriptive", "list"}, required = false
 	)
 	public String defaultDisplayView();

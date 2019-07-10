@@ -456,9 +456,9 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 	private OptionalLong _getSegmentsExperienceIdOptional(
 		long[] segmentsExperienceIds) {
 
-		LongStream stream = Arrays.stream(segmentsExperienceIds);
+		LongStream longStream = Arrays.stream(segmentsExperienceIds);
 
-		return stream.mapToObj(
+		return longStream.mapToObj(
 			segmentsExperienceId ->
 				_segmentsExperienceLocalService.fetchSegmentsExperience(
 					segmentsExperienceId)

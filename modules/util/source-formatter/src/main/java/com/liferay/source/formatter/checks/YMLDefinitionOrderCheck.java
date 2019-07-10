@@ -216,21 +216,21 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 	}
 
 	private String _sortPathParameters(String content) {
-		Matcher matcher = _pathPattern.matcher(content);
+		Matcher matcher1 = _pathPattern.matcher(content);
 
 		Pattern pattern = null;
 
-		while (matcher.find()) {
-			String path = matcher.group();
+		while (matcher1.find()) {
+			String path = matcher1.group();
 
 			pattern = Pattern.compile("\\{([^{}]+)\\}");
 
-			matcher = pattern.matcher(path);
+			Matcher matcher2 = pattern.matcher(path);
 
 			Map<String, String> inPathsMap = new LinkedHashMap<>();
 
-			while (matcher.find()) {
-				inPathsMap.put(matcher.group(1), "");
+			while (matcher2.find()) {
+				inPathsMap.put(matcher2.group(1), "");
 			}
 
 			int inPathCount = inPathsMap.size();
@@ -238,25 +238,25 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 			pattern = Pattern.compile(
 				"( *-\n( +)in: path(\n\\2.+)*\n){" + inPathCount + "}");
 
-			matcher = pattern.matcher(path);
+			matcher2 = pattern.matcher(path);
 
-			if (!matcher.find()) {
+			if (!matcher2.find()) {
 				return content;
 			}
 
 			String inPaths = null;
 
-			inPaths = matcher.group();
+			inPaths = matcher2.group();
 
 			pattern = Pattern.compile(" *-\n( +)in: path(\n\\1.+)*\n");
-			matcher = pattern.matcher(inPaths);
 
-			while (matcher.find()) {
-				String inPath = matcher.group();
+			matcher2 = pattern.matcher(inPaths);
+
+			while (matcher2.find()) {
+				String inPath = matcher2.group();
 
 				inPathsMap.replace(
-					inPath.replaceAll("(?s).*name: (\\S+).*", "$1"),
-					matcher.group());
+					inPath.replaceAll("(?s).*name: (\\S+).*", "$1"), inPath);
 			}
 
 			StringBundler sb = new StringBundler(inPathCount);
@@ -323,8 +323,7 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 			}
 		};
 	private static final Pattern _pathPattern = Pattern.compile(
-		"(?<=\n)( *)\"([^{}]*\\{[^{}]+\\}){2,}\":.*?((?=\n\\1[^ ])|$)",
-		Pattern.DOTALL);
+		"(?<=\n)( *)\"([^{}\"]*\\{[^}]+\\}){2,}\":(\n\\1 .*)*");
 	private static final Map<String, Integer> _specialQueriesKeyWeightMap =
 		new HashMap<String, Integer>() {
 			{

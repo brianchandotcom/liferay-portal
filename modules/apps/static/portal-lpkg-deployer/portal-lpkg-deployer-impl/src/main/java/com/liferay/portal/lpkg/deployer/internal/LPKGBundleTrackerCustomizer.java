@@ -861,18 +861,16 @@ public class LPKGBundleTrackerCustomizer
 				if (jspName.endsWith(".java") || jspName.endsWith(".class")) {
 					Files.createFile(jspPath);
 
-					File jspFile = jspPath.toFile();
-
-					try (FileOutputStream fileOutputStream =
-							new FileOutputStream(jspFile)) {
+					try (OutputStream outputStream = Files.newOutputStream(
+							jspPath)) {
 
 						StreamUtil.transfer(
-							zipInputStream, fileOutputStream, false);
+							zipInputStream, outputStream, false);
 					}
 
 					FileTime fileTime = jspZipEntry.getLastModifiedTime();
 
-					jspFile.setLastModified(fileTime.toMillis());
+					Files.setLastModifiedTime(jspPath, fileTime);
 				}
 				else {
 					Files.createDirectory(jspPath);

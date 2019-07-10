@@ -14,6 +14,8 @@
 
 package com.liferay.portal.vulcan.internal.graphql.servlet;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
@@ -479,6 +481,15 @@ public class GraphQLServletExtender {
 				throw new ValidationException(parameterName + " is null");
 			}
 
+			Class<? extends Parameter> parameterClass = parameter.getClass();
+
+			if ((argument instanceof Map) &&
+				!parameterClass.isAssignableFrom(Map.class)) {
+
+				argument = _objectMapper.convertValue(
+					argument, parameter.getType());
+			}
+
 			args[i] = argument;
 		}
 
@@ -765,6 +776,8 @@ public class GraphQLServletExtender {
 				}
 
 			});
+
+	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
 	private BundleContext _bundleContext;
 

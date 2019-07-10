@@ -298,7 +298,7 @@ public class RequestContextMapper {
 
 			_customEntityFields.put(contextFieldKey, entityField);
 
-			return new ArrayList(_customEntityFields.values());
+			return new ArrayList<>(_customEntityFields.values());
 		}
 
 		private void _register(
@@ -320,11 +320,11 @@ public class RequestContextMapper {
 
 			_customEntityFields.remove(requestContextContributorKey);
 
-			return new ArrayList(_customEntityFields.values());
+			return new ArrayList<>(_customEntityFields.values());
 		}
 
 		private final BundleContext _bundleContext;
-		private Map<String, EntityField> _customEntityFields = new HashMap();
+		private Map<String, EntityField> _customEntityFields = new HashMap<>();
 		private ServiceRegistration<EntityModel> _serviceRegistration;
 
 	}

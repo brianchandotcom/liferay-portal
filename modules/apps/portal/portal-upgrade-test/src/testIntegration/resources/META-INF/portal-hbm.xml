@@ -2,8 +2,8 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping auto-import="false" default-lazy="false">
-	<import class="com.liferay.portal.upgrade.util.test.UpgradeMVCCVersionTestTableClass" />
-	<class name="com.liferay.portal.upgrade.util.test.UpgradeMVCCVersionTestTableClass" table="UpgradeMVCCVersionTest">
+	<import class="com.liferay.portal.upgrade.util.test.UpgradeMVCCVersionPortalTestTableClass" />
+	<class name="UpgradeMVCCVersionPortalTestTableClass" table="UpgradeMVCCVersionPortalTest">
 		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="_userId" name="_userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="_id" name="_id" type="com.liferay.portal.dao.orm.hibernate.StringType" />

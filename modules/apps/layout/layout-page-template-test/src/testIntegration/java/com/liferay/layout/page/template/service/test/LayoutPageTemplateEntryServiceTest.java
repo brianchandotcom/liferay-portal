@@ -161,61 +161,6 @@ public class LayoutPageTemplateEntryServiceTest {
 			StringPool.BLANK);
 	}
 
-	@Test
-	public void testAddLayoutPageTemplateEntryWithFragmentEntries()
-		throws PortalException {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-				_group.getGroupId(),
-				_layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				RandomTestUtil.randomString(), serviceContext);
-
-		FragmentCollection fragmentCollection =
-			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), RandomTestUtil.randomString(),
-				StringPool.BLANK, serviceContext);
-
-		FragmentEntry fragmentEntry1 =
-			FragmentEntryServiceUtil.addFragmentEntry(
-				_group.getGroupId(),
-				fragmentCollection.getFragmentCollectionId(),
-				RandomTestUtil.randomString(),
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
-
-		FragmentEntry fragmentEntry2 =
-			FragmentEntryServiceUtil.addFragmentEntry(
-				_group.getGroupId(),
-				fragmentCollection.getFragmentCollectionId(),
-				RandomTestUtil.randomString(),
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
-
-		long[] fragmentEntryIds = {
-			fragmentEntry1.getFragmentEntryId(),
-			fragmentEntry2.getFragmentEntryId()
-		};
-
-		_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-			layoutPageTemplateEntry.getName(), fragmentEntryIds,
-			serviceContext);
-
-		List<FragmentEntryLink> actualLayoutPageTemplateEntriesCount =
-			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
-				_group.getGroupId(),
-				PortalUtil.getClassNameId(Layout.class.getName()),
-				layoutPageTemplateEntry.getPlid());
-
-		Assert.assertEquals(
-			actualLayoutPageTemplateEntriesCount.toString(), 2,
-			actualLayoutPageTemplateEntriesCount.size());
-	}
-
 	@Test(expected = LayoutPageTemplateEntryNameException.class)
 	public void testAddLayoutPageTemplateEntryWithSymbolInName()
 		throws Exception {
@@ -307,7 +252,7 @@ public class LayoutPageTemplateEntryServiceTest {
 	}
 
 	@Test
-	public void testRemoveFragmentsFromLayoutPageTemplateEntry()
+	public void testUpdateLayoutPageTemplateEntryByRemovingFragmentEntryIds()
 		throws PortalException {
 
 		ServiceContext serviceContext =
@@ -315,11 +260,9 @@ public class LayoutPageTemplateEntryServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-				_group.getGroupId(),
+			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
 				_layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				RandomTestUtil.randomString(), serviceContext);
+					getLayoutPageTemplateCollectionId());
 
 		FragmentCollection fragmentCollection =
 			FragmentCollectionServiceUtil.addFragmentCollection(
@@ -353,7 +296,7 @@ public class LayoutPageTemplateEntryServiceTest {
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			RandomTestUtil.randomString(), null, serviceContext);
 
-		List<FragmentEntryLink> actualLayoutPageTemplateEntriesCount =
+		List<FragmentEntryLink> fragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
 				_group.getGroupId(),
 				PortalUtil.getClassNameId(
@@ -361,8 +304,7 @@ public class LayoutPageTemplateEntryServiceTest {
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
 		Assert.assertEquals(
-			actualLayoutPageTemplateEntriesCount.toString(), 0,
-			actualLayoutPageTemplateEntriesCount.size());
+			fragmentEntryLinks.toString(), 0, fragmentEntryLinks.size());
 	}
 
 	@Test
@@ -410,6 +352,58 @@ public class LayoutPageTemplateEntryServiceTest {
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
 		Assert.assertTrue(persistedLayoutPageTemplateEntry.isDefaultTemplate());
+	}
+
+	@Test
+	public void testUpdateLayoutPageTemplateEntryFragmentEntryIds()
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
+				_layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId());
+
+		FragmentCollection fragmentCollection =
+			FragmentCollectionServiceUtil.addFragmentCollection(
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
+
+		FragmentEntry fragmentEntry1 =
+			FragmentEntryServiceUtil.addFragmentEntry(
+				_group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(),
+				RandomTestUtil.randomString(),
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		FragmentEntry fragmentEntry2 =
+			FragmentEntryServiceUtil.addFragmentEntry(
+				_group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(),
+				RandomTestUtil.randomString(),
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		long[] fragmentEntryIds = {
+			fragmentEntry1.getFragmentEntryId(),
+			fragmentEntry2.getFragmentEntryId()
+		};
+
+		_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+			layoutPageTemplateEntry.getName(), fragmentEntryIds,
+			serviceContext);
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
+				_group.getGroupId(),
+				PortalUtil.getClassNameId(Layout.class.getName()),
+				layoutPageTemplateEntry.getPlid());
+
+		Assert.assertEquals(
+			fragmentEntryLinks.toString(), 2, fragmentEntryLinks.size());
 	}
 
 	@Test

@@ -16,6 +16,21 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM, SearchContainer.DEFAULT_DELTA);
+
+PortletURL serverURL = renderResponse.createRenderURL();
+
+serverURL.setParameter("mvcRenderCommandName", "/server_admin/view");
+serverURL.setParameter("tabs1", tabs1);
+serverURL.setParameter("delta", String.valueOf(delta));
+
+String backURL = serverURL.toString();
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL);
+%>
+
 <div class="server-admin-tabs">
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>

@@ -26,7 +26,7 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 Boolean showRecentPosts = (Boolean)request.getAttribute("edit-message.jsp-showRecentPosts");
 MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 
-if (message.isAnonymous()) {
+if (message.isAnonymous() || thread.isInTrash()) {
 	showRecentPosts = false;
 }
 %>

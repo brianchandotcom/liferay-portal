@@ -283,7 +283,7 @@ if (portletTitleBasedNavigation) {
 		<aui:button onclick="<%= taglibReplyToMessageURL %>" primary="<%= true %>" value="reply" />
 	</c:if>
 
-	<c:if test="<%= moreMessagesPagination %>">
+	<c:if test="<%= !thread.isInTrash() && moreMessagesPagination %>">
 		<div class="reply-to-main-thread-container">
 			<a class="btn btn-default" href="javascript:;" id="<portlet:namespace />moreMessages"><liferay-ui:message key="more-messages" /></a>
 		</div>

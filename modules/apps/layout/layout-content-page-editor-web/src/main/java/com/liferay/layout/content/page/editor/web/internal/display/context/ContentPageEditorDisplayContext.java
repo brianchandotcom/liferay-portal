@@ -773,16 +773,16 @@ public class ContentPageEditorDisplayContext {
 
 			jsonArray.put(
 				JSONUtil.put(
-					"commentId", rootComment.getCommentId()
-				).put(
-					"body", rootComment.getBody()
-				).put(
 					"author",
 					JSONUtil.put(
 						"fullName", commentUser.getFullName()
 					).put(
 						"portraitURL", portraitURL
 					)
+				).put(
+					"body", rootComment.getBody()
+				).put(
+					"commentId", rootComment.getCommentId()
 				).put(
 					"dateDescription", dateDescription
 				));

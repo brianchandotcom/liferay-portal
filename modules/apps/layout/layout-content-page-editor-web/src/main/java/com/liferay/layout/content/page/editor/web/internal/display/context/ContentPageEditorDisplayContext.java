@@ -849,6 +849,9 @@ public class ContentPageEditorDisplayContext {
 				}
 
 				soyContext.put(
+					"comments",
+					_getFragmentEntryLinkCommentsJSONArray(fragmentEntryLink)
+				).put(
 					"configuration",
 					JSONFactoryUtil.createJSONObject(
 						fragmentEntryLink.getConfiguration())
@@ -866,9 +869,6 @@ public class ContentPageEditorDisplayContext {
 				).put(
 					"fragmentEntryLinkId",
 					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())
-				).put(
-					"comments",
-					_getFragmentEntryLinkCommentsJSONArray(fragmentEntryLink)
 				).putAll(
 					_getFragmentEntrySoyContext(
 						fragmentEntryLink, fragmentEntry, content)

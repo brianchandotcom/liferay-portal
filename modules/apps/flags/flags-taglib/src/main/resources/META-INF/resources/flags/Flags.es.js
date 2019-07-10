@@ -12,12 +12,13 @@
  * details.
  */
 
+import 'clay-button';
 import {PortletBase} from 'frontend-js-web';
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import Soy from 'metal-soy';
-import templates from './Flags.soy';
 import {Config} from 'metal-state';
-import 'clay-button';
+
+import templates from './Flags.soy';
 
 /**
  * It opens a dialog where the user can flag the page.

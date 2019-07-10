@@ -150,7 +150,7 @@ definition {
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "DM Document Title");
 
-		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+		DMNavigator.gotoShareInfoPanel(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.sharePG(
 			userEmailAddress = "userea@liferay.com",

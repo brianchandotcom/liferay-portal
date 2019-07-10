@@ -20,18 +20,18 @@
 int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM, SearchContainer.DEFAULT_DELTA);
 String keywords = ParamUtil.getString(request, "keywords");
 
-PortletURL serverURL = renderResponse.createRenderURL();
+PortletURL searchURL = renderResponse.createRenderURL();
 
-serverURL.setParameter("mvcRenderCommandName", "/server_admin/view");
-serverURL.setParameter("tabs1", tabs1);
-serverURL.setParameter("delta", String.valueOf(delta));
+searchURL.setParameter("mvcRenderCommandName", "/server_admin/view");
+searchURL.setParameter("tabs1", tabs1);
+searchURL.setParameter("delta", String.valueOf(delta));
 
-PortletURL clearResultsURL = PortletURLUtil.clone(serverURL, liferayPortletResponse);
+PortletURL clearResultsURL = PortletURLUtil.clone(searchURL, liferayPortletResponse);
 
 clearResultsURL.setParameter("navigation", (String)null);
 clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
-SearchContainer loggerSearchContainer = new SearchContainer(liferayPortletRequest, serverURL, null, null);
+SearchContainer loggerSearchContainer = new SearchContainer(liferayPortletRequest, searchURL, null, null);
 
 Map currentLoggerNames = new TreeMap();
 
@@ -65,11 +65,13 @@ while (itr.hasNext()) {
 loggerSearchContainer.setResults(ListUtil.subList(currentLoggerNamesList, loggerSearchContainer.getStart(), loggerSearchContainer.getEnd()));
 loggerSearchContainer.setTotal(currentLoggerNamesList.size());
 
+PortletURL addLogCategoryURL = PortletURLUtil.clone(searchURL, liferayPortletResponse);
+
 CreationMenu creationMenu = new CreationMenu() {
 	{
 		addPrimaryDropdownItem(
 			dropdownItem -> {
-				dropdownItem.setHref(serverURL, "mvcRenderCommandName", "/server_admin/add_log_category");
+				dropdownItem.setHref(addLogCategoryURL, "mvcRenderCommandName", "/server_admin/add_log_category");
 				dropdownItem.setLabel(LanguageUtil.get(request, "add-category"));
 			});
 	}
@@ -80,7 +82,7 @@ CreationMenu creationMenu = new CreationMenu() {
 	clearResultsURL="<%= String.valueOf(clearResultsURL) %>"
 	creationMenu="<%= creationMenu %>"
 	itemsTotal="<%= loggerSearchContainer.getTotal() %>"
-	searchActionURL="<%= String.valueOf(serverURL) %>"
+	searchActionURL="<%= String.valueOf(searchURL) %>"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
 	showCreationMenu="<%= true %>"

@@ -16,9 +16,13 @@ package com.liferay.portal.servlet.filters.virtualhost.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -35,6 +39,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -56,8 +61,17 @@ public class VirtualHostFilterTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@BeforeClass
+	public static void setUpClass() throws PortalException {
+		_layoutSet = _layoutSetLocalService.getLayoutSet(
+			TestPropsValues.getGroupId(), false);
+	}
+
 	@Before
 	public void setUp() {
+		_mockHttpServletRequest.setAttribute(
+			WebKeys.VIRTUAL_HOST_LAYOUT_SET, _layoutSet);
+
 		_portalUtil.setPortal(
 			new PortalImpl() {
 
@@ -151,6 +165,11 @@ public class VirtualHostFilterTest {
 	private static final String _PATH_CONTEXT = "/context";
 
 	private static final String _PATH_PROXY = "/proxy";
+
+	private static LayoutSet _layoutSet;
+
+	@Inject
+	private static LayoutSetLocalService _layoutSetLocalService;
 
 	private final MockFilterChain _mockFilterChain = new MockFilterChain();
 	private final MockFilterConfig _mockFilterConfig = new MockFilterConfig();

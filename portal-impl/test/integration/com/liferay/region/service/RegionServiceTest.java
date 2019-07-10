@@ -47,6 +47,8 @@ public class RegionServiceTest {
 
 		long countryId = countryJapan.getCountryId();
 
+		List<Region> regions = RegionServiceUtil.getRegions(countryId, true);
+
 		List<Region> sortedRegions = ListUtil.sort(
 			RegionServiceUtil.getRegions(countryId, true),
 			(region1, region2) -> {
@@ -56,17 +58,9 @@ public class RegionServiceTest {
 				return regionCode1.compareTo(regionCode2);
 			});
 
-		List<Region> unsortedRegions = RegionServiceUtil.getRegions(
-			countryId, true);
-
-		for (int i = 0; i < sortedRegions.size(); i++) {
-			Region region1 = sortedRegions.get(i);
-			Region region2 = unsortedRegions.get(i);
-
-			if (region1.getRegionId() != region2.getRegionId()) {
-				Assert.fail();
-			}
-		}
+		Assert.assertEquals(
+			"Japan regions should be sorted by region code", sortedRegions,
+			regions);
 	}
 
 }

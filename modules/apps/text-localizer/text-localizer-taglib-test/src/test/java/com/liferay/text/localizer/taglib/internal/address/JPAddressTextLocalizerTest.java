@@ -51,20 +51,10 @@ public class JPAddressTextLocalizerTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				_COUNTRY_NAME,
-				StringPool.NEW_LINE,
-				_ZIP,
-				StringPool.SPACE,
-				_REGION_NAME,
-				StringPool.SPACE,
-				_CITY,
-				StringPool.SPACE,
-				_STREET_1,
-				StringPool.NEW_LINE,
-				_STREET_2,
-				StringPool.SPACE,
-				_STREET_3
-			),
+				_COUNTRY_NAME, StringPool.NEW_LINE, _ZIP, StringPool.SPACE,
+				_REGION_NAME, StringPool.SPACE, _CITY, StringPool.SPACE,
+				_STREET_1, StringPool.NEW_LINE, _STREET_2, StringPool.SPACE,
+				_STREET_3),
 			_addressTextLocalizer.format(_address));
 	}
 
@@ -89,8 +79,7 @@ public class JPAddressTextLocalizerTest {
 		_setRegion(_REGION_NAME);
 
 		Assert.assertEquals(
-			StringBundler.concat(
-				_REGION_NAME, StringPool.SPACE, _CITY),
+			StringBundler.concat(_REGION_NAME, StringPool.SPACE, _CITY),
 			_addressTextLocalizer.format(_address));
 	}
 
@@ -130,7 +119,7 @@ public class JPAddressTextLocalizerTest {
 		_setZip(_ZIP);
 
 		Assert.assertEquals(
-			StringBundler.concat(_ZIP, StringPool.SPACE ,_REGION_NAME),
+			StringBundler.concat(_ZIP, StringPool.SPACE, _REGION_NAME),
 			_addressTextLocalizer.format(_address));
 	}
 
@@ -148,13 +137,8 @@ public class JPAddressTextLocalizerTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				_COUNTRY_NAME,
-				StringPool.NEW_LINE,
-				_STREET_1,
-				StringPool.NEW_LINE,
-				_STREET_2,
-				StringPool.SPACE,
-				_STREET_3 ),
+				_COUNTRY_NAME, StringPool.NEW_LINE, _STREET_1,
+				StringPool.NEW_LINE, _STREET_2, StringPool.SPACE, _STREET_3),
 			_addressTextLocalizer.format(_address));
 	}
 
@@ -187,20 +171,10 @@ public class JPAddressTextLocalizerTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				escapedValue,
-				StringPool.NEW_LINE,
-				escapedValue,
-				StringPool.SPACE,
-				escapedValue,
-				StringPool.SPACE,
-				escapedValue,
-				StringPool.SPACE,
-				escapedValue,
-				StringPool.NEW_LINE,
-				escapedValue,
-				StringPool.SPACE,
-				escapedValue
-			),
+				escapedValue, StringPool.NEW_LINE, escapedValue,
+				StringPool.SPACE, escapedValue, StringPool.SPACE, escapedValue,
+				StringPool.SPACE, escapedValue, StringPool.NEW_LINE,
+				escapedValue, StringPool.SPACE, escapedValue),
 			_addressTextLocalizer.format(_address));
 	}
 

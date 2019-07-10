@@ -26,12 +26,10 @@ import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.framework.BundleContext;
 
 /**
  * @author Yasuyuki Takeo
-*/
+ */
 @Component(
 	immediate = true, property = "country=JP",
 	service = AddressTextLocalizer.class
@@ -46,6 +44,7 @@ public class JPAddressTextLocalizer implements AddressTextLocalizer {
 			AddressUtil.getCountryNameOptional(address);
 
 		// Country
+
 		countryNameOptional.ifPresent(
 			countryName -> {
 				sb.append(html.escape(countryName));
@@ -68,37 +67,43 @@ public class JPAddressTextLocalizer implements AddressTextLocalizer {
 		boolean hasZip = Validator.isNotNull(zip);
 
 		// Zip code
+
 		if (hasZip) {
 			sb.append(zip);
 		}
 
 		// Prefecture
+
 		regionNameOptional.ifPresent(
 			regionName -> {
 				if (hasZip) {
 					sb.append(StringPool.SPACE);
 				}
+
 				sb.append(html.escape(regionName));
-			}
-		);
+			});
 
 		// City
+
 		if (hasCity) {
 			sb.append(StringPool.SPACE);
 			sb.append(city);
 		}
 
 		// Residence
+
 		String street1 = escapedAddress.getStreet1();
 
 		if (Validator.isNotNull(street1)) {
 			if (hasZip || hasCity) {
 				sb.append(StringPool.SPACE);
 			}
+
 			sb.append(street1);
 		}
 
 		// Apartment name, etc
+
 		String street2 = escapedAddress.getStreet2();
 
 		if (Validator.isNotNull(street2)) {
@@ -107,6 +112,7 @@ public class JPAddressTextLocalizer implements AddressTextLocalizer {
 		}
 
 		// Apartment room number, etc
+
 		String street3 = escapedAddress.getStreet3();
 
 		if (Validator.isNotNull(street3)) {

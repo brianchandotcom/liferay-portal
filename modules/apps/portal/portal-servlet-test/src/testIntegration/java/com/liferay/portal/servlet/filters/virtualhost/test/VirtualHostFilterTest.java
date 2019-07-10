@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.filters.virtualhost.VirtualHostFilter;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalImpl;
 
@@ -57,8 +58,6 @@ public class VirtualHostFilterTest {
 
 	@Before
 	public void setUp() {
-		_portal = PortalUtil.getPortal();
-
 		_portalUtil.setPortal(
 			new PortalImpl() {
 
@@ -161,8 +160,13 @@ public class VirtualHostFilterTest {
 		new MockHttpServletResponse();
 	private String _pathContext;
 	private String _pathProxy;
+
+	@Inject
 	private Portal _portal;
-	private final PortalUtil _portalUtil = new PortalUtil();
+
+	@Inject
+	private PortalUtil _portalUtil;
+
 	private final VirtualHostFilter _virtualHostFilter =
 		new VirtualHostFilter();
 

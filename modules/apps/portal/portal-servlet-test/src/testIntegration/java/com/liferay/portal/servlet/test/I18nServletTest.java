@@ -17,19 +17,20 @@ package com.liferay.portal.servlet.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.I18nServlet;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
@@ -62,34 +63,33 @@ public class I18nServletTest extends I18nServlet {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_availableLocales = LanguageUtil.getAvailableLocales();
+		_availableLocales = _language.getAvailableLocales();
 		_defaultLocale = LocaleUtil.getDefault();
 		_localesEnabled = PropsValues.LOCALES_ENABLED;
 
-		LanguageUtil.init();
+		_language.init();
 
 		CompanyTestUtil.resetCompanyLocales(
-			PortalUtil.getDefaultCompanyId(),
+			_portal.getDefaultCompanyId(),
 			Arrays.asList(
 				LocaleUtil.CANADA_FRENCH, LocaleUtil.SPAIN, LocaleUtil.UK,
 				LocaleUtil.US),
 			LocaleUtil.US);
 
 		PropsValues.LOCALES_ENABLED = new String[] {
-			LanguageUtil.getLanguageId(LocaleUtil.CANADA_FRENCH),
-			LanguageUtil.getLanguageId(LocaleUtil.SPAIN),
-			LanguageUtil.getLanguageId(LocaleUtil.UK),
-			LanguageUtil.getLanguageId(LocaleUtil.US)
+			_language.getLanguageId(LocaleUtil.CANADA_FRENCH),
+			_language.getLanguageId(LocaleUtil.SPAIN),
+			_language.getLanguageId(LocaleUtil.UK),
+			_language.getLanguageId(LocaleUtil.US)
 		};
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		LanguageUtil.init();
+		_language.init();
 
 		CompanyTestUtil.resetCompanyLocales(
-			PortalUtil.getDefaultCompanyId(), _availableLocales,
-			_defaultLocale);
+			_portal.getDefaultCompanyId(), _availableLocales, _defaultLocale);
 
 		PropsValues.LOCALES_ENABLED = _localesEnabled;
 	}
@@ -99,7 +99,7 @@ public class I18nServletTest extends I18nServlet {
 		_originalLocaleUseDefaultIfNotAvailable =
 			PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE;
 
-		LanguageUtil.init();
+		_language.init();
 
 		_group = GroupTestUtil.addGroup();
 
@@ -111,7 +111,7 @@ public class I18nServletTest extends I18nServlet {
 
 		_group.setTypeSettingsProperties(typeSettingsProperties);
 
-		GroupLocalServiceUtil.updateGroup(_group);
+		_groupLocalService.updateGroup(_group);
 	}
 
 	@After
@@ -136,7 +136,7 @@ public class I18nServletTest extends I18nServlet {
 
 	@Test
 	public void testDefaultGroupI18nData() throws Exception {
-		LanguageUtil.resetAvailableGroupLocales(_group.getGroupId());
+		_language.resetAvailableGroupLocales(_group.getGroupId());
 
 		testIsDefaultLocale(_group, LocaleUtil.US);
 		testIsDefaultOrFirstI18nData(_group, LocaleUtil.US);
@@ -319,7 +319,7 @@ public class I18nServletTest extends I18nServlet {
 
 		Locale defaultLocale = _getDefaultLocale(group);
 
-		if (!LanguageUtil.isSameLanguage(defaultLocale, locale)) {
+		if (!_language.isSameLanguage(defaultLocale, locale)) {
 			defaultLocale = _getFirstLocale(group, locale.getLanguage());
 		}
 
@@ -328,7 +328,7 @@ public class I18nServletTest extends I18nServlet {
 
 	private Locale _getDefaultLocale(Group group) throws Exception {
 		if (group != null) {
-			return PortalUtil.getSiteDefaultLocale(group);
+			return _portal.getSiteDefaultLocale(group);
 		}
 
 		return LocaleUtil.getDefault();
@@ -338,10 +338,10 @@ public class I18nServletTest extends I18nServlet {
 		throws Exception {
 
 		if (group != null) {
-			return LanguageUtil.getLocale(group.getGroupId(), language);
+			return _language.getLocale(group.getGroupId(), language);
 		}
 
-		return LanguageUtil.getLocale(language);
+		return _language.getLocale(language);
 	}
 
 	private I18nServlet.I18nData _getI18nData(Group group, String path)
@@ -370,7 +370,16 @@ public class I18nServletTest extends I18nServlet {
 	@DeleteAfterTestRun
 	private static Group _group;
 
+	@Inject
+	private static Language _language;
+
 	private static String[] _localesEnabled;
+
+	@Inject
+	private static Portal _portal;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	private boolean _originalLocaleUseDefaultIfNotAvailable;
 

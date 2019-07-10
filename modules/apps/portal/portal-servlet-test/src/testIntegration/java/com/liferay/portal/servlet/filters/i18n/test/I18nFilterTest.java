@@ -15,7 +15,7 @@
 package com.liferay.portal.servlet.filters.i18n.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.filters.i18n.I18nFilter;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Locale;
@@ -210,7 +211,7 @@ public class I18nFilterTest {
 		}
 
 		if (cookieLocale != null) {
-			LanguageUtil.updateCookie(
+			_language.updateCookie(
 				_mockHttpServletRequest, _mockHttpServletResponse,
 				cookieLocale);
 
@@ -231,6 +232,10 @@ public class I18nFilterTest {
 	private Group _group;
 
 	private I18nFilter _i18nFilter;
+
+	@Inject
+	private Language _language;
+
 	private MockHttpServletRequest _mockHttpServletRequest;
 	private MockHttpServletResponse _mockHttpServletResponse;
 

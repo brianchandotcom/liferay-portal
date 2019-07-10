@@ -60,8 +60,6 @@ public class JPAddressTextLocalizer implements AddressTextLocalizer {
 		Optional<String> regionNameOptional = AddressUtil.getRegionNameOptional(
 			address);
 
-		boolean hasRegionName = regionNameOptional.isPresent();
-
 		String zip = escapedAddress.getZip();
 
 		boolean hasZip = Validator.isNotNull(zip);

@@ -208,6 +208,8 @@ public class LPKGBundleTrackerCustomizer
 
 				if (name.endsWith("-jspc.zip")) {
 					_unzipJSPs(zipFile, zipEntry);
+
+					continue;
 				}
 
 				if (!(name.endsWith(".jar") || name.endsWith(".war"))) {

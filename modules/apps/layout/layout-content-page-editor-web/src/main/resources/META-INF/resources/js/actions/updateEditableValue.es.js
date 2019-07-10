@@ -35,6 +35,7 @@ import {
 import {updateEditableValues} from '../utils/FragmentsEditorFetchUtils.es';
 import debouncedAlert from '../utils/debouncedAlert.es';
 import {prefixSegmentsExperienceId} from '../utils/prefixSegmentsExperienceId.es';
+import {getFragmentEntryLinkContent} from '../reducers/fragments.es';
 
 /**
  * @type {number}
@@ -311,10 +312,25 @@ function updateFragmentEntryLinkContent(
 	fragmentEntryLinkId,
 	segmentsExperienceId
 ) {
-	return {
-		fragmentEntryLinkId,
-		segmentsExperienceId,
-		type: UPDATE_FRAGMENT_ENTRY_LINK_CONTENT
+	return function(dispatch, getState) {
+		const state = getState();
+
+		const fragmentEntryLink = state.fragmentEntryLinks[fragmentEntryLinkId];
+
+		getFragmentEntryLinkContent(
+			state.renderFragmentEntryURL,
+			fragmentEntryLink,
+			state.portletNamespace,
+			segmentsExperienceId
+		).then(response => {
+			const {fragmentEntryLinkId, content} = response;
+
+			dispatch({
+				fragmentEntryLinkContent: content,
+				fragmentEntryLinkId,
+				type: UPDATE_FRAGMENT_ENTRY_LINK_CONTENT
+			});
+		});
 	};
 }
 

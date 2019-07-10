@@ -84,6 +84,12 @@ const debouncedUpdateEditableValues = debouncedAlert(
 	UPDATE_EDITABLE_VALUES_DELAY
 );
 
+/**
+ * @param {number} fragmentEntryLinkId
+ * @param {object} configurationValues
+ * @param {number} segmentsExperienceId
+ * @review
+ */
 function updateConfigurationValueAction(
 	fragmentEntryLinkId,
 	configurationValues,
@@ -308,6 +314,11 @@ function updateEditableValueSuccessAction(date = new Date()) {
 	};
 }
 
+/**
+ * @param {number} fragmentEntryLinkId
+ * @param {number} segmentsExperienceId
+ * @review
+ */
 function updateFragmentEntryLinkContent(
 	fragmentEntryLinkId,
 	segmentsExperienceId

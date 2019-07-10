@@ -16,6 +16,11 @@ import {getRowFragmentEntryLinkIds} from '../utils/FragmentsEditorGetUtils.es';
 import {updateFragmentEntryLinkContent} from './updateEditableValue.es';
 import {SELECT_SEGMENTS_EXPERIENCE} from './actions.es';
 
+/**
+ * Changes segments experience action
+ * @param {number} segmentsExperienceId
+ * @review
+ */
 function selectSegmentExperienceAction(segmentsExperienceId) {
 	return function(dispatch) {
 		dispatch({
@@ -27,6 +32,12 @@ function selectSegmentExperienceAction(segmentsExperienceId) {
 	};
 }
 
+/**
+ * Render the fragment entry links when changing the segments experience
+ * This will apply configuration changes
+ * @param {number} segmentsExperienceId
+ * @review
+ */
 function _renderFragmentEntryLinkContent(segmentsExperienceId) {
 	return function(dispatch, getState) {
 		const state = getState();
@@ -57,6 +68,11 @@ function _renderFragmentEntryLinkContent(segmentsExperienceId) {
 	};
 }
 
+/**
+ * Get the fragment entry link ids from the layout data object
+ * @param {object} layoutData
+ * @review
+ */
 function _getLayoutDataFragmentEntryLinkIds(layoutData) {
 	return layoutData.structure.reduce(
 		(acc, row) => [...acc, ...getRowFragmentEntryLinkIds(row)],

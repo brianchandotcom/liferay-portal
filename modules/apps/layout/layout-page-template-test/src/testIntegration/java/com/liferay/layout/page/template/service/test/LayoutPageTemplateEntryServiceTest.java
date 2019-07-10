@@ -27,6 +27,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateEntryPersistence;
+import com.liferay.layout.page.template.service.persistence.impl.constants.LayoutPersistenceConstants;
 import com.liferay.layout.page.template.util.LayoutPageTemplateTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -72,7 +73,7 @@ public class LayoutPageTemplateEntryServiceTest {
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(
 				Propagation.REQUIRED,
-				"com.liferay.layout.page.template.service"));
+				LayoutPersistenceConstants.BUNDLE_SYMBOLIC_NAME));
 
 	@Before
 	public void setUp() throws Exception {

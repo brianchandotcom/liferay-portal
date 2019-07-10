@@ -164,6 +164,22 @@ definition {
 			value1 = "Share");
 	}
 
+	macro gotoShareInfoPanel {
+		var key_dmDocumentTitle = "${dmDocumentTitle}";
+
+		AssertClick(
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "${dmDocumentTitle}");
+
+		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "${dmDocumentTitle}");
+
+		Click.clickAt(locator1 = "Icon#INFO");
+
+		AssertElementPresent(locator1 = "Button#SHARE");
+
+		Click(locator1 = "Button#SHARE");
+	}
+
 	macro gotoShareViaSharedContent {
 		var key_contentTitle = "${dmDocumentTitle}";
 

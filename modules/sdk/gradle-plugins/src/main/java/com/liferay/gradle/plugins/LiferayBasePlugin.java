@@ -20,6 +20,7 @@ import com.liferay.gradle.plugins.internal.LangBuilderDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.util.FileUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
+import com.liferay.gradle.plugins.tasks.DockerDeployTask;
 import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.util.Validator;
 
@@ -39,6 +40,7 @@ import org.gradle.api.artifacts.DependencyResolveDetails;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ModuleVersionSelector;
 import org.gradle.api.artifacts.ResolutionStrategy;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
@@ -52,6 +54,8 @@ public class LiferayBasePlugin implements Plugin<Project> {
 
 	public static final String DEPLOY_TASK_NAME = "deploy";
 
+	public static final String DOCKER_DEPLOY_TASK_NAME = "dockerDeploy";
+
 	public static final String PORTAL_CONFIGURATION_NAME = "portal";
 
 	@Override
@@ -64,7 +68,17 @@ public class LiferayBasePlugin implements Plugin<Project> {
 		SourceFormatterDefaultsPlugin.INSTANCE.apply(project);
 
 		_addConfigurationPortal(project, liferayExtension);
-		_addTaskDeploy(project, liferayExtension);
+
+		Copy copy = _addTaskDeploy(project, liferayExtension);
+
+		String dockerContainerId = System.getProperty("dockerContainerId");
+
+		if (dockerContainerId != null) {
+			DockerDeployTask dockerDeployTask = _addTaskDockerDeploy(
+				project, copy, dockerContainerId);
+
+			_configureTaskDeploy(copy, dockerDeployTask);
+		}
 
 		_configureConfigurations(project, liferayExtension);
 		_configureTasksDirectDeploy(project, liferayExtension);
@@ -197,6 +211,40 @@ public class LiferayBasePlugin implements Plugin<Project> {
 		return copy;
 	}
 
+	private DockerDeployTask _addTaskDockerDeploy(
+		Project project, final Copy copy, String dockerContainerId) {
+
+		DockerDeployTask dockerDeployTask = GradleUtil.addTask(
+			project, DOCKER_DEPLOY_TASK_NAME, DockerDeployTask.class);
+
+		dockerDeployTask.dependsOn(copy);
+
+		dockerDeployTask.setDescription(
+			"Deploys the project to the Docker container.");
+		dockerDeployTask.setDockerContainerId(dockerContainerId);
+
+		String dockerDeployDir = System.getProperty(
+			"dockerDeployDir", "/opt/liferay/osgi/modules/");
+
+		dockerDeployTask.setDockerDeployDir(dockerDeployDir);
+
+		dockerDeployTask.setGroup(BasePlugin.BUILD_GROUP);
+
+		dockerDeployTask.setSourceFile(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					FileCollection fileCollection = copy.getSource();
+
+					return fileCollection.getSingleFile();
+				}
+
+			});
+
+		return dockerDeployTask;
+	}
+
 	private void _configureConfigurations(
 		Project project, final LiferayExtension liferayExtension) {
 
@@ -238,6 +286,14 @@ public class LiferayBasePlugin implements Plugin<Project> {
 		};
 
 		configurationContainer.all(action);
+	}
+
+	private void _configureTaskDeploy(
+		Copy copy, DockerDeployTask dockerDeployTask) {
+
+		copy.finalizedBy(dockerDeployTask);
+
+		copy.setEnabled(false);
 	}
 
 	private void _configureTaskDirectDeploy(

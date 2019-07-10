@@ -158,12 +158,14 @@
 			</div>
 
 			<div aria-labelledby="configurationTab" class="fade tab-pane" id="configuration" role="tabpanel">
-				{call com.liferay.fragment.web.SourceEditor.render}
-					{param events: ['contentChanged': $_handleConfigurationChanged] /}
-					{param initialContent: $initialConfiguration /}
-					{param spritemap: $spritemap /}
-					{param syntax: 'json' /}
-				{/call}
+				<div class="fragment-editor">
+					{call com.liferay.fragment.web.SourceEditor.render}
+						{param events: ['contentChanged': $_handleConfigurationChanged] /}
+						{param initialContent: $initialConfiguration /}
+						{param spritemap: $spritemap /}
+						{param syntax: 'json' /}
+					{/call}
+				</div>
 			</div>
 		</div>
 	</div>

@@ -138,8 +138,7 @@ public class ContentPageEditorDisplayContext {
 
 	public ContentPageEditorDisplayContext(
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
-		String className, long classPK,
-		CommentManager commentManager,
+		String className, long classPK, CommentManager commentManager,
 		FragmentRendererController fragmentRendererController) {
 
 		request = httpServletRequest;

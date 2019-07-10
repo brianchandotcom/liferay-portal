@@ -616,6 +616,7 @@ const INITIAL_STATE = {
 	 */
 	sidebarPanels: Config.arrayOf(
 		Config.shapeOf({
+			type: Config.oneOf(['button', 'separator']),
 			icon: Config.string(),
 			label: Config.string(),
 			sidebarPanelId: Config.string()

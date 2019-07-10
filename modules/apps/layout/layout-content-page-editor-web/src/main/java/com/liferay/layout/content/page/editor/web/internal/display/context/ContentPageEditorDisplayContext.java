@@ -44,12 +44,18 @@ import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
+import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
+import com.liferay.layout.content.page.editor.web.internal.configuration.util.ContentPageEditorCommentsConfigurationUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -131,12 +137,14 @@ public class ContentPageEditorDisplayContext {
 
 	public ContentPageEditorDisplayContext(
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
-		String className, long classPK,
+		String className, long classPK, CommentManager commentManager,
 		FragmentRendererController fragmentRendererController) {
 
 		request = httpServletRequest;
 		_renderResponse = renderResponse;
 		this.classPK = classPK;
+		_commentManager = commentManager;
+		_fragmentRendererController = fragmentRendererController;
 
 		classNameId = PortalUtil.getClassNameId(className);
 		infoDisplayContributorTracker =
@@ -144,7 +152,6 @@ public class ContentPageEditorDisplayContext {
 				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER);
 		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-		_fragmentRendererController = fragmentRendererController;
 		_fragmentCollectionContributorTracker =
 			(FragmentCollectionContributorTracker)
 				httpServletRequest.getAttribute(
@@ -198,6 +205,10 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		soyContext.put(
+			"addFragmentEntryLinkRootCommentURL",
+			getFragmentEntryActionURL(
+				"/content_layout/add_fragment_entry_link_root_comment")
+		).put(
 			"editFragmentEntryLinkURL",
 			getFragmentEntryActionURL(
 				"/content_layout/edit_fragment_entry_link")
@@ -330,7 +341,9 @@ public class ContentPageEditorDisplayContext {
 		return _groupId;
 	}
 
-	protected List<SoyContext> getSidebarPanelSoyContexts(boolean showMapping) {
+	protected List<SoyContext> getSidebarPanelSoyContexts(boolean showMapping)
+		throws PortalException {
+
 		if (_sidebarPanelSoyContexts != null) {
 			return _sidebarPanelSoyContexts;
 		}
@@ -402,6 +415,26 @@ public class ContentPageEditorDisplayContext {
 		);
 
 		soyContexts.add(availableSoyContext);
+
+		if (ContentPageEditorCommentsConfigurationUtil.isEnabled()) {
+			availableSoyContext = SoyContextFactoryUtil.createSoyContext();
+
+			availableSoyContext.put("type", "separator");
+
+			soyContexts.add(availableSoyContext);
+
+			availableSoyContext = SoyContextFactoryUtil.createSoyContext();
+
+			availableSoyContext.put(
+				"icon", "comments"
+			).put(
+				"label", LanguageUtil.get(resourceBundle, "comments")
+			).put(
+				"sidebarPanelId", "comments"
+			);
+
+			soyContexts.add(availableSoyContext);
+		}
 
 		_sidebarPanelSoyContexts = soyContexts;
 
@@ -727,6 +760,33 @@ public class ContentPageEditorDisplayContext {
 		return soyContexts;
 	}
 
+	private JSONArray _getFragmentEntryLinkCommentsJSONArray(
+			FragmentEntryLink fragmentEntryLink)
+		throws PortalException {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		if (!_commentManager.hasDiscussion(
+				FragmentEntryLink.class.getName(),
+				fragmentEntryLink.getFragmentEntryLinkId())) {
+
+			return jsonArray;
+		}
+
+		List<Comment> rootComments = _commentManager.getRootComments(
+			FragmentEntryLink.class.getName(),
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		for (Comment rootComment : rootComments) {
+			jsonArray.put(
+				CommentUtil.getCommentJSONObject(rootComment, request));
+		}
+
+		return jsonArray;
+	}
+
 	private SoyContext _getFragmentEntryLinksSoyContext()
 		throws PortalException {
 
@@ -785,6 +845,9 @@ public class ContentPageEditorDisplayContext {
 				}
 
 				soyContext.put(
+					"comments",
+					_getFragmentEntryLinkCommentsJSONArray(fragmentEntryLink)
+				).put(
 					"configuration",
 					JSONFactoryUtil.createJSONObject(
 						fragmentEntryLink.getConfiguration())
@@ -1268,6 +1331,7 @@ public class ContentPageEditorDisplayContext {
 		ContentPageEditorDisplayContext.class);
 
 	private List<SoyContext> _assetBrowserLinksSoyContexts;
+	private final CommentManager _commentManager;
 	private Map<String, Object> _defaultConfigurations;
 	private final FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;

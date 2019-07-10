@@ -21,12 +21,6 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 
 import java.util.List;
-import java.util.Set;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.validation.Validator;
-import javax.validation.executable.ExecutableValidator;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -124,17 +118,7 @@ public class BeanValidationInterceptor
 			return;
 		}
 
-		Validator validator = ValidatorFactory.getValidator();
-
-		ExecutableValidator executableValidator = validator.forExecutables();
-
-		Set<ConstraintViolation<Object>> constraintViolations =
-			executableValidator.validateParameters(
-				resource, method, arguments.toArray());
-
-		if (!constraintViolations.isEmpty()) {
-			throw new ConstraintViolationException(constraintViolations);
-		}
+		ValidationUtil.validateArguments(resource, method, arguments.toArray());
 	}
 
 }

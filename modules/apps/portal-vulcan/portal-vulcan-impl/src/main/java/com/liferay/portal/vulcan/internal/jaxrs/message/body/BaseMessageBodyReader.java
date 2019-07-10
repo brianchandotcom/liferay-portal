@@ -17,10 +17,8 @@ package com.liferay.portal.vulcan.internal.jaxrs.message.body;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.vulcan.internal.jaxrs.validation.ValidatorFactory;
+import com.liferay.portal.vulcan.internal.jaxrs.validation.ValidationUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,13 +27,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
 import java.util.Optional;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.ValidationException;
-import javax.validation.Validator;
 
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.InternalServerErrorException;
@@ -83,7 +76,7 @@ public abstract class BaseMessageBodyReader implements MessageBodyReader {
 		if (!StringUtil.equals(
 				_httpServletRequest.getMethod(), HttpMethod.PATCH)) {
 
-			_validate(value);
+			ValidationUtil.validate(value);
 		}
 
 		return value;
@@ -98,30 +91,6 @@ public abstract class BaseMessageBodyReader implements MessageBodyReader {
 			() -> new InternalServerErrorException(
 				"Unable to generate object mapper for class " + clazz)
 		);
-	}
-
-	private void _validate(Object value) {
-		Validator validator = ValidatorFactory.getValidator();
-
-		Set<ConstraintViolation<Object>> constraintViolations =
-			validator.validate(value);
-
-		if (constraintViolations.isEmpty()) {
-			return;
-		}
-
-		StringBundler sb = new StringBundler(constraintViolations.size() * 4);
-
-		for (ConstraintViolation<Object> constraintViolation :
-				constraintViolations) {
-
-			sb.append(constraintViolation.getPropertyPath());
-			sb.append(StringPool.SPACE);
-			sb.append(constraintViolation.getMessage());
-			sb.append(StringPool.NEW_LINE);
-		}
-
-		throw new ValidationException(sb.toString());
 	}
 
 	private final Class<? extends ObjectMapper> _contextType;

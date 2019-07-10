@@ -39,6 +39,7 @@ import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.ContextProviderUtil;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.SortContextProvider;
+import com.liferay.portal.vulcan.internal.jaxrs.validation.ValidationUtil;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
@@ -488,10 +489,14 @@ public class GraphQLServletExtender {
 
 				argument = _objectMapper.convertValue(
 					argument, parameter.getType());
+
+				ValidationUtil.validate(argument);
 			}
 
 			args[i] = argument;
 		}
+
+		ValidationUtil.validateArguments(instance, method, args);
 
 		return method.invoke(instance, args);
 	}

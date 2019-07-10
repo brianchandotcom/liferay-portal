@@ -4,18 +4,18 @@
  * FragmentsEditorToolbar
  */
 {template .render}
-	{@param? availableSegmentsEntries: ?}
-	{@param? editSegmentsEntryURL: string}
-	{@param? hasEditSegmentsEntryPermission: bool }
 	{@param? _handleDiscardDraft: any}
 	{@param? _handleToggleContextualSidebarButtonClick: any}
+	{@param? _online: bool}
+	{@param? availableSegmentsEntries: ?}
 	{@param? classPK: ?}
 	{@param? defaultSegmentsExperienceId: string }
 	{@param? discardDraftRedirectURL: string}
 	{@param? discardDraftURL: string}
 	{@param? draft: bool}
+	{@param? editSegmentsEntryURL: string}
+	{@param? hasEditSegmentsEntryPermission: bool }
 	{@param? lastSaveDate: string}
-	{@param? _online: bool}
 	{@param? portletNamespace: string}
 	{@param? publishURL: string}
 	{@param? redirectURL: string}
@@ -41,10 +41,10 @@
 				{if $defaultSegmentsExperienceId }
 					<li class="nav-item">
 						{call com.liferay.layout.content.page.editor.web.SegmentsExperienceSelector.render}
-							{param hasEditSegmentsEntryPermission: $hasEditSegmentsEntryPermission /}
-							{param editSegmentsEntryURL: $editSegmentsEntryURL /}
 							{param availableSegmentsEntries: $availableSegmentsEntries /}
 							{param defaultSegmentsExperienceId: $defaultSegmentsExperienceId /}
+							{param editSegmentsEntryURL: $editSegmentsEntryURL /}
+							{param hasEditSegmentsEntryPermission: $hasEditSegmentsEntryPermission /}
 							{param spritemap: $spritemap ?: '' /}
 							{param store: $store /}
 						{/call}

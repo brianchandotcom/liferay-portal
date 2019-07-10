@@ -438,14 +438,14 @@ public class LayoutPageTemplateEntryServiceTest {
 
 		layoutPageTemplateEntry = _layoutPageTemplateEntryService.updateStatus(
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-			WorkflowConstants.STATUS_APPROVED);
+			WorkflowConstants.STATUS_PENDING);
 
 		LayoutPageTemplateEntry persistedLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryPersistence.fetchByPrimaryKey(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED,
+			WorkflowConstants.STATUS_PENDING,
 			persistedLayoutPageTemplateEntry.getStatus());
 	}
 

@@ -21,6 +21,8 @@ import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {SidebarComments} from './SidebarComments.es';
 import templates from './SidebarCommentsPanel.soy';
 
+/* eslint no-unused-vars: "warn" */
+
 class SidebarCommentsPanel extends Component {
 	disposed() {
 		ReactDOM.unmountComponentAtNode(this.refs.app);

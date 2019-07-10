@@ -33,15 +33,12 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
-
-import javax.ws.rs.core.Context;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -162,9 +159,6 @@ public class BlogPostingDTOConverter implements DTOConverter {
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
-
-	@Context
-	private User _user;
 
 	@Reference
 	private UserLocalService _userLocalService;

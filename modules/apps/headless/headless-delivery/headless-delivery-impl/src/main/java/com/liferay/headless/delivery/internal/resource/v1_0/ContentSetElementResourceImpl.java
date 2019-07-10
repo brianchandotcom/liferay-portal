@@ -23,7 +23,6 @@ import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
 import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.DTOConverterRegistry;
 import com.liferay.headless.delivery.resource.v1_0.ContentSetElementResource;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -143,8 +142,8 @@ public class ContentSetElementResourceImpl
 
 		long[] segmentsEntryIds =
 			_segmentsEntryProviderRegistry.getSegmentsEntryIds(
-				assetListEntry.getGroupId(), _user.getModelClassName(),
-				_user.getPrimaryKey(), _createSegmentsContext());
+				assetListEntry.getGroupId(), contextUser.getModelClassName(),
+				contextUser.getPrimaryKey(), _createSegmentsContext());
 
 		return Page.of(
 			transform(
@@ -201,8 +200,5 @@ public class ContentSetElementResourceImpl
 
 	@Reference
 	private SegmentsEntryProviderRegistry _segmentsEntryProviderRegistry;
-
-	@Context
-	private User _user;
 
 }

@@ -22,7 +22,6 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBThreadLocalService;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -31,7 +30,6 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.core.Context;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -123,7 +121,7 @@ public class MessageBoardAttachmentResourceImpl
 
 		return _toMessageBoardAttachment(
 			_portletFileRepository.addPortletFileEntry(
-				mbMessage.getGroupId(), _user.getUserId(),
+				mbMessage.getGroupId(), contextUser.getUserId(),
 				MBMessage.class.getName(), mbMessage.getClassPK(),
 				MBConstants.SERVICE_NAME, folder.getFolderId(),
 				binaryFile.getInputStream(), binaryFile.getFileName(),
@@ -172,8 +170,5 @@ public class MessageBoardAttachmentResourceImpl
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
-
-	@Context
-	private User _user;
 
 }

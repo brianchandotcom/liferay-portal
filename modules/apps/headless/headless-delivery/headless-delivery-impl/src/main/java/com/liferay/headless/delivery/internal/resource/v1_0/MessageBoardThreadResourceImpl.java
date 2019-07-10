@@ -46,7 +46,6 @@ import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -78,7 +77,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -330,7 +328,7 @@ public class MessageBoardThreadResourceImpl
 			MBMessage.class.getName(), _ratingsEntryLocalService,
 			ratingsEntry -> RatingUtil.toRating(
 				_portal, ratingsEntry, _userLocalService),
-			_user);
+			contextUser);
 	}
 
 	private MessageBoardThread _toMessageBoardThread(MBMessage mbMessage)
@@ -494,9 +492,6 @@ public class MessageBoardThreadResourceImpl
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
-
-	@Context
-	private User _user;
 
 	@Reference
 	private UserLocalService _userLocalService;

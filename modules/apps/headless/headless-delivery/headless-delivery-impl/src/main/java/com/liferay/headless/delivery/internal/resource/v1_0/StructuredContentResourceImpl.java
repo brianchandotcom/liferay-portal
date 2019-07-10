@@ -61,7 +61,6 @@ import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Sort;
@@ -105,12 +104,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ForbiddenException;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -297,7 +292,7 @@ public class StructuredContentResourceImpl
 			structuredContentId);
 
 		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
+			(ThemeDisplay)contextHttpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		themeDisplay.setScopeGroupId(journalArticle.getGroupId());
@@ -652,7 +647,7 @@ public class StructuredContentResourceImpl
 			JournalArticle.class.getName(), _ratingsEntryLocalService,
 			ratingsEntry -> RatingUtil.toRating(
 				_portal, ratingsEntry, _userLocalService),
-			_user);
+			contextUser);
 	}
 
 	private StructuredContent _getStructuredContent(
@@ -661,7 +656,7 @@ public class StructuredContentResourceImpl
 
 		ContentLanguageUtil.addContentLanguageHeader(
 			journalArticle.getAvailableLanguageIds(),
-			journalArticle.getDefaultLanguageId(), _httpServletResponse,
+			journalArticle.getDefaultLanguageId(), contextHttpServletResponse,
 			contextAcceptLanguage.getPreferredLocale());
 
 		return _toStructuredContent(journalArticle);
@@ -879,12 +874,6 @@ public class StructuredContentResourceImpl
 	@Reference
 	private ExpandoTableLocalService _expandoTableLocalService;
 
-	@Context
-	private HttpServletRequest _httpServletRequest;
-
-	@Context
-	private HttpServletResponse _httpServletResponse;
-
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
 
@@ -917,9 +906,6 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private StructuredContentDTOConverter _structuredContentDTOConverter;
-
-	@Context
-	private User _user;
 
 	@Reference
 	private UserLocalService _userLocalService;

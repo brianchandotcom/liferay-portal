@@ -39,10 +39,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
-
-import javax.ws.rs.core.Context;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -89,7 +85,8 @@ public class FormResourceImpl extends BaseFormResourceImpl {
 			new DDMFormRenderingContext();
 
 		ddmFormRenderingContext.setGroupId(ddmFormInstance.getGroupId());
-		ddmFormRenderingContext.setHttpServletRequest(_httpServletRequest);
+		ddmFormRenderingContext.setHttpServletRequest(
+			contextHttpServletRequest);
 
 		return FormContextUtil.evaluateContext(
 			ddmFormInstance, ddmFormRenderingContext,
@@ -166,9 +163,6 @@ public class FormResourceImpl extends BaseFormResourceImpl {
 
 	@Reference
 	private DLURLHelper _dlurlHelper;
-
-	@Context
-	private HttpServletRequest _httpServletRequest;
 
 	@Reference
 	private Portal _portal;

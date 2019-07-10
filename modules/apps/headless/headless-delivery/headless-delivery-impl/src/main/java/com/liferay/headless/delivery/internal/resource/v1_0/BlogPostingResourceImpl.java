@@ -32,7 +32,6 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.BlogPostingEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -59,7 +58,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -291,7 +289,7 @@ public class BlogPostingResourceImpl
 			BlogsEntry.class.getName(), _ratingsEntryLocalService,
 			ratingsEntry -> RatingUtil.toRating(
 				_portal, ratingsEntry, _userLocalService),
-			_user);
+			contextUser);
 	}
 
 	private BlogPosting _toBlogPosting(BlogsEntry blogsEntry) throws Exception {
@@ -321,9 +319,6 @@ public class BlogPostingResourceImpl
 
 	@Reference
 	private RatingsEntryLocalService _ratingsEntryLocalService;
-
-	@Context
-	private User _user;
 
 	@Reference
 	private UserLocalService _userLocalService;

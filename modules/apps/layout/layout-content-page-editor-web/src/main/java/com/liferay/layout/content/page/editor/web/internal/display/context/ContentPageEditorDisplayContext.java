@@ -44,6 +44,7 @@ import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
+import com.liferay.layout.content.page.editor.web.internal.configuration.util.ContentPageEditorCommentsConfigurationUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
@@ -330,7 +331,9 @@ public class ContentPageEditorDisplayContext {
 		return _groupId;
 	}
 
-	protected List<SoyContext> getSidebarPanelSoyContexts(boolean showMapping) {
+	protected List<SoyContext> getSidebarPanelSoyContexts(boolean showMapping)
+		throws PortalException {
+
 		if (_sidebarPanelSoyContexts != null) {
 			return _sidebarPanelSoyContexts;
 		}
@@ -403,23 +406,25 @@ public class ContentPageEditorDisplayContext {
 
 		soyContexts.add(availableSoyContext);
 
-		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
+		if (ContentPageEditorCommentsConfigurationUtil.isEnabled()) {
+			availableSoyContext = SoyContextFactoryUtil.createSoyContext();
 
-		availableSoyContext.put("type", "separator");
+			availableSoyContext.put("type", "separator");
 
-		soyContexts.add(availableSoyContext);
+			soyContexts.add(availableSoyContext);
 
-		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
+			availableSoyContext = SoyContextFactoryUtil.createSoyContext();
 
-		availableSoyContext.put(
-			"icon", "comments"
-		).put(
-			"label", LanguageUtil.get(resourceBundle, "comments")
-		).put(
-			"sidebarPanelId", "comments"
-		);
+			availableSoyContext.put(
+				"icon", "comments"
+			).put(
+				"label", LanguageUtil.get(resourceBundle, "comments")
+			).put(
+				"sidebarPanelId", "comments"
+			);
 
-		soyContexts.add(availableSoyContext);
+			soyContexts.add(availableSoyContext);
+		}
 
 		_sidebarPanelSoyContexts = soyContexts;
 

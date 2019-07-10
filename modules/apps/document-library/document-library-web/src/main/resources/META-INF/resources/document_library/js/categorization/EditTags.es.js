@@ -12,15 +12,14 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
+import 'asset-taglib/asset_tags_selector/AssetTagsSelector.es';
 import 'clay-multi-select';
 import 'clay-radio';
+import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import Component from 'metal-component';
-import {Config} from 'metal-state';
 import Soy from 'metal-soy';
-import 'asset-taglib/asset_tags_selector/AssetTagsSelector.es';
-import {Modal} from 'frontend-js-web';
+import {Config} from 'metal-state';
+
 import templates from './EditTags.soy';
 
 /**
@@ -87,7 +86,7 @@ class EditTags extends Component {
 
 		return fetch(this.pathModule + url, request)
 			.then(response => response.json())
-			.catch(xhr => {
+			.catch(() => {
 				this.close();
 			});
 	}
@@ -194,7 +193,7 @@ class EditTags extends Component {
 				keywordsToAdd: addedTags,
 				keywordsToRemove: removedTags
 			}
-		).then(response => {
+		).then(() => {
 			instance.close();
 
 			if (instance._bulkStatusComponent) {

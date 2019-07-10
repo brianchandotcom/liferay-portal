@@ -26,8 +26,6 @@ import templates from './BulkStatus.soy';
  * @extends {Component}
  */
 
-/* eslint no-unused-vars: "warn" */
-
 class BulkStatus extends Component {
 	/**
 	 * @inheritDoc
@@ -83,7 +81,7 @@ class BulkStatus extends Component {
 					this._onBulkFinish(false);
 				}
 			})
-			.catch(e => {
+			.catch(() => {
 				this._onBulkFinish(true);
 			});
 	}

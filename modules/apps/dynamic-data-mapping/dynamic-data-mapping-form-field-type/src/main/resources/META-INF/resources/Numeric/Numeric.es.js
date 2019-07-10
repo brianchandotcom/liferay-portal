@@ -28,7 +28,7 @@ class Numeric extends Component {
 		const value = inputElement.value;
 		const numberMaskOptions = this.getMaskConfig(dataType);
 
-		if (value && dataType == 'integer') {
+		if (dataType === 'integer' && value) {
 			inputElement.value = Math.round(
 				value.replace(symbols.decimalSymbol, '.')
 			);
@@ -108,7 +108,7 @@ class Numeric extends Component {
 	_handleFieldChanged(event) {
 		const value = event.target.value;
 
-		if (value.substr(-1) == this.symbols.decimalSymbol) {
+		if (value.substr(-1) === this.symbols.decimalSymbol) {
 			return;
 		}
 

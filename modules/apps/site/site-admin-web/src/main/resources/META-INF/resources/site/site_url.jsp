@@ -115,10 +115,10 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 		<liferay-ui:message arguments="<%= new Object[] {themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic(), themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPrivateGroup()} %>" key="the-friendly-url-is-appended-to-x-for-public-pages-and-x-for-private-pages" translateArguments="<%= false %>" />
 	</p>
 
-	<aui:input label="friendly-url" name="friendlyURL" value="<%= HttpUtil.decodeURL(liveGroup.getFriendlyURL()) %>" />
+	<aui:input label="friendly-url" name="groupFriendlyURL" type="text" value="<%= HttpUtil.decodeURL(liveGroup.getFriendlyURL()) %>" />
 
 	<c:if test="<%= liveGroup.hasStagingGroup() %>">
-		<aui:input bean="<%= stagingGroup %>" field="friendlyURL" fieldParam="stagingFriendlyURL" label="staging-friendly-url" model="<%= Group.class %>" name="stagingFriendlyURL" />
+		<aui:input label="staging-friendly-url" name="stagingFriendlyURL" type="text" value="<%= HttpUtil.decodeURL(stagingGroup.getFriendlyURL()) %>" />
 	</c:if>
 
 	<p class="text-muted">
@@ -164,7 +164,7 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 </aui:fieldset>
 
 <script>
-	var friendlyURL = document.getElementById('<portlet:namespace />friendlyURL');
+	var friendlyURL = document.getElementById('<portlet:namespace />groupFriendlyURL');
 
 	if (friendlyURL) {
 		friendlyURL.addEventListener(

@@ -700,7 +700,8 @@ public class SiteAdminPortlet extends MVCPortlet {
 				actionRequest, "description");
 			type = ParamUtil.getInteger(
 				actionRequest, "type", GroupConstants.TYPE_SITE_OPEN);
-			friendlyURL = ParamUtil.getString(actionRequest, "friendlyURL");
+			friendlyURL = ParamUtil.getString(
+				actionRequest, "groupFriendlyURL");
 			manualMembership = ParamUtil.getBoolean(
 				actionRequest, "manualMembership", true);
 			inheritContent = ParamUtil.getBoolean(
@@ -736,7 +737,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 				actionRequest, "manualMembership",
 				liveGroup.isManualMembership());
 			friendlyURL = ParamUtil.getString(
-				actionRequest, "friendlyURL", liveGroup.getFriendlyURL());
+				actionRequest, "groupFriendlyURL", liveGroup.getFriendlyURL());
 			inheritContent = ParamUtil.getBoolean(
 				actionRequest, "inheritContent", liveGroup.isInheritContent());
 			active = ParamUtil.getBoolean(

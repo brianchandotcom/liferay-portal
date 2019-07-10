@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.kernel.DDMTemplateManager;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -61,6 +62,15 @@ public class FragmentEntryLinkModelListener
 		_ddmTemplateLinkLocalService.deleteTemplateLink(
 			_portal.getClassNameId(FragmentEntryLink.class),
 			fragmentEntryLink.getFragmentEntryLinkId());
+
+		try {
+			_commentManager.deleteDiscussion(
+				FragmentEntryLink.class.getName(),
+				fragmentEntryLink.getFragmentEntryLinkId());
+		}
+		catch (PortalException pe) {
+			throw new ModelListenerException(pe);
+		}
 	}
 
 	@Override
@@ -186,6 +196,9 @@ public class FragmentEntryLinkModelListener
 
 	@Reference
 	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
+
+	@Reference
+	private CommentManager _commentManager;
 
 	@Reference
 	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;

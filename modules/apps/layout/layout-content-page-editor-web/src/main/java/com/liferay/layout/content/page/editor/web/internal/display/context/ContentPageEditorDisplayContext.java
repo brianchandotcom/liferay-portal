@@ -44,6 +44,7 @@ import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
+import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
@@ -56,7 +57,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -65,7 +65,6 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.model.Theme;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
@@ -758,37 +757,8 @@ public class ContentPageEditorDisplayContext {
 			QueryUtil.ALL_POS);
 
 		for (Comment rootComment : rootComments) {
-			User commentUser = rootComment.getUser();
-
-			String portraitURL = StringPool.BLANK;
-
-			if (commentUser.getPortraitId() > 0) {
-				portraitURL = commentUser.getPortraitURL(themeDisplay);
-			}
-
-			Date createDate = rootComment.getCreateDate();
-
-			String dateDescription = LanguageUtil.format(
-				request, "x-ago",
-				LanguageUtil.getTimeDescription(
-					request, System.currentTimeMillis() - createDate.getTime(),
-					true));
-
 			jsonArray.put(
-				JSONUtil.put(
-					"author",
-					JSONUtil.put(
-						"fullName", commentUser.getFullName()
-					).put(
-						"portraitURL", portraitURL
-					)
-				).put(
-					"body", rootComment.getBody()
-				).put(
-					"commentId", rootComment.getCommentId()
-				).put(
-					"dateDescription", dateDescription
-				));
+				CommentUtil.getCommentJSONObject(rootComment, request));
 		}
 
 		return jsonArray;

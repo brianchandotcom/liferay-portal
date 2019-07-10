@@ -50,7 +50,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 
 		super(
 			httpServletRequest, renderResponse, className, classPK,
-			fragmentRendererController, commentManager);
+			commentManager, fragmentRendererController);
 
 		_showMapping = showMapping;
 	}

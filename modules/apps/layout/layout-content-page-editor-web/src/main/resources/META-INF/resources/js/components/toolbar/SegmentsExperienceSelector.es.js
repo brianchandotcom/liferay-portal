@@ -12,11 +12,10 @@
  * details.
  */
 
+import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
-import getConnectedComponent from '../../store/ConnectedComponent.es';
-import './segmentsExperiences/modal.es';
-import templates from './SegmentsExperienceSelector.soy';
+
 import {
 	CREATE_SEGMENTS_EXPERIENCE,
 	DELETE_SEGMENTS_EXPERIENCE,
@@ -24,10 +23,10 @@ import {
 	SELECT_SEGMENTS_EXPERIENCE,
 	UPDATE_SEGMENTS_EXPERIENCE_PRIORITY
 } from '../../actions/actions.es';
-
-import 'frontend-js-web/liferay/compat/modal/Modal.es';
-
+import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
+import templates from './SegmentsExperienceSelector.soy';
+import './segmentsExperiences/modal.es';
 
 const DISMISS_ALERT_ANIMATION_WAIT = 500;
 const MODAL_EXPERIENCE_STATE_KEY = 'modalExperienceState';

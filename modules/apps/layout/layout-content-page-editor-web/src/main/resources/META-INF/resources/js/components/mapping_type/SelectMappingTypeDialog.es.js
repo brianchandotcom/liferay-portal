@@ -12,14 +12,14 @@
  * details.
  */
 
+import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 
-import './SelectMappingTypeForm.es';
-import 'frontend-js-web/liferay/compat/modal/Modal.es';
-import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {HIDE_MAPPING_TYPE_DIALOG} from '../../actions/actions.es';
+import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './SelectMappingTypeDialog.soy';
+import './SelectMappingTypeForm.es';
 
 /**
  * SelectMappingTypeDialog

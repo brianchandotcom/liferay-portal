@@ -19,19 +19,21 @@ import {
 	SELECT_SEGMENTS_EXPERIENCE,
 	UPDATE_SEGMENTS_EXPERIENCE_PRIORITY
 } from '../actions/actions.es';
-import {deepClone} from '../utils/FragmentsEditorGetUtils.es';
-import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 import {
 	removeExperience,
 	updatePageEditorLayoutData
 } from '../utils/FragmentsEditorFetchUtils.es';
-import {getRowFragmentEntryLinkIds} from '../utils/FragmentsEditorGetUtils.es';
+import {
+	deepClone,
+	getRowFragmentEntryLinkIds
+} from '../utils/FragmentsEditorGetUtils.es';
+import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 import {
 	containsFragmentEntryLinkId,
 	getEmptyLayoutData
 } from '../utils/LayoutDataList.es';
-import {prefixSegmentsExperienceId} from '../utils/prefixSegmentsExperienceId.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../utils/constants';
+import {prefixSegmentsExperienceId} from '../utils/prefixSegmentsExperienceId.es';
 
 const CREATE_SEGMENTS_EXPERIENCE_URL =
 	'/segments.segmentsexperience/add-segments-experience';

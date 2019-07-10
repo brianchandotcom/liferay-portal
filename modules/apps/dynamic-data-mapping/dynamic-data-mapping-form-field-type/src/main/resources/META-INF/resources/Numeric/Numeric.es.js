@@ -25,8 +25,7 @@ class Numeric extends Component {
 	applyMask() {
 		const {dataType, element, symbols} = this;
 		const inputElement = element.querySelector('input');
-		const value = inputElement.value;
-		const numberMaskOptions = this.getMaskConfig(dataType);
+		const {value} = inputElement;
 
 		if (dataType === 'integer' && value) {
 			inputElement.value = Math.round(
@@ -34,7 +33,7 @@ class Numeric extends Component {
 			);
 		}
 
-		const mask = createNumberMask(numberMaskOptions);
+		const mask = createNumberMask(this.getMaskConfig(dataType));
 
 		this.maskInstance = vanillaTextMask({
 			inputElement,

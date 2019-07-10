@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lar.test;
+package com.liferay.exportimport.test.util.lar;
 
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;

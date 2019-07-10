@@ -46,7 +46,7 @@ import javax.portlet.PortletResponse;
 /**
  * @author Michael C. Han
  * @author Peter Fellwock
- * @deprecated As of Judson (7.1.x), since 7.1.0
+ * @deprecated As of Judson (7.1.x)
  */
 @Deprecated
 public class AccountIndexer extends BaseIndexer<Account> {

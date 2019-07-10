@@ -44,7 +44,7 @@ import javax.portlet.PortletResponse;
  * @author     Raymond Augé
  * @author     Zsigmond Rab
  * @author     Hugo Huijser
- * @deprecated As of Judson (7.1.x), since 7.1.0
+ * @deprecated As of Judson (7.1.x)
  */
 @Deprecated
 public class ContactIndexer extends BaseIndexer<Contact> {

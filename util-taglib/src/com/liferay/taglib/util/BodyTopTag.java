@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of Mueller (7.2.x), since 7.2, unused
+ * @deprecated As of Mueller (7.2.x)
  */
 @Deprecated
 public class BodyTopTag extends OutputTag {

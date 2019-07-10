@@ -28,7 +28,7 @@ public interface ScopeDescriptorLocator {
 		long companyId, String applicationName);
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), since 7.2, unused
+	 * @deprecated As of Mueller (7.2.x)
 	 */
 	@Deprecated
 	public ScopeDescriptor getScopeDescriptor(String applicationName);

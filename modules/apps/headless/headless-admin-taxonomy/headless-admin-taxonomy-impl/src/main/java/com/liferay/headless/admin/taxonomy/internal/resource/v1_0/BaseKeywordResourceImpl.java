@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.context.VulcanContext;
+import com.liferay.portal.vulcan.context.VulcanContextInjector;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -51,6 +53,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Javier Gamarra
@@ -165,6 +170,11 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 		this.contextUser = contextUser;
 	}
 
+	@Activate
+	protected void activate() {
+		vulcanContextInjector.inject(this);
+	}
+
 	protected void preparePatch(Keyword keyword, Keyword existingKeyword) {
 	}
 
@@ -196,16 +206,19 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
-	@Context
+	@Reference
+	protected VulcanContextInjector vulcanContextInjector;
+
+	@VulcanContext
 	protected AcceptLanguage contextAcceptLanguage;
 
-	@Context
+	@VulcanContext
 	protected Company contextCompany;
 
 	@Context
 	protected UriInfo contextUriInfo;
 
-	@Context
+	@VulcanContext
 	protected User contextUser;
 
 }

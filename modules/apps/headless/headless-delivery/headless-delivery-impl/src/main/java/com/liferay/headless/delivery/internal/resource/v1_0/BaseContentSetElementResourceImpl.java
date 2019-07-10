@@ -20,6 +20,8 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.context.VulcanContext;
+import com.liferay.portal.vulcan.context.VulcanContextInjector;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -44,6 +46,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Javier Gamarra
@@ -143,6 +148,11 @@ public abstract class BaseContentSetElementResourceImpl
 		this.contextUser = contextUser;
 	}
 
+	@Activate
+	protected void activate() {
+		vulcanContextInjector.inject(this);
+	}
+
 	protected void preparePatch(
 		ContentSetElement contentSetElement,
 		ContentSetElement existingContentSetElement) {
@@ -176,16 +186,19 @@ public abstract class BaseContentSetElementResourceImpl
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
-	@Context
+	@Reference
+	protected VulcanContextInjector vulcanContextInjector;
+
+	@VulcanContext
 	protected AcceptLanguage contextAcceptLanguage;
 
-	@Context
+	@VulcanContext
 	protected Company contextCompany;
 
 	@Context
 	protected UriInfo contextUriInfo;
 
-	@Context
+	@VulcanContext
 	protected User contextUser;
 
 }

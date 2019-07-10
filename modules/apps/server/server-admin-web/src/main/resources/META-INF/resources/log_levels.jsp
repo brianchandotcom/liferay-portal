@@ -71,6 +71,16 @@ while (itr.hasNext()) {
 
 loggerSearchContainer.setResults(ListUtil.subList(currentLoggerNamesList, loggerSearchContainer.getStart(), loggerSearchContainer.getEnd()));
 loggerSearchContainer.setTotal(currentLoggerNamesList.size());
+
+CreationMenu creationMenu = new CreationMenu() {
+	{
+		addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(serverURL, "mvcRenderCommandName", "/server_admin/add_log_category");
+				dropdownItem.setLabel(LanguageUtil.get(request, "add-category"));
+			});
+	}
+};
 %>
 
 <div class="server-admin-tabs">
@@ -95,10 +105,12 @@ loggerSearchContainer.setTotal(currentLoggerNamesList.size());
 		<c:if test='<%= tabs2.equals("update-categories") %>'>
 			<clay:management-toolbar
 				clearResultsURL="<%= String.valueOf(clearResultsURL) %>"
+				creationMenu="<%= creationMenu %>"
 				itemsTotal="<%= loggerSearchContainer.getTotal() %>"
 				searchActionURL="<%= String.valueOf(serverURL) %>"
 				searchFormName="searchFm"
 				selectable="<%= false %>"
+				showCreationMenu="<%= true %>"
 				showSearch="<%= true %>"
 			/>
 		</c:if>

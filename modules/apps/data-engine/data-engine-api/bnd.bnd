@@ -2,8 +2,12 @@ Bundle-Name: Liferay Data Engine API
 Bundle-SymbolicName: com.liferay.data.engine.api
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.data.engine.exception,\
 	com.liferay.data.engine.field.type,\
 	com.liferay.data.engine.field.type.util,\
+	com.liferay.data.engine.model,\
 	com.liferay.data.engine.renderer,\
 	com.liferay.data.engine.rule.function,\
+	com.liferay.data.engine.service,\
+	com.liferay.data.engine.service.persistence,\
 	com.liferay.data.engine.storage

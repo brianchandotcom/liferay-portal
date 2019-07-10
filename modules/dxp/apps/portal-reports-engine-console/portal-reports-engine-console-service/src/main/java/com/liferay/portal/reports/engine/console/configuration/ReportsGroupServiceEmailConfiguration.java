@@ -23,8 +23,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
  * @author Prathima Shreenath
  */
 @ExtendedObjectClassDefinition(
-	category = "forms-and-workflow",
-	scope = ExtendedObjectClassDefinition.Scope.GROUP
+	category = "reports", scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
 	id = "com.liferay.portal.reports.engine.console.configuration.ReportsGroupServiceEmailConfiguration",

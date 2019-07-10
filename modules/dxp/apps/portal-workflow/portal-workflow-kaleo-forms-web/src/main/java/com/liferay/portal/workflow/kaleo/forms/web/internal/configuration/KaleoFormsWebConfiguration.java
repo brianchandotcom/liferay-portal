@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Inácio Nery
  */
-@ExtendedObjectClassDefinition(category = "forms-and-workflow")
+@ExtendedObjectClassDefinition(category = "workflow")
 @Meta.OCD(
 	id = "com.liferay.portal.workflow.kaleo.forms.web.internal.configuration.KaleoFormsWebConfiguration",
 	localization = "content/Language", name = "kaleo-web-configuration-name"

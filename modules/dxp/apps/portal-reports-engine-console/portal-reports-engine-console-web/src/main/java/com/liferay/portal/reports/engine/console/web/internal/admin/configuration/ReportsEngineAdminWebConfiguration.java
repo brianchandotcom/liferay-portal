@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Inácio Nery
  */
-@ExtendedObjectClassDefinition(category = "forms-and-workflow")
+@ExtendedObjectClassDefinition(category = "reports")
 @Meta.OCD(
 	id = "com.liferay.portal.reports.engine.console.web.internal.admin.configuration.ReportsEngineAdminWebConfiguration",
 	name = "reports-engine-admin-web-configuration-name"

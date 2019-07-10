@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Prathima Shreenath
  */
-@ExtendedObjectClassDefinition(category = "forms-and-workflow")
+@ExtendedObjectClassDefinition(category = "reports")
 @Meta.OCD(
 	id = "com.liferay.portal.reports.engine.console.configuration.ReportsPortletMessagingConfiguration",
 	localization = "content/Language",

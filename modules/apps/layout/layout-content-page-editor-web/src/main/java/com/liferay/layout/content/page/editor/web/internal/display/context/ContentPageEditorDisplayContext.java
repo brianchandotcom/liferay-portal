@@ -138,14 +138,14 @@ public class ContentPageEditorDisplayContext {
 	public ContentPageEditorDisplayContext(
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
 		String className, long classPK,
-		FragmentRendererController fragmentRendererController,
-		CommentManager commentManager) {
+		CommentManager commentManager,
+		FragmentRendererController fragmentRendererController) {
 
 		request = httpServletRequest;
 		_renderResponse = renderResponse;
 		this.classPK = classPK;
-		_fragmentRendererController = fragmentRendererController;
 		_commentManager = commentManager;
+		_fragmentRendererController = fragmentRendererController;
 
 		classNameId = PortalUtil.getClassNameId(className);
 		infoDisplayContributorTracker =

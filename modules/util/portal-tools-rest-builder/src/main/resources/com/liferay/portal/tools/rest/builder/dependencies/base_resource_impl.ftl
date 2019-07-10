@@ -31,6 +31,9 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import javax.validation.constraints.NotNull;
 
 import javax.ws.rs.Consumes;
@@ -131,6 +134,8 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 
 	protected AcceptLanguage contextAcceptLanguage;
 	protected Company contextCompany;
+	protected HttpServletRequest contextHttpServletRequest;
+	protected HttpServletResponse contextHttpServletResponse;
 	protected UriInfo contextUriInfo;
 	protected User contextUser;
 

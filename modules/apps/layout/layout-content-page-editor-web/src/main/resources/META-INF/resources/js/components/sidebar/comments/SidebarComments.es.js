@@ -15,4 +15,7 @@
 import React from 'react';
 import {NoCommentsMessage} from './NoCommentsMessage.es';
 
-export const SidebarComments = () => <NoCommentsMessage />;
+const SidebarComments = () => <NoCommentsMessage />;
+
+export {SidebarComments};
+export default SidebarComments;

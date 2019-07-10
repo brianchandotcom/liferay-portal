@@ -16,7 +16,7 @@ import React from 'react';
 
 import {NoCommentsMessageIcon} from './NoCommentsMessageIcon.es';
 
-export const NoCommentsMessage = () => (
+const NoCommentsMessage = () => (
 	<div className='p-4 text-center'>
 		<NoCommentsMessageIcon />
 
@@ -27,3 +27,6 @@ export const NoCommentsMessage = () => (
 		</p>
 	</div>
 );
+
+export {NoCommentsMessage};
+export default NoCommentsMessage;

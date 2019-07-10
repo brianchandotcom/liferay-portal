@@ -17,10 +17,10 @@ package com.liferay.portlet.display.template.web.internal.exportimport.data.hand
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.exportimport.kernel.lar.DataLevel;
+import com.liferay.exportimport.test.util.lar.BasePortletDataHandlerTestCase;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 

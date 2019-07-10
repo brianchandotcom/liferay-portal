@@ -16,11 +16,11 @@ package com.liferay.polls.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.lar.DataLevel;
+import com.liferay.exportimport.test.util.lar.BasePortletDataHandlerTestCase;
 import com.liferay.polls.constants.PollsPortletKeys;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.util.test.PollsTestUtil;
-import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Ignore;

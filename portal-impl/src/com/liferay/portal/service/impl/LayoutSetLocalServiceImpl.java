@@ -69,7 +69,8 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		Date now = new Date();
 
-		long layoutSetId = counterLocalService.increment();
+		long layoutSetId = counterLocalService.increment(
+			LayoutSet.class.getName());
 
 		LayoutSet layoutSet = layoutSetPersistence.create(layoutSetId);
 

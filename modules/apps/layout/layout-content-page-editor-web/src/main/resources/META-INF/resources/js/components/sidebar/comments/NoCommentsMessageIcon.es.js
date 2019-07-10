@@ -14,7 +14,7 @@
 
 import React from 'react';
 
-export const NoCommentsMessageIcon = () => (
+const NoCommentsMessageIcon = () => (
 	<svg
 		className='mb-4'
 		fill='none'
@@ -57,3 +57,6 @@ export const NoCommentsMessageIcon = () => (
 		/>
 	</svg>
 );
+
+export {NoCommentsMessageIcon};
+export default NoCommentsMessageIcon;

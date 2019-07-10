@@ -422,16 +422,16 @@ paths:
         put:
             operationId: putFormRecord
             parameters:
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
                 - in: path
                   name: formRecordId
                   required: true
                   schema:
                       format: int64
                       type: integer
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -497,16 +497,16 @@ paths:
         post:
             operationId: postFormEvaluateContext
             parameters:
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
                 - in: path
                   name: formId
                   required: true
                   schema:
                       format: int64
                       type: integer
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -594,16 +594,16 @@ paths:
         post:
             operationId: postFormFormRecord
             parameters:
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
                 - in: path
                   name: formId
                   required: true
                   schema:
                       format: int64
                       type: integer
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:

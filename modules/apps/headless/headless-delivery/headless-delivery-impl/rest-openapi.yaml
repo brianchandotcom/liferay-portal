@@ -2025,10 +2025,6 @@ paths:
             description: Retrieves a list of the content structure's structured content. Results can be paginated, filtered, searched, and sorted.
             operationId: getContentStructureStructuredContentsPage
             parameters:
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
                 - in: path
                   name: contentStructureId
                   required: true
@@ -2053,6 +2049,10 @@ paths:
                       type: string
                 - in: query
                   name: sort
+                  schema:
+                      type: string
+                - in: header
+                  name: Accept-Language
                   schema:
                       type: string
             responses:
@@ -3063,13 +3063,13 @@ paths:
                       format: int64
                       type: integer
                 - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
                   name: flatten
                   schema:
                       type: boolean
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -4416,13 +4416,13 @@ paths:
                       format: int64
                       type: integer
                 - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
                   name: flatten
                   schema:
                       type: boolean
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -4495,13 +4495,13 @@ paths:
                       format: int64
                       type: integer
                 - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
                   name: flatten
                   schema:
                       type: boolean
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -4577,13 +4577,13 @@ paths:
                       format: int64
                       type: integer
                 - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
                   name: flatten
                   schema:
                       type: boolean
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -4719,13 +4719,13 @@ paths:
                       format: int64
                       type: integer
                 - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
                   name: flatten
                   schema:
                       type: boolean
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -4798,13 +4798,13 @@ paths:
                       format: int64
                       type: integer
                 - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
                   name: flatten
                   schema:
                       type: boolean
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -4877,13 +4877,13 @@ paths:
                       format: int64
                       type: integer
                 - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
                   name: flatten
                   schema:
                       type: boolean
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -4949,10 +4949,6 @@ paths:
             description: Retrieves the Site's structured content. Results can be paginated, filtered, searched, flattened, and sorted.
             operationId: getSiteStructuredContentsPage
             parameters:
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
                 - in: path
                   name: siteId
                   required: true
@@ -4960,13 +4956,13 @@ paths:
                       format: int64
                       type: integer
                 - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
                   name: flatten
                   schema:
                       type: boolean
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
                 - in: query
                   name: page
                   schema:
@@ -4981,6 +4977,10 @@ paths:
                       type: string
                 - in: query
                   name: sort
+                  schema:
+                      type: string
+                - in: header
+                  name: Accept-Language
                   schema:
                       type: string
             responses:
@@ -5002,16 +5002,16 @@ paths:
             description: Creates a new structured content.
             operationId: postSiteStructuredContent
             parameters:
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
                 - in: path
                   name: siteId
                   required: true
                   schema:
                       format: int64
                       type: integer
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -5036,10 +5036,6 @@ paths:
             description: Retrieves a structured content by its key (`articleKey`).
             operationId: getSiteStructuredContentByKey
             parameters:
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
                 - in: path
                   name: siteId
                   required: true
@@ -5049,6 +5045,10 @@ paths:
                 - in: path
                   name: key
                   required: true
+                  schema:
+                      type: string
+                - in: header
+                  name: Accept-Language
                   schema:
                       type: string
             responses:
@@ -5067,10 +5067,6 @@ paths:
             description: Retrieves a structured content by its UUID.
             operationId: getSiteStructuredContentByUuid
             parameters:
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
                 - in: path
                   name: siteId
                   required: true
@@ -5080,6 +5076,10 @@ paths:
                 - in: path
                   name: uuid
                   required: true
+                  schema:
+                      type: string
+                - in: header
+                  name: Accept-Language
                   schema:
                       type: string
             responses:
@@ -5343,10 +5343,6 @@ paths:
             description: Retrieves the folder's structured content. Results can be paginated, filtered, searched, and sorted.
             operationId: getStructuredContentFolderStructuredContentsPage
             parameters:
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
                 - in: path
                   name: structuredContentFolderId
                   required: true
@@ -5373,6 +5369,10 @@ paths:
                   name: sort
                   schema:
                       type: string
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -5392,16 +5392,16 @@ paths:
             description: Creates a new structured content in the folder.
             operationId: postStructuredContentFolderStructuredContent
             parameters:
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
                 - in: path
                   name: structuredContentFolderId
                   required: true
                   schema:
                       format: int64
                       type: integer
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -5442,16 +5442,16 @@ paths:
             description: Retrieves the structured content via its ID.
             operationId: getStructuredContent
             parameters:
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
                 - in: path
                   name: structuredContentId
                   required: true
                   schema:
                       format: int64
                       type: integer
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -5467,16 +5467,16 @@ paths:
             description: Updates only the fields received in the request body, leaving any other fields untouched.
             operationId: patchStructuredContent
             parameters:
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
                 - in: path
                   name: structuredContentId
                   required: true
                   schema:
                       format: int64
                       type: integer
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -5500,16 +5500,16 @@ paths:
             description: Replaces the structured content with the information sent in the request body. Any missing fields are deleted, unless they are required.
             operationId: putStructuredContent
             parameters:
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
                 - in: path
                   name: structuredContentId
                   required: true
                   schema:
                       format: int64
                       type: integer
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:

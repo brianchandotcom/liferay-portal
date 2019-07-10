@@ -76,7 +76,7 @@ public class LiferayWriter
 		_liferaySink = writeOperation.getSink();
 		_rejectWrites = new ArrayList<>();
 		_rejectSchema = SchemaUtils.createRejectSchema(
-			tLiferayOutputProperties.resource.main.schema.getValue());
+			tLiferayOutputProperties.getSchema());
 		_successWrites = new ArrayList<>();
 	}
 
@@ -201,27 +201,32 @@ public class LiferayWriter
 			IndexedRecord indexedRecord)
 		throws IOException {
 
-		Schema indexRecordSchema = indexedRecord.getSchema();
-
-		List<Schema.Field> indexRecordFields = indexRecordSchema.getFields();
+		Schema schema = _tLiferayOutputProperties.getSchema();
 
 		JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
 
 		Map<String, JsonObjectBuilder> nestedJsonObjectBuilders =
 			new HashMap<>();
 
-		for (Schema.Field field : indexRecordFields) {
-			if (indexedRecord.get(field.pos()) == null) {
-				continue;
-			}
-
+		for (Schema.Field field : schema.getFields()) {
 			String fieldName = field.name();
 
-			Schema unwrappedSchema = AvroUtils.unwrapIfNullable(field.schema());
+			Schema.Field dataField = _getByName(fieldName, indexedRecord);
 
-			if (unwrappedSchema.getType() == Schema.Type.NULL) {
+			if ((dataField == null) ||
+				(indexedRecord.get(dataField.pos()) == null)) {
+
+				if (!AvroUtils.isNullable(field.schema())) {
+					_handleFailedIndexedRecord(
+						indexedRecord,
+						new UnsupportedOperationException(
+							"Missing required field " + fieldName));
+				}
+
 				continue;
 			}
+
+			Schema fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
 
 			JsonObjectBuilder currentJsonObjectBuilder = objectBuilder;
 
@@ -239,55 +244,48 @@ public class LiferayWriter
 				fieldName = nameParts[1];
 			}
 
-			if (AvroUtils.isSameType(unwrappedSchema, AvroUtils._boolean())) {
-				currentJsonObjectBuilder.add(
-					fieldName, (boolean)indexedRecord.get(field.pos()));
-			}
-			else if (AvroUtils.isSameType(
-						unwrappedSchema, AvroUtils._bytes())) {
+			int fieldPos = dataField.pos();
 
+			if (AvroUtils.isSameType(fieldSchema, AvroUtils._boolean())) {
+				currentJsonObjectBuilder.add(
+					fieldName, (boolean)indexedRecord.get(fieldPos));
+			}
+			else if (AvroUtils.isSameType(fieldSchema, AvroUtils._bytes())) {
 				Base64.Encoder encoder = Base64.getEncoder();
 
 				currentJsonObjectBuilder.add(
 					fieldName,
 					encoder.encodeToString(
-						(byte[])indexedRecord.get(field.pos())));
+						(byte[])indexedRecord.get(fieldPos)));
 			}
 			else if (AvroUtils.isSameType(
-						unwrappedSchema, AvroUtils._logicalTimestamp()) ||
-					 AvroUtils.isSameType(unwrappedSchema, AvroUtils._date())) {
+						fieldSchema, AvroUtils._logicalTimestamp()) ||
+					 AvroUtils.isSameType(fieldSchema, AvroUtils._date())) {
 
 				currentJsonObjectBuilder.add(
-					fieldName, (Long)indexedRecord.get(field.pos()));
+					fieldName, (Long)indexedRecord.get(fieldPos));
 			}
-			else if (AvroUtils.isSameType(
-						unwrappedSchema, AvroUtils._double())) {
-
+			else if (AvroUtils.isSameType(fieldSchema, AvroUtils._double())) {
 				currentJsonObjectBuilder.add(
-					fieldName, (double)indexedRecord.get(field.pos()));
+					fieldName, (double)indexedRecord.get(fieldPos));
 			}
-			else if (AvroUtils.isSameType(
-						unwrappedSchema, AvroUtils._float())) {
-
+			else if (AvroUtils.isSameType(fieldSchema, AvroUtils._float())) {
 				currentJsonObjectBuilder.add(
-					fieldName, (float)indexedRecord.get(field.pos()));
+					fieldName, (float)indexedRecord.get(fieldPos));
 			}
-			else if (AvroUtils.isSameType(unwrappedSchema, AvroUtils._int())) {
+			else if (AvroUtils.isSameType(fieldSchema, AvroUtils._int())) {
 				currentJsonObjectBuilder.add(
-					fieldName, (int)indexedRecord.get(field.pos()));
+					fieldName, (int)indexedRecord.get(fieldPos));
 			}
-			else if (AvroUtils.isSameType(unwrappedSchema, AvroUtils._long())) {
+			else if (AvroUtils.isSameType(fieldSchema, AvroUtils._long())) {
 				currentJsonObjectBuilder.add(
-					fieldName, (long)indexedRecord.get(field.pos()));
+					fieldName, (long)indexedRecord.get(fieldPos));
 			}
-			else if (AvroUtils.isSameType(
-						unwrappedSchema, AvroUtils._string())) {
-
-				String stringFieldValue = (String)indexedRecord.get(
-					field.pos());
+			else if (AvroUtils.isSameType(fieldSchema, AvroUtils._string())) {
+				String stringFieldValue = (String)indexedRecord.get(fieldPos);
 
 				if (Objects.equals("true", field.getProp("oas.dictionary")) ||
-					Objects.equals("Dictionary", unwrappedSchema.getName())) {
+					Objects.equals("Dictionary", fieldSchema.getName())) {
 
 					StringReader stringReader = new StringReader(
 						stringFieldValue);
@@ -305,10 +303,12 @@ public class LiferayWriter
 				currentJsonObjectBuilder.add(fieldName, stringFieldValue);
 			}
 			else {
-				throw new IOException(
-					i18nMessages.getMessage(
-						"error.unsupported.field.schema", fieldName,
-						unwrappedSchema.getType()));
+				_handleFailedIndexedRecord(
+					indexedRecord,
+					new UnsupportedOperationException(
+						i18nMessages.getMessage(
+							"error.unsupported.field.schema", fieldName,
+							fieldSchema.getType())));
 			}
 		}
 
@@ -321,6 +321,18 @@ public class LiferayWriter
 		}
 
 		return objectBuilder.build();
+	}
+
+	private Schema.Field _getByName(String name, IndexedRecord indexedRecord) {
+		Schema schema = indexedRecord.getSchema();
+
+		for (Schema.Field field : schema.getFields()) {
+			if (Objects.equals(name, field.name())) {
+				return field;
+			}
+		}
+
+		return null;
 	}
 
 	private void _handleFailedIndexedRecord(Exception exception)

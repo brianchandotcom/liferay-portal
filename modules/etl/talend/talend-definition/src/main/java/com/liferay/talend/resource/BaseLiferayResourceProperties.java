@@ -33,6 +33,8 @@ import java.util.stream.Stream;
 
 import javax.ws.rs.core.UriBuilder;
 
+import org.apache.avro.Schema;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -138,6 +140,18 @@ public abstract class BaseLiferayResourceProperties
 	@Override
 	public LiferayConnectionProperties getLiferayConnectionProperties() {
 		return connection;
+	}
+
+	public Schema getSchema() {
+		Property<Schema> schemaProperty = main.schema;
+
+		return schemaProperty.getValue();
+	}
+
+	public void setSchema(Schema schema) {
+		Property<Schema> schemaProperty = main.schema;
+
+		schemaProperty.setValue(schema);
 	}
 
 	public void setSchemaListener(ISchemaListener schemaListener) {

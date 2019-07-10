@@ -68,6 +68,10 @@ public class TLiferayOutputProperties
 		return rejectSchemaFieldNames.size();
 	}
 
+	public Schema getSchema() {
+		return resource.getSchema();
+	}
+
 	@Override
 	public void refreshLayout(Form form) {
 		super.refreshLayout(form);
@@ -95,6 +99,10 @@ public class TLiferayOutputProperties
 
 	public void setResourceParametersTableValueColumnNameValue(String value) {
 		resource.parametersTable.valueColumnName.setValue(Arrays.asList(value));
+	}
+
+	public void setSchema(Schema schema) {
+		resource.setSchema(schema);
 	}
 
 	@Override

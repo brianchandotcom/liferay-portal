@@ -59,7 +59,7 @@ public class ContentPageLayoutEditorDisplayContext
 
 		super(
 			httpServletRequest, renderResponse, className, classPK,
-			fragmentRendererController, commentManager);
+			commentManager, fragmentRendererController);
 	}
 
 	@Override

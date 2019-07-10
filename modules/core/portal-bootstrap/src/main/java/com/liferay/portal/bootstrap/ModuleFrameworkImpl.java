@@ -74,6 +74,7 @@ import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Dictionary;
@@ -1646,6 +1647,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		frameworkWiring.resolveBundles(bundles);
 
+		_startConfigurationBundles(bundles);
+
 		if (PropsValues.MODULE_FRAMEWORK_CONCURRENT_STARTUP_ENABLED) {
 			Runtime runtime = Runtime.getRuntime();
 
@@ -1738,6 +1741,22 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Registered required services");
+		}
+	}
+
+	private void _startConfigurationBundles(Collection<Bundle> bundles)
+		throws BundleException {
+
+		Iterator<Bundle> iterator = bundles.iterator();
+
+		while (iterator.hasNext()) {
+			Bundle bundle = iterator.next();
+
+			if (_configurationNames.contains(bundle.getSymbolicName())) {
+				bundle.start();
+
+				iterator.remove();
+			}
 		}
 	}
 
@@ -1877,6 +1896,14 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ModuleFrameworkImpl.class);
+
+	private static final Set<String> _configurationNames =
+		new HashSet<String>() {
+			{
+				add("com.liferay.portal.configuration.persistence.impl");
+				add("org.apache.felix.configadmin");
+			}
+		};
 
 	private Framework _framework;
 	private final Map

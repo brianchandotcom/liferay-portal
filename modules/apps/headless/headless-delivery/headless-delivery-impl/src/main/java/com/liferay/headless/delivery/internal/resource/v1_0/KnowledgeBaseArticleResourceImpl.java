@@ -282,7 +282,8 @@ public class KnowledgeBaseArticleResourceImpl
 		_spiRatingResource = new SPIRatingResource<>(
 			KBArticle.class.getName(), _ratingsEntryLocalService,
 			ratingsEntry -> RatingUtil.toRating(
-				_portal, ratingsEntry, _userLocalService), contextUser);
+				_portal, ratingsEntry, _userLocalService),
+			() -> contextUser);
 	}
 
 	@Deactivate

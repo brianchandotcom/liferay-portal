@@ -326,7 +326,8 @@ public class DocumentResourceImpl
 		_spiRatingResource = new SPIRatingResource<>(
 			DLFileEntry.class.getName(), _ratingsEntryLocalService,
 			ratingsEntry -> RatingUtil.toRating(
-				_portal, ratingsEntry, _userLocalService), contextUser);
+				_portal, ratingsEntry, _userLocalService),
+			() -> contextUser);
 	}
 
 	@Deactivate

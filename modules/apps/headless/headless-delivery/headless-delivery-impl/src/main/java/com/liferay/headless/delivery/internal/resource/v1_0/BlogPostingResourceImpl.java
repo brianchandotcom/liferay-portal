@@ -228,7 +228,8 @@ public class BlogPostingResourceImpl
 		_spiRatingResource = new SPIRatingResource<>(
 			BlogsEntry.class.getName(), _ratingsEntryLocalService,
 			ratingsEntry -> RatingUtil.toRating(
-				_portal, ratingsEntry, _userLocalService), contextUser);
+				_portal, ratingsEntry, _userLocalService),
+			() -> contextUser);
 	}
 
 	@Deactivate

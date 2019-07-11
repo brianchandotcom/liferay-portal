@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
+import java.util.function.Supplier;
+
 /**
  * @author Javier Gamarra
  */
@@ -30,12 +32,12 @@ public class SPIRatingResource<T> {
 	public SPIRatingResource(
 		String className, RatingsEntryLocalService ratingsEntryLocalService,
 		UnsafeFunction<RatingsEntry, T, Exception> transformUnsafeFunction,
-		User user) {
+		Supplier<User> userSupplier) {
 
 		_className = className;
 		_ratingsEntryLocalService = ratingsEntryLocalService;
 		_transformUnsafeFunction = transformUnsafeFunction;
-		_user = user;
+		_userSupplier = userSupplier;
 	}
 
 	public T addOrUpdateRating(Number ratingValue, long classPK)
@@ -43,27 +45,37 @@ public class SPIRatingResource<T> {
 
 		_checkPermission();
 
+		User user = _userSupplier.get();
+
 		return _transformUnsafeFunction.apply(
 			_ratingsEntryLocalService.updateEntry(
-				_user.getUserId(), _className, classPK,
+				user.getUserId(), _className, classPK,
 				GetterUtil.getDouble(ratingValue), new ServiceContext()));
 	}
 
 	public void deleteRating(Long classPK) throws Exception {
 		_checkPermission();
 
+		User user = _userSupplier.get();
+
 		_ratingsEntryLocalService.deleteEntry(
-			_user.getUserId(), _className, classPK);
+			user.getUserId(), _className, classPK);
 	}
 
 	public T getRating(Long classPK) throws Exception {
+
+		User user = _userSupplier.get();
+
 		return _transformUnsafeFunction.apply(
 			_ratingsEntryLocalService.getEntry(
-				_user.getUserId(), _className, classPK));
+				user.getUserId(), _className, classPK));
 	}
 
 	private void _checkPermission() throws Exception {
-		if (_user.isDefaultUser()) {
+
+		User user = _userSupplier.get();
+
+		if (user.isDefaultUser()) {
 			throw new PrincipalException();
 		}
 	}
@@ -72,6 +84,6 @@ public class SPIRatingResource<T> {
 	private final RatingsEntryLocalService _ratingsEntryLocalService;
 	private final UnsafeFunction<RatingsEntry, T, Exception>
 		_transformUnsafeFunction;
-	private final User _user;
+	private final Supplier<User> _userSupplier;
 
 }

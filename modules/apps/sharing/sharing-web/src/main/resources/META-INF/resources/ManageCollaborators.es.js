@@ -16,10 +16,11 @@ import 'clay-alert';
 import 'clay-button';
 import 'clay-select';
 import 'clay-sticker';
+import {PortletBase} from 'frontend-js-web';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
+
 import templates from './ManageCollaborators.soy';
-import {PortletBase} from 'frontend-js-web';
 
 /**
  * Handles actions to delete or change permissions of the

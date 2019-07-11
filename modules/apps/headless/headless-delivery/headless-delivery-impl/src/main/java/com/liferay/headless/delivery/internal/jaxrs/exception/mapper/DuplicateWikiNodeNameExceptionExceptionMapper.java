@@ -39,13 +39,16 @@ public class DuplicateWikiNodeNameExceptionExceptionMapper
 	implements ExceptionMapper<DuplicateNodeNameException> {
 
 	@Override
-	public Response toResponse(DuplicateNodeNameException dnne) {
+	public Response toResponse(
+		DuplicateNodeNameException duplicateNodeNameException) {
+
 		return Response.status(
 			409
 		).type(
 			MediaType.TEXT_PLAIN
 		).entity(
-			"A wiki node already exists with the name " + dnne.getMessage()
+			"A wiki node already exists with the name " +
+				duplicateNodeNameException.getMessage()
 		).build();
 	}
 

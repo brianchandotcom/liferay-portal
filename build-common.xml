@@ -437,7 +437,7 @@ information.
 						/>
 						<fileset
 							dir="test/@{test.type}"
-							includes="**/*.bnd,**/*.png,**/*.policy,**/*.properties,**/dependencies/**,META-INF/*.xml,WEB-INF/*.xml"
+							includes="**/*.bnd,**/*.png,**/*.policy,**/*.properties,**/dependencies/**,META-INF/*.xml"
 						/>
 					</copy>
 

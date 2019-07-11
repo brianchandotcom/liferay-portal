@@ -220,7 +220,8 @@ public class MessageBoardMessageResourceImpl
 		_spiRatingResource = new SPIRatingResource<>(
 			MBMessage.class.getName(), _ratingsEntryLocalService,
 			ratingsEntry -> RatingUtil.toRating(
-				_portal, ratingsEntry, _userLocalService), contextUser);
+				_portal, ratingsEntry, _userLocalService),
+			() -> contextUser);
 	}
 
 	@Deactivate

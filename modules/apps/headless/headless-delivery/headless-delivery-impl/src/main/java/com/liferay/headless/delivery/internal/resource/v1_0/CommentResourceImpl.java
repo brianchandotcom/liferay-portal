@@ -177,7 +177,7 @@ public class CommentResourceImpl
 	@Activate
 	protected void activate() {
 		_spiCommentResource = new SPICommentResource<>(
-			_commentManager,
+			_commentManager, () -> contextCompany.getCompanyId(),
 			comment -> CommentUtil.toComment(
 				comment, _commentManager, _portal));
 	}

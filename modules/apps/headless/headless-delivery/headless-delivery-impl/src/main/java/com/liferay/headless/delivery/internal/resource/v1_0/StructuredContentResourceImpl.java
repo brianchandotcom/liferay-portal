@@ -478,7 +478,8 @@ public class StructuredContentResourceImpl
 		_spiRatingResource = new SPIRatingResource<>(
 			JournalArticle.class.getName(), _ratingsEntryLocalService,
 			ratingsEntry -> RatingUtil.toRating(
-				_portal, ratingsEntry, _userLocalService), contextUser);
+				_portal, ratingsEntry, _userLocalService),
+			() -> contextUser);
 	}
 
 	@Deactivate

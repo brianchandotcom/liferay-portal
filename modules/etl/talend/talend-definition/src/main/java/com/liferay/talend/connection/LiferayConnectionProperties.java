@@ -52,6 +52,10 @@ public class LiferayConnectionProperties
 
 	public LiferayConnectionProperties(String name) {
 		super(name);
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Created " + System.identityHashCode(this));
+		}
 	}
 
 	public void afterLoginType() {
@@ -196,6 +200,10 @@ public class LiferayConnectionProperties
 			basicAuthorizationPropertiesForm.setVisible(true);
 			oAuthAuthorizationPropertiesForm.setVisible(false);
 		}
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Refreshed " + System.identityHashCode(this));
+		}
 	}
 
 	@Override
@@ -239,6 +247,10 @@ public class LiferayConnectionProperties
 			_createAdvancedForm(
 				this, connectTimeout, readTimeout, itemsPerPage,
 				followRedirects, forceHttps));
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Layout set " + System.identityHashCode(this));
+		}
 	}
 
 	@Override
@@ -249,6 +261,10 @@ public class LiferayConnectionProperties
 		followRedirects.setValue(true);
 		forceHttps.setValue(false);
 		loginType.setValue(LoginType.BASIC);
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Properties set " + System.identityHashCode(this));
+		}
 	}
 
 	public ValidationResult validateTestConnection() {

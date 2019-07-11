@@ -18,6 +18,9 @@ import com.liferay.talend.ui.UIKeys;
 
 import java.util.EnumSet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.talend.daikon.properties.PropertiesImpl;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.property.Property;
@@ -38,6 +41,10 @@ public class BasicAuthorizationProperties extends PropertiesImpl {
 				Property.Flags.ENCRYPT, Property.Flags.SUPPRESS_LOGGING));
 
 		userId = PropertyFactory.newString("userId");
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Created " + System.identityHashCode(this));
+		}
 	}
 
 	@Override
@@ -49,6 +56,10 @@ public class BasicAuthorizationProperties extends PropertiesImpl {
 		referenceForm.addRow(userId);
 
 		referenceForm.addColumn(password);
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Layout set " + System.identityHashCode(this));
+		}
 	}
 
 	@Override
@@ -57,9 +68,16 @@ public class BasicAuthorizationProperties extends PropertiesImpl {
 
 		password.setValue(UIKeys.LIFERAY_DEFAULT_PASSWORD);
 		userId.setValue(UIKeys.LIFERAY_DEFAULT_USER_ID);
+
+		if (_logger.isTraceEnabled()) {
+			_logger.trace("Properties set " + System.identityHashCode(this));
+		}
 	}
 
 	public Property<String> password;
 	public Property<String> userId;
+
+	private static final Logger _logger = LoggerFactory.getLogger(
+		BasicAuthorizationProperties.class);
 
 }

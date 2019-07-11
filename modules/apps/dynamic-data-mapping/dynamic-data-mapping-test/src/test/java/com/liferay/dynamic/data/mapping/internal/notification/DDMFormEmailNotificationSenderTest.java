@@ -28,7 +28,8 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.template.soy.util.SoyHTMLSanitizer;
+import com.liferay.portal.template.soy.data.SoyDataFactory;
+import com.liferay.portal.template.soy.data.SoyHTMLData;
 import com.liferay.portal.template.soy.util.SoyRawData;
 import com.liferay.portal.util.HtmlImpl;
 
@@ -133,15 +134,27 @@ public class DDMFormEmailNotificationSenderTest {
 		);
 
 		MemberMatcher.field(
-			DDMFormEmailNotificationSender.class, "_soyHTMLSanitizer"
+			DDMFormEmailNotificationSender.class, "_soyDataFactory"
 		).set(
 			_ddmFormEmailNotificationSender,
-			new SoyHTMLSanitizer() {
+			new SoyDataFactory() {
 
 				@Override
-				public Object sanitize(String value) {
-					return UnsafeSanitizedContentOrdainer.ordainAsSafe(
-						value, SanitizedContent.ContentKind.HTML);
+				public SoyHTMLData createSoyHTMLData(String html) {
+					return null;
+				}
+
+				@Override
+				public SoyRawData createSoyRawData(String html) {
+					return new SoyRawData() {
+
+						@Override
+						public Object getValue() {
+							return UnsafeSanitizedContentOrdainer.ordainAsSafe(
+								html, SanitizedContent.ContentKind.HTML);
+						}
+
+					};
 				}
 
 			}

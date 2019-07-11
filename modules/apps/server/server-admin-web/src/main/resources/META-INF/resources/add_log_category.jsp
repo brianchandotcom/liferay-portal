@@ -31,7 +31,12 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 %>
 
-<div class="server-admin-tabs">
+<portlet:actionURL name="/server_admin/edit_server" var="addLogCategoryURL">
+	<portlet:param name="cmd" value="addLogLevel" />
+	<portlet:param name="redirect" value="<%= String.valueOf(serverURL) %>" />
+</portlet:actionURL>
+
+<aui:form action="<%= addLogCategoryURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
 			<aui:input cssClass="lfr-input-text-container" label="logger-name" name="loggerName" type="text" />
@@ -53,6 +58,8 @@ portletDisplay.setURLBack(backURL);
 	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button cssClass="save-server-button" data-cmd="addLogLevel" value="save" />
+		<aui:button type="submit" />
+
+		<aui:button href="<%= backURL %>" type="cancel" />
 	</aui:button-row>
-</div>
+</aui:form>

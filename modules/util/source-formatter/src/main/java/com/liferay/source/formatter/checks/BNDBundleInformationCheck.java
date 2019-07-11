@@ -49,6 +49,14 @@ public class BNDBundleInformationCheck extends BaseFileCheck {
 				fileName, "Missing Bundle-Version",
 				"bnd_bundle_information.markdown");
 		}
+		else if (absolutePath.endsWith("-test/bnd.bnd") &&
+				 !bundleVersion.equals("1.0.0")) {
+
+			addMessage(
+				fileName,
+				"'Bundle-Version' for *-test modules should always be " +
+					"'1.0.0', since we do not publish these");
+		}
 
 		return content;
 	}

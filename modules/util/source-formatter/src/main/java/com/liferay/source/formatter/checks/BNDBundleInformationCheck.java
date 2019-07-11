@@ -32,20 +32,22 @@ public class BNDBundleInformationCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (fileName.endsWith("/bnd.bnd") &&
-			!absolutePath.contains("/testIntegration/") &&
-			!absolutePath.contains("/third-party/")) {
+		if (!fileName.endsWith("/bnd.bnd") ||
+			absolutePath.contains("/testIntegration/") ||
+			absolutePath.contains("/third-party/")) {
 
-			_checkBundleName(fileName, absolutePath, content);
+			return content;
+		}
 
-			String bundleVersion = BNDSourceUtil.getDefinitionValue(
-				content, "Bundle-Version");
+		_checkBundleName(fileName, absolutePath, content);
 
-			if (bundleVersion == null) {
-				addMessage(
-					fileName, "Missing Bundle-Version",
-					"bnd_bundle_information.markdown");
-			}
+		String bundleVersion = BNDSourceUtil.getDefinitionValue(
+			content, "Bundle-Version");
+
+		if (bundleVersion == null) {
+			addMessage(
+				fileName, "Missing Bundle-Version",
+				"bnd_bundle_information.markdown");
 		}
 
 		return content;

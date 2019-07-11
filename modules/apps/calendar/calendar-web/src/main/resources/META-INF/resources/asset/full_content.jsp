@@ -16,10 +16,19 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+String languageId = LanguageUtil.getLanguageId(request);
+%>
+
 <div class="calendar-asset-full-content">
-	<c:if test="<%= Validator.isNotNull(calendarBooking.getDescription(locale)) %>">
+
+	<%
+	String description = calendarBooking.getDescription(languageId);
+	%>
+
+	<c:if test="<%= Validator.isNotNull(description) %>">
 		<div>
-			<%= calendarBooking.getDescription(locale) %>
+			<%= description %>
 		</div>
 	</c:if>
 
@@ -33,7 +42,7 @@
 		Calendar calendar = calendarBooking.getCalendar();
 		%>
 
-		<strong><%= HtmlUtil.escape(calendar.getName(locale)) %></strong>
+		<strong><%= HtmlUtil.escape(calendar.getName(languageId)) %></strong>
 
 		<%
 		List<CalendarBooking> childCalendarBookings = calendarBooking.getChildCalendarBookings();
@@ -55,7 +64,7 @@
 			for (CalendarBooking childCalendarBooking : childCalendarBookings) {
 				CalendarResource calendarResource = childCalendarBooking.getCalendarResource();
 
-				calendarResourcesNames.add(calendarResource.getName(locale));
+				calendarResourcesNames.add(calendarResource.getName(languageId));
 			}
 			%>
 

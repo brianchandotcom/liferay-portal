@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+String languageId = LanguageUtil.getLanguageId(request);
+%>
+
 <div class="calendar-asset-abstract">
 	<p>
 		<liferay-ui:icon
@@ -27,7 +31,7 @@
 		Calendar calendar = calendarBooking.getCalendar();
 		%>
 
-		<strong><%= HtmlUtil.escape(calendar.getName(locale)) %></strong>
+		<strong><%= HtmlUtil.escape(calendar.getName(languageId)) %></strong>
 
 		<%
 		List<CalendarBooking> childCalendarBookings = calendarBooking.getChildCalendarBookings();
@@ -49,7 +53,7 @@
 			for (CalendarBooking childCalendarBooking : childCalendarBookings) {
 				CalendarResource calendarResource = childCalendarBooking.getCalendarResource();
 
-				calendarResourcesNames.add(calendarResource.getName(locale));
+				calendarResourcesNames.add(calendarResource.getName(languageId));
 			}
 			%>
 

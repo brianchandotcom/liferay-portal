@@ -28,7 +28,7 @@ definition {
 
 	macro signOut {
 		if (IsElementNotPresent(locator1 = "UserBar#USER_SIGN_IN")) {
-			Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
+			Click.pauseClickAt(locator1 = "UserBar#USER_AVATAR_IMAGE");
 
 			AssertVisible(locator1 = "UserBar#USER_AVATAR_DROPDOWN_PORTAL_OPEN");
 

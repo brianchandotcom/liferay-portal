@@ -12,7 +12,7 @@
  * details.
  */
 
-import {debounce} from 'frontend-js-web';
+import {debounce} from '../utils/debounce';
 import {closest, getClosestAssetElement} from '../utils/assets';
 import {DEBOUNCE} from '../utils/constants';
 import {onReady} from '../utils/events.js';

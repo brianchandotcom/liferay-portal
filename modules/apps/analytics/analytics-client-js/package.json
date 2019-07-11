@@ -8,8 +8,6 @@
 	},
 	"dependencies": {
 		"core-js": "^2.5.6",
-		"frontend-js-web": "^4.0.0",
-		"metal-debounce": "^2.0.2",
 		"object-hash": "^1.3.0",
 		"whatwg-fetch": "^2.0.4"
 	},

@@ -15,7 +15,6 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
 import com.liferay.portal.kernel.comment.Comment;
@@ -99,9 +98,6 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 
 	@Reference
 	private CommentManager _commentManager;
-
-	@Reference
-	private FragmentEntryLinkService _fragmentEntryLinkService;
 
 	@Reference
 	private Portal _portal;

@@ -99,9 +99,7 @@ public class DDMFormFieldTypeSettingsEvaluatorTest {
 			(JSONArray)ddmDataProviderInstanceOutputFielPropertyChanges.get(
 				"value");
 
-		Assert.assertEquals(1, jsonArray.length());
-
-		Assert.assertEquals("Countries", jsonArray.getString(0));
+		Assert.assertEquals(0, jsonArray.length());
 	}
 
 	@Test

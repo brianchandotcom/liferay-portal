@@ -261,6 +261,26 @@ public class LiferayBasePlugin implements Plugin<Project> {
 
 			});
 
+		dockerDeployTask.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Logger logger = task.getLogger();
+
+					if (logger.isLifecycleEnabled()) {
+						DockerDeployTask dockerDeployTask =
+							(DockerDeployTask)task;
+
+						logger.lifecycle(
+							"Files of {} deployed to {}",
+							dockerDeployTask.getProject(),
+							dockerDeployTask.getDeployDir());
+					}
+				}
+
+			});
+
 		return dockerDeployTask;
 	}
 

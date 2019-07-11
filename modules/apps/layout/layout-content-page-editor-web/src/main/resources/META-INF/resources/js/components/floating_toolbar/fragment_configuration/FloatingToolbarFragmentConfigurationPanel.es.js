@@ -16,11 +16,13 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
+import './field_types/ColorPalette.soy';
 import './field_types/Checkbox.soy';
 import './field_types/Select.soy';
 import './FloatingToolbarFragmentConfigurationPanelDelegateTemplate.soy';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../utils/constants';
 import {getCheckboxData} from './field_types/Checkbox.es';
+import {getColorPaletteData} from './field_types/ColorPalette.es';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {getSelectData} from './field_types/Select.es';
 import {prefixSegmentsExperienceId} from '../../../utils/prefixSegmentsExperienceId.es';
@@ -33,7 +35,8 @@ import {updateEditableValueAction} from '../../../actions/updateEditableValue.es
  */
 const GET_DATA_FUNCTIONS = {
 	checkbox: getCheckboxData,
-	select: getSelectData
+	select: getSelectData,
+	colorPalette: getColorPaletteData
 };
 
 /**

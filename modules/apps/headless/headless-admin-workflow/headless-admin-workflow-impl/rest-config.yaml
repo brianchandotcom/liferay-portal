@@ -6,4 +6,6 @@ application:
     name: "Liferay.Headless.Admin.Workflow"
 author: "Javier Gamarra"
 clientDir: "../headless-admin-workflow-client/src/main/java"
+licenseName: "Apache 2.0"
+licenseURL: "http://www.apache.org/licenses/LICENSE-2.0.html"
 testDir: "../headless-admin-workflow-test/src/testIntegration/java"

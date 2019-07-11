@@ -6,4 +6,6 @@ application:
     name: "Liferay.Headless.Delivery"
 author: "Javier Gamarra"
 clientDir: "../headless-delivery-client/src/main/java"
+licenseName: "Apache 2.0"
+licenseURL: "http://www.apache.org/licenses/LICENSE-2.0.html"
 testDir: "../headless-delivery-test/src/testIntegration/java"

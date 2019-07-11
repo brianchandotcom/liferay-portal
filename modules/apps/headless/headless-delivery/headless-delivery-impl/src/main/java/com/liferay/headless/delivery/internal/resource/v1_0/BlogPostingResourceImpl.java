@@ -54,6 +54,7 @@ import java.io.Serializable;
 
 import java.time.LocalDateTime;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -112,7 +113,7 @@ public class BlogPostingResourceImpl
 	@Override
 	public Page<BlogPosting> getSiteBlogPostingsPage(
 			Long siteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			List<Sort> sorts)
 		throws Exception {
 
 		return SearchUtil.search(

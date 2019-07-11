@@ -36,6 +36,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
@@ -81,7 +82,7 @@ public class BlogPostingImageResourceImpl
 	@Override
 	public Page<BlogPostingImage> getSiteBlogPostingImagesPage(
 			Long siteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			List<Sort> sorts)
 		throws Exception {
 
 		Folder folder = _blogsEntryService.addAttachmentsFolder(siteId);

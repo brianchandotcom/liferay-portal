@@ -48,10 +48,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
-
-import javax.ws.rs.core.Context;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -73,7 +69,7 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 	@Override
 	public Page<Process> getProcessesPage(
 		Long companyId, String keywords, ProcessType processType, Long userId,
-		Pagination pagination, Sort[] sorts) {
+		Pagination pagination, List<Sort> sorts) {
 
 		List<Process> processes = transform(
 			_getCTProcesses(
@@ -97,7 +93,7 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 
 	private List<CTProcess> _getCTProcesses(
 		Long companyId, String keywords, ProcessType processType, Long userId,
-		Pagination pagination, Sort[] sorts) {
+		Pagination pagination, List<Sort> sorts) {
 
 		if (ProcessType.PUBLISHED_LATEST.equals(processType)) {
 			Optional<CTProcess> latestCTProcessOptional =
@@ -229,9 +225,6 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 
 	@Reference
 	private CTProcessLocalService _ctProcessLocalService;
-
-	@Context
-	private HttpServletRequest _httpServletRequest;
 
 	@Reference
 	private UserLocalService _userLocalService;

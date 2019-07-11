@@ -57,6 +57,7 @@ import com.liferay.wiki.service.WikiPageService;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -100,7 +101,7 @@ public class WikiPageResourceImpl
 	@Override
 	public Page<WikiPage> getWikiNodeWikiPagesPage(
 			Long wikiNodeId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		return SearchUtil.search(

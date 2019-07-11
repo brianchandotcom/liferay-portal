@@ -45,6 +45,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -93,7 +94,7 @@ public class MessageBoardSectionResourceImpl
 	public Page<MessageBoardSection>
 			getMessageBoardSectionMessageBoardSectionsPage(
 				Long parentMessageBoardSectionId, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
+				Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		MBCategory mbCategory = _mbCategoryService.getCategory(
@@ -116,7 +117,7 @@ public class MessageBoardSectionResourceImpl
 	@Override
 	public Page<MessageBoardSection> getSiteMessageBoardSectionsPage(
 			Long siteId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		return _getSiteMessageBoardSectionsPage(
@@ -202,7 +203,7 @@ public class MessageBoardSectionResourceImpl
 	private Page<MessageBoardSection> _getSiteMessageBoardSectionsPage(
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
 			Long siteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			List<Sort> sorts)
 		throws Exception {
 
 		return SearchUtil.search(

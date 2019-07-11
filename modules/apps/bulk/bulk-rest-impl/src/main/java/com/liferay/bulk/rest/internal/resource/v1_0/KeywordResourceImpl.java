@@ -26,7 +26,6 @@ import com.liferay.bulk.selection.BulkSelectionInputParameters;
 import com.liferay.bulk.selection.BulkSelectionRunner;
 import com.liferay.document.library.bulk.selection.EditTagsBulkSelectionAction;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -41,8 +40,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import javax.ws.rs.core.Context;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -73,7 +70,7 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 			transform(
 				_getAssetTagNames(
 					documentSelection,
-					PermissionCheckerFactoryUtil.create(_user)),
+					PermissionCheckerFactoryUtil.create(contextUser)),
 				this::_toTag));
 	}
 
@@ -142,7 +139,7 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 			keywordBulkSelection.getDocumentBulkSelection());
 
 		_bulkSelectionRunner.run(
-			_user, bulkSelection.toAssetEntryBulkSelection(),
+			contextUser, bulkSelection.toAssetEntryBulkSelection(),
 			_editTagsBulkSelectionAction,
 			new HashMap<String, Serializable>() {
 				{
@@ -171,8 +168,5 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 
 	@Reference
 	private EditTagsBulkSelectionAction _editTagsBulkSelectionAction;
-
-	@Context
-	private User _user;
 
 }

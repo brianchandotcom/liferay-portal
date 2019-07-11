@@ -21,12 +21,15 @@ import com.liferay.change.tracking.rest.resource.v1_0.AffectedEntryResource;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,7 +52,8 @@ public class AffectedEntryResourceImpl extends BaseAffectedEntryResourceImpl {
 		throws Exception {
 
 		QueryDefinition<CTEntry> queryDefinition =
-			SearchUtil.getQueryDefinition(CTEntry.class, pagination, null);
+			SearchUtil.getQueryDefinition(
+				CTEntry.class, pagination, (List<Sort>)null);
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
 

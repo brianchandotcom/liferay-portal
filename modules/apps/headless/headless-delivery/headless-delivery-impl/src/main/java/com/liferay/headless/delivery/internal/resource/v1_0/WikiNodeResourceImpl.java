@@ -35,6 +35,8 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.wiki.service.WikiNodeService;
 
+import java.util.List;
+
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -64,7 +66,7 @@ public class WikiNodeResourceImpl
 	@Override
 	public Page<WikiNode> getSiteWikiNodesPage(
 			Long siteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			List<Sort> sorts)
 		throws Exception {
 
 		return SearchUtil.search(

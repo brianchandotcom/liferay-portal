@@ -130,7 +130,8 @@ public class DataDefinitionResourceImpl
 
 	@Override
 	public Page<DataDefinition> getSiteDataDefinitionsPage(
-			Long siteId, String keywords, Pagination pagination, Sort[] sorts)
+			Long siteId, String keywords, Pagination pagination,
+			List<Sort> sorts)
 		throws Exception {
 
 		if (pagination.getPageSize() > 250) {
@@ -140,12 +141,12 @@ public class DataDefinitionResourceImpl
 					"page-size-is-greater-than-x", 250));
 		}
 
-		if (ArrayUtil.isEmpty(sorts)) {
-			sorts = new Sort[] {
+		if (sorts.isEmpty()) {
+			sorts.add(
 				new Sort(
 					Field.getSortableFieldName(Field.MODIFIED_DATE),
 					Sort.STRING_TYPE, true)
-			};
+			);
 		}
 
 		return SearchUtil.search(

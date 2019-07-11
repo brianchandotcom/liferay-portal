@@ -51,6 +51,7 @@ import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.BadRequestException;
@@ -107,7 +108,7 @@ public class MessageBoardMessageResourceImpl
 	public Page<MessageBoardMessage>
 			getMessageBoardMessageMessageBoardMessagesPage(
 				Long parentMessageBoardMessageId, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
+				Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		return _getMessageBoardMessagesPage(
@@ -127,7 +128,7 @@ public class MessageBoardMessageResourceImpl
 	public Page<MessageBoardMessage>
 			getMessageBoardThreadMessageBoardMessagesPage(
 				Long messageBoardThreadId, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
+				Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		MBThread mbThread = _mbThreadLocalService.getMBThread(
@@ -263,7 +264,7 @@ public class MessageBoardMessageResourceImpl
 
 	private Page<MessageBoardMessage> _getMessageBoardMessagesPage(
 			Long messageBoardMessageId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception {
 
 		return SearchUtil.search(

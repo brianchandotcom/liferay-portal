@@ -14,9 +14,10 @@
 
 package com.liferay.journal.internal.upgrade.v3_0_1;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
@@ -41,18 +42,20 @@ public class UpgradeContentRadioFields extends UpgradeProcess {
 		XPath xPath = SAXReaderUtil.createXPath(
 			"//dynamic-element[@type='radio']");
 
-		List<Node> imageNodes = xPath.selectNodes(contentDocument);
+		List<Node> radioNodes = xPath.selectNodes(contentDocument);
 
-		for (Node imageNode : imageNodes) {
-			Element imageElement = (Element)imageNode;
+		for (Node radioNode : radioNodes) {
+			Element radioElement = (Element)radioNode;
 
-			List<Element> dynamicContentElements = imageElement.elements(
+			List<Element> dynamicContentElements = radioElement.elements(
 				"dynamic-content");
 
 			for (Element dynamicContentElement : dynamicContentElements) {
 				String data = String.valueOf(dynamicContentElement.getData());
 
-				data = removeUnusedChars(data);
+				data = StringUtil.replace(
+					data, new String[] {"[\"", "\"]"},
+					new String[] {StringPool.BLANK, StringPool.BLANK});
 
 				dynamicContentElement.clearContent();
 
@@ -70,17 +73,19 @@ public class UpgradeContentRadioFields extends UpgradeProcess {
 
 	protected void updateContentRadioFields() throws Exception {
 		try (PreparedStatement ps1 = connection.prepareStatement(
-				"select id_, content from JournalArticle where content like ?")) {
+				"select id_, content from JournalArticle where content like " +
+					"?")) {
 
 			ps1.setString(1, "%type=\"radio\"%");
 
 			ResultSet rs1 = ps1.executeQuery();
 
 			while (rs1.next()) {
-				long id = rs1.getLong(1);
-				String content = rs1.getString(2);
+				long id = rs1.getLong("id_");
 
-				String newContent = convertRadioElements(content);
+				String content = rs1.getString("content");
+
+				content = convertRadioElements(content);
 
 				try (PreparedStatement ps2 =
 						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
@@ -88,34 +93,13 @@ public class UpgradeContentRadioFields extends UpgradeProcess {
 							"update JournalArticle set content = ? where id_ " +
 								"= ?")) {
 
-					ps2.setString(1, newContent);
+					ps2.setString(1, content);
 					ps2.setLong(2, id);
 
 					ps2.executeUpdate();
 				}
 			}
 		}
-	}
-
-	private String removeUnusedChars(String data) {
-		if (Validator.isNull(data)) {
-			return data;
-		}
-
-		int start = 0;
-		int end = data.length() - 1;
-
-		if (data.charAt(start) == '[' && data.charAt(end) == ']') {
-			start = start + 1;
-			end = end - 1;
-
-			if (data.charAt(start) == '"' && data.charAt(end) == '"') {
-				start = start + 1;
-				end = end - 1;
-			}
-		}
-
-		return data.substring(start, end + 1);
 	}
 
 }

@@ -14,26 +14,26 @@
 
 package com.liferay.portal.template.soy.internal.data;
 
-import com.liferay.portal.template.soy.data.SoyDataFactory;
-import com.liferay.portal.template.soy.data.SoyHTMLData;
+import com.google.template.soy.data.SanitizedContent;
+import com.google.template.soy.data.UnsafeSanitizedContentOrdainer;
+
 import com.liferay.portal.template.soy.util.SoyRawData;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
- * @author Iván Zaera Avellón
+ * @author Tina Tian
  */
-@Component(service = SoyDataFactory.class)
-public class SoyDataFactoryImpl implements SoyDataFactory {
+public class SoyRawDataImpl implements SoyRawData {
 
-	@Override
-	public SoyHTMLData createSoyHTMLData(String html) {
-		return new SoyHTMLDataImpl(html);
+	public SoyRawDataImpl(String html) {
+		_sanitizedContent = UnsafeSanitizedContentOrdainer.ordainAsSafe(
+			html, SanitizedContent.ContentKind.HTML);
 	}
 
 	@Override
-	public SoyRawData createSoyRawData(String html) {
-		return new SoyRawDataImpl(html);
+	public Object getValue() {
+		return _sanitizedContent;
 	}
+
+	private final SanitizedContent _sanitizedContent;
 
 }

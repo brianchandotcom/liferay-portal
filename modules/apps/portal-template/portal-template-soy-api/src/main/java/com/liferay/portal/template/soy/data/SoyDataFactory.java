@@ -14,6 +14,10 @@
 
 package com.liferay.portal.template.soy.data;
 
+import com.liferay.portal.template.soy.util.SoyRawData;
+
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * Describes the API of an OSGi service that creates specialized complex types
  * that can be used in Soy templates.
@@ -21,8 +25,11 @@ package com.liferay.portal.template.soy.data;
  * @author Iván Zaera Avellón
  * @review
  */
+@ProviderType
 public interface SoyDataFactory {
 
 	public SoyHTMLData createSoyHTMLData(String html);
+
+	public SoyRawData createSoyRawData(String html);
 
 }

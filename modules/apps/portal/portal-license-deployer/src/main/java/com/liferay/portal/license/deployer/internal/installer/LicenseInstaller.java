@@ -48,7 +48,9 @@ public class LicenseInstaller implements ArtifactInstaller {
 
 			String rootElementName = rootElement.getName();
 
-			if (rootElementName.equals("license")) {
+			if (rootElementName.equals("license") ||
+				rootElementName.equals("licenses")) {
+
 				return true;
 			}
 		}

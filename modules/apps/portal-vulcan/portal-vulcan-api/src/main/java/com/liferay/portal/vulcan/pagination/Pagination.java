@@ -31,9 +31,7 @@ public class Pagination {
 		_pageSize = 30;
 	}
 
-	public Pagination(
-		@QueryParam("page") int page, @QueryParam("pageSize") int pageSize) {
-
+	public Pagination(int page, int pageSize) {
 		_page = page;
 		_pageSize = pageSize;
 	}
@@ -54,7 +52,10 @@ public class Pagination {
 		return (_page - 1) * _pageSize;
 	}
 
+	@QueryParam("page")
 	private final int _page;
+
+	@QueryParam("pageSize")
 	private final int _pageSize;
 
 }

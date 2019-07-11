@@ -102,7 +102,7 @@ public class VirtualHostFilterTest {
 
 		Assert.assertEquals(
 			_LAST_PATH,
-			getLastPath(
+			_getLastPath(
 				_mockHttpServletRequest, _mockHttpServletResponse,
 				_mockFilterChain));
 	}
@@ -116,7 +116,7 @@ public class VirtualHostFilterTest {
 
 		Assert.assertEquals(
 			_LAST_PATH,
-			getLastPath(
+			_getLastPath(
 				_mockHttpServletRequest, _mockHttpServletResponse,
 				_mockFilterChain));
 	}
@@ -130,12 +130,12 @@ public class VirtualHostFilterTest {
 
 		Assert.assertEquals(
 			_LAST_PATH,
-			getLastPath(
+			_getLastPath(
 				_mockHttpServletRequest, _mockHttpServletResponse,
 				_mockFilterChain));
 	}
 
-	protected String getLastPath(
+	private String _getLastPath(
 		MockHttpServletRequest request, MockHttpServletResponse response,
 		MockFilterChain filterChain) {
 

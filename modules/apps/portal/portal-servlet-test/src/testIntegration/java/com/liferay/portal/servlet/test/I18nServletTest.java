@@ -122,32 +122,32 @@ public class I18nServletTest extends I18nServlet {
 
 	@Test
 	public void testDefaultCompanyI18nData() throws Exception {
-		testIsDefaultLocale(null, LocaleUtil.US);
-		testIsDefaultOrFirstI18nData(null, LocaleUtil.US);
+		_testIsDefaultLocale(null, LocaleUtil.US);
+		_testIsDefaultOrFirstI18nData(null, LocaleUtil.US);
 
-		testIsFirstLocale(null, LocaleUtil.CANADA_FRENCH);
-		testIsDefaultOrFirstI18nData(null, LocaleUtil.CANADA_FRENCH);
-		testIsFirstLocale(null, LocaleUtil.SPAIN);
-		testIsDefaultOrFirstI18nData(null, LocaleUtil.SPAIN);
+		_testIsFirstLocale(null, LocaleUtil.CANADA_FRENCH);
+		_testIsDefaultOrFirstI18nData(null, LocaleUtil.CANADA_FRENCH);
+		_testIsFirstLocale(null, LocaleUtil.SPAIN);
+		_testIsDefaultOrFirstI18nData(null, LocaleUtil.SPAIN);
 
-		testIsNotDefaultOrFirstLocale(null, LocaleUtil.UK);
-		testIsNotDefaultOrFirstI18nData(null, LocaleUtil.UK, LocaleUtil.US);
+		_testIsNotDefaultOrFirstLocale(null, LocaleUtil.UK);
+		_testIsNotDefaultOrFirstI18nData(null, LocaleUtil.UK, LocaleUtil.US);
 	}
 
 	@Test
 	public void testDefaultGroupI18nData() throws Exception {
 		_language.resetAvailableGroupLocales(_group.getGroupId());
 
-		testIsDefaultLocale(_group, LocaleUtil.US);
-		testIsDefaultOrFirstI18nData(_group, LocaleUtil.US);
+		_testIsDefaultLocale(_group, LocaleUtil.US);
+		_testIsDefaultOrFirstI18nData(_group, LocaleUtil.US);
 
-		testIsFirstLocale(_group, LocaleUtil.CANADA_FRENCH);
-		testIsDefaultOrFirstI18nData(_group, LocaleUtil.CANADA_FRENCH);
-		testIsFirstLocale(_group, LocaleUtil.SPAIN);
-		testIsDefaultOrFirstI18nData(_group, LocaleUtil.SPAIN);
+		_testIsFirstLocale(_group, LocaleUtil.CANADA_FRENCH);
+		_testIsDefaultOrFirstI18nData(_group, LocaleUtil.CANADA_FRENCH);
+		_testIsFirstLocale(_group, LocaleUtil.SPAIN);
+		_testIsDefaultOrFirstI18nData(_group, LocaleUtil.SPAIN);
 
-		testIsNotDefaultOrFirstLocale(_group, LocaleUtil.UK);
-		testIsNotDefaultOrFirstI18nData(_group, LocaleUtil.UK, LocaleUtil.US);
+		_testIsNotDefaultOrFirstLocale(_group, LocaleUtil.UK);
+		_testIsNotDefaultOrFirstI18nData(_group, LocaleUtil.UK, LocaleUtil.US);
 	}
 
 	@Test
@@ -170,7 +170,7 @@ public class I18nServletTest extends I18nServlet {
 	public void testI18nNotUseDefaultExistentLocale() throws Exception {
 		PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = false;
 
-		testGetI18nData(
+		_testGetI18nData(
 			LocaleUtil.getDefault(), getI18nData(LocaleUtil.getDefault()));
 	}
 
@@ -178,21 +178,21 @@ public class I18nServletTest extends I18nServlet {
 	public void testI18nNotUseDefaultNondefaultLocale() throws Exception {
 		PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = false;
 
-		testGetI18nData(LocaleUtil.SPAIN, getI18nData(LocaleUtil.SPAIN));
+		_testGetI18nData(LocaleUtil.SPAIN, getI18nData(LocaleUtil.SPAIN));
 	}
 
 	@Test
 	public void testI18nNotUseDefaultNonexistentLocale() throws Exception {
 		PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = false;
 
-		testGetI18nData(LocaleUtil.CHINA, null);
+		_testGetI18nData(LocaleUtil.CHINA, null);
 	}
 
 	@Test
 	public void testI18nUseDefault() throws Exception {
 		PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = true;
 
-		testGetI18nData(
+		_testGetI18nData(
 			LocaleUtil.getDefault(), getI18nData(LocaleUtil.getDefault()));
 	}
 
@@ -200,7 +200,8 @@ public class I18nServletTest extends I18nServlet {
 	public void testI18nUseDefaultNonexistentLocale() throws Exception {
 		PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = true;
 
-		testGetI18nData(LocaleUtil.CHINA, getI18nData(LocaleUtil.getDefault()));
+		_testGetI18nData(
+			LocaleUtil.CHINA, getI18nData(LocaleUtil.getDefault()));
 	}
 
 	@Test
@@ -212,95 +213,16 @@ public class I18nServletTest extends I18nServlet {
 				LocaleUtil.US),
 			LocaleUtil.SPAIN);
 
-		testIsDefaultLocale(_group, LocaleUtil.SPAIN);
-		testIsDefaultOrFirstI18nData(_group, LocaleUtil.SPAIN);
+		_testIsDefaultLocale(_group, LocaleUtil.SPAIN);
+		_testIsDefaultOrFirstI18nData(_group, LocaleUtil.SPAIN);
 
-		testIsFirstLocale(_group, LocaleUtil.CANADA_FRENCH);
-		testIsDefaultOrFirstI18nData(_group, LocaleUtil.CANADA_FRENCH);
-		testIsFirstLocale(_group, LocaleUtil.UK);
-		testIsDefaultOrFirstI18nData(_group, LocaleUtil.UK);
+		_testIsFirstLocale(_group, LocaleUtil.CANADA_FRENCH);
+		_testIsDefaultOrFirstI18nData(_group, LocaleUtil.CANADA_FRENCH);
+		_testIsFirstLocale(_group, LocaleUtil.UK);
+		_testIsDefaultOrFirstI18nData(_group, LocaleUtil.UK);
 
-		testIsNotDefaultOrFirstLocale(_group, LocaleUtil.US);
-		testIsNotDefaultOrFirstI18nData(_group, LocaleUtil.US, LocaleUtil.UK);
-	}
-
-	protected void testGetI18nData(
-			Locale locale, I18nServlet.I18nData expectedI18nData)
-		throws Exception {
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
-		mockHttpServletRequest.setServletPath(
-			StringPool.SLASH + LocaleUtil.toLanguageId(locale));
-
-		Assert.assertEquals(
-			expectedI18nData, getI18nData(mockHttpServletRequest));
-	}
-
-	protected void testIsDefaultLocale(
-			Group group, Locale expectedDefaultLocale)
-		throws Exception {
-
-		Assert.assertEquals(expectedDefaultLocale, _getDefaultLocale(group));
-	}
-
-	protected void testIsDefaultOrFirstI18nData(Group group, Locale locale)
-		throws Exception {
-
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		I18nServlet.I18nData languageAndLocalePath = _getI18nData(
-			group, languageId);
-
-		Assert.assertEquals(languageAndLocalePath.getLanguageId(), languageId);
-
-		Assert.assertEquals(
-			_getI18nData(group, locale.getLanguage()), languageAndLocalePath);
-	}
-
-	protected void testIsFirstLocale(Group group, Locale expectedFirstLocale)
-		throws Exception {
-
-		Assert.assertEquals(
-			expectedFirstLocale,
-			_getFirstLocale(group, expectedFirstLocale.getLanguage()));
-
-		Assert.assertNotEquals(expectedFirstLocale, _getDefaultLocale(group));
-	}
-
-	protected void testIsNotDefaultOrFirstI18nData(
-			Group group, Locale locale, Locale expectedDefaultLocale)
-		throws Exception {
-
-		I18nServlet.I18nData languageOnlyPath = _getI18nData(
-			group, locale.getLanguage());
-
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		I18nServlet.I18nData languageAndLocalePath = _getI18nData(
-			group, languageId);
-
-		Assert.assertEquals(languageAndLocalePath.getLanguageId(), languageId);
-
-		Assert.assertEquals(
-			languageOnlyPath.getLanguageId(),
-			LocaleUtil.toLanguageId(expectedDefaultLocale));
-
-		Assert.assertNotEquals(languageOnlyPath, languageAndLocalePath);
-	}
-
-	protected void testIsNotDefaultOrFirstLocale(Group group, Locale locale)
-		throws Exception {
-
-		Locale defaultLocale = _getDefaultLocale(group);
-
-		if (!_language.isSameLanguage(defaultLocale, locale)) {
-			defaultLocale = _getFirstLocale(group, locale.getLanguage());
-		}
-
-		Assert.assertNotEquals(defaultLocale, locale);
+		_testIsNotDefaultOrFirstLocale(_group, LocaleUtil.US);
+		_testIsNotDefaultOrFirstI18nData(_group, LocaleUtil.US, LocaleUtil.UK);
 	}
 
 	private Locale _getDefaultLocale(Group group) throws Exception {
@@ -337,6 +259,84 @@ public class I18nServletTest extends I18nServlet {
 		mockHttpServletRequest.setServletPath(StringPool.SLASH + path);
 
 		return getI18nData(mockHttpServletRequest);
+	}
+
+	private void _testGetI18nData(
+			Locale locale, I18nServlet.I18nData expectedI18nData)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
+		mockHttpServletRequest.setServletPath(
+			StringPool.SLASH + LocaleUtil.toLanguageId(locale));
+
+		Assert.assertEquals(
+			expectedI18nData, getI18nData(mockHttpServletRequest));
+	}
+
+	private void _testIsDefaultLocale(Group group, Locale expectedDefaultLocale)
+		throws Exception {
+
+		Assert.assertEquals(expectedDefaultLocale, _getDefaultLocale(group));
+	}
+
+	private void _testIsDefaultOrFirstI18nData(Group group, Locale locale)
+		throws Exception {
+
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		I18nServlet.I18nData languageAndLocalePath = _getI18nData(
+			group, languageId);
+
+		Assert.assertEquals(languageAndLocalePath.getLanguageId(), languageId);
+
+		Assert.assertEquals(
+			_getI18nData(group, locale.getLanguage()), languageAndLocalePath);
+	}
+
+	private void _testIsFirstLocale(Group group, Locale expectedFirstLocale)
+		throws Exception {
+
+		Assert.assertEquals(
+			expectedFirstLocale,
+			_getFirstLocale(group, expectedFirstLocale.getLanguage()));
+
+		Assert.assertNotEquals(expectedFirstLocale, _getDefaultLocale(group));
+	}
+
+	private void _testIsNotDefaultOrFirstI18nData(
+			Group group, Locale locale, Locale expectedDefaultLocale)
+		throws Exception {
+
+		I18nServlet.I18nData languageOnlyPath = _getI18nData(
+			group, locale.getLanguage());
+
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		I18nServlet.I18nData languageAndLocalePath = _getI18nData(
+			group, languageId);
+
+		Assert.assertEquals(languageAndLocalePath.getLanguageId(), languageId);
+
+		Assert.assertEquals(
+			languageOnlyPath.getLanguageId(),
+			LocaleUtil.toLanguageId(expectedDefaultLocale));
+
+		Assert.assertNotEquals(languageOnlyPath, languageAndLocalePath);
+	}
+
+	private void _testIsNotDefaultOrFirstLocale(Group group, Locale locale)
+		throws Exception {
+
+		Locale defaultLocale = _getDefaultLocale(group);
+
+		if (!_language.isSameLanguage(defaultLocale, locale)) {
+			defaultLocale = _getFirstLocale(group, locale.getLanguage());
+		}
+
+		Assert.assertNotEquals(defaultLocale, locale);
 	}
 
 	private static Set<Locale> _availableLocales;

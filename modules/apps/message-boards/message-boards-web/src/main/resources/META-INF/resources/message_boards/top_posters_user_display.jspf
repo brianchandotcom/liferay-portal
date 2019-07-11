@@ -32,15 +32,15 @@ User topUser = UserLocalServiceUtil.fetchUserById(statsUser.getUserId());
 	<liferay-ui:search-container-column-text
 		colspan="<%= 2 %>"
 	>
+		<p class="list-group-title">
+			<%= HtmlUtil.escape(topUser.getFullName()) %>
+		</p>
+
 		<c:if test="<%= Validator.isNotNull(ranks[0]) %>">
-			<h5 class="text-default"><liferay-ui:message key="rank" />: <%= HtmlUtil.escape(ranks[0]) %></h5>
+			<p class="list-group-subtitle"><liferay-ui:message key="rank" />: <%= HtmlUtil.escape(ranks[0]) %></p>
 		</c:if>
 
-		<h4 title="<%= HtmlUtil.escapeAttribute(topUser.getFullName()) %>">
-			<%= HtmlUtil.escape(topUser.getFullName()) %>
-		</h4>
-
-		<span class="h5 text-default">
+		<p class="list-group-subtitle">
 			<c:choose>
 				<c:when test="<%= statsUser.getMessageCount() == 1 %>">
 					<liferay-ui:message key="post" />: <%= statsUser.getMessageCount() %>
@@ -49,12 +49,14 @@ User topUser = UserLocalServiceUtil.fetchUserById(statsUser.getUserId());
 					<liferay-ui:message key="posts" />: <%= statsUser.getMessageCount() %>
 				</c:otherwise>
 			</c:choose>
-		</span>
-		<span class="h5 text-default">
+		</p>
+
+		<p class="list-group-subtitle">
 			<liferay-ui:message key="join-date" />: <%= dateFormatDate.format(topUser.getCreateDate()) %>
-		</span>
-		<span class="h5 text-default">
+		</p>
+
+		<p class="list-group-subtitle">
 			<liferay-ui:message key="last-post-date" />: <%= dateFormatDate.format(statsUser.getLastPostDate()) %>
-		</span>
+		</p>
 	</liferay-ui:search-container-column-text>
 </c:if>

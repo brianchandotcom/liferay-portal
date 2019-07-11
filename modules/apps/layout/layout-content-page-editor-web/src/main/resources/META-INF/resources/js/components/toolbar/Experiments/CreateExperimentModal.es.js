@@ -30,7 +30,7 @@ const _inputValueGetter = listener => event => listener(event.target.value);
  * Wrapper for the modal to create an Experiments
  */
 function CreateExperimentModal({setVisible, visible, onCreateExperiment}) {
-	const [name, setName] = useState(Liferay.Language.get('experiment-new'));
+	const [name, setName] = useState(Liferay.Language.get('new-test'));
 	const [description, setDescription] = useState('');
 	const {portletNamespace} = useContext(PageEditorContext);
 
@@ -43,7 +43,7 @@ function CreateExperimentModal({setVisible, visible, onCreateExperiment}) {
 					{onClose => (
 						<>
 							<ClayModal.Header>
-								{Liferay.Language.get('experiment-settings')}
+								{Liferay.Language.get('test-settings')}
 							</ClayModal.Header>
 							<ClayModal.Body>
 								<form id={formId} onSubmit={_handleSaveAction}>

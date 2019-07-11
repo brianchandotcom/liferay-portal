@@ -23,6 +23,6 @@ export function mapExperimentsStatus(status) {
 	switch (status) {
 		case 0:
 		default:
-			return Liferay.Language.get(`experiment-draft`);
+			return Liferay.Language.get(`ab-test-status-draft`);
 	}
 }

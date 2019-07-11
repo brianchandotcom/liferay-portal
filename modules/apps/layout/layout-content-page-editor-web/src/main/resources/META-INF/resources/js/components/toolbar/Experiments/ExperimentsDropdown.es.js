@@ -45,7 +45,7 @@ function ExperimentsDropdown({
 				className='ml-2'
 				trigger={
 					<ClayButton small={true} displayType={'secondary'}>
-						{Liferay.Language.get('experiments-cta')}
+						{Liferay.Language.get('ab')}
 						<ClayIcon symbol={'caret-bottom'} />
 					</ClayButton>
 				}
@@ -57,7 +57,7 @@ function ExperimentsDropdown({
 						<div className='px-3 pt-2'>
 							<h6 className='text-uppercase'>
 								{Liferay.Language.get(
-									'experiments-dropdown-title'
+									'ab-tests-for-current-experience'
 								)}
 							</h6>
 						</div>
@@ -85,12 +85,12 @@ function ExperimentsDropdown({
 					<div className='px-3 pt-3'>
 						<h2>
 							{Liferay.Language.get(
-								'experiments-empty-state-message-title'
+								'ab-test-help-message-empty-state-title'
 							)}
 						</h2>
 						<p>
 							{Liferay.Language.get(
-								'experiments-empty-state-message-paragraph'
+								'ab-test-help-message-empty-state-hint'
 							)}
 						</p>
 					</div>
@@ -101,9 +101,7 @@ function ExperimentsDropdown({
 							className='w-100'
 							onClick={() => setModalShown(true)}
 						>
-							{Liferay.Language.get(
-								'experiements-create-new-test'
-							)}
+							{Liferay.Language.get('create-new-test')}
 						</ClayButton>
 					</div>
 				)}

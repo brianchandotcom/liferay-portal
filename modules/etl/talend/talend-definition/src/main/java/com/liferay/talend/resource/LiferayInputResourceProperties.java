@@ -15,6 +15,7 @@
 package com.liferay.talend.resource;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
+import com.liferay.talend.common.oas.constants.OASConstants;
 import com.liferay.talend.properties.ExceptionUtils;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
@@ -24,8 +25,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
-import javax.ws.rs.HttpMethod;
 
 import org.apache.avro.Schema;
 
@@ -78,7 +77,7 @@ public class LiferayInputResourceProperties
 
 		try {
 			Set<String> endpoints = liferaySourceOrSinkRuntime.getEndpointList(
-				HttpMethod.GET);
+				OASConstants.OPERATION_GET);
 
 			if (endpoints.isEmpty()) {
 				validationResultMutable.setMessage(
@@ -116,7 +115,7 @@ public class LiferayInputResourceProperties
 		try {
 			Schema endpointSchema =
 				liferaySourceOrSinkRuntime.getEndpointSchema(
-					endpoint.getValue(), HttpMethod.GET);
+					endpoint.getValue(), OASConstants.OPERATION_GET);
 
 			main.schema.setValue(endpointSchema);
 		}
@@ -134,7 +133,8 @@ public class LiferayInputResourceProperties
 			endpoint.setValue(null);
 		}
 
-		populateParametersTable(liferaySourceOrSinkRuntime, HttpMethod.GET);
+		populateParametersTable(
+			liferaySourceOrSinkRuntime, OASConstants.OPERATION_GET);
 
 		return validationResultMutable;
 	}

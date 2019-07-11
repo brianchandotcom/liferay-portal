@@ -40,7 +40,6 @@ import java.util.TreeSet;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 
-import javax.ws.rs.HttpMethod;
 import javax.ws.rs.ProcessingException;
 
 import org.apache.avro.Schema;
@@ -272,8 +271,7 @@ public class LiferaySourceOrSink
 
 		String jsonFinderPath = StringUtil.replace(
 			OASConstants.PATH_ENDPOINT_OPERATION_PARAMETERS_PATTERN,
-			"ENDPOINT_TPL", endpoint, "OPERATION_TPL",
-			StringUtil.toLowerCase(operation));
+			"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
 
 		JsonArray parametersJsonArray = _jsonFinder.getDescendantJsonArray(
 			jsonFinderPath, oasJsonObject);
@@ -479,14 +477,13 @@ public class LiferaySourceOrSink
 
 				operationsJsonObject.forEach(
 					(operationName, operationJsonValue) -> {
-						if (!Objects.equals(
-								operation,
-								StringUtil.toUpperCase(operationName))) {
-
+						if (!Objects.equals(operation, operationName)) {
 							return;
 						}
 
-						if (!Objects.equals(operation, HttpMethod.GET)) {
+						if (!Objects.equals(
+								operation, OASConstants.OPERATION_GET)) {
+
 							endpoints.add(path);
 
 							return;
@@ -523,13 +520,8 @@ public class LiferaySourceOrSink
 	}
 
 	private OASParameter _toParameter(JsonObject jsonObject) {
-		OASParameter oasParameter = new OASParameter();
-
-		oasParameter.setType(
-			OASParameter.Type.valueOf(
-				StringUtil.toUpperCase(jsonObject.getString("in"))));
-
-		oasParameter.setName(jsonObject.getString("name"));
+		OASParameter oasParameter = new OASParameter(
+			jsonObject.getString("name"), jsonObject.getString("in"));
 
 		if (jsonObject.containsKey("required")) {
 			oasParameter.setRequired(jsonObject.getBoolean("required"));

@@ -26,8 +26,6 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
-import javax.ws.rs.HttpMethod;
-
 import org.apache.avro.Schema;
 
 import org.junit.Assert;
@@ -62,7 +60,7 @@ public class SchemaBuilderTest {
 	public void testBooleanSchemaFieldsForProducts() {
 		String endpoint = "/v1.0/catalogs/{siteId}/product";
 
-		Schema schema = _getSchema(endpoint, HttpMethod.POST);
+		Schema schema = _getSchema(endpoint, OASConstants.OPERATION_POST);
 
 		_assertValidProductSchema(schema);
 	}
@@ -72,7 +70,7 @@ public class SchemaBuilderTest {
 		String endpoint =
 			"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}";
 
-		Schema schema = _getSchema(endpoint, HttpMethod.DELETE);
+		Schema schema = _getSchema(endpoint, OASConstants.OPERATION_DELETE);
 
 		Assert.assertFalse(AvroUtils.isSchemaEmpty(schema));
 	}
@@ -81,7 +79,7 @@ public class SchemaBuilderTest {
 	public void testInferSchemaForGetOperation() {
 		String endpoint = "/v1.0/catalogs/{siteId}/products";
 
-		Schema schema = _getSchema(endpoint, HttpMethod.GET);
+		Schema schema = _getSchema(endpoint, OASConstants.OPERATION_GET);
 
 		Assert.assertFalse(AvroUtils.isSchemaEmpty(schema));
 
@@ -93,7 +91,7 @@ public class SchemaBuilderTest {
 		String endpoint =
 			"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}";
 
-		Schema schema = _getSchema(endpoint, HttpMethod.PATCH);
+		Schema schema = _getSchema(endpoint, OASConstants.OPERATION_PATCH);
 
 		Assert.assertFalse(AvroUtils.isSchemaEmpty(schema));
 	}
@@ -102,7 +100,7 @@ public class SchemaBuilderTest {
 	public void testIntegerSchemaFieldsForProducts() {
 		String endpoint = "/v1.0/catalogs/{siteId}/product";
 
-		Schema schema = _getSchema(endpoint, HttpMethod.POST);
+		Schema schema = _getSchema(endpoint, OASConstants.OPERATION_POST);
 
 		List<Schema.Field> fields = schema.getFields();
 

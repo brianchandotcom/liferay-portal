@@ -14,23 +14,21 @@
 
 package com.liferay.talend.tliferayoutput;
 
+import com.liferay.talend.common.oas.constants.OASConstants;
+
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import javax.ws.rs.HttpMethod;
 
 /**
  * @author Zoltán Takács
  */
 public enum Action {
 
-	Delete(HttpMethod.DELETE.toLowerCase(Locale.US)),
-	Insert(HttpMethod.POST.toLowerCase(Locale.US)), Unavailable("NOOP"),
-	Update(HttpMethod.PATCH.toLowerCase(Locale.US));
+	Delete(OASConstants.OPERATION_DELETE), Insert(OASConstants.OPERATION_POST),
+	Unavailable("noop"), Update(OASConstants.OPERATION_PATCH);
 
 	public static Stream<Action> getActionsStream() {
 		return _actionsStreamSupplier.get();

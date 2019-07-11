@@ -15,10 +15,9 @@
 package com.liferay.talend.avro;
 
 import com.liferay.talend.BaseTest;
+import com.liferay.talend.common.oas.constants.OASConstants;
 
 import javax.json.JsonObject;
-
-import javax.ws.rs.HttpMethod;
 
 import org.apache.avro.Schema;
 import org.apache.avro.generic.IndexedRecord;
@@ -47,7 +46,8 @@ public class ResourceNodeConverterTest extends BaseTest {
 	public void testInferSchemaForGetOperation() {
 		String endpoint = "/v1.0/catalogs/{siteId}/products";
 
-		Schema schema = getSchema(endpoint, HttpMethod.GET, _oasJsonObject);
+		Schema schema = getSchema(
+			endpoint, OASConstants.OPERATION_GET, _oasJsonObject);
 
 		ResourceNodeConverter resourceNodeConverter = new ResourceNodeConverter(
 			schema);

@@ -17,6 +17,7 @@ package com.liferay.talend.wizard;
 import static org.talend.daikon.properties.property.PropertyFactory.newProperty;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
+import com.liferay.talend.common.oas.constants.OASConstants;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.properties.ExceptionUtils;
 import com.liferay.talend.resource.LiferayInputResourceProperties;
@@ -26,8 +27,6 @@ import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import javax.ws.rs.HttpMethod;
 
 import org.apache.avro.Schema;
 import org.apache.commons.lang3.reflect.TypeLiteral;
@@ -88,7 +87,7 @@ public class LiferaySchemaListProperties extends ComponentPropertiesImpl {
 			liferayInputResourceProperties.afterEndpoint();
 
 			Schema schema = liferaySourceOrSinkRuntime.getEndpointSchema(
-				endpoint, HttpMethod.GET);
+				endpoint, OASConstants.OPERATION_GET);
 
 			liferayInputResourceProperties.main.schema.setValue(schema);
 
@@ -114,7 +113,8 @@ public class LiferaySchemaListProperties extends ComponentPropertiesImpl {
 		if (validationResult.getStatus() == ValidationResult.Result.OK) {
 			try {
 				Map<String, String> endpointMap =
-					liferaySourceOrSinkRuntime.getEndpointMap(HttpMethod.GET);
+					liferaySourceOrSinkRuntime.getEndpointMap(
+						OASConstants.OPERATION_GET);
 
 				for (Map.Entry<String, String> entry : endpointMap.entrySet()) {
 					String endpoint = entry.getKey();

@@ -24,6 +24,14 @@ public class OASConstants {
 
 	public static final String FORMAT = "format";
 
+	public static final String OPERATION_DELETE = "delete";
+
+	public static final String OPERATION_GET = "get";
+
+	public static final String OPERATION_PATCH = "patch";
+
+	public static final String OPERATION_POST = "post";
+
 	public static final String PATH_COMPONENTS_SCHEMAS_PATTERN =
 		"components>schemas>SCHEMA_TPL";
 

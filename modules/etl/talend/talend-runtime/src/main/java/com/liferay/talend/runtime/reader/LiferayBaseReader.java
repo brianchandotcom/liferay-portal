@@ -14,6 +14,7 @@
 
 package com.liferay.talend.runtime.reader;
 
+import com.liferay.talend.common.oas.constants.OASConstants;
 import com.liferay.talend.connection.LiferayConnectionResourceBaseProperties;
 import com.liferay.talend.runtime.LiferaySource;
 import com.liferay.talend.tliferayinput.TLiferayInputProperties;
@@ -21,8 +22,6 @@ import com.liferay.talend.tliferayinput.TLiferayInputProperties;
 import java.io.IOException;
 
 import java.util.Map;
-
-import javax.ws.rs.HttpMethod;
 
 import org.apache.avro.Schema;
 
@@ -86,7 +85,8 @@ public abstract class LiferayBaseReader<T> extends AbstractBoundedReader<T> {
 
 			LiferaySource boundedSource = (LiferaySource)getCurrentSource();
 
-			schema = boundedSource.getEndpointSchema(endpoint, HttpMethod.GET);
+			schema = boundedSource.getEndpointSchema(
+				endpoint, OASConstants.OPERATION_GET);
 		}
 
 		return schema;

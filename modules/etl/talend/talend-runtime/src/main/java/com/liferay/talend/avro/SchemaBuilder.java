@@ -26,7 +26,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -35,8 +34,6 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonString;
 import javax.json.JsonValue;
-
-import javax.ws.rs.HttpMethod;
 
 import org.apache.avro.Schema;
 
@@ -58,9 +55,9 @@ public class SchemaBuilder {
 
 		_endpoint = endpoint;
 		_oasJsonObject = oasJsonObject;
-		_operation = operation.toLowerCase(Locale.US);
+		_operation = operation;
 
-		if (Objects.equals(_operation, _HTTP_OPERATION_DELETE)) {
+		if (Objects.equals(_operation, OASConstants.OPERATION_DELETE)) {
 			return _getDeleteSchema();
 		}
 
@@ -99,7 +96,7 @@ public class SchemaBuilder {
 	private String _extractEndpointSchemaName() {
 		String schemaName = null;
 
-		if (Objects.equals(_operation, _HTTP_OPERATION_GET)) {
+		if (Objects.equals(_operation, OASConstants.OPERATION_GET)) {
 			String jsonFinderPath = StringUtil.replace(
 				OASConstants.
 					PATH_RESPONSES_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,
@@ -129,8 +126,8 @@ public class SchemaBuilder {
 			return schemaName;
 		}
 
-		if (!Objects.equals(_operation, _HTTP_OPERATION_PATCH) &&
-			!Objects.equals(_operation, _HTTP_OPERATION_POST)) {
+		if (!Objects.equals(_operation, OASConstants.OPERATION_PATCH) &&
+			!Objects.equals(_operation, OASConstants.OPERATION_POST)) {
 
 			return null;
 		}
@@ -354,18 +351,6 @@ public class SchemaBuilder {
 
 		return Schema.createRecord(schemaName, null, null, false, schemaFields);
 	}
-
-	private static final String _HTTP_OPERATION_DELETE = StringUtil.toLowerCase(
-		HttpMethod.DELETE);
-
-	private static final String _HTTP_OPERATION_GET = StringUtil.toLowerCase(
-		HttpMethod.GET);
-
-	private static final String _HTTP_OPERATION_PATCH = StringUtil.toLowerCase(
-		HttpMethod.PATCH);
-
-	private static final String _HTTP_OPERATION_POST = StringUtil.toLowerCase(
-		HttpMethod.POST);
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		SchemaBuilder.class);

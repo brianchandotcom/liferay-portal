@@ -38,8 +38,6 @@ import javax.json.JsonObject;
 import javax.json.JsonString;
 import javax.json.JsonValue;
 
-import javax.ws.rs.HttpMethod;
-
 import org.apache.avro.Schema;
 
 import org.slf4j.Logger;
@@ -60,11 +58,9 @@ public class EndpointSchemaInferrer {
 	public String extractEndpointSchemaName(
 		String endpoint, String operation, JsonObject oasJsonObject) {
 
-		operation = StringUtil.toLowerCase(operation);
-
 		String schemaName = null;
 
-		if (Objects.equals(operation, HttpMethod.GET.toLowerCase(Locale.US))) {
+		if (Objects.equals(operation, OASConstants.OPERATION_GET)) {
 			String jsonFinderPath = StringUtil.replace(
 				OASConstants.
 					PATH_RESPONSES_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,
@@ -94,10 +90,8 @@ public class EndpointSchemaInferrer {
 			return schemaName;
 		}
 
-		if (!Objects.equals(
-				operation, HttpMethod.PATCH.toLowerCase(Locale.US)) &&
-			!Objects.equals(
-				operation, HttpMethod.POST.toLowerCase(Locale.US))) {
+		if (!Objects.equals(operation, OASConstants.OPERATION_PATCH) &&
+			!Objects.equals(operation, OASConstants.OPERATION_POST)) {
 
 			return null;
 		}

@@ -15,6 +15,7 @@
 package com.liferay.talend.resource;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
+import com.liferay.talend.common.oas.constants.OASConstants;
 import com.liferay.talend.common.schema.SchemaUtils;
 import com.liferay.talend.properties.ExceptionUtils;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
@@ -29,8 +30,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import javax.ws.rs.HttpMethod;
 
 import org.apache.avro.Schema;
 
@@ -115,12 +114,14 @@ public class LiferayOutputResourceProperties
 
 		try {
 			Set<String> endpoints = liferaySourceOrSinkRuntime.getEndpointList(
-				HttpMethod.POST);
+				OASConstants.OPERATION_POST);
 
 			endpoints.addAll(
-				liferaySourceOrSinkRuntime.getEndpointList(HttpMethod.PATCH));
+				liferaySourceOrSinkRuntime.getEndpointList(
+					OASConstants.OPERATION_PATCH));
 			endpoints.addAll(
-				liferaySourceOrSinkRuntime.getEndpointList(HttpMethod.DELETE));
+				liferaySourceOrSinkRuntime.getEndpointList(
+					OASConstants.OPERATION_DELETE));
 
 			List<NamedThing> endpointsNamedThing = new ArrayList<>();
 

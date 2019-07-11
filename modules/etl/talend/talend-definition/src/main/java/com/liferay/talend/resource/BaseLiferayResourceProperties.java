@@ -243,7 +243,7 @@ public abstract class BaseLiferayResourceProperties
 
 	protected void populateParametersTable(
 		LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime,
-		String httpMethod) {
+		String operation) {
 
 		List<String> parameterNames = new ArrayList<>();
 		List<String> parameterValues = new ArrayList<>();
@@ -251,7 +251,7 @@ public abstract class BaseLiferayResourceProperties
 
 		List<OASParameter> oasParameters =
 			liferaySourceOrSinkRuntime.getParameters(
-				endpoint.getValue(), httpMethod);
+				endpoint.getValue(), operation);
 
 		if (oasParameters.isEmpty()) {
 			parametersTable.columnName.setValue(Collections.emptyList());

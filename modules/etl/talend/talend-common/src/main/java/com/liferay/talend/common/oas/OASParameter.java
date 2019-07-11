@@ -14,10 +14,17 @@
 
 package com.liferay.talend.common.oas;
 
+import com.liferay.talend.common.util.StringUtil;
+
 /**
  * @author Ivica Cardic
  */
 public class OASParameter {
+
+	public OASParameter(String name, String type) {
+		_name = name;
+		_type = Type.valueOf(StringUtil.toUpperCase(type));
+	}
 
 	public String getName() {
 		return _name;

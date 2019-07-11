@@ -41,24 +41,24 @@ public class DockerDeployTask extends Exec {
 		super.exec();
 	}
 
-	public String getDockerContainerId() {
-		return GradleUtil.toString(_dockerContainerId);
+	public String getContainerId() {
+		return GradleUtil.toString(_containerId);
 	}
 
-	public String getDockerDeployDir() {
-		return GradleUtil.toString(_dockerDeployDir);
+	public String getDeployDir() {
+		return GradleUtil.toString(_deployDir);
 	}
 
 	public File getSourceFile() {
 		return GradleUtil.toFile(getProject(), _sourceFile);
 	}
 
-	public void setDockerContainerId(Object dockerContainerId) {
-		_dockerContainerId = dockerContainerId;
+	public void setContainerId(Object containerId) {
+		_containerId = containerId;
 	}
 
-	public void setDockerDeployDir(Object dockerDeployDir) {
-		_dockerDeployDir = dockerDeployDir;
+	public void setDeployDir(Object deployDir) {
+		_deployDir = deployDir;
 	}
 
 	public void setSourceFile(Object sourceFile) {
@@ -76,9 +76,9 @@ public class DockerDeployTask extends Exec {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(getDockerContainerId());
+		sb.append(getContainerId());
 		sb.append(':');
-		sb.append(getDockerDeployDir());
+		sb.append(getDeployDir());
 		sb.append(sourceFile.getName());
 
 		args.add(sb.toString());
@@ -86,8 +86,8 @@ public class DockerDeployTask extends Exec {
 		return args;
 	}
 
-	private Object _dockerContainerId;
-	private Object _dockerDeployDir;
+	private Object _containerId;
+	private Object _deployDir;
 	private Object _sourceFile;
 
 }

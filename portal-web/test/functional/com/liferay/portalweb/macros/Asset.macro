@@ -1,0 +1,84 @@
+definition {
+
+	macro changePermission {
+		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
+
+		var key_userName = "${userName}";
+
+		AssertTextEquals(
+			locator1 = "Sharing#MANAGE_COLLABORATORS_NAME",
+			value1 = "${userName}");
+
+		Select(
+			locator1 = "Sharing#MANAGE_COLLABORATORS_ACCESS_DROPDOWN",
+			value1 = "${selectPermission}");
+
+		AssertSelectedLabel(
+			locator1 = "Sharing#MANAGE_COLLABORATORS_ACCESS_DROPDOWN",
+			value1 = "${selectPermission}");
+
+		Button.clickSave();
+
+		SelectFrame(value1 = "relative=top");
+
+		Alert.viewSuccessMessageText(successMessage = "Permissions Changed");
+	}
+
+	macro gotoManageCollaboratorsViaSharedByMe {
+		var key_contentTitle = "${contentTitle}";
+
+		Click(
+			locator1 = "Sharing#SHARED_CONTENT_ELLIPSIS",
+			value1 = "${contentTitle}");
+
+		var key_text = "Manage Collaborators";
+
+		AssertClick(
+			locator1 = "Button#ANY",
+			value1 = "Manage Collaborators");
+	}
+
+	macro share {
+		IFrame.selectModalFrame();
+
+		Type.sendKeys(
+			locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_INPUT",
+			value1 = "${userEmailAddress}");
+
+		Click(locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_DROPDOWN");
+
+		var key_userName = "${userName}";
+
+		AssertElementPresent(locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_TAG");
+
+		if (isSet(shareable)) {
+			FormFields.enableCheckbox(fieldName = "shareable");
+		}
+		else {
+			FormFields.disableCheckbox(fieldName = "shareable");
+		}
+
+		if ("${sharingPermissions}" == "Update") {
+			FormFields.selectRadioOption(
+				fieldName = "sharingEntryPermission",
+				radioOption = "Update");
+		}
+		else if ("${sharingPermissions}" == "Comment") {
+			FormFields.selectRadioOption(
+				fieldName = "sharingEntryPermission",
+				radioOption = "Comment");
+		}
+		else {
+			FormFields.viewRadioValue(
+				fieldName = "sharingEntryPermission",
+				fieldValue = "View");
+		}
+
+		Button.clickShare();
+
+		SelectFrame(value1 = "relative=top");
+
+		Alert.viewSuccessMessageText(successMessage = "The item was shared successfully.");
+	}
+
+}

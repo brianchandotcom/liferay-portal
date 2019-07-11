@@ -38,7 +38,7 @@ PortletURL clearResultsURL = PortletURLUtil.clone(serverURL, liferayPortletRespo
 clearResultsURL.setParameter("keywords", StringPool.BLANK);
 clearResultsURL.setParameter("navigation", (String)null);
 
-SearchContainer logSearchContainer = new SearchContainer(liferayPortletRequest, serverURL, null, null);
+SearchContainer loggerSearchContainer = new SearchContainer(liferayPortletRequest, serverURL, null, null);
 
 Map currentLoggerNames = new TreeMap();
 
@@ -69,8 +69,8 @@ while (itr.hasNext()) {
 	}
 }
 
-logSearchContainer.setResults(ListUtil.subList(currentLoggerNamesList, logSearchContainer.getStart(), logSearchContainer.getEnd()));
-logSearchContainer.setTotal(currentLoggerNamesList.size());
+loggerSearchContainer.setResults(ListUtil.subList(currentLoggerNamesList, loggerSearchContainer.getStart(), loggerSearchContainer.getEnd()));
+loggerSearchContainer.setTotal(currentLoggerNamesList.size());
 %>
 
 <div class="server-admin-tabs">
@@ -95,7 +95,7 @@ logSearchContainer.setTotal(currentLoggerNamesList.size());
 		<c:if test='<%= tabs2.equals("update-categories") %>'>
 			<clay:management-toolbar
 				clearResultsURL="<%= String.valueOf(clearResultsURL) %>"
-				itemsTotal="<%= logSearchContainer.getTotal() %>"
+				itemsTotal="<%= loggerSearchContainer.getTotal() %>"
 				searchActionURL="<%= String.valueOf(serverURL) %>"
 				searchFormName="searchFm"
 				selectable="<%= false %>"
@@ -132,7 +132,7 @@ logSearchContainer.setTotal(currentLoggerNamesList.size());
 		</c:when>
 		<c:otherwise>
 			<liferay-ui:search-container
-				searchContainer="<%= logSearchContainer %>"
+				searchContainer="<%= loggerSearchContainer %>"
 			>
 				<liferay-ui:search-container-row
 					className="java.util.Map.Entry"

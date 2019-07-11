@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal;
+package com.liferay.portal.search.elasticsearch7.internal;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnection;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch6.internal.connection.EmbeddedElasticsearchConnection;
-import com.liferay.portal.search.elasticsearch6.internal.connection.OperationMode;
-import com.liferay.portal.search.elasticsearch6.internal.index.CompanyIdIndexNameBuilder;
-import com.liferay.portal.search.elasticsearch6.internal.index.CompanyIndexFactory;
-import com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.ElasticsearchEngineAdapterFixture;
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnection;
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.elasticsearch7.internal.connection.EmbeddedElasticsearchConnection;
+import com.liferay.portal.search.elasticsearch7.internal.connection.OperationMode;
+import com.liferay.portal.search.elasticsearch7.internal.index.CompanyIdIndexNameBuilder;
+import com.liferay.portal.search.elasticsearch7.internal.index.CompanyIndexFactory;
+import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.ElasticsearchEngineAdapterFixture;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.index.IndexNameBuilder;
 

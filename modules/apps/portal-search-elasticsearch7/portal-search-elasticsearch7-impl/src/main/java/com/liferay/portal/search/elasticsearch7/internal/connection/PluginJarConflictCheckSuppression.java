@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.connection;
+package com.liferay.portal.search.elasticsearch7.internal.connection;
 
 import java.util.function.Supplier;
 

@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.connection;
+package com.liferay.portal.search.elasticsearch7.internal.connection;
 
-import com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch6.internal.index.IndexFactory;
-import com.liferay.portal.search.elasticsearch6.internal.settings.SettingsBuilder;
-import com.liferay.portal.search.elasticsearch6.internal.util.ResourceUtil;
-import com.liferay.portal.search.elasticsearch6.settings.ClientSettingsHelper;
-import com.liferay.portal.search.elasticsearch6.settings.SettingsContributor;
+import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch7.internal.index.IndexFactory;
+import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsBuilder;
+import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
+import com.liferay.portal.search.elasticsearch7.settings.ClientSettingsHelper;
+import com.liferay.portal.search.elasticsearch7.settings.SettingsContributor;
 
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;

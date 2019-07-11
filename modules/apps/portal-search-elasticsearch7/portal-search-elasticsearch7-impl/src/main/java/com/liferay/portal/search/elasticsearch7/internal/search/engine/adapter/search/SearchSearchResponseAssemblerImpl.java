@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search;
+package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search;
 
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.aggregation.Aggregation;
@@ -22,13 +22,13 @@ import com.liferay.portal.search.aggregation.AggregationResults;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationResultTranslator;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.AggregationResultTranslatorFactory;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.ElasticsearchAggregationResultTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.ElasticsearchAggregationResultsTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.PipelineAggregationResultTranslatorFactory;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.pipeline.ElasticsearchPipelineAggregationResultTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.hits.SearchHitsTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.search.response.SearchResponseTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.AggregationResultTranslatorFactory;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.ElasticsearchAggregationResultTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.ElasticsearchAggregationResultsTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.PipelineAggregationResultTranslatorFactory;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.pipeline.ElasticsearchPipelineAggregationResultTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.hits.SearchHitsTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.search.response.SearchResponseTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.geolocation.GeoBuilders;

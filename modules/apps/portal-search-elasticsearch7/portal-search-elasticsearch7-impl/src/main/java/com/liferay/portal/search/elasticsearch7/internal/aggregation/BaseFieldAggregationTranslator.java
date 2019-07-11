@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.aggregation;
+package com.liferay.portal.search.elasticsearch7.internal.aggregation;
 
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.FieldAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.script.ScriptTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
 
 import org.elasticsearch.script.Script;
 import org.elasticsearch.search.aggregations.AggregationBuilder;

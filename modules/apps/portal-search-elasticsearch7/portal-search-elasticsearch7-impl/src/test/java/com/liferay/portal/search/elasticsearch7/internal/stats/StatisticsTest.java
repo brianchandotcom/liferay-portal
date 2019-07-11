@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.stats;
+package com.liferay.portal.search.elasticsearch7.internal.stats;
 
-import com.liferay.portal.search.elasticsearch6.internal.LiferayElasticsearchIndexingFixtureFactory;
+import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.search.test.util.stats.BaseStatisticsTestCase;
 

@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.connection;
+package com.liferay.portal.search.elasticsearch7.internal.connection;
 
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.search.elasticsearch6.internal.index.LiferayDocumentTypeFactory;
+import com.liferay.portal.search.elasticsearch7.internal.index.LiferayDocumentTypeFactory;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.client.AdminClient;

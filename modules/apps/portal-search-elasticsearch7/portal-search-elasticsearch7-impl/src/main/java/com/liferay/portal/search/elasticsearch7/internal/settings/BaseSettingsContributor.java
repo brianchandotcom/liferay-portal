@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.settings;
+package com.liferay.portal.search.elasticsearch7.internal.settings;
 
-import com.liferay.portal.search.elasticsearch6.settings.SettingsContributor;
+import com.liferay.portal.search.elasticsearch7.settings.SettingsContributor;
 
 /**
  * @author Michael C. Han

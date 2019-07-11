@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.query;
+package com.liferay.portal.search.elasticsearch7.internal.query;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.geolocation.GeoDistance;

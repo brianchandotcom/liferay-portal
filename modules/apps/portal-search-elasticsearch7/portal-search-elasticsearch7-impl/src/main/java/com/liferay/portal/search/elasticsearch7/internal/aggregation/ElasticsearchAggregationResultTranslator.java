@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.aggregation;
+package com.liferay.portal.search.elasticsearch7.internal.aggregation;
 
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.AggregationResult;
@@ -86,8 +86,8 @@ import com.liferay.portal.search.aggregation.metrics.ValueCountAggregationResult
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregation;
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationResultTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.pipeline.ElasticsearchPipelineAggregationResultTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.hits.SearchHitsTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.pipeline.ElasticsearchPipelineAggregationResultTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.hits.SearchHitsTranslator;
 import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 

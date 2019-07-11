@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.index;
+package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index;
 
 import com.carrotsearch.hppc.cursors.ObjectObjectCursor;
 
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.index.GetIndexIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.GetIndexIndexResponse;
 

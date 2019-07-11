@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.mappings;
+package com.liferay.portal.search.elasticsearch7.internal.mappings;
 
-import com.liferay.portal.search.elasticsearch6.internal.ElasticsearchIndexingFixture;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.elasticsearch7.internal.ElasticsearchIndexingFixture;
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.search.test.util.mappings.BaseMaxExpansionsTestCase;
 

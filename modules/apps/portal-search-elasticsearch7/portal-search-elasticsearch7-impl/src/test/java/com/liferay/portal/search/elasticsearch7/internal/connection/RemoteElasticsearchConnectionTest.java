@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.connection;
+package com.liferay.portal.search.elasticsearch7.internal.connection;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.search.elasticsearch6.configuration.OperationMode;
+import com.liferay.portal.search.elasticsearch7.configuration.OperationMode;
 
 import java.net.InetSocketAddress;
 

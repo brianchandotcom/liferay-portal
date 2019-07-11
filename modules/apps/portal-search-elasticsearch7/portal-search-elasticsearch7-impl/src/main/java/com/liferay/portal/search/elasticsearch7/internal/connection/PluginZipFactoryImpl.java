@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.connection;
+package com.liferay.portal.search.elasticsearch7.internal.connection;
 
-import com.liferay.portal.search.elasticsearch6.internal.util.ResourceUtil;
+import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
 
 import java.io.IOException;
 

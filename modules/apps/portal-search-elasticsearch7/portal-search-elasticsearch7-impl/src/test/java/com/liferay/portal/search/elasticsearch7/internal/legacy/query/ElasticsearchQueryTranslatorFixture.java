@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.legacy.query;
+package com.liferay.portal.search.elasticsearch7.internal.legacy.query;
 
-import com.liferay.portal.search.elasticsearch6.internal.filter.ElasticsearchFilterTranslatorFixture;
+import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterTranslatorFixture;
 
 /**
  * @author Michael C. Han

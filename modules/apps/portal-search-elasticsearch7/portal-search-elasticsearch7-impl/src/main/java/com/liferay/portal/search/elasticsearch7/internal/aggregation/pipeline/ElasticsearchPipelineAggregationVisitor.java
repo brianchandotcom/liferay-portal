@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.aggregation.pipeline;
+package com.liferay.portal.search.elasticsearch7.internal.aggregation.pipeline;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.aggregation.pipeline.AvgBucketPipelineAggregation;
@@ -32,7 +32,7 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationVisitor
 import com.liferay.portal.search.aggregation.pipeline.SerialDiffPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregation;
-import com.liferay.portal.search.elasticsearch6.internal.script.ScriptTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
 import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.SortFieldTranslator;
 

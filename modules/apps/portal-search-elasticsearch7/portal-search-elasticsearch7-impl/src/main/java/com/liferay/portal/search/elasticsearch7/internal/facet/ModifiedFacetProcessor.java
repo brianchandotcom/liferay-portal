@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.facet;
+package com.liferay.portal.search.elasticsearch7.internal.facet;
 
 import org.osgi.service.component.annotations.Component;
 

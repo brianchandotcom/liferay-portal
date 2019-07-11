@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.logging;
+package com.liferay.portal.search.elasticsearch7.internal.logging;
 
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
-import com.liferay.portal.search.elasticsearch6.internal.ElasticsearchIndexSearcher;
-import com.liferay.portal.search.elasticsearch6.internal.LiferayElasticsearchIndexingFixtureFactory;
-import com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search.CountSearchRequestExecutorImpl;
-import com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search.SearchSearchRequestExecutorImpl;
+import com.liferay.portal.search.elasticsearch7.internal.ElasticsearchIndexSearcher;
+import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchIndexingFixtureFactory;
+import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search.CountSearchRequestExecutorImpl;
+import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search.SearchSearchRequestExecutorImpl;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.search.test.util.logging.ExpectedLogTestRule;

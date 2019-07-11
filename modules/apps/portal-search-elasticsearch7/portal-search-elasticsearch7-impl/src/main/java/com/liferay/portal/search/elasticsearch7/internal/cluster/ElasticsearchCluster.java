@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.cluster;
+package com.liferay.portal.search.elasticsearch7.internal.cluster;
 
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnection;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
-import com.liferay.portal.search.elasticsearch6.internal.connection.OperationMode;
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnection;
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch7.internal.connection.OperationMode;
 import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.util.List;

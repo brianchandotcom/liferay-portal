@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.aggregation.bucket;
+package com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket;
 
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.bucket.SignificantTextAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.aggregation.BaseAggregationTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.significance.SignificanceHeuristicTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.BaseAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.significance.SignificanceHeuristicTranslator;
 import com.liferay.portal.search.query.QueryTranslator;
 
 import org.elasticsearch.index.query.QueryBuilder;

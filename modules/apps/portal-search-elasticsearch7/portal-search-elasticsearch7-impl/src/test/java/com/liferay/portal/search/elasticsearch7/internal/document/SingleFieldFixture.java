@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.document;
+package com.liferay.portal.search.elasticsearch7.internal.document;
 
-import com.liferay.portal.search.elasticsearch6.internal.connection.IndexName;
-import com.liferay.portal.search.elasticsearch6.internal.query.QueryBuilderFactory;
-import com.liferay.portal.search.elasticsearch6.internal.query.SearchAssert;
+import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
+import com.liferay.portal.search.elasticsearch7.internal.query.QueryBuilderFactory;
+import com.liferay.portal.search.elasticsearch7.internal.query.SearchAssert;
 
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.client.Client;

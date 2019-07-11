@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.aggregation.bucket;
+package com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket;
 
-import com.liferay.portal.search.elasticsearch6.internal.LiferayElasticsearchIndexingFixtureFactory;
+import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.aggregation.bucket.BaseHistogramAggregationTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 

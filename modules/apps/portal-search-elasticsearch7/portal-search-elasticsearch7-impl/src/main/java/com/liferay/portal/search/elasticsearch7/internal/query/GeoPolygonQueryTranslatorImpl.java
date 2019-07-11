@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.query;
+package com.liferay.portal.search.elasticsearch7.internal.query;
 
-import com.liferay.portal.search.elasticsearch6.internal.geolocation.GeoLocationPointTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.query.geolocation.GeoValidationMethodTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.geolocation.GeoLocationPointTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.query.geolocation.GeoValidationMethodTranslator;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.query.GeoPolygonQuery;
 

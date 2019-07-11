@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.highlight;
+package com.liferay.portal.search.elasticsearch7.internal.highlight;
 
-import com.liferay.portal.search.elasticsearch6.internal.LiferayElasticsearchIndexingFixtureFactory;
+import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.highlight.BaseHighlighterTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 

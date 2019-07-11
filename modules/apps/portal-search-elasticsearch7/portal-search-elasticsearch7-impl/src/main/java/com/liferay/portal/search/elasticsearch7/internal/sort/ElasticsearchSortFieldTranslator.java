@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.sort;
+package com.liferay.portal.search.elasticsearch7.internal.sort;
 
-import com.liferay.portal.search.elasticsearch6.internal.geolocation.DistanceUnitTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.geolocation.GeoDistanceTypeTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.geolocation.GeoLocationPointTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.script.ScriptTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.geolocation.DistanceUnitTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.geolocation.GeoDistanceTypeTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.geolocation.GeoLocationPointTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.sort.FieldSort;

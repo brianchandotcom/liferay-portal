@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.groupby;
+package com.liferay.portal.search.elasticsearch7.internal.groupby;
 
 import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.search.elasticsearch6.internal.LiferayElasticsearchIndexingFixtureFactory;
+import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.groupby.GroupByRequest;
 import com.liferay.portal.search.groupby.GroupByResponse;
 import com.liferay.portal.search.test.util.groupby.BaseGroupByTestCase;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.index;
+package com.liferay.portal.search.elasticsearch7.internal.index;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -20,12 +20,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch6.internal.settings.SettingsBuilder;
-import com.liferay.portal.search.elasticsearch6.internal.util.LogUtil;
-import com.liferay.portal.search.elasticsearch6.internal.util.ResourceUtil;
-import com.liferay.portal.search.elasticsearch6.settings.IndexSettingsContributor;
-import com.liferay.portal.search.elasticsearch6.settings.IndexSettingsHelper;
+import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsBuilder;
+import com.liferay.portal.search.elasticsearch7.internal.util.LogUtil;
+import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
+import com.liferay.portal.search.elasticsearch7.settings.IndexSettingsContributor;
+import com.liferay.portal.search.elasticsearch7.settings.IndexSettingsHelper;
 import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.util.Map;
@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration",
+	configurationPid = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration",
 	immediate = true, service = IndexFactory.class
 )
 public class CompanyIndexFactory implements IndexFactory {

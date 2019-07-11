@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.legacy.query;
+package com.liferay.portal.search.elasticsearch7.internal.legacy.query;
 
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Query;
@@ -31,8 +31,8 @@ import com.liferay.portal.kernel.search.generic.StringQuery;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.search.elasticsearch6.internal.filter.QueryFilterTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.filter.QueryFilterTranslatorImpl;
+import com.liferay.portal.search.elasticsearch7.internal.filter.QueryFilterTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.filter.QueryFilterTranslatorImpl;
 
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;

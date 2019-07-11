@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search;
+package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search;
 
 import com.liferay.portal.kernel.search.filter.FilterTranslator;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -21,10 +21,10 @@ import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.facet.FacetTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.filter.FilterToQueryBuilderTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.query.QueryToQueryBuilderTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.stats.StatsTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.facet.FacetTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.filter.FilterToQueryBuilderTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.query.QueryToQueryBuilderTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.stats.StatsTranslator;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
 import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
 import com.liferay.portal.search.filter.ComplexQueryPart;
@@ -237,7 +237,7 @@ public class CommonSearchRequestBuilderAssemblerImpl
 
 	@Reference(unbind = "-")
 	protected void setLegacyQueryToQueryBuilderTranslator(
-		com.liferay.portal.search.elasticsearch6.internal.legacy.query.
+		com.liferay.portal.search.elasticsearch7.internal.legacy.query.
 			QueryToQueryBuilderTranslator queryToQueryBuilderTranslator) {
 
 		_legacyQueryToQueryBuilderTranslator = queryToQueryBuilderTranslator;
@@ -431,7 +431,7 @@ public class CommonSearchRequestBuilderAssemblerImpl
 	private ComplexQueryBuilderFactory _complexQueryBuilderFactory;
 	private FacetTranslator _facetTranslator;
 	private FilterTranslator<QueryBuilder> _filterToQueryBuilderTranslator;
-	private com.liferay.portal.search.elasticsearch6.internal.legacy.query.
+	private com.liferay.portal.search.elasticsearch7.internal.legacy.query.
 		QueryToQueryBuilderTranslator _legacyQueryToQueryBuilderTranslator;
 	private PipelineAggregationTranslator<PipelineAggregationBuilder>
 		_pipelineAggregationTranslator;

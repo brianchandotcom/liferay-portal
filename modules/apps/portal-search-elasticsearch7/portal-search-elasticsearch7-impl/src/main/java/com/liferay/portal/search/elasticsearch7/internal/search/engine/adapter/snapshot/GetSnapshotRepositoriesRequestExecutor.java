@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.snapshot;
+package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.snapshot;
 
 import com.liferay.portal.search.engine.adapter.snapshot.GetSnapshotRepositoriesRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.GetSnapshotRepositoriesResponse;

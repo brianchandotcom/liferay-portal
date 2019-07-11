@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.io;
+package com.liferay.portal.search.elasticsearch7.internal.io;
 
 import com.liferay.petra.string.StringBundler;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.highlight;
+package com.liferay.portal.search.elasticsearch7.internal.highlight;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
 

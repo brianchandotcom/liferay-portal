@@ -55,10 +55,7 @@
 		],
 		"testPathIgnorePatterns": [
 			"FormRenderer"
-		],
-		"transform": {
-			".+": "./jest-workspaces-transform.js"
-		}
+		]
 	},
 	"main": "./",
 	"name": "dynamic-data-mapping-form-renderer",

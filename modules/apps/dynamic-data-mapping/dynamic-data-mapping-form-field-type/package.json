@@ -17,8 +17,6 @@
 	"jest": {
 		"moduleNameMapper": {
 			"(.*)\\.soy$": "$1.soy.js",
-			"dynamic-data-mapping-form-builder/(.*)": "<rootDir>/../dynamic-data-mapping-form-builder/src/main/resources/META-INF/resources/$1",
-			"dynamic-data-mapping-form-renderer/(.*)": "<rootDir>/../dynamic-data-mapping-form-renderer/src/main/resources/META-INF/resources/$1",
 			"source/(.*)": "<rootDir>/src/main/resources/META-INF/resources/$1.js"
 		},
 		"modulePathIgnorePatterns": [
@@ -41,10 +39,7 @@
 			"Select",
 			"Tooltip",
 			"Validation"
-		],
-		"transform": {
-			".+": "./jest-workspaces-transform.js"
-		}
+		]
 	},
 	"main": "./",
 	"name": "dynamic-data-mapping-form-field-type",

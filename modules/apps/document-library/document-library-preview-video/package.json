@@ -10,7 +10,7 @@
 			"Liferay": {}
 		},
 		"moduleNameMapper": {
-			"(.*)\\.soy": "$1.soy.js"
+			"(.+/VideoPreviewer\\.soy)": "$1.js"
 		},
 		"setupFilesAfterEnv": [
 			"<rootDir>/test/setup/index.js"

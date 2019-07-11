@@ -16,7 +16,7 @@
 		"liferay-npm-bridge-generator": "2.7.1",
 		"liferay-npm-bundler": "2.7.1",
 		"liferay-npm-bundler-preset-standard": "2.7.1",
-		"liferay-npm-scripts": "4.6.0",
+		"liferay-npm-scripts": "4.8.0",
 		"liferay-theme-es2015-hook": "8.0.0-rc.2",
 		"metal-jest-serializer": "2.0.0"
 	},
@@ -27,8 +27,8 @@
 	},
 	"workspaces": {
 		"packages": [
-			"apps/**/*-taglib",
-			"apps/**/*-web",
+			"apps/*/*-taglib",
+			"apps/*/*-web",
 			"apps/analytics/analytics-client-js",
 			"apps/data-engine/data-engine-rest-impl",
 			"apps/document-library/document-library-preview-audio",

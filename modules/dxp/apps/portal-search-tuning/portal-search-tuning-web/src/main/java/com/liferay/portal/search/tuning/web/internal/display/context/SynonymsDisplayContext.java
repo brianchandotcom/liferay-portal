@@ -34,6 +34,10 @@ public class SynonymsDisplayContext {
 		return _creationMenu;
 	}
 
+	public int getItemsTotal() {
+		return _itemsTotal;
+	}
+
 	public SearchContainer<SynonymSetDisplayContext> getSearchContainer() {
 		return _searchContainer;
 	}
@@ -54,6 +58,10 @@ public class SynonymsDisplayContext {
 		_dropdownItems = dropdownItems;
 	}
 
+	public void setItemsTotal(int itemsTotal) {
+		_itemsTotal = itemsTotal;
+	}
+
 	public void setSearchContainer(
 		SearchContainer<SynonymSetDisplayContext> searchContainer) {
 
@@ -63,6 +71,7 @@ public class SynonymsDisplayContext {
 	private CreationMenu _creationMenu;
 	private boolean _disabledManagementBar;
 	private List<DropdownItem> _dropdownItems;
+	private int _itemsTotal;
 	private SearchContainer<SynonymSetDisplayContext> _searchContainer;
 
 }

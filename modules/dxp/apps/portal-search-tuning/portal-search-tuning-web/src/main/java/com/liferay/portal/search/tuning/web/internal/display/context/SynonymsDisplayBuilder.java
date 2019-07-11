@@ -72,6 +72,7 @@ public class SynonymsDisplayBuilder {
 			isDisabledManagementBar(synonymSetDisplayContexts));
 
 		synonymsDisplayContext.setDropdownItems(getDropdownItems());
+		synonymsDisplayContext.setItemsTotal(synonymSetDisplayContexts.size());
 		synonymsDisplayContext.setSearchContainer(
 			buildSearchContainer(synonymSetDisplayContexts));
 

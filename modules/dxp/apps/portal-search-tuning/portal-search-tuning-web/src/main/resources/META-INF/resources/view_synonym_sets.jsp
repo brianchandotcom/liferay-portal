@@ -38,6 +38,7 @@ SynonymsDisplayContext synonymsDisplayContext = (SynonymsDisplayContext)request.
 	componentId="synonymSetsEntriesManagementToolbar"
 	creationMenu="<%= synonymsDisplayContext.getCreationMenu() %>"
 	disabled="<%= synonymsDisplayContext.isDisabledManagementBar() %>"
+	itemsTotal="<%= synonymsDisplayContext.getItemsTotal() %>"
 	searchContainerId="synonymSetsEntries"
 	selectable="<%= true %>"
 	showCreationMenu="<%= true %>"

@@ -25,6 +25,8 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolverUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -54,6 +56,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -271,6 +274,30 @@ public class NPMRegistryImpl implements NPMRegistry {
 		_reopenBundleTracker();
 	}
 
+	private String _getNPMResolvedPackageName(
+		Bundle bundle, NPMResolver npmResolver) {
+
+		try {
+			URL url = bundle.getResource("META-INF/resources/package.json");
+
+			String json = StringUtil.read(url.openStream());
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
+
+			String name = jsonObject.getString("name");
+
+			return npmResolver.resolveModuleName(name);
+		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to read META-INF/resources/package.json in " +
+					bundle.getSymbolicName(),
+				e);
+		}
+
+		return null;
+	}
+
 	private JSONObject _getPackageJSONObject(Bundle bundle) {
 		try {
 			URL url = bundle.getResource("package.json");
@@ -314,6 +341,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 			_refreshJSModuleCaches();
 
 			_browserModuleNameMapper.clearCache(this);
+
+			_setNPMResolver(bundle, this);
 
 			for (JSBundleTracker jsBundleTracker : _jsBundleTrackers) {
 				try {
@@ -406,6 +435,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 		_browserModuleNameMapper.clearCache(this);
 
+		_unsetNPMResolver(bundle);
+
 		for (JSBundleTracker jsBundleTracker : _jsBundleTrackers) {
 			try {
 				jsBundleTracker.removedJSBundle(
@@ -423,6 +454,48 @@ public class NPMRegistryImpl implements NPMRegistry {
 		if (_bundleTracker != null) {
 			_bundleTracker.close();
 			_bundleTracker.open();
+		}
+	}
+
+	private void _setNPMResolver(Bundle bundle, NPMRegistry npmRegistry) {
+		NPMResolver npmResolver = new NPMResolverImpl(
+			bundle, _jsonFactory, npmRegistry);
+
+		NPMResolverUtil.set(bundle, npmResolver);
+
+		String npmResolvedPackageName = _getNPMResolvedPackageName(
+			bundle, npmResolver);
+
+		if (npmResolvedPackageName == null) {
+			return;
+		}
+
+		try {
+			NPMResolvedPackageNameRegistrar npmResolvedPackageNameRegistrar =
+				new NPMResolvedPackageNameRegistrar(
+					_bundleContext, bundle, npmResolvedPackageName);
+
+			_npmResolvedPackageNameRegistrarMap.put(
+				bundle, npmResolvedPackageNameRegistrar);
+
+			npmResolvedPackageNameRegistrar.open();
+		}
+		catch (InvalidSyntaxException ise) {
+			_log.error(
+				"Unable to track servlet context for bundle " +
+					bundle.getBundleId(),
+				ise);
+		}
+	}
+
+	private void _unsetNPMResolver(Bundle bundle) {
+		NPMResolverUtil.set(bundle, null);
+
+		NPMResolvedPackageNameRegistrar npmResolvedPackageNameRegistrar =
+			_npmResolvedPackageNameRegistrarMap.remove(bundle);
+
+		if (npmResolvedPackageNameRegistrar != null) {
+			npmResolvedPackageNameRegistrar.close();
 		}
 	}
 
@@ -452,6 +525,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 	private Map<String, JSPackage> _jsPackages = new HashMap<>();
 	private List<JSPackageVersion> _jsPackageVersions = new ArrayList<>();
+	private final Map<Bundle, NPMResolvedPackageNameRegistrar>
+		_npmResolvedPackageNameRegistrarMap = new ConcurrentHashMap<>();
 	private Map<String, JSModule> _resolvedJSModules = new HashMap<>();
 	private Map<String, JSPackage> _resolvedJSPackages = new HashMap<>();
 

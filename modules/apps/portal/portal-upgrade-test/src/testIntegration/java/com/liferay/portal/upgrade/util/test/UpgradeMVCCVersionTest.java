@@ -93,4 +93,30 @@ public class UpgradeMVCCVersionTest extends UpgradeMVCCVersion {
 	private String[] _excludedTableNames;
 	private String[] _moduleTableNames;
 
+	private class UpgradeMVCCVersionModuleTestTableClass {
+
+		public static final String TABLE_NAME = "UpgradeMVCCVersionModuleTest";
+
+		public static final String TABLE_SQL_CREATE =
+			"create table UpgradeMVCCVersionModuleTest(_id LONG not null " +
+				"primary key, _userId LONG)";
+
+		public static final String TABLE_SQL_DROP =
+			"drop table UpgradeMVCCVersionModuleTest";
+
+	}
+
+	private class UpgradeMVCCVersionPortalTestTableClass {
+
+		public static final String TABLE_NAME = "UpgradeMVCCVersionPortalTest";
+
+		public static final String TABLE_SQL_CREATE =
+			"create table UpgradeMVCCVersionPortalTest(_id LONG not null " +
+				"primary key, _userId LONG)";
+
+		public static final String TABLE_SQL_DROP =
+			"drop table UpgradeMVCCVersionPortalTest";
+
+	}
+
 }

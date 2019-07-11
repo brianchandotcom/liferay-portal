@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.spi.index.helper;
+package com.liferay.portal.search.elasticsearch7.spi.index.helper;
 
 import java.util.function.Consumer;
 

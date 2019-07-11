@@ -65,7 +65,7 @@ public class CaptchaFieldType extends BaseFieldType {
 			_log.error(e, e);
 		}
 
-		context.put("html", _soyDataFactory.createSoyHTMLData(html));
+		context.put("html", _soyDataFactory.createSoyRawData(html));
 	}
 
 	private String _renderCaptchaTag(

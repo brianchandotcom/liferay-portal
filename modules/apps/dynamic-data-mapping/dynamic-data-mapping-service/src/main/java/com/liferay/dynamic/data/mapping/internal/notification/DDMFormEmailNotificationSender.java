@@ -284,7 +284,7 @@ public class DDMFormEmailNotificationSender {
 		}
 
 		fieldMap.put("label", labelString);
-		fieldMap.put("value", _soyDataFactory.createSoyHTMLData(sb.toString()));
+		fieldMap.put("value", _soyDataFactory.createSoyRawData(sb.toString()));
 
 		return fieldMap;
 	}

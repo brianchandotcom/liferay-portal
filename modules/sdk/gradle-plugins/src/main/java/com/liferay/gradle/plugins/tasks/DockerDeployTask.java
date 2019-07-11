@@ -31,6 +31,7 @@ public class DockerDeployTask extends Exec {
 
 	public DockerDeployTask() {
 		setExecutable("docker");
+		setLifearyHome("/opt/liferay");
 	}
 
 	@Override
@@ -49,6 +50,10 @@ public class DockerDeployTask extends Exec {
 		return GradleUtil.toString(_deployDir);
 	}
 
+	public String getLiferayHome() {
+		return GradleUtil.toString(_liferayHome);
+	}
+
 	public File getSourceFile() {
 		return GradleUtil.toFile(getProject(), _sourceFile);
 	}
@@ -59,6 +64,10 @@ public class DockerDeployTask extends Exec {
 
 	public void setDeployDir(Object deployDir) {
 		_deployDir = deployDir;
+	}
+
+	public void setLifearyHome(Object liferayHome) {
+		_liferayHome = liferayHome;
 	}
 
 	public void setSourceFile(Object sourceFile) {
@@ -88,6 +97,7 @@ public class DockerDeployTask extends Exec {
 
 	private Object _containerId;
 	private Object _deployDir;
+	private Object _liferayHome;
 	private Object _sourceFile;
 
 }

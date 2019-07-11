@@ -28,6 +28,11 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SoyDataFactory {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 * 			#createSoyRawData(String)}
+	 */
+	@Deprecated
 	public SoyHTMLData createSoyHTMLData(String html);
 
 	public SoyRawData createSoyRawData(String html);

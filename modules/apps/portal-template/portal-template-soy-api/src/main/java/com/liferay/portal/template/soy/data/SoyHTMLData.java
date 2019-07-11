@@ -23,7 +23,9 @@ import com.liferay.portal.template.soy.util.SoyRawData;
  * Use the {@link SoyDataFactory} OSGi service to create objects of this class.
  *
  * @author Iván Zaera Avellón
+ * @deprecated As of Mueller (7.2.x), , replaced by {@link SoyRawData}
  * @review
  */
+@Deprecated
 public interface SoyHTMLData extends SoyRawData {
 }

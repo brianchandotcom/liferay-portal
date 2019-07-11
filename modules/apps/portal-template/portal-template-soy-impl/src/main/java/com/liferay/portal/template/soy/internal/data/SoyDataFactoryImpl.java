@@ -26,6 +26,11 @@ import org.osgi.service.component.annotations.Component;
 @Component(service = SoyDataFactory.class)
 public class SoyDataFactoryImpl implements SoyDataFactory {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 * 			#createSoyRawData(String)}
+	 */
+	@Deprecated
 	@Override
 	public SoyHTMLData createSoyHTMLData(String html) {
 		return new SoyHTMLDataImpl(html);

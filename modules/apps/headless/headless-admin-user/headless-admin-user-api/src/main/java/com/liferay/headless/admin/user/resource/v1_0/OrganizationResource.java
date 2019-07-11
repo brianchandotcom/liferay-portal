@@ -23,6 +23,8 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,14 +42,15 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface OrganizationResource {
 
 	public Page<Organization> getOrganizationsPage(
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Filter filter, Pagination pagination,
+			List<Sort> sorts)
 		throws Exception;
 
 	public Organization getOrganization(Long organizationId) throws Exception;
 
 	public Page<Organization> getOrganizationOrganizationsPage(
 			Long parentOrganizationId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

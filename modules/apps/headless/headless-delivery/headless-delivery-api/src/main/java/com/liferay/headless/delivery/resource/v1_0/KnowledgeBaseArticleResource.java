@@ -24,6 +24,8 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -74,7 +76,7 @@ public interface KnowledgeBaseArticleResource {
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 				Long parentKnowledgeBaseArticleId, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
+				Pagination pagination, List<Sort> sorts)
 		throws Exception;
 
 	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
@@ -85,7 +87,7 @@ public interface KnowledgeBaseArticleResource {
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 				Long knowledgeBaseFolderId, Boolean flatten, String search,
-				Filter filter, Pagination pagination, Sort[] sorts)
+				Filter filter, Pagination pagination, List<Sort> sorts)
 		throws Exception;
 
 	public KnowledgeBaseArticle postKnowledgeBaseFolderKnowledgeBaseArticle(
@@ -95,7 +97,7 @@ public interface KnowledgeBaseArticleResource {
 
 	public Page<KnowledgeBaseArticle> getSiteKnowledgeBaseArticlesPage(
 			Long siteId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception;
 
 	public KnowledgeBaseArticle postSiteKnowledgeBaseArticle(

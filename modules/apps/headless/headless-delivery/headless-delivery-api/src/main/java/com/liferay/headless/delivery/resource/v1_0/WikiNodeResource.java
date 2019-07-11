@@ -23,6 +23,8 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -41,7 +43,7 @@ public interface WikiNodeResource {
 
 	public Page<WikiNode> getSiteWikiNodesPage(
 			Long siteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			List<Sort> sorts)
 		throws Exception;
 
 	public WikiNode postSiteWikiNode(Long siteId, WikiNode wikiNode)

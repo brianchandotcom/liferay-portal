@@ -41,11 +41,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -75,7 +75,7 @@ public abstract class BaseContentSetElementResourceImpl
 	public Page<ContentSetElement> getContentSetContentSetElementsPage(
 			@NotNull @Parameter(hidden = true) @PathParam("contentSetId") Long
 				contentSetId,
-			@Context Pagination pagination)
+			@BeanParam Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -100,7 +100,7 @@ public abstract class BaseContentSetElementResourceImpl
 	public Page<ContentSetElement> getSiteContentSetByKeyContentSetElementsPage(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@NotNull @Parameter(hidden = true) @PathParam("key") String key,
-			@Context Pagination pagination)
+			@BeanParam Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -128,7 +128,7 @@ public abstract class BaseContentSetElementResourceImpl
 					siteId,
 				@NotNull @Parameter(hidden = true) @PathParam("uuid") String
 					uuid,
-				@Context Pagination pagination)
+				@BeanParam Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

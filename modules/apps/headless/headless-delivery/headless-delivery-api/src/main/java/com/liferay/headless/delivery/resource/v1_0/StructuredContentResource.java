@@ -24,6 +24,8 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -42,12 +44,12 @@ public interface StructuredContentResource {
 
 	public Page<StructuredContent> getContentStructureStructuredContentsPage(
 			Long contentStructureId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception;
 
 	public Page<StructuredContent> getSiteStructuredContentsPage(
 			Long siteId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception;
 
 	public StructuredContent postSiteStructuredContent(
@@ -65,7 +67,7 @@ public interface StructuredContentResource {
 	public Page<StructuredContent>
 			getStructuredContentFolderStructuredContentsPage(
 				Long structuredContentFolderId, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
+				Pagination pagination, List<Sort> sorts)
 		throws Exception;
 
 	public StructuredContent postStructuredContentFolderStructuredContent(

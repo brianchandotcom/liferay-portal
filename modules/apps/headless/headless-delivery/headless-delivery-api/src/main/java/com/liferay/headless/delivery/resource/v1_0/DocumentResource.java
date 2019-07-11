@@ -25,6 +25,8 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -43,7 +45,7 @@ public interface DocumentResource {
 
 	public Page<Document> getDocumentFolderDocumentsPage(
 			Long documentFolderId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception;
 
 	public Document postDocumentFolderDocument(
@@ -72,7 +74,7 @@ public interface DocumentResource {
 
 	public Page<Document> getSiteDocumentsPage(
 			Long siteId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, List<Sort> sorts)
 		throws Exception;
 
 	public Document postSiteDocument(Long siteId, MultipartBody multipartBody)

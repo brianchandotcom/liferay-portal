@@ -43,12 +43,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -94,8 +94,9 @@ public abstract class BaseUserAccountResourceImpl
 			@NotNull @Parameter(hidden = true) @PathParam("organizationId") Long
 				organizationId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
-			@Context Filter filter, @Context Pagination pagination,
-			@Context Sort[] sorts)
+			@Parameter(hidden = true) @QueryParam("filter") Filter filter,
+			@BeanParam Pagination pagination,
+			@Parameter(hidden = true) @QueryParam("sort") List<Sort> sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -120,8 +121,9 @@ public abstract class BaseUserAccountResourceImpl
 	@Tags(value = {@Tag(name = "UserAccount")})
 	public Page<UserAccount> getUserAccountsPage(
 			@Parameter(hidden = true) @QueryParam("search") String search,
-			@Context Filter filter, @Context Pagination pagination,
-			@Context Sort[] sorts)
+			@Parameter(hidden = true) @QueryParam("filter") Filter filter,
+			@BeanParam Pagination pagination,
+			@Parameter(hidden = true) @QueryParam("sort") List<Sort> sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -166,8 +168,9 @@ public abstract class BaseUserAccountResourceImpl
 			@NotNull @Parameter(hidden = true) @PathParam("webSiteId") Long
 				webSiteId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
-			@Context Filter filter, @Context Pagination pagination,
-			@Context Sort[] sorts)
+			@Parameter(hidden = true) @QueryParam("filter") Filter filter,
+			@BeanParam Pagination pagination,
+			@Parameter(hidden = true) @QueryParam("sort") List<Sort> sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

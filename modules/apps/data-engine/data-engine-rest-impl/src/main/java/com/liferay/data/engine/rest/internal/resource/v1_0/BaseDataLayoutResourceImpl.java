@@ -41,6 +41,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -50,7 +51,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -78,7 +78,7 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
 				Long dataDefinitionId,
 			@Parameter(hidden = true) @QueryParam("keywords") String keywords,
-			@Context Pagination pagination)
+			@BeanParam Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -187,7 +187,7 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 	public Page<DataLayout> getSiteDataLayoutPage(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@Parameter(hidden = true) @QueryParam("keywords") String keywords,
-			@Context Pagination pagination)
+			@BeanParam Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

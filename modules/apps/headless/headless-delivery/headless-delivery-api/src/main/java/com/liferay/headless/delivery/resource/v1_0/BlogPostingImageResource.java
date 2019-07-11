@@ -24,6 +24,8 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -48,7 +50,7 @@ public interface BlogPostingImageResource {
 
 	public Page<BlogPostingImage> getSiteBlogPostingImagesPage(
 			Long siteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			List<Sort> sorts)
 		throws Exception;
 
 	public BlogPostingImage postSiteBlogPostingImage(

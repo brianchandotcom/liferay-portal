@@ -41,11 +41,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -70,7 +70,7 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 	@Path("/roles")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Role")})
-	public Page<Role> getRolesPage(@Context Pagination pagination)
+	public Page<Role> getRolesPage(@BeanParam Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

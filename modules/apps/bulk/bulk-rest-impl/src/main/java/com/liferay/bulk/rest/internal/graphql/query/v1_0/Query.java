@@ -27,6 +27,7 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Page;
 
+import java.util.List;
 import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
@@ -112,7 +113,7 @@ public class Query {
 
 	private AcceptLanguage _acceptLanguage;
 	private BiFunction<Object, String, Filter> _filterBiFunction;
-	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
+	private BiFunction<Object, String, List<Sort>> _sortsBiFunction;
 	private Company _company;
 	private User _user;
 

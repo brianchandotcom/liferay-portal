@@ -43,13 +43,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -75,7 +75,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public Page<WorkflowTask> getRoleWorkflowTasksPage(
 			@NotNull @Parameter(hidden = true) @PathParam("roleId") Long roleId,
-			@Context Pagination pagination)
+			@BeanParam Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -93,7 +93,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public Page<WorkflowTask> getWorkflowTasksAssignedToMePage(
-			@Context Pagination pagination)
+			@BeanParam Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -111,7 +111,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public Page<WorkflowTask> getWorkflowTasksAssignedToMyRolesPage(
-			@Context Pagination pagination)
+			@BeanParam Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
